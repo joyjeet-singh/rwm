@@ -1,0 +1,192 @@
+==============================================================================
+STEP 3 -- SCORE THE REFERENCE CHECKPOINT
+==============================================================================
+  loaded 10000 rows x 66 cols  (200 s at 50 Hz)
+  episode structure asserted:
+    reset fingerprint re-derived from data -> [999, 1999, 2999, 3999, 4999, 5999, 6999, 7999, 8999, 9999]
+    matches hard-coded RESET_ROWS
+    column 65 identically zero: True (episode structure NOT recoverable from it)
+    ep0 = 999 rows, ep1..ep9 = 1000 rows each, row 9999 discarded
+  split seed 0, stratified by mean commanded speed (one fast, one slow)
+  TRAIN episodes  : [0, 2, 3, 4, 5, 6, 7, 9]
+  HELD-OUT episodes: [1, 8]
+  held-out mean commanded speeds: ['ep1=0.60 m/s', 'ep8=0.79 m/s']
+
+------------------------------------------------------------------------------
+3.1 CHECKPOINT INVENTORY
+------------------------------------------------------------------------------
+  torch.load succeeded under torch 2.2.2 (no fallback needed)
+  top-level keys: ['model_state_dict', 'system_dynamics_state_dict', 'optimizer_state_dict', 'system_dynamics_optimizer_state_dict', 'iter', 'infos']
+  system_dynamics_state_dict holds 106 tensors
+
+  component            parameters      expected     match
+  state_base              636,672      636,672     OK
+  state_heads             387,460      387,460     OK
+  auxiliary_base          636,672      636,672     OK
+  auxiliary_heads         334,765      334,765     OK
+  TOTAL                 1,995,569    1,995,569     OK
+
+  checkpoint iter: 5000
+  rebuilt module parameter+buffer count: 1,995,569  (matches)
+
+  one-step sanity check on a held-out window:
+    |pred - true|_1 / |true|_1 = 0.0579
+    hold-last baseline for the same step = 0.0319
+    aleatoric 0.003   epistemic 0.276
+
+------------------------------------------------------------------------------
+PROTOCOL A -- held-out episodes only, no boundary crossings
+------------------------------------------------------------------------------
+  trajectory start rows: [8412, 8375, 8158, 8008, 1321, 1048, 1018, 1367, 1209, 1089]
+  episodes touched     : [1, 8]
+  trajectories crossing an episode boundary: 0 of 10
+
+  condition                                  e   median r    frac>10       max r
+  clean                                 0.7672     0.7364     0.0000        5.08
+  noise 0.1                             0.8865     0.7923     0.0000        5.05
+  noise 0.2                             1.0054     0.8591     0.0000        2.82
+  noise 0.4                             1.2200     1.0476     0.0000        3.96
+  noise 0.5                             1.2550     1.1339     0.0000        3.19
+  noise 0.8                             1.3811     1.3061     0.0000        2.95
+
+------------------------------------------------------------------------------
+PROTOCOL B -- full 10,000 rows, crossings permitted (train.py:109)
+------------------------------------------------------------------------------
+  trajectory start rows: [8166, 6115, 4907, 2590, 2955, 393, 722, 158, 1682, 7808]
+  episodes touched     : [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  trajectories crossing an episode boundary: 5 of 10
+
+  condition                                  e   median r    frac>10       max r
+  clean                                 1.2728     0.7873     0.0000        5.01
+  noise 0.1                             1.2286     0.8102     0.0000        4.36
+  noise 0.2                             1.2296     0.8373     0.0000        4.52
+  noise 0.4                             0.9775     0.9245     0.0000        4.78
+  noise 0.5                             1.0302     1.0043     0.0000        2.37
+  noise 0.8                             1.2130     1.1856     0.0000        2.32
+
+------------------------------------------------------------------------------
+DECOMPOSING THE A/B GAP
+------------------------------------------------------------------------------
+  Two confounders have to be separated before the gap means anything.
+
+  (i) The reference checkpoint was trained by the authors on this entire
+      CSV. Protocol A's 'held-out' episodes were in its training set, so
+      for THIS checkpoint A is not a generalisation measure -- it only
+      becomes one for a model we train ourselves in Step 6. The A/B gap
+      here therefore cannot be read as 'how much leakage flatters the
+      reference'; that reading only applies from Step 6 onward.
+  (ii) Protocol B lets trajectories straddle an episode reset. A reset is
+      a physical discontinuity no model can predict, so the expectation is
+      that crossing trajectories are penalised for a jump that is not a
+      modelling failure. This is TESTED below, not assumed.
+
+  protocol A: per-trajectory e = [0.44 0.84 0.67 0.66 0.82 0.85 0.72 0.80 1.03 0.85]
+  protocol B: per-trajectory e = [0.63 2.41 0.54 0.93 2.34 1.92 0.59 2.09 0.64 0.62]
+    of the 10, 5 cross a reset and 5 do not
+    e over the 5 crossing    : 0.9470
+    e over the 5 non-crossing: 1.5986
+    -> hypothesis (ii) is REFUTED: the crossing trajectories score
+       BETTER, not worse. Boundary crossing is not what drives the
+       A/B gap. See the per-episode difficulty table below.
+
+  Per-episode difficulty (20 trajectories drawn inside each episode,
+  identical protocol, so the only thing that varies is the episode):
+    ep   mean speed   e (20 traj)   held-out?
+     0      1.17        1.5514
+     1      0.60        0.7867  <-- held out
+     2      0.91        0.6181
+     3      0.70        1.5974
+     4      0.55        1.6739
+     5      0.77        0.8823
+     6      0.85        1.5243
+     7      0.66        0.8341
+     8      0.79        0.6015  <-- held out
+     9      1.04        0.9038
+
+    spread across episodes: 0.601 to 1.674  (mean 1.097)
+    held-out pair mean 0.694 vs all-episode mean 1.097
+    correlation between commanded speed and error: r = +0.00
+    => The A/B gap is dominated by WHICH episodes get sampled, not by
+       boundary crossing. Protocol A draws only from the held-out pair,
+       and that pair sits on the easy side of this spread, so protocol A
+       reads lower than protocol B mostly for that reason.
+
+    CONSEQUENCE FOR THE SPLIT: the brief asks for stratification by
+    velocity regime, and that is what was done -- but the correlation
+    above shows commanded speed does not predict difficulty, so
+    stratifying by speed does not balance difficulty. The seed-0 split
+    holds out two of the easiest episodes, and protocol A is optimistic
+    by roughly the pair-vs-population difference above.
+    The split is NOT re-picked to fix this: choosing a held-out set by
+    measured error would select on the test signal. For Step 6 the sound
+    options are leave-one-episode-out over all ten, or averaging over
+    several seeded splits, and reporting the spread either way.
+
+  Ten trajectories is what the reference uses, but is it enough to
+  support the gap? Re-drawing the sample over 20 seeds:
+    protocol A: e = 0.7088 +- 0.0526   (min 0.6028, max 0.7892, n=20 seeds)
+    protocol B: e = 1.0256 +- 0.1840   (min 0.6616, max 1.2891, n=20 seeds)
+    separation 0.3168 vs pooled seed-to-seed spread 0.1914  ->  1.7 sigma
+    A single seed-0 pair of numbers is NOT a reliable gap estimate;
+    the seed-averaged figures above are the ones to quote.
+
+------------------------------------------------------------------------------
+ACTION ALIGNMENT CHECK (not requested; found while reading the source)
+------------------------------------------------------------------------------
+  system_dynamics.py:196-200 trains on (s[t], a[t+1]) -> s[t+1];
+  model_training.py:131-132 evaluates on (s[t], a[t]) -> s[t+1].
+  The checkpoint was trained under one convention and scored under the
+  other. Both are run here on protocol A:
+    eval convention  (s[t], a[t])   <- reference eval   e = 0.7672   median r = 0.7364
+    train convention (s[t], a[t+1]) <- reference training   e = 0.7008   median r = 0.6801
+    difference: -0.0664  (training convention scores better)
+
+==============================================================================
+3.4 FULL RESULTS TABLE
+==============================================================================
+  row                                        e   median r    frac>10       max r
+  ----------------------------------------------------------------------------
+  hold-last FLOOR (Step 2)              1.0070     0.9649     0.0000        2.80
+  A clean  (held-out, no crossing)      0.7672     0.7364     0.0000        5.08
+  B clean  (reference protocol)         1.2728     0.7873     0.0000        5.01
+  A noise 0.1                           0.8865     0.7923     0.0000        5.05
+  A noise 0.2                           1.0054     0.8591     0.0000        2.82
+  A noise 0.4                           1.2200     1.0476     0.0000        3.96
+  A noise 0.5                           1.2550     1.1339     0.0000        3.19
+  A noise 0.8                           1.3811     1.3061     0.0000        2.95
+  B noise 0.1                           1.2286     0.8102     0.0000        4.36
+  B noise 0.2                           1.2296     0.8373     0.0000        4.52
+  B noise 0.4                           0.9775     0.9245     0.0000        4.78
+  B noise 0.5                           1.0302     1.0043     0.0000        2.37
+  B noise 0.8                           1.2130     1.1856     0.0000        2.32
+
+==============================================================================
+ERROR BY FORECAST HORIZON (protocol A, clean)
+==============================================================================
+  e is a mean over all 368 forecast steps, which buries the fact that the
+  model was trained with forecast_horizon = 8. Cumulative mean of r_t
+  over the first h forecast steps, against the hold-last floor:
+
+   horizon h   model e@h   floor e@h    ratio    r_t at step h
+           1      0.1209      0.1107    1.093           0.1209
+           4      0.1612      0.2407    0.670           0.1977
+           8      0.1806      0.3603    0.501           0.2182   <- training horizon
+          16      0.2279      0.5309    0.429           0.3680
+          32      0.3150      0.5733    0.549           0.4655
+          64      0.4467      0.6787    0.658           0.6931
+         128      0.5522      0.7542    0.732           0.7060
+         256      0.6732      0.9369    0.719           0.9224
+         368      0.7672      1.0070    0.762           0.8742
+
+  The model is far better than the floor at short horizons and converges
+  to it long-horizon: a 368-step mean is mostly measuring the saturated
+  tail, not prediction quality. Quote e@8 alongside e@368.
+
+  ----------------------------------------------------------------------------
+  GAP  e(A) - e(B) = -0.5056   (-39.7% relative to B)
+  Floor headroom: hold-last e = 1.0070, protocol A e = 0.7672  -> model is 1.31x better than the floor
+
+  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/figures/step3_per_step_error.png
+  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/manifest.json
+
+  WALL CLOCK: 38.9 s

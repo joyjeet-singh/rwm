@@ -1,0 +1,107 @@
+==============================================================================
+TASK 2 -- HORIZON TABLE UNDER THE TRAINING CONVENTION
+==============================================================================
+  Task 1 verdict k=-1: the training alignment is the causal one.
+  The floor uses no actions, so it is unchanged from Step 3.
+
+      h |    eval conv (offset 0)    |   train conv (offset 1)    |    floor
+        |       e@h    ratio   r_t@h |       e@h    ratio   r_t@h |      e@h
+  ----------------------------------------------------------------------------
+      1 |    0.1209    1.093  0.1209 |    0.0915    0.827  0.0915 |   0.1107
+      4 |    0.1612    0.670  0.1977 |    0.1144    0.475  0.1329 |   0.2407
+      8 |    0.1806    0.501  0.2182 |    0.1310    0.364  0.1585 |   0.3603  <- training horizon
+     16 |    0.2279    0.429  0.3680 |    0.1808    0.341  0.2982 |   0.5309
+     32 |    0.3150    0.549  0.4655 |    0.2609    0.455  0.3959 |   0.5733
+     64 |    0.4467    0.658  0.6931 |    0.3751    0.553  0.5329 |   0.6787
+    128 |    0.5522    0.732  0.7060 |    0.5096    0.676  0.7088 |   0.7542
+    256 |    0.6732    0.719  0.9224 |    0.6387    0.682  0.8551 |   0.9369
+    368 |    0.7672    0.762  0.8742 |    0.7008    0.696  0.6180 |   1.0070
+
+  h=1 ratio to floor: eval convention 1.093, training convention 0.827
+  Does h=1 drop below 1.0 under the training convention?  YES
+  CONFIRMED: the h=1 anomaly was the convention mismatch, not a model
+  defect. Under the causal alignment the model beats hold-last at every
+  horizon; the one-step error falls 24% from 0.1209 to 0.0915.
+
+  full-horizon e: eval 0.7672 -> train 0.7008  (+8.7%)
+
+==============================================================================
+TASK 4 -- PER-STATE-GROUP BREAKDOWN (protocol A, clean, training convention)
+==============================================================================
+
+  NOTE: a group metric divides by sum_d |true_d| over only that group's
+  dims, so it is far more fragile than the 45-dim aggregate. Median and
+  blow-up rate are shown because the mean is not always usable.
+
+  h = 1
+    group            n    model    floor   ratio |  med mdl  med flr m ratio |  num sh  den sh   |den|   r>10
+    base lin vel     3   0.2312   0.0872   2.652 |   0.0752   0.0703   1.070 |   2.8%   2.6%   0.972  0.0%
+    base ang vel     3   0.7497   0.3287   2.281 |   0.1573   0.1862   0.845 |   8.6%   2.8%   0.971  0.0%
+    proj gravity     3   0.0593   0.3584   0.165 |   0.0157   0.0888   0.176 |   1.6%   5.3%   1.366  0.0%
+    joint pos       12   0.0152   0.0560   0.272 |   0.0080   0.0481   0.166 |   7.0%  45.0%  13.794  0.0%
+    joint vel       12   0.4474   0.1862   2.404 |   0.1181   0.1591   0.742 |  35.4%  15.2%   5.472  0.0%
+    joint torque    12   0.1820   0.1679   1.084 |   0.0919   0.0553   1.661 |  44.7%  29.1%   7.003  0.0%
+    TOTAL           45                           |                           | 100.0% 100.0%
+
+  h = 8
+    group            n    model    floor   ratio |  med mdl  med flr m ratio |  num sh  den sh   |den|   r>10
+    base lin vel     3   0.6778   0.2706   2.505 |   0.1442   0.2167   0.666 |   4.6%   2.9%   1.028  0.0%
+    base ang vel     3      inf      inf     nan |   0.1908   0.4950   0.386 |   8.7%   2.8%   0.940  1.3%
+    proj gravity     3   0.1798   0.4978   0.361 |   0.0895   0.3463   0.258 |   6.4%   6.2%   1.551  0.0%
+    joint pos       12   0.0566   0.1934   0.293 |   0.0234   0.1640   0.143 |  16.0%  45.3%  13.684  0.0%
+    joint vel       12   0.4616   0.8620   0.535 |   0.2187   0.6417   0.341 |  27.9%  13.5%   4.824  0.0%
+    joint torque    12   0.1751   0.4442   0.394 |   0.1297   0.2626   0.494 |  36.3%  29.4%   7.049  0.0%
+    TOTAL           45                           |                           | 100.0% 100.0%
+
+  h = 32
+    group            n    model    floor   ratio |  med mdl  med flr m ratio |  num sh  den sh   |den|   r>10
+    base lin vel     3   1.3345   0.5393   2.475 |   0.2953   0.2792   1.058 |   4.7%   3.2%   1.091  3.1%
+    base ang vel     3      inf      inf     nan |   0.2988   0.9076   0.329 |   8.4%   2.8%   0.943  2.8%
+    proj gravity     3   0.7676   0.8120   0.945 |   0.2591   0.6725   0.385 |  13.0%   5.6%   1.465  0.0%
+    joint pos       12   0.1585   0.3714   0.427 |   0.0420   0.3040   0.138 |  20.3%  46.4%  13.942  0.0%
+    joint vel       12   0.5530   1.2236   0.452 |   0.2421   1.2334   0.196 |  21.4%  13.8%   4.849  0.0%
+    joint torque    12   0.2659   0.7239   0.367 |   0.1805   0.4233   0.426 |  32.2%  28.2%   6.738  0.0%
+    TOTAL           45                           |                           | 100.0% 100.0%
+
+  h = 128
+    group            n    model    floor   ratio |  med mdl  med flr m ratio |  num sh  den sh   |den|   r>10
+    base lin vel     3   1.8825   0.8935   2.107 |   0.7013   0.5133   1.366 |   4.9%   3.0%   1.120  2.6%
+    base ang vel     3      inf      inf     nan |   1.0543   1.0914   0.966 |   8.4%   2.9%   1.047  0.9%
+    proj gravity     3   2.3561   1.0764   2.189 |   1.5228   0.8937   1.704 |  20.4%   5.8%   1.584  2.2%
+    joint pos       12   0.3244   0.5448   0.595 |   0.1425   0.5368   0.265 |  22.4%  46.4%  13.983  0.0%
+    joint vel       12   0.7224   1.6002   0.451 |   0.5548   1.3366   0.415 |  16.8%  13.9%   5.125  0.0%
+    joint torque    12   0.4720   0.9048   0.522 |   0.3778   0.6958   0.543 |  27.1%  28.0%   6.826  0.0%
+    TOTAL           45                           |                           | 100.0% 100.0%
+
+  h = 368
+    group            n    model    floor   ratio |  med mdl  med flr m ratio |  num sh  den sh   |den|   r>10
+    base lin vel     3   1.9600   1.4614   1.341 |   0.9188   1.0158   0.905 |   5.9%   4.0%   1.544  1.8%
+    base ang vel     3      inf      inf     nan |   1.7865   1.2365   1.445 |   8.1%   2.9%   1.075  1.1%
+    proj gravity     3   5.1869   1.5473   3.352 |   3.0853   1.1290   2.733 |  21.7%   5.0%   1.361 11.4%
+    joint pos       12   0.4561   0.9365   0.487 |   0.2704   0.7806   0.346 |  22.5%  42.6%  13.608  0.0%
+    joint vel       12   0.7872   1.8161   0.433 |   0.6544   1.3506   0.485 |  16.5%  17.0%   6.441  0.0%
+    joint torque    12   0.6317   0.9728   0.649 |   0.5867   0.7599   0.772 |  25.4%  28.5%   7.290  0.0%
+    TOTAL           45                           |                           | 100.0% 100.0%
+
+  What the aggregate metric is actually measuring:
+    h=1    denominator dominated by 'joint pos' (45.0%); numerator by 'joint torque' (44.7%)
+    h=368  denominator dominated by 'joint pos' (42.6%); numerator by 'joint torque' (25.4%)
+    at h=368, by MEDIAN ratio, the model beats the floor most on 'joint pos' (0.346) and least on 'proj gravity' (2.733)
+
+  Expectation check (tested, not assumed):
+    The brief expects hold-last to be STRONG on projected gravity
+    (nearly constant) and WEAK on joint torques (high-frequency).
+      gravity floor: mean 1.5473  median 1.1290   mean |denominator| 1.361
+      torque  floor: mean 0.9728  median 0.7599   mean |denominator| 7.290
+    The comparison does NOT go the expected way, but the reason is the
+    normalisation, not the physics. state_data_std for gravity is
+    (0.02, 0.02, 0.04) about a mean of (0, 0, -1), so in NORMALISED space
+    -- the only space this metric lives in -- gravity is a near-zero-mean
+    quantity with unit spread, and its 3-dim denominator is the smallest
+    of any group (1.361 vs 7.290 for torque). A small denominator inflates
+    the ratio for BOTH model and floor. In raw physical units gravity is
+    indeed nearly constant; the metric simply cannot show that.
+    Verdict: the expectation is neither confirmed nor refuted -- the
+    normalised relative-error metric is not meaningful for this group.
+
+  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/figures/task2_4_convention_and_groups.png

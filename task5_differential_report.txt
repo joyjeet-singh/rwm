@@ -1,0 +1,60 @@
+==============================================================================
+TASK 5 -- DIFFERENTIAL TEST AGAINST THE REFERENCE MODULE
+==============================================================================
+
+  import OK via: importlib direct file load
+  (earlier attempts failed; last error from those was:
+   ModuleNotFoundError: No module named 'git')
+
+  READ AND REPORT -- constructor signature (system_dynamics.py:6-17):
+    state_dim: int   (required)
+    action_dim: int   (required)
+    extension_dim: int   (required)
+    contact_dim: int   (required)
+    termination_dim: int   (required)
+    device: str   (required)
+    ensemble_size: int   (default=1)
+    history_horizon: int   (default=1)
+    architecture_config: dict   (default=None)
+    freeze_auxiliary: bool   (default=False)
+
+  built from anymal_d_flat_cfg.py values (not hand-typed):
+    state_dim              45
+    action_dim             12
+    extension_dim          0
+    contact_dim            8
+    termination_dim        1
+    device                 cpu
+    ensemble_size          5
+    history_horizon        32
+    architecture_config    {'type': 'rnn', 'rnn_type': 'gru', 'rnn_num_layers': 2, 'rnn_hidden_size': 256, 'state_mean_shape': [128], 'state_logstd_shape': [128], 'extension_shape': [128], 'contact_shape': [128], 'termination_shape': [128]}
+
+  load_state_dict(strict=True) -> <All keys matched successfully>
+  reference module parameters: 1,995,569
+  rebuilt module params+buffers: 1,995,569
+
+------------------------------------------------------------------------------
+  1. single forward call on a (B, 32, 45) / (B, 32, 12) held-out batch
+------------------------------------------------------------------------------
+     predicted mean   max abs diff : 0.000e+00
+     aleatoric  (mean of stds)     : 0.000e+00
+     epistemic  (std of means)     : 0.000e+00
+     mean magnitude for scale      : 0.6308
+     contact logits max abs diff   : 0.000e+00
+     termination logits max diff   : 0.000e+00
+
+------------------------------------------------------------------------------
+  2. full 368-step protocol A rollout
+------------------------------------------------------------------------------
+     max abs diff over 165600 values (10 traj x 368 steps x 45 dims): 0.000e+00
+     worst step: 1   diff at final step: 0.000e+00
+     steps with diff > 1e-5: 0 of 368
+     e from reference module : 0.767216
+     e from rebuilt module   : 0.767216
+     difference in e         : 0.000e+00
+
+==============================================================================
+  threshold 1e-5 (float32)
+  single forward : 0.000e+00   PASS
+  full rollout   : 0.000e+00   PASS
+  -> PASS: the rebuilt forward pass is confirmed against the reference module.

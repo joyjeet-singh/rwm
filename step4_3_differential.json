@@ -1,0 +1,143 @@
+{
+  "loss": {
+    "zeros": {
+      "state": {
+        "reference": 0.8394136428833008,
+        "ours": 0.8394136428833008,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "sequence": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "bound": {
+        "reference": 1.144409225162235e-06,
+        "ours": 1.144409225162235e-06,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "kl": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "extension": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "contact": {
+        "reference": 0.008576149120926857,
+        "ours": 0.008576149120926857,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "termination": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "TOTAL(weighted)": {
+        "reference": 0.8479909300804138,
+        "ours": 0.8479909300804138,
+        "abs": 0.0,
+        "rel": 0.0
+      }
+    },
+    "fixed": {
+      "state": {
+        "reference": 0.8394033312797546,
+        "ours": 0.8394033312797546,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "sequence": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "bound": {
+        "reference": 1.144409225162235e-06,
+        "ours": 1.144409225162235e-06,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "kl": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "extension": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "contact": {
+        "reference": 0.008576149120926857,
+        "ours": 0.008576149120926857,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "termination": {
+        "reference": 0.0,
+        "ours": 0.0,
+        "abs": 0.0,
+        "rel": 0.0
+      },
+      "TOTAL(weighted)": {
+        "reference": 0.8479806184768677,
+        "ours": 0.8479806184768677,
+        "abs": 0.0,
+        "rel": 0.0
+      }
+    }
+  },
+  "grad": {
+    "zeros": {
+      "worst_max_abs": 0.0,
+      "worst_max_abs_param": null,
+      "worst_max_rel": 0.0,
+      "worst_max_rel_param": null,
+      "n_params": 106,
+      "n_none": 0,
+      "pass": true
+    },
+    "fixed": {
+      "worst_max_abs": 0.0,
+      "worst_max_abs_param": null,
+      "worst_max_rel": 0.0,
+      "worst_max_rel_param": null,
+      "n_params": 106,
+      "n_none": 0,
+      "pass": true
+    }
+  },
+  "grad_magnitude": {
+    "zeros": {
+      "n_nonzero": 81,
+      "n_total": 106,
+      "max": 2.3340203762054443,
+      "median": 0.0005821062950417399,
+      "min": 0.0
+    },
+    "fixed": {
+      "n_nonzero": 106,
+      "n_total": 106,
+      "max": 2.3338541984558105,
+      "median": 0.0005821062950417399,
+      "min": 1.8537044735419446e-17
+    }
+  },
+  "pass": true,
+  "loss_tol": 1e-06,
+  "grad_tol": 1e-05
+}

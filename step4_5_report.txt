@@ -1,0 +1,58 @@
+==================================================================================
+STEP 4 / 5 -- CPU TIMING
+==================================================================================
+  torch 2.2.2, threads 2, CPU only
+
+  2b -- hyperparameters, imported from the config:
+  hyperparameter             value                  note
+  history_horizon            32                     
+  forecast_horizon           8                      
+  ensemble_size              5                      
+  rnn_type                   gru                    
+  rnn_num_layers             2                      
+  rnn_hidden_size            256                    
+  state_mean_shape           [128]                  
+  state_logstd_shape         [128]                  
+  contact_shape              [128]                  
+  termination_shape          [128]                  
+  batch_size                 1024                   
+  max_iterations             500                    paper Table S7 states 2500 -- KNOWN DIFFERENCE
+  learning_rate              0.0001                 
+  weight_decay               1e-05                  
+  save_interval              200                    
+  loss weight state          1.0                    
+  loss weight sequence       1.0                    inert: sequence_loss is identically 0 for prediction_type='single'
+  loss weight bound          1.0                    drives the C-10 collapse
+  loss weight kl             0.1                    inert: rssm only
+  loss weight extension      1.0                    inert: extension_dim = 0
+  loss weight contact        1.0                    
+  loss weight termination    1.0                    target is all-zero (D-03/X-04)
+  forecast decay alpha       ABSENT                 paper specifies one; code has none (C-09)
+
+  2a -- dataset: 7687 windows of 40 steps from episodes [0, 2, 3, 4, 5, 6, 7, 9]
+    matches the 7,687 expected on the seed-0 split
+
+----------------------------------------------------------------------------------
+  timing 20 iterations after 3 warm-up, per configuration
+----------------------------------------------------------------------------------
+   ens  batch    s/iter      std    500 iters   2500 iters  peak RSS MB
+     1   1024     4.623    0.523     38.5 min        3.2 h         1700
+     1    256     1.659    0.527     13.8 min        1.2 h         1700
+     5   1024    37.179    5.316        5.2 h     1.1 days         4769
+     5    256     5.926    0.318     49.4 min        4.1 h         4769
+
+----------------------------------------------------------------------------------
+  PROJECTIONS (single seed, one training run)
+----------------------------------------------------------------------------------
+  Reference configuration is ensemble 5, batch 1024:
+    config's 500 iterations -> 5.2 h
+    paper's 2500 iterations           -> 1.1 days
+  Cheapest configuration (ensemble 1, batch 256):
+    500 iterations  -> 13.8 min
+    2500 iterations -> 1.2 h
+
+  Step 6 five-fold cross-validation (M-05) at the reference config,
+  500 iterations per fold: 1.1 days
+  ... and at 2500 iterations per fold: 5.4 days
+
+  RECOMMENDATION: single runs locally (5.2 h each); rent only if Step 6 needs the full five-fold sweep at 2500 iterations

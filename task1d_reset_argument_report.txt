@@ -1,0 +1,40 @@
+==============================================================================
+TASK 1d -- THE RESET ROWS REFUTE k=0
+==============================================================================
+  reset rows: [999, 1999, 2999, 3999, 4999, 5999, 6999, 7999, 8999, 9999]
+  action columns at those rows: all exactly 0.0 -> True
+  max |action| over those 120 values: 0.0e+00
+  joint velocities exactly 0.0 -> True
+  (Step 1 established these rows are the POST-reset state: continuous
+   with the row after, discontinuous from the row before.)
+
+  For comparison, typical |action| elsewhere in the file:
+    mean 0.5126   median 0.4110   1st percentile 0.0065
+    rows anywhere in the file with ALL 12 actions exactly 0: 10  (i.e. only the reset rows)
+
+  Illustration -- what a policy actually emits on those reset states.
+  (This actor is NOT the collection policy, so this is indicative only.)
+    |pi(reset state)| : mean 0.5469   min 0.0049   max 1.6832
+    smallest single output magnitude across all 120 values: 4.93e-03
+    A policy emits O(0.1-1) here. Recorded value is bitwise 0.0.
+
+==============================================================================
+TASK 1 OVERALL VERDICT (combining 1, 1b, 1c, 1d)
+==============================================================================
+  1  ridge a[t] ~ s[t+k]        peak k=+1   CONFOUNDED (position target)
+  1b PD law tau ~ a,q,qdot      peak m=-1   weak (gap 0.029, actuator net)
+  1c real policy pi(obs)        peak k=-1   weak (gap 0.095 vs k=0; wrong policy)
+  1d reset-row refutation       k=0 REFUTED, k=-1 consistent   DECISIVE
+
+  VERDICT: k = -1
+  Row t holds the action that PRODUCED the state in row t.
+
+  Consequences:
+   * The TRAINING convention (s[t], a[t+1]) -> s[t+1] is CAUSAL. a[t+1] is
+     the action that produced s[t+1]; using it is correct, not leakage.
+   * The EVALUATION convention (s[t], a[t]) -> s[t+1] is STALE by one step:
+     it feeds the action that produced s[t] and asks for s[t+1].
+   * Step 4 must build the loss with the TRAINING alignment.
+   * The Step 3 result that the training convention scores better
+     (e 0.7008 vs 0.7672) is explained by correct causal alignment, NOT
+     by target leakage. Any earlier leakage reading is REFUTED.

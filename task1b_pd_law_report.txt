@@ -1,0 +1,61 @@
+==============================================================================
+TASK 1b -- CONFOUND-FREE CONVENTION TEST VIA THE PD LAW
+==============================================================================
+  Task 1's regression is confounded: the action is a joint POSITION TARGET,
+  so it resembles future joint states regardless of recording convention.
+  Step 1 measured action leading joint position by ~4 steps. That, not the
+  convention, is why Task 1 peaked at k=+1.
+
+  This fit conditions on q[t] and qdot[t] from the SAME row as tau[t] and
+  varies only the action offset, so smoothness cannot drive the result.
+
+  scored on held-out episodes [1, 8]
+
+  tau_row[t,j] ~ c0 + c1*a_row[t+m,j] + c2*q_row[t,j] + c3*qdot_row[t,j]
+
+   offset m    mean R2    min R2    max R2  implied scale       n
+         -2   0.621470  0.338573  0.780413         0.3749    1996
+         -1   0.898245  0.776343  0.956198         0.4612    1998
+          0   0.868816  0.795489  0.945508         0.4941    2000
+          1   0.612946  0.421781  0.772763         0.4648    1998
+          2   0.453412  0.253816  0.661553         0.4148    1996
+
+    peak   m = -1   mean R2 = 0.898245
+    second m = +0   mean R2 = 0.868816
+    gap = 0.029429
+
+  per-joint R2 at each offset
+  joint           m=-2       m=-1       m=+0       m=+1       m=+2
+  LF_HAA      0.594176   0.897214   0.897299   0.617344   0.446145
+  LH_HAA      0.423267   0.838671   0.800169   0.421781   0.284164
+  RF_HAA      0.338573   0.776343   0.866956   0.503535   0.328174
+  RH_HAA      0.583179   0.895441   0.912992   0.679433   0.543173
+  LF_HFE      0.602960   0.923881   0.897937   0.628859   0.472518
+  LH_HFE      0.688885   0.924318   0.920839   0.698064   0.546663
+  RF_HFE      0.780413   0.956198   0.932647   0.764510   0.661553
+  RH_HFE      0.737478   0.947165   0.945508   0.772763   0.636887
+  LF_KFE      0.727422   0.886923   0.811295   0.605280   0.415187
+  LH_KFE      0.745690   0.925324   0.837314   0.634760   0.473679
+  RF_KFE      0.647684   0.910824   0.795489   0.477064   0.253816
+  RH_KFE      0.587919   0.896642   0.807348   0.551963   0.378981
+
+  implied action scale at m = -1  (from -c1/c2, per joint)
+    LF_HAA    0.4510
+    LH_HAA    0.4367
+    RF_HAA    0.4481
+    RH_HAA    0.4641
+    LF_HFE    0.4586
+    LH_HFE    0.4453
+    RF_HFE    0.4622
+    RH_HFE    0.4824
+    LF_KFE    0.4748
+    LH_KFE    0.4720
+    RF_KFE    0.4601
+    RH_KFE    0.4722
+    median 0.4612   mean 0.4606   std 0.0130
+
+==============================================================================
+TASK 1b VERDICT
+==============================================================================
+  peak at m = -1, mean R2 = 0.898245, gap to second = 0.029429
+  The PD law is not recovered sharply enough at any offset to call it.

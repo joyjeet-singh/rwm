@@ -1,0 +1,23 @@
+{
+  "3a_index_assertion": {
+    "bitwise_equal_fa0": true,
+    "bitwise_equal_ha0": true,
+    "bitwise_equal_fa_last": true,
+    "residual_vs_float64_csv": 5.335998531919017e-08,
+    "pass": true
+  },
+  "3b_lag1_oracle": {
+    "lag1_step1": 0.11066164821386337,
+    "holdlast_step1": 0.11066164821386337,
+    "difference": 0.0,
+    "pass": true,
+    "lag1_e": 0.1521664559841156,
+    "holdlast_e": 1.0069583654403687
+  },
+  "3c_zero_delta": {
+    "max_abs_diff": 1.1920928955078125e-07,
+    "tolerance": 1e-06,
+    "n_steps_over_tol": 0,
+    "pass": true
+  }
+}

@@ -1,0 +1,45 @@
+==============================================================================
+TASK 1c -- CONVENTION TEST USING THE ACTUAL POLICY
+==============================================================================
+  observation layout from anymal_d_flat.py:53 (raw units, 48 dims)
+  actor 48->128->128->128->12, elu (base_cfg.py:118-120)
+  scored on held-out episodes [1, 8]
+  commands taken per-regime from the Step 0 segmentation
+
+  hypothesis                                     mean R2       MAE      RMSE
+  k= 0  state[t]   -> A[t]   (eval conv. causal)    0.3911    0.1927    0.2440
+  k=-1  state[t-1] -> A[t]   (train conv. causal)    0.4860    0.1735    0.2235
+
+  control offsets (same construction, other state rows):
+    k=-3  mean R2   0.3787   MAE 0.1868
+    k=-2  mean R2   0.4683   MAE 0.1724
+    k=+1  mean R2   0.2015   MAE 0.2225
+    k=+2  mean R2  -0.0116   MAE 0.2511
+
+  peak at k = -1   mean R2 = 0.4860
+  second best mean R2 = 0.4683   gap = 0.0177
+
+  per-dimension R2 at the peak:
+    LF_HAA      0.4602
+    LH_HAA     -0.1142
+    RF_HAA      0.3144
+    RH_HAA      0.5096
+    LF_HFE      0.7505
+    LH_HFE      0.3718
+    RF_HFE     -0.1135
+    RH_HFE      0.5718
+    LF_KFE      0.7757
+    LH_KFE      0.8731
+    RF_KFE      0.7172
+    RH_KFE      0.7151
+
+==============================================================================
+TASK 1c VERDICT
+==============================================================================
+  The policy does not reproduce the recorded actions under ANY offset
+  (best mean R2 = 0.4860). The actor in this
+  checkpoint is therefore not the policy that collected the CSV -- it is
+  the model-based policy trained afterwards in imagination. This test
+  cannot settle the convention.
+
+  VERDICT: inconclusive

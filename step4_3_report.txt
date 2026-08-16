@@ -1,0 +1,73 @@
+==================================================================================
+STEP 4 / 3 -- DIFFERENTIAL TEST ON LOSSES AND GRADIENTS
+==================================================================================
+  reference imported cleanly: rsl_rl.modules.system_dynamics
+  (3d: installed gitpython + tensordict, both pure-Python; no stubs needed)
+  reference load_state_dict(strict=True): <All keys matched successfully>
+  ours      load_state_dict(strict=True): <All keys matched successfully>
+  parameter-name sets identical: True  (106 tensors)
+  batch: 16 windows from held-out episodes [1, 8], shapes state (16, 40, 45) action (16, 40, 12)
+  loss weights (imported from base_cfg.py): {'state': 1.0, 'sequence': 1.0, 'bound': 1.0, 'kl': 0.1, 'extension': 1.0, 'contact': 1.0, 'termination': 1.0}
+
+----------------------------------------------------------------------------------
+  SAMPLING MODE: zeros   (sample == mean; isolates everything except the sigma path)
+----------------------------------------------------------------------------------
+
+  term                  reference             ours     abs diff     rel diff
+  state                0.83941364       0.83941364    0.000e+00    0.000e+00
+  sequence             0.00000000       0.00000000    0.000e+00    0.000e+00
+  bound                0.00000114       0.00000114    0.000e+00    0.000e+00
+  kl                   0.00000000       0.00000000    0.000e+00    0.000e+00
+  extension            0.00000000       0.00000000    0.000e+00    0.000e+00
+  contact              0.00857615       0.00857615    0.000e+00    0.000e+00
+  termination          0.00000000       0.00000000    0.000e+00    0.000e+00
+  TOTAL                0.84799093       0.84799093    0.000e+00    0.000e+00
+  losses within 1e-06 relative: PASS
+
+  gradients compared over 106 tensors
+    NON-VACUITY CHECK: 81/106 tensors have a non-zero gradient
+      gradient magnitude: max 2.3340e+00  median 5.8211e-04
+      identically-zero in reference 25, in ours 25, sets identical: True
+      the zero set is exactly: ['state_logstd_layers', 'state_min_logstd']
+    worst max-abs  0.000e+00  (all differences exactly 0)
+    worst max-rel  0.000e+00  (all differences exactly 0)
+    gradients within 1e-05 relative: PASS
+    five largest relative differences:
+      0.000e+00  state_heads.4.state_min_logstd
+      0.000e+00  state_heads.4.state_mean_layers.2.weight
+      0.000e+00  state_heads.4.state_mean_layers.2.bias
+      0.000e+00  state_heads.4.state_mean_layers.0.weight
+      0.000e+00  state_heads.4.state_mean_layers.0.bias
+
+----------------------------------------------------------------------------------
+  SAMPLING MODE: fixed   (seeded tensor; sigma path exercised)
+----------------------------------------------------------------------------------
+
+  term                  reference             ours     abs diff     rel diff
+  state                0.83940333       0.83940333    0.000e+00    0.000e+00
+  sequence             0.00000000       0.00000000    0.000e+00    0.000e+00
+  bound                0.00000114       0.00000114    0.000e+00    0.000e+00
+  kl                   0.00000000       0.00000000    0.000e+00    0.000e+00
+  extension            0.00000000       0.00000000    0.000e+00    0.000e+00
+  contact              0.00857615       0.00857615    0.000e+00    0.000e+00
+  termination          0.00000000       0.00000000    0.000e+00    0.000e+00
+  TOTAL                0.84798062       0.84798062    0.000e+00    0.000e+00
+  losses within 1e-06 relative: PASS
+
+  gradients compared over 106 tensors
+    NON-VACUITY CHECK: 106/106 tensors have a non-zero gradient
+      gradient magnitude: max 2.3339e+00  median 5.8211e-04
+      identically-zero in reference 0, in ours 0, sets identical: True
+    worst max-abs  0.000e+00  (all differences exactly 0)
+    worst max-rel  0.000e+00  (all differences exactly 0)
+    gradients within 1e-05 relative: PASS
+    five largest relative differences:
+      0.000e+00  state_heads.4.state_min_logstd
+      0.000e+00  state_heads.4.state_mean_layers.2.weight
+      0.000e+00  state_heads.4.state_mean_layers.2.bias
+      0.000e+00  state_heads.4.state_mean_layers.0.weight
+      0.000e+00  state_heads.4.state_mean_layers.0.bias
+
+==================================================================================
+  ACCEPTANCE GATE: PASS
+==================================================================================

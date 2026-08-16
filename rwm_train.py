@@ -1,0 +1,114 @@
+"""
+Step 4 / 2 -- the trainer: data pipeline, hyperparameters, train step.
+
+Data pipeline (2a):
+  * 40-step windows (32 history + 8 forecast), TRAINING EPISODES ONLY,
+    episode-aware, no boundary crossings -> 7,687 windows on the seed-0 split.
+  * Causal alignment per D-13 / X-05. Note this is achieved by using the
+    reference's own TRAINING slicing (system_dynamics.py:196-200), which pairs
+    (s[t], a[t+1]) -> s[t+1]. Our deviation is from the reference's EVALUATION
+    code, not its training code.
+  * Normalisation imported from the config; actions left unnormalised (C-07).
+
+Hyperparameters (2b) are read from base_cfg.py / anymal_d_flat_cfg.py, never
+retyped. See report_hyperparameters().
+"""
+
+import numpy as np
+import torch
+
+import rwm_data as R
+import rwm_model as M
+
+WINDOW = 40
+
+
+class WindowDataset:
+    """40-step windows from the training episodes, held entirely in memory."""
+
+    def __init__(self, data, episode_id, episodes, cfg, window=WINDOW):
+        starts = R.valid_window_starts(episode_id, window)
+        self.starts = np.array([s for s in starts if episode_id[s] in episodes])
+        assert len(self.starts) > 0
+        idx = self.starts[:, None] + np.arange(window)[None, :]
+        raw = data[idx]
+        self.state = torch.as_tensor(
+            R.normalise_state(raw[:, :, R.STATE_COLS], cfg["state_data_mean"],
+                              cfg["state_data_std"]), dtype=torch.float32)
+        self.action = torch.as_tensor(raw[:, :, R.ACTION_COLS], dtype=torch.float32)
+        self.contact = torch.as_tensor(raw[:, :, R.CONTACTS], dtype=torch.float32)
+        self.termination = torch.as_tensor(raw[:, :, [R.TERMINATION]], dtype=torch.float32)
+        self.extension = torch.zeros(len(self.starts), window, 0)
+        self.episodes = sorted(set(episode_id[self.starts].tolist()))
+        # every window must lie inside one episode
+        for s in self.starts:
+            seg = episode_id[s:s + window]
+            assert seg[0] >= 0 and np.all(seg == seg[0])
+
+    def __len__(self):
+        return len(self.starts)
+
+    def batch(self, idx):
+        return (self.state[idx], self.action[idx], self.extension[idx],
+                self.contact[idx], self.termination[idx])
+
+    def sample(self, batch_size, generator):
+        idx = torch.randint(0, len(self), (batch_size,), generator=generator)
+        return self.batch(idx)
+
+
+def make_optimizer(model, cfg):
+    """Adam with the config's learning rate and weight decay (ModelOptimizerConfig)."""
+    return torch.optim.Adam(model.parameters(), lr=cfg["learning_rate"],
+                            weight_decay=cfg["weight_decay"])
+
+
+def train_step(model, optimizer, batch, weights):
+    """One optimisation step. Returns the seven raw terms plus the weighted total."""
+    state, action, ext, contact, term = batch
+    model.reset()
+    optimizer.zero_grad(set_to_none=True)
+    terms = model.compute_loss(state, action, ext, contact, term)
+    total = M.weighted_total(terms, weights)
+    total.backward()
+    optimizer.step()
+    return [float(t) for t in terms], float(total)
+
+
+def report_hyperparameters(cfg):
+    """
+    2b -- every value imported, none retyped. Paper Table S7 differences flagged.
+    """
+    rows = [
+        ("history_horizon", cfg["history_horizon"], ""),
+        ("forecast_horizon", cfg["forecast_horizon"], ""),
+        ("ensemble_size", cfg["ensemble_size"], ""),
+        ("rnn_type", cfg["architecture_config"]["rnn_type"], ""),
+        ("rnn_num_layers", cfg["architecture_config"]["rnn_num_layers"], ""),
+        ("rnn_hidden_size", cfg["architecture_config"]["rnn_hidden_size"], ""),
+        ("state_mean_shape", cfg["architecture_config"]["state_mean_shape"], ""),
+        ("state_logstd_shape", cfg["architecture_config"]["state_logstd_shape"], ""),
+        ("contact_shape", cfg["architecture_config"]["contact_shape"], ""),
+        ("termination_shape", cfg["architecture_config"]["termination_shape"], ""),
+        ("batch_size", cfg["batch_size"], ""),
+        ("max_iterations", cfg["max_iterations"],
+         "paper Table S7 states 2500 -- KNOWN DIFFERENCE"),
+        ("learning_rate", cfg["learning_rate"], ""),
+        ("weight_decay", cfg["weight_decay"], ""),
+        ("save_interval", cfg["save_interval"], ""),
+        ("loss weight state", cfg["loss_weights"]["state"], ""),
+        ("loss weight sequence", cfg["loss_weights"]["sequence"],
+         "inert: sequence_loss is identically 0 for prediction_type='single'"),
+        ("loss weight bound", cfg["loss_weights"]["bound"], "drives the C-10 collapse"),
+        ("loss weight kl", cfg["loss_weights"]["kl"], "inert: rssm only"),
+        ("loss weight extension", cfg["loss_weights"]["extension"],
+         "inert: extension_dim = 0"),
+        ("loss weight contact", cfg["loss_weights"]["contact"], ""),
+        ("loss weight termination", cfg["loss_weights"]["termination"],
+         "target is all-zero (D-03/X-04)"),
+        ("forecast decay alpha", "ABSENT", "paper specifies one; code has none (C-09)"),
+    ]
+    print(f"  {'hyperparameter':<26s} {'value':<22s} note")
+    for k, v, note in rows:
+        print(f"  {k:<26s} {str(v):<22s} {note}")
+    return {k: v for k, v, _ in rows}

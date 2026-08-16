@@ -1,0 +1,72 @@
+==============================================================================
+STEP 2 -- EVALUATION HARNESS
+==============================================================================
+
+  reference constants, imported from the config (never retyped):
+    history_horizon        32
+    forecast_horizon       8
+    num_eval_trajectories  10
+    len_eval_trajectory    400
+    eval_traj_noise_scale  [0.1, 0.2, 0.4, 0.5, 0.8]
+    ensemble_size          5
+    start_step             32  (model_training.py:201 sets it to history_horizon)
+    actions normalised?    False   (action_data_mean all-zero, action_data_std all-one)
+    state_data_mean[:6]    [0. 0. 0. 0. 0. 0.]
+    state_data_std[:6]     [0.5 0.5 0.1 0.3 0.3 0.5]
+
+  loaded 10000 rows x 66 cols  (200 s at 50 Hz)
+  episode structure asserted:
+    reset fingerprint re-derived from data -> [999, 1999, 2999, 3999, 4999, 5999, 6999, 7999, 8999, 9999]
+    matches hard-coded RESET_ROWS
+    column 65 identically zero: True (episode structure NOT recoverable from it)
+    ep0 = 999 rows, ep1..ep9 = 1000 rows each, row 9999 discarded
+
+  --------------------------------------------------------------------------
+  split seed 0, stratified by mean commanded speed (one fast, one slow)
+  TRAIN episodes  : [0, 2, 3, 4, 5, 6, 7, 9]
+  HELD-OUT episodes: [1, 8]
+  held-out mean commanded speeds: ['ep1=0.60 m/s', 'ep8=0.79 m/s']
+  training windows (40-step, inside training episodes only): 7687
+
+==============================================================================
+STEP 2 ACCEPTANCE TESTS
+==============================================================================
+
+  [1] oracle predictor          e = 0
+      required exactly 0 to float tolerance -> PASS
+
+  [2] hold-last predictor  <-- THE FLOOR
+      e            = 1.0070
+      median r_t   = 0.9649
+      frac r_t>10  = 0.0000
+      finite -> PASS
+
+  [3] oracle + Gaussian noise at 3 magnitudes
+      sigma 0.01  -> e = 0.014605
+      sigma 0.05  -> e = 0.073023
+      sigma 0.25  -> e = 0.365116
+      e ratios ['5.00', '5.00'] vs sigma ratios ['5.00', '5.00']
+      monotonic True, roughly proportional True -> PASS
+
+  [4] every eval trajectory inside a single episode
+      episodes touched: [1, 8]  (held-out = [1, 8])
+      -> PASS
+
+  [5] no eval row appears in any training window
+      rows in training windows 7999, rows in eval trajectories 1553, overlap 0
+      -> PASS
+
+  [6] re-run with the same seed is byte-identical
+      compared clean + 2 noise conditions, scalars and per-step curves
+      -> PASS
+
+------------------------------------------------------------------------------
+  PASS  test1_oracle
+  PASS  test2_hold_last
+  PASS  test3_noise_monotonic
+  PASS  test4_within_episode
+  PASS  test5_no_leakage
+  PASS  test6_determinism
+
+  HOLD-LAST FLOOR: e = 1.0070   (median r_t = 0.9649)
+  ALL ACCEPTANCE TESTS PASS

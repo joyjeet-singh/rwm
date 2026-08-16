@@ -1,0 +1,44 @@
+{
+  "import_succeeded": true,
+  "import_method": "importlib direct file load",
+  "constructor_signature": "(self, state_dim: int, action_dim: int, extension_dim: int, contact_dim: int, termination_dim: int, device: str, ensemble_size: int = 1, history_horizon: int = 1, architecture_config: dict = None, freeze_auxiliary: bool = False)",
+  "constructor_kwargs": {
+    "state_dim": 45,
+    "action_dim": 12,
+    "extension_dim": 0,
+    "contact_dim": 8,
+    "termination_dim": 1,
+    "device": "cpu",
+    "ensemble_size": 5,
+    "history_horizon": 32,
+    "architecture_config": {
+      "type": "rnn",
+      "rnn_type": "gru",
+      "rnn_num_layers": 2,
+      "rnn_hidden_size": 256,
+      "state_mean_shape": [
+        128
+      ],
+      "state_logstd_shape": [
+        128
+      ],
+      "extension_shape": [
+        128
+      ],
+      "contact_shape": [
+        128
+      ],
+      "termination_shape": [
+        128
+      ]
+    }
+  },
+  "max_abs_diff_single_forward_mean": 0.0,
+  "max_abs_diff_single_forward_aleatoric": 0.0,
+  "max_abs_diff_single_forward_epistemic": 0.0,
+  "max_abs_diff_full_rollout": 0.0,
+  "e_reference_module": 0.7672156691551208,
+  "e_rebuilt_module": 0.7672156691551208,
+  "threshold": 1e-05,
+  "pass": true
+}

@@ -1,0 +1,37 @@
+==============================================================================
+TASK 3 -- HARNESS HARDENING
+==============================================================================
+
+  [3a] the future-action tensor is indexed correctly
+       fa shape (10, 368, 12), ha shape (10, 32, 12)
+       fa[b,0]  vs float32(CSV row start+32) : diff 0.0e+00  bitwise equal=True
+       ha[b,0]  vs float32(CSV row start+0)  : diff 0.0e+00  bitwise equal=True
+       fa[b,-1] vs float32(CSV row start+399): diff 0.0e+00  bitwise equal=True
+       (against the float64 CSV the residual is 5.3e-08, which is
+        exactly the float64->float32 cast the harness performs, not a
+        misalignment: a one-row error would be O(0.1) here)
+       -> PASS
+
+  [3b] lag-1 oracle ties hold-last at forecast step 1
+       lag-1 oracle r_t at step 1 : 0.11066164821386337
+       hold-last    r_t at step 1 : 0.11066164821386337
+       difference                 : 0.000e+00  (required exactly 0)
+       (they diverge later, as they must: lag-1 keeps tracking the truth,
+        hold-last freezes -- e 0.1522 vs 1.0070)
+       -> PASS
+
+  [3c] zero-delta model IS the hold-last predictor (residual check)
+       zeroed the final Linear of all 5 state_mean_layers heads
+       max abs diff over all 165600 values (10 traj x 368 steps x 45 dims): 1.192e-07
+       worst single step: 1 (max 1.192e-07)
+       steps with any diff > 1e-6: 0 of 368
+       -> PASS  (tolerance 1e-6, float32)
+
+------------------------------------------------------------------------------
+  PASS  3a_index_assertion
+  PASS  3b_lag1_oracle
+  PASS  3c_zero_delta
+
+  ALL THREE PASS
+  The rebuilt forward pass and the harness indexing are both confirmed;
+  the Step 3 numbers stand.

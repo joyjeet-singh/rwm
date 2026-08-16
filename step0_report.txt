@@ -1,0 +1,139 @@
+==============================================================================
+STEP 0 -- commanded-velocity regimes
+==============================================================================
+  loaded 10000 rows x 66 cols  (200 s at 50 Hz)
+  episode structure asserted:
+    reset fingerprint re-derived from data -> [999, 1999, 2999, 3999, 4999, 5999, 6999, 7999, 8999, 9999]
+    matches hard-coded RESET_ROWS
+    column 65 identically zero: True (episode structure NOT recoverable from it)
+    ep0 = 999 rows, ep1..ep9 = 1000 rows each, row 9999 discarded
+
+  config command_resample_interval_range = [100, 120]
+  (from anymal_d_flat_cfg.py EnvironmentConfig -- the interval, in steps,
+   at which the reference environment resamples its velocity command)
+
+------------------------------------------------------------------------------
+PER-EPISODE STATISTICS of columns 0-2 (raw, whole episode)
+------------------------------------------------------------------------------
+  ep   rows            v_x mean   std    v_y mean   std    v_z mean   std
+   0       0-  998    -0.206  0.765    +0.024  0.886    +0.006  0.062
+   1     999- 1998    -0.320  0.346    -0.471  0.498    +0.016  0.043
+   2    1999- 2998    -0.357  0.233    -0.798  0.173    +0.023  0.043
+   3    2999- 3998    -0.200  0.586    +0.284  0.216    +0.009  0.049
+   4    3999- 4998    -0.130  0.093    +0.475  0.387    +0.008  0.055
+   5    4999- 5998    +0.160  0.734    -0.262  0.049    +0.004  0.056
+   6    5999- 6998    -0.669  0.132    -0.239  0.455    +0.014  0.043
+   7    6999- 7998    -0.336  0.541    -0.214  0.234    +0.010  0.095
+   8    7999- 8998    +0.328  0.361    -0.509  0.383    +0.015  0.042
+   9    8999- 9998    -0.058  0.743    -0.174  0.745    +0.014  0.062
+
+  spread of the per-episode means across the 10 episodes:
+    v_x: min -0.669  max +0.328  range 0.997  std-across-episodes 0.266
+    v_y: min -0.798  max +0.475  range 1.272  std-across-episodes 0.357
+    v_z: min +0.004  max +0.023  range 0.019  std-across-episodes 0.005
+
+  mean within-episode std (how much each channel varies inside an episode):
+    v_x: 0.453
+    v_y: 0.403
+    v_z: 0.055
+
+  If within-episode std >> spread of episode means, the command is not
+  constant within an episode and 'one command per episode' is false.
+
+------------------------------------------------------------------------------
+PLATEAU DETECTION on stride-smoothed v_x, v_y, w_z
+------------------------------------------------------------------------------
+  W= 50 (1.0 s each side): 18 change points inside episodes
+           offsets within episode: [49, 425, 431, 482, 503, 504, 506, 506, 507, 510, 511, 512, 514, 561, 689, 733, 739, 783]
+  W=150 (3.0 s each side): 11 change points inside episodes
+           offsets within episode: [149, 482, 503, 504, 505, 506, 507, 510, 511, 512, 514]
+
+  score = |mean(v_xy after) - mean(v_xy before)|, threshold 0.25 m/s
+  At W=50 the extra hits are short, high-variance excursions (push events).
+  At W=150 only persistent command changes survive.
+
+  regime segments (episode starts + detected change points): 21
+  segment length: min 150  median 495  max 517  mean 476 steps  (9.9 s median)
+
+  config command_resample_interval_range = [100, 120] steps.
+  The observed interval is nothing like that. That config field belongs to
+  the imagination environment used for model-based policy training, not to
+  whatever collected this CSV, so it does not describe this data.
+
+  all regimes:
+     ep    rows          len      v_x     v_y     w_z    (v_x sd, v_y sd)
+      0      0-  513    514    -0.94   +0.87   +0.13    (0.11, 0.12)
+      0    514-  998    485    +0.57   -0.88   +0.06    (0.12, 0.16)
+      1    999- 1502    504    +0.02   +0.02   -0.03    (0.04, 0.06)
+      1   1503- 1998    496    -0.67   -0.97   +0.17    (0.05, 0.07)
+      2   1999- 2506    508    -0.57   -0.67   +0.00    (0.09, 0.06)
+      2   2507- 2998    492    -0.13   -0.93   +0.19    (0.06, 0.15)
+      3   2999- 3505    507    -0.77   +0.08   +0.04    (0.12, 0.06)
+      3   3506- 3998    493    +0.39   +0.50   -0.25    (0.08, 0.06)
+      4   3999- 4481    483    -0.04   +0.86   +0.29    (0.03, 0.12)
+      4   4482- 4998    517    -0.21   +0.12   -0.26    (0.04, 0.11)
+      5   4999- 5509    511    -0.55   -0.28   +0.14    (0.13, 0.06)
+      5   5510- 5998    489    +0.90   -0.25   +0.27    (0.13, 0.03)
+      6   5999- 6511    513    -0.78   +0.20   +0.04    (0.07, 0.06)
+      6   6512- 6998    487    -0.55   -0.70   +0.23    (0.05, 0.10)
+      7   6999- 7148    150    -0.68   -0.43   +0.71    (0.34, 0.16)
+      7   7149- 7504    356    -0.90   -0.43   +0.13    (0.21, 0.06)
+      7   7505- 7998    494    +0.17   +0.01   -0.10    (0.06, 0.06)
+      8   7999- 8503    505    -0.03   -0.88   -0.09    (0.03, 0.09)
+      8   8504- 8998    495    +0.69   -0.13   -0.15    (0.06, 0.07)
+      9   8999- 9510    512    +0.66   +0.54   +0.14    (0.13, 0.15)
+      9   9511- 9998    488    -0.81   -0.93   -0.16    (0.08, 0.11)
+
+------------------------------------------------------------------------------
+HOW MANY DISTINCT COMMANDS?
+------------------------------------------------------------------------------
+  21 regime segments, each a (v_x, v_y, w_z) triple
+    v_x: min -0.94  max +0.90  std 0.57
+    v_y: min -0.97  max +0.87  std 0.57
+    w_z: min -0.26  max +0.71  std 0.21
+    distinct triples at tolerance 0.10: 21
+    distinct triples at tolerance 0.20: 19
+    distinct triples at tolerance 0.30: 15
+
+  regimes per episode: [2, 2, 2, 2, 2, 2, 2, 3, 2, 2]
+
+==============================================================================
+STEP 0 ANSWER
+==============================================================================
+  10 of the 11 persistent change points sit at offset
+  [482, 503, 504, 505, 506, 507, 510, 511, 512, 514] within their episode -- i.e. one command change at the
+  midpoint of every one of the ten episodes, at ~step 505 (~10.1 s).
+  The remaining 1 ([7149]) is a borderline call: a short, high-variance
+  excursion of the kind the push events produce, not a clean plateau step.
+
+  => The data contains TWENTY distinct commanded-velocity regimes:
+     two per episode, each held for ~500 steps (10 s), episodes 1000 steps (20 s).
+  => The ten episodes are NOT ten repetitions of one command. Every regime
+     is a different (v_x, v_y) target; at a 0.10 m/s tolerance all are distinct,
+     and they span roughly [-0.95, +0.90] x [-0.97, +0.87] m/s in the plane.
+  => A held-out episode is therefore NOT a near-duplicate of a training
+     episode. It contains two velocity commands the model has not seen at
+     those exact values. The split measures generalisation across commands,
+     not memorisation of a single behaviour.
+
+  Caveat: the gait itself (a ~1.85 Hz trot) is the same throughout, and all
+  commands are drawn from one bounded box, so this is generalisation across
+  velocity commands within one gait -- not across gaits or terrain.
+
+------------------------------------------------------------------------------
+STRATIFICATION KEY for the Step 2 split
+------------------------------------------------------------------------------
+  ep   n_reg   regime (v_x, v_y) pairs                 quadrants   mean speed
+   0     2     (-0.94,+0.87)  (+0.57,-0.88)              [(-1, 1), (1, -1)]     1.17
+   1     2     (+0.02,+0.02)  (-0.67,-0.97)              [(-1, -1), (1, 1)]     0.60
+   2     2     (-0.57,-0.67)  (-0.13,-0.93)              [(-1, -1)]             0.91
+   3     2     (-0.77,+0.08)  (+0.39,+0.50)              [(-1, 1), (1, 1)]      0.70
+   4     2     (-0.04,+0.86)  (-0.21,+0.12)              [(-1, 1)]              0.55
+   5     2     (-0.55,-0.28)  (+0.90,-0.25)              [(-1, -1), (1, -1)]    0.77
+   6     2     (-0.78,+0.20)  (-0.55,-0.70)              [(-1, -1), (-1, 1)]    0.85
+   7     3     (-0.68,-0.43)  (-0.90,-0.43)  (+0.17,+0.01)  [(-1, -1), (1, 1)]     0.66
+   8     2     (-0.03,-0.88)  (+0.69,-0.13)              [(-1, -1), (1, -1)]    0.79
+   9     2     (+0.66,+0.54)  (-0.81,-0.93)              [(-1, -1), (1, 1)]     1.04
+
+  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/figures/step0_velocity_full.png
+  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/figures/step0_regime_scatter.png

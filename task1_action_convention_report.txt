@@ -1,0 +1,70 @@
+==============================================================================
+TASK 1 -- WHICH ACTION CONVENTION IS CAUSALLY CORRECT
+==============================================================================
+  fit on training episodes [0, 2, 3, 4, 5, 6, 7, 9]
+  scored on held-out episodes [1, 8]
+  inputs normalised with the config constants; alphas [0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0]
+  pairs crossing an episode boundary are dropped
+
+  held-out R2, regressors = s[t+k] only
+   offset k  best alpha   mean R2  spread over alphas   n_test
+         -2       1e+00    0.7332              0.2211     1996
+         -1       1e+00    0.8446              0.2486     1998
+          0       1e+01    0.9542              0.2723     2000
+          1       1e-03    0.9691              0.2619     1998
+          2       1e+01    0.8856              0.2116     1996
+
+    peak      k = +1   mean R2 = 0.9691
+    second    k = +0   mean R2 = 0.9542
+    gap to second place        : 0.0149
+    largest spread over alphas : 0.2723
+    gap <= alpha-spread -> INCONCLUSIVE
+
+  per-dimension held-out R2 at the best alpha for each offset
+  joint         k=-2     k=-1     k=+0     k=+1     k=+2
+  LF_HAA      0.7164   0.8144   0.9561   0.9693   0.8848
+  LH_HAA      0.5756   0.7413   0.9231   0.9433   0.7731
+  RF_HAA      0.6687   0.7918   0.9551   0.9444   0.8393
+  RH_HAA      0.7325   0.8473   0.9687   0.9730   0.9079
+  LF_HFE      0.6740   0.8237   0.9531   0.9697   0.8742
+  LH_HFE      0.7512   0.8650   0.9697   0.9732   0.8982
+  RF_HFE      0.6280   0.7806   0.9280   0.9604   0.8106
+  RH_HFE      0.8439   0.9201   0.9750   0.9795   0.9156
+  LF_KFE      0.8091   0.9032   0.9645   0.9811   0.9614
+  LH_KFE      0.8275   0.9024   0.9580   0.9796   0.9360
+  RF_KFE      0.7674   0.8495   0.9394   0.9732   0.8862
+  RH_KFE      0.8040   0.8952   0.9596   0.9821   0.9405
+  HAA mean    0.6733   0.7987   0.9507   0.9575   0.8513
+  HFE mean    0.7243   0.8474   0.9565   0.9707   0.8747
+  KFE mean    0.8020   0.8876   0.9554   0.9790   0.9310
+    HAA group peaks at k = +1
+    HFE group peaks at k = +1
+    KFE group peaks at k = +1
+
+------------------------------------------------------------------------------
+  ROBUSTNESS: add the previous recorded action a_row[t-1] as a regressor
+  (Isaac Lab's velocity-task policy observation includes the last action)
+------------------------------------------------------------------------------
+
+  held-out R2, regressors = s[t+k] and a_row[t-1]
+   offset k  best alpha   mean R2  spread over alphas   n_test
+         -2       1e-01    0.9048              0.3403     1996
+         -1       1e-03    0.9053              0.2797     1998
+          0       1e-01    0.9692              0.2693     1998
+          1       1e-03    0.9780              0.2511     1996
+          2       1e-03    0.9456              0.2437     1994
+
+    peak      k = +1   mean R2 = 0.9780
+    second    k = +0   mean R2 = 0.9692
+    gap to second place        : 0.0089
+    largest spread over alphas : 0.3403
+    gap <= alpha-spread -> INCONCLUSIVE
+
+    peak did NOT move: k = +1 -> k = +1
+    The test holds up: the peak is unchanged by adding the previous action.
+
+==============================================================================
+TASK 1 VERDICT
+==============================================================================
+  VERDICT: inconclusive
+  The offsets are not separated well enough to call it.

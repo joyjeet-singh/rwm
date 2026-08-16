@@ -1,0 +1,15 @@
+# virtualenvs
+.venv*/
+venv/
+__pycache__/
+*.pyc
+
+# upstream artifacts — cloned/downloaded by setup.sh, not redistributed here
+robotic_world_model_lite/
+rsl_rl_rwm/
+*.pt
+*.csv
+
+# scratch
+*.bak
+.DS_Store

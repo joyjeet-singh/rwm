@@ -1,0 +1,22 @@
+{
+  "verdict": "k=-1",
+  "method": "refutation from reset rows",
+  "actions_zero_at_reset_rows": true,
+  "n_rows_with_all_actions_zero": 10,
+  "reset_rows": [
+    999,
+    1999,
+    2999,
+    3999,
+    4999,
+    5999,
+    6999,
+    7999,
+    8999,
+    9999
+  ],
+  "policy_output_magnitude_on_reset_states": {
+    "mean": 0.5469483733177185,
+    "min": 0.0049291253089904785
+  }
+}

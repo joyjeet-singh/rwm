@@ -1,0 +1,82 @@
+{
+  "split": {
+    "seed": 0,
+    "method": "stratified by mean commanded speed (one fast, one slow)",
+    "train_episodes": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    "holdout_episodes": [
+      1,
+      8
+    ],
+    "episode_mean_speeds": {
+      "0": 1.1655251978326377,
+      "1": 0.6015844080518724,
+      "2": 0.9102453698023525,
+      "3": 0.7005454926376,
+      "4": 0.5511843066393628,
+      "5": 0.7728273048050776,
+      "6": 0.8487316008905684,
+      "7": 0.6578731670392141,
+      "8": 0.7913629775038584,
+      "9": 1.0421763351653643
+    },
+    "holdout_speeds": {
+      "1": 0.6015844080518724,
+      "8": 0.7913629775038584
+    }
+  },
+  "tests": {
+    "test1_oracle": {
+      "e": 0.0,
+      "pass": true
+    },
+    "test2_hold_last": {
+      "e": 1.0069583654403687,
+      "median_r": 0.9648900628089905,
+      "frac_r_gt_10": 0.0,
+      "max_r": 2.798701524734497,
+      "pass": true
+    },
+    "test3_noise_monotonic": {
+      "sigmas": [
+        0.01,
+        0.05,
+        0.25
+      ],
+      "e": [
+        0.014604652300477028,
+        0.07302325963973999,
+        0.36511629819869995
+      ],
+      "monotonic": true,
+      "proportional": true,
+      "pass": true
+    },
+    "test4_within_episode": {
+      "episodes_touched": [
+        1,
+        8
+      ],
+      "pass": true
+    },
+    "test5_no_leakage": {
+      "n_train_rows": 7999,
+      "n_eval_rows": 1553,
+      "overlap": 0,
+      "pass": true
+    },
+    "test6_determinism": {
+      "pass": true
+    },
+    "all_pass": true
+  },
+  "n_train_windows": 7687
+}

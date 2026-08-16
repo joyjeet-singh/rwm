@@ -1,0 +1,415 @@
+{
+  "seed": 0,
+  "split": {
+    "seed": 0,
+    "method": "stratified by mean commanded speed (one fast, one slow)",
+    "train_episodes": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    "holdout_episodes": [
+      1,
+      8
+    ],
+    "episode_mean_speeds": {
+      "0": 1.1655251978326377,
+      "1": 0.6015844080518724,
+      "2": 0.9102453698023525,
+      "3": 0.7005454926376,
+      "4": 0.5511843066393628,
+      "5": 0.7728273048050776,
+      "6": 0.8487316008905684,
+      "7": 0.6578731670392141,
+      "8": 0.7913629775038584,
+      "9": 1.0421763351653643
+    },
+    "holdout_speeds": {
+      "1": 0.6015844080518724,
+      "8": 0.7913629775038584
+    }
+  },
+  "held_out_episodes": [
+    1,
+    8
+  ],
+  "start_step": 32,
+  "start_step_source": "model_training.py:201  self.start_step = self.history_horizon (=32)",
+  "noise_application": {
+    "applied_to": "both state and action (model_training.py:221-222)",
+    "space": "normalised (normalize() is called at model_training.py:200, before the noise loop); actions are normalised by an identity transform since action_data_mean=0 and action_data_std=1",
+    "when": "once, over the whole (B,400,D) trajectory before the rollout; not resampled per rollout step",
+    "denominator": "the NOISED trajectory, state_traj_noised (model_training.py:227) -- confirmed, not the clean one"
+  },
+  "forward_pass": {
+    "1_gru_input": "cat([normalised_state(45), action(12)], dim=-1) = 57, state first then action (rnn.py:22)",
+    "2_normalisation": "applied by the CALLER, not inside the module (model_training.py:200); no normalisation anywhere in system_dynamics.py / rnn.py / mlp.py",
+    "3_activations": "ReLU between the two head layers (mlp.py:57); NO activation on the output layer (mlp.py:59). The mean head adds a RESIDUAL: output + state_seq[:,-1] (mlp.py:88)",
+    "4_logstd_bound": "max = min_logstd + exp(log_delta_logstd); logstd = max - softplus(max - logstd); logstd = min_logstd + softplus(logstd - min_logstd); std = exp(logstd)  (mlp.py:91-93,97)",
+    "5_feedback_at_inference": "the predicted MEAN, not a sample. forward() returns state_means.mean(0) (system_dynamics.py:114) and _autoregressive_prediction feeds that back. Training DOES sample: randn_like(mean)*std + mean (system_dynamics.py:215). Inference differs from training.",
+    "6_ensemble_combination": "averaged over all 5 members when model_ids is None, which is how _autoregressive_prediction calls it (system_dynamics.py:114). Both trunks are shared, so the 5 members differ only in their head weights; epistemic uncertainty therefore measures head disagreement over identical features, not true deep-ensemble diversity.",
+    "7_auxiliary_input": "identical 57-dim input to state_base (system_dynamics.py:95)",
+    "8_hidden_state": "CARRIED across the history/forecast boundary. reset() is called once before the loop (model_training.py:124) and never inside it; Memory.forward threads hidden_states through every call (rnn.py:43)"
+  },
+  "action_alignment_discrepancy": {
+    "training": "(s[t], a[t+1]) -> s[t+1]  (system_dynamics.py:196-200)",
+    "evaluation": "(s[t], a[t]) -> s[t+1]  (model_training.py:131-132)",
+    "e_eval_convention": 0.7672156691551208,
+    "e_train_convention": 0.7007799744606018
+  },
+  "action_column_stats": {
+    "mean": [
+      -0.342324,
+      -0.256064,
+      0.38273,
+      0.290116,
+      -0.22719,
+      0.415669,
+      -0.450056,
+      0.253709,
+      0.645493,
+      -0.834493,
+      0.818851,
+      -0.638895
+    ],
+    "std": [
+      0.277325,
+      0.244413,
+      0.255668,
+      0.271366,
+      0.367237,
+      0.367943,
+      0.347685,
+      0.386008,
+      0.55534,
+      0.554153,
+      0.530829,
+      0.598458
+    ],
+    "note": "raw action columns 45-56; actions are NOT normalised by the reference (action_data_mean=0, action_data_std=1), so a noise scale of s perturbs actions by s in these raw units while states are perturbed by s in units of state_data_std"
+  },
+  "results": {
+    "A": {
+      "clean": {
+        "e": 0.7672156691551208,
+        "median_r": 0.7364441156387329,
+        "frac_r_gt_10": 0.0,
+        "max_r": 5.084810733795166
+      },
+      "n_trajectories_crossing_boundary": 0,
+      "trajectory_start_rows": [
+        8412,
+        8375,
+        8158,
+        8008,
+        1321,
+        1048,
+        1018,
+        1367,
+        1209,
+        1089
+      ],
+      "noise": {
+        "0.1": {
+          "e": 0.8864724636077881,
+          "median_r": 0.7923435568809509,
+          "frac_r_gt_10": 0.0,
+          "max_r": 5.046142578125
+        },
+        "0.2": {
+          "e": 1.0054420232772827,
+          "median_r": 0.8590776324272156,
+          "frac_r_gt_10": 0.0,
+          "max_r": 2.8195698261260986
+        },
+        "0.4": {
+          "e": 1.2200422286987305,
+          "median_r": 1.047574520111084,
+          "frac_r_gt_10": 0.0,
+          "max_r": 3.9603710174560547
+        },
+        "0.5": {
+          "e": 1.2550134658813477,
+          "median_r": 1.1338530778884888,
+          "frac_r_gt_10": 0.0,
+          "max_r": 3.189279079437256
+        },
+        "0.8": {
+          "e": 1.3811442852020264,
+          "median_r": 1.3061457872390747,
+          "frac_r_gt_10": 0.0,
+          "max_r": 2.954444408416748
+        }
+      }
+    },
+    "B": {
+      "clean": {
+        "e": 1.2727813720703125,
+        "median_r": 0.7872761487960815,
+        "frac_r_gt_10": 0.0,
+        "max_r": 5.010159969329834
+      },
+      "n_trajectories_crossing_boundary": 5,
+      "trajectory_start_rows": [
+        8166,
+        6115,
+        4907,
+        2590,
+        2955,
+        393,
+        722,
+        158,
+        1682,
+        7808
+      ],
+      "noise": {
+        "0.1": {
+          "e": 1.22855544090271,
+          "median_r": 0.8101548552513123,
+          "frac_r_gt_10": 0.0,
+          "max_r": 4.360808849334717
+        },
+        "0.2": {
+          "e": 1.2296303510665894,
+          "median_r": 0.8372563719749451,
+          "frac_r_gt_10": 0.0,
+          "max_r": 4.516547203063965
+        },
+        "0.4": {
+          "e": 0.9774522185325623,
+          "median_r": 0.9244634509086609,
+          "frac_r_gt_10": 0.0,
+          "max_r": 4.779927730560303
+        },
+        "0.5": {
+          "e": 1.0301640033721924,
+          "median_r": 1.0042823553085327,
+          "frac_r_gt_10": 0.0,
+          "max_r": 2.3745927810668945
+        },
+        "0.8": {
+          "e": 1.212992548942566,
+          "median_r": 1.1855695247650146,
+          "frac_r_gt_10": 0.0,
+          "max_r": 2.3190085887908936
+        }
+      }
+    },
+    "gap_A_minus_B_seed0": -0.5055657029151917,
+    "seed_averaged": {
+      "A": {
+        "mean": 0.7087770521640777,
+        "std": 0.05259553784753557,
+        "min": 0.6028231382369995,
+        "max": 0.7891879677772522,
+        "per_seed": [
+          0.7672156691551208,
+          0.6980825066566467,
+          0.7686368227005005,
+          0.7891879677772522,
+          0.6028231382369995,
+          0.6804491281509399,
+          0.6620895862579346,
+          0.6950272917747498,
+          0.6762250661849976,
+          0.6633242964744568,
+          0.6923227310180664,
+          0.7556143999099731,
+          0.7891497015953064,
+          0.6506364345550537,
+          0.7097234129905701,
+          0.7092159986495972,
+          0.6505392789840698,
+          0.7845744490623474,
+          0.6786419153213501,
+          0.7520612478256226
+        ]
+      },
+      "B": {
+        "mean": 1.025566628575325,
+        "std": 0.18400055652406047,
+        "min": 0.6616004109382629,
+        "max": 1.2891333103179932,
+        "per_seed": [
+          1.2727813720703125,
+          1.218753457069397,
+          1.1861368417739868,
+          0.8198622465133667,
+          1.0448317527770996,
+          1.1415883302688599,
+          1.006782054901123,
+          0.9179076552391052,
+          1.202032446861267,
+          1.0384684801101685,
+          0.6616004109382629,
+          1.002373456954956,
+          0.855143666267395,
+          0.7158721685409546,
+          1.067276954650879,
+          1.0320857763290405,
+          1.2891333103179932,
+          0.9759876132011414,
+          0.7846086025238037,
+          1.2781059741973877
+        ]
+      }
+    },
+    "gap_A_minus_B_seed_averaged": -0.3167895764112474,
+    "gap_decomposition": {
+      "A": {
+        "per_trajectory_e": [
+          0.43906643986701965,
+          0.843590259552002,
+          0.6684604287147522,
+          0.6557785272598267,
+          0.823596179485321,
+          0.8470653295516968,
+          0.7167008519172668,
+          0.7969188094139099,
+          1.034735083580017,
+          0.8462457060813904
+        ],
+        "crossed": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "B": {
+        "per_trajectory_e": [
+          0.6347272992134094,
+          2.4148194789886475,
+          0.5426389575004578,
+          0.928886353969574,
+          2.340420961380005,
+          1.9236533641815186,
+          0.5855779051780701,
+          2.0908451080322266,
+          0.6440630555152893,
+          0.6221818327903748
+        ],
+        "crossed": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "e_crossing": 0.9469765424728394,
+        "e_non_crossing": 1.5985863208770752
+      },
+      "per_episode_e": {
+        "0": 1.5513502359390259,
+        "1": 0.7866681814193726,
+        "2": 0.6181300282478333,
+        "3": 1.5973622798919678,
+        "4": 1.6739355325698853,
+        "5": 0.882290244102478,
+        "6": 1.5242698192596436,
+        "7": 0.834121584892273,
+        "8": 0.6014806628227234,
+        "9": 0.9038487672805786
+      },
+      "per_episode_speed_error_corr": 0.004024462258385219,
+      "holdout_pair_mean_e": 0.694074422121048,
+      "all_episode_mean_e": 1.097345733642578
+    },
+    "error_by_horizon_protocolA": {
+      "1": {
+        "model": 0.12091358006000519,
+        "floor": 0.11066164821386337,
+        "ratio": 1.0926421394549362,
+        "r_at_h": 0.12091358006000519
+      },
+      "4": {
+        "model": 0.16116932034492493,
+        "floor": 0.24070173501968384,
+        "ratio": 0.6695810494749653,
+        "r_at_h": 0.1976650208234787
+      },
+      "8": {
+        "model": 0.18060505390167236,
+        "floor": 0.3603317141532898,
+        "ratio": 0.5012188680812054,
+        "r_at_h": 0.21815502643585205
+      },
+      "16": {
+        "model": 0.2278808355331421,
+        "floor": 0.5308850407600403,
+        "ratio": 0.4292470460401315,
+        "r_at_h": 0.3679746985435486
+      },
+      "32": {
+        "model": 0.31499335169792175,
+        "floor": 0.5733270645141602,
+        "ratio": 0.5494130160501816,
+        "r_at_h": 0.46545925736427307
+      },
+      "64": {
+        "model": 0.446685254573822,
+        "floor": 0.6786590218544006,
+        "ratio": 0.6581880446432108,
+        "r_at_h": 0.6930578947067261
+      },
+      "128": {
+        "model": 0.5522489547729492,
+        "floor": 0.7541619539260864,
+        "ratio": 0.7322683833333149,
+        "r_at_h": 0.7059834599494934
+      },
+      "256": {
+        "model": 0.6732399463653564,
+        "floor": 0.9368957877159119,
+        "ratio": 0.718585733005236,
+        "r_at_h": 0.9224425554275513
+      },
+      "368": {
+        "model": 0.7672157287597656,
+        "floor": 1.0069583654403687,
+        "ratio": 0.7619140523493666,
+        "r_at_h": 0.8742014169692993
+      }
+    },
+    "hold_last_floor": {
+      "e": 1.0069583654403687,
+      "median_r": 0.9648900628089905,
+      "frac_r_gt_10": 0.0,
+      "max_r": 2.798701524734497,
+      "pass": true
+    }
+  },
+  "sha256": {
+    "csv": "1b2e00b8a2bc10dc9b5f62840de72410adb448a57a9a2f6adbcd735be9e78921",
+    "checkpoint": "2ac8686c8c7736287853c0fe1438c379320068adf97be71609b5f1afb52c6e5a"
+  },
+  "torch_version": "2.2.2",
+  "numpy_version": "1.26.4",
+  "git_commit": {
+    "robotic_world_model_lite": "13a798e9d35dabf12c0e6e02977b25ec64dfb2bd",
+    "rsl_rl_rwm": "18eebcdd7145284c8d5eed5d8ed1a4b96c649693"
+  },
+  "wall_clock_seconds": 38.9,
+  "caveats": [
+    "The reference checkpoint was trained by the authors on this entire CSV, so protocol A's held-out episodes were in its training data. For this checkpoint protocol A is not a generalisation measure.",
+    "Boundary crossing does NOT explain the A/B gap: crossing trajectories scored better than non-crossing ones. Per-episode difficulty does.",
+    "Per-episode error spans 0.60 to 1.67 and is uncorrelated with commanded speed (r = +0.00), so the speed stratification the brief asks for does not balance difficulty; the seed-0 split holds out two of the easiest episodes.",
+    "A 10-trajectory estimate is noisy: over 20 seeds protocol A is 0.709+-0.053 and protocol B is 1.026+-0.184, a separation of only 1.7 sigma."
+  ]
+}
