@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–3.5 complete. Step 4 (trainer) unblocked. Last updated: 16 Aug 2026.
+**Status.** Steps 0–4 complete. No long training run performed; Step 5 decides what to run and where. Last updated: 17 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -71,6 +71,16 @@
 | C-08 | UNVERIFIED | **SUPERSEDED by C-09** |
 | B-05 open note | ambiguous | **closed** — training alignment is the causal one |
 | — | — | **New:** D-13, C-09, C-10, M-09–M-11, R-09–R-13, X-05, S-07, S-08 |
+
+## Step 4 changes at a glance
+
+| ID | Was | Now |
+|---|---|---|
+| D-13 | CONFIRMED, premise uncited | **CONFIRMED, premise cited** — `SRC`/`EXT` (0c) |
+| O-08 | OPEN | **PARTIALLY RESOLVED** — collapse reproduced on one batch (R-17) |
+| R-02, R-04, R-06, R-07 | headline figures | **superseded as headline by R-15**; retained as what the released code reports |
+| M-03 | aggregate-only caveat | companion metric added (M-12) |
+| — | — | **New:** C-11, C-12, M-12, M-13, R-14–R-17, O-10, O-11, X-06 |
 
 ---
 
@@ -159,6 +169,18 @@ The decisive argument: reset rows carry the *post-reset* state (D-05) and their 
 Byproduct: test 1b recovers an implied action scale of **0.461 ± 0.013** across the 12 joints (from −c₁/c₂), the first numeric estimate of the quantity D-07 records as unrecorded. Close to Isaac Lab's ANYmal default of 0.5.
 
 **Evidence** `DATA` `task1_action_convention.py`, `task1b_pd_law.py`, `task1c_policy_test.py`, `task1d_reset_argument.py`; `SRC` `anymal_d_flat.py:53`, `base_cfg.py:118-120`.
+**Premise cited at Step 4 (0c).** The refutation rests on Isaac Lab zeroing the action
+buffer on reset, which was previously asserted without a source. It is
+`ActionManager.reset()`, `source/isaaclab/isaaclab/managers/action_manager.py:350-365`,
+commit `7a4b6d2be5823d03f91a448751947a68add0a285`:
+
+```python
+self._prev_action[env_ids] = 0.0    # line 364
+self._action[env_ids] = 0.0         # line 365
+```
+
+with both buffers initialised to zeros at lines 215-216. Evidence class upgraded from
+`DATA` + `INFER` to `DATA` + `SRC`/`EXT`. No downgrade required.
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Resolves** O-01, O-05. **Refutes** the leakage reading — see S-07. **Determines** X-05.
 
@@ -269,6 +291,54 @@ Mechanism: `compute_bound_loss` returns `mean(max_logstd) − mean(min_logstd) =
 **Consequence** RWM-**U**'s uncertainty story rests on the epistemic term alone in this checkpoint; the aleatoric channel is degenerate. Combined with C-04 (shared trunks), *both* halves of the uncertainty estimate are weaker than the paper implies. Closes O-04 together with the unit definitions below.
 **Step 4 action** Either reduce the bound-loss weight or re-parameterise the interval, and monitor `exp(log_delta_logstd)` during training as a collapse detector.
 
+### C-11 — `state_min_logstd` receives no gradient from the bound loss · **NEW (Step 4)**
+Sharpens C-10's mechanism. The bound loss is
+
+```
+mean(max_logstd) - mean(min_logstd) = mean(min_logstd + exp(log_delta_logstd)) - mean(min_logstd)
+                                    = mean(exp(log_delta_logstd))
+```
+
+so `state_min_logstd` **cancels algebraically** and takes no gradient from that term.
+Confirmed empirically: in the gradient differential test under zero-noise sampling, exactly
+25 of 106 parameter tensors have an identically zero gradient, and they are precisely the
+five heads' `state_logstd_layers` (20 tensors) plus their `state_min_logstd` (5). Both
+implementations agree on the set.
+
+The consequence is a one-way ratchet. `log_delta_logstd` has a constant-sign gradient and
+falls steadily; `min_logstd` is reachable only through the sigma path in the state loss,
+whose gradient vanishes as sigma shrinks. So once the interval starts closing, the floor it
+closes onto freezes, and nothing can reopen it.
+**Evidence** `SRC` `system_dynamics.py:301-302`, `mlp.py:91`; `RUN` `step4_3_differential.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### C-12 — The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500 · **NEW (Step 4)**
+Measured on a fresh model (R-17): `log_delta_logstd` falls at **−9.318e-05 per iteration**,
+which is 0.93× the configured learning rate of 1e-4 — exactly the Adam behaviour expected
+when a gradient holds its sign, since Adam's step size is ~lr regardless of gradient
+magnitude.
+
+Extrapolating to the released checkpoint's value of −14.463 (C-10):
+
+| Iterations | resulting `exp(log_delta_logstd)` |
+|---|---|
+| 500 (`base_cfg.py` `max_iterations`) | 0.9545 |
+| 2500 (paper Table S7) | 0.7922 |
+| **~155,000** | **5.23e-07 — the released value** |
+
+Neither documented iteration count can produce the released checkpoint's variance state at
+the configured learning rate. Following the released recipe as written yields a model whose
+uncertainty head is essentially untouched, not one whose interval has closed by seven orders
+of magnitude.
+**Evidence** `RUN` `step4_4_overfit_ens1.json`, linear fit over 18 collapse samples; `SRC`
+`base_cfg.py` lr and max_iterations.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Caveat** Measured at ensemble 1 on a single fixed batch (X-06). The rate is set by the
+optimiser and the bound-loss gradient sign, neither of which depends on batch content, so
+it should carry — but this is an extrapolation over three orders of magnitude and is
+labelled as one. Opens O-10.
+
+
 ---
 
 ## D. Methodological findings
@@ -349,6 +419,46 @@ The general lesson, and the one worth carrying into Step 4: where a dataset cont
 **Evidence** `INFER` from D-13's test history.
 **Status** CONFIRMED · **Relevance** METHOD
 
+### M-12 — Normalised RMSE with a fixed denominator · **NEW (Step 4)**
+Added alongside the relative-L1 metric, never replacing it. The relative-L1 exists to
+compare against the paper; this exists to reason with.
+
+```
+nrmse[d] = RMSE(pred[..., d], true[..., d]) / scale[d]
+scale[d] = std of normalised dimension d over the TRAINING episodes, computed once
+```
+
+Fixed, not per-timestep, is the whole point: the denominator cannot approach zero, so the
+M-09 failure modes cannot occur. Reading is direct — 1.0 means "no better than predicting
+the training mean", below 1.0 means the model carries information.
+
+The stored scale spans 0.0292 to 1.3873. Its smallest entry is the gravity z-component,
+where the config's `state_data_std` of 0.04 overestimates the actual spread by ~34×, so
+normalised g_z is very nearly constant. This also refines M-09: the gravity blow-ups are
+driven by g_x and g_y, which are near-zero-mean with unit spread, and not by g_z, which
+contributes almost nothing to the denominator.
+
+First application (R-15) immediately paid for itself: at h=368 protocol A scores nRMSE
+**1.3228 under the released evaluation convention and 0.7572 under the causal one**. That is
+the difference between "worse than predicting the training mean" and "clearly informative",
+and the relative-L1 metric (0.7672 vs 0.7008) does not show it.
+**Evidence** `RUN` `rwm_metrics.py`, `step4_0a_results.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-13 — The auxiliary branch is teacher-forced; the state branch is not · **NEW (Step 4)**
+In `compute_state_loss` the trunk is fed its own reparameterised sample at each forecast
+step (`system_dynamics.py:216`). In `compute_auxiliary_loss` it is fed the **true** next
+state (`:264`). So the contact and termination heads never see the model's own rollout
+error during training, while the state head does.
+
+At inference both branches consume predicted states, so the auxiliary heads are evaluated
+under a distribution they were never trained on. Reproduced faithfully; flagged because it
+is invisible from the paper and is a plausible source of auxiliary-head degradation in long
+rollouts.
+**Evidence** `SRC` `system_dynamics.py:216, 264`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## E. Measured results
@@ -363,6 +473,8 @@ Steps 0–3 from `step3_report.txt` and `manifest.json`; Step 3.5 from `task*_re
 Seed 0: A = 0.7672, B = 1.2728. Seed-averaged over 20 seeds: A = 0.709 ± 0.053, B = 1.026 ± 0.184.
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Caveat** Read with M-06. The gap is episode sampling, not leakage.
+
+**Superseded as headline by R-15 (Step 4)** — these are offset-0 figures, i.e. what the released evaluation code reports. Retained deliberately: that is itself the finding. Causal-convention figures are in R-15.
 
 ### R-03 — Hold-last floor
 e = 1.0070, median r = 0.9649.
@@ -397,10 +509,14 @@ Protocol A: 0.7672 under the evaluation convention, 0.7008 under the training co
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Caveat** ~~Not yet interpretable — see O-01 and O-05.~~ **Interpretable as of D-13:** the training alignment is causal, so the 0.066 is the cost the reference evaluation pays for feeding a stale action. It is a measurement of the B-05 defect, not evidence of leakage.
 
+**Superseded as headline by R-15 (Step 4)**, which measures the same swap on both protocols, both metrics and a 20-seed spread.
+
 ### R-07 — Protocol B's noise sweep is non-monotonic
 Protocol A rises cleanly with noise: 0.767, 0.886, 1.005, 1.220, 1.255, 1.381. Protocol B does not: 1.273, 1.229, 1.230, 0.977, 1.030, 1.213.
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Note** Most likely sampling variance swamping the effect, consistent with M-04's ±0.184 on protocol B. Not yet tested.
+
+**Retested at Step 4 (R-15): still non-monotonic under both conventions**, so the convention is not the explanation. M-04 sampling variance remains the leading one.
 
 ### R-08 — Epistemic uncertainty dwarfs aleatoric
 One-step check on a held-out window: aleatoric 0.003, epistemic 0.276, roughly a hundredfold ratio.
@@ -491,6 +607,119 @@ A policy evaluated on its own observation should be near-deterministic, so this 
 **Status** CONFIRMED · **Relevance** CONTEXT
 **Consequence** The released artifact does not contain the behaviour policy, so the dataset's actions cannot be regenerated or verified against their source. Relevant to any claim about reproducing the data-collection stage.
 
+### R-14 — Losses and gradients match the reference exactly · **NEW (Step 4) — THE ACCEPTANCE GATE**
+One fixed batch of 16 held-out windows, both models loaded from `pretrain_rnn_ens.pt`,
+`torch.randn_like` monkeypatched globally so both implementations draw identical samples.
+
+| | zeros mode | fixed mode |
+|---|---|---|
+| all seven loss terms, max relative diff | **0.000e+00** | **0.000e+00** |
+| weighted total | 0.000e+00 | 0.000e+00 |
+| gradients, worst max-abs over 106 tensors | **0.000e+00** | **0.000e+00** |
+| gradients, worst max-relative | 0.000e+00 | 0.000e+00 |
+
+Thresholds were 1e-6 relative on losses and 1e-5 on gradients; the achieved value is exactly
+zero in every cell.
+
+**Non-vacuity checks**, because a comparison of two all-zero gradient sets would pass
+trivially: in `fixed` mode 106/106 tensors carry a non-zero gradient (max magnitude 2.334);
+in `zeros` mode 81/106 do, and the 25 exceptions are exactly the set C-11 predicts. The two
+implementations agree on **which** parameters receive gradient, not merely on the values.
+
+Import: `from rsl_rl.modules import SystemDynamicsEnsemble` now succeeds directly after
+installing `gitpython` and `tensordict` (both pure-Python, neither disturbs the torch pin),
+so no stubs were needed — an improvement on the `importlib` route R-11 had to use.
+**Evidence** `RUN` `step4_3_differential.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+**Consequence** The trainer optimises the same objective as the reference. Step 5 onward is
+on solid ground.
+
+### R-15 — Step 3 results restated under the causal convention · **NEW (Step 4)**
+The offset-0 column is what the released evaluation code reports; the offset-1 column is
+what the checkpoint can actually do; the gap is the measured cost of B-05. Both are real and
+both are retained.
+
+| | offset 0 (released eval) | offset 1 (causal) | delta |
+|---|---|---|---|
+| A clean, relative-L1 | 0.7672 | **0.7008** | −0.0664 |
+| B clean, relative-L1 | 1.2728 | **1.2046** | −0.0682 |
+| A clean, **nRMSE @368** | 1.3228 | **0.7572** | −0.5656 |
+| B clean, nRMSE @368 | 5.6959 | 5.4008 | −0.2951 |
+| A, 20-seed | 0.7088 ± 0.0526 | **0.6499 ± 0.0586** | −0.0589 |
+| B, 20-seed | 1.0256 ± 0.1840 | **0.9878 ± 0.1987** | −0.0378 |
+
+Noise sweep A (clean → 0.8): offset 1 gives 0.7008, 0.8141, 0.9841, 1.2036, 1.2409, 1.3737.
+
+**Qualitative conclusions all survive the convention change:**
+- **R-05 survives.** Crossing trajectories still score *better* than non-crossing under both
+  conventions (0.890 vs 1.519 at offset 1). Boundary crossing still does not explain the A/B gap.
+- **D-12 survives.** Per-episode difficulty spans 0.523–1.585, a 3.0× ratio (was 2.8×), and
+  remains uncorrelated with commanded speed (r = +0.09, was +0.00). The held-out pair is
+  still on the easy side, 0.626 against a population mean of 1.017.
+- **R-07 survives.** Protocol B's noise sweep remains non-monotonic under both conventions;
+  protocol A remains monotonic under both. Consistent with M-04 sampling variance.
+- **M-04 survives.** A–B separation is 1.6σ at offset 1 (was 1.7σ). Still underpowered.
+
+**Evidence** `RUN` `step4_0a_results.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-16 — CPU timing · **NEW (Step 4)**
+20 timed iterations after 3 warm-up, per configuration.
+
+| ensemble | batch | s/iter | 500 iters | 2500 iters | peak RSS |
+|---|---|---|---|---|---|
+| 1 | 1024 | 4.623 ± 0.523 | 38.5 min | 3.2 h | 1.7 GB |
+| 1 | 256 | 1.659 ± 0.527 | 13.8 min | 1.2 h | 1.7 GB |
+| **5** | **1024** | **37.179 ± 5.316** | **5.2 h** | **1.1 days** | **4.8 GB** |
+| 5 | 256 | 5.926 ± 0.318 | 49.4 min | 4.1 h | 4.8 GB |
+
+The reference configuration (ensemble 5, batch 1024) scales **superlinearly**: 8.0× the
+ensemble-1 cost for 5× the heads, against 3.6× at batch 256. Per sample that is 36.3 ms at
+batch 1024 versus 23.2 ms at batch 256, so the large batch is 1.56× *less* efficient. With
+4.8 GB peak RSS this is memory pressure on a 2-core machine, not compute.
+
+Step 6 five-fold cross-validation (M-05) at the reference configuration: **1.1 days** at 500
+iterations per fold, 5.4 days at 2500.
+**Evidence** `RUN` `step4_5_timing.json`.
+**Status** CONFIRMED · **Relevance** INTERNAL
+**Recommendation** Single runs local (5.2 h each, overnight). For the Step 6 five-fold sweep,
+either drop to batch 256 — which is faster per epoch anyway — or rent. Do not run five folds
+at batch 1024 locally.
+
+### R-17 — Overfit one batch: partial, and the collapse prediction confirmed · **NEW (Step 4)**
+Ensemble 1, batch 1024, fresh random init, one fixed batch, 451 iterations in 2708 s before
+the wall-clock cap (X-06).
+
+**Memorisation: INCOMPLETE, not failed.** State loss fell 49.227 → 4.124, a 91.6% reduction,
+monotonically and still falling. It did not reach the 1e-4 threshold; 4.124 summed over 45
+dimensions is a per-dimension RMSE of 0.303 in normalised units, so the batch is not
+memorised. Nothing indicates a bug — the curve is smooth and monotone — but the test as
+specified (2000 iterations) was not completed within the CPU budget and **must not be
+recorded as passed**.
+
+**All active terms moved; all inert terms stayed exactly zero:**
+
+| term | first | last | moved |
+|---|---|---|---|
+| state | 4.923e+01 | 4.124e+00 | yes |
+| sequence | 0 | 0 | no — inert, prediction_type "single" |
+| bound | 1.000e+00 | 9.587e-01 | yes |
+| kl | 0 | 0 | no — inert, rssm only |
+| extension | 0 | 0 | no — inert, extension_dim 0 |
+| contact | 6.866e-01 | 5.163e-02 | yes |
+| termination | 7.040e-01 | 4.360e-04 | yes |
+
+The termination term collapsed to 4.4e-04 within ~50 iterations, confirming rather than
+assuming the D-03/X-04 expectation that an all-zero target drives its logits to −∞.
+
+**Collapse monitor — prediction CONFIRMED.** `exp(log_delta_logstd)` fell monotonically from
+0.9999 to 0.9607 across all 18 samples, with no reversal. The 1b prediction was made from
+the objective's algebra before running, and it holds on a single batch from random init.
+The rate feeds C-12.
+**Evidence** `RUN` `step4_4_overfit_ens1.json`, `figures/step4_overfit_ens1.png`.
+**Status** CONFIRMED (collapse) · **INCOMPLETE** (memorisation) · **Relevance** CONTRIB
+
+
 ---
 
 ## F. Open questions
@@ -538,6 +767,27 @@ B-05 + R-09 show the released evaluation feeds a stale action, costing 0.066 agg
 **Test** Compare our R-09 numbers against the paper's Table values on the matching configuration.
 **Relevance** Would upgrade B-05 from "internal inconsistency" to "published numbers understate the released model".
 
+### O-10 — Was the released checkpoint produced by the released config? · **NEW (Step 4)**
+C-12 shows the checkpoint's `log_delta_logstd` of −14.463 implies ~155,000 iterations at the
+configured learning rate, against a config that says 500 and a paper that says 2500. Either
+the checkpoint was trained far longer than either figure, or with a different learning rate
+or schedule, or the unpublished 6M-transition pretraining (X-04) accounts for the difference.
+**Why it matters** If the released recipe cannot produce the released checkpoint, then
+"reproducing RWM" and "reproducing `pretrain_rnn_ens.pt`" are different tasks, and every
+comparison against that checkpoint needs the distinction stated.
+**Test** Cheap: run the faithful arm to 2500 iterations and check whether
+`exp(log_delta_logstd)` lands near the C-12 prediction of 0.79. If it does, the released
+checkpoint did not come from the released recipe.
+
+### O-11 — Does the batch-1024 superlinear penalty survive on other hardware? · **NEW (Step 4)**
+R-16 measures 8.0× cost for 5× the heads at batch 1024, versus 3.6× at batch 256, with 4.8 GB
+peak RSS. That reads as memory pressure on a 2-core machine rather than anything intrinsic.
+**Why it matters** It decides the Step 6 configuration: if the penalty is local, batch 1024
+is fine on rented hardware; if it is intrinsic to the per-member Python loop in
+`compute_loss`, batch 256 is strictly better everywhere and the reference's own default is a
+poor choice.
+**Test** Re-time on any machine with more cores and RAM before committing to a Step 6 config.
+
 ---
 
 ## G. Deliberate deviations from the reference
@@ -562,6 +812,19 @@ Kept for architectural parity with the checkpoint, so weights can be loaded for 
 Both our trainer and our harness will use `(s[t], a[t+1]) → s[t+1]` — the training alignment, established causal by D-13 — for training *and* for evaluation. The reference uses this alignment for training only and the stale one for evaluation (B-05).
 **Justification** D-13. Feeding an action that has already been superseded is simply wrong, and R-09 measures what it costs.
 **Consequence for comparability** Our headline numbers will not be directly comparable to the reference's reported autoregressive error. Both conventions are therefore reported side by side wherever a reference comparison is made, exactly as R-09 does.
+
+### X-06 — The overfit test ran at ensemble 1 with a wall-clock cap · **NEW (Step 4)**
+The brief specifies batch 1024, ensemble 5, 2000 iterations. R-16 measures that at 37.2 s per
+iteration, i.e. **20.7 hours** — against a brief that budgets "minutes". Run instead at
+ensemble 1, batch 1024 (the specified batch retained), capped at 45 minutes, reaching 451
+iterations.
+**Justification** The test's purpose is to detect a code defect that prevents learning, and
+ensemble members are independent given the shared trunk, so ensemble size does not change
+what the test can detect. The batch size, which does affect how hard memorisation is, was
+kept at the specified value.
+**Consequence** R-17's memorisation result is INCOMPLETE rather than passing, and is recorded
+as such. The collapse-monitor result is unaffected — it is a property of the optimiser and
+the bound-loss gradient, not of ensemble size.
 
 ---
 
@@ -613,10 +876,28 @@ Recorded as C-08 with status UNVERIFIED and an explicit instruction to reconfirm
 Ordered by how much they would stand on their own, for use when the writeup begins. Every one still needs its impact quantified rather than merely its existence demonstrated.
 
 1. **The released pipeline trains on spliced episodes** (B-01, D-03, D-06). A defect with a clear mechanism, a clean count, and an obvious controlled experiment behind it (O-06).
-2. **There is no held-out evaluation in the released repository** (B-03, B-04), plus a demonstration of what a correct one gives (X-01, R-02).
-3. **The released evaluation feeds a stale action and understates its own model** (B-05, D-13, R-09). *Promoted from third-with-caveats to a firm result at Step 3.5.* The convention question is settled, the direction is the opposite of what we first assumed (S-07), and the cost is measured: 24% of the one-step error and 0.066 aggregate. The h=1 anomaly that made the released checkpoint look broken was this defect, not the model.
-4. **The paper's described model is not the implemented model** (C-01, C-03 through C-07, C-09, C-10). Seven loss terms against two; a residual mean head; two trunks; a shared-trunk ensemble; sample-versus-mean asymmetry; a forecast decay factor the paper specifies and the code does not have; and a variance head that has collapsed to a constant in the released weights.
-5. **Both halves of RWM-U's uncertainty estimate are weaker than described** (C-04, C-10, R-08, O-08). The aleatoric channel is degenerate — a learned constant at its own lower bound, σ ≈ 5.6e-05 — and the epistemic channel measures head disagreement over shared features. This is new at Step 3.5 and is the most directly damaging finding for the "-U" contribution specifically.
-6. **The released checkpoint is only modestly better than a trivial baseline at long horizon** (R-03, R-09, R-10). Softened by Step 3.5: it is *not* worse at one step once scored correctly, and the per-group breakdown shows the weakness is concentrated in base linear velocity while joint prediction stays strong. The honest version of this claim is narrower than the original.
-7. **Evaluation with ten trajectories is underpowered** (M-04, D-12). Methodological, but it undercuts single-seed comparisons in this literature generally.
-8. **Correlational tests cannot establish action alignment for position-controlled robots** (M-10, M-11). A small, transferable methods note: the identification has to come from structural invariants such as reset rows, not from fitting.
+2. **There is no held-out evaluation in the released repository** (B-03, B-04), plus a demonstration of what a correct one gives (X-01, R-02, R-15).
+3. **The released evaluation feeds a stale action and understates its own model** (B-05, D-13, R-09, R-15). Settled at Step 3.5 and quantified at Step 4 across both protocols, both metrics and a 20-seed spread. The sharpest single number is the fixed-denominator one: at h=368 the checkpoint scores nRMSE **1.3228 under the released convention and 0.7572 under the causal one** — the difference between "worse than predicting the training mean" and "clearly informative".
+4. **Both halves of RWM-U's uncertainty estimate are degenerate, by construction** (C-04, C-06, C-10, C-11, R-17, O-08). Strengthened considerably at Step 4. The collapse is now shown to be the *optimum of the released objective* rather than an accident: the state loss is squared error on a reparameterised sample with no log-sigma term, so `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at sigma = 0; the bound loss pushes the same way; and `min_logstd` cancels out of it entirely (C-11), giving a one-way ratchet. Predicted from the algebra, then reproduced on a fresh model in 451 iterations.
+5. **The released checkpoint cannot have come from the released recipe** (C-12, O-10). Its variance state implies ~155,000 iterations at the configured learning rate, against a config that says 500 and a paper that says 2500. New at Step 4, cheap to confirm, and it bears on what "reproducing RWM" even means.
+6. **The paper's described model is not the implemented model** (C-01, C-03, C-05, C-07, C-09, M-13). Seven loss terms against two; a residual mean head; two trunks; sample-versus-mean asymmetry; a forecast decay factor the paper specifies and the code lacks; and an auxiliary branch that is teacher-forced while the state branch is not.
+7. **The released checkpoint is only modestly better than a trivial baseline at long horizon** (R-03, R-09, R-10, R-15). Softened twice now: it is not worse at one step once scored correctly, and the per-group breakdown localises the weakness to base linear velocity while joint prediction stays strong.
+8. **Evaluation with ten trajectories is underpowered** (M-04, D-12, R-15). Survives the convention change at 1.6σ. Methodological, but it undercuts single-seed comparisons in this literature generally.
+9. **Correlational tests cannot establish action alignment for position-controlled robots** (M-10, M-11). A small, transferable methods note: identification has to come from structural invariants such as reset rows, not from fitting.
+10. **A relative-L1 metric on normalised states is the wrong instrument** (M-03, M-09, M-12). It is unusable per-group, saturates at long horizon, and hides the effect in item 3. A fixed-denominator nRMSE costs nothing and does not.
+
+---
+
+## Verification chain
+
+What any downstream number rests on, in order:
+
+| Level | Claim | Result |
+|---|---|---|
+| Shapes | parameter counts match | R-01, exact |
+| Wiring | inference outputs match the reference module | R-11, **0.000e+00** bitwise |
+| Indexing | the harness feeds the actions it claims | R-12a, bitwise vs raw CSV |
+| Residual | zero-delta model is the hold-last floor | R-12c, 1.19e-07 |
+| **Objective** | **losses and gradients match** | **R-14, 0.000e+00 across 7 terms, 106 tensors** |
+
+Step 5 onward inherits all five.
