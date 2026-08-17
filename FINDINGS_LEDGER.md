@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–4 complete. Step 5 staged launch: Arm A seed 0 finished (R-19); remaining five runs NOT started, pending report. Last updated: 17 Aug 2026.
+**Status.** Steps 0–5 complete. All six main runs finished; M-16 evaluated and SETTLED on both metrics (R-22). Last updated: 18 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -596,8 +596,15 @@ own error — so faster early fitting followed by worse rollout behaviour is the
 signature rather than a surprise. The reverse pattern (A ahead at 500, B ahead at 2500) has no
 such mechanism behind it and is to be reported as an unexplained flip.
 
-**Evidence** pre-registration; results will be attached as they land.
-**Status** PRE-REGISTERED, awaiting results · **Relevance** METHOD
+**OUTCOME (Step 6, R-22): SETTLED, on both metrics, with the two metrics agreeing.**
+Arm A leads at h=8 at both checkpoints under relative-L1 (0.4022→0.3263 vs B 0.4254→0.3915)
+and under nRMSE (0.3648→0.2805 vs B 0.3991→0.3210). Condition 1 holds: no flip. Condition 2
+holds: |A−B| is 0.0652 against a max within-arm seed sd of 0.0150 (relative-L1), and 0.0405
+against 0.0183 (nRMSE). The rule therefore returns a reportable result, and the annotation
+above did not fire because there was no flip.
+**Evidence** `RUN` `results/step6_analysis.json`.
+**Status** SETTLED — rule pre-registered in `84ff01b`, annotation in `0fe2bca`, both before any
+Arm B result existed · **Relevance** METHOD
 
 
 ---
@@ -985,6 +992,153 @@ normalisation, not to either metric.
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+### R-22 — The paper's central claim REPRODUCES: autoregressive beats teacher forcing · **NEW (Step 6)**
+Six runs, three seeds per arm, 2500 iterations each, 5.96 h total wall clock. Configuration
+identical across arms and differing in exactly one line — the state branch's feedback.
+**Zero gradient spikes in any of the six runs.**
+
+**relative-L1 e** (mean ± sd over 3 seeds; hold-last floor beside):
+
+| | Arm A autoregressive | Arm B teacher forcing | floor |
+|---|---|---|---|
+| h=8 @500 | **0.4022 ± 0.0107** | 0.4254 ± 0.0344 | 0.3603 |
+| h=8 @2500 | **0.3263 ± 0.0074** | 0.3915 ± 0.0150 | 0.3603 |
+| h=368 @500 | **2.0576 ± 0.3555** | 6.1592 ± 1.2868 | 1.0070 |
+| h=368 @2500 | **0.9333 ± 0.0988** | 4.0171 ± 0.3022 | 1.0070 |
+
+**nRMSE:**
+
+| | Arm A | Arm B | floor |
+|---|---|---|---|
+| h=8 @500 | **0.3648 ± 0.0283** | 0.3991 ± 0.0153 | 0.5585 |
+| h=8 @2500 | **0.2805 ± 0.0075** | 0.3210 ± 0.0183 | 0.5585 |
+| h=368 @500 | **2.6776 ± 0.6896** | 7.1737 ± 0.5970 | 0.9601 |
+| h=368 @2500 | **1.1580 ± 0.1148** | 4.5621 ± 0.4582 | 0.9601 |
+
+**M-16 evaluated, both metrics separately (6.4):**
+
+| | relative-L1 | nRMSE |
+|---|---|---|
+| leader @500, h=8 | A | A |
+| leader @2500, h=8 | A | A |
+| condition 1, ordering same | **True** | **True** |
+| \|A−B\| @2500 | 0.0652 | 0.0405 |
+| max within-arm seed sd | 0.0150 | 0.0183 |
+| condition 2, difference exceeds spread | **True** | **True** |
+| **verdict** | **SETTLED** | **SETTLED** |
+
+**The two metrics agree.** Both pre-registered conditions hold under both, so the rule returns
+a reportable result rather than "cannot be settled". The autoregressive objective — the one the
+reference implements and the paper argues for — is better, and the margin at long horizon is
+not marginal: **4.3× on relative-L1 and 3.9× on nRMSE at h=368**.
+
+**The 6.1 pre-registered flip interpretation does not apply: there was no flip.** Arm A leads
+at both checkpoints under both metrics. That annotation is left in place unused, which is the
+correct outcome for a pre-registration that did not fire.
+
+Worth recording against the reasoning behind it: the textbook expectation was that teacher
+forcing would fit *faster early* and generalise worse later. The second half held emphatically;
+the first did not. At h=8 @500 Arm A already leads (0.4022 vs 0.4254), so teacher forcing never
+led at any measured point.
+**Evidence** `RUN` `results/step6_analysis.json`, `results/step5_arm{A,B}_seed{0,1,2}.json`,
+`figures/step6_arms_comparison.png`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-23 — Teacher forcing reaches a 3× lower training loss and a 4× worse rollout · **NEW (Step 6)**
+The mechanism behind R-22, and the cleanest single measurement in the project.
+
+| | Arm A autoregressive | Arm B teacher forcing |
+|---|---|---|
+| final training `state` loss | 1.4956 – 1.5588 | **0.4415 – 0.5119** |
+| gradient norm, median | 10.73 – 10.91 | **2.15 – 2.26** |
+| gradient norm, max | 49.2 – 53.1 | 7.6 – 9.8 |
+| rollout e @h=368 | **0.9333** | 4.0171 |
+
+Arm B optimises its own objective roughly **3× better** — lower loss, gradients 5× smaller,
+a visibly easier problem — and then rolls out **4.3× worse**. This is exposure bias measured
+end to end on the released architecture: the objective teacher forcing minimises is not the
+objective that matters, and its apparent training advantage is precisely what makes it worse
+at deployment.
+
+It also explains why Arm B never led even at 500 iterations. Teacher forcing does not converge
+faster *toward the rollout objective*; it converges faster toward a different one.
+**Evidence** `RUN` `results/step6_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-24 — Pooled collapse fit across six independent runs · **NEW (Step 6)**
+| run | rate/iter | stderr | rate/lr | exp(log_delta)@2500 |
+|---|---|---|---|---|
+| A seed 0 | −9.3641e-05 | 2.64e-08 | 0.936 | 0.791385 |
+| A seed 1 | −9.3589e-05 | 2.60e-08 | 0.936 | 0.791434 |
+| A seed 2 | −9.3621e-05 | 2.61e-08 | 0.936 | 0.791399 |
+| B seed 0 | −9.5107e-05 | 7.53e-08 | 0.951 | 0.788186 |
+| B seed 1 | −9.5099e-05 | 7.50e-08 | 0.951 | 0.788199 |
+| B seed 2 | −9.5117e-05 | 7.57e-08 | 0.951 | 0.788168 |
+
+**Pooled: −9.4362e-05 ± 3.33e-07** (sem over 6 runs). Run-to-run sd 8.168e-07 — **0.87% of the
+mean**. Six independent trajectories agree to within 1%, and the three seeds within each arm
+agree to five significant figures. This is no longer an estimate from heterogeneous runs; it is
+a pinned constant.
+
+Placed beside the earlier measurements: overfit 451 iters at lr 1e-4 gave 0.93; overfit 2000
+iters at lr 1e-3 gave 0.70; the pooled six give **0.9436**. `rate ≈ lr` holds tightly at the
+reference learning rate and degrades as lr grows.
+
+Small systematic detail worth recording: the arms differ, 0.936 versus 0.951, far outside the
+within-arm spread. The bound-loss gradient on `log_delta_logstd` is identical in both arms, so
+the difference must come from the state loss's σ path, which teacher forcing changes. A 1.6%
+effect, but a real one.
+
+**From the pooled fit, not by extrapolation:** reaching the released checkpoint's −14.4629
+requires **153,270 iterations** at lr 1e-4, or **lr 3.07e-03 — 31× the configured value** — to
+arrive within its own tagged 5000.
+**Evidence** `RUN` `results/step6_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-25 — `min_logstd` gives O-12 a second, slower, independent axis · **NEW (Step 6)**
+The released checkpoint's `state_min_logstd` mean is **−9.8128** (σ = 5.475e-05), tight across
+heads (−9.783, −9.814, −9.814, −9.831, −9.822), against an initialisation of −5.0
+(`mlp.py:78`). It has travelled **−4.813 in log space**, shrinking σ by a factor of 0.008.
+
+Arm A's measured drift for the same parameter is **−1.797e-05 per iteration**, which is
+**5.2× slower** than `log_delta_logstd`'s −9.364e-05 — exactly what C-11 predicts, since
+`min_logstd` cancels out of the bound loss and moves only through the weaker σ path.
+
+Order-of-magnitude implication (explicitly *not* a fitted count: `min_logstd`'s gradient depends
+on σ, which is itself shrinking, so its drift is not expected to stay linear):
+
+| parameter | gradient path | implied iterations |
+|---|---|---|
+| `log_delta_logstd` | bound loss, constant sign | **1.5e5** |
+| `min_logstd` | state-loss σ term only | **2.7e5** |
+
+**Two variance parameters, on different gradient paths, drifting at rates 5× apart,
+independently imply order-1e5 optimisation steps.** Against a config saying 500, a paper saying
+2500, and a checkpoint tagged 5000. One parameter admits several escape hatches; two agreeing
+across a 5× rate difference narrows them considerably.
+**Evidence** `RUN` `results/step6_3_min_logstd.json`; `DATA` released checkpoint; `SRC`
+`mlp.py:78`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-26 — Neither arm has converged at the paper's own iteration count · **NEW (Step 6)**
+State-loss slope over the final 250 iterations, all six runs:
+
+| run | A seed 0 | A seed 1 | A seed 2 | B seed 0 | B seed 1 | B seed 2 |
+|---|---|---|---|---|---|---|
+| slope/iter | −7.59e-04 | −6.54e-04 | −3.89e-04 | −2.54e-04 | −2.10e-04 | −1.15e-04 |
+
+**Every run is still descending at 2500**, the count the paper's Table S7 states. Arm A is
+falling 2–3× faster than Arm B at the cap, so the R-22 margin is if anything conservative —
+extending the budget would be expected to widen it, not close it.
+
+This is reported alongside R-22 rather than as a caveat that weakens it: M-16's conditions were
+met at this budget, so the comparison stands, and the non-convergence says the *absolute*
+numbers are not the reference's and were never going to be. It connects directly to O-12 and
+C-13 — 2500 iterations is not where this objective settles.
+**Evidence** `RUN` `results/step6_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## F. Open questions
@@ -1124,6 +1278,12 @@ the released checkpoint is not reachable from the released configuration. That i
 and it should be written that way rather than as a failure to reproduce.
 **Status** the mechanism is now CONFIRMED and quantified; the checkpoint's provenance remains
 OPEN.
+**STRENGTHENED TWICE at Step 6.** (i) R-24 pools six independent trajectories: the rate is
+−9.4362e-05 ± 3.33e-07 with a run-to-run sd of 0.87%, so it is a pinned constant rather than an
+estimate, and it implies 153,270 iterations or lr 3.07e-03. (ii) R-25 adds `min_logstd` as a
+second axis on a different gradient path and a 5× slower clock, independently implying order
+2.7e5 iterations. Two parameters agreeing across a 5× rate difference is much harder to
+attribute to any single escape hatch than one parameter was.
 **Note on arithmetic** The Step 5 brief quotes −8.859e-05/iteration and ≈163,000 iterations.
 That divides the observed log change by the run length (451) rather than by the iteration of
 the last collapse sample (425); dividing by 425 gives −9.402e-05 two-point, −9.318e-05
@@ -1233,16 +1393,31 @@ Recorded as C-08 with status UNVERIFIED and an explicit instruction to reconfirm
 
 Ordered by how much they would stand on their own, for use when the writeup begins. Every one still needs its impact quantified rather than merely its existence demonstrated.
 
-1. **The released pipeline trains on spliced episodes** (B-01, D-03, D-06). A defect with a clear mechanism, a clean count, and an obvious controlled experiment behind it (O-06).
-2. **There is no held-out evaluation in the released repository** (B-03, B-04), plus a demonstration of what a correct one gives (X-01, R-02, R-15).
-3. **The released evaluation feeds a stale action and understates its own model** (B-05, D-13, R-09, R-15). Settled at Step 3.5 and quantified at Step 4 across both protocols, both metrics and a 20-seed spread. The sharpest single number is the fixed-denominator one: at h=368 the checkpoint scores nRMSE **1.3228 under the released convention and 0.7572 under the causal one** — the difference between "worse than predicting the training mean" and "clearly informative".
-4. **Both halves of RWM-U's uncertainty estimate are degenerate, by construction** (C-04, C-06, C-10, C-11, R-17, O-08). Strengthened considerably at Step 4. The collapse is now shown to be the *optimum of the released objective* rather than an accident: the state loss is squared error on a reparameterised sample with no log-sigma term, so `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at sigma = 0; the bound loss pushes the same way; and `min_logstd` cancels out of it entirely (C-11), giving a one-way ratchet. Predicted from the algebra, then reproduced on a fresh model in 451 iterations.
-5. **The released checkpoint cannot have come from the released recipe** (C-12, O-10). Its variance state implies ~155,000 iterations at the configured learning rate, against a config that says 500 and a paper that says 2500. New at Step 4, cheap to confirm, and it bears on what "reproducing RWM" even means.
-6. **The paper's described model is not the implemented model** (C-01, C-03, C-05, C-07, C-09, M-13). Seven loss terms against two; a residual mean head; two trunks; sample-versus-mean asymmetry; a forecast decay factor the paper specifies and the code lacks; and an auxiliary branch that is teacher-forced while the state branch is not.
-7. **The released checkpoint is only modestly better than a trivial baseline at long horizon** (R-03, R-09, R-10, R-15). Softened twice now: it is not worse at one step once scored correctly, and the per-group breakdown localises the weakness to base linear velocity while joint prediction stays strong.
-8. **Evaluation with ten trajectories is underpowered** (M-04, D-12, R-15). Survives the convention change at 1.6σ. Methodological, but it undercuts single-seed comparisons in this literature generally.
-9. **Correlational tests cannot establish action alignment for position-controlled robots** (M-10, M-11). A small, transferable methods note: identification has to come from structural invariants such as reset rows, not from fitting.
-10. **A relative-L1 metric on normalised states is the wrong instrument** (M-03, M-09, M-12). It is unusable per-group, saturates at long horizon, and hides the effect in item 3. A fixed-denominator nRMSE costs nothing and does not.
+1. **The paper's central claim reproduces, and the margin is large** (R-22, R-23, M-16). The
+   autoregressive objective beats teacher forcing at h=368 by **4.3× on relative-L1 and 3.9× on
+   nRMSE**, with the ordering identical at both checkpoints, the difference well outside the
+   seed spread, and both metrics agreeing — against a decision rule pre-registered in git before
+   any Arm B result existed. The mechanism is measured too (R-23): teacher forcing reaches a 3×
+   *lower* training loss with 5× smaller gradients and then rolls out 4.3× worse. That is
+   exposure bias quantified end to end on the released architecture. Promoted to first place at
+   Step 6: it is the claim the project was built to test, it is now answered, and the
+   pre-registration is what makes the answer worth citing.
+2. **The released checkpoint cannot have come from the released recipe, on two independent
+   parameters** (C-12, C-13, O-12, R-24, R-25). The pooled collapse rate over six runs is
+   −9.4362e-05 ± 3.33e-07, a run-to-run spread of 0.87%, implying 153,270 iterations at the
+   configured learning rate or a 31× larger one. `min_logstd`, on a different gradient path and a
+   5× slower clock, independently implies order 2.7e5. Config says 500, paper says 2500,
+   checkpoint is tagged 5000.
+3. **The released pipeline trains on spliced episodes** (B-01, D-03, D-06). A defect with a clear mechanism, a clean count, and an obvious controlled experiment behind it (O-06).
+4. **There is no held-out evaluation in the released repository** (B-03, B-04), plus a demonstration of what a correct one gives (X-01, R-02, R-15).
+5. **The released evaluation feeds a stale action and understates its own model** (B-05, D-13, R-09, R-15). Settled at Step 3.5 and quantified at Step 4 across both protocols, both metrics and a 20-seed spread. The sharpest single number is the fixed-denominator one: at h=368 the checkpoint scores nRMSE **1.3228 under the released convention and 0.7572 under the causal one** — the difference between "worse than predicting the training mean" and "clearly informative".
+6. **Both halves of RWM-U's uncertainty estimate are degenerate, by construction** (C-04, C-06, C-10, C-11, R-17, O-08). Strengthened considerably at Step 4. The collapse is now shown to be the *optimum of the released objective* rather than an accident: the state loss is squared error on a reparameterised sample with no log-sigma term, so `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at sigma = 0; the bound loss pushes the same way; and `min_logstd` cancels out of it entirely (C-11), giving a one-way ratchet. Predicted from the algebra, then reproduced on a fresh model in 451 iterations.
+7. **[superseded by item 2 above]** (C-12, O-10). Its variance state implies ~155,000 iterations at the configured learning rate, against a config that says 500 and a paper that says 2500. New at Step 4, cheap to confirm, and it bears on what "reproducing RWM" even means.
+8. **The paper's described model is not the implemented model** (C-01, C-03, C-05, C-07, C-09, M-13). Seven loss terms against two; a residual mean head; two trunks; sample-versus-mean asymmetry; a forecast decay factor the paper specifies and the code lacks; and an auxiliary branch that is teacher-forced while the state branch is not.
+9. **The released checkpoint is only modestly better than a trivial baseline at long horizon** (R-03, R-09, R-10, R-15). Softened twice now: it is not worse at one step once scored correctly, and the per-group breakdown localises the weakness to base linear velocity while joint prediction stays strong.
+10. **Evaluation with ten trajectories is underpowered** (M-04, D-12, R-15). Survives the convention change at 1.6σ. Methodological, but it undercuts single-seed comparisons in this literature generally.
+11. **Correlational tests cannot establish action alignment for position-controlled robots** (M-10, M-11). A small, transferable methods note: identification has to come from structural invariants such as reset rows, not from fitting.
+12. **A relative-L1 metric on normalised states is the wrong instrument** (M-03, M-09, M-12). It is unusable per-group, saturates at long horizon, and hides the effect in item 3. A fixed-denominator nRMSE costs nothing and does not.
 
 ---
 

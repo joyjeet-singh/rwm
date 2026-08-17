@@ -11,17 +11,17 @@ never edited in place; wrong turns are marked `SUPERSEDED` and kept.
 
 ## Status
 
-**Steps 0–4 complete. Step 5 in progress: 1 of 6 main runs finished.**
+**Steps 0–5 complete. All six main runs finished. The paper's central claim reproduces.**
 
-The trainer is verified against the reference at the gradient level and proven by an overfit
-test. Arm A (autoregressive, faithful) seed 0 has trained to 2500 iterations; Arm A seeds 1–2
-and Arm B (teacher forcing) seeds 0–2 are outstanding. The autoregressive-versus-teacher-forcing
-comparison is therefore **not yet answered**, and its decision rule is pre-registered in the
-ledger (`M-16`) rather than chosen after the fact.
+The autoregressive objective beats teacher forcing at h=368 by **4.3× on relative-L1 and 3.9×
+on nRMSE**, three seeds per arm, with the ordering identical at both the 500 and 2500
+checkpoints and the difference well outside the seed spread. Both metrics agree. The decision
+rule was **pre-registered in git (`84ff01b`) before any Arm B result existed** (`M-16`), so the
+verdict was not chosen after seeing the numbers.
 
-Note on Arm A seed 0: at 2500 iterations — the count the paper states — the training loss is
-still falling steeply, at −7.59e-04 per iteration over the final 250. Neither arm will be
-converged at this budget, which is itself part of the result.
+Caveat stated up front: every one of the six runs was **still descending** at 2500 iterations —
+the count the paper's Table S7 gives — so the absolute error values are not the reference's.
+Arm A was falling 2–3× faster than Arm B at the cap, so the margin is likely conservative.
 
 ## What has been established
 
@@ -46,10 +46,16 @@ Four findings drive the rest of the work:
    one-way ratchet. Predicted from the algebra, then reproduced on a fresh model.
    (`C-06`, `C-10`, `C-11`, `R-17`, `R-18`)
 
-4. **The released checkpoint cannot have come from the released recipe.** Its collapse depth
-   implies either ~155,000 iterations at the configured learning rate, or a learning rate
-   30–40× larger than configured. The checkpoint is tagged iteration 5000, the config says
-   500, and the paper says 2500 — three numbers, none of which fit. (`C-12`, `C-13`, `O-10`)
+4. **The released checkpoint cannot have come from the released recipe — on two independent
+   parameters.** The collapse rate pooled over six runs is −9.4362e-05 ± 3.33e-07, a
+   run-to-run spread of 0.87%, implying ~153,000 iterations at the configured learning rate or
+   one 31× larger. `min_logstd`, on a different gradient path and a 5× slower clock,
+   independently implies order 2.7e5. The checkpoint is tagged iteration 5000, the config says
+   500, the paper says 2500. (`C-12`, `C-13`, `O-12`, `R-24`, `R-25`)
+
+5. **Teacher forcing trains better and deploys worse, measured end to end.** Arm B reaches a
+   3× lower training loss with 5× smaller gradient norms, then rolls out 4.3× worse at h=368.
+   The objective it minimises is not the objective that matters. (`R-22`, `R-23`)
 
 ## Verification chain
 
