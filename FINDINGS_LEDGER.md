@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–4 complete. No long training run performed; Step 5 decides what to run and where. Last updated: 17 Aug 2026.
+**Status.** Steps 0–4 complete. Step 5 hygiene and trainer validation done; the main experiment (5.3) is NOT yet run. Last updated: 17 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -81,6 +81,15 @@
 | R-02, R-04, R-06, R-07 | headline figures | **superseded as headline by R-15**; retained as what the released code reports |
 | M-03 | aggregate-only caveat | companion metric added (M-12) |
 | — | — | **New:** C-11, C-12, M-12, M-13, R-14–R-17, O-10, O-11, X-06 |
+
+## Step 5 changes at a glance
+
+| ID | Was | Now |
+|---|---|---|
+| R-17 | INCOMPLETE (memorisation) | **superseded as the trainer test by R-18** — decisive |
+| O-08 | PARTIALLY RESOLVED | **RESOLVED** — collapse reproduced at two learning rates, rate ∝ lr (R-18) |
+| C-12 | ~155k iterations vs 500/2500 | **refined by O-12** — the checkpoint's own iteration tag makes it sharper |
+| — | — | **New:** C-13, R-18, O-12, plus repository licensing and reproducibility scaffolding |
 
 ---
 
@@ -333,10 +342,31 @@ of magnitude.
 **Evidence** `RUN` `step4_4_overfit_ens1.json`, linear fit over 18 collapse samples; `SRC`
 `base_cfg.py` lr and max_iterations.
 **Status** CONFIRMED · **Relevance** CONTRIB
+**Refined by O-12 (Step 5)**, which adds a second rate measurement at lr 1e-3 and compares against the checkpoint's own iteration tag of 5000 rather than only against 500 and 2500.
 **Caveat** Measured at ensemble 1 on a single fixed batch (X-06). The rate is set by the
 optimiser and the bound-loss gradient sign, neither of which depends on batch content, so
 it should carry — but this is an extrapolation over three orders of magnitude and is
 labelled as one. Opens O-10.
+
+
+### C-13 — Three different iteration counts are in play · **NEW (Step 5)**
+The reproduction target does not state one training length; it states three, and they
+disagree by an order of magnitude.
+
+| Source | Iterations |
+|---|---|
+| `base_cfg.py` `ModelTrainingConfig.max_iterations` | **500** |
+| Paper, Table S7 | **2500** |
+| `pretrain_rnn_ens.pt`, `iter` key in the checkpoint | **5000** |
+
+None of the three is consistent with the released checkpoint's variance state (O-12), so this
+is not merely a documentation mismatch — the largest of the three still falls ~6 orders of
+magnitude short of explaining the weights that shipped.
+**Evidence** `SRC` `base_cfg.py:97`; `EXT` paper Table S7; `DATA` checkpoint `iter` field,
+read in R-01.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Decision for Step 5** Train to 2500 to match the paper and checkpoint at 500 as well, so
+both documented numbers can be reported from one run at no extra cost.
 
 
 ---
@@ -720,6 +750,48 @@ The rate feeds C-12.
 **Status** CONFIRMED (collapse) · **INCOMPLETE** (memorisation) · **Relevance** CONTRIB
 
 
+### R-18 — Overfit one batch, rerun: the trainer is proven · **NEW (Step 5)**
+R-17 was inconclusive because of its own configuration, not a defect: batch 1024 with an
+8-step autoregressive objective at the reference's full-dataset learning rate of 1e-4. Rerun
+with the confounds removed — **batch 32, lr 1e-3, 2000 iterations, no wall-clock cap**,
+everything else identical, ensemble 1 as in X-06.
+
+| | R-17 (batch 1024, lr 1e-4) | **R-18 (batch 32, lr 1e-3)** |
+|---|---|---|
+| iterations | 451 (capped) | **2001** |
+| s/iter | 6.00 | **0.229** |
+| state loss | 49.227 → 4.124 | **41.871 → 0.027802** |
+| reduction | 91.6% | **99.93%, a factor of 1506** |
+| per-dim RMSE equivalent | 0.303 sd | **0.0249 sd** |
+| contact | 6.87e-01 → 5.16e-02 | **6.86e-01 → 4.50e-05** |
+| termination | 7.04e-01 → 4.36e-04 | **7.07e-01 → 1.01e-06** |
+
+**Verdict: decisive.** The literal 1e-4 threshold was not reached, but that threshold is a
+*sum over 45 dimensions* — it demands a per-dimension RMSE of 0.0015 normalised sd, which is
+far below what "can this code memorise" requires. What was reached is a per-dimension error
+of 2.5% of a standard deviation, with the contact term at 4.5e-05 and the termination term at
+1.0e-06.
+
+The run was **still descending at the cap**, not plateaued: block means fall monotonically
+across all ten 200-iteration blocks (4.101, 0.535, 0.252, 0.160, 0.107, 0.135, 0.057, 0.067,
+0.037, 0.033), and iterations 1500–1999 average 2.62× lower than 1000–1499. So there is no
+structural limit of the kind 5.1 asked to watch for. The trainer memorises; Step 5 may
+proceed.
+
+The three inert terms (`sequence`, `kl`, `extension`) stayed exactly zero throughout, as
+C-09/M-07 predict; every live term moved in the right direction.
+
+**Reproducibility check:** the run was executed twice — once to measure and once to regenerate
+the report after the repository restructure — and produced bitwise-identical loss values
+(41.871338, 7.060672, 3.942659, …). The trainer is deterministic under a fixed seed.
+**Evidence** `RUN` `results/step4_4_overfit_b32lr1e3.json`,
+`figures/step4_overfit_b32lr1e3.png`.
+**Status** CONFIRMED · **Relevance** METHOD
+**Supersedes** R-17 as the trainer-validity test. R-17 is retained: its 45-minute cost at the
+reference configuration is what R-16's timing predicted, and that agreement is its own
+small confirmation.
+
+
 ---
 
 ## F. Open questions
@@ -787,6 +859,59 @@ is fine on rented hardware; if it is intrinsic to the per-member Python loop in
 `compute_loss`, batch 256 is strictly better everywhere and the reference's own default is a
 poor choice.
 **Test** Re-time on any machine with more cores and RAM before committing to a Step 6 config.
+
+### O-12 — The released checkpoint's variance collapse is inconsistent with the released configuration · **NEW (Step 5)**
+The sharpest quantitative discrepancy found so far, and it now has two independent
+measurements of the underlying rate rather than one.
+
+`log_delta_logstd` decays at a rate set by the optimiser, not by the data: Adam's step in a
+parameter whose gradient holds its sign is approximately the learning rate, and the bound
+loss `mean(exp(log_delta_logstd))` is monotone in this parameter, so the sign never changes.
+Measured on fresh models over two learning rates a decade apart:
+
+| run | lr | fitted rate per iteration | rate / lr |
+|---|---|---|---|
+| R-17 | 1e-4 | −9.318e-05 | 0.93 |
+| R-18 | 1e-3 | −7.025e-04 | 0.70 |
+
+The released checkpoint sits at `log_delta_logstd` = **−14.4629** (C-10). Against its own
+tagged iteration count of **5000** (C-13):
+
+| | predicted `exp(log_delta_logstd)` |
+|---|---|
+| 500 iterations at lr 1e-4 (`base_cfg.py`) | 0.955 |
+| 2500 iterations at lr 1e-4 (paper Table S7) | 0.792 |
+| **5000 iterations at lr 1e-4 (the checkpoint's own tag)** | **≈ 0.63** |
+| **observed in the released checkpoint** | **5.234e-07** |
+
+That is a gap of roughly **six orders of magnitude** at the checkpoint's own stated iteration
+count. Closing it requires either ≈155,000 iterations at the configured learning rate, or a
+learning rate of **3.1e-3 to 4.1e-3** — 31 to 41× the configured 1e-4 — to arrive in 5000.
+
+**Escape hatches, named honestly.** Any of these would explain it, and this entry does not
+claim to distinguish them:
+- a much larger learning rate during the unpublished 6M-transition pretraining (X-04);
+- a different initialisation of `log_delta_logstd` (the released code initialises it to a
+  constant 0.0 at `mlp.py:79`, but the pretraining code is not public);
+- a different bound-loss weight than the configured 1.0;
+- far more optimisation steps than the `iter` tag records — e.g. if the tag counts outer
+  iterations and each contains many gradient steps.
+
+**What does NOT explain it:** batch size and ensemble size. Adam's step in this parameter is
+~lr regardless of gradient magnitude, and both measurements above confirm that scaling —
+R-17 and R-18 differ 32× in batch size and land within 25% of the same rate/lr ratio.
+**Evidence** `RUN` `results/step4_4_overfit_ens1.json`,
+`results/step4_4_overfit_b32lr1e3.json`; `DATA` C-10; `SRC` `base_cfg.py`, `mlp.py:79`.
+**Status** OPEN — the discrepancy is measured and confirmed; its *cause* is not.
+**Relevance** CONTRIB
+**Test** Cheap, and Step 5.3 supplies it free: the faithful arm runs to 2500 iterations at
+lr 1e-4, so read `exp(log_delta_logstd)` at 500 and 2500 and compare against 0.955 and 0.792.
+Agreement confirms the model of the mechanism and leaves the checkpoint unexplained.
+**Note on arithmetic** The Step 5 brief quotes −8.859e-05/iteration and ≈163,000 iterations.
+That divides the observed log change by the run length (451) rather than by the iteration of
+the last collapse sample (425); dividing by 425 gives −9.402e-05 two-point, −9.318e-05
+fitted, and ≈155,000 iterations. The conclusion is unaffected.
+
 
 ---
 

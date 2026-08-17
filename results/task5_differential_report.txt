@@ -2,9 +2,7 @@
 TASK 5 -- DIFFERENTIAL TEST AGAINST THE REFERENCE MODULE
 ==============================================================================
 
-  import OK via: importlib direct file load
-  (earlier attempts failed; last error from those was:
-   ModuleNotFoundError: No module named 'git')
+  import OK via: from rsl_rl.modules import SystemDynamicsEnsemble
 
   READ AND REPORT -- constructor signature (system_dynamics.py:6-17):
     state_dim: int   (required)

@@ -15,10 +15,15 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               os.pardir, "src"))
+
 import rwm_data as R
 
 STRIDE = 27          # steps, measured in Step 1
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
+OUT = R.FIGURES
 
 
 def smooth(x, w=STRIDE):
@@ -244,7 +249,7 @@ def main():
                     "regimes": [[round(r["vx"], 3), round(r["vy"], 3)] for r in rs]}
         pairs = "  ".join(f"({r['vx']:+.2f},{r['vy']:+.2f})" for r in rs)
         print(f"  {e:2d}     {len(rs)}     {pairs:<40s}  {str(quads):<22s} {speed:.2f}")
-    with open(os.path.join(os.path.dirname(OUT), "step0_strat.json"), "w") as f:
+    with open(os.path.join(R.RESULTS, "step0_strat.json"), "w") as f:
         json.dump(strat, f, indent=2)
 
     # ------------------------------------------------------------------ plots
@@ -293,9 +298,9 @@ def main():
     p2 = os.path.join(OUT, "step0_regime_scatter.png")
     fig.savefig(p2, dpi=130)
     plt.close(fig)
-    print(f"\n  wrote {p1}\n  wrote {p2}")
+    print(f"\n  wrote {R.rel(p1)}\n  wrote {R.rel(p2)}")
 
-    with open(os.path.join(os.path.dirname(OUT), "step0_regimes.json"), "w") as f:
+    with open(os.path.join(R.RESULTS, "step0_regimes.json"), "w") as f:
         json.dump({"regimes": regimes,
                    "per_episode_stats": {str(e): per_ep[e] for e in per_ep},
                    "stride_used": STRIDE, "change_points": cuts,

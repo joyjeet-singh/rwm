@@ -11,12 +11,16 @@ never edited in place; wrong turns are marked `SUPERSEDED` and kept.
 
 ## Status
 
-Steps 0–4 complete. No long training run has been performed yet — Step 4 ends at the
-timing measurement, which decides where Step 5 runs.
+**Steps 0–3 complete. Step 4 verified and timed; its trainer is proven by an overfit test
+and by a losses-and-gradients differential test against the reference. Step 5's main
+experiment has not been run.**
+
+No long training run has been performed. The apparatus is finished and timed; what remains
+is to spend the compute.
 
 ## What has been established
 
-Three findings drive the rest of the work:
+Four findings drive the rest of the work:
 
 1. **The released data has ten unmarked episode boundaries.** The termination column is
    identically zero, so the reference window builder marks all 9,961 windows valid,
@@ -26,68 +30,87 @@ Three findings drive the rest of the work:
 2. **Training and evaluation disagree on action alignment, and the evaluation side is the
    broken one.** Row *t* holds the action that *produced* state *t*, so the reference's
    training pairing is causal and its evaluation pairing is stale by one step. Scored
-   correctly the checkpoint is materially better than the released evaluation reports —
-   24% lower one-step error. (`D-13`, `B-05`, `R-09`)
+   correctly the checkpoint is materially better than the released evaluation reports: at
+   h=368 it goes from nRMSE 1.3228 — worse than predicting the training mean — to 0.7572.
+   (`D-13`, `B-05`, `R-09`, `R-15`)
 
-3. **The variance head has collapsed, and that is the objective's optimum, not an
-   accident.** The state loss is squared error on a reparameterised sample with no
-   log-sigma term, so `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at
-   sigma = 0. In the released checkpoint the learned interval has closed to 5.23e-07.
-   (`C-06`, `C-10`, `O-08`)
+3. **The variance head collapse is the objective's optimum, not an accident.** The state
+   loss is squared error on a reparameterised sample with no log-sigma term, so
+   `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at sigma = 0; the bound
+   loss pushes the same way; and `min_logstd` cancels out of it entirely, making it a
+   one-way ratchet. Predicted from the algebra, then reproduced on a fresh model.
+   (`C-06`, `C-10`, `C-11`, `R-17`, `R-18`)
 
-The verification chain: outputs bitwise identical to the reference module (`R-11`), harness
-indexing pinned by direct assertion against the raw CSV (`R-12`), and losses **and
-gradients** matching to 0.000e+00 across all seven terms and all 106 parameter tensors
-(`R-14`).
+4. **The released checkpoint cannot have come from the released recipe.** Its collapse depth
+   implies either ~155,000 iterations at the configured learning rate, or a learning rate
+   30–40× larger than configured. The checkpoint is tagged iteration 5000, the config says
+   500, and the paper says 2500 — three numbers, none of which fit. (`C-12`, `C-13`, `O-10`)
+
+## Verification chain
+
+What any downstream number rests on:
+
+| Level | Claim | Result |
+|---|---|---|
+| Shapes | parameter counts match | `R-01`, exact |
+| Wiring | inference outputs match the reference module | `R-11`, **0.000e+00** bitwise |
+| Indexing | the harness feeds the actions it claims | `R-12a`, bitwise vs raw CSV |
+| Residual | zero-delta model is the hold-last floor | `R-12c`, 1.19e-07 |
+| **Objective** | **losses and gradients match** | **`R-14`, 0.000e+00 across 7 terms, 106 tensors** |
+| Trainer | can memorise a batch | `R-18`, 1506× loss reduction |
 
 ## Layout
 
-| File | Purpose |
+```
+FINDINGS_LEDGER.md    every claim, with evidence and status — start here
+LOSS_ASSEMBLY.md      line-by-line extraction of the reference loss
+src/                  importable modules
+scripts/              one script per investigation, each self-documenting
+results/              JSON and text artifacts backing the ledger's RUN evidence
+figures/              plots
+setup.sh              fetch upstreams at pinned commits, verify artifact hashes
+```
+
+| Module | Purpose |
 |---|---|
-| `FINDINGS_LEDGER.md` | Every claim, with evidence and status. Start here. |
-| `rwm_data.py` | Loading, episode structure, config import, assertions |
-| `rwm_model.py` | The model — inference and training paths, from scratch |
-| `rwm_train.py` | Data pipeline, optimizer, train step, hyperparameters |
-| `rwm_metrics.py` | Normalised RMSE with a fixed denominator |
-| `rollout_eval.py` | Model-agnostic evaluation harness + acceptance tests |
-| `score_reference.py` | Scores the released checkpoint |
-| `step0_*`, `step4_*`, `task1*`–`task5*` | One script per investigation, each self-documenting |
-| `figures/` | Plots |
-| `*_report.txt`, `*.json` | Run artifacts backing the ledger's `RUN` evidence |
+| `src/rwm_data.py` | Loading, episode structure, config import, assertions |
+| `src/rwm_model.py` | The model — inference and training paths, from scratch |
+| `src/rwm_train.py` | Data pipeline, optimizer, train step, hyperparameters |
+| `src/rwm_metrics.py` | Normalised RMSE with a fixed denominator |
+| `src/rollout_eval.py` | Model-agnostic evaluation harness + acceptance tests |
+| `src/score_reference.py` | Scores the released checkpoint |
 
 ## Reproducing
 
-Needs the two upstream repositories, which are **not** vendored here:
-
 ```bash
-git clone https://github.com/leggedrobotics/robotic_world_model_lite
-git clone https://github.com/leggedrobotics/rsl_rl_rwm
-```
-
-Place both beside this directory. Do **not** run `pip install -e .` in either — their
-`setup.py` pins `torch>=2.7` with CUDA. The modules themselves import fine on CPU.
-
-```bash
+./setup.sh                      # clones both upstreams at the pinned commits,
+                                # verifies the two artifact SHA-256 hashes
 python3.11 -m venv .venv && . .venv/bin/activate
-pip install "torch==2.2.2" "numpy==1.26.4" "pandas==2.2.3" "matplotlib==3.8.4" gitpython tensordict
+pip install -r requirements.txt
 ```
 
+`setup.sh` does **not** install either upstream: their `setup.py` pins `torch>=2.7` with
+CUDA, which would replace the pins in `requirements.txt`. Only their source is read.
 `torch 2.2.2` is the last release with Intel-Mac wheels and is built against NumPy 1.x, so
-the NumPy pin is required. `gitpython` and `tensordict` are only needed to import the
-reference package cleanly for the differential tests.
+the NumPy pin is required rather than cosmetic.
 
 Then, in dependency order:
 
 ```bash
-python step0_velocity_regimes.py      # command regimes; writes the split key
-python rollout_eval.py                # harness + six acceptance tests
-python score_reference.py             # scores the released checkpoint
-python step4_3_differential.py        # the acceptance gate: losses and gradients
-python step4_5_timing.py              # CPU budget
+python scripts/step0_velocity_regimes.py   # command regimes; writes the split key
+python src/rollout_eval.py                 # harness + six acceptance tests
+python src/score_reference.py              # scores the released checkpoint
+python scripts/step4_3_differential.py     # acceptance gate: losses and gradients
+python scripts/step4_5_timing.py           # CPU budget
 ```
 
 ## Environment
 
 Intel Mac x86_64, CPU only, Python 3.11.15, torch 2.2.2, numpy 1.26.4.
 Reference commits: `robotic_world_model_lite` `13a798e9`, `rsl_rl_rwm` `18eebcdd`.
-Both upstream repositories are Apache 2.0.
+
+## Licence and attribution
+
+Apache 2.0 — see [`LICENSE`](LICENSE). Both upstream repositories are Apache 2.0; attribution
+and the independence statement are in [`NOTICE`](NOTICE). This is an independent
+reproduction, not affiliated with or endorsed by the original authors.

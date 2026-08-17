@@ -56,8 +56,28 @@ STATE_GROUPS = [
 ]
 
 
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(SRC_DIR)              # the repository itself
+WORKSPACE = os.path.dirname(REPO_ROOT)            # where ./setup.sh puts the upstreams
+RESULTS = os.path.join(REPO_ROOT, "results")
+FIGURES = os.path.join(REPO_ROOT, "figures")
+
+
+def rel(path):
+    """
+    Path relative to the repository root, for printing.
+
+    Reports are committed artifacts, so they must not carry an absolute path
+    from whatever machine produced them.
+    """
+    try:
+        return os.path.relpath(path, REPO_ROOT)
+    except ValueError:
+        return path
+
+
 def repo_paths(base=None):
-    base = base or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    base = base or WORKSPACE
     return {
         "lite": os.path.join(base, "robotic_world_model_lite"),
         "rsl": os.path.join(base, "rsl_rl_rwm"),

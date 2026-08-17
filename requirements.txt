@@ -1,0 +1,20 @@
+# Exact pins for the environment every recorded result was produced under.
+#
+# torch 2.2.2 is the last release with Intel-Mac (x86_64) wheels, and it is
+# built against NumPy 1.x -- hence the numpy pin, which is required, not
+# cosmetic. Installing numpy>=2 alongside it produces
+# "_ARRAY_API not found" and a broken torch.
+#
+# gitpython and tensordict are needed only so the reference package
+# `rsl_rl.modules` imports cleanly for the differential tests (R-14).
+# Both are pure Python and neither disturbs the torch pin.
+#
+# Do NOT run `pip install -e .` in either upstream repository: their setup.py
+# pins torch>=2.7 with CUDA and will replace the pins above.
+
+torch==2.2.2
+numpy==1.26.4
+pandas==2.2.3
+matplotlib==3.8.4
+gitpython
+tensordict

@@ -25,6 +25,11 @@ import os
 import numpy as np
 import torch
 
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               os.pardir, "src"))
+
 import rwm_data as R
 import rollout_eval as E
 import rwm_metrics as MET
@@ -51,7 +56,7 @@ def per_traj_e(pred, true, start=E.START_STEP):
 
 
 def main():
-    here = os.path.dirname(os.path.abspath(__file__))
+    here = R.RESULTS
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, episode_id = R.load_data(paths["csv"], verbose=False)

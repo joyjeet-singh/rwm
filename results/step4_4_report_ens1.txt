@@ -67,4 +67,9 @@ STEP 4 / 4 -- OVERFIT ONE BATCH  (ensemble 1, batch 1024, cap 2000 iters / 2700 
     PREDICTION CONFIRMED -- the interval is closing even on a single batch
     released checkpoint sits at exp(log_delta) = 5.23e-07 (C-10); we are at 9.607e-01 after 451 iterations
 
-  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/figures/step4_overfit_ens1.png
+  wrote figures/step4_overfit_ens1.png
+
+[Artifact note] This is the original Step 4 run, superseded by the Step 5.1 rerun
+(results/step4_4_report_b32lr1e3.txt). Retained for the record. The only edit made
+to this file was rewriting the absolute output path on the final line as a
+repository-relative one; no measured value was altered.

@@ -186,7 +186,7 @@ ERROR BY FORECAST HORIZON (protocol A, clean)
   GAP  e(A) - e(B) = -0.5056   (-39.7% relative to B)
   Floor headroom: hold-last e = 1.0070, protocol A e = 0.7672  -> model is 1.31x better than the floor
 
-  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/figures/step3_per_step_error.png
-  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/manifest.json
+  wrote figures/step3_per_step_error.png
+  wrote results/manifest.json
 
-  WALL CLOCK: 38.9 s
+  WALL CLOCK: 46.5 s

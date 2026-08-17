@@ -1,0 +1,64 @@
+RWM reproduction — proprioceptive dynamics model
+Copyright 2026 Joyjeet Singh
+
+This product includes software developed as an independent reproduction of work
+by the Robotic Systems Lab, ETH Zurich.
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+-------------------------------------------------------------------------------
+ATTRIBUTION
+-------------------------------------------------------------------------------
+
+This work derives from, and is a reproduction study of:
+
+  Robotic World Model: A Neural Network Simulator for Robust Policy
+  Optimization in Robotics
+  Chenhao Li, Andreas Krause, Marco Hutter
+  arXiv:2501.10100 (2025)
+
+  Uncertainty-Aware Robotic World Model Makes Offline Model-Based
+  Reinforcement Learning Work on Real Robots
+  Chenhao Li, Andreas Krause, Marco Hutter
+  arXiv:2504.16680 (2025)
+
+  Robotic Systems Lab, ETH Zurich.
+
+Upstream repositories, both Apache License 2.0, pinned at the commits this
+reproduction was verified against:
+
+  leggedrobotics/robotic_world_model_lite
+    commit 13a798e9d35dabf12c0e6e02977b25ec64dfb2bd
+    Portions of this work reimplement logic read from scripts/train.py,
+    scripts/model_training.py and scripts/configs/*.
+
+  leggedrobotics/rsl_rl_rwm
+    commit 18eebcdd7145284c8d5eed5d8ed1a4b96c649693
+    Portions of this work reimplement logic read from
+    rsl_rl/modules/system_dynamics.py and rsl_rl/modules/architectures/*.
+
+Reference artifacts consumed but NOT redistributed in this repository
+(see setup.sh, which fetches them and verifies these hashes):
+
+  assets/data/state_action_data_0.csv
+    sha256 1b2e00b8a2bc10dc9b5f62840de72410adb448a57a9a2f6adbcd735be9e78921
+  assets/models/pretrain_rnn_ens.pt
+    sha256 2ac8686c8c7736287853c0fe1438c379320068adf97be71609b5f1afb52c6e5a
+
+The Isaac Lab source is cited in FINDINGS_LEDGER.md entry D-13
+(isaac-sim/IsaacLab, source/isaaclab/isaaclab/managers/action_manager.py,
+commit 7a4b6d2be5823d03f91a448751947a68add0a285, Apache License 2.0 / BSD-3).
+
+-------------------------------------------------------------------------------
+INDEPENDENCE
+-------------------------------------------------------------------------------
+
+This is an INDEPENDENT REPRODUCTION. It is not affiliated with, endorsed by, or
+reviewed by the original authors, the Robotic Systems Lab, or ETH Zurich.
+
+It records discrepancies between the published description and the released
+implementation. Those findings are the present author's, carry the evidence and
+status recorded in FINDINGS_LEDGER.md, and should not be attributed to the
+original authors. Where a finding concerns the released code or checkpoint, it
+describes the artifacts at the commits and hashes pinned above and may not apply
+to other versions.

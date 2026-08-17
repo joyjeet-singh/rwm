@@ -1,6 +1,6 @@
 {
   "import_succeeded": true,
-  "import_method": "importlib direct file load",
+  "import_method": "from rsl_rl.modules import SystemDynamicsEnsemble",
   "constructor_signature": "(self, state_dim: int, action_dim: int, extension_dim: int, contact_dim: int, termination_dim: int, device: str, ensemble_size: int = 1, history_horizon: int = 1, architecture_config: dict = None, freeze_auxiliary: bool = False)",
   "constructor_kwargs": {
     "state_dim": 45,

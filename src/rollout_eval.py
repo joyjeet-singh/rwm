@@ -404,7 +404,7 @@ def build_base_config(cfg, seed=0):
 
 
 def main():
-    here = os.path.dirname(os.path.abspath(__file__))
+    here = R.RESULTS
     paths = R.repo_paths()
     print("=" * 78)
     print("STEP 2 -- EVALUATION HARNESS")

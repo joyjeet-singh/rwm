@@ -21,6 +21,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               os.pardir, "src"))
+
 import rwm_data as R
 import rollout_eval as E
 import score_reference as S
@@ -72,7 +77,7 @@ def group_stats(pred, true, cols, start=E.START_STEP):
 
 
 def main():
-    here = os.path.dirname(os.path.abspath(__file__))
+    here = R.RESULTS
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, episode_id = R.load_data(paths["csv"], verbose=False)
@@ -233,10 +238,10 @@ def main():
     ax[1].set_title("Task 4: per-group error (training convention)")
     ax[1].legend(fontsize=8); ax[1].grid(alpha=0.3)
     fig.tight_layout()
-    p = os.path.join(here, "figures", "task2_4_convention_and_groups.png")
+    p = os.path.join(R.FIGURES, "task2_4_convention_and_groups.png")
     fig.savefig(p, dpi=140)
     plt.close(fig)
-    print(f"\n  wrote {p}")
+    print(f"\n  wrote {R.rel(p)}")
 
     with open(os.path.join(here, "task2_4_results.json"), "w") as f:
         json.dump({"task2_horizons": {str(k): v for k, v in t2.items()},

@@ -104,4 +104,4 @@ TASK 4 -- PER-STATE-GROUP BREAKDOWN (protocol A, clean, training convention)
     Verdict: the expectation is neither confirmed nor refuted -- the
     normalised relative-error metric is not meaningful for this group.
 
-  wrote /Users/joyjeetsingh/Downloads/PDM/rwm_repro/figures/task2_4_convention_and_groups.png
+  wrote figures/task2_4_convention_and_groups.png

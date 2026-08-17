@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+title: "RWM reproduction: an independent reproduction of the Robotic World Model proprioceptive dynamics model"
+message: "If you refer to this reproduction or its findings, please cite it, and cite the original work it reproduces."
+type: software
+authors:
+  - family-names: Singh
+    given-names: Joyjeet
+repository-code: "https://github.com/joyjeet-singh/rwm"
+license: Apache-2.0
+keywords:
+  - reproducibility
+  - world models
+  - model-based reinforcement learning
+  - legged robotics
+abstract: >-
+  An independent CPU reproduction of the proprioceptive dynamics model from
+  Robotic World Model (arXiv:2501.10100), verified against the released
+  reference at the level of outputs, losses and gradients. Every claim is
+  recorded in an append-only findings ledger with an evidence class and a
+  source. Principal findings: the released data contains ten episode
+  boundaries that its own termination column does not mark, so the released
+  window builder trains on 352 spliced windows; the reference's training and
+  evaluation code disagree on action alignment and the evaluation side is
+  stale by one step, understating the released checkpoint; and the predicted
+  variance head collapses because that is the optimum of the released
+  objective rather than a training accident.
+references:
+  - type: article
+    title: "Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics"
+    authors:
+      - family-names: Li
+        given-names: Chenhao
+      - family-names: Krause
+        given-names: Andreas
+      - family-names: Hutter
+        given-names: Marco
+    year: 2025
+    identifiers:
+      - type: other
+        value: "arXiv:2501.10100"
+  - type: article
+    title: "Uncertainty-Aware Robotic World Model Makes Offline Model-Based Reinforcement Learning Work on Real Robots"
+    authors:
+      - family-names: Li
+        given-names: Chenhao
+      - family-names: Krause
+        given-names: Andreas
+      - family-names: Hutter
+        given-names: Marco
+    year: 2025
+    identifiers:
+      - type: other
+        value: "arXiv:2504.16680"

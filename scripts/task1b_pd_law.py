@@ -38,6 +38,11 @@ import os
 
 import numpy as np
 
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               os.pardir, "src"))
+
 import rwm_data as R
 import rollout_eval as E
 
@@ -73,7 +78,7 @@ def fit_pd(data, episode_id, m, episodes, joints=range(12)):
 
 
 def main():
-    here = os.path.dirname(os.path.abspath(__file__))
+    here = R.RESULTS
     paths = R.repo_paths()
     data, episode_id = R.load_data(paths["csv"], verbose=False)
     split = E.make_split(seed=0, strat_path=os.path.join(here, "step0_strat.json"),

@@ -1,14 +1,31 @@
-# virtualenvs
+# --- credentials: never commit. Present in this working tree at one point,
+# --- which is exactly why these patterns are explicit rather than assumed.
+sshkey
+sshkey*
+id_rsa*
+id_ed25519*
+id_ecdsa*
+*.pem
+*.key
+!*.pub.example
+.env
+.netrc
+
+# virtualenvs / caches
 .venv*/
 venv/
 __pycache__/
 *.pyc
 
-# upstream artifacts — cloned/downloaded by setup.sh, not redistributed here
+# upstream repositories and reference artifacts — fetched by ./setup.sh at the
+# pinned commits and hash-verified there. Deliberately not vendored.
 robotic_world_model_lite/
 rsl_rl_rwm/
 *.pt
 *.csv
+
+# trained weights and logs from Step 5 runs (large; regenerate from scripts)
+runs/
 
 # scratch
 *.bak

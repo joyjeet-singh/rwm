@@ -190,7 +190,7 @@ def fmt_row(name, m):
 
 def main():
     t0 = time.time()
-    here = os.path.dirname(os.path.abspath(__file__))
+    here = R.RESULTS
     paths = R.repo_paths()
 
     print("=" * 78)
@@ -478,11 +478,11 @@ def main():
     ax[1].legend(fontsize=8); ax[1].grid(alpha=0.3)
     fig.suptitle("Reference checkpoint pretrain_rnn_ens.pt -- autoregressive error over 368 forecast steps")
     fig.tight_layout()
-    pp = os.path.join(here, "figures", "step3_per_step_error.png")
+    pp = os.path.join(R.FIGURES, "step3_per_step_error.png")
     os.makedirs(os.path.dirname(pp), exist_ok=True)
     fig.savefig(pp, dpi=140)
     plt.close(fig)
-    print(f"\n  wrote {pp}")
+    print(f"\n  wrote {R.rel(pp)}")
 
     # ------------------------------------------------------------- manifest
     elapsed = time.time() - t0
@@ -593,7 +593,7 @@ def main():
         man["results"]["hold_last_floor"] = floor
     with open(os.path.join(here, "manifest.json"), "w") as f:
         json.dump(man, f, indent=2)
-    print(f"  wrote {os.path.join(here, 'manifest.json')}")
+    print(f"  wrote {R.rel(os.path.join(here, 'manifest.json'))}")
     print(f"\n  WALL CLOCK: {elapsed:.1f} s")
     return results
 

@@ -29,6 +29,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               os.pardir, "src"))
+
 import rwm_data as R
 import rollout_eval as E
 import rwm_model as M
@@ -44,10 +49,12 @@ def main():
     ap.add_argument("--batch", type=int, default=1024)
     ap.add_argument("--ensemble", type=int, default=5)
     ap.add_argument("--max-seconds", type=float, default=1800.0)
+    ap.add_argument("--lr", type=float, default=None,
+                    help="override the config learning rate (Step 5.1 uses 1e-3)")
     ap.add_argument("--tag", default="")
     args = ap.parse_args()
 
-    here = os.path.dirname(os.path.abspath(__file__))
+    here = R.RESULTS
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, episode_id = R.load_data(paths["csv"], verbose=False)
@@ -68,6 +75,8 @@ def main():
 
     torch.manual_seed(0)
     model = M.build_from_config(cfg, ensemble_size=args.ensemble)
+    if args.lr is not None:
+        cfg = {**cfg, "learning_rate": args.lr}
     opt = T.make_optimizer(model, cfg)
     print(f"  fresh random init, {sum(p.numel() for p in model.parameters()):,} parameters")
     print(f"  optimizer Adam lr={cfg['learning_rate']} weight_decay={cfg['weight_decay']}")
@@ -161,11 +170,11 @@ def main():
     ax[2].set_xlabel("iteration"); ax[2].set_ylabel("exp(log_delta_logstd)")
     ax[2].set_title("Collapse monitor"); ax[2].legend(fontsize=8); ax[2].grid(alpha=0.3)
     fig.tight_layout()
-    p = os.path.join(here, "figures", f"step4_overfit{args.tag}.png")
+    p = os.path.join(R.FIGURES, f"step4_overfit{args.tag}.png")
     os.makedirs(os.path.dirname(p), exist_ok=True)
     fig.savefig(p, dpi=140)
     plt.close(fig)
-    print(f"\n  wrote {p}")
+    print(f"\n  wrote {R.rel(p)}")
 
     out = {"config": vars(args), "iterations_run": it + 1, "elapsed_s": elapsed,
            "s_per_iter": elapsed / max(it + 1, 1),
