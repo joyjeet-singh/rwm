@@ -246,8 +246,21 @@ class RWMEnsemble(nn.Module):
         """system_dynamics.py:301-302. Requires head.forward to have run."""
         return torch.mean(head.state_max_logstd) - torch.mean(head.state_min_logstd)
 
-    def compute_state_loss(self, head, state_batch, action_batch):
-        """system_dynamics.py:179-231."""
+    def compute_state_loss(self, head, state_batch, action_batch, teacher_forcing=False):
+        """
+        system_dynamics.py:179-231.
+
+        `teacher_forcing` is the ONLY difference between Step 5's two arms:
+
+          False (Arm A, faithful)  the state branch consumes its own reparameterised
+                                   sample, system_dynamics.py:216
+          True  (Arm B)            it consumes the true next state -- exactly the regime
+                                   the auxiliary branch already uses at
+                                   system_dynamics.py:264
+
+        Nothing else changes. The loss still computes squared error on a sample in both
+        arms; the difference is the feedback, not the objective.
+        """
         H = self.history_horizon
         forecast_horizon = state_batch.shape[1] - H
         x_state_batch = state_batch[:, :H]
@@ -266,9 +279,13 @@ class RWMEnsemble(nn.Module):
             k = torch.tensor(0.0, device=mean.device)                # kl: rssm only
             s_losses.append(s.unsqueeze(0)); q_losses.append(q.unsqueeze(0))
             b_losses.append(b.unsqueeze(0)); k_losses.append(k.unsqueeze(0))
-            # :216 feed back a SAMPLE, single timestep, for the rnn base
-            x_state_batch = (torch.randn_like(mean, device=mean.device) * std + mean
-                             ).unsqueeze(1) if head.output_std else mean.unsqueeze(1)
+            if teacher_forcing:
+                # Arm B: the true next state, matching the auxiliary branch (:264)
+                x_state_batch = state_batch[:, H + i:H + i + 1]
+            else:
+                # Arm A / reference: feed back a SAMPLE, single timestep (:216)
+                x_state_batch = (torch.randn_like(mean, device=mean.device) * std + mean
+                                 ).unsqueeze(1) if head.output_std else mean.unsqueeze(1)
 
         m = lambda L: torch.mean(torch.cat(L, dim=0), dim=0)
         return m(s_losses), m(q_losses), m(b_losses), m(k_losses)
@@ -308,7 +325,8 @@ class RWMEnsemble(nn.Module):
         return m(e_losses), m(c_losses), m(t_losses)
 
     def compute_loss(self, state_batch, action_batch, extension_batch,
-                     contact_batch, termination_batch, bootstrap=False):
+                     contact_batch, termination_batch, bootstrap=False,
+                     teacher_forcing=False):
         """system_dynamics.py:128-177. Per-member, then meaned over the ensemble."""
         acc = {k: [] for k in ("state", "sequence", "bound", "kl",
                                "extension", "contact", "termination")}
@@ -319,7 +337,8 @@ class RWMEnsemble(nn.Module):
             else:
                 ids = torch.arange(0, state_batch.shape[0], device=state_batch.device)
             s, q, b, k = self.compute_state_loss(self.state_heads[i],
-                                                 state_batch[ids], action_batch[ids])
+                                                 state_batch[ids], action_batch[ids],
+                                                 teacher_forcing=teacher_forcing)
             e, c, t = self.compute_auxiliary_loss(
                 self.auxiliary_heads[i], state_batch[ids], action_batch[ids],
                 extension_batch[ids] if extension_batch is not None else None,
@@ -332,6 +351,22 @@ class RWMEnsemble(nn.Module):
                       "extension", "contact", "termination"))
 
     # ------------------------------------------------------------ monitoring
+    @torch.no_grad()
+    def sigma_sq_sum(self, state_batch, action_batch):
+        """
+        Sum_d sigma_d^2 at the first forecast step, per Step 5.6 -- the analytic
+        single-step floor of the sampled-MSE objective, since
+        E[sum_d (mu_d + sigma_d*eps_d - y_d)^2] = sum_d (mu_d - y_d)^2 + sum_d sigma_d^2.
+        """
+        H = self.history_horizon
+        out = []
+        for head in self.state_heads:
+            self.reset()
+            _, std = head(self.state_base(state_batch[:, :H], action_batch[:, 1:H + 1]),
+                          state_batch[:, :H])
+            out.append(float((std ** 2).sum(-1).mean()))
+        return float(sum(out) / len(out))
+
     @torch.no_grad()
     def collapse_stats(self):
         """1b collapse monitor: the width of the learned logstd interval."""

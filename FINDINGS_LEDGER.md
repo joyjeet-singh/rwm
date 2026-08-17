@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–4 complete. Step 5 hygiene and trainer validation done; the main experiment (5.3) is NOT yet run. Last updated: 17 Aug 2026.
+**Status.** Steps 0–4 complete. Step 5 launched: decision rule pre-registered (M-16), Arm A seed 0 running. Last updated: 17 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -489,6 +489,96 @@ rollouts.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
+### M-14 — The overfit acceptance threshold was unreachable, and the reason is not the one assumed · **NEW (Step 5)**
+The 1e-4 threshold on the state loss could not be met by construction, because the loss is
+squared error on a reparameterised sample:
+
+```
+E[ sum_d (mu_d + sigma_d*eps_d - y_d)^2 ] = sum_d (mu_d - y_d)^2 + sum_d sigma_d^2
+```
+
+The second term does not vanish, so the objective has a floor and an acceptance threshold has
+to be derived from it rather than assumed. That is the methodological lesson worth keeping.
+
+**But the floor is not what explains the observed plateau.** Measured on the converged R-18
+weights, same batch, no retraining:
+
+| quantity | value | share of L_stoch |
+|---|---|---|
+| `L_stoch` (real sampling, mean of 100 draws, sd 0.000324) | 0.031860 | 100% |
+| `L_det` (randn_like patched to zeros, sample = mean) | **0.027737** | **87.1%** |
+| measured sampling contribution, `L_stoch − L_det` | 0.004123 | 12.9% |
+| `sum_d sigma_d^2` at the first forecast step | 0.000976 | 3.1% |
+
+`L_stoch / L_det = 1.1x`, not the ≫5× that a floor-dominated plateau would give. So by the
+pre-stated rule the plateau is **residual mean error, not the sampling floor**.
+
+**Where the assumption went wrong.** The expectation that "sigma was nowhere near zero"
+read `exp(log_delta_logstd) ≈ 0.25` as a standard deviation. It is not: it is the *width of
+the bounding interval in log space* (C-06). With `min_logstd ≈ log(4.638e-3) = −5.37`, the
+clamp gives `logstd ∈ [−5.37, −5.13]`, i.e. `sigma ≈ 4.6e-3 to 5.9e-3`. Summed over 45
+dimensions that is ~1e-3, which is 3% of the loss, not most of it. The measured 12.9% is
+larger than the single-step 3.1% because injected noise also propagates into each subsequent
+step's input — a ~4× amplification across the eight steps, which is itself a clean
+measurement of how much the autoregressive rollout amplifies its own injected noise.
+
+**This does not overturn R-18 and does not block the runs.** `L_det = 0.027737` over 45
+summed dimensions is a per-dimension RMSE of **0.0248 normalised sd** — a good fit in
+absolute terms, on a curve still descending when the run hit its cap. The accurate statement
+is neither "the floor explains it" nor "the model failed to fit": the model fitted the batch
+to ~2.5% of a standard deviation per dimension, the residual is genuine mean error rather
+than injected variance, and it had not converged.
+**Evidence** `RUN` `results/step5_6_overfit_floor.json`; `SRC` `system_dynamics.py:270-289`,
+`mlp.py:78-79, 91-93`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-15 — The reference does not clip gradients in the world-model path · **NEW (Step 5)**
+`READ AND REPORT` (5.7a). Searched `system_dynamics.py`, `model_training.py`, `base_cfg.py`,
+`anymal_d_flat_cfg.py` and `train.py` for `clip_grad_norm_`, `clip_grad_value_`,
+`max_grad_norm` and equivalents.
+
+**Absent from the world-model path.** `model_training.py:74-75` runs `loss.backward()`
+directly into `self.optimizer.step()` with nothing between, and `ModelOptimizerConfig`
+carries only `learning_rate` and `weight_decay`.
+
+**Present in the policy path**, which makes the absence a choice rather than an oversight:
+`PolicyAlgorithmConfig.max_grad_norm = 1.0` (`base_cfg.py:140`) is applied via
+`nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)` at `ppo.py:380`. The
+codebase knows the idiom and applies it to PPO but not to the dynamics model.
+
+**Decision: do not add it.** Clipping would be an undocumented deviation and would alter
+exactly the dynamic under study — gradient behaviour through the recurrent autoregressive
+rollout. Gradient norm is instead logged every iteration, with a spike detector at 5x the
+trailing 50-iteration median (5.7c). Should a main run diverge, clipping becomes a deviation
+with a stated reason and a new `X-` entry, but not before.
+**Evidence** `SRC` `model_training.py:74-75`, `base_cfg.py:87-93` (ModelOptimizerConfig),
+`base_cfg.py:140`, `ppo.py:380`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-16 — PRE-REGISTERED decision rule for the Arm A / Arm B comparison · **NEW (Step 5)**
+**Entered before any main-run result exists.** Committed prior to launching Arm A seed 0; the
+git history is the timestamp. A rule chosen after seeing numbers is not a rule.
+
+**The claim reproduces, or fails to, and can be reported** only if BOTH hold:
+1. the A-versus-B ordering at h = 8 is the **same** at the 500 checkpoint and at the 2500
+   checkpoint, **and**
+2. the difference between arms **exceeds** the seed spread within arms.
+
+**The claim cannot be settled at this budget** if EITHER:
+1. the ordering **flips** between the two checkpoints, **or**
+2. the difference between arms falls **inside** the seed spread.
+
+In that case the report states that the comparison is not converged, and gives the slope of
+the training loss over the final 250 iterations as evidence. Given M-04 — protocol A varies
+by ±0.053 over evaluation seeds alone, before any training-seed variance — that outcome is
+entirely possible and is a legitimate result, not a failure.
+
+The follow-up, if it lands there, is a higher-learning-rate pair rather than more seeds, and
+it is not to be run without reporting first.
+**Evidence** pre-registration; results will be attached as they land.
+**Status** PRE-REGISTERED, awaiting results · **Relevance** METHOD
+
+
 ---
 
 ## E. Measured results
@@ -950,6 +1040,22 @@ kept at the specified value.
 **Consequence** R-17's memorisation result is INCOMPLETE rather than passing, and is recorded
 as such. The collapse-monitor result is unaffected — it is a property of the optimiser and
 the bound-loss gradient, not of ensemble size.
+
+### X-07 — Step 5's main experiment runs at ensemble size 1, not the reference's 5 · **NEW (Step 5)**
+The reference and the released checkpoint use `ensemble_size = 5`. Step 5's six runs use 1.
+**Justification** C-04: both trunks are shared across the five members, so the ensemble adds
+only head-level diversity and contributes nothing to the autoregressive-versus-teacher-forcing
+question under test. R-16 measures the cost of the difference at 3.6x at batch 256 — 4.1 h
+versus 1.2 h per run, i.e. the whole six-run matrix moves from 7.2 h to over 24 h for no gain
+on the claim.
+**Consequence** Absolute error values are not directly comparable with the released
+checkpoint's, which is a 5-member ensemble mean. The A-versus-B *comparison* is unaffected,
+since both arms use 1. Any later claim about ensemble uncertainty needs its own runs.
+
+### X-08 — No gradient clipping is added · **NEW (Step 5)**
+Recorded as a deliberate non-deviation: see M-15. The reference has none in this path, so
+none is added, even though the R-18 overfit at lr 1e-3 showed loss excursions correlated
+across heads. Gradient norms are logged every iteration instead.
 
 ---
 

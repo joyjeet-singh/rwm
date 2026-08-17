@@ -176,6 +176,12 @@ def main():
     plt.close(fig)
     print(f"\n  wrote {R.rel(p)}")
 
+    wpath = os.path.join(R.RESULTS, f"overfit_weights{args.tag}.pt")
+    torch.save({"model_state_dict": model.state_dict(),
+                "batch_idx": idx, "iterations": it + 1,
+                "config": vars(args)}, wpath)
+    print(f"  wrote {R.rel(wpath)}")
+
     out = {"config": vars(args), "iterations_run": it + 1, "elapsed_s": elapsed,
            "s_per_iter": elapsed / max(it + 1, 1),
            "reached_threshold_at": reached, "threshold": THRESH,

@@ -1,0 +1,18 @@
+{
+  "L_det": 0.027737485244870186,
+  "L_stoch": 0.0318598660454154,
+  "L_stoch_std": 0.0003235405947953415,
+  "L_stoch_min": 0.031143389642238617,
+  "L_stoch_max": 0.03264110907912254,
+  "L_train_final": 0.027802137657999992,
+  "sigma_sq_sum_first_step": 0.0009757573716342449,
+  "ratio_stoch_over_det": 1.148621288633497,
+  "n_draws": 100,
+  "collapse_at_final_weights": {
+    "exp_log_delta_logstd_mean": 0.24132224917411804,
+    "exp_min_logstd_mean": 0.004637680482119322,
+    "log_delta_logstd_mean": -1.4216303825378418,
+    "min_logstd_mean": -5.37487268447876
+  },
+  "verdict": "GENUINE MISFIT"
+}
