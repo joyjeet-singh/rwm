@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–4 complete. Step 5 launched: decision rule pre-registered (M-16), Arm A seed 0 running. Last updated: 17 Aug 2026.
+**Status.** Steps 0–4 complete. Step 5 staged launch: Arm A seed 0 finished (R-19); remaining five runs NOT started, pending report. Last updated: 17 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -882,6 +882,88 @@ reference configuration is what R-16's timing predicted, and that agreement is i
 small confirmation.
 
 
+### R-19 — Arm A (autoregressive, faithful), seed 0 · **NEW (Step 5)**
+The first of the six main runs, run alone per the staged launch. 2500 iterations, ensemble 1,
+batch 256, lr 1e-4, weight decay 1e-5, causal alignment, 7,687 training windows, no gradient
+clipping (M-15). **1.28 h wall clock at 1.850 s/iter**, against a 1.2 h projection — 7% over,
+within R-16's measured variance.
+
+**Training health.** `state` 47.64 → 1.559; `contact` 6.87e-01 → 9.97e-03; `termination`
+7.04e-01 → 2.91e-06; `bound` 1.000 → 0.791. Block means over 250-iteration windows fall
+monotonically throughout: 19.25, 7.74, 4.97, 3.74, 3.07, 2.60, 2.26, 2.01, 1.79, 1.60. Slope
+over the final 250 iterations **−7.59e-04 per iteration — still falling steeply**, so 2500
+iterations is not convergence.
+
+**Gradient norms and spikes.** Mean 11.28, median 10.73, p5–p95 8.01–15.75, p99 23.79, max
+53.09 at iteration 0 (48.09 excluding it). **Zero spikes** above 5× the trailing 50-iteration
+median. The excursions seen in the R-18 overfit were an artifact of its lr 1e-3; at the
+reference lr 1e-4 the run is quiet, and the decision not to add clipping (X-08) cost nothing.
+
+**Evaluation, protocol A clean, offset 1, held-out episodes:**
+
+| h | e@500 | e@2500 | floor | ratio@2500 | nRMSE@500 | nRMSE@2500 | nRMSE floor |
+|---|---|---|---|---|---|---|---|
+| 1 | 0.1515 | 0.1579 | 0.1107 | 1.427 | 0.1848 | **0.1486** | 0.2214 |
+| 4 | 0.3003 | 0.2645 | 0.2407 | 1.099 | 0.2887 | 0.2187 | 0.4187 |
+| 8 | 0.3995 | **0.3163** | 0.3603 | 0.878 | 0.3643 | **0.2700** | 0.5585 |
+| 16 | 0.4710 | 0.3761 | 0.5309 | 0.708 | 0.4646 | 0.3777 | 0.7107 |
+| 32 | 0.5348 | 0.4020 | 0.5733 | 0.701 | 0.5524 | 0.4192 | 0.6802 |
+| 64 | 0.6699 | 0.4747 | 0.6787 | 0.699 | 0.7331 | 0.4881 | 0.7409 |
+| 128 | 0.8985 | 0.5915 | 0.7542 | 0.784 | 1.1268 | 0.7009 | 0.8224 |
+| 256 | 1.7512 | 0.7444 | 0.9369 | 0.795 | 2.0510 | 0.9436 | 0.9031 |
+| 368 | 2.5589 | **0.7938** | 1.0070 | 0.788 | 3.5351 | **1.0460** | 0.9601 |
+
+At 500 iterations the model is worse than the hold-last floor at every horizon beyond h=4 and
+badly so at long horizon (e@368 2.56 against a floor of 1.01). By 2500 it beats the floor from
+h=8 outward. For scale: the released checkpoint scores e@8 0.1310 and e@368 0.7008 (R-09), so
+2500 iterations from random init reaches the reference's long-horizon number (0.794 vs 0.701)
+while remaining far behind at short horizon (0.316 vs 0.131) — consistent with C-13/O-12's
+conclusion that the released checkpoint saw far more optimisation than any documented count.
+
+Noise sweep at 2500 is nearly flat and non-monotonic in the low scales (0.785, 0.784, 0.842,
+0.862, 0.944 for 0.1–0.8), i.e. the model's clean error already dominates the injected noise.
+**Evidence** `RUN` `results/step5_armA_seed0.json`, `results/step5_armA_seed0_report.txt`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Note** Arms B and the remaining seeds are not yet run, so no A-versus-B statement is made
+here. M-16's rule governs that and remains unevaluated.
+
+### R-20 — The two metrics disagree in DIRECTION at h=1 · **NEW (Step 5)**
+From R-19's 2500 checkpoint:
+
+| | model | hold-last floor | verdict |
+|---|---|---|---|
+| relative-L1 e@1 | 0.1579 | 0.1107 | model **1.43x worse** |
+| nRMSE@1 | 0.1486 | 0.2214 | model **0.67x, i.e. better** |
+
+Not a small disagreement in magnitude — an inversion of the ordering. The cause is the one
+M-09 identified: relative-L1 divides by `sum_d |true[t,d]|` recomputed at every timestep, so
+timesteps whose normalised state passes near zero dominate the average; nRMSE divides by a
+fixed per-dimension training-set scale and does not.
+
+This matters for the Step 5 deliverable, because h=1 and h=8 are exactly where the pre-registered
+rule (M-16) is evaluated. At h=8 both metrics agree that the model beats the floor (0.878 and
+0.483 respectively), so the rule is safe there — but the h=1 inversion is a concrete
+demonstration that a paper reporting only relative-L1 can state a short-horizon ordering
+backwards.
+**Evidence** `RUN` `results/step5_armA_seed0.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-21 — nRMSE caveat: a near-constant dimension inflates its group · **NEW (Step 5)**
+The projected-gravity group's nRMSE at h=368 reads 7.61 while its relative-L1 median reads
+1.06. A fixed denominator cannot blow up per timestep, which was the point of M-12, but it can
+still be *small*: the stored scale for the gravity z-component is 0.0292, because the config's
+`state_data_std` of 0.04 overestimates that dimension's true spread by ~34x (M-12). Dividing
+by 0.0292 amplifies any error in that one dimension, and it dominates the three-dimensional
+group mean.
+
+So nRMSE is the right instrument for the aggregate and for well-scaled groups, and it should
+be read per-dimension rather than per-group where a group contains a near-constant dimension.
+Neither metric is trustworthy for projected gravity; that limitation belongs to the
+normalisation, not to either metric.
+**Evidence** `RUN` `results/step5_armA_seed0.json`; `DATA` M-12's stored scale vector.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
 ---
 
 ## F. Open questions
@@ -997,6 +1079,30 @@ R-17 and R-18 differ 32× in batch size and land within 25% of the same rate/lr 
 **Test** Cheap, and Step 5.3 supplies it free: the faithful arm runs to 2500 iterations at
 lr 1e-4, so read `exp(log_delta_logstd)` at 500 and 2500 and compare against 0.955 and 0.792.
 Agreement confirms the model of the mechanism and leaves the checkpoint unexplained.
+
+**TEST PASSED (Step 5, R-19) — prediction confirmed to three decimal places.** Arm A seed 0
+provides a third measurement, this time on real data over 2500 iterations rather than a
+memorisation batch:
+
+| measurement | lr | iterations | fitted rate/iter | rate ÷ lr |
+|---|---|---|---|---|
+| R-17 overfit | 1e-4 | 451 | −9.318e-05 | 0.93 |
+| R-18 overfit | 1e-3 | 2000 | −7.025e-04 | 0.70 |
+| **R-19 Arm A, real data** | **1e-4** | **2500** | **−9.3641e-05 ± 2.64e-08** | **0.936** |
+
+**Predicted `exp(log_delta_logstd)` at 2500 iterations: 0.792. Observed: 0.791385.** The fit
+has 101 points and a standard error of 2.64e-08 on the slope, so the rate is now pinned rather
+than estimated. `rate ≈ lr` holds at lr 1e-4 in both a memorisation and a real-data setting
+(0.93, 0.936); the 0.70 at lr 1e-3 is the outlier, so the proportionality is good near the
+reference learning rate and degrades as lr grows.
+
+From the fit rather than by extrapolation: reaching the checkpoint's −14.4629 requires
+**154,451 iterations** at lr 1e-4, or **lr 3.09e-03** — 31× the configured value — to arrive
+within the checkpoint's own tagged 5000. The mechanism reproduces exactly; the magnitude in
+the released checkpoint is not reachable from the released configuration. That is the finding,
+and it should be written that way rather than as a failure to reproduce.
+**Status** the mechanism is now CONFIRMED and quantified; the checkpoint's provenance remains
+OPEN.
 **Note on arithmetic** The Step 5 brief quotes −8.859e-05/iteration and ≈163,000 iterations.
 That divides the observed log change by the run length (451) rather than by the iteration of
 the last collapse sample (425); dividing by 425 gives −9.402e-05 two-point, −9.318e-05
