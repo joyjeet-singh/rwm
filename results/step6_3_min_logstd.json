@@ -1,0 +1,24 @@
+{
+  "checkpoint_min_logstd_mean": -9.81277084350586,
+  "checkpoint_sigma": 5.4747938469271725e-05,
+  "per_head_means": [
+    -9.782668113708496,
+    -9.813666343688965,
+    -9.814407348632812,
+    -9.831012725830078,
+    -9.822101593017578
+  ],
+  "checkpoint_min_logstd_min": -10.595332145690918,
+  "checkpoint_min_logstd_max": -9.2701997756958,
+  "checkpoint_min_logstd_sd": 0.298194020986557,
+  "init_min_logstd": -5.0,
+  "distance_travelled": -4.812770843505859,
+  "armA_rate_min_logstd": -1.7965942961024166e-05,
+  "armA_rate_min_logstd_stderr": 2.761745569317041e-07,
+  "armA_rate_log_delta": -9.364081815446295e-05,
+  "armA_rate_log_delta_stderr": 2.639492346643467e-08,
+  "rate_ratio": 5.212129324779113,
+  "iters_implied_min_logstd": 267883.00808628986,
+  "iters_implied_log_delta": 154450.8077251426,
+  "verdict": "second axis, agrees"
+}
