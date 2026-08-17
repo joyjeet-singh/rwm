@@ -575,6 +575,27 @@ entirely possible and is a legitimate result, not a failure.
 
 The follow-up, if it lands there, is a higher-learning-rate pair rather than more seeds, and
 it is not to be run without reporting first.
+
+**ANNOTATION, pre-registered separately and before any Arm B result exists.** This does NOT
+modify the rule above; the rule stands exactly as written, including its verdict of "cannot be
+settled at this budget" for *any* flip in the ordering.
+
+What it adds is an interpretation of one specific flip pattern, entered now so that it cannot
+be chosen after seeing the numbers:
+
+> If the ordering flips such that **B leads at 500 and A leads at 2500**, that specific
+> pattern is consistent with teacher forcing converging faster early and generalising worse
+> under rollout. M-16's verdict of "cannot be settled" still holds — but this pattern is to be
+> reported alongside it as a distinct observation, not folded into the null result. Any other
+> flip pattern carries no such reading.
+
+The reasoning, also recorded in advance: R-19 shows Arm A at 500 iterations is worse than the
+hold-last floor at every horizon beyond h=4, so both arms will be deep in the transient at
+that checkpoint. Teacher forcing optimises an easier objective — it never has to consume its
+own error — so faster early fitting followed by worse rollout behaviour is the textbook
+signature rather than a surprise. The reverse pattern (A ahead at 500, B ahead at 2500) has no
+such mechanism behind it and is to be reported as an unexplained flip.
+
 **Evidence** pre-registration; results will be attached as they land.
 **Status** PRE-REGISTERED, awaiting results · **Relevance** METHOD
 
