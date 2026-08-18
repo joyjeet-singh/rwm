@@ -919,7 +919,13 @@ tables are recomputed under bootstrap CIs so the comparison is like for like.
 
 ## E. Measured results
 
-Steps 0–3 from `step3_report.txt` and `manifest.json`; Step 3.5 from `task*_report.txt` and `task*.json`. torch 2.2.2, CPU. Step 3 wall clock 43.7 s; all Step 3.5 tasks together well under the ten-minute budget.
+Steps 0–3 from `results/step3_report.txt` and `results/manifest.json`; Step 3.5 from
+`results/task*_report.txt` and `results/task*.json`. torch 2.2.2, CPU. Step 3 wall clock 43.7 s.
+
+*Every entry below carries its own `**Evidence**` line. R-01 to R-09 originally inherited it
+from this header; the release consistency check (`scripts/ledger_check.py`) flagged that as
+unverifiable per-entry and they were made explicit. No evidence was added that the header did
+not already declare.*
 
 ### R-01 — Checkpoint inventory
 1,995,569 parameters: `state_base` 636,672, `state_heads` 387,460, `auxiliary_base` 636,672, `auxiliary_heads` 334,765. Checkpoint iteration 5000. Loads under torch 2.2.2 with no fallback.
@@ -927,6 +933,7 @@ Steps 0–3 from `step3_report.txt` and `manifest.json`; Step 3.5 from `task*_re
 
 ### R-02 — Protocol A and B, clean
 Seed 0: A = 0.7672, B = 1.2728. Seed-averaged over 20 seeds: A = 0.709 ± 0.053, B = 1.026 ± 0.184.
+**Evidence** `RUN` `results/step3_report.txt`, `results/manifest.json`
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Caveat** Read with M-06. The gap is episode sampling, not leakage.
 
@@ -934,6 +941,7 @@ Seed 0: A = 0.7672, B = 1.2728. Seed-averaged over 20 seeds: A = 0.709 ± 0.053,
 
 ### R-03 — Hold-last floor
 e = 1.0070, median r = 0.9649.
+**Evidence** `RUN` `results/step2_acceptance.json`
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Note** Convention-independent — the predictor uses no actions — so it is reused unchanged in R-09.
 
@@ -952,16 +960,19 @@ Under the **evaluation** convention (`action_offset=0`).
 | 256 | 0.6732 | 0.9369 | 0.719 |
 | 368 | 0.7672 | 1.0070 | 0.762 |
 
+**Evidence** `RUN` `results/step3_report.txt`
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Note** The model is worse than the hold-last floor at one step, best at h=16, and converges back toward the floor thereafter. The h=1 result was the subject of O-02 — **now explained, see R-09.** These numbers remain correct for the stale convention; R-09 supersedes them as the headline figures.
 
 ### R-05 — Boundary crossing does not inflate error
 Of 10 protocol-B trajectories, 5 crossed a reset. Crossing trajectories averaged 0.947; non-crossing averaged 1.599. The crossing trajectories scored **better**.
+**Evidence** `RUN` `results/step3_report.txt`
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Note** This refutes S-03. Recorded because a stated prediction being falsified by measurement is itself a result.
 
 ### R-06 — Convention swap is worth 0.066
 Protocol A: 0.7672 under the evaluation convention, 0.7008 under the training convention.
+**Evidence** `RUN` `results/step3_report.txt`
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Caveat** ~~Not yet interpretable — see O-01 and O-05.~~ **Interpretable as of D-13:** the training alignment is causal, so the 0.066 is the cost the reference evaluation pays for feeding a stale action. It is a measurement of the B-05 defect, not evidence of leakage.
 
@@ -969,6 +980,7 @@ Protocol A: 0.7672 under the evaluation convention, 0.7008 under the training co
 
 ### R-07 — Protocol B's noise sweep is non-monotonic
 Protocol A rises cleanly with noise: 0.767, 0.886, 1.005, 1.220, 1.255, 1.381. Protocol B does not: 1.273, 1.229, 1.230, 0.977, 1.030, 1.213.
+**Evidence** `RUN` `results/step3_report.txt`
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Note** Most likely sampling variance swamping the effect, consistent with M-04's ±0.184 on protocol B. Not yet tested.
 
@@ -976,6 +988,7 @@ Protocol A rises cleanly with noise: 0.767, 0.886, 1.005, 1.220, 1.255, 1.381. P
 
 ### R-08 — Epistemic uncertainty dwarfs aleatoric
 One-step check on a held-out window: aleatoric 0.003, epistemic 0.276, roughly a hundredfold ratio.
+**Evidence** `RUN` `results/step3_report.txt`
 **Status** CONFIRMED as a measurement · **Relevance** CONTRIB
 **Caveat** ~~Units and normalisation of the two quantities not yet established. Do not interpret until O-04 is closed.~~ **O-04 closed.** Both are sums over the 45 normalised state dimensions and are directly comparable: aleatoric = `state_stds.mean(0).sum(1)`, epistemic = `state_means.std(0).sum(1)` (`system_dynamics.py:126-127`). The ratio is real, but the reason is C-10: the aleatoric figure is the collapsed lower bound (Σ exp(min_logstd) = 0.0026 ≈ the 0.003 observed), not a learned prediction.
 
@@ -994,6 +1007,7 @@ Protocol A, clean, `action_offset=1` (the training alignment, established causal
 | 256 | 0.6732 | 0.719 | 0.6387 | 0.682 | 0.9369 |
 | 368 | 0.7672 | 0.762 | **0.7008** | 0.696 | 1.0070 |
 
+**Evidence** `RUN` `results/task2_4_results.json`
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Resolves O-02.** The h=1 ratio falls from 1.093 to **0.827**, a 24% drop in one-step error. The model beats the floor at **every** horizon under the causal alignment. The anomaly was the convention mismatch, not a model defect — the released checkpoint is better than the released evaluation reports.
 **Note** Best ratio is still at h=16 (0.341), and convergence toward the floor at long horizon persists under both conventions, so O-07 is only partly a convention artefact.

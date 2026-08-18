@@ -1,0 +1,16 @@
+==================================================================================
+STEP 5 MAIN RUN -- armA_seed0_contam
+==================================================================================
+  arm A: state branch feeds back its own SAMPLE (autoregressive, faithful)
+  auxiliary branch: teacher-forced in BOTH arms (system_dynamics.py:264)
+  ensemble 1, batch 256, lr 0.0001, weight_decay 1e-05, 2500 iterations
+  action alignment: causal, offset=1 (X-05)
+  gradient clipping: NONE -- the reference has none in this path (5.7a)
+  CONTAMINATION ARM: 7687 clean + 195 splice = 7882 windows (2.47% contaminated)
+
+    iter      state     bound   contact    termin      total    |grad| exp(logdel)      s
+       0   47.41003 1.000e+00   0.68630 7.024e-01   49.79876    55.605    0.999900      1
+      25   35.48331 9.975e-01   0.59162 2.881e-01   37.36055    22.524    0.997422     35
+      50   26.70802 9.951e-01   0.39869 1.557e-02   28.11733    19.410    0.994957     69
+      75   22.02659 9.926e-01   0.34792 5.105e-03   23.37222    15.318    0.992505    101
+     100   22.38025 9.902e-01   0.30802 3.906e-03   23.68235    16.472    0.990062    134

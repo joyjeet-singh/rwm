@@ -112,3 +112,53 @@ def report_hyperparameters(cfg):
     for k, v, note in rows:
         print(f"  {k:<26s} {str(v):<22s} {note}")
     return {k: v for k, v, _ in rows}
+
+
+# --------------------------------------------------------------------------
+# Task 4 -- the contamination arm (O-06)
+# --------------------------------------------------------------------------
+def splice_window_starts(episode_id, train_episodes, window=WINDOW):
+    """
+    Windows straddling a boundary between two CONSECUTIVE TRAINING episodes.
+
+    The reference builder admits all 352 straddling windows because column 65 is
+    identically zero (B-01). Reproducing that naively here would leak: 4 of the 9
+    boundaries touch a held-out episode. Only boundaries whose BOTH sides are
+    training episodes are included -- 2->3, 3->4, 4->5, 5->6, 6->7 -- giving
+    5 x (window-1) = 195 windows.
+    """
+    starts = []
+    for b in R.RESET_ROWS:
+        if b >= len(episode_id) or b == 0:
+            continue
+        if episode_id[b - 1] in train_episodes and episode_id[b] in train_episodes:
+            for s in range(b - window + 1, b):
+                if s >= 0 and s + window <= len(episode_id):
+                    starts.append(s)
+    return sorted(starts)
+
+
+class ContaminatedWindowDataset(WindowDataset):
+    """The clean training windows PLUS the 195 within-training splices."""
+
+    def __init__(self, data, episode_id, episodes, cfg, window=WINDOW):
+        super().__init__(data, episode_id, episodes, cfg, window)
+        splices = splice_window_starts(episode_id, set(episodes), window)
+        self.n_clean, self.n_splice = len(self.starts), len(splices)
+        idx = np.asarray(splices)[:, None] + np.arange(window)[None, :]
+        touched = set(idx.flatten().tolist())
+        held = {int(r) for r in np.flatnonzero(~np.isin(episode_id, list(episodes)))}
+        assert not (touched & held), (
+            f"LEAK: {len(touched & held)} held-out rows appear in the splice windows")
+        raw = data[idx]
+        self.starts = np.concatenate([self.starts, np.asarray(splices)])
+        self.state = torch.cat([self.state, torch.as_tensor(
+            R.normalise_state(raw[:, :, R.STATE_COLS], cfg["state_data_mean"],
+                              cfg["state_data_std"]), dtype=torch.float32)])
+        self.action = torch.cat([self.action, torch.as_tensor(
+            raw[:, :, R.ACTION_COLS], dtype=torch.float32)])
+        self.contact = torch.cat([self.contact, torch.as_tensor(
+            raw[:, :, R.CONTACTS], dtype=torch.float32)])
+        self.termination = torch.cat([self.termination, torch.as_tensor(
+            raw[:, :, [R.TERMINATION]], dtype=torch.float32)])
+        self.extension = torch.zeros(len(self.starts), window, 0)

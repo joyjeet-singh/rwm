@@ -122,6 +122,9 @@ def main():
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--iters", type=int, default=2500)
     ap.add_argument("--tag", default="")
+    ap.add_argument("--contaminated", action="store_true")
+    ap.add_argument("--loss-type", dest="loss_type", default="mse",
+                    choices=["mse", "gaussian_nll"])
     ap.add_argument("--batch", type=int, default=256)
     ap.add_argument("--ensemble", type=int, default=1)
     args = ap.parse_args()
@@ -152,8 +155,15 @@ def main():
     print(f"  action alignment: causal, offset=1 (X-05)")
     print(f"  gradient clipping: NONE -- the reference has none in this path (5.7a)")
 
-    ds = T.WindowDataset(data, episode_id, split["train_episodes"], cfg)
-    print(f"  {len(ds)} training windows from episodes {ds.episodes}")
+    if args.contaminated:
+        ds = T.ContaminatedWindowDataset(data, episode_id, split["train_episodes"], cfg)
+        print(f"  CONTAMINATION ARM: {ds.n_clean} clean + {ds.n_splice} splice"
+              f" = {len(ds)} windows ({100*ds.n_splice/len(ds):.2f}% contaminated)")
+    else:
+        ds = T.WindowDataset(data, episode_id, split["train_episodes"], cfg)
+        print(f"  {len(ds)} training windows from episodes {ds.episodes}")
+    if args.loss_type != "mse":
+        print(f"  LOSS TYPE: {args.loss_type} (the authors' unused branch, system_dynamics.py:285)")
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -174,7 +184,8 @@ def main():
         model.reset()
         opt.zero_grad(set_to_none=True)
         terms = model.compute_loss(state, action, ext, contact, term,
-                                   teacher_forcing=teacher_forcing)
+                                   teacher_forcing=teacher_forcing,
+                                   loss_type=args.loss_type)
         total = M.weighted_total(terms, weights)
         total.backward()
         gn = grad_norm(model)                      # every iteration, pre-step, unclipped
@@ -262,6 +273,8 @@ def main():
                                "weight_decay": cfg["weight_decay"],
                                "loss_weights": weights, "action_offset": 1,
                                "gradient_clipping": None,
+                               "contaminated": bool(args.contaminated),
+                               "loss_type": args.loss_type,
                                "n_train_windows": len(ds),
                                "train_episodes": split["train_episodes"],
                                "holdout_episodes": split["holdout_episodes"]},

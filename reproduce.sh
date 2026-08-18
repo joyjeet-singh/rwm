@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# Regenerate every number in the paper from a clean clone.
+#
+#   ./reproduce.sh --quick     everything except the training arms (minutes)
+#   ./reproduce.sh             the full pipeline, including ~20 h of training
+#   ./reproduce.sh --stage N   run one stage only
+#
+# Each stage skips cleanly if its outputs already exist, so a reviewer can
+# regenerate one table without repeating the training. Use --force to override.
+set -uo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
+PY="${PY:-$(command -v python3.11 || command -v python3)}"
+QUICK=0; FORCE=0; ONLY=""
+for a in "$@"; do
+  case "$a" in
+    --quick) QUICK=1 ;;
+    --force) FORCE=1 ;;
+    --stage) ONLY="NEXT" ;;
+    *) [ "$ONLY" = "NEXT" ] && ONLY="$a" ;;
+  esac
+done
+FAIL=0
+stage() {  # stage <n> <name> <runtime> <output-to-check> <command...>
+  local n="$1" name="$2" rt="$3" out="$4"; shift 4
+  [ -n "$ONLY" ] && [ "$ONLY" != "$n" ] && return 0
+  echo ""
+  echo "───────────────────────────────────────────────────────────────────────"
+  echo " STAGE $n — $name"
+  echo "   expected runtime: $rt"
+  if [ -n "$out" ] && [ -e "$out" ] && [ "$FORCE" -eq 0 ]; then
+    echo "   SKIP — $out already exists (use --force to regenerate)"
+    return 0
+  fi
+  echo "   running: $*"
+  if "$@"; then echo "   OK"; else echo "   FAILED (exit $?)"; FAIL=1; fi
+}
+echo "RWM reproduction — full pipeline"
+echo "  mode: $([ $QUICK -eq 1 ] && echo '--quick (no training)' || echo 'full')"
+echo "  python: $PY"
+
+stage 1 "Fetch upstreams and verify artifact hashes" "2 min" \
+      "../robotic_world_model_lite/assets/data/state_action_data_0.csv" ./setup.sh
+stage 2 "Data checks and velocity regimes" "20 s" \
+      results/step0_strat.json $PY scripts/step0_velocity_regimes.py
+stage 3 "Harness acceptance tests (6 tests)" "30 s" \
+      results/step2_acceptance.json $PY src/rollout_eval.py
+stage 4 "Score the released checkpoint" "60 s" \
+      results/manifest.json $PY src/score_reference.py
+stage 5 "Acceptance gate: losses and gradients" "90 s" \
+      results/step4_3_differential.json $PY scripts/step4_3_differential.py
+stage 6 "Differential test vs the reference module" "60 s" \
+      results/task5_differential.json $PY scripts/task5_differential.py
+stage 7 "Released checkpoint under nRMSE, all aggregations" "5 min" \
+      results/taskAB_gate_r27.json $PY scripts/taskAB_gate_r27.py
+stage 8 "Effective sample size and the 20-trajectory characterisation" "8 min" \
+      results/batch1_post_retraction.json $PY scripts/batch1_retract_jensen_char.py
+
+if [ $QUICK -eq 0 ]; then
+  stage 9 "TRAINING — six main runs, 2500 iters" "6 h" \
+        results/step5_armB_seed2.json ./run_remaining.sh
+  stage 10 "TRAINING — two convergence runs, 10000 iters" "8 h" \
+        results/step5_armB_seed1_10k.json ./run_10k.sh
+  stage 11 "TRAINING — contamination and corrected-objective arms" "6 h" \
+        results/step5_armA_seed2_nll.json ./run_tasks45.sh
+else
+  echo ""
+  echo " STAGES 9-11 (training, ~20 h) SKIPPED in --quick mode."
+  echo "   Their outputs are committed as results/step5_*.json and are consumed below."
+fi
+
+stage 12 "Two-arena analysis and M-16" "3 min" \
+      results/task4_arenas.json $PY scripts/task4_arenas_and_difficulty.py
+stage 13 "Bootstrap CIs on the six runs" "4 min" \
+      results/task5_2_bootstrap.json $PY scripts/task5_2_bootstrap.py
+stage 14 "Task 5 analysis and M-23's verdict" "6 min" \
+      results/task5_analysis.json $PY scripts/task5_analyse.py
+stage 15 "Matched per-dimension comparison and the trend fit" "3 min" \
+      results/task2_3_matched_trend.json $PY scripts/task2_3_matched_and_trend.py
+stage 16 "Ledger consistency check and claims-to-evidence map" "5 s" \
+      "" $PY scripts/ledger_check.py
+
+echo ""
+echo "───────────────────────────────────────────────────────────────────────"
+if [ $FAIL -eq 0 ]; then echo " PIPELINE COMPLETE — no stage failed"; else
+  echo " PIPELINE FINISHED WITH FAILURES — see above"; fi
+exit $FAIL

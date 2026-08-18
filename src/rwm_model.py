@@ -227,7 +227,7 @@ class RWMEnsemble(nn.Module):
         return pred
 
     # ------------------------------------------------------------- training
-    def compute_regression_loss(self, mean, std, target):
+    def compute_regression_loss(self, mean, std, target, loss_type="mse"):
         """
         system_dynamics.py:270-289, loss_type="mse" (the default; nothing in the
         repository ever passes "gaussian_nll").
@@ -236,9 +236,27 @@ class RWMEnsemble(nn.Module):
         state dims, meaned over the batch. sequence_loss is identically zero for
         prediction_type == "single".
         """
-        pred = torch.randn_like(mean, device=mean.device) * std + mean
-        state_loss = torch.sum(torch.square(pred - target), dim=1).mean(dim=0)
         sequence_loss = torch.tensor(0.0, device=mean.device)
+        if loss_type == "mse":
+            pred = torch.randn_like(mean, device=mean.device) * std + mean
+            state_loss = torch.sum(torch.square(pred - target), dim=1).mean(dim=0)
+        elif loss_type == "gaussian_nll":
+            # system_dynamics.py:285-297, the authors' own branch, reached by nothing.
+            # Two differences from the mse branch, both consequential:
+            #   1. it uses the predicted MEAN, not a reparameterised sample, so the
+            #      sigma->0 pressure from E[(mu+sigma*eps-y)^2] = (mu-y)^2 + sigma^2
+            #      is gone;
+            #   2. GaussianNLLLoss uses reduction='mean' over batch AND dims where the
+            #      mse branch SUMS over dims (a factor of 45), but it also carries a
+            #      1/(2 sigma^2) weight -- at init sigma ~ 6.7e-3, so in practice the
+            #      term lands ~18x LARGER, not smaller. Its weight relative to bound,
+            #      contact and termination is therefore changed, not preserved.
+            # The bound loss is still computed and still applied (compute_state_loss),
+            # so switching loss_type removes the collapse pressure from the state term
+            # only -- not from the bound term.
+            state_loss = nn.GaussianNLLLoss()(mean, target, std ** 2)
+        else:
+            raise ValueError("Invalid loss type.")
         return state_loss, sequence_loss
 
     @staticmethod
@@ -246,7 +264,8 @@ class RWMEnsemble(nn.Module):
         """system_dynamics.py:301-302. Requires head.forward to have run."""
         return torch.mean(head.state_max_logstd) - torch.mean(head.state_min_logstd)
 
-    def compute_state_loss(self, head, state_batch, action_batch, teacher_forcing=False):
+    def compute_state_loss(self, head, state_batch, action_batch, teacher_forcing=False,
+                           loss_type="mse"):
         """
         system_dynamics.py:179-231.
 
@@ -273,7 +292,7 @@ class RWMEnsemble(nn.Module):
             else:
                 x_action_batch = action_batch[:, i + 1:H + i + 1]    # :200
             mean, std = head(self.state_base(x_state_batch, x_action_batch), x_state_batch)
-            s, q = self.compute_regression_loss(mean, std, state_target)
+            s, q = self.compute_regression_loss(mean, std, state_target, loss_type)
             b = self.compute_bound_loss(head) if head.output_std \
                 else torch.tensor(0.0, device=mean.device)
             k = torch.tensor(0.0, device=mean.device)                # kl: rssm only
@@ -326,7 +345,7 @@ class RWMEnsemble(nn.Module):
 
     def compute_loss(self, state_batch, action_batch, extension_batch,
                      contact_batch, termination_batch, bootstrap=False,
-                     teacher_forcing=False):
+                     teacher_forcing=False, loss_type="mse"):
         """system_dynamics.py:128-177. Per-member, then meaned over the ensemble."""
         acc = {k: [] for k in ("state", "sequence", "bound", "kl",
                                "extension", "contact", "termination")}
@@ -338,7 +357,8 @@ class RWMEnsemble(nn.Module):
                 ids = torch.arange(0, state_batch.shape[0], device=state_batch.device)
             s, q, b, k = self.compute_state_loss(self.state_heads[i],
                                                  state_batch[ids], action_batch[ids],
-                                                 teacher_forcing=teacher_forcing)
+                                                 teacher_forcing=teacher_forcing,
+                                                 loss_type=loss_type)
             e, c, t = self.compute_auxiliary_loss(
                 self.auxiliary_heads[i], state_batch[ids], action_batch[ids],
                 extension_batch[ids] if extension_batch is not None else None,
