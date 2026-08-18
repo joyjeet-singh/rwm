@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–5 complete. **M-16 returns CANNOT BE SETTLED under corrected measurement (R-35)**; the h=368 effect is unambiguous and the h=8 effect is not. Last updated: 18 Aug 2026.
+**Status.** Steps 0–5 complete. M-16 returns CANNOT BE SETTLED (R-35). **M-23 pre-registered at h=368**; 10,000-iteration convergence runs launched. Last updated: 18 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -843,6 +843,61 @@ discipline then correctly forbids moving the goalposts after the fact. The remed
 pre-register the *right* measurement in advance, which is what M-23 does.
 **Evidence** `RUN` `results/task4_arenas.json`; `SRC` M-16's own text.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### M-23 — PRE-REGISTERED decision rule for the 10,000-iteration comparison · **NEW**
+**Entered before any 10,000-iteration result exists.** Committed on its own, before the runs are
+launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation.
+
+Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is
+actually about, not to the training configuration's forecast horizon.
+
+**Governing measurement:** relative-L1 at **h=368**, **out-of-sample** arena (episodes 1 and 8),
+400-step trajectories, **form 1 pooled** aggregation, with a **95% bootstrap CI over independent
+trajectories** (10,000 resamples), per M-25.
+
+> **The claim reproduces at long horizon** if all three hold:
+> 1. Arm A leads Arm B at the 2500 **and** 10,000 checkpoints;
+> 2. the 95% bootstrap CI on the A/B gap **excludes zero** at 10,000;
+> 3. the sign of the per-episode gap is **consistent across all ten episodes**.
+>
+> **The claim fails to reproduce** if Arm A does not lead at 10,000.
+>
+> **Cannot be settled** if the ordering holds but the CI spans zero, or the per-episode sign is
+> inconsistent.
+
+**Reported alongside, never as the governing verdict:** the same three conditions evaluated at
+h=8; at h=168 on 200-step trajectories; on nRMSE; and in the in-sample arena. **If the governing
+verdict and any secondary verdict disagree, both are reported and the disagreement is the
+result.**
+
+**On the h=8 question, raised before the runs: no expectation is stated.** Both arms were still
+descending at 2500 (slopes −6.5e-04 and −2.1e-04) and whether the h=8 gap separates by 10,000 is
+open. It will be answered by condition 1 evaluated at h=8 as a secondary, and recording "no
+expectation" now is deliberate — a prediction invented afterwards would have no standing.
+**Evidence** pre-registration; results attached when they land.
+**Status** PRE-REGISTERED, awaiting results · **Relevance** METHOD
+
+### M-25 — Bootstrap CIs over independent trajectories replace the seed-spread statistic · **NEW**
+M-16's condition 2 compared the arm gap against the spread over three training seeds. Task 5
+runs one seed per arm, so that statistic does not exist — and running three seeds to 10,000
+iterations to manufacture it would cost over thirty hours for a statistic that was never the
+right one.
+
+**Replacement: resample the independent trajectories with replacement, 10,000 draws, and report
+a 95% CI on the A/B gap.** Better on two counts:
+
+- it measures the uncertainty that actually dominates. `n_independent` ranges 4 to 39, while
+  training-seed spreads contributed only 0.003 to 0.031 (R-35). Task 4 showed the 400-step
+  out-of-sample **floor** moving from 0.3298 to 0.5372 between two trajectory samples at the
+  same horizon — trajectory sampling, not seed variation, is the dominant term;
+- it exists for a single run.
+
+Reported alongside `n_independent` in every table. Where `n_independent` = 4 the CI will be very
+wide, and that is the correct message rather than a defect of the method. The existing six-run
+tables are recomputed under bootstrap CIs so the comparison is like for like.
+**Evidence** `RUN` Task 4's floor instability; adopted as convention.
+**Status** ADOPTED · **Relevance** METHOD
 
 
 ---
