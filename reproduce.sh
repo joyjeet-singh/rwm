@@ -20,13 +20,29 @@ for a in "$@"; do
   esac
 done
 FAIL=0
-stage() {  # stage <n> <name> <runtime> <output-to-check> <command...>
+# Stages marked NEEDS_WEIGHTS load runs/*/weights_*.pt. Those are gitignored --
+# they are ~5.7 MB each and regenerable -- so a clean clone cannot run them. In
+# --quick mode they are skipped with their committed JSON verified instead, which
+# is what --quick is for. --force does not override that; there is nothing to force.
+stage() {  # stage <n> <name> <runtime> <output-to-check> [NEEDS_WEIGHTS] <command...>
   local n="$1" name="$2" rt="$3" out="$4"; shift 4
+  local needs=0
+  if [ "${1:-}" = "NEEDS_WEIGHTS" ]; then needs=1; shift; fi
   [ -n "$ONLY" ] && [ "$ONLY" != "$n" ] && return 0
   echo ""
   echo "───────────────────────────────────────────────────────────────────────"
   echo " STAGE $n — $name"
   echo "   expected runtime: $rt"
+  if [ "$needs" -eq 1 ] && [ ! -d runs ]; then
+    if [ -e "$out" ]; then
+      echo "   SKIP — needs trained weights in runs/ (gitignored, not in a clean clone)."
+      echo "          Its committed result is present: $out"
+    else
+      echo "   FAILED — needs runs/ and $out is absent. Run without --quick to train."
+      FAIL=1
+    fi
+    return 0
+  fi
   if [ -n "$out" ] && [ -e "$out" ] && [ "$FORCE" -eq 0 ]; then
     echo "   SKIP — $out already exists (use --force to regenerate)"
     return 0
@@ -69,13 +85,13 @@ else
 fi
 
 stage 12 "Two-arena analysis and M-16" "3 min" \
-      results/task4_arenas.json $PY scripts/task4_arenas_and_difficulty.py
+      results/task4_arenas.json NEEDS_WEIGHTS $PY scripts/task4_arenas_and_difficulty.py
 stage 13 "Bootstrap CIs on the six runs" "4 min" \
-      results/task5_2_bootstrap.json $PY scripts/task5_2_bootstrap.py
+      results/task5_2_bootstrap.json NEEDS_WEIGHTS $PY scripts/task5_2_bootstrap.py
 stage 14 "Task 5 analysis and M-23's verdict" "6 min" \
-      results/task5_analysis.json $PY scripts/task5_analyse.py
+      results/task5_analysis.json NEEDS_WEIGHTS $PY scripts/task5_analyse.py
 stage 15 "Matched per-dimension comparison and the trend fit" "3 min" \
-      results/task2_3_matched_trend.json $PY scripts/task2_3_matched_and_trend.py
+      results/task2_3_matched_trend.json NEEDS_WEIGHTS $PY scripts/task2_3_matched_and_trend.py
 stage 16 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 

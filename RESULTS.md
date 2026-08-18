@@ -1,0 +1,86 @@
+# Results
+
+An independent reproduction of the proprioceptive dynamics model from
+Li, Krause & Hutter, *Robotic World Model* (arXiv:2501.10100). This page is the outcome;
+[`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md) is the evidence.
+
+## The verdict
+
+**The paper's central claim — that the autoregressive training objective beats teacher
+forcing — REPRODUCES at long horizon.**
+
+Decision rule `M-23`, committed in `efc35b8` **before either run that tested it existed**:
+
+| condition | result |
+|---|---|
+| 1. Arm A leads Arm B at the 2500 **and** 10,000 checkpoints | **met** — gaps +6.7455, +1.2033 |
+| 2. 95% bootstrap CI on the gap excludes zero at 10,000 | **met** — [+0.5606, +2.0467] |
+| 3. per-episode sign consistent across all ten episodes | **met** — all positive, +0.418 to +1.826 |
+
+## The headline comparison
+
+Relative-L1, 400-step trajectories, form-1 pooled aggregation, independent trajectories only.
+`n_ind` is the number of **mutually non-overlapping** trajectories — the statistic that actually
+bounds these estimates.
+
+| arena | n_ind | ckpt | h | Arm A | Arm B | gap | 95% CI |
+|---|---|---|---|---|---|---|---|
+| out-of-sample | 4 | 2500 | 368 | 0.5922 | 7.3325 | +6.7455 | [+1.1094, +16.9030] |
+| out-of-sample | 4 | 10000 | 368 | **0.3509** | 1.5540 | +1.2033 | [+0.5606, +2.0467] |
+| in-sample | 16 | 10000 | 368 | **0.1002** | 0.9723 | +0.8719 | [+0.6711, +1.0920] |
+| out-of-sample | 4 | 10000 | 8 | 0.3414 | 0.3495 | +0.0080 | [-0.1316, +0.1243] **spans zero** |
+| in-sample | 16 | 10000 | 8 | **0.0862** | 0.1349 | +0.0486 | [+0.0284, +0.0705] |
+
+**Power caveat, stated where the verdict is:** the governing row rests on `n_ind = 4`. A
+bootstrap over four points cannot characterise a distribution — it can only say all four lie one
+side by a margin. The verdict's credibility comes from the in-sample arena at `n_ind = 16`
+returning the same answer with a tighter interval, from the per-episode sign holding on all ten
+episodes independently, and from an effect size of 4.4–9.7×.
+
+## The claim's history, in three lines
+
+1. **Asserted** at h=8 in Step 5, under seed-spread statistics and overlapping trajectories.
+2. **Withdrawn** when corrected measurement returned *cannot be settled* in all eight
+   arena/length/metric combinations — the rule had been anchored to the training forecast
+   horizon rather than to the horizon the claim is about (`M-24`).
+3. **Re-tested** at h=368 under `M-23`, committed before the data existed → **reproduces**.
+
+Two headline claims were formed, promoted and then **retracted on this project's own evidence**
+(`S-10`, `S-11`). Section H of the ledger keeps them.
+
+## Discrepancies found
+
+| kind | count | with measured cost |
+|---|---|---|
+| `C-` paper says one thing, code does another | 13 | see the variance collapse (`C-10`, `C-11`) and the absent decay factor (`C-09`) |
+| `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm |
+| `D-` dataset properties | 13 | — |
+| `M-` methodological findings | 25 | — |
+| `R-` measured results | 46 | — |
+| `O-` open questions | 12 | — |
+| `X-` deliberate deviations | 8 | — |
+| `S-` superseded, retained | 11 | — |
+
+Highlights: the released data has **ten episode boundaries its own termination column does not
+mark**, so the reference builder trains on 352 spliced windows (`B-01`, `D-03`). Training and
+evaluation **disagree on action alignment**, and the evaluation side is stale by one step
+(`B-05`, `D-13`). The predicted variance **collapses because that is the objective's optimum**,
+not a training accident (`C-10`, `C-11`), and the released checkpoint's collapse depth implies
+~158,000 optimisation steps against a config saying 500 and a paper saying 2500 (`O-12`).
+
+## Reproducing
+
+```bash
+./setup.sh              # clone upstreams at pinned commits, verify SHA-256
+./reproduce.sh --quick  # everything except training, minutes
+```
+
+Verified from an empty directory: **258,700 numeric values regenerate bitwise**, 0 differing.
+
+## Links
+
+- [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md) — every claim, with evidence class and status
+- [`results/claims_to_evidence.md`](results/claims_to_evidence.md) — the machine-generated map
+- [`LOSS_ASSEMBLY.md`](LOSS_ASSEMBLY.md) — line-by-line extraction of the reference loss
+- Model checkpoints — *pending release*
+- Paper draft — *pending*

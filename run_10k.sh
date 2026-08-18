@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -u
-V=../.venv-rwm311/bin/python
+cd "$(dirname "${BASH_SOURCE[0]}")"
+V="${PY:-$(command -v python3.11 || command -v python3)}"
 for spec in "A 1" "B 1"; do
   set -- $spec; arm=$1; seed=$2
   echo "=== $(date +%H:%M:%S) starting arm${arm} seed${seed} 10k ==="

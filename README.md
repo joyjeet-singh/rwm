@@ -130,6 +130,23 @@ python scripts/step4_3_differential.py     # acceptance gate: losses and gradien
 python scripts/step4_5_timing.py           # CPU budget
 ```
 
+## Determinism
+
+Training is bitwise reproducible under a fixed seed: the 10,000-iteration run reproduces the
+existing 2,500-iteration run exactly at every logged iteration, and `weights_2500.pt` is
+byte-identical between them.
+
+A clean-clone run of `reproduce.sh --quick` regenerates **258,700 numeric values bitwise**, with
+zero differing. Two categories are excluded from that count and are documented here rather than
+left for a reader to find:
+
+- **Timing fields** (`wall_clock_seconds`, `s_per_iter`, `elapsed_s`) — 1,439 values. These
+  measure the machine, not the model. Magnitude of the variation: a stage timed at 46.5 s on an
+  idle machine took 109.7 s while training ran concurrently, i.e. up to ~2.4×.
+- **Four NaN values** — the `base ang vel` group ratio at h = 8/32/128/368 in
+  `task2_4_results.json`. These are `inf/inf`, a documented failure of the relative-L1 metric at
+  group granularity (`M-09`), and are NaN in both the committed and regenerated files.
+
 ## Environment
 
 Intel Mac x86_64, CPU only, Python 3.11.15, torch 2.2.2, numpy 1.26.4.

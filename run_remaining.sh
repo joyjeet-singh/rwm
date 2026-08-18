@@ -2,7 +2,8 @@
 # Step 6.2 -- the remaining five runs, sequentially (2 cores; parallel would
 # contend and distort the timing measurements).
 set -u
-V=../.venv-rwm311/bin/python
+cd "$(dirname "${BASH_SOURCE[0]}")"
+V="${PY:-$(command -v python3.11 || command -v python3)}"
 for spec in "A 1" "A 2" "B 0" "B 1" "B 2"; do
   set -- $spec
   arm=$1; seed=$2

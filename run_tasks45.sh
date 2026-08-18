@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -u
-V=/Users/joyjeetsingh/Downloads/PDM/.venv-rwm311/bin/python
+cd "$(dirname "${BASH_SOURCE[0]}")"
+V="${PY:-$(command -v python3.11 || command -v python3)}"
 for s in 0 1 2; do
   echo "=== $(date +%H:%M:%S) Task4 contamination seed $s ==="
   $V -u scripts/step5_train.py --arm A --seed $s --iters 2500 --contaminated --tag _contam \
