@@ -411,5 +411,15 @@
     "Boundary crossing does NOT explain the A/B gap: crossing trajectories scored better than non-crossing ones. Per-episode difficulty does.",
     "Per-episode error spans 0.60 to 1.67 and is uncorrelated with commanded speed (r = +0.00), so the speed stratification the brief asks for does not balance difficulty; the seed-0 split holds out two of the easiest episodes.",
     "A 10-trajectory estimate is noisy: over 20 seeds protocol A is 0.709+-0.053 and protocol B is 1.026+-0.184, a separation of only 1.7 sigma."
-  ]
+  ],
+  "statistics_convention": {
+    "seed_spread": "sample standard deviation, ddof=1",
+    "adopted": "batch 1, Task 4",
+    "note": "with n=3 seeds ddof=0 understates the spread by 22%; M-16 condition 2 compares against it"
+  },
+  "evaluation_power": {
+    "reference_protocol_n_trajectories": 10,
+    "adopted_n_trajectories": 100,
+    "note": "nRMSE is tail-sensitive and biased low below n=50 (M-17); relative-L1 converges by n=25"
+  }
 }

@@ -1,0 +1,56 @@
+==========================================================================================
+TASK 3 -- RE-EVALUATION AT 100 TRAJECTORIES  (Task 4: ddof=1 throughout)
+==========================================================================================
+  pool: 1,202 valid non-crossing 400-step starts in episodes [1, 8]
+
+------------------------------------------------------------------------------------------
+  M-04 REVISITED -- evaluation-seed spread at 10 vs 100 trajectories
+------------------------------------------------------------------------------------------
+     10 traj, 20 eval seeds: e 0.6499 +- 0.0601   nRMSE 1.0636 +- 0.3912
+    100 traj, 20 eval seeds: e 0.6430 +- 0.0186   nRMSE 1.6333 +- 0.2639
+    spread shrinks 3.23x on e, 1.48x on nRMSE   (sqrt(10) = 3.16 would be pure sampling)
+
+------------------------------------------------------------------------------------------
+  ALL CHECKPOINTS AT 100 TRAJECTORIES
+------------------------------------------------------------------------------------------
+    armA seed0 @500:  e@8 0.3276  e@368 1.6222  nRMSE@8 0.3991  nRMSE@368 2.9418
+    armA seed0 @2500:  e@8 0.2540  e@368 0.5282  nRMSE@8 0.3017  nRMSE@368 0.8707
+    armA seed1 @500:  e@8 0.3237  e@368 1.3898  nRMSE@8 0.3862  nRMSE@368 1.8267
+    armA seed1 @2500:  e@8 0.2751  e@368 0.6386  nRMSE@8 0.3217  nRMSE@368 1.1064
+    armA seed2 @500:  e@8 0.3448  e@368 1.2895  nRMSE@8 0.4358  nRMSE@368 2.2064
+    armA seed2 @2500:  e@8 0.2644  e@368 0.6190  nRMSE@8 0.3129  nRMSE@368 0.8849
+    armB seed0 @500:  e@8 0.3281  e@368 5.3899  nRMSE@8 0.4668  nRMSE@368 6.6916
+    armB seed0 @2500:  e@8 0.3235  e@368 2.4423  nRMSE@8 0.3518  nRMSE@368 3.9318
+    armB seed1 @500:  e@8 0.3607  e@368 4.3683  nRMSE@8 0.4348  nRMSE@368 6.4372
+    armB seed1 @2500:  e@8 0.2926  e@368 2.8003  nRMSE@8 0.3633  nRMSE@368 4.4475
+    armB seed2 @500:  e@8 0.3586  e@368 3.7968  nRMSE@8 0.4295  nRMSE@368 6.6866
+    armB seed2 @2500:  e@8 0.3211  e@368 2.9206  nRMSE@8 0.3452  nRMSE@368 3.7985
+    released      :  e@8 0.1210  e@368 0.6193  nRMSE@8 0.1604  nRMSE@368 1.4268
+    hold-last floor: e@8 0.4871  e@368 0.9724  nRMSE@8 0.7521  nRMSE@368 1.1087
+
+    released vs floor at h=368 (100 traj): e 0.6193 vs 0.9724 | nRMSE 1.4268 vs 1.1087  -> LOSES TO the nRMSE floor
+
+------------------------------------------------------------------------------------------
+  M-16 RE-EVALUATED AT 100 TRAJECTORIES, ddof=1
+------------------------------------------------------------------------------------------
+         e: @500 A leads, @2500 A leads, same=True
+            A@2500 0.2645 +- 0.0105   B@2500 0.3124 +- 0.0172
+            |A-B| 0.0479 vs max sd(ddof=1) 0.0172 -> SETTLED
+     nrmse: @500 A leads, @2500 A leads, same=True
+            A@2500 0.3121 +- 0.0100   B@2500 0.3534 +- 0.0092
+            |A-B| 0.0414 vs max sd(ddof=1) 0.0100 -> SETTLED
+
+    metrics agree: True
+    M-16 verdict UNCHANGED from the 10-trajectory evaluation: True
+
+------------------------------------------------------------------------------------------
+  TASK 4 -- ddof=0 vs ddof=1 on the original 10-trajectory results
+------------------------------------------------------------------------------------------
+    relative-L1  h=8    A 0.3263 +- 0.0074 (ddof0) / 0.0091 (ddof1)   B 0.3915 +- 0.0150 / 0.0184
+    relative-L1  h=368  A 0.9333 +- 0.0988 (ddof0) / 0.1209 (ddof1)   B 4.0171 +- 0.3022 / 0.3701
+    nRMSE        h=8    A 0.2805 +- 0.0075 (ddof0) / 0.0091 (ddof1)   B 0.3210 +- 0.0183 / 0.0224
+    nRMSE        h=368  A 1.1580 +- 0.1148 (ddof0) / 0.1406 (ddof1)   B 4.5621 +- 0.4582 / 0.5611
+    M-16 condition 2 under ddof=1, relative-L1 h=8: 0.0652 > 0.0184 -> True
+    M-16 condition 2 under ddof=1, nRMSE h=8: 0.0405 > 0.0224 -> True
+
+  wrote results/task3_4_power_ddof.json

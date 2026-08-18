@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–5 complete. All six main runs finished; M-16 evaluated and SETTLED on both metrics (R-22). Last updated: 18 Aug 2026.
+**Status.** Steps 0–5 complete; remaining-work batch 1 done. M-16 SETTLED and re-confirmed at 100 trajectories. Last updated: 18 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -607,6 +607,58 @@ above did not fire because there was no flip.
 Arm B result existed · **Relevance** METHOD
 
 
+### M-17 — nRMSE is a TAIL statistic and is biased low at small n; relative-L1 is not · **NEW (batch 1)**
+The single most consequential methodological finding in the project, because it inverts an
+answer that had already been reported.
+
+`nrmse_per_step` takes the RMSE **across trajectories** at each forecast step. RMSE is
+dominated by its tail, and a world-model rollout has a heavy one: a minority of trajectories
+diverge and contribute most of the squared error. A 10-trajectory sample frequently fails to
+draw one, so **small-n nRMSE is biased low, not merely noisy.** relative-L1 averages
+per-timestep ratios and has no such sensitivity.
+
+Released checkpoint at h=368, varying only the trajectory count (8 eval seeds for n ≤ 100,
+4 for n > 100):
+
+| n | e model | e floor | model beats floor | nRMSE model | nRMSE floor | model beats floor |
+|---|---|---|---|---|---|---|
+| 10 | 0.6402 ± 0.0714 | 0.9585 ± 0.0589 | **100%** | 1.0406 ± 0.4349 | 1.0497 ± 0.0749 | **62%** |
+| 25 | 0.6400 ± 0.0454 | 0.9759 ± 0.0453 | 100% | 1.1645 ± 0.3635 | 1.0959 ± 0.0313 | 38% |
+| 50 | 0.6423 ± 0.0171 | 0.9937 ± 0.0446 | 100% | 1.6209 ± 0.2461 | 1.1253 ± 0.0245 | **0%** |
+| 100 | 0.6381 ± 0.0150 | 0.9641 ± 0.0168 | 100% | 1.6918 ± 0.2267 | 1.1189 ± 0.0218 | 0% |
+| 200 | 0.6456 ± 0.0149 | 0.9636 ± 0.0072 | 100% | 1.8072 ± 0.3185 | 1.1154 ± 0.0219 | 0% |
+| 400 | 0.6456 ± 0.0116 | 0.9618 ± 0.0078 | 100% | 1.8872 ± 0.2112 | 1.1127 ± 0.0018 | 0% |
+
+The model's nRMSE climbs monotonically from 1.04 to 1.89 and has still not plateaued at n=400.
+The **floor's** nRMSE is stable (1.05 → 1.11) because the hold-last predictor has a bounded,
+well-behaved error distribution and no diverging tail. That asymmetry is the whole mechanism.
+
+**Practical rule, adopted from here on:** relative-L1 has converged by n=25; nRMSE requires
+n ≥ 50 and should be quoted with the n it was measured at. Any nRMSE in this ledger measured
+at n=10 is biased low and is flagged accordingly.
+**Evidence** `RUN` `results/task3b_convergence.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### M-18 — Spread convention: `ddof=1` throughout · **NEW (batch 1)**
+All spreads over seeds are now reported with the sample standard deviation (`ddof=1`). With
+n=3 the difference from `ddof=0` is 22%, and M-16's condition 2 compares an arm difference
+against exactly that quantity, so the convention has to be stated rather than assumed.
+
+| | mean | sd (ddof=0) | sd (ddof=1) |
+|---|---|---|---|
+| Arm A, relative-L1 h=8 @2500 | 0.3263 | 0.0074 | **0.0091** |
+| Arm B, relative-L1 h=8 @2500 | 0.3915 | 0.0150 | **0.0184** |
+| Arm A, nRMSE h=8 @2500 | 0.2805 | 0.0075 | **0.0091** |
+| Arm B, nRMSE h=8 @2500 | 0.3210 | 0.0183 | **0.0224** |
+| Arm A, relative-L1 h=368 @2500 | 0.9333 | 0.0988 | **0.1209** |
+| Arm B, relative-L1 h=368 @2500 | 4.0171 | 0.3022 | **0.3701** |
+
+**M-16's verdict survives the stricter convention**: 0.0652 > 0.0184 on relative-L1 and
+0.0405 > 0.0224 on nRMSE, both at h=8.
+**Evidence** `RUN` `results/task3_4_power_ddof.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
 ---
 
 ## E. Measured results
@@ -1139,6 +1191,84 @@ C-13 — 2500 iterations is not where this objective settles.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
+### R-27 — The released checkpoint under nRMSE: it LOSES to the hold-last floor at long horizon · **NEW (batch 1)**
+The question this batch was built to answer, and the answer reverses once the evaluation is
+properly powered.
+
+Released checkpoint, protocol A, held-out episodes, `action_offset=1`, fixed training-episode
+scale vector (verified bitwise identical to the stored one):
+
+| h | e model | e floor | ratio | nRMSE model | nRMSE floor | ratio |
+|---|---|---|---|---|---|---|
+| 1 | 0.0915 | 0.1107 | 0.827 | 0.1084 | 0.2214 | 0.490 |
+| 8 | 0.1310 | 0.3603 | 0.364 | 0.1299 | 0.5585 | 0.233 |
+| 32 | 0.2609 | 0.5733 | 0.455 | 0.2254 | 0.6802 | 0.331 |
+| 128 | 0.5096 | 0.7542 | 0.676 | 0.5211 | 0.8224 | 0.634 |
+| 368 | 0.7008 | 1.0070 | 0.696 | 0.7572 | 0.9601 | 0.789 |
+
+At **n=10 — the reference's own protocol** — the checkpoint appears to beat the floor under
+both metrics at every horizon. **That conclusion does not survive M-17.** At n=100:
+
+| | model | floor | verdict |
+|---|---|---|---|
+| relative-L1 @368 | 0.6193 | 0.9724 | **beats the floor by 36%** |
+| nRMSE @368 | **1.4268** | **1.1087** | **LOSES to the floor by 29%** |
+
+and at n=400 the gap widens to 1.8872 against 1.1127. The model beats the floor in **100% of
+eval seeds under relative-L1 at every n**, and loses in **100% of seeds under nRMSE for n ≥ 50**.
+
+**So the two metrics disagree in direction about the released artifact itself, robustly, at
+long horizon.** This is not a statement about our training budget — it is measured on the
+authors' own released weights. Under the paper's metric the checkpoint is clearly better than
+assuming nothing changes; under a fixed-denominator metric that is sensitive to diverging
+rollouts, it is worse. Both are defensible metrics; they disagree because a minority of
+rollouts diverge badly and relative-L1's per-timestep normalisation hides that.
+
+Per-group at h=368 shows where it comes from: projected gravity nRMSE 3.0962 against a floor
+of 0.7914, and base linear velocity 0.7604 against 0.6762, while joint positions (0.4493 vs
+0.9849), velocities (0.4116 vs 0.9379) and torques (0.7645 vs 1.0930) are all far better than
+the floor. The checkpoint models the joints well and the base badly, and nRMSE weights the
+base failure more heavily.
+**Evidence** `RUN` `results/task2_reference_nrmse.json`, `results/task3_4_power_ddof.json`,
+`results/task3b_convergence.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Correction** An earlier statement of this result, computed at n=10, reported the opposite
+("BELOW the floor — it beats it by 21.1%"). That was an artifact of the reference's
+10-trajectory protocol; see M-17 and S-09.
+
+### R-28 — Re-evaluation at 100 trajectories: M-16 unchanged, M-04 revised · **NEW (batch 1)**
+Every checkpoint re-evaluated at 100 trajectories instead of 10. No retraining.
+
+**M-16 re-evaluated at n=100 with `ddof=1`:**
+
+| | relative-L1 | nRMSE |
+|---|---|---|
+| leader @500 / @2500, h=8 | A / A | A / A |
+| A@2500 | 0.2645 ± 0.0105 | 0.3121 ± 0.0100 |
+| B@2500 | 0.3124 ± 0.0172 | 0.3534 ± 0.0092 |
+| \|A−B\| vs max sd | 0.0479 > 0.0172 | 0.0414 > 0.0100 |
+| **verdict** | **SETTLED** | **SETTLED** |
+
+**Unchanged from the 10-trajectory evaluation, on both metrics, and the metrics still agree.**
+The central claim (R-22) is robust to the power fix — which is worth stating precisely because
+R-27 shows another conclusion in this project was not.
+
+**M-04 revised.** Evaluation-seed spread over 20 seeds, released checkpoint:
+
+| n | relative-L1 | nRMSE |
+|---|---|---|
+| 10 | 0.6499 ± 0.0601 | 1.0636 ± 0.3912 |
+| 100 | 0.6430 ± 0.0186 | 1.6333 ± 0.2639 |
+
+relative-L1's spread shrinks 3.23×, almost exactly the √10 = 3.16 of pure sampling noise, and
+its mean barely moves. nRMSE's spread shrinks only 1.48× **and its mean moves by 54%** — the
+signature of bias rather than noise, exactly as M-17 describes.
+**Evidence** `RUN` `results/task3_4_power_ddof.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Note** The 10-trajectory numbers are retained throughout the ledger: they are what the
+reference protocol yields, and the difference between the two is itself the result.
+
+
 ---
 
 ## F. Open questions
@@ -1387,13 +1517,44 @@ Recorded as C-08 with status UNVERIFIED and an explicit instruction to reconfirm
 **Superseded by** C-09.
 **Note** The UNVERIFIED flag did its job — the claim was never promoted to a result. This is the `INFER` evidence class working as intended.
 
+### S-09 — "Under nRMSE the released checkpoint at offset 1 is clearly informative (below 1.0)" · **NEW (batch 1)**
+R-15 reported the released checkpoint's nRMSE at h=368 as 1.3228 under the released evaluation
+convention and 0.7572 under the causal one, and framed that as "the difference between worse
+than predicting the training mean and clearly informative". The framing is **refuted**: both
+figures were measured at n=10 and are biased low (M-17). Re-measured:
+
+| n | nRMSE offset 0 | nRMSE offset 1 | both above 1.0? |
+|---|---|---|---|
+| 10 | 1.4251 | 1.0292 | yes |
+| 100 | 1.8282 | 1.6182 | yes |
+| 400 | 2.1724 | 1.8157 | yes |
+
+**What survives:** offset 1 is better than offset 0 on both metrics at every n, so R-15's
+ordering — the measured cost of B-05 — stands unaffected. **What does not:** the claim that
+the causal convention takes the checkpoint below the "no better than the training mean"
+line. It does not; both conventions sit above it at long horizon.
+**Superseded by** R-27, M-17. R-15's relative-L1 column is unaffected throughout.
+
+
 ---
 
 ## Candidate paper contributions
 
 Ordered by how much they would stand on their own, for use when the writeup begins. Every one still needs its impact quantified rather than merely its existence demonstrated.
 
-1. **The paper's central claim reproduces, and the margin is large** (R-22, R-23, M-16). The
+1. **Two reasonable metrics disagree, in direction, about the released checkpoint itself —
+   and the reference's own evaluation protocol is underpowered enough to flip the answer**
+   (R-27, M-17, R-28). At h=368 the released weights beat the hold-last floor by 36% under
+   relative-L1, the paper's metric, and **lose to it by 29% under a fixed-denominator nRMSE**.
+   Both hold in 100% of evaluation seeds once n ≥ 50. At the reference's own n=10 the nRMSE
+   answer is a coin flip (62% of seeds favourable), and this project reported the wrong answer
+   from it before measuring the convergence. The mechanism is specific and checkable: nRMSE
+   takes an RMSE across trajectories, rollout error has a heavy tail, and a 10-trajectory
+   sample usually misses it — so small-n nRMSE is biased low, while the floor's nRMSE, having
+   no diverging tail, is stable. Promoted to first place because it is a claim about the
+   released artifact rather than about our budget, it is robust, and it comes with its own
+   correction attached (S-09).
+2. **The paper's central claim reproduces, and the margin is large** (R-22, R-23, M-16, R-28). The
    autoregressive objective beats teacher forcing at h=368 by **4.3× on relative-L1 and 3.9× on
    nRMSE**, with the ordering identical at both checkpoints, the difference well outside the
    seed spread, and both metrics agreeing — against a decision rule pre-registered in git before
@@ -1402,22 +1563,22 @@ Ordered by how much they would stand on their own, for use when the writeup begi
    exposure bias quantified end to end on the released architecture. Promoted to first place at
    Step 6: it is the claim the project was built to test, it is now answered, and the
    pre-registration is what makes the answer worth citing.
-2. **The released checkpoint cannot have come from the released recipe, on two independent
+3. **The released checkpoint cannot have come from the released recipe, on two independent
    parameters** (C-12, C-13, O-12, R-24, R-25). The pooled collapse rate over six runs is
    −9.4362e-05 ± 3.33e-07, a run-to-run spread of 0.87%, implying 153,270 iterations at the
    configured learning rate or a 31× larger one. `min_logstd`, on a different gradient path and a
    5× slower clock, independently implies order 2.7e5. Config says 500, paper says 2500,
    checkpoint is tagged 5000.
-3. **The released pipeline trains on spliced episodes** (B-01, D-03, D-06). A defect with a clear mechanism, a clean count, and an obvious controlled experiment behind it (O-06).
-4. **There is no held-out evaluation in the released repository** (B-03, B-04), plus a demonstration of what a correct one gives (X-01, R-02, R-15).
-5. **The released evaluation feeds a stale action and understates its own model** (B-05, D-13, R-09, R-15). Settled at Step 3.5 and quantified at Step 4 across both protocols, both metrics and a 20-seed spread. The sharpest single number is the fixed-denominator one: at h=368 the checkpoint scores nRMSE **1.3228 under the released convention and 0.7572 under the causal one** — the difference between "worse than predicting the training mean" and "clearly informative".
-6. **Both halves of RWM-U's uncertainty estimate are degenerate, by construction** (C-04, C-06, C-10, C-11, R-17, O-08). Strengthened considerably at Step 4. The collapse is now shown to be the *optimum of the released objective* rather than an accident: the state loss is squared error on a reparameterised sample with no log-sigma term, so `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at sigma = 0; the bound loss pushes the same way; and `min_logstd` cancels out of it entirely (C-11), giving a one-way ratchet. Predicted from the algebra, then reproduced on a fresh model in 451 iterations.
-7. **[superseded by item 2 above]** (C-12, O-10). Its variance state implies ~155,000 iterations at the configured learning rate, against a config that says 500 and a paper that says 2500. New at Step 4, cheap to confirm, and it bears on what "reproducing RWM" even means.
-8. **The paper's described model is not the implemented model** (C-01, C-03, C-05, C-07, C-09, M-13). Seven loss terms against two; a residual mean head; two trunks; sample-versus-mean asymmetry; a forecast decay factor the paper specifies and the code lacks; and an auxiliary branch that is teacher-forced while the state branch is not.
-9. **The released checkpoint is only modestly better than a trivial baseline at long horizon** (R-03, R-09, R-10, R-15). Softened twice now: it is not worse at one step once scored correctly, and the per-group breakdown localises the weakness to base linear velocity while joint prediction stays strong.
-10. **Evaluation with ten trajectories is underpowered** (M-04, D-12, R-15). Survives the convention change at 1.6σ. Methodological, but it undercuts single-seed comparisons in this literature generally.
-11. **Correlational tests cannot establish action alignment for position-controlled robots** (M-10, M-11). A small, transferable methods note: identification has to come from structural invariants such as reset rows, not from fitting.
-12. **A relative-L1 metric on normalised states is the wrong instrument** (M-03, M-09, M-12). It is unusable per-group, saturates at long horizon, and hides the effect in item 3. A fixed-denominator nRMSE costs nothing and does not.
+4. **The released pipeline trains on spliced episodes** (B-01, D-03, D-06). A defect with a clear mechanism, a clean count, and an obvious controlled experiment behind it (O-06).
+5. **There is no held-out evaluation in the released repository** (B-03, B-04), plus a demonstration of what a correct one gives (X-01, R-02, R-15).
+6. **The released evaluation feeds a stale action and understates its own model** (B-05, D-13, R-09, R-15). Settled at Step 3.5 and quantified at Step 4 across both protocols, both metrics and a 20-seed spread. The sharpest single number is the fixed-denominator one: at h=368 the checkpoint scores nRMSE **1.3228 under the released convention and 0.7572 under the causal one** — the difference between "worse than predicting the training mean" and "clearly informative".
+7. **Both halves of RWM-U's uncertainty estimate are degenerate, by construction** (C-04, C-06, C-10, C-11, R-17, O-08). Strengthened considerably at Step 4. The collapse is now shown to be the *optimum of the released objective* rather than an accident: the state loss is squared error on a reparameterised sample with no log-sigma term, so `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at sigma = 0; the bound loss pushes the same way; and `min_logstd` cancels out of it entirely (C-11), giving a one-way ratchet. Predicted from the algebra, then reproduced on a fresh model in 451 iterations.
+8. **[superseded by item 3 above]** (C-12, O-10). Its variance state implies ~155,000 iterations at the configured learning rate, against a config that says 500 and a paper that says 2500. New at Step 4, cheap to confirm, and it bears on what "reproducing RWM" even means.
+9. **The paper's described model is not the implemented model** (C-01, C-03, C-05, C-07, C-09, M-13). Seven loss terms against two; a residual mean head; two trunks; sample-versus-mean asymmetry; a forecast decay factor the paper specifies and the code lacks; and an auxiliary branch that is teacher-forced while the state branch is not.
+10. **The released checkpoint is only modestly better than a trivial baseline at long horizon** (R-03, R-09, R-10, R-15). Softened twice now: it is not worse at one step once scored correctly, and the per-group breakdown localises the weakness to base linear velocity while joint prediction stays strong.
+11. **Evaluation with ten trajectories is underpowered** (M-04, D-12, R-15). Survives the convention change at 1.6σ. Methodological, but it undercuts single-seed comparisons in this literature generally.
+12. **Correlational tests cannot establish action alignment for position-controlled robots** (M-10, M-11). A small, transferable methods note: identification has to come from structural invariants such as reset rows, not from fitting.
+13. **A relative-L1 metric on normalised states is the wrong instrument** (M-03, M-09, M-12). It is unusable per-group, saturates at long horizon, and hides the effect in item 3. A fixed-denominator nRMSE costs nothing and does not.
 
 ---
 
