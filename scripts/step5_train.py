@@ -38,7 +38,7 @@ import rwm_train as T
 
 TERMS = M.TOTAL_WEIGHT_KEYS
 LIVE = ("state", "bound", "contact", "termination")
-CHECKPOINTS = (500, 2500)
+CHECKPOINTS = (500, 2500, 5000, 7500, 10000)
 LOG_EVERY = 25
 CKPT_EVERY = 250
 SPIKE_FACTOR = 5.0
@@ -121,6 +121,7 @@ def main():
     ap.add_argument("--arm", choices=["A", "B"], required=True)
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--iters", type=int, default=2500)
+    ap.add_argument("--tag", default="")
     ap.add_argument("--batch", type=int, default=256)
     ap.add_argument("--ensemble", type=int, default=1)
     args = ap.parse_args()
@@ -136,7 +137,7 @@ def main():
     scale = MET.training_scale(data, episode_id, split["train_episodes"],
                               cfg["state_data_mean"], cfg["state_data_std"])
 
-    run = f"arm{args.arm}_seed{args.seed}"
+    run = f"arm{args.arm}_seed{args.seed}{args.tag}"
     rundir = os.path.join(R.REPO_ROOT, "runs", run)
     os.makedirs(rundir, exist_ok=True)
 
@@ -204,7 +205,7 @@ def main():
                   f" {time.perf_counter()-t0:>6.0f}")
 
         step = it + 1
-        if step in CHECKPOINTS:
+        if step in CHECKPOINTS and step <= args.iters:
             wp = os.path.join(rundir, f"weights_{step}.pt")
             torch.save({"model_state_dict": model.state_dict(), "iter": step,
                         "arm": args.arm, "seed": args.seed}, wp)
