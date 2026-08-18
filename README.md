@@ -11,27 +11,26 @@ never edited in place; wrong turns are marked `SUPERSEDED` and kept.
 
 ## Status
 
-**Steps 0–5 complete. The autoregressive-versus-teacher-forcing result holds decisively at
-long horizon and is NOT established at the 8-step training horizon.**
+**Steps 0–5 complete. The paper's central claim REPRODUCES at long horizon, under a decision
+rule pre-registered in git before the runs that tested it existed.**
 
-At h=368 Arm A (autoregressive) beats Arm B (teacher forcing) by a factor of 6–8× in every
-evaluation arena, and the gap is positive on all ten episodes individually under both metrics —
-no exceptions (`R-35`, `R-37`).
+At h=368, out-of-sample, after 10,000 iterations from scratch: the autoregressive objective
+scores **0.3509** against teacher forcing's **1.5540** — a factor of **4.4×** — with a 95%
+bootstrap CI on the gap of [+0.56, +2.05] excluding zero, and the per-episode gap positive on
+**all ten episodes** (+0.42 to +1.83). All three of `M-23`'s pre-registered conditions hold
+(`R-40`). The rule was committed in `efc35b8` before either run was launched.
 
-At h=8, where the decision rule was pre-registered, the rule returns **"cannot be settled at
-this budget"** once independent trajectories and pooled aggregation are used (`R-35`). The arms
-differ by 0.010–0.021 against a seed spread of 0.023–0.031 out-of-sample, and the ordering
-*flips* in-sample — Arm B ahead at 500 iterations, Arm A ahead at 2500. That flip is the
-teacher-forcing signature pre-registered in commit `0fe2bca` before any Arm B result existed,
-and it fires in the arena with the statistical power to see it (`R-36`).
+Stated with it, because the project's discipline is the point:
 
-The earlier SETTLED verdict is retained as what the reference's own 10-trajectory overlapping
-protocol yields. It was not wrong arithmetic — it was computed on a trajectory set whose
-effective sample size was 4 (`M-20`).
-
-A retraction is recorded in full: this project briefly promoted a claim that the released
-checkpoint loses to a constant predictor at long horizon, then refuted it with its own gating
-checks (`S-10`, `R-29`, `R-30`).
+- an **earlier rule (`M-16`) returned "cannot be settled"** — it was anchored at h=8, the
+  training forecast horizon rather than the horizon the claim is about, and that design flaw is
+  recorded as `M-24`. `M-23` was written to correct it, in advance.
+- the h=8 ambiguity **does not resolve even at 10,000 iterations** out-of-sample, where only
+  four independent 400-step trajectories exist. It resolves cleanly in-sample at four times the
+  samples (`R-42`). The limit is sample size, not convergence.
+- a **retraction is recorded in full**: this project promoted a claim that the released
+  checkpoint loses to a constant predictor at long horizon, then refuted it with its own gating
+  checks (`S-10`, `R-29`, `R-30`).
 
 ## What has been established
 
@@ -66,6 +65,12 @@ Four findings drive the rest of the work:
 5. **Teacher forcing trains better and deploys worse, measured end to end.** Arm B reaches a
    3× lower training loss with 5× smaller gradient norms, then rolls out 4.3× worse at h=368.
    The objective it minimises is not the objective that matters. (`R-22`, `R-23`)
+
+6. **A from-scratch model does not develop the released checkpoint's failure pattern.** After
+   10,000 iterations Arm A loses to the hold-last floor on **1 of 45** dimensions — `g_z`, the
+   one weighted 1/1174 by a mis-specified normalisation constant — against the released
+   checkpoint's **7**, with a Jaccard overlap of 0.14. The released weights' extra weaknesses
+   are specific to that checkpoint, not implied by the objective. (`R-41`)
 
 ## Verification chain
 

@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–5 complete. M-16 returns CANNOT BE SETTLED (R-35). **M-23 pre-registered at h=368**; 10,000-iteration convergence runs launched. Last updated: 18 Aug 2026.
+**Status.** Steps 0–5 complete. **M-23 returns REPRODUCES AT LONG HORIZON (R-40)** under a rule pre-registered before the runs existed. Last updated: 19 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -405,6 +405,12 @@ Follows from D-12. The seed-0 split holds out two of the easiest episodes (pair 
 The reference checkpoint was trained on the entire CSV, so protocol A's held-out episodes were in its training data. For this checkpoint, protocol A is not a generalisation measure and the A/B gap measures episode sampling, not leakage.
 **Evidence** `RUN` + `INFER`.
 **Status** CONFIRMED · **Relevance** METHOD
+**CROSS-VALIDATION DECISION (5.4), now resolved.** Deferred pending M-23, and its condition was:
+if M-23 settles with per-episode sign consistent at ten of ten, the direction is established
+without CV and the magnitude is reported as a range with the outlier named; otherwise the twelve
+hours are justified. **M-23 settled and the sign is consistent at ten of ten (R-40), so
+cross-validation does NOT run.** The long-horizon magnitude is reported as a range across
+episodes — gap +0.418 to +1.826 at 10,000 — with episode 1 named as the high outlier per R-39.
 **Decision** For Step 6, redefine protocol B as *trajectories drawn from training episodes only*. A versus B then becomes a clean held-out-versus-seen comparison on a model whose training set we control.
 
 ### M-07 — The aggregate metric hides per-group behaviour
@@ -875,8 +881,17 @@ result.**
 descending at 2500 (slopes −6.5e-04 and −2.1e-04) and whether the h=8 gap separates by 10,000 is
 open. It will be answered by condition 1 evaluated at h=8 as a secondary, and recording "no
 expectation" now is deliberate — a prediction invented afterwards would have no standing.
-**Evidence** pre-registration; results attached when they land.
-**Status** PRE-REGISTERED, awaiting results · **Relevance** METHOD
+**OUTCOME (R-40): REPRODUCES AT LONG HORIZON.** All three conditions hold — Arm A leads at both
+2500 and 10,000 (gaps +6.7455, +1.2033), the 95% bootstrap CI excludes zero at 10,000
+([+0.5606, +2.0467]), and the per-episode sign is positive on all ten episodes (+0.418 to
++1.826). Governing and secondary verdicts agree in direction; the only measurement spanning zero
+is h=8 out-of-sample at n_independent = 4.
+
+**On the h=8 question, for which no expectation was recorded:** it does not resolve
+out-of-sample even at 10,000 iterations (R-42), and it resolves cleanly in-sample where there
+are four times the independent samples. The limit is sample size, not convergence.
+**Evidence** `RUN` `results/task5_analysis.json`.
+**Status** RESOLVED — reproduces at long horizon · **Relevance** METHOD
 
 ### M-25 — Bootstrap CIs over independent trajectories replace the seed-spread statistic · **NEW**
 M-16's condition 2 compared the arm gap against the spread over three training seeds. Task 5
@@ -1836,6 +1851,119 @@ episode 1 named, not as a single figure from the held-out pair.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
+### R-40 — M-23: the claim REPRODUCES AT LONG HORIZON · **NEW**
+The pre-registered rule (`efc35b8`, committed before either 10,000-iteration run was launched)
+evaluated on Arm A seed 1 and Arm B seed 1, from scratch to 10,000 iterations, 7.5 h total,
+zero gradient spikes in either.
+
+**Governing measurement** — relative-L1, h=368, out-of-sample, 400-step, form 1 pooled,
+95% bootstrap CI over independent trajectories:
+
+| condition | result | |
+|---|---|---|
+| 1. Arm A leads at 2500 **and** 10,000 | **True** | gaps +6.7455 and +1.2033 |
+| 2. 95% bootstrap CI excludes zero at 10,000 | **True** | CI [+0.5606, +2.0467], n_indep = 4 |
+| 3. per-episode sign consistent across all ten | **True** | all positive, +0.418 to +1.826 |
+
+**VERDICT: REPRODUCES AT LONG HORIZON.** At 10,000 iterations Arm A scores 0.3509 against Arm
+B's 1.5540 out-of-sample — a factor of **4.4×** — and 0.1002 against 0.9723 in-sample, a factor
+of **9.7×**.
+
+**Secondaries, reported and not governing:**
+
+| | gap | 95% CI | |
+|---|---|---|---|
+| h=368 in-sample | +0.8719 | [+0.6711, +1.0920] | A leads, excludes zero |
+| h=8 in-sample | +0.0486 | [+0.0284, +0.0705] | A leads, excludes zero |
+| **h=8 out-of-sample** | **+0.0080** | **[−0.1316, +0.1243]** | **spans zero** |
+
+The governing verdict and the secondaries **agree in direction everywhere**; the one that spans
+zero is h=8 out-of-sample at `n_independent = 4`, which is the measurement M-24 already
+identified as anchored to the wrong horizon and the weakest sample in the project.
+**Evidence** `RUN` `results/task5_analysis.json`, `results/step5_arm{A,B}_seed1_10k.json`;
+pre-registration `efc35b8`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-41 — A from-scratch model does NOT develop the released checkpoint's failure pattern · **NEW**
+The largest result available from these runs, and it answers the question in the **negative**,
+which is the opposite of the hypothesis that motivated it.
+
+Per-dimension losses to the hold-last floor, evaluated on 20 independent trajectories across
+all ten episodes:
+
+| model | dimensions lost of 45 | overlap with the released 7 |
+|---|---|---|
+| released checkpoint | **7** | — |
+| Arm A @500 | 24 | 3/7 |
+| Arm A @2500 | **1** | 1/7 |
+| Arm A @5000 | **1** | 1/7 |
+| Arm A @7500 | **1** | 1/7 |
+| **Arm A @10000** | **1** | **1/7 — Jaccard 0.14** |
+| Arm B @10000 | 18 | 4/7 |
+
+**Arm A at 10,000 loses on exactly one dimension: `g_z`** — and `g_z` is the dimension R-32
+showed is weighted 1/1174 in the loss by a mis-specified normalisation constant, so no model
+trained on this objective has an incentive to fit it. Every other dimension in the released
+checkpoint's failure set — `g_x`, `g_y`, `v_z`, `w_x`, `w_y`, `tau_RF_HAA` — is handled fine by
+a from-scratch model with **less** training data.
+
+**The inference runs the other way from the hypothesis.** Had the pattern converged, the
+weakness would belong to the objective and architecture. It does not converge: the released
+checkpoint's six extra failing dimensions are **specific to that checkpoint**, not implied by
+the released objective. Taken with C-12, C-13, R-24 and R-25 — which independently place the
+released checkpoint at order 1e5 optimisation steps rather than its tagged 5,000 — this is a
+third, independent line of evidence that the released weights are not what the released recipe
+produces.
+
+**Caveat, stated because it cuts against the finding's convenience:** Arm A trained on 8 of the
+10 episodes it is evaluated on, so its evaluation is 80% in-sample. The released checkpoint
+trained on **all ten**, so it is 100% in-sample and if anything holds the advantage. The
+comparison is conservative in the direction of the conclusion.
+**Evidence** `RUN` `results/task5_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-42 — The A/B gap across five checkpoints: persists everywhere, resolves in-sample at h=8 · **NEW**
+Bootstrap CIs over independent trajectories, gap = Arm B − Arm A so positive favours Arm A.
+
+**h=368, out-of-sample** (n_indep 4): +3.334, +6.746, +1.459, +1.280, +1.203 at 500 / 2500 /
+5000 / 7500 / 10000 — **CI excludes zero at every checkpoint**.
+**h=368, in-sample** (n_indep 16): +1.724, +1.699, +0.924, +0.834, +0.872 — excludes zero at
+every checkpoint.
+
+The absolute gap **narrows** after 2500 because both arms improve (Arm A 1.4265 → 0.3509, Arm B
+4.7589 → 1.5540), but the ratio remains 4.4× out-of-sample and 9.7× in-sample at 10,000, and no
+checkpoint is ambiguous.
+
+**h=8 answers Q2 in two different ways depending on arena.** In-sample the gap grows
+monotonically and every checkpoint after 500 excludes zero: −0.0255, +0.0291, +0.0393, +0.0442,
+**+0.0486**. The negative value at 500 is the R-36 teacher-forcing flip, now confirmed a third
+time with a CI that excludes zero. Out-of-sample the gap never separates: +0.0594, +0.0386,
++0.0070, −0.0127, +0.0080, with the CI spanning zero at four of five checkpoints.
+
+So the h=8 ambiguity **does not resolve with more training out-of-sample** — it is a
+sample-size limit at `n_independent = 4`, not a convergence limit. In-sample, at four times the
+independent samples, it resolves cleanly and widens.
+**Evidence** `RUN` `results/task5_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-43 — The collapse rate stays linear to 10,000; the pre-registered prediction lands · **NEW**
+M-23 recorded the expectation that `exp(log_delta_logstd)` should reach ≈0.39 at 10,000 if the
+pooled 2,500-iteration rate of −9.4362e-05 held.
+
+| | rate over 10,000 | rate/lr | exp(log_delta) @10,000 | predicted | error |
+|---|---|---|---|---|---|
+| Arm A | −9.1353e-05 ± 2.63e-08 | 0.91 | **0.400198** | 0.3892 | **+2.8%** |
+| Arm B | −9.1536e-05 ± 3.65e-08 | 0.92 | **0.398468** | 0.3892 | **+2.4%** |
+
+The rate slows by ~3% over the 4× longer window (−9.44e-05 → −9.14e-05), and the two arms agree
+with each other to 0.2%. **The linearity underpinning O-12 survives a fourfold extrapolation to
+within 3%.** Implied iterations to the released checkpoint's −14.4629 move from 153,270 to
+**158,319** (Arm A) and **158,003** (Arm B) — the conclusion is unchanged and its uncertainty is
+now bounded by measurement rather than by extrapolation.
+**Evidence** `RUN` `results/task5_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## F. Open questions
@@ -1975,6 +2103,13 @@ the released checkpoint is not reachable from the released configuration. That i
 and it should be written that way rather than as a failure to reproduce.
 **Status** the mechanism is now CONFIRMED and quantified; the checkpoint's provenance remains
 OPEN.
+**STRENGTHENED A THIRD TIME (R-43).** The linear extrapolation now survives a fourfold test:
+both 10,000-iteration runs land at exp(log_delta) 0.3985–0.4002 against a prediction of 0.3892
+made from the 2,500-iteration fit — within 3% — and imply 158,003–158,319 iterations rather than
+153,270. R-41 adds an independent line: a from-scratch model at 10,000 iterations loses on 1 of
+45 dimensions against the released checkpoint's 7, so the released weights are not what this
+recipe produces on any of three separate measures.
+
 **STRENGTHENED TWICE at Step 6.** (i) R-24 pools six independent trajectories: the rate is
 −9.4362e-05 ± 3.33e-07 with a run-to-run sd of 0.87%, so it is a pinned constant rather than an
 estimate, and it implies 153,270 iterations or lr 3.07e-03. (ii) R-25 adds `min_logstd` as a

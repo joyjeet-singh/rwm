@@ -1,0 +1,91 @@
+====================================================================================================
+TASK 5 -- 10,000-ITERATION CONVERGENCE RUNS
+====================================================================================================
+
+====================================================================================================
+Q1 -- DOES A FROM-SCRATCH MODEL DEVELOP THE RELEASED CHECKPOINT'S FAILURE PATTERN?
+====================================================================================================
+  released checkpoint loses on 7 of 45: ['g_x', 'g_y', 'g_z', 'tau_RF_HAA', 'v_z', 'w_x', 'w_y']
+
+  run               lost  overlap with the released 7   dims lost
+  armA @500        24  3/7 =  43%   ['g_x', 'g_z', 'q_LF_HFE', 'q_LF_KFE', 'q_LH_HAA', 'q_LH_HFE', 'q_RF_HAA', 'q_RF_KFE', 'q_RH_HAA', 'q_RH_HFE', 'q_RH_KFE', 'qd_LH_KFE', 'qd_RF_KFE', 'qd_RH_KFE', 'tau_LF_HAA', 'tau_LF_HFE', 'tau_LH_HAA', 'tau_LH_HFE', 'tau_RF_HAA', 'tau_RH_HAA', 'tau_RH_HFE', 'v_x', 'v_y', 'w_z']
+  armA @2500        1  1/7 =  14%   ['g_z']
+  armA @5000        1  1/7 =  14%   ['g_z']
+  armA @7500        1  1/7 =  14%   ['g_z']
+  armA @10000       1  1/7 =  14%   ['g_z']
+  armB @500        44  7/7 = 100%   ['g_x', 'g_y', 'g_z', 'q_LF_HAA', 'q_LF_HFE', 'q_LF_KFE', 'q_LH_HAA', 'q_LH_HFE', 'q_LH_KFE', 'q_RF_HAA', 'q_RF_HFE', 'q_RF_KFE', 'q_RH_HAA', 'q_RH_HFE', 'q_RH_KFE', 'qd_LF_HAA', 'qd_LF_HFE', 'qd_LF_KFE', 'qd_LH_HAA', 'qd_LH_HFE', 'qd_LH_KFE', 'qd_RF_HAA', 'qd_RF_KFE', 'qd_RH_HAA', 'qd_RH_HFE', 'qd_RH_KFE', 'tau_LF_HAA', 'tau_LF_HFE', 'tau_LF_KFE', 'tau_LH_HAA', 'tau_LH_HFE', 'tau_LH_KFE', 'tau_RF_HAA', 'tau_RF_HFE', 'tau_RF_KFE', 'tau_RH_HAA', 'tau_RH_HFE', 'tau_RH_KFE', 'v_x', 'v_y', 'v_z', 'w_x', 'w_y', 'w_z']
+  armB @2500       42  7/7 = 100%   ['g_x', 'g_y', 'g_z', 'q_LF_HAA', 'q_LF_HFE', 'q_LF_KFE', 'q_LH_HAA', 'q_LH_HFE', 'q_LH_KFE', 'q_RF_HAA', 'q_RF_HFE', 'q_RF_KFE', 'q_RH_HAA', 'q_RH_HFE', 'q_RH_KFE', 'qd_LF_HAA', 'qd_LF_KFE', 'qd_LH_HFE', 'qd_LH_KFE', 'qd_RF_HFE', 'qd_RF_KFE', 'qd_RH_HAA', 'qd_RH_HFE', 'qd_RH_KFE', 'tau_LF_HAA', 'tau_LF_HFE', 'tau_LF_KFE', 'tau_LH_HAA', 'tau_LH_HFE', 'tau_LH_KFE', 'tau_RF_HAA', 'tau_RF_HFE', 'tau_RF_KFE', 'tau_RH_HAA', 'tau_RH_HFE', 'tau_RH_KFE', 'v_x', 'v_y', 'v_z', 'w_x', 'w_y', 'w_z']
+  armB @5000       22  5/7 =  71%   ['g_x', 'g_z', 'q_LF_HAA', 'q_LF_HFE', 'q_LF_KFE', 'q_LH_HAA', 'q_LH_HFE', 'q_LH_KFE', 'q_RF_HAA', 'q_RF_HFE', 'q_RF_KFE', 'q_RH_HAA', 'q_RH_HFE', 'tau_LF_HAA', 'tau_LH_HAA', 'tau_RF_HAA', 'tau_RH_HAA', 'tau_RH_HFE', 'v_x', 'w_x', 'w_y', 'w_z']
+  armB @7500       17  5/7 =  71%   ['g_x', 'g_z', 'q_LF_HAA', 'q_LF_HFE', 'q_LF_KFE', 'q_LH_HAA', 'q_LH_HFE', 'q_LH_KFE', 'q_RF_HAA', 'q_RH_HAA', 'tau_LF_HAA', 'tau_LH_HAA', 'tau_RF_HAA', 'tau_RH_HAA', 'w_x', 'w_y', 'w_z']
+  armB @10000      18  4/7 =  57%   ['g_x', 'g_z', 'q_LF_HAA', 'q_LF_HFE', 'q_LF_KFE', 'q_LH_HAA', 'q_LH_HFE', 'q_RF_HAA', 'q_RF_HFE', 'q_RH_HAA', 'tau_LF_HAA', 'tau_LH_HAA', 'tau_RF_HAA', 'tau_RH_HAA', 'tau_RH_HFE', 'v_x', 'w_x', 'w_z']
+
+  Arm A @10000 lost-set vs released 7:
+    shared    : ['g_z']
+    only ArmA : []
+    only ref  : ['g_x', 'g_y', 'tau_RF_HAA', 'v_z', 'w_x', 'w_y']
+    Jaccard   : 0.14
+
+====================================================================================================
+Q2 & Q3 -- THE A/B GAP AT h=8 AND h=368, ALL CHECKPOINTS, BOTH ARENAS
+====================================================================================================
+
+  OUT-OF-SAMPLE  n_independent=4
+      ckpt |   h=8 A   h=8 B      gap               95% CI  excl 0 |  h=368 A  h=368 B      gap               95% CI  excl 0
+       500 |  0.3209  0.3802  +0.0594 [ -0.020, +0.164]      no |  1.4265  4.7589  +3.3343 [ +1.582, +6.201]     YES |
+      2500 |  0.3292  0.3677  +0.0386 [ +0.015, +0.062]     YES |  0.5922  7.3325  +6.7455 [ +1.109,+16.903]     YES |
+      5000 |  0.3502  0.3572  +0.0070 [ -0.084, +0.069]      no |  0.5478  2.0061  +1.4594 [ +0.730, +2.555]     YES |
+      7500 |  0.3633  0.3508  -0.0127 [ -0.152, +0.077]      no |  0.3737  1.6538  +1.2801 [ +0.688, +2.300]     YES |
+     10000 |  0.3414  0.3495  +0.0080 [ -0.132, +0.124]      no |  0.3509  1.5540  +1.2033 [ +0.561, +2.047]     YES |
+
+  IN-SAMPLE  n_independent=16
+      ckpt |   h=8 A   h=8 B      gap               95% CI  excl 0 |  h=368 A  h=368 B      gap               95% CI  excl 0
+       500 |  0.3122  0.2866  -0.0255 [ -0.050, -0.004]     YES |  1.2898  3.0110  +1.7241 [ +1.261, +2.323]     YES |
+      2500 |  0.1790  0.2080  +0.0291 [ +0.012, +0.047]     YES |  0.2722  1.9695  +1.6989 [ +1.284, +2.196]     YES |
+      5000 |  0.1315  0.1708  +0.0393 [ +0.020, +0.059]     YES |  0.1311  1.0552  +0.9238 [ +0.721, +1.166]     YES |
+      7500 |  0.1045  0.1488  +0.0442 [ +0.026, +0.063]     YES |  0.1108  0.9453  +0.8337 [ +0.686, +0.990]     YES |
+     10000 |  0.0862  0.1349  +0.0486 [ +0.028, +0.071]     YES |  0.1002  0.9723  +0.8719 [ +0.671, +1.092]     YES |
+
+====================================================================================================
+  PER-EPISODE SIGN OF THE GAP AT 10,000 (M-23 condition 3)
+====================================================================================================
+   ep    gap h=8   gap h=368  arena
+    0    +0.0198     +0.4176  
+    1    -0.0154     +1.8262  HELD OUT
+    2    +0.0509     +0.5836  
+    3    +0.0289     +0.9796  
+    4    +0.0392     +1.0221  
+    5    +0.0457     +0.8971  
+    6    +0.0236     +0.5267  
+    7    +0.0850     +1.5675  
+    8    +0.0316     +0.5603  HELD OUT
+    9    +0.0968     +1.0291  
+
+  h=368 positive on all ten: True   (range +0.418 to +1.826)
+  h=8   positive on all ten: False   negative on [1]
+
+====================================================================================================
+  M-23's PRE-REGISTERED RULE, APPLIED
+====================================================================================================
+  governing: relative-L1, h=368, out-of-sample, 400-step, form1 pooled, bootstrap CI
+    condition 1  Arm A leads at 2500 and 10000 : True   (gaps +6.7455, +1.2033)
+    condition 2  95% CI excludes zero at 10000 : True   (CI [+0.5606, +2.0467], n_ind=4)
+    condition 3  per-episode sign consistent   : True
+
+  VERDICT: REPRODUCES AT LONG HORIZON
+
+  secondaries (reported, not governing):
+    h=8 out-of-sample    gap +0.0080 CI [-0.1316,+0.1243] -> spans zero
+    h=368 in-sample      gap +0.8719 CI [+0.6711,+1.0920] -> A leads, CI excludes 0
+    h=8 in-sample        gap +0.0486 CI [+0.0284,+0.0705] -> A leads, CI excludes 0
+
+====================================================================================================
+Q4 -- DOES THE COLLAPSE RATE STAY LINEAR TO 10,000?
+====================================================================================================
+  armA: rate over 10,000 = -9.1353e-05 (rate/lr 0.91)
+        exp(log_delta) at 10,000 = 0.400198   pre-registered prediction 0.3892   error +2.8%
+        implied iterations to -14.4629: 158,319  (from the 2500-iteration pooled fit: 153,270)
+  armB: rate over 10,000 = -9.1536e-05 (rate/lr 0.92)
+        exp(log_delta) at 10,000 = 0.398468   pre-registered prediction 0.3892   error +2.4%
+        implied iterations to -14.4629: 158,003  (from the 2500-iteration pooled fit: 153,270)
+
+  wrote results/task5_analysis.json
