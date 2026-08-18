@@ -822,6 +822,29 @@ on both metrics (R-37). At h=368 it is positive on all ten. Reported as M-22 req
 **Status** RESOLVED — branch 1, 4c not run · **Relevance** METHOD
 
 
+### M-24 — A pre-registered rule must be anchored to the regime the claim is about · **NEW**
+The methodological lesson from M-16, and it is about the rule's *design*, not its execution.
+
+M-16 was pre-registered at **h=8** because that is the training forecast horizon — a landmark
+in the training configuration, and a defensible-looking choice. But the paper's claim concerns
+**long-horizon rollout fidelity**. h=8 sits one step past the objective's own horizon, before
+the autoregressive and teacher-forced regimes have diverged, and the effect there is small
+enough to be indistinguishable from noise (R-35: gap 0.0035–0.0205 against a spread of
+0.0229–0.0308).
+
+At h=368 the same comparison is unambiguous — a factor of 6–8× in every arena, sign-consistent
+across all ten episodes (R-37). **The rule was well-formed and evaluated at a horizon that could
+not test the claim it was written for.**
+
+The lesson generalises: choose the horizon or regime from the claim, not from a convenient
+landmark in the training setup. A rule anchored to the wrong regime returns "cannot be settled"
+on data that in fact settles the question decisively somewhere else — and pre-registration
+discipline then correctly forbids moving the goalposts after the fact. The remedy is to
+pre-register the *right* measurement in advance, which is what M-23 does.
+**Evidence** `RUN` `results/task4_arenas.json`; `SRC` M-16's own text.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## E. Measured results
@@ -1169,6 +1192,9 @@ Noise sweep at 2500 is nearly flat and non-monotonic in the low scales (0.785, 0
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Note** Arms B and the remaining seeds are not yet run, so no A-versus-B statement is made
 here. M-16's rule governs that and remains unevaluated.
+**Headline framing SUPERSEDED by R-35.** This entry's evaluation figures were computed at
+n=10 overlapping trajectories with form-2 aggregation; they stand as measurements under the
+reference protocol. Any "the claim reproduces" reading built on them is withdrawn.
 
 ### R-20 — The two metrics disagree in DIRECTION at h=1 · **NEW (Step 5)**
 From R-19's 2500 checkpoint:
@@ -1257,7 +1283,11 @@ the first did not. At h=8 @500 Arm A already leads (0.4022 vs 0.4254), so teache
 led at any measured point.
 **Evidence** `RUN` `results/step6_analysis.json`, `results/step5_arm{A,B}_seed{0,1,2}.json`,
 `figures/step6_arms_comparison.png`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** CONFIRMED as measurements under the reference protocol · **Relevance** CONTRIB
+**"The paper's central claim reproduces" framing WITHDRAWN, superseded by R-35.** Under
+independent trajectories and pooled aggregation M-16 returns *cannot be settled* in all eight
+arena/length/metric combinations. The h=8 numbers here rest on `n_independent = 4` (M-20). The
+long-horizon separation survives and is recorded as R-38, explicitly NOT pre-registered.
 
 ### R-23 — Teacher forcing reaches a 3× lower training loss and a 4× worse rollout · **NEW (Step 6)**
 The mechanism behind R-22, and the cleanest single measurement in the project.
@@ -1702,6 +1732,51 @@ Correlation of gap against D-12 difficulty, with bootstrap CI over episodes:
 Held-out pair versus the other eight: at h=8 the held-out pair **understates** the gap
 (+0.0103 vs +0.0272); at h=368 it **overstates** it (+3.98 vs +1.33). The bias runs in opposite
 directions at the two horizons, which is itself why no single correction would fix it.
+**Evidence** `RUN` `results/task4_arenas.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-38 — Long-horizon A/B figures from the existing six runs · **NOT PRE-REGISTERED** · **NEW**
+These are the numbers M-16 could not reach because it was anchored at h=8 (M-24). They are
+recorded with the label in the entry title, not in a footnote, because no rule governed them
+before they were computed.
+
+| **NOT PRE-REGISTERED** — h=368, 2500 checkpoint, form 1 pooled, independent trajectories | Arm A | Arm B | ratio | floor | n_indep |
+|---|---|---|---|---|---|
+| out-of-sample (episodes 1, 8) | **0.5856** | 4.5684 | **7.8×** | 0.9930 | 4 |
+| in-sample (the other eight) | **0.2503** | 1.5791 | **6.3×** | 1.1039 | 16 |
+
+Arm A also beats the hold-last floor in both arenas at h=368, which neither arm does at
+h=8 out-of-sample.
+
+Their standing: suggestive, consistent across arenas and with R-37's ten-of-ten sign
+consistency, and **not** a pre-registered result. M-23 pre-registers the same measurement on
+new data so that a governed verdict exists.
+**Evidence** `RUN` `results/task4_arenas.json`.
+**Status** CONFIRMED as measurements, NOT PRE-REGISTERED as a verdict · **Relevance** CONTRIB
+
+### R-39 — The h=368 magnitude rests on an episode-1 outlier; the direction does not · **NEW**
+At h=368 the held-out pair overstates the A/B gap roughly threefold: **+3.98 against +1.33** on
+the other eight episodes. The cause is a single episode.
+
+| ep | difficulty | gap h=368 | |
+|---|---|---|---|
+| **1** | **0.7285** | **+6.9746** | held out — 2.5× the next largest |
+| 7 | 0.6889 | +2.8376 | |
+| 9 | 0.8190 | +1.5881 | |
+| 8 | 0.5225 | +0.9907 | held out |
+| 6 | 1.5389 | +0.7270 | smallest |
+
+**This is not a difficulty effect.** Episode 1's difficulty is a middling 0.7285 — fifth of ten
+— against a gap of +6.97, the largest by a factor of 2.5. Task 4b's rule tested the correlation
+between gap and difficulty and would not have detected this; **its Branch 1 verdict therefore
+stands and is not overridden** (M-22).
+
+**Consequence, precisely scoped:** the *direction* of the A/B effect is robust — positive on ten
+of ten episodes, both metrics (R-37). The *magnitude* estimated from the two held-out episodes
+is not: it rests on one episode that is anomalous for reasons difficulty does not explain. Any
+long-horizon magnitude should be reported as a range across episodes (+0.73 to +6.97) with
+episode 1 named, not as a single figure from the held-out pair.
 **Evidence** `RUN` `results/task4_arenas.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
