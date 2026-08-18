@@ -11,8 +11,7 @@ never edited in place; wrong turns are marked `SUPERSEDED` and kept.
 
 ## Status
 
-**Steps 0–5 complete. All six main runs finished. The paper's central claim reproduces — and
-two reasonable metrics disagree about the released checkpoint.**
+**Steps 0–5 complete. All six main runs finished. The paper's central claim reproduces.**
 
 The autoregressive objective beats teacher forcing at h=368 by **4.3× on relative-L1 and 3.9×
 on nRMSE**, three seeds per arm, with the ordering identical at both the 500 and 2500
@@ -20,11 +19,14 @@ checkpoints and the difference well outside the seed spread. Both metrics agree.
 rule was **pre-registered in git (`84ff01b`) before any Arm B result existed** (`M-16`), so the
 verdict was not chosen after seeing the numbers.
 
-Second headline, from a properly powered evaluation: at h=368 the **released** checkpoint beats
-the hold-last floor by 36% under relative-L1 (the paper's metric) and **loses to it by 29%
-under a fixed-denominator nRMSE** — both in 100% of evaluation seeds once n ≥ 50. At the
-reference's own 10 trajectories the nRMSE answer is a coin flip, and this project reported it
-the wrong way round before measuring the convergence (`R-27`, `M-17`, `S-09`).
+The verdict is **SETTLED under four independent metric/aggregation variants** and at both 10
+and 100 evaluation trajectories, with Arm A leading by 4–5× at h=368 and beating the hold-last
+floor in every one (`R-31`).
+
+A retraction is recorded in full: this project briefly promoted a claim that the released
+checkpoint loses to a constant predictor at long horizon, then refuted it with its own gating
+checks (`S-10`, `R-29`, `R-30`). The loss held under one aggregation out of four, driven by a
+single near-constant dimension whose scale is a normalisation artifact.
 
 Caveat stated up front: every one of the six runs was **still descending** at 2500 iterations —
 the count the paper's Table S7 gives — so the absolute error values are not the reference's.

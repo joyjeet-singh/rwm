@@ -1,0 +1,88 @@
+==============================================================================================
+TASK A / B -- GATING R-27
+==============================================================================================
+  400 trajectories x 8 eval seeds, released checkpoint, offset=1
+
+    seed 0 rolled out
+    seed 1 rolled out
+    seed 2 rolled out
+    seed 3 rolled out
+    seed 4 rolled out
+    seed 5 rolled out
+    seed 6 rolled out
+    seed 7 rolled out
+
+==============================================================================================
+A1 -- IS THE GRAVITY GROUP DRIVING IT?
+==============================================================================================
+  How the aggregate is computed. Our nrmse_per_step uses FORM 2:
+    form 1  RMSE pooled over all dims / mean(scale)  = sqrt(mean_d MSE_d) / mean_d(scale_d)
+    form 2  mean over dims of (RMSE_d / scale_d)     <- IMPLEMENTED, and used in R-27
+  They differ enormously when scales span 34x, so both are reported.
+
+  per-dimension nRMSE at h=368 (pooled over 3200 trajectories)
+    dim             scale     model     floor   ratio  loses?
+    v_x            1.1846    0.3054    0.6116   0.499
+    v_y            1.1986    0.5575    0.7632   0.730
+    v_z            0.6068    2.0442    0.9423   2.170  LOSES
+    w_x            0.8341    1.7555    1.0515   1.669  LOSES
+    w_y            0.8528    1.4210    1.1460   1.240  LOSES
+    w_z            0.5682    0.8576    0.9781   0.877
+    g_x            0.9418    1.9372    1.1099   1.745  LOSES
+    g_y            0.9046    5.3002    1.1209   4.728  LOSES
+    g_z            0.0292   52.3101    0.4386 119.262  LOSES
+    q_RH_HAA       0.8429    0.6418    1.5331   0.419
+    qd_RH_HAA      1.1944    0.6837    1.5306   0.447
+    tau_RF_HAA     0.5263    1.0709    1.0313   1.038  LOSES
+    tau_RH_HAA     0.4611    1.2661    1.4917   0.849
+
+  MODEL LOSES ON 7 OF 45 DIMENSIONS: ['v_z', 'w_x', 'w_y', 'g_x', 'g_y', 'g_z', 'tau_RF_HAA']
+
+  aggregation                                      model     floor   ratio  verdict
+  form 2, all 45 dims (as in R-27)                1.9583    1.1169   1.753  model LOSES
+  form 2, 42 dims, gravity EXCLUDED               0.6804    1.1331   0.600  model beats floor
+  form 1, all 45 dims                             1.1103    1.1750   0.945  model beats floor
+  form 1, 42 dims, gravity EXCLUDED               0.6702    1.1647   0.575  model beats floor
+
+==============================================================================================
+A2 -- IS THE HEAVY TAIL ONE REGION SAMPLED REPEATEDLY?
+==============================================================================================
+  3200 trajectories (with overlap), per-trajectory total normalised squared error
+    worst 5% (160 trajectories) carry 92.6% of the total
+    worst 1%  carry 30.4%
+    median 26666.6   mean 1640133.4   max 77143630.1   max/median 2893x
+
+  tail trajectories: episodes [1, 8], start rows [1469, 1469, 1470, 1470, 1470, 1470, 1470, 1470, 1471, 1471, 1472, 1472] ...
+  DISTINCT NON-OVERLAPPING TAIL REGIONS (gap >= 400 rows): 2
+    rows 1469-1597  (episode 1, 113 tail trajectories)
+    rows 8414-8593  (episode 8, 47 tail trajectories)
+
+  restricted to strictly NON-OVERLAPPING trajectories:
+    4 non-overlapping 400-step trajectories exist: [999, 1399, 7999, 8399]
+    per-trajectory totals: [5194.9, 27650.7, 32784.9, 25624.1]
+    max/median = 1.2x  -> no strong tail
+    nRMSE model 0.7323  floor 0.9813  -> model beats floor on non-overlapping trajectories only
+
+==============================================================================================
+TASK B -- IS THE BIAS JENSEN? AND THE POOLED ESTIMATOR
+==============================================================================================
+  Nested subsamples of each seed's 400 trajectories, so all n share one pool.
+
+      n |    mean_s MSE |  sqrt(mean_s MSE) |  mean_s sqrt(MSE) |     bias
+  --------------------------------------------------------------------------
+     10 |     151.92580 |           1.88150 |           1.33324 |  0.54826
+     25 |     132.76276 |           2.02660 |           1.54872 |  0.47788
+     50 |     103.30694 |           1.87202 |           1.51981 |  0.35221
+    100 |     100.33205 |           1.89310 |           1.65252 |  0.24058
+    400 |      99.04185 |           1.95828 |           1.86540 |  0.09287
+
+  variation across n (max/min):  mean_s MSE 1.534x   sqrt(mean_s MSE) 1.083x   mean_s sqrt(MSE) 1.399x
+
+  M-17's mechanism is JENSEN'S INEQUALITY: NOT established
+    E[sqrt(MSE_n)] < sqrt(E[MSE_n]); the gap grows with Var(MSE_n), which small n inflates.
+    pooled (unbiased) nRMSE = 1.9583   vs per-seed-averaged at n=10 = 1.3332  (32% low)
+
+  POOLED estimator, released checkpoint vs floor at h=368:
+    model 1.9583   floor 1.1169   -> model LOSES
+
+  wrote results/taskAB_gate_r27.json

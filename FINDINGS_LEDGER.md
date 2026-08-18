@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–5 complete; remaining-work batch 1 done. M-16 SETTLED and re-confirmed at 100 trajectories. Last updated: 18 Aug 2026.
+**Status.** Steps 0–5 complete. R-27 REFUTED by its own gating checks (S-10); M-16 re-confirmed under four aggregations. Last updated: 18 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -659,6 +659,47 @@ against exactly that quantity, so the convention has to be stated rather than as
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+### M-19 — Aggregating nRMSE as a mean of per-dimension ratios is wrong when scales span decades · **NEW**
+The methodological lesson from R-29, and it is about our own analysis rather than the paper's.
+
+M-12 introduced nRMSE with a fixed denominator to cure relative-L1's per-timestep fragility
+(M-09). It did cure that. But the **aggregation** chosen — form 2, `mean_d (RMSE_d / scale_d)` —
+reintroduced a different fragility: a mean of ratios is dominated by whichever ratio has the
+smallest denominator. With scales spanning 0.0292 to 1.3873, a 47× range, one near-constant
+dimension can carry a 45-term average on its own, and here it does: `g_z` contributes 52.3.
+
+**Form 1, `sqrt(mean_d MSE_d) / mean_d(scale_d)`, pools before dividing and does not have this
+property.** It is adopted as the primary aggregation from here on, with form 2 retained and
+labelled where it has already been reported.
+
+**R-21 anticipated exactly this** — "read per-dimension there… neither metric is trustworthy for
+projected gravity" — and R-27 was promoted to contribution #1 without heeding it. Recorded
+because the failure was not the metric; it was not applying a caveat already in this ledger.
+
+**On the estimator, separately from the aggregation.** The brief's proposed Jensen mechanism —
+`E[sqrt(MSE_n)] < sqrt(E[MSE_n])`, gap growing with `Var(MSE_n)` — predicts three behaviours.
+Measured over 8 eval seeds with nested subsamples:
+
+| n | mean_s MSE (should be flat) | sqrt(mean_s MSE) (flat) | mean_s sqrt(MSE) (rises) | bias |
+|---|---|---|---|---|
+| 10 | 151.93 | 1.8815 | 1.3332 | 0.5483 |
+| 25 | 132.76 | 2.0266 | 1.5487 | 0.4779 |
+| 50 | 103.31 | 1.8720 | 1.5198 | 0.3522 |
+| 100 | 100.33 | 1.8931 | 1.6525 | 0.2406 |
+| 400 | 99.04 | 1.9583 | 1.8654 | 0.0929 |
+
+Rows 2 and 3 behave as predicted — row 3 rises monotonically toward row 2 and the bias falls
+monotonically from 0.548 to 0.093. **Row 1 does not**: it varies 1.53× rather than staying
+flat. So the Jensen mechanism is **consistent with the data but not proven**, because with 8
+seeds and a per-trajectory max/median of 2,893× the MSE estimate is itself too noisy to
+establish that row 1 is flat. Reported as consistent-with rather than proven.
+
+The pooled estimator — pool squared errors across trajectories and seeds, then take the root —
+is adopted regardless, since it is unbiased by construction whatever the mechanism.
+**Evidence** `RUN` `results/taskAB_gate_r27.json`.
+**Status** CONFIRMED (aggregation); Jensen mechanism CONSISTENT BUT UNPROVEN · **Relevance** CONTRIB
+
+
 ---
 
 ## E. Measured results
@@ -1269,6 +1310,94 @@ signature of bias rather than noise, exactly as M-17 describes.
 reference protocol yields, and the difference between the two is itself the result.
 
 
+### R-29 — The released checkpoint loses on 7 of 45 dimensions, and one of them carries R-27 · **NEW**
+The gate on R-27. Per-dimension nRMSE at h=368, pooled over 3,200 trajectories (8 eval seeds x
+400), released checkpoint against the hold-last floor.
+
+**The model loses on 7 of 45 dimensions**: `v_z`, `w_x`, `w_y`, `g_x`, `g_y`, `g_z`,
+`tau_RF_HAA`. It wins on the other 38, several by a wide margin (`q_RH_HAA` 0.642 vs 1.533,
+`qd_RH_HAA` 0.684 vs 1.531).
+
+One dimension dominates everything:
+
+| dim | stored scale | model | floor | ratio |
+|---|---|---|---|---|
+| `g_z` | **0.0292** | **52.3101** | 0.4386 | **119×** |
+| `g_y` | 0.9046 | 5.3002 | 1.1209 | 4.7× |
+| `g_x` | 0.9418 | 1.9372 | 1.1099 | 1.7× |
+| `v_x` | 1.1846 | 0.3054 | 0.6116 | 0.50 |
+
+**How the aggregate is computed matters enormously, and this was never stated before:**
+
+| aggregation | model | floor | verdict |
+|---|---|---|---|
+| **form 2**, mean over dims of `RMSE_d/scale_d`, all 45 — *as implemented, and used in R-27* | 1.9583 | 1.1169 | model **loses** |
+| form 2, 42 dims, gravity excluded | **0.6804** | 1.1331 | model **beats by 40%** |
+| **form 1**, `sqrt(mean_d MSE_d) / mean(scale)`, all 45 | **1.1103** | 1.1750 | model **beats** |
+| form 1, 42 dims, gravity excluded | 0.6702 | 1.1647 | model **beats by 42%** |
+
+R-27's conclusion holds under exactly one of the four, and that one is a mean of ratios in
+which a single dimension whose scale is a normalisation artifact contributes 52.3 out of a
+45-term average. `g_z`'s scale is 0.0292 because the config's `state_data_std` of 0.04
+overestimates that dimension's true spread by ~34× (M-12) — the dimension is near-constant, so
+any error in it is amplified by a factor the physics does not justify.
+**Evidence** `RUN` `results/taskAB_gate_r27.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Consequence** R-27 is refuted; see S-10. What survives is narrower and still worth reporting:
+the released checkpoint models the **joints** well and the **base orientation and angular
+velocity** poorly, losing to a constant predictor on `v_z`, `w_x`, `w_y` and the gravity vector.
+
+### R-30 — The "heavy tail" is two short regions, not a property of the model · **NEW**
+The second gate on R-27, and it fails too. Per-trajectory normalised squared error at h=368
+over 3,200 overlapping trajectories: the worst 5% carry **92.6%** of the total, and
+max/median is 2,893×. That looks like a severe heavy tail — until the trajectories are
+checked for independence.
+
+The 100–400 trajectories are drawn from ~600 valid start points per held-out episode, so they
+overlap heavily. Clustering the tail trajectories by start row with a 400-row separation:
+
+| region | rows | episode | tail trajectories |
+|---|---|---|---|
+| 1 | 1469–1597 | 1 | 113 |
+| 2 | 8414–8593 | 8 | 47 |
+
+**Two distinct regions**, together spanning ~310 of 2,000 held-out rows. The effective sample
+size behind the tail is 2, not 400.
+
+Restricted to strictly **non-overlapping** trajectories — 4 exist at 400 steps (starts 999,
+1399, 7999, 8399) — the tail disappears entirely: per-trajectory totals 5,195 / 27,651 /
+32,785 / 25,624, max/median **1.2×**. And on those four the model **beats** the floor
+(nRMSE 0.7323 vs 0.9813).
+
+So the divergence is real but localised: two short stretches of ANYmal data on which the
+released checkpoint's rollout diverges. That is a finding about those stretches, not about the
+model's error distribution in general, and it cannot support a claim of the form "the model's
+rollout error is heavy-tailed".
+**Evidence** `RUN` `results/taskAB_gate_r27.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Consequence** M-17's mechanism is narrowed — see M-19.
+
+### R-31 — M-16 is robust to the aggregation choice · **NEW**
+The correction to R-27 raises the obvious question of whether the central claim rests on the
+same flaw. It does not. Arm A vs Arm B at h=368, n=100, `ddof=1`, under four variants:
+
+| metric | Arm A | Arm B | \|A−B\| vs sd | floor | A vs floor |
+|---|---|---|---|---|---|
+| relative-L1 | 0.5953 ± 0.0589 | 2.7210 ± 0.2488 | 2.126 > 0.249 | 0.9724 | **beats** |
+| nRMSE form 2, all 45 | 0.9540 ± 0.1322 | 4.0593 ± 0.3427 | 3.105 > 0.343 | 1.1087 | **beats** |
+| nRMSE form 2, no gravity | 0.5606 ± 0.0423 | 2.5065 ± 0.1259 | 1.946 > 0.126 | 1.1234 | **beats** |
+| nRMSE form 1, all 45 | 0.5965 ± 0.0543 | 2.7613 ± 0.2695 | 2.165 > 0.270 | 1.1731 | **beats** |
+
+**SETTLED under all four**, with Arm A leading by 4–5× and beating the floor in every case.
+
+This also refutes a claim carried since R-22: that Arm A **fails** the nRMSE floor at h=368 in
+all three seeds. That was measured at n=10 (1.1580 vs 0.9601); at n=100 Arm A beats the floor
+under every aggregation. The motivation for Task D's undertraining question was therefore
+partly built on an n=10 artifact.
+**Evidence** `RUN` `results/taskAB_gate_r27.json` and the M-16 aggregation check.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## F. Open questions
@@ -1536,25 +1665,49 @@ line. It does not; both conventions sit above it at long horizon.
 **Superseded by** R-27, M-17. R-15's relative-L1 column is unaffected throughout.
 
 
+### S-10 — "The released checkpoint loses to the hold-last floor at h=368 under nRMSE" (R-27) · **NEW**
+R-27 was promoted to contribution #1 on the strength of a 29% loss to the floor at n=100. Both
+gating checks refute it.
+
+**Gate A1 — aggregation.** The loss holds under one of four aggregations. Under the pooled form
+(`sqrt(mean_d MSE_d)/mean(scale)`) the model **beats** the floor, 1.1103 vs 1.1750. Excluding the
+three gravity dimensions it beats the floor by 40–42% under both forms. The model loses on only
+**7 of 45 dimensions**, and `g_z` alone reads 52.31 against a floor of 0.44 because its stored
+scale is 0.0292 — a normalisation artifact, not a physical property (R-29).
+
+**Gate A2 — the tail.** The heavy tail that M-17's mechanism required is **two short regions**
+(rows 1469–1597 in episode 1, 8414–8593 in episode 8) sampled repeatedly through trajectory
+overlap. On strictly non-overlapping trajectories the tail vanishes (max/median 1.2×) and the
+model beats the floor (R-30).
+
+**What is retracted:** that the released checkpoint is worse than a constant predictor at long
+horizon; that its rollout error is heavy-tailed as a general property; and the contribution
+ranking that put this first.
+
+**What survives, and is now the honest form of it:** the released checkpoint models the joints
+well and the base orientation and angular velocity poorly, losing to a constant predictor on
+`v_z`, `w_x`, `w_y`, `g_x`, `g_y` and `g_z`; and there exist two short stretches of the
+held-out data on which its rollout diverges badly. Both are narrower claims about specific
+dimensions and specific regions, not about the model overall.
+
+**Superseded by** R-29, R-30, M-19.
+**Note** S-09, which R-27 itself established, is unaffected: R-15's *ordering* still stands and
+its "crosses below 1.0" framing is still refuted, now for the additional reason that the
+threshold was computed under form-2 aggregation.
+
+
 ---
 
 ## Candidate paper contributions
 
 Ordered by how much they would stand on their own, for use when the writeup begins. Every one still needs its impact quantified rather than merely its existence demonstrated.
 
-1. **Two reasonable metrics disagree, in direction, about the released checkpoint itself —
-   and the reference's own evaluation protocol is underpowered enough to flip the answer**
-   (R-27, M-17, R-28). At h=368 the released weights beat the hold-last floor by 36% under
-   relative-L1, the paper's metric, and **lose to it by 29% under a fixed-denominator nRMSE**.
-   Both hold in 100% of evaluation seeds once n ≥ 50. At the reference's own n=10 the nRMSE
-   answer is a coin flip (62% of seeds favourable), and this project reported the wrong answer
-   from it before measuring the convergence. The mechanism is specific and checkable: nRMSE
-   takes an RMSE across trajectories, rollout error has a heavy tail, and a 10-trajectory
-   sample usually misses it — so small-n nRMSE is biased low, while the floor's nRMSE, having
-   no diverging tail, is stable. Promoted to first place because it is a claim about the
-   released artifact rather than about our budget, it is robust, and it comes with its own
-   correction attached (S-09).
-2. **The paper's central claim reproduces, and the margin is large** (R-22, R-23, M-16, R-28). The
+1. **The paper's central claim reproduces, and the margin is large** (R-22, R-23, M-16, R-28,
+   R-31). Restored to first place after R-27's retraction. Strengthened in the process: the
+   verdict is SETTLED under **four** independent metric/aggregation variants, at 10 and at 100
+   trajectories, with Arm A leading by 4–5× at h=368 and beating the hold-last floor in every
+   one. It is the most heavily stress-tested claim in the project.
+2. **Aggregation and evaluation power can invert a published-model comparison — including one this project published** (R-29, R-30, M-19, S-10, M-17). A fixed-denominator nRMSE aggregated as a mean of per-dimension ratios let one near-constant dimension (`g_z`, stored scale 0.0292) carry a 45-term average and reverse the verdict on the released checkpoint; the pooled aggregation does not. The apparent heavy tail behind it was two short regions sampled repeatedly through trajectory overlap. This project promoted the wrong conclusion to first place and then refuted it with its own gating checks. Reported as a worked example, with the retraction attached, because that is more useful to a reader than the claim would have been. The
    autoregressive objective beats teacher forcing at h=368 by **4.3× on relative-L1 and 3.9× on
    nRMSE**, with the ordering identical at both checkpoints, the difference well outside the
    seed spread, and both metrics agreeing — against a decision rule pre-registered in git before
