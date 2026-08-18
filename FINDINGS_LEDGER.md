@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–5 complete. R-27 retracted (S-10). Evaluation rebuilt on effective sample size and pooled aggregation (M-20). Last updated: 18 Aug 2026.
+**Status.** Steps 0–5 complete. Two-arena reporting adopted (M-21); Task 4b rule pre-registered (M-22). Last updated: 18 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -743,6 +743,63 @@ near-constant-dimension caveat, relative-L1 throughout for comparability, `n_ind
 printed everywhere, and an explicit caveat wherever it falls below ~10.
 **Evidence** `RUN` `results/batch1_post_retraction.json`; `SRC` `src/rwm_metrics.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### M-21 — The arms cannot be evaluated on all ten episodes; the released checkpoint can · **NEW**
+A trap worth documenting precisely because the released-checkpoint case makes it look safe.
+
+R-34 evaluates the released checkpoint on all ten episodes, and that is correct: the authors
+trained it on the entire CSV, so there is no clean subset left to protect and restricting it to
+two episodes buys nothing while costing five-sixths of the independent samples.
+
+**The same move does not transfer to Arms A and B.** They trained on episodes 0, 2, 3, 4, 5, 6,
+7, 9. An all-ten aggregate would be **80% training data**, would flatter both arms, and would
+stop being a generalisation measure. It was proposed after M-20 showed composition drives the
+verdict, and it conflates two separate problems — sample size and composition — which are
+addressed separately below.
+
+**Standing convention adopted: two arenas, never one aggregate.**
+
+| arena | episodes | independent @400 | independent @200 |
+|---|---|---|---|
+| **out-of-sample** | 1, 8 | 4 | 10 |
+| **in-sample** | 0, 2, 3, 4, 5, 6, 7, 9 | 16 | 40 |
+
+Both are legitimate and they answer different questions. Out-of-sample is the generalisation
+claim and remains the governing one for M-16, which was pre-registered on it. In-sample is a
+fair comparison of fit quality between two arms that saw identical data, at four times the
+power. Every table carries its arena label and its `n_independent`. **They are never combined**
+— aggregation is always available afterwards, decomposition is not.
+**Evidence** `SRC` split definition; `RUN` M-20's decomposition.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-22 — PRE-REGISTERED rule for whether episode difficulty biases the A/B comparison · **NEW**
+**Entered before Task 4b runs.** Committed prior to computing any per-episode gap; the git
+history is the timestamp, as it was for M-16.
+
+The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest
+of ten by D-12 (pair mean 0.694 against a population mean of 1.097). The test: compute the
+Arm A minus Arm B gap per episode on independent trajectories within that episode, and regress
+it on D-12's per-episode difficulty.
+
+> **If the correlation between gap and difficulty is weak** — |r| < 0.4, or its confidence
+> interval spans zero — the held-out pair's easiness does not bias the comparison. M-16's
+> verdict stands as measured and no retraining is warranted.
+>
+> **If the gap grows with difficulty** (r positive and material), the out-of-sample estimate is
+> conservative: the effect is larger on representative episodes than on the easy pair. The
+> finding strengthens; report the direction and the size of the understatement.
+>
+> **If the gap shrinks with difficulty** (r negative and material), the easy held-out pair
+> inflates the result. Cross-validation becomes necessary rather than optional, and Task 4c
+> runs: five folds of two episodes, every episode held out exactly once, ~12 h.
+>
+> In all three cases, report whether the **sign** of the gap is consistent across all ten
+> episodes. A gap that reverses sign on any episode is a more serious problem than any
+> correlation, and is reportable regardless of r.
+
+**Evidence** pre-registration; results attached when they land.
+**Status** PRE-REGISTERED, awaiting results · **Relevance** METHOD
 
 
 ---
