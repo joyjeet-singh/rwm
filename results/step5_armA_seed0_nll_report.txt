@@ -1,0 +1,20 @@
+==================================================================================
+STEP 5 MAIN RUN -- armA_seed0_nll
+==================================================================================
+  arm A: state branch feeds back its own SAMPLE (autoregressive, faithful)
+  auxiliary branch: teacher-forced in BOTH arms (system_dynamics.py:264)
+  ensemble 1, batch 256, lr 0.0001, weight_decay 1e-05, 2500 iterations
+  action alignment: causal, offset=1 (X-05)
+  gradient clipping: NONE -- the reference has none in this path (5.7a)
+  7687 training windows from episodes [0, 2, 3, 4, 5, 6, 7, 9]
+  LOSS TYPE: gaussian_nll (the authors' unused branch, system_dynamics.py:285)
+
+    iter      state     bound   contact    termin      total    |grad| exp(logdel)      s
+       0  861.31616 1.000e+00   0.68669 7.043e-01  863.70715  1030.265    1.000100      2
+      25  597.87421 1.002e+00   0.59033 2.818e-01  599.74866   491.684    1.002492     34
+      50  481.11145 1.005e+00   0.39998 1.593e-02  482.53198   381.178    1.004681     76
+      75  371.54221 1.007e+00   0.34701 5.102e-03  372.90082   341.633    1.006586    121
+     100  264.79642 1.008e+00   0.30506 3.818e-03  266.11346   262.295    1.008243    170
+     125  275.07352 1.010e+00   0.22771 3.664e-03  276.31454   262.676    1.009747    218
+     150  207.31367 1.011e+00   0.14245 3.464e-03  208.47069   308.690    1.011157    267
+     175  213.68396 1.012e+00   0.10173 2.772e-03  214.80093   226.953    1.012524    301

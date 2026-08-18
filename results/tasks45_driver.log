@@ -1,1 +1,6 @@
 === 02:02:51 Task4 contamination seed 0 ===
+=== 02:52:35 Task4 contamination seed 1 ===
+=== 03:34:18 Task4 contamination seed 2 ===
+./run_tasks45.sh: line 9: d2_contam_report.txt: command not found
+./run_tasks45.sh: line 10: syntax error near unexpected token `done'
+./run_tasks45.sh: line 10: `done'

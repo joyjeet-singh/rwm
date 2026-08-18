@@ -1,0 +1,69 @@
+====================================================================================================
+TASK 4 -- THE COST OF THE SPLICED WINDOWS (O-06)
+====================================================================================================
+  clean Arm A (7,687 windows) vs contaminated Arm A (7,882 = 7,687 + 195 splices, 2.47%)
+  3 seeds each, 2500 iterations, identical in every other respect.
+  diff = contaminated - clean, so POSITIVE means contamination HURT.
+
+  OUT-OF-SAMPLE  400-step  n_independent=4
+     ckpt    h  metric |    clean   contam |      diff                 95% CI  verdict
+      500    8      l1 |   0.3286   0.3193 |   -0.0093 [ -0.0197, +0.0001]  no effect
+      500    8   nrmse |   0.2639   0.2585 |   -0.0054 [ -0.0140, +0.0026]  no effect
+      500  368      l1 |   1.6146   1.6366 |   +0.0203 [ -0.2882, +0.3048]  no effect
+      500  368   nrmse |   1.2988   1.4162 |   +0.1157 [ -0.1316, +0.3852]  no effect
+     2500    8      l1 |   0.3289   0.3074 |   -0.0216 [ -0.0565, +0.0048]  no effect
+     2500    8   nrmse |   0.2522   0.2378 |   -0.0144 [ -0.0400, +0.0041]  no effect
+     2500  368      l1 |   0.5856   0.5294 |   -0.0563 [ -0.1299, +0.0079]  no effect
+     2500  368   nrmse |   0.4911   0.4584 |   -0.0326 [ -0.0873, +0.0220]  no effect
+
+  OUT-OF-SAMPLE  200-step  n_independent=10
+     ckpt    h  metric |    clean   contam |      diff                 95% CI  verdict
+      500    8      l1 |   0.2725   0.2715 |   -0.0011 [ -0.0064, +0.0036]  no effect
+      500    8   nrmse |   0.2581   0.2595 |   +0.0013 [ -0.0031, +0.0052]  no effect
+      500  168      l1 |   0.7447   0.7550 |   +0.0097 [ -0.0422, +0.0580]  no effect
+      500  168   nrmse |   0.6834   0.6892 |   +0.0053 [ -0.0386, +0.0495]  no effect
+     2500    8      l1 |   0.2275   0.2266 |   -0.0011 [ -0.0194, +0.0174]  no effect
+     2500    8   nrmse |   0.1958   0.1962 |   +0.0003 [ -0.0133, +0.0145]  no effect
+     2500  168      l1 |   0.4589   0.3974 |   -0.0616 [ -0.1142, -0.0225]  contamination HELPED
+     2500  168   nrmse |   0.3918   0.3492 |   -0.0428 [ -0.0667, -0.0200]  contamination HELPED
+
+  IN-SAMPLE  400-step  n_independent=16
+     ckpt    h  metric |    clean   contam |      diff                 95% CI  verdict
+      500    8      l1 |   0.3142   0.3097 |   -0.0046 [ -0.0099, +0.0002]  no effect
+      500    8   nrmse |   0.5253   0.5131 |   -0.0121 [ -0.0271, -0.0001]  contamination HELPED
+      500  368      l1 |   1.0227   0.9227 |   -0.1010 [ -0.2173, +0.0103]  no effect
+      500  368   nrmse |   1.2644   1.1589 |   -0.1068 [ -0.2521, +0.0322]  no effect
+     2500    8      l1 |   0.1768   0.1694 |   -0.0074 [ -0.0119, -0.0031]  contamination HELPED
+     2500    8   nrmse |   0.3000   0.2849 |   -0.0151 [ -0.0274, -0.0048]  contamination HELPED
+     2500  368      l1 |   0.2503   0.2183 |   -0.0321 [ -0.0542, -0.0133]  contamination HELPED
+     2500  368   nrmse |   0.3308   0.2925 |   -0.0383 [ -0.0645, -0.0154]  contamination HELPED
+
+  IN-SAMPLE  200-step  n_independent=39
+     ckpt    h  metric |    clean   contam |      diff                 95% CI  verdict
+      500    8      l1 |   0.2686   0.2679 |   -0.0007 [ -0.0033, +0.0017]  no effect
+      500    8   nrmse |   0.3953   0.3922 |   -0.0031 [ -0.0097, +0.0020]  no effect
+      500  168      l1 |   0.5588   0.5430 |   -0.0159 [ -0.0326, +0.0006]  no effect
+      500  168   nrmse |   0.6912   0.6702 |   -0.0211 [ -0.0411, -0.0016]  contamination HELPED
+     2500    8      l1 |   0.1334   0.1319 |   -0.0014 [ -0.0037, +0.0006]  no effect
+     2500    8   nrmse |   0.2062   0.2020 |   -0.0042 [ -0.0099, +0.0002]  no effect
+     2500  168      l1 |   0.2041   0.1893 |   -0.0148 [ -0.0205, -0.0090]  contamination HELPED
+     2500  168   nrmse |   0.2659   0.2474 |   -0.0186 [ -0.0260, -0.0113]  contamination HELPED
+
+====================================================================================================
+  comparisons run: 32   with a CI excluding zero: 10
+    out-of-sample|200|2500|h168|l1: diff -0.0616 CI [-0.1142,-0.0225]
+    out-of-sample|200|2500|h168|nrmse: diff -0.0428 CI [-0.0667,-0.0200]
+    in-sample|400|500|h8|nrmse: diff -0.0121 CI [-0.0271,-0.0001]
+    in-sample|400|2500|h8|l1: diff -0.0074 CI [-0.0119,-0.0031]
+    in-sample|400|2500|h8|nrmse: diff -0.0151 CI [-0.0274,-0.0048]
+    in-sample|400|2500|h368|l1: diff -0.0321 CI [-0.0542,-0.0133]
+    in-sample|400|2500|h368|nrmse: diff -0.0383 CI [-0.0645,-0.0154]
+    in-sample|200|500|h168|nrmse: diff -0.0211 CI [-0.0411,-0.0016]
+    in-sample|200|2500|h168|l1: diff -0.0148 CI [-0.0205,-0.0090]
+    in-sample|200|2500|h168|nrmse: diff -0.0186 CI [-0.0260,-0.0113]
+
+  training loss at 2500 (mean over 3 seeds):
+    clean          1.5364 +- 0.0353
+    contaminated   1.8301 +- 0.0732
+
+  wrote results/task4_contamination.json

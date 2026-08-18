@@ -2081,6 +2081,50 @@ in-sample it grows. Direction holds at every checkpoint, in both arenas, on all 
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
+### R-47 — The spliced windows cost nothing measurable, and if anything help · **NEW**
+Closes O-06, open since Step 3.5. B-01 is a confirmed defect whose cost had never been measured.
+
+**Design.** Clean Arm A (7,687 windows) against contaminated Arm A (7,882 = 7,687 + **195**
+splices), 3 seeds each, 2500 iterations, identical in every other respect. Only boundaries whose
+**both** sides are training episodes are spliced — 2→3, 3→4, 4→5, 5→6, 6→7 — because the other
+four touch a held-out episode and would leak. The held-out-row assertion passes. Contamination
+rate **2.47%** against the reference pipeline's 3.53%.
+
+**Result over 32 comparisons** (2 arenas × 2 trajectory lengths × 2 checkpoints × 2 horizons ×
+2 metrics), diff = contaminated − clean, bootstrap CIs over independent trajectories:
+
+| | count |
+|---|---|
+| comparisons where contamination **hurt** (CI excludes zero, positive) | **0** |
+| comparisons where contamination **helped** (CI excludes zero, negative) | **10** |
+| no measurable effect | 22 |
+
+**Not one comparison shows contamination hurting.** The ten significant ones are all negative and
+are concentrated where statistical power is highest — in-sample (`n_ind` 16 and 39) and
+out-of-sample 200-step (`n_ind` 10). The primary out-of-sample 400-step arena (`n_ind` = 4) shows
+no significant effect either way. Effect sizes are small: −0.7% to −6% relative.
+
+**Training loss goes the other way, as it must:** 1.8301 ± 0.0732 contaminated against
+1.5364 ± 0.0353 clean. The spliced windows contain physically impossible transitions that cannot
+be fit, so they raise the training loss — and rollout error is unchanged or slightly better. The
+195 unfittable windows appear to act as a mild regulariser.
+
+**Scope, stated carefully.** This measures the *physics* cost of training on spliced
+transitions. It does **not** measure the reference's full exposure, which differs in two ways:
+its rate is 3.53% rather than 2.47%, and 4 of its 9 spliced boundaries put **held-out rows into
+training** — a leakage problem rather than a physics problem, and one this experiment
+deliberately excludes in order to keep its own comparison valid. So B-01 remains a real defect
+on leakage grounds; what is now measured is that its *physically-impossible-transition* component
+costs nothing detectable at this rate.
+
+**Caveat on multiplicity:** 32 comparisons at 95% would yield ~1.6 false positives by chance, and
+these comparisons are not independent — they share runs and nest horizons within trajectories.
+Ten significant results all in the same direction is well beyond chance, but the individual
+effect sizes should not be quoted as precise.
+**Evidence** `RUN` `results/task4_contamination.json`, `results/step5_armA_seed{0,1,2}_contam.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## F. Open questions
@@ -2112,7 +2156,11 @@ R-06 shows the training convention scores better. If row *t* holds `a[t]`, then 
 
 ### O-06 — What does the 352-window contamination actually cost
 B-01 is confirmed as a defect but its effect on trained model quality is unmeasured. Candidate Step 6 experiment: train identical models with and without the spliced windows.
-**Status** OPEN. Unchanged by Step 3.5.
+**Status** **CLOSED by R-47.** Measured: at 2.47% contamination, 3 seeds, 2500 iterations, the
+spliced windows cost nothing detectable — 0 of 32 comparisons show harm and 10 show a small
+benefit. The training loss rises as expected (1.83 vs 1.54) because the splices are unfittable;
+rollout error does not. The leakage component of B-01 is deliberately excluded from this
+experiment and remains unmeasured.
 
 ### O-07 — Is the long-horizon convergence to the floor real or a metric artifact
 R-04 shows the ratio compressing from 0.43 at h=16 to 0.76 at h=368. Some of that is genuine degradation and some may be the metric saturating. M-07's per-group breakdown is the first evidence.
