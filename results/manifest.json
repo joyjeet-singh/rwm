@@ -420,6 +420,15 @@
   "evaluation_power": {
     "reference_protocol_n_trajectories": 10,
     "adopted_n_trajectories": 100,
-    "note": "nRMSE is tail-sensitive and biased low below n=50 (M-17); relative-L1 converges by n=25"
+    "note": "nRMSE is tail-sensitive and biased low below n=50 (M-17); relative-L1 converges by n=25",
+    "n_independent_convention": "two trajectories whose spans overlap at all count as one; helpers in src/rwm_metrics.py; caveat required below ~10",
+    "n_independent_holdout_400step": 4,
+    "n_independent_all_episodes_400step": 20
+  },
+  "aggregation_convention": {
+    "primary": "form 1 pooled: sqrt(mean_d MSE_d)/mean(scale_d)",
+    "secondary": "per-dimension with win/loss count; per-group with near-constant caveat",
+    "legacy": "form 2 mean_d(RMSE_d/scale_d) -- retained where already reported, see M-19",
+    "comparability": "relative-L1 reported throughout"
   }
 }

@@ -1,0 +1,78 @@
+==============================================================================================
+TASK 1 -- VERIFYING THE RETRACTION'S SPECIFIC NUMBERS
+==============================================================================================
+  rolling out the entire held-out pool: 1202 start points (one pass)...
+  done, stored 80 MB
+
+  form-2 sum over 45 dims = 88.16
+    g_z alone            = 52.49  (60% of the sum)
+    all three gravity    = 59.68  (68%)
+    model loses on 7 of 45 dims: ['v_z', 'w_x', 'w_y', 'g_x', 'g_y', 'g_z', 'tau_RF_HAA']
+
+  the g_z defect (the narrow claim that survives):
+    model 52.4906   floor 0.4392   ratio 119.5x
+
+  why this dimension is strange:
+    config state_data_std[g_z]      = 0.04
+    measured normalised spread      = 0.0292
+    implied TRUE raw spread         = 0.04*0.0292 = 0.001168
+    config overestimates it by        34.3x
+    squared-error weight in the loss vs a correctly scaled dim: 1/1174x  (3.1 orders of magnitude)
+
+==============================================================================================
+TASK 2 -- JENSEN AT 40 SEEDS (resampled from the stored pool)
+==============================================================================================
+      n |    mean_s MSE |  sqrt(mean_s MSE) |  mean_s sqrt(MSE) |     bias |  n_ind
+  ----------------------------------------------------------------------------------------
+     10 |      98.96583 |           1.96814 |           1.15257 |  0.81557 |    3.0
+     25 |     107.61867 |           2.05027 |           1.41312 |  0.63715 |    3.9
+     50 |     100.92703 |           1.96783 |           1.51384 |  0.45399 |    4.0
+    100 |     103.35422 |           2.02803 |           1.69146 |  0.33657 |    4.0
+    400 |      96.44259 |           1.96494 |           1.87208 |  0.09287 |    4.0
+
+  variation across n:  mean_s MSE 1.116x   sqrt(mean_s MSE) 1.043x   mean_s sqrt(MSE) 1.624x
+  mean_s MSE flat to within 5%? False
+  VERDICT on the Jensen mechanism: SUPPORTED
+    criterion: sqrt(mean_s MSE) flat AND mean_s sqrt(MSE) rising toward it.
+    NOTE: mean_s MSE still varies 1.12x at 40 seeds. It is the mean of a
+    quantity with per-trajectory max/median ~2900x, so its own standard error is
+    large at any feasible seed count; it is not diagnostic of the mechanism.
+  estimator conclusion (independent of the mechanism): per-seed-averaged nRMSE at n=10
+    is 41% below the pooled form.
+
+==============================================================================================
+TASK 3b -- RELEASED CHECKPOINT ON ALL TEN EPISODES, INDEPENDENT TRAJECTORIES
+==============================================================================================
+  20 non-overlapping 400-step trajectories across all 10 episodes
+    starts [0, 400, 999, 1399, 1999, 2399, 2999, 3399, 3999, 4399, 4999, 5399, 5999, 6399, 6999, 7399, 7999, 8399, 8999, 9399]
+    n_independent = 20 (by construction)
+  Justification: the released checkpoint was trained on the entire CSV, so restricting
+  it to the two held-out episodes buys nothing -- the leakage is already total.
+
+     h |  relL1 mdl  relL1 flr |  form1 mdl  form1 flr |  form2 mdl  form2 flr |   f1 no-g
+     1 |     0.0937     0.2266 |     0.3273     0.5698 |     0.3107     0.4896 |    0.3307
+     4 |     0.1227     0.4522 |     0.3975     0.9932 |     0.3903     0.8879 |    0.3950
+     8 |     0.1585     0.6564 |     0.4761     1.2648 |     0.4649     1.1607 |    0.4484
+    16 |     0.1960     0.8626 |     0.5586     1.4133 |     0.5432     1.3107 |    0.4884
+    32 |     0.2418     0.8128 |     0.7455     1.3784 |     0.6513     1.2809 |    0.5226
+    64 |     0.4322     0.8587 |     1.3649     1.3898 |     1.4051     1.3025 |    0.6801
+   128 |     0.8878     0.9743 |     3.0440     1.4947 |     4.6762     1.4334 |    1.0382
+   256 |     1.1965     1.0404 |     3.7826     1.4934 |     5.7293     1.4353 |    1.2288
+   368 |     1.3157     1.0817 |     3.9642     1.4969 |     5.7973     1.4394 |    1.3132
+
+  AT h=368, n_independent=20, the released checkpoint:
+    relative-L1                    1.3157 vs floor   1.0817  -> LOSES by 22%
+    nRMSE form 1 (primary)         3.9642 vs floor   1.4969  -> LOSES by 165%
+    nRMSE form 1, no gravity       1.3132 vs floor   1.4613  -> BEATS by 10%
+    nRMSE form 2 (legacy)          5.7973 vs floor   1.4394  -> LOSES by 303%
+
+  per-dimension: model loses on 18 of 45 -> ['v_x', 'v_z', 'w_x', 'w_y', 'w_z', 'g_x', 'g_y', 'g_z', 'q_LH_HAA', 'q_LH_KFE', 'tau_LF_HAA', 'tau_LH_HAA', 'tau_RF_HAA', 'tau_RH_HAA', 'tau_LF_HFE', 'tau_LH_HFE', 'tau_RF_HFE', 'tau_LH_KFE']
+  per-group (form 1 pooled within group):
+    base lin vel   model   1.6293  floor   1.3232
+    base ang vel   model   2.4964  floor   1.3212
+    proj gravity   model  21.0582  floor   2.2217
+    joint pos      model   1.1603  floor   1.3664
+    joint vel      model   0.8210  floor   1.5448
+    joint torque   model   1.5902  floor   1.4206
+
+  wrote results/batch1_post_retraction.json

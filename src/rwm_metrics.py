@@ -69,3 +69,75 @@ def nrmse_groups(pred, true, scale, start_step):
 def summarise(curve, horizons=(1, 8, 32, 128, 368)):
     """Cumulative mean of a per-step curve at each horizon."""
     return {h: float(curve[:h].mean()) for h in horizons if h <= len(curve)}
+
+
+# --------------------------------------------------------------------------
+# Task 3 -- effective sample size and the pooled (form 1) aggregation
+# --------------------------------------------------------------------------
+def n_independent(start_rows, len_traj):
+    """
+    Number of mutually non-overlapping trajectories among the given starts.
+
+    Two 400-step trajectories whose spans touch at all count as one sample. Greedy
+    left-to-right selection on sorted starts gives the maximum such set for
+    intervals of equal length. Reported alongside n_trajectories everywhere,
+    because a long-horizon figure built on 100 overlapping windows drawn from two
+    episodes has an effective sample size far below 100.
+    """
+    import numpy as _np
+    s = _np.sort(_np.asarray(start_rows))
+    if len(s) == 0:
+        return 0
+    kept, last = 1, s[0]
+    for r in s[1:]:
+        if r - last >= len_traj:
+            kept += 1
+            last = r
+    return kept
+
+
+def non_overlapping_starts(episode_id, episodes, len_traj):
+    """Maximal set of non-overlapping trajectory starts inside the given episodes."""
+    import numpy as _np
+    out = []
+    for e in episodes:
+        idx = _np.flatnonzero(episode_id == e)
+        if len(idx) == 0:
+            continue
+        c, last = idx[0], idx[-1]
+        while c + len_traj - 1 <= last:
+            out.append(int(c))
+            c += len_traj
+    return out
+
+
+def nrmse_pooled(sq_err, scale, keep=None):
+    """
+    FORM 1, the primary aggregation from Task 3d onward.
+
+        sqrt( mean over dims of MSE_d ) / mean over dims of scale_d
+
+    Pools before dividing, so a single near-constant dimension cannot dominate.
+    Form 2 -- mean over dims of RMSE_d/scale_d -- is a mean of ratios and gives
+    whichever dimension has the smallest scale unbounded leverage (M-19, R-29).
+
+    sq_err: (n_traj, T', 45) squared error. keep: optional dimension subset.
+    """
+    import numpy as _np
+    mse = sq_err.mean(axis=0)
+    if keep is not None:
+        mse, sc = mse[:, keep], _np.asarray(scale)[keep]
+    else:
+        sc = _np.asarray(scale)
+    return float((_np.sqrt(mse.mean(axis=1)) / sc.mean()).mean())
+
+
+def nrmse_form2(sq_err, scale, keep=None):
+    """FORM 2, retained for continuity with everything reported before M-19."""
+    import numpy as _np
+    mse = sq_err.mean(axis=0)
+    if keep is not None:
+        mse, sc = mse[:, keep], _np.asarray(scale)[keep]
+    else:
+        sc = _np.asarray(scale)
+    return float((_np.sqrt(mse) / sc).mean())

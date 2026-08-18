@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–5 complete. R-27 REFUTED by its own gating checks (S-10); M-16 re-confirmed under four aggregations. Last updated: 18 Aug 2026.
+**Status.** Steps 0–5 complete. R-27 retracted (S-10). Evaluation rebuilt on effective sample size and pooled aggregation (M-20). Last updated: 18 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -698,6 +698,51 @@ The pooled estimator — pool squared errors across trajectories and seeds, then
 is adopted regardless, since it is unbiased by construction whatever the mechanism.
 **Evidence** `RUN` `results/taskAB_gate_r27.json`.
 **Status** CONFIRMED (aggregation); Jensen mechanism CONSISTENT BUT UNPROVEN · **Relevance** CONTRIB
+
+
+### M-20 — Effective sample size, and what actually drives long-horizon verdicts · **NEW**
+Every long-horizon figure now carries `n_independent` alongside `n_trajectories`: two
+trajectories whose 400-step spans overlap at all count as one. Helpers
+`n_independent()` and `non_overlapping_starts()` are in `src/rwm_metrics.py`; the convention is
+recorded in the manifest.
+
+The counts are sobering. **Only four strictly non-overlapping 400-step trajectories exist in the
+two held-out episodes** (starts 999, 1399, 7999, 8399). Every long-horizon number reported in
+this project before now — including at "n=100" — rests on `n_independent = 4`. The reference's
+protocol has the same property and does not mention it.
+
+**But independence turned out not to be the binding constraint. Episode composition is.**
+Decomposed at h=368, relative-L1, released checkpoint:
+
+| evaluation set | n | n_indep | model | floor | verdict |
+|---|---|---|---|---|---|
+| held-out pair, 100 overlapping | 100 | 4 | 0.6193 | 0.9724 | beats |
+| held-out pair, independent only | 4 | 4 | **0.6041** | 0.9930 | beats |
+| all ten episodes, independent | 20 | 20 | **1.3157** | 1.0817 | loses |
+| the eight training episodes, independent | 16 | 16 | 1.4936 | 1.1039 | loses |
+
+Going from 100 overlapping to 4 independent trajectories on the same episodes changes the model
+figure by 2% (0.6193 → 0.6041). Going from those two episodes to all ten more than doubles it.
+
+**Per-episode model/floor ratio at h=368** (2 independent trajectories each): ep7 0.50, ep8
+**0.60**, ep1 **0.61**, ep2 0.79, ep5 1.11, ep6 1.48, ep0 1.69, ep3 1.90, ep9 2.01, ep4 2.05.
+The checkpoint beats the floor on **4 of 10 episodes and loses on 6**, and the seed-0 split
+holds out two of the three it does best on.
+
+**This revises M-05.** M-05 recorded the composition bias but argued the *ratio* was safe
+because "the model and the floor are evaluated on the same trajectories, so the ratio is a
+controlled comparison". That reasoning is wrong: the ratio itself ranges from 0.50 to 2.05
+across episodes, so which episodes are evaluated determines whether the model beats the floor at
+all. Same-trajectory evaluation controls for trajectory difficulty in the *numerator and
+denominator*, not for the fact that the model's advantage over a constant predictor is itself
+episode-dependent.
+
+**Adopted for all future reporting** (Task 3c/3d): pooled form 1 as the primary aggregate,
+per-dimension always available with a win/loss count, per-group as secondary with the
+near-constant-dimension caveat, relative-L1 throughout for comparability, `n_independent`
+printed everywhere, and an explicit caveat wherever it falls below ~10.
+**Evidence** `RUN` `results/batch1_post_retraction.json`; `SRC` `src/rwm_metrics.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
 
 
 ---
@@ -1395,6 +1440,89 @@ all three seeds. That was measured at n=10 (1.1580 vs 0.9601); at n=100 Arm A be
 under every aggregation. The motivation for Task D's undertraining question was therefore
 partly built on an n=10 artifact.
 **Evidence** `RUN` `results/taskAB_gate_r27.json` and the M-16 aggregation check.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-32 — The retraction's arithmetic, verified · **NEW**
+Pooled over the entire held-out pool of 1,202 start points in one pass.
+
+- form-2 sum over 45 dimensions = **88.16**; `g_z` alone contributes **52.49 (60%)**, all three
+  gravity dimensions **59.68 (68%)**. A 45-term average in which one term is 60% of the total.
+- the model loses on **7 of 45** dimensions: `v_z`, `w_x`, `w_y`, `g_x`, `g_y`, `g_z`, `tau_RF_HAA`.
+
+**The narrow claim that survives, stated as narrow.** On `g_z` — the most nearly-constant
+dimension in the state vector — the released checkpoint scores **52.49 against a floor of
+0.4392, a ratio of 119.5×**. The floor is strong there precisely because the dimension barely
+moves; the learned delta actively degrades it. That is a real, specific defect and it is not an
+aggregation artifact — it is a per-dimension number.
+
+**And the config explains it.** `state_data_std[g_z] = 0.04`, while the measured normalised
+spread is 0.0292, so the true raw spread is 0.04 × 0.0292 = **0.001168** and the constant
+overestimates it by **34.3×**. The training loss is a sum of squared errors in normalised
+space, so this dimension is weighted **1/1174** — about **3.1 orders of magnitude** — below a
+correctly scaled one. The model has almost no incentive to fit `g_z`, and it does not. Defect
+and cause, connected.
+**Evidence** `RUN` `results/batch1_post_retraction.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-33 — The Jensen mechanism is SUPPORTED at 40 seeds · **NEW**
+Rerun with 40 evaluation seeds, resampled from a single stored rollout of all 1,202 held-out
+start points, so the resampling is exact.
+
+| n | mean_s MSE (should be flat) | sqrt(mean_s MSE) (flat) | mean_s sqrt(MSE) (rises) | bias | mean n_independent |
+|---|---|---|---|---|---|
+| 10 | 98.97 | 1.9681 | 1.1526 | 0.8156 | 3.0 |
+| 25 | 107.62 | 2.0503 | 1.4131 | 0.6372 | 3.9 |
+| 50 | 100.93 | 1.9678 | 1.5138 | 0.4540 | 4.0 |
+| 100 | 103.35 | 2.0280 | 1.6915 | 0.3366 | 4.0 |
+| 400 | 96.44 | 1.9649 | 1.8721 | 0.0929 | 4.0 |
+
+`sqrt(mean_s MSE)` is flat to **1.043×** and `mean_s sqrt(MSE)` rises **1.624×** monotonically
+toward it, with the bias falling from 0.816 to 0.093. **Verdict: SUPPORTED.**
+
+`mean_s MSE` still varies 1.116× — improved from 1.534× at 8 seeds but not flat to 5%. As the
+brief anticipated, it is not diagnostic: it is the mean of a quantity whose per-trajectory
+max/median is ~2,900×, so its own standard error stays large at any feasible seed count. The
+criterion is therefore the two rows that bear on the mechanism.
+
+The estimator conclusion is independent of the mechanism and stands: per-seed-averaged nRMSE at
+n=10 is **41% below** the pooled form. Pooled is adopted.
+**Evidence** `RUN` `results/batch1_post_retraction.json`.
+**Status** SUPPORTED · **Relevance** CONTRIB
+
+### R-34 — The released checkpoint characterised on all ten episodes, independent trajectories · **NEW**
+Twenty non-overlapping 400-step trajectories, two per episode, `n_independent = 20` by
+construction. Justified because the checkpoint was trained on the entire CSV, so restricting it
+to the held-out pair buys nothing.
+
+**Bootstrap over the 20 trajectories, 10,000 resamples, relative-L1 (the paper's metric):**
+
+| h | model | floor | ratio [95% CI] | P(model loses) |
+|---|---|---|---|---|
+| 8 | 0.1585 | 0.6564 | **0.241 [0.171, 0.323]** | 0% |
+| 32 | 0.2418 | 0.8128 | **0.297 [0.206, 0.401]** | 0% |
+| 64 | 0.4322 | 0.8587 | **0.504 [0.368, 0.667]** | 0% |
+| 128 | 0.8878 | 0.9743 | 0.911 [0.709, 1.117] | 20% |
+| 256 | 1.1965 | 1.0404 | 1.150 [0.893, 1.421] | 87% |
+| 368 | 1.3157 | 1.0817 | 1.223 [**0.914, 1.552**] | 91% |
+
+**The defensible statement:** the released checkpoint beats the hold-last floor **decisively out
+to ~64 steps (1.3 s)** — ratio 0.24–0.50 with zero bootstrap mass above 1 — is **indistinguishable
+from it at ~128 steps**, and **trends worse but is not statistically distinguishable from it** at
+256–368 steps, where the confidence interval includes 1.0.
+
+It does **not** support "worse than a constant predictor at long horizon": at 91% the h=368
+result falls short of significance. It equally does not support the earlier "beats the floor by
+36% at h=368", which was measured on the two easiest episodes.
+
+**The per-trajectory distribution at h=368 is cleanly bimodal** — ten trajectories at ratios
+0.29–0.92 and ten at 1.68–2.66, with nothing between. Exactly 10 of 20 lose. The rollout either
+tracks or diverges; there is no middle regime.
+
+Aggregation, same 20 trajectories at h=368: relative-L1 1.3157 vs 1.0817; pooled nRMSE (form 1)
+3.9642 vs 1.4969; form 1 excluding gravity **1.3132 vs 1.4613 (model beats)**; form 2 5.7973 vs
+1.4394. The gravity dimensions continue to dominate any aggregate that includes them (R-29).
+**Evidence** `RUN` `results/batch1_post_retraction.json` and the bootstrap.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
