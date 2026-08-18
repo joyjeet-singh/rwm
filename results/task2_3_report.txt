@@ -1,0 +1,64 @@
+==================================================================================================
+TASK 2 -- MATCHED PER-DIMENSION COMPARISON
+==================================================================================================
+  NOTE ON THE BRIEF'S PREMISE: Q1 was ALREADY matched. task5_analyse.py:49 evaluates the
+  released checkpoint AND Arm A on the same 20 independent trajectories across all ten
+  episodes. Both comparisons are reported below; the episodes-1-and-8 restriction is a
+  sharper question, not a correction.
+
+  ALL TEN EPISODES (AS RUN IN Q1)   n_traj=20  n_independent=20
+    released checkpoint loses on 18/45 : ['g_x', 'g_y', 'g_z', 'q_LH_HAA', 'q_LH_KFE', 'tau_LF_HAA', 'tau_LF_HFE', 'tau_LH_HAA', 'tau_LH_HFE', 'tau_LH_KFE', 'tau_RF_HAA', 'tau_RF_HFE', 'tau_RH_HAA', 'v_x', 'v_z', 'w_x', 'w_y', 'w_z']
+    Arm A @10000       loses on  1/45 : ['g_z']
+    shared failures    : ['g_z']
+    Jaccard overlap    : 0.06
+    g_z the only shared failure? True
+    h=8    released 0.1584 [0.1060,0.2227]   ArmA 0.1372 [0.0736,0.2193]   diff +0.0212 [-0.0720,+0.1016] spans zero
+    h=368  released 1.3166 [1.0242,1.6046]   ArmA 0.1505 [0.0991,0.2328]   diff +1.1661 [+0.8463,+1.4794] ArmA BETTER
+
+  EPISODES 1 AND 8 ONLY   n_traj=4  n_independent=4
+    released checkpoint loses on  8/45 : ['g_x', 'g_y', 'g_z', 'tau_LH_HAA', 'tau_RF_HAA', 'v_z', 'w_x', 'w_y']
+    Arm A @10000       loses on  1/45 : ['g_z']
+    shared failures    : ['g_z']
+    Jaccard overlap    : 0.12
+    g_z the only shared failure? True
+    h=8    released 0.0809 [0.0540,0.1263]   ArmA 0.3418 [0.0745,0.6083]   diff -0.2610 [-0.5006,-0.0205] released better
+    h=368  released 0.6044 [0.5159,0.6807]   ArmA 0.3510 [0.1344,0.6620]   diff +0.2533 [-0.0267,+0.4395] spans zero
+
+  ASYMMETRY: the released checkpoint TRAINED on episodes 1 and 8; Arm A did not.
+  The episodes-1-and-8 comparison therefore favours the released checkpoint.
+
+==================================================================================================
+TASK 3 -- THE GAP-NARROWING TREND, FITTED
+==================================================================================================
+
+  OUT-OF-SAMPLE  h=8
+    gap  : 500=+0.059  2k=+0.039  5k=+0.007  7k=-0.013  10k=+0.008
+    ratio: 1.18x  1.12x  1.02x  0.97x  1.02x
+    gap fit slope -6.314e-06/iter  R2 0.71   -> zero at ~8,281 iterations
+    ratio fit slope -1.948e-05/iter  R2 0.71  -> ratio DECLINING
+
+  OUT-OF-SAMPLE  h=368
+    gap  : 500=+3.332  2k=+6.740  5k=+1.458  7k=+1.280  10k=+1.203
+    ratio: 3.34x  12.38x  3.66x  4.43x  4.43x
+    gap fit slope -4.165e-04/iter  R2 0.45   -> zero at ~11,829 iterations
+    ratio fit slope -2.701e-04/iter  R2 0.07  -> ratio DECLINING
+
+  IN-SAMPLE  h=8
+    gap  : 500=-0.026  2k=+0.029  5k=+0.039  7k=+0.044  10k=+0.049
+    ratio: 0.92x  1.16x  1.30x  1.42x  1.57x
+    gap fit slope +6.649e-06/iter  R2 0.69   -> does not extrapolate to closure
+    ratio fit slope +6.436e-05/iter  R2 0.97  -> ratio GROWING
+
+  IN-SAMPLE  h=368
+    gap  : 500=+1.721  2k=+1.697  5k=+0.924  7k=+0.834  10k=+0.872
+    ratio: 2.33x  7.23x  8.05x  8.53x  9.70x
+    gap fit slope -1.065e-04/iter  R2 0.78   -> zero at ~16,457 iterations
+    ratio fit slope +6.527e-04/iter  R2 0.76  -> ratio GROWING
+
+  READING:
+    The absolute gap narrows in BOTH arenas -- both arms improve with training.
+    But the RATIO behaves differently: out-of-sample 12.4x at 2500 -> 4.4x at 10000, while in-sample it GROWS 7.2x -> 9.7x.
+    The out-of-sample 2500 point (12.4x) is an outlier driven by an
+    anomalous Arm B value there; excluding it the out-of-sample ratio is 3.3, 3.7, 4.4, 4.4 -- flat to slightly rising.
+
+  wrote results/task2_3_matched_trend.json

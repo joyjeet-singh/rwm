@@ -1920,7 +1920,11 @@ produces.
 trained on **all ten**, so it is 100% in-sample and if anything holds the advantage. The
 comparison is conservative in the direction of the conclusion.
 **Evidence** `RUN` `results/task5_analysis.json`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** SUPERSEDED IN PART by S-11 and R-45 — the comparison was against a seven-dimension
+set derived from a different evaluation. Matched, the released checkpoint loses on 18 of 45 on
+all ten episodes and 8 of 45 on the held-out pair, against Arm A's 1 in both. The directional
+conclusion survives and strengthens per-dimension; the aggregate reading does not (R-45).
+· **Relevance** CONTRIB
 
 ### R-42 — The A/B gap across five checkpoints: persists everywhere, resolves in-sample at h=8 · **NEW**
 Bootstrap CIs over independent trajectories, gap = Arm B − Arm A so positive favours Arm A.
@@ -1961,6 +1965,105 @@ within 3%.** Implied iterations to the released checkpoint's −14.4629 move fro
 **158,319** (Arm A) and **158,003** (Arm B) — the conclusion is unchanged and its uncertainty is
 now bounded by measurement rather than by extrapolation.
 **Evidence** `RUN` `results/task5_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-44 — The central claim's full history, with commit timestamps · **NEW**
+The methodological spine of the project. This timeline is not reconstructable from any other
+repository, and it is the evidence that the surviving claims went through the same filter as the
+withdrawn ones.
+
+| when | commit | event |
+|---|---|---|
+| 17 Aug 18:52 | `84ff01b` | **M-16 pre-registered** at h=8, before any main run |
+| 17 Aug 22:42 | `0fe2bca` | **§6.1 flip annotation** pre-registered, before any Arm B result |
+| 18 Aug 13:29 | `8385ba1` | **R-27 retracted** by its own gating checks (S-10) |
+| 18 Aug 14:08 | `d88e9ff` | **M-16 returns CANNOT BE SETTLED** in all eight combinations |
+| 18 Aug 17:59 | `efc35b8` | **M-23 pre-registered** at h=368, before either 10,000-iteration run |
+| 19 Aug 01:35 | `8625d32` | **M-23 returns REPRODUCES AT LONG HORIZON** |
+
+The sequence: asserted at h=8 in Step 5 under seed-spread statistics and overlapping
+trajectories → withdrawn in Task 4 when corrected measurement returned CANNOT BE SETTLED in all
+eight arena/length/metric combinations → re-tested at h=368 under a rule committed before the
+data existed → **reproduces at long horizon**. The §6.1 annotation, unused when written, fired
+later in the in-sample arena (R-36).
+
+**POWER CAVEAT, stated here and not in a footnote.** M-23's governing verdict rests on
+`n_independent = 4`. A bootstrap CI resampling four points cannot characterise a distribution;
+it can only say that all four points lie on one side by a margin. The verdict's credibility
+comes from three places, not from that interval alone: the **in-sample arena at n_indep = 16
+returns the same answer with a tighter interval** ([+0.671, +1.092]); the **per-episode sign is
+positive on all ten episodes** independently; and the effect size is 4.4–9.7×, far larger than
+any plausible sampling artefact at this n. Quoted without those three supports, the governing
+CI would be overstated.
+**Evidence** git history; `RUN` `results/task5_analysis.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-45 — Matched per-dimension comparison: released checkpoint vs Arm A · **NEW**
+Correcting S-11. Both models scored identically — 400-step, independent trajectories only,
+form 1 pooled, `action_offset=1`, same floor.
+
+| evaluation | n_indep | released loses | Arm A @10k loses | shared | Jaccard |
+|---|---|---|---|---|---|
+| all ten episodes | 20 | **18 / 45** | **1 / 45** | `g_z` | 0.06 |
+| episodes 1 and 8 only | 4 | **8 / 45** | **1 / 45** | `g_z` | 0.12 |
+
+**`g_z` is the only shared failure under both matchings** — the dimension R-32 showed is
+weighted 1/1174 by a mis-specified normalisation constant.
+
+Aggregate error with bootstrap CIs:
+
+| evaluation | h | released | Arm A | difference | |
+|---|---|---|---|---|---|
+| all ten | 8 | 0.1584 | 0.1372 | +0.0212 [−0.0720, +0.1016] | spans zero |
+| all ten | 368 | 1.3166 | **0.1505** | **+1.1661 [+0.8463, +1.4794]** | **Arm A better** |
+| eps 1,8 | 8 | **0.0809** | 0.3418 | **−0.2610 [−0.5006, −0.0205]** | **released better** |
+| eps 1,8 | 368 | 0.6044 | 0.3510 | +0.2533 [−0.0267, +0.4395] | spans zero |
+
+**The conclusion is split, and both halves must be stated.**
+
+*Per-dimension*, the result is robust across both matchings: Arm A loses on 1 of 45 in each,
+against 18 and 8. That holds even on episodes 1 and 8, which the released checkpoint **trained
+on** and Arm A never saw — the handicap runs against Arm A and it wins anyway.
+
+*In aggregate*, it does not. On the strictly out-of-sample pair the released checkpoint is
+**significantly better at h=8** and the two are **statistically tied at h=368**. Arm A's large
+aggregate advantage appears only on the all-ten arena, where Arm A trained on 8 of the 10
+episodes.
+
+So the brief's first outcome — "a from-scratch model outperforms the released weights on
+held-out data" — is supported **per-dimension** and **not** in aggregate. The defensible claim is
+narrower than R-41 implied: a from-scratch model at 10,000 iterations fails on far fewer state
+dimensions than the released checkpoint, on matched data, under a handicap; it does not achieve
+lower aggregate error on data it has not seen.
+**Evidence** `RUN` `results/task2_3_matched_trend.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-46 — The gap-narrowing trend: absolute gap closes, relative advantage does not · **NEW**
+Fitted against iteration count over 500–10,000, both arenas, h=8 and h=368. **Everything past
+10,000 below is extrapolation and is labelled as such.**
+
+| arena, h | gap at 500 → 10,000 | gap slope /iter | R² | gap zero at | ratio 500 → 10,000 | ratio trend |
+|---|---|---|---|---|---|---|
+| out-of-sample, 368 | +3.33 → +1.20 | −4.17e-04 | 0.45 | ~11,800 *(extrap.)* | 3.34× → 4.43× | −2.7e-04, R² **0.07** |
+| in-sample, 368 | +1.72 → +0.87 | −1.07e-04 | 0.78 | ~16,500 *(extrap.)* | 2.33× → **9.70×** | **+6.5e-04, R² 0.76** |
+| out-of-sample, 8 | +0.059 → +0.008 | −6.31e-06 | 0.71 | ~8,300 *(extrap.)* | 1.18× → 1.02× | declining |
+| in-sample, 8 | −0.026 → +0.049 | +6.65e-06 | 0.69 | never | 0.92× → **1.57×** | **growing** |
+
+**The absolute gap narrows in both arenas — but that is both arms improving toward the same
+floor, not the advantage disappearing.** The ratio tells the opposite story in-sample, growing
+monotonically from 2.33× to 9.70× with R² 0.76.
+
+**Correction to the premise this task was set on.** The out-of-sample ratio does not decline
+monotonically from 2500: it runs 3.34, **12.38**, 3.66, 4.43, 4.43. The 12.38 at 2500 is a single
+anomalous Arm B value; with it removed the sequence is 3.34, 3.66, 4.43, 4.43 — flat to slightly
+**rising**, and the ratio fit has R² 0.07, i.e. no trend at all.
+
+**The honest qualification for a reader:** the autoregressive advantage measured as an absolute
+error difference is largest early and shrinks as both arms train, so an effect size quoted at
+2,500 iterations overstates what remains at 10,000. Measured as a ratio it does not shrink, and
+in-sample it grows. Direction holds at every checkpoint, in both arenas, on all ten episodes.
+**Evidence** `RUN` `results/task2_3_matched_trend.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
@@ -2267,6 +2370,25 @@ dimensions and specific regions, not about the model overall.
 **Note** S-09, which R-27 itself established, is unaffected: R-15's *ordering* still stands and
 its "crosses below 1.0" framing is still refuted, now for the additional reason that the
 threshold was computed under form-2 aggregation.
+
+
+### S-11 — R-41's per-dimension comparison was NOT matched · **NEW**
+R-41 compared **Arm A at 10,000, evaluated on 20 independent trajectories across all ten
+episodes (1 of 45 dimensions lost)** against **the released checkpoint's 7 of 45**. Those seven
+came from R-29/R-32, which scored the checkpoint on the *held-out pool of 1,202 overlapping
+trajectories in episodes 1 and 8* — a different episode set and a different trajectory
+construction.
+
+Scored on the same 20 independent trajectories across all ten episodes, the released checkpoint
+loses on **18 of 45**, not 7. The figure was already in the ledger: R-34's Task 3b reported "18
+of 45" on exactly that evaluation, and R-41 reached past it to the wrong reference set.
+
+**What changes:** the Jaccard overlap falls from 0.14 to **0.06** and the released checkpoint's
+count roughly doubles — so R-41's directional conclusion is *strengthened* on this arena, not
+weakened. **What is retracted:** my statement, made when the mismatch was raised, that "Q1 was
+already matched". It was not. `task5_analyse.py:49` matched Arm A and the floor to all ten
+episodes but compared against a seven-dimension set derived elsewhere.
+**Superseded by** R-45, which reports both matchings.
 
 
 ---
