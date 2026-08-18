@@ -11,26 +11,27 @@ never edited in place; wrong turns are marked `SUPERSEDED` and kept.
 
 ## Status
 
-**Steps 0–5 complete. All six main runs finished. The paper's central claim reproduces.**
+**Steps 0–5 complete. The autoregressive-versus-teacher-forcing result holds decisively at
+long horizon and is NOT established at the 8-step training horizon.**
 
-The autoregressive objective beats teacher forcing at h=368 by **4.3× on relative-L1 and 3.9×
-on nRMSE**, three seeds per arm, with the ordering identical at both the 500 and 2500
-checkpoints and the difference well outside the seed spread. Both metrics agree. The decision
-rule was **pre-registered in git (`84ff01b`) before any Arm B result existed** (`M-16`), so the
-verdict was not chosen after seeing the numbers.
+At h=368 Arm A (autoregressive) beats Arm B (teacher forcing) by a factor of 6–8× in every
+evaluation arena, and the gap is positive on all ten episodes individually under both metrics —
+no exceptions (`R-35`, `R-37`).
 
-The verdict is **SETTLED under four independent metric/aggregation variants** and at both 10
-and 100 evaluation trajectories, with Arm A leading by 4–5× at h=368 and beating the hold-last
-floor in every one (`R-31`).
+At h=8, where the decision rule was pre-registered, the rule returns **"cannot be settled at
+this budget"** once independent trajectories and pooled aggregation are used (`R-35`). The arms
+differ by 0.010–0.021 against a seed spread of 0.023–0.031 out-of-sample, and the ordering
+*flips* in-sample — Arm B ahead at 500 iterations, Arm A ahead at 2500. That flip is the
+teacher-forcing signature pre-registered in commit `0fe2bca` before any Arm B result existed,
+and it fires in the arena with the statistical power to see it (`R-36`).
+
+The earlier SETTLED verdict is retained as what the reference's own 10-trajectory overlapping
+protocol yields. It was not wrong arithmetic — it was computed on a trajectory set whose
+effective sample size was 4 (`M-20`).
 
 A retraction is recorded in full: this project briefly promoted a claim that the released
 checkpoint loses to a constant predictor at long horizon, then refuted it with its own gating
-checks (`S-10`, `R-29`, `R-30`). The loss held under one aggregation out of four, driven by a
-single near-constant dimension whose scale is a normalisation artifact.
-
-Caveat stated up front: every one of the six runs was **still descending** at 2500 iterations —
-the count the paper's Table S7 gives — so the absolute error values are not the reference's.
-Arm A was falling 2–3× faster than Arm B at the cap, so the margin is likely conservative.
+checks (`S-10`, `R-29`, `R-30`).
 
 ## What has been established
 

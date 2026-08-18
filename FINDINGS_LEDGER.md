@@ -12,7 +12,7 @@
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
 | Licence | Apache 2.0, both repos |
 
-**Status.** Steps 0–5 complete. Two-arena reporting adopted (M-21); Task 4b rule pre-registered (M-22). Last updated: 18 Aug 2026.
+**Status.** Steps 0–5 complete. **M-16 returns CANNOT BE SETTLED under corrected measurement (R-35)**; the h=368 effect is unambiguous and the h=8 effect is not. Last updated: 18 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
@@ -596,7 +596,13 @@ own error — so faster early fitting followed by worse rollout behaviour is the
 signature rather than a surprise. The reverse pattern (A ahead at 500, B ahead at 2500) has no
 such mechanism behind it and is to be reported as an unexplained flip.
 
-**OUTCOME (Step 6, R-22): SETTLED, on both metrics, with the two metrics agreeing.**
+**SUPERSEDED AS THE GOVERNING VERDICT BY R-35.** Under independent trajectories and pooled
+aggregation the rule returns **cannot be settled at this budget** in all eight arena/length/
+metric combinations — out-of-sample failing condition 2 (arms not separated at h=8) and
+in-sample failing condition 1 (ordering flips). The verdict below stands as what the
+reference's own overlapping-trajectory protocol yields, and is retained on that basis.
+
+**OUTCOME (Step 6, R-22), on the reference protocol: SETTLED, on both metrics, with the two metrics agreeing.**
 Arm A leads at h=8 at both checkpoints under relative-L1 (0.4022→0.3263 vs B 0.4254→0.3915)
 and under nRMSE (0.3648→0.2805 vs B 0.3991→0.3210). Condition 1 holds: no flip. Condition 2
 holds: |A−B| is 0.0652 against a max within-arm seed sd of 0.0150 (relative-L1), and 0.0405
@@ -798,8 +804,22 @@ it on D-12's per-episode difficulty.
 > episodes. A gap that reverses sign on any episode is a more serious problem than any
 > correlation, and is reportable regardless of r.
 
-**Evidence** pre-registration; results attached when they land.
-**Status** PRE-REGISTERED, awaiting results · **Relevance** METHOD
+**OUTCOME (R-37): BRANCH 1 — WEAK.** Governing metric relative-L1 at h=8, where M-16 was
+pre-registered: **r = −0.464, 95% CI [−0.851, +0.141], which spans zero.** The rule's first
+branch fires: the held-out pair's easiness does not demonstrably bias the comparison, M-16
+stands as measured, and **Task 4c (cross-validation, ~12 h) does NOT run.**
+
+Recorded per the brief so the omission is a decision rather than a gap: cross-validation over
+five folds was considered, its trigger was a materially negative correlation between the A/B
+gap and episode difficulty, and that trigger was not met — the point estimate is negative and
+|r| exceeds 0.4, but the confidence interval includes zero at n=10 episodes, so the evidence
+does not support it.
+
+**But the rule's third requirement is violated and outranks the correlation.** The sign of the
+gap is **not** consistent across all ten episodes at h=8: it is negative on episodes 0, 1 and 3
+on both metrics (R-37). At h=368 it is positive on all ten. Reported as M-22 requires.
+**Evidence** `RUN` `results/task4_arenas.json`.
+**Status** RESOLVED — branch 1, 4c not run · **Relevance** METHOD
 
 
 ---
@@ -1580,6 +1600,109 @@ Aggregation, same 20 trajectories at h=368: relative-L1 1.3157 vs 1.0817; pooled
 3.9642 vs 1.4969; form 1 excluding gravity **1.3132 vs 1.4613 (model beats)**; form 2 5.7973 vs
 1.4394. The gravity dimensions continue to dominate any aggregate that includes them (R-29).
 **Evidence** `RUN` `results/batch1_post_retraction.json` and the bootstrap.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-35 — M-16 re-evaluated in both arenas: CANNOT BE SETTLED, in all eight combinations · **NEW**
+The pre-registered rule, applied to independent trajectories with pooled aggregation, reverses
+its own earlier verdict. Reported first because it outranks everything else in this batch.
+
+| arena | steps | metric | leader @500 | @2500 | \|A−B\| | max seed sd | verdict | n_indep |
+|---|---|---|---|---|---|---|---|---|
+| out-of-sample | 400 | relative-L1 | A | A | 0.0103 | 0.0308 | **cannot be settled** | 4 |
+| out-of-sample | 400 | nRMSE | A | A | 0.0035 | 0.0288 | **cannot be settled** | 4 |
+| out-of-sample | 200 | relative-L1 | A | A | 0.0205 | 0.0229 | **cannot be settled** | 10 |
+| out-of-sample | 200 | nRMSE | A | A | 0.0140 | 0.0231 | **cannot be settled** | 10 |
+| in-sample | 400 | relative-L1 | **B** | **A** | 0.0272 | 0.0040 | **cannot be settled** | 16 |
+| in-sample | 400 | nRMSE | **B** | **A** | 0.0485 | 0.0199 | **cannot be settled** | 16 |
+| in-sample | 200 | relative-L1 | **B** | **A** | 0.0121 | 0.0049 | **cannot be settled** | 39 |
+| in-sample | 200 | nRMSE | **B** | **A** | 0.0200 | 0.0145 | **cannot be settled** | 39 |
+
+**All eight agree**, but they fail different conditions, and the distinction matters:
+
+- **Out-of-sample fails condition 2.** The ordering is stable (A leads at both checkpoints) but
+  the arm difference at h=8 is 0.0035–0.0205 against a seed spread of 0.0229–0.0308. The arms
+  are not separated at h=8 on independent trajectories.
+- **In-sample fails condition 1.** The ordering **flips**: Arm B leads at 500, Arm A leads at
+  2500, on both lengths and both metrics, with `n_independent` up to 39.
+
+**Why this differs from R-22's SETTLED verdict.** R-22 and R-28 used 10 and 100 *overlapping*
+trajectories from the held-out pair with form-2 aggregation. The h=8 arm difference there was
+0.0479 against a spread of 0.0172. On independent trajectories the difference falls to
+0.0103–0.0205 and the spread rises. The earlier verdict was not wrong arithmetic; it was
+computed on a trajectory set whose effective sample size was 4 (M-20).
+
+**What is NOT in doubt.** At h=368 the separation is enormous in every arena — out-of-sample
+Arm A 0.5856 vs Arm B 4.5684, in-sample 0.2503 vs 1.5791 — a factor of 6–8×, far outside any
+spread. The ambiguity is confined to h=8, which is where M-16 was pre-registered.
+
+**The honest statement is therefore horizon-dependent:** the autoregressive objective beats
+teacher forcing decisively at long horizon, and the two are not distinguishable at the
+8-step training horizon at this budget.
+**Evidence** `RUN` `results/task4_arenas.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Supersedes as the governing verdict** R-22's and R-28's SETTLED. Those remain valid for the
+reference's own protocol and are retained.
+
+### R-36 — The pre-registered teacher-forcing flip pattern FIRES, in the in-sample arena · **NEW**
+Commit `0fe2bca`, entered before any Arm B result existed, recorded that a flip with **B
+leading at 500 and A at 2500** would be the textbook teacher-forcing signature — faster early
+fit on an easier objective, worse rollout later — and was to be reported as a distinct
+observation rather than folded into a null result.
+
+R-22 found no flip on the held-out pair and the annotation went unused. **On the in-sample
+arena it fires exactly as written**, on both trajectory lengths and both metrics, with
+`n_independent` of 16 and 39:
+
+| | Arm A @500 | Arm B @500 | Arm A @2500 | Arm B @2500 |
+|---|---|---|---|---|
+| in-sample 400-step, h=8 | 0.3142 | **0.2873** | **0.1768** | 0.2040 |
+| in-sample 200-step, h=8 | 0.2686 | **0.2405** | **0.1334** | 0.1454 |
+
+Teacher forcing is genuinely ahead early and behind later, on the episodes both arms trained
+on, where the power to see it is four to ten times higher than on the held-out pair. The
+annotation's reasoning was right and the earlier report that "teacher forcing never led at any
+measured point" (R-22) was an artifact of measuring only on two easy held-out episodes with
+`n_independent = 4`.
+**Evidence** `RUN` `results/task4_arenas.json`; pre-registration `0fe2bca`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-37 — Per-episode A/B gap: sign-consistent at h=368, reverses at h=8 · **NEW**
+Gap = Arm B − Arm A, so positive means Arm A is better. Two independent 400-step trajectories
+per episode, three seeds per arm, 2500 checkpoint.
+
+| ep | difficulty (D-12) | gap h=8 (L1) | gap h=368 (L1) | arena |
+|---|---|---|---|---|
+| 0 | 1.5084 | **−0.0036** | +1.0005 | in |
+| 1 | 0.7285 | **−0.0043** | +6.9746 | **out** |
+| 2 | 0.5898 | +0.0407 | +1.1876 | in |
+| 3 | 1.5853 | **−0.0105** | +0.9581 | in |
+| 4 | 1.4227 | +0.0447 | +1.4242 | in |
+| 5 | 0.7682 | +0.0169 | +0.9076 | in |
+| 6 | 1.5389 | +0.0100 | +0.7270 | in |
+| 7 | 0.6889 | +0.0802 | +2.8376 | in |
+| 8 | 0.5225 | +0.0250 | +0.9907 | **out** |
+| 9 | 0.8190 | +0.0394 | +1.5881 | in |
+
+**At h=368 the gap is positive on all ten episodes, on both metrics** — Arm A wins everywhere,
+without exception. **At h=8 it reverses sign on episodes 0, 1 and 3** on both metrics. M-22
+requires this to be reported regardless of any correlation, and it is the sharper statement:
+the long-horizon effect is universal across episodes; the short-horizon effect is not even
+consistent in direction.
+
+Correlation of gap against D-12 difficulty, with bootstrap CI over episodes:
+
+| metric | r | 95% CI | spans zero |
+|---|---|---|---|
+| relative-L1 h=8 | −0.464 | [−0.851, +0.141] | yes |
+| relative-L1 h=368 | −0.334 | [−0.735, +0.029] | yes |
+| nRMSE h=8 | −0.474 | [−0.851, +0.108] | yes |
+| nRMSE h=368 | −0.425 | [−0.834, +0.027] | yes |
+
+Held-out pair versus the other eight: at h=8 the held-out pair **understates** the gap
+(+0.0103 vs +0.0272); at h=368 it **overstates** it (+3.98 vs +1.33). The bias runs in opposite
+directions at the two horizons, which is itself why no single correction would fix it.
+**Evidence** `RUN` `results/task4_arenas.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 

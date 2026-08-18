@@ -1,0 +1,99 @@
+==================================================================================================
+TASK 4a -- TWO ARENAS, FOUR TABLES  (form 1 pooled, independent trajectories)
+==================================================================================================
+
+  OUT-OF-SAMPLE  episodes [1, 8]  |  400-step  |  n_trajectories=4  n_independent=4   <-- CAVEAT: n_independent below 10
+    run              h=8 l1     h=8 nR   h=368 l1   h=368 nR
+    armA @500    0.3286±0.007 0.2710±0.007 1.6146±0.166 1.4257±0.110
+    armB @500    0.3694±0.010 0.3262±0.011 5.2457±1.889 4.5426±1.528
+    armA @2500   0.3289±0.003 0.3029±0.007 0.5856±0.053 0.5425±0.053
+    armB @2500   0.3392±0.031 0.3064±0.029 4.5684±2.401 3.7927±1.935
+    floor        0.3298      0.4117      0.9930      1.0897     
+
+  OUT-OF-SAMPLE  episodes [1, 8]  |  200-step  |  n_trajectories=10  n_independent=10
+    run              h=8 l1     h=8 nR   h=168 l1   h=168 nR
+    armA @500    0.2725±0.004 0.2749±0.006 0.7447±0.025 0.7362±0.030
+    armB @500    0.3004±0.008 0.2988±0.003 1.6919±0.260 1.6587±0.226
+    armA @2500   0.2275±0.001 0.2424±0.004 0.4589±0.056 0.4569±0.048
+    armB @2500   0.2480±0.023 0.2564±0.023 1.3488±0.271 1.3782±0.265
+    floor        0.5372      0.7537      0.9034      1.1151     
+
+  IN-SAMPLE  episodes [0, 2, 3, 4, 5, 6, 7, 9]  |  400-step  |  n_trajectories=16  n_independent=16
+    run              h=8 l1     h=8 nR   h=368 l1   h=368 nR
+    armA @500    0.3142±0.002 0.7018±0.010 1.0227±0.243 1.4484±0.375
+    armB @500    0.2873±0.002 0.6815±0.011 2.9575±0.597 3.9652±0.876
+    armA @2500   0.1768±0.002 0.4289±0.006 0.2503±0.020 0.3784±0.034
+    armB @2500   0.2040±0.004 0.4774±0.020 1.5791±0.363 2.3208±0.640
+    floor        0.7380      1.3978      1.1039      1.5798     
+
+  IN-SAMPLE  episodes [0, 2, 3, 4, 5, 6, 7, 9]  |  200-step  |  n_trajectories=39  n_independent=39
+    run              h=8 l1     h=8 nR   h=168 l1   h=168 nR
+    armA @500    0.2686±0.003 0.5258±0.005 0.5588±0.058 0.7725±0.077
+    armB @500    0.2405±0.002 0.4874±0.006 1.1407±0.145 1.5014±0.189
+    armA @2500   0.1334±0.002 0.3054±0.004 0.2041±0.004 0.3120±0.008
+    armB @2500   0.1454±0.005 0.3254±0.015 0.6893±0.069 0.9634±0.102
+    floor        0.7286      1.2043      0.9428      1.3745     
+
+==================================================================================================
+  M-16 RE-EVALUATED IN BOTH ARENAS (h=8, ddof=1)
+==================================================================================================
+  out-of-sample  400-step     l1: @500 A @2500 A same=True  |A-B| 0.0103 vs sd 0.0308  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=4)
+  out-of-sample  400-step  nrmse: @500 A @2500 A same=True  |A-B| 0.0035 vs sd 0.0288  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=4)
+  out-of-sample  200-step     l1: @500 A @2500 A same=True  |A-B| 0.0205 vs sd 0.0229  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=10)
+  out-of-sample  200-step  nrmse: @500 A @2500 A same=True  |A-B| 0.0140 vs sd 0.0231  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=10)
+  in-sample      400-step     l1: @500 B @2500 A same=False |A-B| 0.0272 vs sd 0.0040  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=16)
+  in-sample      400-step  nrmse: @500 B @2500 A same=False |A-B| 0.0485 vs sd 0.0199  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=16)
+  in-sample      200-step     l1: @500 B @2500 A same=False |A-B| 0.0121 vs sd 0.0049  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=39)
+  in-sample      200-step  nrmse: @500 B @2500 A same=False |A-B| 0.0200 vs sd 0.0145  -> CANNOT BE SETTLED AT THIS BUDGET  (n_ind=39)
+
+  all eight arena/length/metric combinations agree: True
+
+==================================================================================================
+TASK 4b -- DOES EPISODE DIFFICULTY DETERMINE THE VERDICT?
+==================================================================================================
+   ep difficulty  n@400 |  gapA-B h=8  gap h=368 |  gap h=8 nR  gap h=368 nR  arena
+    0     1.5084      2 |     -0.0036    +1.0005 |     -0.0131       +1.5308  
+    1     0.7285      2 |     -0.0043    +6.9746 |     -0.0082       +4.3511  HELD OUT
+    2     0.5898      2 |     +0.0407    +1.1876 |     +0.0569       +1.6916  
+    3     1.5853      2 |     -0.0105    +0.9581 |     -0.0287       +1.2005  
+    4     1.4227      2 |     +0.0447    +1.4242 |     +0.0635       +1.7706  
+    5     0.7682      2 |     +0.0169    +0.9076 |     +0.0119       +1.1156  
+    6     1.5389      2 |     +0.0100    +0.7270 |     +0.0040       +0.9308  
+    7     0.6889      2 |     +0.0802    +2.8376 |     +0.1396       +3.3967  
+    8     0.5225      2 |     +0.0250    +0.9907 |     +0.0350       +1.3201  HELD OUT
+    9     0.8190      2 |     +0.0394    +1.5881 |     +0.0464       +2.2933  
+
+  (gap = ArmB - ArmA, so POSITIVE means Arm A is better)
+
+  relative-L1 h=8
+    correlation gap vs difficulty: r = -0.464   95% CI [-0.851, +0.141]   spans zero
+    gap on held-out pair +0.0103   on the other eight +0.0272   (held-out UNDERstates by 0.0169)
+    sign consistent across all ten episodes: False  (signs present: [-1, 1])
+
+  relative-L1 h=368
+    correlation gap vs difficulty: r = -0.334   95% CI [-0.735, +0.029]   spans zero
+    gap on held-out pair +3.9827   on the other eight +1.3288   (held-out OVERstates by 2.6538)
+    sign consistent across all ten episodes: True  (signs present: [1])
+
+  nRMSE h=8
+    correlation gap vs difficulty: r = -0.474   95% CI [-0.851, +0.108]   spans zero
+    gap on held-out pair +0.0134   on the other eight +0.0351   (held-out UNDERstates by 0.0217)
+    sign consistent across all ten episodes: False  (signs present: [-1, 1])
+
+  nRMSE h=368
+    correlation gap vs difficulty: r = -0.425   95% CI [-0.834, +0.027]   spans zero
+    gap on held-out pair +2.8356   on the other eight +1.7413   (held-out OVERstates by 1.0944)
+    sign consistent across all ten episodes: True  (signs present: [1])
+
+==================================================================================================
+  M-22's PRE-REGISTERED RULE, APPLIED
+==================================================================================================
+  governing metric: relative-L1 at h=8 (where M-16 was pre-registered)
+  r = -0.464, CI [-0.851, +0.141]  ->  BRANCH 1 -- WEAK: the held-out pair's easiness does not bias the comparison. M-16 stands as measured; no retraining warranted; Task 4c does NOT run.
+
+  sign of the gap consistent across all ten episodes, on every metric: False
+  *** THE GAP REVERSES SIGN ON AT LEAST ONE EPISODE -- outranks the correlation ***
+      l18: negative on episodes [0, 1, 3]
+      nrmse8: negative on episodes [0, 1, 3]
+
+  wrote results/task4_arenas.json
