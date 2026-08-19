@@ -600,9 +600,20 @@
     "evidence": [
       "RUN"
     ],
+    "artifacts": []
+  },
+  {
+    "id": "M-26",
+    "claim": "A pre-registered rule must be anchored to an adequately powered statistic",
+    "relevance": "METHOD",
+    "status": "ADOPTED",
+    "evidence": [
+      "RUN"
+    ],
     "artifacts": [
       "results/manifest.json",
       "results/step3_report.txt",
+      "results/task3_control_arm.json",
       "scripts/ledger_check.py"
     ]
   },
@@ -1244,6 +1255,18 @@
     ],
     "artifacts": [
       "results/task2_sigma_profile.json"
+    ]
+  },
+  {
+    "id": "R-55",
+    "claim": "The duplication control: R-47's mechanism survives, its statistic does not",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task3_control_arm.json"
     ]
   },
   {

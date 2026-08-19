@@ -1,0 +1,53 @@
+TASK 3 -- THE DUPLICATION CONTROL ARM
+==============================================================================
+
+Does the contaminated arm's higher training loss come from the SPLICE CONTENT
+(R-47's inference) or merely from having 195 more windows?
+
+-- design ------------------------------------------------------------------
+  window counts: clean=[7687], duplicated=[7882], contaminated=[7882]
+  duplication seeds: [10000, 10001, 10002]
+  hyperparameter differences outside the dataset: NONE -- arms are comparable
+
+-- the pre-registered statistic --------------------------------------------
+  final_terms.state IS curves.state[-1]: a single 256-window minibatch draw.
+  arm               seed0    seed1    seed2     mean
+  clean            1.5588   1.4956   1.5546   1.5364
+  duplicated       1.7209   1.7638   1.7166   1.7338
+  contaminated     1.8947   1.8450   1.7506   1.8301
+  duplication explains 67.2% of the contamination rise
+  => on this statistic the pre-registered flag FIRES
+
+-- why that statistic cannot answer the question ---------------------------
+  sd of a single iteration (clean, tail 250) : 0.1769
+  the clean->duplicated effect being measured: 0.0143
+  noise-to-signal ratio                      : 12.4 : 1
+  The pre-registered estimator carries an order of magnitude more noise than
+  the effect it was chosen to resolve. It was never able to decide this.
+
+-- powered statistic: mean over the final N iterations ---------------------
+    tail    clean      dup   contam  dup-clean  contam-dup    dup%
+      50   1.5194   1.5407   1.8444    +0.0213     +0.3037    6.6%
+     100   1.5425   1.5642   1.8709    +0.0217     +0.3067    6.6%
+     150   1.5525   1.5735   1.8964    +0.0210     +0.3229    6.1%
+     250   1.5843   1.5986   1.9261    +0.0143     +0.3275    4.2%
+     400   1.6365   1.6488   1.9800    +0.0122     +0.3312    3.6%
+     600   1.7177   1.7176   2.0579    -0.0001     +0.3403   -0.0%
+    1000   1.8948   1.8876   2.2527    -0.0071     +0.3651   -2.0%
+
+-- bootstrap over iterations 2000-2499 (no tail choice) --------------------
+  duplicated_minus_clean           +0.0077  95% CI [-0.0061, +0.0215]  INCLUDES 0
+  contaminated_minus_clean         +0.3455  95% CI [+0.3284, +0.3626]  excludes 0
+  contaminated_minus_duplicated    +0.3378  95% CI [+0.3274, +0.3483]  excludes 0
+  duplicated below contaminated : 500/500
+  duplicated closer to clean    : 462/500
+
+-- verdict -----------------------------------------------------------------
+  R-47's mechanism is CONFIRMED. 195 perfectly fittable duplicate windows
+  cost nothing measurable; 195 spliced windows cost ~21%. The rise is caused
+  by splice content, not by dataset size.
+
+  The pre-registration was anchored to an underpowered statistic. Read
+  literally it would have refuted R-47. See M-26.
+
+  written: results/task3_control_arm.json

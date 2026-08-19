@@ -107,15 +107,17 @@ claim that M-23 tested is from the **base RWM** paper (arXiv **2501.10100**).
 | `[BOTH]` | bears on both, usually because it concerns shared code or shared data |
 
 **`[RWM-U]`** — C-04, C-06, C-10, C-11, O-08, O-12, O-13, R-08, R-24, R-25, R-43, R-48, R-49,
-R-50, and the σ-profile result. These concern the variance head, its collapse, and the
+R-50, R-51, R-52, R-53, R-54. These concern the variance head, its collapse, and the
 calibration of the uncertainty output; none of them is a claim about the base paper.
 
 **`[BASE]`** — M-16, M-23, M-24, R-19, R-22, R-23, R-35, R-36, R-37, R-40, R-42, R-45, R-46,
-and the A/B comparison generally; plus the loss-assembly discrepancies C-01, C-02, C-05, C-09
+R-47, R-55, and the A/B comparison generally; plus the loss-assembly discrepancies C-01,
+C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, which apply to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, which apply
+to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -943,6 +945,35 @@ Reported alongside `n_independent` in every table. Where `n_independent` = 4 the
 wide, and that is the correct message rather than a defect of the method. The existing six-run
 tables are recomputed under bootstrap CIs so the comparison is like for like.
 **Evidence** `RUN` Task 4's floor instability; adopted as convention.
+**Status** ADOPTED · **Relevance** METHOD
+
+
+### M-26 — A pre-registered rule must be anchored to an adequately powered statistic · **NEW**
+M-24 recorded that a pre-registered rule must be anchored to the *regime* the claim is about.
+This is the same lesson in a second dimension, and it was learned the same way — by watching a
+rule return the wrong answer for a reason that had nothing to do with the hypothesis.
+
+Task 3's rule named a threshold on the training loss "at 2500". The quantity that phrase resolved
+to on disk is `final_terms.state`, which is `curves.state[-1]` — **one 256-window minibatch
+draw**. Its standard deviation is 0.1769. The effect the rule was written to
+detect is 0.0143. The estimator therefore carries
+**12.4× more noise than its own signal** and could never have decided the
+question, in either direction.
+
+Read literally the rule fired and would have retracted R-47 (R-55). Every adequately powered
+estimator says the opposite, and says it consistently.
+
+**What makes this recoverable rather than a free hand.** The estimator was changed *after* seeing
+the result, and the change moved the verdict from *refutes the prior finding* to *confirms the
+prior finding* — the direction that deserves the least trust. Two things carry the argument
+instead of that judgement: the noise-to-signal calculation is computable without knowing which
+arm is which, and the verdict is invariant across every tail length from 50 to 1000 iterations
+and across a bootstrap that makes no tail choice at all.
+
+**Convention adopted.** A pre-registered threshold on a training-loss quantity must name a
+*windowed* statistic and its window, never an endpoint. Where an existing rule named an endpoint,
+report both and show the noise-to-signal ratio, as R-55 does.
+**Evidence** `RUN` `results/task3_control_arm.json`.
 **Status** ADOPTED · **Relevance** METHOD
 
 
@@ -2152,6 +2183,10 @@ costs nothing detectable at this rate.
 these comparisons are not independent — they share runs and nest horizons within trajectories.
 Ten significant results all in the same direction is well beyond chance, but the individual
 effect sizes should not be quoted as precise.
+**Control** The mechanism asserted here — that the rise is caused by unfittable splice
+content rather than by the extra window count — was not controlled when this entry was
+written. It has since been tested against a duplication arm and **confirmed** (R-55).
+The training-loss figures quoted above are single-minibatch draws; see M-26.
 **Evidence** `RUN` `results/task4_contamination.json`, `results/step5_armA_seed{0,1,2}_contam.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
@@ -2325,6 +2360,72 @@ and σ does not move.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
+### R-55 — The duplication control: R-47's mechanism survives, its statistic does not · **NEW**
+R-47 inferred a *mechanism* from a training-loss gap: spliced windows raise the loss **because
+they contain physically impossible transitions that cannot be fit**. That inference had a
+confound it did not control. The contaminated arm differs from clean in two ways at once — 195
+extra windows, and those windows being spliced. Dataset size alone could have produced the rise.
+
+**Design.** A third arm adding 195 windows that are exact duplicates of windows already in
+the training set: 7687 → 7882, matching the contaminated arm's count exactly. Duplicated
+windows are as fittable as ordinary data and carry zero new information, so they isolate size
+from content. 3 seeds, duplication seeds 10000/10001/10002, all windows within-episode, no
+held-out rows. The analysis script asserts that **no hyperparameter differs between the three
+arms outside the dataset itself**.
+
+**On the pre-registered statistic, the rule fires.** `final_terms.state`, mean of 3 seeds:
+clean 1.5364, duplicated 1.7338, contaminated
+1.8301 — duplication apparently explaining
+67.2% of the rise. Taken literally this retracts
+R-47's mechanism.
+
+**It does not, because that statistic is one minibatch.** Its sd is 0.1769
+against an effect of 0.0143: 12.4× more noise
+than signal (M-26).
+
+**Mean over the final N iterations, for every N tried:**
+
+| tail | clean | duplicated | contaminated | share explained by duplication |
+|---|---|---|---|---|
+| 50 | 1.5194 | 1.5407 | 1.8444 | +6.6% |
+| 100 | 1.5425 | 1.5642 | 1.8709 | +6.6% |
+| 150 | 1.5525 | 1.5735 | 1.8964 | +6.1% |
+| 250 | 1.5843 | 1.5986 | 1.9261 | +4.2% |
+| 400 | 1.6365 | 1.6488 | 1.9800 | +3.6% |
+| 600 | 1.7177 | 1.7176 | 2.0579 | -0.0% |
+| 1000 | 1.8948 | 1.8876 | 2.2527 | -2.0% |
+
+Duplication never explains more than
+6.6% of the rise, and at
+longer tails explains none of it.
+
+**Bootstrap over iterations 500 in
+2000–2499, which makes no tail choice:**
+
+| difference | value | 95% CI | |
+|---|---|---|---|
+| duplicated − clean | +0.0077 | [-0.0061, +0.0215] | **includes zero** |
+| contaminated − clean | +0.3455 | [+0.3284, +0.3626] | excludes zero |
+| contaminated − duplicated | +0.3378 | [+0.3274, +0.3483] | excludes zero |
+
+Duplicated sits below contaminated at **500 of
+500** iterations.
+
+**Verdict.** 195 perfectly fittable duplicate windows cost nothing measurable; 195 spliced
+windows cost ~22%. The rise is
+caused by splice content, not by dataset count. **R-47's mechanism is confirmed**, and its
+rollout conclusion — 0 of 32 comparisons showing harm — was never in question here, since this
+arm bears only on the training-loss inference.
+
+**What R-47 got wrong.** Not the mechanism, but the evidence offered for it. R-47 quotes
+"1.8301 ± 0.0732 contaminated against 1.5364 ± 0.0353 clean" as though the seed spread were the
+relevant uncertainty. It is not: those are three single-minibatch draws per arm, and the spread
+measures minibatch noise rather than run-to-run variation. The windowed figures are
+1.5843 and 1.9261.
+**Evidence** `RUN` `results/task3_control_arm.json`, `results/step5_armA_seed{0,1,2}_dup.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## F. Open questions
@@ -2359,7 +2460,8 @@ B-01 is confirmed as a defect but its effect on trained model quality is unmeasu
 **Status** **CLOSED by R-47.** Measured: at 2.47% contamination, 3 seeds, 2500 iterations, the
 spliced windows cost nothing detectable — 0 of 32 comparisons show harm and 10 show a small
 benefit. The training loss rises as expected (1.83 vs 1.54) because the splices are unfittable;
-rollout error does not. The leakage component of B-01 is deliberately excluded from this
+rollout error does not. That the rise is caused by splice **content** and not by
+the added window count is controlled and confirmed in R-55. The leakage component of B-01 is deliberately excluded from this
 experiment and remains unmeasured.
 
 ### O-07 — Is the long-horizon convergence to the floor real or a metric artifact
@@ -2712,7 +2814,8 @@ in scope; see the scope note at the top.
    trained with is identifiable.
 
 5. **The released pipeline trains on spliced episodes, and the cost is now measured** `[BASE]`
-   (B-01, D-03, D-06, R-47). Zero of 32 comparisons show harm.
+   (B-01, D-03, D-06, R-47, R-55). Zero of 32 comparisons show harm, and a duplication control
+   confirms the training-loss rise is caused by splice content rather than by window count.
 
 6. **There is no held-out evaluation in the released repository** `[BASE]` (B-03, B-04, X-01).
 

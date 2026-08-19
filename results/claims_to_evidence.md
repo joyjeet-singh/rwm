@@ -80,4 +80,5 @@ One row per CONTRIB ledger entry.
 | `R-52` | σ is input-independent in all four models | `RUN` | CONFIRMED | `results/task1_calibration.json` |
 | `R-53` | The correction improved magnitude and destroyed what ordering signal existed | `RUN` | CONFIRMED | `results/task1_calibration.json` |
 | `R-54` | σ is flat *inside* the trained horizon, which removes the structural excuse | `RUN` | CONFIRMED | `results/task2_sigma_profile.json` |
+| `R-55` | The duplication control: R-47's mechanism survives, its statistic does not | `RUN` | CONFIRMED | `results/task3_control_arm.json` |
 | `O-12` | The released checkpoint's variance collapse is inconsistent with the released configurat | `DATA`, `RUN`, `SRC` | OPEN — the discrepancy is measured and c | `results/step4_4_overfit_b32lr1e3.json`, `results/step4_4_overfit_ens1.json` |

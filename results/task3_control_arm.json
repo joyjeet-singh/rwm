@@ -1,0 +1,480 @@
+{
+  "design": {
+    "arms": [
+      "clean",
+      "duplicated",
+      "contaminated"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "window_counts": {
+      "clean": [
+        7687
+      ],
+      "duplicated": [
+        7882
+      ],
+      "contaminated": [
+        7882
+      ]
+    },
+    "duplication_seeds": [
+      10000,
+      10001,
+      10002
+    ],
+    "n_duplicated_windows": [
+      195,
+      195,
+      195
+    ],
+    "hyperparameter_differences_outside_dataset": {}
+  },
+  "endpoint_statistic": {
+    "per_seed": {
+      "clean": [
+        1.5588159561157227,
+        1.4956414699554443,
+        1.5546122789382935
+      ],
+      "duplicated": [
+        1.7209217548370361,
+        1.7637782096862793,
+        1.7165675163269043
+      ],
+      "contaminated": [
+        1.8947430849075317,
+        1.8450264930725098,
+        1.7505897283554077
+      ]
+    },
+    "mean": {
+      "clean": 1.5363565683364868,
+      "duplicated": 1.7337558269500732,
+      "contaminated": 1.8301197687784831
+    },
+    "sd": {
+      "clean": 0.03532289841712435,
+      "duplicated": 0.02609113732898992,
+      "contaminated": 0.07322366675600549
+    },
+    "fraction_explained_by_duplication": 0.6719672794842219
+  },
+  "single_draw_noise": {
+    "clean": {
+      "sd_single_iteration": [
+        0.17388385049144905,
+        0.1843787312396733,
+        0.17244683751471518
+      ],
+      "mean_sd": 0.17690313974861252,
+      "se_of_mean_over_tail": 0.011188336936813644
+    },
+    "duplicated": {
+      "sd_single_iteration": [
+        0.17543539270340144,
+        0.18781015216563812,
+        0.16116869700823042
+      ],
+      "mean_sd": 0.17480474729242332,
+      "se_of_mean_over_tail": 0.011055622945084186
+    },
+    "contaminated": {
+      "sd_single_iteration": [
+        0.24265060680854075,
+        0.2781354616896185,
+        0.25100318280205164
+      ],
+      "mean_sd": 0.25726308376673696,
+      "se_of_mean_over_tail": 0.016270746051631573
+    }
+  },
+  "tail_means": {
+    "50": {
+      "per_seed": {
+        "clean": [
+          1.5374197340011597,
+          1.4955641865730285,
+          1.5250756859779357
+        ],
+        "duplicated": [
+          1.5582248973846435,
+          1.50569486618042,
+          1.5581321287155152
+        ],
+        "contaminated": [
+          1.8597414636611937,
+          1.8552833080291748,
+          1.8180586409568786
+        ]
+      },
+      "mean": {
+        "clean": 1.5193532021840412,
+        "duplicated": 1.5406839640935261,
+        "contaminated": 1.8443611375490825
+      },
+      "range": {
+        "clean": [
+          1.4955641865730285,
+          1.5374197340011597
+        ],
+        "duplicated": [
+          1.50569486618042,
+          1.5582248973846435
+        ],
+        "contaminated": [
+          1.8180586409568786,
+          1.8597414636611937
+        ]
+      },
+      "sd": {
+        "clean": 0.0215065531456269,
+        "duplicated": 0.03030148314994165,
+        "contaminated": 0.022887437234146463
+      },
+      "rise_duplicated": 0.021330761909484908,
+      "rise_contaminated": 0.32500793536504125,
+      "fraction_explained_by_duplication": 0.06563151107534251,
+      "clean_dup_ranges_overlap": true,
+      "dup_below_contam_ranges": true
+    },
+    "100": {
+      "per_seed": {
+        "clean": [
+          1.5514196240901947,
+          1.5339907228946685,
+          1.5420833349227905
+        ],
+        "duplicated": [
+          1.5836135315895081,
+          1.53715576171875,
+          1.5716996920108794
+        ],
+        "contaminated": [
+          1.8656117367744445,
+          1.8819850480556488,
+          1.864979374408722
+        ]
+      },
+      "mean": {
+        "clean": 1.542497893969218,
+        "duplicated": 1.5641563284397124,
+        "contaminated": 1.8708587197462718
+      },
+      "range": {
+        "clean": [
+          1.5339907228946685,
+          1.5514196240901947
+        ],
+        "duplicated": [
+          1.53715576171875,
+          1.5836135315895081
+        ],
+        "contaminated": [
+          1.864979374408722,
+          1.8819850480556488
+        ]
+      },
+      "sd": {
+        "clean": 0.00872184290291248,
+        "duplicated": 0.024130019598338274,
+        "contaminated": 0.00964086908823212
+      },
+      "rise_duplicated": 0.021658434470494425,
+      "rise_contaminated": 0.32836082577705383,
+      "fraction_explained_by_duplication": 0.06595925204914604,
+      "clean_dup_ranges_overlap": true,
+      "dup_below_contam_ranges": true
+    },
+    "150": {
+      "per_seed": {
+        "clean": [
+          1.557776239713033,
+          1.5417623297373453,
+          1.558021776676178
+        ],
+        "duplicated": [
+          1.5867616399129232,
+          1.5595123593012492,
+          1.5741737071673076
+        ],
+        "contaminated": [
+          1.8811056685447693,
+          1.9097077949841816,
+          1.8983811601003011
+        ]
+      },
+      "mean": {
+        "clean": 1.5525201153755188,
+        "duplicated": 1.5734825687938268,
+        "contaminated": 1.8963982078764174
+      },
+      "range": {
+        "clean": [
+          1.5417623297373453,
+          1.558021776676178
+        ],
+        "duplicated": [
+          1.5595123593012492,
+          1.5867616399129232
+        ],
+        "contaminated": [
+          1.8811056685447693,
+          1.9097077949841816
+        ]
+      },
+      "sd": {
+        "clean": 0.009317324507482605,
+        "duplicated": 0.013637781258397982,
+        "contaminated": 0.01440380102110849
+      },
+      "rise_duplicated": 0.020962453418307936,
+      "rise_contaminated": 0.3438780925008986,
+      "fraction_explained_by_duplication": 0.060958967365020954,
+      "clean_dup_ranges_overlap": false,
+      "dup_below_contam_ranges": true
+    },
+    "250": {
+      "per_seed": {
+        "clean": [
+          1.6013438177108765,
+          1.5796203808784486,
+          1.5718978147506715
+        ],
+        "duplicated": [
+          1.6089179878234863,
+          1.5915455899238586,
+          1.595297107219696
+        ],
+        "contaminated": [
+          1.9073588013648988,
+          1.9380613918304443,
+          1.9327924575805664
+        ]
+      },
+      "mean": {
+        "clean": 1.5842873377799989,
+        "duplicated": 1.5985868949890136,
+        "contaminated": 1.9260708835919698
+      },
+      "range": {
+        "clean": [
+          1.5718978147506715,
+          1.6013438177108765
+        ],
+        "duplicated": [
+          1.5915455899238586,
+          1.6089179878234863
+        ],
+        "contaminated": [
+          1.9073588013648988,
+          1.9380613918304443
+        ]
+      },
+      "sd": {
+        "clean": 0.015267682785013482,
+        "duplicated": 0.009141503151621766,
+        "contaminated": 0.0164178845466426
+      },
+      "rise_duplicated": 0.014299557209014768,
+      "rise_contaminated": 0.3417835458119709,
+      "fraction_explained_by_duplication": 0.04183805038081482,
+      "clean_dup_ranges_overlap": true,
+      "dup_below_contam_ranges": true
+    },
+    "400": {
+      "per_seed": {
+        "clean": [
+          1.656922019124031,
+          1.6358863085508346,
+          1.616791149675846
+        ],
+        "duplicated": [
+          1.6512481465935707,
+          1.6555611330270767,
+          1.6395226055383683
+        ],
+        "contaminated": [
+          1.9703393906354905,
+          1.9859763070940972,
+          1.9836136084794997
+        ]
+      },
+      "mean": {
+        "clean": 1.636533159116904,
+        "duplicated": 1.6487772950530053,
+        "contaminated": 1.9799764354030291
+      },
+      "range": {
+        "clean": [
+          1.616791149675846,
+          1.656922019124031
+        ],
+        "duplicated": [
+          1.6395226055383683,
+          1.6555611330270767
+        ],
+        "contaminated": [
+          1.9703393906354905,
+          1.9859763070940972
+        ]
+      },
+      "sd": {
+        "clean": 0.020073252910476052,
+        "duplicated": 0.008299844667410974,
+        "contaminated": 0.008429119768665868
+      },
+      "rise_duplicated": 0.012244135936101408,
+      "rise_contaminated": 0.34344327628612525,
+      "fraction_explained_by_duplication": 0.03565111557432478,
+      "clean_dup_ranges_overlap": true,
+      "dup_below_contam_ranges": true
+    },
+    "600": {
+      "per_seed": {
+        "clean": [
+          1.7381167985995611,
+          1.7209993926684062,
+          1.6940838996569316
+        ],
+        "duplicated": [
+          1.7285984114805857,
+          1.7186800307035446,
+          1.7054909378290177
+        ],
+        "contaminated": [
+          2.0633638936281202,
+          2.050215413967768,
+          2.060133915543556
+        ]
+      },
+      "mean": {
+        "clean": 1.717733363641633,
+        "duplicated": 1.717589793337716,
+        "contaminated": 2.0579044077131483
+      },
+      "range": {
+        "clean": [
+          1.6940838996569316,
+          1.7381167985995611
+        ],
+        "duplicated": [
+          1.7054909378290177,
+          1.7285984114805857
+        ],
+        "contaminated": [
+          2.050215413967768,
+          2.0633638936281202
+        ]
+      },
+      "sd": {
+        "clean": 0.022197393011922587,
+        "duplicated": 0.011592251626619544,
+        "contaminated": 0.006851909093023672
+      },
+      "rise_duplicated": -0.00014357030391698444,
+      "rise_contaminated": 0.3401710440715153,
+      "fraction_explained_by_duplication": -0.00042205327707669663,
+      "clean_dup_ranges_overlap": true,
+      "dup_below_contam_ranges": true
+    },
+    "1000": {
+      "per_seed": {
+        "clean": [
+          1.9151105999946594,
+          1.892379085302353,
+          1.8768193423748016
+        ],
+        "duplicated": [
+          1.9020182944536208,
+          1.8905811240673065,
+          1.870263473033905
+        ],
+        "contaminated": [
+          2.262175999522209,
+          2.250091725230217,
+          2.2459156156778337
+        ]
+      },
+      "mean": {
+        "clean": 1.8947696758906047,
+        "duplicated": 1.8876209638516108,
+        "contaminated": 2.25272778014342
+      },
+      "range": {
+        "clean": [
+          1.8768193423748016,
+          1.9151105999946594
+        ],
+        "duplicated": [
+          1.870263473033905,
+          1.9020182944536208
+        ],
+        "contaminated": [
+          2.2459156156778337,
+          2.262175999522209
+        ]
+      },
+      "sd": {
+        "clean": 0.01925724006829786,
+        "duplicated": 0.016083037095848914,
+        "contaminated": 0.008444620170302002
+      },
+      "rise_duplicated": -0.007148712038993921,
+      "rise_contaminated": 0.35795810425281505,
+      "fraction_explained_by_duplication": -0.01997080651076697,
+      "clean_dup_ranges_overlap": true,
+      "dup_below_contam_ranges": true
+    }
+  },
+  "bootstrap_over_iterations": {
+    "duplicated_minus_clean": {
+      "diff": 0.00774056449596087,
+      "lo": -0.0061348745028178,
+      "hi": 0.02150564177831016,
+      "excludes_zero": false
+    },
+    "contaminated_minus_clean": {
+      "diff": 0.34549936910113493,
+      "lo": 0.32836592634518946,
+      "hi": 0.36261958781878145,
+      "excludes_zero": true
+    },
+    "contaminated_minus_duplicated": {
+      "diff": 0.3377537365630269,
+      "lo": 0.3273998707135519,
+      "hi": 0.34827065229415877,
+      "excludes_zero": true
+    },
+    "ordering": {
+      "n_iterations": 500,
+      "dup_below_contam": 500,
+      "dup_closer_to_clean": 462
+    }
+  },
+  "verdict": {
+    "preregistered_statistic": "final_terms.state (== curves.state[-1], ONE minibatch)",
+    "preregistered_expectation": "duplicated near clean 1.5364, not near contaminated 1.8301",
+    "on_preregistered_statistic": {
+      "clean": 1.5363565683364868,
+      "duplicated": 1.7337558269500732,
+      "contaminated": 1.8301197687784831,
+      "fraction_explained_by_duplication": 0.6719672794842219,
+      "flag_fires": true
+    },
+    "why_that_statistic_cannot_answer_it": {
+      "single_iteration_sd": 0.17690313974861252,
+      "effect_being_measured": 0.014299557209014768,
+      "noise_to_signal": 12.37123200130202
+    },
+    "on_powered_statistics": {
+      "verdict": "duplicated is indistinguishable from clean; contaminated is separate",
+      "invariant_across_tails": true,
+      "max_fraction_explained_by_duplication": 0.06595925204914604
+    },
+    "r47_mechanism": "CONFIRMED"
+  }
+}
