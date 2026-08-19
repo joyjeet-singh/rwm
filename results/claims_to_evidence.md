@@ -72,4 +72,12 @@ One row per CONTRIB ledger entry.
 | `R-44` | The central claim's full history, with commit timestamps | `RUN` | CONFIRMED | `results/task5_analysis.json` |
 | `R-45` | Matched per-dimension comparison: released checkpoint vs Arm A | `RUN` | CONFIRMED | `results/task2_3_matched_trend.json` |
 | `R-46` | The gap-narrowing trend: absolute gap closes, relative advantage does not | `RUN` | CONFIRMED | `results/task2_3_matched_trend.json` |
+| `R-47` | The spliced windows cost nothing measurable, and if anything help | `RUN` | CONFIRMED | `results/task4_contamination.json` |
+| `R-48` | The corrected objective reverses the collapse mechanism but produces no usable uncertain | `RUN` | CONFIRMED | `results/task1_calibration.json` |
+| `R-49` | The released checkpoint's uncertainty output is worthless, quantified | `RUN` | CONFIRMED | `results/task1_calibration.json` |
+| `R-50` | Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iter | `RUN` | CONFIRMED | `results/task1_calibration.json` |
+| `R-51` | All four models are catastrophically overconfident | `RUN` | CONFIRMED | `results/task1_calibration.json`, `results/task2_sigma_profile.json` |
+| `R-52` | σ is input-independent in all four models | `RUN` | CONFIRMED | `results/task1_calibration.json` |
+| `R-53` | The correction improved magnitude and destroyed what ordering signal existed | `RUN` | CONFIRMED | `results/task1_calibration.json` |
+| `R-54` | σ is flat *inside* the trained horizon, which removes the structural excuse | `RUN` | CONFIRMED | `results/task2_sigma_profile.json` |
 | `O-12` | The released checkpoint's variance collapse is inconsistent with the released configurat | `DATA`, `RUN`, `SRC` | OPEN — the discrepancy is measured and c | `results/step4_4_overfit_b32lr1e3.json`, `results/step4_4_overfit_ens1.json` |

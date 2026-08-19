@@ -123,6 +123,7 @@ def main():
     ap.add_argument("--iters", type=int, default=2500)
     ap.add_argument("--tag", default="")
     ap.add_argument("--contaminated", action="store_true")
+    ap.add_argument("--duplicated", action="store_true")
     ap.add_argument("--loss-type", dest="loss_type", default="mse",
                     choices=["mse", "gaussian_nll"])
     ap.add_argument("--batch", type=int, default=256)
@@ -159,6 +160,13 @@ def main():
         ds = T.ContaminatedWindowDataset(data, episode_id, split["train_episodes"], cfg)
         print(f"  CONTAMINATION ARM: {ds.n_clean} clean + {ds.n_splice} splice"
               f" = {len(ds)} windows ({100*ds.n_splice/len(ds):.2f}% contaminated)")
+    elif args.duplicated:
+        ds = T.DuplicatedWindowDataset(data, episode_id, split["train_episodes"], cfg,
+                                       seed=args.seed)
+        print(f"  CONTROL ARM: {ds.n_clean} clean + {ds.n_dup} DUPLICATED clean"
+              f" = {len(ds)} windows (count matches the contamination arm, no splices)")
+        print(f"    duplication seed {ds.duplication_seed}, first 5 duplicated starts"
+              f" {ds.duplicated_window_starts[:5]}")
     else:
         ds = T.WindowDataset(data, episode_id, split["train_episodes"], cfg)
         print(f"  {len(ds)} training windows from episodes {ds.episodes}")
@@ -274,6 +282,9 @@ def main():
                                "loss_weights": weights, "action_offset": 1,
                                "gradient_clipping": None,
                                "contaminated": bool(args.contaminated),
+                               "duplicated": bool(args.duplicated),
+                               "duplication_seed": getattr(ds, "duplication_seed", None),
+                               "duplicated_window_starts": getattr(ds, "duplicated_window_starts", None),
                                "loss_type": args.loss_type,
                                "n_train_windows": len(ds),
                                "train_episodes": split["train_episodes"],

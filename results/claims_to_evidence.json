@@ -1150,6 +1150,103 @@
     ]
   },
   {
+    "id": "R-47",
+    "claim": "The spliced windows cost nothing measurable, and if anything help",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task4_contamination.json"
+    ]
+  },
+  {
+    "id": "R-48",
+    "claim": "The corrected objective reverses the collapse mechanism but produces no usable uncertain",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json"
+    ]
+  },
+  {
+    "id": "R-49",
+    "claim": "The released checkpoint's uncertainty output is worthless, quantified",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json"
+    ]
+  },
+  {
+    "id": "R-50",
+    "claim": "Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iter",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json"
+    ]
+  },
+  {
+    "id": "R-51",
+    "claim": "All four models are catastrophically overconfident",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json",
+      "results/task2_sigma_profile.json"
+    ]
+  },
+  {
+    "id": "R-52",
+    "claim": "\u03c3 is input-independent in all four models",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json"
+    ]
+  },
+  {
+    "id": "R-53",
+    "claim": "The correction improved magnitude and destroyed what ordering signal existed",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json"
+    ]
+  },
+  {
+    "id": "R-54",
+    "claim": "\u03c3 is flat *inside* the trained horizon, which removes the structural excuse",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task2_sigma_profile.json"
+    ]
+  },
+  {
     "id": "O-01",
     "claim": "Which action convention is causally correct",
     "relevance": "",
@@ -1193,7 +1290,7 @@
     "id": "O-06",
     "claim": "What does the 352-window contamination actually cost",
     "relevance": "",
-    "status": "OPEN. Unchanged by Step 3.5.",
+    "status": "**CLOSED by R-47.** Measured: at 2.47% contamination, 3 seeds, 2500 iterations, the",
     "evidence": [],
     "artifacts": []
   },
@@ -1251,6 +1348,14 @@
       "results/step4_4_overfit_b32lr1e3.json",
       "results/step4_4_overfit_ens1.json"
     ]
+  },
+  {
+    "id": "O-13",
+    "claim": "Why does \u03c3 stay constant when the pressure forcing it to be constant is removed?",
+    "relevance": "",
+    "status": "",
+    "evidence": [],
+    "artifacts": []
   },
   {
     "id": "X-01",

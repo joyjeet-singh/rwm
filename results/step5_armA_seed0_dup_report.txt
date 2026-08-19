@@ -1,0 +1,17 @@
+==================================================================================
+STEP 5 MAIN RUN -- armA_seed0_dup
+==================================================================================
+  arm A: state branch feeds back its own SAMPLE (autoregressive, faithful)
+  auxiliary branch: teacher-forced in BOTH arms (system_dynamics.py:264)
+  ensemble 1, batch 256, lr 0.0001, weight_decay 1e-05, 2500 iterations
+  action alignment: causal, offset=1 (X-05)
+  gradient clipping: NONE -- the reference has none in this path (5.7a)
+  CONTROL ARM: 7687 clean + 195 DUPLICATED clean = 7882 windows (count matches the contamination arm, no splices)
+    duplication seed 10000, first 5 duplicated starts [20, 154, 215, 234, 244]
+
+    iter      state     bound   contact    termin      total    |grad| exp(logdel)      s
+       0   47.03323 1.000e+00   0.68627 7.024e-01   49.42191    55.430    0.999900      2
+      25   33.68002 9.975e-01   0.59090 2.853e-01   35.55370    22.427    0.997422     32
+      50   24.73524 9.951e-01   0.39867 1.553e-02   26.14451    19.084    0.994958     66
+      75   21.67383 9.926e-01   0.34749 5.183e-03   23.01910    15.073    0.992507    100
+     100   20.15543 9.902e-01   0.30669 3.940e-03   21.45622    16.117    0.990062    134

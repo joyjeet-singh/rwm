@@ -1,10 +1,33 @@
 # Results
 
+**Two papers are in scope.** The released checkpoint `pretrain_rnn_ens.pt` is the five-member
+**RWM-U** configuration of [arXiv:2504.16680](https://arxiv.org/abs/2504.16680); the
+autoregressive-versus-teacher-forcing claim `M-23` tested is from the base
+[arXiv:2501.10100](https://arxiv.org/abs/2501.10100). Every ledger entry is tagged `[BASE]`,
+`[RWM-U]` or `[BOTH]`.
+
+## The headline finding — the uncertainty output is unusable `[RWM-U]`
+
+The released checkpoint's predicted σ is **7,878× smaller than its own mean absolute error**:
+0.14% coverage at ±1σ, against 68.3% for a calibrated Gaussian. At a predicted 99.7% (±3σ) the
+observed frequency is 0.1%.
+
+This is not a training failure. The state loss is squared error on a reparameterised sample with
+no log-σ term, so it is minimised at σ = 0; the bound loss pushes the same way; and `min_logstd`
+cancels out of the bound loss entirely, making the ratchet one-way. Running **the authors' own
+unused `gaussian_nll` branch** reverses the mechanism — and still does not produce a usable
+estimate: magnitude improves to 10.9× overconfident, σ remains input-independent (CoV 0.0059
+while the permitted interval allows a 3.0× spread), and the faint ordering signal the faithful
+arm had is destroyed (39/45 dimensions positive, P = 1.4e-06 → 21/45, chance).
+
+σ is flat even across forecast steps 1–8, the window the loss actually optimises, while realised
+error grows 3.4×. There is no structural excuse. (`R-48`–`R-54`, `O-12`, `O-13`)
+
 An independent reproduction of the proprioceptive dynamics model from
 Li, Krause & Hutter, *Robotic World Model* (arXiv:2501.10100). This page is the outcome;
 [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md) is the evidence.
 
-## The verdict
+## The base paper's central claim `[BASE]`
 
 **The paper's central claim — that the autoregressive training objective beats teacher
 forcing — REPRODUCES at long horizon.**

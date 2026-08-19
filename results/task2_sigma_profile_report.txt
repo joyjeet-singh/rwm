@@ -1,0 +1,77 @@
+====================================================================================================
+TASK 2 -- SIGMA PROFILE WITHIN THE TRAINED HORIZON (forecast steps 1-8)
+====================================================================================================
+  held-out episodes [1, 8], 4 independent trajectories
+  the loss trains on exactly these 8 forecast steps (forecast_horizon = 8)
+
+  FAITHFUL ARMA (MSE)
+     step        sigma  sigma/s1   mean|err|   err/s1   cov+-1s   cov+-2s
+        1 7.019415e-03    1.0000  6.9123e-02     1.00    11.67%    20.74%
+        2 6.946774e-03    0.9897  1.2273e-01     1.78     6.30%    12.78%
+        3 6.842161e-03    0.9747  1.6144e-01     2.34     6.48%    10.93%
+        4 6.737291e-03    0.9598  1.9051e-01     2.76     3.33%     7.78%
+        5 6.657392e-03    0.9484  2.0987e-01     3.04     2.04%     6.30%
+        6 6.599620e-03    0.9402  2.1879e-01     3.17     3.52%     5.56%
+        7 6.546502e-03    0.9326  2.2889e-01     3.31     2.04%     3.89%
+        8 6.486791e-03    0.9241  2.4103e-01     3.49     1.48%     4.26%
+    sigma grows 0.9241x from step 1 to 8, while |error| grows 3.49x
+    sigma at steps 300+ vs step 1: 0.9125x
+
+  CORRECTED ARMA (NLL)
+     step        sigma  sigma/s1   mean|err|   err/s1   cov+-1s   cov+-2s
+        1 2.921435e-02    1.0000  6.7116e-02     1.00    42.78%    63.89%
+        2 2.921559e-02    1.0000  1.1994e-01     1.79    26.85%    47.22%
+        3 2.921746e-02    1.0001  1.5895e-01     2.37    19.26%    36.30%
+        4 2.921937e-02    1.0002  1.8714e-01     2.79    16.11%    30.56%
+        5 2.922086e-02    1.0002  2.0299e-01     3.02    16.30%    28.70%
+        6 2.922195e-02    1.0003  2.0708e-01     3.09    14.44%    25.19%
+        7 2.922288e-02    1.0003  2.1666e-01     3.23    12.41%    21.85%
+        8 2.922389e-02    1.0003  2.2889e-01     3.41    11.48%    23.15%
+    sigma grows 1.0003x from step 1 to 8, while |error| grows 3.41x
+    sigma at steps 300+ vs step 1: 1.0004x
+
+  TEACHER-FORCED ARMB
+     step        sigma  sigma/s1   mean|err|   err/s1   cov+-1s   cov+-2s
+        1 6.506369e-03    1.0000  5.2118e-02     1.00    12.96%    24.44%
+        2 6.507074e-03    1.0001  9.5052e-02     1.82     8.15%    14.26%
+        3 6.507804e-03    1.0002  1.3456e-01     2.58     6.11%    11.67%
+        4 6.510206e-03    1.0006  1.7279e-01     3.32     3.89%     7.78%
+        5 6.516361e-03    1.0015  2.1356e-01     4.10     2.78%     5.93%
+        6 6.521846e-03    1.0024  2.4069e-01     4.62     2.96%     5.93%
+        7 6.530484e-03    1.0037  2.7684e-01     5.31     1.67%     4.44%
+        8 6.568585e-03    1.0096  3.1828e-01     6.11     2.04%     3.15%
+    sigma grows 1.0096x from step 1 to 8, while |error| grows 6.11x
+    sigma at steps 300+ vs step 1: 1.1325x
+
+  RELEASED CHECKPOINT
+     step        sigma  sigma/s1   mean|err|   err/s1   cov+-1s   cov+-2s
+        1 5.736330e-05    1.0000  3.4226e-02     1.00     0.56%     0.56%
+        2 5.736731e-05    1.0001  3.5751e-02     1.04     0.00%     1.11%
+        3 5.740808e-05    1.0008  3.8416e-02     1.12     0.00%     0.00%
+        4 5.742141e-05    1.0010  4.1436e-02     1.21     0.56%     0.56%
+        5 5.744508e-05    1.0014  5.1861e-02     1.52     0.00%     0.00%
+        6 5.749884e-05    1.0024  5.0906e-02     1.49     0.00%     0.00%
+        7 5.749679e-05    1.0023  5.4642e-02     1.60     0.00%     0.00%
+        8 5.740065e-05    1.0007  6.1341e-02     1.79     0.00%     0.56%
+    sigma grows 1.0007x from step 1 to 8, while |error| grows 1.79x
+    sigma at steps 300+ vs step 1: 1.0126x
+
+====================================================================================================
+  WHICH READING DOES THE DATA SUPPORT?
+====================================================================================================
+  faithful armA (mse)      sigma x0.9241 vs error x3.49  ->  FLAT -- fails to learn horizon-dependence where the loss demanded it
+  corrected armA (nll)     sigma x1.0003 vs error x3.41  ->  FLAT -- fails to learn horizon-dependence where the loss demanded it
+  teacher-forced armB      sigma x1.0096 vs error x6.11  ->  FLAT -- fails to learn horizon-dependence where the loss demanded it
+  released checkpoint      sigma x1.0007 vs error x1.79  ->  FLAT -- fails to learn horizon-dependence where the loss demanded it
+
+  READING 2 -- THE STRONGER NEGATIVE RESULT.
+  sigma is flat across steps 1-8 in every model, INCLUDING the corrected arm and
+  INCLUDING the released checkpoint, while the realised error grows several-fold
+  over the same range. The models fail to learn horizon-dependence even inside the
+  window the loss actually optimises. The structural excuse -- that the 8-step
+  objective cannot teach uncertainty beyond 8 steps -- does not apply, because
+  they do not learn it within 8 steps either.
+  The coverage decline from step 1 to 8 is therefore driven ENTIRELY by growing
+  error against a fixed sigma, not by sigma failing to keep up.
+
+  wrote results/task2_sigma_profile.json

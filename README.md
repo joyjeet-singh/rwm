@@ -11,26 +11,33 @@ never edited in place; wrong turns are marked `SUPERSEDED` and kept.
 
 ## Status
 
-**Steps 0–5 complete. The paper's central claim REPRODUCES at long horizon, under a decision
-rule pre-registered in git before the runs that tested it existed.**
+**Steps 0–5 complete. Fourteen training runs. Two papers in scope, and the headline finding is
+about the follow-up rather than the base paper.**
 
-At h=368, out-of-sample, after 10,000 iterations from scratch: the autoregressive objective
-scores **0.3509** against teacher forcing's **1.5540** — a factor of **4.4×** — with a 95%
-bootstrap CI on the gap of [+0.56, +2.05] excluding zero, and the per-episode gap positive on
-**all ten episodes** (+0.42 to +1.83). All three of `M-23`'s pre-registered conditions hold
-(`R-40`). The rule was committed in `efc35b8` before either run was launched.
+**1 — The uncertainty output is unusable, and that is a property of the objective**
+([arXiv:2504.16680](https://arxiv.org/abs/2504.16680), the RWM-U follow-up). The released
+checkpoint's predicted σ is **7,878× smaller than its own mean absolute error**, giving 0.14%
+coverage at ±1σ where a calibrated Gaussian gives 68.3%. This is derived analytically, confirmed
+across fourteen runs, extrapolated with 3% accuracy over a fourfold extension, and tested with a
+corrective experiment using **the authors' own unused `gaussian_nll` branch** — which reverses
+the collapse mechanism and still does not produce a usable estimate (`R-48`–`R-54`).
 
-Stated with it, because the project's discipline is the point:
+**2 — The base paper's central claim REPRODUCES at long horizon**
+([arXiv:2501.10100](https://arxiv.org/abs/2501.10100)), under a decision rule committed to git
+before the runs that tested it existed. At h=368 out-of-sample after 10,000 iterations from
+scratch: autoregressive **0.3509** against teacher forcing's **1.5540**, a factor of **4.4×**,
+95% bootstrap CI [+0.56, +2.05] excluding zero, per-episode gap positive on **all ten episodes**.
+All three of `M-23`'s pre-registered conditions hold (`R-40`), rule committed in `efc35b8`.
 
-- an **earlier rule (`M-16`) returned "cannot be settled"** — it was anchored at h=8, the
-  training forecast horizon rather than the horizon the claim is about, and that design flaw is
-  recorded as `M-24`. `M-23` was written to correct it, in advance.
-- the h=8 ambiguity **does not resolve even at 10,000 iterations** out-of-sample, where only
-  four independent 400-step trajectories exist. It resolves cleanly in-sample at four times the
-  samples (`R-42`). The limit is sample size, not convergence.
-- a **retraction is recorded in full**: this project promoted a claim that the released
-  checkpoint loses to a constant predictor at long horizon, then refuted it with its own gating
-  checks (`S-10`, `R-29`, `R-30`).
+Stated alongside, because the discipline is the point:
+
+- an earlier rule (`M-16`) returned **"cannot be settled"** — anchored at h=8, the training
+  forecast horizon rather than the horizon the claim is about (`M-24`). `M-23` corrected it, in
+  advance.
+- **three findings have been retracted** on this project's own evidence (`S-09`, `S-10`,
+  `S-11`), each after a plausible first reading failed a gating check.
+- the h=8 ambiguity **never resolves** out-of-sample, even at 10,000 iterations, because only
+  four independent 400-step trajectories exist there (`R-42`, `M-20`).
 
 ## What has been established
 

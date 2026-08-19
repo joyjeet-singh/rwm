@@ -93,6 +93,37 @@
 
 ---
 
+## Which paper each claim addresses
+
+**Two papers are in scope and they must not be conflated.** `pretrain_rnn_ens.pt` is a
+five-member ensemble with an epistemic/aleatoric decomposition — the **RWM-U** configuration of
+*Uncertainty-Aware Robotic World Model* (arXiv **2504.16680**). The autoregressive-versus-teacher-forcing
+claim that M-23 tested is from the **base RWM** paper (arXiv **2501.10100**).
+
+| tag | meaning |
+|---|---|
+| `[BASE]` | bears on arXiv 2501.10100 — the dynamics model and its training objective |
+| `[RWM-U]` | bears on arXiv 2504.16680 — the uncertainty-aware follow-up |
+| `[BOTH]` | bears on both, usually because it concerns shared code or shared data |
+
+**`[RWM-U]`** — C-04, C-06, C-10, C-11, O-08, O-12, O-13, R-08, R-24, R-25, R-43, R-48, R-49,
+R-50, and the σ-profile result. These concern the variance head, its collapse, and the
+calibration of the uncertainty output; none of them is a claim about the base paper.
+
+**`[BASE]`** — M-16, M-23, M-24, R-19, R-22, R-23, R-35, R-36, R-37, R-40, R-42, R-45, R-46,
+and the A/B comparison generally; plus the loss-assembly discrepancies C-01, C-02, C-05, C-09
+and the defects B-01 to B-05.
+
+**`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, which apply to any
+measurement made on this data.
+
+Recorded now rather than during writing: a reviewer who notices the conflation before it is
+named will read it as carelessness rather than as a two-paper result.
+
+
+---
+
 ## A. Dataset findings
 
 ### D-01 — Column layout confirmed
@@ -2211,6 +2242,89 @@ also shipped.
 **Status** CONFIRMED · **Relevance** CONTRIB · **Strengthens O-12.**
 
 
+### R-51 — All four models are catastrophically overconfident · `[RWM-U]` · **NEW**
+Coverage measured on the 4 independent held-out 400-step trajectories, against a calibrated
+Gaussian's 68.3% at ±1σ and 95.4% at ±2σ.
+
+| model | mean \|error\| / σ | ±1σ @h=8 | ±2σ @h=8 | ±1σ @h=368 |
+|---|---|---|---|---|
+| released checkpoint | **7,878×** | **0.14%** | 0.35% | 0.04% |
+| faithful Arm A (mse) | 52.2× | 4.61% | 9.03% | 1.75% |
+| teacher-forced Arm B | 61.0× | 2.04% | 3.15% | — |
+| corrected Arm A (nll) | **10.9×** | **19.95%** | 34.61% | 8.57% |
+| *calibrated reference* | *1×* | *68.3%* | *95.4%* | *68.3%* |
+
+The released checkpoint's reliability curve is flat at the floor: at a predicted 99.7% (±3σ) the
+observed frequency is **0.1%**. The corrected arm is the least bad by a factor of ~700 and is
+still wrong by an order of magnitude.
+**Evidence** `RUN` `results/task1_calibration.json`, `results/task2_sigma_profile.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-52 — σ is input-independent in all four models · `[RWM-U]` · **NEW**
+Coefficient of variation of the predicted σ across a batch:
+
+| model | CoV of σ | permitted interval width (log space) | fraction of the freedom used |
+|---|---|---|---|
+| released checkpoint | 0.0177 | 5.2e-07 — closed | n/a, the clamp binds |
+| faithful Arm A | 0.0076 | 0.79 | ~1% |
+| corrected Arm A (nll) | **0.0059** | **1.09** | **0.6%** |
+
+The corrected arm is the decisive case. Raising `log_delta` to 1.09 widened the permitted
+interval so σ could span a factor of e^1.09 ≈ 3.0×, and the head used **0.6%** of it — varying
+*less* across a batch than the faithful arm, whose interval is narrower. **The clamp is not what
+makes σ constant.** Removing the pressure that forces σ to a constant did not cause the network
+to learn a varying one.
+**Evidence** `RUN` `results/task1_calibration.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-53 — The correction improved magnitude and destroyed what ordering signal existed · `[RWM-U]` · **NEW**
+σ-versus-realised-error correlation, per dimension, pooled across seeds:
+
+| model | mean r | median r | dims with r > 0 | under a coin-flip null |
+|---|---|---|---|---|
+| faithful Arm A (mse) | **+0.034** | +0.029 | **39 / 45** | P ≈ **1.4e-06** — real |
+| corrected Arm A (nll) | **−0.004** | −0.009 | **21 / 45** | P ≈ 0.66 — chance |
+| released checkpoint | +0.001 | −0.010 | 20 / 45 | chance |
+
+The faithful arm's correlation is *small but genuine*: 39 of 45 dimensions positive has
+probability 1.4e-06 under a fair-coin null, so the constant-σ head nonetheless carried a faint
+ordering signal. The corrected arm scores 21 of 45 — indistinguishable from chance.
+
+So the correction **improved the magnitude** (10.9× overconfident against 52.2×) and
+**removed the ordering**. An uncertainty estimate that is better scaled but no longer ranks
+which predictions are worse is not obviously an improvement for any downstream use.
+**Evidence** `RUN` `results/task1_calibration.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-54 — σ is flat *inside* the trained horizon, which removes the structural excuse · `[RWM-U]` · **NEW**
+Task 2. The loss trains on exactly 8 forecast steps, so if a model were going to learn
+horizon-dependent uncertainty anywhere it would be here. σ across steps 1 → 8, against the
+realised error over the same range:
+
+| model | σ growth 1→8 | \|error\| growth 1→8 | ±1σ coverage 1 → 8 |
+|---|---|---|---|
+| faithful Arm A | **0.924×** (declines) | 3.49× | 11.67% → 1.48% |
+| corrected Arm A (nll) | **1.0003×** | 3.41× | 42.78% → 11.48% |
+| teacher-forced Arm B | 1.0096× | 6.11× | 12.96% → 2.04% |
+| released checkpoint | 1.0007× | 1.79× | 0.56% → 0.00% |
+
+**Reading 2, the stronger negative result.** σ is flat across steps 1–8 in every model — the
+faithful arm's actually *declines* — while realised error grows 1.8× to 6.1× over the same
+range. The models fail to learn horizon-dependence **even inside the window the loss actually
+optimises**.
+
+This removes the structural excuse. One could have argued that an 8-step forecast objective
+cannot teach uncertainty about step 368; that argument does not survive, because these models do
+not learn it about step 8 either. The coverage decline from step 1 to step 8 is therefore driven
+**entirely** by growing error against a fixed σ, not by σ failing to keep pace.
+
+It also narrows O-13: "2500 iterations is too few" and "the task has little heteroscedasticity
+to learn" both become harder to sustain, since the error grows 3.4× within the trained window
+and σ does not move.
+**Evidence** `RUN` `results/task2_sigma_profile.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
 ---
 
 ## F. Open questions
@@ -2564,38 +2678,57 @@ episodes but compared against a seven-dimension set derived elsewhere.
 
 ## Candidate paper contributions
 
-Ordered by how much they would stand on their own, for use when the writeup begins. Every one still needs its impact quantified rather than merely its existence demonstrated.
+Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are
+in scope; see the scope note at the top.
 
-1. **The paper's central claim reproduces, and the margin is large** (R-22, R-23, M-16, R-28,
-   R-31). Restored to first place after R-27's retraction. Strengthened in the process: the
-   verdict is SETTLED under **four** independent metric/aggregation variants, at 10 and at 100
-   trajectories, with Arm A leading by 4–5× at h=368 and beating the hold-last floor in every
-   one. It is the most heavily stress-tested claim in the project.
-2. **Aggregation and evaluation power can invert a published-model comparison — including one this project published** (R-29, R-30, M-19, S-10, M-17). A fixed-denominator nRMSE aggregated as a mean of per-dimension ratios let one near-constant dimension (`g_z`, stored scale 0.0292) carry a 45-term average and reverse the verdict on the released checkpoint; the pooled aggregation does not. The apparent heavy tail behind it was two short regions sampled repeatedly through trajectory overlap. This project promoted the wrong conclusion to first place and then refuted it with its own gating checks. Reported as a worked example, with the retraction attached, because that is more useful to a reader than the claim would have been. The
-   autoregressive objective beats teacher forcing at h=368 by **4.3× on relative-L1 and 3.9× on
-   nRMSE**, with the ordering identical at both checkpoints, the difference well outside the
-   seed spread, and both metrics agreeing — against a decision rule pre-registered in git before
-   any Arm B result existed. The mechanism is measured too (R-23): teacher forcing reaches a 3×
-   *lower* training loss with 5× smaller gradients and then rolls out 4.3× worse. That is
-   exposure bias quantified end to end on the released architecture. Promoted to first place at
-   Step 6: it is the claim the project was built to test, it is now answered, and the
-   pre-registration is what makes the answer worth citing.
-3. **The released checkpoint cannot have come from the released recipe, on two independent
-   parameters** (C-12, C-13, O-12, R-24, R-25). The pooled collapse rate over six runs is
-   −9.4362e-05 ± 3.33e-07, a run-to-run spread of 0.87%, implying 153,270 iterations at the
-   configured learning rate or a 31× larger one. `min_logstd`, on a different gradient path and a
-   5× slower clock, independently implies order 2.7e5. Config says 500, paper says 2500,
-   checkpoint is tagged 5000.
-4. **The released pipeline trains on spliced episodes** (B-01, D-03, D-06). A defect with a clear mechanism, a clean count, and an obvious controlled experiment behind it (O-06).
-5. **There is no held-out evaluation in the released repository** (B-03, B-04), plus a demonstration of what a correct one gives (X-01, R-02, R-15).
-6. **The released evaluation feeds a stale action and understates its own model** (B-05, D-13, R-09, R-15). Settled at Step 3.5 and quantified at Step 4 across both protocols, both metrics and a 20-seed spread. The sharpest single number is the fixed-denominator one: at h=368 the checkpoint scores nRMSE **1.3228 under the released convention and 0.7572 under the causal one** — the difference between "worse than predicting the training mean" and "clearly informative".
-7. **Both halves of RWM-U's uncertainty estimate are degenerate, by construction** (C-04, C-06, C-10, C-11, R-17, O-08). Strengthened considerably at Step 4. The collapse is now shown to be the *optimum of the released objective* rather than an accident: the state loss is squared error on a reparameterised sample with no log-sigma term, so `E[(mu + sigma*eps - y)^2] = (mu - y)^2 + sigma^2` is minimised at sigma = 0; the bound loss pushes the same way; and `min_logstd` cancels out of it entirely (C-11), giving a one-way ratchet. Predicted from the algebra, then reproduced on a fresh model in 451 iterations.
-8. **[superseded by item 3 above]** (C-12, O-10). Its variance state implies ~155,000 iterations at the configured learning rate, against a config that says 500 and a paper that says 2500. New at Step 4, cheap to confirm, and it bears on what "reproducing RWM" even means.
-9. **The paper's described model is not the implemented model** (C-01, C-03, C-05, C-07, C-09, M-13). Seven loss terms against two; a residual mean head; two trunks; sample-versus-mean asymmetry; a forecast decay factor the paper specifies and the code lacks; and an auxiliary branch that is teacher-forced while the state branch is not.
-10. **The released checkpoint is only modestly better than a trivial baseline at long horizon** (R-03, R-09, R-10, R-15). Softened twice now: it is not worse at one step once scored correctly, and the per-group breakdown localises the weakness to base linear velocity while joint prediction stays strong.
-11. **Evaluation with ten trajectories is underpowered** (M-04, D-12, R-15). Survives the convention change at 1.6σ. Methodological, but it undercuts single-seed comparisons in this literature generally.
-12. **Correlational tests cannot establish action alignment for position-controlled robots** (M-10, M-11). A small, transferable methods note: identification has to come from structural invariants such as reset rows, not from fitting.
-13. **A relative-L1 metric on normalised states is the wrong instrument** (M-03, M-09, M-12). It is unusable per-group, saturates at long horizon, and hides the effect in item 3. A fixed-denominator nRMSE costs nothing and does not.
+1. **The uncertainty output is unusable, and that is a property of the objective, not of the
+   training run** `[RWM-U]` (C-06, C-10, C-11, R-48–R-54, O-12, O-13). The most completely
+   evidenced claim here, and **novel rather than confirmatory**. Analytic derivation —
+   `E[(mu + sigma·eps − y)²] = (mu − y)² + sigma²` is minimised at sigma = 0, and `min_logstd`
+   cancels out of the bound loss so the ratchet is one-way. Empirical confirmation across
+   **fourteen training runs**. A linear extrapolation validated to 3% over a fourfold extension.
+   A corrective experiment using **the authors' own unused `gaussian_nll` branch**. And
+   calibration measured against a known reference: the released checkpoint's predicted sigma is
+   **7,878× smaller than its own mean absolute error**, giving 0.14% coverage at ±1σ against a
+   calibrated 68.3%. The correction reverses the mechanism and still fails — magnitude improves
+   to 10.9×, while the faint ordering signal the faithful arm had (39/45 dimensions positive,
+   P = 1.4e-06) is **destroyed** (21/45, chance). σ is flat even inside the 8-step trained
+   horizon while error grows 3.4×, so no structural excuse survives.
+
+2. **The paper's central claim reproduces, and the margin is large** `[BASE]` (R-22, R-23, M-23,
+   R-40, R-42). Confirmatory rather than novel, but stress-tested harder than anything else in
+   the project: SETTLED under four independent metric/aggregation variants, at 10 and 100
+   trajectories, on a rule committed to git before the runs that tested it existed, with Arm A
+   leading 4.4–9.7× at h=368 and the per-episode sign positive on all ten episodes.
+
+3. **Aggregation and evaluation power can invert a published-model comparison — including one
+   this project published** `[BOTH]` (R-29, R-30, M-19, S-10, S-11, M-17). Reported as a worked
+   example with the retraction attached.
+
+4. **The released checkpoint cannot have come from the released recipe, on three independent
+   measures** `[BOTH]` (C-12, C-13, O-12, R-24, R-25, R-41, R-50). Collapse rate implies
+   ~158,000 iterations against a tag of 5,000; `min_logstd` on a 5× slower clock implies order
+   2.7e5; and under `gaussian_nll` the implied count is **negative**, so the branch it was
+   trained with is identifiable.
+
+5. **The released pipeline trains on spliced episodes, and the cost is now measured** `[BASE]`
+   (B-01, D-03, D-06, R-47). Zero of 32 comparisons show harm.
+
+6. **There is no held-out evaluation in the released repository** `[BASE]` (B-03, B-04, X-01).
+
+7. **The released evaluation feeds a stale action and understates its own model** `[BASE]`
+   (B-05, D-13, R-09, R-15).
+
+8. **The paper's described model is not the implemented model** `[BASE]` (C-01, C-03, C-05,
+   C-07, C-09, M-13).
+
+9. **Effective sample size, not trajectory count, bounds every long-horizon claim** `[BOTH]`
+   (M-20, M-04, D-12) — only four independent 400-step trajectories exist in the held-out pair.
+
+10. **Correlational tests cannot establish action alignment for position-controlled robots**
+    `[BASE]` (M-10, M-11).
+
+11. **A pre-registered rule must be anchored to the regime the claim is about** `[BOTH]` (M-24).
 
 ---
 

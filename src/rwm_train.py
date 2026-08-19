@@ -162,3 +162,36 @@ class ContaminatedWindowDataset(WindowDataset):
         self.termination = torch.cat([self.termination, torch.as_tensor(
             raw[:, :, [R.TERMINATION]], dtype=torch.float32)])
         self.extension = torch.zeros(len(self.starts), window, 0)
+
+
+class DuplicatedWindowDataset(WindowDataset):
+    """
+    Task 3's control for R-47: the same WINDOW COUNT as the contaminated arm, with no
+    impossible transitions.
+
+    The contaminated arm added 195 splice windows, taking 7,687 to 7,882, and scored
+    slightly better on held-out data. The objection is that it also had 2.5% more
+    training windows. This arm adds 195 *clean* windows instead -- chosen at random and
+    duplicated -- so the count matches exactly and the only difference from the
+    contaminated arm is whether the extra windows cross an episode boundary.
+
+    The duplicated set is drawn from the TRAINING seed, so the three seeds average over
+    which windows get duplicated rather than depending on one draw. The contaminated
+    arm's extra set is fixed by construction (there are only 195 splices), so the control
+    carries selection variance the contaminated arm does not -- making it the
+    conservative side of the comparison.
+    """
+
+    def __init__(self, data, episode_id, episodes, cfg, window=WINDOW, n_extra=195, seed=0):
+        super().__init__(data, episode_id, episodes, cfg, window)
+        self.n_clean = len(self.starts)
+        self.duplication_seed = 10_000 + seed
+        rng = np.random.default_rng(self.duplication_seed)
+        dup = rng.choice(len(self.starts), size=n_extra, replace=False)
+        self.n_dup = int(n_extra)
+        self.duplicated_window_starts = sorted(int(x) for x in self.starts[dup])
+        self.starts = np.concatenate([self.starts, self.starts[dup]])
+        for attr in ("state", "action", "contact", "termination"):
+            t = getattr(self, attr)
+            setattr(self, attr, torch.cat([t, t[dup]]))
+        self.extension = torch.zeros(len(self.starts), window, 0)
