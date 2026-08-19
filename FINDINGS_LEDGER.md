@@ -2125,6 +2125,92 @@ effect sizes should not be quoted as precise.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
+### R-48 — The corrected objective reverses the collapse mechanism but produces no usable uncertainty · **NEW**
+The measurement the corrected-objective arm was run for, and it returns a **negative** result on
+the part that matters. Three seeds at 2500 iterations under the authors' unused `gaussian_nll`
+branch, evaluated on the 4 independent held-out 400-step trajectories.
+
+**What reverses.** `log_delta_logstd` moves in the opposite direction: rate **+3.26e-05** per
+iteration against the faithful arm's −9.14e-05, and `exp(log_delta)` grows 1.0001 → **1.092**
+instead of shrinking to 0.79. Gradient norms are **16× larger** (mean 180 against 11) with
+**zero spikes** in any seed. The bound-loss ratchet of C-11 is genuinely broken.
+
+**What does not.** σ remains, in effect, a constant — a larger one.
+
+| | faithful (mse) | corrected (nll) | released ckpt | calibrated |
+|---|---|---|---|---|
+| mean σ | 6.41e-03 | **2.92e-02** | 5.79e-05 | — |
+| mean \|error\| / σ | 52× | **11×** | **7,878×** | 1 |
+| ±1σ coverage @h=8 | 4.61% | **19.95%** | 0.14% | **68.3%** |
+| ±2σ coverage @h=8 | 9.03% | 34.61% | 0.35% | 95.4% |
+| ±1σ coverage @h=368 | 1.75% | 8.57% | 0.04% | 68.3% |
+| **CoV of σ across a batch** | 0.0076 | **0.0059** | 0.0177 | — |
+| **σ vs \|error\| correlation** | +0.034 | **−0.004** | +0.001 | strongly positive |
+| σ growth, late/early forecast step | 0.95× | **1.00×** | 1.01× | >1 |
+
+**The flagged result: σ does not correlate with realised error.** Mean correlation **−0.004**,
+median −0.009, positive on 21 of 45 dimensions where chance is ~22.5. The coefficient of
+variation across a batch is 0.0059 — *lower* than the faithful arm's. And σ does not grow with
+forecast step (1.00×) even though rollout error grows by an order of magnitude over the same
+range. A σ that varies neither with input nor with horizon, and does not track error, is no more
+useful than the constant it replaced.
+
+**The prediction stated before running was half right.** The faithful arm behaved exactly as
+predicted — coverage near zero (4.61% at h=8) and flat in horizon. The NLL arm did *not* land
+near 68/95 at short horizon: 42.8% at h=1 and 19.95% at h=8. So by the brief's own third branch,
+**the collapse reversed without producing calibration**.
+
+**Mechanism, and it is not the clamp.** At 2500 iterations the NLL arm's bound interval is
+`[−4.92, −3.82]`, a width of 1.09 in log space — σ is free to span a factor of e^1.09 ≈ 3.0×.
+It uses 0.6% of that freedom. The clamp is not the binding constraint; the `state_logstd_layers`
+tower is itself emitting a near-constant output. **Removing the pressure that forces σ to a
+constant did not cause the network to learn a varying one.**
+
+**Consequence for the release.** The planned amendment to publish `armA_2500_nll` as "the only
+model whose uncertainty output is usable" is **withdrawn** — its condition was calibration and
+that condition fails. It may still be published as the corrected-objective artifact, but its
+per-checkpoint limitation must say the same thing as the others: do not use the uncertainty.
+**Evidence** `RUN` `results/task1_calibration.json`, `results/step5_armA_seed{0,1,2}_nll.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+**Opens O-13.**
+
+### R-49 — The released checkpoint's uncertainty output is worthless, quantified · **NEW**
+Not previously measured by anyone, including this project. On held-out data the released
+checkpoint's predicted σ is **5.79e-05** against a mean absolute error of **4.56e-01** — the
+error is **7,878×** the claimed standard deviation.
+
+±1σ coverage is **0.14%** at h=8 and **0.04%** at h=368, against 68.3% for a calibrated
+Gaussian. The reliability curve is flat at the floor: at a predicted coverage of 99.7% (±3σ) the
+observed frequency is **0.1%**.
+
+This is the direct empirical consequence of C-10 and it is the number that makes
+"uncertainty-aware" checkable. RWM-U's epistemic term is a separate quantity and is not measured
+here; this concerns the aleatoric σ the state head emits.
+**Evidence** `RUN` `results/task1_calibration.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-50 — Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iteration count · **NEW**
+1c. Fitted rate of `log_delta_logstd` under the corrected objective, three seeds:
+
+| seed | rate/iter | implied iterations to −14.4629 |
+|---|---|---|
+| 0 | **+3.2571e-05** | **−444,049** |
+| 1 | +3.1785e-05 | −455,028 |
+| 2 | +3.2640e-05 | −443,110 |
+
+The rate is **positive** — the parameter moves *away* from the released checkpoint's value — so
+the implied count is negative, mean **−447,396**. No iteration count under this branch reaches
+−14.4629, in either direction of training time.
+
+Under sampled MSE the same extrapolation gives **+158,000** and was validated to 3% over a
+fourfold extension (R-43). Together these establish something neither shows alone: **the
+released checkpoint was trained with the MSE branch**, and its variance state is not merely
+far from what the released recipe produces but unreachable under the alternative the authors
+also shipped.
+**Evidence** `RUN` `results/task1_calibration.json`, `results/step5_armA_seed{0,1,2}_nll.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB · **Strengthens O-12.**
+
+
 ---
 
 ## F. Open questions
@@ -2285,6 +2371,27 @@ attribute to any single escape hatch than one parameter was.
 That divides the observed log change by the run length (451) rather than by the iteration of
 the last collapse sample (425); dividing by 425 gives −9.402e-05 two-point, −9.318e-05
 fitted, and ≈155,000 iterations. The conclusion is unaffected.
+
+
+### O-13 — Why does σ stay constant when the pressure forcing it to be constant is removed? · **NEW**
+R-48 shows the `gaussian_nll` arm breaks the bound-loss ratchet — the interval widens to 1.09 in
+log space, giving σ room to span ~3× — and the network uses 0.6% of that freedom, with a
+σ-versus-error correlation of −0.004.
+
+Candidate explanations, none tested:
+- **2500 iterations is too few.** The mean path had 10,000 iterations available and still had not
+  converged (R-26); the σ path may simply be slower. Cheap to test: extend one NLL seed to 10,000.
+- **The σ gradient is weak relative to the mean gradient.** Under NLL the mean receives a
+  1/σ² weighting while σ receives a term of order 1/σ − (err/σ)³; at σ ≈ 0.03 with errors ~0.3
+  the mean term dominates by orders of magnitude.
+- **The task has little heteroscedasticity to learn** at the 8-step training horizon, so a
+  constant σ is close to optimal *for the objective as trained*, even though rollout error at
+  h=368 varies enormously.
+
+The third would be the most interesting: it would mean the training horizon, not the objective,
+is what prevents a useful uncertainty estimate — which would connect this to M-24's finding that
+h=8 is the wrong anchor for everything else about this model too.
+**Blocks** any claim that the corrected objective fixes RWM-U's uncertainty.
 
 
 ---

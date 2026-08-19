@@ -186,6 +186,7 @@ class RWMEnsemble(nn.Module):
             means.append(m.unsqueeze(0))
             stds.append(s.unsqueeze(0))
         means, stds = torch.cat(means, 0), torch.cat(stds, 0)
+        self.last_sigma = stds.mean(0).detach()      # (B, 45) per-dimension sigma
 
         abase = self.auxiliary_base(x_state_batch, x_action_batch)   # same 57-dim input
         contacts, terms = [], []
@@ -200,6 +201,28 @@ class RWMEnsemble(nn.Module):
                 else torch.zeros(means.shape[1], device=means.device),  # :127 epistemic
                 torch.cat(contacts, 0).mean(0) if self.contact_dim > 0 else None,
                 torch.cat(terms, 0).mean(0) if self.termination_dim > 0 else None)
+
+    @torch.no_grad()
+    def rollout_full(self, state, action, start_step, action_offset=1):
+        """As rollout(), but also returns the per-dimension predicted sigma at each
+        forecast step. Needed for the calibration measurement (Task 1a/1b)."""
+        B, T, _ = state.shape
+        pred = state.clone()
+        sigma = torch.zeros(B, T, state.shape[2])
+        self.reset()
+        for i in range(start_step, T):
+            if i > start_step:
+                s_in = pred[:, i - 1:i]
+                a_in = action[:, i - 1 + action_offset:i + action_offset]
+            else:
+                s_in = pred[:, i - start_step:i]
+                a_in = action[:, i - start_step + action_offset:i + action_offset]
+            if a_in.shape[1] != s_in.shape[1]:
+                a_in = action[:, -s_in.shape[1]:]
+            m, *_ = self.forward(s_in, a_in)
+            pred[:, i] = m
+            sigma[:, i] = self.last_sigma
+        return pred, sigma
 
     @torch.no_grad()
     def rollout(self, state, action, start_step, action_offset=1):
