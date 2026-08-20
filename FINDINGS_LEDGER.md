@@ -1232,7 +1232,9 @@ Noise sweep A (clean → 0.8): offset 1 gives 0.7008, 0.8141, 0.9841, 1.2036, 1.
 - **M-04 survives.** A–B separation is 1.6σ at offset 1 (was 1.7σ). Still underpowered.
 
 **Evidence** `RUN` `step4_0a_results.json`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** SUPERSEDED IN PART by S-09 — the numbers stand as measured, but both were taken
+at n=10 and are biased low (M-17); the framing "the difference between worse than predicting
+the training mean and clearly informative" is withdrawn. · **Relevance** CONTRIB
 
 ### R-16 — CPU timing · **NEW (Step 4)**
 20 timed iterations after 3 warm-up, per configuration.
@@ -1609,7 +1611,14 @@ the floor. The checkpoint models the joints well and the base badly, and nRMSE w
 base failure more heavily.
 **Evidence** `RUN` `results/task2_reference_nrmse.json`, `results/task3_4_power_ddof.json`,
 `results/task3b_convergence.json`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** **SUPERSEDED BY S-10** — refuted by its own gating checks. The loss holds under
+one of four aggregations; under the pooled form the model **beats** the floor (1.1103 vs
+1.1750), it loses on only 7 of 45 dimensions (R-29), and the heavy tail the mechanism
+required is two short regions sampled repeatedly through trajectory overlap (R-30). The
+first artifact cited above records `below_nrmse_floor_at_368 = true`, which is the
+generating script's flag for the model BEATING the floor — the citation contradicted the
+claim from the outset. · **Relevance** METHOD — retained as the worked example behind
+contribution 3, not as a result.
 **Correction** An earlier statement of this result, computed at n=10, reported the opposite
 ("BELOW the floor — it beats it by 21.1%"). That was an artifact of the reference's
 10-trajectory protocol; see M-17 and S-09.
@@ -2751,31 +2760,38 @@ across heads. Gradient norms are logged every iteration instead.
 Retained deliberately. A reproduction that never records its wrong turns is not showing its work.
 
 ### S-01 — "The lite repo may not ship training data"
+**Retracts** — an early hypothesis, never a numbered claim
 Stated during target selection. **Wrong.** `assets/data/state_action_data_0.csv` ships 10,000 rows of real ANYmal D data.
 **Superseded by** D-01.
 
 ### S-02 — "The checkpoint is ~1.25M parameters per ensemble member"
+**Retracts** — an early hypothesis, never a numbered claim
 Derived by dividing total file size by five. **Wrong** — the file also contains optimizer state and an unrelated actor/critic policy.
 **Superseded by** R-01. Correct figures: 1,995,569 total, ~1,417,789 for a single-member configuration.
 
 ### S-03 — "Boundary crossings inflate protocol B"
+**Retracts** — an early hypothesis, never a numbered claim
 Stated as the expected explanation for the A/B gap. **Refuted by measurement** — crossing trajectories scored better (0.947) than non-crossing (1.599).
 **Superseded by** R-05, D-12.
 
 ### S-04 — "The relative-L1 denominator will be numerically fragile here"
+**Retracts** — an early hypothesis, never a numbered claim
 Anticipated but not observed on this data.
 **Superseded by** M-03.
 **Partially reinstated at Step 3.5 by M-09** — the concern was correct, just not at the 45-dimensional aggregate where M-03 tested it. At per-group granularity the denominator does collapse: base angular velocity produces `inf`, projected gravity blows up on 11.4% of timesteps at h=368. Recorded here rather than by editing S-04 or M-03, both of which stand as written within their scope.
 
 ### S-05 — "The ten episodes may be ten repetitions of one command"
+**Retracts** — an early hypothesis, never a numbered claim
 Raised as a risk to the value of any held-out split. **Refuted** — twenty distinct commanded-velocity regimes.
 **Superseded by** D-10.
 
 ### S-06 — "Contacts are four knee then four foot"
+**Retracts** — an early hypothesis, never a numbered claim
 Working assumption during Step 1. **Corrected** to thigh then foot before any downstream use.
 **Superseded by** D-02.
 
 ### S-07 — "The training convention leaks the target" · **NEW**
+**Retracts** — an early hypothesis, never a numbered claim
 Carried as the leading reading of B-05 from Step 2 onward, and stated outright in the Step 3 report, which described the training alignment as "non-causal" on the grounds that `a[t+1]` is the policy's response to `s[t+1]` and therefore leaks it. The Step 3.5 brief's own decision table encoded the same reading as the `k = 0` branch.
 
 **Refuted.** D-13 establishes k = −1: row *t* holds the action that *produced* state[*t*], so `a[t+1]` is the action that produced `s[t+1]` — a genuinely causal input. The training alignment is correct and the *evaluation* alignment is the defective one.
@@ -2783,11 +2799,13 @@ Carried as the leading reading of B-05 from Step 2 onward, and stated outright i
 **Note** R-06 (the training convention scores 0.066 better) was measured before the convention was known and was explicitly flagged as uninterpretable at the time. That caution was the right call: the same measurement supports the opposite conclusion once D-13 fixes the direction.
 
 ### S-08 — "Forecast decay is inert because it is configured to 1.0" · **NEW**
+**Retracts** C-08
 Recorded as C-08 with status UNVERIFIED and an explicit instruction to reconfirm before use. **The premise was wrong**: there is no decay parameter in the implementation to configure. The forecast loop applies a plain unweighted mean over forecast steps.
 **Superseded by** C-09.
 **Note** The UNVERIFIED flag did its job — the claim was never promoted to a result. This is the `INFER` evidence class working as intended.
 
 ### S-09 — "Under nRMSE the released checkpoint at offset 1 is clearly informative (below 1.0)" · **NEW (batch 1)**
+**Retracts** R-15
 R-15 reported the released checkpoint's nRMSE at h=368 as 1.3228 under the released evaluation
 convention and 0.7572 under the causal one, and framed that as "the difference between worse
 than predicting the training mean and clearly informative". The framing is **refuted**: both
@@ -2807,6 +2825,7 @@ line. It does not; both conventions sit above it at long horizon.
 
 
 ### S-10 — "The released checkpoint loses to the hold-last floor at h=368 under nRMSE" (R-27) · **NEW**
+**Retracts** R-27
 R-27 was promoted to contribution #1 on the strength of a 29% loss to the floor at n=100. Both
 gating checks refute it.
 
@@ -2838,6 +2857,7 @@ threshold was computed under form-2 aggregation.
 
 
 ### S-11 — R-41's per-dimension comparison was NOT matched · **NEW**
+**Retracts** R-41
 R-41 compared **Arm A at 10,000, evaluated on 20 independent trajectories across all ten
 episodes (1 of 45 dimensions lost)** against **the released checkpoint's 7 of 45**. Those seven
 came from R-29/R-32, which scored the checkpoint on the *held-out pool of 1,202 overlapping
@@ -2858,6 +2878,7 @@ episodes but compared against a seven-dimension set derived elsewhere.
 
 
 ### S-12 — "Task 3's duplication rule was pre-registered" · **NEW**
+**Retracts** — a framing, not a numbered claim; the wording was corrected in place
 **What is retracted:** the description of the Task 3 decision rule as *pre-registered*, in the
 sense this project has used that word everywhere else — a rule committed to git before the data
 testing it exists (M-16, M-23, R-44).

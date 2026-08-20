@@ -43,7 +43,7 @@ One row per CONTRIB ledger entry.
 | `R-07` | Protocol B's noise sweep is non-monotonic | `RUN` | CONFIRMED | `results/step3_report.txt` |
 | `R-08` | Epistemic uncertainty dwarfs aleatoric | `RUN` | CONFIRMED as a measurement | `results/step3_report.txt` |
 | `R-09` | Error by forecast horizon under the causal convention | `RUN` | CONFIRMED | `results/task2_4_results.json` |
-| `R-15` | Step 3 results restated under the causal convention | `RUN` | CONFIRMED | — |
+| `R-15` | Step 3 results restated under the causal convention | `RUN` | SUPERSEDED IN PART by S-09 — the numbers | — |
 | `R-17` | Overfit one batch: partial, and the collapse prediction confirmed | `RUN` | CONFIRMED (collapse) | `figures/step4_overfit_ens1.png` |
 | `R-19` | Arm A (autoregressive, faithful), seed 0 | `RUN` | CONFIRMED | `results/step5_armA_seed0.json`, `results/step5_armA_seed0_report.txt` |
 | `R-20` | The two metrics disagree in DIRECTION at h=1 | `RUN` | CONFIRMED | `results/step5_armA_seed0.json` |
@@ -52,7 +52,6 @@ One row per CONTRIB ledger entry.
 | `R-24` | Pooled collapse fit across six independent runs | `RUN` | CONFIRMED | `results/step6_analysis.json` |
 | `R-25` | `min_logstd` gives O-12 a second, slower, independent axis | `DATA`, `RUN`, `SRC` | CONFIRMED | `results/step6_3_min_logstd.json` |
 | `R-26` | Neither arm has converged at the paper's own iteration count | `RUN` | CONFIRMED | `results/step6_analysis.json` |
-| `R-27` | The released checkpoint under nRMSE: it LOSES to the hold-last floor at long horizon | `RUN` | CONFIRMED | `results/task2_reference_nrmse.json`, `results/task3_4_power_ddof.json` |
 | `R-28` | Re-evaluation at 100 trajectories: M-16 unchanged, M-04 revised | `RUN` | CONFIRMED | `results/task3_4_power_ddof.json` |
 | `R-29` | The released checkpoint loses on 7 of 45 dimensions, and one of them carries R-27 | `RUN` | CONFIRMED | `results/taskAB_gate_r27.json` |
 | `R-30` | The "heavy tail" is two short regions, not a property of the model | `RUN` | CONFIRMED | `results/taskAB_gate_r27.json` |

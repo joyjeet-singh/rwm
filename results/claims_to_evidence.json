@@ -8,7 +8,8 @@
       "DATA",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-02",
@@ -18,7 +19,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-03",
@@ -28,7 +30,8 @@
     "evidence": [
       "DATA"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-04",
@@ -38,7 +41,8 @@
     "evidence": [
       "DATA"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-05",
@@ -49,7 +53,8 @@
       "DATA",
       "INFER"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-06",
@@ -59,7 +64,8 @@
     "evidence": [
       "DATA"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-07",
@@ -70,7 +76,8 @@
       "DATA",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-08",
@@ -80,7 +87,8 @@
     "evidence": [
       "DATA"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-09",
@@ -91,7 +99,8 @@
       "DATA",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-10",
@@ -102,7 +111,8 @@
       "DATA",
       "EXT"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-11",
@@ -113,7 +123,8 @@
       "DATA",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-12",
@@ -123,7 +134,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "D-13",
@@ -136,7 +148,8 @@
       "INFER",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "B-01",
@@ -147,7 +160,8 @@
       "DATA",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "B-02",
@@ -157,7 +171,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "B-03",
@@ -167,7 +182,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "B-04",
@@ -178,7 +194,8 @@
       "RUN",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "B-05",
@@ -188,7 +205,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-01",
@@ -198,7 +216,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-02",
@@ -208,7 +227,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-03",
@@ -218,7 +238,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-04",
@@ -228,7 +249,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-05",
@@ -238,7 +260,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-06",
@@ -248,7 +271,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-07",
@@ -258,7 +282,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-08",
@@ -268,7 +293,8 @@
     "evidence": [
       "INFER"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-09",
@@ -278,7 +304,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-10",
@@ -289,7 +316,8 @@
       "DATA",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-11",
@@ -300,7 +328,8 @@
       "RUN",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-12",
@@ -311,7 +340,8 @@
       "RUN",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "C-13",
@@ -323,7 +353,8 @@
       "EXT",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-01",
@@ -334,7 +365,8 @@
       "DATA",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-02",
@@ -345,7 +377,8 @@
       "INFER",
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-03",
@@ -355,7 +388,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-04",
@@ -365,7 +399,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-05",
@@ -375,7 +410,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-06",
@@ -386,7 +422,8 @@
       "INFER",
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-07",
@@ -397,7 +434,8 @@
       "INFER",
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-08",
@@ -407,7 +445,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-09",
@@ -417,7 +456,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-10",
@@ -427,7 +467,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-11",
@@ -437,7 +478,8 @@
     "evidence": [
       "INFER"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-12",
@@ -447,7 +489,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-13",
@@ -457,7 +500,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-14",
@@ -470,7 +514,8 @@
     ],
     "artifacts": [
       "results/step5_6_overfit_floor.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-15",
@@ -480,7 +525,8 @@
     "evidence": [
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-16",
@@ -492,7 +538,8 @@
     ],
     "artifacts": [
       "results/step6_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-17",
@@ -504,7 +551,8 @@
     ],
     "artifacts": [
       "results/task3b_convergence.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-18",
@@ -516,7 +564,8 @@
     ],
     "artifacts": [
       "results/task3_4_power_ddof.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-19",
@@ -528,7 +577,8 @@
     ],
     "artifacts": [
       "results/taskAB_gate_r27.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-20",
@@ -542,7 +592,8 @@
     "artifacts": [
       "results/batch1_post_retraction.json",
       "src/rwm_metrics.py"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-21",
@@ -553,7 +604,8 @@
       "RUN",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-22",
@@ -565,7 +617,8 @@
     ],
     "artifacts": [
       "results/task4_arenas.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-24",
@@ -578,7 +631,8 @@
     ],
     "artifacts": [
       "results/task4_arenas.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-23",
@@ -590,7 +644,8 @@
     ],
     "artifacts": [
       "results/task5_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-25",
@@ -600,7 +655,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "M-26",
@@ -612,7 +668,8 @@
     ],
     "artifacts": [
       "results/task3_control_arm.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "M-27",
@@ -629,7 +686,8 @@
       "results/step3_report.txt",
       "results/task3_three_way.json",
       "scripts/ledger_check.py"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-01",
@@ -637,7 +695,8 @@
     "relevance": "METHOD",
     "status": "CONFIRMED",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-02",
@@ -650,7 +709,8 @@
     "artifacts": [
       "results/manifest.json",
       "results/step3_report.txt"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-03",
@@ -662,7 +722,8 @@
     ],
     "artifacts": [
       "results/step2_acceptance.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-04",
@@ -674,7 +735,8 @@
     ],
     "artifacts": [
       "results/step3_report.txt"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-05",
@@ -686,7 +748,8 @@
     ],
     "artifacts": [
       "results/step3_report.txt"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-06",
@@ -698,7 +761,8 @@
     ],
     "artifacts": [
       "results/step3_report.txt"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-07",
@@ -710,7 +774,8 @@
     ],
     "artifacts": [
       "results/step3_report.txt"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-08",
@@ -722,7 +787,8 @@
     ],
     "artifacts": [
       "results/step3_report.txt"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-09",
@@ -734,7 +800,8 @@
     ],
     "artifacts": [
       "results/task2_4_results.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-10",
@@ -742,7 +809,8 @@
     "relevance": "METHOD",
     "status": "CONFIRMED",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-11",
@@ -753,7 +821,8 @@
       "RUN",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-12",
@@ -763,7 +832,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-13",
@@ -774,7 +844,8 @@
       "RUN",
       "SRC"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-14",
@@ -784,17 +855,19 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-15",
     "claim": "Step 3 results restated under the causal convention",
     "relevance": "CONTRIB",
-    "status": "CONFIRMED",
+    "status": "SUPERSEDED IN PART by S-09 \u2014 the numbers stand as measured, but both were taken",
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-16",
@@ -804,7 +877,8 @@
     "evidence": [
       "RUN"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "R-17",
@@ -816,7 +890,8 @@
     ],
     "artifacts": [
       "figures/step4_overfit_ens1.png"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-18",
@@ -829,7 +904,8 @@
     "artifacts": [
       "figures/step4_overfit_b32lr1e3.png",
       "results/step4_4_overfit_b32lr1e3.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-19",
@@ -842,7 +918,8 @@
     "artifacts": [
       "results/step5_armA_seed0.json",
       "results/step5_armA_seed0_report.txt"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-20",
@@ -854,7 +931,8 @@
     ],
     "artifacts": [
       "results/step5_armA_seed0.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-21",
@@ -867,7 +945,8 @@
     ],
     "artifacts": [
       "results/step5_armA_seed0.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-22",
@@ -880,7 +959,8 @@
     "artifacts": [
       "figures/step6_arms_comparison.png",
       "results/step6_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-23",
@@ -892,7 +972,8 @@
     ],
     "artifacts": [
       "results/step6_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-24",
@@ -904,7 +985,8 @@
     ],
     "artifacts": [
       "results/step6_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-25",
@@ -918,7 +1000,8 @@
     ],
     "artifacts": [
       "results/step6_3_min_logstd.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-26",
@@ -930,13 +1013,14 @@
     ],
     "artifacts": [
       "results/step6_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-27",
     "claim": "The released checkpoint under nRMSE: it LOSES to the hold-last floor at long horizon",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
+    "relevance": "METHOD",
+    "status": "**SUPERSEDED BY S-10** \u2014 refuted by its own gating checks. The loss holds under",
     "evidence": [
       "RUN"
     ],
@@ -944,7 +1028,8 @@
       "results/task2_reference_nrmse.json",
       "results/task3_4_power_ddof.json",
       "results/task3b_convergence.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-28",
@@ -956,7 +1041,8 @@
     ],
     "artifacts": [
       "results/task3_4_power_ddof.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-29",
@@ -968,7 +1054,8 @@
     ],
     "artifacts": [
       "results/taskAB_gate_r27.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-30",
@@ -980,7 +1067,8 @@
     ],
     "artifacts": [
       "results/taskAB_gate_r27.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-31",
@@ -992,7 +1080,8 @@
     ],
     "artifacts": [
       "results/taskAB_gate_r27.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-32",
@@ -1004,7 +1093,8 @@
     ],
     "artifacts": [
       "results/batch1_post_retraction.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-33",
@@ -1016,7 +1106,8 @@
     ],
     "artifacts": [
       "results/batch1_post_retraction.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-34",
@@ -1028,7 +1119,8 @@
     ],
     "artifacts": [
       "results/batch1_post_retraction.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-35",
@@ -1040,7 +1132,8 @@
     ],
     "artifacts": [
       "results/task4_arenas.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-36",
@@ -1052,7 +1145,8 @@
     ],
     "artifacts": [
       "results/task4_arenas.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-37",
@@ -1064,7 +1158,8 @@
     ],
     "artifacts": [
       "results/task4_arenas.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-38",
@@ -1076,7 +1171,8 @@
     ],
     "artifacts": [
       "results/task4_arenas.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-39",
@@ -1088,7 +1184,8 @@
     ],
     "artifacts": [
       "results/task4_arenas.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-40",
@@ -1100,7 +1197,8 @@
     ],
     "artifacts": [
       "results/task5_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-41",
@@ -1112,7 +1210,8 @@
     ],
     "artifacts": [
       "results/task5_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-42",
@@ -1124,7 +1223,8 @@
     ],
     "artifacts": [
       "results/task5_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-43",
@@ -1136,7 +1236,8 @@
     ],
     "artifacts": [
       "results/task5_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-44",
@@ -1148,7 +1249,8 @@
     ],
     "artifacts": [
       "results/task5_analysis.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-45",
@@ -1160,7 +1262,8 @@
     ],
     "artifacts": [
       "results/task2_3_matched_trend.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-46",
@@ -1172,7 +1275,8 @@
     ],
     "artifacts": [
       "results/task2_3_matched_trend.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-47",
@@ -1184,7 +1288,8 @@
     ],
     "artifacts": [
       "results/task4_contamination.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-48",
@@ -1196,7 +1301,8 @@
     ],
     "artifacts": [
       "results/task1_calibration.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-49",
@@ -1208,7 +1314,8 @@
     ],
     "artifacts": [
       "results/task1_calibration.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-50",
@@ -1220,7 +1327,8 @@
     ],
     "artifacts": [
       "results/task1_calibration.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-51",
@@ -1233,7 +1341,8 @@
     "artifacts": [
       "results/task1_calibration.json",
       "results/task2_sigma_profile.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-52",
@@ -1245,7 +1354,8 @@
     ],
     "artifacts": [
       "results/task1_calibration.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-53",
@@ -1257,7 +1367,8 @@
     ],
     "artifacts": [
       "results/task1_calibration.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-54",
@@ -1269,7 +1380,8 @@
     ],
     "artifacts": [
       "results/task2_sigma_profile.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-55",
@@ -1281,7 +1393,8 @@
     ],
     "artifacts": [
       "results/task3_control_arm.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "R-56",
@@ -1293,7 +1406,8 @@
     ],
     "artifacts": [
       "results/task3_three_way.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "O-01",
@@ -1301,7 +1415,8 @@
     "relevance": "",
     "status": "**RESOLVED at Step 3.5 \u2192 k = \u22121, row *t* holds the action that produced state[*t*].** See D-13. The prescribed ridge test did not settle it (M-10); the reset-row refutation did. Step 4 is unblocked \u2014 see X-05.",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-02",
@@ -1309,7 +1424,8 @@
     "relevance": "",
     "status": "**RESOLVED \u2014 hypothesis confirmed.** Ratio 1.093 \u2192 0.827 (R-09). Not a model defect.",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-03",
@@ -1317,7 +1433,8 @@
     "relevance": "",
     "status": "**RESOLVED \u2014 bitwise identical, 0.000e+00 on every comparison.** See R-11.",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-04",
@@ -1325,7 +1442,8 @@
     "relevance": "",
     "status": "**RESOLVED.** Both are sums over the 45 **normalised** state dimensions and are directly comparable: aleatoric = `state_stds.mean(0).sum(1)`, epistemic = `state_means.std(0).sum(1)` (`system_dynamics.py:126-127`). The hundredfold ratio in R-08 is real but is explained by C-10 \u2014 the aleatoric term is a collapsed constant at its learned lower bound, not a calibrated prediction.",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-05",
@@ -1333,7 +1451,8 @@
     "relevance": "",
     "status": "**RESOLVED \u2014 causal, not leakage.** Row *t* holds `a[t\u22121]` in the brief's labelling (D-13), so `a[t+1]` is the action that produced `s[t+1]`: a legitimate input. See S-07.",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-06",
@@ -1341,7 +1460,8 @@
     "relevance": "",
     "status": "**CLOSED by R-47.** Measured: at 2.47% contamination, 3 seeds, 2500 iterations, the",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-07",
@@ -1349,7 +1469,8 @@
     "relevance": "",
     "status": "**PARTIALLY RESOLVED.** R-10 separates the two: genuine degradation on base linear velocity (ratio 1.341 at h=368) and joint torque (0.649); metric saturation on projected gravity and base angular velocity, both of which blow up for denominator reasons (M-09). Joint positions and velocities stay strong throughout (0.487, 0.433). Compression persists under the causal convention too (R-09), so it is not a convention artefact. Remaining question: how much of the base-velocity failure is intrinsic to open-loop rollout without command input.",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-08",
@@ -1357,7 +1478,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-09",
@@ -1365,7 +1487,8 @@
     "relevance": "W",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-10",
@@ -1373,7 +1496,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-11",
@@ -1381,7 +1505,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "O-12",
@@ -1396,7 +1521,8 @@
     "artifacts": [
       "results/step4_4_overfit_b32lr1e3.json",
       "results/step4_4_overfit_ens1.json"
-    ]
+    ],
+    "retracts": []
   },
   {
     "id": "O-13",
@@ -1404,7 +1530,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-01",
@@ -1412,7 +1539,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-02",
@@ -1420,7 +1548,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-03",
@@ -1428,7 +1557,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-04",
@@ -1436,7 +1566,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-05",
@@ -1444,7 +1575,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-06",
@@ -1452,7 +1584,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-07",
@@ -1460,7 +1593,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "X-08",
@@ -1468,7 +1602,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-01",
@@ -1476,7 +1611,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-02",
@@ -1484,7 +1620,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-03",
@@ -1492,7 +1629,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-04",
@@ -1500,7 +1638,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-05",
@@ -1508,7 +1647,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-06",
@@ -1516,7 +1656,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-07",
@@ -1524,7 +1665,8 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": []
   },
   {
     "id": "S-08",
@@ -1534,7 +1676,10 @@
     "evidence": [
       "INFER"
     ],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": [
+      "C-08"
+    ]
   },
   {
     "id": "S-09",
@@ -1542,7 +1687,10 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": [
+      "R-15"
+    ]
   },
   {
     "id": "S-10",
@@ -1550,7 +1698,10 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": [
+      "R-27"
+    ]
   },
   {
     "id": "S-11",
@@ -1558,7 +1709,10 @@
     "relevance": "",
     "status": "",
     "evidence": [],
-    "artifacts": []
+    "artifacts": [],
+    "retracts": [
+      "R-41"
+    ]
   },
   {
     "id": "S-12",
@@ -1570,6 +1724,7 @@
     ],
     "artifacts": [
       "results/control_driver.log"
-    ]
+    ],
+    "retracts": []
   }
 ]
