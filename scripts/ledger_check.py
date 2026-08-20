@@ -71,7 +71,27 @@ for sid,tid,why in unmarked: print(f"    !! {sid} retracts {tid} but {why}")
 if declared:
     print(f"  S-* entries with no **Retracts** line: {len(declared)}")
     for d in declared: print(f"    !! {d}")
-json.dump(rows,open("results/claims_to_evidence.json","w"),indent=2)
+# Fourth invariant: RESULTS.md's discrepancy table is a hand-maintained count of
+# ledger entries by prefix. It had drifted 11 entries across four rows before anyone
+# noticed, and it is trivially derivable. Check it.
+import collections
+counts=collections.Counter(r["id"].split("-")[0] for r in rows)
+stale=[]
+try:
+    res=open("RESULTS.md").read()
+    for pfx,n in sorted(counts.items()):
+        m=re.search(r'^\|\s*`'+pfx+r'-`[^|]*\|\s*(\d+)\s*\|', res, re.M)
+        if m and int(m.group(1))!=n:
+            stale.append((pfx,int(m.group(1)),n))
+except FileNotFoundError:
+    pass
+print(f"\n  entry counts by prefix: "
+      + ", ".join(f"{k}-{v}" for k,v in sorted(counts.items())))
+print(f"  RESULTS.md discrepancy-table rows out of date: {len(stale)}")
+for pfx,said,real in stale:
+    print(f"    !! {pfx}- : RESULTS.md says {said}, ledger has {real}")
+json.dump({"entries":rows,"counts_by_prefix":dict(sorted(counts.items()))},
+          open("results/claims_to_evidence.json","w"),indent=2)
 with open("results/claims_to_evidence.md","w") as f:
     f.write("# Claims-to-evidence map\n\nOne row per CONTRIB ledger entry.\n\n")
     f.write("| ID | Claim | Evidence | Status | Artifacts |\n|---|---|---|---|---|\n")
@@ -79,6 +99,6 @@ with open("results/claims_to_evidence.md","w") as f:
         f.write(f"| `{r['id']}` | {r['claim']} | {', '.join('`'+e+'`' for e in r['evidence']) or '—'} "
                 f"| {r['status'][:40]} | {', '.join('`'+a+'`' for a in r['artifacts'][:2]) or '—'} |\n")
 print(f"\n  wrote results/claims_to_evidence.md ({len(contrib)} CONTRIB rows)")
-ok = not flagged and not missing and not unmarked and not declared
+ok = not flagged and not missing and not unmarked and not declared and not stale
 print(f"\n  RESULT: {'PASS' if ok else 'BLOCKER -- see flags above'}")
 sys.exit(0 if ok else 1)

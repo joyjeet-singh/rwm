@@ -78,13 +78,13 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | kind | count | with measured cost |
 |---|---|---|
 | `C-` paper says one thing, code does another | 13 | see the variance collapse (`C-10`, `C-11`) and the absent decay factor (`C-09`) |
-| `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm |
+| `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm and its duplication control (`R-56`) |
 | `D-` dataset properties | 13 | — |
-| `M-` methodological findings | 25 | — |
-| `R-` measured results | 46 | — |
-| `O-` open questions | 12 | — |
+| `M-` methodological findings | 29 | — |
+| `R-` measured results | 57 | — |
+| `O-` open questions | 13 | — |
 | `X-` deliberate deviations | 8 | — |
-| `S-` superseded, retained | 11 | — |
+| `S-` superseded, retained | 13 | — |
 
 Highlights: the released data has **ten episode boundaries its own termination column does not
 mark**, so the reference builder trains on 352 spliced windows (`B-01`, `D-03`). Training and

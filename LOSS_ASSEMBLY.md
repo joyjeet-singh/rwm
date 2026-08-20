@@ -1,5 +1,20 @@
 # Step 4 / 1a — the reference loss assembly, READ AND REPORT
 
+**Which files these line numbers refer to**, since the names alone are ambiguous across two
+upstreams (both pinned by `setup.sh`):
+
+| name used below | actual path |
+|---|---|
+| `system_dynamics.py` — unqualified line numbers | `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py` @ `18eebcdd` |
+| `mlp.py` | `rsl_rl_rwm/rsl_rl/modules/architectures/mlp.py` @ `18eebcdd` |
+| `rnn.py` | `rsl_rl_rwm/rsl_rl/modules/architectures/rnn.py` @ `18eebcdd` |
+| `model_training.py` | `robotic_world_model_lite/scripts/model_training.py` @ `13a798e9` |
+| `train.py` | `robotic_world_model_lite/scripts/train.py` @ `13a798e9` |
+
+Four line numbers in this document were wrong until the review — 204, 253, 264 and 291, three of
+them in section 6. They are 202, 250, 261 and 285. The claims they supported were correct; the
+pointers were not. A document that opens "Nothing is inferred" should have citations that resolve.
+
 Everything below is read from `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py` at commit
 `18eebcdd`, with `mlp.py` for the head internals. Nothing is inferred.
 
@@ -88,7 +103,7 @@ state_loss = torch.sum(torch.square(state_pred - state_target), dim=1).mean(dim=
 So it is the **reparameterised sample**, not the mean, that enters the squared error;
 summed over the 45 state dimensions, then meaned over the batch.
 
-A `gaussian_nll` branch exists (lines 291–305) using `nn.GaussianNLLLoss`, but nothing
+A `gaussian_nll` branch exists (lines 285–305) using `nn.GaussianNLLLoss`, but nothing
 calls it. This matters for `C-10`: a Gaussian NLL carries a `log σ` term that penalises
 shrinking σ, and the MSE-on-a-sample form does not. That absence is what makes the variance
 collapse the optimum rather than an accident.
@@ -151,8 +166,8 @@ term collapses to driving its logits to −∞. That is `X-04`.
 
 **No.** The two branches are structurally disjoint:
 
-- `compute_state_loss` uses `self.state_base` and `self.state_heads[i]` (line 204)
-- `compute_auxiliary_loss` uses `self.auxiliary_base` and `self.auxiliary_heads[i]` (line 253)
+- `compute_state_loss` uses `self.state_base` and `self.state_heads[i]` (line 202)
+- `compute_auxiliary_loss` uses `self.auxiliary_base` and `self.auxiliary_heads[i]` (line 250)
 
 They are separate `RNNBase` instances (`C-03`), so no gradient path connects the state loss
 to the auxiliary parameters or vice versa. The only coupling is that both consume the same
@@ -160,7 +175,7 @@ input tensors.
 
 There is one further asymmetry worth recording, which the brief did not ask about but which
 matters for reimplementation: **the auxiliary branch is teacher-forced.** Its feedback at
-line 264 is
+line 261 is
 
 ```python
 x_state_batch = state_batch[:, self.history_horizon + i : self.history_horizon + i + 1]

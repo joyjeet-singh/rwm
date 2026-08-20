@@ -1,1792 +1,1804 @@
-[
-  {
-    "id": "D-01",
-    "claim": "Column layout confirmed",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-02",
-    "claim": "Contact channel ordering",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-03",
-    "claim": "The termination column is identically zero",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-04",
-    "claim": "Ten unmarked episode boundaries",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-05",
-    "claim": "Reset fingerprint",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "INFER"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-06",
-    "claim": "Usable window count",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-07",
-    "claim": "Actions are not joint targets in radians",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-08",
-    "claim": "A single gait throughout",
-    "relevance": "CONTEXT",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-09",
-    "claim": "One thigh contact in the entire file",
-    "relevance": "CONTEXT",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-10",
-    "claim": "Twenty-one commanded-velocity regime segments, not one",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "EXT"
-    ],
-    "artifacts": [
-      "results/step0_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "D-11",
-    "claim": "The config's resample interval does not describe this data",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-12",
-    "claim": "Per-episode difficulty varies threefold and is not explained by speed",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "D-13",
-    "claim": "Row *t* holds the action that **produced** state[*t*] (k = \u22121)",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "EXT",
-      "INFER",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "B-01",
-    "claim": "The window builder cannot see the episode resets",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "B-02",
-    "claim": "Latent falsy-index bug in the same guard",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "B-03",
-    "claim": "Train/test split leaks",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "B-04",
-    "claim": "Evaluation trajectories are drawn from training data",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "B-05",
-    "claim": "Training and evaluation use different action alignments",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-01",
-    "claim": "The loss has seven terms, not two",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-02",
-    "claim": "The mean head is residual",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-03",
-    "claim": "Two GRU trunks, not one",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-04",
-    "claim": "The \"ensemble of 5\" shares both trunks",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-05",
-    "claim": "Training samples, inference takes the mean",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-06",
-    "claim": "Learnable bounded log-standard-deviation",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-07",
-    "claim": "Actions are not normalised",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-08",
-    "claim": "Forecast decay is inert",
-    "relevance": "",
-    "status": "**SUPERSEDED BY C-09** \u2014 the premise was wrong. There is no decay parameter to configure.",
-    "evidence": [
-      "INFER"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-09",
-    "claim": "There is no forecast decay factor in the implementation at all",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-10",
-    "claim": "The aleatoric variance head has collapsed to a constant",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-11",
-    "claim": "`state_min_logstd` receives no gradient from the bound loss",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-12",
-    "claim": "The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "C-13",
-    "claim": "Three different iteration counts are in play",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "EXT",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-01",
-    "claim": "Episode identity must be carried explicitly",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-02",
-    "claim": "The hold-last floor is the zero-delta model",
-    "relevance": "CONTRIB",
-    "status": "**CONFIRMED** (was PENDING VERIFICATION)",
-    "evidence": [
-      "INFER",
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-03",
-    "claim": "The metric is stable on this data",
-    "relevance": "METHOD",
-    "status": "CONFIRMED **for the 45-dimensional aggregate only**",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-04",
-    "claim": "Ten trajectories is not enough to support a gap claim",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-05",
-    "claim": "Speed stratification does not balance difficulty",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-06",
-    "claim": "Protocol B as defined cannot isolate leakage",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "INFER",
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-07",
-    "claim": "The aggregate metric hides per-group behaviour",
-    "relevance": "METHOD",
-    "status": "**CONFIRMED** (was PENDING VERIFICATION)",
-    "evidence": [
-      "INFER",
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-08",
-    "claim": "The oracle acceptance test passes under any consistent off-by-one",
-    "relevance": "INTERNAL",
-    "status": "**FIXED** (was CONFIRMED)",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-09",
-    "claim": "The metric *is* fragile at per-group granularity",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-10",
-    "claim": "Regressing the action on the state cannot identify the recording convention",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-11",
-    "claim": "Refutation on structural invariants beats correlation for alignment questions",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "INFER"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-12",
-    "claim": "Normalised RMSE with a fixed denominator",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-13",
-    "claim": "The auxiliary branch is teacher-forced; the state branch is not",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-14",
-    "claim": "The overfit acceptance threshold was unreachable, and the reason is not the one assumed",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [
-      "results/step5_6_overfit_floor.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-15",
-    "claim": "The reference does not clip gradients in the world-model path",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-16",
-    "claim": "PRE-REGISTERED decision rule for the Arm A / Arm B comparison",
-    "relevance": "METHOD",
-    "status": "SETTLED \u2014 rule pre-registered in `84ff01b`, annotation in `0fe2bca`, both before any",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step6_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-17",
-    "claim": "nRMSE is a TAIL statistic and is biased low at small n; relative-L1 is not",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task3b_convergence.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-18",
-    "claim": "Spread convention: `ddof=1` throughout",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task3_4_power_ddof.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-19",
-    "claim": "Aggregating nRMSE as a mean of per-dimension ratios is wrong when scales span decades",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED (aggregation); Jensen mechanism CONSISTENT BUT UNPROVEN",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/taskAB_gate_r27.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-20",
-    "claim": "Effective sample size, and what actually drives long-horizon verdicts",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [
-      "results/batch1_post_retraction.json",
-      "src/rwm_metrics.py"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-21",
-    "claim": "The arms cannot be evaluated on all ten episodes; the released checkpoint can",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-22",
-    "claim": "PRE-REGISTERED rule for whether episode difficulty biases the A/B comparison",
-    "relevance": "METHOD",
-    "status": "RESOLVED \u2014 branch 1, 4c not run",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task4_arenas.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-24",
-    "claim": "A pre-registered rule must be anchored to the regime the claim is about",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [
-      "results/task4_arenas.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-23",
-    "claim": "PRE-REGISTERED decision rule for the 10,000-iteration comparison",
-    "relevance": "METHOD",
-    "status": "RESOLVED \u2014 reproduces at long horizon",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task5_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-25",
-    "claim": "Bootstrap CIs over independent trajectories replace the seed-spread statistic",
-    "relevance": "METHOD",
-    "status": "ADOPTED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "M-26",
-    "claim": "A pre-registered rule must be anchored to an adequately powered statistic",
-    "relevance": "METHOD",
-    "status": "ADOPTED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task3_control_arm.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-27",
-    "claim": "The bootstrap was resampling the wrong unit",
-    "relevance": "METHOD",
-    "status": "ADOPTED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [
-      "results/review_bootstrap_unit.json",
-      "results/task3_three_way.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-28",
-    "claim": "The clean-clone test was counting files the clone carried in",
-    "relevance": "METHOD",
-    "status": "ADOPTED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [
-      "results/verify_reproduction.json",
-      "scripts/verify_reproduction.py",
-      "src/score_reference.py"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "M-29",
-    "claim": "Most of the pipeline was not in the pipeline",
-    "relevance": "METHOD",
-    "status": "ADOPTED",
-    "evidence": [
-      "SRC"
-    ],
-    "artifacts": [
-      "results/manifest.json",
-      "results/step3_report.txt",
-      "results/step4_0a_results.json",
-      "results/step6_analysis.json",
-      "results/task1_calibration.json",
-      "scripts/ledger_check.py"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-01",
-    "claim": "Checkpoint inventory",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-02",
-    "claim": "Protocol A and B, clean",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/manifest.json",
-      "results/step3_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-03",
-    "claim": "Hold-last floor",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step2_acceptance.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-04",
-    "claim": "Error by forecast horizon, protocol A clean",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step3_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-05",
-    "claim": "Boundary crossing does not inflate error",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step3_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-06",
-    "claim": "Convention swap is worth 0.066",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step3_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-07",
-    "claim": "Protocol B's noise sweep is non-monotonic",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step3_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-08",
-    "claim": "Epistemic uncertainty dwarfs aleatoric",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED as a measurement",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step3_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-09",
-    "claim": "Error by forecast horizon under the causal convention",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task2_4_results.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-10",
-    "claim": "Per-state-group breakdown",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-11",
-    "claim": "The rebuilt forward pass is bitwise identical to the reference module",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-12",
-    "claim": "Harness hardening",
-    "relevance": "INTERNAL",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-13",
-    "claim": "The checkpoint's actor is not the data-collection policy",
-    "relevance": "CONTEXT",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-14",
-    "claim": "Losses and gradients match the reference exactly",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-15",
-    "claim": "Step 3 results restated under the causal convention",
-    "relevance": "CONTRIB",
-    "status": "SUPERSEDED IN PART by S-09 \u2014 the numbers stand as measured, but both were taken",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-16",
-    "claim": "CPU timing",
-    "relevance": "INTERNAL",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "R-17",
-    "claim": "Overfit one batch: partial, and the collapse prediction confirmed",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED (collapse)",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "figures/step4_overfit_ens1.png"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-18",
-    "claim": "Overfit one batch, rerun: the trainer is proven",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "figures/step4_overfit_b32lr1e3.png",
-      "results/step4_4_overfit_b32lr1e3.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-19",
-    "claim": "Arm A (autoregressive, faithful), seed 0",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step5_armA_seed0.json",
-      "results/step5_armA_seed0_report.txt"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-20",
-    "claim": "The two metrics disagree in DIRECTION at h=1",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step5_armA_seed0.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-21",
-    "claim": "nRMSE caveat: a near-constant dimension inflates its group",
-    "relevance": "METHOD",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step5_armA_seed0.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-22",
-    "claim": "The paper's central claim REPRODUCES: autoregressive beats teacher forcing",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED as measurements under the reference protocol",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "figures/step6_arms_comparison.png",
-      "results/step6_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-23",
-    "claim": "Teacher forcing reaches a 3\u00d7 lower training loss and a 4\u00d7 worse rollout",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step6_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-24",
-    "claim": "Pooled collapse fit across six independent runs",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step6_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-25",
-    "claim": "`min_logstd` gives O-12 a second, slower, independent axis",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "DATA",
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [
-      "results/step6_3_min_logstd.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-26",
-    "claim": "Neither arm has converged at the paper's own iteration count",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/step6_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-27",
-    "claim": "The released checkpoint under nRMSE: it LOSES to the hold-last floor at long horizon",
-    "relevance": "METHOD",
-    "status": "**SUPERSEDED BY S-10** \u2014 refuted by its own gating checks. The loss holds under",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task2_reference_nrmse.json",
-      "results/task3_4_power_ddof.json",
-      "results/task3b_convergence.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-28",
-    "claim": "Re-evaluation at 100 trajectories: M-16 unchanged, M-04 revised",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task3_4_power_ddof.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-29",
-    "claim": "The released checkpoint loses on 7 of 45 dimensions, and one of them carries R-27",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/taskAB_gate_r27.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-30",
-    "claim": "The \"heavy tail\" is two short regions, not a property of the model",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/taskAB_gate_r27.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-31",
-    "claim": "M-16 is robust to the aggregation choice",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/taskAB_gate_r27.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-32",
-    "claim": "The retraction's arithmetic, verified",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/batch1_post_retraction.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-33",
-    "claim": "The Jensen mechanism is SUPPORTED at 40 seeds",
-    "relevance": "CONTRIB",
-    "status": "SUPPORTED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/batch1_post_retraction.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-34",
-    "claim": "The released checkpoint characterised on all ten episodes, independent trajectories",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/batch1_post_retraction.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-35",
-    "claim": "M-16 re-evaluated in both arenas: CANNOT BE SETTLED, in all eight combinations",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task4_arenas.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-36",
-    "claim": "The pre-registered teacher-forcing flip pattern FIRES, in the in-sample arena",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task4_arenas.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-37",
-    "claim": "Per-episode A/B gap: sign-consistent at h=368, reverses at h=8",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task4_arenas.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-38",
-    "claim": "Long-horizon A/B figures from the existing six runs",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED as measurements, NOT PRE-REGISTERED as a verdict",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task4_arenas.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-39",
-    "claim": "The h=368 magnitude rests on an episode-1 outlier; the direction does not",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task4_arenas.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-40",
-    "claim": "M-23: the claim REPRODUCES AT LONG HORIZON",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task5_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-41",
-    "claim": "A from-scratch model does NOT develop the released checkpoint's failure pattern",
-    "relevance": "CONTRIB",
-    "status": "SUPERSEDED IN PART by S-11 and R-45 \u2014 the comparison was against a seven-dimension",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task5_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-42",
-    "claim": "The A/B gap across five checkpoints: persists everywhere, resolves in-sample at h=8",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task5_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-43",
-    "claim": "The collapse rate stays linear to 10,000; the pre-registered prediction lands",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task5_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-44",
-    "claim": "The central claim's full history, with commit timestamps",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task5_analysis.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-45",
-    "claim": "Matched per-dimension comparison: released checkpoint vs Arm A",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task2_3_matched_trend.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-46",
-    "claim": "The gap-narrowing trend: absolute gap closes, relative advantage does not",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task2_3_matched_trend.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-47",
-    "claim": "The spliced windows cost nothing measurable, and if anything help",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task4_contamination.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-48",
-    "claim": "The corrected objective reverses the collapse mechanism but produces no usable uncertain",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-49",
-    "claim": "The released checkpoint's uncertainty output is worthless, quantified",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-50",
-    "claim": "Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iter",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-51",
-    "claim": "All four models are catastrophically overconfident",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json",
-      "results/task2_sigma_profile.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-52",
-    "claim": "\u03c3 is input-independent in all four models",
-    "relevance": "METHOD",
-    "status": "SUPERSEDED BY S-13 \u2014 the quantifier was wrong: Arm B had not been measured on this",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-53",
-    "claim": "The correction improved magnitude and destroyed what ordering signal existed",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-54",
-    "claim": "\u03c3 is flat *inside* the trained horizon, which removes the structural excuse",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task2_sigma_profile.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-55",
-    "claim": "The duplication control: R-47's mechanism survives, its statistic does not",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task3_control_arm.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-56",
-    "claim": "The three-way comparison: the control is inert, contamination still costs nothing",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task3_three_way.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "R-57",
-    "claim": "All four models, measured on one table",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json",
-      "scripts/task1_calibration.py"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "O-01",
-    "claim": "Which action convention is causally correct",
-    "relevance": "",
-    "status": "**RESOLVED at Step 3.5 \u2192 k = \u22121, row *t* holds the action that produced state[*t*].** See D-13. The prescribed ridge test did not settle it (M-10); the reset-row refutation did. Step 4 is unblocked \u2014 see X-05.",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-02",
-    "claim": "Why is the model worse than the floor at one step",
-    "relevance": "",
-    "status": "**RESOLVED \u2014 hypothesis confirmed.** Ratio 1.093 \u2192 0.827 (R-09). Not a model defect.",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-03",
-    "claim": "Does our rebuilt forward pass match the reference exactly",
-    "relevance": "",
-    "status": "**RESOLVED \u2014 bitwise identical, 0.000e+00 on every comparison.** See R-11.",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-04",
-    "claim": "Units and calibration of the uncertainty outputs",
-    "relevance": "",
-    "status": "**RESOLVED.** Both are sums over the 45 **normalised** state dimensions and are directly comparable: aleatoric = `state_stds.mean(0).sum(1)`, epistemic = `state_means.std(0).sum(1)` (`system_dynamics.py:126-127`). The hundredfold ratio in R-08 is real but is explained by C-10 \u2014 the aleatoric term is a collapsed constant at its learned lower bound, not a calibrated prediction.",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-05",
-    "claim": "Is the training convention's advantage causal or leakage",
-    "relevance": "",
-    "status": "**RESOLVED \u2014 causal, not leakage.** Row *t* holds `a[t\u22121]` in the brief's labelling (D-13), so `a[t+1]` is the action that produced `s[t+1]`: a legitimate input. See S-07.",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-06",
-    "claim": "What does the 352-window contamination actually cost",
-    "relevance": "",
-    "status": "**CLOSED by R-47.** Measured: at 2.47% contamination, 3 seeds, 2500 iterations, the",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-07",
-    "claim": "Is the long-horizon convergence to the floor real or a metric artifact",
-    "relevance": "",
-    "status": "**PARTIALLY RESOLVED.** R-10 separates the two: genuine degradation on base linear velocity (ratio 1.341 at h=368) and joint torque (0.649); metric saturation on projected gravity and base angular velocity, both of which blow up for denominator reasons (M-09). Joint positions and velocities stay strong throughout (0.487, 0.433). Compression persists under the causal convention too (R-09), so it is not a convention artefact. Remaining question: how much of the base-velocity failure is intrinsic to open-loop rollout without command input.",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-08",
-    "claim": "Does the variance collapse reproduce when we train from scratch",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-09",
-    "claim": "Is the reference evaluation's understatement material to the paper's reported numbers",
-    "relevance": "W",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-10",
-    "claim": "Was the released checkpoint produced by the released config?",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-11",
-    "claim": "Does the batch-1024 superlinear penalty survive on other hardware?",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "O-12",
-    "claim": "The released checkpoint's variance collapse is inconsistent with the released configurat",
-    "relevance": "CONTRIB",
-    "status": "OPEN \u2014 the discrepancy is measured and confirmed; its *cause* is not.",
-    "evidence": [
-      "DATA",
-      "RUN",
-      "SRC"
-    ],
-    "artifacts": [
-      "results/step4_4_overfit_b32lr1e3.json",
-      "results/step4_4_overfit_ens1.json"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "O-13",
-    "claim": "Why does \u03c3 stay constant when the pressure forcing it to be constant is removed?",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-01",
-    "claim": "Episode-aware split",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-02",
-    "claim": "No boundary-crossing windows",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-03",
-    "claim": "Rebuilt forward pass rather than importing the reference",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-04",
-    "claim": "Termination head retained but degenerate",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-05",
-    "claim": "Step 4 trains and evaluates under the causal action alignment",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-06",
-    "claim": "The overfit test ran at ensemble 1 with a wall-clock cap",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-07",
-    "claim": "Step 5's main experiment runs at ensemble size 1, not the reference's 5",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "X-08",
-    "claim": "No gradient clipping is added",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-01",
-    "claim": "\"The lite repo may not ship training data\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-02",
-    "claim": "\"The checkpoint is ~1.25M parameters per ensemble member\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-03",
-    "claim": "\"Boundary crossings inflate protocol B\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-04",
-    "claim": "\"The relative-L1 denominator will be numerically fragile here\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-05",
-    "claim": "\"The ten episodes may be ten repetitions of one command\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-06",
-    "claim": "\"Contacts are four knee then four foot\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-07",
-    "claim": "\"The training convention leaks the target\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": []
-  },
-  {
-    "id": "S-08",
-    "claim": "\"Forecast decay is inert because it is configured to 1.0\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [
-      "INFER"
-    ],
-    "artifacts": [],
-    "retracts": [
-      "C-08"
-    ]
-  },
-  {
-    "id": "S-09",
-    "claim": "\"Under nRMSE the released checkpoint at offset 1 is clearly informative (below 1.0)\"",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": [
-      "R-15"
-    ]
-  },
-  {
-    "id": "S-10",
-    "claim": "\"The released checkpoint loses to the hold-last floor at h=368 under nRMSE\" (R-27)",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": [
-      "R-27"
-    ]
-  },
-  {
-    "id": "S-11",
-    "claim": "R-41's per-dimension comparison was NOT matched",
-    "relevance": "",
-    "status": "",
-    "evidence": [],
-    "artifacts": [],
-    "retracts": [
-      "R-41"
-    ]
-  },
-  {
-    "id": "S-12",
-    "claim": "\"Task 3's duplication rule was pre-registered\"",
-    "relevance": "METHOD",
-    "status": "RETRACTED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/control_driver.log"
-    ],
-    "retracts": []
-  },
-  {
-    "id": "S-13",
-    "claim": "\"\u03c3 is input-independent in all four models\" (R-52)",
-    "relevance": "METHOD",
-    "status": "RETRACTED",
-    "evidence": [
-      "RUN"
-    ],
-    "artifacts": [
-      "results/task1_calibration.json"
-    ],
-    "retracts": [
-      "R-52"
-    ]
+{
+  "entries": [
+    {
+      "id": "D-01",
+      "claim": "Column layout confirmed",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-02",
+      "claim": "Contact channel ordering",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-03",
+      "claim": "The termination column is identically zero",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-04",
+      "claim": "Ten unmarked episode boundaries",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-05",
+      "claim": "Reset fingerprint",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "INFER"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-06",
+      "claim": "Usable window count",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-07",
+      "claim": "Actions are not joint targets in radians",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-08",
+      "claim": "A single gait throughout",
+      "relevance": "CONTEXT",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-09",
+      "claim": "One thigh contact in the entire file",
+      "relevance": "CONTEXT",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-10",
+      "claim": "Twenty-one commanded-velocity regime segments, not one",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "EXT"
+      ],
+      "artifacts": [
+        "results/step0_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-11",
+      "claim": "The config's resample interval does not describe this data",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-12",
+      "claim": "Per-episode difficulty varies threefold and is not explained by speed",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-13",
+      "claim": "Row *t* holds the action that **produced** state[*t*] (k = \u22121)",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "EXT",
+        "INFER",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "B-01",
+      "claim": "The window builder cannot see the episode resets",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "B-02",
+      "claim": "Latent falsy-index bug in the same guard",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "B-03",
+      "claim": "Train/test split leaks",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "B-04",
+      "claim": "Evaluation trajectories are drawn from training data",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "B-05",
+      "claim": "Training and evaluation use different action alignments",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-01",
+      "claim": "The loss has seven terms, not two",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-02",
+      "claim": "The mean head is residual",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-03",
+      "claim": "Two GRU trunks, not one",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-04",
+      "claim": "The \"ensemble of 5\" shares both trunks",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-05",
+      "claim": "Training samples, inference takes the mean",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-06",
+      "claim": "Learnable bounded log-standard-deviation",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-07",
+      "claim": "Actions are not normalised",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-08",
+      "claim": "Forecast decay is inert",
+      "relevance": "",
+      "status": "**SUPERSEDED BY C-09** \u2014 the premise was wrong. There is no decay parameter to configure.",
+      "evidence": [
+        "INFER"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-09",
+      "claim": "There is no forecast decay factor in the implementation at all",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-10",
+      "claim": "The aleatoric variance head has collapsed to a constant",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-11",
+      "claim": "`state_min_logstd` receives no gradient from the bound loss",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-12",
+      "claim": "The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-13",
+      "claim": "Three different iteration counts are in play",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "EXT",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-01",
+      "claim": "Episode identity must be carried explicitly",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-02",
+      "claim": "The hold-last floor is the zero-delta model",
+      "relevance": "CONTRIB",
+      "status": "**CONFIRMED** (was PENDING VERIFICATION)",
+      "evidence": [
+        "INFER",
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-03",
+      "claim": "The metric is stable on this data",
+      "relevance": "METHOD",
+      "status": "CONFIRMED **for the 45-dimensional aggregate only**",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-04",
+      "claim": "Ten trajectories is not enough to support a gap claim",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-05",
+      "claim": "Speed stratification does not balance difficulty",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-06",
+      "claim": "Protocol B as defined cannot isolate leakage",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "INFER",
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-07",
+      "claim": "The aggregate metric hides per-group behaviour",
+      "relevance": "METHOD",
+      "status": "**CONFIRMED** (was PENDING VERIFICATION)",
+      "evidence": [
+        "INFER",
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-08",
+      "claim": "The oracle acceptance test passes under any consistent off-by-one",
+      "relevance": "INTERNAL",
+      "status": "**FIXED** (was CONFIRMED)",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-09",
+      "claim": "The metric *is* fragile at per-group granularity",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-10",
+      "claim": "Regressing the action on the state cannot identify the recording convention",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-11",
+      "claim": "Refutation on structural invariants beats correlation for alignment questions",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "INFER"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-12",
+      "claim": "Normalised RMSE with a fixed denominator",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-13",
+      "claim": "The auxiliary branch is teacher-forced; the state branch is not",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-14",
+      "claim": "The overfit acceptance threshold was unreachable, and the reason is not the one assumed",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/step5_6_overfit_floor.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-15",
+      "claim": "The reference does not clip gradients in the world-model path",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-16",
+      "claim": "PRE-REGISTERED decision rule for the Arm A / Arm B comparison",
+      "relevance": "METHOD",
+      "status": "SETTLED \u2014 rule pre-registered in `84ff01b`, annotation in `0fe2bca`, both before any",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step6_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-17",
+      "claim": "nRMSE is a TAIL statistic and is biased low at small n; relative-L1 is not",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task3b_convergence.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-18",
+      "claim": "Spread convention: `ddof=1` throughout",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task3_4_power_ddof.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-19",
+      "claim": "Aggregating nRMSE as a mean of per-dimension ratios is wrong when scales span decades",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED (aggregation); Jensen mechanism CONSISTENT BUT UNPROVEN",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/taskAB_gate_r27.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-20",
+      "claim": "Effective sample size, and what actually drives long-horizon verdicts",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/batch1_post_retraction.json",
+        "src/rwm_metrics.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-21",
+      "claim": "The arms cannot be evaluated on all ten episodes; the released checkpoint can",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-22",
+      "claim": "PRE-REGISTERED rule for whether episode difficulty biases the A/B comparison",
+      "relevance": "METHOD",
+      "status": "RESOLVED \u2014 branch 1, 4c not run",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-24",
+      "claim": "A pre-registered rule must be anchored to the regime the claim is about",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-23",
+      "claim": "PRE-REGISTERED decision rule for the 10,000-iteration comparison",
+      "relevance": "METHOD",
+      "status": "RESOLVED \u2014 reproduces at long horizon",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-25",
+      "claim": "Bootstrap CIs over independent trajectories replace the seed-spread statistic",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "M-26",
+      "claim": "A pre-registered rule must be anchored to an adequately powered statistic",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task3_control_arm.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-27",
+      "claim": "The bootstrap was resampling the wrong unit",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/review_bootstrap_unit.json",
+        "results/task3_three_way.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-28",
+      "claim": "The clean-clone test was counting files the clone carried in",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json",
+        "scripts/verify_reproduction.py",
+        "src/score_reference.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-29",
+      "claim": "Most of the pipeline was not in the pipeline",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/manifest.json",
+        "results/step3_report.txt",
+        "results/step4_0a_results.json",
+        "results/step6_analysis.json",
+        "results/task1_calibration.json",
+        "scripts/ledger_check.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-01",
+      "claim": "Checkpoint inventory",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-02",
+      "claim": "Protocol A and B, clean",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/manifest.json",
+        "results/step3_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-03",
+      "claim": "Hold-last floor",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step2_acceptance.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-04",
+      "claim": "Error by forecast horizon, protocol A clean",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step3_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-05",
+      "claim": "Boundary crossing does not inflate error",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step3_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-06",
+      "claim": "Convention swap is worth 0.066",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step3_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-07",
+      "claim": "Protocol B's noise sweep is non-monotonic",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step3_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-08",
+      "claim": "Epistemic uncertainty dwarfs aleatoric",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED as a measurement",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step3_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-09",
+      "claim": "Error by forecast horizon under the causal convention",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task2_4_results.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-10",
+      "claim": "Per-state-group breakdown",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-11",
+      "claim": "The rebuilt forward pass is bitwise identical to the reference module",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-12",
+      "claim": "Harness hardening",
+      "relevance": "INTERNAL",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-13",
+      "claim": "The checkpoint's actor is not the data-collection policy",
+      "relevance": "CONTEXT",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-14",
+      "claim": "Losses and gradients match the reference exactly",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-15",
+      "claim": "Step 3 results restated under the causal convention",
+      "relevance": "CONTRIB",
+      "status": "SUPERSEDED IN PART by S-09 \u2014 the numbers stand as measured, but both were taken",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-16",
+      "claim": "CPU timing",
+      "relevance": "INTERNAL",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "R-17",
+      "claim": "Overfit one batch: partial, and the collapse prediction confirmed",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED (collapse)",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "figures/step4_overfit_ens1.png"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-18",
+      "claim": "Overfit one batch, rerun: the trainer is proven",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "figures/step4_overfit_b32lr1e3.png",
+        "results/step4_4_overfit_b32lr1e3.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-19",
+      "claim": "Arm A (autoregressive, faithful), seed 0",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step5_armA_seed0.json",
+        "results/step5_armA_seed0_report.txt"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-20",
+      "claim": "The two metrics disagree in DIRECTION at h=1",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step5_armA_seed0.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-21",
+      "claim": "nRMSE caveat: a near-constant dimension inflates its group",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step5_armA_seed0.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-22",
+      "claim": "The paper's central claim REPRODUCES: autoregressive beats teacher forcing",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED as measurements under the reference protocol",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "figures/step6_arms_comparison.png",
+        "results/step6_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-23",
+      "claim": "Teacher forcing reaches a 3\u00d7 lower training loss and a 4\u00d7 worse rollout",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step6_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-24",
+      "claim": "Pooled collapse fit across six independent runs",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step6_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-25",
+      "claim": "`min_logstd` gives O-12 a second, slower, independent axis",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/step6_3_min_logstd.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-26",
+      "claim": "Neither arm has converged at the paper's own iteration count",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step6_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-27",
+      "claim": "The released checkpoint under nRMSE: it LOSES to the hold-last floor at long horizon",
+      "relevance": "METHOD",
+      "status": "**SUPERSEDED BY S-10** \u2014 refuted by its own gating checks. The loss holds under",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task2_reference_nrmse.json",
+        "results/task3_4_power_ddof.json",
+        "results/task3b_convergence.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-28",
+      "claim": "Re-evaluation at 100 trajectories: M-16 unchanged, M-04 revised",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task3_4_power_ddof.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-29",
+      "claim": "The released checkpoint loses on 7 of 45 dimensions, and one of them carries R-27",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/taskAB_gate_r27.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-30",
+      "claim": "The \"heavy tail\" is two short regions, not a property of the model",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/taskAB_gate_r27.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-31",
+      "claim": "M-16 is robust to the aggregation choice",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/taskAB_gate_r27.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-32",
+      "claim": "The retraction's arithmetic, verified",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/batch1_post_retraction.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-33",
+      "claim": "The Jensen mechanism is SUPPORTED at 40 seeds",
+      "relevance": "CONTRIB",
+      "status": "SUPPORTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/batch1_post_retraction.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-34",
+      "claim": "The released checkpoint characterised on all ten episodes, independent trajectories",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/batch1_post_retraction.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-35",
+      "claim": "M-16 re-evaluated in both arenas: CANNOT BE SETTLED, in all eight combinations",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-36",
+      "claim": "The pre-registered teacher-forcing flip pattern FIRES, in the in-sample arena",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-37",
+      "claim": "Per-episode A/B gap: sign-consistent at h=368, reverses at h=8",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-38",
+      "claim": "Long-horizon A/B figures from the existing six runs",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED as measurements, NOT PRE-REGISTERED as a verdict",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-39",
+      "claim": "The h=368 magnitude rests on an episode-1 outlier; the direction does not",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-40",
+      "claim": "M-23: the claim REPRODUCES AT LONG HORIZON",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-41",
+      "claim": "A from-scratch model does NOT develop the released checkpoint's failure pattern",
+      "relevance": "CONTRIB",
+      "status": "SUPERSEDED IN PART by S-11 and R-45 \u2014 the comparison was against a seven-dimension",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-42",
+      "claim": "The A/B gap across five checkpoints: persists everywhere, resolves in-sample at h=8",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-43",
+      "claim": "The collapse rate stays linear to 10,000; the pre-registered prediction lands",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-44",
+      "claim": "The central claim's full history, with commit timestamps",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-45",
+      "claim": "Matched per-dimension comparison: released checkpoint vs Arm A",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task2_3_matched_trend.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-46",
+      "claim": "The gap-narrowing trend: absolute gap closes, relative advantage does not",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task2_3_matched_trend.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-47",
+      "claim": "The spliced windows cost nothing measurable, and if anything help",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task4_contamination.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-48",
+      "claim": "The corrected objective reverses the collapse mechanism but produces no usable uncertain",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-49",
+      "claim": "The released checkpoint's uncertainty output is worthless, quantified",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-50",
+      "claim": "Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iter",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-51",
+      "claim": "All four models are catastrophically overconfident",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json",
+        "results/task2_sigma_profile.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-52",
+      "claim": "\u03c3 is input-independent in all four models",
+      "relevance": "METHOD",
+      "status": "SUPERSEDED BY S-13 \u2014 the quantifier was wrong: Arm B had not been measured on this",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-53",
+      "claim": "The correction improved magnitude and destroyed what ordering signal existed",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-54",
+      "claim": "\u03c3 is flat *inside* the trained horizon, which removes the structural excuse",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task2_sigma_profile.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-55",
+      "claim": "The duplication control: R-47's mechanism survives, its statistic does not",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task3_control_arm.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-56",
+      "claim": "The three-way comparison: the control is inert, contamination still costs nothing",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task3_three_way.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-57",
+      "claim": "All four models, measured on one table",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json",
+        "scripts/task1_calibration.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "O-01",
+      "claim": "Which action convention is causally correct",
+      "relevance": "",
+      "status": "**RESOLVED at Step 3.5 \u2192 k = \u22121, row *t* holds the action that produced state[*t*].** See D-13. The prescribed ridge test did not settle it (M-10); the reset-row refutation did. Step 4 is unblocked \u2014 see X-05.",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-02",
+      "claim": "Why is the model worse than the floor at one step",
+      "relevance": "",
+      "status": "**RESOLVED \u2014 hypothesis confirmed.** Ratio 1.093 \u2192 0.827 (R-09). Not a model defect.",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-03",
+      "claim": "Does our rebuilt forward pass match the reference exactly",
+      "relevance": "",
+      "status": "**RESOLVED \u2014 bitwise identical, 0.000e+00 on every comparison.** See R-11.",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-04",
+      "claim": "Units and calibration of the uncertainty outputs",
+      "relevance": "",
+      "status": "**RESOLVED.** Both are sums over the 45 **normalised** state dimensions and are directly comparable: aleatoric = `state_stds.mean(0).sum(1)`, epistemic = `state_means.std(0).sum(1)` (`system_dynamics.py:126-127`). The hundredfold ratio in R-08 is real but is explained by C-10 \u2014 the aleatoric term is a collapsed constant at its learned lower bound, not a calibrated prediction.",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-05",
+      "claim": "Is the training convention's advantage causal or leakage",
+      "relevance": "",
+      "status": "**RESOLVED \u2014 causal, not leakage.** Row *t* holds `a[t\u22121]` in the brief's labelling (D-13), so `a[t+1]` is the action that produced `s[t+1]`: a legitimate input. See S-07.",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-06",
+      "claim": "What does the 352-window contamination actually cost",
+      "relevance": "",
+      "status": "**CLOSED by R-47.** Measured: at 2.47% contamination, 3 seeds, 2500 iterations, the",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-07",
+      "claim": "Is the long-horizon convergence to the floor real or a metric artifact",
+      "relevance": "",
+      "status": "**PARTIALLY RESOLVED.** R-10 separates the two: genuine degradation on base linear velocity (ratio 1.341 at h=368) and joint torque (0.649); metric saturation on projected gravity and base angular velocity, both of which blow up for denominator reasons (M-09). Joint positions and velocities stay strong throughout (0.487, 0.433). Compression persists under the causal convention too (R-09), so it is not a convention artefact. Remaining question: how much of the base-velocity failure is intrinsic to open-loop rollout without command input.",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-08",
+      "claim": "Does the variance collapse reproduce when we train from scratch",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-09",
+      "claim": "Is the reference evaluation's understatement material to the paper's reported numbers",
+      "relevance": "W",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-10",
+      "claim": "Was the released checkpoint produced by the released config?",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-11",
+      "claim": "Does the batch-1024 superlinear penalty survive on other hardware?",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "O-12",
+      "claim": "The released checkpoint's variance collapse is inconsistent with the released configurat",
+      "relevance": "CONTRIB",
+      "status": "OPEN \u2014 the discrepancy is measured and confirmed; its *cause* is not.",
+      "evidence": [
+        "DATA",
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/step4_4_overfit_b32lr1e3.json",
+        "results/step4_4_overfit_ens1.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "O-13",
+      "claim": "Why does \u03c3 stay constant when the pressure forcing it to be constant is removed?",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-01",
+      "claim": "Episode-aware split",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-02",
+      "claim": "No boundary-crossing windows",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-03",
+      "claim": "Rebuilt forward pass rather than importing the reference",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-04",
+      "claim": "Termination head retained but degenerate",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-05",
+      "claim": "Step 4 trains and evaluates under the causal action alignment",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-06",
+      "claim": "The overfit test ran at ensemble 1 with a wall-clock cap",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-07",
+      "claim": "Step 5's main experiment runs at ensemble size 1, not the reference's 5",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "X-08",
+      "claim": "No gradient clipping is added",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-01",
+      "claim": "\"The lite repo may not ship training data\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-02",
+      "claim": "\"The checkpoint is ~1.25M parameters per ensemble member\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-03",
+      "claim": "\"Boundary crossings inflate protocol B\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-04",
+      "claim": "\"The relative-L1 denominator will be numerically fragile here\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-05",
+      "claim": "\"The ten episodes may be ten repetitions of one command\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-06",
+      "claim": "\"Contacts are four knee then four foot\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-07",
+      "claim": "\"The training convention leaks the target\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-08",
+      "claim": "\"Forecast decay is inert because it is configured to 1.0\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [
+        "INFER"
+      ],
+      "artifacts": [],
+      "retracts": [
+        "C-08"
+      ]
+    },
+    {
+      "id": "S-09",
+      "claim": "\"Under nRMSE the released checkpoint at offset 1 is clearly informative (below 1.0)\"",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": [
+        "R-15"
+      ]
+    },
+    {
+      "id": "S-10",
+      "claim": "\"The released checkpoint loses to the hold-last floor at h=368 under nRMSE\" (R-27)",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": [
+        "R-27"
+      ]
+    },
+    {
+      "id": "S-11",
+      "claim": "R-41's per-dimension comparison was NOT matched",
+      "relevance": "",
+      "status": "",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": [
+        "R-41"
+      ]
+    },
+    {
+      "id": "S-12",
+      "claim": "\"Task 3's duplication rule was pre-registered\"",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/control_driver.log"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "S-13",
+      "claim": "\"\u03c3 is input-independent in all four models\" (R-52)",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "retracts": [
+        "R-52"
+      ]
+    }
+  ],
+  "counts_by_prefix": {
+    "B": 5,
+    "C": 13,
+    "D": 13,
+    "M": 29,
+    "O": 13,
+    "R": 57,
+    "S": 13,
+    "X": 8
   }
-]
+}
