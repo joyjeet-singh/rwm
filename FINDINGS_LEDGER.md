@@ -1098,6 +1098,17 @@ trained five runs and then failed looking for the sixth.
 sole exception being `verify_reproduction.py`, which runs *against* a regenerated tree rather than
 inside it. `run_remaining.sh` trains A0 first and skips runs whose JSON already exists, so
 re-running is cheap. `run_control.sh` is stage 11b.
+**The new stages were themselves wrong, and a clean-clone run caught them.** Two of the
+thirteen added stages failed on first execution from an empty clone:
+`task3_4_power_and_ddof.py` loads `runs/armA_seed0/weights_500.pt` and had been staged without
+`NEEDS_WEIGHTS`; and `step4_4_overfit.py` had been staged bare, so it wrote untagged files that
+are not committed and left `results/overfit_weights_b32lr1e3.pt` — stage 8l's input — absent. The
+correct flags were recoverable from each artifact's own `config` block
+(`--batch 32 --ensemble 1 --lr 1e-3 --tag _b32lr1e3`, and `--batch 1024 --ensemble 1
+--max-seconds 2700 --tag _ens1`), which is the one thing this repository had done right there.
+Recorded because it is the first evidence that the clean-clone test has teeth: before M-28 it
+would have reported success on both.
+
 **Evidence** `SRC` `reproduce.sh`, `run_remaining.sh`.
 **Status** ADOPTED · **Relevance** METHOD
 

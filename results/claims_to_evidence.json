@@ -717,6 +717,7 @@
         "SRC"
       ],
       "artifacts": [
+        "results/overfit_weights_b32lr1e3.pt",
         "results/step4_0a_results.json",
         "results/step6_analysis.json",
         "results/task1_calibration.json"

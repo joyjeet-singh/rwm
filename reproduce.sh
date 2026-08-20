@@ -133,11 +133,21 @@ stage 8g "Released checkpoint under nRMSE at n=10" "2 min" \
 stage 8h "Per-horizon, per-group breakdown" "3 min" \
       results/task2_4_results.json $PY scripts/task2_4_horizon_groups.py
 stage 8i "Evaluation power and the ddof convention" "4 min" \
-      results/task3_4_power_ddof.json $PY scripts/task3_4_power_and_ddof.py
+      results/task3_4_power_ddof.json NEEDS_WEIGHTS $PY scripts/task3_4_power_and_ddof.py
 stage 8j "Convergence of the metric with trajectory count" "3 min" \
       results/task3b_convergence.json $PY scripts/task3b_convergence.py
-stage 8k "Overfit one batch: the trainer acceptance gate" "45 min" \
-      results/step4_4_overfit_b32lr1e3.json $PY scripts/step4_4_overfit.py
+# Flags read from each artifact's own `config` block, not guessed. Run bare, this
+# script writes untagged files that are not committed and leaves
+# results/overfit_weights_b32lr1e3.pt -- stage 8l's input -- absent.
+stage 8k "Overfit one batch, batch 32 / lr 1e-3 (R-18)" "8 min" \
+      results/step4_4_overfit_b32lr1e3.json $PY scripts/step4_4_overfit.py \
+      --iters 2000 --batch 32 --ensemble 1 --lr 1e-3 --max-seconds 100000 --tag _b32lr1e3
+# X-06: this one terminates on the 2700 s wall-clock cap, not on convergence --
+# 451 of 2000 iterations on the reference machine. A faster host runs further and
+# its numbers will differ; that is documented, not a regression.
+stage 8k2 "Overfit one batch, ensemble 1 / batch 1024 (R-17, cap-terminated)" "45 min" \
+      results/step4_4_overfit_ens1.json $PY scripts/step4_4_overfit.py \
+      --iters 2000 --batch 1024 --ensemble 1 --max-seconds 2700 --tag _ens1
 stage 8l "Deterministic-vs-stochastic loss floor at the overfit weights" "30 s" \
       results/step5_6_overfit_floor.json $PY scripts/step5_6_overfit_floor.py
 REPORT=step4_5_report.txt stage 8m "CPU timing budget" "5 min" \
