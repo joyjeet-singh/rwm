@@ -111,13 +111,12 @@ R-50, R-51, R-52, R-53, R-54. These concern the variance head, its collapse, and
 calibration of the uncertainty output; none of them is a claim about the base paper.
 
 **`[BASE]`** — M-16, M-23, M-24, R-19, R-22, R-23, R-35, R-36, R-37, R-40, R-42, R-45, R-46,
-R-47, R-55, and the A/B comparison generally; plus the loss-assembly discrepancies C-01,
+R-47, R-55, R-56, and the A/B comparison generally; plus the loss-assembly discrepancies C-01,
 C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, which apply
-to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, which apply to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -944,6 +943,9 @@ a 95% CI on the A/B gap.** Better on two counts:
 Reported alongside `n_independent` in every table. Where `n_independent` = 4 the CI will be very
 wide, and that is the correct message rather than a defect of the method. The existing six-run
 tables are recomputed under bootstrap CIs so the comparison is like for like.
+**Correction** The convention stated here is right; the code that implemented it resampled the
+pooled seed x trajectory vector instead of the trajectories. See M-27, which measures the
+effect and restates the affected counts.
 **Evidence** `RUN` Task 4's floor instability; adopted as convention.
 **Status** ADOPTED · **Relevance** METHOD
 
@@ -976,6 +978,41 @@ and across a bootstrap that makes no tail choice at all.
 *windowed* statistic and its window, never an endpoint. Where an existing rule named an endpoint,
 report both and show the noise-to-signal ratio, as R-55 does.
 **Evidence** `RUN` `results/task3_control_arm.json`.
+**Status** ADOPTED · **Relevance** METHOD
+
+
+### M-27 — The bootstrap was resampling the wrong unit · **NEW**
+M-25 adopted the right convention — "resample the **independent trajectories** with
+replacement" — and the code did not implement it.
+
+`scripts/task5_2_bootstrap.py:44-46` and `scripts/task4_contamination_analysis.py:44-45` both
+build the sample as `np.concatenate([per_traj(model(seed=s), ...) for s in SEEDS])`, so the
+vector handed to the resampler has length **3 x n_traj** while the record written beside it
+reports `n_independent = n_traj` and `task5_2_report.txt` describes the interval as being over
+independent trajectories. Each trajectory appears three times, once per training seed, and those
+three values share the same held-out rows. Resampling them independently breaks the clustering
+and can only narrow the interval.
+
+**Measured, across the 16 A/B cells** (`results/review_bootstrap_unit.json`): the correct
+cluster bootstrap — resample trajectories, carry all three seeds — widens the interval by a mean
+factor of **1.42x** (range 0.96x to
+1.69x). That is close to the sqrt(3) = 1.73 expected when between-seed
+variation is small against between-trajectory variation, which is exactly what M-25 itself
+predicted when it noted seed spreads of 0.003–0.031 against trajectory-driven swings ten times
+larger.
+
+**1 of 16 verdicts change**, all in the same direction
+(significant becomes non-significant): `out-of-sample|200|2500|h8`.
+It is an h=8 cell, in the regime M-24 and R-42 already record as unresolvable out-of-sample.
+Every h=368 long-horizon verdict survives.
+
+**Convention.** Where a statistic pools several training seeds over a shared set of evaluation
+trajectories, the bootstrap resamples **trajectories**, carrying every seed with each draw.
+Reporting `n_independent` next to an interval resampled over `3 x n_independent` values
+misstates the interval. Both units are reported in `results/task3_three_way.json` so the
+previously published counts stay traceable.
+**Evidence** `RUN` `results/review_bootstrap_unit.json`, `results/task3_three_way.json`;
+`SRC` `scripts/task5_2_bootstrap.py:28-32,44-46`, `scripts/task4_contamination_analysis.py:27-29,44-45`.
 **Status** ADOPTED · **Relevance** METHOD
 
 
@@ -2185,6 +2222,9 @@ costs nothing detectable at this rate.
 these comparisons are not independent — they share runs and nest horizons within trajectories.
 Ten significant results all in the same direction is well beyond chance, but the individual
 effect sizes should not be quoted as precise.
+**Unit** The 32 counts above use the naive bootstrap; under the correct cluster unit (M-27)
+they become 0 hurt / 9 helped / 23 no effect. The headline — no cell shows harm — is
+unchanged (R-56).
 **Control** The mechanism asserted here — that the rise is caused by unfittable splice
 content rather than by the extra window count — was not controlled when this entry was
 written. It has since been tested against a duplication arm and **confirmed** (R-55).
@@ -2427,6 +2467,42 @@ relevant uncertainty. It is not: those are three single-minibatch draws per arm,
 measures minibatch noise rather than run-to-run variation. The windowed figures are
 1.5843 and 1.9261.
 **Evidence** `RUN` `results/task3_control_arm.json`, `results/step5_armA_seed{0,1,2}_dup.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-56 — The three-way comparison: the control is inert, contamination still costs nothing · **NEW**
+Completes Task 3. All three arms — clean, duplicated, contaminated — through the identical
+32-cell evaluation (2 arenas x 2 trajectory lengths x 2 checkpoints x 2 horizons x 2 metrics),
+under both resampling units (M-27). Positive difference means the second arm is worse.
+
+| comparison | unit | hurt | helped | no effect |
+|---|---|---|---|---|
+| duplicated − clean | cluster | **0** | 2 | 30 |
+| contaminated − clean | naive (as published in R-47) | **0** | 10 | 22 |
+| contaminated − clean | cluster | **0** | 9 | 23 |
+| contaminated − duplicated | cluster | 2 | 8 | 22 |
+
+**R-47 reproduces exactly.** Under the naive unit the contaminated-versus-clean counts are
+0 hurt / 10 helped / 22 no effect — the published
+figures, regenerated from the weights.
+
+**The headline survives the unit correction.** Under the correct cluster bootstrap contamination
+hurts in **0 of 32** cells. One "helped" cell drops to non-significant
+(`in-sample|400|500|h8|nrmse`); nothing moves the other way.
+
+**The control is inert in rollout**, as it should be: duplicated differs from clean in
+2 of 32 cells, both marginal in-sample 168-step cells. Duplicating
+existing windows changes the training loss by 0.90% (R-55) and changes rollout behaviour
+essentially not at all.
+
+**Where contamination does look worse than the size-matched control.** Against duplicated rather
+than clean, contamination is significantly worse in 2 of 32 cells:
+`out-of-sample|400|500|h368|l1`, `out-of-sample|400|500|h368|nrmse`. Both sit in the **four-trajectory** arena at the
+**500-iteration** checkpoint — the lowest-power cell in the design, at the earliest checkpoint —
+and 32 comparisons at 95% produce about 1.6 false positives by chance. This is not a signal, and
+it is recorded here rather than omitted because it is the only place in the design where
+contamination looks harmful at all.
+**Evidence** `RUN` `results/task3_three_way.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
@@ -2854,8 +2930,9 @@ in scope; see the scope note at the top.
    trained with is identifiable.
 
 5. **The released pipeline trains on spliced episodes, and the cost is now measured** `[BASE]`
-   (B-01, D-03, D-06, R-47, R-55). Zero of 32 comparisons show harm, and a duplication control
-   confirms the training-loss rise is caused by splice content rather than by window count.
+   (B-01, D-03, D-06, R-47, R-55, R-56). Zero of 32 comparisons show harm under either
+   resampling unit; a duplication control confirms the training-loss rise is caused by splice
+   content rather than by window count, and the control is inert in rollout.
 
 6. **There is no held-out evaluation in the released repository** `[BASE]` (B-03, B-04, X-01).
 

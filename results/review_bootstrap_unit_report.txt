@@ -1,0 +1,32 @@
+REVIEW -- IS THE BOOTSTRAP RESAMPLING THE RIGHT UNIT?
+======================================================================================
+
+  naive   = resample all (seed x trajectory) values independently, as implemented in
+            scripts/task5_2_bootstrap.py:28-32 and task4_contamination_analysis.py:27
+  cluster = resample TRAJECTORIES, carrying all three seeds with each draw
+
+  cell                               n_traj pooled         naive       cluster    width
+  out-of-sample|400|500|h8                4     12       spans 0       spans 0  x  1.49
+  out-of-sample|400|500|h368              4     12      EXCLUDES      EXCLUDES  x  1.23
+  out-of-sample|400|2500|h8               4     12       spans 0       spans 0  x  1.13
+  out-of-sample|400|2500|h368             4     12      EXCLUDES      EXCLUDES  x  1.32
+  out-of-sample|200|500|h8               10     30       spans 0       spans 0  x  1.69
+  out-of-sample|200|500|h168             10     30      EXCLUDES      EXCLUDES  x  1.49
+  out-of-sample|200|2500|h8              10     30      EXCLUDES       spans 0  x  1.37  <-- CHANGES
+  out-of-sample|200|2500|h168            10     30      EXCLUDES      EXCLUDES  x  1.47
+  in-sample|400|500|h8                   16     48      EXCLUDES      EXCLUDES  x  1.66
+  in-sample|400|500|h368                 16     48      EXCLUDES      EXCLUDES  x  0.96
+  in-sample|400|2500|h8                  16     48      EXCLUDES      EXCLUDES  x  1.60
+  in-sample|400|2500|h368                16     48      EXCLUDES      EXCLUDES  x  1.14
+  in-sample|200|500|h8                   39    117      EXCLUDES      EXCLUDES  x  1.52
+  in-sample|200|500|h168                 39    117      EXCLUDES      EXCLUDES  x  1.50
+  in-sample|200|2500|h8                  39    117      EXCLUDES      EXCLUDES  x  1.59
+  in-sample|200|2500|h168                39    117      EXCLUDES      EXCLUDES  x  1.49
+
+  cells: 16   verdict changes: 1
+  CI width ratio (cluster / naive): min x0.96  mean x1.42  max x1.69
+
+  CELLS WHOSE VERDICT DEPENDS ON THE RESAMPLING UNIT:
+    out-of-sample|200|2500|h8
+
+  written: results/review_bootstrap_unit.json

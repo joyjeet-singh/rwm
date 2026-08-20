@@ -611,9 +611,23 @@
       "RUN"
     ],
     "artifacts": [
+      "results/task3_control_arm.json"
+    ]
+  },
+  {
+    "id": "M-27",
+    "claim": "The bootstrap was resampling the wrong unit",
+    "relevance": "METHOD",
+    "status": "ADOPTED",
+    "evidence": [
+      "RUN",
+      "SRC"
+    ],
+    "artifacts": [
       "results/manifest.json",
+      "results/review_bootstrap_unit.json",
       "results/step3_report.txt",
-      "results/task3_control_arm.json",
+      "results/task3_three_way.json",
       "scripts/ledger_check.py"
     ]
   },
@@ -1267,6 +1281,18 @@
     ],
     "artifacts": [
       "results/task3_control_arm.json"
+    ]
+  },
+  {
+    "id": "R-56",
+    "claim": "The three-way comparison: the control is inert, contamination still costs nothing",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task3_three_way.json"
     ]
   },
   {

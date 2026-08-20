@@ -1,0 +1,444 @@
+{
+  "out-of-sample|400|500|h8": {
+    "n_trajectories": 4,
+    "n_independent_reported": 4,
+    "n_pooled_values": 12,
+    "naive": {
+      "gap": 0.0409516841173172,
+      "ci": [
+        -0.01369706392288208,
+        0.10033074617385863
+      ],
+      "width": 0.11402781009674072,
+      "excludes_zero": false
+    },
+    "cluster": {
+      "gap": 0.04082953423261643,
+      "ci": [
+        -0.015956521034240723,
+        0.1537463665008545
+      ],
+      "width": 0.16970288753509521,
+      "excludes_zero": false
+    },
+    "width_ratio_cluster_over_naive": 1.488258762411731,
+    "var_between_trajectories": 0.012767135165631771,
+    "var_within_trajectory_across_seeds": 0.0013402400072664022,
+    "verdict_changes": false
+  },
+  "out-of-sample|400|500|h368": {
+    "n_trajectories": 4,
+    "n_independent_reported": 4,
+    "n_pooled_values": 12,
+    "naive": {
+      "gap": 3.6354992389678955,
+      "ci": [
+        2.1054610908031464,
+        5.6429711103439315
+      ],
+      "width": 3.537510019540785,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 3.632406875324249,
+      "ci": [
+        2.105849266052246,
+        6.454893112182617
+      ],
+      "width": 4.349043846130371,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.2294082058020386,
+    "var_between_trajectories": 8.113707542419434,
+    "var_within_trajectory_across_seeds": 5.873611927032471,
+    "verdict_changes": false
+  },
+  "out-of-sample|400|2500|h8": {
+    "n_trajectories": 4,
+    "n_independent_reported": 4,
+    "n_pooled_values": 12,
+    "naive": {
+      "gap": 0.010311972349882126,
+      "ci": [
+        -0.026133589446544647,
+        0.038267796486616136
+      ],
+      "width": 0.06440138593316078,
+      "excludes_zero": false
+    },
+    "cluster": {
+      "gap": 0.010381612937152385,
+      "ci": [
+        -0.029562324285507202,
+        0.04338392615318298
+      ],
+      "width": 0.07294625043869019,
+      "excludes_zero": false
+    },
+    "width_ratio_cluster_over_naive": 1.132681376056064,
+    "var_between_trajectories": 0.0020854142494499683,
+    "var_within_trajectory_across_seeds": 0.0025516462046653032,
+    "verdict_changes": false
+  },
+  "out-of-sample|400|2500|h368": {
+    "n_trajectories": 4,
+    "n_independent_reported": 4,
+    "n_pooled_values": 12,
+    "naive": {
+      "gap": 3.9965851306915283,
+      "ci": [
+        1.3226519137620927,
+        7.759987378120418
+      ],
+      "width": 6.437335464358325,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 3.985284795308113,
+      "ci": [
+        0.9906817078590393,
+        9.484769821166992
+      ],
+      "width": 8.494088113307953,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.3195037232931661,
+    "var_between_trajectories": 30.811002731323242,
+    "var_within_trajectory_across_seeds": 18.54115867614746,
+    "verdict_changes": false
+  },
+  "out-of-sample|200|500|h8": {
+    "n_trajectories": 10,
+    "n_independent_reported": 10,
+    "n_pooled_values": 30,
+    "naive": {
+      "gap": 0.02813318558037281,
+      "ci": [
+        -0.00046184584498405425,
+        0.06162526234984397
+      ],
+      "width": 0.06208710819482803,
+      "excludes_zero": false
+    },
+    "cluster": {
+      "gap": 0.028108010816574096,
+      "ci": [
+        -0.016914733871817588,
+        0.08829256072640417
+      ],
+      "width": 0.10520729459822176,
+      "excludes_zero": false
+    },
+    "width_ratio_cluster_over_naive": 1.6945111095862848,
+    "var_between_trajectories": 0.007828650064766407,
+    "var_within_trajectory_across_seeds": 0.00094539241399616,
+    "verdict_changes": false
+  },
+  "out-of-sample|200|500|h168": {
+    "n_trajectories": 10,
+    "n_independent_reported": 10,
+    "n_pooled_values": 30,
+    "naive": {
+      "gap": 0.9479865431785583,
+      "ci": [
+        0.6693339020013809,
+        1.2781674474477767
+      ],
+      "width": 0.6088335454463958,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 0.9469964235126972,
+      "ci": [
+        0.5360751390457154,
+        1.4405196756124496
+      ],
+      "width": 0.9044445365667343,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.4855366353107187,
+    "var_between_trajectories": 0.5967127084732056,
+    "var_within_trajectory_across_seeds": 0.3158677816390991,
+    "verdict_changes": false
+  },
+  "out-of-sample|200|2500|h8": {
+    "n_trajectories": 10,
+    "n_independent_reported": 10,
+    "n_pooled_values": 30,
+    "naive": {
+      "gap": 0.020533254370093346,
+      "ci": [
+        0.0006048612296581269,
+        0.04251211211085319
+      ],
+      "width": 0.04190725088119507,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 0.020340693225711585,
+      "ci": [
+        -0.005790174752473831,
+        0.05162378884851931
+      ],
+      "width": 0.057413963600993136,
+      "excludes_zero": false
+    },
+    "width_ratio_cluster_over_naive": 1.3700245755503937,
+    "var_between_trajectories": 0.002394990064203739,
+    "var_within_trajectory_across_seeds": 0.0020214850082993507,
+    "verdict_changes": true
+  },
+  "out-of-sample|200|2500|h168": {
+    "n_trajectories": 10,
+    "n_independent_reported": 10,
+    "n_pooled_values": 30,
+    "naive": {
+      "gap": 0.892925500869751,
+      "ci": [
+        0.6100416541099548,
+        1.24456769824028
+      ],
+      "width": 0.6345260441303252,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 0.8897700385898352,
+      "ci": [
+        0.4808311864733696,
+        1.4123092979192733
+      ],
+      "width": 0.9314781114459036,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.4679903528980878,
+    "var_between_trajectories": 0.6273651123046875,
+    "var_within_trajectory_across_seeds": 0.3504194915294647,
+    "verdict_changes": false
+  },
+  "in-sample|400|500|h8": {
+    "n_trajectories": 16,
+    "n_independent_reported": 16,
+    "n_pooled_values": 48,
+    "naive": {
+      "gap": -0.026931997388601303,
+      "ci": [
+        -0.04043765515089035,
+        -0.014224457740783694
+      ],
+      "width": 0.026213197410106658,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": -0.02688551838696003,
+      "ci": [
+        -0.05047102384269238,
+        -0.007036208361387259
+      ],
+      "width": 0.04343481548130512,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.6569827328488576,
+    "var_between_trajectories": 0.00210265233181417,
+    "var_within_trajectory_across_seeds": 0.0002651413669809699,
+    "verdict_changes": false
+  },
+  "in-sample|400|500|h368": {
+    "n_trajectories": 16,
+    "n_independent_reported": 16,
+    "n_pooled_values": 48,
+    "naive": {
+      "gap": 1.9326223134994507,
+      "ci": [
+        1.644636368751526,
+        2.256951856613159
+      ],
+      "width": 0.612315487861633,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 1.9359484130978584,
+      "ci": [
+        1.6565146684646606,
+        2.2456417858600615
+      ],
+      "width": 0.5891271173954009,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 0.9621300278599648,
+    "var_between_trajectories": 0.3877406120300293,
+    "var_within_trajectory_across_seeds": 1.2749130725860596,
+    "verdict_changes": false
+  },
+  "in-sample|400|2500|h8": {
+    "n_trajectories": 16,
+    "n_independent_reported": 16,
+    "n_pooled_values": 48,
+    "naive": {
+      "gap": 0.02719855308532715,
+      "ci": [
+        0.01735623963177204,
+        0.03707373552024364
+      ],
+      "width": 0.019717495888471603,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 0.027241784113645553,
+      "ci": [
+        0.011650183983147145,
+        0.04321435578167439
+      ],
+      "width": 0.031564171798527246,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.6008205087027374,
+    "var_between_trajectories": 0.0011211750097572803,
+    "var_within_trajectory_across_seeds": 0.0002776710025500506,
+    "verdict_changes": false
+  },
+  "in-sample|400|2500|h368": {
+    "n_trajectories": 16,
+    "n_independent_reported": 16,
+    "n_pooled_values": 48,
+    "naive": {
+      "gap": 1.3299001455307007,
+      "ci": [
+        1.064246118068695,
+        1.643346098065376
+      ],
+      "width": 0.579099979996681,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 1.329667035961151,
+      "ci": [
+        1.0323398560285568,
+        1.6907509058713912
+      ],
+      "width": 0.6584110498428344,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.1369557461331772,
+    "var_between_trajectories": 0.48850739002227783,
+    "var_within_trajectory_across_seeds": 0.8942723274230957,
+    "verdict_changes": false
+  },
+  "in-sample|200|500|h8": {
+    "n_trajectories": 39,
+    "n_independent_reported": 39,
+    "n_pooled_values": 117,
+    "naive": {
+      "gap": -0.02814200520515442,
+      "ci": [
+        -0.036101548746228215,
+        -0.02045548483729363
+      ],
+      "width": 0.015646063908934586,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": -0.028070357339084147,
+      "ci": [
+        -0.040376893058419225,
+        -0.016522660106420523
+      ],
+      "width": 0.0238542329519987,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.5246155896357354,
+    "var_between_trajectories": 0.0015240027569234371,
+    "var_within_trajectory_across_seeds": 0.0005922869895584881,
+    "verdict_changes": false
+  },
+  "in-sample|200|500|h168": {
+    "n_trajectories": 39,
+    "n_independent_reported": 39,
+    "n_pooled_values": 117,
+    "naive": {
+      "gap": 0.5816013813018799,
+      "ci": [
+        0.4949670359492302,
+        0.6768030107021332
+      ],
+      "width": 0.18183597475290303,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 0.5831315500199795,
+      "ci": [
+        0.45609180778265,
+        0.7286226749420165
+      ],
+      "width": 0.2725308671593665,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.4987730977311216,
+    "var_between_trajectories": 0.18802650272846222,
+    "var_within_trajectory_across_seeds": 0.11202820390462875,
+    "verdict_changes": false
+  },
+  "in-sample|200|2500|h8": {
+    "n_trajectories": 39,
+    "n_independent_reported": 39,
+    "n_pooled_values": 117,
+    "naive": {
+      "gap": 0.012012646533548832,
+      "ci": [
+        0.006641277298331261,
+        0.017667817324399947
+      ],
+      "width": 0.011026540026068687,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 0.0121471302613616,
+      "ci": [
+        0.003711148910224438,
+        0.02124560847878456
+      ],
+      "width": 0.01753445956856012,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.5902050441122568,
+    "var_between_trajectories": 0.000789110257755965,
+    "var_within_trajectory_across_seeds": 0.0002455875219311565,
+    "verdict_changes": false
+  },
+  "in-sample|200|2500|h168": {
+    "n_trajectories": 39,
+    "n_independent_reported": 39,
+    "n_pooled_values": 117,
+    "naive": {
+      "gap": 0.48479121923446655,
+      "ci": [
+        0.4216390587389469,
+        0.553935407102108
+      ],
+      "width": 0.13229634836316106,
+      "excludes_zero": true
+    },
+    "cluster": {
+      "gap": 0.48595927562117575,
+      "ci": [
+        0.39471646696329116,
+        0.5922073766589163
+      ],
+      "width": 0.19749090969562516,
+      "excludes_zero": true
+    },
+    "width_ratio_cluster_over_naive": 1.4927918430031137,
+    "var_between_trajectories": 0.10211595892906189,
+    "var_within_trajectory_across_seeds": 0.055311061441898346,
+    "verdict_changes": false
+  },
+  "_summary": {
+    "n_cells": 16,
+    "n_verdict_changes": 1,
+    "cells_that_change": [
+      "out-of-sample|200|2500|h8"
+    ],
+    "width_ratio_min": 0.9621300278599648,
+    "width_ratio_max": 1.6945111095862848,
+    "width_ratio_mean": 1.4156993331834655
+  }
+}

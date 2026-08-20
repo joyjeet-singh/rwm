@@ -1,0 +1,24 @@
+TASK 3 -- THREE-WAY ROLLOUT COMPARISON: CLEAN / DUPLICATED / CONTAMINATED
+========================================================================================
+
+  32 cells = 2 arenas x 2 trajectory lengths x 2 checkpoints x 2 horizons
+            x 2 metrics.  POSITIVE diff = the second arm is WORSE.
+
+  Two resampling units are reported. 'cluster' resamples trajectories carrying all
+  three seeds and is the correct unit; 'naive' resamples the pooled seed x trajectory
+  vector and is what R-47's published counts used.
+
+  -- duplicated vs clean -------------------------------------------------
+     naive    hurt  0 / helped  1 / no effect 31   (of 32)
+     cluster  hurt  0 / helped  2 / no effect 30   (of 32)
+  -- contaminated vs clean -----------------------------------------------
+     naive    hurt  0 / helped 10 / no effect 22   (of 32)
+     cluster  hurt  0 / helped  9 / no effect 23   (of 32)
+  -- contaminated vs duplicated ------------------------------------------
+     naive    hurt  1 / helped 10 / no effect 21   (of 32)
+     cluster  hurt  2 / helped  8 / no effect 22   (of 32)
+
+  -- cells where contamination HURT under the cluster unit --
+     NONE
+
+  written: results/task3_three_way.json

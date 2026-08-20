@@ -1,0 +1,2088 @@
+{
+  "out-of-sample|400|500|h8|l1": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 0.32859519124031067,
+      "duplicated": 0.32334885001182556,
+      "contaminated": 0.3193122446537018
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.005274093709886074,
+        "ci": [
+          -0.014460832625627518,
+          0.001580966264009473
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.00525591208934784,
+        "ci": [
+          -0.016986370086669922,
+          0.0019373297691345215
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.009321029298007488,
+        "ci": [
+          -0.01969137489795685,
+          0.0001398518681526151
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.009304870150983333,
+        "ci": [
+          -0.02798822522163391,
+          0.003960847854614258
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.004046935588121414,
+        "ci": [
+          -0.010296028107404709,
+          0.0017874121665954587
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0040489580616354945,
+        "ci": [
+          -0.01100185513496399,
+          0.0020235180854797363
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|400|500|h8|nrmse": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 0.2638625080386798,
+      "duplicated": 0.261817595611016,
+      "contaminated": 0.25846921280026436
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.0020582115008185306,
+        "ci": [
+          -0.009306855065127233,
+          0.003982068070520939
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0020507121995091437,
+        "ci": [
+          -0.01061326265335083,
+          0.0029622726142406464
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.005422420348475377,
+        "ci": [
+          -0.014037183206528444,
+          0.002610219921916759
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.005412720603247485,
+        "ci": [
+          -0.019417474667231205,
+          0.0054291573663552695
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.0033642088476568462,
+        "ci": [
+          -0.00829417193308469,
+          0.0013305108994245527
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0033620084037383415,
+        "ci": [
+          -0.008804212013880375,
+          0.002466884752114623
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|400|500|h368|l1": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 1.614578127861023,
+      "duplicated": 1.584172248840332,
+      "contaminated": 1.636591911315918
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.03176625818014145,
+        "ci": [
+          -0.4175587147474289,
+          0.2881336659193037
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.03068953967690468,
+        "ci": [
+          -0.29447078704833984,
+          0.23365873098373413
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": 0.020263992249965668,
+        "ci": [
+          -0.28823390901088713,
+          0.3048037394881247
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.021791326504945755,
+        "ci": [
+          -0.20189952850341797,
+          0.24592697620391846
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.05203025043010712,
+        "ci": [
+          -0.18091530203819275,
+          0.2496260344982147
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.05248086618185043,
+        "ci": [
+          0.005467534065246582,
+          0.1269996166229248
+        ],
+        "significant": true
+      }
+    }
+  },
+  "out-of-sample|400|500|h368|nrmse": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 1.298763945698738,
+      "duplicated": 1.32859102388223,
+      "contaminated": 1.4162319550911586
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": 0.02829268278727929,
+        "ci": [
+          -0.25498235697547594,
+          0.3178633861243724
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.029441324259340762,
+        "ci": [
+          -0.24029874801635742,
+          0.29995290438334155
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": 0.1157229652022322,
+        "ci": [
+          -0.13160306898256144,
+          0.3852193247526883
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.11715809346884488,
+        "ci": [
+          -0.11302095651626587,
+          0.3479569753011067
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.08743028241495292,
+        "ci": [
+          -0.07848802308241519,
+          0.24620723476012557
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.08771676920950414,
+        "ci": [
+          0.025901973247528076,
+          0.18569902578989672
+        ],
+        "significant": true
+      }
+    }
+  },
+  "out-of-sample|400|2500|h8|l1": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 0.328874796628952,
+      "duplicated": 0.32014426589012146,
+      "contaminated": 0.30740848183631897
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.008766908198595047,
+        "ci": [
+          -0.019905338436365126,
+          0.0005090869963169068
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.008733537006378174,
+        "ci": [
+          -0.021437913179397583,
+          0.0014582276344299316
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.021551592275500298,
+        "ci": [
+          -0.05652057155966759,
+          0.004764690995216366
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.021488707979768516,
+        "ci": [
+          -0.05358901619911194,
+          0.004475399851799011
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.012784685008227825,
+        "ci": [
+          -0.04137741811573505,
+          0.011426609382033345
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.01275517097339034,
+        "ci": [
+          -0.03244200348854065,
+          0.003188088536262512
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|400|2500|h8|nrmse": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 0.2521987122793992,
+      "duplicated": 0.24567588915427527,
+      "contaminated": 0.23784704816838106
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.00655048964843154,
+        "ci": [
+          -0.018751752873261734,
+          0.0030299308399359477
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.006522132167840995,
+        "ci": [
+          -0.023451140771309553,
+          0.0037471155325571603
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.014413628814990321,
+        "ci": [
+          -0.0400040723072986,
+          0.004062888507420817
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.01436263021292786,
+        "ci": [
+          -0.04167718626558781,
+          0.0044830379386743
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.00786313916655878,
+        "ci": [
+          -0.02928360573326547,
+          0.0108127704045425
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.007840498045086864,
+        "ci": [
+          -0.017992106576760647,
+          0.002334424604972213
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|400|2500|h368|l1": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 0.5856011509895325,
+      "duplicated": 0.6030817627906799,
+      "contaminated": 0.5293590426445007
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": 0.017899787053465843,
+        "ci": [
+          -0.06082008704543114,
+          0.11222682744264594
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.017456597474217416,
+        "ci": [
+          -0.01606804132461548,
+          0.05068004131317139
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.05625283345580101,
+        "ci": [
+          -0.1298747032880783,
+          0.007912389934062928
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0562479034781456,
+        "ci": [
+          -0.14919453859329224,
+          0.01323804259300232
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.07415261119604111,
+        "ci": [
+          -0.20837043598294258,
+          0.014756818115711208
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.07370450095236301,
+        "ci": [
+          -0.19987457990646362,
+          0.029306024312973022
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|400|2500|h368|nrmse": {
+    "n_trajectories": 4,
+    "n_independent": 4,
+    "n_pooled": 12,
+    "means": {
+      "clean": 0.491086741288503,
+      "duplicated": 0.4967639086147149,
+      "contaminated": 0.4584374551971753
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": 0.005970975237339735,
+        "ci": [
+          -0.04022129733736316,
+          0.0544349345999459
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.005644188883776468,
+        "ci": [
+          -0.024547550827264786,
+          0.026413674155871147
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.03255954725618164,
+        "ci": [
+          -0.08733528560648357,
+          0.021981300910313886
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.032623784878104925,
+        "ci": [
+          -0.07542683929204941,
+          0.019101490577061953
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.038530522493521374,
+        "ci": [
+          -0.10743092053259407,
+          0.022504948483159093
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.03826797376188139,
+        "ci": [
+          -0.09493010739485419,
+          0.040247950702905655
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|200|500|h8|l1": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.27245646715164185,
+      "duplicated": 0.27015554904937744,
+      "contaminated": 0.27145564556121826
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.002336862962692976,
+        "ci": [
+          -0.006536083668470383,
+          0.0008597921580076205
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.002317373089492321,
+        "ci": [
+          -0.007379933819174766,
+          0.0009098198264837263
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.0010589074809104204,
+        "ci": [
+          -0.006412036716938019,
+          0.0035789195448160164
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0010161651611328125,
+        "ci": [
+          -0.010173840075731277,
+          0.005318711698055267
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.001277955248951912,
+        "ci": [
+          -0.002181261032819748,
+          0.004502968862652779
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0013012079283595086,
+        "ci": [
+          -0.003050578385591507,
+          0.00514787808060646
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|200|500|h8|nrmse": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.2581475079059601,
+      "duplicated": 0.2577358524004618,
+      "contaminated": 0.25950490434964496
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.0004417185808718205,
+        "ci": [
+          -0.0036980554709831874,
+          0.0023487220704555647
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0004249678861598171,
+        "ci": [
+          -0.0040334453185398855,
+          0.0019613085066278774
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": 0.001304159731467565,
+        "ci": [
+          -0.0031483321140209726,
+          0.005248870116968953
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0013478747866054377,
+        "ci": [
+          -0.005569683127105193,
+          0.006193043552339051
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.0017458783123393854,
+        "ci": [
+          -0.0010908567408720441,
+          0.004311457648873343
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0017728426727652551,
+        "ci": [
+          -0.0020299971103668324,
+          0.0050014922519524925
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|200|500|h168|l1": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.7447137236595154,
+      "duplicated": 0.7199280858039856,
+      "contaminated": 0.7549720406532288
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.025341559201478958,
+        "ci": [
+          -0.08777185976505279,
+          0.022184540331363668
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.024625444036722184,
+        "ci": [
+          -0.07849389761686325,
+          0.016162708401679993
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": 0.009684746153652668,
+        "ci": [
+          -0.04223000407218933,
+          0.058016985654830926
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.010338102376461029,
+        "ci": [
+          -0.018592537939548494,
+          0.03891911208629608
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.03502630442380905,
+        "ci": [
+          0.004135322570800782,
+          0.06967070996761322
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": 0.034963546413183215,
+        "ci": [
+          -0.0029881849884986875,
+          0.09257484078407288
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|200|500|h168|nrmse": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.6833501984675725,
+      "duplicated": 0.6721188505490621,
+      "contaminated": 0.6892378439505895
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.011674501154820124,
+        "ci": [
+          -0.05160815541942906,
+          0.026999326845010153
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.011076187126040457,
+        "ci": [
+          -0.039628671929240224,
+          0.017266882186134605
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": 0.005313532303571702,
+        "ci": [
+          -0.03859886690974239,
+          0.04948236895104241
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.005966089431544145,
+        "ci": [
+          -0.029924354776740006,
+          0.04147266201674929
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.016988033458391824,
+        "ci": [
+          -0.008438279454906805,
+          0.04228107939163845
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.017042276557584602,
+        "ci": [
+          -0.009148140897353503,
+          0.043088621894518515
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|200|2500|h8|l1": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.22752825915813446,
+      "duplicated": 0.22496461868286133,
+      "contaminated": 0.22655102610588074
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.002601960673928261,
+        "ci": [
+          -0.008213748782873153,
+          0.002565327286720276
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.002564197477698326,
+        "ci": [
+          -0.00944233313202858,
+          0.002883843705058097
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.0011451832251623273,
+        "ci": [
+          -0.01937353126704693,
+          0.017382217198610304
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0009894262865185737,
+        "ci": [
+          -0.021995775029063223,
+          0.020748104155063618
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.0014567779144272208,
+        "ci": [
+          -0.013225941732525824,
+          0.01642831079661846
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0015747711911797524,
+        "ci": [
+          -0.012723167985677719,
+          0.018284904956817616
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|200|2500|h8|nrmse": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.19575198516249656,
+      "duplicated": 0.19315451954801877,
+      "contaminated": 0.1962060458958149
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.0026206297297775745,
+        "ci": [
+          -0.008121975840379797,
+          0.0020893592697878503
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.002619269432326158,
+        "ci": [
+          -0.00985921796411278,
+          0.0020360430888831456
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": 0.0003318749045580623,
+        "ci": [
+          -0.013348915018141273,
+          0.014531614109873772
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0004394104322542747,
+        "ci": [
+          -0.01609605505441626,
+          0.016945826262235675
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.002952504634335637,
+        "ci": [
+          -0.00831401452422141,
+          0.014912900533527146
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0030586798645804328,
+        "ci": [
+          -0.006776658880213898,
+          0.01582127601529159
+        ],
+        "significant": false
+      }
+    }
+  },
+  "out-of-sample|200|2500|h168|l1": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.45889389514923096,
+      "duplicated": 0.4442785680294037,
+      "contaminated": 0.3974270522594452
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.01454907562583685,
+        "ci": [
+          -0.040227822959423065,
+          0.005040971189737316
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.014599459820985794,
+        "ci": [
+          -0.035768212378025056,
+          9.608231484889898e-05
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.061589259654283524,
+        "ci": [
+          -0.11421123296022415,
+          -0.02250719442963602
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.06128944566100836,
+        "ci": [
+          -0.139587838947773,
+          -0.01306043937802315
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.0470401830971241,
+        "ci": [
+          -0.08479993864893913,
+          -0.015549423545598986
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.04668998584002256,
+        "ci": [
+          -0.10675669908523559,
+          -0.007856018841266642
+        ],
+        "significant": true
+      }
+    }
+  },
+  "out-of-sample|200|2500|h168|nrmse": {
+    "n_trajectories": 10,
+    "n_independent": 10,
+    "n_pooled": 30,
+    "means": {
+      "clean": 0.39183416167894997,
+      "duplicated": 0.38132301916678746,
+      "contaminated": 0.3492216060558955
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.0104043012004594,
+        "ci": [
+          -0.02204709880053997,
+          0.0021665842086076516
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.010503836787939074,
+        "ci": [
+          -0.023745015549162998,
+          0.0018731146181622984
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.04275775597155094,
+        "ci": [
+          -0.06672086278597515,
+          -0.020025769844651237
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.04239156741003195,
+        "ci": [
+          -0.07585692236820862,
+          -0.014098679311573489
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.03235345477109154,
+        "ci": [
+          -0.05400898049275081,
+          -0.012329830477635048
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.03188773062209287,
+        "ci": [
+          -0.06230867759635053,
+          -0.006181835755705839
+        ],
+        "significant": true
+      }
+    }
+  },
+  "in-sample|400|500|h8|l1": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 0.31424394249916077,
+      "duplicated": 0.3150070309638977,
+      "contaminated": 0.30966058373451233
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": 0.0007611108594574034,
+        "ci": [
+          -0.0012594029307365416,
+          0.00269857719540596
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0007784560859203339,
+        "ci": [
+          -0.0009205855429172515,
+          0.002445582300424576
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.0045599061995744705,
+        "ci": [
+          -0.009880732744932175,
+          0.00017634481191635082
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.004590941807627678,
+        "ci": [
+          -0.01422029733657837,
+          0.0023977816104888915
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.005321016535162926,
+        "ci": [
+          -0.010106047987937928,
+          -0.001092544198036194
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.005369397893548012,
+        "ci": [
+          -0.014303696900606155,
+          0.0013118654489517208
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|400|500|h8|nrmse": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 0.5253096582988898,
+      "duplicated": 0.5262163498749336,
+      "contaminated": 0.5131240567813317
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": 0.0008949143027576308,
+        "ci": [
+          -0.002908464086552459,
+          0.004374231817200779
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0009095953767498336,
+        "ci": [
+          -0.002044306928291917,
+          0.0034360671959196695
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.012134459466083597,
+        "ci": [
+          -0.027114301399948623,
+          -0.00013207664402823267
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.012279688570275903,
+        "ci": [
+          -0.03887608085448547,
+          0.0036881904661034536
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.013029373768841225,
+        "ci": [
+          -0.0265306405257434,
+          -0.0019702333646516032
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.013189283947025737,
+        "ci": [
+          -0.037786486178326036,
+          0.0019783238259454376
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|400|500|h368|l1": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 1.0227349996566772,
+      "duplicated": 0.9713043570518494,
+      "contaminated": 0.9226778149604797
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.05266400799155235,
+        "ci": [
+          -0.1815715879201889,
+          0.07027776837348933
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.051302799189090725,
+        "ci": [
+          -0.14770126789808274,
+          0.04508935809135435
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.10101323574781418,
+        "ci": [
+          -0.21729973554611207,
+          0.01026497334241867
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.10002712829113007,
+        "ci": [
+          -0.20598280876874922,
+          0.004481184482574458
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.048349227756261826,
+        "ci": [
+          -0.14413676857948304,
+          0.05560809671878814
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.04872432910203934,
+        "ci": [
+          -0.10890956372022628,
+          0.006534843146800991
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|400|500|h368|nrmse": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 1.264403307189544,
+      "duplicated": 1.2036876020332177,
+      "contaminated": 1.1589015796780586
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.06225654468201101,
+        "ci": [
+          -0.22021866152063005,
+          0.08550089780862132
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.06042899183109403,
+        "ci": [
+          -0.18756437671060364,
+          0.062094528321176595
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.10679254849664867,
+        "ci": [
+          -0.25206149720276394,
+          0.03215259416028871
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.10537119237855076,
+        "ci": [
+          -0.23835300033291196,
+          0.02551241330802426
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.04453600381463766,
+        "ci": [
+          -0.15969278852765753,
+          0.07596823399265606
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.04494220054745674,
+        "ci": [
+          -0.11700042818362522,
+          0.02227521222084767
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|400|2500|h8|l1": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 0.17679733037948608,
+      "duplicated": 0.1761370450258255,
+      "contaminated": 0.16938526928424835
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.000634526542853564,
+        "ci": [
+          -0.0027300570160150527,
+          0.0014637127518653866
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0006697140946984291,
+        "ci": [
+          -0.0032566819339990617,
+          0.001731346733868121
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.007378625683486462,
+        "ci": [
+          -0.011924221366643905,
+          -0.003056571632623673
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.007451752053946257,
+        "ci": [
+          -0.0154188871383667,
+          -0.0009283579885959667
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.006744098849594593,
+        "ci": [
+          -0.010986845195293426,
+          -0.002953771874308589
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.006782037959247827,
+        "ci": [
+          -0.013895150646567343,
+          -0.001321581751108171
+        ],
+        "significant": true
+      }
+    }
+  },
+  "in-sample|400|2500|h8|nrmse": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 0.2999689231316249,
+      "duplicated": 0.29833974114929634,
+      "contaminated": 0.28486132132820785
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.0016113959557376802,
+        "ci": [
+          -0.004672096848177394,
+          0.0014085689753604246
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0016461401569967471,
+        "ci": [
+          -0.0043149318934107995,
+          0.0009072829658786446
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.015076018643852634,
+        "ci": [
+          -0.027413462670908037,
+          -0.004821503703715297
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.01520469360682182,
+        "ci": [
+          -0.037262838644286,
+          -0.0009267208981327838
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.013464622688114951,
+        "ci": [
+          -0.025386246897202605,
+          -0.003686188770613315
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.013558553449825072,
+        "ci": [
+          -0.03448481170150141,
+          -0.000390493080097545
+        ],
+        "significant": true
+      }
+    }
+  },
+  "in-sample|400|2500|h368|l1": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 0.25030434131622314,
+      "duplicated": 0.2334408015012741,
+      "contaminated": 0.21826989948749542
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.01697918027639389,
+        "ci": [
+          -0.040962406992912294,
+          0.003611509501934046
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.016960492019355296,
+        "ci": [
+          -0.047154591977596284,
+          0.008167213946580884
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.032078079879283905,
+        "ci": [
+          -0.054192494973540305,
+          -0.013267331570386892
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.03217491629272699,
+        "ci": [
+          -0.055884185060858724,
+          -0.01225768066942692
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.015098894946277142,
+        "ci": [
+          -0.02694016955792904,
+          -0.004201141372323039
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.015214424273371696,
+        "ci": [
+          -0.02695803642272949,
+          -0.004013670980930329
+        ],
+        "significant": true
+      }
+    }
+  },
+  "in-sample|400|2500|h368|nrmse": {
+    "n_trajectories": 16,
+    "n_independent": 16,
+    "n_pooled": 48,
+    "means": {
+      "clean": 0.33080580178648233,
+      "duplicated": 0.31029965976874035,
+      "contaminated": 0.2925167875364423
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.020650011391503117,
+        "ci": [
+          -0.04881031590824328,
+          0.0046030302376796756
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.020613838150600593,
+        "ci": [
+          -0.055223045800812574,
+          0.009856344743942237
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.03834558867256467,
+        "ci": [
+          -0.06450642674074819,
+          -0.015438250467802088
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.03846407765677821,
+        "ci": [
+          -0.06664666968863459,
+          -0.013987936777994026
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.017695577281061563,
+        "ci": [
+          -0.03235730042215433,
+          -0.004119122517295177
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.017850239506177604,
+        "ci": [
+          -0.03189048117492346,
+          -0.004468439084788201
+        ],
+        "significant": true
+      }
+    }
+  },
+  "in-sample|200|500|h8|l1": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.26862451434135437,
+      "duplicated": 0.26810526847839355,
+      "contaminated": 0.26793575286865234
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.0005204776534810662,
+        "ci": [
+          -0.0018084421753883362,
+          0.0007661297917366015
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0005320148423314094,
+        "ci": [
+          -0.0018244963139295578,
+          0.0006572827696800229
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.0006869626231491566,
+        "ci": [
+          -0.0032902196049690246,
+          0.001665840297937393
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.000718566107749939,
+        "ci": [
+          -0.005007160454988479,
+          0.002574780210852622
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.00016648496966809034,
+        "ci": [
+          -0.0024901017546653747,
+          0.0018457800149917602
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.00018655126541852952,
+        "ci": [
+          -0.004219485819339752,
+          0.0029104106128215786
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|200|500|h8|nrmse": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.39531628876669794,
+      "duplicated": 0.39497105586223114,
+      "contaminated": 0.39216765022685385
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.00034750533647771593,
+        "ci": [
+          -0.0021982791491298643,
+          0.001441444412001173
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0003675515442577182,
+        "ci": [
+          -0.0019343211259852111,
+          0.00105253877038631
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.0031469243998456208,
+        "ci": [
+          -0.009714826683585441,
+          0.002047835411424309
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.003248547498996441,
+        "ci": [
+          -0.014814273799713859,
+          0.0038042240800001733
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.0027994190633679047,
+        "ci": [
+          -0.008784147953757884,
+          0.001973812934807222
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.002880995954738723,
+        "ci": [
+          -0.013724245490808772,
+          0.003760603178515433
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|200|500|h168|l1": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.5588497519493103,
+      "duplicated": 0.5409202575683594,
+      "contaminated": 0.5429989695549011
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.018034569919109344,
+        "ci": [
+          -0.037629587948322295,
+          0.0005676001310348374
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.01798054391145706,
+        "ci": [
+          -0.03306264281272888,
+          -0.0021809175610542353
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.015927059575915337,
+        "ci": [
+          -0.0326449528336525,
+          0.0005987212061881951
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.01588687479197979,
+        "ci": [
+          -0.03137786835432053,
+          0.0011570751667022623
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.002107510808855295,
+        "ci": [
+          -0.008736258745193482,
+          0.013701529800891876
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.002093669119477272,
+        "ci": [
+          -0.005663005262613296,
+          0.010148747265338896
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|200|500|h168|nrmse": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.6911909144658309,
+      "duplicated": 0.6673963041896493,
+      "contaminated": 0.6701832831415355
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.02391429918892363,
+        "ci": [
+          -0.04681807390899737,
+          -0.0023296768657671794
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.02384182911719012,
+        "ci": [
+          -0.040460275508399736,
+          -0.00670950560488254
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.021121648800067415,
+        "ci": [
+          -0.0410702330052343,
+          -0.0016090385997906279
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.02103657494421698,
+        "ci": [
+          -0.03880622644837085,
+          -0.0024493645462724087
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": 0.00279265038885622,
+        "ci": [
+          -0.010756857489418839,
+          0.01711676890651384
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.002805254172973145,
+        "ci": [
+          -0.007606144026558598,
+          0.013739314089473565
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|200|2500|h8|l1": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.13336698710918427,
+      "duplicated": 0.13373112678527832,
+      "contaminated": 0.1319289207458496
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": 0.0003699910012073815,
+        "ci": [
+          -0.0007038451731204987,
+          0.0014549110084772106
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": 0.0003602369502186775,
+        "ci": [
+          -0.0008940696716308594,
+          0.0015116170048713683
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.0014277717564255,
+        "ci": [
+          -0.0037300992757081986,
+          0.0006339691579341886
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.001456718847155571,
+        "ci": [
+          -0.005292254500091076,
+          0.0017180938273668284
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.0017977628158405423,
+        "ci": [
+          -0.0038961533457040785,
+          2.020876854658112e-05
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0018169557973742485,
+        "ci": [
+          -0.005302663519978523,
+          0.0008686918765306469
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|200|2500|h8|nrmse": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.20616996574860352,
+      "duplicated": 0.20590056918370417,
+      "contaminated": 0.20197029800241828
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.0002656493723838248,
+        "ci": [
+          -0.0017622682011216723,
+          0.001179306258439494
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.00027699814658516467,
+        "ci": [
+          -0.0016413868285524284,
+          0.0010445864950744711
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.004194416276722128,
+        "ci": [
+          -0.009861489779387533,
+          0.00021143071194235712
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.004261281479411145,
+        "ci": [
+          -0.014357896874316512,
+          0.002147842238410408
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.003928766904338302,
+        "ci": [
+          -0.009283029008656737,
+          0.00027779325460774626
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.00398428333282598,
+        "ci": [
+          -0.013473575754871212,
+          0.0018462869306851205
+        ],
+        "significant": false
+      }
+    }
+  },
+  "in-sample|200|2500|h168|l1": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.20407088100910187,
+      "duplicated": 0.20255717635154724,
+      "contaminated": 0.18931151926517487
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.001523526618257165,
+        "ci": [
+          -0.00795072428882122,
+          0.004915571212768555
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0014997443839907647,
+        "ci": [
+          -0.00923670008778572,
+          0.0067311767488718
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.014753561466932297,
+        "ci": [
+          -0.020544805750250816,
+          -0.00903625935316086
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.014799758747220039,
+        "ci": [
+          -0.021346092224121094,
+          -0.008449238911271096
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.0132300341501832,
+        "ci": [
+          -0.01842643879354,
+          -0.008159874007105829
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.013300014363229275,
+        "ci": [
+          -0.020445235818624497,
+          -0.006509005278348924
+        ],
+        "significant": true
+      }
+    }
+  },
+  "in-sample|200|2500|h168|nrmse": {
+    "n_trajectories": 39,
+    "n_independent": 39,
+    "n_pooled": 117,
+    "means": {
+      "clean": 0.26593133469677377,
+      "duplicated": 0.26166238107232964,
+      "contaminated": 0.24735332121196976
+    },
+    "duplicated_minus_clean": {
+      "naive": {
+        "diff": -0.00427248776330907,
+        "ci": [
+          -0.011730327616389959,
+          0.0031650080289850934
+        ],
+        "significant": false
+      },
+      "cluster": {
+        "diff": -0.0042514731002987445,
+        "ci": [
+          -0.012851882003184038,
+          0.004580396272114737
+        ],
+        "significant": false
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "diff": -0.018566093090673287,
+        "ci": [
+          -0.02599035505619312,
+          -0.011324891739357731
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.018632394951652,
+        "ci": [
+          -0.027441079874769726,
+          -0.010065530154567504
+        ],
+        "significant": true
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "diff": -0.014293605327364216,
+        "ci": [
+          -0.020346959747183025,
+          -0.008581264387083893
+        ],
+        "significant": true
+      },
+      "cluster": {
+        "diff": -0.014380921851353258,
+        "ci": [
+          -0.021976875131710955,
+          -0.007085330774768827
+        ],
+        "significant": true
+      }
+    }
+  },
+  "_summary": {
+    "duplicated_minus_clean": {
+      "naive": {
+        "hurt": 0,
+        "helped": 1,
+        "no_effect": 31
+      },
+      "cluster": {
+        "hurt": 0,
+        "helped": 2,
+        "no_effect": 30
+      }
+    },
+    "contaminated_minus_clean": {
+      "naive": {
+        "hurt": 0,
+        "helped": 10,
+        "no_effect": 22
+      },
+      "cluster": {
+        "hurt": 0,
+        "helped": 9,
+        "no_effect": 23
+      }
+    },
+    "contaminated_minus_duplicated": {
+      "naive": {
+        "hurt": 1,
+        "helped": 10,
+        "no_effect": 21
+      },
+      "cluster": {
+        "hurt": 2,
+        "helped": 8,
+        "no_effect": 22
+      }
+    }
+  }
+}
