@@ -320,13 +320,18 @@ def main():
     crossing = sum(1 for i in range(naive) if episode_id[i] != episode_id[i + Wn - 1])
     windows = {"rows": int(len(data)), "history_horizon": int(H), "forecast_horizon": int(F),
                "window": int(Wn),
+               "tail_rows_that_cannot_start_a_window": int(Wn - 1),
                "naive_windows_reference_builder_marks_valid": int(naive),
                "boundary_crossing_windows": int(crossing),
-               "usable_episode_respecting_windows": int(naive - crossing)}
+               "usable_episode_respecting_windows": int(naive - crossing),
+               "derivation": f"{len(data)} rows - {Wn - 1} tail = {naive} naive "
+                             f"- {crossing} crossing = {naive - crossing} usable"}
     print(f"\n  window accounting (D-06):")
     print(f"    naive windows the reference builder marks valid : {naive}")
     print(f"    of which cross an episode boundary              : {crossing}")
     print(f"    usable, episode-respecting                      : {naive - crossing}")
+    print(f"    derivation: {len(data)} - {Wn - 1} tail = {naive} - {crossing} crossing "
+          f"= {naive - crossing}")
     with open(os.path.join(R.RESULTS, "step0_regimes.json"), "w") as f:
         json.dump({"window_accounting": windows, "regimes": regimes,
                    "per_episode_stats": {str(e): per_ep[e] for e in per_ep},

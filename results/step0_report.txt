@@ -144,3 +144,4 @@ STRATIFICATION KEY for the Step 2 split
     naive windows the reference builder marks valid : 9961
     of which cross an episode boundary              : 352
     usable, episode-respecting                      : 9609
+    derivation: 10000 - 39 tail = 9961 - 352 crossing = 9609

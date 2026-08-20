@@ -2950,6 +2950,38 @@ Recorded as a deliberate non-deviation: see M-15. The reference has none in this
 none is added, even though the R-18 overfit at lr 1e-3 showed loss excursions correlated
 across heads. Gradient norms are logged every iteration instead.
 
+### X-09 — The earliest analysis lives outside this repository, and everything in it was carried forward · **NEW**
+`../rwm_analysis/` holds the first work on this dataset — `analyze_state_action_data.py`,
+`diagnose_jump.py`, `verify_resets.py`, a 210-line `report.txt` and four figures — written before
+`rwm_repro` existed. It is not tracked by this repository (0 files), so a clone does not receive
+it. Recorded here so its absence is deliberate rather than an oversight, and audited so the
+absence is safe.
+
+**Audited against the ledger. Nothing in it is contradicted, and nothing substantive is stranded:**
+
+| early finding | where it lives now |
+|---|---|
+| 10 unmarked resets at rows 999, 1999 … 9999; reset fingerprint | `D-04`, `D-05` |
+| 9,961 naive / 352 crossing / 9,609 usable | `D-06`, now derived into `results/step0_regimes.json` |
+| assertion 3 fails over all adjacent rows, passes within episodes | `D-04`'s origin |
+| action leads position by 4 steps (80 ms), median gain 0.350, ~2.9× wider swing | `D-07`, `task1b_pd_law.py` |
+| trot at 1.85 Hz, diagonal co-contact 1.7× chance, duty 52.6–55.2%, two feet down 84.4% | `D-08` |
+| one thigh contact, row 7039, RF, no termination | `D-09` |
+| column 65 identically zero | `D-03` |
+
+**One derivation step was missing until now.** The early report decomposes the window count as
+`10000 rows − 39 tail = 9961 − 352 crossing = 9609`. The ledger carried the three totals but not
+the 39-row tail term, which is what makes 9,961 comprehensible rather than arbitrary.
+`step0_velocity_regimes.py` now emits the whole chain.
+
+**One cosmetic defect in the early report, not carried forward:** its duty-factor block prints
+"thigh channels are nonzero -- check" while listing every thigh duty factor as 0.0%. Both are
+true — one contact step in 10,000 rounds to 0.0% — but the line reads as a warning about a
+problem that does not exist.
+**Evidence** `DATA` `../rwm_analysis/report.txt`; `RUN` `results/step0_regimes.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
 ---
 
 ## H. Superseded claims

@@ -1687,6 +1687,20 @@
       "retracts": []
     },
     {
+      "id": "X-09",
+      "claim": "The earliest analysis lives outside this repository, and everything in it was carried fo",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "DATA",
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step0_regimes.json"
+      ],
+      "retracts": []
+    },
+    {
       "id": "S-01",
       "claim": "\"The lite repo may not ship training data\"",
       "relevance": "",
@@ -1832,6 +1846,6 @@
     "O": 13,
     "R": 57,
     "S": 13,
-    "X": 8
+    "X": 9
   }
 }

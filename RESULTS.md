@@ -83,7 +83,7 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | `M-` methodological findings | 31 | — |
 | `R-` measured results | 57 | — |
 | `O-` open questions | 13 | — |
-| `X-` deliberate deviations | 8 | — |
+| `X-` deliberate deviations | 9 | — |
 | `S-` superseded, retained | 13 | — |
 
 Highlights: the released data has **ten episode boundaries its own termination column does not

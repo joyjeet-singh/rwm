@@ -4,9 +4,11 @@
     "history_horizon": 32,
     "forecast_horizon": 8,
     "window": 40,
+    "tail_rows_that_cannot_start_a_window": 39,
     "naive_windows_reference_builder_marks_valid": 9961,
     "boundary_crossing_windows": 352,
-    "usable_episode_respecting_windows": 9609
+    "usable_episode_respecting_windows": 9609,
+    "derivation": "10000 rows - 39 tail = 9961 naive - 352 crossing = 9609 usable"
   },
   "regimes": [
     {
