@@ -271,7 +271,7 @@ class RWMEnsemble(nn.Module):
             #      is gone;
             #   2. GaussianNLLLoss uses reduction='mean' over batch AND dims where the
             #      mse branch SUMS over dims (a factor of 45), but it also carries a
-            #      1/(2 sigma^2) weight -- at init sigma ~ 6.7e-3, so in practice the
+            #      1/(2 sigma^2) weight -- at init sigma ~ 2.47e-2 (the BOUNDED value; 6.7e-3 is exp(state_min_logstd), not sigma), so in practice the
             #      term lands ~18x LARGER, not smaller. Its weight relative to bound,
             #      contact and termination is therefore changed, not preserved.
             # The bound loss is still computed and still applied (compute_state_loss),

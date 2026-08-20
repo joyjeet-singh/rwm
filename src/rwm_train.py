@@ -182,10 +182,17 @@ class DuplicatedWindowDataset(WindowDataset):
     conservative side of the comparison.
     """
 
-    def __init__(self, data, episode_id, episodes, cfg, window=WINDOW, n_extra=195, seed=0):
+    def __init__(self, data, episode_id, episodes, cfg, window=WINDOW, n_extra=None,
+                 seed=0):
+        """n_extra defaults to the number of windows the contaminated arm ADDS, derived
+        from the same splice enumeration rather than typed. It was hardcoded to 195,
+        which is right only for the seed-0 {1,8} holdout; under any other split the
+        control silently stopped matching the arm it exists to match."""
         super().__init__(data, episode_id, episodes, cfg, window)
         self.n_clean = len(self.starts)
         self.duplication_seed = 10_000 + seed
+        if n_extra is None:
+            n_extra = len(splice_window_starts(episode_id, set(episodes), window))
         rng = np.random.default_rng(self.duplication_seed)
         dup = rng.choice(len(self.starts), size=n_extra, replace=False)
         self.n_dup = int(n_extra)

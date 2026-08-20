@@ -72,9 +72,31 @@ rm -f results/_regenerated.txt
 echo "RWM reproduction — full pipeline"
 echo "  mode: $([ $QUICK -eq 1 ] && echo '--quick (no training)' || echo 'full')"
 echo "  python: $PY"
+# M13: the pipeline recorded torch/numpy versions into artifacts but never checked
+# them, and verify_reproduction.py cannot compare them because they are strings.
+# A mismatch here invalidates bitwise comparison, so fail loudly and early.
+"$PY" - <<'ENVCHECK' || { echo "  ENVIRONMENT MISMATCH — see requirements.txt"; exit 2; }
+import sys
+want = {"torch": "2.2.2", "numpy": "1.26.4"}
+bad = []
+for mod, exp in want.items():
+    try:
+        got = __import__(mod).__version__
+    except Exception as e:
+        bad.append(f"{mod}: not importable ({e})"); continue
+    if got.split("+")[0] != exp:
+        bad.append(f"{mod}: {got}, expected {exp}")
+if bad:
+    print("  " + "\n  ".join(bad)); sys.exit(1)
+print(f"  env OK: torch {want['torch']}, numpy {want['numpy']}, python {sys.version.split()[0]}")
+ENVCHECK
 
+# M12: stage 1's output-check was the CSV itself, so once setup.sh had run once the
+# stage skipped -- and with it the two SHA-256 checks whose failure message says
+# results from different bytes "are not comparable". Passing an empty output-check
+# makes it run every time; setup.sh is idempotent and re-verifies the hashes.
 stage 1 "Fetch upstreams and verify artifact hashes" "2 min" \
-      "../robotic_world_model_lite/assets/data/state_action_data_0.csv" ./setup.sh
+      "" ./setup.sh
 REPORT=step0_report.txt stage 2 "Data checks and velocity regimes" "20 s" \
       results/step0_strat.json $PY scripts/step0_velocity_regimes.py
 stage 3 "Harness acceptance tests (6 tests)" "30 s" \

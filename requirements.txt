@@ -7,7 +7,11 @@
 #
 # gitpython and tensordict are needed only so the reference package
 # `rsl_rl.modules` imports cleanly for the differential tests (R-14).
-# Both are pure Python and neither disturbs the torch pin.
+#
+# tensordict was left unpinned, which was a live hazard rather than a tidiness
+# issue: it is version-coupled to torch, and `pip install -r requirements.txt`
+# would resolve a current release that demands a newer torch than the pin two
+# lines above. Pinned to the version every recorded result was produced under.
 #
 # Do NOT run `pip install -e .` in either upstream repository: their setup.py
 # pins torch>=2.7 with CUDA and will replace the pins above.
@@ -16,5 +20,5 @@ torch==2.2.2
 numpy==1.26.4
 pandas==2.2.3
 matplotlib==3.8.4
-gitpython
-tensordict
+gitpython==3.1.59
+tensordict==0.3.2

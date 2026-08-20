@@ -11,7 +11,8 @@ Normalised RMSE fixes the denominator once, over the TRAINING episodes:
     nrmse[d] = RMSE(pred[..., d], true[..., d]) / scale[d]
     scale[d] = std of normalised dimension d over training-episode rows
 
-`scale` is a constant stored in the manifest, never recomputed per timestep and
+`scale` is a constant stored in results/step4_0a_results.json under `nrmse_scale`
+(it is NOT in results/manifest.json, which this line used to claim), never recomputed per timestep and
 never derived from held-out data. So it cannot approach zero, and the reading is
 clean: 1.0 means "no better than predicting the training mean", below 1.0 means
 the model carries information about that dimension.
