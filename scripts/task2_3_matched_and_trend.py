@@ -109,5 +109,10 @@ print(f"    But the RATIO behaves differently: out-of-sample {oos['ratio'][1]:.1
 print(f"    The out-of-sample 2500 point ({oos['ratio'][1]:.1f}x) is an outlier driven by an")
 print(f"    anomalous Arm B value there; excluding it the out-of-sample ratio is"
       f" {oos['ratio'][0]:.1f}, {oos['ratio'][2]:.1f}, {oos['ratio'][3]:.1f}, {oos['ratio'][4]:.1f} -- flat to slightly rising.")
+# Provenance, so a reader can tell this apart from the three-seed artifacts:
+# only ONE 10,000-iteration run exists per arm (M-25 records why), so every number
+# here is single-seed. The seed was not recorded until the review.
+out["provenance"]={"runs":["armA_seed1_10k","armB_seed1_10k"],"seeds":[1],
+                   "n_seeds":1,"note":"single-seed by necessity, not by choice -- see M-25"}
 json.dump(out,open(os.path.join(R.RESULTS,"task2_3_matched_trend.json"),"w"),indent=2,default=float)
 print(f"\n  wrote {R.rel(os.path.join(R.RESULTS,'task2_3_matched_trend.json'))}")

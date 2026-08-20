@@ -116,7 +116,7 @@ C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, M-30, which apply to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, M-30, M-31, which apply to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -1113,6 +1113,50 @@ relaunch. Every driver records a per-run exit status, as `run_nll.sh` and `run_c
 **Status** ADOPTED · **Relevance** METHOD
 
 
+### M-31 — R-33's verdict turns on a criterion that changed between the two scripts · **NEW**
+`scripts/taskAB_gate_r27.py:145-147` states the Jensen test as **three** conditions, all required:
+
+```
+mean_MSE          max/min < 1.05
+sqrt_of_mean_MSE  max/min < 1.05
+mean_of_sqrt_MSE  last > first x 1.20
+```
+
+`scripts/batch1_retract_jensen_char.py:102` states it as **two**, with both thresholds relaxed:
+
+```
+sqrt_of_mean_MSE  max/min < 1.10        (was 1.05)
+mean_of_sqrt_MSE  last > first x 1.15   (was 1.20)
+```
+
+The `mean_MSE` flatness condition was dropped entirely.
+
+**On batch1's own 40-seed numbers** the two criteria disagree, and the dropped condition is the
+one that fails: v1 = **1.1159** (needed < 1.05), v2 = 1.0434, v3 = 1.6243. Under the
+original three-condition criterion the verdict is **NOT established**; under the revised
+two-condition one it is **SUPPORTED**. So R-33's "SUPPORTED at 40 seeds" is carried by the
+criterion change, not by the extra seeds.
+
+**In fairness, two things.** The artifact does not conceal it — `mean_MSE_flat` is recorded as
+`False` in `results/batch1_post_retraction.json`, and the script prints a note that
+mean MSE still varies 1.12× at 40 seeds. And dropping that condition is *defensible on
+theory*: Jensen's inequality does not require `mean_MSE` to be flat across n. E[√X] < √E[X]
+whatever E[X] does; flatness of the mean was never part of the mechanism, only a convenient proxy
+for "the sampling distribution has settled".
+
+**What is not defensible is doing it silently.** The criterion was written down, the data were
+seen, the criterion was changed, and the entry recording the result says none of that — the
+report states the test in words with no thresholds at all. That is the same failure S-12 records
+for Task 3 and M-26 for the estimator: a rule stated in advance loses its force the moment it is
+revised after the answer is visible, however good the reason.
+
+**Convention.** Where a later script restates an earlier script's acceptance criterion, it prints
+both, evaluates both, and the ledger entry records the disagreement if there is one.
+**Evidence** `RUN` `results/batch1_post_retraction.json`, `results/taskAB_gate_r27.json`;
+`SRC` `scripts/taskAB_gate_r27.py:145-147`, `scripts/batch1_retract_jensen_char.py:102`.
+**Status** ADOPTED · **Relevance** METHOD
+
+
 ---
 
 ## E. Measured results
@@ -1886,6 +1930,10 @@ criterion is therefore the two rows that bear on the mechanism.
 The estimator conclusion is independent of the mechanism and stands: per-seed-averaged nRMSE at
 n=10 is **41% below** the pooled form. Pooled is adopted.
 **Evidence** `RUN` `results/batch1_post_retraction.json`.
+**Criterion** This verdict uses a two-condition test; `taskAB_gate_r27.py` had stated a
+three-condition one, and on these same numbers the dropped condition fails (v1 = 1.1159 against a
+required < 1.05). Under the original criterion the verdict is NOT established. See M-31 — the
+change is defensible on theory and was not disclosed.
 **Status** SUPPORTED · **Relevance** CONTRIB
 
 ### R-34 — The released checkpoint characterised on all ten episodes, independent trajectories · **NEW**

@@ -733,10 +733,25 @@
       ],
       "artifacts": [
         "results/control_driver.log",
-        "results/manifest.json",
         "results/nll_driver.log",
+        "results/tasks45_driver.log"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-31",
+      "claim": "R-33's verdict turns on a criterion that changed between the two scripts",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/batch1_post_retraction.json",
+        "results/manifest.json",
         "results/step3_report.txt",
-        "results/tasks45_driver.log",
+        "results/taskAB_gate_r27.json",
         "scripts/ledger_check.py"
       ],
       "retracts": []
@@ -1813,7 +1828,7 @@
     "B": 5,
     "C": 13,
     "D": 13,
-    "M": 30,
+    "M": 31,
     "O": 13,
     "R": 57,
     "S": 13,

@@ -134,5 +134,16 @@
       "ratio_r2": 0.7580712908092534,
       "gap_zero_at": 16456.657478161087
     }
+  },
+  "provenance": {
+    "runs": [
+      "armA_seed1_10k",
+      "armB_seed1_10k"
+    ],
+    "seeds": [
+      1
+    ],
+    "n_seeds": 1,
+    "note": "single-seed by necessity, not by choice -- see M-25"
   }
 }

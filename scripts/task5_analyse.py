@@ -150,5 +150,10 @@ for a in ("A","B"):
     print(f"        implied iterations to -14.4629: {-14.4629/sl:,.0f}"
           f"  (from the 2500-iteration pooled fit: 153,270)")
 out["q4"]=q4
+# Provenance, so a reader can tell this apart from the three-seed artifacts:
+# only ONE 10,000-iteration run exists per arm (M-25 records why), so every number
+# here is single-seed. The seed was not recorded until the review.
+out["provenance"]={"runs":["armA_seed1_10k","armB_seed1_10k"],"seeds":[1],
+                   "n_seeds":1,"note":"single-seed by necessity, not by choice -- see M-25"}
 json.dump(out,open(os.path.join(R.RESULTS,"task5_analysis.json"),"w"),indent=2,default=float)
 print(f"\n  wrote {R.rel(os.path.join(R.RESULTS,'task5_analysis.json'))}")

@@ -601,5 +601,16 @@
       "rate_2500_pooled": -9.4362e-05,
       "implied_iters": 158002.89768376274
     }
+  },
+  "provenance": {
+    "runs": [
+      "armA_seed1_10k",
+      "armB_seed1_10k"
+    ],
+    "seeds": [
+      1
+    ],
+    "n_seeds": 1,
+    "note": "single-seed by necessity, not by choice -- see M-25"
   }
 }
