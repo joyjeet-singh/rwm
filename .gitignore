@@ -30,3 +30,6 @@ runs/
 # scratch
 *.bak
 .DS_Store
+
+# transient: written by one reproduce.sh run, describes that run not the repository
+results/_regenerated.txt

@@ -24,18 +24,26 @@ This work derives from, and is a reproduction study of:
 
   Robotic Systems Lab, ETH Zurich.
 
-Upstream repositories, both Apache License 2.0, pinned at the commits this
-reproduction was verified against:
+Upstream repositories, pinned at the commits this reproduction was verified
+against. They are under DIFFERENT licences; neither is redistributed here
+(setup.sh fetches them, and .gitignore excludes them from this repository):
 
-  leggedrobotics/robotic_world_model_lite
+  leggedrobotics/robotic_world_model_lite      Apache License 2.0
     commit 13a798e9d35dabf12c0e6e02977b25ec64dfb2bd
+    See LICENCE in that repository.
     Portions of this work reimplement logic read from scripts/train.py,
     scripts/model_training.py and scripts/configs/*.
 
-  leggedrobotics/rsl_rl_rwm
+  leggedrobotics/rsl_rl_rwm                    BSD 3-Clause
     commit 18eebcdd7145284c8d5eed5d8ed1a4b96c649693
+    Copyright (c) 2025 ETH Zurich; Copyright (c) 2025 NVIDIA CORPORATION
+    & AFFILIATES. All rights reserved. See LICENSE in that repository.
     Portions of this work reimplement logic read from
     rsl_rl/modules/system_dynamics.py and rsl_rl/modules/architectures/*.
+
+  Per BSD 3-Clause clause 3, neither the names of the copyright holders nor
+  of their contributors are used here to endorse or promote this work. See
+  INDEPENDENCE below.
 
 Reference artifacts consumed but NOT redistributed in this repository
 (see setup.sh, which fetches them and verifies these hashes):

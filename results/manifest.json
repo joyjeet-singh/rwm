@@ -405,7 +405,7 @@
     "robotic_world_model_lite": "13a798e9d35dabf12c0e6e02977b25ec64dfb2bd",
     "rsl_rl_rwm": "18eebcdd7145284c8d5eed5d8ed1a4b96c649693"
   },
-  "wall_clock_seconds": 46.5,
+  "wall_clock_seconds": 73.5,
   "caveats": [
     "The reference checkpoint was trained by the authors on this entire CSV, so protocol A's held-out episodes were in its training data. For this checkpoint protocol A is not a generalisation measure.",
     "Boundary crossing does NOT explain the A/B gap: crossing trajectories scored better than non-crossing ones. Per-episode difficulty does.",

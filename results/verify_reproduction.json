@@ -1,0 +1,21 @@
+{
+  "regenerated_files": [
+    "batch1_post_retraction.json",
+    "manifest.json",
+    "step0_regimes.json",
+    "step0_strat.json",
+    "step2_acceptance.json",
+    "step4_3_differential.json",
+    "task5_differential.json",
+    "taskAB_gate_r27.json"
+  ],
+  "values_compared": 1129,
+  "bitwise_identical": 1129,
+  "identical_to_1e-9": 0,
+  "differing": 0,
+  "timing_excluded": 2366,
+  "nan_in_both": 0,
+  "copied_file_values": 428457,
+  "copied_identical": 428457,
+  "copied_differing": 0
+}

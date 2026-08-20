@@ -95,10 +95,12 @@ not a training accident (`C-10`, `C-11`), and the released checkpoint's collapse
 
 ```bash
 ./setup.sh              # clone upstreams at pinned commits, verify SHA-256
-./reproduce.sh --quick  # everything except training, minutes
+./reproduce.sh --quick --force  # everything except training, minutes
 ```
 
-Verified from an empty directory: **258,700 numeric values regenerate bitwise**, 0 differing.
+Verified from a genuine clean clone: **8 artifact files, 1,129 numeric values,
+1,129 bitwise identical (100.00%), 0 differing** (`results/verify_reproduction.json`).
+An earlier figure of 258,700 counted files a clone carries in rather than regenerates; see `M-28`.
 
 ## Links
 

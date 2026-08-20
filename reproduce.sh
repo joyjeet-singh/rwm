@@ -48,8 +48,14 @@ stage() {  # stage <n> <name> <runtime> <output-to-check> [NEEDS_WEIGHTS] <comma
     return 0
   fi
   echo "   running: $*"
-  if "$@"; then echo "   OK"; else echo "   FAILED (exit $?)"; FAIL=1; fi
+  if "$@"; then
+    echo "   OK"
+    # record what this stage actually regenerated, so verify_reproduction.py can tell
+    # a rewritten file from one the clone merely carried in.
+    [ -n "$out" ] && [ -e "$out" ] && basename "$out" >> results/_regenerated.txt
+  else echo "   FAILED (exit $?)"; FAIL=1; fi
 }
+rm -f results/_regenerated.txt
 echo "RWM reproduction — full pipeline"
 echo "  mode: $([ $QUICK -eq 1 ] && echo '--quick (no training)' || echo 'full')"
 echo "  python: $PY"

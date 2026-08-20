@@ -602,8 +602,9 @@ def main():
         "protocol A is not a generalisation measure.",
         "Boundary crossing does NOT explain the A/B gap: crossing trajectories scored "
         "better than non-crossing ones. Per-episode difficulty does.",
-        "Per-episode error spans 0.60 to 1.67 and is uncorrelated with commanded speed "
-        f"(r = {decomp['per_episode_speed_error_corr']:+.2f}), so the speed stratification "
+        f"Per-episode error spans {min(vals):.2f} to {max(vals):.2f} and is uncorrelated "
+        f"with commanded speed (r = {decomp['per_episode_speed_error_corr']:+.2f}), "
+        "so the speed stratification "
         "the brief asks for does not balance difficulty; the seed-0 split holds out two "
         "of the easiest episodes.",
         "A 10-trajectory estimate is noisy: over 20 seeds protocol A is "
@@ -613,6 +614,33 @@ def main():
     ]
     if floor:
         man["results"]["hold_last_floor"] = floor
+    # These three blocks were once hand-added to manifest.json after this script wrote
+    # it, so a clean-clone regeneration silently deleted them and the verifier could not
+    # see the loss (it skipped keys missing from the regenerated file). They are emitted
+    # here so the manifest is wholly script-generated. See M-28.
+    man["statistics_convention"] = {
+        "seed_spread": "sample standard deviation, ddof=1",
+        "adopted": "batch 1, Task 4",
+        "note": "with n=3 seeds ddof=0 understates the spread by 22%; "
+                "M-16 condition 2 compares against it",
+    }
+    man["evaluation_power"] = {
+        "reference_protocol_n_trajectories": 10,
+        "adopted_n_trajectories": 100,
+        "note": "nRMSE is tail-sensitive and biased low below n=50 (M-17); "
+                "relative-L1 converges by n=25",
+        "n_independent_convention": "two trajectories whose spans overlap at all count as "
+                                    "one; helpers in src/rwm_metrics.py; caveat required "
+                                    "below ~10",
+        "n_independent_holdout_400step": 4,
+        "n_independent_all_episodes_400step": 20,
+    }
+    man["aggregation_convention"] = {
+        "primary": "form 1 pooled: sqrt(mean_d MSE_d)/mean(scale_d)",
+        "secondary": "per-dimension with win/loss count; per-group with near-constant caveat",
+        "legacy": "form 2 mean_d(RMSE_d/scale_d) -- retained where already reported, see M-19",
+        "comparability": "relative-L1 reported throughout",
+    }
     with open(os.path.join(here, "manifest.json"), "w") as f:
         json.dump(man, f, indent=2)
     print(f"  wrote {R.rel(os.path.join(here, 'manifest.json'))}")

@@ -116,7 +116,7 @@ C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, which apply to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, which apply to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -1013,6 +1013,47 @@ misstates the interval. Both units are reported in `results/task3_three_way.json
 previously published counts stay traceable.
 **Evidence** `RUN` `results/review_bootstrap_unit.json`, `results/task3_three_way.json`;
 `SRC` `scripts/task5_2_bootstrap.py:28-32,44-46`, `scripts/task4_contamination_analysis.py:27-29,44-45`.
+**Status** ADOPTED · **Relevance** METHOD
+
+
+### M-28 — The clean-clone test was counting files the clone carried in · **NEW**
+The headline reproducibility claim — "a clean-clone run of `reproduce.sh --quick` regenerates
+**258,700 numeric values bitwise**" — was measuring something other than what it said, and the
+mechanism could not have measured the right thing.
+
+**Where 258,700 came from.** `results/` is committed, so a clean clone already contains every
+artifact. `verify_reproduction.py` compared the clone's directory against the committed one and
+counted every numeric value in every file — including the ~44 files the run never rewrote, which
+compare identical because `git clone` put them there. Reconstructed at the commit that published
+the figure (`0519916`): 258,704 numeric values across 37 JSON files, minus the 4 documented NaNs
+= **258,700 exactly**, and the timing count matches its documented 1,439 exactly. The arithmetic
+was right; the label was wrong.
+
+**What `--quick` actually regenerates**, measured from a real clean clone with the upstreams
+symlinked in: **8 files, 1,129 numeric values,
+1,129 bitwise identical (100.00%),
+0 differing**, with 2,366 timing fields excluded. The other
+428,457 values sit in files the clone carried in.
+
+So the determinism result is real and perfect **within its true scope**, and that scope is
+0.4% of what was claimed.
+
+**A second defect the same run exposed.** Regenerating `manifest.json` from a clean clone
+**deleted three whole blocks** — `statistics_convention`, `evaluation_power` and
+`aggregation_convention`. No script wrote them; they had been added to the artifact by hand after
+`score_reference.py` produced it, so the documented pipeline destroyed them. And
+`verify_reproduction.py` could not see the loss: it iterated the committed keys and skipped any
+with no counterpart in the regenerated file, so a **deletion always looked like a match**.
+
+**Fixes, all three mechanical.** `reproduce.sh` records each output it regenerates in a
+transient `_regenerated.txt` manifest beside them (gitignored — it describes one run, not the
+repository); `verify_reproduction.py` partitions regenerated from carried-in files,
+reports deletions as failures, and writes `results/verify_reproduction.json` so the claim cites an
+artifact instead of prose; `score_reference.py` emits the three convention blocks so the manifest
+is wholly script-generated. Verified: the manifest now regenerates with only its timing field
+differing.
+**Evidence** `RUN` `results/verify_reproduction.json`;
+`SRC` `scripts/verify_reproduction.py`, `reproduce.sh`, `src/score_reference.py`.
 **Status** ADOPTED · **Relevance** METHOD
 
 

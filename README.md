@@ -143,16 +143,21 @@ Training is bitwise reproducible under a fixed seed: the 10,000-iteration run re
 existing 2,500-iteration run exactly at every logged iteration, and `weights_2500.pt` is
 byte-identical between them.
 
-A clean-clone run of `reproduce.sh --quick` regenerates **258,700 numeric values bitwise**, with
-zero differing. Two categories are excluded from that count and are documented here rather than
-left for a reader to find:
+A clean-clone run of `reproduce.sh --quick --force` regenerates **8 artifact files,
+1,129 numeric values, 1,129 of them bitwise identical (100.00%), 0 differing**
+(`results/verify_reproduction.json`). 2,366 timing fields are excluded — they measure the
+machine, not the model; a stage timed at 46.5 s idle took 109.7 s with training running
+concurrently, up to ~2.4x.
 
-- **Timing fields** (`wall_clock_seconds`, `s_per_iter`, `elapsed_s`) — 1,439 values. These
-  measure the machine, not the model. Magnitude of the variation: a stage timed at 46.5 s on an
-  idle machine took 109.7 s while training ran concurrently, i.e. up to ~2.4×.
-- **Four NaN values** — the `base ang vel` group ratio at h = 8/32/128/368 in
-  `task2_4_results.json`. These are `inf/inf`, a documented failure of the relative-L1 metric at
-  group granularity (`M-09`), and are NaN in both the committed and regenerated files.
+**A note on what that number is not.** An earlier version of this section claimed 258,700 values.
+That figure counted every numeric value in the committed `results/` directory. Because `results/`
+is committed, a clean clone already contains all of it, so files the run never rewrote compared
+identical and were counted as regenerated. The 428,457 values in those carried-in files are now
+reported separately and excluded from the claim. `reproduce.sh` records what it actually
+regenerates and the verifier partitions on that; see `M-28`.
+
+The `--force` flag matters: without it every stage skips, because a clean clone already contains
+each stage's declared output.
 
 ## Environment
 
@@ -161,6 +166,8 @@ Reference commits: `robotic_world_model_lite` `13a798e9`, `rsl_rl_rwm` `18eebcdd
 
 ## Licence and attribution
 
-Apache 2.0 — see [`LICENSE`](LICENSE). Both upstream repositories are Apache 2.0; attribution
+Apache 2.0 — see [`LICENSE`](LICENSE). The upstreams are under different licences:
+`robotic_world_model_lite` is Apache 2.0, `rsl_rl_rwm` is BSD 3-Clause. Neither is
+redistributed here. Attribution
 and the independence statement are in [`NOTICE`](NOTICE). This is an independent
 reproduction, not affiliated with or endorsed by the original authors.
