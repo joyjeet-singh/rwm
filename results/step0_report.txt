@@ -139,3 +139,8 @@ STRATIFICATION KEY for the Step 2 split
 
   wrote figures/step0_velocity_full.png
   wrote figures/step0_regime_scatter.png
+
+  window accounting (D-06):
+    naive windows the reference builder marks valid : 9961
+    of which cross an episode boundary              : 352
+    usable, episode-respecting                      : 9609

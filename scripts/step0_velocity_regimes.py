@@ -312,8 +312,23 @@ def main():
     plt.close(fig)
     print(f"\n  wrote {R.rel(p1)}\n  wrote {R.rel(p2)}")
 
+    # D-06's window counts (9,961 / 352 / 9,609) were stated in README, RESULTS.md and
+    # the ledger with no artifact behind them -- the claims map recorded D-06's evidence
+    # as "—". They are cheap to derive, so derive them.
+    H = cfg["history_horizon"]; F = cfg["forecast_horizon"]; Wn = H + F
+    naive = len(data) - Wn + 1
+    crossing = sum(1 for i in range(naive) if episode_id[i] != episode_id[i + Wn - 1])
+    windows = {"rows": int(len(data)), "history_horizon": int(H), "forecast_horizon": int(F),
+               "window": int(Wn),
+               "naive_windows_reference_builder_marks_valid": int(naive),
+               "boundary_crossing_windows": int(crossing),
+               "usable_episode_respecting_windows": int(naive - crossing)}
+    print(f"\n  window accounting (D-06):")
+    print(f"    naive windows the reference builder marks valid : {naive}")
+    print(f"    of which cross an episode boundary              : {crossing}")
+    print(f"    usable, episode-respecting                      : {naive - crossing}")
     with open(os.path.join(R.RESULTS, "step0_regimes.json"), "w") as f:
-        json.dump({"regimes": regimes,
+        json.dump({"window_accounting": windows, "regimes": regimes,
                    "per_episode_stats": {str(e): per_ep[e] for e in per_ep},
                    "stride_used": STRIDE, "change_points": cuts,
                    "detector": {"W": 150, "threshold": THRESH}}, f, indent=2)

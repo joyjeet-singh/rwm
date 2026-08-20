@@ -80,7 +80,7 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | `C-` paper says one thing, code does another | 13 | see the variance collapse (`C-10`, `C-11`) and the absent decay factor (`C-09`) |
 | `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm and its duplication control (`R-56`) |
 | `D-` dataset properties | 13 | — |
-| `M-` methodological findings | 29 | — |
+| `M-` methodological findings | 30 | — |
 | `R-` measured results | 57 | — |
 | `O-` open questions | 13 | — |
 | `X-` deliberate deviations | 8 | — |
@@ -92,6 +92,9 @@ evaluation **disagree on action alignment**, and the evaluation side is stale by
 (`B-05`, `D-13`). The predicted variance **collapses because that is the objective's optimum**,
 not a training accident (`C-10`, `C-11`), and the released checkpoint's collapse depth implies
 ~158,000 optimisation steps against a config saying 500 and a paper saying 2500 (`O-12`).
+That figure is the refit from the 10,000-iteration runs (158,003 Arm B / 158,319 Arm A, `R-43`);
+the pooled fit over the six 2,500-iteration runs gives 153,270 (`results/step6_analysis.json`).
+They are different estimators of the same quantity, agreeing within 3%, not competing claims.
 
 ## Reproducing
 

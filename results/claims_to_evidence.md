@@ -6,7 +6,7 @@ One row per CONTRIB ledger entry.
 |---|---|---|---|---|
 | `D-03` | The termination column is identically zero | `DATA` | CONFIRMED | — |
 | `D-04` | Ten unmarked episode boundaries | `DATA` | CONFIRMED | — |
-| `D-06` | Usable window count | `DATA` | CONFIRMED | — |
+| `D-06` | Usable window count | `DATA` | CONFIRMED | `results/step0_regimes.json`, `scripts/step0_velocity_regimes.py` |
 | `D-07` | Actions are not joint targets in radians | `DATA`, `SRC` | CONFIRMED | — |
 | `D-10` | Twenty-one commanded-velocity regime segments, not one | `DATA`, `EXT` | CONFIRMED | `results/step0_report.txt` |
 | `D-12` | Per-episode difficulty varies threefold and is not explained by speed | `RUN` | CONFIRMED | — |

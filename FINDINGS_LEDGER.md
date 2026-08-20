@@ -116,7 +116,7 @@ C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, which apply to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, M-30, which apply to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -157,7 +157,9 @@ At every boundary row, all 12 joint velocities, the 4 HAA joint positions, and a
 
 ### D-06 — Usable window count
 9,609 valid 40-step windows once episode resets are respected, against 9,961 if the termination column is trusted. The 352 difference are windows that splice one episode's end onto another's start.
-**Evidence** `DATA`.
+
+**Correction** These three numbers were stated in the README, RESULTS.md and here with no artifact behind them — the generated claims map recorded this entry's artifacts as `—`, which is precisely the gap the project's own rule forbids. `scripts/step0_velocity_regimes.py` now derives them into `window_accounting` and they are re-derived on every run.
+**Evidence** `DATA` `results/step0_regimes.json` (`window_accounting`).
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 ### D-07 — Actions are not joint targets in radians
@@ -1083,6 +1085,31 @@ sole exception being `verify_reproduction.py`, which runs *against* a regenerate
 inside it. `run_remaining.sh` trains A0 first and skips runs whose JSON already exists, so
 re-running is cheap. `run_control.sh` is stage 11b.
 **Evidence** `SRC` `reproduce.sh`, `run_remaining.sh`.
+**Status** ADOPTED · **Relevance** METHOD
+
+
+### M-30 — A driver corrupted itself mid-run, and the ledger did not record it · **NEW**
+`results/tasks45_driver.log` shows the three contamination runs starting, then:
+
+```
+./run_tasks45.sh: line 9: d2_contam_report.txt: command not found
+./run_tasks45.sh: line 10: syntax error near unexpected token `done'
+```
+
+That is the signature of a running bash script being edited in place: bash reads the file by byte
+offset as it executes, so an edit shifts the bytes under it. The three contamination runs survived
+because they had already been dispatched; the `gaussian_nll` half of the loop never ran and was
+relaunched as `run_nll.sh`. The log records no exit status for the three contamination runs, unlike
+`run_nll.sh` and `run_control.sh`, which record one per run.
+
+Two things follow. The on-disk `run_tasks45.sh` is **not the script that produced the contaminated
+runs**, so `reproduce.sh` stage 11 points at a file that never ran to completion in that form. And
+for a project whose thesis is an append-only record of every wrong turn, an aborted driver and a
+replacement script created in response to it had no D-, M- or O- entry until this one.
+
+**Convention adopted.** Never edit a shell script while it is executing; copy, edit the copy, and
+relaunch. Every driver records a per-run exit status, as `run_nll.sh` and `run_control.sh` do.
+**Evidence** `RUN` `results/tasks45_driver.log`, `results/nll_driver.log`, `results/control_driver.log`.
 **Status** ADOPTED · **Relevance** METHOD
 
 

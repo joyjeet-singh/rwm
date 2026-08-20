@@ -1,4 +1,13 @@
 {
+  "window_accounting": {
+    "rows": 10000,
+    "history_horizon": 32,
+    "forecast_horizon": 8,
+    "window": 40,
+    "naive_windows_reference_builder_marks_valid": 9961,
+    "boundary_crossing_windows": 352,
+    "usable_episode_respecting_windows": 9609
+  },
   "regimes": [
     {
       "ep": 0,

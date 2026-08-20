@@ -64,7 +64,9 @@ Four findings drive the rest of the work:
 
 4. **The released checkpoint cannot have come from the released recipe — on two independent
    parameters.** The collapse rate pooled over six runs is −9.4362e-05 ± 3.33e-07, a
-   run-to-run spread of 0.87%, implying ~153,000 iterations at the configured learning rate or
+   run-to-run spread of 0.87%, implying **153,270** iterations at the configured learning rate
+   (`results/step6_analysis.json`, `collapse.iters_to_checkpoint` — the pooled fit over the six
+   2,500-iteration runs) or
    one 31× larger. `min_logstd`, on a different gradient path and a 5× slower clock,
    independently implies order 2.7e5. The checkpoint is tagged iteration 5000, the config says
    500, the paper says 2500. (`C-12`, `C-13`, `O-12`, `R-24`, `R-25`)

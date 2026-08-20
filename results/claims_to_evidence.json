@@ -65,7 +65,10 @@
       "evidence": [
         "DATA"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "results/step0_regimes.json",
+        "scripts/step0_velocity_regimes.py"
+      ],
       "retracts": []
     },
     {
@@ -714,11 +717,26 @@
         "SRC"
       ],
       "artifacts": [
-        "results/manifest.json",
-        "results/step3_report.txt",
         "results/step4_0a_results.json",
         "results/step6_analysis.json",
-        "results/task1_calibration.json",
+        "results/task1_calibration.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-30",
+      "claim": "A driver corrupted itself mid-run, and the ledger did not record it",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/control_driver.log",
+        "results/manifest.json",
+        "results/nll_driver.log",
+        "results/step3_report.txt",
+        "results/tasks45_driver.log",
         "scripts/ledger_check.py"
       ],
       "retracts": []
@@ -1795,7 +1813,7 @@
     "B": 5,
     "C": 13,
     "D": 13,
-    "M": 29,
+    "M": 30,
     "O": 13,
     "R": 57,
     "S": 13,
