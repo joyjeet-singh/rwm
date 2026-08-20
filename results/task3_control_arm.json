@@ -456,6 +456,8 @@
     }
   },
   "verdict": {
+    "duplication_cost_pct_tail250": 0.9025860945813147,
+    "contamination_cost_pct_tail250": 21.573330649154787,
     "preregistered_statistic": "final_terms.state (== curves.state[-1], ONE minibatch)",
     "preregistered_expectation": "duplicated near clean 1.5364, not near contaminated 1.8301",
     "on_preregistered_statistic": {

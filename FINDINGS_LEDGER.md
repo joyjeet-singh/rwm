@@ -2411,8 +2411,8 @@ longer tails explains none of it.
 Duplicated sits below contaminated at **500 of
 500** iterations.
 
-**Verdict.** 195 perfectly fittable duplicate windows cost nothing measurable; 195 spliced
-windows cost ~22%. The rise is
+**Verdict.** 195 perfectly fittable duplicate windows cost 0.90% of training loss;
+195 spliced windows cost 21.57%. The rise is
 caused by splice content, not by dataset count. **R-47's mechanism is confirmed**, and its
 rollout conclusion — 0 of 32 comparisons showing harm — was never in question here, since this
 arm bears only on the training-loss inference.

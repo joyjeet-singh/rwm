@@ -163,7 +163,14 @@ def main():
     signal = abs(tails[250]["rise_duplicated"])
     noise_sd = noise["clean"]["mean_sd"]
 
+    contam_cost_pct = 100 * (tails[250]["mean"]["contaminated"]
+                             / tails[250]["mean"]["clean"] - 1)
+    dup_cost_pct = 100 * (tails[250]["mean"]["duplicated"]
+                          / tails[250]["mean"]["clean"] - 1)
+
     verdict = {
+        "duplication_cost_pct_tail250": dup_cost_pct,
+        "contamination_cost_pct_tail250": contam_cost_pct,
         "preregistered_statistic": "final_terms.state (== curves.state[-1], ONE minibatch)",
         "preregistered_expectation": "duplicated near clean 1.5364, not near contaminated 1.8301",
         "on_preregistered_statistic": {
@@ -262,8 +269,8 @@ def main():
     A("")
     A("-- verdict -----------------------------------------------------------------")
     A("  R-47's mechanism is CONFIRMED. 195 perfectly fittable duplicate windows")
-    A("  cost nothing measurable; 195 spliced windows cost ~21%. The rise is caused")
-    A("  by splice content, not by dataset size.")
+    A(f"  cost {dup_cost_pct:.2f}%; 195 spliced windows cost {contam_cost_pct:.2f}%. The rise")
+    A("  is caused by splice content, not by dataset size.")
     A("")
     A("  The pre-registration was anchored to an underpowered statistic. Read")
     A("  literally it would have refuted R-47. See M-26.")

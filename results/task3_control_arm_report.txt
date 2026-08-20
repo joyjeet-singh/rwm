@@ -44,8 +44,8 @@ Does the contaminated arm's higher training loss come from the SPLICE CONTENT
 
 -- verdict -----------------------------------------------------------------
   R-47's mechanism is CONFIRMED. 195 perfectly fittable duplicate windows
-  cost nothing measurable; 195 spliced windows cost ~21%. The rise is caused
-  by splice content, not by dataset size.
+  cost 0.90%; 195 spliced windows cost 21.57%. The rise
+  is caused by splice content, not by dataset size.
 
   The pre-registration was anchored to an underpowered statistic. Read
   literally it would have refuted R-47. See M-26.
