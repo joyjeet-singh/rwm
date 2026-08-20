@@ -10,9 +10,23 @@
 | `rsl_rl_rwm` | commit `18eebcdd7145284c8d5eed5d8ed1a4b96c649693` |
 | `state_action_data_0.csv` | sha256 `1b2e00b8…9e78921` |
 | `pretrain_rnn_ens.pt` | sha256 `2ac8686c…52c6e5a` |
-| Licence | Apache 2.0, both repos |
+| Licence | `robotic_world_model_lite` Apache 2.0; `rsl_rl_rwm` **BSD 3-Clause** (ETH Zurich, NVIDIA) |
 
-**Status.** Steps 0–5 complete. **M-23 returns REPRODUCES AT LONG HORIZON (R-40)** under a rule pre-registered before the runs existed. Last updated: 19 Aug 2026.
+**Resolving `SRC` citations.** Entries below cite upstream source by bare filename. The names are
+ambiguous across two repositories, so:
+
+| name in a citation | actual path, at the commit above |
+|---|---|
+| `system_dynamics.py` | `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py` |
+| `mlp.py` | `rsl_rl_rwm/rsl_rl/modules/architectures/mlp.py` |
+| `rnn.py` | `rsl_rl_rwm/rsl_rl/modules/architectures/rnn.py` |
+| `train.py` | `robotic_world_model_lite/scripts/train.py` |
+| `model_training.py` | `robotic_world_model_lite/scripts/model_training.py` |
+| `base_cfg.py` | `robotic_world_model_lite/scripts/configs/base_cfg.py` |
+| `anymal_d_flat.py` | `robotic_world_model_lite/scripts/envs/anymal_d_flat.py` |
+| `anymal_d_flat_cfg.py` | `robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py` |
+
+**Status.** Steps 0–5 complete; 17 training runs. **M-23 returns REPRODUCES AT LONG HORIZON (R-40)** under a rule committed to git before the runs existed (`efc35b8`). A full review of the repository is folded in at M-26 to M-31, S-12, S-13 and X-09 — including four retractions of this project's own claims. Last updated: 20 Aug 2026.
 **Environment.** Intel Mac x86_64, CPU only, torch 2.2.2, numpy 1.26.4, Python 3.11.15. Neither repo installed (`setup.py` pins torch ≥ 2.7 + CUDA); config and modules loaded via `importlib`.
 
 ---
