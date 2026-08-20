@@ -1533,5 +1533,17 @@
     "status": "",
     "evidence": [],
     "artifacts": []
+  },
+  {
+    "id": "S-12",
+    "claim": "\"Task 3's duplication rule was pre-registered\"",
+    "relevance": "METHOD",
+    "status": "RETRACTED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/control_driver.log"
+    ]
   }
 ]

@@ -953,7 +953,9 @@ M-24 recorded that a pre-registered rule must be anchored to the *regime* the cl
 This is the same lesson in a second dimension, and it was learned the same way — by watching a
 rule return the wrong answer for a reason that had nothing to do with the hypothesis.
 
-Task 3's rule named a threshold on the training loss "at 2500". The quantity that phrase resolved
+Task 3's expectation named a threshold on the training loss "at 2500". (That expectation was
+not committed before the runs — S-12 withdraws the pre-registration framing. The estimator
+lesson below stands independently of that.) The quantity that phrase resolved
 to on disk is `final_terms.state`, which is `curves.state[-1]` — **one 256-window minibatch
 draw**. Its standard deviation is 0.1769. The effect the rule was written to
 detect is 0.0143. The estimator therefore carries
@@ -2373,13 +2375,15 @@ from content. 3 seeds, duplication seeds 10000/10001/10002, all windows within-e
 held-out rows. The analysis script asserts that **no hyperparameter differs between the three
 arms outside the dataset itself**.
 
-**On the pre-registered statistic, the rule fires.** `final_terms.state`, mean of 3 seeds:
+**On the statistic the expectation named, the rule fires.** `final_terms.state`, mean of 3 seeds:
 clean 1.5364, duplicated 1.7338, contaminated
 1.8301 — duplication apparently explaining
 67.2% of the rise. Taken literally this retracts
 R-47's mechanism.
 
-**It does not, because that statistic is one minibatch.** Its sd is 0.1769
+**It does not, because that statistic is one minibatch.** (The expectation was never committed to git before
+the runs; see S-12, which withdraws the pre-registration framing without disturbing the
+measurement.) Its sd is 0.1769
 against an effect of 0.0143: 12.4× more noise
 than signal (M-26).
 
@@ -2775,6 +2779,42 @@ already matched". It was not. `task5_analyse.py:49` matched Arm A and the floor 
 episodes but compared against a seven-dimension set derived elsewhere.
 **Superseded by** R-45, which reports both matchings.
 
+
+
+### S-12 — "Task 3's duplication rule was pre-registered" · **NEW**
+**What is retracted:** the description of the Task 3 decision rule as *pre-registered*, in the
+sense this project has used that word everywhere else — a rule committed to git before the data
+testing it exists (M-16, M-23, R-44).
+
+**The timeline, from `git log` and `results/control_driver.log`:**
+
+| when | what |
+|---|---|
+| 2026-08-19 05:17:57 | `731748f` puts 1.5364 and 1.8301 into R-47 as observations |
+| 2026-08-19 19:24:18 | the three control runs start |
+| 2026-08-19 19:26:59 | `6fdbd22` — machinery only (`run_control.sh`, `--duplicated`, `n_extra`); **no threshold** |
+| 2026-08-19 21:37:51 | the runs finish; the answer exists |
+| 2026-08-20 00:34:03 | `3ee9d97` — the **first** commit containing the decision rule |
+
+The rule was stated in conversation before launch and written into the ledger after the answer
+was known. Compare M-16, registered 80 minutes before its first data, and M-23, registered 3
+minutes before its runs were launched. This one has no such lead, and a `git log -S` for any
+threshold keyed to those numbers returns nothing before `3ee9d97`.
+
+**Why it matters more here than it looks.** The result went the way the un-committed rule
+predicted, *and* the estimator was changed after the fact (M-26). Those two facts together are
+exactly the configuration pre-registration exists to rule out. Nothing in the git record
+distinguishes what happened from post-hoc construction.
+
+**What survives.** The control is still a control: the duplicated arm was built and run without
+reference to its outcome, its dataset differs from the contaminated arm's in content only, and
+the analysis script asserts arm comparability from the run files themselves. The
+*measurement* stands; only the claim about its epistemic status is withdrawn.
+
+**Replaces** the word "pre-registered" in R-55 and M-26 with the accurate description: an
+expectation stated in advance but not committed.
+**Evidence** `RUN` `git log`, `results/control_driver.log`.
+**Status** RETRACTED · **Relevance** METHOD
 
 ---
 
