@@ -32,6 +32,18 @@ TASK 1 -- CALIBRATION AND INPUT-DEPENDENCE OF THE PREDICTED SIGMA
     1b  CoV of sigma across batch: 0.0059   sigma-vs-|err| correlation: mean -0.004 median -0.009  positive on 21/45 dims
         sigma growth (late/early forecast steps): 1.00x
 
+  TEACHER-FORCED ARMB   mean sigma 6.861e-03   mean |err| 2.161e+00   |err|/sigma 315.0x
+        h   cov +-1s      dev   cov +-2s      dev   mean sigma
+        1     12.96%   -55.3     24.44%   -71.0    6.506e-03
+        8      5.07%   -63.2      9.70%   -85.7    6.521e-03
+       32      2.11%   -66.2      4.14%   -91.3    6.522e-03
+      128      1.06%   -67.2      2.09%   -93.3    6.522e-03
+      368      0.56%   -67.7      1.10%   -94.3    6.861e-03
+    per group (+-1 sigma coverage): vel 0.6%  vel 0.4%  gravity 0.5%  pos 0.5%  vel 0.6%  torque 0.6%
+    reliability (predicted -> observed): 20->0.1  38->0.3  55->0.4  68->0.6  87->0.8  95->1.1  99->1.4  100->1.6
+    1b  CoV of sigma across batch: 0.1188   sigma-vs-|err| correlation: mean +0.257 median +0.254  positive on 45/45 dims
+        sigma growth (late/early forecast steps): 1.13x
+
   RELEASED CKPT   mean sigma 5.792e-05   mean |err| 4.563e-01   |err|/sigma 7878.1x
         h   cov +-1s      dev   cov +-2s      dev   mean sigma
         1      0.56%   -67.7      0.56%   -94.8    5.736e-05

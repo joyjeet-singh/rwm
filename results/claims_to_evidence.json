@@ -104,14 +104,16 @@
   },
   {
     "id": "D-10",
-    "claim": "Twenty commanded-velocity regimes, not one",
+    "claim": "Twenty-one commanded-velocity regime segments, not one",
     "relevance": "CONTRIB",
     "status": "CONFIRMED",
     "evidence": [
       "DATA",
       "EXT"
     ],
-    "artifacts": [],
+    "artifacts": [
+      "results/step0_report.txt"
+    ],
     "retracts": []
   },
   {
@@ -1363,8 +1365,8 @@
   {
     "id": "R-52",
     "claim": "\u03c3 is input-independent in all four models",
-    "relevance": "CONTRIB",
-    "status": "CONFIRMED",
+    "relevance": "METHOD",
+    "status": "SUPERSEDED BY S-13 \u2014 the quantifier was wrong: Arm B had not been measured on this",
     "evidence": [
       "RUN"
     ],
@@ -1422,6 +1424,20 @@
     ],
     "artifacts": [
       "results/task3_three_way.json"
+    ],
+    "retracts": []
+  },
+  {
+    "id": "R-57",
+    "claim": "All four models, measured on one table",
+    "relevance": "CONTRIB",
+    "status": "CONFIRMED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json",
+      "scripts/task1_calibration.py"
     ],
     "retracts": []
   },
@@ -1742,5 +1758,20 @@
       "results/control_driver.log"
     ],
     "retracts": []
+  },
+  {
+    "id": "S-13",
+    "claim": "\"\u03c3 is input-independent in all four models\" (R-52)",
+    "relevance": "METHOD",
+    "status": "RETRACTED",
+    "evidence": [
+      "RUN"
+    ],
+    "artifacts": [
+      "results/task1_calibration.json"
+    ],
+    "retracts": [
+      "R-52"
+    ]
   }
 ]

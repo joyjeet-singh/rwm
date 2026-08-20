@@ -18,7 +18,9 @@ cancels out of the bound loss entirely, making the ratchet one-way. Running **th
 unused `gaussian_nll` branch** reverses the mechanism — and still does not produce a usable
 estimate: magnitude improves to 10.9× overconfident, σ remains input-independent (CoV 0.0059
 while the permitted interval allows a 3.0× spread), and the faint ordering signal the faithful
-arm had is destroyed (39/45 dimensions positive, P = 1.4e-06 → 21/45, chance).
+arm had is destroyed (39/45 positive, P = 5.4e-07 → 21/45, chance). Measured across
+all four models (`R-57`) the failure is one of magnitude: Arm B has the best-ordered σ (45/45)
+and is still 315× overconfident.
 
 σ is flat even across forecast steps 1–8, the window the loss actually optimises, while realised
 error grows 3.4×. There is no structural excuse. (`R-48`–`R-54`, `O-12`, `O-13`)

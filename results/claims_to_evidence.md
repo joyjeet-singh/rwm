@@ -8,7 +8,7 @@ One row per CONTRIB ledger entry.
 | `D-04` | Ten unmarked episode boundaries | `DATA` | CONFIRMED | — |
 | `D-06` | Usable window count | `DATA` | CONFIRMED | — |
 | `D-07` | Actions are not joint targets in radians | `DATA`, `SRC` | CONFIRMED | — |
-| `D-10` | Twenty commanded-velocity regimes, not one | `DATA`, `EXT` | CONFIRMED | — |
+| `D-10` | Twenty-one commanded-velocity regime segments, not one | `DATA`, `EXT` | CONFIRMED | `results/step0_report.txt` |
 | `D-12` | Per-episode difficulty varies threefold and is not explained by speed | `RUN` | CONFIRMED | — |
 | `D-13` | Row *t* holds the action that **produced** state[*t*] (k = −1) | `DATA`, `EXT`, `INFER`, `SRC` | CONFIRMED | — |
 | `B-01` | The window builder cannot see the episode resets | `DATA`, `SRC` | CONFIRMED | — |
@@ -76,9 +76,9 @@ One row per CONTRIB ledger entry.
 | `R-49` | The released checkpoint's uncertainty output is worthless, quantified | `RUN` | CONFIRMED | `results/task1_calibration.json` |
 | `R-50` | Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iter | `RUN` | CONFIRMED | `results/task1_calibration.json` |
 | `R-51` | All four models are catastrophically overconfident | `RUN` | CONFIRMED | `results/task1_calibration.json`, `results/task2_sigma_profile.json` |
-| `R-52` | σ is input-independent in all four models | `RUN` | CONFIRMED | `results/task1_calibration.json` |
 | `R-53` | The correction improved magnitude and destroyed what ordering signal existed | `RUN` | CONFIRMED | `results/task1_calibration.json` |
 | `R-54` | σ is flat *inside* the trained horizon, which removes the structural excuse | `RUN` | CONFIRMED | `results/task2_sigma_profile.json` |
 | `R-55` | The duplication control: R-47's mechanism survives, its statistic does not | `RUN` | CONFIRMED | `results/task3_control_arm.json` |
 | `R-56` | The three-way comparison: the control is inert, contamination still costs nothing | `RUN` | CONFIRMED | `results/task3_three_way.json` |
+| `R-57` | All four models, measured on one table | `RUN` | CONFIRMED | `results/task1_calibration.json`, `scripts/task1_calibration.py` |
 | `O-12` | The released checkpoint's variance collapse is inconsistent with the released configurat | `DATA`, `RUN`, `SRC` | OPEN — the discrepancy is measured and c | `results/step4_4_overfit_b32lr1e3.json`, `results/step4_4_overfit_ens1.json` |

@@ -106,11 +106,13 @@ STEP 0 ANSWER
   The remaining 1 ([7149]) is a borderline call: a short, high-variance
   excursion of the kind the push events produce, not a clean plateau step.
 
-  => The data contains TWENTY distinct commanded-velocity regimes:
-     two per episode, each held for ~500 steps (10 s), episodes 1000 steps (20 s).
+  => The data contains 21 commanded-velocity regime segments,
+     20 of them the clean two-per-episode structure (one change at each episode midpoint)
+     plus 1 extra in episode [7] -- the borderline excursion noted above.
+     Regimes per episode: [2, 2, 2, 2, 2, 2, 2, 3, 2, 2]. Each held ~500 steps (10 s); episodes 1000 steps (20 s).
   => The ten episodes are NOT ten repetitions of one command. Every regime
-     is a different (v_x, v_y) target; at a 0.10 m/s tolerance all are distinct,
-     and they span roughly [-0.95, +0.90] x [-0.97, +0.87] m/s in the plane.
+     is a different (v_x, v_y) target; at a 0.10 m/s tolerance all 21 are
+     distinct, spanning roughly [-0.95, +0.90] x [-0.97, +0.87] m/s in the plane.
   => A held-out episode is therefore NOT a near-duplicate of a training
      episode. It contains two velocity commands the model has not seen at
      those exact values. The split measures generalisation across commands,

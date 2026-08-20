@@ -220,11 +220,23 @@ def main():
               f" high-variance")
         print("  excursion of the kind the push events produce, not a clean plateau step.")
     print()
-    print("  => The data contains TWENTY distinct commanded-velocity regimes:")
-    print("     two per episode, each held for ~500 steps (10 s), episodes 1000 steps (20 s).")
+    # Derived, not typed. An earlier version of this line said "TWENTY ... two per
+    # episode" while the table above it printed 21 segments and [2,2,2,2,2,2,2,3,2,2].
+    n_seg = len(cuts) + R.N_EPISODES          # episode starts + persistent change points
+    counts = [per_ep_regimes[e] for e in range(R.N_EPISODES)]
+    at_mid = len(main_cuts) + R.N_EPISODES    # the clean two-per-episode structure
+    print(f"  => The data contains {n_seg} commanded-velocity regime segments,")
+    if at_mid != n_seg:
+        print(f"     {at_mid} of them the clean two-per-episode structure "
+              f"(one change at each episode midpoint)")
+        odd = [e for e in range(R.N_EPISODES) if counts[e] != 2]
+        print(f"     plus {n_seg - at_mid} extra in episode{'s' if len(odd) != 1 else ''} "
+              f"{odd} -- the borderline excursion noted above.")
+    print(f"     Regimes per episode: {counts}. Each held ~500 steps (10 s); "
+          f"episodes 1000 steps (20 s).")
     print("  => The ten episodes are NOT ten repetitions of one command. Every regime")
-    print("     is a different (v_x, v_y) target; at a 0.10 m/s tolerance all are distinct,")
-    print("     and they span roughly [-0.95, +0.90] x [-0.97, +0.87] m/s in the plane.")
+    print(f"     is a different (v_x, v_y) target; at a 0.10 m/s tolerance all {n_seg} are")
+    print("     distinct, spanning roughly [-0.95, +0.90] x [-0.97, +0.87] m/s in the plane.")
     print("  => A held-out episode is therefore NOT a near-duplicate of a training")
     print("     episode. It contains two velocity commands the model has not seen at")
     print("     those exact values. The split measures generalisation across commands,")

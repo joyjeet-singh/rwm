@@ -11,14 +11,14 @@ never edited in place; wrong turns are marked `SUPERSEDED` and kept.
 
 ## Status
 
-**Steps 0–5 complete. Fourteen training runs. Two papers in scope, and the headline finding is
+**Steps 0–5 complete. 17 training runs. Two papers in scope, and the headline finding is
 about the follow-up rather than the base paper.**
 
 **1 — The uncertainty output is unusable, and that is a property of the objective**
 ([arXiv:2504.16680](https://arxiv.org/abs/2504.16680), the RWM-U follow-up). The released
 checkpoint's predicted σ is **7,878× smaller than its own mean absolute error**, giving 0.14%
 coverage at ±1σ where a calibrated Gaussian gives 68.3%. This is derived analytically, confirmed
-across fourteen runs, extrapolated with 3% accuracy over a fourfold extension, and tested with a
+across 17 runs, extrapolated with 3% accuracy over a fourfold extension, and tested with a
 corrective experiment using **the authors' own unused `gaussian_nll` branch** — which reverses
 the collapse mechanism and still does not produce a usable estimate (`R-48`–`R-54`).
 

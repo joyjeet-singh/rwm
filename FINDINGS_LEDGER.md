@@ -176,8 +176,10 @@ Column 59, row 7039 (t = 140.78 s): right-front thigh, one step, all four feet a
 **Evidence** `DATA`; `SRC` `anymal_d_flat.py`.
 **Status** CONFIRMED · **Relevance** CONTEXT
 
-### D-10 — Twenty commanded-velocity regimes, not one
-Two commands per episode, each held ~500 steps (10 s), changing at the midpoint of every one of the ten episodes. All 20 regimes distinct at 0.10 m/s tolerance, spanning roughly [−0.95, +0.90] × [−0.97, +0.87] m/s.
+### D-10 — Twenty-one commanded-velocity regime segments, not one
+Two commands per episode — one change at the midpoint of every one of the ten episodes, each held ~500 steps (10 s) — **plus one extra segment in episode 7**, a short high-variance excursion the detector calls a borderline case (row 7149). Regimes per episode `[2,2,2,2,2,2,2,3,2,2]`. All **21** distinct at 0.10 m/s tolerance, spanning roughly [−0.95, +0.90] × [−0.97, +0.87] m/s.
+
+**Correction** This entry read "Twenty ... All 20 regimes distinct" until the review. Its own evidence file said 21 in three places, and `regimes per episode` printed the 3 for episode 7. The script hard-typed "TWENTY ... two per episode" as a literal; it now derives the count, and `results/step0_report.txt` has been regenerated. Nothing downstream depended on 20 rather than 21 — the consequence below is unchanged — but the number was wrong against the file it cited.
 **Evidence** `DATA` change-point detection on stride-smoothed velocity, W=150, threshold 0.25 m/s; `EXT` matches Isaac Lab's default `resampling_time_range` of 10 s for velocity commands with a 20 s episode length.
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Consequence** A held-out episode is **not** a near-duplicate of a training episode. The split tests generalisation across velocity commands — though within one gait and one terrain only.
@@ -2402,20 +2404,30 @@ interval so σ could span a factor of e^1.09 ≈ 3.0×, and the head used **0.6%
 makes σ constant.** Removing the pressure that forces σ to a constant did not cause the network
 to learn a varying one.
 **Evidence** `RUN` `results/task1_calibration.json`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** SUPERSEDED BY S-13 — the quantifier was wrong: Arm B had not been measured on this
+axis, and when measured its σ is an order of magnitude more input-dependent than the others.
+Replaced by R-57. · **Relevance** METHOD
 
 ### R-53 — The correction improved magnitude and destroyed what ordering signal existed · `[RWM-U]` · **NEW**
 σ-versus-realised-error correlation, per dimension, pooled across seeds:
 
 | model | mean r | median r | dims with r > 0 | under a coin-flip null |
 |---|---|---|---|---|
-| faithful Arm A (mse) | **+0.034** | +0.029 | **39 / 45** | P ≈ **1.4e-06** — real |
-| corrected Arm A (nll) | **−0.004** | −0.009 | **21 / 45** | P ≈ 0.66 — chance |
-| released checkpoint | +0.001 | −0.010 | 20 / 45 | chance |
+| faithful Arm A (mse) | **+0.034** | +0.029 | **39 / 45** | P = **5.42e-07** — real |
+| corrected Arm A (nll) | **-0.004** | -0.009 | **21 / 45** | P = 0.77 — chance |
+| teacher-forced Arm B | **+0.257** | +0.254 | **45 / 45** | P = **5.7e-14** — strongest of the four |
+| released checkpoint | +0.001 | −0.010 | 20 / 45 | P = 0.55 — chance |
 
 The faithful arm's correlation is *small but genuine*: 39 of 45 dimensions positive has
-probability 1.4e-06 under a fair-coin null, so the constant-σ head nonetheless carried a faint
-ordering signal. The corrected arm scores 21 of 45 — indistinguishable from chance.
+probability 5.42e-07 under a fair-coin null, so the constant-σ head
+nonetheless carried a faint ordering signal. The corrected arm scores 21 of 45 —
+indistinguishable from chance.
+
+**Amended after the review (R-57).** The Arm B row was added later; it was missing when this
+entry was written, and it is the strongest ordering signal of the four. The P-values are now
+computed by the script rather than quoted; the figure previously given here as 1.4e-06 is the
+value for 38 of 45, not 39. Neither change affects the comparison this entry is about — the
+correction still removes the faithful arm's ordering — but the table was incomplete.
 
 So the correction **improved the magnitude** (10.9× overconfident against 52.2×) and
 **removed the ordering**. An uncertainty estimate that is better scaled but no longer ranks
@@ -2553,6 +2565,48 @@ and 32 comparisons at 95% produce about 1.6 false positives by chance. This is n
 it is recorded here rather than omitted because it is the only place in the design where
 contamination looks harmful at all.
 **Evidence** `RUN` `results/task3_three_way.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-57 — All four models, measured on one table · **NEW**
+R-52 and R-53 were each written against a three-model artifact. Arm B is now measured on the same
+axes, at the same checkpoint, pooled over the same three seeds.
+
+| model | err / σ | ±1σ coverage at h=1 | CoV(σ) across batch | dims with r > 0 | P (two-sided, exact) |
+|---|---|---|---|---|---|
+| faithful Arm A (mse) | 52.2× | 11.67% | 0.0076 | 39/45 | 5.42e-07 |
+| corrected Arm A (nll) | 10.9× | 42.78% | 0.0059 | 21/45 | 7.66e-01 |
+| teacher-forced Arm B | 315.0× | 12.96% | 0.1188 | 45/45 | 5.68e-14 |
+| released checkpoint | 7878.1× | 0.56% | 0.0177 | 20/45 | 5.51e-01 |
+
+**The headline is unaffected and if anything strengthened.** Every model is overconfident by
+between one and four orders of magnitude. Arm B — the arm that trains best — is
+315× overconfident.
+
+**Two supporting claims were wrong, and in opposite directions.**
+
+*Input-independence (S-13).* Arm B's σ is
+16× more variable across inputs
+than the faithful arm's. σ collapsing to a constant is a property of the **autoregressive** arms
+and the released checkpoint, not of the objective in general.
+
+*Ordering.* R-53 read the faithful arm's 39/45 as
+"a faint ordering signal" that the correction destroyed. Arm B, absent from that table, scores
+**45/45**, P = 5.7e-14
+— the strongest σ-versus-error ordering of the four, by a wide margin.
+
+**Which makes the finding sharper rather than weaker.** Arm B has the most input-dependent σ *and*
+the best-ordered σ, and is still 315× overconfident. So the failure is
+specifically one of **magnitude calibration**: these models can learn which predictions will be
+worse, and cannot learn how wrong they will be. A downstream user who needs a ranking might be
+served; one who needs an interval is not, under any of the four.
+
+Also corrected here: the P-values are now computed by `scripts/task1_calibration.py` as exact
+two-sided binomial tails. R-53 quoted "P ≈ 1.4e-06" for 39/45; the
+true value is 5.418e-07 (2.6×
+larger than quoted, and 1.4e-06 is the figure for 38/45). The companion "P ≈ 0.66" for 21/45 is
+0.766. No conclusion turns on either.
+**Evidence** `RUN` `results/task1_calibration.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
@@ -2954,6 +3008,28 @@ expectation stated in advance but not committed.
 **Evidence** `RUN` `git log`, `results/control_driver.log`.
 **Status** RETRACTED · **Relevance** METHOD
 
+### S-13 — "σ is input-independent in all four models" (R-52) · **NEW**
+**What is retracted:** R-52's quantifier. When it was written, `results/task1_calibration.json`
+held **three** models — faithful, corrected and released. The teacher-forced Arm B had no
+coefficient-of-variation measurement anywhere in `results/`, so "all four" was asserted for a
+model that had not been measured on this axis. The review caught the arithmetic mismatch between
+the claim and its sole cited artifact.
+
+Arm B has since been measured. Its σ varies across the batch with **CoV
+0.1188**, against 0.0076 for the
+faithful arm — **16× more
+input-dependent**, and an order of magnitude above every other model here. The claim is false for
+the fourth model, not merely unevidenced.
+
+**What survives:** R-51. All four models remain catastrophically overconfident, Arm B included —
+315× at h=1 with 12.96% coverage
+against a calibrated 68.3%. Input-independence was a supporting observation, not the finding.
+**Replaced by** R-57.
+**Retracts** R-52
+**Evidence** `RUN` `results/task1_calibration.json`.
+**Status** RETRACTED · **Relevance** METHOD
+
+
 ---
 
 ## Candidate paper contributions
@@ -2966,13 +3042,15 @@ in scope; see the scope note at the top.
    evidenced claim here, and **novel rather than confirmatory**. Analytic derivation —
    `E[(mu + sigma·eps − y)²] = (mu − y)² + sigma²` is minimised at sigma = 0, and `min_logstd`
    cancels out of the bound loss so the ratchet is one-way. Empirical confirmation across
-   **fourteen training runs**. A linear extrapolation validated to 3% over a fourfold extension.
+   **17 training runs**. A linear extrapolation validated to 3% over a fourfold extension.
    A corrective experiment using **the authors' own unused `gaussian_nll` branch**. And
    calibration measured against a known reference: the released checkpoint's predicted sigma is
    **7,878× smaller than its own mean absolute error**, giving 0.14% coverage at ±1σ against a
    calibrated 68.3%. The correction reverses the mechanism and still fails — magnitude improves
    to 10.9×, while the faint ordering signal the faithful arm had (39/45 dimensions positive,
-   P = 1.4e-06) is **destroyed** (21/45, chance). σ is flat even inside the 8-step trained
+   P = 5.4e-07) is **destroyed** (21/45, chance). Measured across all four models (R-57), the
+   failure is specifically one of **magnitude**: Arm B has the most input-dependent σ and the
+   best-ordered σ (45/45, P = 6e-14) and is still 315× overconfident. σ is flat even inside the 8-step trained
    horizon while error grows 3.4×, so no structural excuse survives.
 
 2. **The paper's central claim reproduces, and the margin is large** `[BASE]` (R-22, R-23, M-23,

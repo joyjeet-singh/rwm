@@ -12,6 +12,17 @@ PREDICTION, stated before the numbers (the brief's expected shape):
   calibration -- also a result.
 """
 import json, os, sys, math
+from math import comb
+
+
+def _sign_p(k, n):
+    """Two-sided exact binomial tail probability under p = 0.5."""
+    if n == 0:
+        return float("nan")
+    tail = (sum(comb(n, i) for i in range(k, n + 1)) if k * 2 >= n
+            else sum(comb(n, i) for i in range(0, k + 1)))
+    return min(1.0, 2.0 * tail / 2 ** n)
+
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 import numpy as np, torch
 import rwm_data as R, rollout_eval as E, rwm_metrics as MET, rwm_model as M, score_reference as S
@@ -27,12 +38,16 @@ idx=np.asarray(starts)[:,None]+np.arange(400)[None,:]
 raw=data[idx]
 ST=torch.as_tensor(R.normalise_state(raw[:,:,R.STATE_COLS],cfg["state_data_mean"],cfg["state_data_std"]),dtype=torch.float32)
 AC=torch.as_tensor(raw[:,:,R.ACTION_COLS],dtype=torch.float32)
-def get(tag,s):
+def get(tag,s, arm="A"):
     m=M.build_from_config(cfg,ensemble_size=1)
-    m.load_state_dict(torch.load(f"runs/armA_seed{s}{tag}/weights_2500.pt",map_location="cpu")["model_state_dict"],strict=True)
+    m.load_state_dict(torch.load(f"runs/arm{arm}_seed{s}{tag}/weights_2500.pt",map_location="cpu")["model_state_dict"],strict=True)
     m.eval(); return m
+# Arm B is measured here too. R-52 claimed sigma is input-independent "in all four
+# models" while this artifact held three; the teacher-forced arm had no
+# cov-of-sigma-across-batch measurement anywhere. Now it does.
 MODELS={"faithful (mse)":[get("",s) for s in SEEDS],
         "corrected (nll)":[get("_nll",s) for s in SEEDS],
+        "teacher-forced armB":[get("",s,arm="B") for s in SEEDS],
         "released ckpt":[S.ReferenceRWM(torch.load(paths["ckpt"],map_location="cpu")["system_dynamics_state_dict"])]}
 print("="*104); print("TASK 1 -- CALIBRATION AND INPUT-DEPENDENCE OF THE PREDICTED SIGMA"); print("="*104)
 print(f"  held-out episodes {OOS}, {len(starts)} independent 400-step trajectories, offset=1")
@@ -84,6 +99,10 @@ for name,ms in MODELS.items():
                 "sigma_err_corr_mean":float(np.nanmean(cors)),
                 "sigma_err_corr_median":float(np.nanmedian(cors)),
                 "sigma_err_corr_n_positive":int((fin>0).sum()),"n_finite_corr":int(len(fin)),
+                # Two-sided exact binomial against a fair-coin null. Previously the
+                # ledger quoted "P ~ 1.4e-06" for 39/45; that is the value for 38/45.
+                # Derived here so it cannot drift from the count it describes.
+                "sigma_err_corr_sign_p_two_sided":_sign_p(int((fin>0).sum()),int(len(fin))),
                 "sigma_growth_late_over_early":grow})
     print(f"    1b  CoV of sigma across batch: {cov_var:.4f}"
           f"   sigma-vs-|err| correlation: mean {np.nanmean(cors):+.3f}"

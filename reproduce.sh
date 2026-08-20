@@ -24,8 +24,14 @@ FAIL=0
 # they are ~5.7 MB each and regenerable -- so a clean clone cannot run them. In
 # --quick mode they are skipped with their committed JSON verified instead, which
 # is what --quick is for. --force does not override that; there is nothing to force.
-stage() {  # stage <n> <name> <runtime> <output-to-check> [NEEDS_WEIGHTS] <command...>
+# REPORT=<file> before a stage call captures that stage's stdout to results/<file>,
+# so the committed *_report.txt artifacts are regenerable. Without this every report
+# was a hand-captured stdout from some earlier run and drifted from its own script.
+stage() {  # [REPORT=x] stage <n> <name> <runtime> <output-to-check> [NEEDS_WEIGHTS] <cmd...>
   local n="$1" name="$2" rt="$3" out="$4"; shift 4
+  # capture and clear immediately: the skip paths below return early, and a leaked
+  # REPORT would redirect the NEXT stage's stdout into this stage's report file.
+  local rep="${REPORT:-}"; unset REPORT
   local needs=0
   if [ "${1:-}" = "NEEDS_WEIGHTS" ]; then needs=1; shift; fi
   [ -n "$ONLY" ] && [ "$ONLY" != "$n" ] && return 0
@@ -48,12 +54,19 @@ stage() {  # stage <n> <name> <runtime> <output-to-check> [NEEDS_WEIGHTS] <comma
     return 0
   fi
   echo "   running: $*"
-  if "$@"; then
-    echo "   OK"
+  local rc=0
+  if [ -n "$rep" ]; then
+    "$@" > "results/$rep" 2>&1 || rc=$?
+    [ $rc -eq 0 ] && echo "   OK (stdout -> results/$rep)"
+  else
+    "$@" || rc=$?
+    [ $rc -eq 0 ] && echo "   OK"
+  fi
+  if [ $rc -eq 0 ]; then
     # record what this stage actually regenerated, so verify_reproduction.py can tell
     # a rewritten file from one the clone merely carried in.
     [ -n "$out" ] && [ -e "$out" ] && basename "$out" >> results/_regenerated.txt
-  else echo "   FAILED (exit $?)"; FAIL=1; fi
+  else echo "   FAILED (exit $rc)"; FAIL=1; fi
 }
 rm -f results/_regenerated.txt
 echo "RWM reproduction — full pipeline"
@@ -62,19 +75,19 @@ echo "  python: $PY"
 
 stage 1 "Fetch upstreams and verify artifact hashes" "2 min" \
       "../robotic_world_model_lite/assets/data/state_action_data_0.csv" ./setup.sh
-stage 2 "Data checks and velocity regimes" "20 s" \
+REPORT=step0_report.txt stage 2 "Data checks and velocity regimes" "20 s" \
       results/step0_strat.json $PY scripts/step0_velocity_regimes.py
 stage 3 "Harness acceptance tests (6 tests)" "30 s" \
       results/step2_acceptance.json $PY src/rollout_eval.py
 stage 4 "Score the released checkpoint" "60 s" \
       results/manifest.json $PY src/score_reference.py
-stage 5 "Acceptance gate: losses and gradients" "90 s" \
+REPORT=step4_3_report.txt stage 5 "Acceptance gate: losses and gradients" "90 s" \
       results/step4_3_differential.json $PY scripts/step4_3_differential.py
 stage 6 "Differential test vs the reference module" "60 s" \
       results/task5_differential.json $PY scripts/task5_differential.py
-stage 7 "Released checkpoint under nRMSE, all aggregations" "5 min" \
+REPORT=taskAB_report.txt stage 7 "Released checkpoint under nRMSE, all aggregations" "5 min" \
       results/taskAB_gate_r27.json $PY scripts/taskAB_gate_r27.py
-stage 8 "Effective sample size and the 20-trajectory characterisation" "8 min" \
+REPORT=batch1_post_retraction_report.txt stage 8 "Effective sample size and the 20-trajectory characterisation" "8 min" \
       results/batch1_post_retraction.json $PY scripts/batch1_retract_jensen_char.py
 
 if [ $QUICK -eq 0 ]; then
@@ -90,13 +103,13 @@ else
   echo "   Their outputs are committed as results/step5_*.json and are consumed below."
 fi
 
-stage 12 "Two-arena analysis and M-16" "3 min" \
+REPORT=task4_report.txt stage 12 "Two-arena analysis and M-16" "3 min" \
       results/task4_arenas.json NEEDS_WEIGHTS $PY scripts/task4_arenas_and_difficulty.py
-stage 13 "Bootstrap CIs on the six runs" "4 min" \
+REPORT=task5_2_report.txt stage 13 "Bootstrap CIs on the six runs" "4 min" \
       results/task5_2_bootstrap.json NEEDS_WEIGHTS $PY scripts/task5_2_bootstrap.py
-stage 14 "Task 5 analysis and M-23's verdict" "6 min" \
+REPORT=task5_analysis_report.txt stage 14 "Task 5 analysis and M-23's verdict" "6 min" \
       results/task5_analysis.json NEEDS_WEIGHTS $PY scripts/task5_analyse.py
-stage 15 "Matched per-dimension comparison and the trend fit" "3 min" \
+REPORT=task2_3_report.txt stage 15 "Matched per-dimension comparison and the trend fit" "3 min" \
       results/task2_3_matched_trend.json NEEDS_WEIGHTS $PY scripts/task2_3_matched_and_trend.py
 stage 16 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
