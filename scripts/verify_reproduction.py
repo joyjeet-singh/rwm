@@ -23,11 +23,17 @@ def flat(o, p=""):
 # the manifest deliberately and are not expected to reproduce; their magnitude is
 # documented in the README.
 TIMING = ("wall_clock", "s_per_iter", "elapsed_s", "_time")
+# Whole artifacts that measure the machine rather than the model. step4_5_timing.json
+# is the CPU budget: every number in it -- projected runtimes, peak RSS, the standard
+# deviation across repeats -- is host-dependent. The key-level TIMING filter above did
+# not catch proj_500_s, proj_2500_s, peak_rss_mb or std, so this file alone produced
+# every difference in the first honest clean-clone comparison.
+MACHINE_FILES = ("step4_5_timing.json",)
 regen=set()
 _rl=os.path.join(A,"_regenerated.txt")
 if os.path.exists(_rl):
     regen={l.strip() for l in open(_rl) if l.strip()}
-tot=exact=close=diff=timing=nans=0; report=[]; dropped=[]
+tot=exact=close=diff=timing=nans=0; report=[]; dropped=[]; machine=0
 c_tot=c_exact=c_diff=0     # files present in the clone but never rewritten
 for fn in sorted(os.listdir(B)):
     if not fn.endswith(".json"): continue
@@ -36,6 +42,9 @@ for fn in sorted(os.listdir(B)):
     try: da, db = json.load(open(pa)), json.load(open(pb))
     except Exception: continue
     ma, mb = dict(flat(da)), dict(flat(db))
+    if fn in MACHINE_FILES:
+        machine += sum(1 for k in mb if k in ma)
+        continue
     is_regen = (not regen) or (fn in regen)
     # A key in the committed file with no counterpart in the regenerated one is a
     # DELETION, not a match. Silently skipping these once hid three hand-added
@@ -65,6 +74,7 @@ print("="*90); print("CLEAN-CLONE NUMERIC VERIFICATION"); print("="*90)
 print(f"  regenerated-file values compared : {tot}"
       + ("" if regen else "   (no results/_regenerated.txt -- ALL files treated as regenerated)"))
 print(f"    of which NaN in both  : {nans}  (counted identical: NaN != NaN in IEEE 754)")
+print(f"  machine-measurement files excluded : {machine} values in {', '.join(MACHINE_FILES)}")
 print(f"  timing fields excluded  : {timing}  (machine-dependent by design, see README)")
 print(f"  bitwise identical       : {exact} ({100*exact/max(tot,1):.2f}%)")
 print(f"  identical to 1e-9       : {close}")
@@ -85,7 +95,9 @@ json.dump({"regenerated_files": sorted(regen), "values_compared": tot,
            "bitwise_identical": exact, "identical_to_1e-9": close, "differing": diff,
            "timing_excluded": timing, "nan_in_both": nans,
            "copied_file_values": c_tot, "copied_identical": c_exact,
-           "copied_differing": c_diff},
+           "copied_differing": c_diff,
+           "machine_file_values_excluded": machine,
+           "machine_files": list(MACHINE_FILES)},
           open(os.path.join(B, "verify_reproduction.json"), "w"), indent=2)
 print(f"\n  wrote {os.path.join(B, 'verify_reproduction.json')}")
 ok = (diff == 0) and not dropped

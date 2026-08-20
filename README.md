@@ -145,18 +145,18 @@ Training is bitwise reproducible under a fixed seed: the 10,000-iteration run re
 existing 2,500-iteration run exactly at every logged iteration, and `weights_2500.pt` is
 byte-identical between them.
 
-A clean-clone run of `reproduce.sh --quick --force` regenerates **8 artifact files,
-1,129 numeric values, 1,129 of them bitwise identical (100.00%), 0 differing**
-(`results/verify_reproduction.json`). 2,366 timing fields are excluded — they measure the
-machine, not the model; a stage timed at 46.5 s idle took 109.7 s with training running
-concurrently, up to ~2.4x.
+A clean-clone run of `reproduce.sh --quick --force` regenerates **19 artifact files,
+4,804 numeric values, 4,804 of them bitwise identical (100.00%), 0 differing**, with 0 keys
+lost (`results/verify_reproduction.json`). Excluded and reported separately: 2,362 timing fields,
+and 22 values in `step4_5_timing.json`, which is wholly a measurement of the host — its
+projected runtimes, peak RSS and repeat-to-repeat standard deviation are all machine-dependent.
 
 **A note on what that number is not.** An earlier version of this section claimed 258,700 values.
 That figure counted every numeric value in the committed `results/` directory. Because `results/`
 is committed, a clean clone already contains all of it, so files the run never rewrote compared
-identical and were counted as regenerated. The 428,457 values in those carried-in files are now
+identical and were counted as regenerated. The 424,883 values in those carried-in files are now
 reported separately and excluded from the claim. `reproduce.sh` records what it actually
-regenerates and the verifier partitions on that; see `M-28`.
+regenerates and the verifier partitions on that; see `M-28` and `M-29`.
 
 The `--force` flag matters: without it every stage skips, because a clean clone already contains
 each stage's declared output.

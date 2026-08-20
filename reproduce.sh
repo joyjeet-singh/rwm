@@ -68,7 +68,9 @@ stage() {  # [REPORT=x] stage <n> <name> <runtime> <output-to-check> [NEEDS_WEIG
     [ -n "$out" ] && [ -e "$out" ] && basename "$out" >> results/_regenerated.txt
   else echo "   FAILED (exit $rc)"; FAIL=1; fi
 }
-rm -f results/_regenerated.txt
+# Only a whole-pipeline run starts a fresh list; --stage N appends to the existing
+# one, so re-running a single stage does not erase what the full run recorded.
+[ -z "$ONLY" ] && rm -f results/_regenerated.txt
 echo "RWM reproduction — full pipeline"
 echo "  mode: $([ $QUICK -eq 1 ] && echo '--quick (no training)' || echo 'full')"
 echo "  python: $PY"

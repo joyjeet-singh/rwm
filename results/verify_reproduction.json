@@ -2,20 +2,35 @@
   "regenerated_files": [
     "batch1_post_retraction.json",
     "manifest.json",
-    "step0_regimes.json",
     "step0_strat.json",
     "step2_acceptance.json",
+    "step4_0a_results.json",
     "step4_3_differential.json",
+    "step4_4_overfit_b32lr1e3.json",
+    "step4_5_timing.json",
+    "task1_action_convention.json",
+    "task1b_pd_law.json",
+    "task1c_policy.json",
+    "task1d_reset.json",
+    "task2_4_results.json",
+    "task2_reference_nrmse.json",
+    "task3_control_arm.json",
+    "task3_hardening.json",
+    "task3b_convergence.json",
     "task5_differential.json",
     "taskAB_gate_r27.json"
   ],
-  "values_compared": 1129,
-  "bitwise_identical": 1129,
+  "values_compared": 4804,
+  "bitwise_identical": 4804,
   "identical_to_1e-9": 0,
   "differing": 0,
-  "timing_excluded": 2366,
-  "nan_in_both": 0,
-  "copied_file_values": 428457,
-  "copied_identical": 428457,
-  "copied_differing": 0
+  "timing_excluded": 2362,
+  "nan_in_both": 4,
+  "copied_file_values": 424883,
+  "copied_identical": 424877,
+  "copied_differing": 6,
+  "machine_file_values_excluded": 22,
+  "machine_files": [
+    "step4_5_timing.json"
+  ]
 }

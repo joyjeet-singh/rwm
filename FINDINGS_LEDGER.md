@@ -1047,14 +1047,12 @@ the figure (`0519916`): 258,704 numeric values across 37 JSON files, minus the 4
 = **258,700 exactly**, and the timing count matches its documented 1,439 exactly. The arithmetic
 was right; the label was wrong.
 
-**What `--quick` actually regenerates**, measured from a real clean clone with the upstreams
-symlinked in: **8 files, 1,129 numeric values,
-1,129 bitwise identical (100.00%),
-0 differing**, with 2,366 timing fields excluded. The other
-428,457 values sit in files the clone carried in.
+**What `--quick --force` actually regenerates**, measured from a real clean clone with the upstreams symlinked in: **19 files, 4,804 numeric values, 4,804 bitwise identical (100.00%), 0 differing**, and **0 keys lost**. Excluded and reported separately: 2,362 timing fields and 22 values in `step4_5_timing.json`, which is wholly a measurement of the host — its projected runtimes, peak RSS and repeat-to-repeat standard deviation are all machine-dependent, and the key-level timing filter did not catch them. The other 424,883 values sit in files the clone carried in.
+
+(The first honest measurement gave 8 files and 1,129 values. M-29's thirteen added stages raised genuine coverage 4.3× — the pipeline now regenerates far more of what it claims to, which is the point of having staged them.)
 
 So the determinism result is real and perfect **within its true scope**, and that scope is
-0.4% of what was claimed.
+1.9% of what was claimed — not the ~100% the prose implied.
 
 **A second defect the same run exposed.** Regenerating `manifest.json` from a clean clone
 **deleted three whole blocks** — `statistics_convention`, `evaluation_power` and

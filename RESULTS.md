@@ -103,9 +103,10 @@ They are different estimators of the same quantity, agreeing within 3%, not comp
 ./reproduce.sh --quick --force  # everything except training, minutes
 ```
 
-Verified from a genuine clean clone: **8 artifact files, 1,129 numeric values,
-1,129 bitwise identical (100.00%), 0 differing** (`results/verify_reproduction.json`).
-An earlier figure of 258,700 counted files a clone carries in rather than regenerates; see `M-28`.
+Verified from a genuine clean clone: **19 artifact files, 4,804 numeric values,
+4,804 bitwise identical (100.00%), 0 differing, 0 keys lost**
+(`results/verify_reproduction.json`). An earlier figure of 258,700 counted files a clone carries
+in rather than regenerates; see `M-28`.
 
 ## Links
 
