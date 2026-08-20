@@ -698,12 +698,27 @@
       "SRC"
     ],
     "artifacts": [
-      "results/manifest.json",
-      "results/step3_report.txt",
       "results/verify_reproduction.json",
-      "scripts/ledger_check.py",
       "scripts/verify_reproduction.py",
       "src/score_reference.py"
+    ],
+    "retracts": []
+  },
+  {
+    "id": "M-29",
+    "claim": "Most of the pipeline was not in the pipeline",
+    "relevance": "METHOD",
+    "status": "ADOPTED",
+    "evidence": [
+      "SRC"
+    ],
+    "artifacts": [
+      "results/manifest.json",
+      "results/step3_report.txt",
+      "results/step4_0a_results.json",
+      "results/step6_analysis.json",
+      "results/task1_calibration.json",
+      "scripts/ledger_check.py"
     ],
     "retracts": []
   },

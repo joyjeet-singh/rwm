@@ -116,7 +116,7 @@ C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, which apply to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, which apply to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -1056,6 +1056,33 @@ is wholly script-generated. Verified: the manifest now regenerates with only its
 differing.
 **Evidence** `RUN` `results/verify_reproduction.json`;
 `SRC` `scripts/verify_reproduction.py`, `reproduce.sh`, `src/score_reference.py`.
+**Status** ADOPTED · **Relevance** METHOD
+
+
+### M-29 — Most of the pipeline was not in the pipeline · **NEW**
+`reproduce.sh` opens "Regenerate every number in the paper from a clean clone". It had 16 stages
+covering 11 of 31 scripts. Twenty were outside it, and between them they produced the evidence for
+the project's two headline contributions:
+
+- `results/step6_analysis.json` — the sole cited artifact for **R-22, R-23, R-24, R-26**,
+  including the base paper's central A/B reproduction — was produced by `step6_analyse.py`, which
+  no stage ran.
+- `results/task1_calibration.json` — the sole cited artifact for the whole of **contribution 1** —
+  was produced by `task1_calibration.py`, which no stage ran.
+- `results/step4_0a_results.json`, which holds the nRMSE scale vector that **stage 14 loads**, was
+  produced by a script outside the pipeline. The pipeline consumed an artifact it could not make.
+
+**And a full run could not have completed.** `run_remaining.sh` trained five runs — A1, A2, B0,
+B1, B2 — while stages 12–15 iterate `SEEDS=(0,1,2)` over both arms. `armA_seed0` was run by hand
+before that driver existed and is recorded in no driver log; its `s_per_iter` of 1.850 against
+`armA_seed1`'s 1.165 is a 59% outlier that no other run explains. A clean clone would have
+trained five runs and then failed looking for the sixth.
+
+**Fixed.** 38 stages now cover every script whose artifact any ledger entry cites — the
+sole exception being `verify_reproduction.py`, which runs *against* a regenerated tree rather than
+inside it. `run_remaining.sh` trains A0 first and skips runs whose JSON already exists, so
+re-running is cheap. `run_control.sh` is stage 11b.
+**Evidence** `SRC` `reproduce.sh`, `run_remaining.sh`.
 **Status** ADOPTED · **Relevance** METHOD
 
 

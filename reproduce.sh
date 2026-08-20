@@ -90,6 +90,37 @@ REPORT=taskAB_report.txt stage 7 "Released checkpoint under nRMSE, all aggregati
 REPORT=batch1_post_retraction_report.txt stage 8 "Effective sample size and the 20-trajectory characterisation" "8 min" \
       results/batch1_post_retraction.json $PY scripts/batch1_retract_jensen_char.py
 
+
+# --- pre-training analysis that later stages consume -------------------------
+# step4_0a_results.json holds the nRMSE scale vector that stage 14 and
+# task2_reference_nrmse both load. It was outside the pipeline entirely.
+stage 8a "Step 3 results restated under the causal convention" "2 min" \
+      results/step4_0a_results.json $PY scripts/step4_0a_restate.py
+stage 8b "Action convention: the ridge test and its refutation" "90 s" \
+      results/task1_action_convention.json $PY scripts/task1_action_convention.py
+stage 8c "The PD law behind the action convention" "60 s" \
+      results/task1b_pd_law.json $PY scripts/task1b_pd_law.py
+stage 8d "Is the checkpoint actor the data-collection policy?" "60 s" \
+      results/task1c_policy.json $PY scripts/task1c_policy_test.py
+stage 8e "The reset-row argument for k = -1" "30 s" \
+      results/task1d_reset.json $PY scripts/task1d_reset_argument.py
+stage 8f "Harness hardening checks" "60 s" \
+      results/task3_hardening.json $PY scripts/task3_harness_hardening.py
+stage 8g "Released checkpoint under nRMSE at n=10" "2 min" \
+      results/task2_reference_nrmse.json $PY scripts/task2_reference_nrmse.py
+stage 8h "Per-horizon, per-group breakdown" "3 min" \
+      results/task2_4_results.json $PY scripts/task2_4_horizon_groups.py
+stage 8i "Evaluation power and the ddof convention" "4 min" \
+      results/task3_4_power_ddof.json $PY scripts/task3_4_power_and_ddof.py
+stage 8j "Convergence of the metric with trajectory count" "3 min" \
+      results/task3b_convergence.json $PY scripts/task3b_convergence.py
+stage 8k "Overfit one batch: the trainer acceptance gate" "45 min" \
+      results/step4_4_overfit_b32lr1e3.json $PY scripts/step4_4_overfit.py
+stage 8l "Deterministic-vs-stochastic loss floor at the overfit weights" "30 s" \
+      results/step5_6_overfit_floor.json $PY scripts/step5_6_overfit_floor.py
+REPORT=step4_5_report.txt stage 8m "CPU timing budget" "5 min" \
+      results/step4_5_timing.json $PY scripts/step4_5_timing.py
+
 if [ $QUICK -eq 0 ]; then
   stage 9 "TRAINING — six main runs, 2500 iters" "6 h" \
         results/step5_armB_seed2.json ./run_remaining.sh
@@ -97,6 +128,8 @@ if [ $QUICK -eq 0 ]; then
         results/step5_armB_seed1_10k.json ./run_10k.sh
   stage 11 "TRAINING — contamination and corrected-objective arms" "6 h" \
         results/step5_armA_seed2_nll.json ./run_tasks45.sh
+  stage 11b "TRAINING — duplication control arm" "2 h" \
+        results/step5_armA_seed2_dup.json ./run_control.sh
 else
   echo ""
   echo " STAGES 9-11 (training, ~20 h) SKIPPED in --quick mode."
@@ -111,7 +144,27 @@ REPORT=task5_analysis_report.txt stage 14 "Task 5 analysis and M-23's verdict" "
       results/task5_analysis.json NEEDS_WEIGHTS $PY scripts/task5_analyse.py
 REPORT=task2_3_report.txt stage 15 "Matched per-dimension comparison and the trend fit" "3 min" \
       results/task2_3_matched_trend.json NEEDS_WEIGHTS $PY scripts/task2_3_matched_and_trend.py
-stage 16 "Ledger consistency check and claims-to-evidence map" "5 s" \
+
+# Stages 16-20 were outside the pipeline until the review. Between them they carry
+# R-22, R-23, R-24, R-26 (step6_analysis.json), the whole of contribution 1
+# (task1_calibration.json), and R-54, R-55 and R-56.
+REPORT=step6_analysis_report.txt stage 16 "Six-run A/B analysis and the pooled collapse fit" "2 min" \
+      results/step6_analysis.json NEEDS_WEIGHTS $PY scripts/step6_analyse.py
+REPORT=task1_calibration_report.txt stage 17 "Calibration of all four models" "10 min" \
+      results/task1_calibration.json NEEDS_WEIGHTS $PY scripts/task1_calibration.py
+REPORT=task2_sigma_profile_report.txt stage 18 "Sigma profile across forecast steps" "6 min" \
+      results/task2_sigma_profile.json NEEDS_WEIGHTS $PY scripts/task2_sigma_profile.py
+REPORT=task3_control_arm_report.txt stage 19 "Duplication control: the training-loss discriminator" "5 s" \
+      results/task3_control_arm.json $PY scripts/task3_control_arm.py
+REPORT=task3_three_way_report.txt stage 20 "Three-way rollout comparison, both resampling units" "12 min" \
+      results/task3_three_way.json NEEDS_WEIGHTS $PY scripts/task3_three_way.py
+REPORT=task4_report_contamination.txt stage 20a "Contamination comparison, 32 cells" "12 min" \
+      results/task4_contamination.json NEEDS_WEIGHTS $PY scripts/task4_contamination_analysis.py
+stage 20b "min_logstd: O-12's second axis" "20 s" \
+      results/step6_3_min_logstd.json NEEDS_WEIGHTS $PY scripts/step6_3_min_logstd.py
+REPORT=review_bootstrap_unit_report.txt stage 20c "Bootstrap resampling unit (M-27)" "8 min" \
+      results/review_bootstrap_unit.json NEEDS_WEIGHTS $PY scripts/review_bootstrap_unit.py
+stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 
 echo ""
