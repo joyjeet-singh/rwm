@@ -154,6 +154,8 @@ def main():
     put("ver_pct", f"{100*ver['bitwise_identical']/ver['values_compared']:.2f}",
         "results/verify_reproduction.json")
     put("ver_differing", ver["differing"], "results/verify_reproduction.json")
+    put("ver_timing", f'{ver["timing_excluded"]:,}', "results/verify_reproduction.json")
+    put("ver_machine", ver["machine_file_values_excluded"], "results/verify_reproduction.json")
     put("diff_terms", dif.get("n_terms", 7), "results/step4_3_differential.json")
     t5d = J("task5_differential.json")
     import re as _re
@@ -310,6 +312,23 @@ def main():
         put(f"d2_{tag}_c_lo", f"{min(cs):.3g}", "results/task_d2_recalibration.json")
         put(f"d2_{tag}_c_hi", f"{max(cs):.3g}", "results/task_d2_recalibration.json")
     put("d2_target", f'{100*_d2["target_coverage"]:.1f}', "results/task_d2_recalibration.json")
+
+    # E2: magnitude collapse is objective-driven, input-independence is arm-driven
+    import glob as _g, statistics as _st
+    _mse, _nll_s = [], []
+    for _f in sorted(_g.glob("results/step5_arm*.json")):
+        if "_10k" in _f:
+            continue
+        _d = json.load(open(_f))
+        _sl = _d.get("collapse_fit", {}).get("slope_per_iter")
+        if _sl is None:
+            continue
+        (_nll_s if _f.endswith("_nll.json") else _mse).append(_sl)
+    put("e2_mse_runs", len(_mse), "results/step5_arm*.json")
+    put("e2_mse_rate", f"{_st.mean(_mse):.4e}", "results/step5_arm*.json")
+    put("e2_mse_sd", f"{_st.stdev(_mse):.1e}", "results/step5_arm*.json")
+    put("e2_nll_runs", len(_nll_s), "results/step5_arm*.json")
+    put("e2_nll_rate", f"{_st.mean(_nll_s):+.4e}", "results/step5_arm*.json")
 
     # C3 -- multiplicity
     C3 = J("task_c3_multiplicity.json")

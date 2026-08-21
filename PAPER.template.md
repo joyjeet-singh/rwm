@@ -35,8 +35,9 @@ P = {{cal_armB_p}}), and is still {{cal_armB_ratio}}× overconfident. These mode
 predictions will be worse. They cannot learn *how wrong* they will be. A downstream user who needs
 a ranking may be served; one who needs an interval is not, under any of the four.
 
-We also report four defects in the released pipeline, evidence that the released checkpoint cannot
-have come from the released recipe, and {{n_retractions_lower}} retractions of our own numbered claims —
+We also report four defects in the released pipeline, evidence that the released checkpoint's
+variance state is unreachable at any of the three iteration counts its own artifacts state, and
+{{n_retractions_lower}} retractions of our own numbered claims —
 one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.
 Every number in this paper is generated from a file in `results/`; none is typed by hand.
 
@@ -279,6 +280,14 @@ We predicted the collapse from this algebra before training, then observed it. A
 (Figure 3a). Under the corrected objective the sign flips (Figure 3b) — which is the strongest
 evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
 
+**Two different things are being explained here, and §4.5 separates them.** *Magnitude collapse
+is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of
+{{e2_mse_rate}} per iteration with a standard deviation of {{e2_mse_sd}} — **including the
+teacher-forced arm**, which shares the objective — and reverses to {{e2_nll_rate}} in the
+{{e2_nll_runs}} runs that change it. *Input-independence is not.* That varies by a factor of
+{{cal_armB_over_faithA_cov}} between two arms trained under the same objective, so the objective
+cannot be what produces it.
+
 ### 4.4 The correction fails differently rather than succeeding
 
 The reference contains an unused `gaussian_nll` branch. Running it reverses the collapse and
@@ -303,9 +312,16 @@ Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faith
 ordering is the strongest of the four by a wide margin (mean r = {{cal_armB_r}}). It is still
 {{cal_armB_ratio}}× overconfident.
 
-So σ collapsing to a constant is a property of the *autoregressive* arms and the released
-checkpoint, not of the objective in general — and input-dependence and correct ranking are both
-achievable without the interval becoming meaningful.
+So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not.
+The teacher-forced arm collapses in magnitude exactly like the autoregressive ones — same
+objective, same rate — while retaining {{cal_armB_over_faithA_cov}}× more variation across
+inputs. Input-independence is a property of the autoregressive arms and the released checkpoint,
+and input-dependence and correct ranking are both achievable without the interval becoming
+meaningful.
+
+One candidate mechanism, stated as a hypothesis and not a result: autoregressive feedback narrows
+the input distribution toward the model's own manifold, leaving a heteroscedastic head less
+variation to key on. We have not tested it.
 
 **The same pattern holds for the quantity the method uses, with the strongest evidence in this
 paper.** At h=128 and h=368 the epistemic term correlates positively with realised error on
@@ -393,13 +409,21 @@ mechanism without it.
 In rollout, across {{tw_cells}} cells (two arenas × two trajectory lengths × two checkpoints × two
 horizons × two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and
 helps in {{tw_cc_cluster_helped}} (Figure 5a). The control is inert, differing from clean in
-{{tw_dc_cluster_helped}} cells. **The unmarked boundaries remain a real defect on leakage grounds;
+{{tw_dc_cluster_helped}} cells.
+
+**"Costs nothing" is the wrong summary, and we should not use it.** Splicing raises training loss
+by {{contam_cost_pct}}% against duplication's {{dup_cost_pct}}%, and improves rollout in
+{{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measured effects in opposite directions,
+which is the signature of regularisation: the spliced windows contain transitions the model
+cannot fit, it fits the rest less tightly as a result, and it rolls out slightly better. The
+defensible statement is that **at this rate the splices do not harm rollout and appear to help
+slightly**, not that they cost nothing. **The unmarked boundaries remain a real defect on leakage grounds;
 what is now measured is that the physically-impossible-transition component costs nothing
 detectable at this rate.**
 
 ---
 
-## 6. The released checkpoint cannot have come from the released recipe
+## 6. The released checkpoint's variance state is unreachable at the stated iteration counts
 
 The collapse rate is a clock. Fitting it across our runs and extrapolating to the released
 checkpoint's σ state implies **{{implied_iters}}** optimisation steps at the configured learning
@@ -411,6 +435,28 @@ The released configuration says 500 iterations. The paper says 2,500. The checkp
 5,000. A second, independent parameter on a slower gradient path implies the same order. And under
 `gaussian_nll` the implied count is *negative*, which identifies the branch the checkpoint was
 trained with.
+
+**What this extrapolation assumes, and what would falsify it.** It assumes constant-rate Adam at
+the configured learning rate from the released initialisation. Five things would break it, and
+they are not equally plausible:
+
+| assumption | if violated | ruled out by the second parameter? |
+|---|---|---|
+| no learning-rate schedule | a decaying schedule inflates the implied count; a warm-up deflates it | **partly** — `min_logstd` and `log_delta_logstd` travel at rates differing by about 5×, and a uniform schedule scales both, so a schedule alone cannot reconcile them without also changing their ratio |
+| `log_delta_logstd` initialised as released | a different initialisation moves the origin of the fit and rescales the count linearly | **no** — this is the weakest point of the argument |
+| no warm start from an earlier checkpoint | a warm start makes the count a lower bound on total optimisation, not an estimate of one run | **no** |
+| no gradient clipping in this path | clipping would slow the collapse and inflate the implied count | **partly** — the reference does not clip in the world-model path (X-08), so this is ruled out by source rather than by measurement |
+| bound-loss weight as configured | a different weight scales the rate directly | **partly** — same ratio argument as the schedule |
+
+So the defensible claim is narrower than "cannot have come from the released recipe": **no
+constant-rate run from the released initialisation at the configured learning rate reaches this
+checkpoint's variance state in 500, 2,500 or 5,000 iterations.** A warm start or a different
+initialisation would explain the gap without any inconsistency, and we cannot exclude either.
+
+**Author contact.** The original authors have not been contacted about this discrepancy as of
+submission. A warm start or a changed initialisation would resolve it immediately and neither is
+visible from the released artifacts, so their answer would very likely settle it. We record the
+omission rather than leave a reader to wonder whether it was tried.
 
 ---
 
@@ -451,8 +497,12 @@ verdict survives. Both units are reported.
 
 **Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and
 {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical
-({{ver_pct}}%), {{ver_differing}} differing. Timing fields and one whole host-measurement artifact
-are excluded and reported separately.
+({{ver_pct}}%), {{ver_differing}} differing. Excluded and reported separately: {{ver_timing}} timing fields, and the
+{{ver_machine}} values in `results/step4_5_timing.json`. That file is the CPU budget — projected
+runtimes for configurations we did not run, peak resident memory, and the standard deviation
+across repeats — and every number in it measures the host rather than the model. It cannot
+reproduce bitwise on a different machine, or on the same machine under different load: one stage
+timed at 46.5 s idle took 109.7 s with training running concurrently.
 
 ---
 
@@ -504,10 +554,14 @@ supplementary material, and will be released under a permanent archival identifi
 acceptance. Neither upstream repository is redistributed; `setup.sh` fetches both at pinned
 commits and verifies two SHA-256 hashes.
 
-The pre-registration argument in §7 rests on commit timestamps. The supplementary material
-includes an anonymised `git log` covering every commit cited here, so the ordering in Figure 4 is
-checkable at review time; the archival identifier, which is not author-settable, is disclosed on
-acceptance.
+The pre-registration argument in §7 rests on commit timestamps, and those are author-settable
+via `git commit --date`. That matters, because §7 is load-bearing. Two mitigations, neither
+sufficient alone: the supplementary material includes an anonymised `git log` covering every
+commit cited here, so the ordering in Figure 4 is checkable at review time; and the repository is
+to be archived under a permanent third-party identifier whose timestamp is **not**
+author-controllable, disclosed on acceptance because the identifier resolves to a named
+repository. As of submission that archive has not been created, so a reviewer should treat the
+timestamps as self-reported and weigh §7 accordingly.
 
 ## References
 

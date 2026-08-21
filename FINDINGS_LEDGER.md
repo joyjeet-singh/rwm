@@ -130,7 +130,7 @@ C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, M-30, M-31, M-32, which apply to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, M-30, M-31, M-32, M-33, which apply to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -1242,6 +1242,41 @@ record that site. Where a claim is about a method rather than a checkpoint, the 
 must be the quantity the method reads.
 **Evidence** `SRC` `robotic_world_model_lite/scripts/envs/base.py:142,166`;
 `RUN` `results/task_b2_epistemic.json`.
+**Status** ADOPTED · **Relevance** METHOD
+
+
+### M-33 — Decisions this project cannot take on its own · **NEW**
+Recorded so they are not revisited under time pressure, and so a reader can see they were
+considered rather than missed.
+
+**Venue timing (A6).** MLRC 2026 requires *acceptance* to TMLR between 20 June 2025 and
+30 September 2026. TMLR targets a two-month review and does not guarantee it; with rebuttal and
+revision, six weeks is not achievable. **Decision: publish to TMLR on its own timeline and do not
+compress the work to chase MLRC.** Nothing in this brief was scoped down for a deadline.
+
+**Author contact (E4).** §6 states that the released checkpoint's variance state is unreachable
+at any of the three iteration counts its own artifacts give. A warm start or a different
+initialisation of `log_delta_logstd` would explain it with no inconsistency, and neither is
+visible from the released files. The authors have **not** been contacted. This is an outward-facing
+action requiring the author's decision, not this project's; the paper records the omission
+explicitly rather than leaving a reviewer to ask whether it was tried.
+
+**Archival timestamp (E6).** Commit timestamps are settable with `git commit --date`, and §7 rests
+on them. Software Heritage assigns a third-party timestamp that is not author-controllable, and
+MLRC recommends it. Checked: the repository is **not** currently archived there
+(`/api/1/origin/.../get/` returns 404). Archiving is an outward-facing, permanent action and needs
+the author's decision. Two consequences if it is not done: §7's ordering remains self-reported,
+and the paper says so; and the archive must predate submission to be worth anything, so this is
+time-ordered rather than deferrable.
+
+**Anonymity tension (A1).** The archival identifier resolves to a named repository, so it cannot
+appear in a double-blind submission. The chosen resolution is an anonymised `git log` in the
+supplementary material for review, with the identifier disclosed on acceptance. That is the
+weakest of the three options the brief lists and it is chosen knowingly: an anonymised git mirror
+would change the commit hashes the paper cites, and `anonymous.4open.science` was not relied on
+because whether it preserves commit history could not be established without uploading the
+repository, which is itself an outward-facing action.
+**Evidence** `EXT` TMLR author guidelines; MLRC 2026 eligibility window; Software Heritage API.
 **Status** ADOPTED · **Relevance** METHOD
 
 

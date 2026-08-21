@@ -739,6 +739,26 @@
     "source": "results/task3_control_arm.json",
     "value": "0.90"
   },
+  "e2_mse_rate": {
+    "source": "results/step5_arm*.json",
+    "value": "-9.3986e-05"
+  },
+  "e2_mse_runs": {
+    "source": "results/step5_arm*.json",
+    "value": 12
+  },
+  "e2_mse_sd": {
+    "source": "results/step5_arm*.json",
+    "value": "6.8e-07"
+  },
+  "e2_nll_rate": {
+    "source": "results/step5_arm*.json",
+    "value": "+3.2332e-05"
+  },
+  "e2_nll_runs": {
+    "source": "results/step5_arm*.json",
+    "value": 3
+  },
   "err_armB_growth": {
     "source": "results/task2_sigma_profile.json",
     "value": 6.11
@@ -853,7 +873,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 160
+    "value": 161
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",
@@ -1019,9 +1039,17 @@
     "source": "results/verify_reproduction.json",
     "value": "4,804"
   },
+  "ver_machine": {
+    "source": "results/verify_reproduction.json",
+    "value": 22
+  },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
     "value": "100.00"
+  },
+  "ver_timing": {
+    "source": "results/verify_reproduction.json",
+    "value": "2,362"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",

@@ -788,9 +788,21 @@
         "SRC"
       ],
       "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-33",
+      "claim": "Decisions this project cannot take on its own",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "EXT"
+      ],
+      "artifacts": [
         "results/manifest.json",
         "results/step3_report.txt",
-        "results/task_b2_epistemic.json",
         "scripts/ledger_check.py"
       ],
       "retracts": []
@@ -1938,7 +1950,7 @@
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 32,
+    "M": 33,
     "O": 14,
     "R": 59,
     "S": 14,
