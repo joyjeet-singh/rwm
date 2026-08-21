@@ -86,16 +86,17 @@ def main():
     if "ci" in g:
         put("m23_ci_lo", round(g["ci"][0], 2), "results/task5_analysis.json")
         put("m23_ci_hi", round(g["ci"][1], 2), "results/task5_analysis.json")
-    put("m23_c1", t5["m23"]["c1"], "results/task5_analysis.json")
-    put("m23_c2", t5["m23"]["c2"], "results/task5_analysis.json")
-    put("m23_c3", t5["m23"]["c3"], "results/task5_analysis.json")
+    put("m23_c1", "holds" if t5["m23"]["c1"] else "FAILS", "results/task5_analysis.json")
+    put("m23_c2", "holds" if t5["m23"]["c2"] else "FAILS", "results/task5_analysis.json")
+    put("m23_c3", "holds" if t5["m23"]["c3"] else "FAILS", "results/task5_analysis.json")
     put("m23_sign_h368", t5["sign_consistent_h368"], "results/task5_analysis.json")
     put("m23_n_episodes_positive",
         sum(1 for e in t5["per_episode"].values() if e["h368"] > 0), "results/task5_analysis.json")
     put("m23_n_episodes", len(t5["per_episode"]), "results/task5_analysis.json")
     g8 = t5["gaps"]["out-of-sample|10000|h8"]
     put("m23_h8_gap", round(g8["gap"], 4), "results/task5_analysis.json")
-    put("m23_h8_excl", g8["excludes_zero"], "results/task5_analysis.json")
+    put("m23_h8_excl", "excludes zero" if g8["excludes_zero"] else "includes zero",
+        "results/task5_analysis.json")
     put("q4_implied_A", f"{t5['q4']['A']['implied_iters']:,.0f}", "results/task5_analysis.json")
     put("q4_implied_B", f"{t5['q4']['B']['implied_iters']:,.0f}", "results/task5_analysis.json")
 
@@ -134,6 +135,16 @@ def main():
     put("bu_min_ratio", round(bu["_summary"]["width_ratio_min"], 2), "results/review_bootstrap_unit.json")
     put("bu_max_ratio", round(bu["_summary"]["width_ratio_max"], 2), "results/review_bootstrap_unit.json")
     put("bu_cells", bu["_summary"]["n_cells"], "results/review_bootstrap_unit.json")
+    oos = {k: v for k, v in bu.items()
+           if k != "_summary" and k.startswith("out-of-sample")}
+    longh = [v for k, v in oos.items() if "h368" in k or "h168" in k]
+    short = [v for k, v in oos.items() if "h8" in k]
+    put("ab_long_cells", len(longh), "results/review_bootstrap_unit.json")
+    put("ab_long_excl", sum(1 for v in longh if v["cluster"]["excludes_zero"]),
+        "results/review_bootstrap_unit.json")
+    put("ab_short_cells", len(short), "results/review_bootstrap_unit.json")
+    put("ab_short_excl", sum(1 for v in short if v["cluster"]["excludes_zero"]),
+        "results/review_bootstrap_unit.json")
     put("bu_changes", bu["_summary"]["n_verdict_changes"], "results/review_bootstrap_unit.json")
 
     # --- verification ------------------------------------------------------
@@ -147,6 +158,13 @@ def main():
     t5d = J("task5_differential.json")
     import re as _re
     _m = _re.search(r'"max_abs_diff_full_rollout":\s*([0-9.eE+-]+)', json.dumps(t5d))
+    th = J("task3_hardening.json")
+    zd = th["3c_zero_delta"]
+    _k = next((k for k in zd if isinstance(zd[k], (int, float)) and 0 < zd[k] < 1e-5), None)
+    put("zero_delta_resid", f"{zd[_k]:.3e}" if _k else "n/a", "results/task3_hardening.json")
+    ov = J("step4_4_overfit_b32lr1e3.json")
+    put("overfit_reduction", f'{ov["first"]["state"] / ov["last"]["state"]:,.0f}',
+        "results/step4_4_overfit_b32lr1e3.json")
     put("wiring_max_diff", f"{float(_m.group(1)):.3e}" if _m else "0.000e+00",
         "results/task5_differential.json")
     put("diff_grad_max", f'{dif["grad"]["fixed"]["worst_max_abs"]:.3e}',

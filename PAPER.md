@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     98 values substituted from 17 artifacts. -->
+     102 values substituted from 19 artifacts. -->
 
 # What a world model's uncertainty output actually reports: an independent reproduction of the Robotic World Model
 
@@ -81,7 +81,7 @@ concerns the pre-registration discipline itself.
 **Data.** The released dataset is 10,000 rows of ANYmal D proprioceptive state and policy
 actions at 50 Hz. It is not one recording: it is ten concatenated 20-second episodes, and its
 termination column is identically zero, so nothing in the file marks the boundaries. The reference
-window builder therefore treats every 9,961 window as valid, including 352 that
+window builder therefore marks all 9,961 windows valid, including 352 that
 splice one episode's end onto the next one's start. The usable, episode-respecting count is
 9,609 — 10,000 rows, less 39 that cannot start a full window, less
 352 that cross a boundary. The contamination rate is 3.53%.
@@ -112,19 +112,23 @@ Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the
 effect survives at 10,000 iterations rather than only at the paper's 2,500.
 
-**Result.** All three hold: True, True, True. At h = 368 out-of-sample after
+**Result.** Every condition holds. At h = 368 out-of-sample after
 10,000 iterations, autoregressive training reaches **0.3509** against teacher forcing's
 **1.5540** — a factor of **4.4×**, gap 1.2033, 95% bootstrap interval
 [0.56, 2.05], on n = 4 independent trajectories. The per-episode gap
 is positive on **10 of 10** episodes.
 
 **What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
-comparison out-of-sample gives a gap of 0.008 whose interval includes zero
-(False). The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored
+comparison out-of-sample gives a gap of 0.008 whose interval includes zero.
+The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored
 at h = 8, returned "cannot be settled"; anchoring a rule to the horizon the claim is actually
 about was a correction we had to make in advance of the runs, not after them (§7).
 
-*Figure 5(a)* summarises the per-cell outcome across arenas, horizons and metrics.
+The pattern is consistent across the design. Under the correct cluster bootstrap, the
+out-of-sample gap excludes zero in **4 of 4** long-horizon cells —
+both trajectory lengths crossed with both checkpoints — and in **0 of
+4** at h = 8. These figures are relative-L1; the nRMSE aggregation is reported
+separately and does not change the direction.
 
 ---
 
@@ -340,9 +344,9 @@ report: the released checkpoint's σ is 7,878× smaller than its own error, and 
 cause is that the objective's optimum is σ = 0 with the term that should prevent this cancelling
 out of the gradient.
 
-The more useful finding is the one that required training a model nobody had measured. Ranking and
-input-dependence are achievable — the teacher-forced arm has both — while the interval remains
-meaningless. Uncertainty in this family of models should be reported as an ordering, or fixed at
+The more useful finding came from measuring a model we had already trained for another purpose
+and had not put on a calibration table. Ranking and input-dependence are achievable — the
+teacher-forced arm has both — while the interval remains meaningless. Uncertainty in this family of models should be reported as an ordering, or fixed at
 the objective, but not read as a scale.
 
 ---
@@ -370,9 +374,9 @@ What every downstream number rests on. Each level was passed before the next was
 | shapes | parameter counts match the reference | exact |
 | wiring | inference outputs match the reference module | **0.000e+00**, bitwise |
 | indexing | the harness feeds the actions it claims | bitwise against the raw CSV |
-| residual | the zero-delta model is the hold-last floor | 1.19e-07 |
+| residual | the zero-delta model is the hold-last floor | 1.192e-07 |
 | **objective** | **losses and gradients match** | **0.000e+00 across 7 terms, 106 tensors** |
-| trainer | can memorise a single batch | 1506× loss reduction |
+| trainer | can memorise a single batch | 1,506× loss reduction |
 
 ## Appendix B — reproducing
 

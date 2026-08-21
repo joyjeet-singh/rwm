@@ -75,7 +75,7 @@ concerns the pre-registration discipline itself.
 **Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state and policy
 actions at 50 Hz. It is not one recording: it is ten concatenated 20-second episodes, and its
 termination column is identically zero, so nothing in the file marks the boundaries. The reference
-window builder therefore treats every {{win_naive}} window as valid, including {{win_cross}} that
+window builder therefore marks all {{win_naive}} windows valid, including {{win_cross}} that
 splice one episode's end onto the next one's start. The usable, episode-respecting count is
 {{win_usable}} — {{rows}} rows, less {{win_tail}} that cannot start a full window, less
 {{win_cross}} that cross a boundary. The contamination rate is {{contam_pct}}%.
@@ -106,19 +106,23 @@ Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the
 effect survives at 10,000 iterations rather than only at the paper's 2,500.
 
-**Result.** All three hold: {{m23_c1}}, {{m23_c2}}, {{m23_c3}}. At h = 368 out-of-sample after
+**Result.** Every condition {{m23_c1}}. At h = 368 out-of-sample after
 10,000 iterations, autoregressive training reaches **{{m23_A}}** against teacher forcing's
 **{{m23_B}}** — a factor of **{{m23_ratio}}×**, gap {{m23_gap}}, 95% bootstrap interval
 [{{m23_ci_lo}}, {{m23_ci_hi}}], on n = {{m23_nind}} independent trajectories. The per-episode gap
 is positive on **{{m23_n_episodes_positive}} of {{m23_n_episodes}}** episodes.
 
 **What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
-comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval includes zero
-({{m23_h8_excl}}). The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored
+comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.
+The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored
 at h = 8, returned "cannot be settled"; anchoring a rule to the horizon the claim is actually
 about was a correction we had to make in advance of the runs, not after them (§7).
 
-*Figure 5(a)* summarises the per-cell outcome across arenas, horizons and metrics.
+The pattern is consistent across the design. Under the correct cluster bootstrap, the
+out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells —
+both trajectory lengths crossed with both checkpoints — and in **{{ab_short_excl}} of
+{{ab_short_cells}}** at h = 8. These figures are relative-L1; the nRMSE aggregation is reported
+separately and does not change the direction.
 
 ---
 
@@ -334,9 +338,9 @@ report: the released checkpoint's σ is {{cal_rel_ratio}}× smaller than its own
 cause is that the objective's optimum is σ = 0 with the term that should prevent this cancelling
 out of the gradient.
 
-The more useful finding is the one that required training a model nobody had measured. Ranking and
-input-dependence are achievable — the teacher-forced arm has both — while the interval remains
-meaningless. Uncertainty in this family of models should be reported as an ordering, or fixed at
+The more useful finding came from measuring a model we had already trained for another purpose
+and had not put on a calibration table. Ranking and input-dependence are achievable — the
+teacher-forced arm has both — while the interval remains meaningless. Uncertainty in this family of models should be reported as an ordering, or fixed at
 the objective, but not read as a scale.
 
 ---
@@ -364,9 +368,9 @@ What every downstream number rests on. Each level was passed before the next was
 | shapes | parameter counts match the reference | exact |
 | wiring | inference outputs match the reference module | **{{wiring_max_diff}}**, bitwise |
 | indexing | the harness feeds the actions it claims | bitwise against the raw CSV |
-| residual | the zero-delta model is the hold-last floor | 1.19e-07 |
+| residual | the zero-delta model is the hold-last floor | {{zero_delta_resid}} |
 | **objective** | **losses and gradients match** | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** |
-| trainer | can memorise a single batch | 1506× loss reduction |
+| trainer | can memorise a single batch | {{overfit_reduction}}× loss reduction |
 
 ## Appendix B — reproducing
 

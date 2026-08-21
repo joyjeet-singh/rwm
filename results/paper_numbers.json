@@ -1,4 +1,20 @@
 {
+  "ab_long_cells": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 4
+  },
+  "ab_long_excl": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 4
+  },
+  "ab_short_cells": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 4
+  },
+  "ab_short_excl": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 0
+  },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
     "value": "7,687"
@@ -257,15 +273,15 @@
   },
   "m23_c1": {
     "source": "results/task5_analysis.json",
-    "value": true
+    "value": "holds"
   },
   "m23_c2": {
     "source": "results/task5_analysis.json",
-    "value": true
+    "value": "holds"
   },
   "m23_c3": {
     "source": "results/task5_analysis.json",
-    "value": true
+    "value": "holds"
   },
   "m23_ci_hi": {
     "source": "results/task5_analysis.json",
@@ -281,7 +297,7 @@
   },
   "m23_h8_excl": {
     "source": "results/task5_analysis.json",
-    "value": false
+    "value": "includes zero"
   },
   "m23_h8_gap": {
     "source": "results/task5_analysis.json",
@@ -330,6 +346,10 @@
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",
     "value": 13
+  },
+  "overfit_reduction": {
+    "source": "results/step4_4_overfit_b32lr1e3.json",
+    "value": "1,506"
   },
   "q4_implied_A": {
     "source": "results/task5_analysis.json",
@@ -478,5 +498,9 @@
   "wiring_max_diff": {
     "source": "results/task5_differential.json",
     "value": "0.000e+00"
+  },
+  "zero_delta_resid": {
+    "source": "results/task3_hardening.json",
+    "value": "1.192e-07"
   }
 }
