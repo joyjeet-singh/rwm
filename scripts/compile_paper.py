@@ -47,6 +47,10 @@ def main():
 
     with tempfile.TemporaryDirectory() as d:
         shutil.copy("PAPER.tex", d)
+        # the TMLR style file is vendored under tex/ (see tex/README.md)
+        for f in os.listdir("tex"):
+            if f.endswith((".sty", ".bst")):
+                shutil.copy(os.path.join("tex", f), d)
         os.makedirs(os.path.join(d, "figures"), exist_ok=True)
         for f in os.listdir(R.FIGURES):
             if f.startswith("paper_fig"):

@@ -71,23 +71,31 @@ def convert(md, title, author):
     lines = md.split("\n")
     out, unhandled = [], []
     i, in_code = 0, False
-    out.append(r"""\documentclass[11pt,a4paper]{article}
-\usepackage[margin=1in]{geometry}
+    out.append(r"""\documentclass[10pt]{article}
+% TMLR requires its official style file; non-compliance is grounds for desk
+% rejection. No package option = anonymous submission mode, which replaces the
+% author block with "Anonymous authors" and sets the "Under review" running head.
+% Do NOT add [accepted] or [preprint] for a submission: both de-anonymise.
+\usepackage{tmlr}
+
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{longtable}
 \usepackage[hidelinks]{hyperref}
+\usepackage{url}
 \usepackage{textcomp}
-\setlength{\parskip}{0.5em}
-\setlength{\parindent}{0pt}
-% Long \texttt tokens (flag names, arXiv ids) cannot hyphenate; give TeX room
-% rather than letting them run into the margin.
+% tmlr.sty fixes \textwidth, \textheight and the margins itself, so geometry
+% must not be loaded here -- it would silently override the required layout.
 \emergencystretch=3em
 \hbadness=10000
 \sloppy
+\def\month{MM}
+\def\year{YYYY}
+\def\openreview{\url{https://openreview.net/forum?id=XXXX}}
 \title{""" + esc(title) + r"""}
-\author{""" + esc(author) + r"""}
+% Author intentionally omitted: the submission is double-blind and tmlr.sty
+% renders "Anonymous authors" in this mode regardless.
+\author{}
 \date{}
 \begin{document}
 \maketitle

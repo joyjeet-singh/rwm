@@ -6,8 +6,6 @@
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
-**Joyjeet Singh**
-
 ---
 
 ## Abstract
@@ -419,10 +417,16 @@ as an ordering, or fixed at the objective, but not read as a scale.
 
 ## Data and code
 
-`https://github.com/joyjeet-singh/rwm` — every number above cites a file under `results/`, and
-`FINDINGS_LEDGER.md` carries the full claim record including the retractions. Neither upstream
-repository is redistributed; `setup.sh` fetches both at pinned commits and verifies two SHA-256
-hashes.
+The full repository — code, every artifact under `results/`, and `FINDINGS_LEDGER.md` with the
+complete claim record including the retractions — accompanies this submission as anonymised
+supplementary material, and will be released under a permanent archival identifier on
+acceptance. Neither upstream repository is redistributed; `setup.sh` fetches both at pinned
+commits and verifies two SHA-256 hashes.
+
+The pre-registration argument in §7 rests on commit timestamps. The supplementary material
+includes an anonymised `git log` covering every commit cited here, so the ordering in Figure 4 is
+checkable at review time; the archival identifier, which is not author-settable, is disclosed on
+acceptance.
 
 ## References
 

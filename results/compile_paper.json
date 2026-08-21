@@ -1,8 +1,8 @@
 {
   "pdflatex": "/Library/TeX/texbin/pdflatex",
   "status": "OK",
-  "pages": 10,
-  "bytes": 515826,
+  "pages": 9,
+  "bytes": 614704,
   "errors": [],
   "overfull_hboxes": 0,
   "underfull_hboxes": 0,

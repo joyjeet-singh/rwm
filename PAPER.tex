@@ -1,20 +1,28 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[margin=1in]{geometry}
+\documentclass[10pt]{article}
+% TMLR requires its official style file; non-compliance is grounds for desk
+% rejection. No package option = anonymous submission mode, which replaces the
+% author block with "Anonymous authors" and sets the "Under review" running head.
+% Do NOT add [accepted] or [preprint] for a submission: both de-anonymise.
+\usepackage{tmlr}
+
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{longtable}
 \usepackage[hidelinks]{hyperref}
+\usepackage{url}
 \usepackage{textcomp}
-\setlength{\parskip}{0.5em}
-\setlength{\parindent}{0pt}
-% Long \texttt tokens (flag names, arXiv ids) cannot hyphenate; give TeX room
-% rather than letting them run into the margin.
+% tmlr.sty fixes \textwidth, \textheight and the margins itself, so geometry
+% must not be loaded here -- it would silently override the required layout.
 \emergencystretch=3em
 \hbadness=10000
 \sloppy
+\def\month{MM}
+\def\year{YYYY}
+\def\openreview{\url{https://openreview.net/forum?id=XXXX}}
 \title{What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model}
-\author{Joyjeet Singh}
+% Author intentionally omitted: the submission is double-blind and tmlr.sty
+% renders "Anonymous authors" in this mode regardless.
+\author{}
 \date{}
 \begin{document}
 \maketitle
@@ -234,7 +242,9 @@ The more useful finding is that ranking survives where scale does not, in both c
 
 \section{Data and code}
 
-\texttt{https://github.com/joyjeet-singh/rwm} --- every number above cites a file under \texttt{results/}, and \texttt{FINDINGS\_LEDGER.md} carries the full claim record including the retractions. Neither upstream repository is redistributed; \texttt{setup.sh} fetches both at pinned commits and verifies two SHA-256 hashes.
+The full repository --- code, every artifact under \texttt{results/}, and \texttt{FINDINGS\_LEDGER.md} with the complete claim record including the retractions --- accompanies this submission as anonymised supplementary material, and will be released under a permanent archival identifier on acceptance. Neither upstream repository is redistributed; \texttt{setup.sh} fetches both at pinned commits and verifies two SHA-256 hashes.
+
+The pre-registration argument in \S7 rests on commit timestamps. The supplementary material includes an anonymised \texttt{git log} covering every commit cited here, so the ordering in Figure 4 is checkable at review time; the archival identifier, which is not author-settable, is disclosed on acceptance.
 
 \section{References}
 
