@@ -1543,6 +1543,19 @@
       "retracts": []
     },
     {
+      "id": "R-59",
+      "claim": "One scalar cannot fix it, and the way it fails is the horizon",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d2_recalibration.json"
+      ],
+      "retracts": []
+    },
+    {
       "id": "O-01",
       "claim": "Which action convention is causally correct",
       "relevance": "",
@@ -1912,7 +1925,7 @@
     "D": 13,
     "M": 32,
     "O": 13,
-    "R": 58,
+    "R": 59,
     "S": 14,
     "X": 9
   }

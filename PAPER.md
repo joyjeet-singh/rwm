@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     159 values substituted from 22 artifacts. -->
+     178 values substituted from 26 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -57,8 +57,9 @@ We came to the question sideways. Our aim was an ordinary reproduction: rebuild 
 dynamics model from scratch, check it against the released implementation, and see whether the
 paper's central training claim holds. It does. But the same rebuild made a second question cheap
 to ask, because we had a from-scratch model, the released checkpoint, and a harness that could
-score both: *is the predicted σ calibrated?* It is not, by three to four orders of magnitude, and
-the reason is structural rather than incidental.
+score both: *is the predicted σ calibrated?* Neither of the two the checkpoint emits is — the
+per-member σ by three to four orders of magnitude, the ensemble disagreement the method actually
+uses by one to two — and for the first of them the reason is structural rather than incidental.
 
 Three things distinguish this from a re-run of the authors' code.
 
@@ -130,7 +131,14 @@ checkpoint.
 *The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
 training reaches **0.3509** against teacher forcing's **1.5540** — a factor of
 **4.4×**, gap 1.2033, 95% bootstrap interval [0.56, 2.05] on
-n = 4 independent trajectories. **That interval should not be read as an ordinary
+n = 4 independent trajectories.
+
+*Against a baseline, because neither number means anything without one.* The hold-last floor —
+predicting that nothing changes — scores **0.9930** in the same cell. Autoregressive
+training beats it by **2.8×**. **Teacher forcing is 1.56× worse than
+assuming nothing changes at all**, which is the sharper statement of what exposure bias costs
+here: the arm that reaches a lower training loss ends up predicting the future worse than a
+model that makes no prediction. **That interval should not be read as an ordinary
 one:** four trajectories admit 256 distinct resamples, so any bootstrap tail is
 quantised to steps of 0.39%, and the interval is coarse by construction. It is offered as
 corroboration of the sign test, not as the primary evidence.
@@ -195,8 +203,8 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside
 | teacher-forced Arm B | 315× | 12.96% | 0.56% |
 | released checkpoint | 7,878× | 0.56% | 0.04% |
 
-Every model is overconfident by between one and four orders of magnitude (Figure 1). Those are
-aleatoric figures — the quantity §4.1 shows the method discards.
+On the aleatoric head every model is overconfident by between one and four orders of magnitude
+(Figure 1) — that is the quantity §4.1 shows the method discards.
 
 **The quantity the method does use is also uncalibrated.** On the released
 5-member checkpoint, out-of-sample, n = 4 independent trajectories:
@@ -238,7 +246,7 @@ and `min_logstd` cancels algebraically, taking no gradient from that term. The f
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 We predicted the collapse from this algebra before training, then observed it. Across all
-17 runs the collapse is linear in iteration count and its rate is nearly identical
+18 runs the collapse is linear in iteration count and its rate is nearly identical
 (Figure 3a). Under the corrected objective the sign flips (Figure 3b) — which is the strongest
 evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
 
@@ -279,7 +287,27 @@ error grows 13.33×.
 
 **The failure is specifically magnitude calibration, in both components.**
 
-### 4.6 The structural excuse does not survive
+### 4.6 One scalar does not fix it
+
+If σ had the right shape and the wrong scale, a single multiplier would repair it, and the
+finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on
+**one** held-out episode and evaluated on the **other**, in both directions, so it is never
+fitted on its own test set.
+
+Fitting at one step works at one step and nowhere else. On the epistemic term — the quantity the
+method uses — a scalar of 5.08–5.82 brings h=1 coverage to
+63–74%, essentially calibrated against the 68.3% target,
+and leaves h=368 at 17–21%. On the aleatoric term a scalar of
+593–611 gives 64–70% at h=1 and
+11–15% at h=368. Fitting over the whole rollout instead
+drives one-step coverage to 100% — an interval wide enough to be vacuous where the model is
+accurate — while still falling short at the far end.
+
+The reason is §4.7's mechanism: a constant multiplier cannot track an error that grows while σ
+does not. So "right shape, wrong scale" is the charitable reading of these tables and it does not
+survive. A per-horizon or input-dependent correction might still work; a constant one does not.
+
+### 4.7 The structural excuse does not survive
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
@@ -307,7 +335,9 @@ identically zero, so it marks all 9,961 windows valid.
 Row *t* holds the action that *produced* state *t*. The training path pairs states and actions
 index-for-index, which is causally correct. The evaluation path feeds the action from *t−1* to
 predict state *t* — stale by one step. Scored correctly the released checkpoint is materially
-better than its own released evaluation reports.
+better than its own released evaluation reports: nRMSE at h = 368 falls from 1.3228
+under the released pairing to 0.7572 under the causal one, so the released evaluation
+overstates its own model's error by 75%.
 
 **5.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all.
@@ -359,7 +389,7 @@ trained with.
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-(159 entries). Claims are never edited in place. A claim that turns out to be wrong is
+(160 entries). Claims are never edited in place. A claim that turns out to be wrong is
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data

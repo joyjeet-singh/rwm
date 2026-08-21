@@ -81,7 +81,7 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm and its duplication control (`R-56`) |
 | `D-` dataset properties | 13 | — |
 | `M-` methodological findings | 32 | — |
-| `R-` measured results | 58 | — |
+| `R-` measured results | 59 | — |
 | `O-` open questions | 13 | — |
 | `X-` deliberate deviations | 9 | — |
 | `S-` superseded, retained | 14 | — |

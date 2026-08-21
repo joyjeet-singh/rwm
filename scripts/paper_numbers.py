@@ -277,6 +277,40 @@ def main():
     put("nind_ins_400", _ins, "results/review_bootstrap_unit.json")
     put("nind_ratio", f"{_ins / _oos:.0f}", "results/review_bootstrap_unit.json")
 
+    # R-15: the stale-action cost, so section 5.2 can quote a figure rather than
+    # asserting "materially better" with nothing behind it (C1 marked it UNSUPPORTED).
+    _r15 = J("step4_0a_results.json")["protocols"]
+    put("stale_nrmse", f'{_r15["A_off0"]["nrmse"]["368"]:.4f}', "results/step4_0a_results.json")
+    put("causal_nrmse", f'{_r15["A_off1"]["nrmse"]["368"]:.4f}', "results/step4_0a_results.json")
+    put("stale_pct", f'{100*(_r15["A_off0"]["nrmse"]["368"]/_r15["A_off1"]["nrmse"]["368"]-1):.0f}',
+        "results/step4_0a_results.json")
+
+    # D3: the hold-last floor. Section 3 quoted 0.3509 against 1.5540 with no
+    # baseline, so a reader could not judge whether 0.3509 was good.
+    _fl = J("task4_arenas.json")["task4a"]["out-of-sample@400"]["floor"]["368"]["l1"]
+    put("floor_h368", f"{_fl:.4f}", "results/task4_arenas.json")
+    _A = float(t5["gaps"]["out-of-sample|10000|h368"]["A"])
+    _B = float(t5["gaps"]["out-of-sample|10000|h368"]["B"])
+    put("floor_over_A", f"{_fl / _A:.1f}", "results/task4_arenas.json + task5_analysis.json")
+    put("B_over_floor", f"{_B / _fl:.2f}", "results/task4_arenas.json + task5_analysis.json")
+
+    # D2 -- post-hoc recalibration
+    _d2 = J("task_d2_recalibration.json")
+    def _f1(lab):
+        return [f for f in _d2["models"][lab]["fits"] if f["mode"] == "c@h1"]
+    for lab, tag in (("released aleatoric", "ale"),
+                     ("released EPISTEMIC (used by the method)", "epi"),
+                     ("faithful (mse)", "fai")):
+        fs = _f1(lab)
+        for h in (1, 368):
+            v = [100 * f["coverage_after"][str(h)] for f in fs]
+            put(f"d2_{tag}_cov{h}_lo", f"{min(v):.0f}", "results/task_d2_recalibration.json")
+            put(f"d2_{tag}_cov{h}_hi", f"{max(v):.0f}", "results/task_d2_recalibration.json")
+        cs = [f["scalar"] for f in fs]
+        put(f"d2_{tag}_c_lo", f"{min(cs):.3g}", "results/task_d2_recalibration.json")
+        put(f"d2_{tag}_c_hi", f"{max(cs):.3g}", "results/task_d2_recalibration.json")
+    put("d2_target", f'{100*_d2["target_coverage"]:.1f}', "results/task_d2_recalibration.json")
+
     # C3 -- multiplicity
     C3 = J("task_c3_multiplicity.json")
     put("c3_family", C3["family_ab"]["n_comparisons"], "results/task_c3_multiplicity.json")

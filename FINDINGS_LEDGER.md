@@ -121,7 +121,7 @@ claim that M-23 tested is from the **base RWM** paper (arXiv **2501.10100**).
 | `[BOTH]` | bears on both, usually because it concerns shared code or shared data |
 
 **`[RWM-U]`** — C-04, C-06, C-10, C-11, O-08, O-12, O-13, R-08, R-24, R-25, R-43, R-48, R-49,
-R-50, R-51, R-52, R-53, R-54, C-14, C-15, R-58. These concern the variance head, its collapse, and the
+R-50, R-51, R-52, R-53, R-54, C-14, C-15, R-58, R-59. These concern the variance head, its collapse, and the
 calibration of the uncertainty output; none of them is a claim about the base paper.
 
 **`[BASE]`** — M-16, M-23, M-24, R-19, R-22, R-23, R-35, R-36, R-37, R-40, R-42, R-45, R-46,
@@ -2854,6 +2854,43 @@ epistemic term. That argument explains why a *per-member* σ collapses to zero u
 loss. Ensemble disagreement is not shaped by that mechanism, and why it is miscalibrated is not
 established here.
 **Evidence** `RUN` `results/task_b2_epistemic.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-59 — One scalar cannot fix it, and the way it fails is the horizon · `[RWM-U]` · **NEW**
+The constructive question a reader asks next: if σ has the right shape and the wrong scale, one
+multiplier fixes it. It does not, and the failure mode is informative.
+
+A single scalar `c` was fitted on **one** held-out episode and evaluated on the **other**, in both
+directions, so it is never fitted on its own test set. Two fits per model: `c@h1` matches ±1σ
+coverage to 68.3% at one step, `c@all` matches it over the whole 368-step rollout.
+
+**Fitting at h=1 works at h=1 and fails everywhere else.** For the released checkpoint, on the
+epistemic term the method actually uses, `c` = 5.08–5.82 brings one-step coverage to
+63–74% — essentially calibrated — and the same scalar leaves h=368 at 17–21%
+against a target of 68.3%. On the aleatoric term, `c` = 593–611 gives 64–70% at h=1 and
+11–15% at h=368.
+
+**Fitting over the whole rollout fails at both ends.** `c@all` drives one-step coverage to 100% —
+an interval so wide it is vacuous where the model is accurate — while still falling short at
+h=368.
+
+**Why, and it is the same mechanism as R-54 and R-58.** A constant multiplier cannot track an
+error that grows while σ does not. R-58 measured that directly for the epistemic term: σ grows
+1.59× from h=1 to h=368 while error grows 13.33×. No scalar reconciles those.
+
+**A second failure, on top of the horizon one.** For the trained arms the scalar does not
+transfer between the two held-out episodes even at h=1. The faithful arm fitted on episode 1 and
+tested on episode 8 reaches 91.9% coverage; fitted on
+episode 8 and tested on episode 1 it reaches 41.9%. With
+only two held-out episodes we cannot separate episode difficulty from a genuine failure to
+generalise, and we do not claim to.
+
+**What this rules out.** "The head learns the right shape and the wrong scale" is the charitable
+reading of R-51 and R-58, and it is wrong. A per-horizon or input-dependent correction might
+still work; a constant one does not. That makes the failure structural rather than a units
+problem, which is the harder of the two possible outcomes for the method.
+**Evidence** `RUN` `results/task_d2_recalibration.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 

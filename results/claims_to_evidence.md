@@ -84,4 +84,5 @@ One row per CONTRIB ledger entry.
 | `R-56` | The three-way comparison: the control is inert, contamination still costs nothing | `RUN` | CONFIRMED | `results/task3_three_way.json` |
 | `R-57` | All four models, measured on one table | `RUN` | CONFIRMED | `results/task1_calibration.json`, `scripts/task1_calibration.py` |
 | `R-58` | The uncertainty the method actually uses is also uncalibrated | `RUN` | CONFIRMED | `results/task_b2_epistemic.json` |
+| `R-59` | One scalar cannot fix it, and the way it fails is the horizon | `RUN` | CONFIRMED | `results/task_d2_recalibration.json` |
 | `O-12` | The released checkpoint's variance collapse is inconsistent with the released configurat | `DATA`, `RUN`, `SRC` | OPEN — the discrepancy is measured and c | `results/step4_4_overfit_b32lr1e3.json`, `results/step4_4_overfit_ens1.json` |

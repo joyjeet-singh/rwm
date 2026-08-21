@@ -51,8 +51,9 @@ We came to the question sideways. Our aim was an ordinary reproduction: rebuild 
 dynamics model from scratch, check it against the released implementation, and see whether the
 paper's central training claim holds. It does. But the same rebuild made a second question cheap
 to ask, because we had a from-scratch model, the released checkpoint, and a harness that could
-score both: *is the predicted σ calibrated?* It is not, by three to four orders of magnitude, and
-the reason is structural rather than incidental.
+score both: *is the predicted σ calibrated?* Neither of the two the checkpoint emits is — the
+per-member σ by three to four orders of magnitude, the ensemble disagreement the method actually
+uses by one to two — and for the first of them the reason is structural rather than incidental.
 
 Three things distinguish this from a re-run of the authors' code.
 
@@ -124,7 +125,14 @@ checkpoint.
 *The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
 training reaches **{{m23_A}}** against teacher forcing's **{{m23_B}}** — a factor of
 **{{m23_ratio}}×**, gap {{m23_gap}}, 95% bootstrap interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on
-n = {{m23_nind}} independent trajectories. **That interval should not be read as an ordinary
+n = {{m23_nind}} independent trajectories.
+
+*Against a baseline, because neither number means anything without one.* The hold-last floor —
+predicting that nothing changes — scores **{{floor_h368}}** in the same cell. Autoregressive
+training beats it by **{{floor_over_A}}×**. **Teacher forcing is {{B_over_floor}}× worse than
+assuming nothing changes at all**, which is the sharper statement of what exposure bias costs
+here: the arm that reaches a lower training loss ends up predicting the future worse than a
+model that makes no prediction. **That interval should not be read as an ordinary
 one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is
 quantised to steps of {{c3_quant}}%, and the interval is coarse by construction. It is offered as
 corroboration of the sign test, not as the primary evidence.
@@ -189,8 +197,8 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside
 | teacher-forced Arm B | {{cal_armB_ratio}}× | {{cal_armB_cov1}}% | {{cal_armB_cov368}}% |
 | released checkpoint | {{cal_rel_ratio}}× | {{cal_rel_cov1}}% | {{cal_rel_cov368}}% |
 
-Every model is overconfident by between one and four orders of magnitude (Figure 1). Those are
-aleatoric figures — the quantity §4.1 shows the method discards.
+On the aleatoric head every model is overconfident by between one and four orders of magnitude
+(Figure 1) — that is the quantity §4.1 shows the method discards.
 
 **The quantity the method does use is also uncalibrated.** On the released
 {{b2_members}}-member checkpoint, out-of-sample, n = {{b2_nind}} independent trajectories:
@@ -273,7 +281,27 @@ error grows {{b2_epi_err_growth}}×.
 
 **The failure is specifically magnitude calibration, in both components.**
 
-### 4.6 The structural excuse does not survive
+### 4.6 One scalar does not fix it
+
+If σ had the right shape and the wrong scale, a single multiplier would repair it, and the
+finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on
+**one** held-out episode and evaluated on the **other**, in both directions, so it is never
+fitted on its own test set.
+
+Fitting at one step works at one step and nowhere else. On the epistemic term — the quantity the
+method uses — a scalar of {{d2_epi_c_lo}}–{{d2_epi_c_hi}} brings h=1 coverage to
+{{d2_epi_cov1_lo}}–{{d2_epi_cov1_hi}}%, essentially calibrated against the {{d2_target}}% target,
+and leaves h=368 at {{d2_epi_cov368_lo}}–{{d2_epi_cov368_hi}}%. On the aleatoric term a scalar of
+{{d2_ale_c_lo}}–{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}}–{{d2_ale_cov1_hi}}% at h=1 and
+{{d2_ale_cov368_lo}}–{{d2_ale_cov368_hi}}% at h=368. Fitting over the whole rollout instead
+drives one-step coverage to 100% — an interval wide enough to be vacuous where the model is
+accurate — while still falling short at the far end.
+
+The reason is §4.7's mechanism: a constant multiplier cannot track an error that grows while σ
+does not. So "right shape, wrong scale" is the charitable reading of these tables and it does not
+survive. A per-horizon or input-dependent correction might still work; a constant one does not.
+
+### 4.7 The structural excuse does not survive
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
@@ -301,7 +329,9 @@ identically zero, so it marks all {{win_naive}} windows valid.
 Row *t* holds the action that *produced* state *t*. The training path pairs states and actions
 index-for-index, which is causally correct. The evaluation path feeds the action from *t−1* to
 predict state *t* — stale by one step. Scored correctly the released checkpoint is materially
-better than its own released evaluation reports.
+better than its own released evaluation reports: nRMSE at h = 368 falls from {{stale_nrmse}}
+under the released pairing to {{causal_nrmse}} under the causal one, so the released evaluation
+overstates its own model's error by {{stale_pct}}%.
 
 **5.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all.

@@ -1,4 +1,8 @@
 {
+  "B_over_floor": {
+    "source": "results/task4_arenas.json + task5_analysis.json",
+    "value": "1.56"
+  },
   "ab_long_cells": {
     "source": "results/review_bootstrap_unit.json",
     "value": 4
@@ -619,6 +623,10 @@
     "source": "results/task1_calibration.json",
     "value": "7,878"
   },
+  "causal_nrmse": {
+    "source": "results/step4_0a_results.json",
+    "value": "0.7572"
+  },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
     "value": "nan"
@@ -630,6 +638,82 @@
   "contam_pct": {
     "source": "results/step0_regimes.json",
     "value": 3.53
+  },
+  "d2_ale_c_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "611"
+  },
+  "d2_ale_c_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "593"
+  },
+  "d2_ale_cov1_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "70"
+  },
+  "d2_ale_cov1_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "64"
+  },
+  "d2_ale_cov368_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "15"
+  },
+  "d2_ale_cov368_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "11"
+  },
+  "d2_epi_c_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "5.82"
+  },
+  "d2_epi_c_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "5.08"
+  },
+  "d2_epi_cov1_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "74"
+  },
+  "d2_epi_cov1_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "63"
+  },
+  "d2_epi_cov368_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "21"
+  },
+  "d2_epi_cov368_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "17"
+  },
+  "d2_fai_c_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "14.8"
+  },
+  "d2_fai_c_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "6.2"
+  },
+  "d2_fai_cov1_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "92"
+  },
+  "d2_fai_cov1_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "42"
+  },
+  "d2_fai_cov368_hi": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "30"
+  },
+  "d2_fai_cov368_lo": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "9"
+  },
+  "d2_target": {
+    "source": "results/task_d2_recalibration.json",
+    "value": "68.3"
   },
   "diff_grad_max": {
     "source": "results/step4_3_differential.json",
@@ -670,6 +754,14 @@
   "err_rel_growth": {
     "source": "results/task2_sigma_profile.json",
     "value": 1.79
+  },
+  "floor_h368": {
+    "source": "results/task4_arenas.json",
+    "value": "0.9930"
+  },
+  "floor_over_A": {
+    "source": "results/task4_arenas.json + task5_analysis.json",
+    "value": "2.8"
   },
   "implied_iters": {
     "source": "results/step6_analysis.json",
@@ -761,7 +853,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 159
+    "value": 160
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",
@@ -777,7 +869,7 @@
   },
   "n_runs": {
     "source": "runs/ directory listing",
-    "value": 17
+    "value": 18
   },
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",
@@ -826,6 +918,14 @@
   "sig_rel_growth": {
     "source": "results/task2_sigma_profile.json",
     "value": 1.0007
+  },
+  "stale_nrmse": {
+    "source": "results/step4_0a_results.json",
+    "value": "1.3228"
+  },
+  "stale_pct": {
+    "source": "results/step4_0a_results.json",
+    "value": "75"
   },
   "t5_seeds": {
     "source": "results/task5_analysis.json",
