@@ -1,0 +1,15 @@
+==================================================================================
+STEP 5 MAIN RUN -- armA_seed0_10k
+==================================================================================
+  arm A: state branch feeds back its own SAMPLE (autoregressive, faithful)
+  auxiliary branch: teacher-forced in BOTH arms (system_dynamics.py:264)
+  ensemble 1, batch 256, lr 0.0001, weight_decay 1e-05, 10000 iterations
+  action alignment: causal, offset=1 (X-05)
+  gradient clipping: NONE -- the reference has none in this path (5.7a)
+  7687 training windows from episodes [0, 2, 3, 4, 5, 6, 7, 9]
+
+    iter      state     bound   contact    termin      total    |grad| exp(logdel)      s
+       0   47.63628 1.000e+00   0.68669 7.043e-01   50.02722    53.088    0.999900      2
+      25   33.43483 9.975e-01   0.59033 2.818e-01   35.30444    23.407    0.997428     31
+      50   27.20879 9.951e-01   0.39998 1.593e-02   28.61976    18.146    0.994962     63
+      75   21.22186 9.926e-01   0.34701 5.102e-03   22.56658    17.162    0.992514     97
