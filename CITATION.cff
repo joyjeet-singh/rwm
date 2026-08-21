@@ -7,6 +7,8 @@ authors:
     given-names: Joyjeet
 repository-code: "https://github.com/joyjeet-singh/rwm"
 license: Apache-2.0
+version: "1.0.0"
+date-released: "2026-08-21"
 keywords:
   - reproducibility
   - world models
@@ -23,7 +25,13 @@ abstract: >-
   evaluation code disagree on action alignment and the evaluation side is
   stale by one step, understating the released checkpoint; and the predicted
   variance head collapses because that is the optimum of the released
-  objective rather than a training accident.
+  objective rather than a training accident. The headline result concerns the
+  uncertainty-aware follow-up (arXiv:2504.16680): across four models the
+  predicted sigma is between 10.9x and 7,878x smaller than the
+  realised error, so the failure is one of magnitude calibration rather than of
+  ordering. The base paper's central autoregressive-versus-teacher-forcing
+  claim reproduces at long horizon by a factor of 4.4x under a decision rule
+  committed to git before the runs that tested it.
 references:
   - type: article
     title: "Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics"

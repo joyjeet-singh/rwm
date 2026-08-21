@@ -5,6 +5,11 @@ Li, Krause & Hutter, *Robotic World Model* ([arXiv:2501.10100](https://arxiv.org
 built from scratch on CPU and verified against the released reference at the level of
 outputs, losses and gradients.
 
+**The paper is [`PAPER.md`](PAPER.md)** (LaTeX: [`PAPER.tex`](PAPER.tex)). It is generated,
+not typed: every number is substituted from an artifact under `results/` by
+`scripts/build_paper.py`, which refuses to emit a paper if any placeholder is unresolved.
+The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
+
 **Every claim in this repository lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** with an
 ID, a status, its evidence class, and the file:line or run artifact it came from. Claims are
 never edited in place; wrong turns are marked `SUPERSEDED` and kept.

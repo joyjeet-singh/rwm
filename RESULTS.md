@@ -113,5 +113,7 @@ in rather than regenerates; see `M-28`.
 - [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md) — every claim, with evidence class and status
 - [`results/claims_to_evidence.md`](results/claims_to_evidence.md) — the machine-generated map
 - [`LOSS_ASSEMBLY.md`](LOSS_ASSEMBLY.md) — line-by-line extraction of the reference loss
-- Model checkpoints — *pending release*
-- Paper draft — *pending*
+- [`PAPER.md`](PAPER.md) — the paper; [`PAPER.tex`](PAPER.tex) for submission
+- [`MODEL_CARD.md`](MODEL_CARD.md) — the four checkpoints, with per-checkpoint limits
+- Model checkpoints — see the model card for sha256s; weights are gitignored and
+  regenerable via `./reproduce.sh`
