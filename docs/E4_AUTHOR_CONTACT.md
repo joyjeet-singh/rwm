@@ -2,6 +2,19 @@
 
 **This is yours to send. I have not contacted anyone.**
 
+## Addresses
+
+| author | address | source |
+|---|---|---|
+| **Chenhao Li** (first author — write to him) | `chenhli@ethz.ch` | his own site, breadli428.github.io |
+| Andreas Krause | `krausea@ethz.ch` | ETH Learning & Adaptive Systems group page |
+| Marco Hutter | **not confirmed** | ETH's directory pages do not publish it; I would not guess at a pattern |
+
+Chenhao Li is the first author and the one who would know the training configuration, so he is
+the person to write to; cc the other two if you like. He lists himself as a doctoral fellow at the
+ETH AI Center co-advised by Hutter and Krause, and as of April 2026 also a student researcher at
+Google DeepMind — so the ETH address may or may not still be the fastest route.
+
 ## Why it is worth doing before submission
 
 §6 of the paper says the released checkpoint's variance state is unreachable at any of the three
