@@ -419,6 +419,18 @@
     "source": "results/task_b2_epistemic.json",
     "value": "6.3"
   },
+  "bound_both_train": {
+    "source": "results/step5_armA_seed0.json (split)",
+    "value": 5
+  },
+  "bound_total": {
+    "source": "results/step5_armA_seed0.json (split)",
+    "value": 9
+  },
+  "bound_touch_holdout": {
+    "source": "results/step5_armA_seed0.json (split)",
+    "value": 4
+  },
   "bu_cells": {
     "source": "results/review_bootstrap_unit.json",
     "value": 16
@@ -438,6 +450,42 @@
   "bu_min_ratio": {
     "source": "results/review_bootstrap_unit.json",
     "value": 0.96
+  },
+  "c3_bonf_excl": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": 4
+  },
+  "c3_family": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": 8
+  },
+  "c3_holm_rejected": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": 4
+  },
+  "c3_long": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": 4
+  },
+  "c3_quant": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": "0.39"
+  },
+  "c3_resamples": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": 256
+  },
+  "c3_sign_n": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": 10
+  },
+  "c3_sign_p": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": "0.0020"
+  },
+  "c3_sign_pos": {
+    "source": "results/task_c3_multiplicity.json",
+    "value": 10
   },
   "cal_armB_cov": {
     "source": "results/task1_calibration.json",

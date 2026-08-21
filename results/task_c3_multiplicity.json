@@ -1,0 +1,171 @@
+{
+  "family_ab": {
+    "n_comparisons": 8,
+    "n_long_horizon": 4,
+    "note": "the family is the 8 out-of-sample A/B cells; correcting over all 16 including in-sample would be more conservative still"
+  },
+  "long_horizon_by_level": [
+    {
+      "level": "uncorrected 0.05",
+      "alpha": 0.05,
+      "long_horizon_excluding_zero": 4,
+      "of": 4,
+      "cells": [
+        {
+          "cell": "out-of-sample|400|500|h368",
+          "diff": 3.6297831535339355,
+          "lo": 2.105849266052246,
+          "hi": 6.454893112182617,
+          "excludes_zero": true,
+          "n_ind": 4
+        },
+        {
+          "cell": "out-of-sample|400|2500|h368",
+          "diff": 3.9799964427948,
+          "lo": 0.9906817078590393,
+          "hi": 9.484769821166992,
+          "excludes_zero": true,
+          "n_ind": 4
+        },
+        {
+          "cell": "out-of-sample|200|500|h168",
+          "diff": 0.9477583765983582,
+          "lo": 0.5381256252527237,
+          "hi": 1.4369115293025956,
+          "excludes_zero": true,
+          "n_ind": 10
+        },
+        {
+          "cell": "out-of-sample|200|2500|h168",
+          "diff": 0.8903342485427856,
+          "lo": 0.48082345724105835,
+          "hi": 1.4016240328550325,
+          "excludes_zero": true,
+          "n_ind": 10
+        }
+      ]
+    },
+    {
+      "level": "Bonferroni 0.05/8",
+      "alpha": 0.00625,
+      "long_horizon_excluding_zero": 4,
+      "of": 4,
+      "cells": [
+        {
+          "cell": "out-of-sample|400|500|h368",
+          "diff": 3.6297831535339355,
+          "lo": 2.086625099182129,
+          "hi": 7.898166656494141,
+          "excludes_zero": true,
+          "n_ind": 4
+        },
+        {
+          "cell": "out-of-sample|400|2500|h368",
+          "diff": 3.9799964427948,
+          "lo": 0.9282748699188232,
+          "hi": 12.295328140258789,
+          "excludes_zero": true,
+          "n_ind": 4
+        },
+        {
+          "cell": "out-of-sample|200|500|h168",
+          "diff": 0.9477583765983582,
+          "lo": 0.43095205053687097,
+          "hi": 1.6541076853871326,
+          "excludes_zero": true,
+          "n_ind": 10
+        },
+        {
+          "cell": "out-of-sample|200|2500|h168",
+          "diff": 0.8903342485427856,
+          "lo": 0.4152021027170122,
+          "hi": 1.6316851820796725,
+          "excludes_zero": true,
+          "n_ind": 10
+        }
+      ]
+    },
+    {
+      "level": "Bonferroni 0.05/4",
+      "alpha": 0.0125,
+      "long_horizon_excluding_zero": 4,
+      "of": 4,
+      "cells": [
+        {
+          "cell": "out-of-sample|400|500|h368",
+          "diff": 3.6297831535339355,
+          "lo": 2.0962371826171875,
+          "hi": 6.527287483215332,
+          "excludes_zero": true,
+          "n_ind": 4
+        },
+        {
+          "cell": "out-of-sample|400|2500|h368",
+          "diff": 3.9799964427948,
+          "lo": 0.9594782590866089,
+          "hi": 9.635093688964844,
+          "excludes_zero": true,
+          "n_ind": 4
+        },
+        {
+          "cell": "out-of-sample|200|500|h168",
+          "diff": 0.9477583765983582,
+          "lo": 0.4648773869499564,
+          "hi": 1.5846953421831147,
+          "excludes_zero": true,
+          "n_ind": 10
+        },
+        {
+          "cell": "out-of-sample|200|2500|h168",
+          "diff": 0.8903342485427856,
+          "lo": 0.4338349990546703,
+          "hi": 1.5521750979125524,
+          "excludes_zero": true,
+          "n_ind": 10
+        }
+      ]
+    }
+  ],
+  "holm_bonferroni": {
+    "n": 4,
+    "steps": [
+      {
+        "cell": "out-of-sample|400|500|h368",
+        "p": 5e-05,
+        "holm_threshold": 0.0125,
+        "rejected": true
+      },
+      {
+        "cell": "out-of-sample|400|2500|h368",
+        "p": 5e-05,
+        "holm_threshold": 0.016666666666666666,
+        "rejected": true
+      },
+      {
+        "cell": "out-of-sample|200|500|h168",
+        "p": 5e-05,
+        "holm_threshold": 0.025,
+        "rejected": true
+      },
+      {
+        "cell": "out-of-sample|200|2500|h168",
+        "p": 5e-05,
+        "holm_threshold": 0.05,
+        "rejected": true
+      }
+    ],
+    "n_rejected": 4
+  },
+  "sign_test_h368": {
+    "n_episodes": 10,
+    "n_positive": 10,
+    "exact_two_sided_p": 0.001953125,
+    "note": "a single exact test on ten paired episodes; it is one comparison, not a family, and does not depend on the bootstrap or on n_independent"
+  },
+  "bootstrap_resolution_note": {
+    "n_ind_out_of_sample_400": 4,
+    "distinct_resamples": 256,
+    "quantisation_pct": 0.390625,
+    "note": "with 4 trajectories a bootstrap has 256 distinct resamples, so any interval is quantised to 0.39% steps; corrected tails at this n are coarse by construction and should not lead the evidence"
+  }
+}

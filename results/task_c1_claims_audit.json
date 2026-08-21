@@ -1,0 +1,1054 @@
+{
+  "n_claims": 62,
+  "by_verdict": {
+    "OVERSTATED": 3,
+    "SUPPORTED": 52,
+    "UNREVIEWED": 6,
+    "UNSUPPORTED": 1
+  },
+  "claims": [
+    {
+      "id": "a0648b9f1fa3",
+      "section": "Abstract",
+      "claim": "The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the model reaches normalised error {{m23_A}} at a 368-step horizon on held-out episodes against {{m23_B}} for teacher forcing, a factor of {{m23_ratio}}\u00d7, with a bootstrap interval of [{{m23_ci_lo}}, {{m23_ci_hi}}] excluding zero and the gap positive on all {{m23_n_episodes_positive}} of {{m23_n_episodes}} episodes.",
+      "keys": [
+        "m23_A",
+        "m23_B",
+        "m23_ratio",
+        "m23_ci_lo",
+        "m23_ci_hi",
+        "m23_n_episodes_positive",
+        "m23_n_episodes"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "n_keys": 7,
+      "generated": true,
+      "verdict": "OVERSTATED",
+      "sample_size": "1 seed (armA/B_seed1_10k)",
+      "note": "The 4.4x direction is corroborated by three seeds at 2,500 iterations, but the specific figures 0.3509/1.5540 come from one 10k run per arm. Not defensible against seed variance until D1 lands."
+    },
+    {
+      "id": "0743a4754d4a",
+      "section": "Abstract",
+      "claim": "The aleatoric \u03c3 is **{{cal_rel_ratio}}\u00d7 smaller than its own mean absolute error** ({{cal_rel_cov1}}% coverage at \u00b11\u03c3 against a calibrated 68.3%), and we show analytically why: the state loss is squared error on a reparameterised sample with no log-\u03c3 term, minimised at \u03c3 = 0, with the bound term that should oppose this cancelling algebraically.",
+      "keys": [
+        "cal_rel_ratio",
+        "cal_rel_cov1"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "1a7f61b9a16a",
+      "section": "Abstract",
+      "claim": "Running the correction \u2014 the authors' own unused `gaussian_nll` branch \u2014 fails differently rather than succeeding, at {{cal_nll_ratio}}\u00d7 overconfidence.",
+      "keys": [
+        "cal_nll_ratio"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "64468c1423df",
+      "section": "Abstract",
+      "claim": "The epistemic term, the one the method actually consumes, is two orders of magnitude better and still **{{b2_epi_ratio_h368}}\u00d7 overconfident at the deployment horizon**, with {{b2_epi_cov1_h368}}% coverage.",
+      "keys": [
+        "b2_epi_ratio_h368",
+        "b2_epi_cov1_h368"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "35297b24bd38",
+      "section": "Abstract",
+      "claim": "The teacher-forced arm has the most input-dependent \u03c3 ({{cal_armB_over_faithA_cov}}\u00d7 the autoregressive arm's) and the strongest \u03c3-versus-error ordering ({{cal_armB_npos}} of {{cal_armB_ndim}} dimensions positive, P = {{cal_armB_p}}), and is still {{cal_armB_ratio}}\u00d7 overconfident.",
+      "keys": [
+        "cal_armB_over_faithA_cov",
+        "cal_armB_npos",
+        "cal_armB_ndim",
+        "cal_armB_p",
+        "cal_armB_ratio"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "e3de9217487e",
+      "section": "Abstract",
+      "claim": "We also report four defects in the released pipeline, evidence that the released checkpoint cannot have come from the released recipe, and {{n_retractions_lower}} retractions of our own numbered claims \u2014 one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.",
+      "keys": [
+        "n_retractions_lower"
+      ],
+      "artifacts": [
+        "FINDINGS_LEDGER.md"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "318b2c580584",
+      "section": "1. Introduction",
+      "claim": "A world model that reports its own uncertainty is more useful than one that does not, and the uncertainty-aware Robotic World Model reports one.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Framing, not a measurement claim."
+    },
+    {
+      "id": "920934ccb2ba",
+      "section": "1. Introduction",
+      "claim": "But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released checkpoint, and a harness that could score both: *is the predicted \u03c3 calibrated?* It is not, by three to four orders of magnitude, and the reason is structural rather than incidental.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "OVERSTATED",
+      "sample_size": "n_ind=4",
+      "note": "'by three to four orders of magnitude' is true of the aleatoric head only. The epistemic term, which the method uses, is 1-2 orders. Must name the quantity."
+    },
+    {
+      "id": "5f4a84677345",
+      "section": "1. Introduction",
+      "claim": "We rebuilt rather than imported.** The forward pass, the loss and the training step are written from scratch and then checked against the reference: outputs match bitwise, and losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors before any training begins (Appendix A).",
+      "keys": [
+        "diff_grad_max",
+        "diff_terms",
+        "diff_n_params"
+      ],
+      "artifacts": [
+        "results/step4_3_differential.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "94be81a5c0de",
+      "section": "1. Introduction",
+      "claim": "We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are withdrawn on evidence this project produced, and the retractions are kept in the record rather than deleted.",
+      "keys": [
+        "n_retractions_word"
+      ],
+      "artifacts": [
+        "FINDINGS_LEDGER.md"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "f038c6a13acb",
+      "section": "2. Setup",
+      "claim": "Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state and policy actions at 50 Hz.",
+      "keys": [
+        "rows"
+      ],
+      "artifacts": [
+        "results/step0_regimes.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "c3e575a5e486",
+      "section": "2. Setup",
+      "claim": "The reference window builder therefore marks all {{win_naive}} windows valid, including {{win_cross}} that splice one episode's end onto the next one's start.",
+      "keys": [
+        "win_naive",
+        "win_cross"
+      ],
+      "artifacts": [
+        "results/step0_regimes.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "8541f38d8c72",
+      "section": "2. Setup",
+      "claim": "The usable, episode-respecting count is {{win_usable}} \u2014 {{rows}} rows, less {{win_tail}} that cannot start a full window, less {{win_cross}} that cross a boundary.",
+      "keys": [
+        "win_usable",
+        "rows",
+        "win_tail",
+        "win_cross"
+      ],
+      "artifacts": [
+        "results/step0_regimes.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "29e04802f599",
+      "section": "2. Setup",
+      "claim": "The contamination rate is {{contam_pct}}%.",
+      "keys": [
+        "contam_pct"
+      ],
+      "artifacts": [
+        "results/step0_regimes.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "ca4ccb0e1ae3",
+      "section": "2. Setup",
+      "claim": "The paper describes two loss terms; the implementation has {{diff_terms}}.",
+      "keys": [
+        "diff_terms"
+      ],
+      "artifacts": [
+        "results/step4_3_differential.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "bab37b3ae6d5",
+      "section": "2. Setup",
+      "claim": "Two 400-step trajectories whose spans overlap are not independent evidence, and the out-of-sample arena contains only {{m23_nind}} mutually non-overlapping 400-step trajectories.",
+      "keys": [
+        "m23_nind"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "f5a9645e0ed0",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "Three conditions, all required: the out-of-sample gap at h = 368 excludes zero under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "committed efc35b8",
+      "note": "M-23's three conditions verbatim; the commit predates the runs (Figure 4)."
+    },
+    {
+      "id": "89791e359c69",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "Result.** Every condition {{m23_c1}}.",
+      "keys": [
+        "m23_c1"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "1b79c814239a",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes \u2014 an exact two-sided binomial test, p = **{{c3_sign_p}}**.",
+      "keys": [
+        "c3_sign_pos",
+        "c3_sign_n",
+        "c3_sign_p"
+      ],
+      "artifacts": [
+        "results/task_c3_multiplicity.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "b3ed9369a44b",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "The in-sample arena, where the sample is larger.* The same comparison on the eight training episodes has {{ab_long_cells}}\u00d7 more independent trajectories and gives the same direction at every horizon and checkpoint.",
+      "keys": [
+        "ab_long_cells"
+      ],
+      "artifacts": [
+        "results/review_bootstrap_unit.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "b3897b72105a",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive training reaches **{{m23_A}}** against teacher forcing's **{{m23_B}}** \u2014 a factor of **{{m23_ratio}}\u00d7**, gap {{m23_gap}}, 95% bootstrap interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories.",
+      "keys": [
+        "m23_A",
+        "m23_B",
+        "m23_ratio",
+        "m23_gap",
+        "m23_ci_lo",
+        "m23_ci_hi",
+        "m23_nind"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "n_keys": 7,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "c4c8c028036a",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised to steps of {{c3_quant}}%, and the interval is coarse by construction.",
+      "keys": [
+        "c3_resamples",
+        "c3_quant"
+      ],
+      "artifacts": [
+        "results/task_c3_multiplicity.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "73e96eb04496",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.",
+      "keys": [
+        "m23_h8_gap",
+        "m23_h8_excl"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "565a75b35888",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells \u2014 both trajectory lengths crossed with both checkpoints \u2014 and in **{{ab_short_excl}} of {{ab_short_cells}}** at h = 8.",
+      "keys": [
+        "ab_long_excl",
+        "ab_long_cells",
+        "ab_short_excl",
+        "ab_short_cells"
+      ],
+      "artifacts": [
+        "results/review_bootstrap_unit.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "2a8460fa2afd",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leaving it to a reader.",
+      "keys": [
+        "ab_long_cells",
+        "c3_family"
+      ],
+      "artifacts": [
+        "results/review_bootstrap_unit.json",
+        "results/task_c3_multiplicity.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "714e025c8133",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm\u2013Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**.",
+      "keys": [
+        "c3_bonf_excl",
+        "c3_long",
+        "c3_family",
+        "c3_holm_rejected",
+        "c3_long"
+      ],
+      "artifacts": [
+        "results/task_c3_multiplicity.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "34a343cc5968",
+      "section": "4.2 The measurement",
+      "claim": "Every model is overconfident by between one and four orders of magnitude (Figure 1).",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "OVERSTATED",
+      "sample_size": "n_ind=4",
+      "note": "'Every model is overconfident by between one and four orders of magnitude' now sits above a table with both quantities; it describes the aleatoric column. Needs scoping."
+    },
+    {
+      "id": "22b3d3615b08",
+      "section": "4.2 The measurement",
+      "claim": "The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint, out-of-sample, n = {{b2_nind}} independent trajectories:",
+      "keys": [
+        "b2_members",
+        "b2_nind"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "2b8285c24ad0",
+      "section": "4.2 The measurement",
+      "claim": "Epistemic is two orders of magnitude better than aleatoric \u2014 {{b2_epi_over_alea_h1}}\u00d7 larger at h=1, {{b2_epi_over_alea_h368}}\u00d7 at h=368 \u2014 and still wrong by **{{b2_epi_ratio_h1}}\u00d7** at one step and **{{b2_epi_ratio_h368}}\u00d7** at the deployment horizon, with \u00b11\u03c3 coverage of {{b2_epi_cov1_h368}}% where a calibrated Gaussian gives 68.3%.",
+      "keys": [
+        "b2_epi_over_alea_h1",
+        "b2_epi_over_alea_h368",
+        "b2_epi_ratio_h1",
+        "b2_epi_ratio_h368",
+        "b2_epi_cov1_h368"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "307da2161dc8",
+      "section": "4.2 The measurement",
+      "claim": "The scalar penalty as actually applied \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 correlates {{b2_penalty_corr}} with total absolute error over the rollout.",
+      "keys": [
+        "b2_penalty_corr"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "d4f8d90d55f6",
+      "section": "4.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a).",
+      "keys": [
+        "n_runs"
+      ],
+      "artifacts": [
+        "runs/ directory listing"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "0ed44d3f861c",
+      "section": "4.4 The correction fails differently rather than succeeding",
+      "claim": "Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}\u00d7 to {{cal_nll_ratio}}\u00d7 overconfident.",
+      "keys": [
+        "cal_faithA_ratio",
+        "cal_nll_ratio"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "a8fb8df2201c",
+      "section": "4.4 The correction fails differently rather than succeeding",
+      "claim": "It does not produce a usable estimate, and it destroys something the faithful arm had: the \u03c3-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positively correlated (P = {{cal_faithA_p}}) to {{cal_nll_npos}}/{{cal_nll_ndim}} (P = {{cal_nll_p}}, chance).",
+      "keys": [
+        "cal_faithA_npos",
+        "cal_faithA_ndim",
+        "cal_faithA_p",
+        "cal_nll_npos",
+        "cal_nll_ndim",
+        "cal_nll_p"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 6,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "2af9118239cc",
+      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "claim": "Arm B's \u03c3 is {{cal_armB_over_faithA_cov}}\u00d7 more input-dependent than the faithful arm's, and its ordering is the strongest of the four by a wide margin (mean r = {{cal_armB_r}}).",
+      "keys": [
+        "cal_armB_over_faithA_cov",
+        "cal_armB_r"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "d585e9d69a12",
+      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "claim": "It is still {{cal_armB_ratio}}\u00d7 overconfident.",
+      "keys": [
+        "cal_armB_ratio"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "716676892281",
+      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "claim": "The same pattern holds for the quantity the method uses, with the strongest evidence in this paper.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, P = {{b2_epi_p_h368}} \u2014 a better ranking than any aleatoric head here \u2014 while being {{b2_epi_ratio_h368}}\u00d7 overconfident.",
+      "keys": [
+        "b2_epi_npos_h368",
+        "b2_epi_ndim_h368",
+        "b2_epi_p_h368",
+        "b2_epi_ratio_h368"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "851b1b2fc523",
+      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "claim": "And it fails the horizon test the same way: \u03c3 grows {{b2_epi_sigma_growth}}\u00d7 from h=1 to h=368 while error grows {{b2_epi_err_growth}}\u00d7.",
+      "keys": [
+        "b2_epi_sigma_growth",
+        "b2_epi_err_growth"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "aaa2804dc8b4",
+      "section": "4.6 The structural excuse does not survive",
+      "claim": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7.",
+      "keys": [
+        "sig_faithA_growth",
+        "err_faithA_growth"
+      ],
+      "artifacts": [
+        "results/task2_sigma_profile.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "3865d2a0c04a",
+      "section": "5. Defects in the released pipeline",
+      "claim": "The window builder reads a termination column that is identically zero, so it marks all {{win_naive}} windows valid.",
+      "keys": [
+        "win_naive"
+      ],
+      "artifacts": [
+        "results/step0_regimes.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "f119432c0cb3",
+      "section": "5. Defects in the released pipeline",
+      "claim": "Scored correctly the released checkpoint is materially better than its own released evaluation reports.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNSUPPORTED",
+      "sample_size": "-",
+      "note": "'materially better than its own released evaluation reports' gives no figure and cites no artifact. R-15 has 1.3228 -> 0.7572; either quote it or drop the sentence."
+    },
+    {
+      "id": "e14b58dfd9b5",
+      "section": "5. Defects in the released pipeline",
+      "claim": "5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows}} windows \u2014 the clean {{arm_clean_windows}} plus {{arm_splices}} splices \u2014 and, because that confounds *content* with *count*, a duplication control adding the same {{arm_splices}} windows as exact copies of windows already present.",
+      "keys": [
+        "arm_contam_windows",
+        "arm_clean_windows",
+        "arm_splices",
+        "arm_splices"
+      ],
+      "artifacts": [
+        "results/step5_armA_seed0.json",
+        "results/step5_armA_seed0_contam.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "6d0f5a55482e",
+      "section": "5. Defects in the released pipeline",
+      "claim": "The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%.",
+      "keys": [
+        "arm_contam_pct",
+        "contam_pct"
+      ],
+      "artifacts": [
+        "results/step0_regimes.json",
+        "results/step5_armA_seed0_contam.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "b3ee37340ab6",
+      "section": "5. Defects in the released pipeline",
+      "claim": "It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training episodes, because {{bound_touch_holdout}} of the {{bound_total}} put held-out rows into training.",
+      "keys": [
+        "bound_both_train",
+        "bound_touch_holdout",
+        "bound_total"
+      ],
+      "artifacts": [
+        "results/step5_armA_seed0.json (split)"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "351639629dee",
+      "section": "5. Defects in the released pipeline",
+      "claim": "That is a leakage problem rather than a physics one, and including it would have invalidated our own comparison.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Design rationale for the contamination arm, not a measurement."
+    },
+    {
+      "id": "2a0742f49fcc",
+      "section": "5. Defects in the released pipeline",
+      "claim": "Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost_pct}}%.",
+      "keys": [
+        "dup_cost_pct",
+        "contam_cost_pct"
+      ],
+      "artifacts": [
+        "results/task3_control_arm.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "cf8a27d9770a",
+      "section": "5. Defects in the released pipeline",
+      "claim": "The bootstrap interval on duplicated \u2212 clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero.",
+      "keys": [
+        "dup_ci_lo",
+        "dup_ci_hi"
+      ],
+      "artifacts": [
+        "results/task3_control_arm.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "50d895c651db",
+      "section": "5. Defects in the released pipeline",
+      "claim": "In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory lengths \u00d7 two checkpoints \u00d7 two horizons \u00d7 two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} (Figure 5a).",
+      "keys": [
+        "tw_cells",
+        "tw_cc_cluster_hurt",
+        "tw_cells",
+        "tw_cc_cluster_helped"
+      ],
+      "artifacts": [
+        "results/task3_three_way.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "04ab531e3a05",
+      "section": "5. Defects in the released pipeline",
+      "claim": "The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells.",
+      "keys": [
+        "tw_dc_cluster_helped"
+      ],
+      "artifacts": [
+        "results/task3_three_way.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "32ba77174758",
+      "section": "6. The released checkpoint cannot have come from the released recipe",
+      "claim": "Fitting it across our runs and extrapolating to the released checkpoint's \u03c3 state implies **{{implied_iters}}** optimisation steps at the configured learning rate.",
+      "keys": [
+        "implied_iters"
+      ],
+      "artifacts": [
+        "results/step6_analysis.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "68b9e59b9fb0",
+      "section": "6. The released checkpoint cannot have come from the released recipe",
+      "claim": "The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}}, spreading {{implied_spread_pct}}% across the three fits \u2014 a linear extrapolation validated over a fourfold extension.",
+      "keys": [
+        "q4_implied_A",
+        "q4_implied_B",
+        "implied_spread_pct"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json",
+        "results/task5_analysis.json + results/step6_analysis.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "4211a0dea899",
+      "section": "7. Method",
+      "claim": "An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries).",
+      "keys": [
+        "n_entries"
+      ],
+      "artifacts": [
+        "FINDINGS_LEDGER.md"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "1db61e732582",
+      "section": "7. Method",
+      "claim": "Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip-pattern rule by {{lead_flip}}, the difficulty-bias rule by {{lead_m22}}, the long-horizon rule by {{lead_m23}}.",
+      "keys": [
+        "lead_m16",
+        "lead_flip",
+        "lead_m22",
+        "lead_m23"
+      ],
+      "artifacts": [
+        "results/paper_figures.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "8f21c91311f5",
+      "section": "7. Method",
+      "claim": "The rule for the duplication control (\u00a75.4) was stated in conversation before the runs but reached git **{{lead_task3}} after the runs finished**, and we found this only by auditing our own `git log`.",
+      "keys": [
+        "lead_task3"
+      ],
+      "artifacts": [
+        "results/paper_figures.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "310e07ba5798",
+      "section": "7. Method",
+      "claim": "{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record.",
+      "keys": [
+        "n_retractions_word",
+        "n_superseded"
+      ],
+      "artifacts": [
+        "FINDINGS_LEDGER.md"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "5131c9c3bc39",
+      "section": "7. Method",
+      "claim": "The pre-registration claim above retracts a framing rather than a number and is counted separately.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Bookkeeping statement about S-12, checkable in the ledger."
+    },
+    {
+      "id": "5a75a4a8195b",
+      "section": "7. Method",
+      "claim": "Resampling trajectories correctly \u2014 carrying all seeds with each draw \u2014 widens intervals by a mean factor of {{bu_mean_ratio}}\u00d7 (range {{bu_min_ratio}}\u2013{{bu_max_ratio}}) and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable.",
+      "keys": [
+        "bu_mean_ratio",
+        "bu_min_ratio",
+        "bu_max_ratio",
+        "bu_changes",
+        "bu_cells"
+      ],
+      "artifacts": [
+        "results/review_bootstrap_unit.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "d6d5a295e9b8",
+      "section": "7. Method",
+      "claim": "Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing.",
+      "keys": [
+        "ver_files",
+        "ver_values",
+        "ver_identical",
+        "ver_pct",
+        "ver_differing"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "05038c4640f0",
+      "section": "8. Limitations",
+      "claim": "Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent 400-step trajectories.",
+      "keys": [
+        "m23_nind"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "70b6010104ed",
+      "section": "9. Conclusion",
+      "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of the gradient.",
+      "keys": [
+        "cal_rel_ratio"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "821ab7bb5ed8",
+      "section": "9. Conclusion",
+      "claim": "The epistemic term the method actually penalises with is better by two orders of magnitude and still {{b2_epi_ratio_h368}}\u00d7 overconfident where it is used.",
+      "keys": [
+        "b2_epi_ratio_h368"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "44513c92c70d",
+      "section": "9. Conclusion",
+      "claim": "The more useful finding is that ranking survives where scale does not, in both components.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Summarises the two measured components; both backed below."
+    },
+    {
+      "id": "ee328cdfe27f",
+      "section": "9. Conclusion",
+      "claim": "The teacher-forced arm has input-dependent \u03c3 and good ordering; the epistemic term ranks better still, at {{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}} dimensions positively correlated with realised error.",
+      "keys": [
+        "b2_epi_npos_h368",
+        "b2_epi_ndim_h368"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    }
+  ]
+}

@@ -44,7 +44,7 @@ Three things distinguish this from a re-run of the authors' code.
 
 \textbf{Decision rules were committed before the data.} The verdicts below were fixed in advance, in git, with timestamps a reader can check (\S7, Figure 4). One of them returned "cannot be settled" and we report that too.
 
-\textbf{We retract our own findings when they fail.} Four claims in this work are withdrawn on evidence this project produced, and the retractions are kept in the record rather than deleted. One of them concerns the pre-registration discipline itself.
+\textbf{We retract our own findings when they fail.} Six claims in this work are withdrawn on evidence this project produced, and the retractions are kept in the record rather than deleted. One of them concerns the pre-registration discipline itself.
 
 
 \section{Setup}
@@ -64,11 +64,19 @@ Three things distinguish this from a re-run of the authors' code.
 
 \textbf{Rule, committed in advance} (commit \texttt{efc35b8}, and it names conditions rather than outcomes). Three conditions, all required: the out-of-sample gap at h = 368 excludes zero under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500.
 
-\textbf{Result.} Every condition holds. At h = 368 out-of-sample after 10,000 iterations, autoregressive training reaches \textbf{0.3509} against teacher forcing's \textbf{1.5540} --- a factor of \textbf{4.4$\times$}, gap 1.2033, 95\% bootstrap interval [0.56, 2.05], on n = 4 independent trajectories. The per-episode gap is positive on \textbf{10 of 10} episodes.
+\textbf{Result.} Every condition holds. We give the evidence in order of how little it depends on the small held-out sample.
+
+\emph{The sign test, which does not depend on n.} At h = 368 the per-episode gap favours autoregressive training on \textbf{10 of 10} episodes --- an exact two-sided binomial test, p = \textbf{0.0020}. This is one test on ten paired episodes, it uses no bootstrap, and no multiplicity correction touches it.
+
+\emph{The in-sample arena, where the sample is larger.} The same comparison on the eight training episodes has 4$\times$ more independent trajectories and gives the same direction at every horizon and checkpoint.
+
+\emph{The out-of-sample effect size, reported last and with its limitation stated.} Autoregressive training reaches \textbf{0.3509} against teacher forcing's \textbf{1.5540} --- a factor of \textbf{4.4$\times$}, gap 1.2033, 95\% bootstrap interval [0.56, 2.05] on n = 4 independent trajectories. \textbf{That interval should not be read as an ordinary one:} four trajectories admit 256 distinct resamples, so any bootstrap tail is quantised to steps of 0.39\%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
 \textbf{What does not hold, and we say so.} At h = 8 --- the horizon the model is trained on --- the same comparison out-of-sample gives a gap of 0.008 whose interval includes zero. The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored at h = 8, returned "cannot be settled"; anchoring a rule to the horizon the claim is actually about was a correction we had to make in advance of the runs, not after them (\S7).
 
 The pattern is consistent across the design. Under the correct cluster bootstrap, the out-of-sample gap excludes zero in \textbf{4 of 4} long-horizon cells --- both trajectory lengths crossed with both checkpoints --- and in \textbf{0 of 4} at h = 8. These figures are relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
+
+\textbf{Multiplicity.} Those 4 cells sit in a family of 8 out-of-sample comparisons, so we state the correction rather than leaving it to a reader. All 4 of 4 still exclude zero at a Bonferroni level of 0.05/8, and Holm--Bonferroni rejects \textbf{4 of 4}. The sign test above is unaffected either way.
 
 
 \section{Neither of the checkpoint's uncertainty outputs is usable as an interval}
@@ -191,7 +199,7 @@ The faithful arm's $\sigma$ \emph{declines} (0.9241$\times$) while its error gro
 
 \textbf{5.4 What the spliced windows cost: nothing measurable.} We trained a contaminated arm on 7,882 windows --- the clean 7,687 plus 195 splices --- and, because that confounds \emph{content} with \emph{count}, a duplication control adding the same 195 windows as exact copies of windows already present.
 
-The arm's contamination rate is 2.47\%, against the reference pipeline's 3.53\%. It is deliberately lower: we splice only boundaries whose \emph{both} sides are training episodes, because four of the reference's nine put held-out rows into training. That is a leakage problem rather than a physics one, and including it would have invalidated our own comparison. So this experiment measures the cost of training on physically impossible transitions, and not the reference's full exposure.
+The arm's contamination rate is 2.47\%, against the reference pipeline's 3.53\%. It is deliberately lower: we splice only the 5 boundaries whose \emph{both} sides are training episodes, because 4 of the 9 put held-out rows into training. That is a leakage problem rather than a physics one, and including it would have invalidated our own comparison. So this experiment measures the cost of training on physically impossible transitions, and not the reference's full exposure.
 
 Training loss over the final 250 iterations: duplication costs 0.90\%, splicing costs 21.57\%. The bootstrap interval on duplicated $-$ clean is [-0.0061, 0.0215], including zero. So the rise is caused by splice content, not by dataset size --- a control we ran only because the first version of this finding inferred the mechanism without it.
 
@@ -213,7 +221,7 @@ The released configuration says 500 iterations. The paper says 2,500. The checkp
 
 The fifth bar is negative. The rule for the duplication control (\S5.4) was stated in conversation before the runs but reached git \textbf{2.9 hours after the runs finished}, and we found this only by auditing our own \texttt{git log}. The measurement stands --- the arm was built and run without reference to its outcome --- but the claim that it was pre-registered does not, and we withdraw it. We report it because a discipline that is only checked when it succeeds is not a discipline.
 
-\textbf{Six retractions on our own evidence}, out of 14 superseded claims kept in the record. In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; and the claim that $\sigma$ is input-independent "in all four models", made against a table holding three. The pre-registration claim above is a sixth, retracting a framing rather than a number.
+\textbf{Six retractions on our own evidence}, out of 14 superseded claims kept in the record. In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; and the claim that $\sigma$ is input-independent "in all four models", made against a table holding three. The pre-registration claim above retracts a framing rather than a number and is counted separately.
 
 \textbf{A statistic that was resampling the wrong unit.} Our bootstrap pooled three training seeds over a shared set of evaluation trajectories and resampled the pooled vector, while reporting the independent-trajectory count. Each trajectory appeared three times. Resampling trajectories correctly --- carrying all seeds with each draw --- widens intervals by a mean factor of 1.42$\times$ (range 0.96--1.69) and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives. Both units are reported.
 

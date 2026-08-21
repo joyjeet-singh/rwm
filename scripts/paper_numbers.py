@@ -254,6 +254,34 @@ def main():
     put("b2_nind", B["design"]["n_independent"], "results/task_b2_epistemic.json")
     put("b2_members", B["design"]["ensemble_size"], "results/task_b2_epistemic.json")
 
+    # Episode-boundary accounting for section 5.4. These were typed ("four of the
+    # reference's nine"); correct, but typed.
+    _tr = set(J("step5_armA_seed0.json")["hyperparameters"]["train_episodes"])
+    _ho = set(J("step5_armA_seed0.json")["hyperparameters"]["holdout_episodes"])
+    _b = [(e, e + 1) for e in range(len(_tr) + len(_ho) - 1)]
+    _both = [x for x in _b if x[0] in _tr and x[1] in _tr]
+    _touch = [x for x in _b if x[0] in _ho or x[1] in _ho]
+    put("bound_total", len(_b), "results/step5_armA_seed0.json (split)")
+    put("bound_both_train", len(_both), "results/step5_armA_seed0.json (split)")
+    put("bound_touch_holdout", len(_touch), "results/step5_armA_seed0.json (split)")
+
+    # C3 -- multiplicity
+    C3 = J("task_c3_multiplicity.json")
+    put("c3_family", C3["family_ab"]["n_comparisons"], "results/task_c3_multiplicity.json")
+    put("c3_long", C3["family_ab"]["n_long_horizon"], "results/task_c3_multiplicity.json")
+    for r in C3["long_horizon_by_level"]:
+        if r["level"].startswith("Bonferroni 0.05/") and str(C3["family_ab"]["n_comparisons"]) in r["level"]:
+            put("c3_bonf_excl", r["long_horizon_excluding_zero"], "results/task_c3_multiplicity.json")
+    put("c3_holm_rejected", C3["holm_bonferroni"]["n_rejected"], "results/task_c3_multiplicity.json")
+    put("c3_sign_pos", C3["sign_test_h368"]["n_positive"], "results/task_c3_multiplicity.json")
+    put("c3_sign_n", C3["sign_test_h368"]["n_episodes"], "results/task_c3_multiplicity.json")
+    put("c3_sign_p", f'{C3["sign_test_h368"]["exact_two_sided_p"]:.4f}',
+        "results/task_c3_multiplicity.json")
+    put("c3_resamples", C3["bootstrap_resolution_note"]["distinct_resamples"],
+        "results/task_c3_multiplicity.json")
+    put("c3_quant", f'{C3["bootstrap_resolution_note"]["quantisation_pct"]:.2f}',
+        "results/task_c3_multiplicity.json")
+
     op = os.path.join(R.RESULTS, "paper_numbers.json")
     json.dump(N, open(op, "w"), indent=2, sort_keys=True)
     print(f"collected {len(N)} keyed numbers -> {R.rel(op)}")

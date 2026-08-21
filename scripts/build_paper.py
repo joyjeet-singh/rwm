@@ -41,6 +41,22 @@ def main():
 
     unused = sorted(set(N) - used)
 
+    # Typed-number check. The paper claims no number in it is typed by hand, and a
+    # hand-typed retraction count ("Four claims...") once contradicted the derived
+    # count in the same PDF. Everything numeric that is NOT a placeholder is listed
+    # here every build, so a typed number has to be looked at rather than assumed
+    # benign. Section numbers, arXiv ids and defined constants are expected.
+    prose = re.sub(r"\{\{[A-Za-z0-9_]+\}\}", "", text)
+    prose = re.sub(r"```.*?```", "", prose, flags=re.S)
+    prose = re.sub(r"^ {4}.*$", "", prose, flags=re.M)
+    prose = prose.split("## References")[0]
+    WORDS = r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|" \
+            r"thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\b"
+    typed_words = sorted({m.group(0).lower() for m in re.finditer(WORDS, prose, re.I)})
+    typed_nums = sorted({m.group(1) for m in
+                         re.finditer(r"(?<![\w.])(\d[\d,]*\.?\d*)(?![\w])", prose)},
+                        key=lambda x: (len(x), x))
+
     figs = sorted(f for f in os.listdir(R.FIGURES) if f.startswith("paper_fig"))
     header = (
         "<!-- GENERATED FILE — do not edit.\n"
@@ -66,6 +82,9 @@ def main():
     print(f"  placeholders filled : {len(used)}")
     print(f"  distinct artifacts  : {len(set(N[k]['source'] for k in used))}")
     print(f"  figures attached    : {len(figs)}")
+    print(f"  numerals typed in prose : {len(typed_nums)}  "
+          f"(section numbers, arXiv ids and constants expected)")
+    print(f"  number-words in prose   : {len(typed_words)}  {', '.join(typed_words)}")
     if unused:
         print(f"  collected but unused: {len(unused)}")
         print("    " + ", ".join(unused))

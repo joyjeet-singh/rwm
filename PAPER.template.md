@@ -66,9 +66,9 @@ gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
 git, with timestamps a reader can check (§7, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail.** Four claims in this work are withdrawn on evidence
-this project produced, and the retractions are kept in the record rather than deleted. One of them
-concerns the pre-registration discipline itself.
+**We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are
+withdrawn on evidence this project produced, and the retractions are kept in the record rather
+than deleted. One of them concerns the pre-registration discipline itself.
 
 ---
 
@@ -108,11 +108,25 @@ Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the
 effect survives at 10,000 iterations rather than only at the paper's 2,500.
 
-**Result.** Every condition {{m23_c1}}. At h = 368 out-of-sample after
-10,000 iterations, autoregressive training reaches **{{m23_A}}** against teacher forcing's
-**{{m23_B}}** — a factor of **{{m23_ratio}}×**, gap {{m23_gap}}, 95% bootstrap interval
-[{{m23_ci_lo}}, {{m23_ci_hi}}], on n = {{m23_nind}} independent trajectories. The per-episode gap
-is positive on **{{m23_n_episodes_positive}} of {{m23_n_episodes}}** episodes.
+**Result.** Every condition {{m23_c1}}. We give the evidence in order of how little it depends
+on the small held-out sample.
+
+*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours
+autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact two-sided
+binomial test, p = **{{c3_sign_p}}**. This is one test on ten paired episodes, it uses no
+bootstrap, and no multiplicity correction touches it.
+
+*The in-sample arena, where the sample is larger.* The same comparison on the eight training
+episodes has {{ab_long_cells}}× more independent trajectories and gives the same direction at
+every horizon and checkpoint.
+
+*The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
+training reaches **{{m23_A}}** against teacher forcing's **{{m23_B}}** — a factor of
+**{{m23_ratio}}×**, gap {{m23_gap}}, 95% bootstrap interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on
+n = {{m23_nind}} independent trajectories. **That interval should not be read as an ordinary
+one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is
+quantised to steps of {{c3_quant}}%, and the interval is coarse by construction. It is offered as
+corroboration of the sign test, not as the primary evidence.
 
 **What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
 comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.
@@ -125,6 +139,12 @@ out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** lon
 both trajectory lengths crossed with both checkpoints — and in **{{ab_short_excl}} of
 {{ab_short_cells}}** at h = 8. These figures are relative-L1; the nRMSE aggregation is reported
 separately and does not change the direction.
+
+**Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample
+comparisons, so we state the correction rather than leaving it to a reader. All
+{{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}},
+and Holm–Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**. The sign test above is
+unaffected either way.
 
 ---
 
@@ -291,8 +311,9 @@ because that confounds *content* with *count*, a duplication control adding the 
 {{arm_splices}} windows as exact copies of windows already present.
 
 The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's
-{{contam_pct}}%. It is deliberately lower: we splice only boundaries whose *both* sides are
-training episodes, because four of the reference's nine put held-out rows into training. That is a
+{{contam_pct}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides
+are training episodes, because {{bound_touch_holdout}} of the {{bound_total}} put held-out rows
+into training. That is a
 leakage problem rather than a physics one, and including it would have invalidated our own
 comparison. So this experiment measures the cost of training on physically impossible transitions,
 and not the reference's full exposure.
@@ -351,8 +372,8 @@ code; a framing of the released checkpoint as "clearly informative" that rested 
 we ourselves showed to be biased low; an aggregation artifact that inverted a published-model
 comparison in our favour, withdrawn when the gating checks we had written refuted it; a
 per-dimension comparison that turned out to be unmatched; and the claim that σ is input-independent
-"in all four models", made against a table holding three. The pre-registration claim above is a
-sixth, retracting a framing rather than a number.
+"in all four models", made against a table holding three. The pre-registration claim above retracts a framing rather
+than a number and is counted separately.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three training seeds over
 a shared set of evaluation trajectories and resampled the pooled vector, while reporting the

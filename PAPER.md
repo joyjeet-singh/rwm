@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     144 values substituted from 20 artifacts. -->
+     156 values substituted from 22 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -72,9 +72,9 @@ gradients match to 0.000e+00 across 7 loss terms and
 git, with timestamps a reader can check (§7, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail.** Four claims in this work are withdrawn on evidence
-this project produced, and the retractions are kept in the record rather than deleted. One of them
-concerns the pre-registration discipline itself.
+**We retract our own findings when they fail.** Six claims in this work are
+withdrawn on evidence this project produced, and the retractions are kept in the record rather
+than deleted. One of them concerns the pre-registration discipline itself.
 
 ---
 
@@ -114,11 +114,25 @@ Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the
 effect survives at 10,000 iterations rather than only at the paper's 2,500.
 
-**Result.** Every condition holds. At h = 368 out-of-sample after
-10,000 iterations, autoregressive training reaches **0.3509** against teacher forcing's
-**1.5540** — a factor of **4.4×**, gap 1.2033, 95% bootstrap interval
-[0.56, 2.05], on n = 4 independent trajectories. The per-episode gap
-is positive on **10 of 10** episodes.
+**Result.** Every condition holds. We give the evidence in order of how little it depends
+on the small held-out sample.
+
+*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours
+autoregressive training on **10 of 10** episodes — an exact two-sided
+binomial test, p = **0.0020**. This is one test on ten paired episodes, it uses no
+bootstrap, and no multiplicity correction touches it.
+
+*The in-sample arena, where the sample is larger.* The same comparison on the eight training
+episodes has 4× more independent trajectories and gives the same direction at
+every horizon and checkpoint.
+
+*The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
+training reaches **0.3509** against teacher forcing's **1.5540** — a factor of
+**4.4×**, gap 1.2033, 95% bootstrap interval [0.56, 2.05] on
+n = 4 independent trajectories. **That interval should not be read as an ordinary
+one:** four trajectories admit 256 distinct resamples, so any bootstrap tail is
+quantised to steps of 0.39%, and the interval is coarse by construction. It is offered as
+corroboration of the sign test, not as the primary evidence.
 
 **What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
 comparison out-of-sample gives a gap of 0.008 whose interval includes zero.
@@ -131,6 +145,12 @@ out-of-sample gap excludes zero in **4 of 4** long-horizon cells —
 both trajectory lengths crossed with both checkpoints — and in **0 of
 4** at h = 8. These figures are relative-L1; the nRMSE aggregation is reported
 separately and does not change the direction.
+
+**Multiplicity.** Those 4 cells sit in a family of 8 out-of-sample
+comparisons, so we state the correction rather than leaving it to a reader. All
+4 of 4 still exclude zero at a Bonferroni level of 0.05/8,
+and Holm–Bonferroni rejects **4 of 4**. The sign test above is
+unaffected either way.
 
 ---
 
@@ -297,8 +317,9 @@ because that confounds *content* with *count*, a duplication control adding the 
 195 windows as exact copies of windows already present.
 
 The arm's contamination rate is 2.47%, against the reference pipeline's
-3.53%. It is deliberately lower: we splice only boundaries whose *both* sides are
-training episodes, because four of the reference's nine put held-out rows into training. That is a
+3.53%. It is deliberately lower: we splice only the 5 boundaries whose *both* sides
+are training episodes, because 4 of the 9 put held-out rows
+into training. That is a
 leakage problem rather than a physics one, and including it would have invalidated our own
 comparison. So this experiment measures the cost of training on physically impossible transitions,
 and not the reference's full exposure.
@@ -357,8 +378,8 @@ code; a framing of the released checkpoint as "clearly informative" that rested 
 we ourselves showed to be biased low; an aggregation artifact that inverted a published-model
 comparison in our favour, withdrawn when the gating checks we had written refuted it; a
 per-dimension comparison that turned out to be unmatched; and the claim that σ is input-independent
-"in all four models", made against a table holding three. The pre-registration claim above is a
-sixth, retracting a framing rather than a number.
+"in all four models", made against a table holding three. The pre-registration claim above retracts a framing rather
+than a number and is counted separately.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three training seeds over
 a shared set of evaluation trajectories and resampled the pooled vector, while reporting the
