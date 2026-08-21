@@ -210,6 +210,8 @@ stage 23 "Collect the paper's numbers from the artifacts" "5 s" \
       results/paper_numbers.json $PY scripts/paper_numbers.py
 stage 24 "Build PAPER.md" "5 s" \
       "" $PY scripts/build_paper.py
+stage 25 "Build MODEL_CARD.md (checkpoint sha256s and per-checkpoint limits)" "10 s" \
+      "" $PY scripts/build_model_card.py
 
 echo ""
 echo "───────────────────────────────────────────────────────────────────────"
