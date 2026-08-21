@@ -10,6 +10,7 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 import rwm_data as R  # noqa: E402
 
@@ -52,6 +53,13 @@ def main():
         body += f"![{f}](figures/{f})\n\n"
     open(OUT, "w").write(header + body)
 
+    # LaTeX for submission, from the same resolved text -- one source, two outputs.
+    import md_to_tex
+    title = re.search(r"^# (.+)$", out, re.M).group(1)
+    tex, unhandled = md_to_tex.convert(header + body, title, "Joyjeet Singh")
+    open("PAPER.tex", "w").write(tex)
+    assert not unhandled, f"converter did not handle: {unhandled[:5]}"
+
     print("PAPER BUILD")
     print("=" * 72)
     print(f"  template            : {TEMPLATE} ({len(text.splitlines())} lines)")
@@ -62,6 +70,7 @@ def main():
         print(f"  collected but unused: {len(unused)}")
         print("    " + ", ".join(unused))
     print(f"  wrote {OUT} ({len(body.splitlines())} lines)")
+    print(f"  wrote PAPER.tex ({len(tex.splitlines())} lines)")
     print("\n  every number in the paper traces to:")
     for s in sorted(set(N[k]["source"] for k in used)):
         print(f"    {s}")
