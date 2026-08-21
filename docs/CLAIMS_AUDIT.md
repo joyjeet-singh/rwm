@@ -5,7 +5,7 @@ One row per declarative claim in the paper. Claims are enumerated mechanically f
 only judgement, and is keyed to the claim's text so that rewording a claim resets it
 to UNREVIEWED rather than carrying a stale verdict forward.
 
-**62 claims.** OVERSTATED: 4, SUPPORTED: 57, UNSUPPORTED: 1
+**85 claims.** OVERSTATED: 2, SUPPORTED: 83
 
 | # | § | claim | backed by | verdict |
 |---|---|---|---|---|
@@ -14,9 +14,9 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 3 | Abstract | Running the correction — the authors' own unused `gaussian_nll` branch — fails differently rather than succeeding, at {{cal_nll_ratio}}× overconfidenc… | `task1_calibration.json` | **SUPPORTED** |
 | 4 | Abstract | The epistemic term, the one the method actually consumes, is two orders of magnitude better and still **{{b2_epi_ratio_h368}}× overconfident at the de… | `task_b2_epistemic.json` | **SUPPORTED** |
 | 5 | Abstract | The teacher-forced arm has the most input-dependent σ ({{cal_armB_over_faithA_cov}}× the autoregressive arm's) and the strongest σ-versus-error orderi… | `task1_calibration.json` | **SUPPORTED** |
-| 6 | Abstract | We also report four defects in the released pipeline, evidence that the released checkpoint cannot have come from the released recipe, and {{n_retract… | `FINDINGS_LEDGER.md` | **SUPPORTED** |
+| 6 | Abstract | We also report {{n_defects}} defects in the released pipeline, evidence that the released checkpoint's variance state is unreachable at any of the thr… | `FINDINGS_LEDGER.md`, `PAPER.template.md section 5 subsections` | **SUPPORTED** |
 | 7 | 1. Introduction | A world model that reports its own uncertainty is more useful than one that does not, and the uncertainty-aware Robotic World Model reports one. | — | **SUPPORTED** |
-| 8 | 1. Introduction | But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released checkpoint, and a harness that could score… | — | **OVERSTATED** |
+| 8 | 1. Introduction | But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released checkpoint, and a harness that could score… | — | **SUPPORTED** |
 | 9 | 1. Introduction | We rebuilt rather than imported.** The forward pass, the loss and the training step are written from scratch and then checked against the reference: o… | `step4_3_differential.json` | **SUPPORTED** |
 | 10 | 1. Introduction | We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are withdrawn on evidence this project produced, and the retr… | `FINDINGS_LEDGER.md` | **SUPPORTED** |
 | 11 | 2. Setup | Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state and policy actions at 50 Hz. | `step0_regimes.json` | **SUPPORTED** |
@@ -30,44 +30,67 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 19 | 3. The base paper's centra | The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** epi… | `task_c3_multiplicity.json` | **SUPPORTED** |
 | 20 | 3. The base paper's centra | The in-sample arena, where the sample is larger.* The same comparison on the eight training episodes has {{nind_ins_400}} independent 400-step traject… | `review_bootstrap_unit.json` | **SUPPORTED** |
 | 21 | 3. The base paper's centra | The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive training reaches **{{m23_A}}** against teacher forcing's … | `task5_analysis.json` | **OVERSTATED** |
-| 22 | 3. The base paper's centra | That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised… | `task_c3_multiplicity.json` | **SUPPORTED** |
-| 23 | 3. The base paper's centra | What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same comparison out-of-sample gives a gap of {{m23_h8_gap}} … | `task5_analysis.json` | **SUPPORTED** |
-| 24 | 3. The base paper's centra | Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells — both trajec… | `review_bootstrap_unit.json` | **SUPPORTED** |
-| 25 | 3. The base paper's centra | Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leavi… | `review_bootstrap_unit.json`, `task_c3_multiplicity.json` | **SUPPORTED** |
-| 26 | 3. The base paper's centra | All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm–Bonferroni rejects **{{c3_holm_rejected}}… | `task_c3_multiplicity.json` | **SUPPORTED** |
-| 27 | 4.2 The measurement | Every model is overconfident by between one and four orders of magnitude (Figure 1). | — | **OVERSTATED** |
-| 28 | 4.2 The measurement | The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint, out-of-sample, n = {{b2_nind}} independent … | `task_b2_epistemic.json` | **SUPPORTED** |
-| 29 | 4.2 The measurement | Epistemic is two orders of magnitude better than aleatoric — {{b2_epi_over_alea_h1}}× larger at h=1, {{b2_epi_over_alea_h368}}× at h=368 — and still w… | `task_b2_epistemic.json` | **SUPPORTED** |
-| 30 | 4.2 The measurement | The scalar penalty as actually applied — `means.std(0).sum(-1)` at `envs/base.py:166` — correlates {{b2_penalty_corr}} with total absolute error over … | `task_b2_epistemic.json` | **SUPPORTED** |
-| 31 | 4.3 Why the aleatoric head | Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a). | ` directory listing` | **SUPPORTED** |
-| 32 | 4.4 The correction fails d | Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overconfident. | `task1_calibration.json` | **SUPPORTED** |
-| 33 | 4.4 The correction fails d | It does not produce a usable estimate, and it destroys something the faithful arm had: the σ-versus-error ordering falls from {{cal_faithA_npos}}/{{ca… | `task1_calibration.json` | **SUPPORTED** |
-| 34 | 4.5 The failure is one of  | Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faithful arm's, and its ordering is the strongest of the four by a wide margi… | `task1_calibration.json` | **SUPPORTED** |
-| 35 | 4.5 The failure is one of  | It is still {{cal_armB_ratio}}× overconfident. | `task1_calibration.json` | **SUPPORTED** |
-| 36 | 4.5 The failure is one of  | The same pattern holds for the quantity the method uses, with the strongest evidence in this paper.** At h=128 and h=368 the epistemic term correlates… | `task_b2_epistemic.json` | **SUPPORTED** |
-| 37 | 4.5 The failure is one of  | And it fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while error grows {{b2_epi_err_growth}}×. | `task_b2_epistemic.json` | **SUPPORTED** |
-| 38 | 4.6 The structural excuse  | The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows {{err_faithA_growth}}×. | `task2_sigma_profile.json` | **SUPPORTED** |
-| 39 | 5. Defects in the released | The window builder reads a termination column that is identically zero, so it marks all {{win_naive}} windows valid. | `step0_regimes.json` | **SUPPORTED** |
-| 40 | 5. Defects in the released | Scored correctly the released checkpoint is materially better than its own released evaluation reports. | — | **UNSUPPORTED** |
-| 41 | 5. Defects in the released | 5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows}} windows — the clean {{arm_clean_windo… | `step5_armA_seed0.json`, `step5_armA_seed0_contam.json` | **SUPPORTED** |
-| 42 | 5. Defects in the released | The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%. | `step0_regimes.json`, `step5_armA_seed0_contam.json` | **SUPPORTED** |
-| 43 | 5. Defects in the released | It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training episodes, because {{bound_touch_holdout}}… | `step5_armA_seed0.json (split)` | **SUPPORTED** |
-| 44 | 5. Defects in the released | That is a leakage problem rather than a physics one, and including it would have invalidated our own comparison. | — | **SUPPORTED** |
-| 45 | 5. Defects in the released | Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost_pct}}%. | `task3_control_arm.json` | **SUPPORTED** |
-| 46 | 5. Defects in the released | The bootstrap interval on duplicated − clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero. | `task3_control_arm.json` | **SUPPORTED** |
-| 47 | 5. Defects in the released | In rollout, across {{tw_cells}} cells (two arenas × two trajectory lengths × two checkpoints × two horizons × two metrics), contamination hurts in **{… | `task3_three_way.json` | **SUPPORTED** |
-| 48 | 5. Defects in the released | The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells. | `task3_three_way.json` | **SUPPORTED** |
-| 49 | 6. The released checkpoint | Fitting it across our runs and extrapolating to the released checkpoint's σ state implies **{{implied_iters}}** optimisation steps at the configured l… | `step6_analysis.json` | **SUPPORTED** |
-| 50 | 6. The released checkpoint | The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}}, spreading {{implied_spread_pct}}% across the three fits — a line… | `task5_analysis.json`, `step6_analysis.json` | **SUPPORTED** |
-| 51 | 7. Method | An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status,… | `FINDINGS_LEDGER.md` | **SUPPORTED** |
-| 52 | 7. Method | Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip-pattern rule by {{lead_flip}}, the diff… | `paper_figures.json` | **SUPPORTED** |
-| 53 | 7. Method | The rule for the duplication control (§5.4) was stated in conversation before the runs but reached git **{{lead_task3}} after the runs finished**, and… | `paper_figures.json` | **SUPPORTED** |
-| 54 | 7. Method | {{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record. | `FINDINGS_LEDGER.md` | **SUPPORTED** |
-| 55 | 7. Method | The pre-registration claim above retracts a framing rather than a number and is counted separately. | — | **SUPPORTED** |
-| 56 | 7. Method | Resampling trajectories correctly — carrying all seeds with each draw — widens intervals by a mean factor of {{bu_mean_ratio}}× (range {{bu_min_ratio}… | `review_bootstrap_unit.json` | **SUPPORTED** |
-| 57 | 7. Method | Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{v… | `verify_reproduction.json` | **SUPPORTED** |
-| 58 | 8. Limitations | Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent 400-step trajectories. | `task5_analysis.json` | **SUPPORTED** |
-| 59 | 9. Conclusion | The aleatoric σ is {{cal_rel_ratio}}× smaller than its own error, and the cause is that the objective's optimum is σ = 0 with the term that should pre… | `task1_calibration.json` | **SUPPORTED** |
-| 60 | 9. Conclusion | The epistemic term the method actually penalises with is better by two orders of magnitude and still {{b2_epi_ratio_h368}}× overconfident where it is … | `task_b2_epistemic.json` | **SUPPORTED** |
-| 61 | 9. Conclusion | The more useful finding is that ranking survives where scale does not, in both components. | — | **SUPPORTED** |
-| 62 | 9. Conclusion | The teacher-forced arm has input-dependent σ and good ordering; the epistemic term ranks better still, at {{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}… | `task_b2_epistemic.json` | **SUPPORTED** |
+| 22 | 3. The base paper's centra | Against a baseline, because neither number means anything without one.* The hold-last floor — predicting that nothing changes — scores **{{floor_h368}… | `task4_arenas.json` | **SUPPORTED** |
+| 23 | 3. The base paper's centra | Autoregressive training beats it by **{{floor_over_A}}×**. | `task4_arenas.json + task5_analysis.json` | **SUPPORTED** |
+| 24 | 3. The base paper's centra | Teacher forcing is {{B_over_floor}}× worse than assuming nothing changes at all**, which is the sharper statement of what exposure bias costs here: th… | `task4_arenas.json + task5_analysis.json` | **SUPPORTED** |
+| 25 | 3. The base paper's centra | That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised… | `task_c3_multiplicity.json` | **SUPPORTED** |
+| 26 | 3. The base paper's centra | What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same comparison out-of-sample gives a gap of {{m23_h8_gap}} … | `task5_analysis.json` | **SUPPORTED** |
+| 27 | 3. The base paper's centra | Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells — both trajec… | `review_bootstrap_unit.json` | **SUPPORTED** |
+| 28 | 3. The base paper's centra | Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leavi… | `review_bootstrap_unit.json`, `task_c3_multiplicity.json` | **SUPPORTED** |
+| 29 | 3. The base paper's centra | All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm–Bonferroni rejects **{{c3_holm_rejected}}… | `task_c3_multiplicity.json` | **SUPPORTED** |
+| 30 | 4.1 Which quantity the met | It is three things the papers do not address: that the aleatoric head is discarded before use, that neither quantity is usable as a scale, and that th… | — | **SUPPORTED** |
+| 31 | 4.2 The measurement | On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1) — that is the quantity §4.1 shows the method… | — | **SUPPORTED** |
+| 32 | 4.2 The measurement | The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint, out-of-sample, n = {{b2_nind}} independent … | `task_b2_epistemic.json` | **SUPPORTED** |
+| 33 | 4.2 The measurement | Epistemic is two orders of magnitude better than aleatoric — {{b2_epi_over_alea_h1}}× larger at h=1, {{b2_epi_over_alea_h368}}× at h=368 — and still w… | `task_b2_epistemic.json` | **SUPPORTED** |
+| 34 | 4.2 The measurement | The scalar penalty as actually applied — `means.std(0).sum(-1)` at `envs/base.py:166` — correlates {{b2_penalty_corr}} with total absolute error over … | `task_b2_epistemic.json` | **SUPPORTED** |
+| 35 | 4.3 Why the aleatoric head | Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a). | ` directory listing` | **SUPPORTED** |
+| 36 | 4.3 Why the aleatoric head | Two different things are being explained here, and §4.5 separates them.** *Magnitude collapse is objective-driven.* It occurs in all {{e2_mse_runs}} s… | `step5_arm*.json` | **SUPPORTED** |
+| 37 | 4.3 Why the aleatoric head | Input-independence is not.* That varies by a factor of {{cal_armB_over_faithA_cov}} between two arms trained under the same objective, so the objectiv… | `task1_calibration.json` | **SUPPORTED** |
+| 38 | 4.4 The correction fails d | Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overconfident. | `task1_calibration.json` | **SUPPORTED** |
+| 39 | 4.4 The correction fails d | It does not produce a usable estimate, and it destroys something the faithful arm had: the σ-versus-error ordering falls from {{cal_faithA_npos}}/{{ca… | `task1_calibration.json` | **SUPPORTED** |
+| 40 | 4.5 The failure is one of  | Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faithful arm's, and its ordering is the strongest of the four by a wide margi… | `task1_calibration.json` | **SUPPORTED** |
+| 41 | 4.5 The failure is one of  | It is still {{cal_armB_ratio}}× overconfident. | `task1_calibration.json` | **SUPPORTED** |
+| 42 | 4.5 The failure is one of  | The teacher-forced arm collapses in magnitude exactly like the autoregressive ones — same objective, same rate — while retaining {{cal_armB_over_faith… | `task1_calibration.json` | **SUPPORTED** |
+| 43 | 4.5 The failure is one of  | The same pattern holds for the quantity the method uses, with the strongest evidence in this paper.** At h=128 and h=368 the epistemic term correlates… | `task_b2_epistemic.json` | **SUPPORTED** |
+| 44 | 4.5 The failure is one of  | And it fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while error grows {{b2_epi_err_growth}}×. | `task_b2_epistemic.json` | **SUPPORTED** |
+| 45 | 4.6 One scalar does not fi | On the epistemic term — the quantity the method uses — a scalar of {{d2_epi_c_lo}}–{{d2_epi_c_hi}} brings h=1 coverage to {{d2_epi_cov1_lo}}–{{d2_epi_… | `task_d2_recalibration.json` | **SUPPORTED** |
+| 46 | 4.6 One scalar does not fi | On the aleatoric term a scalar of {{d2_ale_c_lo}}–{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}}–{{d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}–{{d2_al… | `task_d2_recalibration.json` | **SUPPORTED** |
+| 47 | 4.7 The structural excuse  | The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows {{err_faithA_growth}}×. | `task2_sigma_profile.json` | **SUPPORTED** |
+| 48 | 5. Defects in the released | The window builder reads a termination column that is identically zero, so it marks all {{win_naive}} windows valid. | `step0_regimes.json` | **SUPPORTED** |
+| 49 | 5. Defects in the released | Scored correctly the released checkpoint is materially better than its own released evaluation reports: nRMSE at h = 368 falls from {{stale_nrmse}} un… | `step4_0a_results.json` | **SUPPORTED** |
+| 50 | 5. Defects in the released | 5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows}} windows — the clean {{arm_clean_windo… | `step5_armA_seed0.json`, `step5_armA_seed0_contam.json` | **SUPPORTED** |
+| 51 | 5. Defects in the released | The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%. | `step0_regimes.json`, `step5_armA_seed0_contam.json` | **SUPPORTED** |
+| 52 | 5. Defects in the released | It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training episodes, because {{bound_touch_holdout}}… | `step5_armA_seed0.json (split)` | **SUPPORTED** |
+| 53 | 5. Defects in the released | That is a leakage problem rather than a physics one, and including it would have invalidated our own comparison. | — | **SUPPORTED** |
+| 54 | 5. Defects in the released | Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost_pct}}%. | `task3_control_arm.json` | **SUPPORTED** |
+| 55 | 5. Defects in the released | The bootstrap interval on duplicated − clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero. | `task3_control_arm.json` | **SUPPORTED** |
+| 56 | 5. Defects in the released | In rollout, across {{tw_cells}} cells (two arenas × two trajectory lengths × two checkpoints × two horizons × two metrics), contamination hurts in **{… | `task3_three_way.json` | **SUPPORTED** |
+| 57 | 5. Defects in the released | The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells. | `task3_three_way.json` | **SUPPORTED** |
+| 58 | 5. Defects in the released | "Costs nothing" is the wrong summary, and we should not use it.** Splicing raises training loss by {{contam_cost_pct}}% against duplication's {{dup_co… | `task3_control_arm.json`, `task3_three_way.json` | **SUPPORTED** |
+| 59 | 5. Defects in the released | Both are measured effects in opposite directions, which is the signature of regularisation: the spliced windows contain transitions the model cannot f… | — | **SUPPORTED** |
+| 60 | 6. The released checkpoint | Fitting it across our runs and extrapolating to the released checkpoint's σ state implies **{{implied_iters}}** optimisation steps at the configured l… | `step6_analysis.json` | **SUPPORTED** |
+| 61 | 6. The released checkpoint | The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}}, spreading {{implied_spread_pct}}% across the three fits — a line… | `task5_analysis.json`, `step6_analysis.json` | **SUPPORTED** |
+| 62 | 6. The released checkpoint | So the defensible claim is narrower than "cannot have come from the released recipe": **no constant-rate run from the released initialisation at the c… | — | **SUPPORTED** |
+| 63 | 7. Method | An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status,… | `FINDINGS_LEDGER.md` | **SUPPORTED** |
+| 64 | 7. Method | Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip-pattern rule by {{lead_flip}}, the diff… | `paper_figures.json` | **SUPPORTED** |
+| 65 | 7. Method | The rule for the duplication control (§5.4) was stated in conversation before the runs but reached git **{{lead_task3}} after the runs finished**, and… | `paper_figures.json` | **SUPPORTED** |
+| 66 | 7. Method | {{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record. | `FINDINGS_LEDGER.md` | **SUPPORTED** |
+| 67 | 7. Method | The pre-registration claim above retracts a framing rather than a number and is counted separately. | — | **SUPPORTED** |
+| 68 | 7. Method | Resampling trajectories correctly — carrying all seeds with each draw — widens intervals by a mean factor of {{bu_mean_ratio}}× (range {{bu_min_ratio}… | `review_bootstrap_unit.json` | **SUPPORTED** |
+| 69 | 7. Method | Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{v… | `verify_reproduction.json` | **SUPPORTED** |
+| 70 | 7. Method | Excluded and reported separately: {{ver_timing}} timing fields, and the {{ver_machine}} values in `results/step4_5_timing.json`. | `verify_reproduction.json` | **SUPPORTED** |
+| 71 | 7. Method | That file is the CPU budget — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats — … | — | **SUPPORTED** |
+| 72 | 8. Actionable lessons | Report uncertainty in this model family as an ordering, not as a scale.** Both of the released checkpoint's uncertainty outputs rank which predictions… | `task_b2_epistemic.json` | **SUPPORTED** |
+| 73 | 8. Actionable lessons | The held-out arena here contains {{nind_oos_400}} independent 400-step trajectories however many windows are drawn from it, and that number — not the … | `review_bootstrap_unit.json` | **SUPPORTED** |
+| 74 | 8. Actionable lessons | Reporting an interval beside a trajectory count rather than an independent-trajectory count overstates precision, and resampling pooled seed × traject… | `review_bootstrap_unit.json` | **SUPPORTED** |
+| 75 | 8. Actionable lessons | Check that the implemented loss is the described loss before reproducing any number from it.** The paper describes two loss terms; the implementation … | `step4_3_differential.json` | **SUPPORTED** |
+| 76 | 8. Actionable lessons | The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's σ is {{cal_rel_ratio}}× smaller than i… | `task1_calibration.json` | **SUPPORTED** |
+| 77 | 9. Broader impact | But a downstream user who reads the same quantity as a *calibrated interval* — a safety margin, a confidence bound, a gate on when to hand control to … | `task_b2_epistemic.json` | **SUPPORTED** |
+| 78 | 9. Broader impact | We think that makes the finding worth publishing rather than the reverse, and it is the reason §4 reports coverage rather than only correlation. | — | **SUPPORTED** |
+| 79 | 10. Limitations | Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent 400-step trajectories. | `task5_analysis.json` | **SUPPORTED** |
+| 80 | 11. Conclusion | The aleatoric σ is {{cal_rel_ratio}}× smaller than its own error, and the cause is that the objective's optimum is σ = 0 with the term that should pre… | `task1_calibration.json` | **SUPPORTED** |
+| 81 | 11. Conclusion | The epistemic term the method actually penalises with is better by two orders of magnitude and still {{b2_epi_ratio_h368}}× overconfident where it is … | `task_b2_epistemic.json` | **SUPPORTED** |
+| 82 | 11. Conclusion | The more useful finding is that ranking survives where scale does not, in both components. | — | **SUPPORTED** |
+| 83 | 11. Conclusion | The teacher-forced arm has input-dependent σ and good ordering; the epistemic term ranks better still, at {{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}… | `task_b2_epistemic.json` | **SUPPORTED** |
+| 84 | Data and code | And **the repository was archived by Software Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit timestamp is n… | — | **SUPPORTED** |
+| 85 | Data and code | It proves that the repository, with the whole pre-registration history in the form this paper cites, existed no later than that archival moment, as re… | — | **SUPPORTED** |

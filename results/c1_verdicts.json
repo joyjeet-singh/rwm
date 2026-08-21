@@ -376,5 +376,140 @@
     "verdict": "SUPPORTED",
     "sample_size": "",
     "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "45e41d1bfaac": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "6222452dc293": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+  },
+  "4307718cf905": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "beaf6b586404": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "b8cf445bdfdc": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "60eefc01f2a6": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+  },
+  "87790a27dd92": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+  },
+  "2bdfd7f98f09": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "3ae4dd000f59": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "537e14ef90d2": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "32348f363a95": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "6641dbaaab94": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "68bd110f4fa9": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "6b9ad2413a1f": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "20a63340af15": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+  },
+  "a0112c4bd6a3": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+  },
+  "304f894f3cd3": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "ccf8cda42bd8": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+  },
+  "e713a1b6aa83": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "e4b3f63239bc": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "eff0c489e42f": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "fdd6b6aaa3c6": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "7f9ebf680b50": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "e6a71e938009": {
+    "verdict": "SUPPORTED",
+    "sample_size": "n_ind=4",
+    "note": "An implication drawn from a measured overconfidence factor, flagged as such in the text; the factor itself is derived."
+  },
+  "83572538ff1d": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "A judgement, presented as one."
+  },
+  "d4d66e70bac3": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive."
+  },
+  "c7fc30eb1a9f": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive."
   }
 }

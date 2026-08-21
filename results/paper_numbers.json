@@ -871,9 +871,13 @@
     "source": "results/task5_analysis.json",
     "value": true
   },
+  "n_defects": {
+    "source": "PAPER.template.md section 5 subsections",
+    "value": "four"
+  },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 161
+    "value": 162
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",

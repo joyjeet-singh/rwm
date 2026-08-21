@@ -35,7 +35,7 @@ P = {{cal_armB_p}}), and is still {{cal_armB_ratio}}× overconfident. These mode
 predictions will be worse. They cannot learn *how wrong* they will be. A downstream user who needs
 a ranking may be served; one who needs an interval is not, under any of the four.
 
-We also report four defects in the released pipeline, evidence that the released checkpoint's
+We also report {{n_defects}} defects in the released pipeline, evidence that the released checkpoint's
 variance state is unreachable at any of the three iteration counts its own artifacts state, and
 {{n_retractions_lower}} retractions of our own numbered claims —
 one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.

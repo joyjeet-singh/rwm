@@ -222,6 +222,8 @@ stage 27 "Claims-versus-evidence audit" "10 s" \
 # under their account; third-party upstreams are allowlisted.
 stage 28 "Assemble the anonymised supplementary archive" "20 s" \
       "" $PY scripts/build_supplementary.py
+stage 29 "Submission readiness gate" "40 s" \
+      "" $PY scripts/submission_check.py
 
 echo ""
 echo "───────────────────────────────────────────────────────────────────────"

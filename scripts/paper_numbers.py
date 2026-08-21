@@ -330,6 +330,13 @@ def main():
     put("e2_nll_runs", len(_nll_s), "results/step5_arm*.json")
     put("e2_nll_rate", f"{_st.mean(_nll_s):+.4e}", "results/step5_arm*.json")
 
+    # "four defects in the released pipeline" was typed. Count section 5's
+    # subsections instead, so adding or removing one cannot desynchronise the abstract.
+    _tpl = open("PAPER.template.md").read()
+    _n = len(re.findall(r"^\*\*5\.\d+ ", _tpl, re.M))
+    WORD = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
+    put("n_defects", WORD.get(_n, str(_n)), "PAPER.template.md section 5 subsections")
+
     # C3 -- multiplicity
     C3 = J("task_c3_multiplicity.json")
     put("c3_family", C3["family_ab"]["n_comparisons"], "results/task_c3_multiplicity.json")
