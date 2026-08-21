@@ -378,7 +378,7 @@
       "id": "C-15",
       "claim": "Eq. 4 defines the penalty on variance; the code computes a standard deviation",
       "relevance": "CONTRIB",
-      "status": "CONFIRMED",
+      "status": "RESOLVED \u2014 the code is intended",
       "evidence": [
         "EXT",
         "SRC"
@@ -1793,6 +1793,17 @@
       "retracts": []
     },
     {
+      "id": "X-10",
+      "claim": "Author correspondence, 21 August 2026",
+      "relevance": "CONTEXT",
+      "status": "CONFIRMED",
+      "evidence": [
+        "EXT"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
       "id": "S-01",
       "claim": "\"The lite repo may not ship training data\"",
       "relevance": "",
@@ -1954,6 +1965,6 @@
     "O": 14,
     "R": 59,
     "S": 14,
-    "X": 9
+    "X": 10
   }
 }

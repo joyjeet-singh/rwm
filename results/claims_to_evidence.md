@@ -29,7 +29,7 @@ One row per CONTRIB ledger entry.
 | `C-12` | The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500 | `RUN`, `SRC` | CONFIRMED | — |
 | `C-13` | Three different iteration counts are in play | `DATA`, `EXT`, `SRC` | CONFIRMED | — |
 | `C-14` | The method penalises EPISTEMIC uncertainty; the aleatoric head is discarded before use | `EXT`, `SRC` | CONFIRMED | — |
-| `C-15` | Eq. 4 defines the penalty on variance; the code computes a standard deviation | `EXT`, `SRC` | CONFIRMED | — |
+| `C-15` | Eq. 4 defines the penalty on variance; the code computes a standard deviation | `EXT`, `SRC` | RESOLVED — the code is intended | — |
 | `M-02` | The hold-last floor is the zero-delta model | `INFER`, `RUN` | **CONFIRMED** (was PENDING VERIFICATION) | — |
 | `M-04` | Ten trajectories is not enough to support a gap claim | `RUN` | CONFIRMED | — |
 | `M-13` | The auxiliary branch is teacher-forced; the state branch is not | `SRC` | CONFIRMED | — |

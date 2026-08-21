@@ -42,7 +42,9 @@ predictions will be worse. They cannot learn *how wrong* they will be. A downstr
 a ranking may be served; one who needs an interval is not, under any of the four.
 
 We also report four defects in the released pipeline, evidence that the released checkpoint's
-variance state is unreachable at any of the three iteration counts its own artifacts state, and
+variance state is not reachable from the released artifacts at the iteration count its author
+recalls — which he attributes to the repository having moved on between training and release —
+and
 six retractions of our own numbered claims —
 one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.
 Every number in this paper is generated from a file in `results/`; none is typed by hand.
@@ -205,10 +207,17 @@ $u = \mathrm{Var}_b[\mu_b]$, the variance across ensemble members, and Eq. 5 app
 as $\tilde{r} = r - \lambda u$. The per-member predicted variance enters the training objective and nothing
 downstream.
 
-One discrepancy between the two, minor but real: Eq. 4 specifies a **variance**, and
-`system_dynamics.py:126` computes a **standard deviation**. With $\lambda = 1$ these differ by a square.
-We measure the code's quantity throughout, because that is what produced the released
-checkpoint's behaviour, and we do not treat either definition as authoritative.
+Eq. 4 specifies a **variance** while `system_dynamics.py:126` computes a **standard deviation**,
+which with $\lambda = 1$ differ by a square. We asked, and the first author confirms the code is
+operative: the penalty is applied to the standard deviation as intended, and Eq. 4 is "more of a
+high-level explanation" (personal communication, 21 August 2026). We measure the code's quantity
+throughout, which is now known to be the intended one.
+
+The same correspondence confirms the discard directly: "the aleatoric term is not used in
+downstream training. It is reported in Fig. 3 (right) as an analysis of the model behavior." So
+what follows is not an implementation slip being reported back to its authors — it is the
+intended design, and the aleatoric head exists to shape training and be inspected rather than to
+be consumed.
 
 So the aleatoric head — the one the state loss and the bound loss shape, and the one §4.3
 explains — is computed on every imagination step and discarded. We report both quantities below.
@@ -462,12 +471,23 @@ constant-rate run from the released initialisation at the configured learning ra
 checkpoint's variance state in 500, 2,500 or 5,000 iterations.** A warm start or a different
 initialisation would explain the gap without any inconsistency, and we cannot exclude either.
 
-**Author contact.** We wrote to the first author on 21 August 2026 asking exactly this — whether
-the released checkpoint was warm-started, or `log_delta_logstd` initialised differently, or a
-learning-rate schedule used — and had no response as of submission. A warm start or a changed
-initialisation would resolve the discrepancy immediately and neither is visible from the released
-artifacts, so their answer would very likely settle it. If it is settled after submission we will
-say so; the section stands as a bounded observation until then, not as an accusation.
+**What the author says.** We wrote to the first author on 21 August 2026 asking exactly this. He
+replied the same day: the released `max_iterations: 500` is "a typo"; his recollection is 5,000
+iterations, "as I always did"; he does not recall how the checkpoint was obtained; and — the part
+that matters most — "the checkpoint was released after a few iterations of the repo than the setup
+I used for the submission."
+
+That last point reframes this section. The extrapolation above assumes the *released*
+initialisation and the *released* learning rate. If the repository drifted between the training
+run and the release, those are not necessarily the values that produced the checkpoint, and E5
+already lists a changed `log_delta_logstd` initialisation as the assumption it cannot rule out.
+
+So the finding is not that the release is internally inconsistent. It is that **the released
+artifacts do not reproduce the released checkpoint's variance state, and the author's account is
+that the released repository is not the one that trained it.** That is a documentation gap between
+a release and a run — common, worth recording, and much less interesting than an inconsistency.
+We report the arithmetic because it is what let us detect the gap at all, not as a charge against
+the work.
 
 ---
 

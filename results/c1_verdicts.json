@@ -511,5 +511,30 @@
     "verdict": "SUPPORTED",
     "sample_size": "-",
     "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive."
+  },
+  "307a4ef9f224": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+  },
+  "f4539346e6e6": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+  },
+  "8e0fb7de4bce": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+  },
+  "0d1b5b192253": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+  },
+  "bfa02cae679c": {
+    "verdict": "SUPPORTED",
+    "sample_size": "-",
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
   }
 }

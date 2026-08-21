@@ -1,8 +1,8 @@
 {
-  "n_claims": 85,
+  "n_claims": 89,
   "by_verdict": {
     "OVERSTATED": 2,
-    "SUPPORTED": 83
+    "SUPPORTED": 87
   },
   "claims": [
     {
@@ -98,9 +98,9 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "45e41d1bfaac",
+      "id": "307a4ef9f224",
       "section": "Abstract",
-      "claim": "We also report {{n_defects}} defects in the released pipeline, evidence that the released checkpoint's variance state is unreachable at any of the three iteration counts its own artifacts state, and {{n_retractions_lower}} retractions of our own numbered claims \u2014 one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.",
+      "claim": "We also report {{n_defects}} defects in the released pipeline, evidence that the released checkpoint's variance state is not reachable from the released artifacts at the iteration count its author recalls \u2014 which he attributes to the repository having moved on between training and release \u2014 and {{n_retractions_lower}} retractions of our own numbered claims \u2014 one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.",
       "keys": [
         "n_defects",
         "n_retractions_lower"
@@ -112,8 +112,8 @@
       "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "sample_size": "-",
+      "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
     },
     {
       "id": "318b2c580584",
@@ -497,6 +497,30 @@
       "verdict": "SUPPORTED",
       "sample_size": "",
       "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "f4539346e6e6",
+      "section": "4.1 Which quantity the method actually uses",
+      "claim": "We asked, and the first author confirms the code is operative: the penalty is applied to the standard deviation as intended, and Eq. 4 is \"more of a high-level explanation\" (personal communication, 21 August 2026).",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+    },
+    {
+      "id": "8e0fb7de4bce",
+      "section": "4.1 Which quantity the method actually uses",
+      "claim": "It is reported in Fig. 3 (right) as an analysis of the model behavior.\" So what follows is not an implementation slip being reported back to its authors \u2014 it is the intended design, and the aleatoric head exists to shape training and be inspected rather than to be consumed.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
     },
     {
       "id": "60eefc01f2a6",
@@ -1059,6 +1083,30 @@
       "verdict": "SUPPORTED",
       "sample_size": "-",
       "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+    },
+    {
+      "id": "0d1b5b192253",
+      "section": "6. The released checkpoint's variance state is unreachable at the stated iteration counts",
+      "claim": "He replied the same day: the released `max_iterations: 500` is \"a typo\"; his recollection is 5,000 iterations, \"as I always did\"; he does not recall how the checkpoint was obtained; and \u2014 the part that matters most \u2014 \"the checkpoint was released after a few iterations of the repo than the setup I used for the submission.\"",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+    },
+    {
+      "id": "bfa02cae679c",
+      "section": "6. The released checkpoint's variance state is unreachable at the stated iteration counts",
+      "claim": "It is that **the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repository is not the one that trained it.** That is a documentation gap between a release and a run \u2014 common, worth recording, and much less interesting than an inconsistency.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "-",
+      "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
     },
     {
       "id": "4211a0dea899",

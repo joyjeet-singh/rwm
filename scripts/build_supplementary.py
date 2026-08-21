@@ -42,11 +42,15 @@ INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex"]
 # eventual named checkpoint release, not review evidence, and both carry the author
 # and repository by design. This script is a submission build tool and its own
 # identity patterns would trip its own scan.
+# Submission build tools carry the identity patterns they search for, so they trip
+# their own scan. They are tooling for the submission, not evidence within it.
 EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
+           "scripts/submission_check.py",
            "MODEL_CARD.md", "CITATION.cff", "NOTICE",
            # working documents for outward-facing steps; they necessarily carry the
            # repository URL and the author's correspondents
            "docs/E4_AUTHOR_CONTACT.md", "docs/E6_ARCHIVAL.md",
+           "docs/E4_REPLY_DRAFT.md",
            "docs/ARCHIVAL_IDENTIFIERS.md"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",

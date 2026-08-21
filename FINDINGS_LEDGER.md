@@ -405,9 +405,9 @@ disagree by an order of magnitude.
 
 | Source | Iterations |
 |---|---|
-| `base_cfg.py` `ModelTrainingConfig.max_iterations` | **500** |
+| `base_cfg.py` `ModelTrainingConfig.max_iterations` | **500** — the author confirms this is a **typo** (X-10) |
 | Paper, Table S7 | **2500** |
-| `pretrain_rnn_ens.pt`, `iter` key in the checkpoint | **5000** |
+| `pretrain_rnn_ens.pt`, `iter` key in the checkpoint | **5000** — the author's own recollection (X-10) |
 
 None of the three is consistent with the released checkpoint's variance state (O-12), so this
 is not merely a documentation mismatch — the largest of the three still falls ~6 orders of
@@ -446,10 +446,13 @@ model evaluation rather than policy training, so it is not the operative site.
 the one C-10, C-11 and R-48 to R-54 analyse — is computed on every imagination step and thrown
 away. Any claim that "the released checkpoint's uncertainty output" is unusable must say which
 output it means. See S-14.
+**Confirmed by the author (X-10):** "The aleatoric term is not used in downstream training. It is
+reported in Fig. 3 (right) as an analysis of the model behavior." So the discard is intended
+design, not an implementation slip.
 **Evidence** `SRC` `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:125-126`,
 `robotic_world_model_lite/scripts/envs/base.py:142,158,166`,
 `robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:30`;
-`EXT` arXiv:2504.16680 Eq. 4-5.
+`EXT` arXiv:2504.16680 Eq. 4-5; `EXT` personal communication, C. Li, 21 August 2026.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
@@ -459,11 +462,15 @@ Eq. 4 of arXiv:2504.16680 gives `u_{t+1} = Var_b[μ_b]`. `system_dynamics.py:126
 45 state dimensions rather than left per-dimension. With λ = 1.0 the two differ by a square, so
 the penalty the released configuration actually applies is not the one the paper writes down.
 
-Minor beside C-14, and of the same class as C-01 and B-05: the implemented quantity is not the
-described one. R-58 measures the code's quantity, since that is what produced the released
-behaviour, and does not treat either definition as authoritative.
-**Evidence** `SRC` `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:126`; `EXT` arXiv:2504.16680 Eq. 4.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Answered by the author (X-10).** Asked which form was intended, the first author replied that
+"the lambda is applied to the standard deviation in the implementation as intended, in contrast to
+Eq. 4 being more of a high-level explanation." So the code is operative and Eq. 4 is a high-level
+description. This is a **notational gap in the paper, not an implementation error**, and it is
+recorded as such rather than as a defect. R-58 measures the code's quantity, which is now known to
+be the intended one.
+**Evidence** `SRC` `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:126`; `EXT` arXiv:2504.16680 Eq. 4;
+`EXT` personal communication, C. Li, 21 August 2026.
+**Status** RESOLVED — the code is intended · **Relevance** CONTRIB
 
 
 ---
@@ -3242,6 +3249,58 @@ true — one contact step in 10,000 rounds to 0.0% — but the line reads as a w
 problem that does not exist.
 **Evidence** `DATA` `../rwm_analysis/report.txt`; `RUN` `results/step0_regimes.json`.
 **Status** CONFIRMED · **Relevance** METHOD
+
+
+### X-10 — Author correspondence, 21 August 2026 · **NEW**
+The first author of both papers, written to on 21 August 2026 (E4), replied the same day. Recorded
+here because it settles two open items, softens a third, and supplies one fact not obtainable from
+the released artifacts. Quoted with the sender's words; permission to cite has been requested and
+this entry will be updated with the outcome.
+
+**1. The aleatoric head is not used downstream — CONFIRMED by the author.**
+> "The aleatoric term is not used in downstream training. It is reported in Fig. 3 (right) as an
+> analysis of the model behavior."
+
+C-14 was established independently from the paper and the code. It is now confirmed by the person
+who wrote both, and the intent is explicit: the head exists to shape training and to be reported,
+not to be consumed. That removes any reading of C-14 as an implementation slip.
+
+**2. The standard deviation is intended; Eq. 4 is a simplification — RESOLVES C-15.**
+> "The lambda is applied to the standard deviation in the implementation as intended, in contrast
+> to Eq. 4 being more of a high-level explanation."
+
+C-15 asked which of the two forms was meant. The answer is the code. Eq. 4 is a high-level
+description rather than the operative definition, so this is a notational gap in the paper and not
+an implementation error. C-15 is restated accordingly.
+
+**3. The iteration count — `max_iterations: 500` is a typo, and the released repo is not the
+training repo.**
+> "I could not really remember how I obtained the checkpoint. But I do think it is likely that it
+> was trained for 5000 iterations as I always did. I believe the released config with
+> max_iterations: 500 is a typo. Please forgive me that the checkpoint was released after a few
+> iterations of the repo than the setup I used for the submission."
+
+Three things follow, and only the first two are settled. The `500` is a **typo**, so C-13's
+three-way disagreement is really a two-way one. The author's belief is **5,000**, consistent with
+the checkpoint tag. And — the fact not otherwise obtainable — **the released repository is several
+revisions removed from the setup that produced the checkpoint.**
+
+That last point matters more than the first two. §6 extrapolates from *the released
+initialisation* at *the configured learning rate*. If the training setup differed from the
+released one, the initialisation and the learning rate the extrapolation assumes may not be the
+ones used, and E5 already lists a different `log_delta_logstd` initialisation as the assumption it
+cannot rule out. The author does not recall a warm start and does not rule one out either.
+
+**What is NOT settled.** The arithmetic stands: at the released initialisation and learning rate,
+the checkpoint's variance state is unreachable in 5,000 iterations. What the reply supplies is a
+plausible and author-supplied mechanism for why the released artifacts would not reproduce it — a
+drifted repository — rather than a confirmation that they should. §6 is narrowed again to say so,
+and its framing moves from an inconsistency in the release to a documentation gap between the
+release and the run.
+**Evidence** `EXT` personal communication, C. Li, 21 August 2026.
+**Status** CONFIRMED · **Relevance** CONTEXT — a source record, not a contribution. The findings it
+bears on (C-13, C-14, C-15, O-12) carry their own measured evidence, and correspondence is `EXT`:
+it cannot substitute for a measurement, only corroborate or explain one.
 
 
 ---
