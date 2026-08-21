@@ -1254,20 +1254,37 @@ considered rather than missed.
 revision, six weeks is not achievable. **Decision: publish to TMLR on its own timeline and do not
 compress the work to chase MLRC.** Nothing in this brief was scoped down for a deadline.
 
-**Author contact (E4).** §6 states that the released checkpoint's variance state is unreachable
-at any of the three iteration counts its own artifacts give. A warm start or a different
-initialisation of `log_delta_logstd` would explain it with no inconsistency, and neither is
-visible from the released files. The authors have **not** been contacted. This is an outward-facing
-action requiring the author's decision, not this project's; the paper records the omission
-explicitly rather than leaving a reviewer to ask whether it was tried.
+**Author contact (E4). DONE — 21 August 2026.** §6 states that the released checkpoint's variance
+state is unreachable at any of the three iteration counts its own artifacts give. A warm start or
+a different initialisation of `log_delta_logstd` would explain it with no inconsistency, and
+neither is visible from the released files. **Dr Chenhao Li, the first author, was written to on
+2026-08-21** with that question, plus C-15's variance-versus-standard-deviation discrepancy and
+C-14's discarded aleatoric term. No response as of writing. If a warm start or a changed
+initialisation is confirmed, §6 becomes a documentation gap rather than an inconsistency and
+should shrink accordingly.
 
-**Archival timestamp (E6).** Commit timestamps are settable with `git commit --date`, and §7 rests
-on them. Software Heritage assigns a third-party timestamp that is not author-controllable, and
-MLRC recommends it. Checked: the repository is **not** currently archived there
-(`/api/1/origin/.../get/` returns 404). Archiving is an outward-facing, permanent action and needs
-the author's decision. Two consequences if it is not done: §7's ordering remains self-reported,
-and the paper says so; and the archive must predate submission to be worth anything, so this is
-time-ordered rather than deferrable.
+**Archival timestamp (E6). DONE — 21 August 2026.** Commit timestamps are settable with
+`git commit --date`, and §7 rests on them. The repository is now archived at Software Heritage,
+whose visit timestamp is not author-controllable:
+
+Visit date, third-party stamped: **2026-08-21T13:24:43Z**, `visit_status: full`. Verified that the
+archived release resolves to exactly the local `v1.0.0` commit.
+
+The identifiers themselves are held in `docs/ARCHIVAL_IDENTIFIERS.md`, which is **excluded from
+the supplementary archive**. A SWHID is opaque but resolvable: pasting one into the Software
+Heritage UI returns the origin URL, which carries the author's name. So it de-anonymises exactly
+as a link would, and the anonymisation check now treats it that way.
+
+**What this does and does not establish, stated precisely.** It does **not** prove that any
+individual commit date is genuine — `--date` can still have been used. It proves that the
+repository, with the whole pre-registration history in the form the paper cites, existed no later
+than 2026-08-21T13:24:43Z, by a party with no interest in the claim. Since submission follows that
+moment, nothing in the record can have been back-dated after it. That converts §7 from
+self-reported to bounded, which is the strongest thing an archive can do here and is weaker than
+proof.
+
+The identifiers are **not** cited in the anonymous submission: they resolve to a named
+repository. They are disclosed on acceptance.
 
 **Anonymity tension (A1).** The archival identifier resolves to a named repository, so it cannot
 appear in a double-blind submission. The chosen resolution is an anonymised `git log` in the

@@ -270,7 +270,7 @@ bound-loss weight as configured & a different weight scales the rate directly & 
 
 So the defensible claim is narrower than "cannot have come from the released recipe": \textbf{no constant-rate run from the released initialisation at the configured learning rate reaches this checkpoint's variance state in 500, 2,500 or 5,000 iterations.} A warm start or a different initialisation would explain the gap without any inconsistency, and we cannot exclude either.
 
-\textbf{Author contact.} The original authors have not been contacted about this discrepancy as of submission. A warm start or a changed initialisation would resolve it immediately and neither is visible from the released artifacts, so their answer would very likely settle it. We record the omission rather than leave a reader to wonder whether it was tried.
+\textbf{Author contact.} We wrote to the first author on 21 August 2026 asking exactly this --- whether the released checkpoint was warm-started, or \texttt{log\_delta\_logstd} initialised differently, or a learning-rate schedule used --- and had no response as of submission. A warm start or a changed initialisation would resolve the discrepancy immediately and neither is visible from the released artifacts, so their answer would very likely settle it. If it is settled after submission we will say so; the section stands as a bounded observation until then, not as an accusation.
 
 
 \section{Method}
@@ -334,7 +334,9 @@ The more useful finding is that ranking survives where scale does not, in both c
 
 The full repository --- code, every artifact under \texttt{results/}, and \texttt{FINDINGS\_LEDGER.md} with the complete claim record including the retractions --- accompanies this submission as anonymised supplementary material, and will be released under a permanent archival identifier on acceptance. Neither upstream repository is redistributed; \texttt{setup.sh} fetches both at pinned commits and verifies two SHA-256 hashes.
 
-The pre-registration argument in \S{}7 rests on commit timestamps, and those are author-settable via \texttt{git commit --date}. That matters, because \S{}7 is load-bearing. Two mitigations, neither sufficient alone: the supplementary material includes an anonymised \texttt{git log} covering every commit cited here, so the ordering in Figure 4 is checkable at review time; and the repository is to be archived under a permanent third-party identifier whose timestamp is \textbf{not} author-controllable, disclosed on acceptance because the identifier resolves to a named repository. As of submission that archive has not been created, so a reviewer should treat the timestamps as self-reported and weigh \S{}7 accordingly.
+The pre-registration argument in \S{}7 rests on commit timestamps, and those are author-settable via \texttt{git commit --date}. That matters, because \S{}7 is load-bearing. Two things address it. The supplementary material includes an anonymised \texttt{git log} covering every commit cited here, so the ordering in Figure 4 is checkable at review time. And \textbf{the repository was archived by Software Heritage on 21 August 2026}, before submission, under a permanent identifier whose visit timestamp is not author-controllable; the identifier resolves to a named repository and is therefore disclosed on acceptance rather than here.
+
+What that archive establishes should be stated precisely, because it is easy to overclaim. It does \textbf{not} prove any individual commit date is genuine. It proves that the repository, with the whole pre-registration history in the form this paper cites, existed no later than that archival moment, as recorded by a third party with no interest in the claim --- so nothing in the record can have been back-dated afterwards. That bounds \S{}7 rather than proving it, and a reviewer should read it as such.
 
 \section{References}
 

@@ -26,6 +26,10 @@ OUT = "supplementary.zip"
 IDENT = [re.compile(p, re.I) for p in (
     r"joyjeet", r"\bsingh\b", r"github\.com/joyjeet", r"joyjeet-singh",
     r"/Users/joyjeetsingh",
+    # A SWHID is opaque but resolvable: the Software Heritage UI returns the origin
+    # URL for it, which carries the author's name. It de-anonymises exactly as a link
+    # does, and the first version of this check did not catch it.
+    r"swh:1:(?:snp|rev|rel|dir|cnt):[0-9a-f]{40}",
 )]
 # Repository URL in any form. The paper must not link to a named repo.
 URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
@@ -39,7 +43,11 @@ INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex"]
 # and repository by design. This script is a submission build tool and its own
 # identity patterns would trip its own scan.
 EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
-           "MODEL_CARD.md", "CITATION.cff", "NOTICE"}
+           "MODEL_CARD.md", "CITATION.cff", "NOTICE",
+           # working documents for outward-facing steps; they necessarily carry the
+           # repository URL and the author's correspondents
+           "docs/E4_AUTHOR_CONTACT.md", "docs/E6_ARCHIVAL.md",
+           "docs/ARCHIVAL_IDENTIFIERS.md"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]

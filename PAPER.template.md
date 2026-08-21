@@ -456,10 +456,12 @@ constant-rate run from the released initialisation at the configured learning ra
 checkpoint's variance state in 500, 2,500 or 5,000 iterations.** A warm start or a different
 initialisation would explain the gap without any inconsistency, and we cannot exclude either.
 
-**Author contact.** The original authors have not been contacted about this discrepancy as of
-submission. A warm start or a changed initialisation would resolve it immediately and neither is
-visible from the released artifacts, so their answer would very likely settle it. We record the
-omission rather than leave a reader to wonder whether it was tried.
+**Author contact.** We wrote to the first author on 21 August 2026 asking exactly this — whether
+the released checkpoint was warm-started, or `log_delta_logstd` initialised differently, or a
+learning-rate schedule used — and had no response as of submission. A warm start or a changed
+initialisation would resolve the discrepancy immediately and neither is visible from the released
+artifacts, so their answer would very likely settle it. If it is settled after submission we will
+say so; the section stands as a bounded observation until then, not as an accusation.
 
 ---
 
@@ -608,14 +610,20 @@ supplementary material, and will be released under a permanent archival identifi
 acceptance. Neither upstream repository is redistributed; `setup.sh` fetches both at pinned
 commits and verifies two SHA-256 hashes.
 
-The pre-registration argument in §7 rests on commit timestamps, and those are author-settable
-via `git commit --date`. That matters, because §7 is load-bearing. Two mitigations, neither
-sufficient alone: the supplementary material includes an anonymised `git log` covering every
-commit cited here, so the ordering in Figure 4 is checkable at review time; and the repository is
-to be archived under a permanent third-party identifier whose timestamp is **not**
-author-controllable, disclosed on acceptance because the identifier resolves to a named
-repository. As of submission that archive has not been created, so a reviewer should treat the
-timestamps as self-reported and weigh §7 accordingly.
+The pre-registration argument in §7 rests on commit timestamps, and those are author-settable via
+`git commit --date`. That matters, because §7 is load-bearing. Two things address it. The
+supplementary material includes an anonymised `git log` covering every commit cited here, so the
+ordering in Figure 4 is checkable at review time. And **the repository was archived by Software
+Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit
+timestamp is not author-controllable; the identifier resolves to a named repository and is
+therefore disclosed on acceptance rather than here.
+
+What that archive establishes should be stated precisely, because it is easy to overclaim. It
+does **not** prove any individual commit date is genuine. It proves that the repository, with the
+whole pre-registration history in the form this paper cites, existed no later than that archival
+moment, as recorded by a third party with no interest in the claim — so nothing in the record can
+have been back-dated afterwards. That bounds §7 rather than proving it, and a reviewer should
+read it as such.
 
 ## References
 
