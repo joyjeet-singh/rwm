@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     83 values substituted from 12 artifacts. -->
+     95 values substituted from 17 artifacts. -->
 
 # What a world model's uncertainty output actually reports: an independent reproduction of the Robotic World Model
 
@@ -61,7 +61,8 @@ Three things distinguish this from a re-run of the authors' code.
 
 **We rebuilt rather than imported.** The forward pass, the loss and the training step are written
 from scratch and then checked against the reference: outputs match bitwise, and losses and
-gradients match to 0.000e+00 across 7 loss terms before any training begins
+gradients match to 0.000e+00 across 7 loss terms and
+106 parameter tensors before any training begins
 (Appendix A). A discrepancy found later is therefore a property of the method, not of our wiring.
 
 **Decision rules were committed before the data.** The verdicts below were fixed in advance, in
@@ -76,12 +77,12 @@ concerns the pre-registration discipline itself.
 
 ## 2. Setup
 
-**Data.** The released dataset is 10000 rows of ANYmal D proprioceptive state and policy
+**Data.** The released dataset is 10,000 rows of ANYmal D proprioceptive state and policy
 actions at 50 Hz. It is not one recording: it is ten concatenated 20-second episodes, and its
 termination column is identically zero, so nothing in the file marks the boundaries. The reference
-window builder therefore treats every 9961 window as valid, including 352 that
+window builder therefore treats every 9,961 window as valid, including 352 that
 splice one episode's end onto the next one's start. The usable, episode-respecting count is
-9609 — 10000 rows, less 39 that cannot start a full window, less
+9,609 — 10,000 rows, less 39 that cannot start a full window, less
 352 that cross a boundary. The contamination rate is 3.53%.
 
 **Model.** A GRU-based ensemble predicting the next proprioceptive state, with a mean head and a
@@ -213,7 +214,7 @@ growing error against a fixed σ.
 ## 5. Defects in the released pipeline
 
 **5.1 Ten unmarked episode boundaries.** §2. The window builder reads a termination column that is
-identically zero, so it marks all 9961 windows valid.
+identically zero, so it marks all 9,961 windows valid.
 
 **5.2 Training and evaluation disagree on action alignment, and evaluation is the broken one.**
 Row *t* holds the action that *produced* state *t*. The training path pairs states and actions
@@ -224,20 +225,30 @@ better than its own released evaluation reports.
 **5.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all.
 
-**5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm
-(+352 spliced windows, matching the reference's exposure) and, because that confounds
-*content* with *count*, a duplication control adding the same number of exact-copy windows.
+**5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on
+7,882 windows — the clean 7,687 plus 195 splices — and,
+because that confounds *content* with *count*, a duplication control adding the same
+195 windows as exact copies of windows already present.
 
-Training loss over the final 250 iterations: duplication costs 0.9%, splicing costs
+The arm's contamination rate is 2.47%, against the reference pipeline's
+3.53%. It is deliberately lower: we splice only boundaries whose *both* sides are
+training episodes, because four of the reference's nine put held-out rows into training. That is a
+leakage problem rather than a physics one, and including it would have invalidated our own
+comparison. So this experiment measures the cost of training on physically impossible transitions,
+and not the reference's full exposure.
+
+Training loss over the final 250 iterations: duplication costs 0.90%, splicing costs
 21.57%. The bootstrap interval on duplicated − clean is
 [-0.0061, 0.0215], including zero. So the rise is caused by splice content, not by
-dataset size.
+dataset size — a control we ran only because the first version of this finding inferred the
+mechanism without it.
 
 In rollout, across 32 cells (two arenas × two trajectory lengths × two checkpoints × two
 horizons × two metrics), contamination hurts in **0** of 32 and
 helps in 9 (Figure 5a). The control is inert, differing from clean in
-2 cells. **B-01 is a real defect on leakage grounds; its
-physically-impossible-transition component costs nothing detectable at this rate.**
+2 cells. **The unmarked boundaries remain a real defect on leakage grounds;
+what is now measured is that the physically-impossible-transition component costs nothing
+detectable at this rate.**
 
 ---
 
@@ -246,7 +257,8 @@ physically-impossible-transition component costs nothing detectable at this rate
 The collapse rate is a clock. Fitting it across our runs and extrapolating to the released
 checkpoint's σ state implies **153,270** optimisation steps at the configured learning
 rate. The refit from our 10,000-iteration runs gives 158,319 and 158,003,
-agreeing within 3% — a linear extrapolation validated over a fourfold extension.
+spreading 3.3% across the three fits — a linear extrapolation
+validated over a fourfold extension.
 
 The released configuration says 500 iterations. The paper says 2,500. The checkpoint is tagged
 5,000. A second, independent parameter on a slower gradient path implies the same order. And under
@@ -263,8 +275,9 @@ trained with.
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data
-that tested them. Figure 4 shows the lead time for each, computed from commit timestamps: M-16 by
-1.3 hours, the flip-pattern rule by 4.8 hours, M-22 by 5 minutes, M-23 by 2 minutes.
+that tested them — with one exception, which we report below. Figure 4 shows the lead time for
+each, computed from commit timestamps: the A/B rule by 1.3 hours, the flip-pattern rule by
+4.8 hours, the difficulty-bias rule by 5 minutes, the long-horizon rule by 2 minutes.
 
 The fifth bar is negative. The rule for the duplication control (§5.4) was stated in conversation
 before the runs but reached git **2.9 hours after the runs finished**, and we found this only by
@@ -306,7 +319,7 @@ budget. The epistemic component of the released model's uncertainty is therefore
 is a single trot throughout. "Generalisation" here means across velocity commands, not across
 gaits or terrain.
 
-**Two of our headline analyses are single-seed** (1 seed), because only one
+**Two of our headline analyses rest on a single training seed**, because only one
 10,000-iteration run per arm exists. This is recorded in the artifacts themselves.
 
 **We did not reproduce the policy-learning results** of either paper. This is a dynamics-model

@@ -1,4 +1,20 @@
 {
+  "arm_clean_windows": {
+    "source": "results/step5_armA_seed0.json",
+    "value": "7,687"
+  },
+  "arm_contam_pct": {
+    "source": "results/step5_armA_seed0_contam.json",
+    "value": 2.47
+  },
+  "arm_contam_windows": {
+    "source": "results/step5_armA_seed0_contam.json",
+    "value": "7,882"
+  },
+  "arm_splices": {
+    "source": "results/step5_armA_seed0_contam.json",
+    "value": 195
+  },
   "bu_cells": {
     "source": "results/review_bootstrap_unit.json",
     "value": 16
@@ -157,11 +173,19 @@
   },
   "contam_cost_pct": {
     "source": "results/task3_control_arm.json",
-    "value": 21.57
+    "value": "21.57"
   },
   "contam_pct": {
     "source": "results/step0_regimes.json",
     "value": 3.53
+  },
+  "diff_grad_max": {
+    "source": "results/step4_3_differential.json",
+    "value": "0.000e+00"
+  },
+  "diff_n_params": {
+    "source": "results/step4_3_differential.json",
+    "value": 106
   },
   "diff_terms": {
     "source": "results/step4_3_differential.json",
@@ -177,7 +201,7 @@
   },
   "dup_cost_pct": {
     "source": "results/task3_control_arm.json",
-    "value": 0.9
+    "value": "0.90"
   },
   "err_armB_growth": {
     "source": "results/task2_sigma_profile.json",
@@ -198,6 +222,30 @@
   "implied_iters": {
     "source": "results/step6_analysis.json",
     "value": "153,270"
+  },
+  "implied_spread_pct": {
+    "source": "results/task5_analysis.json + results/step6_analysis.json",
+    "value": "3.3"
+  },
+  "lead_flip": {
+    "source": "results/paper_figures.json",
+    "value": "4.8 hours"
+  },
+  "lead_m16": {
+    "source": "results/paper_figures.json",
+    "value": "1.3 hours"
+  },
+  "lead_m22": {
+    "source": "results/paper_figures.json",
+    "value": "5 minutes"
+  },
+  "lead_m23": {
+    "source": "results/paper_figures.json",
+    "value": "2 minutes"
+  },
+  "lead_task3": {
+    "source": "results/paper_figures.json",
+    "value": "2.9 hours"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -277,7 +325,7 @@
   },
   "rows": {
     "source": "results/step0_regimes.json",
-    "value": 10000
+    "value": "10,000"
   },
   "sig_armB_growth": {
     "source": "results/task2_sigma_profile.json",
@@ -397,11 +445,11 @@
   },
   "win_cross": {
     "source": "results/step0_regimes.json",
-    "value": 352
+    "value": "352"
   },
   "win_naive": {
     "source": "results/step0_regimes.json",
-    "value": 9961
+    "value": "9,961"
   },
   "win_tail": {
     "source": "results/step0_regimes.json",
@@ -409,6 +457,10 @@
   },
   "win_usable": {
     "source": "results/step0_regimes.json",
-    "value": 9609
+    "value": "9,609"
+  },
+  "wiring_max_diff": {
+    "source": "results/task5_differential.json",
+    "value": "0.000e+00"
   }
 }

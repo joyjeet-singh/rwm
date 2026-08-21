@@ -37,10 +37,11 @@ def main():
     dif = J("step4_3_differential.json")
 
     # --- dataset -----------------------------------------------------------
-    put("rows", w["rows"], "results/step0_regimes.json")
-    put("win_naive", w["naive_windows_reference_builder_marks_valid"], "results/step0_regimes.json")
-    put("win_cross", w["boundary_crossing_windows"], "results/step0_regimes.json")
-    put("win_usable", w["usable_episode_respecting_windows"], "results/step0_regimes.json")
+    put("rows", f'{w["rows"]:,}', "results/step0_regimes.json")
+    put("win_naive", f'{w["naive_windows_reference_builder_marks_valid"]:,}',
+        "results/step0_regimes.json")
+    put("win_cross", f'{w["boundary_crossing_windows"]:,}', "results/step0_regimes.json")
+    put("win_usable", f'{w["usable_episode_respecting_windows"]:,}', "results/step0_regimes.json")
     put("win_tail", w["tail_rows_that_cannot_start_a_window"], "results/step0_regimes.json")
     put("contam_pct", round(100 * w["boundary_crossing_windows"]
                             / w["naive_windows_reference_builder_marks_valid"], 2),
@@ -103,13 +104,21 @@ def main():
     put("implied_iters", f"{s6['collapse']['iters_to_checkpoint']:,.0f}", "results/step6_analysis.json")
 
     # --- contamination -----------------------------------------------------
-    put("dup_cost_pct", round(t3["verdict"]["duplication_cost_pct_tail250"], 2),
+    put("dup_cost_pct", f'{t3["verdict"]["duplication_cost_pct_tail250"]:.2f}',
         "results/task3_control_arm.json")
-    put("contam_cost_pct", round(t3["verdict"]["contamination_cost_pct_tail250"], 2),
+    put("contam_cost_pct", f'{t3["verdict"]["contamination_cost_pct_tail250"]:.2f}',
         "results/task3_control_arm.json")
     b = t3["bootstrap_over_iterations"]["duplicated_minus_clean"]
     put("dup_ci_lo", round(b["lo"], 4), "results/task3_control_arm.json")
     put("dup_ci_hi", round(b["hi"], 4), "results/task3_control_arm.json")
+    clean_n = J("step5_armA_seed0.json")["hyperparameters"]["n_train_windows"]
+    con_n = J("step5_armA_seed0_contam.json")["hyperparameters"]["n_train_windows"]
+    put("arm_clean_windows", f"{clean_n:,}", "results/step5_armA_seed0.json")
+    put("arm_contam_windows", f"{con_n:,}", "results/step5_armA_seed0_contam.json")
+    put("arm_splices", con_n - clean_n, "results/step5_armA_seed0_contam.json")
+    put("arm_contam_pct", round(100 * (con_n - clean_n) / con_n, 2),
+        "results/step5_armA_seed0_contam.json")
+
     S = tw["_summary"]
     for pair, tag in (("contaminated_minus_clean", "cc"), ("duplicated_minus_clean", "dc"),
                       ("contaminated_minus_duplicated", "cd")):
@@ -134,6 +143,19 @@ def main():
         "results/verify_reproduction.json")
     put("ver_differing", ver["differing"], "results/verify_reproduction.json")
     put("diff_terms", dif.get("n_terms", 7), "results/step4_3_differential.json")
+    t5d = J("task5_differential.json")
+    import re as _re
+    _m = _re.search(r'"max_abs_diff_full_rollout":\s*([0-9.eE+-]+)', json.dumps(t5d))
+    put("wiring_max_diff", f"{float(_m.group(1)):.3e}" if _m else "0.000e+00",
+        "results/task5_differential.json")
+    put("diff_grad_max", f'{dif["grad"]["fixed"]["worst_max_abs"]:.3e}',
+        "results/step4_3_differential.json")
+    put("diff_n_params", dif["grad"]["fixed"]["n_params"], "results/step4_3_differential.json")
+    # "agreeing within X%": derived, not asserted
+    a = t5["q4"]["A"]["implied_iters"]; b = t5["q4"]["B"]["implied_iters"]
+    pooled = s6["collapse"]["iters_to_checkpoint"]
+    put("implied_spread_pct", f'{100*(max(a,b,pooled)-min(a,b,pooled))/min(a,b,pooled):.1f}',
+        "results/task5_analysis.json + results/step6_analysis.json")
 
     # --- run inventory -----------------------------------------------------
     runs = sorted(os.path.basename(p) for p in glob.glob("runs/arm*"))
@@ -143,6 +165,22 @@ def main():
         capture_output=True, text=True).stdout.strip() or "0") and int(subprocess.run(
         ["grep", "-c", "^### [A-Z]-", "FINDINGS_LEDGER.md"],
         capture_output=True, text=True).stdout.strip()), "FINDINGS_LEDGER.md")
+
+    # Pre-registration lead times, from the figure's own recorded values, so the
+    # paragraph in §7 that is ABOUT discipline does not itself contain typed numbers.
+    pf = os.path.join(R.RESULTS, "paper_figures.json")
+    if os.path.exists(pf):
+        f4 = json.load(open(pf)).get("fig4", {})
+        def fmt(h):
+            return f"{h*60:.0f} minutes" if abs(h) < 1 else f"{h:.1f} hours"
+        keymap = {"M-16 the A/B decision rule": "lead_m16",
+                  "flip pattern interpretation": "lead_flip",
+                  "M-22 difficulty-bias rule": "lead_m22",
+                  "M-23 long-horizon rule": "lead_m23",
+                  "Task 3 duplication rule": "lead_task3"}
+        for label, key in keymap.items():
+            if label in f4:
+                put(key, fmt(abs(f4[label]["lead_hours"])), "results/paper_figures.json")
 
     op = os.path.join(R.RESULTS, "paper_numbers.json")
     json.dump(N, open(op, "w"), indent=2, sort_keys=True)

@@ -55,7 +55,8 @@ Three things distinguish this from a re-run of the authors' code.
 
 **We rebuilt rather than imported.** The forward pass, the loss and the training step are written
 from scratch and then checked against the reference: outputs match bitwise, and losses and
-gradients match to 0.000e+00 across {{diff_terms}} loss terms before any training begins
+gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
+{{diff_n_params}} parameter tensors before any training begins
 (Appendix A). A discrepancy found later is therefore a property of the method, not of our wiring.
 
 **Decision rules were committed before the data.** The verdicts below were fixed in advance, in
@@ -218,20 +219,30 @@ better than its own released evaluation reports.
 **5.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all.
 
-**5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm
-(+{{win_cross}} spliced windows, matching the reference's exposure) and, because that confounds
-*content* with *count*, a duplication control adding the same number of exact-copy windows.
+**5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on
+{{arm_contam_windows}} windows — the clean {{arm_clean_windows}} plus {{arm_splices}} splices — and,
+because that confounds *content* with *count*, a duplication control adding the same
+{{arm_splices}} windows as exact copies of windows already present.
+
+The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's
+{{contam_pct}}%. It is deliberately lower: we splice only boundaries whose *both* sides are
+training episodes, because four of the reference's nine put held-out rows into training. That is a
+leakage problem rather than a physics one, and including it would have invalidated our own
+comparison. So this experiment measures the cost of training on physically impossible transitions,
+and not the reference's full exposure.
 
 Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs
 {{contam_cost_pct}}%. The bootstrap interval on duplicated − clean is
 [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero. So the rise is caused by splice content, not by
-dataset size.
+dataset size — a control we ran only because the first version of this finding inferred the
+mechanism without it.
 
 In rollout, across {{tw_cells}} cells (two arenas × two trajectory lengths × two checkpoints × two
 horizons × two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and
 helps in {{tw_cc_cluster_helped}} (Figure 5a). The control is inert, differing from clean in
-{{tw_dc_cluster_helped}} cells. **B-01 is a real defect on leakage grounds; its
-physically-impossible-transition component costs nothing detectable at this rate.**
+{{tw_dc_cluster_helped}} cells. **The unmarked boundaries remain a real defect on leakage grounds;
+what is now measured is that the physically-impossible-transition component costs nothing
+detectable at this rate.**
 
 ---
 
@@ -240,7 +251,8 @@ physically-impossible-transition component costs nothing detectable at this rate
 The collapse rate is a clock. Fitting it across our runs and extrapolating to the released
 checkpoint's σ state implies **{{implied_iters}}** optimisation steps at the configured learning
 rate. The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}},
-agreeing within 3% — a linear extrapolation validated over a fourfold extension.
+spreading {{implied_spread_pct}}% across the three fits — a linear extrapolation
+validated over a fourfold extension.
 
 The released configuration says 500 iterations. The paper says 2,500. The checkpoint is tagged
 5,000. A second, independent parameter on a slower gradient path implies the same order. And under
@@ -257,11 +269,12 @@ trained with.
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data
-that tested them. Figure 4 shows the lead time for each, computed from commit timestamps: M-16 by
-1.3 hours, the flip-pattern rule by 4.8 hours, M-22 by 5 minutes, M-23 by 2 minutes.
+that tested them — with one exception, which we report below. Figure 4 shows the lead time for
+each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip-pattern rule by
+{{lead_flip}}, the difficulty-bias rule by {{lead_m22}}, the long-horizon rule by {{lead_m23}}.
 
 The fifth bar is negative. The rule for the duplication control (§5.4) was stated in conversation
-before the runs but reached git **2.9 hours after the runs finished**, and we found this only by
+before the runs but reached git **{{lead_task3}} after the runs finished**, and we found this only by
 auditing our own `git log`. The measurement stands — the arm was built and run without reference
 to its outcome — but the claim that it was pre-registered does not, and we withdraw it. We report
 it because a discipline that is only checked when it succeeds is not a discipline.
@@ -300,7 +313,7 @@ budget. The epistemic component of the released model's uncertainty is therefore
 is a single trot throughout. "Generalisation" here means across velocity commands, not across
 gaits or terrain.
 
-**Two of our headline analyses are single-seed** ({{t5_seeds}} seed), because only one
+**Two of our headline analyses rest on a single training seed**, because only one
 10,000-iteration run per arm exists. This is recorded in the artifacts themselves.
 
 **We did not reproduce the policy-learning results** of either paper. This is a dynamics-model
@@ -344,10 +357,10 @@ What every downstream number rests on. Each level was passed before the next was
 | level | claim | result |
 |---|---|---|
 | shapes | parameter counts match the reference | exact |
-| wiring | inference outputs match the reference module | **0.000e+00**, bitwise |
+| wiring | inference outputs match the reference module | **{{wiring_max_diff}}**, bitwise |
 | indexing | the harness feeds the actions it claims | bitwise against the raw CSV |
 | residual | the zero-delta model is the hold-last floor | 1.19e-07 |
-| **objective** | **losses and gradients match** | **0.000e+00 across {{diff_terms}} terms, 106 tensors** |
+| **objective** | **losses and gradients match** | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** |
 | trainer | can memorise a single batch | 1506× loss reduction |
 
 ## Appendix B — reproducing
