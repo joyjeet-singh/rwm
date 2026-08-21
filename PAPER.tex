@@ -13,7 +13,7 @@
 \emergencystretch=3em
 \hbadness=10000
 \sloppy
-\title{What a world model's uncertainty output actually reports: an independent reproduction of the Robotic World Model}
+\title{What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model}
 \author{Joyjeet Singh}
 \date{}
 \begin{document}
@@ -21,7 +21,7 @@
 
 
 \begin{abstract}
-We independently reproduce the proprioceptive dynamics model of Li, Krause and Hutter (\emph{Robotic World Model}, arXiv:2501.10100) and its uncertainty-aware follow-up (arXiv:2504.16680), building the model from scratch on CPU and verifying it against the released reference at the level of outputs, losses and gradients before training anything. The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the model reaches normalised error 0.3509 at a 368-step horizon on held-out episodes against 1.5540 for teacher forcing, a factor of 4.4$\times$, with a bootstrap interval of [0.56, 2.05] excluding zero and the gap positive on all 10 of 10 episodes. That verdict was fixed by a decision rule committed to git before the runs that tested it existed. The follow-up's uncertainty output does not survive contact with a calibration measurement. The released checkpoint's predicted standard deviation is \textbf{7,878$\times$ smaller than its own mean absolute error}, giving 0.56\% coverage at $\pm$1$\sigma$ where a calibrated Gaussian gives 68.3\%. We show analytically why: the state loss is squared error on a reparameterised sample with no log-$\sigma$ term, minimised at $\sigma$ = 0, and the bound term that should oppose this cancels algebraically. We then run the correction --- the authors' own unused \texttt{gaussian\_nll} branch --- and it fails differently rather than succeeding, reaching 10.9$\times$ overconfidence. Measuring all four models we trained or scored puts the failure precisely. The teacher-forced arm has the most input-dependent $\sigma$ (15.6$\times$ the autoregressive arm's) and the strongest $\sigma$-versus-error ordering (45 of 45 dimensions positive, P = 5.68e-14), and is still 315$\times$ overconfident. These models can learn \emph{which} predictions will be worse. They cannot learn \emph{how wrong} they will be. A downstream user who needs a ranking may be served; one who needs an interval is not, under any of the four. We also report four defects in the released pipeline, evidence that the released checkpoint cannot have come from the released recipe, and five retractions of our own numbered claims --- one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered. Every number in this paper is generated from a file in \texttt{results/}; none is typed by hand.
+We independently reproduce the proprioceptive dynamics model of Li, Krause and Hutter (\emph{Robotic World Model}, arXiv:2501.10100) and its uncertainty-aware follow-up (arXiv:2504.16680), building the model from scratch on CPU and verifying it against the released reference at the level of outputs, losses and gradients before training anything. The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the model reaches normalised error 0.3509 at a 368-step horizon on held-out episodes against 1.5540 for teacher forcing, a factor of 4.4$\times$, with a bootstrap interval of [0.56, 2.05] excluding zero and the gap positive on all 10 of 10 episodes. That verdict was fixed by a decision rule committed to git before the runs that tested it existed. Neither of the follow-up's uncertainty outputs survives contact with a calibration measurement. The checkpoint emits a per-member \textbf{aleatoric} $\sigma$ and an \textbf{epistemic} ensemble disagreement, and the method penalises rewards with the second while discarding the first. We measure both. The aleatoric $\sigma$ is \textbf{7,878$\times$ smaller than its own mean absolute error} (0.56\% coverage at $\pm$1$\sigma$ against a calibrated 68.3\%), and we show analytically why: the state loss is squared error on a reparameterised sample with no log-$\sigma$ term, minimised at $\sigma$ = 0, with the bound term that should oppose this cancelling algebraically. Running the correction --- the authors' own unused \texttt{gaussian\_nll} branch --- fails differently rather than succeeding, at 10.9$\times$ overconfidence. The epistemic term, the one the method actually consumes, is two orders of magnitude better and still \textbf{39.7$\times$ overconfident at the deployment horizon}, with 3.76\% coverage. Measuring all four models we trained or scored puts the failure precisely. The teacher-forced arm has the most input-dependent $\sigma$ (15.6$\times$ the autoregressive arm's) and the strongest $\sigma$-versus-error ordering (45 of 45 dimensions positive, P = 5.68e-14), and is still 315$\times$ overconfident. These models can learn \emph{which} predictions will be worse. They cannot learn \emph{how wrong} they will be. A downstream user who needs a ranking may be served; one who needs an interval is not, under any of the four. We also report four defects in the released pipeline, evidence that the released checkpoint cannot have come from the released recipe, and six retractions of our own numbered claims --- one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered. Every number in this paper is generated from a file in \texttt{results/}; none is typed by hand.
 \end{abstract}
 
 \section{Introduction}
@@ -63,7 +63,19 @@ Three things distinguish this from a re-run of the authors' code.
 The pattern is consistent across the design. Under the correct cluster bootstrap, the out-of-sample gap excludes zero in \textbf{4 of 4} long-horizon cells --- both trajectory lengths crossed with both checkpoints --- and in \textbf{0 of 4} at h = 8. These figures are relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
 
 
-\section{The uncertainty output is unusable, and that is a property of the objective}
+\section{Neither of the checkpoint's uncertainty outputs is usable as an interval}
+
+\subsection{Which quantity the method actually uses}
+
+The released checkpoint emits \textbf{two} uncertainty quantities, and the method consumes only one of them. This has to be settled before any calibration number means anything.
+
+\texttt{system\_dynamics.py:125} computes an \textbf{aleatoric} term, the mean over ensemble members of each member's predicted $\sigma$. \texttt{system\_dynamics.py:126} computes an \textbf{epistemic} term, the standard deviation across the members' mean predictions. In \texttt{envs/base.py:142} the aleatoric term is bound to a local variable that is never read again; the epistemic term is stored, returned to the policy loop at \texttt{:158}, and applied at \texttt{:166} as a reward penalty with weight $-$1.0.
+
+The paper agrees with its code. arXiv:2504.16680 Eq. 4 defines the penalised quantity as $u = \mathrm{Var}_b[\mu_b]$, the variance across ensemble members, and Eq. 5 applies it as $\tilde{r} = r - \lambda u$. The per-member predicted variance enters the training objective and nothing downstream.
+
+One discrepancy between the two, minor but real: Eq. 4 specifies a \textbf{variance}, and \texttt{system\_dynamics.py:126} computes a \textbf{standard deviation}. With $\lambda = 1$ these differ by a square. We measure the code's quantity throughout, because that is what produced the released checkpoint's behaviour, and we do not treat either definition as authoritative.
+
+So the aleatoric head --- the one the state loss and the bound loss shape, and the one \S4.2 explains --- is computed on every imagination step and discarded. We report both quantities below. Our own arms are ensemble size 1, where the epistemic term is identically zero by construction, so the epistemic measurement is possible only on the released checkpoint.
 
 \subsection{The measurement}
 
@@ -80,9 +92,29 @@ teacher-forced Arm B & 315$\times$ & 12.96\% & 0.56\% \\
 released checkpoint & 7,878$\times$ & 0.56\% & 0.04\% \\
 \bottomrule\end{tabular}}\end{center}
 
-Every model is overconfident by between one and four orders of magnitude (Figure 1).
+Every model is overconfident by between one and four orders of magnitude (Figure 1). Those are aleatoric figures --- the quantity \S4.1 shows the method discards.
 
-\subsection{Why: the optimum is $\sigma$ = 0}
+\textbf{The quantity the method does use is also uncalibrated.} On the released 5-member checkpoint, out-of-sample, n = 4 independent trajectories:
+
+\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{lllllll}
+\toprule
+h & aleatoric err/$\sigma$ & epistemic err/$\sigma$ & epistemic $\pm$1$\sigma$ & epistemic $\pm$2$\sigma$ & dims r$>$0 & P \\
+\midrule
+1 & 597$\times$ & \textbf{4.7$\times$} & 17.78\% & 37.22\% & 23/45 & 1.0e+00 \\
+8 & 802$\times$ & 6.3$\times$ & 12.15\% & 25.14\% & 25/45 & 5.5e-01 \\
+32 & 1,530$\times$ & 11.1$\times$ & 8.70\% & 17.66\% & 34/45 & 8.2e-04 \\
+128 & 5,132$\times$ & 28.4$\times$ & 5.42\% & 10.95\% & 45/45 & 5.7e-14 \\
+368 & 7,878$\times$ & \textbf{39.7$\times$} & 3.76\% & 7.69\% & 45/45 & 5.7e-14 \\
+\bottomrule\end{tabular}}\end{center}
+
+Epistemic is two orders of magnitude better than aleatoric --- 126$\times$ larger at h=1, 198$\times$ at h=368 --- and still wrong by \textbf{4.7$\times$} at one step and \textbf{39.7$\times$} at the deployment horizon, with $\pm$1$\sigma$ coverage of 3.76\% where a calibrated Gaussian gives 68.3\%. \textbf{Total} uncertainty, \texttt{sqrt(aleatoric\textasciicircum{}2 + epistemic\textasciicircum{}2)}, equals the epistemic value to four significant figures at every horizon, because the aleatoric term is too small to move it.
+
+The scalar penalty as actually applied --- \texttt{means.std(0).sum(-1)} at \texttt{envs/base.py:166} --- correlates +0.348 with total absolute error over the rollout.
+
+\subsection{Why the aleatoric head collapses: the optimum is $\sigma$ = 0}
+
+This subsection explains the aleatoric column and only that column. Ensemble disagreement is not shaped by the mechanism below, and why \emph{it} is miscalibrated is not established here.
 
 The state loss is squared error on a \emph{sample} drawn from the predicted Gaussian, not a likelihood:
 
@@ -117,7 +149,11 @@ released checkpoint & 0.0177 & 20/45 & 5.51e-01 \\
 
 Arm B's $\sigma$ is 15.6$\times$ more input-dependent than the faithful arm's, and its ordering is the strongest of the four by a wide margin (mean r = 0.257). It is still 315$\times$ overconfident.
 
-So $\sigma$ collapsing to a constant is a property of the \emph{autoregressive} arms and the released checkpoint, not of the objective in general --- and input-dependence and correct ranking are both achievable without the interval becoming meaningful. \textbf{The failure is specifically magnitude calibration.}
+So $\sigma$ collapsing to a constant is a property of the \emph{autoregressive} arms and the released checkpoint, not of the objective in general --- and input-dependence and correct ranking are both achievable without the interval becoming meaningful.
+
+\textbf{The same pattern holds for the quantity the method uses, with the strongest evidence in this paper.} At h=128 and h=368 the epistemic term correlates positively with realised error on \textbf{45 of 45} dimensions, P = 5.7e-14 --- a better ranking than any aleatoric head here --- while being 39.7$\times$ overconfident. And it fails the horizon test the same way: $\sigma$ grows 1.59$\times$ from h=1 to h=368 while error grows 13.33$\times$.
+
+\textbf{The failure is specifically magnitude calibration, in both components.}
 
 \subsection{The structural excuse does not survive}
 
@@ -163,13 +199,13 @@ The released configuration says 500 iterations. The paper says 2,500. The checkp
 
 \section{Method}
 
-\textbf{An append-only ledger.} Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (154 entries). Claims are never edited in place. A claim that turns out to be wrong is marked superseded, with a pointer to what replaced it, and kept.
+\textbf{An append-only ledger.} Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (159 entries). Claims are never edited in place. A claim that turns out to be wrong is marked superseded, with a pointer to what replaced it, and kept.
 
 \textbf{Pre-registration, and one failure of it.} Decision rules were committed to git before the data that tested them --- with one exception, which we report below. Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by 1.3 hours, the flip-pattern rule by 4.8 hours, the difficulty-bias rule by 5 minutes, the long-horizon rule by 2 minutes.
 
 The fifth bar is negative. The rule for the duplication control (\S5.4) was stated in conversation before the runs but reached git \textbf{2.9 hours after the runs finished}, and we found this only by auditing our own \texttt{git log}. The measurement stands --- the arm was built and run without reference to its outcome --- but the claim that it was pre-registered does not, and we withdraw it. We report it because a discipline that is only checked when it succeeds is not a discipline.
 
-\textbf{Five retractions on our own evidence}, out of 13 superseded claims kept in the record. In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; and the claim that $\sigma$ is input-independent "in all four models", made against a table holding three. The pre-registration claim above is a sixth, retracting a framing rather than a number.
+\textbf{Six retractions on our own evidence}, out of 14 superseded claims kept in the record. In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; and the claim that $\sigma$ is input-independent "in all four models", made against a table holding three. The pre-registration claim above is a sixth, retracting a framing rather than a number.
 
 \textbf{A statistic that was resampling the wrong unit.} Our bootstrap pooled three training seeds over a shared set of evaluation trajectories and resampled the pooled vector, while reporting the independent-trajectory count. Each trajectory appeared three times. Resampling trajectories correctly --- carrying all seeds with each draw --- widens intervals by a mean factor of 1.42$\times$ (range 0.96--1.69) and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives. Both units are reported.
 
@@ -180,7 +216,7 @@ The fifth bar is negative. The rule for the duplication control (\S5.4) was stat
 
 \textbf{Effective sample size bounds every long-horizon claim.} The out-of-sample arena has 4 independent 400-step trajectories. That is the binding constraint on \S3, and no amount of trajectory oversampling changes it.
 
-\textbf{Ensemble size.} Our main experiment runs at ensemble size 1 against the reference's 5, for CPU budget. The epistemic component of the released model's uncertainty is therefore not reproduced; \S4 concerns the aleatoric head, which is per-member.
+\textbf{Ensemble size.} Our main experiment runs at ensemble size 1 against the reference's 5, for CPU budget, so our own arms have no epistemic component --- it is identically zero by construction at ensemble size 1. The epistemic measurement in \S4.2 is therefore made on the released checkpoint only, and we cannot say how ensemble disagreement would behave in a model we trained.
 
 \textbf{One dataset, one gait, one terrain.} All commands are drawn from one bounded box and the gait is a single trot throughout. "Generalisation" here means across velocity commands, not across gaits or terrain.
 
@@ -191,9 +227,9 @@ The fifth bar is negative. The rule for the duplication control (\S5.4) was stat
 
 \section{Conclusion}
 
-The Robotic World Model's central training claim reproduces, and the margin is large. Its uncertainty output, in the follow-up that adds one, does not report what a reader would take it to report: the released checkpoint's $\sigma$ is 7,878$\times$ smaller than its own error, and the cause is that the objective's optimum is $\sigma$ = 0 with the term that should prevent this cancelling out of the gradient.
+The Robotic World Model's central training claim reproduces, and the margin is large. Neither uncertainty output of the follow-up that adds them reports what a reader would take it to report. The aleatoric $\sigma$ is 7,878$\times$ smaller than its own error, and the cause is that the objective's optimum is $\sigma$ = 0 with the term that should prevent this cancelling out of the gradient. The epistemic term the method actually penalises with is better by two orders of magnitude and still 39.7$\times$ overconfident where it is used.
 
-The more useful finding came from measuring a model we had already trained for another purpose and had not put on a calibration table. Ranking and input-dependence are achievable --- the teacher-forced arm has both --- while the interval remains meaningless. Uncertainty in this family of models should be reported as an ordering, or fixed at the objective, but not read as a scale.
+The more useful finding is that ranking survives where scale does not, in both components. The teacher-forced arm has input-dependent $\sigma$ and good ordering; the epistemic term ranks better still, at 45 of 45 dimensions positively correlated with realised error. Neither yields a usable interval. Uncertainty in this family of models should be reported as an ordering, or fixed at the objective, but not read as a scale.
 
 
 \section{Data and code}

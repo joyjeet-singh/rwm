@@ -111,11 +111,49 @@ class ReferenceRWM(nn.Module):
             aux = (torch.stack([c(ah) for c in self.contact_layers]).mean(0),
                    torch.stack([t(ah) for t in self.termination_layers]).mean(0))
 
-        self.last_sigma = stds.mean(0).detach()                 # (B,45) per-dim sigma
+        self.last_sigma = stds.mean(0).detach()                 # (B,45) per-dim aleatoric sigma
+        # Per-dimension epistemic, i.e. system_dynamics.py:126 BEFORE its .sum(-1).
+        # B2 needs it per dimension to compute coverage; the released code only ever
+        # uses the summed scalar, as a reward penalty (base.py:166).
+        self.last_epistemic = means.std(0).detach()             # (B,45)
+        self.last_epistemic_scalar = means.std(0).sum(-1).detach()
+        self.last_aleatoric_scalar = stds.mean(0).sum(-1).detach()
         return (means.mean(0),                                  # system_dynamics.py:114
                 stds.mean(0).sum(-1),                           # aleatoric
                 means.std(0).sum(-1),                           # epistemic
                 aux, h_state, h_aux)
+
+    @torch.no_grad()
+    def rollout_uncertainty(self, state, action, start_step=32, action_offset=1):
+        """Rollout returning per-dimension ALEATORIC and EPISTEMIC sigma at each step,
+        plus the two scalar forms the released code actually computes.
+
+        Only meaningful on a multi-member ensemble: with ensemble_size 1 the
+        epistemic term is identically zero by construction (system_dynamics.py:126).
+        """
+        B, T, D = state.shape
+        pred = state.clone()
+        alea = torch.zeros(B, T, D)
+        epi = torch.zeros(B, T, D)
+        epi_s = torch.zeros(B, T)
+        alea_s = torch.zeros(B, T)
+        h_state = h_aux = None
+        for i in range(start_step, T):
+            if i > start_step:
+                s_in = pred[:, i - 1:i]
+                a_in = action[:, i - 1 + action_offset:i + action_offset]
+            else:
+                s_in = pred[:, i - start_step:i]
+                a_in = action[:, i - start_step + action_offset:i + action_offset]
+            if a_in.shape[1] != s_in.shape[1]:
+                a_in = action[:, -s_in.shape[1]:]
+            m, _, _, _, h_state, h_aux = self.step(s_in, a_in, h_state, h_aux, False)
+            pred[:, i] = m
+            alea[:, i] = self.last_sigma
+            epi[:, i] = self.last_epistemic
+            epi_s[:, i] = self.last_epistemic_scalar
+            alea_s[:, i] = self.last_aleatoric_scalar
+        return pred, alea, epi, alea_s, epi_s
 
     @torch.no_grad()
     def rollout_full(self, state, action, start_step=32, action_offset=1):

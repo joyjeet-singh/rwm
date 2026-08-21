@@ -28,6 +28,8 @@ One row per CONTRIB ledger entry.
 | `C-11` | `state_min_logstd` receives no gradient from the bound loss | `RUN`, `SRC` | CONFIRMED | — |
 | `C-12` | The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500 | `RUN`, `SRC` | CONFIRMED | — |
 | `C-13` | Three different iteration counts are in play | `DATA`, `EXT`, `SRC` | CONFIRMED | — |
+| `C-14` | The method penalises EPISTEMIC uncertainty; the aleatoric head is discarded before use | `EXT`, `SRC` | CONFIRMED | — |
+| `C-15` | Eq. 4 defines the penalty on variance; the code computes a standard deviation | `EXT`, `SRC` | CONFIRMED | — |
 | `M-02` | The hold-last floor is the zero-delta model | `INFER`, `RUN` | **CONFIRMED** (was PENDING VERIFICATION) | — |
 | `M-04` | Ten trajectories is not enough to support a gap claim | `RUN` | CONFIRMED | — |
 | `M-13` | The auxiliary branch is teacher-forced; the state branch is not | `SRC` | CONFIRMED | — |
@@ -73,7 +75,7 @@ One row per CONTRIB ledger entry.
 | `R-46` | The gap-narrowing trend: absolute gap closes, relative advantage does not | `RUN` | CONFIRMED | `results/task2_3_matched_trend.json` |
 | `R-47` | The spliced windows cost nothing measurable, and if anything help | `RUN` | CONFIRMED | `results/task4_contamination.json` |
 | `R-48` | The corrected objective reverses the collapse mechanism but produces no usable uncertain | `RUN` | CONFIRMED | `results/task1_calibration.json` |
-| `R-49` | The released checkpoint's uncertainty output is worthless, quantified | `RUN` | CONFIRMED | `results/task1_calibration.json` |
+| `R-49` | The released checkpoint's uncertainty output is worthless, quantified | `RUN` | SUPERSEDED IN PART by S-14 — the numbers | `results/task1_calibration.json` |
 | `R-50` | Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iter | `RUN` | CONFIRMED | `results/task1_calibration.json` |
 | `R-51` | All four models are catastrophically overconfident | `RUN` | CONFIRMED | `results/task1_calibration.json`, `results/task2_sigma_profile.json` |
 | `R-53` | The correction improved magnitude and destroyed what ordering signal existed | `RUN` | CONFIRMED | `results/task1_calibration.json` |
@@ -81,4 +83,5 @@ One row per CONTRIB ledger entry.
 | `R-55` | The duplication control: R-47's mechanism survives, its statistic does not | `RUN` | CONFIRMED | `results/task3_control_arm.json` |
 | `R-56` | The three-way comparison: the control is inert, contamination still costs nothing | `RUN` | CONFIRMED | `results/task3_three_way.json` |
 | `R-57` | All four models, measured on one table | `RUN` | CONFIRMED | `results/task1_calibration.json`, `scripts/task1_calibration.py` |
+| `R-58` | The uncertainty the method actually uses is also uncalibrated | `RUN` | CONFIRMED | `results/task_b2_epistemic.json` |
 | `O-12` | The released checkpoint's variance collapse is inconsistent with the released configurat | `DATA`, `RUN`, `SRC` | OPEN — the discrepancy is measured and c | `results/step4_4_overfit_b32lr1e3.json`, `results/step4_4_overfit_ens1.json` |

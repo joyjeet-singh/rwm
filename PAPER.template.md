@@ -1,4 +1,4 @@
-# What a world model's uncertainty output actually reports: an independent reproduction of the Robotic World Model
+# What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
 **Joyjeet Singh**
 
@@ -18,13 +18,17 @@ model reaches normalised error {{m23_A}} at a 368-step horizon on held-out episo
 {{m23_n_episodes_positive}} of {{m23_n_episodes}} episodes. That verdict was fixed by a decision
 rule committed to git before the runs that tested it existed.
 
-The follow-up's uncertainty output does not survive contact with a calibration measurement. The
-released checkpoint's predicted standard deviation is **{{cal_rel_ratio}}× smaller than its own
-mean absolute error**, giving {{cal_rel_cov1}}% coverage at ±1σ where a calibrated Gaussian gives
-68.3%. We show analytically why: the state loss is squared error on a reparameterised sample with
-no log-σ term, minimised at σ = 0, and the bound term that should oppose this cancels
-algebraically. We then run the correction — the authors' own unused `gaussian_nll` branch — and it
-fails differently rather than succeeding, reaching {{cal_nll_ratio}}× overconfidence.
+Neither of the follow-up's uncertainty outputs survives contact with a calibration measurement.
+The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and
+the method penalises rewards with the second while discarding the first. We measure both. The
+aleatoric σ is **{{cal_rel_ratio}}× smaller than its own mean absolute error**
+({{cal_rel_cov1}}% coverage at ±1σ against a calibrated 68.3%), and we show analytically why: the
+state loss is squared error on a reparameterised sample with no log-σ term, minimised at σ = 0,
+with the bound term that should oppose this cancelling algebraically. Running the correction —
+the authors' own unused `gaussian_nll` branch — fails differently rather than succeeding, at
+{{cal_nll_ratio}}× overconfidence. The epistemic term, the one the method actually consumes, is
+two orders of magnitude better and still **{{b2_epi_ratio_h368}}× overconfident at the deployment
+horizon**, with {{b2_epi_cov1_h368}}% coverage.
 
 Measuring all four models we trained or scored puts the failure precisely. The teacher-forced arm
 has the most input-dependent σ ({{cal_armB_over_faithA_cov}}× the autoregressive arm's) and the
@@ -126,9 +130,35 @@ separately and does not change the direction.
 
 ---
 
-## 4. The uncertainty output is unusable, and that is a property of the objective
+## 4. Neither of the checkpoint's uncertainty outputs is usable as an interval
 
-### 4.1 The measurement
+### 4.1 Which quantity the method actually uses
+
+The released checkpoint emits **two** uncertainty quantities, and the method consumes only one of
+them. This has to be settled before any calibration number means anything.
+
+`system_dynamics.py:125` computes an **aleatoric** term, the mean over ensemble members of each
+member's predicted σ. `system_dynamics.py:126` computes an **epistemic** term, the standard
+deviation across the members' mean predictions. In `envs/base.py:142` the aleatoric term is bound
+to a local variable that is never read again; the epistemic term is stored, returned to the policy
+loop at `:158`, and applied at `:166` as a reward penalty with weight −1.0.
+
+The paper agrees with its code. arXiv:2504.16680 Eq. 4 defines the penalised quantity as
+$u = \mathrm{Var}_b[\mu_b]$, the variance across ensemble members, and Eq. 5 applies it
+as $\tilde{r} = r - \lambda u$. The per-member predicted variance enters the training objective and nothing
+downstream.
+
+One discrepancy between the two, minor but real: Eq. 4 specifies a **variance**, and
+`system_dynamics.py:126` computes a **standard deviation**. With $\lambda = 1$ these differ by a square.
+We measure the code's quantity throughout, because that is what produced the released
+checkpoint's behaviour, and we do not treat either definition as authoritative.
+
+So the aleatoric head — the one the state loss and the bound loss shape, and the one §4.2 explains
+— is computed on every imagination step and discarded. We report both quantities below. Our own
+arms are ensemble size 1, where the epistemic term is identically zero by construction, so the
+epistemic measurement is possible only on the released checkpoint.
+
+### 4.2 The measurement
 
 For each model we compute the mean predicted σ, the mean absolute realised error, and the fraction
 of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside ±1σ.
@@ -140,9 +170,34 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside
 | teacher-forced Arm B | {{cal_armB_ratio}}× | {{cal_armB_cov1}}% | {{cal_armB_cov368}}% |
 | released checkpoint | {{cal_rel_ratio}}× | {{cal_rel_cov1}}% | {{cal_rel_cov368}}% |
 
-Every model is overconfident by between one and four orders of magnitude (Figure 1).
+Every model is overconfident by between one and four orders of magnitude (Figure 1). Those are
+aleatoric figures — the quantity §4.1 shows the method discards.
 
-### 4.2 Why: the optimum is σ = 0
+**The quantity the method does use is also uncalibrated.** On the released
+{{b2_members}}-member checkpoint, out-of-sample, n = {{b2_nind}} independent trajectories:
+
+| h | aleatoric err/σ | epistemic err/σ | epistemic ±1σ | epistemic ±2σ | dims r>0 | P |
+|---|---|---|---|---|---|---|
+| 1 | {{b2_alea_ratio_h1}}× | **{{b2_epi_ratio_h1}}×** | {{b2_epi_cov1_h1}}% | {{b2_epi_cov2_h1}}% | {{b2_epi_npos_h1}}/{{b2_epi_ndim_h1}} | {{b2_epi_p_h1}} |
+| 8 | {{b2_alea_ratio_h8}}× | {{b2_epi_ratio_h8}}× | {{b2_epi_cov1_h8}}% | {{b2_epi_cov2_h8}}% | {{b2_epi_npos_h8}}/{{b2_epi_ndim_h8}} | {{b2_epi_p_h8}} |
+| 32 | {{b2_alea_ratio_h32}}× | {{b2_epi_ratio_h32}}× | {{b2_epi_cov1_h32}}% | {{b2_epi_cov2_h32}}% | {{b2_epi_npos_h32}}/{{b2_epi_ndim_h32}} | {{b2_epi_p_h32}} |
+| 128 | {{b2_alea_ratio_h128}}× | {{b2_epi_ratio_h128}}× | {{b2_epi_cov1_h128}}% | {{b2_epi_cov2_h128}}% | {{b2_epi_npos_h128}}/{{b2_epi_ndim_h128}} | {{b2_epi_p_h128}} |
+| 368 | {{b2_alea_ratio_h368}}× | **{{b2_epi_ratio_h368}}×** | {{b2_epi_cov1_h368}}% | {{b2_epi_cov2_h368}}% | {{b2_epi_npos_h368}}/{{b2_epi_ndim_h368}} | {{b2_epi_p_h368}} |
+
+Epistemic is two orders of magnitude better than aleatoric — {{b2_epi_over_alea_h1}}× larger at
+h=1, {{b2_epi_over_alea_h368}}× at h=368 — and still wrong by
+**{{b2_epi_ratio_h1}}×** at one step and **{{b2_epi_ratio_h368}}×** at the deployment horizon,
+with ±1σ coverage of {{b2_epi_cov1_h368}}% where a calibrated Gaussian gives 68.3%. **Total**
+uncertainty, `sqrt(aleatoric² + epistemic²)`, equals the epistemic value to four significant
+figures at every horizon, because the aleatoric term is too small to move it.
+
+The scalar penalty as actually applied — `means.std(0).sum(-1)` at `envs/base.py:166` —
+correlates {{b2_penalty_corr}} with total absolute error over the rollout.
+
+### 4.3 Why the aleatoric head collapses: the optimum is σ = 0
+
+This subsection explains the aleatoric column and only that column. Ensemble disagreement is not
+shaped by the mechanism below, and why *it* is miscalibrated is not established here.
 
 The state loss is squared error on a *sample* drawn from the predicted Gaussian, not a likelihood:
 
@@ -162,7 +217,7 @@ We predicted the collapse from this algebra before training, then observed it. A
 (Figure 3a). Under the corrected objective the sign flips (Figure 3b) — which is the strongest
 evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
 
-### 4.3 The correction fails differently rather than succeeding
+### 4.4 The correction fails differently rather than succeeding
 
 The reference contains an unused `gaussian_nll` branch. Running it reverses the collapse and
 improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overconfident. It does not
@@ -170,7 +225,7 @@ produce a usable estimate, and it destroys something the faithful arm had: the �
 ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positively correlated
 (P = {{cal_faithA_p}}) to {{cal_nll_npos}}/{{cal_nll_ndim}} (P = {{cal_nll_p}}, chance).
 
-### 4.4 The failure is one of magnitude, not of ordering
+### 4.5 The failure is one of magnitude, not of ordering
 
 Measuring the teacher-forced arm — which we had trained for §3, and which our own first three
 calibration tables omitted — sharpens the finding:
@@ -188,10 +243,18 @@ ordering is the strongest of the four by a wide margin (mean r = {{cal_armB_r}})
 
 So σ collapsing to a constant is a property of the *autoregressive* arms and the released
 checkpoint, not of the objective in general — and input-dependence and correct ranking are both
-achievable without the interval becoming meaningful. **The failure is specifically magnitude
-calibration.**
+achievable without the interval becoming meaningful.
 
-### 4.5 The structural excuse does not survive
+**The same pattern holds for the quantity the method uses, with the strongest evidence in this
+paper.** At h=128 and h=368 the epistemic term correlates positively with realised error on
+**{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, P = {{b2_epi_p_h368}} — a better
+ranking than any aleatoric head here — while being {{b2_epi_ratio_h368}}× overconfident. And it
+fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while
+error grows {{b2_epi_err_growth}}×.
+
+**The failure is specifically magnitude calibration, in both components.**
+
+### 4.6 The structural excuse does not survive
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
@@ -315,8 +378,9 @@ are excluded and reported separately.
 amount of trajectory oversampling changes it.
 
 **Ensemble size.** Our main experiment runs at ensemble size 1 against the reference's 5, for CPU
-budget. The epistemic component of the released model's uncertainty is therefore not reproduced;
-§4 concerns the aleatoric head, which is per-member.
+budget, so our own arms have no epistemic component — it is identically zero by construction at
+ensemble size 1. The epistemic measurement in §4.2 is therefore made on the released checkpoint
+only, and we cannot say how ensemble disagreement would behave in a model we trained.
 
 **One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait
 is a single trot throughout. "Generalisation" here means across velocity commands, not across
@@ -332,16 +396,18 @@ reproduction only.
 
 ## 9. Conclusion
 
-The Robotic World Model's central training claim reproduces, and the margin is large. Its
-uncertainty output, in the follow-up that adds one, does not report what a reader would take it to
-report: the released checkpoint's σ is {{cal_rel_ratio}}× smaller than its own error, and the
-cause is that the objective's optimum is σ = 0 with the term that should prevent this cancelling
-out of the gradient.
+The Robotic World Model's central training claim reproduces, and the margin is large. Neither
+uncertainty output of the follow-up that adds them reports what a reader would take it to report.
+The aleatoric σ is {{cal_rel_ratio}}× smaller than its own error, and the cause is that the
+objective's optimum is σ = 0 with the term that should prevent this cancelling out of the
+gradient. The epistemic term the method actually penalises with is better by two orders of
+magnitude and still {{b2_epi_ratio_h368}}× overconfident where it is used.
 
-The more useful finding came from measuring a model we had already trained for another purpose
-and had not put on a calibration table. Ranking and input-dependence are achievable — the
-teacher-forced arm has both — while the interval remains meaningless. Uncertainty in this family of models should be reported as an ordering, or fixed at
-the objective, but not read as a scale.
+The more useful finding is that ranking survives where scale does not, in both components. The
+teacher-forced arm has input-dependent σ and good ordering; the epistemic term ranks better still,
+at {{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}} dimensions positively correlated with realised
+error. Neither yields a usable interval. Uncertainty in this family of models should be reported
+as an ordering, or fixed at the objective, but not read as a scale.
 
 ---
 

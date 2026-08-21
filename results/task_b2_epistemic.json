@@ -1,0 +1,247 @@
+{
+  "design": {
+    "checkpoint": "../robotic_world_model_lite/assets/models/pretrain_rnn_ens.pt",
+    "ensemble_size": 5,
+    "arena": "out-of-sample",
+    "holdout_episodes": [
+      1,
+      8
+    ],
+    "trajectories": 4,
+    "n_independent": 4,
+    "traj_len": 400,
+    "start_step": 32,
+    "action_offset": 1,
+    "note": "epistemic is identically zero for ensemble_size 1, so this measurement is possible only on the released checkpoint"
+  },
+  "by_horizon": {
+    "1": {
+      "aleatoric": {
+        "name": "aleatoric",
+        "mean_sigma": 5.7363304222235456e-05,
+        "mean_abs_err": 0.034226175397634506,
+        "ratio_err_over_sigma": 596.65625,
+        "coverage_pm1": 0.005555555555555556,
+        "coverage_pm2": 0.005555555555555556,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": -0.0344473490757169,
+        "corr_median": -0.036120126964613544,
+        "n_positive": 20,
+        "sign_p_two_sided": 0.5514843298025198
+      },
+      "epistemic": {
+        "name": "epistemic",
+        "mean_sigma": 0.007221951149404049,
+        "mean_abs_err": 0.034226175397634506,
+        "ratio_err_over_sigma": 4.739186763763428,
+        "coverage_pm1": 0.17777777777777778,
+        "coverage_pm2": 0.37222222222222223,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": -0.0024585911251431636,
+        "corr_median": 0.030266311465063925,
+        "n_positive": 23,
+        "sign_p_two_sided": 1.0
+      },
+      "total": {
+        "name": "total",
+        "mean_sigma": 0.007222222164273262,
+        "mean_abs_err": 0.034226175397634506,
+        "ratio_err_over_sigma": 4.739008903503418,
+        "coverage_pm1": 0.17777777777777778,
+        "coverage_pm2": 0.37222222222222223,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": -0.0024589773000842302,
+        "corr_median": 0.030257184964347546,
+        "n_positive": 23,
+        "sign_p_two_sided": 1.0
+      }
+    },
+    "8": {
+      "aleatoric": {
+        "name": "aleatoric",
+        "mean_sigma": 5.742518260376528e-05,
+        "mean_abs_err": 0.046072348952293396,
+        "ratio_err_over_sigma": 802.3021850585938,
+        "coverage_pm1": 0.001388888888888889,
+        "coverage_pm2": 0.003472222222222222,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": -0.04725991664355871,
+        "corr_median": -0.10475439844600062,
+        "n_positive": 15,
+        "sign_p_two_sided": 0.035697803555194696
+      },
+      "epistemic": {
+        "name": "epistemic",
+        "mean_sigma": 0.0073150633834302425,
+        "mean_abs_err": 0.046072348952293396,
+        "ratio_err_over_sigma": 6.298284530639648,
+        "coverage_pm1": 0.12152777777777778,
+        "coverage_pm2": 0.2513888888888889,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": -0.035780960878885895,
+        "corr_median": 0.017085957655340583,
+        "n_positive": 25,
+        "sign_p_two_sided": 0.5514843298025198
+      },
+      "total": {
+        "name": "total",
+        "mean_sigma": 0.007315337657928467,
+        "mean_abs_err": 0.046072348952293396,
+        "ratio_err_over_sigma": 6.29804801940918,
+        "coverage_pm1": 0.12152777777777778,
+        "coverage_pm2": 0.2513888888888889,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": -0.035781947425810645,
+        "corr_median": 0.017079129340927177,
+        "n_positive": 25,
+        "sign_p_two_sided": 0.5514843298025198
+      }
+    },
+    "32": {
+      "aleatoric": {
+        "name": "aleatoric",
+        "mean_sigma": 5.7417557400185615e-05,
+        "mean_abs_err": 0.08782577514648438,
+        "ratio_err_over_sigma": 1529.597900390625,
+        "coverage_pm1": 0.001388888888888889,
+        "coverage_pm2": 0.0022569444444444442,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": -0.17198383302520776,
+        "corr_median": -0.20782404976310903,
+        "n_positive": 7,
+        "sign_p_two_sided": 3.1213096463034162e-06
+      },
+      "epistemic": {
+        "name": "epistemic",
+        "mean_sigma": 0.00788943748921156,
+        "mean_abs_err": 0.08782577514648438,
+        "ratio_err_over_sigma": 11.132070541381836,
+        "coverage_pm1": 0.08697916666666666,
+        "coverage_pm2": 0.1765625,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.14397781939750967,
+        "corr_median": 0.1526643061765754,
+        "n_positive": 34,
+        "sign_p_two_sided": 0.0008240823595997426
+      },
+      "total": {
+        "name": "total",
+        "mean_sigma": 0.00788969174027443,
+        "mean_abs_err": 0.08782577514648438,
+        "ratio_err_over_sigma": 11.131711959838867,
+        "coverage_pm1": 0.08697916666666666,
+        "coverage_pm2": 0.17673611111111112,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.1439801477034866,
+        "corr_median": 0.1526607298059488,
+        "n_positive": 34,
+        "sign_p_two_sided": 0.0008240823595997426
+      }
+    },
+    "128": {
+      "aleatoric": {
+        "name": "aleatoric",
+        "mean_sigma": 5.7970053603639826e-05,
+        "mean_abs_err": 0.29749196767807007,
+        "ratio_err_over_sigma": 5131.8212890625,
+        "coverage_pm1": 0.0006510416666666666,
+        "coverage_pm2": 0.0010416666666666667,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.043341513373830326,
+        "corr_median": 0.022388791593214406,
+        "n_positive": 29,
+        "sign_p_two_sided": 0.07245426016254441
+      },
+      "epistemic": {
+        "name": "epistemic",
+        "mean_sigma": 0.01047368161380291,
+        "mean_abs_err": 0.29749196767807007,
+        "ratio_err_over_sigma": 28.403762817382812,
+        "coverage_pm1": 0.054210069444444446,
+        "coverage_pm2": 0.10946180555555556,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.24119411331144572,
+        "corr_median": 0.22870125736183705,
+        "n_positive": 45,
+        "sign_p_two_sided": 5.684341886080802e-14
+      },
+      "total": {
+        "name": "total",
+        "mean_sigma": 0.010473898611962795,
+        "mean_abs_err": 0.29749196767807007,
+        "ratio_err_over_sigma": 28.403173446655273,
+        "coverage_pm1": 0.054210069444444446,
+        "coverage_pm2": 0.10950520833333334,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.24119282448545631,
+        "corr_median": 0.22869834032628117,
+        "n_positive": 45,
+        "sign_p_two_sided": 5.684341886080802e-14
+      }
+    },
+    "368": {
+      "aleatoric": {
+        "name": "aleatoric",
+        "mean_sigma": 5.7922432461054996e-05,
+        "mean_abs_err": 0.4563196003437042,
+        "ratio_err_over_sigma": 7878.115234375,
+        "coverage_pm1": 0.000392512077294686,
+        "coverage_pm2": 0.0006491545893719807,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.0014917360068609534,
+        "corr_median": -0.010226431899007656,
+        "n_positive": 20,
+        "sign_p_two_sided": 0.5514843298025198
+      },
+      "epistemic": {
+        "name": "epistemic",
+        "mean_sigma": 0.011494130827486515,
+        "mean_abs_err": 0.4563196003437042,
+        "ratio_err_over_sigma": 39.700225830078125,
+        "coverage_pm1": 0.03759057971014493,
+        "coverage_pm2": 0.07685688405797102,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.15093487209916556,
+        "corr_median": 0.12932558829533494,
+        "n_positive": 45,
+        "sign_p_two_sided": 5.684341886080802e-14
+      },
+      "total": {
+        "name": "total",
+        "mean_sigma": 0.011494328267872334,
+        "mean_abs_err": 0.4563196003437042,
+        "ratio_err_over_sigma": 39.69954299926758,
+        "coverage_pm1": 0.03759057971014493,
+        "coverage_pm2": 0.0768719806763285,
+        "frac_sigma_positive": 1.0,
+        "n_finite_corr": 45,
+        "corr_mean": 0.1509334261106411,
+        "corr_median": 0.12932270607558874,
+        "n_positive": 45,
+        "sign_p_two_sided": 5.684341886080802e-14
+      }
+    }
+  },
+  "released_scalar_penalty": {
+    "definition": "means.std(0).sum(-1)  (system_dynamics.py:126)",
+    "applied_at": "envs/base.py:166  rewards += uncertainty_penalty_weight * epistemic * dt",
+    "weight": -1.0,
+    "corr_with_total_abs_error": 0.3479517795415219,
+    "mean": 0.5172358751296997,
+    "paper_defines_variance_code_uses_std": true
+  }
+}

@@ -31,6 +31,394 @@
     "source": "results/step5_armA_seed0_contam.json",
     "value": 195
   },
+  "b2_alea_cov1_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.56"
+  },
+  "b2_alea_cov1_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.07"
+  },
+  "b2_alea_cov1_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.14"
+  },
+  "b2_alea_cov1_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.04"
+  },
+  "b2_alea_cov1_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.14"
+  },
+  "b2_alea_cov2_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.56"
+  },
+  "b2_alea_cov2_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.10"
+  },
+  "b2_alea_cov2_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.23"
+  },
+  "b2_alea_cov2_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.06"
+  },
+  "b2_alea_cov2_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.35"
+  },
+  "b2_alea_ndim_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_alea_ndim_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_alea_ndim_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_alea_ndim_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_alea_ndim_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_alea_npos_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 20
+  },
+  "b2_alea_npos_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 29
+  },
+  "b2_alea_npos_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 7
+  },
+  "b2_alea_npos_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 20
+  },
+  "b2_alea_npos_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 15
+  },
+  "b2_alea_p_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.5e-01"
+  },
+  "b2_alea_p_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "7.2e-02"
+  },
+  "b2_alea_p_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "3.1e-06"
+  },
+  "b2_alea_p_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.5e-01"
+  },
+  "b2_alea_p_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "3.6e-02"
+  },
+  "b2_alea_ratio_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "597"
+  },
+  "b2_alea_ratio_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5,132"
+  },
+  "b2_alea_ratio_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "1,530"
+  },
+  "b2_alea_ratio_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "7,878"
+  },
+  "b2_alea_ratio_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "802"
+  },
+  "b2_epi_cov1_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "17.78"
+  },
+  "b2_epi_cov1_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.42"
+  },
+  "b2_epi_cov1_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "8.70"
+  },
+  "b2_epi_cov1_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "3.76"
+  },
+  "b2_epi_cov1_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "12.15"
+  },
+  "b2_epi_cov2_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "37.22"
+  },
+  "b2_epi_cov2_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "10.95"
+  },
+  "b2_epi_cov2_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "17.66"
+  },
+  "b2_epi_cov2_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "7.69"
+  },
+  "b2_epi_cov2_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "25.14"
+  },
+  "b2_epi_err_growth": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "13.33"
+  },
+  "b2_epi_ndim_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_epi_ndim_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_epi_ndim_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_epi_ndim_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_epi_ndim_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_epi_npos_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 23
+  },
+  "b2_epi_npos_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_epi_npos_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 34
+  },
+  "b2_epi_npos_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_epi_npos_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 25
+  },
+  "b2_epi_over_alea_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "126"
+  },
+  "b2_epi_over_alea_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "198"
+  },
+  "b2_epi_p_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "1.0e+00"
+  },
+  "b2_epi_p_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.7e-14"
+  },
+  "b2_epi_p_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "8.2e-04"
+  },
+  "b2_epi_p_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.7e-14"
+  },
+  "b2_epi_p_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.5e-01"
+  },
+  "b2_epi_ratio_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "4.7"
+  },
+  "b2_epi_ratio_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "28.4"
+  },
+  "b2_epi_ratio_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "11.1"
+  },
+  "b2_epi_ratio_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "39.7"
+  },
+  "b2_epi_ratio_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "6.3"
+  },
+  "b2_epi_sigma_growth": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "1.59"
+  },
+  "b2_members": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 5
+  },
+  "b2_nind": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 4
+  },
+  "b2_penalty_corr": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.348"
+  },
+  "b2_tot_cov1_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "17.78"
+  },
+  "b2_tot_cov1_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.42"
+  },
+  "b2_tot_cov1_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "8.70"
+  },
+  "b2_tot_cov1_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "3.76"
+  },
+  "b2_tot_cov1_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "12.15"
+  },
+  "b2_tot_cov2_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "37.22"
+  },
+  "b2_tot_cov2_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "10.95"
+  },
+  "b2_tot_cov2_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "17.67"
+  },
+  "b2_tot_cov2_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "7.69"
+  },
+  "b2_tot_cov2_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "25.14"
+  },
+  "b2_tot_ndim_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_ndim_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_ndim_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_ndim_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_ndim_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_npos_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 23
+  },
+  "b2_tot_npos_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_npos_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 34
+  },
+  "b2_tot_npos_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_npos_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 25
+  },
+  "b2_tot_p_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "1.0e+00"
+  },
+  "b2_tot_p_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.7e-14"
+  },
+  "b2_tot_p_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "8.2e-04"
+  },
+  "b2_tot_p_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.7e-14"
+  },
+  "b2_tot_p_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.5e-01"
+  },
+  "b2_tot_ratio_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "4.7"
+  },
+  "b2_tot_ratio_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "28.4"
+  },
+  "b2_tot_ratio_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "11.1"
+  },
+  "b2_tot_ratio_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "39.7"
+  },
+  "b2_tot_ratio_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "6.3"
+  },
   "bu_cells": {
     "source": "results/review_bootstrap_unit.json",
     "value": 16
@@ -325,19 +713,19 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 154
+    "value": 159
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 5
+    "value": 6
   },
   "n_retractions_lower": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "five"
+    "value": "six"
   },
   "n_retractions_word": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "Five"
+    "value": "Six"
   },
   "n_runs": {
     "source": "runs/ directory listing",
@@ -345,7 +733,7 @@
   },
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 13
+    "value": 14
   },
   "overfit_reduction": {
     "source": "results/step4_4_overfit_b32lr1e3.json",

@@ -121,7 +121,7 @@ claim that M-23 tested is from the **base RWM** paper (arXiv **2501.10100**).
 | `[BOTH]` | bears on both, usually because it concerns shared code or shared data |
 
 **`[RWM-U]`** — C-04, C-06, C-10, C-11, O-08, O-12, O-13, R-08, R-24, R-25, R-43, R-48, R-49,
-R-50, R-51, R-52, R-53, R-54. These concern the variance head, its collapse, and the
+R-50, R-51, R-52, R-53, R-54, C-14, C-15, R-58. These concern the variance head, its collapse, and the
 calibration of the uncertainty output; none of them is a claim about the base paper.
 
 **`[BASE]`** — M-16, M-23, M-24, R-19, R-22, R-23, R-35, R-36, R-37, R-40, R-42, R-45, R-46,
@@ -130,7 +130,7 @@ C-02, C-05, C-09
 and the defects B-01 to B-05.
 
 **`[BOTH]`** — D-01 to D-13 (the dataset is shared), C-03, C-07, C-12, C-13, R-01, R-11, R-14,
-and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, M-30, M-31, which apply to any
+and the evaluation-methodology entries M-09, M-12, M-17, M-19, M-20, M-25, M-26, M-27, M-28, M-29, M-30, M-31, M-32, which apply to any
 measurement made on this data.
 
 Recorded now rather than during writing: a reviewer who notices the conflation before it is
@@ -417,6 +417,53 @@ read in R-01.
 **Status** CONFIRMED · **Relevance** CONTRIB
 **Decision for Step 5** Train to 2500 to match the paper and checkpoint at 500 as well, so
 both documented numbers can be reported from one run at no extra cost.
+
+
+### C-14 — The method penalises EPISTEMIC uncertainty; the aleatoric head is discarded before use · `[RWM-U]` · **NEW**
+`pretrain_rnn_ens.pt` carries two uncertainty outputs, and the released method consumes only one
+of them. Established from the paper and the code independently, and they agree.
+
+**The paper** (arXiv:2504.16680). Eq. 4 defines the penalised quantity as the variance across
+ensemble members, `u_{t+1} = Var_b[μ_b]` — epistemic. Eq. 5 applies it as a reward penalty,
+`r̃ = r − λ·u`. The per-member predicted variance enters the training objective (Eq. 1) and
+nothing downstream.
+
+**The code**, in order:
+
+| step | site | what happens |
+|---|---|---|
+| define | `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:125` | `aleatoric = state_stds.mean(0).sum(-1)` |
+| define | `system_dynamics.py:126` | `epistemic = state_means.std(0).sum(-1)` |
+| **discard** | `robotic_world_model_lite/scripts/envs/base.py:142` | aleatoric is bound to a local that is never read again; epistemic is stored on `self` |
+| return | `envs/base.py:158` | only `self.epistemic_uncertainty` reaches the policy loop |
+| **apply** | `envs/base.py:166` | `rewards += uncertainty_penalty_weight * self.epistemic_uncertainty * dt` |
+| configure | `scripts/configs/anymal_d_flat_cfg.py:30` | `uncertainty_penalty_weight = -1.0` |
+
+`rsl_rl/algorithms/mbpo_ppo.py:253` and `:259` unpack both uncertainties into `_`; that path is
+model evaluation rather than policy training, so it is not the operative site.
+
+**Consequence.** The aleatoric head — the one the state loss and bound loss actually shape, and
+the one C-10, C-11 and R-48 to R-54 analyse — is computed on every imagination step and thrown
+away. Any claim that "the released checkpoint's uncertainty output" is unusable must say which
+output it means. See S-14.
+**Evidence** `SRC` `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:125-126`,
+`robotic_world_model_lite/scripts/envs/base.py:142,158,166`,
+`robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:30`;
+`EXT` arXiv:2504.16680 Eq. 4-5.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### C-15 — Eq. 4 defines the penalty on variance; the code computes a standard deviation · `[RWM-U]` · **NEW**
+Eq. 4 of arXiv:2504.16680 gives `u_{t+1} = Var_b[μ_b]`. `system_dynamics.py:126` computes
+`state_means.std(dim=0).sum(dim=1)` — a standard deviation, not a variance, and summed over the
+45 state dimensions rather than left per-dimension. With λ = 1.0 the two differ by a square, so
+the penalty the released configuration actually applies is not the one the paper writes down.
+
+Minor beside C-14, and of the same class as C-01 and B-05: the implemented quantity is not the
+described one. R-58 measures the code's quantity, since that is what produced the released
+behaviour, and does not treat either definition as authoritative.
+**Evidence** `SRC` `rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:126`; `EXT` arXiv:2504.16680 Eq. 4.
+**Status** CONFIRMED · **Relevance** CONTRIB
 
 
 ---
@@ -1177,6 +1224,24 @@ revised after the answer is visible, however good the reason.
 both, evaluates both, and the ledger entry records the disagreement if there is one.
 **Evidence** `RUN` `results/batch1_post_retraction.json`, `results/taskAB_gate_r27.json`;
 `SRC` `scripts/taskAB_gate_r27.py:145-147`, `scripts/batch1_retract_jensen_char.py:102`.
+**Status** ADOPTED · **Relevance** METHOD
+
+
+### M-32 — Measure the quantity the method consumes, not the one that is easiest to reach · **NEW**
+R-48 to R-54 measured the aleatoric head because it is the head the training objective shapes,
+and because the analysis of that objective was already in hand. That made it the natural thing to
+measure and the wrong thing to measure alone: C-14 shows the released method discards it and
+penalises ensemble disagreement instead.
+
+The finding survived — R-58 shows the consumed quantity is also uncalibrated — but it survived on
+the evidence, not by design. Had epistemic been adequately calibrated, the project's headline
+claim would have been about a component nothing uses.
+
+**Convention.** Before measuring a model's output, trace it to the site that consumes it and
+record that site. Where a claim is about a method rather than a checkpoint, the quantity measured
+must be the quantity the method reads.
+**Evidence** `SRC` `robotic_world_model_lite/scripts/envs/base.py:142,166`;
+`RUN` `results/task_b2_epistemic.json`.
 **Status** ADOPTED · **Relevance** METHOD
 
 
@@ -2472,7 +2537,9 @@ This is the direct empirical consequence of C-10 and it is the number that makes
 "uncertainty-aware" checkable. RWM-U's epistemic term is a separate quantity and is not measured
 here; this concerns the aleatoric σ the state head emits.
 **Evidence** `RUN` `results/task1_calibration.json`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** SUPERSEDED IN PART by S-14 — the numbers stand; the phrase "the uncertainty
+output" does not, because the checkpoint has two and this measured the one the released
+method discards (C-14). Replaced in scope by R-58. · **Relevance** CONTRIB
 
 ### R-50 — Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iteration count · **NEW**
 1c. Fitted rate of `log_delta_logstd` under the corrected objective, three seeds:
@@ -2497,6 +2564,7 @@ also shipped.
 
 
 ### R-51 — All four models are catastrophically overconfident · `[RWM-U]` · **NEW**
+**Quantity** Aleatoric — the per-member predicted σ. The released method discards it and penalises ensemble disagreement instead (C-14); R-58 measures that.
 Coverage measured on the 4 independent held-out 400-step trajectories, against a calibrated
 Gaussian's 68.3% at ±1σ and 95.4% at ±2σ.
 
@@ -2515,6 +2583,7 @@ still wrong by an order of magnitude.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 ### R-52 — σ is input-independent in all four models · `[RWM-U]` · **NEW**
+**Quantity** Aleatoric — the per-member predicted σ. The released method discards it and penalises ensemble disagreement instead (C-14); R-58 measures that.
 Coefficient of variation of the predicted σ across a batch:
 
 | model | CoV of σ | permitted interval width (log space) | fraction of the freedom used |
@@ -2534,6 +2603,7 @@ axis, and when measured its σ is an order of magnitude more input-dependent tha
 Replaced by R-57. · **Relevance** METHOD
 
 ### R-53 — The correction improved magnitude and destroyed what ordering signal existed · `[RWM-U]` · **NEW**
+**Quantity** Aleatoric — the per-member predicted σ. The released method discards it and penalises ensemble disagreement instead (C-14); R-58 measures that.
 σ-versus-realised-error correlation, per dimension, pooled across seeds:
 
 | model | mean r | median r | dims with r > 0 | under a coin-flip null |
@@ -2561,6 +2631,7 @@ which predictions are worse is not obviously an improvement for any downstream u
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 ### R-54 — σ is flat *inside* the trained horizon, which removes the structural excuse · `[RWM-U]` · **NEW**
+**Quantity** Aleatoric — the per-member predicted σ. The released method discards it and penalises ensemble disagreement instead (C-14); R-58 measures that.
 Task 2. The loss trains on exactly 8 forecast steps, so if a model were going to learn
 horizon-dependent uncertainty anywhere it would be here. σ across steps 1 → 8, against the
 realised error over the same range:
@@ -2732,6 +2803,57 @@ true value is 5.418e-07 (2.6×
 larger than quoted, and 1.4e-06 is the figure for 38/45). The companion "P ≈ 0.66" for 21/45 is
 0.766. No conclusion turns on either.
 **Evidence** `RUN` `results/task1_calibration.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-58 — The uncertainty the method actually uses is also uncalibrated · `[RWM-U]` · **NEW**
+C-14 established that the method penalises epistemic uncertainty and discards the aleatoric head.
+This measures the quantity that is used. Released checkpoint, 5 members,
+out-of-sample episodes [1, 8], `n_independent` = 4, action
+offset 1. Our own arms are ensemble size 1, where epistemic is identically zero by construction
+(`system_dynamics.py:126`), so this is possible only on the released checkpoint.
+
+| h | aleatoric err/σ | epistemic err/σ | epi ±1σ | epi ±2σ | dims r>0 | P |
+|---|---|---|---|---|---|---|
+| 1 | 597× | 4.7× | 17.78% | 37.22% | 23/45 | 1.0e+00 |
+| 8 | 802× | 6.3× | 12.15% | 25.14% | 25/45 | 5.5e-01 |
+| 32 | 1,530× | 11.1× | 8.70% | 17.66% | 34/45 | 8.2e-04 |
+| 128 | 5,132× | 28.4× | 5.42% | 10.95% | 45/45 | 5.7e-14 |
+| 368 | 7,878× | 39.7× | 3.76% | 7.69% | 45/45 | 5.7e-14 |
+
+Calibrated reference: 68.3% at ±1σ, 95.4% at ±2σ.
+
+**Epistemic is far better than aleatoric and still badly wrong.** It is 126× to
+198× larger than the aleatoric σ across horizons — independently reproducing R-08's
+hundredfold estimate and sharpening it — which puts its overconfidence at
+**4.7×** at one step rather than 597×.
+But ±1σ coverage is **17.78%** at h=1 against a calibrated 68.3%, falling
+to **3.76%** at h=368, where overconfidence reaches
+**39.7×**.
+
+**Total is indistinguishable from epistemic.** Because σ_epi exceeds σ_alea by two orders of
+magnitude, `sqrt(alea² + epi²)` equals the epistemic value to four significant figures at every
+horizon measured.
+
+**The magnitude-not-ordering finding extends to it, with the strongest evidence in the project.**
+At h=128 and h=368 epistemic correlates positively with realised error on **45
+of 45** dimensions, P = 5.7e-14. The ranking is
+excellent; the scale is wrong by 40×.
+
+**And the same horizon mechanism applies.** σ_epi grows
+1.59× from h=1 to h=368 while realised error grows
+13.33×. Ensemble disagreement does not track error
+growth either.
+
+**The scalar penalty as applied.** `means.std(0).sum(-1)`, the quantity at `envs/base.py:166`,
+correlates +0.3480 with total absolute error over the rollout, mean
+0.5172.
+
+**Scope, stated carefully.** This does **not** extend C-06/C-10/C-11's objective argument to the
+epistemic term. That argument explains why a *per-member* σ collapses to zero under a sampled-MSE
+loss. Ensemble disagreement is not shaped by that mechanism, and why it is miscalibrated is not
+established here.
+**Evidence** `RUN` `results/task_b2_epistemic.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 
@@ -3184,6 +3306,27 @@ against a calibrated 68.3%. Input-independence was a supporting observation, not
 **Replaced by** R-57.
 **Retracts** R-52
 **Evidence** `RUN` `results/task1_calibration.json`.
+**Status** RETRACTED · **Relevance** METHOD
+
+
+### S-14 — "The released checkpoint's uncertainty output is worthless" (R-49) · **NEW**
+**What is retracted:** the definite article. R-49 is titled "the released checkpoint's uncertainty
+output", singular and unqualified. The checkpoint emits **two** uncertainty quantities
+(`system_dynamics.py:125-126`), and R-49 measured the aleatoric one — which C-14 shows the
+released method computes and discards at `envs/base.py:142`.
+
+**What survives, unchanged:** every number in R-49. The aleatoric σ is 7,878× smaller than the
+realised error and its ±1σ coverage is 0.04% at h=368. Those were measured correctly and are
+reproduced independently by R-58's aleatoric column.
+
+**What replaces it:** R-58, which measures the quantity the method actually penalises and finds it
+also uncalibrated — 4.7× at h=1 rising to 39.7× at h=368, with 3.76% coverage. The conclusion is
+therefore unchanged in direction and stronger in scope: both of the checkpoint's uncertainty
+outputs are unusable as intervals. What was wrong was implying, by omission, that the measured one
+was the operative one.
+**Retracts** R-49
+**Evidence** `SRC` `robotic_world_model_lite/scripts/envs/base.py:142`;
+`RUN` `results/task_b2_epistemic.json`.
 **Status** RETRACTED · **Relevance** METHOD
 
 

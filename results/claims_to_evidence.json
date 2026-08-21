@@ -363,6 +363,30 @@
       "retracts": []
     },
     {
+      "id": "C-14",
+      "claim": "The method penalises EPISTEMIC uncertainty; the aleatoric head is discarded before use",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "EXT",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "C-15",
+      "claim": "Eq. 4 defines the penalty on variance; the code computes a standard deviation",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "EXT",
+        "SRC"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
       "id": "M-01",
       "claim": "Episode identity must be carried explicitly",
       "relevance": "METHOD",
@@ -750,9 +774,23 @@
       ],
       "artifacts": [
         "results/batch1_post_retraction.json",
+        "results/taskAB_gate_r27.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-32",
+      "claim": "Measure the quantity the method consumes, not the one that is easiest to reach",
+      "relevance": "METHOD",
+      "status": "ADOPTED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
         "results/manifest.json",
         "results/step3_report.txt",
-        "results/taskAB_gate_r27.json",
+        "results/task_b2_epistemic.json",
         "scripts/ledger_check.py"
       ],
       "retracts": []
@@ -1376,7 +1414,7 @@
       "id": "R-49",
       "claim": "The released checkpoint's uncertainty output is worthless, quantified",
       "relevance": "CONTRIB",
-      "status": "CONFIRMED",
+      "status": "SUPERSEDED IN PART by S-14 \u2014 the numbers stand; the phrase \"the uncertainty",
       "evidence": [
         "RUN"
       ],
@@ -1488,6 +1526,19 @@
       "artifacts": [
         "results/task1_calibration.json",
         "scripts/task1_calibration.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-58",
+      "claim": "The uncertainty the method actually uses is also uncalibrated",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
       ],
       "retracts": []
     },
@@ -1837,16 +1888,32 @@
       "retracts": [
         "R-52"
       ]
+    },
+    {
+      "id": "S-14",
+      "claim": "\"The released checkpoint's uncertainty output is worthless\" (R-49)",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "retracts": [
+        "R-49"
+      ]
     }
   ],
   "counts_by_prefix": {
     "B": 5,
-    "C": 13,
+    "C": 15,
     "D": 13,
-    "M": 31,
+    "M": 32,
     "O": 13,
-    "R": 57,
-    "S": 13,
+    "R": 58,
+    "S": 14,
     "X": 9
   }
 }

@@ -219,6 +219,41 @@ def main():
     put("n_retractions_word", WORDS.get(len(retr), str(len(retr))), "FINDINGS_LEDGER.md")
     put("n_retractions_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
 
+    # B2 -- the uncertainty the method actually consumes (C-14, R-58)
+    B = J("task_b2_epistemic.json")
+    for h in (1, 8, 32, 128, 368):
+        rec = B["by_horizon"][str(h)]
+        for q, tag in (("aleatoric", "alea"), ("epistemic", "epi"), ("total", "tot")):
+            m = rec[q]
+            rr = m["ratio_err_over_sigma"]
+            put(f"b2_{tag}_ratio_h{h}", f"{rr:,.0f}" if rr >= 100 else f"{rr:.1f}",
+                "results/task_b2_epistemic.json")
+            put(f"b2_{tag}_cov1_h{h}", f'{100*m["coverage_pm1"]:.2f}',
+                "results/task_b2_epistemic.json")
+            put(f"b2_{tag}_cov2_h{h}", f'{100*m["coverage_pm2"]:.2f}',
+                "results/task_b2_epistemic.json")
+            put(f"b2_{tag}_npos_h{h}", m["n_positive"], "results/task_b2_epistemic.json")
+            put(f"b2_{tag}_ndim_h{h}", m["n_finite_corr"], "results/task_b2_epistemic.json")
+            put(f"b2_{tag}_p_h{h}", f'{m["sign_p_two_sided"]:.1e}',
+                "results/task_b2_epistemic.json")
+    e1 = B["by_horizon"]["1"]; e368 = B["by_horizon"]["368"]
+    put("b2_epi_over_alea_h1",
+        f'{e1["epistemic"]["mean_sigma"]/e1["aleatoric"]["mean_sigma"]:.0f}',
+        "results/task_b2_epistemic.json")
+    put("b2_epi_over_alea_h368",
+        f'{e368["epistemic"]["mean_sigma"]/e368["aleatoric"]["mean_sigma"]:.0f}',
+        "results/task_b2_epistemic.json")
+    put("b2_epi_sigma_growth",
+        f'{e368["epistemic"]["mean_sigma"]/e1["epistemic"]["mean_sigma"]:.2f}',
+        "results/task_b2_epistemic.json")
+    put("b2_epi_err_growth",
+        f'{e368["epistemic"]["mean_abs_err"]/e1["epistemic"]["mean_abs_err"]:.2f}',
+        "results/task_b2_epistemic.json")
+    put("b2_penalty_corr", f'{B["released_scalar_penalty"]["corr_with_total_abs_error"]:+.3f}',
+        "results/task_b2_epistemic.json")
+    put("b2_nind", B["design"]["n_independent"], "results/task_b2_epistemic.json")
+    put("b2_members", B["design"]["ensemble_size"], "results/task_b2_epistemic.json")
+
     op = os.path.join(R.RESULTS, "paper_numbers.json")
     json.dump(N, open(op, "w"), indent=2, sort_keys=True)
     print(f"collected {len(N)} keyed numbers -> {R.rel(op)}")

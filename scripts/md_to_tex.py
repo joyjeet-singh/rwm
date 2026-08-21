@@ -30,12 +30,15 @@ def esc(s):
         return f"\x00{len(tokens)-1}\x00"
 
     s = re.sub(r"`[^`]*`", stash, s)
+    # inline math must survive escaping intact, exactly as code spans do
+    s = re.sub(r"\$[^$\n]+\$", stash, s)
     for a, b in (("\\", r"\textbackslash{}"), ("&", r"\&"), ("%", r"\%"), ("$", r"\$"),
                  ("#", r"\#"), ("_", r"\_"), ("{", r"\{"), ("}", r"\}"), ("~", r"\textasciitilde{}"),
                  ("^", r"\textasciicircum{}")):
         s = s.replace(a, b)
     s = s.replace("—", "---").replace("–", "--").replace("×", r"$\times$")
     s = s.replace("σ", r"$\sigma$").replace("μ", r"$\mu$").replace("ε", r"$\varepsilon$")
+    s = s.replace("λ", r"$\lambda$").replace("φ", r"$\phi$").replace("\u0303", "")
     s = s.replace("Δ", r"$\Delta$").replace("±", r"$\pm$").replace("≈", r"$\approx$")
     s = s.replace("§", r"\S").replace("“", "``").replace("”", "''")
     s = s.replace("−", "$-$")
@@ -44,9 +47,16 @@ def esc(s):
     s = s.replace(">", "$>$").replace("<", "$<$")
 
     def unstash(m):
-        t = tokens[int(m.group(1))].strip("`")
+        raw = tokens[int(m.group(1))]
+        if raw.startswith("$"):
+            return raw                      # inline math: emit verbatim
+        # Inline code is protected from escaping, which means Unicode inside it would
+        # reach \texttt{} raw and kill pdflatex. Transliterate rather than trust the author.
+        t = _ascii(raw.strip("`"))
         for a, b in (("\\", r"\textbackslash{}"), ("_", r"\_"), ("&", r"\&"),
-                     ("%", r"\%"), ("#", r"\#"), ("{", r"\{"), ("}", r"\}")):
+                     ("%", r"\%"), ("#", r"\#"), ("{", r"\{"), ("}", r"\}"),
+                     ("^", r"\textasciicircum{}"), ("~", r"\textasciitilde{}"),
+                     ("$", r"\$")):
             t = t.replace(a, b)
         return r"\texttt{" + t + "}"
 
