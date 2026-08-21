@@ -2712,7 +2712,7 @@ between one and four orders of magnitude. Arm B — the arm that trains best —
 
 *Input-independence (S-13).* Arm B's σ is
 16× more variable across inputs
-than the faithful arm's. σ collapsing to a constant is a property of the **autoregressive** arms
+than the faithful arm's, and 6.7x the next highest of the four. σ collapsing to a constant is a property of the **autoregressive** arms
 and the released checkpoint, not of the objective in general.
 
 *Ordering.* R-53 read the faithful arm's 39/45 as
@@ -3175,7 +3175,7 @@ the claim and its sole cited artifact.
 Arm B has since been measured. Its σ varies across the batch with **CoV
 0.1188**, against 0.0076 for the
 faithful arm — **16× more
-input-dependent**, and an order of magnitude above every other model here. The claim is false for
+input-dependent**, and 6.7x above the next highest (released ckpt, 0.0177). The claim is false for
 the fourth model, not merely unevidenced.
 
 **What survives:** R-51. All four models remain catastrophically overconfident, Arm B included —
