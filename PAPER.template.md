@@ -34,8 +34,9 @@ predictions will be worse. They cannot learn *how wrong* they will be. A downstr
 a ranking may be served; one who needs an interval is not, under any of the four.
 
 We also report four defects in the released pipeline, evidence that the released checkpoint cannot
-have come from the released recipe, and four retractions of our own claims. Every number in this
-paper is generated from a file in `results/`; none is typed by hand.
+have come from the released recipe, and {{n_retractions_lower}} retractions of our own numbered claims —
+one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.
+Every number in this paper is generated from a file in `results/`; none is typed by hand.
 
 ---
 
@@ -279,10 +280,14 @@ auditing our own `git log`. The measurement stands — the arm was built and run
 to its outcome — but the claim that it was pre-registered does not, and we withdraw it. We report
 it because a discipline that is only checked when it succeeds is not a discipline.
 
-**Four retractions on our own evidence.** An aggregation artifact inverted a published-model
-comparison in our favour, and we withdrew it when the gating checks we had written refuted it. A
-per-dimension comparison turned out to be unmatched. The claim that σ is input-independent "in all
-four models" was made against a table holding three. And the pre-registration claim above.
+**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims
+kept in the record. In order: a premise about forecast decay that turned out not to exist in the
+code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate
+we ourselves showed to be biased low; an aggregation artifact that inverted a published-model
+comparison in our favour, withdrawn when the gating checks we had written refuted it; a
+per-dimension comparison that turned out to be unmatched; and the claim that σ is input-independent
+"in all four models", made against a table holding three. The pre-registration claim above is a
+sixth, retracting a framing rather than a number.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three training seeds over
 a shared set of evaluation trajectories and resampled the pooled vector, while reporting the

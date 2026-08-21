@@ -311,9 +311,25 @@
     "source": "FINDINGS_LEDGER.md",
     "value": 154
   },
+  "n_retractions": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": 5
+  },
+  "n_retractions_lower": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "five"
+  },
+  "n_retractions_word": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "Five"
+  },
   "n_runs": {
     "source": "runs/ directory listing",
     "value": 17
+  },
+  "n_superseded": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": 13
   },
   "q4_implied_A": {
     "source": "results/task5_analysis.json",

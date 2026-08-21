@@ -7,6 +7,7 @@ placeholder is unresolved or any key here is unused. No number in the paper is t
 import glob
 import json
 import os
+import re
 import subprocess
 import sys
 from math import comb
@@ -181,6 +182,24 @@ def main():
         for label, key in keymap.items():
             if label in f4:
                 put(key, fmt(abs(f4[label]["lead_hours"])), "results/paper_figures.json")
+
+    # Retractions, counted rather than asserted. An earlier draft said "four" and the
+    # ledger had six by then -- exactly the drift this indirection exists to stop.
+    led = open("FINDINGS_LEDGER.md").read()
+    sup = re.findall(r"^### (S-\d+) ", led, re.M)
+    retr = []
+    for sid in sup:
+        blk = led[led.index("### " + sid + " "):]
+        blk = blk[:blk.find("\n### ", 5)] if "\n### " in blk[5:] else blk
+        m = re.search(r"^\*\*Retracts\*\* (.+)$", blk, re.M)
+        if m and not m.group(1).lstrip().startswith("\u2014"):
+            retr.append(sid)
+    put("n_superseded", len(sup), "FINDINGS_LEDGER.md")
+    put("n_retractions", len(retr), "FINDINGS_LEDGER.md")
+    WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
+             8: "Eight", 9: "Nine", 10: "Ten"}
+    put("n_retractions_word", WORDS.get(len(retr), str(len(retr))), "FINDINGS_LEDGER.md")
+    put("n_retractions_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
 
     op = os.path.join(R.RESULTS, "paper_numbers.json")
     json.dump(N, open(op, "w"), indent=2, sort_keys=True)
