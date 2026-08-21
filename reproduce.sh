@@ -216,6 +216,12 @@ stage 25 "Build MODEL_CARD.md (checkpoint sha256s and per-checkpoint limits)" "1
 # markdown emphasis. Skips loudly, not silently, where no TeX is installed.
 stage 26 "Compile PAPER.tex" "30 s" \
       "" $PY scripts/compile_paper.py
+stage 27 "Claims-versus-evidence audit" "10 s" \
+      results/task_c1_claims_audit.json $PY scripts/task_c1_claims_audit.py
+# Refuses to write the ZIP if any file in it carries the author or a repository
+# under their account; third-party upstreams are allowlisted.
+stage 28 "Assemble the anonymised supplementary archive" "20 s" \
+      "" $PY scripts/build_supplementary.py
 
 echo ""
 echo "───────────────────────────────────────────────────────────────────────"

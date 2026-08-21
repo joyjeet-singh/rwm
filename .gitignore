@@ -33,3 +33,6 @@ runs/
 
 # transient: written by one reproduce.sh run, describes that run not the repository
 results/_regenerated.txt
+
+# rebuildable submission artifact
+supplementary.zip

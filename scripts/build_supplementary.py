@@ -1,0 +1,138 @@
+"""A3 — assemble the anonymised supplementary ZIP for a double-blind submission.
+
+TMLR allows up to 100 MB, PDF or ZIP, and it must be anonymised. This assembles
+the ledger, the claims-to-evidence map, the claims audit, every results/ JSON,
+the code, reproduce.sh, requirements.txt, and an anonymised git log — then
+verifies that no file in the archive carries the author name or the repository
+URL, and refuses to write the ZIP if any does.
+
+The git log matters: §7's pre-registration argument rests on commit timestamps,
+and a reviewer cannot see the repository. The log is emitted with author name and
+email scrubbed and the timestamps and hashes left intact, so the ordering in
+Figure 4 is checkable at review time.
+"""
+import io
+import json
+import os
+import re
+import subprocess
+import sys
+import zipfile
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
+import rwm_data as R  # noqa: E402
+
+OUT = "supplementary.zip"
+IDENT = [re.compile(p, re.I) for p in (
+    r"joyjeet", r"\bsingh\b", r"github\.com/joyjeet", r"joyjeet-singh",
+    r"/Users/joyjeetsingh",
+)]
+# Repository URL in any form. The paper must not link to a named repo.
+URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
+# Third-party repositories the work legitimately cites: the two upstreams and the
+# TMLR style file. Only a repository under the AUTHOR's account is identifying.
+SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli"}
+
+INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex"]
+# Excluded on purpose. MODEL_CARD.md and its builder are release artifacts for the
+# eventual named checkpoint release, not review evidence, and both carry the author
+# and repository by design. This script is a submission build tool and its own
+# identity patterns would trip its own scan.
+EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
+           "MODEL_CARD.md", "CITATION.cff", "NOTICE"}
+INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
+                 "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
+                 "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]
+SKIP_SUFFIX = (".pt", ".pyc", ".bak")
+
+
+def anon_git_log():
+    fmt = "%H%x09%ad%x09%s"
+    out = subprocess.run(["git", "log", "--reverse", f"--format={fmt}",
+                          "--date=format:%Y-%m-%d %H:%M:%S"],
+                         capture_output=True, text=True).stdout
+    head = ("# Anonymised commit log\n#\n"
+            "# Author name and email are removed; hashes and timestamps are intact, because\n"
+            "# section 7's pre-registration argument depends on the ordering of the latter.\n"
+            "# Commit timestamps are settable with `git commit --date`; see the paper's\n"
+            "# discussion of that limitation.\n#\n"
+            "# hash\tdate\tsubject\n")
+    return head + out
+
+
+def scrub(text):
+    """Report identifying hits in a text blob."""
+    hits = []
+    for pat in IDENT:
+        n = len(pat.findall(text))
+        if n:
+            hits.append((pat.pattern, n))
+    for m in URL.finditer(text):
+        if m.group(1).lower() not in SAFE_ORGS:
+            hits.append((f"url:{m.group(0)}", 1))
+    return hits
+
+
+def main():
+    files = []
+    for d in INCLUDE_DIRS:
+        if not os.path.isdir(d):
+            continue
+        for root, _, names in os.walk(d):
+            if "__pycache__" in root:
+                continue
+            for n in sorted(names):
+                if n.endswith(SKIP_SUFFIX):
+                    continue
+                files.append(os.path.join(root, n))
+    files += [f for f in INCLUDE_FILES if os.path.exists(f)]
+    files = sorted(set(files) - EXCLUDE)
+
+    log = anon_git_log()
+    problems, total = [], 0
+    for f in files:
+        try:
+            txt = open(f, encoding="utf-8", errors="replace").read()
+        except Exception:
+            continue
+        total += 1
+        h = scrub(txt)
+        if h:
+            problems.append((f, h))
+    log_hits = scrub(log)
+
+    print("A3 — SUPPLEMENTARY MATERIAL")
+    print("=" * 78)
+    print(f"  candidate files      : {len(files)}")
+    print(f"  scanned for identity : {total}")
+    print(f"  anonymised git log   : {len(log.splitlines()) - 7} commits, "
+          f"{'CLEAN' if not log_hits else 'HITS: ' + str(log_hits)}")
+    if problems:
+        print(f"\n  !! {len(problems)} file(s) carry identifying material; ZIP NOT written:\n")
+        for f, h in problems[:25]:
+            print(f"     {f}")
+            for pat, n in h[:4]:
+                print(f"        {pat}  x{n}")
+        print("\n  Fix or exclude these, then re-run.")
+        return 1
+
+    size = 0
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in files:
+            z.write(f, arcname=os.path.join("supplementary", f))
+            size += os.path.getsize(f)
+        z.writestr("supplementary/GIT_LOG_ANONYMISED.txt", log)
+    open(OUT, "wb").write(buf.getvalue())
+    zb = os.path.getsize(OUT)
+    print(f"\n  wrote {OUT}: {len(files) + 1} entries, "
+          f"{zb / 1e6:.1f} MB compressed from {size / 1e6:.1f} MB")
+    print(f"  TMLR limit is 100 MB: {'OK' if zb < 100e6 else 'OVER LIMIT'}")
+    json.dump({"files": len(files) + 1, "bytes": zb, "uncompressed": size,
+               "identifying_hits": 0, "commits_in_log": len(log.splitlines()) - 7},
+              open(os.path.join(R.RESULTS, "supplementary_manifest.json"), "w"), indent=2)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

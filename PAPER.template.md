@@ -56,7 +56,10 @@ score both: *is the predicted σ calibrated?* Neither of the two the checkpoint 
 per-member σ by three to four orders of magnitude, the ensemble disagreement the method actually
 uses by one to two — and for the first of them the reason is structural rather than incidental.
 
-Three things distinguish this from a re-run of the authors' code.
+This is a reproduction paper, and we mean the term in its stronger sense: the contribution is not
+that the numbers came out the same, but what systematically re-measuring the method reveals about
+where it is robust and where it is not. §8 collects the lessons in a form a practitioner can apply
+without reading the rest. Three things distinguish the work from a re-run of the authors' code.
 
 **We rebuilt rather than imported.** The forward pass, the loss and the training step are written
 from scratch and then checked against the reference: outputs match bitwise, and losses and
@@ -506,7 +509,58 @@ timed at 46.5 s idle took 109.7 s with training running concurrently.
 
 ---
 
-## 8. Limitations
+## 8. Actionable lessons
+
+Four things a practitioner can apply without reading the rest of this paper.
+
+**Report uncertainty in this model family as an ordering, not as a scale.** Both of the released
+checkpoint's uncertainty outputs rank which predictions will be worse — the epistemic term at
+{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}} dimensions, P = {{b2_epi_p_h368}} — and neither is
+within an order of magnitude of a usable interval. A ranking use is supported by our measurements
+and by the follow-up's own claim. A risk gate, a safety margin, or anything that reads σ as a
+distance is not, and no single scalar repairs it (§4.6).
+
+**Count independent trajectories, not trajectories.** Two 400-step windows that overlap at all
+are one piece of evidence, not two. The held-out arena here contains {{nind_oos_400}} independent
+400-step trajectories however many windows are drawn from it, and that number — not the window
+count — bounds every long-horizon claim. Reporting an interval beside a trajectory count rather
+than an independent-trajectory count overstates precision, and resampling pooled seed × trajectory
+values instead of trajectories narrows intervals by a further {{bu_mean_ratio}}× (§7).
+
+**Anchor a decision rule to the horizon the claim is about.** Our first pre-registered rule was
+anchored at h = 8, the training forecast horizon, and returned "cannot be settled". The claim was
+about deployment horizons. The rule was correct in form and pointed at the wrong regime, which is
+a failure mode that pre-registration does not protect against on its own.
+
+**Check that the implemented loss is the described loss before reproducing any number from it.**
+The paper describes two loss terms; the implementation has {{diff_terms}}. The predicted variance
+has an optimum at zero under the implemented one, which is why the released checkpoint's σ is
+{{cal_rel_ratio}}× smaller than its own error. Reading the loss took an afternoon and explained a
+result that would otherwise have looked like a training bug.
+
+---
+
+## 9. Broader impact
+
+This is a reproduction of a dynamics model on public simulation data, and the reproduction itself
+carries no significant risk of harm: no new capability, no personal data, no deployment.
+
+The finding does bear on safety, in one specific way worth stating. The method this paper examines
+uses its uncertainty estimate as a **trust metric** — a reward penalty that steers a policy away
+from states the model is unsure about. That use is supported by our measurements. But a downstream
+user who reads the same quantity as a *calibrated interval* — a safety margin, a confidence bound,
+a gate on when to hand control to a fallback controller — would be materially misled: at the
+deployment horizon the released checkpoint's ensemble disagreement is
+{{b2_epi_ratio_h368}}× smaller than the realised error, giving {{b2_epi_cov1_h368}}% coverage
+where 68.3% is expected. On hardware, a margin that is wrong by that factor is the difference
+between a conservative controller and one that believes it is safe when it is not.
+
+We think that makes the finding worth publishing rather than the reverse, and it is the reason
+§4 reports coverage rather than only correlation.
+
+---
+
+## 10. Limitations
 
 **Effective sample size bounds every long-horizon claim.** The out-of-sample arena has
 {{m23_nind}} independent 400-step trajectories. That is the binding constraint on §3, and no
@@ -529,7 +583,7 @@ reproduction only.
 
 ---
 
-## 9. Conclusion
+## 11. Conclusion
 
 The Robotic World Model's central training claim reproduces, and the margin is large. Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.

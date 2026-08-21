@@ -38,7 +38,7 @@ A world model that reports its own uncertainty is more useful than one that does
 
 We came to the question sideways. Our aim was an ordinary reproduction: rebuild the proprioceptive dynamics model from scratch, check it against the released implementation, and see whether the paper's central training claim holds. It does. But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released checkpoint, and a harness that could score both: \emph{is the predicted $\sigma$ calibrated?} Neither of the two the checkpoint emits is --- the per-member $\sigma$ by three to four orders of magnitude, the ensemble disagreement the method actually uses by one to two --- and for the first of them the reason is structural rather than incidental.
 
-Three things distinguish this from a re-run of the authors' code.
+This is a reproduction paper, and we mean the term in its stronger sense: the contribution is not that the numbers came out the same, but what systematically re-measuring the method reveals about where it is robust and where it is not. \S{}8 collects the lessons in a form a practitioner can apply without reading the rest. Three things distinguish the work from a re-run of the authors' code.
 
 \textbf{We rebuilt rather than imported.} The forward pass, the loss and the training step are written from scratch and then checked against the reference: outputs match bitwise, and losses and gradients match to 0.000e+00 across 7 loss terms and 106 parameter tensors before any training begins (Appendix A). A discrepancy found later is therefore a property of the method, not of our wiring.
 
@@ -286,6 +286,28 @@ The fifth bar is negative. The rule for the duplication control (\S{}5.4) was st
 \textbf{A statistic that was resampling the wrong unit.} Our bootstrap pooled three training seeds over a shared set of evaluation trajectories and resampled the pooled vector, while reporting the independent-trajectory count. Each trajectory appeared three times. Resampling trajectories correctly --- carrying all seeds with each draw --- widens intervals by a mean factor of 1.42$\times$ (range 0.96--1.69) and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives. Both units are reported.
 
 \textbf{Reproducibility.} \texttt{./reproduce.sh --quick --force} regenerates 19 artifact files and 4,804 numeric values from a clean clone, 4,804 of them bitwise identical (100.00\%), 0 differing. Excluded and reported separately: 2,362 timing fields, and the 22 values in \texttt{results/step4\_5\_timing.json}. That file is the CPU budget --- projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats --- and every number in it measures the host rather than the model. It cannot reproduce bitwise on a different machine, or on the same machine under different load: one stage timed at 46.5 s idle took 109.7 s with training running concurrently.
+
+
+\section{Actionable lessons}
+
+Four things a practitioner can apply without reading the rest of this paper.
+
+\textbf{Report uncertainty in this model family as an ordering, not as a scale.} Both of the released checkpoint's uncertainty outputs rank which predictions will be worse --- the epistemic term at 45 of 45 dimensions, P = 5.7e-14 --- and neither is within an order of magnitude of a usable interval. A ranking use is supported by our measurements and by the follow-up's own claim. A risk gate, a safety margin, or anything that reads $\sigma$ as a distance is not, and no single scalar repairs it (\S{}4.6).
+
+\textbf{Count independent trajectories, not trajectories.} Two 400-step windows that overlap at all are one piece of evidence, not two. The held-out arena here contains 4 independent 400-step trajectories however many windows are drawn from it, and that number --- not the window count --- bounds every long-horizon claim. Reporting an interval beside a trajectory count rather than an independent-trajectory count overstates precision, and resampling pooled seed $\times$ trajectory values instead of trajectories narrows intervals by a further 1.42$\times$ (\S{}7).
+
+\textbf{Anchor a decision rule to the horizon the claim is about.} Our first pre-registered rule was anchored at h = 8, the training forecast horizon, and returned "cannot be settled". The claim was about deployment horizons. The rule was correct in form and pointed at the wrong regime, which is a failure mode that pre-registration does not protect against on its own.
+
+\textbf{Check that the implemented loss is the described loss before reproducing any number from it.} The paper describes two loss terms; the implementation has 7. The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's $\sigma$ is 7,878$\times$ smaller than its own error. Reading the loss took an afternoon and explained a result that would otherwise have looked like a training bug.
+
+
+\section{Broader impact}
+
+This is a reproduction of a dynamics model on public simulation data, and the reproduction itself carries no significant risk of harm: no new capability, no personal data, no deployment.
+
+The finding does bear on safety, in one specific way worth stating. The method this paper examines uses its uncertainty estimate as a \textbf{trust metric} --- a reward penalty that steers a policy away from states the model is unsure about. That use is supported by our measurements. But a downstream user who reads the same quantity as a \emph{calibrated interval} --- a safety margin, a confidence bound, a gate on when to hand control to a fallback controller --- would be materially misled: at the deployment horizon the released checkpoint's ensemble disagreement is 39.7$\times$ smaller than the realised error, giving 3.76\% coverage where 68.3\% is expected. On hardware, a margin that is wrong by that factor is the difference between a conservative controller and one that believes it is safe when it is not.
+
+We think that makes the finding worth publishing rather than the reverse, and it is the reason \S{}4 reports coverage rather than only correlation.
 
 
 \section{Limitations}

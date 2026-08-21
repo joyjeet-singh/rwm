@@ -72,7 +72,10 @@ def main():
     # LaTeX for submission, from the same resolved text -- one source, two outputs.
     import md_to_tex
     title = re.search(r"^# (.+)$", out, re.M).group(1)
-    tex, unhandled = md_to_tex.convert(header + body, title, "Joyjeet Singh")
+    # No author string: the submission is double-blind and tmlr.sty renders
+    # "Anonymous authors" in submission mode. Keeping the name out of the source
+    # keeps it out of the supplementary archive too (A3).
+    tex, unhandled = md_to_tex.convert(header + body, title, "")
     open("PAPER.tex", "w").write(tex)
     assert not unhandled, f"converter did not handle: {unhandled[:5]}"
 
