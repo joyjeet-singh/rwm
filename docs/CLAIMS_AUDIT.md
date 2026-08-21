@@ -5,7 +5,7 @@ One row per declarative claim in the paper. Claims are enumerated mechanically f
 only judgement, and is keyed to the claim's text so that rewording a claim resets it
 to UNREVIEWED rather than carrying a stale verdict forward.
 
-**62 claims.** OVERSTATED: 3, SUPPORTED: 52, UNREVIEWED: 6, UNSUPPORTED: 1
+**62 claims.** OVERSTATED: 4, SUPPORTED: 57, UNSUPPORTED: 1
 
 | # | § | claim | backed by | verdict |
 |---|---|---|---|---|
@@ -27,14 +27,14 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 16 | 2. Setup | Two 400-step trajectories whose spans overlap are not independent evidence, and the out-of-sample arena contains only {{m23_nind}} mutually non-overla… | `task5_analysis.json` | **SUPPORTED** |
 | 17 | 3. The base paper's centra | Three conditions, all required: the out-of-sample gap at h = 368 excludes zero under a bootstrap over independent trajectories; the sign is consistent… | — | **SUPPORTED** |
 | 18 | 3. The base paper's centra | Result.** Every condition {{m23_c1}}. | `task5_analysis.json` | **SUPPORTED** |
-| 19 | 3. The base paper's centra | The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** epi… | `task_c3_multiplicity.json` | **UNREVIEWED** |
-| 20 | 3. The base paper's centra | The in-sample arena, where the sample is larger.* The same comparison on the eight training episodes has {{ab_long_cells}}× more independent trajector… | `review_bootstrap_unit.json` | **UNREVIEWED** |
-| 21 | 3. The base paper's centra | The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive training reaches **{{m23_A}}** against teacher forcing's … | `task5_analysis.json` | **UNREVIEWED** |
-| 22 | 3. The base paper's centra | That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised… | `task_c3_multiplicity.json` | **UNREVIEWED** |
+| 19 | 3. The base paper's centra | The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** epi… | `task_c3_multiplicity.json` | **SUPPORTED** |
+| 20 | 3. The base paper's centra | The in-sample arena, where the sample is larger.* The same comparison on the eight training episodes has {{nind_ins_400}} independent 400-step traject… | `review_bootstrap_unit.json` | **SUPPORTED** |
+| 21 | 3. The base paper's centra | The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive training reaches **{{m23_A}}** against teacher forcing's … | `task5_analysis.json` | **OVERSTATED** |
+| 22 | 3. The base paper's centra | That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised… | `task_c3_multiplicity.json` | **SUPPORTED** |
 | 23 | 3. The base paper's centra | What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same comparison out-of-sample gives a gap of {{m23_h8_gap}} … | `task5_analysis.json` | **SUPPORTED** |
 | 24 | 3. The base paper's centra | Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells — both trajec… | `review_bootstrap_unit.json` | **SUPPORTED** |
-| 25 | 3. The base paper's centra | Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leavi… | `review_bootstrap_unit.json`, `task_c3_multiplicity.json` | **UNREVIEWED** |
-| 26 | 3. The base paper's centra | All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm–Bonferroni rejects **{{c3_holm_rejected}}… | `task_c3_multiplicity.json` | **UNREVIEWED** |
+| 25 | 3. The base paper's centra | Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leavi… | `review_bootstrap_unit.json`, `task_c3_multiplicity.json` | **SUPPORTED** |
+| 26 | 3. The base paper's centra | All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm–Bonferroni rejects **{{c3_holm_rejected}}… | `task_c3_multiplicity.json` | **SUPPORTED** |
 | 27 | 4.2 The measurement | Every model is overconfident by between one and four orders of magnitude (Figure 1). | — | **OVERSTATED** |
 | 28 | 4.2 The measurement | The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint, out-of-sample, n = {{b2_nind}} independent … | `task_b2_epistemic.json` | **SUPPORTED** |
 | 29 | 4.2 The measurement | Epistemic is two orders of magnitude better than aleatoric — {{b2_epi_over_alea_h1}}× larger at h=1, {{b2_epi_over_alea_h368}}× at h=368 — and still w… | `task_b2_epistemic.json` | **SUPPORTED** |

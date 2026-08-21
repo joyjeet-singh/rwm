@@ -117,8 +117,9 @@ binomial test, p = **{{c3_sign_p}}**. This is one test on ten paired episodes, i
 bootstrap, and no multiplicity correction touches it.
 
 *The in-sample arena, where the sample is larger.* The same comparison on the eight training
-episodes has {{ab_long_cells}}× more independent trajectories and gives the same direction at
-every horizon and checkpoint.
+episodes has {{nind_ins_400}} independent 400-step trajectories against the held-out arena's
+{{nind_oos_400}} — {{nind_ratio}}× more — and gives the same direction at every horizon and
+checkpoint.
 
 *The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
 training reaches **{{m23_A}}** against teacher forcing's **{{m23_B}}** — a factor of

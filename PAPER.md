@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     156 values substituted from 22 artifacts. -->
+     159 values substituted from 22 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -123,8 +123,9 @@ binomial test, p = **0.0020**. This is one test on ten paired episodes, it uses 
 bootstrap, and no multiplicity correction touches it.
 
 *The in-sample arena, where the sample is larger.* The same comparison on the eight training
-episodes has 4× more independent trajectories and gives the same direction at
-every horizon and checkpoint.
+episodes has 16 independent 400-step trajectories against the held-out arena's
+4 — 4× more — and gives the same direction at every horizon and
+checkpoint.
 
 *The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
 training reaches **0.3509** against teacher forcing's **1.5540** — a factor of

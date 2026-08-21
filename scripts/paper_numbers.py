@@ -265,6 +265,18 @@ def main():
     put("bound_both_train", len(_both), "results/step5_armA_seed0.json (split)")
     put("bound_touch_holdout", len(_touch), "results/step5_armA_seed0.json (split)")
 
+    # in-sample vs out-of-sample independent-trajectory counts. An earlier draft
+    # reused ab_long_cells (a CELL count) as this ratio; both happened to be 4.
+    _c3 = J("task_c3_multiplicity.json")
+    _bu = J("review_bootstrap_unit.json")
+    _oos = next(v["n_independent_reported"] for k, v in _bu.items()
+                if k != "_summary" and k.startswith("out-of-sample|400"))
+    _ins = next(v["n_independent_reported"] for k, v in _bu.items()
+                if k != "_summary" and k.startswith("in-sample|400"))
+    put("nind_oos_400", _oos, "results/review_bootstrap_unit.json")
+    put("nind_ins_400", _ins, "results/review_bootstrap_unit.json")
+    put("nind_ratio", f"{_ins / _oos:.0f}", "results/review_bootstrap_unit.json")
+
     # C3 -- multiplicity
     C3 = J("task_c3_multiplicity.json")
     put("c3_family", C3["family_ab"]["n_comparisons"], "results/task_c3_multiplicity.json")

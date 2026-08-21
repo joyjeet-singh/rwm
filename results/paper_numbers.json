@@ -783,6 +783,18 @@
     "source": "FINDINGS_LEDGER.md",
     "value": 14
   },
+  "nind_ins_400": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 16
+  },
+  "nind_oos_400": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 4
+  },
+  "nind_ratio": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": "4"
+  },
   "overfit_reduction": {
     "source": "results/step4_4_overfit_b32lr1e3.json",
     "value": "1,506"

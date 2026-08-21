@@ -346,5 +346,35 @@
     "sample_size": "",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "claim": "The teacher-forced arm has input-dependent \u03c3 and good ordering; the epistemic term ranks better still, at {{b2"
+  },
+  "1b79c814239a": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "41869b31316f": {
+    "verdict": "SUPPORTED",
+    "sample_size": "n_ind 16 vs 4",
+    "note": "Both counts derived from review_bootstrap_unit.json."
+  },
+  "b3897b72105a": {
+    "verdict": "OVERSTATED",
+    "sample_size": "1 seed (armA/B_seed1_10k)",
+    "note": "The effect size is still one 10k run per arm. Reordering fixed how it is presented, not the sample behind it; D1 fixes the sample."
+  },
+  "c4c8c028036a": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "2a8460fa2afd": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
+  },
+  "714e025c8133": {
+    "verdict": "SUPPORTED",
+    "sample_size": "",
+    "note": "Quantitative, substituted from the named artifact by the build."
   }
 }

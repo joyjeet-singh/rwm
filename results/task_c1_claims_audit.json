@@ -1,9 +1,8 @@
 {
   "n_claims": 62,
   "by_verdict": {
-    "OVERSTATED": 3,
-    "SUPPORTED": 52,
-    "UNREVIEWED": 6,
+    "OVERSTATED": 4,
+    "SUPPORTED": 57,
     "UNSUPPORTED": 1
   },
   "claims": [
@@ -315,25 +314,27 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "UNREVIEWED",
+      "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": ""
+      "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "b3ed9369a44b",
+      "id": "41869b31316f",
       "section": "3. The base paper's central claim reproduces",
-      "claim": "The in-sample arena, where the sample is larger.* The same comparison on the eight training episodes has {{ab_long_cells}}\u00d7 more independent trajectories and gives the same direction at every horizon and checkpoint.",
+      "claim": "The in-sample arena, where the sample is larger.* The same comparison on the eight training episodes has {{nind_ins_400}} independent 400-step trajectories against the held-out arena's {{nind_oos_400}} \u2014 {{nind_ratio}}\u00d7 more \u2014 and gives the same direction at every horizon and checkpoint.",
       "keys": [
-        "ab_long_cells"
+        "nind_ins_400",
+        "nind_oos_400",
+        "nind_ratio"
       ],
       "artifacts": [
         "results/review_bootstrap_unit.json"
       ],
-      "n_keys": 1,
+      "n_keys": 3,
       "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
+      "verdict": "SUPPORTED",
+      "sample_size": "n_ind 16 vs 4",
+      "note": "Both counts derived from review_bootstrap_unit.json."
     },
     {
       "id": "b3897b72105a",
@@ -353,9 +354,9 @@
       ],
       "n_keys": 7,
       "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
+      "verdict": "OVERSTATED",
+      "sample_size": "1 seed (armA/B_seed1_10k)",
+      "note": "The effect size is still one 10k run per arm. Reordering fixed how it is presented, not the sample behind it; D1 fixes the sample."
     },
     {
       "id": "c4c8c028036a",
@@ -370,9 +371,9 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "UNREVIEWED",
+      "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": ""
+      "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
       "id": "73e96eb04496",
@@ -424,9 +425,9 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "UNREVIEWED",
+      "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": ""
+      "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
       "id": "714e025c8133",
@@ -444,9 +445,9 @@
       ],
       "n_keys": 5,
       "generated": true,
-      "verdict": "UNREVIEWED",
+      "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": ""
+      "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
       "id": "34a343cc5968",

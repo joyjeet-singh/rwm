@@ -68,7 +68,7 @@ Three things distinguish this from a re-run of the authors' code.
 
 \emph{The sign test, which does not depend on n.} At h = 368 the per-episode gap favours autoregressive training on \textbf{10 of 10} episodes --- an exact two-sided binomial test, p = \textbf{0.0020}. This is one test on ten paired episodes, it uses no bootstrap, and no multiplicity correction touches it.
 
-\emph{The in-sample arena, where the sample is larger.} The same comparison on the eight training episodes has 4$\times$ more independent trajectories and gives the same direction at every horizon and checkpoint.
+\emph{The in-sample arena, where the sample is larger.} The same comparison on the eight training episodes has 16 independent 400-step trajectories against the held-out arena's 4 --- 4$\times$ more --- and gives the same direction at every horizon and checkpoint.
 
 \emph{The out-of-sample effect size, reported last and with its limitation stated.} Autoregressive training reaches \textbf{0.3509} against teacher forcing's \textbf{1.5540} --- a factor of \textbf{4.4$\times$}, gap 1.2033, 95\% bootstrap interval [0.56, 2.05] on n = 4 independent trajectories. \textbf{That interval should not be read as an ordinary one:} four trajectories admit 256 distinct resamples, so any bootstrap tail is quantised to steps of 0.39\%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
