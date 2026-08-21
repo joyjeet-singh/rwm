@@ -1,0 +1,71 @@
+"""Build PAPER.md from PAPER.template.md by substituting values read from artifacts.
+
+The point of the indirection: no number in the paper is typed. Every {{key}} resolves
+from results/paper_numbers.json, which scripts/paper_numbers.py derives from the run
+artifacts. The build fails if any placeholder is unresolved, so a paper that mentions
+a quantity we no longer measure cannot be produced.
+"""
+import json
+import os
+import re
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
+import rwm_data as R  # noqa: E402
+
+TEMPLATE = "PAPER.template.md"
+OUT = "PAPER.md"
+
+
+def main():
+    N = json.load(open(os.path.join(R.RESULTS, "paper_numbers.json")))
+    text = open(TEMPLATE).read()
+
+    used, missing = set(), []
+
+    def sub(m):
+        k = m.group(1)
+        if k not in N:
+            missing.append(k)
+            return m.group(0)
+        used.add(k)
+        return str(N[k]["value"])
+
+    out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", sub, text)
+
+    assert not missing, ("placeholders with no value in paper_numbers.json: "
+                         + ", ".join(sorted(set(missing))))
+    leftover = re.findall(r"\{\{[^}]*\}\}", out)
+    assert not leftover, f"unresolved placeholders remain: {sorted(set(leftover))}"
+
+    unused = sorted(set(N) - used)
+
+    figs = sorted(f for f in os.listdir(R.FIGURES) if f.startswith("paper_fig"))
+    header = (
+        "<!-- GENERATED FILE — do not edit.\n"
+        "     Prose lives in PAPER.template.md; every number is substituted from\n"
+        "     results/paper_numbers.json by scripts/build_paper.py. Edit the template,\n"
+        "     then run: python scripts/build_paper.py\n"
+        f"     {len(used)} values substituted from {len(set(N[k]['source'] for k in used))} artifacts. -->\n\n")
+    body = out.rstrip() + "\n\n## Figures\n\n"
+    for f in figs:
+        body += f"![{f}](figures/{f})\n\n"
+    open(OUT, "w").write(header + body)
+
+    print("PAPER BUILD")
+    print("=" * 72)
+    print(f"  template            : {TEMPLATE} ({len(text.splitlines())} lines)")
+    print(f"  placeholders filled : {len(used)}")
+    print(f"  distinct artifacts  : {len(set(N[k]['source'] for k in used))}")
+    print(f"  figures attached    : {len(figs)}")
+    if unused:
+        print(f"  collected but unused: {len(unused)}")
+        print("    " + ", ".join(unused))
+    print(f"  wrote {OUT} ({len(body.splitlines())} lines)")
+    print("\n  every number in the paper traces to:")
+    for s in sorted(set(N[k]["source"] for k in used)):
+        print(f"    {s}")
+
+
+if __name__ == "__main__":
+    main()

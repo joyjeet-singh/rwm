@@ -1,0 +1,143 @@
+{
+  "fig1": {
+    "ratio_err_over_sigma": {
+      "faithful Arm A (mse)": 52.24684143066406,
+      "corrected Arm A (nll)": 10.936323165893555,
+      "teacher-forced Arm B": 314.9823913574219,
+      "released checkpoint": 7878.1142578125
+    },
+    "coverage_pm1_by_horizon": {
+      "faithful Arm A (mse)": {
+        "1": 0.11666666666666667,
+        "8": 0.046064814814814815,
+        "32": 0.029861111111111113,
+        "128": 0.02032696759259259,
+        "368": 0.01748691626409018
+      },
+      "corrected Arm A (nll)": {
+        "1": 0.42777777777777776,
+        "8": 0.19953703703703704,
+        "32": 0.12841435185185185,
+        "128": 0.09298321759259259,
+        "368": 0.08570350241545893
+      },
+      "teacher-forced Arm B": {
+        "1": 0.12962962962962962,
+        "8": 0.050694444444444445,
+        "32": 0.021064814814814814,
+        "128": 0.010648148148148148,
+        "368": 0.0056411030595813205
+      },
+      "released checkpoint": {
+        "1": 0.005555555555555556,
+        "8": 0.001388888888888889,
+        "32": 0.001388888888888889,
+        "128": 0.0006510416666666666,
+        "368": 0.000392512077294686
+      }
+    }
+  },
+  "fig2": {
+    "faithful armA (mse)": {
+      "sigma_growth_1_to_8": 0.9241212730727182,
+      "err_growth_1_to_8": 3.48695106580964
+    },
+    "corrected armA (nll)": {
+      "sigma_growth_1_to_8": 1.0003267591933938,
+      "err_growth_1_to_8": 3.410393994273219
+    },
+    "teacher-forced armB": {
+      "sigma_growth_1_to_8": 1.0095623339887483,
+      "err_growth_1_to_8": 6.106823741455599
+    },
+    "released checkpoint": {
+      "sigma_growth_1_to_8": 1.0006510059516467,
+      "err_growth_1_to_8": 1.792213001137739
+    }
+  },
+  "fig3": {
+    "n_runs": 17,
+    "slopes": {
+      "armA_seed0": -9.364081815446295e-05,
+      "armA_seed0_contam": -9.36246631486062e-05,
+      "armA_seed0_dup": -9.363975928629111e-05,
+      "armA_seed0_nll": 3.257051606743983e-05,
+      "armA_seed1": -9.358861927817003e-05,
+      "armA_seed1_10k": -9.135270193638754e-05,
+      "armA_seed1_contam": -9.355720448536409e-05,
+      "armA_seed1_dup": -9.357533002942565e-05,
+      "armA_seed1_nll": 3.178463082067091e-05,
+      "armA_seed2": -9.362131944310674e-05,
+      "armA_seed2_contam": -9.362414393226273e-05,
+      "armA_seed2_dup": -9.363804771479963e-05,
+      "armA_seed2_nll": 3.263953968970883e-05,
+      "armB_seed0": -9.510731193206736e-05,
+      "armB_seed1": -9.509923928061239e-05,
+      "armB_seed1_10k": -9.153566302908562e-05,
+      "armB_seed2": -9.511708949115637e-05
+    }
+  },
+  "fig4": {
+    "M-16 the A/B decision rule": {
+      "lead_hours": 1.3322222222222222,
+      "tested_by": "first main-run data"
+    },
+    "flip pattern interpretation": {
+      "lead_hours": 4.778888888888889,
+      "tested_by": "all six main runs"
+    },
+    "M-22 difficulty-bias rule": {
+      "lead_hours": 0.08861111111111111,
+      "tested_by": "M-16 re-evaluated"
+    },
+    "M-23 long-horizon rule": {
+      "lead_hours": 0.03638888888888889,
+      "tested_by": "10k runs launched"
+    },
+    "Task 3 duplication rule": {
+      "lead_hours": -2.9366666666666665,
+      "tested_by": "control runs finished"
+    }
+  },
+  "fig5": {
+    "summary": {
+      "duplicated_minus_clean": {
+        "naive": {
+          "hurt": 0,
+          "helped": 1,
+          "no_effect": 31
+        },
+        "cluster": {
+          "hurt": 0,
+          "helped": 2,
+          "no_effect": 30
+        }
+      },
+      "contaminated_minus_clean": {
+        "naive": {
+          "hurt": 0,
+          "helped": 10,
+          "no_effect": 22
+        },
+        "cluster": {
+          "hurt": 0,
+          "helped": 9,
+          "no_effect": 23
+        }
+      },
+      "contaminated_minus_duplicated": {
+        "naive": {
+          "hurt": 1,
+          "helped": 10,
+          "no_effect": 21
+        },
+        "cluster": {
+          "hurt": 2,
+          "helped": 8,
+          "no_effect": 22
+        }
+      }
+    },
+    "width_ratio_mean": 1.4156993331834655
+  }
+}

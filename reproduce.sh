@@ -201,6 +201,16 @@ REPORT=review_bootstrap_unit_report.txt stage 20c "Bootstrap resampling unit (M-
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 
+# The paper is generated, not written by hand: paper_numbers.py collects every value
+# it quotes from the artifacts, build_paper.py substitutes them into PAPER.template.md
+# and fails if any placeholder is unresolved.
+stage 22 "Paper figures" "40 s" \
+      figures/paper_fig1_calibration.png NEEDS_WEIGHTS $PY scripts/paper_figures.py
+stage 23 "Collect the paper's numbers from the artifacts" "5 s" \
+      results/paper_numbers.json $PY scripts/paper_numbers.py
+stage 24 "Build PAPER.md" "5 s" \
+      "" $PY scripts/build_paper.py
+
 echo ""
 echo "───────────────────────────────────────────────────────────────────────"
 if [ $FAIL -eq 0 ]; then echo " PIPELINE COMPLETE — no stage failed"; else

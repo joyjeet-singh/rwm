@@ -1,0 +1,414 @@
+{
+  "bu_cells": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 16
+  },
+  "bu_changes": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 1
+  },
+  "bu_max_ratio": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 1.69
+  },
+  "bu_mean_ratio": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 1.42
+  },
+  "bu_min_ratio": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 0.96
+  },
+  "cal_armB_cov": {
+    "source": "results/task1_calibration.json",
+    "value": 0.1188
+  },
+  "cal_armB_cov1": {
+    "source": "results/task1_calibration.json",
+    "value": 12.96
+  },
+  "cal_armB_cov368": {
+    "source": "results/task1_calibration.json",
+    "value": 0.56
+  },
+  "cal_armB_ndim": {
+    "source": "results/task1_calibration.json",
+    "value": 45
+  },
+  "cal_armB_npos": {
+    "source": "results/task1_calibration.json",
+    "value": 45
+  },
+  "cal_armB_over_faithA_cov": {
+    "source": "results/task1_calibration.json",
+    "value": 15.6
+  },
+  "cal_armB_p": {
+    "source": "results/task1_calibration.json",
+    "value": "5.68e-14"
+  },
+  "cal_armB_r": {
+    "source": "results/task1_calibration.json",
+    "value": 0.257
+  },
+  "cal_armB_ratio": {
+    "source": "results/task1_calibration.json",
+    "value": "315"
+  },
+  "cal_faithA_cov": {
+    "source": "results/task1_calibration.json",
+    "value": 0.0076
+  },
+  "cal_faithA_cov1": {
+    "source": "results/task1_calibration.json",
+    "value": 11.67
+  },
+  "cal_faithA_cov368": {
+    "source": "results/task1_calibration.json",
+    "value": 1.75
+  },
+  "cal_faithA_ndim": {
+    "source": "results/task1_calibration.json",
+    "value": 45
+  },
+  "cal_faithA_npos": {
+    "source": "results/task1_calibration.json",
+    "value": 39
+  },
+  "cal_faithA_p": {
+    "source": "results/task1_calibration.json",
+    "value": "5.42e-07"
+  },
+  "cal_faithA_r": {
+    "source": "results/task1_calibration.json",
+    "value": 0.034
+  },
+  "cal_faithA_ratio": {
+    "source": "results/task1_calibration.json",
+    "value": "52.2"
+  },
+  "cal_nll_cov": {
+    "source": "results/task1_calibration.json",
+    "value": 0.0059
+  },
+  "cal_nll_cov1": {
+    "source": "results/task1_calibration.json",
+    "value": 42.78
+  },
+  "cal_nll_cov368": {
+    "source": "results/task1_calibration.json",
+    "value": 8.57
+  },
+  "cal_nll_ndim": {
+    "source": "results/task1_calibration.json",
+    "value": 45
+  },
+  "cal_nll_npos": {
+    "source": "results/task1_calibration.json",
+    "value": 21
+  },
+  "cal_nll_p": {
+    "source": "results/task1_calibration.json",
+    "value": "7.66e-01"
+  },
+  "cal_nll_r": {
+    "source": "results/task1_calibration.json",
+    "value": -0.004
+  },
+  "cal_nll_ratio": {
+    "source": "results/task1_calibration.json",
+    "value": "10.9"
+  },
+  "cal_rel_cov": {
+    "source": "results/task1_calibration.json",
+    "value": 0.0177
+  },
+  "cal_rel_cov1": {
+    "source": "results/task1_calibration.json",
+    "value": 0.56
+  },
+  "cal_rel_cov368": {
+    "source": "results/task1_calibration.json",
+    "value": 0.04
+  },
+  "cal_rel_ndim": {
+    "source": "results/task1_calibration.json",
+    "value": 45
+  },
+  "cal_rel_npos": {
+    "source": "results/task1_calibration.json",
+    "value": 20
+  },
+  "cal_rel_p": {
+    "source": "results/task1_calibration.json",
+    "value": "5.51e-01"
+  },
+  "cal_rel_r": {
+    "source": "results/task1_calibration.json",
+    "value": 0.001
+  },
+  "cal_rel_ratio": {
+    "source": "results/task1_calibration.json",
+    "value": "7,878"
+  },
+  "collapse_pooled_rate": {
+    "source": "results/step6_analysis.json",
+    "value": "nan"
+  },
+  "contam_cost_pct": {
+    "source": "results/task3_control_arm.json",
+    "value": 21.57
+  },
+  "contam_pct": {
+    "source": "results/step0_regimes.json",
+    "value": 3.53
+  },
+  "diff_terms": {
+    "source": "results/step4_3_differential.json",
+    "value": 7
+  },
+  "dup_ci_hi": {
+    "source": "results/task3_control_arm.json",
+    "value": 0.0215
+  },
+  "dup_ci_lo": {
+    "source": "results/task3_control_arm.json",
+    "value": -0.0061
+  },
+  "dup_cost_pct": {
+    "source": "results/task3_control_arm.json",
+    "value": 0.9
+  },
+  "err_armB_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 6.11
+  },
+  "err_faithA_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 3.49
+  },
+  "err_nll_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 3.41
+  },
+  "err_rel_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 1.79
+  },
+  "implied_iters": {
+    "source": "results/step6_analysis.json",
+    "value": "153,270"
+  },
+  "m23_A": {
+    "source": "results/task5_analysis.json",
+    "value": "0.3509"
+  },
+  "m23_B": {
+    "source": "results/task5_analysis.json",
+    "value": "1.5540"
+  },
+  "m23_c1": {
+    "source": "results/task5_analysis.json",
+    "value": true
+  },
+  "m23_c2": {
+    "source": "results/task5_analysis.json",
+    "value": true
+  },
+  "m23_c3": {
+    "source": "results/task5_analysis.json",
+    "value": true
+  },
+  "m23_ci_hi": {
+    "source": "results/task5_analysis.json",
+    "value": 2.05
+  },
+  "m23_ci_lo": {
+    "source": "results/task5_analysis.json",
+    "value": 0.56
+  },
+  "m23_gap": {
+    "source": "results/task5_analysis.json",
+    "value": 1.2033
+  },
+  "m23_h8_excl": {
+    "source": "results/task5_analysis.json",
+    "value": false
+  },
+  "m23_h8_gap": {
+    "source": "results/task5_analysis.json",
+    "value": 0.008
+  },
+  "m23_n_episodes": {
+    "source": "results/task5_analysis.json",
+    "value": 10
+  },
+  "m23_n_episodes_positive": {
+    "source": "results/task5_analysis.json",
+    "value": 10
+  },
+  "m23_nind": {
+    "source": "results/task5_analysis.json",
+    "value": 4
+  },
+  "m23_ratio": {
+    "source": "results/task5_analysis.json",
+    "value": "4.4"
+  },
+  "m23_sign_h368": {
+    "source": "results/task5_analysis.json",
+    "value": true
+  },
+  "n_entries": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": 154
+  },
+  "n_runs": {
+    "source": "runs/ directory listing",
+    "value": 17
+  },
+  "q4_implied_A": {
+    "source": "results/task5_analysis.json",
+    "value": "158,319"
+  },
+  "q4_implied_B": {
+    "source": "results/task5_analysis.json",
+    "value": "158,003"
+  },
+  "rows": {
+    "source": "results/step0_regimes.json",
+    "value": 10000
+  },
+  "sig_armB_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 1.0096
+  },
+  "sig_faithA_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 0.9241
+  },
+  "sig_nll_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 1.0003
+  },
+  "sig_rel_growth": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 1.0007
+  },
+  "t5_seeds": {
+    "source": "results/task5_analysis.json",
+    "value": 1
+  },
+  "tw_cc_cluster_helped": {
+    "source": "results/task3_three_way.json",
+    "value": 9
+  },
+  "tw_cc_cluster_hurt": {
+    "source": "results/task3_three_way.json",
+    "value": 0
+  },
+  "tw_cc_cluster_no_effect": {
+    "source": "results/task3_three_way.json",
+    "value": 23
+  },
+  "tw_cc_naive_helped": {
+    "source": "results/task3_three_way.json",
+    "value": 10
+  },
+  "tw_cc_naive_hurt": {
+    "source": "results/task3_three_way.json",
+    "value": 0
+  },
+  "tw_cc_naive_no_effect": {
+    "source": "results/task3_three_way.json",
+    "value": 22
+  },
+  "tw_cd_cluster_helped": {
+    "source": "results/task3_three_way.json",
+    "value": 8
+  },
+  "tw_cd_cluster_hurt": {
+    "source": "results/task3_three_way.json",
+    "value": 2
+  },
+  "tw_cd_cluster_no_effect": {
+    "source": "results/task3_three_way.json",
+    "value": 22
+  },
+  "tw_cd_naive_helped": {
+    "source": "results/task3_three_way.json",
+    "value": 10
+  },
+  "tw_cd_naive_hurt": {
+    "source": "results/task3_three_way.json",
+    "value": 1
+  },
+  "tw_cd_naive_no_effect": {
+    "source": "results/task3_three_way.json",
+    "value": 21
+  },
+  "tw_cells": {
+    "source": "results/task3_three_way.json",
+    "value": 32
+  },
+  "tw_dc_cluster_helped": {
+    "source": "results/task3_three_way.json",
+    "value": 2
+  },
+  "tw_dc_cluster_hurt": {
+    "source": "results/task3_three_way.json",
+    "value": 0
+  },
+  "tw_dc_cluster_no_effect": {
+    "source": "results/task3_three_way.json",
+    "value": 30
+  },
+  "tw_dc_naive_helped": {
+    "source": "results/task3_three_way.json",
+    "value": 1
+  },
+  "tw_dc_naive_hurt": {
+    "source": "results/task3_three_way.json",
+    "value": 0
+  },
+  "tw_dc_naive_no_effect": {
+    "source": "results/task3_three_way.json",
+    "value": 31
+  },
+  "ver_differing": {
+    "source": "results/verify_reproduction.json",
+    "value": 0
+  },
+  "ver_files": {
+    "source": "results/verify_reproduction.json",
+    "value": 19
+  },
+  "ver_identical": {
+    "source": "results/verify_reproduction.json",
+    "value": "4,804"
+  },
+  "ver_pct": {
+    "source": "results/verify_reproduction.json",
+    "value": "100.00"
+  },
+  "ver_values": {
+    "source": "results/verify_reproduction.json",
+    "value": "4,804"
+  },
+  "win_cross": {
+    "source": "results/step0_regimes.json",
+    "value": 352
+  },
+  "win_naive": {
+    "source": "results/step0_regimes.json",
+    "value": 9961
+  },
+  "win_tail": {
+    "source": "results/step0_regimes.json",
+    "value": 39
+  },
+  "win_usable": {
+    "source": "results/step0_regimes.json",
+    "value": 9609
+  }
+}
