@@ -99,6 +99,26 @@ bootstrap over independent trajectories, and every table reports that count.
 
 ---
 
+## 2b. What the original papers claim, and which claims we test
+
+A reproduction that does not say what it left alone invites the reader to assume it tested
+everything. It did not.
+
+| claim, and where | tested | verdict |
+|---|---|---|
+| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **reproduces** at long horizon (§3) |
+| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | reproduces, and more strongly: Arm B is worse than the hold-last floor |
+| M=32, N=8 is the optimal configuration (§IV-C) | no | we use the released configuration and did not sweep it |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | no | the lite release ships only the RNN variant |
+| Zero-shot hardware transfer (§IV-E) | no | no hardware; this is a dynamics-model reproduction |
+| MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | no policy learning reproduced |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | no | one released dataset, ANYmal D flat |
+| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 §5.1) | **yes** | **supported as an ordering** (§4.2); not as a scale |
+| Aleatoric "remains low, reflecting small stochasticity" (§5.1) | **yes** | the observation holds; the explanation does not (§4.3) |
+| Offline MBRL on real robots (2504.16680) | no | not tested |
+
+---
+
 ## 3. The base paper's central claim reproduces
 
 **Claim under test.** Training the dynamics model on its own autoregressive rollouts beats
@@ -180,10 +200,20 @@ One discrepancy between the two, minor but real: Eq. 4 specifies a **variance**,
 We measure the code's quantity throughout, because that is what produced the released
 checkpoint's behaviour, and we do not treat either definition as authoritative.
 
-So the aleatoric head — the one the state loss and the bound loss shape, and the one §4.2 explains
-— is computed on every imagination step and discarded. We report both quantities below. Our own
-arms are ensemble size 1, where the epistemic term is identically zero by construction, so the
-epistemic measurement is possible only on the released checkpoint.
+So the aleatoric head — the one the state loss and the bound loss shape, and the one §4.3
+explains — is computed on every imagination step and discarded. We report both quantities below.
+Our own arms are ensemble size 1, where the epistemic term is identically zero by construction,
+so the epistemic measurement is possible only on the released checkpoint.
+
+**What the follow-up does and does not claim, stated before we measure anything.** It does not
+claim its uncertainty is a calibrated interval. §5.1 claims the epistemic term "closely follows
+the trend of the prediction error" and that this "justifies its role as a trust metric", and of
+the aleatoric term it observes only that it "remains low, reflecting small stochasticity in the
+environment". Our measurement **supports the first claim** — the epistemic ordering is real and
+strong. What follows is therefore not a refutation of a calibration claim nobody made. It is
+three things the papers do not address: that the aleatoric head is discarded before use, that
+neither quantity is usable as a scale, and that the low aleatoric value has a different cause
+than the one offered.
 
 ### 4.2 The measurement
 
@@ -225,6 +255,11 @@ correlates {{b2_penalty_corr}} with total absolute error over the rollout.
 
 This subsection explains the aleatoric column and only that column. Ensemble disagreement is not
 shaped by the mechanism below, and why *it* is miscalibrated is not established here.
+
+It also supplies the alternative explanation promised in §4.1. The follow-up reads the low
+aleatoric value as reflecting "small stochasticity in the environment". The observation is
+correct and the reading is not: σ is low because σ = 0 is the optimum of the loss that trains it,
+and it would be low on any dataset, stochastic or not.
 
 The state loss is squared error on a *sample* drawn from the predicted Gaussian, not a likelihood:
 

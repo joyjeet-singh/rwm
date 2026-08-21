@@ -1680,6 +1680,21 @@
       "retracts": []
     },
     {
+      "id": "O-14",
+      "claim": "What the original papers claim, and which claims this work tests",
+      "relevance": "",
+      "status": "OPEN \u2014 claims 3 to 7 and 10 remain untested here and are the obvious extensions.",
+      "evidence": [
+        "EXT",
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json",
+        "results/task_b2_epistemic.json"
+      ],
+      "retracts": []
+    },
+    {
       "id": "X-01",
       "claim": "Episode-aware split",
       "relevance": "",
@@ -1924,7 +1939,7 @@
     "C": 15,
     "D": 13,
     "M": 32,
-    "O": 13,
+    "O": 14,
     "R": 59,
     "S": 14,
     "X": 9

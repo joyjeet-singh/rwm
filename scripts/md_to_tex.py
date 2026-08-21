@@ -40,7 +40,7 @@ def esc(s):
     s = s.replace("σ", r"$\sigma$").replace("μ", r"$\mu$").replace("ε", r"$\varepsilon$")
     s = s.replace("λ", r"$\lambda$").replace("φ", r"$\phi$").replace("\u0303", "")
     s = s.replace("Δ", r"$\Delta$").replace("±", r"$\pm$").replace("≈", r"$\approx$")
-    s = s.replace("§", r"\S").replace("“", "``").replace("”", "''")
+    s = s.replace("§", r"\S{}").replace("“", "``").replace("”", "''")
     s = s.replace("−", "$-$")
     # text-mode LaTeX renders these as other glyphs; force math mode
     s = s.replace(chr(92) + "|", "$|$").replace("|", "$|$")

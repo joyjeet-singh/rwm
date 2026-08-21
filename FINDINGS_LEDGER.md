@@ -3078,6 +3078,34 @@ h=8 is the wrong anchor for everything else about this model too.
 **Blocks** any claim that the corrected objective fixes RWM-U's uncertainty.
 
 
+### O-14 — What the original papers claim, and which claims this work tests · **NEW**
+Recorded because the paper had no table of the originals' claims, and a reproduction that does
+not say which claims it leaves alone invites the reader to assume it tested all of them.
+
+| # | claim, and where | tested here | verdict |
+|---|---|---|---|
+| 1 | RWM-AR consistently outperforms RWM-TF; lowest prediction errors across environments (2501.10100 §IV-D, Fig. 6) | **yes** | **REPRODUCES** at long horizon (R-40, R-22) |
+| 2 | Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **REPRODUCES**, and more strongly than stated: Arm B is worse than the hold-last floor (R-58 floor comparison) |
+| 3 | M = 32, N = 8 is the optimal configuration (§IV-C) | no | not tested — we use the released configuration and did not sweep it |
+| 4 | RWM-AR beats MLP, RSSM and transformer baselines (§IV-D) | no | not tested — the lite release ships only the RNN variant |
+| 5 | Zero-shot hardware transfer with minimal sim-to-real loss (§IV-E) | no | not tested — no hardware, and this is a dynamics-model reproduction |
+| 6 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | not tested — no policy learning reproduced |
+| 7 | Generality across quadruped, humanoid and manipulation (§IV-D) | no | not tested — one released dataset, ANYmal D flat |
+| 8 | Epistemic uncertainty "closely follows the trend of the prediction error" and justifies "its role as a trust metric" (2504.16680 §5.1) | **yes** | **SUPPORTED as an ordering** — 45/45 dimensions positively correlated at h=368, P = 5.7e-14 (R-58). NOT supported as a scale: 39.7x overconfident |
+| 9 | Aleatoric uncertainty "remains low, reflecting small stochasticity in the environment" (§5.1) | **yes** | **the observation holds, the explanation does not** — it is low because sigma = 0 is the objective's optimum (C-06, C-10, C-11), not because the environment is nearly deterministic |
+| 10 | Offline MBRL working on real robots (2504.16680) | no | not tested |
+
+**The honest position on 8.** The follow-up does not claim its uncertainty is a calibrated
+interval. It claims correlation with prediction error and a role as a trust metric, and our
+measurement **supports that claim**. What this work adds is that the quantity is not usable as a
+scale, that the aleatoric head is discarded before use (C-14), and that no single scalar repairs
+either (R-59). Framing §4 as refuting a calibration claim the authors did not make would be
+misattribution.
+**Evidence** `EXT` arXiv:2501.10100 §IV-C to §IV-E; arXiv:2504.16680 §5.1, Eq. 4-5;
+`RUN` `results/task_b2_epistemic.json`, `results/task5_analysis.json`.
+**Status** OPEN — claims 3 to 7 and 10 remain untested here and are the obvious extensions.
+
+
 ---
 
 ## G. Deliberate deviations from the reference

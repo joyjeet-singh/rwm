@@ -82,7 +82,7 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | `D-` dataset properties | 13 | — |
 | `M-` methodological findings | 32 | — |
 | `R-` measured results | 59 | — |
-| `O-` open questions | 13 | — |
+| `O-` open questions | 14 | — |
 | `X-` deliberate deviations | 9 | — |
 | `S-` superseded, retained | 14 | — |
 
