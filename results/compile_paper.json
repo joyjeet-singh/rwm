@@ -1,0 +1,12 @@
+{
+  "pdflatex": "/Library/TeX/texbin/pdflatex",
+  "status": "OK",
+  "pages": 9,
+  "bytes": 508749,
+  "errors": [],
+  "overfull_hboxes": 0,
+  "underfull_hboxes": 0,
+  "latex_warnings": [],
+  "stray_markdown_emphasis": 0,
+  "returncode": 0
+}

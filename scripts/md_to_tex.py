@@ -7,6 +7,18 @@ converter that quietly loses a paragraph is worse than one that refuses.
 import re
 
 
+UNI = {"μ": "mu", "σ": "sigma", "ε": "eps", "Δ": "Delta", "−": "-", "·": "*",
+       "²": "^2", "×": "x", "≈": "~", "±": "+-", "—": "--", "–": "-", "§": "S",
+       "“": '"', "”": '"', "’": "'"}
+
+
+def _ascii(s):
+    """verbatim under pdflatex is byte-oriented: no non-ASCII may survive."""
+    for a, b in UNI.items():
+        s = s.replace(a, b)
+    return "".join(c if ord(c) < 128 else "?" for c in s)
+
+
 def esc(s):
     """Escape LaTeX specials in prose. Inline code and math are protected first."""
     out, i = [], 0
@@ -59,6 +71,11 @@ def convert(md, title, author):
 \usepackage{textcomp}
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0pt}
+% Long \texttt tokens (flag names, arXiv ids) cannot hyphenate; give TeX room
+% rather than letting them run into the margin.
+\emergencystretch=3em
+\hbadness=10000
+\sloppy
 \title{""" + esc(title) + r"""}
 \author{""" + esc(author) + r"""}
 \date{}
@@ -78,7 +95,11 @@ def convert(md, title, author):
             i += 1
             continue
         if in_code:
-            out.append(ln)
+            out.append(_ascii(ln))
+            i += 1
+            continue
+        if ln.strip().startswith("$$") and ln.strip().endswith("$$") and len(ln.strip()) > 4:
+            out.append(r"\[" + ln.strip()[2:-2] + r"\]")
             i += 1
             continue
         if ln.startswith("    ") and ln.strip():          # indented code
@@ -88,7 +109,7 @@ def convert(md, title, author):
                 i += 1
             while block and not block[-1].strip():
                 block.pop()
-            out += [r"\begin{verbatim}"] + block + [r"\end{verbatim}"]
+            out += [r"\begin{verbatim}"] + [_ascii(x) for x in block] + [r"\end{verbatim}"]
             continue
         m = re.match(r"^(#{1,4})\s+(.*)$", ln)
         if m:
@@ -103,6 +124,11 @@ def convert(md, title, author):
                 continue
             txt = re.sub(r"^\d+(\.\d+)*\.?\s*", "", txt)   # LaTeX numbers sections itself
             cmd = {1: "section", 2: "section", 3: "subsection", 4: "subsubsection"}[lvl]
+            if txt.strip().startswith("Appendix") and not any(
+                    x.startswith(chr(92) + "appendix") for x in out):
+                out.append(r"\appendix")
+            if txt.strip().startswith("Appendix"):
+                txt = re.sub(r"^Appendix [A-Z]\s*[—-]\s*", "", txt)
             if txt.strip().lower() == "abstract":
                 out.append(r"\begin{abstract}")
                 i += 1
@@ -124,14 +150,15 @@ def convert(md, title, author):
             cells = [re.split(r"(?<!\\)\|", r)[1:-1] for r in tbl]
             cells = [c for c in cells if not all(set(x.strip()) <= set("-: ") for x in c)]
             n = max(len(c) for c in cells)
-            out.append(r"\begin{center}\small\begin{tabular}{" + "l" * n + "}")
+            out.append(r"\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%")
+            out.append(r"\begin{tabular}{" + "l" * n + "}")
             out.append(r"\toprule")
             for j, row in enumerate(cells):
                 row = [esc(x.strip().replace(r"\|", "|")) for x in row] + [""] * (n - len(row))
                 out.append(" & ".join(row) + r" \\")
                 if j == 0:
                     out.append(r"\midrule")
-            out.append(r"\bottomrule\end{tabular}\end{center}")
+            out.append(r"\bottomrule\end{tabular}}\end{center}")
             continue
         if re.match(r"^!\[.*\]\((.*)\)", ln):
             src = re.match(r"^!\[.*\]\((.*)\)", ln).group(1)
@@ -142,15 +169,30 @@ def convert(md, title, author):
         if ln.startswith("- "):
             out.append(r"\begin{itemize}")
             while i < len(lines) and lines[i].startswith("- "):
-                out.append(r"\item " + esc(lines[i][2:]))
+                item = [lines[i][2:]]
                 i += 1
+                # a wrapped continuation line belongs to the item, not to a new paragraph
+                while (i < len(lines) and lines[i].strip()
+                       and not lines[i].startswith("- ")
+                       and not lines[i].startswith("#")
+                       and not lines[i].startswith("|")):
+                    item.append(lines[i].strip())
+                    i += 1
+                out.append(r"\item " + esc(" ".join(x.strip() for x in item)))
             out.append(r"\end{itemize}")
             continue
         if re.match(r"^\d+\.\s", ln):
             out.append(r"\begin{enumerate}")
             while i < len(lines) and re.match(r"^\d+\.\s", lines[i]):
-                out.append(r"\item " + esc(re.sub(r"^\d+\.\s", "", lines[i])))
+                item = [re.sub(r"^\d+\.\s", "", lines[i])]
                 i += 1
+                while (i < len(lines) and lines[i].strip()
+                       and not re.match(r"^\d+\.\s", lines[i])
+                       and not lines[i].startswith("#")
+                       and not lines[i].startswith("|")):
+                    item.append(lines[i].strip())
+                    i += 1
+                out.append(r"\item " + esc(" ".join(x.strip() for x in item)))
             out.append(r"\end{enumerate}")
             continue
         if ln.strip() == "---":
@@ -160,8 +202,18 @@ def convert(md, title, author):
             out.append("")
             i += 1
             continue
-        out.append(esc(ln))
+        para = [ln]
         i += 1
+        while i < len(lines):
+            nxt = lines[i]
+            if (not nxt.strip() or nxt.startswith("|") or nxt.startswith("- ")
+                    or nxt.startswith("    ") or nxt.lstrip().startswith("$$")
+                    or nxt.startswith("#") or nxt.startswith("!") or nxt.strip() == "---"
+                    or nxt.strip().startswith("```") or re.match(r"^\d+\.\s", nxt)):
+                break
+            para.append(nxt)
+            i += 1
+        out.append(esc(" ".join(x.strip() for x in para)))
     out.append(r"\end{document}")
     tex = "\n".join(out)
 
@@ -171,6 +223,14 @@ def convert(md, title, author):
     body_wo_verb = re.sub(r"\\begin\{verbatim\}.*?\\end\{verbatim\}", "", tex, flags=re.S)
     # \detokenize makes filename underscores safe; do not re-flag them
     body_wo_verb = re.sub(r"\\detokenize\{[^}]*\}", "", body_wo_verb)
+    # subscripts inside display/inline math are correct LaTeX, not stray specials
+    body_wo_verb = re.sub(r"\\\[.*?\\\]", "", body_wo_verb, flags=re.S)
+    body_wo_verb = re.sub(r"\$[^$]*\$", "", body_wo_verb)
+    # a trailing %% is a LaTeX line-continuation comment, not a stray special
+    # LaTeX comments -- a trailing %% continuation or a whole comment line -- are
+    # legitimate, not stray specials
+    body_wo_verb = re.sub(r"^\s*%.*$", "", body_wo_verb, flags=re.M)
+    body_wo_verb = re.sub(r"%$", "", body_wo_verb, flags=re.M)
     for env in ("verbatim", "tabular", "itemize", "enumerate", "figure", "abstract", "center",
                 "document"):
         b = len(re.findall(r"\\begin\{" + env + r"\}", tex))

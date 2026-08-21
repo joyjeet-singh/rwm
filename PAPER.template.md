@@ -146,13 +146,13 @@ Every model is overconfident by between one and four orders of magnitude (Figure
 
 The state loss is squared error on a *sample* drawn from the predicted Gaussian, not a likelihood:
 
-    L = E[(μ + σ·ε − y)²] = (μ − y)² + σ²
+$$\mathcal{L} \;=\; \mathbb{E}\big[(\mu + \sigma\varepsilon - y)^2\big] \;=\; (\mu - y)^2 + \sigma^2$$
 
 which is minimised at σ = 0 for any μ. There is no log-σ term to oppose it. The bound term that
 appears to oppose it does not, because `max_logstd` is not an independent parameter — it is
 constructed as `min_logstd + exp(log_delta_logstd)`, so
 
-    mean(max_logstd) − mean(min_logstd) = mean(exp(log_delta_logstd))
+$$\overline{\log\sigma_{\max}} - \overline{\log\sigma_{\min}} \;=\; \overline{\exp(\log\Delta_{\log\sigma})}$$
 
 and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval
 closes onto therefore freezes while the interval closes: a one-way ratchet.
@@ -374,10 +374,10 @@ What every downstream number rests on. Each level was passed before the next was
 
 ## Appendix B — reproducing
 
-    ./setup.sh                       # clone upstreams at pinned commits, verify hashes
+    ./setup.sh                     # clone upstreams at pinned commits
     python3.11 -m venv .venv && . .venv/bin/activate
     pip install -r requirements.txt
-    ./reproduce.sh --quick --force   # everything except training
+    ./reproduce.sh --quick --force # everything except training
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it
 every stage skips. Training stages are excluded by `--quick`; a full run is roughly 22 hours on

@@ -212,6 +212,10 @@ stage 24 "Build PAPER.md and PAPER.tex" "5 s" \
       "" $PY scripts/build_paper.py
 stage 25 "Build MODEL_CARD.md (checkpoint sha256s and per-checkpoint limits)" "10 s" \
       "" $PY scripts/build_model_card.py
+# Compiles PAPER.tex and fails on errors, overfull boxes, LaTeX warnings or stray
+# markdown emphasis. Skips loudly, not silently, where no TeX is installed.
+stage 26 "Compile PAPER.tex" "30 s" \
+      "" $PY scripts/compile_paper.py
 
 echo ""
 echo "───────────────────────────────────────────────────────────────────────"

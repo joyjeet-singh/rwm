@@ -9,6 +9,7 @@ outputs, losses and gradients.
 not typed: every number is substituted from an artifact under `results/` by
 `scripts/build_paper.py`, which refuses to emit a paper if any placeholder is unresolved.
 The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
+`PAPER.tex` compiles clean under pdfTeX — 9 pages, 0 overfull boxes, 0 LaTeX warnings (`results/compile_paper.json`).
 
 **Every claim in this repository lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** with an
 ID, a status, its evidence class, and the file:line or run artifact it came from. Claims are
