@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     349 values substituted from 38 artifacts. -->
+     372 values substituted from 38 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -28,9 +28,9 @@ the method penalises rewards with the second while discarding the first. We meas
 state loss is squared error on a reparameterised sample with no log-σ term, minimised at σ = 0,
 with the bound term that should oppose this cancelling algebraically. Running the correction —
 the authors' own unused `gaussian_nll` branch — fails differently rather than succeeding, at
-10.9× overconfidence. The epistemic term, the one the method actually consumes, is nearly three orders of magnitude better and still **34.4× overconfident at the deployment horizon**, with 3.59% coverage where a calibrated Gaussian gives 68.3% (n_independent = 20).
+10.9× overconfidence. The epistemic term, the one the method actually consumes, is 600× better and still **34.4× overconfident at the deployment horizon**, with 3.59% coverage where a calibrated Gaussian gives 68.3% (n_independent = 20).
 
-Two results run the other way, and both are tests the original work did not run. **Ensemble disagreement beats a trivial baseline.** Against the forecast step index — a counter, free, requiring no ensemble — disagreement correlates +0.605 [+0.545, +0.694] with realised error where the counter reaches +0.269 [+0.106, +0.431], and partialling the counter out changes disagreement's correlation by +0.010. That holds under four stronger controls too: with forecast depth held exactly constant it is +0.739, positive at 368 of 368 steps. The follow-up's trust-metric claim survives adversarial testing against a real alternative. **And the interval is repairable.** A per-horizon multiplier, fitted on one held-out episode and scored on the other, brings coverage within 10 points of target on 10 of 10 held-out cells, where a constant multiplier manages 2.
+Two results run the other way, and both are tests the original work did not run. **Ensemble disagreement beats a trivial baseline.** Against the forecast step index — a counter, free, requiring no ensemble — disagreement correlates +0.605 [+0.545, +0.694] with realised error where the counter reaches +0.269 [+0.106, +0.431], and partialling the counter out lowers disagreement's correlation by only 0.010, from +0.605 to +0.596. A paired test on the difference between the two, resampling whole trajectories, excludes zero at 4 of 4 horizons, and four stronger controls agree: with forecast depth held exactly constant disagreement still reaches +0.739, positive at 368 of 368 steps. The follow-up's trust-metric claim survives adversarial testing against a real alternative. **And the interval is repairable.** A per-horizon multiplier, fitted on one held-out episode and scored on the other, brings coverage within 10 points of target on 10 of 10 held-out cells, where a constant multiplier manages 2.
 
 Measuring all four models we trained or scored puts the failure precisely. The teacher-forced arm
 has the most input-dependent σ (15.6× the autoregressive arm's) and ranks its own errors on 45 of 45 dimensions, and is still 315× overconfident. That count is *not* the strong evidence an independent-trials test makes it look like: the 45 state dimensions are physically coupled and share a forecast-depth trend, and a permutation test over whole trajectories moves its P-value from 5.68e-14 to 0.2609. No dimension count in this paper survives multiplicity correction under that test. These models can learn *which*
@@ -257,7 +257,7 @@ On the aleatoric head every model is overconfident by between one and four order
 | 128 | 14,934× | 0.03% | 34.2× | 4.37% | 8.75% | 45/45 | +0.338 | 0.3725 |
 | 368 | 20,669× | 0.02% | **34.4×** | 3.59% | 7.19% | 45/45 | +0.298 | 0.0823 |
 
-Epistemic is nearly three orders of magnitude better than aleatoric at the deployment horizon — 600× — and still wrong by **8.3×** at one step and **34.4×** at the deployment horizon, with ±1σ coverage of 3.59% where a calibrated Gaussian gives 68.3%. **Total** uncertainty, `sqrt(aleatoric² + epistemic²)`, equals the epistemic value to four significant figures at every horizon, because the aleatoric term is too small to move it.
+Epistemic is 600× better than aleatoric at the deployment horizon and still wrong by **8.3×** at one step and **34.4×** at the deployment horizon, with ±1σ coverage of 3.59% where a calibrated Gaussian gives 68.3%. **Total** uncertainty, `sqrt(aleatoric² + epistemic²)`, equals the epistemic value to four significant figures at every horizon, because the aleatoric term is too small to move it.
 
 **The larger sample changes one thing materially, and it is a correction to our own earlier reading.** At n_independent = 4 the epistemic ordering looked like chance at short horizon — 23 of 45 dimensions at h=1 — and we had described it as a long-horizon effect. At n_independent = 20 it is 44 of 45 at h=1, with mean r = +0.662, the *strongest* mean correlation of any horizon. The in-sample permutation test says the same (§5.5). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model, and we record it as such rather than keeping the more interesting-sounding horizon story.
 
@@ -327,12 +327,14 @@ improves the magnitude from 52.2× to 10.9× overconfident. It does not produce 
 Measuring the teacher-forced arm — which we had trained for §4, and which our own first three
 calibration tables omitted — sharpens the finding:
 
-| model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 | perm P, out-of-sample | perm P, in-sample |
+| model | σ variation across inputs (CoV) | dims with r(σ, error) > 0, out-of-sample | perm P, out-of-sample | perm P, in-sample |
 |---|---|---|---|---|
 | faithful Arm A | 0.0076 | 39/45 | 0.0417 | 0.0232 |
 | corrected Arm A | 0.0059 | 21/45 | 1.0000 | 0.8734 |
 | **teacher-forced Arm B** | **0.1188** | **45/45** | **0.2609** | **0.5656** |
 | released checkpoint | 0.0177 | 20/45 | 0.6957 | 0.9738 |
+
+**The count column is the out-of-sample arena** (n_independent = 4), so that all four models are compared on trajectories none of our own arms was trained on. It is not the only arena, and for the released checkpoint's aleatoric head it is not the most informative one: at n_independent = 20 over all ten episodes that head is 0/45 — negatively correlated with error on *every* dimension — against 20/45 here. §12 quotes the larger arena and says so.
 
 Arm B's σ is 15.6× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = 0.257). It is still 315× overconfident.
 
@@ -371,18 +373,23 @@ Error in an autoregressive rollout grows with depth. So the trivial competitor t
 
 All three correlations below are on the scalar quantity the method actually applies — `means.std(0).sum(-1)` at `envs/base.py:166` — against total absolute error, over n_independent = 20 trajectories, with 95% intervals from a bootstrap over whole trajectories.
 
-| h | r(step index, \|error\|) | r(disagreement, \|error\|) | partial r(disagreement, \|error\| · index) |
-|---|---|---|---|
-| 8 | +0.181 [+0.108, +0.349] | **+0.738** [+0.537, +0.807] | +0.757 [+0.540, +0.822] |
-| 32 | +0.174 [+0.131, +0.336] | **+0.735** [+0.577, +0.823] | +0.756 [+0.604, +0.841] |
-| 128 | +0.526 [+0.421, +0.643] | **+0.671** [+0.604, +0.846] | +0.617 [+0.534, +0.812] |
-| 368 | +0.269 [+0.106, +0.431] | **+0.605** [+0.545, +0.694] | +0.596 [+0.526, +0.687] |
+| h | r(step index, \|error\|) | r(disagreement, \|error\|) | partial r(disagreement, \|error\| · index) | paired difference, disagreement − index |
+|---|---|---|---|---|
+| **1** | — | **+0.994** [+0.918, +0.999] | — | — |
+| 8 | +0.181 [+0.108, +0.349] | **+0.738** [+0.537, +0.807] | +0.757 [+0.540, +0.822] | +0.556 [+0.241, +0.679] |
+| 32 | +0.174 [+0.131, +0.336] | **+0.735** [+0.577, +0.823] | +0.756 [+0.604, +0.841] | +0.561 [+0.298, +0.674] |
+| 128 | +0.526 [+0.421, +0.643] | **+0.671** [+0.604, +0.846] | +0.617 [+0.534, +0.812] | +0.145 [+0.011, +0.324] |
+| 368 | +0.269 [+0.106, +0.431] | **+0.605** [+0.545, +0.694] | +0.596 [+0.526, +0.687] | +0.337 [+0.147, +0.544] |
 
-*(h=1 has a single forecast step, so the index is constant and its correlation undefined.)*
+*(h=1 has a single forecast step, so the index is constant and its correlation — and therefore the partial and the difference — undefined. The epistemic correlation is not, and it is the largest anywhere in this work: at one step, ensemble disagreement is very nearly a perfect ranking of realised error.)*
 
-**Disagreement wins at every horizon tested, and the intervals do not overlap.** The counter reaches +0.269 over the full rollout against disagreement's +0.605. The index leads in 0 of 4 horizons.
+**Disagreement wins at every horizon tested.** The counter reaches +0.269 over the full rollout against disagreement's +0.605, and the index leads in 0 of 4 horizons.
 
-**The third column is the one that settles it.** Partialling the step index out of both variables leaves disagreement's correlation at +0.596, against +0.605 raw — a change of +0.010. Almost none of what disagreement knows is explained by knowing how deep into the rollout you are. It is carrying real information about *this* rollout, not a re-encoding of the clock.
+**The last column is the test that decides it, and it is not the one a reader might expect.** Comparing the two marginal intervals for overlap is the wrong comparison here: both correlations are measured on the *same* trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference — resampling whole trajectories and recomputing *both* correlations inside each draw — is the appropriate test and the more powerful one. It excludes zero at **4 of 4** horizons.
+
+The distinction matters at exactly one place. At h=128 the marginal intervals *do* overlap — it is the horizon where the counter is strongest (+0.526) and the margin narrowest — and an earlier draft of this paper wrongly asserted that they never do. The paired difference there is +0.145 [+0.011, +0.324], which excludes zero, but only just: +0.011 is the smallest lower bound in the table and we would not rest anything on that horizon alone.
+
+**The third column is the one that settles it.** Partialling the step index out of both variables *lowers* disagreement's correlation by 0.010, from +0.605 to +0.596. Almost none of what disagreement knows is explained by knowing how deep into the rollout you are. It is carrying real information about *this* rollout, not a re-encoding of the clock.
 
 **A linear control is not much of a control, so we tested four harder ones.** Error does not grow linearly with rollout depth, and a control that under-fits the index leaves index-driven variance in the residual and flatters disagreement. Partialling out log(1 + index) gives +0.589 [+0.512, +0.688]; a cubic in the index gives +0.582 [+0.495, +0.676]; a rank partial correlation, which removes *any* monotone dependence on depth rather than an assumed functional form, gives +0.906 [+0.856, +0.921].
 
@@ -415,7 +422,7 @@ The reason is §5.8's mechanism: a constant multiplier cannot track an error tha
 | aleatoric | **10 / 10** | 2 / 10 | 592.6 – 7782 (13.1×) |
 | epistemic | **10 / 10** | 2 / 10 | 5.082 – 47.33 (9.31×) |
 
-Every held-out cell lands within 10 points of the 68.27% target for both quantities; the worst is h=1 on the epistemic term at 74.44%. The constant scalar manages 2 of 10, and those are the h=1 cells it was fitted at.
+Every held-out cell lands within 10 points of the 68.27% target for both quantities. The largest deviation over all 20 held-out cells is aleatoric at h=128, fitted on episode 8 and scored on the other, at 76.55% — 8.28 points off target. The two largest deviations are both at h=128 on the aleatoric term, in opposite directions (76.55% and 60.18%), which is a mild sign that the fitted multiplier is least stable at that horizon. The constant scalar manages 2 of 10, and those are the h=1 cells it was fitted at.
 
 Two cautions a reader should apply. The per-horizon scalar has five free parameters against the constant one's one, so it *must* fit better in sample — only the held-out column above is evidence, and that is the column reported. And the correction is a calibration patch, not a fix: it leaves the model's σ carrying no more information than before and simply rescales it by how far ahead you are looking. It is nevertheless enough to make the interval mean what it says, which is what a downstream user needs, and it costs one lookup table.
 
@@ -595,7 +602,7 @@ verdict survives. Both units are reported.
 
 Six things a practitioner can apply without reading the rest of this paper.
 
-**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance.** The scalar the method applies correlates +0.605 [+0.545, +0.694] with realised error at n_independent = 20, beats the free alternative — the forecast step index — at every horizon we tested, and retains +0.596 once that index is partialled out (§5.6). That is a real signal, not a re-encoding of how far ahead you are looking: holding forecast depth exactly constant it still correlates +0.739 with error, at 368 of 368 steps (§5.6). But it is 34.4× too small to be an interval, and a risk gate or safety margin that reads σ as a distance is not supported at any horizon.
+**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it correlates +0.994 [+0.918, +0.999] with realised error — very nearly a perfect ranking. Over the full 20-trajectory rollout it falls to +0.605 [+0.545, +0.694]. That decay is the useful part: the signal is excellent where you can check it cheaply and merely good where you most need it. It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at 4 of 4, and it retains +0.596 once that index is partialled out (§5.6). That is a real signal, not a re-encoding of how far ahead you are looking: holding forecast depth exactly constant it still correlates +0.739 with error, at 368 of 368 steps (§5.6). But it is 34.4× too small to be an interval, and a risk gate or safety margin that reads σ as a distance is not supported at any horizon.
 
 **If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within 10 points of nominal on 10 of 10 held-out cells; a single global multiplier manages 2 (§5.7). The fitted multipliers span 9.31× across horizons, which is precisely why one number cannot serve.
 
@@ -674,12 +681,11 @@ The Robotic World Model's central training claim reproduces, and the margin is l
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
 The aleatoric σ is 20,669× smaller than its own error, and the cause is that the
 objective's optimum is σ = 0 with the term that should prevent this cancelling out of the
-gradient. The epistemic term the method actually penalises with is better by two orders of
-magnitude and still 34.4× overconfident where it is used.
+gradient. The epistemic term the method actually penalises with is 600× better and still 34.4× overconfident where it is used.
 
 The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large — but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, restores nominal coverage on 10 of 10 held-out cells where a global multiplier restores 2. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon, keeps +0.596 once the index is partialled out, and still reaches +0.739 when depth is held exactly constant — so it is not a re-encoding of the clock. That is the one claim of either original work that this reproduction strengthens rather than qualifies.
 
-What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on 45 of 45 dimensions at h=368, and the faithful and teacher-forced arms. The released checkpoint's *aleatoric* head does the opposite, ranking backwards on every one of 45 dimensions, and the corrected arm sits at chance. And once the physical coupling between state dimensions is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction. We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about 10^13 on the cells we had cited as evidence. Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
+What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on 45 of 45 dimensions at h=368, and the faithful and teacher-forced arms. The released checkpoint's *aleatoric* head does the opposite, and how strongly depends on the arena — a dependence worth stating rather than smoothing over. Over all ten episodes (n_independent = 20) it ranks error **inversely on every one of 45 dimensions** at h=368; on the two held-out episodes alone (n_independent = 4, the arena §5.5's table reports) it is 20/45, which is chance. The larger arena is the better-sampled one and its result is the stranger of the two: a σ that is not merely uninformative about error but anti-correlated with it. The corrected arm sits at chance in both. And once the physical coupling between state dimensions is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction. We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about 10^13 on the cells we had cited as evidence. Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
 
 ---
 

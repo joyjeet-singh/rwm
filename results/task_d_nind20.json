@@ -211,6 +211,12 @@
           "n_boot_finite": 0
         }
       },
+      "marginal_ci_overlap": null,
+      "paired_diff": null,
+      "paired_ci_lo": null,
+      "paired_ci_hi": null,
+      "paired_n_boot_finite": 0,
+      "paired_excludes_zero": false,
       "index_wins": false
     },
     "8": {
@@ -237,6 +243,12 @@
           "n_boot_finite": 20000
         }
       },
+      "marginal_ci_overlap": false,
+      "paired_diff": 0.556265897194264,
+      "paired_ci_lo": 0.24089886585003323,
+      "paired_ci_hi": 0.6794203709604547,
+      "paired_n_boot_finite": 20000,
+      "paired_excludes_zero": true,
       "index_wins": false
     },
     "32": {
@@ -263,6 +275,12 @@
           "n_boot_finite": 20000
         }
       },
+      "marginal_ci_overlap": false,
+      "paired_diff": 0.5607090598639064,
+      "paired_ci_lo": 0.29830039701004313,
+      "paired_ci_hi": 0.6739795568337537,
+      "paired_n_boot_finite": 20000,
+      "paired_excludes_zero": true,
       "index_wins": false
     },
     "128": {
@@ -289,6 +307,12 @@
           "n_boot_finite": 20000
         }
       },
+      "marginal_ci_overlap": true,
+      "paired_diff": 0.14520416487618681,
+      "paired_ci_lo": 0.01069702603321511,
+      "paired_ci_hi": 0.3241998201536079,
+      "paired_n_boot_finite": 20000,
+      "paired_excludes_zero": true,
       "index_wins": false
     },
     "368": {
@@ -315,6 +339,12 @@
           "n_boot_finite": 20000
         }
       },
+      "marginal_ci_overlap": false,
+      "paired_diff": 0.33676485226708364,
+      "paired_ci_lo": 0.14687944842071143,
+      "paired_ci_hi": 0.5440911046960716,
+      "paired_n_boot_finite": 20000,
+      "paired_excludes_zero": true,
       "index_wins": false
     },
     "all": {
@@ -341,6 +371,12 @@
           "n_boot_finite": 20000
         }
       },
+      "marginal_ci_overlap": false,
+      "paired_diff": 0.33676485226708364,
+      "paired_ci_lo": 0.14687944842071143,
+      "paired_ci_hi": 0.5440911046960716,
+      "paired_n_boot_finite": 20000,
+      "paired_excludes_zero": true,
       "index_wins": false
     }
   },

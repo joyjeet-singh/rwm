@@ -1179,6 +1179,10 @@
     "source": "results/task_d2_recalibration.json",
     "value": "5.08"
   },
+  "d2_epi_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.918, +0.999]"
+  },
   "d2_epi_cov1_hi": {
     "source": "results/task_d2_recalibration.json",
     "value": "74"
@@ -1194,6 +1198,10 @@
   "d2_epi_cov368_lo": {
     "source": "results/task_d2_recalibration.json",
     "value": "17"
+  },
+  "d2_epi_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.994"
   },
   "d2_fai_c_hi": {
     "source": "results/task_d2_recalibration.json",
@@ -1379,6 +1387,74 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.010"
   },
+  "d2b_shrink_all_abs": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.010"
+  },
+  "d2p_ci_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.147, +0.544]"
+  },
+  "d2p_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.011, +0.324]"
+  },
+  "d2p_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.298, +0.674]"
+  },
+  "d2p_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.147, +0.544]"
+  },
+  "d2p_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.241, +0.679]"
+  },
+  "d2p_diff_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.337"
+  },
+  "d2p_diff_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.145"
+  },
+  "d2p_diff_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.561"
+  },
+  "d2p_diff_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.337"
+  },
+  "d2p_diff_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.556"
+  },
+  "d2p_n_horizons": {
+    "source": "results/task_d_nind20.json",
+    "value": 4
+  },
+  "d2p_n_overlap": {
+    "source": "results/task_d_nind20.json",
+    "value": 1
+  },
+  "d2p_n_separating": {
+    "source": "results/task_d_nind20.json",
+    "value": 4
+  },
+  "d2p_narrowest_h": {
+    "source": "results/task_d_nind20.json",
+    "value": "128"
+  },
+  "d2p_narrowest_lo": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.011"
+  },
+  "d2p_overlap_h": {
+    "source": "results/task_d_nind20.json",
+    "value": "h=128"
+  },
   "d2r_cub": {
     "source": "results/task_d2b_robustness.json",
     "value": "+0.582"
@@ -1503,6 +1579,10 @@
     "source": "results/task_d3_perhorizon.json",
     "value": 1
   },
+  "d3_ncells_all": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 20
+  },
   "d3_neps": {
     "source": "results/task_d3_perhorizon.json",
     "value": 2
@@ -1515,6 +1595,10 @@
     "source": "results/task_d3_perhorizon.json",
     "value": 4
   },
+  "d3_second_cov": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "60.18"
+  },
   "d3_target": {
     "source": "results/task_d3_perhorizon.json",
     "value": "68.27"
@@ -1522,6 +1606,26 @@
   "d3_tol": {
     "source": "results/task_d3_perhorizon.json",
     "value": "10"
+  },
+  "d3_worst_cov": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "76.55"
+  },
+  "d3_worst_dev": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "8.28"
+  },
+  "d3_worst_ep": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 8
+  },
+  "d3_worst_h": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 128
+  },
+  "d3_worst_q": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "aleatoric"
   },
   "d4_ci": {
     "source": "results/task_d_nind20.json",
@@ -3710,6 +3814,38 @@
   "q4_implied_B": {
     "source": "results/task5_analysis.json",
     "value": "158,003"
+  },
+  "relale_all_neg_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "relale_all_nind": {
+    "source": "results/task_b_permutation.json",
+    "value": 20
+  },
+  "relale_all_pos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "relale_ins_neg_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 42
+  },
+  "relale_ins_pos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "relale_oos_neg_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "relale_oos_nind": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "relale_oos_pos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 20
   },
   "rows": {
     "source": "results/step0_regimes.json",

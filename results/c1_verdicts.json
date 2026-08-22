@@ -9,6 +9,11 @@
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
     "verdict": "SUPPORTED"
   },
+  "0418c199d02a": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "04ab531e3a05": {
     "claim": "The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells.",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -47,6 +52,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "0ceb6498a950": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "0d1b5b192253": {
     "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
     "sample_size": "-",
@@ -73,6 +83,11 @@
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
     "verdict": "SUPPORTED"
   },
+  "13ff4804ca76": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "14e175fe6c2e": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
@@ -81,6 +96,11 @@
   "154ac3587ab6": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "17cf243e4b5a": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "1a7f61b9a16a": {
@@ -165,6 +185,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "2d00e293c70a": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "2ea2240f0364": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories",
@@ -240,6 +265,11 @@
     "claim": "The teacher-forced arm has the most input-dependent \u03c3 ({{cal_armB_over_faithA_cov}}\u00d7 the autoregressive arm's)",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "356a3e9ca687": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "35ad1106c17e": {
@@ -345,6 +375,16 @@
     "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
     "verdict": "SUPPORTED"
   },
+  "4ef32d11164c": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
+  "4f6fe448dd07": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "50d895c651db": {
     "claim": "In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory lengths \u00d7 two checkpoints \u00d7 two horizons \u00d7 ",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -435,9 +475,19 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "601c072b2255": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "60eefc01f2a6": {
     "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
     "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "61b7f2a74e7b": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "6222452dc293": {
@@ -508,6 +558,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "6f8f4435c5aa": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "70b6010104ed": {
     "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimu",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -525,9 +580,24 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "71a087f1f60c": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
+  "72026a79eedc": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "72bdc184b55b": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "735250c082e5": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "73e96eb04496": {
@@ -574,6 +644,11 @@
   "7f9ebf680b50": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "82198a728ff8": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "821ab7bb5ed8": {
@@ -636,6 +711,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "90c1e7fdf6d0": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "920934ccb2ba": {
     "claim": "But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released ch",
     "note": "'by three to four orders of magnitude' is true of the aleatoric head only. The epistemic term, which the method uses, is 1-2 orders. Must name the quantity.",
@@ -658,9 +738,19 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "9864bed62b09": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "9901ab24888c": {
     "note": "checked against results/task_d2b_robustness.json controls block",
     "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "9a17f9bec679": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "9e5cfc71baaf": {
@@ -714,6 +804,11 @@
   "af1b0db4c8d3": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "b0dfe727353e": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "b1acef498ca8": {
@@ -909,6 +1004,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "d8e0cf99008e": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "daa86c50b1ef": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
@@ -919,10 +1019,20 @@
     "sample_size": "counted from the ledger, not asserted",
     "verdict": "SUPPORTED"
   },
+  "e033754d6b05": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
   "e14b58dfd9b5": {
     "claim": "5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "e1d0009b3214": {
+    "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
+    "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
   "e2cd3cf2204a": {

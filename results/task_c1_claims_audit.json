@@ -1,7 +1,7 @@
 {
-  "n_claims": 167,
+  "n_claims": 178,
   "by_verdict": {
-    "SUPPORTED": 167
+    "SUPPORTED": 178
   },
   "claims": [
     {
@@ -65,10 +65,11 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "00a534e11a0c",
+      "id": "13ff4804ca76",
       "section": "Abstract",
-      "claim": "The epistemic term, the one the method actually consumes, is nearly three orders of magnitude better and still **{{d1n_epi_ratio_h368}}\u00d7 overconfident at the deployment horizon**, with {{d1n_epi_cov1_h368}}% coverage where a calibrated Gaussian gives 68.3% (n_independent = {{d1n_nind}}).",
+      "claim": "The epistemic term, the one the method actually consumes, is {{d1n_epi_over_alea_h368}}\u00d7 better and still **{{d1n_epi_ratio_h368}}\u00d7 overconfident at the deployment horizon**, with {{d1n_epi_cov1_h368}}% coverage where a calibrated Gaussian gives 68.3% (n_independent = {{d1n_nind}}).",
       "keys": [
+        "d1n_epi_over_alea_h368",
         "d1n_epi_ratio_h368",
         "d1n_epi_cov1_h368",
         "d1n_nind"
@@ -76,49 +77,54 @@
       "artifacts": [
         "results/task_d_nind20.json"
       ],
-      "n_keys": 3,
+      "n_keys": 4,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
-      "id": "5b9e6443eab1",
+      "id": "6f8f4435c5aa",
       "section": "Abstract",
-      "claim": "Ensemble disagreement beats a trivial baseline.** Against the forecast step index \u2014 a counter, free, requiring no ensemble \u2014 disagreement correlates {{d2b_epi_h368}} {{d2b_epi_ci_h368}} with realised error where the counter reaches {{d2b_idx_h368}} {{d2b_idx_ci_h368}}, and partialling the counter out changes disagreement's correlation by {{d2b_shrink_all}}.",
+      "claim": "Ensemble disagreement beats a trivial baseline.** Against the forecast step index \u2014 a counter, free, requiring no ensemble \u2014 disagreement correlates {{d2b_epi_h368}} {{d2b_epi_ci_h368}} with realised error where the counter reaches {{d2b_idx_h368}} {{d2b_idx_ci_h368}}, and partialling the counter out lowers disagreement's correlation by only {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}.",
       "keys": [
         "d2b_epi_h368",
         "d2b_epi_ci_h368",
         "d2b_idx_h368",
         "d2b_idx_ci_h368",
-        "d2b_shrink_all"
+        "d2b_shrink_all_abs",
+        "d2b_epi_all",
+        "d2b_par_all"
       ],
       "artifacts": [
         "results/task_d_nind20.json"
       ],
-      "n_keys": 5,
+      "n_keys": 7,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
-      "id": "9901ab24888c",
+      "id": "9a17f9bec679",
       "section": "Abstract",
-      "claim": "That holds under four stronger controls too: with forecast depth held exactly constant it is {{d2r_win}}, positive at {{d2r_win_pos}} of {{d2r_win_n}} steps.",
+      "claim": "A paired test on the difference between the two, resampling whole trajectories, excludes zero at {{d2p_n_separating}} of {{d2p_n_horizons}} horizons, and four stronger controls agree: with forecast depth held exactly constant disagreement still reaches {{d2r_win}}, positive at {{d2r_win_pos}} of {{d2r_win_n}} steps.",
       "keys": [
+        "d2p_n_separating",
+        "d2p_n_horizons",
         "d2r_win",
         "d2r_win_pos",
         "d2r_win_n"
       ],
       "artifacts": [
-        "results/task_d2b_robustness.json"
+        "results/task_d2b_robustness.json",
+        "results/task_d_nind20.json"
       ],
-      "n_keys": 3,
+      "n_keys": 5,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
-      "note": "checked against results/task_d2b_robustness.json controls block"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "029d4ca60cdd",
@@ -829,9 +835,9 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "472bd53b29b2",
+      "id": "e1d0009b3214",
       "section": "5.2 The measurement",
-      "claim": "Epistemic is nearly three orders of magnitude better than aleatoric at the deployment horizon \u2014 {{d1n_epi_over_alea_h368}}\u00d7 \u2014 and still wrong by **{{d1n_epi_ratio_h1}}\u00d7** at one step and **{{d1n_epi_ratio_h368}}\u00d7** at the deployment horizon, with \u00b11\u03c3 coverage of {{d1n_epi_cov1_h368}}% where a calibrated Gaussian gives 68.3%.",
+      "claim": "Epistemic is {{d1n_epi_over_alea_h368}}\u00d7 better than aleatoric at the deployment horizon and still wrong by **{{d1n_epi_ratio_h1}}\u00d7** at one step and **{{d1n_epi_ratio_h368}}\u00d7** at the deployment horizon, with \u00b11\u03c3 coverage of {{d1n_epi_cov1_h368}}% where a calibrated Gaussian gives 68.3%.",
       "keys": [
         "d1n_epi_over_alea_h368",
         "d1n_epi_ratio_h1",
@@ -844,8 +850,8 @@
       "n_keys": 4,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "a88c086ee32a",
@@ -1122,6 +1128,42 @@
       "verdict": "SUPPORTED",
       "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+    },
+    {
+      "id": "61b7f2a74e7b",
+      "section": "5.5 The failure is one of magnitude; the ordering is weaker than it looks",
+      "claim": "The count column is the out-of-sample arena** (n_independent = {{relale_oos_nind}}), so that all four models are compared on trajectories none of our own arms was trained on.",
+      "keys": [
+        "relale_oos_nind"
+      ],
+      "artifacts": [
+        "results/task_b_permutation.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "17cf243e4b5a",
+      "section": "5.5 The failure is one of magnitude; the ordering is weaker than it looks",
+      "claim": "It is not the only arena, and for the released checkpoint's aleatoric head it is not the most informative one: at n_independent = {{relale_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}} \u2014 negatively correlated with error on *every* dimension \u2014 against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here. \u00a712 quotes the larger arena and says so.",
+      "keys": [
+        "relale_all_nind",
+        "relale_all_pos_h368",
+        "perm_all_relale_ndim_h368",
+        "relale_oos_pos_h368",
+        "perm_all_relale_ndim_h368"
+      ],
+      "artifacts": [
+        "results/task_b_permutation.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "68b384c1feca",
@@ -1557,47 +1599,78 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "d56eb1de5a37",
+      "id": "9864bed62b09",
       "section": "5.6 Ensemble disagreement beats the trivial baseline",
-      "claim": "Disagreement wins at every horizon tested, and the intervals do not overlap.** The counter reaches {{d2b_idx_h368}} over the full rollout against disagreement's {{d2b_epi_h368}}.",
+      "claim": "Disagreement wins at every horizon tested.** The counter reaches {{d2b_idx_h368}} over the full rollout against disagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons.",
       "keys": [
         "d2b_idx_h368",
-        "d2b_epi_h368"
-      ],
-      "artifacts": [
-        "results/task_d_nind20.json"
-      ],
-      "n_keys": 2,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
-    },
-    {
-      "id": "41eae82eba6b",
-      "section": "5.6 Ensemble disagreement beats the trivial baseline",
-      "claim": "The index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons.",
-      "keys": [
+        "d2b_epi_h368",
         "d2b_n_index_wins",
         "d2b_n_horizons_tested"
       ],
       "artifacts": [
         "results/task_d_nind20.json"
       ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "4ef32d11164c",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "The paired difference \u2014 resampling whole trajectories and recomputing *both* correlations inside each draw \u2014 is the appropriate test and the more powerful one.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "90c1e7fdf6d0",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons.",
+      "keys": [
+        "d2p_n_separating",
+        "d2p_n_horizons"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
       "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
-      "id": "11120908bc44",
+      "id": "0418c199d02a",
       "section": "5.6 Ensemble disagreement beats the trivial baseline",
-      "claim": "The third column is the one that settles it.** Partialling the step index out of both variables leaves disagreement's correlation at {{d2b_par_all}}, against {{d2b_epi_all}} raw \u2014 a change of {{d2b_shrink_all}}.",
+      "claim": "At {{d2p_overlap_h}} the marginal intervals *do* overlap \u2014 it is the horizon where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest \u2014 and an earlier draft of this paper wrongly asserted that they never do.",
       "keys": [
-        "d2b_par_all",
-        "d2b_epi_all",
-        "d2b_shrink_all"
+        "d2p_overlap_h",
+        "d2b_idx_h128"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "601c072b2255",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "The paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero, but only just: {{d2p_narrowest_lo}} is the smallest lower bound in the table and we would not rest anything on that horizon alone.",
+      "keys": [
+        "d2p_diff_h128",
+        "d2p_ci_h128",
+        "d2p_narrowest_lo"
       ],
       "artifacts": [
         "results/task_d_nind20.json"
@@ -1605,8 +1678,26 @@
       "n_keys": 3,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "4f6fe448dd07",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "The third column is the one that settles it.** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}.",
+      "keys": [
+        "d2b_shrink_all_abs",
+        "d2b_epi_all",
+        "d2b_par_all"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "cb446a46b86b",
@@ -1740,23 +1831,60 @@
       "note": "results/task_d3_perhorizon.json design.trajectories_per_episode = {1: 2, 8: 2}; the smallness is the point and section 11 bounds the claim accordingly"
     },
     {
-      "id": "3ea8fb0aa0d0",
+      "id": "0ceb6498a950",
       "section": "5.7 One constant scalar does not fix it, but a per-horizon one does",
-      "claim": "Every held-out cell lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities; the worst is h={{d3_epi_worst_h}} on the epistemic term at {{d3_epi_worst_cov}}%.",
+      "claim": "Every held-out cell lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities.",
       "keys": [
         "d3_tol",
-        "d3_target",
-        "d3_epi_worst_h",
-        "d3_epi_worst_cov"
+        "d3_target"
       ],
       "artifacts": [
         "results/task_d3_perhorizon.json"
       ],
-      "n_keys": 4,
+      "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "2d00e293c70a",
+      "section": "5.7 One constant scalar does not fix it, but a per-horizon one does",
+      "claim": "The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_cov}}% \u2014 {{d3_worst_dev}} points off target.",
+      "keys": [
+        "d3_ncells_all",
+        "d3_worst_q",
+        "d3_worst_h",
+        "d3_worst_ep",
+        "d3_worst_cov",
+        "d3_worst_dev"
+      ],
+      "artifacts": [
+        "results/task_d3_perhorizon.json"
+      ],
+      "n_keys": 6,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "72026a79eedc",
+      "section": "5.7 One constant scalar does not fix it, but a per-horizon one does",
+      "claim": "The two largest deviations are both at h={{d3_worst_h}} on the aleatoric term, in opposite directions ({{d3_worst_cov}}% and {{d3_second_cov}}%), which is a mild sign that the fitted multiplier is least stable at that horizon.",
+      "keys": [
+        "d3_worst_h",
+        "d3_worst_cov",
+        "d3_second_cov"
+      ],
+      "artifacts": [
+        "results/task_d3_perhorizon.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "49405a99c548",
@@ -2300,23 +2428,57 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "5e3f8e590db3",
+      "id": "735250c082e5",
       "section": "9. Actionable lessons",
-      "claim": "Do not read it as a distance.** The scalar the method applies correlates {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the free alternative \u2014 the forecast step index \u2014 at every horizon we tested, and retains {{d2b_par_all}} once that index is partialled out (\u00a75.6).",
+      "claim": "And expect it to degrade with horizon.** At one forecast step it correlates {{d2_epi_h1}} {{d2_epi_ci_h1}} with realised error \u2014 very nearly a perfect ranking.",
       "keys": [
+        "d2_epi_h1",
+        "d2_epi_ci_h1"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "356a3e9ca687",
+      "section": "9. Actionable lessons",
+      "claim": "Over the full {{d1n_nind}}-trajectory rollout it falls to {{d4_r}} {{d4_ci}}.",
+      "keys": [
+        "d1n_nind",
         "d4_r",
-        "d4_ci",
-        "d4_nind",
+        "d4_ci"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "b0dfe727353e",
+      "section": "9. Actionable lessons",
+      "claim": "It still beats the free alternative \u2014 the forecast step index \u2014 at every horizon we tested, on a paired test that excludes zero at {{d2p_n_separating}} of {{d2p_n_horizons}}, and it retains {{d2b_par_all}} once that index is partialled out (\u00a75.6).",
+      "keys": [
+        "d2p_n_separating",
+        "d2p_n_horizons",
         "d2b_par_all"
       ],
       "artifacts": [
         "results/task_d_nind20.json"
       ],
-      "n_keys": 4,
+      "n_keys": 3,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "f3e167eb7b6f",
@@ -2592,20 +2754,21 @@
       "note": "same; section 5.2's four-model table retains the n=4 figure and says so, because that table compares our arms on their only fair arena"
     },
     {
-      "id": "bf0579ebb5f8",
+      "id": "e033754d6b05",
       "section": "12. Conclusion",
-      "claim": "The epistemic term the method actually penalises with is better by two orders of magnitude and still {{d1n_epi_ratio_h368}}\u00d7 overconfident where it is used.",
+      "claim": "The epistemic term the method actually penalises with is {{d1n_epi_over_alea_h368}}\u00d7 better and still {{d1n_epi_ratio_h368}}\u00d7 overconfident where it is used.",
       "keys": [
+        "d1n_epi_over_alea_h368",
         "d1n_epi_ratio_h368"
       ],
       "artifacts": [
         "results/task_d_nind20.json"
       ],
-      "n_keys": 1,
+      "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "d4837ca7c620",
@@ -2685,20 +2848,48 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "cc57cfe27e95",
+      "id": "71a087f1f60c",
       "section": "12. Conclusion",
-      "claim": "The released checkpoint's *aleatoric* head does the opposite, ranking backwards on every one of {{perm_all_relale_ndim_h368}} dimensions, and the corrected arm sits at chance.",
+      "claim": "The released checkpoint's *aleatoric* head does the opposite, and how strongly depends on the arena \u2014 a dependence worth stating rather than smoothing over.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "82198a728ff8",
+      "section": "12. Conclusion",
+      "claim": "Over all ten episodes (n_independent = {{relale_all_nind}}) it ranks error **inversely on every one of {{perm_all_relale_ndim_h368}} dimensions** at h=368; on the two held-out episodes alone (n_independent = {{relale_oos_nind}}, the arena \u00a75.5's table reports) it is {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}}, which is chance.",
       "keys": [
+        "relale_all_nind",
+        "perm_all_relale_ndim_h368",
+        "relale_oos_nind",
+        "relale_oos_pos_h368",
         "perm_all_relale_ndim_h368"
       ],
       "artifacts": [
         "results/task_b_permutation.json"
       ],
-      "n_keys": 1,
+      "n_keys": 5,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+    },
+    {
+      "id": "d8e0cf99008e",
+      "section": "12. Conclusion",
+      "claim": "The larger arena is the better-sampled one and its result is the stranger of the two: a \u03c3 that is not merely uninformative about error but anti-correlated with it.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
       "id": "933263d85098",

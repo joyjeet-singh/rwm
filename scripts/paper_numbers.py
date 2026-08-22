@@ -291,6 +291,9 @@ def main():
             put(f"d1n_{tg}_ndim_h{h}", m["n_finite_corr"], "results/task_d_nind20.json")
             put(f"d1n_{tg}_r_h{h}", f'{m["corr_mean"]:+.3f}', "results/task_d_nind20.json")
     _e1, _e368 = D["d1_by_horizon"]["1"], D["d1_by_horizon"]["368"]
+    # A5: quote the ratio itself rather than an orders-of-magnitude phrase. 600x is
+    # exact and generated; "two orders" and "nearly three orders" disagreed with
+    # each other across the abstract and section 12 while both described this value.
     put("d1n_epi_over_alea_h368",
         f'{_e368["aleatoric"]["ratio_err_over_sigma"]/_e368["epistemic"]["ratio_err_over_sigma"]:,.0f}',
         "results/task_d_nind20.json")
@@ -308,11 +311,44 @@ def main():
             put(f"d2b_{tg}_ci_{k}",
                 "n/a" if c["lo"] is None else f'[{c["lo"]:+.3f}, {c["hi"]:+.3f}]',
                 "results/task_d_nind20.json")
+    # A2: the PAIRED difference r(disagreement) - r(index), bootstrapped over whole
+    # trajectories with both correlations recomputed inside each draw. Replaces the
+    # marginal-overlap comparison, which is not the right test for two correlations
+    # measured on the same trajectories -- and which the artifact shows is false at
+    # h=128 anyway.
+    for h in ("8", "32", "128", "368", "all"):
+        r = D["d2_forecast_index"][h]
+        k = h if h == "all" else f"h{h}"
+        put(f"d2p_diff_{k}", f'{r["paired_diff"]:+.3f}', "results/task_d_nind20.json")
+        put(f"d2p_ci_{k}", f'[{r["paired_ci_lo"]:+.3f}, {r["paired_ci_hi"]:+.3f}]',
+            "results/task_d_nind20.json")
+    _sep = [h for h in ("8", "32", "128", "368")
+            if D["d2_forecast_index"][h]["paired_excludes_zero"]]
+    _ovl = [h for h in ("8", "32", "128", "368")
+            if D["d2_forecast_index"][h]["marginal_ci_overlap"]]
+    put("d2p_n_separating", len(_sep), "results/task_d_nind20.json")
+    put("d2p_n_horizons", 4, "results/task_d_nind20.json")
+    put("d2p_overlap_h", ", ".join(f"h={x}" for x in _ovl) or "none",
+        "results/task_d_nind20.json")
+    put("d2p_n_overlap", len(_ovl), "results/task_d_nind20.json")
+    _narrow = min(("8", "32", "128", "368"),
+                  key=lambda h: D["d2_forecast_index"][h]["paired_ci_lo"])
+    put("d2p_narrowest_h", _narrow, "results/task_d_nind20.json")
+    put("d2p_narrowest_lo", f'{D["d2_forecast_index"][_narrow]["paired_ci_lo"]:+.3f}',
+        "results/task_d_nind20.json")
+    # B: h=1, the strongest correlation anywhere in this project's data
+    _h1 = D["d2_forecast_index"]["1"]
+    put("d2_epi_h1", f'{_h1["r_epistemic"]:+.3f}', "results/task_d_nind20.json")
+    put("d2_epi_ci_h1", f'[{_h1["ci"]["epistemic"]["lo"]:+.3f}, '
+                        f'{_h1["ci"]["epistemic"]["hi"]:+.3f}]',
+        "results/task_d_nind20.json")
     _dw = [h for h in ("8", "32", "128", "368") if D["d2_forecast_index"][h]["index_wins"]]
     put("d2b_n_index_wins", len(_dw), "results/task_d_nind20.json")
     put("d2b_n_horizons_tested", 4, "results/task_d_nind20.json")
     _all = D["d2_forecast_index"]["all"]
     put("d2b_shrink_all", f'{_all["r_epistemic"] - _all["r_partial"]:+.3f}',
+        "results/task_d_nind20.json")
+    put("d2b_shrink_all_abs", f'{abs(_all["r_epistemic"] - _all["r_partial"]):.3f}',
         "results/task_d_nind20.json")
 
     # D4 -- the penalty correlation, with an interval and an n at last
@@ -339,6 +375,22 @@ def main():
         put(f"d3_{tg}_c_lo", f"{_cs[0]:.4g}", "results/task_d3_perhorizon.json")
         put(f"d3_{tg}_c_hi", f"{_cs[-1]:.4g}", "results/task_d3_perhorizon.json")
     put("d3_target", f'{100*D3["target_coverage"]:.2f}', "results/task_d3_perhorizon.json")
+    # A4: the worst cell over ALL held-out cells, not the worst within one quantity.
+    # The per-quantity verdict blocks each name their own worst; the paper quoted
+    # the epistemic one as if it were the overall worst, and it is third.
+    _all_cells = [(abs(f["coverage_after"] - D3["target_coverage"]), q, f)
+                  for q in D3["quantities"]
+                  for f in D3["quantities"][q]["fits"]]
+    _all_cells.sort(key=lambda x: -x[0])
+    _w = _all_cells[0]
+    put("d3_ncells_all", len(_all_cells), "results/task_d3_perhorizon.json")
+    put("d3_worst_q", _w[1], "results/task_d3_perhorizon.json")
+    put("d3_worst_h", _w[2]["h"], "results/task_d3_perhorizon.json")
+    put("d3_worst_ep", _w[2]["fit_episode"], "results/task_d3_perhorizon.json")
+    put("d3_worst_cov", f'{100*_w[2]["coverage_after"]:.2f}', "results/task_d3_perhorizon.json")
+    put("d3_worst_dev", f'{100*_w[0]:.2f}', "results/task_d3_perhorizon.json")
+    put("d3_second_cov", f'{100*_all_cells[1][2]["coverage_after"]:.2f}',
+        "results/task_d3_perhorizon.json")
     _tp = D3["design"]["trajectories_per_episode"]
     put("d3_neps", len(_tp), "results/task_d3_perhorizon.json")
     put("d3_nind_fit", min(_tp.values()), "results/task_d3_perhorizon.json")
@@ -508,6 +560,19 @@ def main():
                 _rat = r["p_permutation"] / max(r["p_binomial_two_sided"], 1e-300)
                 if r["observed"] > r["n_dims"] / 2 and (_big is None or _rat > _big[0]):
                     _big = (_rat, _ar, _lab, _h, r)
+    # A1: the released aleatoric head's direction is arena-dependent and the paper
+    # asserted the all-episodes result while its table printed the out-of-sample
+    # one. Both are surfaced here so each citation can name its arena.
+    _ra = PM["arenas"]
+    for _pre, _ar in (("oos", "out-of-sample"), ("ins", "in-sample"), ("all", "all-episodes")):
+        _r = _ra[_ar]["models"]["released aleatoric"]["368"]
+        put(f"relale_{_pre}_pos_h368", _r["observed"], "results/task_b_permutation.json")
+        put(f"relale_{_pre}_neg_h368", _r["n_dims"] - _r["observed"],
+            "results/task_b_permutation.json")
+    put("relale_all_nind", _ra["all-episodes"]["n_independent"],
+        "results/task_b_permutation.json")
+    put("relale_oos_nind", _ra["out-of-sample"]["n_independent"],
+        "results/task_b_permutation.json")
     put("perm_ngroups", PM["arenas"]["out-of-sample"]["models"]["released EPISTEMIC"]["368"]["n_groups"],
         "results/task_b_permutation.json")
     _r, _ar, _lab, _h, _rec = _big

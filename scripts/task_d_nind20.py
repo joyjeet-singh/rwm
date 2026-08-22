@@ -173,7 +173,7 @@ def main():
 
     print("  D2 — the forecast-index baseline the follow-up never ran")
     hdr2 = (f"  {'h':>5} {'r(index, |err|)':>26} {'r(epistemic, |err|)':>30} "
-            f"{'partial r(epi,|err| . index)':>32}")
+            f"{'partial r(epi,|err| . index)':>32} {'PAIRED diff [95% CI]':>26}")
     print(hdr2); print("  " + "-" * (len(hdr2) - 2))
     for h in list(HORIZONS) + ["all"]:
         k = T if h == "all" else min(h, T)
@@ -186,16 +186,37 @@ def main():
                        ("partial", lambda i: partial_corr(S_[i], E_[i], F_[i]))):
             lo, hi, nb = cluster_boot(fn, n_traj, np.random.default_rng(0))
             ci[nm] = {"lo": lo, "hi": hi, "n_boot_finite": nb}
+        # PAIRED difference, resampling whole trajectories and recomputing BOTH
+        # correlations inside each draw. Two marginal intervals overlapping is not
+        # evidence of no difference when both are measured on the same
+        # trajectories -- the draws are correlated, and the paired test is both
+        # correct for this design and more powerful. The marginal intervals
+        # overlap at h=128; this is the test that decides whether that matters.
+        def _pair(i):
+            a, b = pooled_corr(S_[i], E_[i]), pooled_corr(F_[i], E_[i])
+            return None if (a is None or b is None) else a - b
+        d_obs = (None if (r_epi is None or r_idx is None) else r_epi - r_idx)
+        d_lo, d_hi, d_nb = cluster_boot(_pair, n_traj, np.random.default_rng(0))
         rec = {"horizon": h, "n_steps": int(k), "n_independent": n_ind,
                "r_index": r_idx, "r_epistemic": r_epi, "r_partial": r_par,
                "ci": ci,
+               "marginal_ci_overlap": (
+                   None if r_idx is None else
+                   not (ci["index"]["hi"] < ci["epistemic"]["lo"]
+                        or ci["epistemic"]["hi"] < ci["index"]["lo"])),
+               "paired_diff": d_obs, "paired_ci_lo": d_lo, "paired_ci_hi": d_hi,
+               "paired_n_boot_finite": d_nb,
+               "paired_excludes_zero": (d_lo is not None and d_lo > 0),
                "index_wins": (r_idx is not None and r_epi is not None
                               and abs(r_idx) >= abs(r_epi))}
         out["d2_forecast_index"][str(h)] = rec
         f = lambda v, c: (f"{v:+.3f} [{c['lo']:+.3f}, {c['hi']:+.3f}]"
                           if v is not None and c['lo'] is not None else "n/a")
+        pd_ = ("n/a" if d_obs is None else
+               f"{d_obs:+.3f} [{d_lo:+.3f}, {d_hi:+.3f}]")
         print(f"  {str(h):>5} {f(r_idx, ci['index']):>26} {f(r_epi, ci['epistemic']):>30} "
-              f"{f(r_par, ci['partial']):>32}"
+              f"{f(r_par, ci['partial']):>32} {pd_:>26}"
+              + ("   OVERLAP" if rec["marginal_ci_overlap"] else "")
               + ("   <-- COUNTER WINS" if rec["index_wins"] else ""))
     print()
 
