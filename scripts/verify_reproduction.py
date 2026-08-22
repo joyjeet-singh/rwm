@@ -29,11 +29,34 @@ TIMING = ("wall_clock", "s_per_iter", "elapsed_s", "_time")
 # not catch proj_500_s, proj_2500_s, peak_rss_mb or std, so this file alone produced
 # every difference in the first honest clean-clone comparison.
 MACHINE_FILES = ("step4_5_timing.json",)
+
+
+def time_bounded(d):
+    """True if this artifact's run stopped on a WALL-CLOCK budget rather than its
+    iteration cap, which makes its iteration count and terminal losses a property
+    of the host, not the model.
+
+    Derived from the artifact instead of hardcoded by filename, because it is not a
+    property of the file -- it is a property of the run. step4_4_overfit_b32lr1e3
+    and step4_4_overfit_ens1 come from the same script: the first was given a
+    100,000 s budget and stopped at its 2,000-iteration cap, so it reproduces
+    bitwise and IS checked; the second was given 2,700 s and stopped at 451
+    iterations on one machine and 514 on another, so it is not comparable and is
+    excluded. Excluding by filename would have dropped the reproducible one too.
+    """
+    try:
+        c = d.get("config") or {}
+        cap, budget, ran = c.get("iters"), c.get("max_seconds"), d.get("iterations_run")
+        return (cap is not None and budget is not None and ran is not None
+                and ran < cap)
+    except Exception:
+        return False
 regen=set()
 _rl=os.path.join(A,"_regenerated.txt")
 if os.path.exists(_rl):
     regen={l.strip() for l in open(_rl) if l.strip()}
 tot=exact=close=diff=timing=nans=0; report=[]; dropped=[]; machine=0
+time_bounded_files=[]      # excluded because the RUN was wall-clock bounded
 c_tot=c_exact=c_diff=0     # files present in the clone but never rewritten
 for fn in sorted(os.listdir(B)):
     if not fn.endswith(".json"): continue
@@ -42,8 +65,10 @@ for fn in sorted(os.listdir(B)):
     try: da, db = json.load(open(pa)), json.load(open(pb))
     except Exception: continue
     ma, mb = dict(flat(da)), dict(flat(db))
-    if fn in MACHINE_FILES:
+    if fn in MACHINE_FILES or time_bounded(db) or time_bounded(da):
         machine += sum(1 for k in mb if k in ma)
+        if fn not in MACHINE_FILES:
+            time_bounded_files.append(fn)
         continue
     is_regen = (not regen) or (fn in regen)
     # A key in the committed file with no counterpart in the regenerated one is a
@@ -75,6 +100,12 @@ print(f"  regenerated-file values compared : {tot}"
       + ("" if regen else "   (no results/_regenerated.txt -- ALL files treated as regenerated)"))
 print(f"    of which NaN in both  : {nans}  (counted identical: NaN != NaN in IEEE 754)")
 print(f"  machine-measurement files excluded : {machine} values in {', '.join(MACHINE_FILES)}")
+if time_bounded_files:
+    print(f"  wall-clock-bounded runs excluded   : {len(time_bounded_files)} file(s) -- "
+          f"{', '.join(time_bounded_files)}")
+    print("      (stopped on --max-seconds, not the iteration cap, so the iteration count and")
+    print("       terminal losses measure the host; sibling runs from the same script that")
+    print("       reached their cap ARE checked, and reproduce bitwise)")
 print(f"  timing fields excluded  : {timing}  (machine-dependent by design, see README)")
 print(f"  bitwise identical       : {exact} ({100*exact/max(tot,1):.2f}%)")
 print(f"  identical to 1e-9       : {close}")
@@ -97,7 +128,8 @@ json.dump({"regenerated_files": sorted(regen), "values_compared": tot,
            "copied_file_values": c_tot, "copied_identical": c_exact,
            "copied_differing": c_diff,
            "machine_file_values_excluded": machine,
-           "machine_files": list(MACHINE_FILES)},
+           "machine_files": list(MACHINE_FILES),
+           "time_bounded_files_excluded": time_bounded_files},
           open(os.path.join(B, "verify_reproduction.json"), "w"), indent=2)
 print(f"\n  wrote {os.path.join(B, 'verify_reproduction.json')}")
 ok = (diff == 0) and not dropped

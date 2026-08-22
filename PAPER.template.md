@@ -396,7 +396,7 @@ accurate — while still falling short at the far end.
 
 The reason is §5.8's mechanism: a constant multiplier cannot track an error that grows while σ does not. So "right shape, wrong scale" is the charitable reading of these tables, and for a *constant* scale it does not survive.
 
-**A per-horizon scalar does work, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it:
+**A per-horizon scalar does work, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute {{d3_nind_tot}} non-overlapping 400-step trajectories between them, so each direction fits on n_independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fit}}:
 
 | quantity | held-out cells within {{d3_tol}} points of {{d3_target}}%, per-horizon c | same, constant c | range of fitted c |
 |---|---|---|---|
@@ -571,10 +571,11 @@ verdict survives. Both units are reported.
 
 **Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and
 {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical
-({{ver_pct}}%), {{ver_differing}} differing. Excluded and reported separately: {{ver_timing}} timing fields, and the
-{{ver_machine}} values in `results/step4_5_timing.json`. That file is the CPU budget — projected
-runtimes for configurations we did not run, peak resident memory, and the standard deviation
-across repeats — and every number in it measures the host rather than the model. It cannot reproduce bitwise on a different machine, or on the same machine under different load. The file records this about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}), on one machine, within a single measurement session.
+({{ver_pct}}%), {{ver_differing}} differing. Two things are excluded, on the same principle: the number measures the machine, not the model.
+
+*The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) — on one machine, within a single measurement session.
+
+*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, reaching {{ver_tb_ran}} iterations on the machine that produced the committed copy and a different count on the machine that regenerated it. Its iteration count and terminal losses are therefore a property of the host. **Its sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise. Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact — a run that stopped short of its own cap was time-bounded.
 
 ---
 

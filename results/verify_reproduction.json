@@ -2,12 +2,16 @@
   "regenerated_files": [
     "batch1_post_retraction.json",
     "manifest.json",
+    "paper_numbers.json",
+    "part_f_gate.json",
     "step0_strat.json",
     "step2_acceptance.json",
     "step4_0a_results.json",
     "step4_3_differential.json",
     "step4_4_overfit_b32lr1e3.json",
+    "step4_4_overfit_ens1.json",
     "step4_5_timing.json",
+    "step5_6_overfit_floor.json",
     "task1_action_convention.json",
     "task1b_pd_law.json",
     "task1c_policy.json",
@@ -18,19 +22,26 @@
     "task3_hardening.json",
     "task3b_convergence.json",
     "task5_differential.json",
-    "taskAB_gate_r27.json"
+    "taskAB_gate_r27.json",
+    "task_c1_claims_audit.json",
+    "task_d2b_robustness.json",
+    "task_d3_perhorizon.json",
+    "task_d_nind20.json"
   ],
-  "values_compared": 4804,
-  "bitwise_identical": 4804,
+  "values_compared": 5928,
+  "bitwise_identical": 5928,
   "identical_to_1e-9": 0,
   "differing": 0,
-  "timing_excluded": 2362,
+  "timing_excluded": 3972,
   "nan_in_both": 4,
-  "copied_file_values": 424883,
-  "copied_identical": 424877,
-  "copied_differing": 6,
-  "machine_file_values_excluded": 22,
+  "copied_file_values": 705853,
+  "copied_identical": 705841,
+  "copied_differing": 12,
+  "machine_file_values_excluded": 584,
   "machine_files": [
     "step4_5_timing.json"
+  ],
+  "time_bounded_files_excluded": [
+    "step4_4_overfit_ens1.json"
   ]
 }

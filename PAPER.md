@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     343 values substituted from 38 artifacts. -->
+     349 values substituted from 38 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -408,7 +408,7 @@ accurate — while still falling short at the far end.
 
 The reason is §5.8's mechanism: a constant multiplier cannot track an error that grows while σ does not. So "right shape, wrong scale" is the charitable reading of these tables, and for a *constant* scale it does not survive.
 
-**A per-horizon scalar does work, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it:
+**A per-horizon scalar does work, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute 4 non-overlapping 400-step trajectories between them, so each direction fits on n_independent = 2 and is scored on the other 2:
 
 | quantity | held-out cells within 10 points of 68.27%, per-horizon c | same, constant c | range of fitted c |
 |---|---|---|---|
@@ -547,7 +547,7 @@ the work.
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-(178 entries). Claims are never edited in place. A claim that turns out to be wrong is
+(179 entries). Claims are never edited in place. A claim that turns out to be wrong is
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data
@@ -581,12 +581,13 @@ correctly — carrying all seeds with each draw — widens intervals by a mean f
 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon
 verdict survives. Both units are reported.
 
-**Reproducibility.** `./reproduce.sh --quick --force` regenerates 19 artifact files and
-4,804 numeric values from a clean clone, 4,804 of them bitwise identical
-(100.00%), 0 differing. Excluded and reported separately: 2,362 timing fields, and the
-22 values in `results/step4_5_timing.json`. That file is the CPU budget — projected
-runtimes for configurations we did not run, peak resident memory, and the standard deviation
-across repeats — and every number in it measures the host rather than the model. It cannot reproduce bitwise on a different machine, or on the same machine under different load. The file records this about itself: across its 4 configurations the standard deviation of seconds-per-iteration across repeats runs from 5% to 32% of the mean (ens1_bs256), on one machine, within a single measurement session.
+**Reproducibility.** `./reproduce.sh --quick --force` regenerates 27 artifact files and
+5,928 numeric values from a clean clone, 5,928 of them bitwise identical
+(100.00%), 0 differing. Two things are excluded, on the same principle: the number measures the machine, not the model.
+
+*The CPU budget.* 3,972 timing fields and the 584 values of `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its 4 configurations the standard deviation of seconds-per-iteration across repeats runs from 5% to 32% of the mean (ens1_bs256) — on one machine, within a single measurement session.
+
+*One wall-clock-bounded diagnostic.* `results/step4_4_overfit_ens1.json` stops after 2,700 seconds rather than at its 2,000-iteration cap, reaching 451 iterations on the machine that produced the committed copy and a different count on the machine that regenerated it. Its iteration count and terminal losses are therefore a property of the host. **Its sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise. Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact — a run that stopped short of its own cap was time-bounded.
 
 ---
 

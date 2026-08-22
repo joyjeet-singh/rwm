@@ -1,7 +1,7 @@
 {
-  "n_claims": 165,
+  "n_claims": 167,
   "by_verdict": {
-    "SUPPORTED": 165
+    "SUPPORTED": 167
   },
   "claims": [
     {
@@ -958,7 +958,7 @@
         "n_runs"
       ],
       "artifacts": [
-        "runs/ directory listing"
+        "results/step5_arm*.json"
       ],
       "n_keys": 1,
       "generated": true,
@@ -1722,6 +1722,24 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
+      "id": "08f7b5d4ff11",
+      "section": "5.7 One constant scalar does not fix it, but a per-horizon one does",
+      "claim": "The two held-out episodes contribute {{d3_nind_tot}} non-overlapping 400-step trajectories between them, so each direction fits on n_independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fit}}:",
+      "keys": [
+        "d3_nind_tot",
+        "d3_nind_fit",
+        "d3_nind_fit"
+      ],
+      "artifacts": [
+        "results/task_d3_perhorizon.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 2 per fit direction; 4 non-overlapping 400-step trajectories across the two held-out episodes",
+      "note": "results/task_d3_perhorizon.json design.trajectories_per_episode = {1: 2, 8: 2}; the smallness is the point and section 11 bounds the claim accordingly"
+    },
+    {
       "id": "3ea8fb0aa0d0",
       "section": "5.7 One constant scalar does not fix it, but a per-horizon one does",
       "claim": "Every held-out cell lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities; the worst is h={{d3_epi_worst_h}} on the epistemic term at {{d3_epi_worst_cov}}%.",
@@ -2198,9 +2216,9 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "304f894f3cd3",
+      "id": "f0e7b09f6f99",
       "section": "8. Method",
-      "claim": "Excluded and reported separately: {{ver_timing}} timing fields, and the {{ver_machine}} values in `results/step4_5_timing.json`.",
+      "claim": "The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` \u2014 projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats.",
       "keys": [
         "ver_timing",
         "ver_machine"
@@ -2211,25 +2229,13 @@
       "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "sample_size": "clean-clone comparison, 27 regenerated files",
+      "note": "results/verify_reproduction.json timing_excluded=3972, machine_file_values_excluded=584"
     },
     {
-      "id": "ccf8cda42bd8",
+      "id": "45c8c028f002",
       "section": "8. Method",
-      "claim": "That file is the CPU budget \u2014 projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats \u2014 and every number in it measures the host rather than the model.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "-",
-      "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
-    },
-    {
-      "id": "ede32a03443a",
-      "section": "8. Method",
-      "claim": "The file records this about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}), on one machine, within a single measurement session.",
+      "claim": "It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) \u2014 on one machine, within a single measurement session.",
       "keys": [
         "time_cfgs",
         "time_rel_lo",
@@ -2242,8 +2248,40 @@
       "n_keys": 4,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "results/step4_5_timing.json: std/s_per_iter per configuration is 5.4%% (ens5_bs256), 11.3%% (ens1_bs1024), 14.3%% (ens5_bs1024), 31.8%% (ens1_bs256); min and max reported, worst named"
+      "sample_size": "clean-clone comparison, 27 regenerated files",
+      "note": "results/step4_5_timing.json: std/s_per_iter per config spans 5.4% (ens5_bs256) to 31.8% (ens1_bs256)"
+    },
+    {
+      "id": "5a6825a05e74",
+      "section": "8. Method",
+      "claim": "One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, reaching {{ver_tb_ran}} iterations on the machine that produced the committed copy and a different count on the machine that regenerated it.",
+      "keys": [
+        "ver_timebound",
+        "ver_tb_budget",
+        "ver_tb_cap",
+        "ver_tb_ran"
+      ],
+      "artifacts": [
+        "results/step4_4_overfit_ens1.json",
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "clean-clone comparison, 27 regenerated files",
+      "note": "results/step4_4_overfit_ens1.json config.max_seconds=2700, config.iters=2000, iterations_run=451; the clone run reached 514, hence the exclusion"
+    },
+    {
+      "id": "84b8f57e0683",
+      "section": "8. Method",
+      "claim": "Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact \u2014 a run that stopped short of its own cap was time-bounded.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "clean-clone comparison, 27 regenerated files",
+      "note": "scripts/verify_reproduction.py time_bounded(): excludes when iterations_run < config.iters; step4_4_overfit_b32lr1e3.json (2001 of a 2000 cap) is NOT excluded and reproduces bitwise"
     },
     {
       "id": "7b4068efe820",

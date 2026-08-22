@@ -1503,6 +1503,18 @@
     "source": "results/task_d3_perhorizon.json",
     "value": 1
   },
+  "d3_neps": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 2
+  },
+  "d3_nind_fit": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 2
+  },
+  "d3_nind_tot": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 4
+  },
   "d3_target": {
     "source": "results/task_d3_perhorizon.json",
     "value": "68.27"
@@ -1697,7 +1709,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 178
+    "value": 179
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",
@@ -1744,7 +1756,7 @@
     "value": "Six"
   },
   "n_runs": {
-    "source": "runs/ directory listing",
+    "source": "results/step5_arm*.json",
     "value": 21
   },
   "n_superseded": {
@@ -3873,27 +3885,47 @@
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 19
+    "value": 27
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "4,804"
+    "value": "5,928"
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
-    "value": 22
+    "value": 584
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
     "value": "100.00"
   },
+  "ver_tb_budget": {
+    "source": "results/step4_4_overfit_ens1.json",
+    "value": "2,700"
+  },
+  "ver_tb_cap": {
+    "source": "results/step4_4_overfit_ens1.json",
+    "value": "2,000"
+  },
+  "ver_tb_ran": {
+    "source": "results/step4_4_overfit_ens1.json",
+    "value": 451
+  },
+  "ver_timebound": {
+    "source": "results/verify_reproduction.json",
+    "value": "`results/step4_4_overfit_ens1.json`"
+  },
+  "ver_timebound_n": {
+    "source": "results/verify_reproduction.json",
+    "value": 1
+  },
   "ver_timing": {
     "source": "results/verify_reproduction.json",
-    "value": "2,362"
+    "value": "3,972"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "4,804"
+    "value": "5,928"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

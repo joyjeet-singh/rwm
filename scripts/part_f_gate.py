@@ -101,9 +101,16 @@ def main():
     # certify the working copy, which is not what this check is for -- the same
     # class of mistake as M-35, where a check and its artifact came from two
     # different paths.
+    # verify_reproduction.py writes its output into the COMMITTED tree (its second
+    # argument), not into the clone, so the artifact of record is always the
+    # in-tree one. CLONE_RESULTS locates the clone's _regenerated.txt, which is
+    # what the freshness assertion below compares against -- the in-tree artifact
+    # must post-date the run that produced it, or it is a stale copy from an
+    # earlier comparison. An earlier version of this check read the CLONE's
+    # verify_reproduction.json, which is a carried-in file the pipeline never
+    # rewrites, and so could only ever have failed.
     clone = os.environ.get("CLONE_RESULTS", "")
-    vp = os.path.join(clone, "verify_reproduction.json") if clone else \
-        os.path.join(R.RESULTS, "verify_reproduction.json")
+    vp = os.path.join(R.RESULTS, "verify_reproduction.json")
     v = json.load(open(vp)) if os.path.exists(vp) else None
     if v:
         # M-28: a clean clone already CONTAINS results/, so a verifier that does
@@ -125,8 +132,8 @@ def main():
             # directory, which contains the author's name, and this detail string
             # is written into results/part_f_gate.json -- which ships in the
             # supplementary archive. The archive builder caught exactly that.
-            f"read {os.path.basename(vp)} from "
-            f"{'the clone' if clone else 'THE WORKING TREE [not a clone: set CLONE_RESULTS]'}: "
+            f"{os.path.basename(vp)} vs "
+            f"{'the clone run at ' + os.path.basename(os.path.dirname(clone)) if clone else 'NO CLONE GIVEN [set CLONE_RESULTS]'}: "
             f"{len(v['regenerated_files'])} files regenerated, "
             f"{nregen:,} values, {v['bitwise_identical']:,} identical, "
             f"{v['differing']} differing; carried-in partition "

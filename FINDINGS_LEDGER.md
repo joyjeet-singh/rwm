@@ -4046,6 +4046,51 @@ and `paper_numbers.py` already knows the full list of artifacts it reads.
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+
+### M-41 — What the clean clone found that the working tree could not · **NEW**
+Part F's check 4 is the only check in this project that runs the code somewhere the author's
+machine state cannot help it. Run properly — clone at a commit, `./reproduce.sh --quick --force`,
+compare against **that commit's** `results/`, not the working tree — it found two things nothing
+else could.
+
+**1. A clean clone built a paper that said "Across 0 runs the collapse is linear."**
+`n_runs` was counted from a listing of `runs/`. `runs/` is gitignored. In the working tree the
+directory is full and the count is 21; in a clone it is empty and the count is **0**, and the
+sentence built cleanly around it. No placeholder was unresolved, no assertion fired, the paper
+compiled, and every gate passed — on a machine where the directory happened to exist.
+
+This is the third instance of one bug. `n_defects` counted a section number that moved (M-36);
+`n_runs` counted a directory that is not shipped. In both cases the *derivation* succeeded and
+returned a wrong answer, which no number-provenance discipline detects, because the number does
+have a provenance — it is just the wrong one. **The rule that follows: a derived count must be
+read from something the repository actually contains.** `n_runs` now counts
+`results/step5_arm*.json`, which is committed, and asserts the list is non-empty.
+
+**2. One artifact does not reproduce, for a reason worth stating rather than suppressing.**
+`step4_4_overfit_ens1.json` stops on a wall-clock budget of 2,700 seconds rather than at
+its 2,000-iteration cap. It reached
+451 iterations on the machine that produced the committed copy and 514 on the one that
+regenerated it, so its iteration count and every terminal loss below it differ.
+
+**The tempting fix is wrong.** Adding `step4_4_overfit_*.json` to the excluded-files list would
+also have dropped `step4_4_overfit_b32lr1e3.json` — the sibling the paper actually cites, which
+was given a 100,000-second budget, reached its cap at 2,001 iterations, and reproduces **bitwise**.
+Excluding by filename would have silently removed a reproducible result to hide an irreproducible
+one. The verifier now decides from the artifact instead: a run whose `iterations_run` is below its
+own `config.iters` was time-bounded, and only that run is excluded.
+
+**Result after both fixes:** 27 files regenerated,
+**5,928 values, 5,928 bitwise identical (100.00%), 0
+differing, 0 deletions**, with 3,972 timing fields, 584
+values of the CPU-budget file and one wall-clock-bounded diagnostic excluded and named.
+
+**Why the count rose from 19 to 27:** M-40 added the four Part B and D
+scripts to `reproduce.sh`, three of which run in a clean clone.
+**Evidence** `RUN` `results/verify_reproduction.json`, `scripts/verify_reproduction.py`,
+`scripts/paper_numbers.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
 ### S-15 — The binomial P-values attached to every dimension count · **NEW**
 **Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand
 **What is retracted:** the step from a sign count to a P-value under a fair-coin binomial null,

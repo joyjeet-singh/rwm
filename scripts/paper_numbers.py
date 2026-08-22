@@ -156,6 +156,17 @@ def main():
     put("ver_differing", ver["differing"], "results/verify_reproduction.json")
     put("ver_timing", f'{ver["timing_excluded"]:,}', "results/verify_reproduction.json")
     put("ver_machine", ver["machine_file_values_excluded"], "results/verify_reproduction.json")
+    _tb = ver.get("time_bounded_files_excluded", [])
+    put("ver_timebound_n", len(_tb), "results/verify_reproduction.json")
+    put("ver_timebound", ", ".join(f"`results/{x}`" for x in _tb) or "none",
+        "results/verify_reproduction.json")
+    # the committed iteration count of the wall-clock-bounded diagnostic, and the
+    # cap it never reached -- both read from the artifact rather than typed
+    if _tb:
+        _ov = J(_tb[0])
+        put("ver_tb_ran", _ov["iterations_run"], f"results/{_tb[0]}")
+        put("ver_tb_cap", f'{_ov["config"]["iters"]:,}', f"results/{_tb[0]}")
+        put("ver_tb_budget", f'{_ov["config"]["max_seconds"]:,.0f}', f"results/{_tb[0]}")
     put("diff_terms", dif.get("n_terms", 7), "results/step4_3_differential.json")
     t5d = J("task5_differential.json")
     import re as _re
@@ -179,8 +190,14 @@ def main():
         "results/task5_analysis.json + results/step6_analysis.json")
 
     # --- run inventory -----------------------------------------------------
-    runs = sorted(os.path.basename(p) for p in glob.glob("runs/arm*"))
-    put("n_runs", len(runs), "runs/ directory listing")
+    # Counted from the COMMITTED run artifacts, not from a listing of runs/.
+    # runs/ is gitignored, so in a clean clone the listing is empty and this
+    # silently became 0 -- building a paper that said "Across 0 runs the collapse
+    # is linear". Same failure as n_defects (M-36): a derived number whose source
+    # can vanish without the derivation failing. The assert makes it fail loudly.
+    runs = sorted(glob.glob("results/step5_arm*.json"))
+    assert runs, "no results/step5_arm*.json -- cannot count training runs"
+    put("n_runs", len(runs), "results/step5_arm*.json")
     put("n_entries", len(subprocess.run(
         ["grep", "-c", "^### [A-Z]-", "FINDINGS_LEDGER.md"],
         capture_output=True, text=True).stdout.strip() or "0") and int(subprocess.run(
@@ -322,6 +339,10 @@ def main():
         put(f"d3_{tg}_c_lo", f"{_cs[0]:.4g}", "results/task_d3_perhorizon.json")
         put(f"d3_{tg}_c_hi", f"{_cs[-1]:.4g}", "results/task_d3_perhorizon.json")
     put("d3_target", f'{100*D3["target_coverage"]:.2f}', "results/task_d3_perhorizon.json")
+    _tp = D3["design"]["trajectories_per_episode"]
+    put("d3_neps", len(_tp), "results/task_d3_perhorizon.json")
+    put("d3_nind_fit", min(_tp.values()), "results/task_d3_perhorizon.json")
+    put("d3_nind_tot", sum(_tp.values()), "results/task_d3_perhorizon.json")
 
     # Section 9 opens by counting its own lessons. It said "Four" while carrying a
     # different number after Part D added two; count the bold leads instead.

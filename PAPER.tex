@@ -285,7 +285,7 @@ Fitting at one step works at one step and nowhere else. On the epistemic term --
 
 The reason is \S{}5.8's mechanism: a constant multiplier cannot track an error that grows while $\sigma$ does not. So "right shape, wrong scale" is the charitable reading of these tables, and for a \emph{constant} scale it does not survive.
 
-\textbf{A per-horizon scalar does work, and this is the one concrete remedy in this paper.} Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it:
+\textbf{A per-horizon scalar does work, and this is the one concrete remedy in this paper.} Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute 4 non-overlapping 400-step trajectories between them, so each direction fits on n\_independent = 2 and is scored on the other 2:
 
 \begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
 \begin{tabular}{llll}
@@ -370,7 +370,7 @@ So the finding is not that the release is internally inconsistent. It is that \t
 
 \section{Method}
 
-\textbf{An append-only ledger.} Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (178 entries). Claims are never edited in place. A claim that turns out to be wrong is marked superseded, with a pointer to what replaced it, and kept.
+\textbf{An append-only ledger.} Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (179 entries). Claims are never edited in place. A claim that turns out to be wrong is marked superseded, with a pointer to what replaced it, and kept.
 
 \textbf{Pre-registration, and one failure of it.} Decision rules were committed to git before the data that tested them --- with one exception, which we report below. Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by 1.3 hours, the flip-pattern rule by 4.8 hours, the difficulty-bias rule by 5 minutes, the long-horizon rule by 2 minutes.
 
@@ -382,7 +382,11 @@ Two further retractions are \textbf{not} among those six, because they withdraw 
 
 \textbf{A statistic that was resampling the wrong unit.} Our bootstrap pooled three training seeds over a shared set of evaluation trajectories and resampled the pooled vector, while reporting the independent-trajectory count. Each trajectory appeared three times. Resampling trajectories correctly --- carrying all seeds with each draw --- widens intervals by a mean factor of 1.42$\times$ (range 0.96--1.69) and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives. Both units are reported.
 
-\textbf{Reproducibility.} \texttt{./reproduce.sh --quick --force} regenerates 19 artifact files and 4,804 numeric values from a clean clone, 4,804 of them bitwise identical (100.00\%), 0 differing. Excluded and reported separately: 2,362 timing fields, and the 22 values in \texttt{results/step4\_5\_timing.json}. That file is the CPU budget --- projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats --- and every number in it measures the host rather than the model. It cannot reproduce bitwise on a different machine, or on the same machine under different load. The file records this about itself: across its 4 configurations the standard deviation of seconds-per-iteration across repeats runs from 5\% to 32\% of the mean (ens1\_bs256), on one machine, within a single measurement session.
+\textbf{Reproducibility.} \texttt{./reproduce.sh --quick --force} regenerates 27 artifact files and 5,928 numeric values from a clean clone, 5,928 of them bitwise identical (100.00\%), 0 differing. Two things are excluded, on the same principle: the number measures the machine, not the model.
+
+\emph{The CPU budget.} 3,972 timing fields and the 584 values of \texttt{results/step4\_5\_timing.json} --- projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its 4 configurations the standard deviation of seconds-per-iteration across repeats runs from 5\% to 32\% of the mean (ens1\_bs256) --- on one machine, within a single measurement session.
+
+\emph{One wall-clock-bounded diagnostic.} \texttt{results/step4\_4\_overfit\_ens1.json} stops after 2,700 seconds rather than at its 2,000-iteration cap, reaching 451 iterations on the machine that produced the committed copy and a different count on the machine that regenerated it. Its iteration count and terminal losses are therefore a property of the host. \textbf{Its sibling from the same script is not excluded}: that run reaches its cap, and reproduces bitwise. Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact --- a run that stopped short of its own cap was time-bounded.
 
 
 \section{Actionable lessons}

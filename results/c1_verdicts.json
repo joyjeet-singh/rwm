@@ -37,6 +37,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "08f7b5d4ff11": {
+    "note": "results/task_d3_perhorizon.json design.trajectories_per_episode = {1: 2, 8: 2}; the smallness is the point and section 11 bounds the claim accordingly",
+    "sample_size": "n_independent = 2 per fit direction; 4 non-overlapping 400-step trajectories across the two held-out episodes",
+    "verdict": "SUPPORTED"
+  },
   "0aa88aa0cb0d": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
@@ -305,6 +310,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "45c8c028f002": {
+    "note": "results/step4_5_timing.json: std/s_per_iter per config spans 5.4% (ens5_bs256) to 31.8% (ens1_bs256)",
+    "sample_size": "clean-clone comparison, 27 regenerated files",
+    "verdict": "SUPPORTED"
+  },
   "45e41d1bfaac": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -391,6 +401,11 @@
   "5a073c0c6776": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "5a6825a05e74": {
+    "note": "results/step4_4_overfit_ens1.json config.max_seconds=2700, config.iters=2000, iterations_run=451; the clone run reached 514, hence the exclusion",
+    "sample_size": "clean-clone comparison, 27 regenerated files",
     "verdict": "SUPPORTED"
   },
   "5a75a4a8195b": {
@@ -570,6 +585,11 @@
   "83572538ff1d": {
     "note": "A judgement, presented as one.",
     "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "84b8f57e0683": {
+    "note": "scripts/verify_reproduction.py time_bounded(): excludes when iterations_run < config.iters; step4_4_overfit_b32lr1e3.json (2001 of a 2000 cap) is NOT excluded and reproduces bitwise",
+    "sample_size": "clean-clone comparison, 27 regenerated files",
     "verdict": "SUPPORTED"
   },
   "851b1b2fc523": {
@@ -981,6 +1001,11 @@
   "f057e1c0b366": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "f0e7b09f6f99": {
+    "note": "results/verify_reproduction.json timing_excluded=3972, machine_file_values_excluded=584",
+    "sample_size": "clean-clone comparison, 27 regenerated files",
     "verdict": "SUPPORTED"
   },
   "f119432c0cb3": {
