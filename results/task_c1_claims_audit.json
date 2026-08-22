@@ -1,8 +1,8 @@
 {
-  "n_claims": 187,
+  "n_claims": 188,
   "by_verdict": {
     "SUPPORTED": 186,
-    "UNREVIEWED": 1
+    "UNREVIEWED": 2
   },
   "claims": [
     {
@@ -1752,9 +1752,9 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20",
+      "note": "results/task_d2b_robustness.json raw 0.60534 -> controls.linear 0.59571, a FALL of 0.00963; guarded permanently by comparative check C3.1"
     },
     {
       "id": "cb446a46b86b",
@@ -2413,9 +2413,9 @@
       "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact"
     },
     {
-      "id": "c2cfc2e6da56",
+      "id": "f8cc6aa35089",
       "section": "8. Method",
-      "claim": "The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds \u2014 interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, and the arena and horizon a count came from.",
+      "claim": "The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds \u2014 interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, the arena and horizon a count came from, a stated ordering between two scalars, and a stated ratio of relative variabilities.",
       "keys": [
         "cc_n",
         "cc_kinds"
@@ -2425,9 +2425,9 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "12 comparative claims, 11 corruptions",
-      "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "9397a5d9422f",
@@ -2474,6 +2474,18 @@
       "verdict": "SUPPORTED",
       "sample_size": "12 comparative claims, 11 corruptions",
       "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact"
+    },
+    {
+      "id": "a53d00d681e8",
+      "section": "8. Method",
+      "claim": "Both were defects in the checker rather than in the paper, and both surfaced because the checks were run rather than assumed.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "f0e7b09f6f99",

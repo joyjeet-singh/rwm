@@ -127,6 +127,44 @@ CLAIMS = [
      "cell": ("task_b_permutation.json",
               "arenas.all-episodes.models.released EPISTEMIC.1"),
      "expect_observed": 44, "expect_n": 45},
+
+    # ---- coverage beyond the six defects the review named ----------------
+    # None of these was reported wrong. They are guarded because the same class
+    # of error -- a correct number in a wrong relation -- is what this checker
+    # exists for, and a checker covering only known failures protects nothing
+    # that has not already been fixed.
+    {"id": "C2.3", "kind": "extremum", "where": "5.5",
+     "says": "it has the largest mean correlation of the four",
+     "family": ("task1_calibration.json", "cal_mean_r"),
+     "named": {"label": "teacher-forced armB"}, "expect": "max"},
+    {"id": "C2.4", "kind": "extremum", "where": "5.6",
+     "says": "it is the largest anywhere in this work",
+     "family": ("task_d_nind20.json", "d2_epistemic_r"),
+     "named": {"h": "1"}, "expect": "max"},
+    {"id": "C2.5", "kind": "extremum", "where": "5.2",
+     "says": "the smallest is faithful (mse) h=368",
+     "family": ("task_b_permutation.json", "holm_all"),
+     "named": {"label": "faithful (mse) h=368"}, "expect": "min"},
+    {"id": "C3.4", "kind": "compare", "where": "5.5",
+     "says": "It does not beat Arm B's head on strength either",
+     "a": ("task_b2_epistemic.json", "by_horizon.368.epistemic.corr_mean"),
+     "b": ("task1_calibration.json", "teacher-forced armB.sigma_err_corr_mean"),
+     "expect": "lt"},
+    {"id": "C3.5", "kind": "compare", "where": "5.5",
+     "says": "which already exceeds the smallest Holm threshold",
+     "a": ("task_b_permutation.json", "arenas.out-of-sample.p_floor"),
+     "b": ("task_b_permutation.json", "arenas.out-of-sample.holm.smallest_threshold"),
+     "expect": "gt"},
+    {"id": "C3.6", "kind": "compare", "where": "9",
+     "says": "very nearly a perfect ranking. Over the full",
+     "a": ("task_d_nind20.json", "d2_forecast_index.1.r_epistemic"),
+     "b": ("task_d_nind20.json", "d2_forecast_index.368.r_epistemic"),
+     "expect": "gt"},
+    {"id": "C6.1", "kind": "relvar", "where": "4",
+     "says": "Teacher forcing is more than twice as variable across seeds",
+     "a": ("task_d1_threeseed.json", "aggregate.A.sd_ddof1", "aggregate.A.mean"),
+     "b": ("task_d1_threeseed.json", "aggregate.B.sd_ddof1", "aggregate.B.mean"),
+     "at_least": 2.0},
 ]
 
 
@@ -138,6 +176,17 @@ def _family(spec):
         D3 = art(name); T = D3["target_coverage"]
         return {f'{q}|h={f["h"]}|ep{f["fit_episode"]}': abs(f["coverage_after"] - T)
                 for q in D3["quantities"] for f in D3["quantities"][q]["fits"]}
+    if kind == "cal_mean_r":
+        C = art(name)
+        return {k: C[k]["sigma_err_corr_mean"] for k in C
+                if isinstance(C[k], dict) and "sigma_err_corr_mean" in C[k]}
+    if kind == "d2_epistemic_r":
+        D = art(name)
+        return {f"h={h}": D["d2_forecast_index"][h]["r_epistemic"]
+                for h in ("1", "8", "32", "128", "368")}
+    if kind == "holm_all":
+        P = art(name)
+        return {st["cell"]: st["p"] for st in P["arenas"]["all-episodes"]["holm"]["steps"]}
     if kind == "d2_paired_lo":
         D = art(name)
         return {f'h={h}': D["d2_forecast_index"][h]["paired_ci_lo"]
@@ -146,8 +195,18 @@ def _family(spec):
 
 
 def _label(named):
+    """The family key the paper's sentence names.
+
+    Three shapes, because the three families are keyed differently: a d3 cell, a
+    bare horizon, and a family whose keys are already free-form labels (model
+    names, Holm cells). The last needs `label`, not `h` -- overloading `h` for it
+    produced "h=teacher-forced armB", which matched nothing and failed two checks
+    whose underlying extremum was correct.
+    """
     if "quantity" in named:
         return f'{named["quantity"]}|h={named["h"]}|ep{named["fit_episode"]}'
+    if "label" in named:
+        return named["label"]
     return f'h={named["h"]}'
 
 
@@ -179,6 +238,20 @@ def evaluate(c, paper, override=None):
         got = "rise" if b > a else ("fall" if b < a else "flat")
         return got == exp["expect"], (f'{a:.5f} -> {b:.5f} is a {got} of {abs(b-a):.5f}, '
                                       f'text says {exp["expect"]}')
+    if k == "compare":
+        a, b = dig(*exp["a"]), dig(*exp["b"])
+        got = "gt" if a > b else ("lt" if a < b else "eq")
+        return got == exp["expect"], f'{a:.6g} vs {b:.6g} -> {got}, text says {exp["expect"]}'
+    if k == "relvar":
+        # relative sd of b against relative sd of a, e.g. "more than twice as
+        # variable across seeds" -- neither relative sd is stored, so both are
+        # formed here from the mean and sd the artifact does store
+        A, B = exp["a"], exp["b"]
+        ra = dig(A[0], A[1]) / dig(A[0], A[2])
+        rb = dig(B[0], B[1]) / dig(B[0], B[2])
+        r = rb / ra
+        return r >= exp["at_least"], (f'relative sd {rb:.4f} vs {ra:.4f} -> {r:.3f}x, '
+                                      f'text implies at least {exp["at_least"]}x')
     if k == "orders":
         ratio = dig(*exp["num"]) / dig(*exp["den"])
         got = round(math.log10(abs(ratio)))
@@ -214,6 +287,10 @@ def corruption_for(c):
         return None if c["stated_orders"] is None else {"stated_orders": c["stated_orders"] + 1}
     if k == "cell":
         return {"expect_observed": dig(*c["cell"])["observed"] + 1}
+    if k == "compare":
+        return {"expect": "lt" if c["expect"] == "gt" else "gt"}
+    if k == "relvar":
+        return {"at_least": c["at_least"] * 100}
     if k == "extremum":
         fam = _family(c["family"])
         ranked = sorted(fam, key=fam.get, reverse=(c["expect"] == "max"))
@@ -221,7 +298,9 @@ def corruption_for(c):
         if "|" in runner_up:
             q, h, ep = runner_up.split("|")
             return {"named": {"quantity": q, "h": int(h[2:]), "fit_episode": int(ep[2:])}}
-        return {"named": {"h": runner_up[2:]}}
+        if runner_up.startswith("h=") and runner_up[2:].isdigit():
+            return {"named": {"h": runner_up[2:]}}
+        return {"named": {"label": runner_up}}
     raise ValueError(k)
 
 

@@ -1096,6 +1096,11 @@
     "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
     "verdict": "SUPPORTED"
   },
+  "e6480df494a2": {
+    "note": "results/task_d2b_robustness.json raw 0.60534 -> controls.linear 0.59571, a FALL of 0.00963; guarded permanently by comparative check C3.1",
+    "sample_size": "n_independent = 20",
+    "verdict": "SUPPORTED"
+  },
   "e6a63050db47": {
     "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
     "sample_size": "3 seeds, n_ind=4",

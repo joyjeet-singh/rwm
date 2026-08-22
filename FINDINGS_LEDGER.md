@@ -4162,9 +4162,10 @@ and appear nowhere in `results/paper_numbers.json`; they were typed, and five of
 wrong.
 
 **The fix is a second checker, not a stricter first one.**
-`scripts/check_comparative_claims.py` verifies 12 comparative claims across 5 kinds — interval
-overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions,
-and the arena and horizon a count came from. Each entry pins two things and requires both:
+`scripts/check_comparative_claims.py` verifies 19 comparative claims across 7 kinds — interval
+overlap, extremum identification, the sign of a stated change, orders-of-magnitude
+descriptions, the arena and horizon a count came from, a stated ordering between two
+scalars, and a stated ratio of relative variabilities. Each entry pins two things and requires both:
 
 - a **fragment of the paper's own text**, so rewording the sentence fails the check rather than
   silently detaching it from the claim it was written to guard; and
@@ -4177,13 +4178,16 @@ disjoint" — same meaning — fails C1.1.
 **Every assertion is run against a deliberately corrupted expectation on each build** and must
 fail: the interval relation inverted, the extremum replaced by the **runner-up** rather than an
 absent label, the sign flipped, the order of magnitude and the dimension counts moved by one.
-11 of 11 corruptions are caught.
+18 of 18 corruptions are caught.
 
 **The self-test found its own bug first.** Its first version applied a fixed corruption per kind —
 `expect: "disjoint"` to every overlap check, `expect: "rise"` to every sign check. For claims that
 already expected those, the corruption was a no-op, and two of eleven assertions reported as
 MISSED. They were not missed; nothing had been corrupted. The corruption now inverts relative to
-each claim's own expectation. **An assertion that has quietly stopped being able to fail is worth
+each claim's own expectation. A later extension hit the same class again: a label
+helper prefixed "h=" to family keys that were already free-form model names, so two checks failed on
+extrema that were in fact correct. Both were checker bugs, not paper defects, and both surfaced
+because the checks were run rather than assumed. **An assertion that has quietly stopped being able to fail is worth
 less than no assertion**, because it reads as coverage, and this is the mechanism that finds out.
 
 One check has nothing to corrupt: A5's ratio is now quoted as 600x directly rather than as a count

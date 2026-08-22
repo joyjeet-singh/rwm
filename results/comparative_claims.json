@@ -1,6 +1,6 @@
 {
-  "n_claims": 12,
-  "n_pass": 12,
+  "n_claims": 19,
+  "n_pass": 19,
   "claims": [
     {
       "id": "C1.1",
@@ -97,11 +97,67 @@
       "says": "of 45 at h=1, with mean r",
       "pass": true,
       "detail": "arenas.all-episodes.models.released EPISTEMIC.1 -> 44/45, text cites 44/45"
+    },
+    {
+      "id": "C2.3",
+      "kind": "extremum",
+      "where": "5.5",
+      "says": "it has the largest mean correlation of the four",
+      "pass": true,
+      "detail": "max of 4 is teacher-forced armB (0.25686); paper names teacher-forced armB (0.25686)"
+    },
+    {
+      "id": "C2.4",
+      "kind": "extremum",
+      "where": "5.6",
+      "says": "it is the largest anywhere in this work",
+      "pass": true,
+      "detail": "max of 5 is h=1 (0.99391); paper names h=1 (0.99391)"
+    },
+    {
+      "id": "C2.5",
+      "kind": "extremum",
+      "where": "5.2",
+      "says": "the smallest is faithful (mse) h=368",
+      "pass": true,
+      "detail": "min of 25 is faithful (mse) h=368 (0.0042); paper names faithful (mse) h=368 (0.0042)"
+    },
+    {
+      "id": "C3.4",
+      "kind": "compare",
+      "where": "5.5",
+      "says": "It does not beat Arm B's head on strength either",
+      "pass": true,
+      "detail": "0.150935 vs 0.256859 -> lt, text says lt"
+    },
+    {
+      "id": "C3.5",
+      "kind": "compare",
+      "where": "5.5",
+      "says": "which already exceeds the smallest Holm threshold",
+      "pass": true,
+      "detail": "0.0416667 vs 0.002 -> gt, text says gt"
+    },
+    {
+      "id": "C3.6",
+      "kind": "compare",
+      "where": "9",
+      "says": "very nearly a perfect ranking. Over the full",
+      "pass": true,
+      "detail": "0.993913 vs 0.605338 -> gt, text says gt"
+    },
+    {
+      "id": "C6.1",
+      "kind": "relvar",
+      "where": "4",
+      "says": "Teacher forcing is more than twice as variable across seeds",
+      "pass": true,
+      "detail": "relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 2.0x"
     }
   ],
   "self_test": {
-    "n": 11,
-    "caught": 11,
+    "n": 18,
+    "caught": 18,
     "detail": [
       {
         "id": "C1.1",
@@ -160,6 +216,41 @@
       {
         "id": "C5.3",
         "corruption": "{'expect_observed': 45}",
+        "caught": true
+      },
+      {
+        "id": "C2.3",
+        "corruption": "{'named': {'label': 'faithful (mse)'}}",
+        "caught": true
+      },
+      {
+        "id": "C2.4",
+        "corruption": "{'named': {'h': '8'}}",
+        "caught": true
+      },
+      {
+        "id": "C2.5",
+        "corruption": "{'named': {'label': 'released EPISTEMIC h=1'}}",
+        "caught": true
+      },
+      {
+        "id": "C3.4",
+        "corruption": "{'expect': 'gt'}",
+        "caught": true
+      },
+      {
+        "id": "C3.5",
+        "corruption": "{'expect': 'lt'}",
+        "caught": true
+      },
+      {
+        "id": "C3.6",
+        "corruption": "{'expect': 'lt'}",
+        "caught": true
+      },
+      {
+        "id": "C6.1",
+        "corruption": "{'at_least': 200.0}",
         "caught": true
       }
     ]
