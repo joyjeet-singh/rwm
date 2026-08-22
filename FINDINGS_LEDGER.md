@@ -4009,6 +4009,43 @@ shipped certifies the wrong thing.
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+
+### M-40 — Four new measurements, none of them in the pipeline that claims to regenerate everything · **NEW**
+Parts B and D added four measurement scripts — `task_b_permutation.py`, `task_d_nind20.py`,
+`task_d2b_robustness.py`, `task_d3_perhorizon.py` — whose outputs the paper quotes throughout §5.2,
+§5.5, §5.6 and §5.7. **None of them was added to `reproduce.sh`.**
+
+Nothing failed. Every artifact existed, every number resolved, the paper built, and the
+reproducibility figure in §8 stayed green.
+
+**Why that is worse than an ordinary omission.** A clean clone of this repository *already
+contains* `results/`. `verify_reproduction.py` handles that by partitioning on
+`results/_regenerated.txt` — files a run actually rewrote are compared as regenerated, files
+carried in by the clone are held out and counted separately. A script that is not in
+`reproduce.sh` never appears in `_regenerated.txt`, so its outputs fall silently into the
+carried-in partition. The paper's newest and most consequential results would have been excluded
+from the reproducibility claim **without the claim changing at all** — the figure would still read
+"N files, 0 differing", over a set that no longer contained them.
+
+This is M-28's trap approached from the other side. M-28 was carried-in files being *counted* as
+regenerated, which inflated the figure. This is regenerable files being *silently dropped* from
+it, which does not move the figure at all and is therefore harder to see.
+
+**Fix:** stages 20d–20g run the four scripts before stage 23 collects the paper's numbers, and
+stage 29a runs the Part F gate. Only 20d carries `NEEDS_WEIGHTS`: it is the only one that loads
+`runs/`. The other three need the released checkpoint alone, which `setup.sh` fetches, so they run
+in a clean clone and their values count toward the regenerated set. Marking all four
+`NEEDS_WEIGHTS` — the lazy choice — would have skipped three working stages and understated
+reproducibility instead.
+
+**The rule:** a script whose output the paper cites belongs in `reproduce.sh` in the same change
+that writes the script. The check that would have caught this does not exist yet; the nearest
+approximation is that every `results/*.json` a paper number cites should be declared by some stage,
+and `paper_numbers.py` already knows the full list of artifacts it reads.
+**Evidence** `RUN` `reproduce.sh`, `scripts/verify_reproduction.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
 ### S-15 — The binomial P-values attached to every dimension count · **NEW**
 **Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand
 **What is retracted:** the step from a sign count to a P-value under a fair-coin binomial null,

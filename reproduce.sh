@@ -198,6 +198,26 @@ stage 20b "min_logstd: O-12's second axis" "20 s" \
       results/step6_3_min_logstd.json NEEDS_WEIGHTS $PY scripts/step6_3_min_logstd.py
 REPORT=review_bootstrap_unit_report.txt stage 20c "Bootstrap resampling unit (M-27)" "8 min" \
       results/review_bootstrap_unit.json NEEDS_WEIGHTS $PY scripts/review_bootstrap_unit.py
+# Part B and Part D. These were added during submission hardening and must run
+# before stage 23 collects the paper's numbers, because the paper quotes them.
+# Only the permutation test loads runs/ (it scores our own arms alongside the
+# released checkpoint), so only it is NEEDS_WEIGHTS. The other three need the
+# released checkpoint alone, which setup.sh fetches, so they DO run in a clean
+# clone and their values count toward the regenerated set. Marking all four
+# NEEDS_WEIGHTS would have skipped three stages that work, and understated
+# reproducibility. Leaving them out of this file would have
+# been worse than it looks: a clean clone CARRIES their outputs in, so
+# verify_reproduction.py would have scored them as copied rather than
+# regenerated and the reproducibility figure would have silently excluded the
+# paper's newest results.
+REPORT=task_b_permutation_report.txt stage 20d "Permutation test over trajectories (R-61)" "12 min" \
+      results/task_b_permutation.json NEEDS_WEIGHTS $PY scripts/task_b_permutation.py
+REPORT=task_d_nind20_report.txt stage 20e "Epistemic table at n=20, forecast-index baseline, penalty CI (R-62, R-63, R-65)" "6 min" \
+      results/task_d_nind20.json $PY scripts/task_d_nind20.py
+REPORT=task_d2b_robustness_report.txt stage 20f "Forecast-index control, four stronger forms (R-66)" "5 min" \
+      results/task_d2b_robustness.json $PY scripts/task_d2b_robustness.py
+REPORT=task_d3_perhorizon_report.txt stage 20g "Per-horizon recalibration (R-64)" "3 min" \
+      results/task_d3_perhorizon.json $PY scripts/task_d3_perhorizon.py
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 
@@ -222,6 +242,8 @@ stage 27 "Claims-versus-evidence audit" "10 s" \
 # under their account; third-party upstreams are allowlisted.
 stage 28 "Assemble the anonymised supplementary archive" "20 s" \
       "" $PY scripts/build_supplementary.py
+stage 29a "Part F submission gate, six checks" "30 s" \
+      results/part_f_gate.json $PY scripts/part_f_gate.py
 stage 29 "Submission readiness gate" "40 s" \
       "" $PY scripts/submission_check.py
 

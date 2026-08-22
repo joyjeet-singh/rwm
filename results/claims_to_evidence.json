@@ -2128,6 +2128,20 @@
       "retracts": []
     },
     {
+      "id": "M-40",
+      "claim": "Four new measurements, none of them in the pipeline that claims to regenerate everything",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/_regenerated.txt",
+        "scripts/verify_reproduction.py"
+      ],
+      "retracts": []
+    },
+    {
       "id": "S-15",
       "claim": "The binomial P-values attached to every dimension count",
       "relevance": "METHOD",
@@ -2160,7 +2174,7 @@
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 39,
+    "M": 40,
     "O": 14,
     "R": 66,
     "S": 15,
