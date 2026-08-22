@@ -507,7 +507,7 @@ the work.
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-(163 entries). Claims are never edited in place. A claim that turns out to be wrong is
+(164 entries). Claims are never edited in place. A claim that turns out to be wrong is
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data

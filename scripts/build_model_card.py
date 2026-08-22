@@ -14,17 +14,18 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.p
 import rwm_data as R  # noqa: E402
 
 CKPTS = [
-    ("armA_seed1_10k/weights_10000.pt", "autoregressive-10k",
-     "faithful (mse)", "The main result. Arm A trained autoregressively for 10,000 iterations. "
-     "Use this one if you want the model the base paper's claim is about."),
-    ("armB_seed1_10k/weights_10000.pt", "teacher-forced-10k",
-     "teacher-forced armB", "The comparison arm. Trains to a lower loss and rolls out far worse; "
-     "released so the central claim can be checked rather than taken on trust."),
-    ("armA_seed0/weights_2500.pt", "autoregressive-2500",
-     "faithful (mse)", "Arm A at the paper's stated iteration count."),
-    ("armA_seed0_nll/weights_2500.pt", "corrected-objective-2500",
-     "corrected (nll)", "Trained with the reference's unused `gaussian_nll` branch. This is the "
-     "CORRECTED-OBJECTIVE artifact, not a calibrated one — see the limitation below."),
+    # The paper's headline is a three-seed mean, so all three seeds of each arm ship.
+    ("armA_seed0_10k/weights_10000.pt", "autoregressive-10k-seed0", "faithful (mse)", None),
+    ("armA_seed1_10k/weights_10000.pt", "autoregressive-10k-seed1", "faithful (mse)", None),
+    ("armA_seed2_10k/weights_10000.pt", "autoregressive-10k-seed2", "faithful (mse)", None),
+    ("armB_seed0_10k/weights_10000.pt", "teacher-forced-10k-seed0", "teacher-forced armB", None),
+    ("armB_seed1_10k/weights_10000.pt", "teacher-forced-10k-seed1", "teacher-forced armB", None),
+    ("armB_seed2_10k/weights_10000.pt", "teacher-forced-10k-seed2", "teacher-forced armB", None),
+    ("armA_seed0/weights_2500.pt", "autoregressive-2500", "faithful (mse)",
+     "Arm A at the paper's stated iteration count, for comparison with the released checkpoint."),
+    ("armA_seed0_nll/weights_2500.pt", "corrected-objective-2500", "corrected (nll)",
+     "Trained with the reference's unused `gaussian_nll` branch. This is the CORRECTED-OBJECTIVE "
+     "artifact, not a calibrated one \u2014 see the limitation above."),
 ]
 
 
@@ -41,8 +42,26 @@ def main():
     N = json.load(open(os.path.join(R.RESULTS, "paper_numbers.json")))
     v = lambda k: N[k]["value"]  # noqa: E731
 
+    d1 = json.load(open(os.path.join(R.RESULTS, "task_d1_threeseed.json")))
+    AG = d1["aggregate"]
+
+    def default_blurb(name, calkey):
+        arm = "A" if "autoregressive" in name else "B"
+        seed = name[-1]
+        if not name.endswith(("0", "1", "2")) or "10k" not in name:
+            return ""
+        v = AG[arm]["per_seed"].get(seed)
+        role = ("Autoregressive training \u2014 the arm the base paper's claim is about."
+                if arm == "A" else
+                "Teacher forcing \u2014 the comparison arm. Released so the central claim can be "
+                "checked rather than taken on trust.")
+        return (f"{role} Seed {seed} of three at 10,000 iterations; scores {v:.4f} normalised "
+                f"error at a 368-step horizon on held-out episodes "
+                f"(arm mean {AG[arm]['mean']:.4f} \u00b1 {AG[arm]['sd_ddof1']:.4f} over three seeds).")
+
     rows, present = [], []
     for path, name, calkey, blurb in CKPTS:
+        blurb = blurb or default_blurb(name, calkey)
         full = os.path.join("runs", path)
         if not os.path.exists(full):
             rows.append((name, path, None, None, calkey, blurb))
@@ -101,9 +120,33 @@ def main():
             A(f"- sha256: `{digest}`")
         m = cal.get(calkey)
         if m:
-            A(f"- overconfidence: {m['ratio_err_over_sigma']:,.0f}×, "
+            # task1_calibration.py measures weights_2500.pt. Attaching that figure to a
+            # 10,000-iteration checkpoint would mis-attribute it, so say which it is.
+            at = "2,500" if "2500" in path else "2,500 (this arm; not re-measured at 10,000)"
+            A(f"- σ calibration, measured at iteration {at}: "
+              f"{m['ratio_err_over_sigma']:,.0f}× overconfident, "
               f"coverage {100*m['coverage']['1']['pm1']:.2f}% at ±1σ (h=1)")
         A("")
+    A("## The result these support")
+    A("")
+    A("Normalised error at a 368-step horizon on held-out episodes, over three training seeds "
+      "(standard deviation with `ddof=1`):")
+    A("")
+    A("| arm | seed 0 | seed 1 | seed 2 | mean \u00b1 sd |")
+    A("|---|---|---|---|---|")
+    for arm, lab in (("A", "autoregressive"), ("B", "teacher forcing")):
+        g = AG[arm]
+        A(f"| {lab} | {g['per_seed']['0']:.4f} | {g['per_seed']['1']:.4f} | "
+          f"{g['per_seed']['2']:.4f} | **{g['mean']:.4f} \u00b1 {g['sd_ddof1']:.4f}** |")
+    A("")
+    A(f"Autoregressive training is better by a factor of "
+      f"**{AG['ratio_B_over_A']:.2f}\u00d7**. For reference the hold-last floor \u2014 predicting "
+      f"that nothing changes \u2014 scores 0.9930 in the same cell, so teacher forcing is worse "
+      f"than making no prediction at all.")
+    A("")
+    A("Every 10,000-iteration checkpoint was cross-checked against the 2,500-iteration run at "
+      "the same seed: 90,000 logged values compared, 0 differing.")
+    A("")
     A("## What these are")
     A("")
     A("- **Architecture.** GRU trunk, ensemble size 1, mean head plus bounded log-σ head, "

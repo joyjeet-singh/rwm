@@ -31,41 +31,90 @@ anything that treats σ as a scale.
 
 ## Checkpoints
 
-### `autoregressive-10k`
+### `autoregressive-10k-seed0`
 
-The main result. Arm A trained autoregressively for 10,000 iterations. Use this one if you want the model the base paper's claim is about.
+Autoregressive training — the arm the base paper's claim is about. Seed 0 of three at 10,000 iterations; scores 0.3894 normalised error at a 368-step horizon on held-out episodes (arm mean 0.3582 ± 0.0283 over three seeds).
+
+- source: `runs/armA_seed0_10k/weights_10000.pt`
+- size: 5,683,412 bytes
+- sha256: `4dbb6871f69e6b7a3e7014fb0ae7effb8366860f6bd0c84af717c10ea64c6625`
+- σ calibration, measured at iteration 2,500 (this arm; not re-measured at 10,000): 52× overconfident, coverage 11.67% at ±1σ (h=1)
+
+### `autoregressive-10k-seed1`
+
+Autoregressive training — the arm the base paper's claim is about. Seed 1 of three at 10,000 iterations; scores 0.3509 normalised error at a 368-step horizon on held-out episodes (arm mean 0.3582 ± 0.0283 over three seeds).
 
 - source: `runs/armA_seed1_10k/weights_10000.pt`
 - size: 5,683,412 bytes
 - sha256: `c88b20a136c7364475e1bf74b3919b33de1ebad9293de521cfe259ed8474ee6e`
-- overconfidence: 52×, coverage 11.67% at ±1σ (h=1)
+- σ calibration, measured at iteration 2,500 (this arm; not re-measured at 10,000): 52× overconfident, coverage 11.67% at ±1σ (h=1)
 
-### `teacher-forced-10k`
+### `autoregressive-10k-seed2`
 
-The comparison arm. Trains to a lower loss and rolls out far worse; released so the central claim can be checked rather than taken on trust.
+Autoregressive training — the arm the base paper's claim is about. Seed 2 of three at 10,000 iterations; scores 0.3341 normalised error at a 368-step horizon on held-out episodes (arm mean 0.3582 ± 0.0283 over three seeds).
+
+- source: `runs/armA_seed2_10k/weights_10000.pt`
+- size: 5,683,412 bytes
+- sha256: `d8e3f43edf8a6f76c25e34d814a7a7c4c35779bbb7ec90e76c5f49a9ec2a192c`
+- σ calibration, measured at iteration 2,500 (this arm; not re-measured at 10,000): 52× overconfident, coverage 11.67% at ±1σ (h=1)
+
+### `teacher-forced-10k-seed0`
+
+Teacher forcing — the comparison arm. Released so the central claim can be checked rather than taken on trust. Seed 0 of three at 10,000 iterations; scores 1.9710 normalised error at a 368-step horizon on held-out episodes (arm mean 1.6497 ± 0.2858 over three seeds).
+
+- source: `runs/armB_seed0_10k/weights_10000.pt`
+- size: 5,683,412 bytes
+- sha256: `a8e20cf9ef3f0ed0380ba031559fdd497f9e2a0a3a681ce0de39820b4e66f0c1`
+- σ calibration, measured at iteration 2,500 (this arm; not re-measured at 10,000): 315× overconfident, coverage 12.96% at ±1σ (h=1)
+
+### `teacher-forced-10k-seed1`
+
+Teacher forcing — the comparison arm. Released so the central claim can be checked rather than taken on trust. Seed 1 of three at 10,000 iterations; scores 1.5540 normalised error at a 368-step horizon on held-out episodes (arm mean 1.6497 ± 0.2858 over three seeds).
 
 - source: `runs/armB_seed1_10k/weights_10000.pt`
 - size: 5,683,412 bytes
 - sha256: `b473bd70d5afdcbb1065e7ef49e32e85d4941719ec1bf290e4a91a09b8165754`
-- overconfidence: 315×, coverage 12.96% at ±1σ (h=1)
+- σ calibration, measured at iteration 2,500 (this arm; not re-measured at 10,000): 315× overconfident, coverage 12.96% at ±1σ (h=1)
+
+### `teacher-forced-10k-seed2`
+
+Teacher forcing — the comparison arm. Released so the central claim can be checked rather than taken on trust. Seed 2 of three at 10,000 iterations; scores 1.4241 normalised error at a 368-step horizon on held-out episodes (arm mean 1.6497 ± 0.2858 over three seeds).
+
+- source: `runs/armB_seed2_10k/weights_10000.pt`
+- size: 5,683,412 bytes
+- sha256: `2431bc1ba09229d305d364abb53d422ef79d39a7299f8c3692f1fb743c8240a2`
+- σ calibration, measured at iteration 2,500 (this arm; not re-measured at 10,000): 315× overconfident, coverage 12.96% at ±1σ (h=1)
 
 ### `autoregressive-2500`
 
-Arm A at the paper's stated iteration count.
+Arm A at the paper's stated iteration count, for comparison with the released checkpoint.
 
 - source: `runs/armA_seed0/weights_2500.pt`
 - size: 5,683,374 bytes
 - sha256: `bc4e0dfbcff28b994e3acabbae2d6f1d833331dc5bfad5cc9aa8f410385bd4b0`
-- overconfidence: 52×, coverage 11.67% at ±1σ (h=1)
+- σ calibration, measured at iteration 2,500: 52× overconfident, coverage 11.67% at ±1σ (h=1)
 
 ### `corrected-objective-2500`
 
-Trained with the reference's unused `gaussian_nll` branch. This is the CORRECTED-OBJECTIVE artifact, not a calibrated one — see the limitation below.
+Trained with the reference's unused `gaussian_nll` branch. This is the CORRECTED-OBJECTIVE artifact, not a calibrated one — see the limitation above.
 
 - source: `runs/armA_seed0_nll/weights_2500.pt`
 - size: 5,683,374 bytes
 - sha256: `a1a339b27b077712b0a87b4df4718437933db3e6a370b8b08f941fab30129367`
-- overconfidence: 11×, coverage 42.78% at ±1σ (h=1)
+- σ calibration, measured at iteration 2,500: 11× overconfident, coverage 42.78% at ±1σ (h=1)
+
+## The result these support
+
+Normalised error at a 368-step horizon on held-out episodes, over three training seeds (standard deviation with `ddof=1`):
+
+| arm | seed 0 | seed 1 | seed 2 | mean ± sd |
+|---|---|---|---|---|
+| autoregressive | 0.3894 | 0.3509 | 0.3341 | **0.3582 ± 0.0283** |
+| teacher forcing | 1.9710 | 1.5540 | 1.4241 | **1.6497 ± 0.2858** |
+
+Autoregressive training is better by a factor of **4.61×**. For reference the hold-last floor — predicting that nothing changes — scores 0.9930 in the same cell, so teacher forcing is worse than making no prediction at all.
+
+Every 10,000-iteration checkpoint was cross-checked against the 2,500-iteration run at the same seed: 90,000 logged values compared, 0 differing.
 
 ## What these are
 

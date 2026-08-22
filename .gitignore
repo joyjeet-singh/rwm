@@ -36,3 +36,6 @@ results/_regenerated.txt
 
 # rebuildable submission artifact
 supplementary.zip
+
+# generated at release time by the HF upload
+checkpoint_manifest.json

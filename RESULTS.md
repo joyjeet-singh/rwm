@@ -115,5 +115,6 @@ in rather than regenerates; see `M-28`.
 - [`LOSS_ASSEMBLY.md`](LOSS_ASSEMBLY.md) — line-by-line extraction of the reference loss
 - [`PAPER.md`](PAPER.md) — the paper; [`PAPER.tex`](PAPER.tex) for submission
 - [`MODEL_CARD.md`](MODEL_CARD.md) — the four checkpoints, with per-checkpoint limits
-- Model checkpoints — see the model card for sha256s; weights are gitignored and
-  regenerable via `./reproduce.sh`
+- Model checkpoints — released at `huggingface.co/Joyjeetsingh/rwm-reproduction` with sha256s
+  in `checkpoint_manifest.json`; the local `runs/` tree stays gitignored and is regenerable
+  via `./reproduce.sh`
