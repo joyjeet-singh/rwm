@@ -1,0 +1,77 @@
+{
+  "reference": {
+    "source": "arXiv:2501.10100v1 Table I",
+    "quantity": "state transitions, RWM pretraining",
+    "value": 6000000
+  },
+  "ours": {
+    "train_episodes": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    "holdout_episodes": [
+      1,
+      8
+    ],
+    "rows_in_training_episodes": 7999,
+    "distinct_transitions": 7991,
+    "boundaries_excluded": 8,
+    "training_windows": 7687,
+    "window_draws_per_run": 640000,
+    "note": "a transition is a consecutive (row, row+1) pair inside one episode, so an episode of n rows gives n-1 and the 8 episode boundaries give none; the window count is larger because 33-step windows starting one row apart overlap almost completely"
+  },
+  "whole_dataset": {
+    "rows": 9999,
+    "distinct_transitions": 9989
+  },
+  "per_episode": {
+    "0": {
+      "rows": 999,
+      "transitions": 998
+    },
+    "1": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "2": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "3": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "4": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "5": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "6": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "7": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "8": {
+      "rows": 1000,
+      "transitions": 999
+    },
+    "9": {
+      "rows": 1000,
+      "transitions": 999
+    }
+  },
+  "ratio_reference_over_ours": 750.8447002878238,
+  "ours_as_fraction_of_reference": 0.0013318333333333333
+}

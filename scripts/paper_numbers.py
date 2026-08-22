@@ -285,6 +285,19 @@ def main():
     put("unreach_recalled_iters", f"{_rec:,}", "docs/E4_AUTHOR_CONTACT.md")
     put("unreach_factor", f"{_imp / _rec:.0f}", "results/step6_analysis.json")
 
+    # --- C2: the data budget ----------------------------------------------
+    C2 = J("task_c2_data_budget.json")
+    put("c2_trans", f'{C2["ours"]["distinct_transitions"]:,}', "results/task_c2_data_budget.json")
+    put("c2_rows", f'{C2["ours"]["rows_in_training_episodes"]:,}',
+        "results/task_c2_data_budget.json")
+    put("c2_windows", f'{C2["ours"]["training_windows"]:,}', "results/task_c2_data_budget.json")
+    put("c2_bounds", C2["ours"]["boundaries_excluded"], "results/task_c2_data_budget.json")
+    put("c2_ref", f'{C2["reference"]["value"]:,}', "results/task_c2_data_budget.json")
+    put("c2_ratio", f'{C2["ratio_reference_over_ours"]:,.0f}', "results/task_c2_data_budget.json")
+    put("c2_pct", f'{100*C2["ours_as_fraction_of_reference"]:.3f}',
+        "results/task_c2_data_budget.json")
+    put("c2_draws", f'{C2["ours"]["window_draws_per_run"]:,}', "results/task_c2_data_budget.json")
+
     # --- D1/D2/D4: the released checkpoint at n_independent = 20 -----------
     D = J("task_d_nind20.json")
     put("d1n_nind", D["design"]["n_independent"], "results/task_d_nind20.json")

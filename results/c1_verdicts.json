@@ -294,6 +294,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "3362d8b35e48": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+    "verdict": "SUPPORTED"
+  },
   "3385bf2a0eca": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
@@ -358,6 +363,11 @@
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
     "verdict": "SUPPORTED"
   },
+  "3d1dfed02832": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+    "verdict": "SUPPORTED"
+  },
   "3ea8fb0aa0d0": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
@@ -366,6 +376,11 @@
   "41869b31316f": {
     "note": "Both counts derived from review_bootstrap_unit.json.",
     "sample_size": "n_ind 16 vs 4",
+    "verdict": "SUPPORTED"
+  },
+  "41dff1eb6de5": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
     "verdict": "SUPPORTED"
   },
   "41eae82eba6b": {
@@ -377,6 +392,11 @@
     "claim": "An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data,",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "42478d60d3bc": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
     "verdict": "SUPPORTED"
   },
   "4307718cf905": {
@@ -408,6 +428,11 @@
   "472bd53b29b2": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "478128517331": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
     "verdict": "SUPPORTED"
   },
   "49405a99c548": {
@@ -481,6 +506,11 @@
   "56d2a28a2baf": {
     "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
     "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "57571c1d6f8b": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
     "verdict": "SUPPORTED"
   },
   "580d222d4346": {
@@ -623,6 +653,11 @@
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "7065d6ef998b": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+    "verdict": "SUPPORTED"
+  },
   "70b6010104ed": {
     "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimu",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -709,6 +744,11 @@
   "7d8f408696e9": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "7e50cf9f3bcd": {
+    "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
+    "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
     "verdict": "SUPPORTED"
   },
   "7e5c8e059c0c": {

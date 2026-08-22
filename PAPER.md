@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     375 values substituted from 40 artifacts. -->
+     383 values substituted from 41 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -23,8 +23,9 @@ of **4.61×**, with the per-episode gap positive on all 10 of
 decision rule committed to git before the runs that tested it existed.
 
 Neither of the follow-up's uncertainty outputs survives contact with a calibration measurement.
-The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and
-the method penalises rewards with the second while discarding the first. We measure both. At the 368-step deployment horizon the aleatoric σ is **20,669× smaller than the realised error** on n_independent = 20 trajectories, giving **0.02%** coverage at ±1σ against a calibrated 68.3%, and we show analytically why: the
+**What is and is not reproduced here.** This work reproduces the *dynamics-model training* claim only. The hardware-transfer, sample-efficiency and policy-learning results of both papers are not tested: they need a simulator, an RL loop and an ANYmal, none of which this reproduction has (§3, §11, Appendix E).
+
+The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and the method penalises rewards with the second while discarding the first. We measure both. At the 368-step deployment horizon the aleatoric σ is **20,669× smaller than the realised error** on n_independent = 20 trajectories, giving **0.02%** coverage at ±1σ against a calibrated 68.3%, and we show analytically why: the
 state loss is squared error on a reparameterised sample with no log-σ term, minimised at σ = 0,
 with the bound term that should oppose this cancelling algebraically. Running the correction —
 the authors' own unused `gaussian_nll` branch — fails differently rather than succeeding, at
@@ -183,8 +184,17 @@ separately and does not change the direction.
 **Multiplicity.** Those 4 cells sit in a family of 8 out-of-sample
 comparisons, so we state the correction rather than leaving it to a reader. All
 4 of 4 still exclude zero at a Bonferroni level of 0.05/8,
-and Holm–Bonferroni rejects **4 of 4**. The sign test above is
-unaffected either way.
+and Holm–Bonferroni rejects **4 of 4**. The sign test above is unaffected either way.
+
+### 4.1 The data budget, which is the one part of the sample-efficiency claim we can measure
+
+The base paper's headline is a sample-efficiency result: policies transfer to hardware from 6,000,000 state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). We cannot test it — it is a claim about policy learning and hardware. But its *world-model* half is a claim about a quantity we can count exactly, and ours is directly comparable.
+
+**Our arms consume 7,991 distinct state transitions.** That is the 7,999 rows of the eight training episodes less one per episode boundary (8 of them), a transition being a consecutive pair of rows inside one episode. It is deliberately not the 7,687 training windows, which overlap almost completely — consecutive 33-step windows start one row apart — nor the 640,000 window draws a run makes, which resample the same data with replacement. Against the reference's 6,000,000, that is **751× less data, 0.133% of its world-model budget**.
+
+A dynamics model trained on 0.133% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result at 4.61× and still beats the hold-last floor by 2.8× at h=368. That is what this paper can contribute to the sample-efficiency question without training a policy.
+
+**Three limits, in the same breath.** It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning and which we do not touch. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the same narrow distribution it trained on — one robot, one gait, one terrain, velocity commands from a single bounded box — where the reference's 6,000,000 transitions span considerably more. A smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
 ---
 
@@ -290,19 +300,19 @@ and `min_logstd` cancels algebraically, taking no gradient from that term. The f
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 We predicted the collapse from this algebra before training, then observed it. Across all
-21 runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Rates are fitted on 15 of those runs: the 6
+22 runs the collapse is linear in iteration count and its rate is nearly identical
+(Figure 3a). Rates are fitted on 16 of those runs: the 6
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 3(a) shows all 21 runs;
-Figure 3(b) plots only the 15 the rate is fitted on, so the scatter and the quoted
+counted at 2,500 and would double-weight them. Figure 3(a) shows all 22 runs;
+Figure 3(b) plots only the 16 the rate is fitted on, so the scatter and the quoted
 statistic describe the same set.
 
-The 21 runs, so a reader can count them:
+The 22 runs, so a reader can count them:
 
 | arm | iterations | objective | dataset | seeds | seed ids |
 |---|---|---|---|---|---|
 | Arm A | 2,500 | gaussian_nll | clean | 3 | 0, 1, 2 |
-| Arm A | 2,500 | mse | clean | 3 | 0, 1, 2 |
+| Arm A | 2,500 | mse | clean | 4 | 0, 0, 1, 2 |
 | Arm A | 2,500 | mse | contaminated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | mse | duplicated | 3 | 0, 1, 2 |
 | Arm A | 10,000 | mse | clean | 3 | 0, 1, 2 |
@@ -310,8 +320,8 @@ The 21 runs, so a reader can count them:
 | Arm B | 10,000 | mse | clean | 3 | 0, 1, 2 |
 
 **Two different things are being explained here, and §5.5 separates them.** *Magnitude collapse
-is objective-driven.* It occurs in all 12 sampled-MSE runs at a rate of
--9.3986e-05 per iteration with a standard deviation of 6.8e-07 — **including the
+is objective-driven.* It occurs in all 13 sampled-MSE runs at a rate of
+-9.3950e-05 per iteration with a standard deviation of 6.6e-07 — **including the
 teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05 in the
 3 runs that change it. *Input-independence is not.* That varies by a factor of
 15.6 between two arms trained under the same objective, so the objective
@@ -713,7 +723,7 @@ What every downstream number rests on. Each level was passed before the next was
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 21 runs takes **32 hours** of recorded wall clock on two CPU cores: 20 hours for the 6 runs at 10,000 iterations and 12 for the remaining 15 at 2,500. The longest single run is 3.8 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 22 runs takes **36 hours** of recorded wall clock on two CPU cores: 20 hours for the 6 runs at 10,000 iterations and 16 for the remaining 16 at 2,500. The longest single run is 4.0 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
 
 ## Appendix C — figures
 
@@ -804,3 +814,32 @@ of its own — so the host-dependence leaked through a file that was not exclude
 clone duly differed on it. The verifier now drops any key whose recorded source is an excluded
 artifact (7 of them), which follows the provenance the file already carries rather
 than requiring anyone to remember.
+
+## Appendix E — what testing the untested claims would require
+
+§3's table marks 4 claims tested and the rest not. "Not tested" is an apology
+unless it comes with a price, so here is what each would cost. We give compute orders where we
+can estimate them honestly from this project's own measurements and say so where we cannot.
+
+**Everything below needs what this reproduction did not have: a simulator.** Our arms train on
+the released CSV, which is a recording. Every untested claim needs *interaction* — a policy acting
+in an environment and the environment responding — and that means Isaac Lab, which needs an
+RTX-class NVIDIA GPU. No amount of CPU substitutes: the reference's data generation is
+GPU-parallel simulation, not a data-loading problem.
+
+| untested claim | what it needs | order |
+|---|---|---|
+| Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
+| MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
+| Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
+| Whether the penalty improves the learned policy (2504.16680 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 36 h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 22 runs took 36 h on two cores; a modest sweep is a small multiple of that |
+
+**The two at the bottom are within reach of this setup** and are the honest next steps for anyone
+extending this work on CPU. The four above them are not, and no amount of care with the released
+CSV changes that.
+
+**What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
+items, it bears directly on the one limitation §11 states that our measurements cannot bound —
+whether the miscalibration we document costs anything downstream — and it needs no hardware.

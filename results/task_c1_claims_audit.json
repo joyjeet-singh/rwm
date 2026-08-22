@@ -1,7 +1,7 @@
 {
-  "n_claims": 188,
+  "n_claims": 196,
   "by_verdict": {
-    "SUPPORTED": 188
+    "SUPPORTED": 196
   },
   "claims": [
     {
@@ -788,6 +788,127 @@
       "verdict": "SUPPORTED",
       "sample_size": "",
       "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "3d1dfed02832",
+      "section": "4.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+      "claim": "The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I).",
+      "keys": [
+        "c2_ref"
+      ],
+      "artifacts": [
+        "results/task_c2_data_budget.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+    },
+    {
+      "id": "41dff1eb6de5",
+      "section": "4.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+      "claim": "Our arms consume {{c2_trans}} distinct state transitions.** That is the {{c2_rows}} rows of the eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecutive pair of rows inside one episode.",
+      "keys": [
+        "c2_trans",
+        "c2_rows",
+        "c2_bounds"
+      ],
+      "artifacts": [
+        "results/task_c2_data_budget.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+    },
+    {
+      "id": "7e50cf9f3bcd",
+      "section": "4.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+      "claim": "It is deliberately not the {{c2_windows}} training windows, which overlap almost completely \u2014 consecutive 33-step windows start one row apart \u2014 nor the {{c2_draws}} window draws a run makes, which resample the same data with replacement.",
+      "keys": [
+        "c2_windows",
+        "c2_draws"
+      ],
+      "artifacts": [
+        "results/task_c2_data_budget.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+    },
+    {
+      "id": "42478d60d3bc",
+      "section": "4.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+      "claim": "Against the reference's {{c2_ref}}, that is **{{c2_ratio}}\u00d7 less data, {{c2_pct}}% of its world-model budget**.",
+      "keys": [
+        "c2_ref",
+        "c2_ratio",
+        "c2_pct"
+      ],
+      "artifacts": [
+        "results/task_c2_data_budget.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+    },
+    {
+      "id": "478128517331",
+      "section": "4.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+      "claim": "A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result at {{d1_ratio}}\u00d7 and still beats the hold-last floor by {{floor_over_A}}\u00d7 at h=368.",
+      "keys": [
+        "c2_pct",
+        "d1_ratio",
+        "floor_over_A"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json + task5_analysis.json",
+        "results/task_c2_data_budget.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+    },
+    {
+      "id": "57571c1d6f8b",
+      "section": "4.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+      "claim": "Three limits, in the same breath.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning and which we do not touch.",
+      "keys": [
+        "c2_ref"
+      ],
+      "artifacts": [
+        "results/task_c2_data_budget.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+    },
+    {
+      "id": "3362d8b35e48",
+      "section": "4.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+      "claim": "And our model is evaluated on the same narrow distribution it trained on \u2014 one robot, one gait, one terrain, velocity commands from a single bounded box \u2014 where the reference's {{c2_ref}} transitions span considerably more.",
+      "keys": [
+        "c2_ref"
+      ],
+      "artifacts": [
+        "results/task_c2_data_budget.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
     },
     {
       "id": "f4539346e6e6",
@@ -3119,6 +3240,22 @@
       "verdict": "SUPPORTED",
       "sample_size": "clean-clone comparison, 28 regenerated files",
       "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance"
+    },
+    {
+      "id": "7065d6ef998b",
+      "section": "Appendix E \u2014 what testing the untested claims would require",
+      "claim": "\u00a73's table marks {{orig_n_tested}} claims tested and the rest not. \"Not tested\" is an apology unless it comes with a price, so here is what each would cost.",
+      "keys": [
+        "orig_n_tested"
+      ],
+      "artifacts": [
+        "results/original_paper_figures.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
+      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
     }
   ]
 }

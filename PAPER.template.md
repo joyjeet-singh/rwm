@@ -17,8 +17,9 @@ of **{{d1_ratio}}×**, with the per-episode gap positive on all {{m23_n_episodes
 decision rule committed to git before the runs that tested it existed.
 
 Neither of the follow-up's uncertainty outputs survives contact with a calibration measurement.
-The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and
-the method penalises rewards with the second while discarding the first. We measure both. At the 368-step deployment horizon the aleatoric σ is **{{d1n_alea_ratio_h368}}× smaller than the realised error** on n_independent = {{d1n_nind}} trajectories, giving **{{d1n_alea_cov1_h368}}%** coverage at ±1σ against a calibrated 68.3%, and we show analytically why: the
+**What is and is not reproduced here.** This work reproduces the *dynamics-model training* claim only. The hardware-transfer, sample-efficiency and policy-learning results of both papers are not tested: they need a simulator, an RL loop and an ANYmal, none of which this reproduction has (§3, §11, Appendix E).
+
+The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and the method penalises rewards with the second while discarding the first. We measure both. At the 368-step deployment horizon the aleatoric σ is **{{d1n_alea_ratio_h368}}× smaller than the realised error** on n_independent = {{d1n_nind}} trajectories, giving **{{d1n_alea_cov1_h368}}%** coverage at ±1σ against a calibrated 68.3%, and we show analytically why: the
 state loss is squared error on a reparameterised sample with no log-σ term, minimised at σ = 0,
 with the bound term that should oppose this cancelling algebraically. Running the correction —
 the authors' own unused `gaussian_nll` branch — fails differently rather than succeeding, at
@@ -177,8 +178,17 @@ separately and does not change the direction.
 **Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample
 comparisons, so we state the correction rather than leaving it to a reader. All
 {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}},
-and Holm–Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**. The sign test above is
-unaffected either way.
+and Holm–Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**. The sign test above is unaffected either way.
+
+### 4.1 The data budget, which is the one part of the sample-efficiency claim we can measure
+
+The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). We cannot test it — it is a claim about policy learning and hardware. But its *world-model* half is a claim about a quantity we can count exactly, and ours is directly comparable.
+
+**Our arms consume {{c2_trans}} distinct state transitions.** That is the {{c2_rows}} rows of the eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecutive pair of rows inside one episode. It is deliberately not the {{c2_windows}} training windows, which overlap almost completely — consecutive 33-step windows start one row apart — nor the {{c2_draws}} window draws a run makes, which resample the same data with replacement. Against the reference's {{c2_ref}}, that is **{{c2_ratio}}× less data, {{c2_pct}}% of its world-model budget**.
+
+A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result at {{d1_ratio}}× and still beats the hold-last floor by {{floor_over_A}}× at h=368. That is what this paper can contribute to the sample-efficiency question without training a policy.
+
+**Three limits, in the same breath.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning and which we do not touch. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the same narrow distribution it trained on — one robot, one gait, one terrain, velocity commands from a single bounded box — where the reference's {{c2_ref}} transitions span considerably more. A smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
 ---
 
@@ -783,3 +793,31 @@ clone duly differed on it. The verifier now drops any key whose recorded source 
 artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather
 than requiring anyone to remember.
 
+## Appendix E — what testing the untested claims would require
+
+§3's table marks {{orig_n_tested}} claims tested and the rest not. "Not tested" is an apology
+unless it comes with a price, so here is what each would cost. We give compute orders where we
+can estimate them honestly from this project's own measurements and say so where we cannot.
+
+**Everything below needs what this reproduction did not have: a simulator.** Our arms train on
+the released CSV, which is a recording. Every untested claim needs *interaction* — a policy acting
+in an environment and the environment responding — and that means Isaac Lab, which needs an
+RTX-class NVIDIA GPU. No amount of CPU substitutes: the reference's data generation is
+GPU-parallel simulation, not a data-loading problem.
+
+| untested claim | what it needs | order |
+|---|---|---|
+| Sample efficiency, {{c2_ref}} against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports {{c2_ref}} pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
+| MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
+| Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
+| Whether the penalty improves the learned policy (2504.16680 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's {{rt_hours}} h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; a modest sweep is a small multiple of that |
+
+**The two at the bottom are within reach of this setup** and are the honest next steps for anyone
+extending this work on CPU. The four above them are not, and no amount of care with the released
+CSV changes that.
+
+**What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
+items, it bears directly on the one limitation §11 states that our measurements cannot bound —
+whether the miscalibration we document costs anything downstream — and it needs no hardware.
