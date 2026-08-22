@@ -1,7 +1,7 @@
 {
-  "n_claims": 158,
+  "n_claims": 159,
   "by_verdict": {
-    "SUPPORTED": 158
+    "SUPPORTED": 159
   },
   "claims": [
     {
@@ -174,23 +174,23 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "f9f83b6ba39c",
+      "id": "b83e94ef4583",
       "section": "Abstract",
-      "claim": "The gap is not marginal: the bound arithmetic implies roughly {{unreach_implied_iters}} iterations against the {{unreach_recalled_iters}} recalled, a factor of about {{unreach_factor}}\u00d7 still unexplained (\u00a77).",
+      "claim": "The gap is not marginal: the bound arithmetic implies **{{implied_iters}}** iterations against the {{unreach_recalled_iters}} recalled, a factor of about {{unreach_factor}}\u00d7 still unexplained (\u00a77).",
       "keys": [
-        "unreach_implied_iters",
+        "implied_iters",
         "unreach_recalled_iters",
         "unreach_factor"
       ],
       "artifacts": [
         "docs/E4_AUTHOR_CONTACT.md",
-        "results/task5_analysis.json"
+        "results/step6_analysis.json"
       ],
       "n_keys": 3,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 out-of-sample trajectories",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "",
+      "note": "results/step6_analysis.json collapse.iters_to_checkpoint = 153269.7; matches section 7's implied_iters exactly, which is why the abstract was moved off the task5 refit (158,319) it previously quoted"
     },
     {
       "id": "debc47a09ac8",
@@ -2137,6 +2137,25 @@
       "verdict": "SUPPORTED",
       "sample_size": "-",
       "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+    },
+    {
+      "id": "ede32a03443a",
+      "section": "8. Method",
+      "claim": "The file records this about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}), on one machine, within a single measurement session.",
+      "keys": [
+        "time_cfgs",
+        "time_rel_lo",
+        "time_rel_hi",
+        "time_worst_cfg"
+      ],
+      "artifacts": [
+        "results/step4_5_timing.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "results/step4_5_timing.json: std/s_per_iter per configuration is 5.4%% (ens5_bs256), 11.3%% (ens1_bs1024), 14.3%% (ens5_bs1024), 31.8%% (ens1_bs256); min and max reported, worst named"
     },
     {
       "id": "7b4068efe820",

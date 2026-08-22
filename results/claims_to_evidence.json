@@ -2084,6 +2084,21 @@
       "retracts": []
     },
     {
+      "id": "M-38",
+      "claim": "Eight numbered figure references, and no numbered figures",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/compile_paper.json",
+        "scripts/build_paper.py",
+        "scripts/md_to_tex.py"
+      ],
+      "retracts": []
+    },
+    {
       "id": "S-15",
       "claim": "The binomial P-values attached to every dimension count",
       "relevance": "METHOD",
@@ -2116,7 +2131,7 @@
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 37,
+    "M": 38,
     "O": 14,
     "R": 65,
     "S": 15,

@@ -188,8 +188,15 @@ def convert(md, title, author):
             continue
         if re.match(r"^!\[.*\]\((.*)\)", ln):
             src = re.match(r"^!\[.*\]\((.*)\)", ln).group(1)
+            cap = re.match(r"^!\[(.*)\]\(.*\)", ln).group(1)
+            # The alt text is the caption. Escaping is already applied upstream
+            # for prose, but this string never passes through esc(), so the few
+            # LaTeX-active characters a caption can contain are handled here.
+            cap = cap.replace("%", r"\%") if "\\%" not in cap else cap
             out.append(r"\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]"
-                       r"{\detokenize{" + src + r"}}\end{figure}")
+                       r"{\detokenize{" + src + r"}}"
+                       + (r"\caption{" + cap + r"}" if cap else "")
+                       + r"\end{figure}")
             i += 1
             continue
         if ln.startswith("- "):

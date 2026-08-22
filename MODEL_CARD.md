@@ -38,9 +38,23 @@ reference's unused `gaussian_nll` branch, which reverses the mechanism and still
 produce a usable estimate (10.9× overconfident). **It is released as the
 corrected-objective artifact, not as a calibrated one.**
 
-If you need to rank which predictions will be worse, the σ output carries some signal.
-If you need an interval, it does not. Do not use it for risk-gating, safety margins, or
-anything that treats σ as a scale.
+If you need to rank which predictions will be worse, the σ output carries some signal —
+but treat that as directional, not established. Converting per-dimension sign counts to
+P-values against an independent-trials null overstates the evidence badly: the 45 state
+dimensions are physically coupled and share a forecast-depth trend, so a σ that grows with
+depth correlates with any trajectory's error. Under a permutation test over whole
+trajectories, no such count in our paper survives multiplicity correction.
+
+If you need an interval, the raw σ will not give you one. Do not use it for risk-gating,
+safety margins, or anything that treats σ as a scale.
+
+**There is a remedy, and it is cheap.** A single multiplier does not work, because the
+miscalibration grows with forecast horizon. One multiplier *per horizon*, fitted on held-out
+data, does: on the released reference checkpoint it restored ±1σ coverage to within
+10 points of nominal on 10 of 10 held-out cells,
+where a single global multiplier managed 2. We measured that on the
+reference checkpoint rather than on these arms, and on two episodes only, so refit it on your
+own data rather than copying our constants.
 
 ## Checkpoints
 

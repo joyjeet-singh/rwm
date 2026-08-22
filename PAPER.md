@@ -119,6 +119,7 @@ everything. It did not.
 | Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 §5.1) | **yes** | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n_independent = 20, beats the forecast-index counter at every horizon, and keeps +0.596 after partialling that counter out (§5.6). **Weaker per-dimension than we first reported**: the 45-of-45 sign count gives a permutation P of 0.0435 (out-of-sample) and 0.0758 (in-sample), and no cell survives multiplicity correction (§5.5). **Not supported as a scale**: 34.4× overconfident, repairable per horizon (§5.7) |
 | Aleatoric "remains low, reflecting small stochasticity" (§5.1) | **yes** | the observation holds; the explanation does not (§5.3) |
 | Offline MBRL on real robots (2504.16680) | no | not tested |
+| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680 Eq. 4–5, §5) — the follow-up's core method claim | no | **not tested.** We measure the penalty quantity itself — what it is (§5.1), how well it ranks error (§5.6), whether it is calibrated (§5.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
 
 ---
 
@@ -542,7 +543,7 @@ the work.
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-(174 entries). Claims are never edited in place. A claim that turns out to be wrong is
+(175 entries). Claims are never edited in place. A claim that turns out to be wrong is
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data
@@ -733,13 +734,13 @@ What every downstream number rests on. Each level was passed before the next was
 
 ## Figures
 
-![paper_fig1_calibration.png](figures/paper_fig1_calibration.png)
+![Calibration of all four models on the held-out arena. (a) reliability: observed against predicted coverage, with the calibrated diagonal. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.3\% a calibrated Gaussian gives. Every curve sits far below the diagonal and falls further with horizon.](figures/paper_fig1_calibration.png)
 
-![paper_fig2_sigma_profile.png](figures/paper_fig2_sigma_profile.png)
+![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1. (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows by an order of magnitude over the same steps. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
 
-![paper_fig3_collapse.png](figures/paper_fig3_collapse.png)
+![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for every run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
 
-![paper_fig4_prereg_timeline.png](figures/paper_fig4_prereg_timeline.png)
+![Pre-registration lead time for each decision rule, from git commit timestamps. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. The one negative bar is the Task 3 duplication rule, retracted as a pre-registration in this paper.](figures/paper_fig4_prereg_timeline.png)
 
-![paper_fig5_three_way.png](figures/paper_fig5_three_way.png)
+![The contamination control. (a) outcome across 32 cells for each arm pair, naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling trajectory-step pairs rather than whole trajectories narrows every interval.](figures/paper_fig5_three_way.png)
 

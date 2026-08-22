@@ -113,6 +113,7 @@ everything. It did not.
 | Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 §5.1) | **yes** | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at every horizon, and keeps {{d2b_par_all}} after partialling that counter out (§5.6). **Weaker per-dimension than we first reported**: the {{d1n_epi_npos_h368}}-of-{{d1n_epi_ndim_h368}} sign count gives a permutation P of {{perm_oos_epi_p_h368}} (out-of-sample) and {{perm_ins_epi_p_h368}} (in-sample), and no cell survives multiplicity correction (§5.5). **Not supported as a scale**: {{d1n_epi_ratio_h368}}× overconfident, repairable per horizon (§5.7) |
 | Aleatoric "remains low, reflecting small stochasticity" (§5.1) | **yes** | the observation holds; the explanation does not (§5.3) |
 | Offline MBRL on real robots (2504.16680) | no | not tested |
+| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680 Eq. 4–5, §5) — the follow-up's core method claim | no | **not tested.** We measure the penalty quantity itself — what it is (§5.1), how well it ranks error (§5.6), whether it is calibrated (§5.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
 
 ---
 

@@ -702,6 +702,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "b83e94ef4583": {
+    "note": "results/step6_analysis.json collapse.iters_to_checkpoint = 153269.7; matches section 7's implied_iters exactly, which is why the abstract was moved off the task5 refit (158,319) it previously quoted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "b8cf445bdfdc": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -893,6 +898,11 @@
   },
   "e713a1b6aa83": {
     "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "ede32a03443a": {
+    "note": "results/step4_5_timing.json: std/s_per_iter per configuration is 5.4%% (ens5_bs256), 11.3%% (ens1_bs1024), 14.3%% (ens5_bs1024), 31.8%% (ens1_bs256); min and max reported, worst named",
     "sample_size": "",
     "verdict": "SUPPORTED"
   },

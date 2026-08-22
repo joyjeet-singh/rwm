@@ -3192,11 +3192,13 @@ not say which claims it leaves alone invites the reader to assume it tested all 
 | 5 | Zero-shot hardware transfer with minimal sim-to-real loss (§IV-E) | no | not tested — no hardware, and this is a dynamics-model reproduction |
 | 6 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | not tested — no policy learning reproduced |
 | 7 | Generality across quadruped, humanoid and manipulation (§IV-D) | no | not tested — one released dataset, ANYmal D flat |
-| 8 | Epistemic uncertainty "closely follows the trend of the prediction error" and justifies "its role as a trust metric" (2504.16680 §5.1) | **yes** | **SUPPORTED as an ordering** — 45/45 dimensions positively correlated at h=368, P = 5.7e-14 (R-58). NOT supported as a scale: 39.7x overconfident |
+| 8 | Epistemic uncertainty "closely follows the trend of the prediction error" and justifies "its role as a trust metric" (2504.16680 §5.1) | **yes** | **SUPPORTED as a scalar ranking, against a real baseline** — the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n_independent = 20, beats the forecast-index counter at every horizon and retains +0.596 after partialling it out (R-63). **Weaker per-dimension than R-58 reported**: the 45/45 count gives a permutation P of 0.0435 out-of-sample and 0.0823 over all ten episodes, and no cell survives multiplicity correction (R-61, S-15). NOT supported as a scale: 34.4x overconfident, though repairable per horizon (R-64) |
 | 9 | Aleatoric uncertainty "remains low, reflecting small stochasticity in the environment" (§5.1) | **yes** | **the observation holds, the explanation does not** — it is low because sigma = 0 is the objective's optimum (C-06, C-10, C-11), not because the environment is nearly deterministic |
 | 10 | Offline MBRL working on real robots (2504.16680) | no | not tested |
+| 11 | Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the base paper's headline sample-efficiency result | no | **not tested.** It is a claim about policy learning and hardware deployment: it needs the RL loop, a simulator and an ANYmal. No policy is trained anywhere in this work, so no transition count of ours is comparable. Added in the submission-hardening review; its absence from this table was an omission, since it is the result the base paper leads with |
+| 12 | Penalising rewards by ensemble disagreement improves the learned policy (2504.16680 Eq. 4-5, §5) — the follow-up's core method claim | no | **not tested.** We measure the penalty quantity itself — what it is (C-14), how well it tracks error (R-63), whether it is calibrated (R-58, R-62) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs*; a miscalibrated scale entering as a relative penalty across candidate actions may cost little or much, and we cannot distinguish those |
 
-**The honest position on 8.** The follow-up does not claim its uncertainty is a calibrated
+**The honest position on 8, revised.** The follow-up does not claim its uncertainty is a calibrated
 interval. It claims correlation with prediction error and a role as a trust metric, and our
 measurement **supports that claim**. What this work adds is that the quantity is not usable as a
 scale, that the aleatoric head is discarded before use (C-14), and that no single scalar repairs
@@ -3900,6 +3902,32 @@ No number-checking discipline catches those, because the number is not what is w
 reading them as a list, out of the flow of the prose. A false universal quantifier is obvious
 beside the table that refutes it and invisible three paragraphs away from it.
 **Evidence** `RUN` `results/task_c1_claims_audit.json`, `docs/CLAIMS_AUDIT.md`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
+
+### M-38 — Eight numbered figure references, and no numbered figures · **NEW**
+The body refers to "Figure 1", "Figure 2", "Figure 3(a)", "Figure 3b", "Figure 4" and "Figure 5a"
+in eight places. The Markdown-to-LaTeX converter emitted each figure as a bare
+`\includegraphics` inside a `figure` environment and **discarded the alt text**. Without a
+`\caption`, LaTeX assigns no number, so none of those eight references resolved to anything a
+reader could find, and the figures arrived unlabelled and unexplained.
+
+It survived every check because no check looked. The compile reported zero errors — a figure
+without a caption is valid LaTeX. The cross-reference check (Part F, item 5) scans `§` references,
+not `Figure` ones. And in `PAPER.md` the images render in order, so the Markdown reads correctly
+while the PDF does not.
+
+**Fix:** `build_paper.py` now carries a caption per figure and asserts that every figure it emits
+has one, so adding a figure without a caption fails the build. `md_to_tex.py` converts the alt
+text into `\caption{...}`. The rebuilt PDF numbers Figures 1–5 and all eight references resolve.
+
+**The general form of M-35, M-36 and M-38 is the same:** each was a defect in the *presentation*
+of correct data, in a project whose entire verification apparatus is pointed at whether the data
+are correct. Checking that a number came from a file does not check that a reader can find the
+figure it refers to, that the section it cites exists, or that the PDF on disk is the one the
+check certified.
+**Evidence** `RUN` `scripts/build_paper.py`, `scripts/md_to_tex.py`, `results/compile_paper.json`.
 **Status** CONFIRMED · **Relevance** METHOD
 
 

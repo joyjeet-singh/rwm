@@ -5,7 +5,7 @@ One row per declarative claim in the paper. Claims are enumerated mechanically f
 only judgement, and is keyed to the claim's text so that rewording a claim resets it
 to UNREVIEWED rather than carrying a stale verdict forward.
 
-**158 claims.** SUPPORTED: 158
+**159 claims.** SUPPORTED: 159
 
 | # | § | claim | backed by | verdict |
 |---|---|---|---|---|
@@ -18,7 +18,7 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 7 | Abstract | The teacher-forced arm has the most input-dependent σ ({{cal_armB_over_faithA_cov}}× the autoregressive arm's) and ranks its own errors on {{cal_armB_… | `task1_calibration.json` | **SUPPORTED** |
 | 8 | Abstract | That count is *not* the strong evidence an independent-trials test makes it look like: the 45 state dimensions are physically coupled and share a fore… | `task_b_permutation.json` | **SUPPORTED** |
 | 9 | Abstract | We also report {{n_defects}} defects in the released pipeline, and evidence that the released checkpoint's variance state is not reachable from the re… | `PAPER.template.md section 6 subsections` | **SUPPORTED** |
-| 10 | Abstract | The gap is not marginal: the bound arithmetic implies roughly {{unreach_implied_iters}} iterations against the {{unreach_recalled_iters}} recalled, a … | `E4_AUTHOR_CONTACT.md`, `task5_analysis.json` | **SUPPORTED** |
+| 10 | Abstract | The gap is not marginal: the bound arithmetic implies **{{implied_iters}}** iterations against the {{unreach_recalled_iters}} recalled, a factor of ab… | `E4_AUTHOR_CONTACT.md`, `step6_analysis.json` | **SUPPORTED** |
 | 11 | Abstract | And we report {{n_retractions_lower}} retractions of our own numbered claims, plus {{n_retract_framing_word}} more that withdraw framings rather than … | `FINDINGS_LEDGER.md` | **SUPPORTED** |
 | 12 | 1. Introduction | A world model that reports its own uncertainty is more useful than one that does not, and the uncertainty-aware Robotic World Model reports one. | — | **SUPPORTED** |
 | 13 | 1. Introduction | But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released checkpoint, and a harness that could score… | — | **SUPPORTED** |
@@ -136,34 +136,35 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 125 | 8. Method | Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{v… | `verify_reproduction.json` | **SUPPORTED** |
 | 126 | 8. Method | Excluded and reported separately: {{ver_timing}} timing fields, and the {{ver_machine}} values in `results/step4_5_timing.json`. | `verify_reproduction.json` | **SUPPORTED** |
 | 127 | 8. Method | That file is the CPU budget — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats — … | — | **SUPPORTED** |
-| 128 | 9. Actionable lessons | {{n_lessons_word}} things a practitioner can apply without reading the rest of this paper. | `PAPER.template.md section 9` | **SUPPORTED** |
-| 129 | 9. Actionable lessons | Do not read it as a distance.** The scalar the method applies correlates {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats … | `task_d_nind20.json` | **SUPPORTED** |
-| 130 | 9. Actionable lessons | But it is {{d1n_epi_ratio_h368}}× too small to be an interval, and a risk gate or safety margin that reads σ as a distance is not supported at any hor… | `task_d_nind20.json` | **SUPPORTED** |
-| 131 | 9. Actionable lessons | If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within {{… | `task_d3_perhorizon.json` | **SUPPORTED** |
-| 132 | 9. Actionable lessons | The fitted multipliers span {{d3_epi_cspread}}× across horizons, which is precisely why one number cannot serve. | `task_d3_perhorizon.json` | **SUPPORTED** |
-| 133 | 9. Actionable lessons | Do not convert per-dimension sign counts into P-values.** State dimensions in a robot are physically coupled and share a forecast-depth trend, so an i… | `task_b_permutation.json` | **SUPPORTED** |
-| 134 | 9. Actionable lessons | The held-out arena here contains {{nind_oos_400}} independent 400-step trajectories however many windows are drawn from it, and that number — not the … | `review_bootstrap_unit.json` | **SUPPORTED** |
-| 135 | 9. Actionable lessons | Reporting an interval beside a trajectory count rather than an independent-trajectory count overstates precision, and resampling pooled seed × traject… | `review_bootstrap_unit.json` | **SUPPORTED** |
-| 136 | 9. Actionable lessons | Check that the implemented loss is the described loss before reproducing any number from it.** The paper describes two loss terms; the implementation … | `step4_3_differential.json` | **SUPPORTED** |
-| 137 | 9. Actionable lessons | The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's σ is {{cal_rel_ratio}}× smaller than i… | `task1_calibration.json` | **SUPPORTED** |
-| 138 | 10. Broader impact | But a downstream user who reads the same quantity as a *calibrated interval* — a safety margin, a confidence bound, a gate on when to hand control to … | `task_d_nind20.json` | **SUPPORTED** |
-| 139 | 10. Broader impact | We think that makes the finding worth publishing rather than the reverse, and it is the reason §5 reports coverage rather than only correlation. | — | **SUPPORTED** |
-| 140 | 11. Limitations | Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent 400-step trajectories. | `task5_analysis.json` | **SUPPORTED** |
-| 141 | 11. Limitations | We did not measure what the miscalibration costs.** We show that the penalty the follow-up applies is miscalibrated as a scale — {{d1n_epi_ratio_h368}… | `task_d_nind20.json` | **SUPPORTED** |
-| 142 | 11. Limitations | The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§5.5),… | `task_b_permutation.json` | **SUPPORTED** |
-| 143 | 11. Limitations | The larger arenas can reject and do not: over all ten episodes the smallest P in the family is {{perm_all_holm_min_p}} against a threshold of {{perm_a… | `task_b_permutation.json` | **SUPPORTED** |
-| 144 | 11. Limitations | The aggregate scalar the method applies is separately and more strongly supported (§5.6), on the same trajectories, because it is one test rather than… | — | **SUPPORTED** |
-| 145 | 12. Conclusion | The aleatoric σ is {{cal_rel_ratio}}× smaller than its own error, and the cause is that the objective's optimum is σ = 0 with the term that should pre… | `task1_calibration.json` | **SUPPORTED** |
-| 146 | 12. Conclusion | The epistemic term the method actually penalises with is better by two orders of magnitude and still {{d1n_epi_ratio_h368}}× overconfident where it is… | `task_d_nind20.json` | **SUPPORTED** |
-| 147 | 12. Conclusion | The more useful finding is asymmetric, and it cuts both ways. | — | **SUPPORTED** |
-| 148 | 12. Conclusion | The scale failure is established and large — but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, res… | `task_d3_perhorizon.json` | **SUPPORTED** |
-| 149 | 12. Conclusion | And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemb… | `task_d_nind20.json` | **SUPPORTED** |
-| 150 | 12. Conclusion | That is the one claim of either original work that this reproduction strengthens rather than qualifies. | — | **SUPPORTED** |
-| 151 | 12. Conclusion | Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on {{perm_all_epi_npos_h368}} of… | `task_b_permutation.json` | **SUPPORTED** |
-| 152 | 12. Conclusion | The released checkpoint's *aleatoric* head does the opposite, ranking backwards on every one of {{perm_all_relale_ndim_h368}} dimensions, and the corr… | `task_b_permutation.json` | **SUPPORTED** |
-| 153 | 12. Conclusion | We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about {{perm_worst_factor}}… | `task_b_permutation.json` | **SUPPORTED** |
-| 154 | Data and code | And **the repository was archived by Software Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit timestamp is n… | — | **SUPPORTED** |
-| 155 | Data and code | It proves that the repository, with the whole pre-registration history in the form this paper cites, existed no later than that archival moment, as re… | — | **SUPPORTED** |
-| 156 | Appendix B — reproducing | Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of recorded wall clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} run… | `step5_*.json` | **SUPPORTED** |
-| 157 | Appendix B — reproducing | The longest single run is {{rt_longest}} hours. | `step5_*.json` | **SUPPORTED** |
-| 158 | Appendix B — reproducing | An earlier version of this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for the three-seed headl… | `step5_*.json` | **SUPPORTED** |
+| 128 | 8. Method | The file records this about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {… | `step4_5_timing.json` | **SUPPORTED** |
+| 129 | 9. Actionable lessons | {{n_lessons_word}} things a practitioner can apply without reading the rest of this paper. | `PAPER.template.md section 9` | **SUPPORTED** |
+| 130 | 9. Actionable lessons | Do not read it as a distance.** The scalar the method applies correlates {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats … | `task_d_nind20.json` | **SUPPORTED** |
+| 131 | 9. Actionable lessons | But it is {{d1n_epi_ratio_h368}}× too small to be an interval, and a risk gate or safety margin that reads σ as a distance is not supported at any hor… | `task_d_nind20.json` | **SUPPORTED** |
+| 132 | 9. Actionable lessons | If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within {{… | `task_d3_perhorizon.json` | **SUPPORTED** |
+| 133 | 9. Actionable lessons | The fitted multipliers span {{d3_epi_cspread}}× across horizons, which is precisely why one number cannot serve. | `task_d3_perhorizon.json` | **SUPPORTED** |
+| 134 | 9. Actionable lessons | Do not convert per-dimension sign counts into P-values.** State dimensions in a robot are physically coupled and share a forecast-depth trend, so an i… | `task_b_permutation.json` | **SUPPORTED** |
+| 135 | 9. Actionable lessons | The held-out arena here contains {{nind_oos_400}} independent 400-step trajectories however many windows are drawn from it, and that number — not the … | `review_bootstrap_unit.json` | **SUPPORTED** |
+| 136 | 9. Actionable lessons | Reporting an interval beside a trajectory count rather than an independent-trajectory count overstates precision, and resampling pooled seed × traject… | `review_bootstrap_unit.json` | **SUPPORTED** |
+| 137 | 9. Actionable lessons | Check that the implemented loss is the described loss before reproducing any number from it.** The paper describes two loss terms; the implementation … | `step4_3_differential.json` | **SUPPORTED** |
+| 138 | 9. Actionable lessons | The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's σ is {{cal_rel_ratio}}× smaller than i… | `task1_calibration.json` | **SUPPORTED** |
+| 139 | 10. Broader impact | But a downstream user who reads the same quantity as a *calibrated interval* — a safety margin, a confidence bound, a gate on when to hand control to … | `task_d_nind20.json` | **SUPPORTED** |
+| 140 | 10. Broader impact | We think that makes the finding worth publishing rather than the reverse, and it is the reason §5 reports coverage rather than only correlation. | — | **SUPPORTED** |
+| 141 | 11. Limitations | Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent 400-step trajectories. | `task5_analysis.json` | **SUPPORTED** |
+| 142 | 11. Limitations | We did not measure what the miscalibration costs.** We show that the penalty the follow-up applies is miscalibrated as a scale — {{d1n_epi_ratio_h368}… | `task_d_nind20.json` | **SUPPORTED** |
+| 143 | 11. Limitations | The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§5.5),… | `task_b_permutation.json` | **SUPPORTED** |
+| 144 | 11. Limitations | The larger arenas can reject and do not: over all ten episodes the smallest P in the family is {{perm_all_holm_min_p}} against a threshold of {{perm_a… | `task_b_permutation.json` | **SUPPORTED** |
+| 145 | 11. Limitations | The aggregate scalar the method applies is separately and more strongly supported (§5.6), on the same trajectories, because it is one test rather than… | — | **SUPPORTED** |
+| 146 | 12. Conclusion | The aleatoric σ is {{cal_rel_ratio}}× smaller than its own error, and the cause is that the objective's optimum is σ = 0 with the term that should pre… | `task1_calibration.json` | **SUPPORTED** |
+| 147 | 12. Conclusion | The epistemic term the method actually penalises with is better by two orders of magnitude and still {{d1n_epi_ratio_h368}}× overconfident where it is… | `task_d_nind20.json` | **SUPPORTED** |
+| 148 | 12. Conclusion | The more useful finding is asymmetric, and it cuts both ways. | — | **SUPPORTED** |
+| 149 | 12. Conclusion | The scale failure is established and large — but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, res… | `task_d3_perhorizon.json` | **SUPPORTED** |
+| 150 | 12. Conclusion | And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemb… | `task_d_nind20.json` | **SUPPORTED** |
+| 151 | 12. Conclusion | That is the one claim of either original work that this reproduction strengthens rather than qualifies. | — | **SUPPORTED** |
+| 152 | 12. Conclusion | Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on {{perm_all_epi_npos_h368}} of… | `task_b_permutation.json` | **SUPPORTED** |
+| 153 | 12. Conclusion | The released checkpoint's *aleatoric* head does the opposite, ranking backwards on every one of {{perm_all_relale_ndim_h368}} dimensions, and the corr… | `task_b_permutation.json` | **SUPPORTED** |
+| 154 | 12. Conclusion | We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about {{perm_worst_factor}}… | `task_b_permutation.json` | **SUPPORTED** |
+| 155 | Data and code | And **the repository was archived by Software Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit timestamp is n… | — | **SUPPORTED** |
+| 156 | Data and code | It proves that the repository, with the whole pre-registration history in the form this paper cites, existed no later than that archival moment, as re… | — | **SUPPORTED** |
+| 157 | Appendix B — reproducing | Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of recorded wall clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} run… | `step5_*.json` | **SUPPORTED** |
+| 158 | Appendix B — reproducing | The longest single run is {{rt_longest}} hours. | `step5_*.json` | **SUPPORTED** |
+| 159 | Appendix B — reproducing | An earlier version of this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for the three-seed headl… | `step5_*.json` | **SUPPORTED** |

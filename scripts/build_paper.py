@@ -64,9 +64,45 @@ def main():
         "     results/paper_numbers.json by scripts/build_paper.py. Edit the template,\n"
         "     then run: python scripts/build_paper.py\n"
         f"     {len(used)} values substituted from {len(set(N[k]['source'] for k in used))} artifacts. -->\n\n")
+    # Captions. The body makes numbered references ("Figure 1", "Figure 3b"), so
+    # the figures must actually carry numbers; without \caption LaTeX assigns
+    # none and every one of those references dangles.
+    CAPS = {
+        "paper_fig1_calibration.png":
+            "Calibration of all four models on the held-out arena. "
+            "(a) reliability: observed against predicted coverage, with the calibrated diagonal. "
+            "(b) coverage at $\\pm1\\sigma$ against forecast horizon, log scale, against the "
+            "68.3\\% a calibrated Gaussian gives. Every curve sits far below the diagonal and "
+            "falls further with horizon.",
+        "paper_fig2_sigma_profile.png":
+            "Why the coverage collapse is a horizon effect. Both panels are normalised to "
+            "forecast step 1. (a) predicted $\\sigma$ barely moves, and for the faithful arm it "
+            "declines. (b) realised error grows by an order of magnitude over the same steps. "
+            "The gap between the panels is the collapse.",
+        "paper_fig3_collapse.png":
+            "The variance collapse is objective-driven. (a) mean "
+            "$\\log\\Delta_{\\log\\sigma}$ against training iteration for every run. "
+            "(b) the fitted per-iteration slope for each run, grouped by objective: negative and "
+            "tightly clustered under sampled MSE, positive under \\texttt{gaussian\\_nll}. The "
+            "sign flip is the evidence that the objective, not the optimiser or the data, "
+            "produces it.",
+        "paper_fig4_prereg_timeline.png":
+            "Pre-registration lead time for each decision rule, from git commit timestamps. "
+            "Positive is a rule committed before the data that tested it existed; negative is a "
+            "rule written afterwards. The one negative bar is the Task 3 duplication rule, "
+            "retracted as a pre-registration in this paper.",
+        "paper_fig5_three_way.png":
+            "The contamination control. (a) outcome across 32 cells for each arm pair, naive "
+            "bootstrap on the left of each position and cluster bootstrap on the right; the "
+            "duplication control is inert. (b) distribution of the ratio of cluster to naive "
+            "confidence-interval width, with the mean marked. Resampling trajectory-step pairs "
+            "rather than whole trajectories narrows every interval.",
+    }
     body = out.rstrip() + "\n\n## Figures\n\n"
+    missing = [f for f in figs if f not in CAPS]
+    assert not missing, f"figures with no caption: {missing}"
     for f in figs:
-        body += f"![{f}](figures/{f})\n\n"
+        body += f"![{CAPS[f]}](figures/{f})\n\n"
     open(OUT, "w").write(header + body)
 
     # LaTeX for submission, from the same resolved text -- one source, two outputs.
