@@ -125,7 +125,7 @@ R-50, R-51, R-52, R-53, R-54, C-14, C-15, R-58, R-59. These concern the variance
 calibration of the uncertainty output; none of them is a claim about the base paper.
 
 **`[BASE]`** — M-16, M-23, M-24, R-19, R-22, R-23, R-35, R-36, R-37, R-40, R-42, R-45, R-46,
-R-47, R-55, R-56, and the A/B comparison generally; plus the loss-assembly discrepancies C-01,
+R-47, R-55, R-56, R-60, and the A/B comparison generally; plus the loss-assembly discrepancies C-01,
 C-02, C-05, C-09
 and the defects B-01 to B-05.
 
@@ -2950,6 +2950,42 @@ reading of R-51 and R-58, and it is wrong. A per-horizon or input-dependent corr
 still work; a constant one does not. That makes the failure structural rather than a units
 problem, which is the harder of the two possible outcomes for the method.
 **Evidence** `RUN` `results/task_d2_recalibration.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-60 — The headline over three seeds · `[BASE]` · **NEW**
+R-40 and the paper's abstract rested on **one** training seed per arm, because only one
+10,000-iteration run per arm existed. Four more were run — Arm A seeds 0 and 2, Arm B seeds 0 and
+2 — with flags identical to the existing pair.
+
+**Cross-check first, because the aggregate is worthless without it.** A 10,000-iteration run and
+the 2,500-iteration run at the same seed share their first 2,500 iterations exactly. All six
+pairs agree: **90,000 logged values compared across six
+curves, 0 differing, worst absolute difference 0.000e+00.**
+`scripts/task_d1_threeseed.py` refuses to form the aggregate if any pair disagrees.
+
+**h = 368, out-of-sample, n_independent = 4:**
+
+| arm | seed 0 | seed 1 | seed 2 | mean ± sd (ddof=1) | relative sd |
+|---|---|---|---|---|---|
+| A, autoregressive | 0.3894 | 0.3509 | 0.3341 | **0.3582 ± 0.0283** | 7.9% |
+| B, teacher forcing | 1.9710 | 1.5540 | 1.4241 | **1.6497 ± 0.2858** | 17.3% |
+
+**Ratio 4.61×**, against 4.4× from the single seed.
+
+**The claim survives and the seed that was quoted was a flattering one — in both directions at
+once.** Seed 1 gave Arm A 0.3509 against a three-seed mean of 0.3582
+(better than average) and Arm B 1.5540 against 1.6497 (worse than
+average). Those errors happened to cancel in the numerator and denominator, so the single-seed
+ratio understated rather than overstated the effect. That is luck, not method, and it is exactly
+why C1 marked the figure OVERSTATED rather than wrong.
+
+**Teacher forcing is more than twice as seed-variable as autoregressive training** at this
+horizon — 17.3% against 7.9% relative.
+A single-seed comparison of these two arms is therefore unreliable in a direction a reader cannot
+predict, and the paper now says so.
+**Evidence** `RUN` `results/task_d1_threeseed.json`,
+`results/step5_arm{A,B}_seed{0,1,2}_10k.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
 

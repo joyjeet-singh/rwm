@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     186 values substituted from 28 artifacts. -->
+     199 values substituted from 29 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -15,12 +15,12 @@ We independently reproduce the proprioceptive dynamics model of Li, Krause and H
 (arXiv:2504.16680), building the model from scratch on CPU and verifying it against the released
 reference at the level of outputs, losses and gradients before training anything.
 
-The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the
-model reaches normalised error 0.3509 at a 368-step horizon on held-out episodes against
-1.5540 for teacher forcing, a factor of 4.4×, with a bootstrap interval of
-[0.56, 2.05] excluding zero and the gap positive on all
-10 of 10 episodes. That verdict was fixed by a decision
-rule committed to git before the runs that tested it existed.
+The base paper's central claim reproduces, and by a wide margin: over 3 training seeds,
+autoregressive training reaches normalised error **0.3582 ± 0.0283** at a 368-step
+horizon on held-out episodes against **1.6497 ± 0.2858** for teacher forcing, a factor
+of **4.61×**, with the per-episode gap positive on all 10 of
+10 episodes — an exact sign test at p = 0.0020. That verdict was fixed by a
+decision rule committed to git before the runs that tested it existed.
 
 Neither of the follow-up's uncertainty outputs survives contact with a calibration measurement.
 The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and
@@ -154,10 +154,20 @@ episodes has 16 independent 400-step trajectories against the held-out arena's
 4 — 4× more — and gives the same direction at every horizon and
 checkpoint.
 
-*The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
-training reaches **0.3509** against teacher forcing's **1.5540** — a factor of
-**4.4×**, gap 1.2033, 95% bootstrap interval [0.56, 2.05] on
-n = 4 independent trajectories.
+*The out-of-sample effect size, over 3 seeds.* Autoregressive training reaches
+**0.3582 ± 0.0283** against teacher forcing's **1.6497 ± 0.2858**
+(standard deviation over seeds, `ddof=1`) — a factor of **4.61×**.
+
+Seed spread is not symmetric between the arms and that is worth stating: Arm A ranges
+0.3341–0.3894 across seeds (7.9% relative), Arm B 1.4241–1.9710
+(17.3%). Teacher forcing is more than twice as variable across seeds as autoregressive
+training at this horizon, so a single-seed comparison of these two arms is unreliable in a way a
+reader should know about. An earlier draft of this paper quoted the single-seed figures
+0.3509 and 1.5540; those came from the seed that happened to be favourable to Arm A and
+unfavourable to Arm B, and the three-seed ratio is 4.61× rather than 4.4×.
+
+For a single seed the bootstrap over trajectories gives 95% interval
+[0.56, 2.05] on n = 4 independent trajectories.
 
 *Against a baseline, because neither number means anything without one.* The hold-last floor —
 predicting that nothing changes — scores **0.9930** in the same cell. Autoregressive
@@ -294,8 +304,10 @@ and `min_logstd` cancels algebraically, taking no gradient from that term. The f
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 We predicted the collapse from this algebra before training, then observed it. Across all
-18 runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Under the corrected objective the sign flips (Figure 3b) — which is the strongest
+21 runs the collapse is linear in iteration count and its rate is nearly identical
+(Figure 3a). Rates are fitted on 15 of those runs: the 6
+10,000-iteration runs are excluded from the rate statistics because they continue seeds already
+counted at 2,500 and would double-weight them. Under the corrected objective the sign flips (Figure 3b) — which is the strongest
 evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
 
 **Two different things are being explained here, and §4.5 separates them.** *Magnitude collapse
@@ -495,7 +507,7 @@ the work.
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-(162 entries). Claims are never edited in place. A claim that turns out to be wrong is
+(163 entries). Claims are never edited in place. A claim that turns out to be wrong is
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data

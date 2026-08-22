@@ -328,6 +328,9 @@ def main():
     put("e2_mse_rate", f"{_st.mean(_mse):.4e}", "results/step5_arm*.json")
     put("e2_mse_sd", f"{_st.stdev(_mse):.1e}", "results/step5_arm*.json")
     put("e2_nll_runs", len(_nll_s), "results/step5_arm*.json")
+    put("e2_fitted_runs", len(_mse) + len(_nll_s), "results/step5_arm*.json")
+    _all = len([f for f in _g.glob("results/step5_arm*.json")])
+    put("e2_excluded_10k", _all - (len(_mse) + len(_nll_s)), "results/step5_arm*.json")
     put("e2_nll_rate", f"{_st.mean(_nll_s):+.4e}", "results/step5_arm*.json")
 
     # "four defects in the released pipeline" was typed. Count section 5's
@@ -336,6 +339,30 @@ def main():
     _n = len(re.findall(r"^\*\*5\.\d+ ", _tpl, re.M))
     WORD = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
     put("n_defects", WORD.get(_n, str(_n)), "PAPER.template.md section 5 subsections")
+
+    # D1 -- the headline over three seeds. The single-seed figures stay available
+    # so the paper can say what changed rather than quietly swapping them.
+    _d1 = J("task_d1_threeseed.json")
+    _A, _B = _d1["aggregate"]["A"], _d1["aggregate"]["B"]
+    put("d1_seeds", _A["n_seeds"], "results/task_d1_threeseed.json")
+    put("d1_A_mean", f'{_A["mean"]:.4f}', "results/task_d1_threeseed.json")
+    put("d1_A_sd", f'{_A["sd_ddof1"]:.4f}', "results/task_d1_threeseed.json")
+    put("d1_B_mean", f'{_B["mean"]:.4f}', "results/task_d1_threeseed.json")
+    put("d1_B_sd", f'{_B["sd_ddof1"]:.4f}', "results/task_d1_threeseed.json")
+    put("d1_ratio", f'{_d1["aggregate"]["ratio_B_over_A"]:.2f}',
+        "results/task_d1_threeseed.json")
+    put("d1_A_relsd", f'{100*_A["sd_ddof1"]/_A["mean"]:.1f}', "results/task_d1_threeseed.json")
+    put("d1_B_relsd", f'{100*_B["sd_ddof1"]/_B["mean"]:.1f}', "results/task_d1_threeseed.json")
+    put("d1_A_lo", f'{min(_A["per_seed"].values()):.4f}', "results/task_d1_threeseed.json")
+    put("d1_A_hi", f'{max(_A["per_seed"].values()):.4f}', "results/task_d1_threeseed.json")
+    put("d1_B_lo", f'{min(_B["per_seed"].values()):.4f}', "results/task_d1_threeseed.json")
+    put("d1_B_hi", f'{max(_B["per_seed"].values()):.4f}', "results/task_d1_threeseed.json")
+    _xc = _d1["cross_check"]
+    put("d1_xc_runs", len(_xc), "results/task_d1_threeseed.json")
+    put("d1_xc_values", f'{sum(r.get("values_compared", 0) for r in _xc):,}',
+        "results/task_d1_threeseed.json")
+    put("d1_xc_diff", sum(r.get("differing", 0) for r in _xc),
+        "results/task_d1_threeseed.json")
 
     # C3 -- multiplicity
     C3 = J("task_c3_multiplicity.json")

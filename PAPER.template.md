@@ -9,12 +9,12 @@ We independently reproduce the proprioceptive dynamics model of Li, Krause and H
 (arXiv:2504.16680), building the model from scratch on CPU and verifying it against the released
 reference at the level of outputs, losses and gradients before training anything.
 
-The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the
-model reaches normalised error {{m23_A}} at a 368-step horizon on held-out episodes against
-{{m23_B}} for teacher forcing, a factor of {{m23_ratio}}×, with a bootstrap interval of
-[{{m23_ci_lo}}, {{m23_ci_hi}}] excluding zero and the gap positive on all
-{{m23_n_episodes_positive}} of {{m23_n_episodes}} episodes. That verdict was fixed by a decision
-rule committed to git before the runs that tested it existed.
+The base paper's central claim reproduces, and by a wide margin: over {{d1_seeds}} training seeds,
+autoregressive training reaches normalised error **{{d1_A_mean}} ± {{d1_A_sd}}** at a 368-step
+horizon on held-out episodes against **{{d1_B_mean}} ± {{d1_B_sd}}** for teacher forcing, a factor
+of **{{d1_ratio}}×**, with the per-episode gap positive on all {{m23_n_episodes_positive}} of
+{{m23_n_episodes}} episodes — an exact sign test at p = {{c3_sign_p}}. That verdict was fixed by a
+decision rule committed to git before the runs that tested it existed.
 
 Neither of the follow-up's uncertainty outputs survives contact with a calibration measurement.
 The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and
@@ -148,10 +148,20 @@ episodes has {{nind_ins_400}} independent 400-step trajectories against the held
 {{nind_oos_400}} — {{nind_ratio}}× more — and gives the same direction at every horizon and
 checkpoint.
 
-*The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive
-training reaches **{{m23_A}}** against teacher forcing's **{{m23_B}}** — a factor of
-**{{m23_ratio}}×**, gap {{m23_gap}}, 95% bootstrap interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on
-n = {{m23_nind}} independent trajectories.
+*The out-of-sample effect size, over {{d1_seeds}} seeds.* Autoregressive training reaches
+**{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} ± {{d1_B_sd}}**
+(standard deviation over seeds, `ddof=1`) — a factor of **{{d1_ratio}}×**.
+
+Seed spread is not symmetric between the arms and that is worth stating: Arm A ranges
+{{d1_A_lo}}–{{d1_A_hi}} across seeds ({{d1_A_relsd}}% relative), Arm B {{d1_B_lo}}–{{d1_B_hi}}
+({{d1_B_relsd}}%). Teacher forcing is more than twice as variable across seeds as autoregressive
+training at this horizon, so a single-seed comparison of these two arms is unreliable in a way a
+reader should know about. An earlier draft of this paper quoted the single-seed figures
+{{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and
+unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{m23_ratio}}×.
+
+For a single seed the bootstrap over trajectories gives 95% interval
+[{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories.
 
 *Against a baseline, because neither number means anything without one.* The hold-last floor —
 predicting that nothing changes — scores **{{floor_h368}}** in the same cell. Autoregressive
@@ -289,7 +299,9 @@ closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 We predicted the collapse from this algebra before training, then observed it. Across all
 {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Under the corrected objective the sign flips (Figure 3b) — which is the strongest
+(Figure 3a). Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}}
+10,000-iteration runs are excluded from the rate statistics because they continue seeds already
+counted at 2,500 and would double-weight them. Under the corrected objective the sign flips (Figure 3b) — which is the strongest
 evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
 
 **Two different things are being explained here, and §4.5 separates them.** *Magnitude collapse

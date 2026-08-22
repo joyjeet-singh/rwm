@@ -1568,6 +1568,20 @@
       "retracts": []
     },
     {
+      "id": "R-60",
+      "claim": "The headline over three seeds",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d1_threeseed.json",
+        "scripts/task_d1_threeseed.py"
+      ],
+      "retracts": []
+    },
+    {
       "id": "O-01",
       "claim": "Which action convention is causally correct",
       "relevance": "",
@@ -1963,7 +1977,7 @@
     "D": 13,
     "M": 33,
     "O": 14,
-    "R": 59,
+    "R": 60,
     "S": 14,
     "X": 10
   }

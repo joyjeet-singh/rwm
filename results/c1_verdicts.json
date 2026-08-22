@@ -536,5 +536,40 @@
     "verdict": "SUPPORTED",
     "sample_size": "-",
     "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+  },
+  "eedb3d507f31": {
+    "verdict": "SUPPORTED",
+    "sample_size": "3 seeds, n_ind=4",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  },
+  "c3204ca09b05": {
+    "verdict": "SUPPORTED",
+    "sample_size": "3 seeds, n_ind=4",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  },
+  "ff44600dc084": {
+    "verdict": "SUPPORTED",
+    "sample_size": "3 seeds, n_ind=4",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  },
+  "ca8d296bf44d": {
+    "verdict": "SUPPORTED",
+    "sample_size": "3 seeds, n_ind=4",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  },
+  "ad1695104a2c": {
+    "verdict": "SUPPORTED",
+    "sample_size": "3 seeds, n_ind=4",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  },
+  "e6a63050db47": {
+    "verdict": "SUPPORTED",
+    "sample_size": "3 seeds, n_ind=4",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  },
+  "56d2a28a2baf": {
+    "verdict": "SUPPORTED",
+    "sample_size": "3 seeds, n_ind=4",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
   }
 }

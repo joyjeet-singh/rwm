@@ -639,6 +639,66 @@
     "source": "results/step0_regimes.json",
     "value": 3.53
   },
+  "d1_A_hi": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.3894"
+  },
+  "d1_A_lo": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.3341"
+  },
+  "d1_A_mean": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.3582"
+  },
+  "d1_A_relsd": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "7.9"
+  },
+  "d1_A_sd": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.0283"
+  },
+  "d1_B_hi": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "1.9710"
+  },
+  "d1_B_lo": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "1.4241"
+  },
+  "d1_B_mean": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "1.6497"
+  },
+  "d1_B_relsd": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "17.3"
+  },
+  "d1_B_sd": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.2858"
+  },
+  "d1_ratio": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "4.61"
+  },
+  "d1_seeds": {
+    "source": "results/task_d1_threeseed.json",
+    "value": 3
+  },
+  "d1_xc_diff": {
+    "source": "results/task_d1_threeseed.json",
+    "value": 0
+  },
+  "d1_xc_runs": {
+    "source": "results/task_d1_threeseed.json",
+    "value": 6
+  },
+  "d1_xc_values": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "90,000"
+  },
   "d2_ale_c_hi": {
     "source": "results/task_d2_recalibration.json",
     "value": "611"
@@ -738,6 +798,14 @@
   "dup_cost_pct": {
     "source": "results/task3_control_arm.json",
     "value": "0.90"
+  },
+  "e2_excluded_10k": {
+    "source": "results/step5_arm*.json",
+    "value": 6
+  },
+  "e2_fitted_runs": {
+    "source": "results/step5_arm*.json",
+    "value": 15
   },
   "e2_mse_rate": {
     "source": "results/step5_arm*.json",
@@ -877,7 +945,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 162
+    "value": 163
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",
@@ -893,7 +961,7 @@
   },
   "n_runs": {
     "source": "runs/ directory listing",
-    "value": 18
+    "value": 21
   },
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",

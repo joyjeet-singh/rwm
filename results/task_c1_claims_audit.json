@@ -1,31 +1,34 @@
 {
-  "n_claims": 89,
+  "n_claims": 94,
   "by_verdict": {
-    "OVERSTATED": 2,
-    "SUPPORTED": 87
+    "SUPPORTED": 94
   },
   "claims": [
     {
-      "id": "a0648b9f1fa3",
+      "id": "eedb3d507f31",
       "section": "Abstract",
-      "claim": "The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the model reaches normalised error {{m23_A}} at a 368-step horizon on held-out episodes against {{m23_B}} for teacher forcing, a factor of {{m23_ratio}}\u00d7, with a bootstrap interval of [{{m23_ci_lo}}, {{m23_ci_hi}}] excluding zero and the gap positive on all {{m23_n_episodes_positive}} of {{m23_n_episodes}} episodes.",
+      "claim": "The base paper's central claim reproduces, and by a wide margin: over {{d1_seeds}} training seeds, autoregressive training reaches normalised error **{{d1_A_mean}} \u00b1 {{d1_A_sd}}** at a 368-step horizon on held-out episodes against **{{d1_B_mean}} \u00b1 {{d1_B_sd}}** for teacher forcing, a factor of **{{d1_ratio}}\u00d7**, with the per-episode gap positive on all {{m23_n_episodes_positive}} of {{m23_n_episodes}} episodes \u2014 an exact sign test at p = {{c3_sign_p}}.",
       "keys": [
-        "m23_A",
-        "m23_B",
-        "m23_ratio",
-        "m23_ci_lo",
-        "m23_ci_hi",
+        "d1_seeds",
+        "d1_A_mean",
+        "d1_A_sd",
+        "d1_B_mean",
+        "d1_B_sd",
+        "d1_ratio",
         "m23_n_episodes_positive",
-        "m23_n_episodes"
+        "m23_n_episodes",
+        "c3_sign_p"
       ],
       "artifacts": [
-        "results/task5_analysis.json"
+        "results/task5_analysis.json",
+        "results/task_c3_multiplicity.json",
+        "results/task_d1_threeseed.json"
       ],
-      "n_keys": 7,
+      "n_keys": 9,
       "generated": true,
-      "verdict": "OVERSTATED",
-      "sample_size": "1 seed (armA/B_seed1_10k)",
-      "note": "The 4.4x direction is corroborated by three seeds at 2,500 iterations, but the specific figures 0.3509/1.5540 come from one 10k run per arm. Not defensible against seed variance until D1 lands."
+      "verdict": "SUPPORTED",
+      "sample_size": "3 seeds, n_ind=4",
+      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
     },
     {
       "id": "0743a4754d4a",
@@ -338,14 +341,84 @@
       "note": "Both counts derived from review_bootstrap_unit.json."
     },
     {
-      "id": "b3897b72105a",
+      "id": "c3204ca09b05",
       "section": "3. The base paper's central claim reproduces",
-      "claim": "The out-of-sample effect size, reported last and with its limitation stated.* Autoregressive training reaches **{{m23_A}}** against teacher forcing's **{{m23_B}}** \u2014 a factor of **{{m23_ratio}}\u00d7**, gap {{m23_gap}}, 95% bootstrap interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories.",
+      "claim": "The out-of-sample effect size, over {{d1_seeds}} seeds.* Autoregressive training reaches **{{d1_A_mean}} \u00b1 {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} \u00b1 {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`) \u2014 a factor of **{{d1_ratio}}\u00d7**.",
+      "keys": [
+        "d1_seeds",
+        "d1_A_mean",
+        "d1_A_sd",
+        "d1_B_mean",
+        "d1_B_sd",
+        "d1_ratio"
+      ],
+      "artifacts": [
+        "results/task_d1_threeseed.json"
+      ],
+      "n_keys": 6,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 seeds, n_ind=4",
+      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+    },
+    {
+      "id": "ff44600dc084",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "Seed spread is not symmetric between the arms and that is worth stating: Arm A ranges {{d1_A_lo}}\u2013{{d1_A_hi}} across seeds ({{d1_A_relsd}}% relative), Arm B {{d1_B_lo}}\u2013{{d1_B_hi}} ({{d1_B_relsd}}%).",
+      "keys": [
+        "d1_A_lo",
+        "d1_A_hi",
+        "d1_A_relsd",
+        "d1_B_lo",
+        "d1_B_hi",
+        "d1_B_relsd"
+      ],
+      "artifacts": [
+        "results/task_d1_threeseed.json"
+      ],
+      "n_keys": 6,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 seeds, n_ind=4",
+      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+    },
+    {
+      "id": "ca8d296bf44d",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "Teacher forcing is more than twice as variable across seeds as autoregressive training at this horizon, so a single-seed comparison of these two arms is unreliable in a way a reader should know about.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 seeds, n_ind=4",
+      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+    },
+    {
+      "id": "ad1695104a2c",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "An earlier draft of this paper quoted the single-seed figures {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}\u00d7 rather than {{m23_ratio}}\u00d7.",
       "keys": [
         "m23_A",
         "m23_B",
-        "m23_ratio",
-        "m23_gap",
+        "d1_ratio",
+        "m23_ratio"
+      ],
+      "artifacts": [
+        "results/task5_analysis.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 seeds, n_ind=4",
+      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+    },
+    {
+      "id": "e6a63050db47",
+      "section": "3. The base paper's central claim reproduces",
+      "claim": "For a single seed the bootstrap over trajectories gives 95% interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories.",
+      "keys": [
         "m23_ci_lo",
         "m23_ci_hi",
         "m23_nind"
@@ -353,11 +426,11 @@
       "artifacts": [
         "results/task5_analysis.json"
       ],
-      "n_keys": 7,
+      "n_keys": 3,
       "generated": true,
-      "verdict": "OVERSTATED",
-      "sample_size": "1 seed (armA/B_seed1_10k)",
-      "note": "The effect size is still one 10k run per arm. Reordering fixed how it is presented, not the sample behind it; D1 fixes the sample."
+      "verdict": "SUPPORTED",
+      "sample_size": "3 seeds, n_ind=4",
+      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
     },
     {
       "id": "4307718cf905",
@@ -614,6 +687,23 @@
       "verdict": "SUPPORTED",
       "sample_size": "",
       "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "56d2a28a2baf",
+      "section": "4.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}} 10,000-iteration runs are excluded from the rate statistics because they continue seeds already counted at 2,500 and would double-weight them.",
+      "keys": [
+        "e2_fitted_runs",
+        "e2_excluded_10k"
+      ],
+      "artifacts": [
+        "results/step5_arm*.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 seeds, n_ind=4",
+      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
     },
     {
       "id": "2bdfd7f98f09",

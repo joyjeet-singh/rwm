@@ -2,9 +2,12 @@
   "cross_check": [
     {
       "run": "armA_seed0",
-      "status": "MISSING",
-      "have_10k": false,
-      "have_2500": true
+      "status": "MATCH",
+      "values_compared": 15000,
+      "differing": 0,
+      "worst_abs_diff": 0.0,
+      "worst_at": null,
+      "iterations_compared": 2500
     },
     {
       "run": "armA_seed1",
@@ -17,15 +20,21 @@
     },
     {
       "run": "armA_seed2",
-      "status": "MISSING",
-      "have_10k": false,
-      "have_2500": true
+      "status": "MATCH",
+      "values_compared": 15000,
+      "differing": 0,
+      "worst_abs_diff": 0.0,
+      "worst_at": null,
+      "iterations_compared": 2500
     },
     {
       "run": "armB_seed0",
-      "status": "MISSING",
-      "have_10k": false,
-      "have_2500": true
+      "status": "MATCH",
+      "values_compared": 15000,
+      "differing": 0,
+      "worst_abs_diff": 0.0,
+      "worst_at": null,
+      "iterations_compared": 2500
     },
     {
       "run": "armB_seed1",
@@ -38,31 +47,38 @@
     },
     {
       "run": "armB_seed2",
-      "status": "MISSING",
-      "have_10k": false,
-      "have_2500": true
+      "status": "MATCH",
+      "values_compared": 15000,
+      "differing": 0,
+      "worst_abs_diff": 0.0,
+      "worst_at": null,
+      "iterations_compared": 2500
     }
   ],
   "n_mismatch": 0,
-  "n_missing": 4,
+  "n_missing": 0,
   "aggregate": {
     "A": {
       "per_seed": {
-        "1": 0.35089385509490967
+        "0": 0.3894190788269043,
+        "1": 0.35089385509490967,
+        "2": 0.3341435194015503
       },
-      "mean": 0.35089385509490967,
-      "sd_ddof1": NaN,
-      "n_seeds": 1
+      "mean": 0.3581521511077881,
+      "sd_ddof1": 0.028343588573156813,
+      "n_seeds": 3
     },
     "B": {
       "per_seed": {
-        "1": 1.5539506673812866
+        "0": 1.971046805381775,
+        "1": 1.5539506673812866,
+        "2": 1.4240561723709106
       },
-      "mean": 1.5539506673812866,
-      "sd_ddof1": NaN,
-      "n_seeds": 1
+      "mean": 1.6496845483779907,
+      "sd_ddof1": 0.2857856191770762,
+      "n_seeds": 3
     },
-    "ratio_B_over_A": 4.42854910343464
+    "ratio_B_over_A": 4.606099791039669
   },
   "n_independent": 4,
   "horizon": 368
