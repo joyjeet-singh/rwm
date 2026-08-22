@@ -1813,7 +1813,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 179
+    "value": 180
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",
@@ -1882,6 +1882,34 @@
   "nind_ratio": {
     "source": "results/review_bootstrap_unit.json",
     "value": "4"
+  },
+  "orig_n_tested": {
+    "source": "results/original_paper_figures.json",
+    "value": 4
+  },
+  "orig_n_with": {
+    "source": "results/original_paper_figures.json",
+    "value": 0
+  },
+  "orig_n_without": {
+    "source": "results/original_paper_figures.json",
+    "value": 4
+  },
+  "orig_se_ppo": {
+    "source": "results/original_paper_figures.json",
+    "value": "250M"
+  },
+  "orig_se_ppo_rew": {
+    "source": "results/original_paper_figures.json",
+    "value": "0.90 +- 0.03"
+  },
+  "orig_se_rwm": {
+    "source": "results/original_paper_figures.json",
+    "value": "6M"
+  },
+  "orig_se_rwm_rew": {
+    "source": "results/original_paper_figures.json",
+    "value": "0.90 +- 0.04"
   },
   "overfit_reduction": {
     "source": "results/step4_4_overfit_b32lr1e3.json",

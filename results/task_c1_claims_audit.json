@@ -1,7 +1,7 @@
 {
-  "n_claims": 178,
+  "n_claims": 182,
   "by_verdict": {
-    "SUPPORTED": 178
+    "SUPPORTED": 182
   },
   "claims": [
     {
@@ -390,6 +390,62 @@
       "verdict": "SUPPORTED",
       "sample_size": "",
       "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "f46de3600ea7",
+      "section": "3. What the original papers claim, and which claims we test",
+      "claim": "The third column is what the original reports, and it is the answer to a question a reader of any reproduction should ask: is this result consistent with the authors', larger, or smaller?",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 a statement about the source papers",
+      "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json"
+    },
+    {
+      "id": "0089e975327e",
+      "section": "3. What the original papers claim, and which claims we test",
+      "claim": "For all {{orig_n_tested}} of the claims we tested, the answer is that there is nothing to compare against.** Each is asserted qualitatively and shown in a plot; none is given a number in text, caption or table.",
+      "keys": [
+        "orig_n_tested"
+      ],
+      "artifacts": [
+        "results/original_paper_figures.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 a statement about the source papers",
+      "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json"
+    },
+    {
+      "id": "bb4fa6407fde",
+      "section": "3. What the original papers claim, and which claims we test",
+      "claim": "So our {{d1_ratio}}\u00d7 is not a confirmation of a published figure and not a contradiction of one \u2014 it is the first figure attached to the claim.",
+      "keys": [
+        "d1_ratio"
+      ],
+      "artifacts": [
+        "results/task_d1_threeseed.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 a statement about the source papers",
+      "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json"
+    },
+    {
+      "id": "076e064f48b8",
+      "section": "3. What the original papers claim, and which claims we test",
+      "claim": "Where a magnitude is legible only from a plotted curve we say so rather than estimating it from the axis.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 a statement about the source papers",
+      "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json"
     },
     {
       "id": "f5a9645e0ed0",

@@ -97,23 +97,26 @@ bootstrap over independent trajectories, and every table reports that count.
 
 ## 3. What the original papers claim, and which claims we test
 
-A reproduction that does not say what it left alone invites the reader to assume it tested
-everything. It did not.
+A reproduction that does not say what it left alone invites the reader to assume it tested everything. It did not.
 
-| claim, and where | tested | verdict |
-|---|---|---|
-| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **reproduces** at long horizon (§4) |
-| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | reproduces, and more strongly: Arm B is worse than the hold-last floor |
-| M=32, N=8 is the optimal configuration (§IV-C) | no | we use the released configuration and did not sweep it |
-| Beats MLP, RSSM and transformer baselines (§IV-D) | no | the lite release ships only the RNN variant |
-| Zero-shot hardware transfer (§IV-E) | no | no hardware; this is a dynamics-model reproduction |
-| Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
-| MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | no policy learning reproduced |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | no | one released dataset, ANYmal D flat |
-| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 §5.1) | **yes** | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at every horizon, keeps {{d2b_par_all}} after partialling that counter out, and survives four stronger controls including a within-step one at {{d2r_win}} (§5.6). **Weaker per-dimension than we first reported**: the {{d1n_epi_npos_h368}}-of-{{d1n_epi_ndim_h368}} sign count gives a permutation P of {{perm_oos_epi_p_h368}} (out-of-sample) and {{perm_ins_epi_p_h368}} (in-sample), and no cell survives multiplicity correction (§5.5). **Not supported as a scale**: {{d1n_epi_ratio_h368}}× overconfident, repairable per horizon (§5.7) |
-| Aleatoric "remains low, reflecting small stochasticity" (§5.1) | **yes** | the observation holds; the explanation does not (§5.3) |
-| Offline MBRL on real robots (2504.16680) | no | not tested |
-| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680 Eq. 4–5, §5) — the follow-up's core method claim | no | **not tested.** We measure the penalty quantity itself — what it is (§5.1), how well it ranks error (§5.6), whether it is calibrated (§5.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
+The third column is what the original reports, and it is the answer to a question a reader of any reproduction should ask: is this result consistent with the authors', larger, or smaller? **For all {{orig_n_tested}} of the claims we tested, the answer is that there is nothing to compare against.** Each is asserted qualitatively and shown in a plot; none is given a number in text, caption or table. So our {{d1_ratio}}× is not a confirmation of a published figure and not a contradiction of one — it is the first figure attached to the claim. We record this because it bears on what a reproduction of this work can even mean, and because the same is true of the follow-up's "strong correlation" between disagreement and error, for which §5.6 supplies the first coefficient. Where a magnitude is legible only from a plotted curve we say so rather than estimating it from the axis.
+
+*Section references follow arXiv:2501.10100**v1**, which uses Roman-numeral sectioning. v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1; both locations are recorded in `results/original_paper_figures.json`.*
+
+| claim, and where | tested | what the original reports | verdict |
+|---|---|---|---|
+| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 4 and stated nowhere in text, caption or table | **reproduces** at long horizon (§4) |
+| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
+| M=32, N=8 is the optimal configuration (§IV-C) | no | — | we use the released configuration and did not sweep it |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | no | plotted in Fig. 4; no numbers in text | the lite release ships only the RNN variant |
+| Zero-shot hardware transfer (§IV-E) | no | — | no hardware; this is a dynamics-model reproduction |
+| Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **{{orig_se_rwm}} against {{orig_se_ppo}} state transitions** at equal real tracking reward ({{orig_se_rwm_rew}} against {{orig_se_ppo_rew}}), Table I — the only table of numbers in either paper | **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
+| MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | no policy learning reproduced |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | no | plotted in Fig. 4; no numbers in text | one released dataset, ANYmal D flat |
+| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 §5.1) | **yes** | **no quantitative figure.** A "strong correlation" is asserted with no coefficient, interval or sample size; plotted in Fig. 2 (right) | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at every horizon, keeps {{d2b_par_all}} after partialling that counter out, and survives four stronger controls including a within-step one at {{d2r_win}} (§5.6). **Weaker per-dimension than we first reported**: the {{d1n_epi_npos_h368}}-of-{{d1n_epi_ndim_h368}} sign count gives a permutation P of {{perm_oos_epi_p_h368}} (out-of-sample) and {{perm_ins_epi_p_h368}} (in-sample), and no cell survives multiplicity correction (§5.5). **Not supported as a scale**: {{d1n_epi_ratio_h368}}× overconfident, repairable per horizon (§5.7) |
+| Aleatoric "remains low, reflecting small stochasticity" (§5.1) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§5.3) |
+| Offline MBRL on real robots (2504.16680) | no | — | not tested |
+| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | **not tested.** We measure the penalty quantity itself — what it is (§5.1), how well it ranks error (§5.6), whether it is calibrated (§5.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
 
 ---
 

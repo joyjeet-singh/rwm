@@ -2156,6 +2156,20 @@
       "retracts": []
     },
     {
+      "id": "X-11",
+      "claim": "What the original papers report for the claims we tested: nothing quantitative",
+      "relevance": "CONTEXT",
+      "status": "CONFIRMED",
+      "evidence": [
+        "EXT",
+        "RUN"
+      ],
+      "artifacts": [
+        "results/original_paper_figures.json"
+      ],
+      "retracts": []
+    },
+    {
       "id": "S-15",
       "claim": "The binomial P-values attached to every dimension count",
       "relevance": "METHOD",
@@ -2192,6 +2206,6 @@
     "O": 14,
     "R": 66,
     "S": 15,
-    "X": 10
+    "X": 11
   }
 }

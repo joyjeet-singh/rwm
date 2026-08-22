@@ -1,0 +1,72 @@
+{
+  "read_on": "2026-08-22",
+  "sources": [
+    "arXiv:2501.10100v1 (17 Jan 2025)",
+    "arXiv:2501.10100v2 (23 Apr 2025)",
+    "arXiv:2504.16680v1 (23 Apr 2025)"
+  ],
+  "evidence_class": "EXT \u2014 transcribed from the published papers, not computed",
+  "version_note": "Our section references use v1's Roman-numeral sectioning (IV-C, IV-D, IV-E). v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1, so a reader opening the current arXiv version will not find IV-C. Both locations are recorded for every claim.",
+  "claims": [
+    {
+      "key": "ar_beats_tf",
+      "claim": "RWM-AR consistently outperforms RWM-TF",
+      "where_v1": "2501.10100v1 IV-D (Generality across Robotic Environments)",
+      "where_v2": "2501.10100v2 4.3 (same title)",
+      "original_figure": null,
+      "original_states": "RWM-AR significantly outperforms its teacher-forcing counterpart (RWM-TF), underscoring the importance of autoregressive training in mitigating compounding prediction errors over long rollouts.",
+      "form": "qualitative; shown in Figure 4",
+      "numeral_in_text": false,
+      "note": "Figure 4 plots autoregressive prediction error for RWM-AR against RWM-TF and the MLP, RSSM and transformer baselines across environments. No numeral for the AR-vs-TF gap appears in the running text, the caption, or any table. The magnitude is legible only from the plotted curves, and we do not estimate it from the axis."
+    },
+    {
+      "key": "tf_poor",
+      "claim": "Teacher forcing gives \"poor autoregressive performance\"",
+      "where_v1": "2501.10100v1 IV-C (Dual-autoregressive Mechanism)",
+      "where_v2": "2501.10100v2 Appendix A.4.1 (same title)",
+      "original_figure": null,
+      "original_states": "Interestingly, when the forecast horizon N=1 (teacher-forcing), training can be highly parallelized, resulting in minimal training time. However, this setting leads to poor autoregressive performance, as the model lacks exposure to long-horizon prediction during training and fails to effectively handle compounding errors.",
+      "form": "qualitative",
+      "numeral_in_text": false,
+      "note": "The only numeral in the passage is the configuration N=1, which names the teacher-forcing setting rather than measuring its cost."
+    },
+    {
+      "key": "epistemic_trust",
+      "claim": "Epistemic uncertainty \"closely follows the trend of the prediction error\", justifying \"its role as a trust metric\"",
+      "where_v1": "2504.16680v1 5.1",
+      "where_v2": null,
+      "original_figure": null,
+      "original_states": "the estimated epistemic uncertainty (dark blue) closely follows the trend of the prediction error, demonstrating that RWM-O effectively captures uncertainty in regions where the model generalization deteriorates. ... The strong correlation between epistemic uncertainty and model prediction error justifies its role as a trust metric for policy optimization.",
+      "form": "qualitative; shown in Figure 2 (right)",
+      "numeral_in_text": false,
+      "note": "The paper asserts a \"strong correlation\" and gives no correlation coefficient, no interval and no sample size. Our +0.605 [+0.545, +0.694] at n_independent = 20 appears to be the first number attached to this claim."
+    },
+    {
+      "key": "aleatoric_low",
+      "claim": "Aleatoric uncertainty \"remains low, reflecting small stochasticity\"",
+      "where_v1": "2504.16680v1 5.1",
+      "where_v2": null,
+      "original_figure": null,
+      "original_states": "the aleatoric uncertainty (light blue) remains low, reflecting small stochasticity in the environment.",
+      "form": "qualitative; shown in Figure 2 (right)",
+      "numeral_in_text": false,
+      "note": "\"Low\" is relative to the plotted epistemic curve on the same axes; no absolute value, ratio or comparison against realised error is given."
+    }
+  ],
+  "sample_efficiency": {
+    "where_v1": "2501.10100v1 Table I (Limitations)",
+    "figures": {
+      "RWM pretraining state transitions": "6M",
+      "PPO state transitions": "250M",
+      "RWM pretraining time": "50 min",
+      "MBPO-PPO training time": "5 min",
+      "PPO training time": "10 min",
+      "MBPO-PPO real tracking reward": "0.90 +- 0.04",
+      "PPO real tracking reward": "0.90 +- 0.03"
+    },
+    "note": "The only table of numbers in either paper. It reports parity on the real tracking reward at a ~42x reduction in state transitions."
+  },
+  "n_tested_claims": 4,
+  "n_with_quantitative_figure": 0,
+  "n_without": 4
+}

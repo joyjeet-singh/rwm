@@ -573,6 +573,19 @@ def main():
         "results/task_b_permutation.json")
     put("relale_oos_nind", _ra["out-of-sample"]["n_independent"],
         "results/task_b_permutation.json")
+    # A6 -- what the originals report for each claim we tested
+    OP = J("original_paper_figures.json")
+    put("orig_n_tested", OP["n_tested_claims"], "results/original_paper_figures.json")
+    put("orig_n_without", OP["n_without"], "results/original_paper_figures.json")
+    put("orig_n_with", OP["n_with_quantitative_figure"], "results/original_paper_figures.json")
+    _se = OP["sample_efficiency"]["figures"]
+    put("orig_se_rwm", _se["RWM pretraining state transitions"],
+        "results/original_paper_figures.json")
+    put("orig_se_ppo", _se["PPO state transitions"], "results/original_paper_figures.json")
+    put("orig_se_rwm_rew", _se["MBPO-PPO real tracking reward"],
+        "results/original_paper_figures.json")
+    put("orig_se_ppo_rew", _se["PPO real tracking reward"],
+        "results/original_paper_figures.json")
     put("perm_ngroups", PM["arenas"]["out-of-sample"]["models"]["released EPISTEMIC"]["368"]["n_groups"],
         "results/task_b_permutation.json")
     _r, _ar, _lab, _h, _rec = _big

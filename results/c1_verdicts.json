@@ -1,4 +1,9 @@
 {
+  "0089e975327e": {
+    "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json",
+    "sample_size": "n/a \u2014 a statement about the source papers",
+    "verdict": "SUPPORTED"
+  },
   "00a534e11a0c": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
@@ -40,6 +45,11 @@
   "0765b3a83a7e": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "076e064f48b8": {
+    "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json",
+    "sample_size": "n/a \u2014 a statement about the source papers",
     "verdict": "SUPPORTED"
   },
   "08f7b5d4ff11": {
@@ -868,6 +878,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "bb4fa6407fde": {
+    "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json",
+    "sample_size": "n/a \u2014 a statement about the source papers",
+    "verdict": "SUPPORTED"
+  },
   "beaf6b586404": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -1143,6 +1158,11 @@
   "f4539346e6e6": {
     "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
     "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "f46de3600ea7": {
+    "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json",
+    "sample_size": "n/a \u2014 a statement about the source papers",
     "verdict": "SUPPORTED"
   },
   "f56c878ef10a": {

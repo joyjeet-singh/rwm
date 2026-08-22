@@ -4091,6 +4091,55 @@ scripts to `reproduce.sh`, three of which run in a clean clone.
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+
+### X-11 — What the original papers report for the claims we tested: nothing quantitative · **NEW**
+A reproduction that reports 4.61× without saying what the authors reported leaves a reader
+unable to place it. So, for every claim §3's table marks as tested, this records the figure the
+original gives.
+
+**All 4 are stated with no quantitative figure at all.**
+
+| claim | where (v1) | what the original gives |
+|---|---|---|
+| RWM-AR consistently outperforms RWM-TF | 2501.10100v1 IV-D (Generality across Robotic Environments) | qualitative; shown in Figure 4 |
+| Teacher forcing gives "poor autoregressive performance" | 2501.10100v1 IV-C (Dual-autoregressive Mechanism) | qualitative |
+| Epistemic uncertainty "closely follows the trend of the prediction err | 2504.16680v1 5.1 | qualitative; shown in Figure 2 (right) |
+| Aleatoric uncertainty "remains low, reflecting small stochasticity" | 2504.16680v1 5.1 | qualitative; shown in Figure 2 (right) |
+
+Each is asserted qualitatively and shown in a plot. None is given a number in running text, in a
+caption, or in a table.
+
+**What follows for this paper.** Our 4.61× for the autoregressive-versus-teacher-forcing gap
+neither confirms nor contradicts a published figure, because there is no published figure. It is
+the first number attached to the claim. The same holds for the follow-up's "strong correlation"
+between ensemble disagreement and prediction error: the phrase appears with no coefficient, no
+interval and no sample size, and R-63's +0.605  at n_independent = 20 appears to be the
+first coefficient anyone has attached to it.
+
+**Where a magnitude is legible only from a plotted curve we say so** rather than estimating it
+from the axis. Figure 4 of 2501.10100 plots the AR-versus-TF gap across environments and the
+magnitude could be eyeballed; we decline to, because an eyeballed value would be indistinguishable
+in the text from a value the authors stated.
+
+**One table of numbers exists in either paper** — Table I of 2501.10100, on sample efficiency:
+6M state transitions against
+250M at equal real tracking reward
+(0.90 +- 0.04 against
+0.90 +- 0.03). We did not test it — it needs
+policy learning and hardware — and the table now cites it rather than leaving the cell empty.
+
+**A versioning note that affects every section reference in this paper.** Our references use
+**v1** (17 Jan 2025), which uses Roman-numeral sectioning. **v2** (23 Apr 2025) renumbered to
+Arabic and moved IV-C's material into Appendix A.4.1, so a reader who opens the current arXiv
+version will not find a §IV-C at all. Both locations are recorded per claim. The references were
+correct when written and are correct for the version named; they were one arXiv revision away
+from being unresolvable, which is worth a sentence in any paper that cites section numbers.
+**Evidence** `EXT` arXiv:2501.10100v1 §IV-C, §IV-D, Table I; arXiv:2501.10100v2 §4.3, §A.4.1;
+arXiv:2504.16680v1 §5.1, Figs. 2-3, read 2026-08-22;
+`RUN` `results/original_paper_figures.json`.
+**Status** CONFIRMED · **Relevance** CONTEXT
+
+
 ### S-15 — The binomial P-values attached to every dimension count · **NEW**
 **Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand
 **What is retracted:** the step from a sign count to a P-value under a fair-coin binomial null,

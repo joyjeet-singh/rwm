@@ -62,23 +62,27 @@ This is a reproduction paper, and we mean the term in its stronger sense: the co
 
 A reproduction that does not say what it left alone invites the reader to assume it tested everything. It did not.
 
+The third column is what the original reports, and it is the answer to a question a reader of any reproduction should ask: is this result consistent with the authors', larger, or smaller? \textbf{For all 4 of the claims we tested, the answer is that there is nothing to compare against.} Each is asserted qualitatively and shown in a plot; none is given a number in text, caption or table. So our 4.61$\times$ is not a confirmation of a published figure and not a contradiction of one --- it is the first figure attached to the claim. We record this because it bears on what a reproduction of this work can even mean, and because the same is true of the follow-up's "strong correlation" between disagreement and error, for which \S{}5.6 supplies the first coefficient. Where a magnitude is legible only from a plotted curve we say so rather than estimating it from the axis.
+
+\emph{Section references follow arXiv:2501.10100\textbf{v1}, which uses Roman-numeral sectioning. v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1; both locations are recorded in \texttt{results/original\_paper\_figures.json}.}
+
 \begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \toprule
-claim, and where & tested & verdict \\
+claim, and where & tested & what the original reports & verdict \\
 \midrule
-RWM-AR consistently outperforms RWM-TF (2501.10100 \S{}IV-D) & \textbf{yes} & \textbf{reproduces} at long horizon (\S{}4) \\
-Teacher forcing gives "poor autoregressive performance" (\S{}IV-C) & \textbf{yes} & reproduces, and more strongly: Arm B is worse than the hold-last floor \\
-M=32, N=8 is the optimal configuration (\S{}IV-C) & no & we use the released configuration and did not sweep it \\
-Beats MLP, RSSM and transformer baselines (\S{}IV-D) & no & the lite release ships only the RNN variant \\
-Zero-shot hardware transfer (\S{}IV-E) & no & no hardware; this is a dynamics-model reproduction \\
-Policies transfer to hardware from \textasciitilde{}6M state transitions against \textasciitilde{}250M for the model-free baseline (\S{}IV-E) --- the paper's headline sample-efficiency result & no & \textbf{not tested.} It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable \\
-MBPO-PPO beats SHAC and Dreamer (\S{}IV-E) & no & no policy learning reproduced \\
-Generality across quadruped, humanoid, manipulation (\S{}IV-D) & no & one released dataset, ANYmal D flat \\
-Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 \S{}5.1) & \textbf{yes} & \textbf{supported as a scalar ranking, against a real baseline} --- the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n\_independent = 20, beats the forecast-index counter at every horizon, keeps +0.596 after partialling that counter out, and survives four stronger controls including a within-step one at +0.739 (\S{}5.6). \textbf{Weaker per-dimension than we first reported}: the 45-of-45 sign count gives a permutation P of 0.0435 (out-of-sample) and 0.0758 (in-sample), and no cell survives multiplicity correction (\S{}5.5). \textbf{Not supported as a scale}: 34.4$\times$ overconfident, repairable per horizon (\S{}5.7) \\
-Aleatoric "remains low, reflecting small stochasticity" (\S{}5.1) & \textbf{yes} & the observation holds; the explanation does not (\S{}5.3) \\
-Offline MBRL on real robots (2504.16680) & no & not tested \\
-Penalising rewards by ensemble disagreement improves the learned policy (2504.16680 Eq. 4--5, \S{}5) --- the follow-up's core method claim & no & \textbf{not tested.} We measure the penalty quantity itself --- what it is (\S{}5.1), how well it ranks error (\S{}5.6), whether it is calibrated (\S{}5.2) --- but never train a policy with or without it. Our findings bound what the quantity \emph{reports}, not what it \emph{costs} (\S{}11) \\
+RWM-AR consistently outperforms RWM-TF (2501.10100 \S{}IV-D) & \textbf{yes} & \textbf{no quantitative figure.} "significantly outperforms"; the gap is plotted in Fig. 4 and stated nowhere in text, caption or table & \textbf{reproduces} at long horizon (\S{}4) \\
+Teacher forcing gives "poor autoregressive performance" (\S{}IV-C) & \textbf{yes} & \textbf{no quantitative figure.} Qualitative; the only numeral in the passage is the configuration N=1 & reproduces, and more strongly: Arm B is worse than the hold-last floor \\
+M=32, N=8 is the optimal configuration (\S{}IV-C) & no & --- & we use the released configuration and did not sweep it \\
+Beats MLP, RSSM and transformer baselines (\S{}IV-D) & no & plotted in Fig. 4; no numbers in text & the lite release ships only the RNN variant \\
+Zero-shot hardware transfer (\S{}IV-E) & no & --- & no hardware; this is a dynamics-model reproduction \\
+Policies transfer to hardware from \textasciitilde{}6M state transitions against \textasciitilde{}250M for the model-free baseline (\S{}IV-E) --- the paper's headline sample-efficiency result & no & \textbf{6M against 250M state transitions} at equal real tracking reward (0.90 +- 0.04 against 0.90 +- 0.03), Table I --- the only table of numbers in either paper & \textbf{not tested.} It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable \\
+MBPO-PPO beats SHAC and Dreamer (\S{}IV-E) & no & --- & no policy learning reproduced \\
+Generality across quadruped, humanoid, manipulation (\S{}IV-D) & no & plotted in Fig. 4; no numbers in text & one released dataset, ANYmal D flat \\
+Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 \S{}5.1) & \textbf{yes} & \textbf{no quantitative figure.} A "strong correlation" is asserted with no coefficient, interval or sample size; plotted in Fig. 2 (right) & \textbf{supported as a scalar ranking, against a real baseline} --- the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n\_independent = 20, beats the forecast-index counter at every horizon, keeps +0.596 after partialling that counter out, and survives four stronger controls including a within-step one at +0.739 (\S{}5.6). \textbf{Weaker per-dimension than we first reported}: the 45-of-45 sign count gives a permutation P of 0.0435 (out-of-sample) and 0.0758 (in-sample), and no cell survives multiplicity correction (\S{}5.5). \textbf{Not supported as a scale}: 34.4$\times$ overconfident, repairable per horizon (\S{}5.7) \\
+Aleatoric "remains low, reflecting small stochasticity" (\S{}5.1) & \textbf{yes} & \textbf{no quantitative figure.} "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error & the observation holds; the explanation does not (\S{}5.3) \\
+Offline MBRL on real robots (2504.16680) & no & --- & not tested \\
+Penalising rewards by ensemble disagreement improves the learned policy (2504.16680 Eq. 4--5, \S{}5) --- the follow-up's core method claim & no & Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers & \textbf{not tested.} We measure the penalty quantity itself --- what it is (\S{}5.1), how well it ranks error (\S{}5.6), whether it is calibrated (\S{}5.2) --- but never train a policy with or without it. Our findings bound what the quantity \emph{reports}, not what it \emph{costs} (\S{}11) \\
 \bottomrule\end{tabular}}\end{center}
 
 
@@ -377,7 +381,7 @@ So the finding is not that the release is internally inconsistent. It is that \t
 
 \section{Method}
 
-\textbf{An append-only ledger.} Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (179 entries). Claims are never edited in place. A claim that turns out to be wrong is marked superseded, with a pointer to what replaced it, and kept.
+\textbf{An append-only ledger.} Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (180 entries). Claims are never edited in place. A claim that turns out to be wrong is marked superseded, with a pointer to what replaced it, and kept.
 
 \textbf{Pre-registration, and one failure of it.} Decision rules were committed to git before the data that tested them --- with one exception, which we report below. Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by 1.3 hours, the flip-pattern rule by 4.8 hours, the difficulty-bias rule by 5 minutes, the long-horizon rule by 2 minutes.
 
