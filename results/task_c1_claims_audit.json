@@ -276,20 +276,33 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "94be81a5c0de",
+      "id": "c2b18fb425ba",
       "section": "1. Introduction",
-      "claim": "We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are withdrawn on evidence this project produced, and the retractions are kept in the record rather than deleted.",
+      "claim": "We retract our own findings when they fail.** {{n_retractions_word}} numbered claims in this work are withdrawn on evidence this project produced, and {{n_retract_framing_word}} further retractions withdraw framings rather than numbers \u2014 one of them the claim that a pre-registration was pre-registered at all.",
       "keys": [
-        "n_retractions_word"
+        "n_retractions_word",
+        "n_retract_framing_word"
       ],
       "artifacts": [
         "FINDINGS_LEDGER.md"
       ],
-      "n_keys": 1,
+      "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": "Part A: retraction counts now pinned by comparative checks C7.1/C7.2 against FINDINGS_LEDGER.md; section 5.3's sentence restored from the table it was swallowed by"
+    },
+    {
+      "id": "ad04ed2cf86d",
+      "section": "1. Introduction",
+      "claim": "All of them are kept in the record rather than deleted (\u00a78).",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part A: retraction counts now pinned by comparative checks C7.1/C7.2 against FINDINGS_LEDGER.md; section 5.3's sentence restored from the table it was swallowed by"
     },
     {
       "id": "f038c6a13acb",
@@ -1068,22 +1081,6 @@
       "claim": "The {{run_total}} runs, so a reader can count them:",
       "keys": [
         "run_total"
-      ],
-      "artifacts": [
-        "results/step5_arm*.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
-    },
-    {
-      "id": "7743add3eab9",
-      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
-      "claim": "{{run_table}} Under the corrected objective the sign flips (Figure 3b) \u2014 which is the strongest evidence that the mechanism is the objective and not the optimiser, the data or the architecture.",
-      "keys": [
-        "run_table"
       ],
       "artifacts": [
         "results/step5_arm*.json"

@@ -42,6 +42,14 @@ import rwm_data as R  # noqa: E402
 
 PAPER = "PAPER.md"
 _cache = {}
+WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
+         8: "Eight", 9: "Nine", 10: "Ten"}
+
+
+def _window(text, frag, span=160):
+    """The text around a fragment, where the count that qualifies it must appear."""
+    i = text.find(frag)
+    return "" if i < 0 else text[max(0, i - span):i + len(frag) + span]
 
 
 def art(name):
@@ -160,6 +168,20 @@ CLAIMS = [
      "a": ("task_d_nind20.json", "d2_forecast_index.1.r_epistemic"),
      "b": ("task_d_nind20.json", "d2_forecast_index.368.r_epistemic"),
      "expect": "gt"},
+    {"id": "C7.1", "kind": "count-consistency", "where": "1 / abstract / 8",
+     "label": "numbered retractions",
+     "says": "numbered claims in this work are withdrawn",
+     "value": ("paper_numbers.json", "n_retractions.value"),
+     "sites": ["numbered claims in this work are withdrawn",
+               "retractions of our own numbered claims",
+               "retractions on our own evidence"]},
+    {"id": "C7.2", "kind": "count-consistency", "where": "1 / abstract / 8",
+     "label": "framing retractions",
+     "says": "further retractions withdraw framings rather than numbers",
+     "value": ("paper_numbers.json", "n_retract_framing.value"),
+     "sites": ["further retractions withdraw framings rather than numbers",
+               "more that withdraw framings rather than numbers",
+               "further retractions are **not** among those"]},
     {"id": "C6.1", "kind": "relvar", "where": "4",
      "says": "Teacher forcing is more than twice as variable across seeds",
      "a": ("task_d1_threeseed.json", "aggregate.A.sd_ddof1", "aggregate.A.mean"),
@@ -238,6 +260,23 @@ def evaluate(c, paper, override=None):
         got = "rise" if b > a else ("fall" if b < a else "flat")
         return got == exp["expect"], (f'{a:.5f} -> {b:.5f} is a {got} of {abs(b-a):.5f}, '
                                       f'text says {exp["expect"]}')
+    if k == "count-consistency":
+        # One count, asserted in several places, in words or numerals. A1 was this
+        # failure: section 1 said six claims were withdrawn "one of them" about
+        # pre-registration, while section 8 said six numbered PLUS two framings and
+        # that the pre-registration one was explicitly not among the six. Both
+        # sentences were internally coherent and they contradicted each other, and
+        # it survived three rounds of editing because no numeral was wrong.
+        want = exp.get("_forced", dig(*exp["value"]))
+        forms = {str(want), WORDS.get(int(want), ""), WORDS.get(int(want), "").lower()}
+        forms.discard("")
+        missing = [frag for frag in exp["sites"]
+                   if not any(f"{frag} {f}" in paper or f"{f} {frag}" in paper
+                              or (frag in paper and any(f in _window(paper, frag) for f in forms))
+                              for f in forms)]
+        return not missing, (f'{exp["label"]} = {want} ({"/".join(sorted(forms))}); '
+                             f'{len(exp["sites"]) - len(missing)}/{len(exp["sites"])} sites agree'
+                             + (f'; disagreeing: {missing}' if missing else ''))
     if k == "compare":
         a, b = dig(*exp["a"]), dig(*exp["b"])
         got = "gt" if a > b else ("lt" if a < b else "eq")
@@ -287,6 +326,10 @@ def corruption_for(c):
         return None if c["stated_orders"] is None else {"stated_orders": c["stated_orders"] + 1}
     if k == "cell":
         return {"expect_observed": dig(*c["cell"])["observed"] + 1}
+    if k == "count-consistency":
+        # corrupt the COUNT, not the path: the check must reject a paper that
+        # agrees with itself on a different number than the ledger holds
+        return {"_forced": int(dig(*c["value"])) + 1}
     if k == "compare":
         return {"expect": "lt" if c["expect"] == "gt" else "gt"}
     if k == "relvar":

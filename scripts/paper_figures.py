@@ -55,7 +55,9 @@ def fig1_calibration(rec):
     ax[1].axhline(68.3, color="k", ls="--", lw=1)
     ax[1].text(hs[-1], 70, "calibrated 68.3%", ha="right", fontsize=7)
     ax[1].set(xscale="log", xlabel="forecast horizon (steps)",
-              ylabel=r"coverage at $\pm1\sigma$ (%)", title="(b) coverage collapses with horizon")
+              ylabel=r"coverage at $\pm1\sigma$ (%)", # was "(b) coverage collapses with horizon", which rendered at 1.10x the
+              # axes width and clipped. The caption carries the full statement.
+              title="(b) coverage vs horizon")
 
     # (c) how many times too small sigma is
     labs = [lab for _, lab, _ in order]
@@ -93,8 +95,8 @@ def fig2_sigma_profile(rec):
         steps = np.arange(1, len(s) + 1)
         ax[0].plot(steps, s / s[0], "o-", ms=3, lw=1.4, color=col, label=lab)
         ax[1].plot(steps, e / e[0], "o-", ms=3, lw=1.4, color=col, label=lab)
-    for a, t in ((ax[0], r"(a) predicted $\sigma$, normalised to step 1"),
-                 (ax[1], "(b) realised error, normalised to step 1")):
+    for a, t in ((ax[0], r"(a) predicted $\sigma$"),
+                 (ax[1], "(b) realised error")):
         a.axhline(1.0, color="k", ls="--", lw=1)
         a.set(xlabel="forecast step (training horizon is 8)", title=t)
     ax[0].set_ylabel(r"$\sigma_h/\sigma_1$"); ax[1].set_ylabel(r"$|e_h|/|e_1|$")
@@ -137,7 +139,10 @@ def fig3_collapse(rec):
         if vals:
             ax[1].scatter(np.arange(len(vals)), vals, s=18, color=col, label=f"{lab} (n={len(vals)})")
     ax[1].set(xlabel="run", ylabel="fitted slope per iteration",
-              title="(b) fitted rate, non-double-counting subset:\nsign flips with the objective")
+              # "non-double-counting subset" overran the axes and rendered as
+              # "non-double-counting subse". The subset is defined in the caption
+              # and in section 5.3; the title only has to name the panel.
+              title="(b) fitted rate, fitted subset:\nsign flips with the objective")
     ax[1].legend(fontsize=7)
     rec["fig3"] = {"n_runs": len(runs), "slopes": dict(slopes)}
     fig.tight_layout()

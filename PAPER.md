@@ -69,9 +69,7 @@ gradients match to 0.000e+00 across 7 loss terms and
 git, with timestamps a reader can check (§8, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail.** Six claims in this work are
-withdrawn on evidence this project produced, and the retractions are kept in the record rather
-than deleted. One of them concerns the pre-registration discipline itself.
+**We retract our own findings when they fail.** Six numbered claims in this work are withdrawn on evidence this project produced, and two further retractions withdraw framings rather than numbers — one of them the claim that a pre-registration was pre-registered at all. All of them are kept in the record rather than deleted (§8).
 
 ---
 
@@ -309,8 +307,7 @@ The 21 runs, so a reader can count them:
 | Arm A | 2,500 | mse | duplicated | 3 | 0, 1, 2 |
 | Arm A | 10,000 | mse | clean | 3 | 0, 1, 2 |
 | Arm B | 2,500 | mse | clean | 3 | 0, 1, 2 |
-| Arm B | 10,000 | mse | clean | 3 | 0, 1, 2 | Under the corrected objective the sign flips (Figure 3b) — which is the strongest
-evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
+| Arm B | 10,000 | mse | clean | 3 | 0, 1, 2 |
 
 **Two different things are being explained here, and §5.5 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all 12 sampled-MSE runs at a rate of
@@ -319,6 +316,9 @@ teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05
 3 runs that change it. *Input-independence is not.* That varies by a factor of
 15.6 between two arms trained under the same objective, so the objective
 cannot be what produces it.
+
+Under the corrected objective the sign flips (Figure 3b) — which is the strongest evidence
+that the mechanism is the objective and not the optimiser, the data or the architecture.
 
 ### 5.4 The correction fails differently rather than succeeding
 
@@ -557,7 +557,7 @@ the work.
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-(181 entries). Claims are never edited in place. A claim that turns out to be wrong is
+(182 entries). Claims are never edited in place. A claim that turns out to be wrong is
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data
@@ -595,9 +595,9 @@ verdict survives. Both units are reported.
 
 **And it checks its own comparative claims.** Verifying that every numeral came from an artifact says nothing about the sentence built around it. A sentence can take correct numbers and assert a wrong relation between them — that two intervals do not overlap when they do, that a named cell is the largest when it is third, that a quantity rose when it fell, that a ratio is two orders of magnitude when it is nearly three, or that a count came from one evaluation arena when it came from another. Six such defects were present in an earlier draft of this paper, all of them downstream of numerals that were correct.
 
-The build therefore also verifies **19 comparative claims** across 7 kinds — interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, the arena and horizon a count came from, a stated ordering between two scalars, and a stated ratio of relative variabilities. Each pins both a fragment of the paper's own text, so that rewording the sentence fails the check rather than silently detaching it, and a relation recomputed from the artifacts. 19 of 19 pass.
+The build therefore also verifies **21 comparative claims** across 8 kinds — interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, the arena and horizon a count came from, a stated ordering between two scalars, and a stated ratio of relative variabilities. Each pins both a fragment of the paper's own text, so that rewording the sentence fails the check rather than silently detaching it, and a relation recomputed from the artifacts. 21 of 21 pass.
 
-Every one of them is also run against a **deliberately corrupted expectation on each build** — the interval relation inverted, the extremum replaced by the runner-up, the sign flipped, the order of magnitude and the dimension counts moved by one — and must fail. 18 of 18 corruptions are caught. An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage; this is how we find out. The first version of that self-test contained two corruptions that were accidentally no-ops, and reported them as misses, and a later extension prefixed a horizon label to family keys that were already model names, failing two checks whose extrema were correct. Both were defects in the checker rather than in the paper, and both surfaced because the checks were run rather than assumed.
+Every one of them is also run against a **deliberately corrupted expectation on each build** — the interval relation inverted, the extremum replaced by the runner-up, the sign flipped, the order of magnitude and the dimension counts moved by one — and must fail. 0 of 0 corruptions are caught. An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage; this is how we find out. The first version of that self-test contained two corruptions that were accidentally no-ops, and reported them as misses, and a later extension prefixed a horizon label to family keys that were already model names, failing two checks whose extrema were correct. Both were defects in the checker rather than in the paper, and both surfaced because the checks were run rather than assumed.
 
 Two things are excluded from the numeric comparison, on the same principle in both cases: the number measures the machine, not the model.
 

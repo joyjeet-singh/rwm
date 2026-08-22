@@ -2185,6 +2185,17 @@
       "retracts": []
     },
     {
+      "id": "M-43",
+      "claim": "PRE-REGISTERED decision rule for the ensemble-5 replication",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
       "id": "S-15",
       "claim": "The binomial P-values attached to every dimension count",
       "relevance": "METHOD",
@@ -2217,7 +2228,7 @@
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 42,
+    "M": 43,
     "O": 14,
     "R": 66,
     "S": 15,

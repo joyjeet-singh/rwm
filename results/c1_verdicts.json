@@ -836,6 +836,11 @@
     "sample_size": "12 comparative claims, 11 corruptions",
     "verdict": "SUPPORTED"
   },
+  "ad04ed2cf86d": {
+    "note": "Part A: retraction counts now pinned by comparative checks C7.1/C7.2 against FINDINGS_LEDGER.md; section 5.3's sentence restored from the table it was swallowed by",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "ad1695104a2c": {
     "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
     "sample_size": "3 seeds, n_ind=4",
@@ -931,6 +936,11 @@
   "c1a05ea91a4c": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "c2b18fb425ba": {
+    "note": "Part A: retraction counts now pinned by comparative checks C7.1/C7.2 against FINDINGS_LEDGER.md; section 5.3's sentence restored from the table it was swallowed by",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "c2cfc2e6da56": {

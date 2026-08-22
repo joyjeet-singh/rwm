@@ -68,5 +68,88 @@
   },
   "n_tested_claims": 4,
   "n_with_quantitative_figure": 0,
-  "n_without": 4
+  "n_without": 4,
+  "verification": {
+    "date": "2026-08-22",
+    "method": "each original_states string matched as a substring of the published text, after stripping tags, collapsing whitespace, and collapsing arXiv's duplicated MathML alt text",
+    "sources": {
+      "2501.10100v1": "https://arxiv.org/html/2501.10100v1",
+      "2501.10100v2": "https://arxiv.org/html/2501.10100v2",
+      "2504.16680v1": "https://arxiv.org/html/2504.16680v1"
+    },
+    "n_checked": 4,
+    "n_verbatim": 4,
+    "per_claim": [
+      {
+        "key": "ar_beats_tf",
+        "verbatim": true,
+        "fragments": [
+          {
+            "fragment": "RWM-AR significantly outperforms its teacher-forcing counterpart (RWM-",
+            "found_in": [
+              "2501.10100v1",
+              "2501.10100v2"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "tf_poor",
+        "verbatim": true,
+        "fragments": [
+          {
+            "fragment": "Interestingly, when the forecast horizon N=1 (teacher-forcing), traini",
+            "found_in": [
+              "2501.10100v1",
+              "2501.10100v2"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "epistemic_trust",
+        "verbatim": true,
+        "fragments": [
+          {
+            "fragment": "the estimated epistemic uncertainty (dark blue) closely follows the tr",
+            "found_in": [
+              "2504.16680v1"
+            ]
+          },
+          {
+            "fragment": "The strong correlation between epistemic uncertainty and model predict",
+            "found_in": [
+              "2504.16680v1"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "aleatoric_low",
+        "verbatim": true,
+        "fragments": [
+          {
+            "fragment": "the aleatoric uncertainty (light blue) remains low, reflecting small s",
+            "found_in": [
+              "2504.16680v1"
+            ]
+          }
+        ]
+      }
+    ],
+    "abbreviation_census": {
+      "2501.10100v1": {
+        "RWM-O": 0,
+        "RWM-U": 0
+      },
+      "2501.10100v2": {
+        "RWM-O": 0,
+        "RWM-U": 0
+      },
+      "2504.16680v1": {
+        "RWM-O": 35,
+        "RWM-U": 0
+      }
+    }
+  }
 }

@@ -63,9 +63,7 @@ gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
 git, with timestamps a reader can check (§8, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are
-withdrawn on evidence this project produced, and the retractions are kept in the record rather
-than deleted. One of them concerns the pre-registration discipline itself.
+**We retract our own findings when they fail.** {{n_retractions_word}} numbered claims in this work are withdrawn on evidence this project produced, and {{n_retract_framing_word}} further retractions withdraw framings rather than numbers — one of them the claim that a pre-registration was pre-registered at all. All of them are kept in the record rather than deleted (§8).
 
 ---
 
@@ -297,8 +295,7 @@ The {{run_total}} runs, so a reader can count them:
 
 | arm | iterations | objective | dataset | seeds | seed ids |
 |---|---|---|---|---|---|
-{{run_table}} Under the corrected objective the sign flips (Figure 3b) — which is the strongest
-evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
+{{run_table}}
 
 **Two different things are being explained here, and §5.5 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of
@@ -307,6 +304,9 @@ teacher-forced arm**, which shares the objective — and reverses to {{e2_nll_ra
 {{e2_nll_runs}} runs that change it. *Input-independence is not.* That varies by a factor of
 {{cal_armB_over_faithA_cov}} between two arms trained under the same objective, so the objective
 cannot be what produces it.
+
+Under the corrected objective the sign flips (Figure 3b) — which is the strongest evidence
+that the mechanism is the objective and not the optimiser, the data or the architecture.
 
 ### 5.4 The correction fails differently rather than succeeding
 
