@@ -2170,6 +2170,21 @@
       "retracts": []
     },
     {
+      "id": "M-42",
+      "claim": "The numeral check could not see any of the six interpretive defects",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/comparative_claims.json",
+        "results/paper_numbers.json",
+        "scripts/check_comparative_claims.py"
+      ],
+      "retracts": []
+    },
+    {
       "id": "S-15",
       "claim": "The binomial P-values attached to every dimension count",
       "relevance": "METHOD",
@@ -2202,7 +2217,7 @@
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 41,
+    "M": 42,
     "O": 14,
     "R": 66,
     "S": 15,

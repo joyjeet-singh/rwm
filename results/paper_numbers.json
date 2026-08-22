@@ -699,6 +699,26 @@
     "source": "results/step4_0a_results.json",
     "value": "0.7572"
   },
+  "cc_kinds": {
+    "source": "results/comparative_claims.json",
+    "value": 5
+  },
+  "cc_n": {
+    "source": "results/comparative_claims.json",
+    "value": 12
+  },
+  "cc_pass": {
+    "source": "results/comparative_claims.json",
+    "value": 12
+  },
+  "cc_st_caught": {
+    "source": "results/comparative_claims.json",
+    "value": 11
+  },
+  "cc_st_n": {
+    "source": "results/comparative_claims.json",
+    "value": 11
+  },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
     "value": "nan"
@@ -1813,7 +1833,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 180
+    "value": 181
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",

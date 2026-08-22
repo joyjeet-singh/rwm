@@ -1,0 +1,167 @@
+{
+  "n_claims": 12,
+  "n_pass": 12,
+  "claims": [
+    {
+      "id": "C1.1",
+      "kind": "overlap",
+      "where": "5.6",
+      "says": "the marginal intervals *do* overlap",
+      "pass": true,
+      "detail": "[0.42129,0.64340] vs [0.60396,0.84563] -> overlap, expected overlap"
+    },
+    {
+      "id": "C1.2",
+      "kind": "overlap",
+      "where": "5.6",
+      "says": "excludes zero at",
+      "pass": true,
+      "detail": "[0.10634,0.43058] vs [0.54457,0.69396] -> disjoint, expected disjoint"
+    },
+    {
+      "id": "C2.1",
+      "kind": "extremum",
+      "where": "5.7",
+      "says": "The largest deviation over all",
+      "pass": true,
+      "detail": "max of 20 is aleatoric|h=128|ep8 (0.082838); paper names aleatoric|h=128|ep8 (0.082838)"
+    },
+    {
+      "id": "C2.2",
+      "kind": "extremum",
+      "where": "5.6",
+      "says": "is the smallest lower bound in the table",
+      "pass": true,
+      "detail": "min of 4 is h=128 (0.010697); paper names h=128 (0.010697)"
+    },
+    {
+      "id": "C3.1",
+      "kind": "sign",
+      "where": "5.6",
+      "says": "*lowers* disagreement's correlation by",
+      "pass": true,
+      "detail": "0.60534 -> 0.59571 is a fall of 0.00963, text says fall"
+    },
+    {
+      "id": "C3.2",
+      "kind": "sign",
+      "where": "abstract",
+      "says": "lowers disagreement's correlation by only",
+      "pass": true,
+      "detail": "0.60534 -> 0.59571 is a fall of 0.00963, text says fall"
+    },
+    {
+      "id": "C3.3",
+      "kind": "sign",
+      "where": "5.6",
+      "says": "removing the shared depth trend",
+      "pass": true,
+      "detail": "0.60534 -> 0.73919 is a rise of 0.13386, text says rise"
+    },
+    {
+      "id": "C4.1",
+      "kind": "orders",
+      "where": "5.2 / abstract / 12",
+      "says": "\u00d7 better than aleatoric at the deployment horizon",
+      "pass": true,
+      "detail": "ratio 600.0x quoted directly, not as orders (log10=2.78)"
+    },
+    {
+      "id": "C4.2",
+      "kind": "orders",
+      "where": "5.5",
+      "says": "a factor of about 10^",
+      "pass": true,
+      "detail": "ratio 9.95e+12, round(log10)=13, text says 13"
+    },
+    {
+      "id": "C5.1",
+      "kind": "cell",
+      "where": "12",
+      "says": "inversely on every one of",
+      "pass": true,
+      "detail": "arenas.all-episodes.models.released aleatoric.368 -> 0/45, text cites 0/45"
+    },
+    {
+      "id": "C5.2",
+      "kind": "cell",
+      "where": "5.5",
+      "says": "the arena \u00a75.5's table reports",
+      "pass": true,
+      "detail": "arenas.out-of-sample.models.released aleatoric.368 -> 20/45, text cites 20/45"
+    },
+    {
+      "id": "C5.3",
+      "kind": "cell",
+      "where": "5.2",
+      "says": "of 45 at h=1, with mean r",
+      "pass": true,
+      "detail": "arenas.all-episodes.models.released EPISTEMIC.1 -> 44/45, text cites 44/45"
+    }
+  ],
+  "self_test": {
+    "n": 11,
+    "caught": 11,
+    "detail": [
+      {
+        "id": "C1.1",
+        "corruption": "{'expect': 'disjoint'}",
+        "caught": true
+      },
+      {
+        "id": "C1.2",
+        "corruption": "{'expect': 'overlap'}",
+        "caught": true
+      },
+      {
+        "id": "C2.1",
+        "corruption": "{'named': {'quantity': 'aleatoric', 'h': 128, 'fit_episode': 1}}",
+        "caught": true
+      },
+      {
+        "id": "C2.2",
+        "corruption": "{'named': {'h': '368'}}",
+        "caught": true
+      },
+      {
+        "id": "C3.1",
+        "corruption": "{'expect': 'rise'}",
+        "caught": true
+      },
+      {
+        "id": "C3.2",
+        "corruption": "{'expect': 'rise'}",
+        "caught": true
+      },
+      {
+        "id": "C3.3",
+        "corruption": "{'expect': 'fall'}",
+        "caught": true
+      },
+      {
+        "id": "C4.1",
+        "skipped": "quotes the ratio directly, no orders claim to corrupt"
+      },
+      {
+        "id": "C4.2",
+        "corruption": "{'stated_orders': 14}",
+        "caught": true
+      },
+      {
+        "id": "C5.1",
+        "corruption": "{'expect_observed': 1}",
+        "caught": true
+      },
+      {
+        "id": "C5.2",
+        "corruption": "{'expect_observed': 21}",
+        "caught": true
+      },
+      {
+        "id": "C5.3",
+        "corruption": "{'expect_observed': 45}",
+        "caught": true
+      }
+    ]
+  }
+}

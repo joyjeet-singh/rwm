@@ -4140,6 +4140,59 @@ arXiv:2504.16680v1 §5.1, Figs. 2-3, read 2026-08-22;
 **Status** CONFIRMED · **Relevance** CONTEXT
 
 
+
+### M-42 — The numeral check could not see any of the six interpretive defects · **NEW**
+Every generated numeral in this paper was correct. A review that traced each one back to
+`results/` found no defect in any of them. **Six defects were found anyway**, all in hand-written
+sentences that interpret those numerals:
+
+| defect | the numerals were | the sentence said |
+|---|---|---|
+| A1 | 0/45 all-episodes, 20/45 out-of-sample | asserted one arena while the table printed the other, naming neither |
+| A2 | two correct CIs | "the intervals do not overlap" — at h=128 they do, across 0.604-0.643 |
+| A3 | 0.60534 and 0.59571 | "a change of **+**0.010" — the change is negative |
+| A4 | every coverage figure correct | named the third-largest deviation as the largest |
+| A5 | 20,668.6 and 34.45 | "two orders of magnitude" in §12, "nearly three" in the abstract, of the same ratio |
+| A6 | our 4.61x correct | implied a comparison with an original figure that does not exist |
+
+**The pattern.** `build_paper.py` asserts that every printed number came from a named artifact.
+That is a guarantee about *provenance*, and it is silent about *relations between* provenanced
+numbers. "Do not overlap", "backwards", "the worst is" and "orders of magnitude" are not numerals
+and appear nowhere in `results/paper_numbers.json`; they were typed, and five of the six were
+wrong.
+
+**The fix is a second checker, not a stricter first one.**
+`scripts/check_comparative_claims.py` verifies 12 comparative claims across 5 kinds — interval
+overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions,
+and the arena and horizon a count came from. Each entry pins two things and requires both:
+
+- a **fragment of the paper's own text**, so rewording the sentence fails the check rather than
+  silently detaching it from the claim it was written to guard; and
+- a **relation recomputed from the artifacts**.
+
+A check that only re-asserts an artifact fact guards nothing, and a check that only matches text
+guards nothing either. Demonstrated: rewording "the marginal intervals *do* overlap" to "are not
+disjoint" — same meaning — fails C1.1.
+
+**Every assertion is run against a deliberately corrupted expectation on each build** and must
+fail: the interval relation inverted, the extremum replaced by the **runner-up** rather than an
+absent label, the sign flipped, the order of magnitude and the dimension counts moved by one.
+11 of 11 corruptions are caught.
+
+**The self-test found its own bug first.** Its first version applied a fixed corruption per kind —
+`expect: "disjoint"` to every overlap check, `expect: "rise"` to every sign check. For claims that
+already expected those, the corruption was a no-op, and two of eleven assertions reported as
+MISSED. They were not missed; nothing had been corrupted. The corruption now inverts relative to
+each claim's own expectation. **An assertion that has quietly stopped being able to fail is worth
+less than no assertion**, because it reads as coverage, and this is the mechanism that finds out.
+
+One check has nothing to corrupt: A5's ratio is now quoted as 600x directly rather than as a count
+of orders, which is why the self-test marks it n/a. That is the stronger fix — an exact generated
+ratio cannot drift out of agreement with itself the way two prose descriptions of it did.
+**Evidence** `RUN` `results/comparative_claims.json`; `scripts/check_comparative_claims.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
 ### S-15 — The binomial P-values attached to every dimension count · **NEW**
 **Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand
 **What is retracted:** the step from a sign count to a P-value under a fair-coin binomial null,

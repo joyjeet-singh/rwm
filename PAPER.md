@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     377 values substituted from 39 artifacts. -->
+     382 values substituted from 40 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -557,7 +557,7 @@ the work.
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-(180 entries). Claims are never edited in place. A claim that turns out to be wrong is
+(181 entries). Claims are never edited in place. A claim that turns out to be wrong is
 marked superseded, with a pointer to what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data
@@ -591,9 +591,13 @@ correctly — carrying all seeds with each draw — widens intervals by a mean f
 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon
 verdict survives. Both units are reported.
 
-**Reproducibility.** `./reproduce.sh --quick --force` regenerates 27 artifact files and
-5,928 numeric values from a clean clone, 5,928 of them bitwise identical
-(100.00%), 0 differing. Two things are excluded, on the same principle: the number measures the machine, not the model.
+**Reproducibility.** `./reproduce.sh --quick --force` regenerates 27 artifact files and 5,928 numeric values from a clean clone, 5,928 of them bitwise identical (100.00%), 0 differing.
+
+**And it checks its own comparative claims.** Verifying that every numeral came from an artifact says nothing about the sentence built around it. A sentence can take correct numbers and assert a wrong relation between them — that two intervals do not overlap when they do, that a named cell is the largest when it is third, that a quantity rose when it fell, that a ratio is two orders of magnitude when it is nearly three, or that a count came from one evaluation arena when it came from another. Six such defects were present in an earlier draft of this paper, all of them downstream of numerals that were correct.
+
+The build therefore also verifies **12 comparative claims** across 5 kinds — interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, and the arena and horizon a count came from. Each pins both a fragment of the paper's own text, so that rewording the sentence fails the check rather than silently detaching it, and a relation recomputed from the artifacts. 12 of 12 pass.
+
+Every one of them is also run against a **deliberately corrupted expectation on each build** — the interval relation inverted, the extremum replaced by the runner-up, the sign flipped, the order of magnitude and the dimension counts moved by one — and must fail. 11 of 11 corruptions are caught. An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage; this is how we find out. The first version of that self-test contained two corruptions that were accidentally no-ops, and reported them as misses. Two things are excluded, on the same principle: the number measures the machine, not the model.
 
 *The CPU budget.* 3,972 timing fields and the 584 values of `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its 4 configurations the standard deviation of seconds-per-iteration across repeats runs from 5% to 32% of the mean (ens1_bs256) — on one machine, within a single measurement session.
 

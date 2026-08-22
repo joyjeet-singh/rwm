@@ -167,6 +167,17 @@ def main():
         put("ver_tb_ran", _ov["iterations_run"], f"results/{_tb[0]}")
         put("ver_tb_cap", f'{_ov["config"]["iters"]:,}', f"results/{_tb[0]}")
         put("ver_tb_budget", f'{_ov["config"]["max_seconds"]:,.0f}', f"results/{_tb[0]}")
+
+    # Part C: the count of COMPARATIVE claims verified, reported in section 8
+    # beside the numeral count. A build that verifies its own interpretive claims
+    # is a stronger reproducibility statement than one that verifies only numerals.
+    CC = J("comparative_claims.json")
+    put("cc_n", CC["n_claims"], "results/comparative_claims.json")
+    put("cc_pass", CC["n_pass"], "results/comparative_claims.json")
+    _st = CC.get("self_test", {})
+    put("cc_st_n", _st.get("n", 0), "results/comparative_claims.json")
+    put("cc_st_caught", _st.get("caught", 0), "results/comparative_claims.json")
+    put("cc_kinds", len({c["kind"] for c in CC["claims"]}), "results/comparative_claims.json")
     put("diff_terms", dif.get("n_terms", 7), "results/step4_3_differential.json")
     t5d = J("task5_differential.json")
     import re as _re

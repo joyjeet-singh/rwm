@@ -636,6 +636,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "7c19fc1a4730": {
+    "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact",
+    "sample_size": "12 comparative claims, 11 corruptions",
+    "verdict": "SUPPORTED"
+  },
   "7cac9dc7d9d8": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "21 training runs",
@@ -737,6 +742,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "9397a5d9422f": {
+    "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact",
+    "sample_size": "12 comparative claims, 11 corruptions",
+    "verdict": "SUPPORTED"
+  },
   "94be81a5c0de": {
     "claim": "We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are withdrawn on evid",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -784,6 +794,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "a11b0e48686c": {
+    "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact",
+    "sample_size": "12 comparative claims, 11 corruptions",
+    "verdict": "SUPPORTED"
+  },
   "a88c086ee32a": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories",
@@ -804,6 +819,11 @@
     "claim": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7.",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "acc0f21ea900": {
+    "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact",
+    "sample_size": "12 comparative claims, 11 corruptions",
     "verdict": "SUPPORTED"
   },
   "ad1695104a2c": {
@@ -901,6 +921,11 @@
   "c1a05ea91a4c": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "c2cfc2e6da56": {
+    "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact",
+    "sample_size": "12 comparative claims, 11 corruptions",
     "verdict": "SUPPORTED"
   },
   "c3204ca09b05": {

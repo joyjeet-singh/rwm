@@ -242,6 +242,14 @@ stage 27 "Claims-versus-evidence audit" "10 s" \
 # under their account; third-party upstreams are allowlisted.
 stage 28 "Assemble the anonymised supplementary archive" "20 s" \
       "" $PY scripts/build_supplementary.py
+# The numeral check guarantees every printed number came from an artifact. It
+# cannot see a sentence that takes correct numbers and asserts a wrong relation
+# between them -- six such defects shipped before anyone looked. --self-test runs
+# every assertion against a deliberately corrupted expectation on every build, so
+# an assertion that has stopped being able to fail is caught here rather than
+# quietly passing forever.
+REPORT=comparative_claims_report.txt stage 28a "Comparative-claim check, with self-test" "10 s" \
+      results/comparative_claims.json $PY scripts/check_comparative_claims.py --self-test
 stage 29a "Part F submission gate, six checks" "30 s" \
       results/part_f_gate.json $PY scripts/part_f_gate.py
 stage 29 "Submission readiness gate" "40 s" \

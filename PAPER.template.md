@@ -579,9 +579,13 @@ correctly — carrying all seeds with each draw — widens intervals by a mean f
 {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon
 verdict survives. Both units are reported.
 
-**Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and
-{{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical
-({{ver_pct}}%), {{ver_differing}} differing. Two things are excluded, on the same principle: the number measures the machine, not the model.
+**Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing.
+
+**And it checks its own comparative claims.** Verifying that every numeral came from an artifact says nothing about the sentence built around it. A sentence can take correct numbers and assert a wrong relation between them — that two intervals do not overlap when they do, that a named cell is the largest when it is third, that a quantity rose when it fell, that a ratio is two orders of magnitude when it is nearly three, or that a count came from one evaluation arena when it came from another. Six such defects were present in an earlier draft of this paper, all of them downstream of numerals that were correct.
+
+The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds — interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, and the arena and horizon a count came from. Each pins both a fragment of the paper's own text, so that rewording the sentence fails the check rather than silently detaching it, and a relation recomputed from the artifacts. {{cc_pass}} of {{cc_n}} pass.
+
+Every one of them is also run against a **deliberately corrupted expectation on each build** — the interval relation inverted, the extremum replaced by the runner-up, the sign flipped, the order of magnitude and the dimension counts moved by one — and must fail. {{cc_st_caught}} of {{cc_st_n}} corruptions are caught. An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage; this is how we find out. The first version of that self-test contained two corruptions that were accidentally no-ops, and reported them as misses. Two things are excluded, on the same principle: the number measures the machine, not the model.
 
 *The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) — on one machine, within a single measurement session.
 
