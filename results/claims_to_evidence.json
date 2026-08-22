@@ -2136,7 +2136,6 @@
         "RUN"
       ],
       "artifacts": [
-        "results/_regenerated.txt",
         "scripts/verify_reproduction.py"
       ],
       "retracts": []

@@ -4020,7 +4020,7 @@ reproducibility figure in §8 stayed green.
 
 **Why that is worse than an ordinary omission.** A clean clone of this repository *already
 contains* `results/`. `verify_reproduction.py` handles that by partitioning on
-`results/_regenerated.txt` — files a run actually rewrote are compared as regenerated, files
+the run's `_regenerated.txt` manifest — files a run actually rewrote are compared as regenerated, files
 carried in by the clone are held out and counted separately. A script that is not in
 `reproduce.sh` never appears in `_regenerated.txt`, so its outputs fall silently into the
 carried-in partition. The paper's newest and most consequential results would have been excluded
