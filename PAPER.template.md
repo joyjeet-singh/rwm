@@ -376,7 +376,7 @@ All three correlations below are on the scalar quantity the method actually appl
 
 The decisive one needs no model of the index-error relationship at all. Computing the correlation **within each forecast step** — across trajectories, with depth held exactly constant, so the index cannot contribute by construction — and averaging over steps gives **{{d2r_win}} {{d2r_win_ci}}**, positive at **{{d2r_win_pos}} of {{d2r_win_n}}** forecast steps with a median of {{d2r_win_med}}. The weakest figure across all {{d2r_ncontrols}} controls is {{d2r_weakest}}. Disagreement is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong.
 
-We had expected the opposite, and the brief that commissioned this test named it as the most valuable missing experiment precisely because a null would have been damaging. It is not a null. **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and that is the strongest form of support this paper offers any claim of either original work. It coexists with §5.5 without contradiction: the *scalar* the method applies tracks error well, while the *per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
+**We ran this expecting it to go the other way.** A counter matching disagreement would have been the more consequential result — it would make the trust metric close to vacuous, since a counter is free — and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way. **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and that is the strongest form of support this paper offers any claim of either original work. It coexists with §5.5 without contradiction: the *scalar* the method applies tracks error well, while the *per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
 
 ### 5.7 One constant scalar does not fix it, but a per-horizon one does
 
@@ -559,7 +559,7 @@ per-dimension comparison that turned out to be unmatched; the claim that σ is i
 uncertainty output", singular, when the checkpoint emits two and we had measured the one the method
 discards.
 
-{{n_retract_framing_word_cap}} further retractions are **not** among those {{n_retractions_lower}}, because they withdraw framings rather than numbers and are counted separately: the pre-registration claim above, and the inference from a count of positive per-dimension correlations to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§5.5). The second was found by this paper's own submission review, and it is the one that cost the most — it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
+{{n_retract_framing_word_cap}} further retractions are **not** among those {{n_retractions_lower}}, because they withdraw framings rather than numbers and are counted separately: the pre-registration claim above, and the inference from a count of positive per-dimension correlations to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§5.5). The second was found by our own pre-submission audit of this paper, and it is the one that cost the most: it withdraws the strength of evidence behind what an earlier draft of §5.5 called the strongest result here.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three training seeds over
 a shared set of evaluation trajectories and resampled the pooled vector, while reporting the
@@ -603,7 +603,7 @@ a failure mode that pre-registration does not protect against on its own.
 **Check that the implemented loss is the described loss before reproducing any number from it.**
 The paper describes two loss terms; the implementation has {{diff_terms}}. The predicted variance
 has an optimum at zero under the implemented one, which is why the released checkpoint's σ is
-{{cal_rel_ratio}}× smaller than its own error. Reading the loss took an afternoon and explained a
+{{d1n_alea_ratio_h368}}× smaller than its own error. Reading the loss took an afternoon and explained a
 result that would otherwise have looked like a training bug.
 
 ---
@@ -659,7 +659,7 @@ among them: it is a three-seed mean with per-seed values reported (§4). This is
 
 The Robotic World Model's central training claim reproduces, and the margin is large. Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
-The aleatoric σ is {{cal_rel_ratio}}× smaller than its own error, and the cause is that the
+The aleatoric σ is {{d1n_alea_ratio_h368}}× smaller than its own error, and the cause is that the
 objective's optimum is σ = 0 with the term that should prevent this cancelling out of the
 gradient. The epistemic term the method actually penalises with is better by two orders of
 magnitude and still {{d1n_epi_ratio_h368}}× overconfident where it is used.

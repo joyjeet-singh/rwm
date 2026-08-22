@@ -28,7 +28,7 @@
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "58 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
+      "detail": "60 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
     },
     {
       "n": 6,

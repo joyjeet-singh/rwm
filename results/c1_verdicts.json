@@ -531,6 +531,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "784210c99684": {
+    "note": "aleatoric err/sigma at h=368, n_independent=20, results/task_d_nind20.json; switched from the n=4 held-out figure so it matches the abstract's arena",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "7b4068efe820": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
@@ -667,6 +672,11 @@
   "a8fb8df2201c": {
     "claim": "It does not produce a usable estimate, and it destroys something the faithful arm had: the \u03c3-versus-error orde",
     "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "a9dea322d5ff": {
+    "note": "same; section 5.2's four-model table retains the n=4 figure and says so, because that table compares our arms on their only fair arena",
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
@@ -892,6 +902,11 @@
   "e14b58dfd9b5": {
     "claim": "5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows",
     "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "e2cd3cf2204a": {
+    "note": "a statement of expectation, explicitly NOT claimed as a pre-registration; the sentence following it says so and points at section 8's standard (cf. S-12)",
     "sample_size": "",
     "verdict": "SUPPORTED"
   },

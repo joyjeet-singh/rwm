@@ -165,11 +165,29 @@ def main():
         if not any(str(N[j]["value"]) == str(N[k]["value"]) for j in bk):
             orphan.append(k)
     # the same quantity must not appear at two aggregations without labels
+    # Two keys for one quantity measured on two arenas. The abstract must not
+    # carry both, AND a key the abstract does not use must not appear in a
+    # headline section either -- section 12 quoted the n=4 aleatoric ratio while
+    # the abstract quoted the n=20 one, which the earlier version of this check
+    # missed because both keys were "in the body somewhere".
     DUAL = [("b2_epi_ratio_h368", "d1n_epi_ratio_h368"),
             ("b2_epi_cov1_h368", "d1n_epi_cov1_h368"),
+            ("cal_rel_ratio", "d1n_alea_ratio_h368"),
             ("b2_alea_ratio_h368", "d1n_alea_ratio_h368")]
+    HEADLINE = ["\n## 9.", "\n## 10.", "\n## 12."]
     clash = [(a, b) for a, b in DUAL
              if f"{{{{{a}}}}}" in abstract and f"{{{{{b}}}}}" in abstract]
+    for a, b in DUAL:
+        used_in_abs = b if f"{{{{{b}}}}}" in abstract else (a if f"{{{{{a}}}}}" in abstract else None)
+        if not used_in_abs:
+            continue
+        other = a if used_in_abs == b else b
+        for h in HEADLINE:
+            if h not in T:
+                continue
+            sec = T.split(h)[1].split("\n## ")[0]
+            if f"{{{{{other}}}}}" in sec:
+                clash.append((f"{other} in {h.strip()}", f"abstract uses {used_in_abs}"))
     chk(6, "numeric consistency, abstract vs body", not orphan and not clash,
         f"{len(ak)} abstract keys; asserted-but-absent-from-body {orphan or 'none'}; "
         f"same quantity at two aggregations in the abstract {clash or 'none'}")

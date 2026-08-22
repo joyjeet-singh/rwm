@@ -1,7 +1,7 @@
 {
-  "n_claims": 164,
+  "n_claims": 165,
   "by_verdict": {
-    "SUPPORTED": 164
+    "SUPPORTED": 165
   },
   "claims": [
     {
@@ -1667,6 +1667,18 @@
       "note": "checked against results/task_d2b_robustness.json controls block"
     },
     {
+      "id": "e2cd3cf2204a",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "We ran this expecting it to go the other way.** A counter matching disagreement would have been the more consequential result \u2014 it would make the trust metric close to vacuous, since a counter is free \u2014 and that is the outcome this test was set up to expose.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "a statement of expectation, explicitly NOT claimed as a pre-registration; the sentence following it says so and points at section 8's standard (cf. S-12)"
+    },
+    {
       "id": "32348f363a95",
       "section": "5.7 One constant scalar does not fix it, but a per-horizon one does",
       "claim": "On the epistemic term \u2014 the quantity the method uses \u2014 a scalar of {{d2_epi_c_lo}}\u2013{{d2_epi_c_hi}} brings h=1 coverage to {{d2_epi_cov1_lo}}\u2013{{d2_epi_cov1_hi}}%, essentially calibrated against the {{d2_target}}% target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%.",
@@ -2402,20 +2414,20 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "7f9ebf680b50",
+      "id": "784210c99684",
       "section": "9. Actionable lessons",
-      "claim": "The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error.",
+      "claim": "The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's \u03c3 is {{d1n_alea_ratio_h368}}\u00d7 smaller than its own error.",
       "keys": [
-        "cal_rel_ratio"
+        "d1n_alea_ratio_h368"
       ],
       "artifacts": [
-        "results/task1_calibration.json"
+        "results/task_d_nind20.json"
       ],
       "n_keys": 1,
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": "aleatoric err/sigma at h=368, n_independent=20, results/task_d_nind20.json; switched from the n=4 held-out figure so it matches the abstract's arena"
     },
     {
       "id": "557a3c572a29",
@@ -2526,20 +2538,20 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "70b6010104ed",
+      "id": "a9dea322d5ff",
       "section": "12. Conclusion",
-      "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of the gradient.",
+      "claim": "The aleatoric \u03c3 is {{d1n_alea_ratio_h368}}\u00d7 smaller than its own error, and the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of the gradient.",
       "keys": [
-        "cal_rel_ratio"
+        "d1n_alea_ratio_h368"
       ],
       "artifacts": [
-        "results/task1_calibration.json"
+        "results/task_d_nind20.json"
       ],
       "n_keys": 1,
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": "same; section 5.2's four-model table retains the n=4 figure and says so, because that table compares our arms on their only fair arena"
     },
     {
       "id": "bf0579ebb5f8",
