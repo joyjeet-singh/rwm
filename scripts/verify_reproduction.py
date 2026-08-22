@@ -57,6 +57,22 @@ if os.path.exists(_rl):
     regen={l.strip() for l in open(_rl) if l.strip()}
 tot=exact=close=diff=timing=nans=0; report=[]; dropped=[]; machine=0
 time_bounded_files=[]      # excluded because the RUN was wall-clock bounded
+host_sourced_keys=[]       # paper_numbers keys whose SOURCE is a host-dependent artifact
+
+# Determine the wall-clock-bounded files BEFORE the main loop. They are needed
+# while processing paper_numbers.json, which sorts earlier alphabetically than
+# step4_4_overfit_ens1.json -- so discovering them as the loop went left the list
+# empty at the moment it was consulted, and the leak this exclusion exists to
+# close stayed open.
+for _fn in sorted(os.listdir(B)):
+    if not _fn.endswith(".json"):
+        continue
+    try:
+        _d = json.load(open(os.path.join(B, _fn)))
+    except Exception:
+        continue
+    if _fn not in MACHINE_FILES and time_bounded(_d):
+        time_bounded_files.append(_fn)
 c_tot=c_exact=c_diff=0     # files present in the clone but never rewritten
 for fn in sorted(os.listdir(B)):
     if not fn.endswith(".json"): continue
@@ -65,10 +81,32 @@ for fn in sorted(os.listdir(B)):
     try: da, db = json.load(open(pa)), json.load(open(pb))
     except Exception: continue
     ma, mb = dict(flat(da)), dict(flat(db))
+    # paper_numbers.json records the SOURCE of every key it holds, so a key
+    # sourced from a machine-dependent artifact can be excluded by that
+    # provenance rather than by name. This matters: excluding
+    # step4_4_overfit_ens1.json while paper_numbers.json copied its achieved
+    # iteration count into a key left the host-dependence leaking through a file
+    # that was not excluded, and the clean clone duly differed on it (451 here,
+    # 545 there). The exclusion now follows the provenance the file already
+    # carries, so a future key sourced from a host-dependent file is covered
+    # without anyone remembering to add it.
+    if fn == "paper_numbers.json":
+        vals = db.get("values", db)
+        host = {k for k, d in vals.items()
+                if isinstance(d, dict)
+                and any(m.rstrip(".json") in str(d.get("source", "")) for m in MACHINE_FILES)}
+        host |= {k for k, d in vals.items()
+                 if isinstance(d, dict) and any(
+                     tb.rstrip(".json") in str(d.get("source", "")) for tb in time_bounded_files)}
+        if host:
+            drop = {f".{k}.value" for k in host} | {f".{k}.source" for k in host}
+            n_before = len(mb)
+            ma = {k: v for k, v in ma.items() if not any(k.endswith(d) for d in drop)}
+            mb = {k: v for k, v in mb.items() if not any(k.endswith(d) for d in drop)}
+            machine += n_before - len(mb)
+            host_sourced_keys.extend(sorted(host))
     if fn in MACHINE_FILES or time_bounded(db) or time_bounded(da):
         machine += sum(1 for k in mb if k in ma)
-        if fn not in MACHINE_FILES:
-            time_bounded_files.append(fn)
         continue
     is_regen = (not regen) or (fn in regen)
     # A key in the committed file with no counterpart in the regenerated one is a
@@ -106,6 +144,11 @@ if time_bounded_files:
     print("      (stopped on --max-seconds, not the iteration cap, so the iteration count and")
     print("       terminal losses measure the host; sibling runs from the same script that")
     print("       reached their cap ARE checked, and reproduce bitwise)")
+if host_sourced_keys:
+    print(f"  host-sourced paper numbers excluded : {len(host_sourced_keys)} key(s) -- "
+          f"{', '.join(host_sourced_keys)}")
+    print("      (paper_numbers.json records each key's source; these are sourced from an")
+    print("       artifact already excluded above, so the exclusion follows the provenance)")
 print(f"  timing fields excluded  : {timing}  (machine-dependent by design, see README)")
 print(f"  bitwise identical       : {exact} ({100*exact/max(tot,1):.2f}%)")
 print(f"  identical to 1e-9       : {close}")
@@ -129,7 +172,8 @@ json.dump({"regenerated_files": sorted(regen), "values_compared": tot,
            "copied_differing": c_diff,
            "machine_file_values_excluded": machine,
            "machine_files": list(MACHINE_FILES),
-           "time_bounded_files_excluded": time_bounded_files},
+           "time_bounded_files_excluded": time_bounded_files,
+           "host_sourced_keys_excluded": host_sourced_keys},
           open(os.path.join(B, "verify_reproduction.json"), "w"), indent=2)
 print(f"\n  wrote {os.path.join(B, 'verify_reproduction.json')}")
 ok = (diff == 0) and not dropped

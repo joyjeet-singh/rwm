@@ -160,6 +160,8 @@ def main():
     put("ver_timebound_n", len(_tb), "results/verify_reproduction.json")
     put("ver_timebound", ", ".join(f"`results/{x}`" for x in _tb) or "none",
         "results/verify_reproduction.json")
+    put("ver_hostkeys", len(ver.get("host_sourced_keys_excluded", [])),
+        "results/verify_reproduction.json")
     # the committed iteration count of the wall-clock-bounded diagnostic, and the
     # cap it never reached -- both read from the artifact rather than typed
     if _tb:

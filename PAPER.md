@@ -591,7 +591,7 @@ correctly — carrying all seeds with each draw — widens intervals by a mean f
 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon
 verdict survives. Both units are reported.
 
-**Reproducibility.** `./reproduce.sh --quick --force` regenerates 27 artifact files and 5,928 numeric values from a clean clone, 5,928 of them bitwise identical (100.00%), 0 differing.
+**Reproducibility.** `./reproduce.sh --quick --force` regenerates 28 artifact files and 5,999 numeric values from a clean clone, 5,999 of them bitwise identical (100.00%), 0 differing.
 
 **And it checks its own comparative claims.** Verifying that every numeral came from an artifact says nothing about the sentence built around it. A sentence can take correct numbers and assert a wrong relation between them — that two intervals do not overlap when they do, that a named cell is the largest when it is third, that a quantity rose when it fell, that a ratio is two orders of magnitude when it is nearly three, or that a count came from one evaluation arena when it came from another. Six such defects were present in an earlier draft of this paper, all of them downstream of numerals that were correct.
 
@@ -601,9 +601,11 @@ Every one of them is also run against a **deliberately corrupted expectation on 
 
 Two things are excluded from the numeric comparison, on the same principle in both cases: the number measures the machine, not the model.
 
-*The CPU budget.* 3,972 timing fields and the 584 values of `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its 4 configurations the standard deviation of seconds-per-iteration across repeats runs from 5% to 32% of the mean (ens1_bs256) — on one machine, within a single measurement session.
+*The CPU budget.* 3,973 timing fields and the 586 values of `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its 4 configurations the standard deviation of seconds-per-iteration across repeats runs from 5% to 32% of the mean (ens1_bs256) — on one machine, within a single measurement session.
 
-*One wall-clock-bounded diagnostic.* `results/step4_4_overfit_ens1.json` stops after 2,700 seconds rather than at its 2,000-iteration cap, reaching 451 iterations on the machine that produced the committed copy and a different count on the machine that regenerated it. Its iteration count and terminal losses are therefore a property of the host. **Its sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise. Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact — a run that stopped short of its own cap was time-bounded.
+*One wall-clock-bounded diagnostic.* `results/step4_4_overfit_ens1.json` stops after 2,700 seconds rather than at its 2,000-iteration cap, so it reaches a different iteration count on every machine — three different values across the three hosts we have run it on. Its iteration count and terminal losses are therefore a property of the host, and we do not quote any of them here: a number the build declares host-dependent has no business being printed as a result. **Its sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise. Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact — a run that stopped short of its own cap was time-bounded.
+
+Excluding a file is not sufficient on its own. `results/paper_numbers.json` records the *source* of every value it holds, and it had copied that diagnostic's iteration count into a key of its own — so the host-dependence leaked through a file that was not excluded, and the clean clone duly differed on it. The verifier now drops any key whose recorded source is an excluded artifact (7 of them), which follows the provenance the file already carries rather than requiring anyone to remember.
 
 ---
 

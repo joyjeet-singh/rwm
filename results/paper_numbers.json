@@ -4069,15 +4069,19 @@
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 27
+    "value": 28
+  },
+  "ver_hostkeys": {
+    "source": "results/verify_reproduction.json",
+    "value": 7
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "5,928"
+    "value": "5,999"
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
-    "value": 584
+    "value": 586
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
@@ -4105,11 +4109,11 @@
   },
   "ver_timing": {
     "source": "results/verify_reproduction.json",
-    "value": "3,972"
+    "value": "3,973"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "5,928"
+    "value": "5,999"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

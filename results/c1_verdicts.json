@@ -62,6 +62,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "0c8fde7f2259": {
+    "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance",
+    "sample_size": "clean-clone comparison, 28 regenerated files",
+    "verdict": "SUPPORTED"
+  },
   "0ceb6498a950": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
@@ -799,6 +804,11 @@
     "sample_size": "12 comparative claims, 11 corruptions",
     "verdict": "SUPPORTED"
   },
+  "a53d00d681e8": {
+    "note": "counts read from results/comparative_claims.json, regenerated with --self-test; the 7 kinds are overlap, extremum, sign, orders, cell, compare, relvar",
+    "sample_size": "19 comparative claims, 18 corruptions",
+    "verdict": "SUPPORTED"
+  },
   "a88c086ee32a": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories",
@@ -1116,6 +1126,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "eb4453c77a88": {
+    "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance",
+    "sample_size": "clean-clone comparison, 28 regenerated files",
+    "verdict": "SUPPORTED"
+  },
   "ede32a03443a": {
     "note": "results/step4_5_timing.json: std/s_per_iter per configuration is 5.4%% (ens5_bs256), 11.3%% (ens1_bs1024), 14.3%% (ens5_bs1024), 31.8%% (ens1_bs256); min and max reported, worst named",
     "sample_size": "",
@@ -1215,6 +1230,11 @@
   "f70fc31b015b": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "f8cc6aa35089": {
+    "note": "counts read from results/comparative_claims.json, regenerated with --self-test; the 7 kinds are overlap, extremum, sign, orders, cell, compare, relvar",
+    "sample_size": "19 comparative claims, 18 corruptions",
     "verdict": "SUPPORTED"
   },
   "f9f83b6ba39c": {

@@ -22,7 +22,7 @@
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
       "pass": true,
-      "detail": "verify_reproduction.json vs the clone run at clone2: 27 files regenerated, 5,928 values, 5,928 identical, 0 differing; carried-in partition present (705,853 copied values held out); artifact post-dates the regeneration marker"
+      "detail": "verify_reproduction.json vs the clone run at clone3: 28 files regenerated, 5,999 values, 5,999 identical, 0 differing; carried-in partition present (705,856 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": 5,
