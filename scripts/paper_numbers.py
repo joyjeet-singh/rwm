@@ -206,6 +206,7 @@ def main():
     # Retractions, counted rather than asserted. An earlier draft said "four" and the
     # ledger had six by then -- exactly the drift this indirection exists to stop.
     led = open("FINDINGS_LEDGER.md").read()
+    TPL = open("PAPER.template.md").read()
     sup = re.findall(r"^### (S-\d+) ", led, re.M)
     retr = []
     for sid in sup:
@@ -214,12 +215,176 @@ def main():
         m = re.search(r"^\*\*Retracts\*\* (.+)$", blk, re.M)
         if m and not m.group(1).lstrip().startswith("\u2014"):
             retr.append(sid)
+    # Framing retractions split two ways. S-01..S-07 withdraw early hypotheses that
+    # were never numbered claims -- routine housekeeping. S-12 and S-15 withdraw
+    # something the paper had asserted (a pre-registration status; an inference
+    # from counts to P-values). The abstract and section 8 count the second group
+    # separately, and an earlier draft typed "a seventh" for what is now two.
+    fram = []
+    for sid in sup:
+        blk = led[led.index("### " + sid + " "):]
+        blk = blk[:blk.find("\n### ", 5)] if "\n### " in blk[5:] else blk
+        m = re.search(r"^\*\*Retracts\*\* (.+)$", blk, re.M)
+        if m and m.group(1).lstrip().startswith("\u2014") \
+                and "early hypothesis" not in m.group(1):
+            fram.append(sid)
     put("n_superseded", len(sup), "FINDINGS_LEDGER.md")
     put("n_retractions", len(retr), "FINDINGS_LEDGER.md")
+    put("n_retract_framing", len(fram), "FINDINGS_LEDGER.md")
     WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
              8: "Eight", 9: "Nine", 10: "Ten"}
     put("n_retractions_word", WORDS.get(len(retr), str(len(retr))), "FINDINGS_LEDGER.md")
     put("n_retractions_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
+    put("n_retract_framing_word", WORDS.get(len(fram), str(len(fram))).lower(), "FINDINGS_LEDGER.md")
+    put("n_retract_framing_word_cap", WORDS.get(len(fram), str(len(fram))), "FINDINGS_LEDGER.md")
+    ORD = {1: "a seventh", 2: "two further", 3: "three further", 4: "four further"}
+    put("n_retract_framing_phrase", ORD.get(len(fram), f"{len(fram)} further"), "FINDINGS_LEDGER.md")
+    put("n_retract_total", len(retr) + len(fram), "FINDINGS_LEDGER.md")
+
+    # E2 -- the residual factor between the implied iteration count and the one
+    # the checkpoint's author recalls. The abstract said only "not reachable",
+    # which reads as nearly reconciled; it is a factor of ~30.
+    _rec = 5000        # docs/E4_AUTHOR_CONTACT.md: checkpoint tag, and the count
+                       # the author recalls in his reply of 2026-08-21
+    # Use the SAME estimate the body leads with (step6_analysis), not the
+    # task5 refits. Quoting 158,000 in the abstract against section 7's 153,270
+    # put two numbers for one quantity in one document; the refits are
+    # corroboration and section 7 reports them as such.
+    _imp = J("step6_analysis.json")["collapse"]["iters_to_checkpoint"]
+    put("unreach_recalled_iters", f"{_rec:,}", "docs/E4_AUTHOR_CONTACT.md")
+    put("unreach_factor", f"{_imp / _rec:.0f}", "results/step6_analysis.json")
+
+    # --- D1/D2/D4: the released checkpoint at n_independent = 20 -----------
+    D = J("task_d_nind20.json")
+    put("d1n_nind", D["design"]["n_independent"], "results/task_d_nind20.json")
+    put("d1n_ntraj", D["design"]["trajectories"], "results/task_d_nind20.json")
+    put("d1n_eps", len(D["design"]["episodes"]), "results/task_d_nind20.json")
+    for h in (1, 8, 32, 128, 368):
+        r = D["d1_by_horizon"][str(h)]
+        for q, tg in (("aleatoric", "alea"), ("epistemic", "epi"), ("total", "tot")):
+            m = r[q]
+            rr = m["ratio_err_over_sigma"]
+            put(f"d1n_{tg}_ratio_h{h}", f"{rr:,.0f}" if rr >= 100 else f"{rr:.1f}",
+                "results/task_d_nind20.json")
+            put(f"d1n_{tg}_cov1_h{h}", f'{100*m["coverage_pm1"]:.2f}',
+                "results/task_d_nind20.json")
+            put(f"d1n_{tg}_cov2_h{h}", f'{100*m["coverage_pm2"]:.2f}',
+                "results/task_d_nind20.json")
+            put(f"d1n_{tg}_npos_h{h}", m["n_positive"], "results/task_d_nind20.json")
+            put(f"d1n_{tg}_ndim_h{h}", m["n_finite_corr"], "results/task_d_nind20.json")
+            put(f"d1n_{tg}_r_h{h}", f'{m["corr_mean"]:+.3f}', "results/task_d_nind20.json")
+    _e1, _e368 = D["d1_by_horizon"]["1"], D["d1_by_horizon"]["368"]
+    put("d1n_epi_over_alea_h368",
+        f'{_e368["aleatoric"]["ratio_err_over_sigma"]/_e368["epistemic"]["ratio_err_over_sigma"]:,.0f}',
+        "results/task_d_nind20.json")
+
+    # D2 -- the forecast-index baseline
+    for h in ("1", "8", "32", "128", "368", "all"):
+        r = D["d2_forecast_index"][h]
+        k = h if h == "all" else f"h{h}"
+        for nm, tg in (("r_index", "idx"), ("r_epistemic", "epi"), ("r_partial", "par")):
+            v = r[nm]
+            put(f"d2b_{tg}_{k}", "n/a" if v is None else f"{v:+.3f}",
+                "results/task_d_nind20.json")
+        for nm, tg in (("index", "idx"), ("epistemic", "epi"), ("partial", "par")):
+            c = r["ci"][nm]
+            put(f"d2b_{tg}_ci_{k}",
+                "n/a" if c["lo"] is None else f'[{c["lo"]:+.3f}, {c["hi"]:+.3f}]',
+                "results/task_d_nind20.json")
+    _dw = [h for h in ("8", "32", "128", "368") if D["d2_forecast_index"][h]["index_wins"]]
+    put("d2b_n_index_wins", len(_dw), "results/task_d_nind20.json")
+    put("d2b_n_horizons_tested", 4, "results/task_d_nind20.json")
+    _all = D["d2_forecast_index"]["all"]
+    put("d2b_shrink_all", f'{_all["r_epistemic"] - _all["r_partial"]:+.3f}',
+        "results/task_d_nind20.json")
+
+    # D4 -- the penalty correlation, with an interval and an n at last
+    _p4 = D["d4_penalty"]
+    put("d4_r", f'{_p4["corr_with_total_abs_error"]:+.3f}', "results/task_d_nind20.json")
+    put("d4_ci", f'[{_p4["ci_lo"]:+.3f}, {_p4["ci_hi"]:+.3f}]', "results/task_d_nind20.json")
+    put("d4_nind", _p4["n_independent"], "results/task_d_nind20.json")
+    put("d4_npoints", f'{_p4["n_points"]:,}', "results/task_d_nind20.json")
+
+    # --- D3: the per-horizon scalar ---------------------------------------
+    D3 = J("task_d3_perhorizon.json")
+    for q, tg in (("aleatoric", "ale"), ("epistemic", "epi")):
+        v = D3["quantities"][q]["verdict"]
+        put(f"d3_{tg}_ok", v["per_horizon_cells_calibrated"], "results/task_d3_perhorizon.json")
+        put(f"d3_{tg}_cells", v["n_cells"], "results/task_d3_perhorizon.json")
+        put(f"d3_{tg}_const_ok", v["constant_cells_calibrated"],
+            "results/task_d3_perhorizon.json")
+        put(f"d3_{tg}_cspread", f'{v["c_ratio_max_over_min"]:.3g}',
+            "results/task_d3_perhorizon.json")
+        put(f"d3_{tg}_worst_h", v["worst_cell"]["h"], "results/task_d3_perhorizon.json")
+        put(f"d3_{tg}_worst_cov", f'{100*v["worst_cell"]["coverage_after"]:.2f}',
+            "results/task_d3_perhorizon.json")
+        _cs = sorted(f["c"] for f in D3["quantities"][q]["fits"])
+        put(f"d3_{tg}_c_lo", f"{_cs[0]:.4g}", "results/task_d3_perhorizon.json")
+        put(f"d3_{tg}_c_hi", f"{_cs[-1]:.4g}", "results/task_d3_perhorizon.json")
+    put("d3_target", f'{100*D3["target_coverage"]:.2f}', "results/task_d3_perhorizon.json")
+
+    # Section 9 opens by counting its own lessons. It said "Four" while carrying a
+    # different number after Part D added two; count the bold leads instead.
+    _s9 = TPL.split("## 9.")[1].split("\n## ")[0]
+    _n9 = len(re.findall(r"^\*\*[A-Z]", _s9, re.M))
+    put("n_lessons", _n9, "PAPER.template.md section 9")
+    put("n_lessons_word", WORDS.get(_n9, str(_n9)), "PAPER.template.md section 9")
+
+    # E4 -- appendix B claimed "roughly 22 hours" for a full run. Recomputed from
+    # the top-level wall_clock_s of every training run. (The per-checkpoint
+    # wall_clock_s inside `collapse` is elapsed-so-far, not per-interval; summing
+    # those inflates the total about 15-fold.)
+    import glob as _glob
+    _runs = []
+    for _f in sorted(_glob.glob("results/step5_*.json")):
+        _d = json.load(open(_f))
+        if _d.get("wall_clock_s"):
+            _runs.append((_d["hyperparameters"]["iterations"], _d["wall_clock_s"]))
+    _t = sum(w for _, w in _runs)
+    _t10 = sum(w for i, w in _runs if i == 10000)
+    put("rt_runs", len(_runs), "results/step5_*.json")
+    put("rt_runs_10k", sum(1 for i, _ in _runs if i == 10000), "results/step5_*.json")
+    put("rt_hours", f"{_t/3600:.0f}", "results/step5_*.json")
+    put("rt_hours_10k", f"{_t10/3600:.0f}", "results/step5_*.json")
+    put("rt_hours_short", f"{(_t-_t10)/3600:.0f}", "results/step5_*.json")
+    put("rt_runs_short", sum(1 for i, _ in _runs if i != 10000), "results/step5_*.json")
+
+    # Section 8 illustrated the host-dependence of step4_5_timing.json with a
+    # typed anecdote ("46.5 s idle took 109.7 s under load") that appears in no
+    # artifact. The file records its own across-repeat standard deviation, which
+    # makes the same point and is readable from disk.
+    _tm = J("step4_5_timing.json")["results"]
+    _rel = {k: v["std"] / v["s_per_iter"] for k, v in _tm.items()
+            if isinstance(v, dict) and v.get("s_per_iter")}
+    _wk = max(_rel, key=_rel.get)
+    put("time_cfgs", len(_rel), "results/step4_5_timing.json")
+    put("time_rel_hi", f"{100*_rel[_wk]:.0f}", "results/step4_5_timing.json")
+    put("time_rel_lo", f"{100*min(_rel.values()):.0f}", "results/step4_5_timing.json")
+    put("time_worst_cfg", _wk, "results/step4_5_timing.json")
+    put("rt_longest", f"{max(w for _, w in _runs)/3600:.1f}", "results/step5_*.json")
+
+    # Section 5.2 claims the n=4 table "agrees in direction" with the n=20 one.
+    # Checked rather than asserted: it does for the epistemic column at all five
+    # horizons, and does NOT for the aleatoric column at one of them.
+    _B4 = J("task_b2_epistemic.json")
+    _agree_e = _agree_a = 0
+    for _h in ("1", "8", "32", "128", "368"):
+        for _q, _c in (("epistemic", "e"), ("aleatoric", "a")):
+            _x = (_B4["by_horizon"][_h][_q]["n_positive"]
+                  > _B4["by_horizon"][_h][_q]["n_finite_corr"] / 2)
+            _y = (D["d1_by_horizon"][_h][_q]["n_positive"]
+                  > D["d1_by_horizon"][_h][_q]["n_finite_corr"] / 2)
+            if _x == _y:
+                if _c == "e":
+                    _agree_e += 1
+                else:
+                    _agree_a += 1
+    put("agree_epi", _agree_e, "results/task_b2_epistemic.json + task_d_nind20.json")
+    put("agree_alea", _agree_a, "results/task_b2_epistemic.json + task_d_nind20.json")
+    put("agree_nh", 5, "results/task_b2_epistemic.json + task_d_nind20.json")
+    put("d3_tol", f'{100*D3["quantities"]["epistemic"]["verdict"]["tolerance"]:.0f}',
+        "results/task_d3_perhorizon.json")
+
 
     # B2 -- the uncertainty the method actually consumes (C-14, R-58)
     B = J("task_b2_epistemic.json")
@@ -237,6 +402,8 @@ def main():
             put(f"b2_{tag}_npos_h{h}", m["n_positive"], "results/task_b2_epistemic.json")
             put(f"b2_{tag}_ndim_h{h}", m["n_finite_corr"], "results/task_b2_epistemic.json")
             put(f"b2_{tag}_p_h{h}", f'{m["sign_p_two_sided"]:.1e}',
+                "results/task_b2_epistemic.json")
+            put(f"b2_{tag}_r_h{h}", f'{m["corr_mean"]:+.3f}',
                 "results/task_b2_epistemic.json")
     e1 = B["by_horizon"]["1"]; e368 = B["by_horizon"]["368"]
     put("b2_epi_over_alea_h1",
@@ -256,6 +423,70 @@ def main():
     put("b2_nind", B["design"]["n_independent"], "results/task_b2_epistemic.json")
     put("b2_members", B["design"]["ensemble_size"], "results/task_b2_epistemic.json")
 
+    # --- B: permutation over trajectories (R-61, S-15) ---------------------
+    # Every dimension-count P-value in the paper comes from here now. The
+    # binomial values are retained under _binom keys so the paper can quote the
+    # size of the correction without either number being typed.
+    PM = J("task_b_permutation.json")
+    _ptag = {"faithful (mse)": "faithA", "corrected (nll)": "nll",
+             "teacher-forced armB": "armB", "released aleatoric": "relale",
+             "released EPISTEMIC": "epi"}
+    _big = None
+    for _ar, _pre in (("out-of-sample", "oos"), ("in-sample", "ins"),
+                      ("all-episodes", "all")):
+        A = PM["arenas"][_ar]
+        put(f"perm_{_pre}_nind", A["n_independent"], "results/task_b_permutation.json")
+        put(f"perm_{_pre}_floor", f'{A["p_floor"]:.4g}', "results/task_b_permutation.json")
+        H = A["holm"]
+        put(f"perm_{_pre}_holm_n", H["family_size"], "results/task_b_permutation.json")
+        put(f"perm_{_pre}_holm_rej", H["n_rejected"], "results/task_b_permutation.json")
+        put(f"perm_{_pre}_holm_thr", f'{H["smallest_threshold"]:.4g}',
+            "results/task_b_permutation.json")
+        put(f"perm_{_pre}_holm_min_p", f'{H["steps"][0]["p"]:.4f}',
+            "results/task_b_permutation.json")
+        put(f"perm_{_pre}_holm_min_cell", H["steps"][0]["cell"],
+            "results/task_b_permutation.json")
+        for _lab, _tg in _ptag.items():
+            for _h in (1, 8, 32, 128, 368):
+                r = A["models"][_lab][str(_h)]
+                put(f"perm_{_pre}_{_tg}_p_h{_h}", f'{r["p_permutation"]:.4f}',
+                    "results/task_b_permutation.json")
+                put(f"perm_{_pre}_{_tg}_null_h{_h}", f'{r["null_mean"]:.1f}',
+                    "results/task_b_permutation.json")
+                put(f"perm_{_pre}_{_tg}_grp_h{_h}", r["group_count"],
+                    "results/task_b_permutation.json")
+                put(f"perm_{_pre}_{_tg}_npos_h{_h}", r["observed"],
+                    "results/task_b_permutation.json")
+                put(f"perm_{_pre}_{_tg}_ndim_h{_h}", r["n_dims"],
+                    "results/task_b_permutation.json")
+                put(f"perm_{_pre}_{_tg}_binom_h{_h}", f'{r["p_binomial_two_sided"]:.2e}',
+                    "results/task_b_permutation.json")
+                # Only cells the paper ever cited as evidence, i.e. where the
+                # count is a positive-direction majority. The largest ratio
+                # overall belongs to released aleatoric at h=32 in-sample (0/45,
+                # binomially "significant" in the NEGATIVE direction), which no
+                # claim here rests on; quoting it would overstate the correction
+                # by pointing at a cell nobody used.
+                _rat = r["p_permutation"] / max(r["p_binomial_two_sided"], 1e-300)
+                if r["observed"] > r["n_dims"] / 2 and (_big is None or _rat > _big[0]):
+                    _big = (_rat, _ar, _lab, _h, r)
+    put("perm_ngroups", PM["arenas"]["out-of-sample"]["models"]["released EPISTEMIC"]["368"]["n_groups"],
+        "results/task_b_permutation.json")
+    _r, _ar, _lab, _h, _rec = _big
+    # Rendered as a power of ten. "17,592,186,044,416" is not a number a reader
+    # parses; "about 10^13" is the claim being made.
+    import math as _m
+    put("perm_worst_factor", f"10^{round(_m.log10(_r))}", "results/task_b_permutation.json")
+    put("perm_worst_factor_exact", f"{_r:.3g}", "results/task_b_permutation.json")
+    put("perm_worst_model", _lab, "results/task_b_permutation.json")
+    put("perm_worst_h", _h, "results/task_b_permutation.json")
+    put("perm_worst_arena", _ar, "results/task_b_permutation.json")
+    put("perm_worst_null", f'{_rec["null_mean"]:.1f}', "results/task_b_permutation.json")
+    _nulls = [PM["arenas"][a]["models"][l][str(h)]["null_mean"]
+              for a in PM["arenas"] for l in _ptag for h in (1, 8, 32, 128, 368)]
+    put("perm_null_lo", f"{min(_nulls):.1f}", "results/task_b_permutation.json")
+    put("perm_null_hi", f"{max(_nulls):.1f}", "results/task_b_permutation.json")
+
     # Episode-boundary accounting for section 5.4. These were typed ("four of the
     # reference's nine"); correct, but typed.
     _tr = set(J("step5_armA_seed0.json")["hyperparameters"]["train_episodes"])
@@ -266,6 +497,8 @@ def main():
     put("bound_total", len(_b), "results/step5_armA_seed0.json (split)")
     put("bound_both_train", len(_both), "results/step5_armA_seed0.json (split)")
     put("bound_touch_holdout", len(_touch), "results/step5_armA_seed0.json (split)")
+    put("n_train_eps", len(_tr), "results/step5_armA_seed0.json (split)")
+    put("n_holdout_eps", len(_ho), "results/step5_armA_seed0.json (split)")
 
     # in-sample vs out-of-sample independent-trajectory counts. An earlier draft
     # reused ab_long_cells (a CELL count) as this ratio; both happened to be 4.
@@ -335,10 +568,21 @@ def main():
 
     # "four defects in the released pipeline" was typed. Count section 5's
     # subsections instead, so adding or removing one cannot desynchronise the abstract.
+    # Bound to the section's TITLE, not its number. The first version of this
+    # matched "**5.N " and silently returned 0 the moment the section was
+    # renumbered to 6 -- putting "we report 0 defects" in the abstract. Counting
+    # from a number that can move is the same bug as typing the number.
     _tpl = open("PAPER.template.md").read()
-    _n = len(re.findall(r"^\*\*5\.\d+ ", _tpl, re.M))
+    _dsec = re.search(r"^## (\d+)\. Defects in the released pipeline\s*$", _tpl, re.M)
+    assert _dsec, "no section titled 'Defects in the released pipeline'"
+    _dnum = _dsec.group(1)
+    _dbody = _tpl[_dsec.end():]
+    _dbody = _dbody[:_dbody.find("\n## ")] if "\n## " in _dbody else _dbody
+    _n = len(re.findall(r"^\*\*" + _dnum + r"\.\d+ ", _dbody, re.M))
+    assert _n > 0, f"section {_dnum} has no bold-numbered defect subsections"
     WORD = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
-    put("n_defects", WORD.get(_n, str(_n)), "PAPER.template.md section 5 subsections")
+    put("n_defects", WORD.get(_n, str(_n)),
+        f"PAPER.template.md section {_dnum} subsections")
 
     # D1 -- the headline over three seeds. The single-seed figures stay available
     # so the paper can say what changed rather than quietly swapping them.

@@ -1,0 +1,227 @@
+"""D1, D2, D4 — the epistemic table at n=20, the forecast-index baseline, and the
+penalty correlation with an interval.
+
+All three share one expensive object: rollouts of the released five-member
+checkpoint over ALL TEN episodes, giving 20 mutually non-overlapping 400-step
+trajectories instead of the 4 the held-out pair admits. The released checkpoint
+trained on all ten, so restricting it to two buys no independence -- the same
+argument this paper makes elsewhere about that checkpoint. n=20 is five times the
+sample and the coarse-bootstrap caveat that applies at n=4 does not apply here.
+
+D1  the full uncertainty table at every horizon, at n_independent=20.
+
+D2  THE BASELINE THE FOLLOW-UP NEVER RAN. arXiv:2504.16680 claims ensemble
+    disagreement "closely follows the trend of the prediction error", justifying
+    its role as a trust metric. A trust metric must beat a trivial alternative to
+    be worth computing. The trivial alternative here is the forecast step index:
+    a counter, available for free, requiring no ensemble and no model. We compute
+
+      r(forecast index, |error|)      the counter
+      r(epistemic sigma, |error|)     the trust metric
+      partial r(epistemic, |error| . index)
+
+    The partial correlation is the number that matters: it is what ensemble
+    disagreement contributes BEYOND knowing how deep into the rollout you are.
+
+D4  the scalar penalty as actually applied -- means.std(0).sum(-1) at
+    envs/base.py:166 -- against total absolute error, with a cluster bootstrap
+    over whole trajectories (never over trajectory x step, per M-27) and its
+    n_independent stated.
+
+Writes results/task_d_nind20.json.
+"""
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
+import numpy as np  # noqa: E402
+import torch  # noqa: E402
+import rwm_data as R  # noqa: E402
+import rollout_eval as E  # noqa: E402
+import rwm_metrics as MET  # noqa: E402
+import score_reference as S  # noqa: E402
+
+HORIZONS = (1, 8, 32, 128, 368)
+START, LEN, N_BOOT = E.START_STEP, 400, 20000
+
+
+def cluster_boot(fn, n_traj, rng, n_boot=N_BOOT):
+    """Bootstrap resampling WHOLE TRAJECTORIES. M-27: resampling trajectory x step
+    pairs narrows every interval by about sqrt(steps) and is wrong."""
+    vals = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n_traj, n_traj)
+        v = fn(idx)
+        if v is not None and np.isfinite(v):
+            vals.append(v)
+    if not vals:
+        return None, None, 0
+    v = np.array(vals)
+    return float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5)), len(v)
+
+
+def pooled_corr(x, y):
+    """x, y: (n_traj, T) -> scalar correlation over all pooled points."""
+    a, b = x.ravel(), y.ravel()
+    m = np.isfinite(a) & np.isfinite(b)
+    if m.sum() < 3 or a[m].std() == 0 or b[m].std() == 0:
+        return None
+    return float(np.corrcoef(a[m], b[m])[0, 1])
+
+
+def partial_corr(x, y, z):
+    """r(x, y . z) -- correlation of x and y with z partialled out of both."""
+    a, b, c = x.ravel(), y.ravel(), z.ravel()
+    m = np.isfinite(a) & np.isfinite(b) & np.isfinite(c)
+    a, b, c = a[m], b[m], c[m]
+    if len(a) < 4 or a.std() == 0 or b.std() == 0 or c.std() == 0:
+        return None
+    ra = a - np.polyval(np.polyfit(c, a, 1), c)
+    rb = b - np.polyval(np.polyfit(c, b, 1), c)
+    if ra.std() == 0 or rb.std() == 0:
+        return None
+    return float(np.corrcoef(ra, rb)[0, 1])
+
+
+def block(err, sig):
+    e = err.reshape(-1, err.shape[-1]); s = sig.reshape(-1, sig.shape[-1])
+    rec = {"mean_sigma": float(np.nanmean(s)), "mean_abs_err": float(np.nanmean(e)),
+           "ratio_err_over_sigma": float(np.nanmean(e) / np.nanmean(s)),
+           "coverage_pm1": float(np.nanmean(e <= s)),
+           "coverage_pm2": float(np.nanmean(e <= 2 * s))}
+    cors = []
+    for d in range(e.shape[1]):
+        sd, ed = s[:, d], e[:, d]
+        m = np.isfinite(sd) & np.isfinite(ed)
+        if m.sum() > 2 and sd[m].std() > 0 and ed[m].std() > 0:
+            cors.append(float(np.corrcoef(sd[m], ed[m])[0, 1]))
+    cors = np.array(cors)
+    rec.update({"n_finite_corr": len(cors), "n_positive": int((cors > 0).sum()),
+                "corr_mean": float(cors.mean()) if len(cors) else None})
+    return rec
+
+
+def main():
+    rng = np.random.default_rng(0)
+    paths = R.repo_paths()
+    cfg = R.load_reference_config(paths["lite"])
+    data, ep = R.load_data(paths["csv"], verbose=False)
+    split = E.make_split(seed=0, strat_path=os.path.join(R.RESULTS, "step0_strat.json"),
+                         verbose=False)
+    allep = sorted(set(split["train_episodes"]) | set(split["holdout_episodes"]))
+    starts = MET.non_overlapping_starts(ep, allep, LEN)
+    n_ind = int(MET.n_independent(starts, LEN))
+    n_traj = len(starts)
+
+    sd = torch.load(paths["ckpt"], map_location="cpu")["system_dynamics_state_dict"]
+    model = S.ReferenceRWM(sd); model.eval()
+    idx = np.asarray(starts)[:, None] + np.arange(LEN)[None, :]
+    raw = data[idx]
+    st = torch.as_tensor(R.normalise_state(raw[:, :, R.STATE_COLS],
+                                           cfg["state_data_mean"], cfg["state_data_std"]),
+                         dtype=torch.float32)
+    ac = torch.as_tensor(raw[:, :, R.ACTION_COLS], dtype=torch.float32)
+    pred, alea, epi, alea_s, epi_s = model.rollout_uncertainty(st.clone(), ac, START,
+                                                               action_offset=1)
+    abs_err = (pred - st).abs().numpy().astype(np.float64)
+    alea = alea.numpy().astype(np.float64)
+    epi = epi.numpy().astype(np.float64)
+    total = np.sqrt(alea ** 2 + epi ** 2)
+
+    out = {"design": {"checkpoint": R.rel(paths["ckpt"]), "ensemble_size": model.ensemble,
+                      "arena": "all ten episodes", "episodes": allep,
+                      "trajectories": n_traj, "n_independent": n_ind,
+                      "traj_len": LEN, "start_step": START, "action_offset": 1,
+                      "n_boot": N_BOOT, "bootstrap_unit": "whole trajectory (M-27)",
+                      "rationale": ("the released checkpoint trained on all ten episodes, so "
+                                    "restricting it to the held-out pair buys no independence")},
+           "d1_by_horizon": {}, "d2_forecast_index": {}, "d4_penalty": {}}
+
+    print("D1 / D2 / D4 — RELEASED CHECKPOINT AT n_independent = %d" % n_ind)
+    print("=" * 104)
+    print(f"  {model.ensemble} members, episodes {allep}, {n_traj} non-overlapping "
+          f"400-step trajectories\n")
+
+    # ---------------- D1 ----------------
+    print("  D1 — the uncertainty table, n_independent = %d" % n_ind)
+    hdr = (f"  {'h':>4} {'quantity':<11} {'err/sigma':>11} {'cov+-1s':>9} {'cov+-2s':>9} "
+           f"{'dims r>0':>10} {'mean r':>9}")
+    print(hdr); print("  " + "-" * (len(hdr) - 2))
+    for h in HORIZONS:
+        sl = slice(START, START + h)
+        rec = {}
+        for name, sig in (("aleatoric", alea[:, sl]), ("epistemic", epi[:, sl]),
+                          ("total", total[:, sl])):
+            b = block(abs_err[:, sl], sig)
+            rec[name] = b
+            print(f"  {h:>4} {name:<11} {b['ratio_err_over_sigma']:>11.1f} "
+                  f"{100*b['coverage_pm1']:>8.2f}% {100*b['coverage_pm2']:>8.2f}% "
+                  f"{b['n_positive']:>4}/{b['n_finite_corr']:<4} {b['corr_mean']:>+9.3f}")
+        out["d1_by_horizon"][str(h)] = rec
+        print()
+
+    # ---------------- D2 ----------------
+    # Scalars per (trajectory, step): the trust metric is the summed epistemic
+    # sigma, exactly what envs/base.py:166 applies. The counter is the step index.
+    # The error is total absolute error, the quantity the follow-up says the trust
+    # metric tracks.
+    epi_scalar = epi_s.numpy().astype(np.float64)[:, START:]        # (n_traj, T)
+    err_scalar = abs_err[:, START:].sum(-1)                         # (n_traj, T)
+    T = err_scalar.shape[1]
+    fidx = np.broadcast_to(np.arange(T, dtype=np.float64), err_scalar.shape).copy()
+
+    print("  D2 — the forecast-index baseline the follow-up never ran")
+    hdr2 = (f"  {'h':>5} {'r(index, |err|)':>26} {'r(epistemic, |err|)':>30} "
+            f"{'partial r(epi,|err| . index)':>32}")
+    print(hdr2); print("  " + "-" * (len(hdr2) - 2))
+    for h in list(HORIZONS) + ["all"]:
+        k = T if h == "all" else min(h, T)
+        E_, S_, F_ = err_scalar[:, :k], epi_scalar[:, :k], fidx[:, :k]
+        r_idx, r_epi = pooled_corr(F_, E_), pooled_corr(S_, E_)
+        r_par = partial_corr(S_, E_, F_)
+        ci = {}
+        for nm, fn in (("index", lambda i: pooled_corr(F_[i], E_[i])),
+                       ("epistemic", lambda i: pooled_corr(S_[i], E_[i])),
+                       ("partial", lambda i: partial_corr(S_[i], E_[i], F_[i]))):
+            lo, hi, nb = cluster_boot(fn, n_traj, np.random.default_rng(0))
+            ci[nm] = {"lo": lo, "hi": hi, "n_boot_finite": nb}
+        rec = {"horizon": h, "n_steps": int(k), "n_independent": n_ind,
+               "r_index": r_idx, "r_epistemic": r_epi, "r_partial": r_par,
+               "ci": ci,
+               "index_wins": (r_idx is not None and r_epi is not None
+                              and abs(r_idx) >= abs(r_epi))}
+        out["d2_forecast_index"][str(h)] = rec
+        f = lambda v, c: (f"{v:+.3f} [{c['lo']:+.3f}, {c['hi']:+.3f}]"
+                          if v is not None and c['lo'] is not None else "n/a")
+        print(f"  {str(h):>5} {f(r_idx, ci['index']):>26} {f(r_epi, ci['epistemic']):>30} "
+              f"{f(r_par, ci['partial']):>32}"
+              + ("   <-- COUNTER WINS" if rec["index_wins"] else ""))
+    print()
+
+    # ---------------- D4 ----------------
+    r_pen = pooled_corr(epi_scalar, err_scalar)
+    lo, hi, nb = cluster_boot(lambda i: pooled_corr(epi_scalar[i], err_scalar[i]),
+                              n_traj, np.random.default_rng(0))
+    out["d4_penalty"] = {
+        "definition": "means.std(0).sum(-1)  (system_dynamics.py:126)",
+        "applied_at": "envs/base.py:166  rewards += uncertainty_penalty_weight * epistemic * dt",
+        "corr_with_total_abs_error": r_pen,
+        "ci_lo": lo, "ci_hi": hi, "n_boot_finite": nb,
+        "n_independent": n_ind, "n_trajectories": n_traj,
+        "n_points": int(np.isfinite(epi_scalar).sum()),
+        "bootstrap_unit": "whole trajectory",
+        "note": ("section 5.2 previously quoted this correlation with no interval and no n. "
+                 "The interval is a cluster bootstrap over whole trajectories; pooling "
+                 "trajectory x step pairs would narrow it by about sqrt(T) (M-27).")}
+    print("  D4 — the scalar penalty actually applied, against total absolute error")
+    print(f"      r = {r_pen:+.3f}   95% CI [{lo:+.3f}, {hi:+.3f}]   "
+          f"n_independent = {n_ind}   trajectories = {n_traj}   points = {out['d4_penalty']['n_points']:,}")
+
+    op = os.path.join(R.RESULTS, "task_d_nind20.json")
+    json.dump(out, open(op, "w"), indent=2)
+    print(f"\n  wrote {R.rel(op)}")
+
+
+if __name__ == "__main__":
+    main()

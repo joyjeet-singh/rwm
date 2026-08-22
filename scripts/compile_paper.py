@@ -63,6 +63,15 @@ def main():
         pdf = os.path.join(d, "PAPER.pdf")
         ok_pdf = os.path.exists(pdf)
         size = os.path.getsize(pdf) if ok_pdf else 0
+        # Copy the built PDF OUT of the temp directory. Without this the repo's
+        # committed PAPER.pdf is whatever was last placed there by hand, and it
+        # went stale: the tree carried a 9-page pre-anonymisation build carrying
+        # the author name while every check passed against a fresh temp build
+        # nobody kept. A build artifact that is committed must be written by the
+        # build.
+        if ok_pdf and not re.findall(r"^! (.+)$", log, re.M):
+            shutil.copy(pdf, "PAPER.pdf")
+            out["copied_to"] = "PAPER.pdf"
         m = re.search(r"Output written on PAPER\.pdf \((\d+) pages", log)
         pages = int(m.group(1)) if m else 0
         errors = re.findall(r"^! (.+)$", log, re.M)

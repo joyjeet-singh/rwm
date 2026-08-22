@@ -2686,6 +2686,8 @@ correction still removes the faithful arm's ordering — but the table was incom
 So the correction **improved the magnitude** (10.9× overconfident against 52.2×) and
 **removed the ordering**. An uncertainty estimate that is better scaled but no longer ranks
 which predictions are worse is not obviously an improvement for any downstream use.
+**P-values retracted.** The binomial P-values in this entry assume the 45 state dimensions are independent. They are not; see S-15 for the retraction and R-61 for the permutation replacement. Every *count* in this entry stands, and no magnitude result here depends on that null.
+
 **Evidence** `RUN` `results/task1_calibration.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
@@ -2861,6 +2863,8 @@ two-sided binomial tails. R-53 quoted "P ≈ 1.4e-06" for 39/45; the
 true value is 5.418e-07 (2.6×
 larger than quoted, and 1.4e-06 is the figure for 38/45). The companion "P ≈ 0.66" for 21/45 is
 0.766. No conclusion turns on either.
+**P-values retracted.** The binomial P-values in this entry assume the 45 state dimensions are independent. They are not; see S-15 for the retraction and R-61 for the permutation replacement. Every *count* in this entry stands, and no magnitude result here depends on that null.
+
 **Evidence** `RUN` `results/task1_calibration.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
@@ -2912,6 +2916,8 @@ correlates +0.3480 with total absolute error over the rollout, mean
 epistemic term. That argument explains why a *per-member* σ collapses to zero under a sampled-MSE
 loss. Ensemble disagreement is not shaped by that mechanism, and why it is miscalibrated is not
 established here.
+**P-values retracted.** The binomial P-values in this entry assume the 45 state dimensions are independent. They are not; see S-15 for the retraction and R-61 for the permutation replacement. Every *count* in this entry stands, and no magnitude result here depends on that null.
+
 **Evidence** `RUN` `results/task_b2_epistemic.json`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
@@ -3540,6 +3546,411 @@ was the operative one.
 **Evidence** `SRC` `robotic_world_model_lite/scripts/envs/base.py:142`;
 `RUN` `results/task_b2_epistemic.json`.
 **Status** RETRACTED · **Relevance** METHOD
+
+
+
+### R-61 — The dimension-count P-values assumed independence the data does not have · `[RWM-U]` `[BASE]` · **NEW**
+Every "39 of 45" and "45 of 45" in this paper was converted to a P-value by a two-sided exact
+binomial against a fair-coin null. That null says: absent any association between σ and error,
+each of the 45 state dimensions independently has probability ½ of showing a positive
+correlation. **The 45 dimensions are not independent**, and the resulting P-values are wrong by
+up to **10^13×** on the cells this paper cited as evidence.
+
+Two distinct dependencies break the assumption:
+
+1. **Physical coupling.** Position, velocity and torque for the same joint move together; base
+   linear and angular velocity are coupled through the gait. The 45 dimensions carry far fewer
+   than 45 independent signs.
+2. **Shared forecast-depth trend.** Every trajectory's error grows with rollout step, and any σ
+   that also grows with rollout step correlates with *any* trajectory's error — including a
+   trajectory it was never paired with. This one is the larger effect and it is not obvious.
+
+**The replacement.** `scripts/task_b_permutation.py` permutes **whole trajectories**: the null
+pairs each trajectory's σ with another trajectory's realised error, leaving both marginals and
+the entire cross-dimension dependence structure intact, and destroying only the pairing. The
+observed count is referred to that null. Whole trajectories move together, so coupling is
+preserved by construction rather than modelled.
+
+The observed counts reproduce `results/task1_calibration.json` and
+`results/task_b2_epistemic.json` **exactly, on all nine cells they share** — the statistic is the
+same one, only the reference distribution changed.
+
+**How wrong the binomial null was.** It centres the count at 22.5 of 45. The
+dependence-preserving null centres it between 5.4 and 43.8
+depending on model, horizon and arena.
+
+**The worst affected cell is the one the paper leaned on hardest.** Teacher-forced Arm B at
+h=368 in the in-sample arena moves from 5.68e-14 to
+**0.5656** — a factor of 9.95e+12, about
+10^13 — because a random re-pairing already yields
+**43.8 of 45** positive on average. Observing 45/45
+against a null that expects 43.8 is close to unremarkable.
+
+A larger ratio exists in the table — released aleatoric at h=32 in-sample, 0/45, where the
+binomial is "significant" in the *negative* direction and the permutation P is 1.0000 — but no
+claim in this paper ever rested on that cell, and quoting it as the headline correction would
+overstate the damage by pointing at evidence nobody used.
+
+**Out-of-sample arena, n_independent = 4, attainable P floor
+0.04167:**
+
+| model | h | count | binomial P | permutation P | null mean | state groups + |
+|---|---|---|---|---|---|---|
+| faithful (mse) | 1 | 36/45 | 6.57e-05 | **0.2174** | 16.7 | 6/6 |
+| faithful (mse) | 8 | 33/45 | 2.46e-03 | **0.2174** | 11.4 | 6/6 |
+| faithful (mse) | 32 | 30/45 | 3.57e-02 | **0.0435** | 8.8 | 5/6 |
+| faithful (mse) | 128 | 26/45 | 3.71e-01 | **0.0435** | 5.4 | 5/6 |
+| faithful (mse) | 368 | 39/45 | 5.42e-07 | **0.0417** *(at floor)* | 7.8 | 6/6 |
+| corrected (nll) | 1 | 16/45 | 7.25e-02 | **1.0000** | 24.6 | 2/6 |
+| corrected (nll) | 8 | 20/45 | 5.51e-01 | **1.0000** | 26.4 | 2/6 |
+| corrected (nll) | 32 | 19/45 | 3.71e-01 | **1.0000** | 21.7 | 0/6 |
+| corrected (nll) | 128 | 26/45 | 3.71e-01 | **1.0000** | 26.0 | 3/6 |
+| corrected (nll) | 368 | 21/45 | 7.66e-01 | **1.0000** | 21.8 | 2/6 |
+| teacher-forced armB | 1 | 33/45 | 2.46e-03 | **0.2174** | 22.0 | 5/6 |
+| teacher-forced armB | 8 | 39/45 | 5.42e-07 | **0.2174** | 22.7 | 5/6 |
+| teacher-forced armB | 32 | 14/45 | 1.61e-02 | **0.3478** | 14.3 | 1/6 |
+| teacher-forced armB | 128 | 36/45 | 6.57e-05 | **0.3043** | 26.0 | 6/6 |
+| teacher-forced armB | 368 | 45/45 | 5.68e-14 | **0.2609** | 29.3 | 6/6 |
+| released aleatoric | 1 | 20/45 | 5.51e-01 | **0.6087** | 22.9 | 2/6 |
+| released aleatoric | 8 | 15/45 | 3.57e-02 | **0.7391** | 19.8 | 0/6 |
+| released aleatoric | 32 | 7/45 | 3.12e-06 | **0.9565** | 17.5 | 0/6 |
+| released aleatoric | 128 | 29/45 | 7.25e-02 | **0.7391** | 29.8 | 4/6 |
+| released aleatoric | 368 | 20/45 | 5.51e-01 | **0.6957** | 24.4 | 2/6 |
+| released EPISTEMIC | 1 | 23/45 | 1.00e+00 | **0.4348** | 22.8 | 2/6 |
+| released EPISTEMIC | 8 | 25/45 | 5.51e-01 | **0.3043** | 22.6 | 3/6 |
+| released EPISTEMIC | 32 | 34/45 | 8.24e-04 | **0.2174** | 31.4 | 4/6 |
+| released EPISTEMIC | 128 | 45/45 | 5.68e-14 | **0.0417** *(at floor)* | 38.2 | 6/6 |
+| released EPISTEMIC | 368 | 45/45 | 5.68e-14 | **0.0435** | 33.7 | 6/6 |
+
+**In-sample arena, n_independent = 16, attainable P floor 5e-05:**
+
+| model | h | count | binomial P | permutation P | null mean | state groups + |
+|---|---|---|---|---|---|---|
+| faithful (mse) | 1 | 45/45 | 5.68e-14 | **0.0106** | 14.9 | 6/6 |
+| faithful (mse) | 8 | 41/45 | 9.33e-09 | **0.0882** | 16.9 | 5/6 |
+| faithful (mse) | 32 | 44/45 | 2.61e-12 | **0.0633** | 20.2 | 6/6 |
+| faithful (mse) | 128 | 43/45 | 5.89e-11 | **0.0293** | 24.3 | 6/6 |
+| faithful (mse) | 368 | 42/45 | 8.65e-10 | **0.0232** | 26.6 | 6/6 |
+| corrected (nll) | 1 | 25/45 | 5.51e-01 | **1.0000** | 25.6 | 4/6 |
+| corrected (nll) | 8 | 28/45 | 1.35e-01 | **0.9744** | 28.0 | 4/6 |
+| corrected (nll) | 32 | 29/45 | 7.25e-02 | **0.6750** | 28.5 | 3/6 |
+| corrected (nll) | 128 | 23/45 | 1.00e+00 | **0.9651** | 23.0 | 3/6 |
+| corrected (nll) | 368 | 27/45 | 2.33e-01 | **0.8734** | 26.9 | 4/6 |
+| teacher-forced armB | 1 | 45/45 | 5.68e-14 | **0.0150** | 14.4 | 6/6 |
+| teacher-forced armB | 8 | 39/45 | 5.42e-07 | **0.0575** | 10.5 | 5/6 |
+| teacher-forced armB | 32 | 44/45 | 2.61e-12 | **0.0249** | 12.7 | 6/6 |
+| teacher-forced armB | 128 | 44/45 | 2.61e-12 | **0.0027** | 18.0 | 6/6 |
+| teacher-forced armB | 368 | 45/45 | 5.68e-14 | **0.5656** | 43.8 | 6/6 |
+| released aleatoric | 1 | 7/45 | 3.12e-06 | **0.6854** | 16.7 | 0/6 |
+| released aleatoric | 8 | 25/45 | 5.51e-01 | **0.3085** | 16.7 | 3/6 |
+| released aleatoric | 32 | 0/45 | 5.68e-14 | **1.0000** | 21.1 | 0/6 |
+| released aleatoric | 128 | 29/45 | 7.25e-02 | **0.4345** | 25.3 | 3/6 |
+| released aleatoric | 368 | 3/45 | 8.65e-10 | **0.9738** | 20.4 | 0/6 |
+| released EPISTEMIC | 1 | 44/45 | 2.61e-12 | **0.0060** | 16.0 | 6/6 |
+| released EPISTEMIC | 8 | 45/45 | 5.68e-14 | **0.0084** | 16.2 | 6/6 |
+| released EPISTEMIC | 32 | 45/45 | 5.68e-14 | **0.0349** | 16.1 | 6/6 |
+| released EPISTEMIC | 128 | 45/45 | 5.68e-14 | **0.3804** | 42.7 | 6/6 |
+| released EPISTEMIC | 368 | 45/45 | 5.68e-14 | **0.0758** | 34.9 | 6/6 |
+
+**Nothing survives multiplicity correction in either arena.** Holm–Bonferroni over the
+25 cells of each arena at α = 0.05 rejects
+**0** out-of-sample and **0** in-sample. Out of
+sample this is a design limit rather than a result: the P floor 0.04167 exceeds the
+smallest Holm threshold 0.002, so that arena **cannot** reject at
+any effect size. In sample it is a real miss — the smallest P in the family is
+teacher-forced armB h=128 at 0.0027 against a threshold of
+0.00200.
+
+**The two arenas disagree about where the epistemic effect lives, and that disagreement is the
+finding.** Out of sample the released checkpoint's epistemic term looks strongest at long horizon
+(0.0417 at h=128,
+0.0435 at h=368) and unremarkable at short
+(0.4348 at h=1). In sample, with four times the
+resolution, it is the **opposite**: 0.0060 at h=1 and
+0.0084 at h=8, against
+0.3804 at h=128. The mechanism is visible in the null
+means: at long horizon the shared forecast-depth trend inflates the null to
+42.7 of 45, so 45/45 says little; at short horizon the
+null sits near 16.0 and the same count is surprising.
+
+**What this costs the paper.** The claim that Arm B shows "the strongest ordering signal of the
+four" does not survive: its 45/45 at h=368 is P = 0.2609
+out of sample and 0.5656 in sample — not significant
+anywhere, against a null mean of 43.8 of 45. The
+epistemic ordering that supports the follow-up's trust-metric claim is marginal at best and its
+horizon dependence points in opposite directions in the two arenas.
+
+**What survives.** The **magnitude** findings are untouched — every overconfidence ratio, every
+coverage figure, R-51, R-57's ratios and R-58's 39.7× rest on no independence assumption at all.
+The direction of every count is also unchanged. What is withdrawn is the strength of evidence
+claimed for the *ordering*, and with it the phrase "strongest evidence in this paper".
+
+A coarser fallback is reported alongside: aggregating to the **six state groups** rather than 45
+dimensions, which is closer to the number of genuinely independent signals. Those counts appear in
+the last column of both tables.
+**Evidence** `RUN` `results/task_b_permutation.json`; `scripts/task_b_permutation.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+
+### R-62 — The epistemic table at n_independent = 20, and a short-horizon result that reverses our own · `[RWM-U]` · **NEW**
+R-58 measured the released checkpoint on the **4** independent
+trajectories the held-out pair admits. That restriction buys nothing here: **the released
+checkpoint trained on all ten episodes**, so there is no held-out arena for it at all, and
+confining it to two episodes costs four fifths of the sample for no gain in independence. This
+repeats the table on all 10 episodes —
+**20 mutually non-overlapping 400-step trajectories**,
+n_independent = 20.
+
+| h | aleatoric err/σ | epistemic err/σ | ±1σ | ±2σ | dims r>0 | mean r | permutation P |
+|---|---|---|---|---|---|---|---|
+| 1 | 1,827× | 8.3× | 16.22% | 30.11% | 44/45 | +0.662 | 0.0060 |
+| 8 | 3,034× | 15.1× | 9.99% | 19.76% | 45/45 | +0.427 | 0.0085 |
+| 32 | 4,525× | 22.6× | 6.95% | 13.68% | 45/45 | +0.426 | 0.0355 |
+| 128 | 14,934× | 34.2× | 4.37% | 8.75% | 45/45 | +0.338 | 0.3725 |
+| 368 | 20,669× | 34.4× | 3.59% | 7.19% | 45/45 | +0.298 | 0.0823 |
+
+**The direction of every finding survives.** The epistemic term remains uncalibrated by more than
+an order of magnitude at every horizon, reaching
+34.4× with
+3.59% coverage at ±1σ against a calibrated 68.3%.
+
+**One result reverses, and it is one of ours.** At n=4 the epistemic ordering read as chance at
+short horizon — 23/45 at h=1 — and R-58 described
+the ordering as a long-horizon property. At n=20 it is
+**44/45 at h=1**, with mean r =
++0.662, the *highest* of any horizon, and permutation
+P = 0.0060. The in-sample arena (R-61) says
+the same independently. **The short-horizon null was an artifact of four trajectories.** It is
+recorded here rather than quietly dropped because the horizon story it supported was the more
+interesting one, and it was ours.
+**Evidence** `RUN` `results/task_d_nind20.json`; `scripts/task_d_nind20.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-63 — Ensemble disagreement beats the free baseline, and that is the one claim we strengthen · `[RWM-U]` · **NEW**
+arXiv:2504.16680 justifies ensemble disagreement as a trust metric because it "closely follows the
+trend of the prediction error". Neither original paper asks whether it beats a trivial competitor.
+
+**The trivial competitor is the forecast step index.** Error grows with rollout depth, so a counter
+— no ensemble, no second forward pass, no model — already tracks error. If the counter ranks as
+well, the ensemble is not earning its cost and the trust-metric claim is close to vacuous.
+
+Measured on the scalar the method actually applies, `means.std(0).sum(-1)` at `envs/base.py:166`,
+against total absolute error, over n_independent = 20 trajectories,
+95% intervals from a bootstrap over **whole trajectories** (M-27):
+
+| h | r(step index, error) | r(disagreement, error) | partial r(disagreement, error · index) |
+|---|---|---|---|
+| 8 | +0.181 [+0.108, +0.349] | **+0.738 [+0.537, +0.807]** | +0.757 [+0.540, +0.822] |
+| 32 | +0.174 [+0.131, +0.336] | **+0.735 [+0.577, +0.823]** | +0.756 [+0.604, +0.841] |
+| 128 | +0.526 [+0.421, +0.643] | **+0.671 [+0.604, +0.846]** | +0.617 [+0.534, +0.812] |
+| 368 | +0.269 [+0.106, +0.431] | **+0.605 [+0.545, +0.694]** | +0.596 [+0.526, +0.687] |
+
+**Disagreement wins at every horizon tested, with non-overlapping intervals.** The index leads in
+0 of 4.
+
+**The partial correlation is what settles it.** Partialling the step index out of both variables
+leaves disagreement at +0.596, against +0.605 raw — a change of
++0.010. Essentially none of what disagreement knows is a
+re-encoding of how deep into the rollout you are. It carries information about *this* rollout.
+
+**This was run expecting the opposite.** The brief that commissioned it named a null result as the
+most valuable possible output and instructed that it lead the report. It is not a null. On this
+axis **the follow-up's claim survives adversarial testing against a real baseline**, and this is
+the only claim of either original paper that this reproduction strengthens rather than qualifies.
+
+**It does not contradict R-61.** R-61 concerns per-dimension *sign counts* across 45 coupled
+dimensions at small n; this concerns the aggregate *scalar* the method applies, with a cluster
+bootstrap at n=20. The scalar is what `base.py:166` consumes. Both can
+hold, and do: the quantity is a usable ranking signal and is not an interval.
+**Evidence** `RUN` `results/task_d_nind20.json`;
+`SRC` `robotic_world_model_lite/scripts/envs/base.py:166`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-64 — A per-horizon scalar restores calibration where a constant one cannot · `[RWM-U]` · **NEW**
+R-59 showed one global multiplier on σ fails, and the paper then said a per-horizon or
+input-dependent correction "might still work". That was a promissory note. This tests it.
+
+One multiplier **per horizon**, fitted on one held-out episode and evaluated on the **other**, in
+both directions, so no multiplier is ever scored on the episode that produced it. Target ±1σ
+coverage 68.27%, tolerance
+10 points.
+
+| quantity | held-out cells calibrated, per-horizon c | same, constant c | range of fitted c |
+|---|---|---|---|
+| aleatoric | **10 / 10** | 2 / 10 | 592.6 – 7782 (13.1×) |
+| epistemic | **10 / 10** | 2 / 10 | 5.082 – 47.33 (9.31×) |
+
+**Every held-out cell lands within tolerance, for both quantities.** The constant scalar manages
+2 of
+10, and those are the h=1 cells it was fitted
+at. The fitted multipliers span
+9.31× across horizons on the
+epistemic term, which is exactly why one number cannot serve.
+
+**Two cautions, both stated in the paper.** The per-horizon scalar has five free parameters against
+the constant one's one, so it must fit its own episode better; only the held-out column is
+evidence, and only the held-out column is reported. And it is a calibration patch, not a fix — σ
+carries no more information afterwards, it is merely rescaled by forecast depth. It is still enough
+to make the interval mean what it says, and it costs one lookup table.
+
+**This converts R-59 from a negative result into a bounded one:** the interval is broken as
+shipped, and repairable without retraining.
+**Evidence** `RUN` `results/task_d3_perhorizon.json`; `scripts/task_d3_perhorizon.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-65 — The penalty correlation, with the interval and the n it never had · `[RWM-U]` · **NEW**
+R-58 reported the correlation between the applied scalar penalty and total absolute error as a bare
+number with no interval and no sample size. It is the correlation of the exact quantity
+`envs/base.py:166` applies with the error it is meant to track, so it carries more weight than any
+other single number in that section and it was the least qualified.
+
+**r = +0.605**, 95% CI
+[+0.545, +0.694], n_independent = 20,
+20 trajectories, 7,360 pooled trajectory-step points.
+
+The interval resamples **whole trajectories**. Resampling trajectory-step pairs would narrow it by
+about the square root of the rollout length and produce a spuriously tight figure — the error M-27
+records.
+
+The interval excludes zero comfortably and its lower bound
+(+0.545) still exceeds the forecast-index baseline's point estimate
+(+0.269), which is the comparison that matters (R-63).
+**Evidence** `RUN` `results/task_d_nind20.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+
+### M-35 — The committed PDF was not built by the build · **NEW**
+`scripts/compile_paper.py` compiled `PAPER.tex` inside a temporary directory, read the page count
+and the error list out of the log, reported PASS — and **deleted the PDF with the directory**. The
+`PAPER.pdf` at the repository root was therefore whatever had last been copied there by hand.
+
+It had gone stale by a wide margin. The committed file was **9 pages** against the current
+document's 17, predated the anonymisation work, and its text layer contained the author's name,
+surname and the repository host — every string the submission is required not to carry.
+
+**Every anonymisation check passed throughout.** `scripts/submission_check.py` builds its own PDF
+in a temp directory and greps that; it was correct about the document it built and blind to the
+one in the tree. The defect was invisible to the check designed to catch exactly this, because
+both used the same discarded-output pattern.
+
+**Found by** Part F's check 2, which specifies grepping the built PDF *and* running metadata
+extraction over the PDF and every figure — the figure sweep is what forced a scan of files on disk
+rather than of a freshly built temp copy.
+
+**Fix:** `compile_paper.py` now copies the PDF out to `PAPER.pdf` when the compile has no errors.
+The rebuilt file is 17 pages, `/Author` empty, and contains none of the identifying strings in
+either its text layer or its raw bytes.
+
+**The rule:** a build artifact that is committed must be written by the build. If a check and the
+artifact it certifies are produced by two different paths, the check certifies nothing.
+**Evidence** `RUN` `scripts/compile_paper.py`, `results/compile_paper.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
+### M-36 — A derived count broke silently when the section it counted was renumbered · **NEW**
+The abstract's "{n} defects in the released pipeline" was made indirect precisely so it could not
+drift: `scripts/paper_numbers.py` counted the bold-numbered subsections rather than trusting a
+typed figure. It counted them with the pattern `^\*\*5\.\d+ `.
+
+Part A renumbered that section from 5 to 6. The pattern matched nothing, the count became **0**,
+and the abstract read **"We also report 0 defects in the released pipeline"** — in a paper whose
+§6 is titled "Defects in the released pipeline" and lists four.
+
+**The no-hand-typed-numbers check could not see it**, because 0 is a legitimately generated value.
+Nothing was typed; the generator was simply asking the wrong question.
+
+**The lesson is narrower than "check your regexes".** Deriving a number from a *position* — a
+section number, a row index, a line offset — is only as stable as that position. Bind it to
+something that does not move. The counter now locates the section by its **title**, reads its
+number from the heading, and asserts the count is non-zero, so the same renumbering produces the
+right answer and any future mismatch fails the build instead of printing zero.
+
+Found by the C1 claims audit, which prints each claim with its placeholders resolved. "0 defects"
+is obvious on sight and invisible in a template.
+**Evidence** `RUN` `scripts/paper_numbers.py`, `results/paper_numbers.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
+### M-37 — What the claims audit caught that the build checks could not · **NEW**
+The build refuses to emit a paper with an unresolved placeholder, and every number is read from an
+artifact. That guarantees the *numbers* are right. It says nothing about whether the *sentence
+around them* is true. Reviewing all 158 claims with their placeholders resolved found
+**eight assertions that were false or misleading while every number in them was correct**:
+
+| the claim | why it was wrong |
+|---|---|
+| "we report **0** defects in the released pipeline" | M-36: the generator counted a section number that had moved |
+| the aleatoric ratio in the abstract vs §5.2's table | the same quantity on two different arenas (n=4 and n=20), the first unlabelled — both correct, together a contradiction |
+| "agrees in direction at **every** cell" | the aleatoric column flips sign at h=8 |
+| "a better ranking than **any** aleatoric head here" | Arm B's aleatoric head has the higher mean correlation (+0.257 against +0.151) |
+| "**every model** we measured orders its own errors better than chance" | the released checkpoint's aleatoric head ranks backwards on all 45 dimensions |
+| "Figure 3(a) shows all 21 **trajectories**" | 21 is a count of runs |
+| §11's overconfidence ratio | still the n=4 figure after the rest of the paper moved to n=20 |
+| Appendix B's "roughly 22 hours" | E4: the true total is 32 hours; the figure predated six 10,000-iteration runs |
+
+Five of the eight are **quantifier errors** — "every", "any", "all" — attached to a correct number.
+No number-checking discipline catches those, because the number is not what is wrong.
+
+**The mechanism that worked** was rendering every claim with its placeholders substituted and
+reading them as a list, out of the flow of the prose. A false universal quantifier is obvious
+beside the table that refutes it and invisible three paragraphs away from it.
+**Evidence** `RUN` `results/task_c1_claims_audit.json`, `docs/CLAIMS_AUDIT.md`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
+### S-15 — The binomial P-values attached to every dimension count · **NEW**
+**Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand
+**What is retracted:** the step from a sign count to a P-value under a fair-coin binomial null,
+wherever it appears — R-53's table, R-57's last column, R-58's per-horizon table and claims-table
+row, and the abstract, §5.2, §5.4, §5.5, §9 and §12 of the paper. Specifically the values
+5.42e-07 for 39/45 and 5.68e-14 for 45/45.
+
+**Why it is wrong:** the 45 state dimensions are physically coupled, and error and σ share a
+forecast-depth trend that produces positive correlations under re-pairing. R-61 gives the
+dependence-preserving replacement and shows the true null mean reaching
+43.8 of 45 where the binomial
+assumed 22.5.
+
+**What is not retracted:** the counts themselves. 39/45, 45/45, 21/45, 23/45 are all reproduced
+exactly by the permutation code on the cells the two share. Nor is any magnitude result affected —
+the overconfidence ratios and coverage figures never used this null.
+
+**Who found it:** the submission-hardening review, before submission and before any reviewer saw
+it. **Superseded by** R-61.
+**Evidence** `RUN` `results/task_b_permutation.json`.
+**Status** RETRACTED · **Relevance** METHOD
+
+
+### M-34 — The permutation test's first implementation was numerically wrong, and the existing pipeline caught it · **NEW**
+The permutation numerator was first written in the raw cross-product form,
+`<σ, err> − N · mean(σ) · mean(err)`, in float32 — the textbook catastrophic-cancellation shape.
+For a dimension whose true correlation is near zero the two terms agree to about seven significant
+figures and their difference is rounding noise.
+
+It flipped exactly one dimension. The corrected (nll) arm at h=368 came out **20 of 45** where
+`results/task1_calibration.json` had long said **21 of 45**.
+
+**The disagreement was one dimension out of 45, in the least interesting model in the table, on a
+cell whose P-value is 1.0 either way.** It changed no conclusion. It was caught only because the
+counts were cross-checked against the two artifacts that already contained them, cell by cell,
+instead of being accepted as new measurements of a new statistic.
+
+**The fix** centres σ and error once, in float64, before forming the cross-product. Re-pairing
+trajectories leaves both marginal means unchanged, so the centred cross-product *is* the
+covariance numerator for every permutation, with no subtraction and therefore no cancellation. All
+nine shared cells then agreed exactly.
+
+**The rule this earns:** a new statistic that overlaps an existing artifact must be made to
+reproduce it on the overlap before its novel cells are believed. The overlap is free validation
+and this project has now twice found real defects in it (compare S-11).
+**Evidence** `RUN` `results/task_b_permutation.json`, `results/task1_calibration.json`;
+`scripts/task_b_permutation.py`.
+**Status** CONFIRMED · **Relevance** METHOD
 
 
 ---

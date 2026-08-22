@@ -87,3 +87,8 @@ One row per CONTRIB ledger entry.
 | `R-59` | One scalar cannot fix it, and the way it fails is the horizon | `RUN` | CONFIRMED | `results/task_d2_recalibration.json` |
 | `R-60` | The headline over three seeds | `RUN` | CONFIRMED | `results/task_d1_threeseed.json`, `scripts/task_d1_threeseed.py` |
 | `O-12` | The released checkpoint's variance collapse is inconsistent with the released configurat | `DATA`, `RUN`, `SRC` | OPEN — the discrepancy is measured and c | `results/step4_4_overfit_b32lr1e3.json`, `results/step4_4_overfit_ens1.json` |
+| `R-61` | The dimension-count P-values assumed independence the data does not have | `RUN` | CONFIRMED | `results/task1_calibration.json`, `results/task_b2_epistemic.json` |
+| `R-62` | The epistemic table at n_independent = 20, and a short-horizon result that reverses our  | `RUN` | CONFIRMED | `results/task_d_nind20.json`, `scripts/task_d_nind20.py` |
+| `R-63` | Ensemble disagreement beats the free baseline, and that is the one claim we strengthen | `RUN`, `SRC` | CONFIRMED | `results/task_d_nind20.json` |
+| `R-64` | A per-horizon scalar restores calibration where a constant one cannot | `RUN` | CONFIRMED | `results/task_d3_perhorizon.json`, `scripts/task_d3_perhorizon.py` |
+| `R-65` | The penalty correlation, with the interval and the n it never had | `RUN` | CONFIRMED | `results/task_d_nind20.json` |

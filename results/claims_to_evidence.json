@@ -1969,16 +1969,157 @@
       "retracts": [
         "R-49"
       ]
+    },
+    {
+      "id": "R-61",
+      "claim": "The dimension-count P-values assumed independence the data does not have",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json",
+        "results/task_b2_epistemic.json",
+        "results/task_b_permutation.json",
+        "scripts/task_b_permutation.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-62",
+      "claim": "The epistemic table at n_independent = 20, and a short-horizon result that reverses our ",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json",
+        "scripts/task_d_nind20.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-63",
+      "claim": "Ensemble disagreement beats the free baseline, and that is the one claim we strengthen",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-64",
+      "claim": "A per-horizon scalar restores calibration where a constant one cannot",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d3_perhorizon.json",
+        "scripts/task_d3_perhorizon.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-65",
+      "claim": "The penalty correlation, with the interval and the n it never had",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-35",
+      "claim": "The committed PDF was not built by the build",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/compile_paper.json",
+        "scripts/compile_paper.py",
+        "scripts/submission_check.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-36",
+      "claim": "A derived count broke silently when the section it counted was renumbered",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/paper_numbers.json",
+        "scripts/paper_numbers.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-37",
+      "claim": "What the claims audit caught that the build checks could not",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_c1_claims_audit.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "S-15",
+      "claim": "The binomial P-values attached to every dimension count",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_b_permutation.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-34",
+      "claim": "The permutation test's first implementation was numerically wrong, and the existing pipe",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json",
+        "results/task_b_permutation.json",
+        "scripts/task_b_permutation.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 33,
+    "M": 37,
     "O": 14,
-    "R": 60,
-    "S": 14,
+    "R": 65,
+    "S": 15,
     "X": 10
   }
 }

@@ -19,6 +19,18 @@
     "source": "results/review_bootstrap_unit.json",
     "value": 0
   },
+  "agree_alea": {
+    "source": "results/task_b2_epistemic.json + task_d_nind20.json",
+    "value": 4
+  },
+  "agree_epi": {
+    "source": "results/task_b2_epistemic.json + task_d_nind20.json",
+    "value": 5
+  },
+  "agree_nh": {
+    "source": "results/task_b2_epistemic.json + task_d_nind20.json",
+    "value": 5
+  },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
     "value": "7,687"
@@ -134,6 +146,26 @@
   "b2_alea_p_h8": {
     "source": "results/task_b2_epistemic.json",
     "value": "3.6e-02"
+  },
+  "b2_alea_r_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.034"
+  },
+  "b2_alea_r_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.043"
+  },
+  "b2_alea_r_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.172"
+  },
+  "b2_alea_r_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.001"
+  },
+  "b2_alea_r_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.047"
   },
   "b2_alea_ratio_h1": {
     "source": "results/task_b2_epistemic.json",
@@ -266,6 +298,26 @@
   "b2_epi_p_h8": {
     "source": "results/task_b2_epistemic.json",
     "value": "5.5e-01"
+  },
+  "b2_epi_r_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.002"
+  },
+  "b2_epi_r_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.241"
+  },
+  "b2_epi_r_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.144"
+  },
+  "b2_epi_r_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.151"
+  },
+  "b2_epi_r_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.036"
   },
   "b2_epi_ratio_h1": {
     "source": "results/task_b2_epistemic.json",
@@ -402,6 +454,26 @@
   "b2_tot_p_h8": {
     "source": "results/task_b2_epistemic.json",
     "value": "5.5e-01"
+  },
+  "b2_tot_r_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.002"
+  },
+  "b2_tot_r_h128": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.241"
+  },
+  "b2_tot_r_h32": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.144"
+  },
+  "b2_tot_r_h368": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.151"
+  },
+  "b2_tot_r_h8": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.036"
   },
   "b2_tot_ratio_h1": {
     "source": "results/task_b2_epistemic.json",
@@ -699,6 +771,382 @@
     "source": "results/task_d1_threeseed.json",
     "value": "90,000"
   },
+  "d1n_alea_cov1_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.11"
+  },
+  "d1n_alea_cov1_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.03"
+  },
+  "d1n_alea_cov1_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.07"
+  },
+  "d1n_alea_cov1_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.02"
+  },
+  "d1n_alea_cov1_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.08"
+  },
+  "d1n_alea_cov2_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.11"
+  },
+  "d1n_alea_cov2_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.05"
+  },
+  "d1n_alea_cov2_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.11"
+  },
+  "d1n_alea_cov2_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.03"
+  },
+  "d1n_alea_cov2_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.15"
+  },
+  "d1n_alea_ndim_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_alea_ndim_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_alea_ndim_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_alea_ndim_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_alea_ndim_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_alea_npos_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 7
+  },
+  "d1n_alea_npos_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": 28
+  },
+  "d1n_alea_npos_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": 0
+  },
+  "d1n_alea_npos_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": 0
+  },
+  "d1n_alea_npos_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": 25
+  },
+  "d1n_alea_r_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "-0.145"
+  },
+  "d1n_alea_r_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.006"
+  },
+  "d1n_alea_r_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "-0.185"
+  },
+  "d1n_alea_r_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "-0.040"
+  },
+  "d1n_alea_r_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.047"
+  },
+  "d1n_alea_ratio_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "1,827"
+  },
+  "d1n_alea_ratio_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "14,934"
+  },
+  "d1n_alea_ratio_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "4,525"
+  },
+  "d1n_alea_ratio_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "20,669"
+  },
+  "d1n_alea_ratio_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "3,034"
+  },
+  "d1n_epi_cov1_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "16.22"
+  },
+  "d1n_epi_cov1_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "4.37"
+  },
+  "d1n_epi_cov1_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "6.95"
+  },
+  "d1n_epi_cov1_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "3.59"
+  },
+  "d1n_epi_cov1_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "9.99"
+  },
+  "d1n_epi_cov2_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "30.11"
+  },
+  "d1n_epi_cov2_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.75"
+  },
+  "d1n_epi_cov2_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "13.68"
+  },
+  "d1n_epi_cov2_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "7.19"
+  },
+  "d1n_epi_cov2_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "19.76"
+  },
+  "d1n_epi_ndim_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_ndim_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_ndim_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_ndim_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_ndim_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_npos_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 44
+  },
+  "d1n_epi_npos_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_npos_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_npos_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_npos_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_over_alea_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "600"
+  },
+  "d1n_epi_r_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.662"
+  },
+  "d1n_epi_r_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.338"
+  },
+  "d1n_epi_r_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.426"
+  },
+  "d1n_epi_r_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.298"
+  },
+  "d1n_epi_r_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.427"
+  },
+  "d1n_epi_ratio_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.3"
+  },
+  "d1n_epi_ratio_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "34.2"
+  },
+  "d1n_epi_ratio_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "22.6"
+  },
+  "d1n_epi_ratio_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "34.4"
+  },
+  "d1n_epi_ratio_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "15.1"
+  },
+  "d1n_eps": {
+    "source": "results/task_d_nind20.json",
+    "value": 10
+  },
+  "d1n_nind": {
+    "source": "results/task_d_nind20.json",
+    "value": 20
+  },
+  "d1n_ntraj": {
+    "source": "results/task_d_nind20.json",
+    "value": 20
+  },
+  "d1n_tot_cov1_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "16.22"
+  },
+  "d1n_tot_cov1_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "4.37"
+  },
+  "d1n_tot_cov1_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "6.95"
+  },
+  "d1n_tot_cov1_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "3.59"
+  },
+  "d1n_tot_cov1_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "9.99"
+  },
+  "d1n_tot_cov2_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "30.11"
+  },
+  "d1n_tot_cov2_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.75"
+  },
+  "d1n_tot_cov2_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "13.68"
+  },
+  "d1n_tot_cov2_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "7.19"
+  },
+  "d1n_tot_cov2_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "19.76"
+  },
+  "d1n_tot_ndim_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_ndim_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_ndim_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_ndim_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_ndim_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_npos_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 44
+  },
+  "d1n_tot_npos_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_npos_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_npos_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_npos_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_r_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.662"
+  },
+  "d1n_tot_r_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.338"
+  },
+  "d1n_tot_r_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.426"
+  },
+  "d1n_tot_r_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.298"
+  },
+  "d1n_tot_r_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.427"
+  },
+  "d1n_tot_ratio_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.3"
+  },
+  "d1n_tot_ratio_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "34.2"
+  },
+  "d1n_tot_ratio_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "22.6"
+  },
+  "d1n_tot_ratio_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "34.4"
+  },
+  "d1n_tot_ratio_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "15.1"
+  },
   "d2_ale_c_hi": {
     "source": "results/task_d2_recalibration.json",
     "value": "611"
@@ -774,6 +1222,250 @@
   "d2_target": {
     "source": "results/task_d2_recalibration.json",
     "value": "68.3"
+  },
+  "d2b_epi_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.605"
+  },
+  "d2b_epi_ci_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.545, +0.694]"
+  },
+  "d2b_epi_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.918, +0.999]"
+  },
+  "d2b_epi_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.604, +0.846]"
+  },
+  "d2b_epi_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.577, +0.823]"
+  },
+  "d2b_epi_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.545, +0.694]"
+  },
+  "d2b_epi_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.537, +0.807]"
+  },
+  "d2b_epi_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.994"
+  },
+  "d2b_epi_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.671"
+  },
+  "d2b_epi_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.735"
+  },
+  "d2b_epi_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.605"
+  },
+  "d2b_epi_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.738"
+  },
+  "d2b_idx_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.269"
+  },
+  "d2b_idx_ci_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.106, +0.431]"
+  },
+  "d2b_idx_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "n/a"
+  },
+  "d2b_idx_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.421, +0.643]"
+  },
+  "d2b_idx_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.131, +0.336]"
+  },
+  "d2b_idx_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.106, +0.431]"
+  },
+  "d2b_idx_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.108, +0.349]"
+  },
+  "d2b_idx_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "n/a"
+  },
+  "d2b_idx_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.526"
+  },
+  "d2b_idx_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.174"
+  },
+  "d2b_idx_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.269"
+  },
+  "d2b_idx_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.181"
+  },
+  "d2b_n_horizons_tested": {
+    "source": "results/task_d_nind20.json",
+    "value": 4
+  },
+  "d2b_n_index_wins": {
+    "source": "results/task_d_nind20.json",
+    "value": 0
+  },
+  "d2b_par_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.596"
+  },
+  "d2b_par_ci_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.526, +0.687]"
+  },
+  "d2b_par_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "n/a"
+  },
+  "d2b_par_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.534, +0.812]"
+  },
+  "d2b_par_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.604, +0.841]"
+  },
+  "d2b_par_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.526, +0.687]"
+  },
+  "d2b_par_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.540, +0.822]"
+  },
+  "d2b_par_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "n/a"
+  },
+  "d2b_par_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.617"
+  },
+  "d2b_par_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.756"
+  },
+  "d2b_par_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.596"
+  },
+  "d2b_par_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.757"
+  },
+  "d2b_shrink_all": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.010"
+  },
+  "d3_ale_c_hi": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "7782"
+  },
+  "d3_ale_c_lo": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "592.6"
+  },
+  "d3_ale_cells": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 10
+  },
+  "d3_ale_const_ok": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 2
+  },
+  "d3_ale_cspread": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "13.1"
+  },
+  "d3_ale_ok": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 10
+  },
+  "d3_ale_worst_cov": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "76.55"
+  },
+  "d3_ale_worst_h": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 128
+  },
+  "d3_epi_c_hi": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "47.33"
+  },
+  "d3_epi_c_lo": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "5.082"
+  },
+  "d3_epi_cells": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 10
+  },
+  "d3_epi_const_ok": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 2
+  },
+  "d3_epi_cspread": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "9.31"
+  },
+  "d3_epi_ok": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 10
+  },
+  "d3_epi_worst_cov": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "74.44"
+  },
+  "d3_epi_worst_h": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 1
+  },
+  "d3_target": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "68.27"
+  },
+  "d3_tol": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "10"
+  },
+  "d4_ci": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.545, +0.694]"
+  },
+  "d4_nind": {
+    "source": "results/task_d_nind20.json",
+    "value": 20
+  },
+  "d4_npoints": {
+    "source": "results/task_d_nind20.json",
+    "value": "7,360"
+  },
+  "d4_r": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.605"
   },
   "diff_grad_max": {
     "source": "results/step4_3_differential.json",
@@ -940,12 +1632,44 @@
     "value": true
   },
   "n_defects": {
-    "source": "PAPER.template.md section 5 subsections",
-    "value": "0"
+    "source": "PAPER.template.md section 6 subsections",
+    "value": "four"
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 164
+    "value": 174
+  },
+  "n_holdout_eps": {
+    "source": "results/step5_armA_seed0.json (split)",
+    "value": 2
+  },
+  "n_lessons": {
+    "source": "PAPER.template.md section 9",
+    "value": 6
+  },
+  "n_lessons_word": {
+    "source": "PAPER.template.md section 9",
+    "value": "Six"
+  },
+  "n_retract_framing": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": 2
+  },
+  "n_retract_framing_phrase": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "two further"
+  },
+  "n_retract_framing_word": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "two"
+  },
+  "n_retract_framing_word_cap": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "Two"
+  },
+  "n_retract_total": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": 8
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",
@@ -965,7 +1689,11 @@
   },
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 14
+    "value": 15
+  },
+  "n_train_eps": {
+    "source": "results/step5_armA_seed0.json (split)",
+    "value": 8
   },
   "nind_ins_400": {
     "source": "results/review_bootstrap_unit.json",
@@ -983,6 +1711,1926 @@
     "source": "results/step4_4_overfit_b32lr1e3.json",
     "value": "1,506"
   },
+  "perm_all_armB_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_armB_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_armB_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.89e-11"
+  },
+  "perm_all_armB_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_armB_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.88e-08"
+  },
+  "perm_all_armB_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_armB_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_armB_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_armB_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_armB_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_all_armB_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 43
+  },
+  "perm_all_armB_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_armB_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 40
+  },
+  "perm_all_armB_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "15.7"
+  },
+  "perm_all_armB_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "25.0"
+  },
+  "perm_all_armB_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "13.5"
+  },
+  "perm_all_armB_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "43.2"
+  },
+  "perm_all_armB_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "13.1"
+  },
+  "perm_all_armB_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0137"
+  },
+  "perm_all_armB_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0174"
+  },
+  "perm_all_armB_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0360"
+  },
+  "perm_all_armB_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.5214"
+  },
+  "perm_all_armB_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0457"
+  },
+  "perm_all_epi_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.61e-12"
+  },
+  "perm_all_epi_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_epi_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_epi_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_epi_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_epi_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_epi_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_epi_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_epi_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_epi_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_epi_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 44
+  },
+  "perm_all_epi_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_epi_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "15.4"
+  },
+  "perm_all_epi_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "41.6"
+  },
+  "perm_all_epi_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "15.8"
+  },
+  "perm_all_epi_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "33.1"
+  },
+  "perm_all_epi_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "15.8"
+  },
+  "perm_all_epi_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0060"
+  },
+  "perm_all_epi_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3725"
+  },
+  "perm_all_epi_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0355"
+  },
+  "perm_all_epi_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0823"
+  },
+  "perm_all_epi_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0085"
+  },
+  "perm_all_faithA_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.25e-02"
+  },
+  "perm_all_faithA_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.88e-08"
+  },
+  "perm_all_faithA_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "6.57e-05"
+  },
+  "perm_all_faithA_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.89e-11"
+  },
+  "perm_all_faithA_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.47e-04"
+  },
+  "perm_all_faithA_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_all_faithA_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_faithA_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_faithA_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_faithA_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_faithA_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_faithA_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_faithA_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_faithA_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_faithA_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_faithA_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 29
+  },
+  "perm_all_faithA_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 40
+  },
+  "perm_all_faithA_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 36
+  },
+  "perm_all_faithA_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 43
+  },
+  "perm_all_faithA_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 35
+  },
+  "perm_all_faithA_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "11.8"
+  },
+  "perm_all_faithA_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "10.6"
+  },
+  "perm_all_faithA_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "12.0"
+  },
+  "perm_all_faithA_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.3"
+  },
+  "perm_all_faithA_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "12.3"
+  },
+  "perm_all_faithA_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.1343"
+  },
+  "perm_all_faithA_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0076"
+  },
+  "perm_all_faithA_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0672"
+  },
+  "perm_all_faithA_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0042"
+  },
+  "perm_all_faithA_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.1303"
+  },
+  "perm_all_floor": {
+    "source": "results/task_b_permutation.json",
+    "value": "5e-05"
+  },
+  "perm_all_holm_min_cell": {
+    "source": "results/task_b_permutation.json",
+    "value": "faithful (mse) h=368"
+  },
+  "perm_all_holm_min_p": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0042"
+  },
+  "perm_all_holm_n": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_all_holm_rej": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_all_holm_thr": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.002"
+  },
+  "perm_all_nind": {
+    "source": "results/task_b_permutation.json",
+    "value": 20
+  },
+  "perm_all_nll_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.66e-01"
+  },
+  "perm_all_nll_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.33e-01"
+  },
+  "perm_all_nll_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.71e-01"
+  },
+  "perm_all_nll_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.33e-01"
+  },
+  "perm_all_nll_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_all_nll_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_all_nll_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "perm_all_nll_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_all_nll_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_all_nll_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 2
+  },
+  "perm_all_nll_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_nll_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_nll_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_nll_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_nll_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_nll_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 21
+  },
+  "perm_all_nll_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 27
+  },
+  "perm_all_nll_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 26
+  },
+  "perm_all_nll_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 27
+  },
+  "perm_all_nll_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_all_nll_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "25.9"
+  },
+  "perm_all_nll_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "27.7"
+  },
+  "perm_all_nll_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "27.3"
+  },
+  "perm_all_nll_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "27.0"
+  },
+  "perm_all_nll_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "27.2"
+  },
+  "perm_all_nll_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.8914"
+  },
+  "perm_all_nll_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9601"
+  },
+  "perm_all_nll_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.8240"
+  },
+  "perm_all_nll_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9995"
+  },
+  "perm_all_nll_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.7596"
+  },
+  "perm_all_relale_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.12e-06"
+  },
+  "perm_all_relale_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.35e-01"
+  },
+  "perm_all_relale_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_relale_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_all_relale_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_all_relale_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_all_relale_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_all_relale_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_all_relale_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_all_relale_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_all_relale_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_relale_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_relale_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_relale_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_relale_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_relale_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 7
+  },
+  "perm_all_relale_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 28
+  },
+  "perm_all_relale_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_all_relale_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_all_relale_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_all_relale_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "17.6"
+  },
+  "perm_all_relale_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "29.4"
+  },
+  "perm_all_relale_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "21.6"
+  },
+  "perm_all_relale_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "23.1"
+  },
+  "perm_all_relale_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "17.1"
+  },
+  "perm_all_relale_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.7157"
+  },
+  "perm_all_relale_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.6250"
+  },
+  "perm_all_relale_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_all_relale_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_all_relale_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3258"
+  },
+  "perm_ins_armB_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_armB_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.61e-12"
+  },
+  "perm_ins_armB_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.61e-12"
+  },
+  "perm_ins_armB_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_armB_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.42e-07"
+  },
+  "perm_ins_armB_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_armB_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_armB_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_armB_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_armB_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_ins_armB_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_armB_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_armB_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_armB_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_armB_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_armB_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_armB_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 44
+  },
+  "perm_ins_armB_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 44
+  },
+  "perm_ins_armB_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_armB_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 39
+  },
+  "perm_ins_armB_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "14.4"
+  },
+  "perm_ins_armB_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "18.0"
+  },
+  "perm_ins_armB_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "12.7"
+  },
+  "perm_ins_armB_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "43.8"
+  },
+  "perm_ins_armB_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "10.5"
+  },
+  "perm_ins_armB_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0150"
+  },
+  "perm_ins_armB_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0027"
+  },
+  "perm_ins_armB_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0249"
+  },
+  "perm_ins_armB_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.5656"
+  },
+  "perm_ins_armB_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0575"
+  },
+  "perm_ins_epi_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.61e-12"
+  },
+  "perm_ins_epi_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_epi_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_epi_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_epi_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_epi_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_epi_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_epi_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_epi_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_epi_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_epi_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 44
+  },
+  "perm_ins_epi_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_epi_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.0"
+  },
+  "perm_ins_epi_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "42.7"
+  },
+  "perm_ins_epi_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.1"
+  },
+  "perm_ins_epi_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "34.9"
+  },
+  "perm_ins_epi_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.2"
+  },
+  "perm_ins_epi_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0060"
+  },
+  "perm_ins_epi_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3804"
+  },
+  "perm_ins_epi_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0349"
+  },
+  "perm_ins_epi_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0758"
+  },
+  "perm_ins_epi_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0084"
+  },
+  "perm_ins_faithA_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_faithA_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.89e-11"
+  },
+  "perm_ins_faithA_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.61e-12"
+  },
+  "perm_ins_faithA_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "8.65e-10"
+  },
+  "perm_ins_faithA_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "9.33e-09"
+  },
+  "perm_ins_faithA_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_faithA_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_faithA_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_faithA_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_faithA_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_ins_faithA_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_faithA_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_faithA_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_faithA_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_faithA_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_faithA_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_faithA_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 43
+  },
+  "perm_ins_faithA_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 44
+  },
+  "perm_ins_faithA_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 42
+  },
+  "perm_ins_faithA_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 41
+  },
+  "perm_ins_faithA_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "14.9"
+  },
+  "perm_ins_faithA_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "24.3"
+  },
+  "perm_ins_faithA_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "20.2"
+  },
+  "perm_ins_faithA_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "26.6"
+  },
+  "perm_ins_faithA_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.9"
+  },
+  "perm_ins_faithA_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0106"
+  },
+  "perm_ins_faithA_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0293"
+  },
+  "perm_ins_faithA_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0633"
+  },
+  "perm_ins_faithA_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0232"
+  },
+  "perm_ins_faithA_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0882"
+  },
+  "perm_ins_floor": {
+    "source": "results/task_b_permutation.json",
+    "value": "5e-05"
+  },
+  "perm_ins_holm_min_cell": {
+    "source": "results/task_b_permutation.json",
+    "value": "teacher-forced armB h=128"
+  },
+  "perm_ins_holm_min_p": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0027"
+  },
+  "perm_ins_holm_n": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_ins_holm_rej": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_ins_holm_thr": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.002"
+  },
+  "perm_ins_nind": {
+    "source": "results/task_b_permutation.json",
+    "value": 16
+  },
+  "perm_ins_nll_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_ins_nll_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.00e+00"
+  },
+  "perm_ins_nll_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.25e-02"
+  },
+  "perm_ins_nll_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.33e-01"
+  },
+  "perm_ins_nll_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.35e-01"
+  },
+  "perm_ins_nll_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "perm_ins_nll_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_ins_nll_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_ins_nll_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "perm_ins_nll_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "perm_ins_nll_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_nll_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_nll_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_nll_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_nll_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_nll_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_ins_nll_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 23
+  },
+  "perm_ins_nll_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 29
+  },
+  "perm_ins_nll_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 27
+  },
+  "perm_ins_nll_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 28
+  },
+  "perm_ins_nll_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "25.6"
+  },
+  "perm_ins_nll_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "23.0"
+  },
+  "perm_ins_nll_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "28.5"
+  },
+  "perm_ins_nll_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "26.9"
+  },
+  "perm_ins_nll_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "28.0"
+  },
+  "perm_ins_nll_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_ins_nll_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9651"
+  },
+  "perm_ins_nll_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.6750"
+  },
+  "perm_ins_nll_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.8734"
+  },
+  "perm_ins_nll_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9744"
+  },
+  "perm_ins_relale_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.12e-06"
+  },
+  "perm_ins_relale_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.25e-02"
+  },
+  "perm_ins_relale_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_ins_relale_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "8.65e-10"
+  },
+  "perm_ins_relale_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_ins_relale_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_ins_relale_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_ins_relale_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_ins_relale_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_ins_relale_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_ins_relale_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_relale_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_relale_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_relale_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_relale_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_relale_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 7
+  },
+  "perm_ins_relale_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 29
+  },
+  "perm_ins_relale_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_ins_relale_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_ins_relale_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_ins_relale_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.7"
+  },
+  "perm_ins_relale_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "25.3"
+  },
+  "perm_ins_relale_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "21.1"
+  },
+  "perm_ins_relale_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "20.4"
+  },
+  "perm_ins_relale_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.7"
+  },
+  "perm_ins_relale_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.6854"
+  },
+  "perm_ins_relale_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.4345"
+  },
+  "perm_ins_relale_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_ins_relale_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9738"
+  },
+  "perm_ins_relale_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3085"
+  },
+  "perm_ngroups": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_null_hi": {
+    "source": "results/task_b_permutation.json",
+    "value": "43.8"
+  },
+  "perm_null_lo": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.4"
+  },
+  "perm_oos_armB_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.46e-03"
+  },
+  "perm_oos_armB_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "6.57e-05"
+  },
+  "perm_oos_armB_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.61e-02"
+  },
+  "perm_oos_armB_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_oos_armB_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.42e-07"
+  },
+  "perm_oos_armB_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_oos_armB_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_oos_armB_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 1
+  },
+  "perm_oos_armB_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_oos_armB_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_oos_armB_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_armB_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_armB_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_armB_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_armB_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_armB_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 33
+  },
+  "perm_oos_armB_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 36
+  },
+  "perm_oos_armB_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 14
+  },
+  "perm_oos_armB_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_armB_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 39
+  },
+  "perm_oos_armB_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "22.0"
+  },
+  "perm_oos_armB_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "26.0"
+  },
+  "perm_oos_armB_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "14.3"
+  },
+  "perm_oos_armB_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "29.3"
+  },
+  "perm_oos_armB_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "22.7"
+  },
+  "perm_oos_armB_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2174"
+  },
+  "perm_oos_armB_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3043"
+  },
+  "perm_oos_armB_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3478"
+  },
+  "perm_oos_armB_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2609"
+  },
+  "perm_oos_armB_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2174"
+  },
+  "perm_oos_epi_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.00e+00"
+  },
+  "perm_oos_epi_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_oos_epi_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "8.24e-04"
+  },
+  "perm_oos_epi_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
+  },
+  "perm_oos_epi_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_oos_epi_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 2
+  },
+  "perm_oos_epi_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_oos_epi_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "perm_oos_epi_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_oos_epi_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_oos_epi_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 23
+  },
+  "perm_oos_epi_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 34
+  },
+  "perm_oos_epi_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_oos_epi_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "22.8"
+  },
+  "perm_oos_epi_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "38.2"
+  },
+  "perm_oos_epi_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "31.4"
+  },
+  "perm_oos_epi_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "33.7"
+  },
+  "perm_oos_epi_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "22.6"
+  },
+  "perm_oos_epi_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.4348"
+  },
+  "perm_oos_epi_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0417"
+  },
+  "perm_oos_epi_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2174"
+  },
+  "perm_oos_epi_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0435"
+  },
+  "perm_oos_epi_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3043"
+  },
+  "perm_oos_faithA_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "6.57e-05"
+  },
+  "perm_oos_faithA_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.71e-01"
+  },
+  "perm_oos_faithA_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.57e-02"
+  },
+  "perm_oos_faithA_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.42e-07"
+  },
+  "perm_oos_faithA_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.46e-03"
+  },
+  "perm_oos_faithA_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_oos_faithA_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_oos_faithA_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
+  "perm_oos_faithA_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_oos_faithA_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_oos_faithA_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_faithA_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_faithA_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_faithA_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_faithA_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_faithA_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 36
+  },
+  "perm_oos_faithA_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 26
+  },
+  "perm_oos_faithA_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 30
+  },
+  "perm_oos_faithA_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 39
+  },
+  "perm_oos_faithA_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 33
+  },
+  "perm_oos_faithA_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "16.7"
+  },
+  "perm_oos_faithA_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.4"
+  },
+  "perm_oos_faithA_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "8.8"
+  },
+  "perm_oos_faithA_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.8"
+  },
+  "perm_oos_faithA_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "11.4"
+  },
+  "perm_oos_faithA_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2174"
+  },
+  "perm_oos_faithA_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0435"
+  },
+  "perm_oos_faithA_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0435"
+  },
+  "perm_oos_faithA_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0417"
+  },
+  "perm_oos_faithA_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2174"
+  },
+  "perm_oos_floor": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.04167"
+  },
+  "perm_oos_holm_min_cell": {
+    "source": "results/task_b_permutation.json",
+    "value": "faithful (mse) h=368"
+  },
+  "perm_oos_holm_min_p": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0417"
+  },
+  "perm_oos_holm_n": {
+    "source": "results/task_b_permutation.json",
+    "value": 25
+  },
+  "perm_oos_holm_rej": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_oos_holm_thr": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.002"
+  },
+  "perm_oos_nind": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "perm_oos_nll_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.25e-02"
+  },
+  "perm_oos_nll_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.71e-01"
+  },
+  "perm_oos_nll_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.71e-01"
+  },
+  "perm_oos_nll_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.66e-01"
+  },
+  "perm_oos_nll_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_oos_nll_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 2
+  },
+  "perm_oos_nll_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
+  "perm_oos_nll_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_oos_nll_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 2
+  },
+  "perm_oos_nll_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 2
+  },
+  "perm_oos_nll_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_nll_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_nll_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_nll_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_nll_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_nll_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 16
+  },
+  "perm_oos_nll_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 26
+  },
+  "perm_oos_nll_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 19
+  },
+  "perm_oos_nll_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 21
+  },
+  "perm_oos_nll_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 20
+  },
+  "perm_oos_nll_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "24.6"
+  },
+  "perm_oos_nll_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "26.0"
+  },
+  "perm_oos_nll_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "21.7"
+  },
+  "perm_oos_nll_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "21.8"
+  },
+  "perm_oos_nll_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "26.4"
+  },
+  "perm_oos_nll_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_oos_nll_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_oos_nll_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_oos_nll_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_oos_nll_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
+  "perm_oos_relale_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_oos_relale_binom_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.25e-02"
+  },
+  "perm_oos_relale_binom_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.12e-06"
+  },
+  "perm_oos_relale_binom_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.51e-01"
+  },
+  "perm_oos_relale_binom_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.57e-02"
+  },
+  "perm_oos_relale_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 2
+  },
+  "perm_oos_relale_grp_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 4
+  },
+  "perm_oos_relale_grp_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_oos_relale_grp_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 2
+  },
+  "perm_oos_relale_grp_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 0
+  },
+  "perm_oos_relale_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_relale_ndim_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_relale_ndim_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_relale_ndim_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_relale_ndim_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_relale_npos_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 20
+  },
+  "perm_oos_relale_npos_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": 29
+  },
+  "perm_oos_relale_npos_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": 7
+  },
+  "perm_oos_relale_npos_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": 20
+  },
+  "perm_oos_relale_npos_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": 15
+  },
+  "perm_oos_relale_null_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "22.9"
+  },
+  "perm_oos_relale_null_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "29.8"
+  },
+  "perm_oos_relale_null_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "17.5"
+  },
+  "perm_oos_relale_null_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "24.4"
+  },
+  "perm_oos_relale_null_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "19.8"
+  },
+  "perm_oos_relale_p_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.6087"
+  },
+  "perm_oos_relale_p_h128": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.7391"
+  },
+  "perm_oos_relale_p_h32": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9565"
+  },
+  "perm_oos_relale_p_h368": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.6957"
+  },
+  "perm_oos_relale_p_h8": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.7391"
+  },
+  "perm_worst_arena": {
+    "source": "results/task_b_permutation.json",
+    "value": "in-sample"
+  },
+  "perm_worst_factor": {
+    "source": "results/task_b_permutation.json",
+    "value": "10^13"
+  },
+  "perm_worst_factor_exact": {
+    "source": "results/task_b_permutation.json",
+    "value": "9.95e+12"
+  },
+  "perm_worst_h": {
+    "source": "results/task_b_permutation.json",
+    "value": 368
+  },
+  "perm_worst_model": {
+    "source": "results/task_b_permutation.json",
+    "value": "teacher-forced armB"
+  },
+  "perm_worst_null": {
+    "source": "results/task_b_permutation.json",
+    "value": "43.8"
+  },
   "q4_implied_A": {
     "source": "results/task5_analysis.json",
     "value": "158,319"
@@ -994,6 +3642,34 @@
   "rows": {
     "source": "results/step0_regimes.json",
     "value": "10,000"
+  },
+  "rt_hours": {
+    "source": "results/step5_*.json",
+    "value": "32"
+  },
+  "rt_hours_10k": {
+    "source": "results/step5_*.json",
+    "value": "20"
+  },
+  "rt_hours_short": {
+    "source": "results/step5_*.json",
+    "value": "12"
+  },
+  "rt_longest": {
+    "source": "results/step5_*.json",
+    "value": "3.8"
+  },
+  "rt_runs": {
+    "source": "results/step5_*.json",
+    "value": 21
+  },
+  "rt_runs_10k": {
+    "source": "results/step5_*.json",
+    "value": 6
+  },
+  "rt_runs_short": {
+    "source": "results/step5_*.json",
+    "value": 15
   },
   "run_table": {
     "source": "results/step5_arm*.json",
@@ -1030,6 +3706,22 @@
   "t5_seeds": {
     "source": "results/task5_analysis.json",
     "value": 1
+  },
+  "time_cfgs": {
+    "source": "results/step4_5_timing.json",
+    "value": 4
+  },
+  "time_rel_hi": {
+    "source": "results/step4_5_timing.json",
+    "value": "32"
+  },
+  "time_rel_lo": {
+    "source": "results/step4_5_timing.json",
+    "value": "5"
+  },
+  "time_worst_cfg": {
+    "source": "results/step4_5_timing.json",
+    "value": "ens1_bs256"
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -1106,6 +3798,14 @@
   "tw_dc_naive_no_effect": {
     "source": "results/task3_three_way.json",
     "value": 31
+  },
+  "unreach_factor": {
+    "source": "results/step6_analysis.json",
+    "value": "31"
+  },
+  "unreach_recalled_iters": {
+    "source": "docs/E4_AUTHOR_CONTACT.md",
+    "value": "5,000"
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",

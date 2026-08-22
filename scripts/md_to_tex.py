@@ -8,6 +8,7 @@ import re
 
 
 UNI = {"μ": "mu", "σ": "sigma", "ε": "eps", "Δ": "Delta", "−": "-", "·": "*",
+       "α": "alpha", "β": "beta", "π": "pi", "γ": "gamma", "θ": "theta", "τ": "tau",
        "²": "^2", "×": "x", "≈": "~", "±": "+-", "—": "--", "–": "-", "§": "S",
        "“": '"', "”": '"', "’": "'"}
 
@@ -39,6 +40,10 @@ def esc(s):
     s = s.replace("—", "---").replace("–", "--").replace("×", r"$\times$")
     s = s.replace("σ", r"$\sigma$").replace("μ", r"$\mu$").replace("ε", r"$\varepsilon$")
     s = s.replace("λ", r"$\lambda$").replace("φ", r"$\phi$").replace("\u0303", "")
+    # alpha arrived with the Holm-Bonferroni thresholds and was not in this map;
+    # pdflatex fails hard on an unmapped Unicode letter rather than warning.
+    s = s.replace("α", r"$\alpha$").replace("β", r"$\beta$").replace("π", r"$\pi$")
+    s = s.replace("γ", r"$\gamma$").replace("θ", r"$\theta$").replace("τ", r"$\tau$")
     s = s.replace("Δ", r"$\Delta$").replace("±", r"$\pm$").replace("≈", r"$\approx$")
     s = s.replace("§", r"\S{}").replace("“", "``").replace("”", "''")
     s = s.replace("−", "$-$")

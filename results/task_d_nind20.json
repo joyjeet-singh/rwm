@@ -1,0 +1,360 @@
+{
+  "design": {
+    "checkpoint": "../robotic_world_model_lite/assets/models/pretrain_rnn_ens.pt",
+    "ensemble_size": 5,
+    "arena": "all ten episodes",
+    "episodes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "trajectories": 20,
+    "n_independent": 20,
+    "traj_len": 400,
+    "start_step": 32,
+    "action_offset": 1,
+    "n_boot": 20000,
+    "bootstrap_unit": "whole trajectory (M-27)",
+    "rationale": "the released checkpoint trained on all ten episodes, so restricting it to the held-out pair buys no independence"
+  },
+  "d1_by_horizon": {
+    "1": {
+      "aleatoric": {
+        "mean_sigma": 5.741089252599825e-05,
+        "mean_abs_err": 0.10490783179204705,
+        "ratio_err_over_sigma": 1827.315813711484,
+        "coverage_pm1": 0.0011111111111111111,
+        "coverage_pm2": 0.0011111111111111111,
+        "n_finite_corr": 45,
+        "n_positive": 7,
+        "corr_mean": -0.14491811736206808
+      },
+      "epistemic": {
+        "mean_sigma": 0.012632874782753383,
+        "mean_abs_err": 0.10490783179204705,
+        "ratio_err_over_sigma": 8.30435143196931,
+        "coverage_pm1": 0.1622222222222222,
+        "coverage_pm2": 0.3011111111111111,
+        "n_finite_corr": 45,
+        "n_positive": 44,
+        "corr_mean": 0.6616493150620982
+      },
+      "total": {
+        "mean_sigma": 0.012633089603400162,
+        "mean_abs_err": 0.10490783179204705,
+        "ratio_err_over_sigma": 8.304210219787517,
+        "coverage_pm1": 0.1622222222222222,
+        "coverage_pm2": 0.3011111111111111,
+        "n_finite_corr": 45,
+        "n_positive": 44,
+        "corr_mean": 0.6616505208172327
+      }
+    },
+    "8": {
+      "aleatoric": {
+        "mean_sigma": 5.738148852969971e-05,
+        "mean_abs_err": 0.17408060235484804,
+        "ratio_err_over_sigma": 3033.74148728726,
+        "coverage_pm1": 0.0008333333333333334,
+        "coverage_pm2": 0.0015277777777777779,
+        "n_finite_corr": 45,
+        "n_positive": 25,
+        "corr_mean": 0.046816381471857266
+      },
+      "epistemic": {
+        "mean_sigma": 0.01151633672974842,
+        "mean_abs_err": 0.17408060235484804,
+        "ratio_err_over_sigma": 15.115970159605686,
+        "coverage_pm1": 0.09986111111111111,
+        "coverage_pm2": 0.1976388888888889,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.42742648407057937
+      },
+      "total": {
+        "mean_sigma": 0.011516548308252038,
+        "mean_abs_err": 0.17408060235484804,
+        "ratio_err_over_sigma": 15.115692453624561,
+        "coverage_pm1": 0.09986111111111111,
+        "coverage_pm2": 0.1976388888888889,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.42742607759168944
+      }
+    },
+    "32": {
+      "aleatoric": {
+        "mean_sigma": 5.736706252896005e-05,
+        "mean_abs_err": 0.25959544495553905,
+        "ratio_err_over_sigma": 4525.165373850021,
+        "coverage_pm1": 0.0006597222222222222,
+        "coverage_pm2": 0.0010763888888888889,
+        "n_finite_corr": 45,
+        "n_positive": 0,
+        "corr_mean": -0.185201151447878
+      },
+      "epistemic": {
+        "mean_sigma": 0.011484953392103104,
+        "mean_abs_err": 0.25959544495553905,
+        "ratio_err_over_sigma": 22.603090852247888,
+        "coverage_pm1": 0.06954861111111112,
+        "coverage_pm2": 0.13680555555555557,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.4256587492085992
+      },
+      "total": {
+        "mean_sigma": 0.011485161647604627,
+        "mean_abs_err": 0.25959544495553905,
+        "ratio_err_over_sigma": 22.602681000112952,
+        "coverage_pm1": 0.06954861111111112,
+        "coverage_pm2": 0.13684027777777777,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.42565830884303374
+      }
+    },
+    "128": {
+      "aleatoric": {
+        "mean_sigma": 5.768705561428709e-05,
+        "mean_abs_err": 0.8615021615143925,
+        "ratio_err_over_sigma": 14934.063670620557,
+        "coverage_pm1": 0.00028645833333333333,
+        "coverage_pm2": 0.00045138888888888887,
+        "n_finite_corr": 45,
+        "n_positive": 28,
+        "corr_mean": 0.005585774463633368
+      },
+      "epistemic": {
+        "mean_sigma": 0.025219485877622422,
+        "mean_abs_err": 0.8615021615143925,
+        "ratio_err_over_sigma": 34.160179382515274,
+        "coverage_pm1": 0.04372395833333333,
+        "coverage_pm2": 0.08751736111111111,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.3377729103069927
+      },
+      "total": {
+        "mean_sigma": 0.025219642976544204,
+        "mean_abs_err": 0.8615021615143925,
+        "ratio_err_over_sigma": 34.159966590948244,
+        "coverage_pm1": 0.04372395833333333,
+        "coverage_pm2": 0.08752604166666667,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.3377722425271824
+      }
+    },
+    "368": {
+      "aleatoric": {
+        "mean_sigma": 5.758748725747645e-05,
+        "mean_abs_err": 1.1902528213743009,
+        "ratio_err_over_sigma": 20668.601428164817,
+        "coverage_pm1": 0.000196256038647343,
+        "coverage_pm2": 0.0003079710144927536,
+        "n_finite_corr": 45,
+        "n_positive": 0,
+        "corr_mean": -0.03978073436747495
+      },
+      "epistemic": {
+        "mean_sigma": 0.034553321774499435,
+        "mean_abs_err": 1.1902528213743009,
+        "ratio_err_over_sigma": 34.44684216302222,
+        "coverage_pm1": 0.035905797101449276,
+        "coverage_pm2": 0.0718780193236715,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.29849725892856455
+      },
+      "total": {
+        "mean_sigma": 0.03455345381342492,
+        "mean_abs_err": 1.1902528213743009,
+        "ratio_err_over_sigma": 34.446710531491256,
+        "coverage_pm1": 0.035905797101449276,
+        "coverage_pm2": 0.07188405797101449,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.29849671972201747
+      }
+    }
+  },
+  "d2_forecast_index": {
+    "1": {
+      "horizon": 1,
+      "n_steps": 1,
+      "n_independent": 20,
+      "r_index": null,
+      "r_epistemic": 0.9939134152022003,
+      "r_partial": null,
+      "ci": {
+        "index": {
+          "lo": null,
+          "hi": null,
+          "n_boot_finite": 0
+        },
+        "epistemic": {
+          "lo": 0.918210780428039,
+          "hi": 0.9987927971490497,
+          "n_boot_finite": 20000
+        },
+        "partial": {
+          "lo": null,
+          "hi": null,
+          "n_boot_finite": 0
+        }
+      },
+      "index_wins": false
+    },
+    "8": {
+      "horizon": 8,
+      "n_steps": 8,
+      "n_independent": 20,
+      "r_index": 0.1813021093264023,
+      "r_epistemic": 0.7375680065206663,
+      "r_partial": 0.7574483667009009,
+      "ci": {
+        "index": {
+          "lo": 0.10843772686731719,
+          "hi": 0.34850120934350204,
+          "n_boot_finite": 20000
+        },
+        "epistemic": {
+          "lo": 0.5367557591506862,
+          "hi": 0.807017447920535,
+          "n_boot_finite": 20000
+        },
+        "partial": {
+          "lo": 0.5404669900706776,
+          "hi": 0.8218094221441736,
+          "n_boot_finite": 20000
+        }
+      },
+      "index_wins": false
+    },
+    "32": {
+      "horizon": 32,
+      "n_steps": 32,
+      "n_independent": 20,
+      "r_index": 0.17444225865071888,
+      "r_epistemic": 0.7351513185146253,
+      "r_partial": 0.7557780975000069,
+      "ci": {
+        "index": {
+          "lo": 0.13097590665748537,
+          "hi": 0.3356361795237722,
+          "n_boot_finite": 20000
+        },
+        "epistemic": {
+          "lo": 0.5773190445233255,
+          "hi": 0.8232029943413739,
+          "n_boot_finite": 20000
+        },
+        "partial": {
+          "lo": 0.6038357601065405,
+          "hi": 0.8412847806957562,
+          "n_boot_finite": 20000
+        }
+      },
+      "index_wins": false
+    },
+    "128": {
+      "horizon": 128,
+      "n_steps": 128,
+      "n_independent": 20,
+      "r_index": 0.5255743299391843,
+      "r_epistemic": 0.6707784948153711,
+      "r_partial": 0.6170581558955691,
+      "ci": {
+        "index": {
+          "lo": 0.42129174671848796,
+          "hi": 0.6433974871633956,
+          "n_boot_finite": 20000
+        },
+        "epistemic": {
+          "lo": 0.6039553662159818,
+          "hi": 0.8456264843814468,
+          "n_boot_finite": 20000
+        },
+        "partial": {
+          "lo": 0.533632823159004,
+          "hi": 0.8117315949792903,
+          "n_boot_finite": 20000
+        }
+      },
+      "index_wins": false
+    },
+    "368": {
+      "horizon": 368,
+      "n_steps": 368,
+      "n_independent": 20,
+      "r_index": 0.2685729388123981,
+      "r_epistemic": 0.6053377910794817,
+      "r_partial": 0.5957061701083897,
+      "ci": {
+        "index": {
+          "lo": 0.10634200863167186,
+          "hi": 0.43057803244480086,
+          "n_boot_finite": 20000
+        },
+        "epistemic": {
+          "lo": 0.5445687821115579,
+          "hi": 0.6939553485105802,
+          "n_boot_finite": 20000
+        },
+        "partial": {
+          "lo": 0.5263657790422948,
+          "hi": 0.6874373892276091,
+          "n_boot_finite": 20000
+        }
+      },
+      "index_wins": false
+    },
+    "all": {
+      "horizon": "all",
+      "n_steps": 368,
+      "n_independent": 20,
+      "r_index": 0.2685729388123981,
+      "r_epistemic": 0.6053377910794817,
+      "r_partial": 0.5957061701083897,
+      "ci": {
+        "index": {
+          "lo": 0.10634200863167186,
+          "hi": 0.43057803244480086,
+          "n_boot_finite": 20000
+        },
+        "epistemic": {
+          "lo": 0.5445687821115579,
+          "hi": 0.6939553485105802,
+          "n_boot_finite": 20000
+        },
+        "partial": {
+          "lo": 0.5263657790422948,
+          "hi": 0.6874373892276091,
+          "n_boot_finite": 20000
+        }
+      },
+      "index_wins": false
+    }
+  },
+  "d4_penalty": {
+    "definition": "means.std(0).sum(-1)  (system_dynamics.py:126)",
+    "applied_at": "envs/base.py:166  rewards += uncertainty_penalty_weight * epistemic * dt",
+    "corr_with_total_abs_error": 0.6053377910794817,
+    "ci_lo": 0.5445687821115579,
+    "ci_hi": 0.6939553485105802,
+    "n_boot_finite": 20000,
+    "n_independent": 20,
+    "n_trajectories": 20,
+    "n_points": 7360,
+    "bootstrap_unit": "whole trajectory",
+    "note": "section 5.2 previously quoted this correlation with no interval and no n. The interval is a cluster bootstrap over whole trajectories; pooling trajectory x step pairs would narrow it by about sqrt(T) (M-27)."
+  }
+}

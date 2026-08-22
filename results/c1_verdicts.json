@@ -1,575 +1,1010 @@
 {
-  "a0648b9f1fa3": {
-    "verdict": "OVERSTATED",
-    "sample_size": "1 seed (armA/B_seed1_10k)",
-    "note": "The 4.4x direction is corroborated by three seeds at 2,500 iterations, but the specific figures 0.3509/1.5540 come from one 10k run per arm. Not defensible against seed variance until D1 lands.",
-    "claim": "The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the model reaches n"
+  "00a534e11a0c": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
   },
-  "0743a4754d4a": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The aleatoric \u03c3 is **{{cal_rel_ratio}}\u00d7 smaller than its own mean absolute error** ({{cal_rel_cov1}}% coverage"
-  },
-  "1a7f61b9a16a": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Running the correction \u2014 the authors' own unused `gaussian_nll` branch \u2014 fails differently rather than succeed"
-  },
-  "64468c1423df": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The epistemic term, the one the method actually consumes, is two orders of magnitude better and still **{{b2_e"
-  },
-  "35297b24bd38": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The teacher-forced arm has the most input-dependent \u03c3 ({{cal_armB_over_faithA_cov}}\u00d7 the autoregressive arm's)"
-  },
-  "e3de9217487e": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "We also report four defects in the released pipeline, evidence that the released checkpoint cannot have come f"
-  },
-  "318b2c580584": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Framing, not a measurement claim.",
-    "claim": "A world model that reports its own uncertainty is more useful than one that does not, and the uncertainty-awar"
-  },
-  "920934ccb2ba": {
-    "verdict": "OVERSTATED",
-    "sample_size": "n_ind=4",
-    "note": "'by three to four orders of magnitude' is true of the aleatoric head only. The epistemic term, which the method uses, is 1-2 orders. Must name the quantity.",
-    "claim": "But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released ch"
-  },
-  "5f4a84677345": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "We rebuilt rather than imported.** The forward pass, the loss and the training step are written from scratch a"
-  },
-  "94be81a5c0de": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are withdrawn on evid"
-  },
-  "f038c6a13acb": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state and policy actions at 50 Hz."
-  },
-  "c3e575a5e486": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The reference window builder therefore marks all {{win_naive}} windows valid, including {{win_cross}} that spl"
-  },
-  "8541f38d8c72": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The usable, episode-respecting count is {{win_usable}} \u2014 {{rows}} rows, less {{win_tail}} that cannot start a "
-  },
-  "29e04802f599": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The contamination rate is {{contam_pct}}%."
-  },
-  "ca4ccb0e1ae3": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The paper describes two loss terms; the implementation has {{diff_terms}}."
-  },
-  "bab37b3ae6d5": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Two 400-step trajectories whose spans overlap are not independent evidence, and the out-of-sample arena contai"
-  },
-  "f5a9645e0ed0": {
-    "verdict": "SUPPORTED",
-    "sample_size": "committed efc35b8",
-    "note": "M-23's three conditions verbatim; the commit predates the runs (Figure 4).",
-    "claim": "Three conditions, all required: the out-of-sample gap at h = 368 excludes zero under a bootstrap over independ"
-  },
-  "89791e359c69": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Result.** Every condition {{m23_c1}}."
-  },
-  "f70c4a7d7e7e": {
-    "verdict": "OVERSTATED",
-    "sample_size": "1 seed; n_ind=4 bootstrap",
-    "note": "Same single-seed issue, plus the n=4 bootstrap leads the evidence. C2 requires reordering: sign test (10/10, exact, n-independent) first, in-sample n=16 second, n=4 bootstrap third with its limitation inline.",
-    "claim": "At h = 368 out-of-sample after 10,000 iterations, autoregressive training reaches **{{m23_A}}** against teache"
-  },
-  "f38a00bfda30": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The per-episode gap is positive on **{{m23_n_episodes_positive}} of {{m23_n_episodes}}** episodes."
-  },
-  "73e96eb04496": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison out-"
-  },
-  "565a75b35888": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_ce"
-  },
-  "34a343cc5968": {
-    "verdict": "OVERSTATED",
-    "sample_size": "n_ind=4",
-    "note": "'Every model is overconfident by between one and four orders of magnitude' now sits above a table with both quantities; it describes the aleatoric column. Needs scoping.",
-    "claim": "Every model is overconfident by between one and four orders of magnitude (Figure 1)."
-  },
-  "22b3d3615b08": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint, out"
-  },
-  "2b8285c24ad0": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Epistemic is two orders of magnitude better than aleatoric \u2014 {{b2_epi_over_alea_h1}}\u00d7 larger at h=1, {{b2_epi_"
-  },
-  "307da2161dc8": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The scalar penalty as actually applied \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 correlates {{b2_penalt"
-  },
-  "d4f8d90d55f6": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure "
-  },
-  "0ed44d3f861c": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}\u00d7 to {{cal_nll_ratio}}\u00d7 o"
-  },
-  "a8fb8df2201c": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "It does not produce a usable estimate, and it destroys something the faithful arm had: the \u03c3-versus-error orde"
-  },
-  "2af9118239cc": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Arm B's \u03c3 is {{cal_armB_over_faithA_cov}}\u00d7 more input-dependent than the faithful arm's, and its ordering is t"
-  },
-  "d585e9d69a12": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "It is still {{cal_armB_ratio}}\u00d7 overconfident."
-  },
-  "716676892281": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The same pattern holds for the quantity the method uses, with the strongest evidence in this paper.** At h=128"
-  },
-  "851b1b2fc523": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "And it fails the horizon test the same way: \u03c3 grows {{b2_epi_sigma_growth}}\u00d7 from h=1 to h=368 while error gro"
-  },
-  "aaa2804dc8b4": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7."
-  },
-  "3865d2a0c04a": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The window builder reads a termination column that is identically zero, so it marks all {{win_naive}} windows "
-  },
-  "f119432c0cb3": {
-    "verdict": "UNSUPPORTED",
-    "sample_size": "-",
-    "note": "'materially better than its own released evaluation reports' gives no figure and cites no artifact. R-15 has 1.3228 -> 0.7572; either quote it or drop the sentence.",
-    "claim": "Scored correctly the released checkpoint is materially better than its own released evaluation reports."
-  },
-  "e14b58dfd9b5": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows"
-  },
-  "6d0f5a55482e": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%."
-  },
-  "b3ee37340ab6": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training e"
-  },
-  "351639629dee": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Design rationale for the contamination arm, not a measurement.",
-    "claim": "That is a leakage problem rather than a physics one, and including it would have invalidated our own compariso"
-  },
-  "2a0742f49fcc": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost"
-  },
-  "cf8a27d9770a": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The bootstrap interval on duplicated \u2212 clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero."
-  },
-  "50d895c651db": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory lengths \u00d7 two checkpoints \u00d7 two horizons \u00d7 "
+  "029d4ca60cdd": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
+    "verdict": "SUPPORTED"
   },
   "04ab531e3a05": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
+    "claim": "The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells.",
     "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells."
-  },
-  "32ba77174758": {
-    "verdict": "SUPPORTED",
     "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Fitting it across our runs and extrapolating to the released checkpoint's \u03c3 state implies **{{implied_iters}}*"
-  },
-  "68b9e59b9fb0": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}}, spreading {{implied_spre"
-  },
-  "4211a0dea899": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data,"
-  },
-  "1db61e732582": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip"
-  },
-  "8f21c91311f5": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The rule for the duplication control (\u00a75.4) was stated in conversation before the runs but reached git **{{lea"
-  },
-  "310e07ba5798": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in th"
-  },
-  "5131c9c3bc39": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Bookkeeping statement about S-12, checkable in the ledger.",
-    "claim": "The pre-registration claim above retracts a framing rather than a number and is counted separately."
-  },
-  "5a75a4a8195b": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Resampling trajectories correctly \u2014 carrying all seeds with each draw \u2014 widens intervals by a mean factor of {"
-  },
-  "d6d5a295e9b8": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}"
+    "verdict": "SUPPORTED"
   },
   "05038c4640f0": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
+    "claim": "Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent ",
     "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent "
-  },
-  "70b6010104ed": {
-    "verdict": "SUPPORTED",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "0555d64775cb": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "0743a4754d4a": {
+    "claim": "The aleatoric \u03c3 is **{{cal_rel_ratio}}\u00d7 smaller than its own mean absolute error** ({{cal_rel_cov1}}% coverage",
     "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimu"
-  },
-  "821ab7bb5ed8": {
-    "verdict": "SUPPORTED",
     "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The epistemic term the method actually penalises with is better by two orders of magnitude and still {{b2_epi_"
+    "verdict": "SUPPORTED"
   },
-  "44513c92c70d": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Summarises the two measured components; both backed below.",
-    "claim": "The more useful finding is that ranking survives where scale does not, in both components."
-  },
-  "ee328cdfe27f": {
-    "verdict": "SUPPORTED",
+  "0765b3a83a7e": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build.",
-    "claim": "The teacher-forced arm has input-dependent \u03c3 and good ordering; the epistemic term ranks better still, at {{b2"
+    "verdict": "SUPPORTED"
   },
-  "1b79c814239a": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "41869b31316f": {
-    "verdict": "SUPPORTED",
-    "sample_size": "n_ind 16 vs 4",
-    "note": "Both counts derived from review_bootstrap_unit.json."
-  },
-  "b3897b72105a": {
-    "verdict": "OVERSTATED",
-    "sample_size": "1 seed (armA/B_seed1_10k)",
-    "note": "The effect size is still one 10k run per arm. Reordering fixed how it is presented, not the sample behind it; D1 fixes the sample."
-  },
-  "c4c8c028036a": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "2a8460fa2afd": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "714e025c8133": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "45e41d1bfaac": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "6222452dc293": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
-  },
-  "4307718cf905": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "beaf6b586404": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "b8cf445bdfdc": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "60eefc01f2a6": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
-  },
-  "87790a27dd92": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
-  },
-  "2bdfd7f98f09": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "3ae4dd000f59": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "537e14ef90d2": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "32348f363a95": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "6641dbaaab94": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "68bd110f4fa9": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "6b9ad2413a1f": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "20a63340af15": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
-  },
-  "a0112c4bd6a3": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
-  },
-  "304f894f3cd3": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "ccf8cda42bd8": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
-  },
-  "e713a1b6aa83": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "e4b3f63239bc": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "eff0c489e42f": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "fdd6b6aaa3c6": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "7f9ebf680b50": {
-    "verdict": "SUPPORTED",
-    "sample_size": "",
-    "note": "Quantitative, substituted from the named artifact by the build."
-  },
-  "e6a71e938009": {
-    "verdict": "SUPPORTED",
-    "sample_size": "n_ind=4",
-    "note": "An implication drawn from a measured overconfidence factor, flagged as such in the text; the factor itself is derived."
-  },
-  "83572538ff1d": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "A judgement, presented as one."
-  },
-  "d4d66e70bac3": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive."
-  },
-  "c7fc30eb1a9f": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive."
-  },
-  "307a4ef9f224": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
-  },
-  "f4539346e6e6": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
-  },
-  "8e0fb7de4bce": {
-    "verdict": "SUPPORTED",
-    "sample_size": "-",
-    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+  "0aa88aa0cb0d": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
   },
   "0d1b5b192253": {
-    "verdict": "SUPPORTED",
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
     "sample_size": "-",
-    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+    "verdict": "SUPPORTED"
   },
-  "bfa02cae679c": {
-    "verdict": "SUPPORTED",
+  "0e5fbeef0d49": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "0ed44d3f861c": {
+    "claim": "Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}\u00d7 to {{cal_nll_ratio}}\u00d7 o",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "100fc86c7410": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "11120908bc44": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "14e175fe6c2e": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "154ac3587ab6": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "1a7f61b9a16a": {
+    "claim": "Running the correction \u2014 the authors' own unused `gaussian_nll` branch \u2014 fails differently rather than succeed",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "1b79c814239a": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "1db61e732582": {
+    "claim": "Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "1f5f79ee65ec": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "2006b614663c": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "20a63340af15": {
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
     "sample_size": "-",
-    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+    "verdict": "SUPPORTED"
   },
-  "eedb3d507f31": {
-    "verdict": "SUPPORTED",
-    "sample_size": "3 seeds, n_ind=4",
-    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  "21ff8e40e77a": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
+    "verdict": "SUPPORTED"
   },
-  "c3204ca09b05": {
-    "verdict": "SUPPORTED",
-    "sample_size": "3 seeds, n_ind=4",
-    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  "22b3d3615b08": {
+    "claim": "The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint, out",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
   },
-  "ff44600dc084": {
-    "verdict": "SUPPORTED",
-    "sample_size": "3 seeds, n_ind=4",
-    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  "235c8a7fc64c": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
   },
-  "ca8d296bf44d": {
-    "verdict": "SUPPORTED",
-    "sample_size": "3 seeds, n_ind=4",
-    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  "29e04802f599": {
+    "claim": "The contamination rate is {{contam_pct}}%.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
   },
-  "ad1695104a2c": {
-    "verdict": "SUPPORTED",
-    "sample_size": "3 seeds, n_ind=4",
-    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  "2a0742f49fcc": {
+    "claim": "Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
   },
-  "e6a63050db47": {
-    "verdict": "SUPPORTED",
-    "sample_size": "3 seeds, n_ind=4",
-    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+  "2a8460fa2afd": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "2af9118239cc": {
+    "claim": "Arm B's \u03c3 is {{cal_armB_over_faithA_cov}}\u00d7 more input-dependent than the faithful arm's, and its ordering is t",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "2b8285c24ad0": {
+    "claim": "Epistemic is two orders of magnitude better than aleatoric \u2014 {{b2_epi_over_alea_h1}}\u00d7 larger at h=1, {{b2_epi_",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "2bdfd7f98f09": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "2ea2240f0364": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "304f894f3cd3": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "3066edab61b5": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "307a4ef9f224": {
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "307da2161dc8": {
+    "claim": "The scalar penalty as actually applied \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 correlates {{b2_penalt",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "310e07ba5798": {
+    "claim": "{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in th",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "318b2c580584": {
+    "claim": "A world model that reports its own uncertainty is more useful than one that does not, and the uncertainty-awar",
+    "note": "Framing, not a measurement claim.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "3231c6b891b4": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 vs 16 by arena",
+    "verdict": "SUPPORTED"
+  },
+  "32348f363a95": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "32ba77174758": {
+    "claim": "Fitting it across our runs and extrapolating to the released checkpoint's \u03c3 state implies **{{implied_iters}}*",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "3385bf2a0eca": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "34a343cc5968": {
+    "claim": "Every model is overconfident by between one and four orders of magnitude (Figure 1).",
+    "note": "'Every model is overconfident by between one and four orders of magnitude' now sits above a table with both quantities; it describes the aleatoric column. Needs scoping.",
+    "sample_size": "n_ind=4",
+    "verdict": "OVERSTATED"
+  },
+  "351639629dee": {
+    "claim": "That is a leakage problem rather than a physics one, and including it would have invalidated our own compariso",
+    "note": "Design rationale for the contamination arm, not a measurement.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "35297b24bd38": {
+    "claim": "The teacher-forced arm has the most input-dependent \u03c3 ({{cal_armB_over_faithA_cov}}\u00d7 the autoregressive arm's)",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "36d9bea02350": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "37beb7c04f41": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "3865d2a0c04a": {
+    "claim": "The window builder reads a termination column that is identically zero, so it marks all {{win_naive}} windows ",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "3ae4dd000f59": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "3cdd91dd6324": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
+    "verdict": "SUPPORTED"
+  },
+  "3ea8fb0aa0d0": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
+    "verdict": "SUPPORTED"
+  },
+  "41869b31316f": {
+    "note": "Both counts derived from review_bootstrap_unit.json.",
+    "sample_size": "n_ind 16 vs 4",
+    "verdict": "SUPPORTED"
+  },
+  "41eae82eba6b": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "4211a0dea899": {
+    "claim": "An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data,",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "4307718cf905": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "44513c92c70d": {
+    "claim": "The more useful finding is that ranking survives where scale does not, in both components.",
+    "note": "Summarises the two measured components; both backed below.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "44e4fd4a6efd": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "45e41d1bfaac": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "472bd53b29b2": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "49405a99c548": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
+    "verdict": "SUPPORTED"
+  },
+  "4a53be6f3be6": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "4ca6c7926219": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "4cfd2662cd13": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
+    "verdict": "SUPPORTED"
+  },
+  "50d895c651db": {
+    "claim": "In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory lengths \u00d7 two checkpoints \u00d7 two horizons \u00d7 ",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "5131c9c3bc39": {
+    "claim": "The pre-registration claim above retracts a framing rather than a number and is counted separately.",
+    "note": "Bookkeeping statement about S-12, checkable in the ledger.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "516d892a0fab": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "537e14ef90d2": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "53bfdf70e4c5": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "557a3c572a29": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "565a75b35888": {
+    "claim": "Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_ce",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
   },
   "56d2a28a2baf": {
-    "verdict": "SUPPORTED",
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
     "sample_size": "3 seeds, n_ind=4",
-    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+    "verdict": "SUPPORTED"
+  },
+  "580d222d4346": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "59e7c5043002": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "5a073c0c6776": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "5a75a4a8195b": {
+    "claim": "Resampling trajectories correctly \u2014 carrying all seeds with each draw \u2014 widens intervals by a mean factor of {",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "5b9e6443eab1": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "5e3f8e590db3": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "5eb43f129f19": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "21 training runs",
+    "verdict": "SUPPORTED"
+  },
+  "5f4a84677345": {
+    "claim": "We rebuilt rather than imported.** The forward pass, the loss and the training step are written from scratch a",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "60eefc01f2a6": {
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "6222452dc293": {
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "62f385ff0f04": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "63c1d3196261": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "64468c1423df": {
+    "claim": "The epistemic term, the one the method actually consumes, is two orders of magnitude better and still **{{b2_e",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "6641dbaaab94": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "664a8c8ec170": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "68b384c1feca": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
+    "verdict": "SUPPORTED"
+  },
+  "68b9e59b9fb0": {
+    "claim": "The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}}, spreading {{implied_spre",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "68bd110f4fa9": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "6b9ad2413a1f": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "6bff90b6929f": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "6d0f5a55482e": {
+    "claim": "The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "70b6010104ed": {
+    "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimu",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "714e025c8133": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "716676892281": {
+    "claim": "The same pattern holds for the quantity the method uses, with the strongest evidence in this paper.** At h=128",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "72bdc184b55b": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "73e96eb04496": {
+    "claim": "What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison out-",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "76647232a5b0": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "7743add3eab9": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "7b4068efe820": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "7cac9dc7d9d8": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "21 training runs",
+    "verdict": "SUPPORTED"
+  },
+  "7d8f408696e9": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "7e5c8e059c0c": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "7f9ebf680b50": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "821ab7bb5ed8": {
+    "claim": "The epistemic term the method actually penalises with is better by two orders of magnitude and still {{b2_epi_",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "83572538ff1d": {
+    "note": "A judgement, presented as one.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "851b1b2fc523": {
+    "claim": "And it fails the horizon test the same way: \u03c3 grows {{b2_epi_sigma_growth}}\u00d7 from h=1 to h=368 while error gro",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "8541f38d8c72": {
+    "claim": "The usable, episode-respecting count is {{win_usable}} \u2014 {{rows}} rows, less {{win_tail}} that cannot start a ",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "86ddd35f09c3": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
+    "verdict": "SUPPORTED"
+  },
+  "87790a27dd92": {
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "89791e359c69": {
+    "claim": "Result.** Every condition {{m23_c1}}.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "8d89a6bcc5f7": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "21 training runs",
+    "verdict": "SUPPORTED"
+  },
+  "8e0fb7de4bce": {
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "8f21c91311f5": {
+    "claim": "The rule for the duplication control (\u00a75.4) was stated in conversation before the runs but reached git **{{lea",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "920934ccb2ba": {
+    "claim": "But the same rebuild made a second question cheap to ask, because we had a from-scratch model, the released ch",
+    "note": "'by three to four orders of magnitude' is true of the aleatoric head only. The epistemic term, which the method uses, is 1-2 orders. Must name the quantity.",
+    "sample_size": "n_ind=4",
+    "verdict": "OVERSTATED"
+  },
+  "933263d85098": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "94be81a5c0de": {
+    "claim": "We retract our own findings when they fail.** {{n_retractions_word}} claims in this work are withdrawn on evid",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "975a7a13f62d": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "9e5cfc71baaf": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 vs 16 by arena",
+    "verdict": "SUPPORTED"
+  },
+  "a0112c4bd6a3": {
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "a0648b9f1fa3": {
+    "claim": "The base paper's central claim reproduces, and by a wide margin: trained autoregressively, the model reaches n",
+    "note": "The 4.4x direction is corroborated by three seeds at 2,500 iterations, but the specific figures 0.3509/1.5540 come from one 10k run per arm. Not defensible against seed variance until D1 lands.",
+    "sample_size": "1 seed (armA/B_seed1_10k)",
+    "verdict": "OVERSTATED"
+  },
+  "a07cfcd700fa": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "a88c086ee32a": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "a8fb8df2201c": {
+    "claim": "It does not produce a usable estimate, and it destroys something the faithful arm had: the \u03c3-versus-error orde",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "aaa2804dc8b4": {
+    "claim": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "ad1695104a2c": {
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
+    "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "af1b0db4c8d3": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "b1acef498ca8": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "b32c2e89b0b1": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "b3897b72105a": {
+    "note": "The effect size is still one 10k run per arm. Reordering fixed how it is presented, not the sample behind it; D1 fixes the sample.",
+    "sample_size": "1 seed (armA/B_seed1_10k)",
+    "verdict": "OVERSTATED"
+  },
+  "b3ee37340ab6": {
+    "claim": "It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training e",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "b5ad19cf6aae": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "counted from the ledger, not asserted",
+    "verdict": "SUPPORTED"
+  },
+  "b6ac3d009270": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "b8cf445bdfdc": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "b921b732a396": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "bab37b3ae6d5": {
+    "claim": "Two 400-step trajectories whose spans overlap are not independent evidence, and the out-of-sample arena contai",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "beaf6b586404": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "bf0579ebb5f8": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "bfa02cae679c": {
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "c1a05ea91a4c": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "c3204ca09b05": {
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
+    "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "c3e575a5e486": {
+    "claim": "The reference window builder therefore marks all {{win_naive}} windows valid, including {{win_cross}} that spl",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "c4c8c028036a": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "c7fc30eb1a9f": {
+    "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "c84497002285": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "ca4ccb0e1ae3": {
+    "claim": "The paper describes two loss terms; the implementation has {{diff_terms}}.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "ca8d296bf44d": {
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
+    "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "cc57cfe27e95": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "ccf8cda42bd8": {
+    "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "cf8a27d9770a": {
+    "claim": "The bootstrap interval on duplicated \u2212 clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "d104e645ec94": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "d4837ca7c620": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "d4d66e70bac3": {
+    "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "d4f8d90d55f6": {
+    "claim": "Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure ",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "d562ccf545bd": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
+    "verdict": "SUPPORTED"
+  },
+  "d56eb1de5a37": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "d585e9d69a12": {
+    "claim": "It is still {{cal_armB_ratio}}\u00d7 overconfident.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "d5c99562d8a7": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "d60b4b3aa344": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "d6432e2e35b7": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "d6d5a295e9b8": {
+    "claim": "Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "daa86c50b1ef": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "debc47a09ac8": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "counted from the ledger, not asserted",
+    "verdict": "SUPPORTED"
+  },
+  "e14b58dfd9b5": {
+    "claim": "5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "e3de9217487e": {
+    "claim": "We also report four defects in the released pipeline, evidence that the released checkpoint cannot have come f",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "e4b3f63239bc": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "e5103c74e231": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
+    "verdict": "SUPPORTED"
+  },
+  "e6a63050db47": {
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
+    "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "e6a71e938009": {
+    "note": "An implication drawn from a measured overconfidence factor, flagged as such in the text; the factor itself is derived.",
+    "sample_size": "n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "e713a1b6aa83": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "ee328cdfe27f": {
+    "claim": "The teacher-forced arm has input-dependent \u03c3 and good ordering; the epistemic term ranks better still, at {{b2",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "ee592d9f3fea": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "eedb3d507f31": {
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
+    "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "eff0c489e42f": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "f01da71b897a": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "f038c6a13acb": {
+    "claim": "Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state and policy actions at 50 Hz.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "f057e1c0b366": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "f119432c0cb3": {
+    "claim": "Scored correctly the released checkpoint is materially better than its own released evaluation reports.",
+    "note": "'materially better than its own released evaluation reports' gives no figure and cites no artifact. R-15 has 1.3228 -> 0.7572; either quote it or drop the sentence.",
+    "sample_size": "-",
+    "verdict": "UNSUPPORTED"
+  },
+  "f12ed8e05b19": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "f38a00bfda30": {
+    "claim": "The per-episode gap is positive on **{{m23_n_episodes_positive}} of {{m23_n_episodes}}** episodes.",
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "f4539346e6e6": {
+    "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
+    "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "f56c878ef10a": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "10 paired episodes; 16 A/B cells",
+    "verdict": "SUPPORTED"
+  },
+  "f5a9645e0ed0": {
+    "claim": "Three conditions, all required: the out-of-sample gap at h = 368 excludes zero under a bootstrap over independ",
+    "note": "M-23's three conditions verbatim; the commit predates the runs (Figure 4).",
+    "sample_size": "committed efc35b8",
+    "verdict": "SUPPORTED"
+  },
+  "f70c4a7d7e7e": {
+    "claim": "At h = 368 out-of-sample after 10,000 iterations, autoregressive training reaches **{{m23_A}}** against teache",
+    "note": "Same single-seed issue, plus the n=4 bootstrap leads the evidence. C2 requires reordering: sign test (10/10, exact, n-independent) first, in-sample n=16 second, n=4 bootstrap third with its limitation inline.",
+    "sample_size": "1 seed; n_ind=4 bootstrap",
+    "verdict": "OVERSTATED"
+  },
+  "f70fc31b015b": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "f9f83b6ba39c": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 out-of-sample trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "fa24f0a5e029": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "fb68c1895cc5": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "fcab37327de8": {
+    "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "fdd6b6aaa3c6": {
+    "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "ff44600dc084": {
+    "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
+    "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
   }
 }

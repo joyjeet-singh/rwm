@@ -1,0 +1,364 @@
+{
+  "target_coverage": 0.6827,
+  "holdout_episodes": [
+    1,
+    8
+  ],
+  "design": {
+    "fit": "one held-out episode",
+    "eval": "the other, both directions",
+    "traj_len": 400,
+    "start_step": 32,
+    "trajectories_per_episode": {
+      "1": 2,
+      "8": 2
+    },
+    "note": "the per-horizon scalar has 5 free parameters against the constant scalar's 1, so it necessarily fits its own episode better; only the held-out column is evidence"
+  },
+  "quantities": {
+    "aleatoric": {
+      "fits": [
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 1,
+          "c": 592.5602452517332,
+          "coverage_after": 0.6444444444444445,
+          "coverage_before": 0.0
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 8,
+          "c": 924.2471222012347,
+          "coverage_after": 0.6833333333333333,
+          "coverage_before": 0.001388888888888889
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 32,
+          "c": 1734.2233906869983,
+          "coverage_after": 0.7138888888888889,
+          "coverage_before": 0.001736111111111111
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 128,
+          "c": 3631.1587288078886,
+          "coverage_after": 0.6018229166666667,
+          "coverage_before": 0.0006944444444444445
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 368,
+          "c": 7523.446607381588,
+          "coverage_after": 0.6733091787439613,
+          "coverage_before": 0.00030193236714975844
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 1,
+          "c": 611.1163286413264,
+          "coverage_after": 0.7,
+          "coverage_before": 0.011111111111111112
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 8,
+          "c": 920.7167392708288,
+          "coverage_after": 0.6819444444444445,
+          "coverage_before": 0.001388888888888889
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 32,
+          "c": 1595.9156648519288,
+          "coverage_after": 0.65625,
+          "coverage_before": 0.0010416666666666667
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 128,
+          "c": 5112.633214444101,
+          "coverage_after": 0.7655381944444445,
+          "coverage_before": 0.0006076388888888889
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 368,
+          "c": 7782.278210757911,
+          "coverage_after": 0.6894625603864735,
+          "coverage_before": 0.0004528985507246377
+        }
+      ],
+      "constant_fits": [
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 1,
+          "c": 592.5602452517332,
+          "coverage_after": 0.6444444444444445
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 8,
+          "c": 592.5602452517332,
+          "coverage_after": 0.5069444444444444
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 32,
+          "c": 592.5602452517332,
+          "coverage_after": 0.33958333333333335
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 128,
+          "c": 592.5602452517332,
+          "coverage_after": 0.18107638888888888
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 368,
+          "c": 592.5602452517332,
+          "coverage_after": 0.11243961352657005
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 1,
+          "c": 611.1163286413264,
+          "coverage_after": 0.7
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 8,
+          "c": 611.1163286413264,
+          "coverage_after": 0.5166666666666667
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 32,
+          "c": 611.1163286413264,
+          "coverage_after": 0.35173611111111114
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 128,
+          "c": 611.1163286413264,
+          "coverage_after": 0.2232638888888889
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 368,
+          "c": 611.1163286413264,
+          "coverage_after": 0.1547705314009662
+        }
+      ],
+      "verdict": {
+        "per_horizon_cells_calibrated": 10,
+        "n_cells": 10,
+        "constant_cells_calibrated": 2,
+        "per_horizon_restores_calibration": true,
+        "worst_cell": {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 128,
+          "c": 5112.633214444101,
+          "coverage_after": 0.7655381944444445,
+          "coverage_before": 0.0006076388888888889
+        },
+        "c_ratio_max_over_min": 13.13331137739728,
+        "tolerance": 0.1
+      }
+    },
+    "epistemic": {
+      "fits": [
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 1,
+          "c": 5.0817340086935285,
+          "coverage_after": 0.6333333333333333,
+          "coverage_before": 0.1111111111111111
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 8,
+          "c": 8.053819112178806,
+          "coverage_after": 0.7027777777777777,
+          "coverage_before": 0.10972222222222222
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 32,
+          "c": 13.80463151386988,
+          "coverage_after": 0.7090277777777778,
+          "coverage_before": 0.08923611111111111
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 128,
+          "c": 25.639584788802928,
+          "coverage_after": 0.6527777777777778,
+          "coverage_before": 0.05303819444444444
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 368,
+          "c": 47.33297855376413,
+          "coverage_after": 0.7180555555555556,
+          "coverage_before": 0.034963768115942026
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 1,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.7444444444444445,
+          "coverage_before": 0.24444444444444444
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 8,
+          "c": 7.652213233442365,
+          "coverage_after": 0.6694444444444444,
+          "coverage_before": 0.13333333333333333
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 32,
+          "c": 12.665868745551535,
+          "coverage_after": 0.646875,
+          "coverage_before": 0.08472222222222223
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 128,
+          "c": 29.09813386768436,
+          "coverage_after": 0.7189236111111111,
+          "coverage_before": 0.05538194444444444
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 368,
+          "c": 41.30909529313515,
+          "coverage_after": 0.6519021739130435,
+          "coverage_before": 0.04015700483091787
+        }
+      ],
+      "constant_fits": [
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 1,
+          "c": 5.0817340086935285,
+          "coverage_after": 0.6333333333333333
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 8,
+          "c": 5.0817340086935285,
+          "coverage_after": 0.5236111111111111
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 32,
+          "c": 5.0817340086935285,
+          "coverage_after": 0.37430555555555556
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 128,
+          "c": 5.0817340086935285,
+          "coverage_after": 0.23055555555555557
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 368,
+          "c": 5.0817340086935285,
+          "coverage_after": 0.16796497584541062
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 1,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.7444444444444445
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 8,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.5805555555555556
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 32,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.40902777777777777
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 128,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.2747395833333333
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 368,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.20694444444444443
+        }
+      ],
+      "verdict": {
+        "per_horizon_cells_calibrated": 10,
+        "n_cells": 10,
+        "constant_cells_calibrated": 2,
+        "per_horizon_restores_calibration": true,
+        "worst_cell": {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 1,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.7444444444444445,
+          "coverage_before": 0.24444444444444444
+        },
+        "c_ratio_max_over_min": 9.314336105114846,
+        "tolerance": 0.1
+      }
+    }
+  }
+}
