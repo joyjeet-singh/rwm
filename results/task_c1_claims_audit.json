@@ -1,7 +1,8 @@
 {
   "n_claims": 187,
   "by_verdict": {
-    "SUPPORTED": 187
+    "SUPPORTED": 186,
+    "UNREVIEWED": 1
   },
   "claims": [
     {
@@ -1738,9 +1739,9 @@
       "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
     },
     {
-      "id": "4f6fe448dd07",
+      "id": "e6480df494a2",
       "section": "5.6 Ensemble disagreement beats the trivial baseline",
-      "claim": "The third column is the one that settles it.** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}.",
+      "claim": "The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}.",
       "keys": [
         "d2b_shrink_all_abs",
         "d2b_epi_all",
@@ -1751,9 +1752,9 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
-      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "cb446a46b86b",

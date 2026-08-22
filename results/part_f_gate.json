@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "18 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "19 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -28,13 +28,13 @@
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "60 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
+      "detail": "63 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
     },
     {
       "n": 6,
       "name": "numeric consistency, abstract vs body",
       "pass": true,
-      "detail": "39 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
+      "detail": "44 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
   "n_pass": 6,

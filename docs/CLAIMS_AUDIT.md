@@ -5,7 +5,7 @@ One row per declarative claim in the paper. Claims are enumerated mechanically f
 only judgement, and is keyed to the claim's text so that rewording a claim resets it
 to UNREVIEWED rather than carrying a stale verdict forward.
 
-**187 claims.** SUPPORTED: 187
+**187 claims.** SUPPORTED: 186, UNREVIEWED: 1
 
 | # | § | claim | backed by | verdict |
 |---|---|---|---|---|
@@ -112,7 +112,7 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 101 | 5.6 Ensemble disagreement  | It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. | `task_d_nind20.json` | **SUPPORTED** |
 | 102 | 5.6 Ensemble disagreement  | At {{d2p_overlap_h}} the marginal intervals *do* overlap — it is the horizon where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowes… | `task_d_nind20.json` | **SUPPORTED** |
 | 103 | 5.6 Ensemble disagreement  | The paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero, but only just: {{d2p_narrowest_lo}} is the smallest lower bound… | `task_d_nind20.json` | **SUPPORTED** |
-| 104 | 5.6 Ensemble disagreement  | The third column is the one that settles it.** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_al… | `task_d_nind20.json` | **SUPPORTED** |
+| 104 | 5.6 Ensemble disagreement  | The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lower… | `task_d_nind20.json` | **UNREVIEWED** |
 | 105 | 5.6 Ensemble disagreement  | Partialling out log(1 + index) gives {{d2r_log}} {{d2r_log_ci}}; a cubic in the index gives {{d2r_cub}} {{d2r_cub_ci}}; a rank partial correlation, wh… | `task_d2b_robustness.json` | **SUPPORTED** |
 | 106 | 5.6 Ensemble disagreement  | Computing the correlation **within each forecast step** — across trajectories, with depth held exactly constant, so the index cannot contribute by con… | `task_d2b_robustness.json` | **SUPPORTED** |
 | 107 | 5.6 Ensemble disagreement  | The weakest figure across all {{d2r_ncontrols}} controls is {{d2r_weakest}}. | `task_d2b_robustness.json` | **SUPPORTED** |

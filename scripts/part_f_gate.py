@@ -177,10 +177,19 @@ def main():
     # headline section either -- section 12 quoted the n=4 aleatoric ratio while
     # the abstract quoted the n=20 one, which the earlier version of this check
     # missed because both keys were "in the body somewhere".
+    # Pairs of keys carrying the SAME quantity from different arenas or scripts.
+    # A5 was this failure: the abstract and section 12 both described the
+    # aleatoric/epistemic ratio, in words, and disagreed about it -- "nearly three
+    # orders" against "two orders" -- while every numeral was correct.
     DUAL = [("b2_epi_ratio_h368", "d1n_epi_ratio_h368"),
             ("b2_epi_cov1_h368", "d1n_epi_cov1_h368"),
             ("cal_rel_ratio", "d1n_alea_ratio_h368"),
-            ("b2_alea_ratio_h368", "d1n_alea_ratio_h368")]
+            ("b2_alea_ratio_h368", "d1n_alea_ratio_h368"),
+            ("b2_epi_over_alea_h368", "d1n_epi_over_alea_h368"),
+            ("b2_penalty_corr", "d4_r"),
+            ("d2b_par_all", "d2r_lin"),
+            ("b2_epi_npos_h368", "perm_all_epi_npos_h368"),
+            ("cal_rel_npos", "relale_all_pos_h368")]
     HEADLINE = ["\n## 9.", "\n## 10.", "\n## 12."]
     clash = [(a, b) for a, b in DUAL
              if f"{{{{{a}}}}}" in abstract and f"{{{{{b}}}}}" in abstract]
