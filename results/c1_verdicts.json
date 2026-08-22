@@ -14,6 +14,11 @@
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
     "verdict": "SUPPORTED"
   },
+  "02d12dcb4980": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "0418c199d02a": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
@@ -36,6 +41,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "06d17526f8b4": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "0743a4754d4a": {
     "claim": "The aleatoric \u03c3 is **{{cal_rel_ratio}}\u00d7 smaller than its own mean absolute error** ({{cal_rel_cov1}}% coverage",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -55,6 +65,11 @@
   "08f7b5d4ff11": {
     "note": "results/task_d3_perhorizon.json design.trajectories_per_episode = {1: 2, 8: 2}; the smallness is the point and section 11 bounds the claim accordingly",
     "sample_size": "n_independent = 2 per fit direction; 4 non-overlapping 400-step trajectories across the two held-out episodes",
+    "verdict": "SUPPORTED"
+  },
+  "0a51978739b8": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "0aa88aa0cb0d": {
@@ -118,6 +133,16 @@
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "1808dac3dffa": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "19daefb82ef9": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "1a7f61b9a16a": {
     "claim": "Running the correction \u2014 the authors' own unused `gaussian_nll` branch \u2014 fails differently rather than succeed",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -164,6 +189,11 @@
   "235c8a7fc64c": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "2786140b6e93": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "29e04802f599": {
@@ -231,6 +261,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "30d68f335081": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "310e07ba5798": {
     "claim": "{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in th",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -262,6 +297,11 @@
   "3385bf2a0eca": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "33c6a5b4a93a": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "34a343cc5968": {
@@ -500,6 +540,11 @@
     "sample_size": "-",
     "verdict": "SUPPORTED"
   },
+  "61674645f9f5": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "61b7f2a74e7b": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
@@ -621,6 +666,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "75c11305e547": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "76647232a5b0": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
@@ -644,6 +694,11 @@
   "7c19fc1a4730": {
     "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact",
     "sample_size": "12 comparative claims, 11 corruptions",
+    "verdict": "SUPPORTED"
+  },
+  "7c8507eeea53": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "7cac9dc7d9d8": {
@@ -892,6 +947,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "b80ece631b68": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "b83e94ef4583": {
     "note": "results/step6_analysis.json collapse.iters_to_checkpoint = 153269.7; matches section 7's implied_iters exactly, which is why the abstract was moved off the task5 refit (158,319) it previously quoted",
     "sample_size": "",
@@ -931,6 +991,11 @@
   "bfa02cae679c": {
     "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
     "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "c0690281938b": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "c1a05ea91a4c": {
@@ -1202,6 +1267,11 @@
   "f38a00bfda30": {
     "claim": "The per-episode gap is positive on **{{m23_n_episodes_positive}} of {{m23_n_episodes}}** episodes.",
     "note": "Quantitative, substituted from the named artifact by the build.",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "f3d767b81e0f": {
+    "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
     "sample_size": "",
     "verdict": "SUPPORTED"
   },

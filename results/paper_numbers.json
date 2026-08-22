@@ -713,11 +713,11 @@
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 0
+    "value": 20
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 0
+    "value": 20
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -1878,6 +1878,10 @@
   "n_retractions_word": {
     "source": "FINDINGS_LEDGER.md",
     "value": "Six"
+  },
+  "n_retractions_word_lower": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "six"
   },
   "n_runs": {
     "source": "results/step5_arm*.json",

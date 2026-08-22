@@ -265,6 +265,7 @@ def main():
              8: "Eight", 9: "Nine", 10: "Ten"}
     put("n_retractions_word", WORDS.get(len(retr), str(len(retr))), "FINDINGS_LEDGER.md")
     put("n_retractions_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
+    put("n_retractions_word_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
     put("n_retract_framing_word", WORDS.get(len(fram), str(len(fram))).lower(), "FINDINGS_LEDGER.md")
     put("n_retract_framing_word_cap", WORDS.get(len(fram), str(len(fram))), "FINDINGS_LEDGER.md")
     ORD = {1: "a seventh", 2: "two further", 3: "three further", 4: "four further"}

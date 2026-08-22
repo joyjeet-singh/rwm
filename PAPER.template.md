@@ -543,57 +543,18 @@ the work.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
-(source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
-({{n_entries}} entries). Claims are never edited in place. A claim that turns out to be wrong is
-marked superseded, with a pointer to what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data
-that tested them — with one exception, which we report below. Figure 4 shows the lead time for
-each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip-pattern rule by
-{{lead_flip}}, the difficulty-bias rule by {{lead_m22}}, the long-horizon rule by {{lead_m23}}.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps. The fifth bar is negative: the duplication-control rule (§6.4) was stated in conversation before the runs but reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
-The fifth bar is negative. The rule for the duplication control (§6.4) was stated in conversation
-before the runs but reached git **{{lead_task3}} after the runs finished**, and we found this only by
-auditing our own `git log`. The measurement stands — the arm was built and run without reference
-to its outcome — but the claim that it was pre-registered does not, and we withdraw it. We report
-it because a discipline that is only checked when it succeeds is not a discipline.
+**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix D lists them). The most consequential is the second framing retraction: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§5.5). Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
-**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims
-kept in the record. In order: a premise about forecast decay that turned out not to exist in the
-code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate
-we ourselves showed to be biased low; an aggregation artifact that inverted a published-model
-comparison in our favour, withdrawn when the gating checks we had written refuted it; a
-per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent
-"in all four models", made against a table holding three; and the phrase "the released checkpoint's
-uncertainty output", singular, when the checkpoint emits two and we had measured the one the method
-discards.
+**A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean {{bu_mean_ratio}}× and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
-{{n_retract_framing_word_cap}} further retractions are **not** among those {{n_retractions_lower}}, because they withdraw framings rather than numbers and are counted separately: the pre-registration claim above, and the inference from a count of positive per-dimension correlations to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§5.5). The second was found by our own pre-submission audit of this paper, and it is the one that cost the most: it withdraws the strength of evidence behind what an earlier draft of §5.5 called the strongest result here.
-
-**A statistic that was resampling the wrong unit.** Our bootstrap pooled three training seeds over
-a shared set of evaluation trajectories and resampled the pooled vector, while reporting the
-independent-trajectory count. Each trajectory appeared three times. Resampling trajectories
-correctly — carrying all seeds with each draw — widens intervals by a mean factor of
-{{bu_mean_ratio}}× (range {{bu_min_ratio}}–{{bu_max_ratio}}) and changes {{bu_changes}} of
-{{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon
-verdict survives. Both units are reported.
-
-**Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing.
-
-**And it checks its own comparative claims.** Verifying that every numeral came from an artifact says nothing about the sentence built around it. A sentence can take correct numbers and assert a wrong relation between them — that two intervals do not overlap when they do, that a named cell is the largest when it is third, that a quantity rose when it fell, that a ratio is two orders of magnitude when it is nearly three, or that a count came from one evaluation arena when it came from another. Six such defects were present in an earlier draft of this paper, all of them downstream of numerals that were correct.
-
-The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds — interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, the arena and horizon a count came from, a stated ordering between two scalars, and a stated ratio of relative variabilities. Each pins both a fragment of the paper's own text, so that rewording the sentence fails the check rather than silently detaching it, and a relation recomputed from the artifacts. {{cc_pass}} of {{cc_n}} pass.
-
-Every one of them is also run against a **deliberately corrupted expectation on each build** — the interval relation inverted, the extremum replaced by the runner-up, the sign flipped, the order of magnitude and the dimension counts moved by one — and must fail. {{cc_st_caught}} of {{cc_st_n}} corruptions are caught. An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage; this is how we find out. The first version of that self-test contained two corruptions that were accidentally no-ops, and reported them as misses, and a later extension prefixed a horizon label to family keys that were already model names, failing two checks whose extrema were correct. Both were defects in the checker rather than in the paper, and both surfaced because the checks were run rather than assumed.
-
-Two things are excluded from the numeric comparison, on the same principle in both cases: the number measures the machine, not the model.
-
-*The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) — on one machine, within a single measurement session.
-
-*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on every machine — three different values across the three hosts we have run it on. Its iteration count and terminal losses are therefore a property of the host, and we do not quote any of them here: a number the build declares host-dependent has no business being printed as a result. **Its sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise. Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact — a run that stopped short of its own cap was time-bounded.
-
-Excluding a file is not sufficient on its own. `results/paper_numbers.json` records the *source* of every value it holds, and it had copied that diagnostic's iteration count into a key of its own — so the host-dependence leaked through a file that was not excluded, and the clean clone duly differed on it. The verifier now drops any key whose recorded source is an excluded artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather than requiring anyone to remember.
+**Reproducibility, and a build that checks its own prose.**
+`./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}}
+numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%),
+{{ver_differing}} differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix D gives the argument, the kinds, the self-test, two defects found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -684,7 +645,7 @@ gradient. The epistemic term the method actually penalises with is {{d1n_epi_ove
 
 The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large — but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, restores nominal coverage on {{d3_epi_ok}} of {{d3_epi_cells}} held-out cells where a global multiplier restores {{d3_epi_const_ok}}. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon, keeps {{d2b_par_all}} once the index is partialled out, and still reaches {{d2r_win}} when depth is held exactly constant — so it is not a re-encoding of the clock. That is the one claim of either original work that this reproduction strengthens rather than qualifies.
 
-What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on {{perm_all_epi_npos_h368}} of {{perm_all_epi_ndim_h368}} dimensions at h=368, and the faithful and teacher-forced arms. The released checkpoint's *aleatoric* head does the opposite, and how strongly depends on the arena — a dependence worth stating rather than smoothing over. Over all ten episodes (n_independent = {{relale_all_nind}}) it ranks error **inversely on every one of {{perm_all_relale_ndim_h368}} dimensions** at h=368; on the two held-out episodes alone (n_independent = {{relale_oos_nind}}, the arena §5.5's table reports) it is {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}}, which is chance. The larger arena is the better-sampled one and its result is the stranger of the two: a σ that is not merely uninformative about error but anti-correlated with it. The corrected arm sits at chance in both. And once the physical coupling between state dimensions is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction. We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about {{perm_worst_factor}} on the cells we had cited as evidence. Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
+What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on {{perm_all_epi_npos_h368}} of {{perm_all_epi_ndim_h368}} dimensions at h=368, and the faithful and teacher-forced arms. The released checkpoint's *aleatoric* head does the opposite, ranking error inversely on every one of {{perm_all_relale_ndim_h368}} dimensions over all ten episodes and at chance on the held-out pair alone — a dependence on arena that §5.5 sets out. The corrected arm sits at chance in both. And once the physical coupling between state dimensions is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction. We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about {{perm_worst_factor}} on the cells we had cited as evidence. Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
 
 ---
 
@@ -741,3 +702,84 @@ What every downstream number rests on. Each level was passed before the next was
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
 **Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of recorded wall clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. The longest single run is {{rt_longest}} hours. An earlier version of this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+
+{{FIGURES}}
+
+## Appendix D — verifying the paper's own claims
+
+**The {{n_retractions_word_lower}} numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. The {{n_retract_framing_word}} framing retractions are the claim that a pre-registration was pre-registered, and the binomial inference of §5.5. Each is a numbered entry in `FINDINGS_LEDGER.md` with its evidence and its successor.
+
+`build_paper.py` asserts that every printed number came from a named artifact. That is a
+guarantee about *provenance*, and it is silent about *relations between* provenanced numbers.
+Five failure modes survive it, and all five occurred in this paper:
+
+- **an interval relation that is not the one asserted** — "the intervals do not overlap", where at
+  h=128 they overlap across 0.604–0.643;
+- **an extremum that is not the extremum** — the worst-calibrated held-out cell named as
+  epistemic at h=1, which is third; the largest deviation is aleatoric at h=128;
+- **a stated change with the wrong sign** — "a change of **+**0.010", where partialling the
+  forecast index out *reduces* the correlation;
+- **two prose descriptions of one ratio that disagree** — "nearly three orders of magnitude" in
+  the abstract against "two orders" in §12, of 600×;
+- **a count attributed to the wrong evaluation arena** — 0 of 45 over all ten episodes asserted
+  where the table beside it printed the held-out arena's 20 of 45.
+
+None is a numeral. None appears in `results/paper_numbers.json`. Each was typed.
+
+**The check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across
+{{cc_kinds}} kinds: *overlap* (two intervals do or do not overlap), *extremum* (a named cell is
+the max or min of its family), *sign* (a stated rise or fall matches the direction of the
+difference), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`),
+*cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering
+between two scalars), *relvar* (a stated ratio of relative variabilities), and
+*count-consistency* (one count asserted in several places, in words or numerals, agrees with the
+ledger everywhere).
+
+Each entry pins two things and requires both: a **fragment of the paper's own text**, so that
+rewording a sentence fails the check rather than silently detaching it from the claim it guards,
+and a **relation recomputed from the artifacts**. A check that only re-asserts an artifact fact
+guards nothing; a check that only matches text guards nothing either.
+
+**The self-test.** Every assertion is run against a deliberately corrupted expectation on each
+build and must fail: the interval relation inverted, the extremum replaced by the *runner-up*
+rather than an absent label, the sign flipped, the order of magnitude and the dimension counts
+moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught. An assertion that has quietly stopped
+being able to fail is worth less than no assertion, because it reads as coverage.
+
+**Two defects the self-test found in the checker itself.** Its first version applied a fixed
+corruption per kind — `expect: "disjoint"` to every overlap check — so for claims that already
+expected that value the corruption was a no-op, and two of eleven assertions reported as missed.
+They were not missed; nothing had been corrupted. Corruptions now invert relative to each claim's
+own expectation. Later, a label helper prefixed a horizon to family keys that were already model
+names, producing `h=teacher-forced armB`, which matched nothing and failed two checks whose
+extrema were correct. Both were defects in the checker rather than in the paper, and both
+surfaced because the checks were run rather than assumed.
+
+**Two exclusions from the numeric comparison**, on the same principle in both cases: the number
+measures the machine, not the model.
+
+*The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of
+`results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
+resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on
+another machine, or on this one under different load, and it records that about itself: across
+its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats
+runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) — on one machine,
+within a single measurement session.
+
+*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds
+rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on
+every machine — three different values across the three hosts we have run it on. Its iteration
+count and terminal losses are therefore a property of the host, and we do not quote any of them
+here: a number the build declares host-dependent has no business being printed as a result. **Its
+sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise.
+Excluding by filename rather than by stopping rule would have dropped the reproducible one along
+with it, so the verifier decides from the artifact — a run that stopped short of its own cap was
+time-bounded.
+
+**Excluding a file is not sufficient on its own.** `results/paper_numbers.json` records the
+*source* of every value it holds, and it had copied that diagnostic's iteration count into a key
+of its own — so the host-dependence leaked through a file that was not excluded, and the clean
+clone duly differed on it. The verifier now drops any key whose recorded source is an excluded
+artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather
+than requiring anyone to remember.
+

@@ -32,11 +32,15 @@ def main():
         used.add(k)
         return str(N[k]["value"])
 
-    out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", sub, text)
+    # {{FIGURES}} is a placement marker, not a value: it is substituted after the
+    # numeric pass, so exclude it from both the missing and leftover checks.
+    text_marked = text.replace("{{FIGURES}}", "\x00FIGURES\x00")
+    out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", sub, text_marked)
+    out = out.replace("\x00FIGURES\x00", "{{FIGURES}}")
 
     assert not missing, ("placeholders with no value in paper_numbers.json: "
                          + ", ".join(sorted(set(missing))))
-    leftover = re.findall(r"\{\{[^}]*\}\}", out)
+    leftover = [x for x in re.findall(r"\{\{[^}]*\}\}", out) if x != "{{FIGURES}}"]
     assert not leftover, f"unresolved placeholders remain: {sorted(set(leftover))}"
 
     unused = sorted(set(N) - used)
@@ -98,11 +102,18 @@ def main():
             "confidence-interval width, with the mean marked. Resampling trajectory-step pairs "
             "rather than whole trajectories narrows every interval.",
     }
-    body = out.rstrip() + "\n\n## Figures\n\n"
     missing = [f for f in figs if f not in CAPS]
     assert not missing, f"figures with no caption: {missing}"
+    block = "## Appendix C — figures\n\n"
     for f in figs:
-        body += f"![{CAPS[f]}](figures/{f})\n\n"
+        block += f"![{CAPS[f]}](figures/{f})\n\n"
+    # The figures used to be appended last unconditionally, which fixed them as
+    # the final appendix. A template that wants an appendix AFTER them places
+    # {{FIGURES}} where they belong; otherwise they still go at the end.
+    if "{{FIGURES}}" in out:
+        body = out.replace("{{FIGURES}}", block.rstrip()) .rstrip() + "\n"
+    else:
+        body = out.rstrip() + "\n\n" + block
     open(OUT, "w").write(header + body)
 
     # LaTeX for submission, from the same resolved text -- one source, two outputs.

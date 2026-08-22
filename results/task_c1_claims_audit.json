@@ -1,7 +1,7 @@
 {
-  "n_claims": 189,
+  "n_claims": 188,
   "by_verdict": {
-    "SUPPORTED": 189
+    "SUPPORTED": 188
   },
   "claims": [
     {
@@ -2272,9 +2272,9 @@
       "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
     },
     {
-      "id": "4211a0dea899",
+      "id": "02d12dcb4980",
       "section": "8. Method",
-      "claim": "An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries).",
+      "claim": "An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries).",
       "keys": [
         "n_entries"
       ],
@@ -2285,31 +2285,12 @@
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "1db61e732582",
+      "id": "19daefb82ef9",
       "section": "8. Method",
-      "claim": "Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip-pattern rule by {{lead_flip}}, the difficulty-bias rule by {{lead_m22}}, the long-horizon rule by {{lead_m23}}.",
-      "keys": [
-        "lead_m16",
-        "lead_flip",
-        "lead_m22",
-        "lead_m23"
-      ],
-      "artifacts": [
-        "results/paper_figures.json"
-      ],
-      "n_keys": 4,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
-    },
-    {
-      "id": "0765b3a83a7e",
-      "section": "8. Method",
-      "claim": "The rule for the duplication control (\u00a76.4) was stated in conversation before the runs but reached git **{{lead_task3}} after the runs finished**, and we found this only by auditing our own `git log`.",
+      "claim": "The fifth bar is negative: the duplication-control rule (\u00a76.4) was stated in conversation before the runs but reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`.",
       "keys": [
         "lead_task3"
       ],
@@ -2320,66 +2301,48 @@
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "310e07ba5798",
+      "id": "06d17526f8b4",
       "section": "8. Method",
-      "claim": "{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record.",
+      "claim": "{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix D lists them).",
       "keys": [
         "n_retractions_word",
-        "n_superseded"
+        "n_superseded",
+        "n_retract_framing_word"
       ],
       "artifacts": [
         "FINDINGS_LEDGER.md"
       ],
-      "n_keys": 2,
+      "n_keys": 3,
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "b5ad19cf6aae",
+      "id": "33c6a5b4a93a",
       "section": "8. Method",
-      "claim": "{{n_retract_framing_word_cap}} further retractions are **not** among those {{n_retractions_lower}}, because they withdraw framings rather than numbers and are counted separately: the pre-registration claim above, and the inference from a count of positive per-dimension correlations to a binomial P-value, which assumed an independence the 45 state dimensions do not have (\u00a75.5).",
-      "keys": [
-        "n_retract_framing_word_cap",
-        "n_retractions_lower"
-      ],
-      "artifacts": [
-        "FINDINGS_LEDGER.md"
-      ],
-      "n_keys": 2,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "counted from the ledger, not asserted",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
-    },
-    {
-      "id": "5a75a4a8195b",
-      "section": "8. Method",
-      "claim": "Resampling trajectories correctly \u2014 carrying all seeds with each draw \u2014 widens intervals by a mean factor of {{bu_mean_ratio}}\u00d7 (range {{bu_min_ratio}}\u2013{{bu_max_ratio}}) and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable.",
+      "claim": "Resampling trajectories instead widens intervals by a mean {{bu_mean_ratio}}\u00d7 and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable.",
       "keys": [
         "bu_mean_ratio",
-        "bu_min_ratio",
-        "bu_max_ratio",
         "bu_changes",
         "bu_cells"
       ],
       "artifacts": [
         "results/review_bootstrap_unit.json"
       ],
-      "n_keys": 5,
+      "n_keys": 3,
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "d6d5a295e9b8",
+      "id": "0a51978739b8",
       "section": "8. Method",
-      "claim": "Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing.",
+      "claim": "Reproducibility, and a build that checks its own prose.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing.",
       "keys": [
         "ver_files",
         "ver_values",
@@ -2394,177 +2357,26 @@
       "generated": true,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "acc0f21ea900",
+      "id": "30d68f335081",
       "section": "8. Method",
-      "claim": "A sentence can take correct numbers and assert a wrong relation between them \u2014 that two intervals do not overlap when they do, that a named cell is the largest when it is third, that a quantity rose when it fell, that a ratio is two orders of magnitude when it is nearly three, or that a count came from one evaluation arena when it came from another.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "12 comparative claims, 11 corruptions",
-      "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact"
-    },
-    {
-      "id": "f8cc6aa35089",
-      "section": "8. Method",
-      "claim": "The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds \u2014 interval overlap, extremum identification, the sign of a stated change, orders-of-magnitude descriptions, the arena and horizon a count came from, a stated ordering between two scalars, and a stated ratio of relative variabilities.",
+      "claim": "The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught.",
       "keys": [
         "cc_n",
-        "cc_kinds"
-      ],
-      "artifacts": [
-        "results/comparative_claims.json"
-      ],
-      "n_keys": 2,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "19 comparative claims, 18 corruptions",
-      "note": "counts read from results/comparative_claims.json, regenerated with --self-test; the 7 kinds are overlap, extremum, sign, orders, cell, compare, relvar"
-    },
-    {
-      "id": "9397a5d9422f",
-      "section": "8. Method",
-      "claim": "Each pins both a fragment of the paper's own text, so that rewording the sentence fails the check rather than silently detaching it, and a relation recomputed from the artifacts. {{cc_pass}} of {{cc_n}} pass.",
-      "keys": [
-        "cc_pass",
-        "cc_n"
-      ],
-      "artifacts": [
-        "results/comparative_claims.json"
-      ],
-      "n_keys": 2,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "12 comparative claims, 11 corruptions",
-      "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact"
-    },
-    {
-      "id": "a11b0e48686c",
-      "section": "8. Method",
-      "claim": "Every one of them is also run against a **deliberately corrupted expectation on each build** \u2014 the interval relation inverted, the extremum replaced by the runner-up, the sign flipped, the order of magnitude and the dimension counts moved by one \u2014 and must fail. {{cc_st_caught}} of {{cc_st_n}} corruptions are caught.",
-      "keys": [
+        "cc_kinds",
         "cc_st_caught",
         "cc_st_n"
       ],
       "artifacts": [
         "results/comparative_claims.json"
       ],
-      "n_keys": 2,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "12 comparative claims, 11 corruptions",
-      "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact"
-    },
-    {
-      "id": "7c19fc1a4730",
-      "section": "8. Method",
-      "claim": "An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage; this is how we find out.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "12 comparative claims, 11 corruptions",
-      "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact"
-    },
-    {
-      "id": "a53d00d681e8",
-      "section": "8. Method",
-      "claim": "Both were defects in the checker rather than in the paper, and both surfaced because the checks were run rather than assumed.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "19 comparative claims, 18 corruptions",
-      "note": "counts read from results/comparative_claims.json, regenerated with --self-test; the 7 kinds are overlap, extremum, sign, orders, cell, compare, relvar"
-    },
-    {
-      "id": "f0e7b09f6f99",
-      "section": "8. Method",
-      "claim": "The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` \u2014 projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats.",
-      "keys": [
-        "ver_timing",
-        "ver_machine"
-      ],
-      "artifacts": [
-        "results/verify_reproduction.json"
-      ],
-      "n_keys": 2,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "clean-clone comparison, 27 regenerated files",
-      "note": "results/verify_reproduction.json timing_excluded=3972, machine_file_values_excluded=584"
-    },
-    {
-      "id": "45c8c028f002",
-      "section": "8. Method",
-      "claim": "It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) \u2014 on one machine, within a single measurement session.",
-      "keys": [
-        "time_cfgs",
-        "time_rel_lo",
-        "time_rel_hi",
-        "time_worst_cfg"
-      ],
-      "artifacts": [
-        "results/step4_5_timing.json"
-      ],
       "n_keys": 4,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "clean-clone comparison, 27 regenerated files",
-      "note": "results/step4_5_timing.json: std/s_per_iter per config spans 5.4% (ens5_bs256) to 31.8% (ens1_bs256)"
-    },
-    {
-      "id": "eb4453c77a88",
-      "section": "8. Method",
-      "claim": "One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on every machine \u2014 three different values across the three hosts we have run it on.",
-      "keys": [
-        "ver_timebound",
-        "ver_tb_budget",
-        "ver_tb_cap"
-      ],
-      "artifacts": [
-        "results/step4_4_overfit_ens1.json",
-        "results/verify_reproduction.json"
-      ],
-      "n_keys": 3,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "clean-clone comparison, 28 regenerated files",
-      "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance"
-    },
-    {
-      "id": "84b8f57e0683",
-      "section": "8. Method",
-      "claim": "Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact \u2014 a run that stopped short of its own cap was time-bounded.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "clean-clone comparison, 27 regenerated files",
-      "note": "scripts/verify_reproduction.py time_bounded(): excludes when iterations_run < config.iters; step4_4_overfit_b32lr1e3.json (2001 of a 2000 cap) is NOT excluded and reproduces bitwise"
-    },
-    {
-      "id": "0c8fde7f2259",
-      "section": "8. Method",
-      "claim": "The verifier now drops any key whose recorded source is an excluded artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather than requiring anyone to remember.",
-      "keys": [
-        "ver_hostkeys"
-      ],
-      "artifacts": [
-        "results/verify_reproduction.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "clean-clone comparison, 28 regenerated files",
-      "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance"
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
       "id": "7b4068efe820",
@@ -3003,48 +2815,20 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "71a087f1f60c",
+      "id": "7c8507eeea53",
       "section": "12. Conclusion",
-      "claim": "The released checkpoint's *aleatoric* head does the opposite, and how strongly depends on the arena \u2014 a dependence worth stating rather than smoothing over.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
-      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
-    },
-    {
-      "id": "82198a728ff8",
-      "section": "12. Conclusion",
-      "claim": "Over all ten episodes (n_independent = {{relale_all_nind}}) it ranks error **inversely on every one of {{perm_all_relale_ndim_h368}} dimensions** at h=368; on the two held-out episodes alone (n_independent = {{relale_oos_nind}}, the arena \u00a75.5's table reports) it is {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}}, which is chance.",
+      "claim": "The released checkpoint's *aleatoric* head does the opposite, ranking error inversely on every one of {{perm_all_relale_ndim_h368}} dimensions over all ten episodes and at chance on the held-out pair alone \u2014 a dependence on arena that \u00a75.5 sets out.",
       "keys": [
-        "relale_all_nind",
-        "perm_all_relale_ndim_h368",
-        "relale_oos_nind",
-        "relale_oos_pos_h368",
         "perm_all_relale_ndim_h368"
       ],
       "artifacts": [
         "results/task_b_permutation.json"
       ],
-      "n_keys": 5,
+      "n_keys": 1,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
-      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
-    },
-    {
-      "id": "d8e0cf99008e",
-      "section": "12. Conclusion",
-      "claim": "The larger arena is the better-sampled one and its result is the stranger of the two: a \u03c3 that is not merely uninformative about error but anti-correlated with it.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
-      "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations"
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
       "id": "933263d85098",
@@ -3138,6 +2922,203 @@
       "verdict": "SUPPORTED",
       "sample_size": "21 training runs",
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+    },
+    {
+      "id": "1808dac3dffa",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "The {{n_retractions_word_lower}} numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as \"clearly informative\" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that \u03c3 is input-independent \"in all four models\", made against a table holding three; and the phrase \"the released checkpoint's uncertainty output\", singular, when the checkpoint emits two and we had measured the one the method discards.",
+      "keys": [
+        "n_retractions_word_lower"
+      ],
+      "artifacts": [
+        "FINDINGS_LEDGER.md"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+    },
+    {
+      "id": "2786140b6e93",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "The {{n_retract_framing_word}} framing retractions are the claim that a pre-registration was pre-registered, and the binomial inference of \u00a75.5.",
+      "keys": [
+        "n_retract_framing_word"
+      ],
+      "artifacts": [
+        "FINDINGS_LEDGER.md"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+    },
+    {
+      "id": "c0690281938b",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "an interval relation that is not the one asserted** \u2014 \"the intervals do not overlap\", where at h=128 they overlap across 0.604\u20130.643; - **an extremum that is not the extremum** \u2014 the worst-calibrated held-out cell named as epistemic at h=1, which is third; the largest deviation is aleatoric at h=128; - **a stated change with the wrong sign** \u2014 \"a change of **+**0.010\", where partialling the forecast index out *reduces* the correlation; - **two prose descriptions of one ratio that disagree** \u2014 \"nearly three orders of magnitude\" in the abstract against \"two orders\" in \u00a712, of 600\u00d7; - **a count attributed to the wrong evaluation arena** \u2014 0 of 45 over all ten episodes asserted where the table beside it printed the held-out arena's 20 of 45.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+    },
+    {
+      "id": "f3d767b81e0f",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "The check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: *overlap* (two intervals do or do not overlap), *extremum* (a named cell is the max or min of its family), *sign* (a stated rise or fall matches the direction of the difference), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *relvar* (a stated ratio of relative variabilities), and *count-consistency* (one count asserted in several places, in words or numerals, agrees with the ledger everywhere).",
+      "keys": [
+        "cc_n",
+        "cc_kinds"
+      ],
+      "artifacts": [
+        "results/comparative_claims.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+    },
+    {
+      "id": "75c11305e547",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "Each entry pins two things and requires both: a **fragment of the paper's own text**, so that rewording a sentence fails the check rather than silently detaching it from the claim it guards, and a **relation recomputed from the artifacts**.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+    },
+    {
+      "id": "b80ece631b68",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "The self-test.** Every assertion is run against a deliberately corrupted expectation on each build and must fail: the interval relation inverted, the extremum replaced by the *runner-up* rather than an absent label, the sign flipped, the order of magnitude and the dimension counts moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught.",
+      "keys": [
+        "cc_st_caught",
+        "cc_st_n"
+      ],
+      "artifacts": [
+        "results/comparative_claims.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+    },
+    {
+      "id": "61674645f9f5",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+    },
+    {
+      "id": "a53d00d681e8",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "Both were defects in the checker rather than in the paper, and both surfaced because the checks were run rather than assumed.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "19 comparative claims, 18 corruptions",
+      "note": "counts read from results/comparative_claims.json, regenerated with --self-test; the 7 kinds are overlap, extremum, sign, orders, cell, compare, relvar"
+    },
+    {
+      "id": "f0e7b09f6f99",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` \u2014 projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats.",
+      "keys": [
+        "ver_timing",
+        "ver_machine"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "clean-clone comparison, 27 regenerated files",
+      "note": "results/verify_reproduction.json timing_excluded=3972, machine_file_values_excluded=584"
+    },
+    {
+      "id": "45c8c028f002",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "It cannot reproduce bitwise on another machine, or on this one under different load, and it records that about itself: across its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) \u2014 on one machine, within a single measurement session.",
+      "keys": [
+        "time_cfgs",
+        "time_rel_lo",
+        "time_rel_hi",
+        "time_worst_cfg"
+      ],
+      "artifacts": [
+        "results/step4_5_timing.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "clean-clone comparison, 27 regenerated files",
+      "note": "results/step4_5_timing.json: std/s_per_iter per config spans 5.4% (ens5_bs256) to 31.8% (ens1_bs256)"
+    },
+    {
+      "id": "eb4453c77a88",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on every machine \u2014 three different values across the three hosts we have run it on.",
+      "keys": [
+        "ver_timebound",
+        "ver_tb_budget",
+        "ver_tb_cap"
+      ],
+      "artifacts": [
+        "results/step4_4_overfit_ens1.json",
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "clean-clone comparison, 28 regenerated files",
+      "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance"
+    },
+    {
+      "id": "84b8f57e0683",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact \u2014 a run that stopped short of its own cap was time-bounded.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "clean-clone comparison, 27 regenerated files",
+      "note": "scripts/verify_reproduction.py time_bounded(): excludes when iterations_run < config.iters; step4_4_overfit_b32lr1e3.json (2001 of a 2000 cap) is NOT excluded and reproduces bitwise"
+    },
+    {
+      "id": "0c8fde7f2259",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "The verifier now drops any key whose recorded source is an excluded artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather than requiring anyone to remember.",
+      "keys": [
+        "ver_hostkeys"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "clean-clone comparison, 28 regenerated files",
+      "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance"
     }
   ]
 }
