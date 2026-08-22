@@ -4197,6 +4197,46 @@ ratio cannot drift out of agreement with itself the way two prose descriptions o
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+
+### M-43 — PRE-REGISTERED decision rule for the ensemble-5 replication · **NEW**
+*The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger
+on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43.
+Nothing else about the rule is changed.*
+
+**Entered before any ensemble-5 result exists.** No `runs/armA_seed*_ens5` directory existed when
+this was committed; the commit containing it precedes the launch of the runs it governs, and that
+ordering is checkable from `git log` exactly as M-16's and M-23's are.
+
+**Why the rule is needed.** §11 concedes that our own arms run at ensemble size 1, where the
+epistemic term is identically zero by construction, so **every epistemic measurement in this paper
+is made on a single released checkpoint.** §5.6 — the one finding here that *strengthens* an
+original claim — rests entirely on that one artifact. A property of the method and a property of
+one checkpoint are currently indistinguishable.
+
+**Governing measurement.** On the ensemble-5 Arm A checkpoints at 2,500 iterations: the
+correlation between ensemble disagreement and realised absolute error, against the forecast step
+index, over independent trajectories in the out-of-sample arena, using the paired-difference
+bootstrap of §5.6.
+
+**§5.6's finding GENERALISES beyond the released checkpoint** if disagreement leads the index at
+every horizon tested **and** the paired difference excludes zero at a majority of them.
+
+**It DOES NOT generalise** if the index leads at any horizon, **or** the paired difference spans
+zero at a majority of them.
+
+**Reported alongside, not governing:** whether the aleatoric collapse rate matches the ens1 runs;
+whether epistemic is input-dependent and horizon-flat as it is in the released checkpoint; the
+calibration ratio at each horizon; and the ens1-versus-ens5 comparison on prediction accuracy.
+
+**Our expectation, recorded as an expectation only.** We expect the replication to succeed. That
+is a belief, not a pre-registration, and it carries none of the weight one does — the same
+distinction §5.6 draws about its own forecast-index baseline, and the one S-12 was written to
+retract when this project failed to observe it. The rule above is what governs; the expectation
+is recorded so that a reader can see it was held in advance and can judge accordingly if the
+result agrees with it.
+**Evidence** `RUN` pending — the runs this governs have not been launched.
+**Status** PRE-REGISTERED · **Relevance** METHOD
+
 ### S-15 — The binomial P-values attached to every dimension count · **NEW**
 **Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand
 **What is retracted:** the step from a sign count to a P-value under a fair-coin binomial null,
