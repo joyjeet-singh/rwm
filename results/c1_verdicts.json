@@ -237,6 +237,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "35ad1106c17e": {
+    "note": "checked against results/task_d2b_robustness.json controls block",
+    "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "36d9bea02350": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
@@ -435,6 +440,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "63cbd7af9034": {
+    "note": "checked against results/task_d2b_robustness.json controls block",
+    "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "64468c1423df": {
     "claim": "The epistemic term, the one the method actually consumes, is two orders of magnitude better and still **{{b2_e",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -623,6 +633,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "9901ab24888c": {
+    "note": "checked against results/task_d2b_robustness.json controls block",
+    "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "9e5cfc71baaf": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 vs 16 by arena",
@@ -695,6 +710,11 @@
   "b5ad19cf6aae": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "counted from the ledger, not asserted",
+    "verdict": "SUPPORTED"
+  },
+  "b62c69e1eddd": {
+    "note": "checked against results/task_d2b_robustness.json controls block",
+    "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "b6ac3d009270": {
@@ -778,6 +798,11 @@
   "ca8d296bf44d": {
     "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
     "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "cb446a46b86b": {
+    "note": "checked against results/task_d2b_robustness.json controls block",
+    "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "cc57cfe27e95": {
@@ -958,6 +983,11 @@
     "claim": "The per-episode gap is positive on **{{m23_n_episodes_positive}} of {{m23_n_episodes}}** episodes.",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "f3e167eb7b6f": {
+    "note": "checked against results/task_d2b_robustness.json controls block",
+    "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "f4539346e6e6": {

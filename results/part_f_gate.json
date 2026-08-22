@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "17 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "18 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -22,19 +22,19 @@
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
       "pass": true,
-      "detail": "read /Users/joyjeetsingh/Downloads/PDM/rwm_repro/results/verify_reproduction.json  [IN-TREE, not a clone: set CLONE_RESULTS]: 19 files regenerated, 4,804 values, 4,804 identical, 0 differing"
+      "detail": "read verify_reproduction.json from THE WORKING TREE [not a clone: set CLONE_RESULTS]: 19 files regenerated, 4,804 values, 4,804 identical, 0 differing; carried-in partition present (424,883 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "57 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
+      "detail": "58 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
     },
     {
       "n": 6,
       "name": "numeric consistency, abstract vs body",
       "pass": true,
-      "detail": "36 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
+      "detail": "39 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
   "n_pass": 6,

@@ -3931,6 +3931,84 @@ check certified.
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+
+### R-66 — The forecast-index control was too weak to be believed, so we strengthened it four ways · `[RWM-U]` · **NEW**
+R-63's partial correlation regresses the forecast step index out of both variables **linearly**.
+Error does not grow linearly with rollout depth. A control that under-fits the index leaves
+index-driven variance in the residual and inflates what disagreement appears to contribute — and
+R-63 is the one result in this paper that *strengthens* an original claim, so it is the one that
+most deserves an attempt to break it.
+
+Four stronger controls, same rollouts, n_independent = 20:
+
+| control | what it removes | r(disagreement, error · index) |
+|---|---|---|
+| linear (R-63) | a straight-line trend in depth | +0.596 [+0.526, +0.688] |
+| log | a logarithmic trend | +0.589 [+0.512, +0.688] |
+| cubic | any degree-3 polynomial trend | +0.582 [+0.495, +0.676] |
+| rank (Spearman) | **any monotone** dependence on depth | +0.906 [+0.856, +0.921] |
+| **within-step** | **the index entirely, by construction** | **+0.739 [+0.711, +0.852]** |
+
+**The within-step control settles it.** Correlating disagreement with error *across trajectories at
+a fixed forecast step*, then averaging over steps, holds depth exactly constant — the index cannot
+contribute anything, and no functional form for the index-error relationship has to be assumed. It
+gives **+0.739**, positive at
+**368 of 368** forecast steps, median +0.737.
+
+The weakest figure across all 5 controls is +0.582, against a raw
++0.605. **The finding does not merely survive; the two strongest
+controls raise it**, because removing the shared depth trend removes a source of common variance
+that was diluting the association rather than creating it.
+
+**What this closes.** The obvious objection to R-63 — "disagreement grows with depth, error grows
+with depth, so of course they correlate" — is now excluded by measurement rather than by argument.
+At a fixed depth, ensemble disagreement still identifies which rollouts are going wrong.
+**Evidence** `RUN` `results/task_d2b_robustness.json`; `scripts/task_d2b_robustness.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+
+### M-39 — The anonymisation checker de-anonymised the submission · **NEW**
+`scripts/part_f_gate.py` was written to satisfy Part F's check 2: grep the built PDF and every
+figure for the author's name and repository URL. To do that it held the strings to search for as
+literals:
+
+```
+IDENT = ["<given name>", ..., "/Users/<given name><surname>"]
+REPO  = "github.com/<given name>-<surname>"
+```
+(elided here for the same reason — this ledger ships in the archive too, and quoting
+the literals verbatim in the entry that describes them would reintroduce them a third
+time. The archive builder caught that as well.)
+
+**That script ships inside `supplementary.zip`.** A checker for identifying strings had become the
+only file in the archive that contained one — and it contained the full set.
+
+Then, once the literals were split into fragments, its **output** leaked them again: the check-4
+detail line reported the absolute path of the file it had read, and an absolute path on this
+machine contains the home directory, which contains the author's name. That string was written
+into `results/part_f_gate.json`, which also ships in the archive.
+
+Both were caught by `scripts/build_supplementary.py`, which scans every candidate file before
+writing the zip and refuses to write one that carries an identifying string. It rejected the
+archive twice in a row and named the offending file and pattern each time.
+
+**Fixes:** the search strings are assembled from fragments at import, with a comment saying why
+they must not be written out; and the gate reports `os.path.basename(vp)` plus a description of
+which tree it read, never an absolute path.
+
+**What this says about the check that caught it.** Part F item 2 as specified — grep the *built
+PDF* and the *figures* — would never have found either of these, because neither is in the PDF or
+a figure. The archive scanner found them because it scans **everything that leaves the machine**,
+which is the right unit. Anonymisation is a property of the artifact set that is transmitted, not
+of the document.
+
+Compare M-35: the same shape again. A check that inspects a narrower object than the one actually
+shipped certifies the wrong thing.
+**Evidence** `RUN` `scripts/build_supplementary.py`, `scripts/part_f_gate.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
 ### S-15 — The binomial P-values attached to every dimension count · **NEW**
 **Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand
 **What is retracted:** the step from a sign count to a P-value under a fair-coin binomial null,

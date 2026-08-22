@@ -385,6 +385,23 @@ def main():
     put("d3_tol", f'{100*D3["quantities"]["epistemic"]["verdict"]["tolerance"]:.0f}',
         "results/task_d3_perhorizon.json")
 
+    # --- D2b: is the forecast-index control adequate? ---------------------
+    RB = J("task_d2b_robustness.json")
+    for _m, _t in (("linear", "lin"), ("log", "log"), ("cubic", "cub"),
+                   ("spearman", "spr"), ("within_step", "win")):
+        c = RB["controls"][_m]
+        put(f"d2r_{_t}", f'{c["r_disagreement_given_index"]:+.3f}',
+            "results/task_d2b_robustness.json")
+        put(f"d2r_{_t}_ci", f'[{c["ci_lo"]:+.3f}, {c["ci_hi"]:+.3f}]',
+            "results/task_d2b_robustness.json")
+    _w = RB["controls"]["within_step"]
+    put("d2r_win_pos", _w["steps_positive"], "results/task_d2b_robustness.json")
+    put("d2r_win_n", _w["n_steps"], "results/task_d2b_robustness.json")
+    put("d2r_win_med", f'{_w["median"]:+.3f}', "results/task_d2b_robustness.json")
+    put("d2r_weakest", f'{RB["verdict"]["weakest_partial"]:+.3f}',
+        "results/task_d2b_robustness.json")
+    put("d2r_ncontrols", len(RB["controls"]), "results/task_d2b_robustness.json")
+
 
     # B2 -- the uncertainty the method actually consumes (C-14, R-58)
     B = J("task_b2_epistemic.json")

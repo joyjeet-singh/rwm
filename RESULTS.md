@@ -80,8 +80,8 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | `C-` paper says one thing, code does another | 15 | see the variance collapse (`C-10`, `C-11`) and the absent decay factor (`C-09`) |
 | `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm and its duplication control (`R-56`) |
 | `D-` dataset properties | 13 | — |
-| `M-` methodological findings | 38 | — |
-| `R-` measured results | 65 | — |
+| `M-` methodological findings | 39 | — |
+| `R-` measured results | 66 | — |
 | `O-` open questions | 14 | — |
 | `X-` deliberate deviations | 10 | — |
 | `S-` superseded, retained | 15 | — |

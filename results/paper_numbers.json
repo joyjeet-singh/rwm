@@ -1379,6 +1379,66 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.010"
   },
+  "d2r_cub": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "+0.582"
+  },
+  "d2r_cub_ci": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "[+0.495, +0.676]"
+  },
+  "d2r_lin": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "+0.596"
+  },
+  "d2r_lin_ci": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "[+0.526, +0.688]"
+  },
+  "d2r_log": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "+0.589"
+  },
+  "d2r_log_ci": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "[+0.512, +0.688]"
+  },
+  "d2r_ncontrols": {
+    "source": "results/task_d2b_robustness.json",
+    "value": 5
+  },
+  "d2r_spr": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "+0.906"
+  },
+  "d2r_spr_ci": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "[+0.856, +0.921]"
+  },
+  "d2r_weakest": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "+0.582"
+  },
+  "d2r_win": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "+0.739"
+  },
+  "d2r_win_ci": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "[+0.711, +0.852]"
+  },
+  "d2r_win_med": {
+    "source": "results/task_d2b_robustness.json",
+    "value": "+0.737"
+  },
+  "d2r_win_n": {
+    "source": "results/task_d2b_robustness.json",
+    "value": 368
+  },
+  "d2r_win_pos": {
+    "source": "results/task_d2b_robustness.json",
+    "value": 368
+  },
   "d3_ale_c_hi": {
     "source": "results/task_d3_perhorizon.json",
     "value": "7782"
@@ -1637,7 +1697,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 175
+    "value": 177
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",

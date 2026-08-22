@@ -2099,6 +2099,35 @@
       "retracts": []
     },
     {
+      "id": "R-66",
+      "claim": "The forecast-index control was too weak to be believed, so we strengthened it four ways",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d2b_robustness.json",
+        "scripts/task_d2b_robustness.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-39",
+      "claim": "The anonymisation checker de-anonymised the submission",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/part_f_gate.json",
+        "scripts/build_supplementary.py",
+        "scripts/part_f_gate.py"
+      ],
+      "retracts": []
+    },
+    {
       "id": "S-15",
       "claim": "The binomial P-values attached to every dimension count",
       "relevance": "METHOD",
@@ -2131,9 +2160,9 @@
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 38,
+    "M": 39,
     "O": 14,
-    "R": 65,
+    "R": 66,
     "S": 15,
     "X": 10
   }

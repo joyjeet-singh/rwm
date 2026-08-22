@@ -1,7 +1,7 @@
 {
-  "n_claims": 159,
+  "n_claims": 164,
   "by_verdict": {
-    "SUPPORTED": 159
+    "SUPPORTED": 164
   },
   "claims": [
     {
@@ -101,6 +101,24 @@
       "verdict": "SUPPORTED",
       "sample_size": "n_independent = 20 trajectories, all ten episodes",
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+    },
+    {
+      "id": "9901ab24888c",
+      "section": "Abstract",
+      "claim": "That holds under four stronger controls too: with forecast depth held exactly constant it is {{d2r_win}}, positive at {{d2r_win_pos}} of {{d2r_win_n}} steps.",
+      "keys": [
+        "d2r_win",
+        "d2r_win_pos",
+        "d2r_win_n"
+      ],
+      "artifacts": [
+        "results/task_d2b_robustness.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+      "note": "checked against results/task_d2b_robustness.json controls block"
     },
     {
       "id": "029d4ca60cdd",
@@ -1591,6 +1609,64 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
+      "id": "cb446a46b86b",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "Partialling out log(1 + index) gives {{d2r_log}} {{d2r_log_ci}}; a cubic in the index gives {{d2r_cub}} {{d2r_cub_ci}}; a rank partial correlation, which removes *any* monotone dependence on depth rather than an assumed functional form, gives {{d2r_spr}} {{d2r_spr_ci}}.",
+      "keys": [
+        "d2r_log",
+        "d2r_log_ci",
+        "d2r_cub",
+        "d2r_cub_ci",
+        "d2r_spr",
+        "d2r_spr_ci"
+      ],
+      "artifacts": [
+        "results/task_d2b_robustness.json"
+      ],
+      "n_keys": 6,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+      "note": "checked against results/task_d2b_robustness.json controls block"
+    },
+    {
+      "id": "35ad1106c17e",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "Computing the correlation **within each forecast step** \u2014 across trajectories, with depth held exactly constant, so the index cannot contribute by construction \u2014 and averaging over steps gives **{{d2r_win}} {{d2r_win_ci}}**, positive at **{{d2r_win_pos}} of {{d2r_win_n}}** forecast steps with a median of {{d2r_win_med}}.",
+      "keys": [
+        "d2r_win",
+        "d2r_win_ci",
+        "d2r_win_pos",
+        "d2r_win_n",
+        "d2r_win_med"
+      ],
+      "artifacts": [
+        "results/task_d2b_robustness.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+      "note": "checked against results/task_d2b_robustness.json controls block"
+    },
+    {
+      "id": "b62c69e1eddd",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "The weakest figure across all {{d2r_ncontrols}} controls is {{d2r_weakest}}.",
+      "keys": [
+        "d2r_ncontrols",
+        "d2r_weakest"
+      ],
+      "artifacts": [
+        "results/task_d2b_robustness.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+      "note": "checked against results/task_d2b_robustness.json controls block"
+    },
+    {
       "id": "32348f363a95",
       "section": "5.7 One constant scalar does not fix it, but a per-horizon one does",
       "claim": "On the epistemic term \u2014 the quantity the method uses \u2014 a scalar of {{d2_epi_c_lo}}\u2013{{d2_epi_c_hi}} brings h=1 coverage to {{d2_epi_cov1_lo}}\u2013{{d2_epi_cov1_hi}}%, essentially calibrated against the {{d2_target}}% target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%.",
@@ -2193,6 +2269,24 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
+      "id": "f3e167eb7b6f",
+      "section": "9. Actionable lessons",
+      "claim": "That is a real signal, not a re-encoding of how far ahead you are looking: holding forecast depth exactly constant it still correlates {{d2r_win}} with error, at {{d2r_win_pos}} of {{d2r_win_n}} steps (\u00a75.6).",
+      "keys": [
+        "d2r_win",
+        "d2r_win_pos",
+        "d2r_win_n"
+      ],
+      "artifacts": [
+        "results/task_d2b_robustness.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+      "note": "checked against results/task_d2b_robustness.json controls block"
+    },
+    {
       "id": "580d222d4346",
       "section": "9. Actionable lessons",
       "claim": "But it is {{d1n_epi_ratio_h368}}\u00d7 too small to be an interval, and a risk gate or safety margin that reads \u03c3 as a distance is not supported at any horizon.",
@@ -2494,20 +2588,22 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "0e5fbeef0d49",
+      "id": "63cbd7af9034",
       "section": "12. Conclusion",
-      "claim": "And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} of its correlation once the index is partialled out.",
+      "claim": "And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon, keeps {{d2b_par_all}} once the index is partialled out, and still reaches {{d2r_win}} when depth is held exactly constant \u2014 so it is not a re-encoding of the clock.",
       "keys": [
-        "d2b_par_all"
+        "d2b_par_all",
+        "d2r_win"
       ],
       "artifacts": [
+        "results/task_d2b_robustness.json",
         "results/task_d_nind20.json"
       ],
-      "n_keys": 1,
+      "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
+      "note": "checked against results/task_d2b_robustness.json controls block"
     },
     {
       "id": "53bfdf70e4c5",

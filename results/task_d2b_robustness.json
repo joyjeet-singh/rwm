@@ -1,0 +1,53 @@
+{
+  "design": {
+    "n_independent": 20,
+    "n_trajectories": 20,
+    "n_steps": 368,
+    "n_boot": 2000,
+    "bootstrap_unit": "whole trajectory"
+  },
+  "raw": {
+    "r_disagreement_error": 0.6053377910794817,
+    "r_index_error": 0.2685729388123981
+  },
+  "controls": {
+    "linear": {
+      "r_disagreement_given_index": 0.5957061701083896,
+      "ci_lo": 0.5262312523806383,
+      "ci_hi": 0.6876512809088805,
+      "r_index_given_disagreement": 0.23492528060567766
+    },
+    "log": {
+      "r_disagreement_given_index": 0.5889338827335397,
+      "ci_lo": 0.5123721940713677,
+      "ci_hi": 0.6876184668636253,
+      "r_index_given_disagreement": 0.18457133391130345
+    },
+    "cubic": {
+      "r_disagreement_given_index": 0.5823219123951461,
+      "ci_lo": 0.4952479689104895,
+      "ci_hi": 0.6762410612516053,
+      "r_index_given_disagreement": 0.17099021367191658
+    },
+    "spearman": {
+      "r_disagreement_given_index": 0.9063071075768219,
+      "ci_lo": 0.8556406001560803,
+      "ci_hi": 0.920790019554302,
+      "r_index_given_disagreement": 0.2635827146116884
+    },
+    "within_step": {
+      "r_disagreement_given_index": 0.7391948537019067,
+      "median": 0.7373712078203275,
+      "ci_lo": 0.7107957784870976,
+      "ci_hi": 0.8524947496166878,
+      "steps_positive": 368,
+      "n_steps": 368,
+      "note": "correlation across trajectories at a FIXED forecast step, averaged over steps; the index is constant within each step so it cannot contribute"
+    }
+  },
+  "verdict": {
+    "weakest_partial": 0.5823219123951461,
+    "survives_all_controls": true,
+    "beats_index_under_all_controls": true
+  }
+}
