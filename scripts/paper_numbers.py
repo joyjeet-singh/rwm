@@ -364,6 +364,24 @@ def main():
     put("d1_xc_diff", sum(r.get("differing", 0) for r in _xc),
         "results/task_d1_threeseed.json")
 
+    # A4.3: a table a reader can count. Derived from the run JSONs themselves.
+    import glob as _g2
+    inv = {}
+    for f in sorted(_g2.glob("results/step5_arm*.json")):
+        d = json.load(open(f))
+        h = d["hyperparameters"]
+        arm = d["arm"] if "arm" in d else ("B" if "armB" in f else "A")
+        key = (arm, h["iterations"], h.get("loss_type", "mse"),
+               "contaminated" if h.get("contaminated") else
+               ("duplicated" if h.get("duplicated") else "clean"))
+        inv.setdefault(key, []).append(d["seed"])
+    rows = []
+    for (arm, it, loss, ds), seeds in sorted(inv.items()):
+        rows.append(f"| Arm {arm} | {it:,} | {loss} | {ds} | {len(seeds)} | "
+                    f"{', '.join(str(x) for x in sorted(seeds))} |")
+    put("run_table", "\n".join(rows), "results/step5_arm*.json")
+    put("run_total", sum(len(v) for v in inv.values()), "results/step5_arm*.json")
+
     # C3 -- multiplicity
     C3 = J("task_c3_multiplicity.json")
     put("c3_family", C3["family_ab"]["n_comparisons"], "results/task_c3_multiplicity.json")

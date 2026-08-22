@@ -1,3 +1,16 @@
+---
+license: apache-2.0
+library_name: pytorch
+tags:
+  - robotics
+  - world-models
+  - model-based-rl
+  - reproduction
+  - uncertainty-quantification
+  - legged-robotics
+pipeline_tag: robotics
+---
+
 # Model card — RWM reproduction checkpoints
 
 Independent reproduction of the proprioceptive dynamics model of Li, Krause & Hutter,

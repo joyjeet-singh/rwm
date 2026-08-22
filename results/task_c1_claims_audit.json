@@ -1,7 +1,8 @@
 {
-  "n_claims": 94,
+  "n_claims": 97,
   "by_verdict": {
-    "SUPPORTED": 94
+    "SUPPORTED": 85,
+    "UNREVIEWED": 12
   },
   "claims": [
     {
@@ -31,21 +32,21 @@
       "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
     },
     {
-      "id": "0743a4754d4a",
+      "id": "3026a8cd8563",
       "section": "Abstract",
-      "claim": "The aleatoric \u03c3 is **{{cal_rel_ratio}}\u00d7 smaller than its own mean absolute error** ({{cal_rel_cov1}}% coverage at \u00b11\u03c3 against a calibrated 68.3%), and we show analytically why: the state loss is squared error on a reparameterised sample with no log-\u03c3 term, minimised at \u03c3 = 0, with the bound term that should oppose this cancelling algebraically.",
+      "claim": "At the 368-step deployment horizon the aleatoric \u03c3 is **{{b2_alea_ratio_h368}}\u00d7 smaller than the realised error**, giving **{{b2_alea_cov1_h368}}%** coverage at \u00b11\u03c3 against a calibrated 68.3%, and we show analytically why: the state loss is squared error on a reparameterised sample with no log-\u03c3 term, minimised at \u03c3 = 0, with the bound term that should oppose this cancelling algebraically.",
       "keys": [
-        "cal_rel_ratio",
-        "cal_rel_cov1"
+        "b2_alea_ratio_h368",
+        "b2_alea_cov1_h368"
       ],
       "artifacts": [
-        "results/task1_calibration.json"
+        "results/task_b2_epistemic.json"
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
     },
     {
       "id": "1a7f61b9a16a",
@@ -101,9 +102,9 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "307a4ef9f224",
+      "id": "5993a9967973",
       "section": "Abstract",
-      "claim": "We also report {{n_defects}} defects in the released pipeline, evidence that the released checkpoint's variance state is not reachable from the released artifacts at the iteration count its author recalls \u2014 which he attributes to the repository having moved on between training and release \u2014 and {{n_retractions_lower}} retractions of our own numbered claims \u2014 one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.",
+      "claim": "We also report {{n_defects}} defects in the released pipeline, evidence that the released checkpoint's variance state is not reachable from the released artifacts at the iteration count its author recalls \u2014 which he attributes to the repository having moved on between training and release \u2014 and {{n_retractions_lower}} retractions of our own numbered claims, and a seventh withdrawing the claim that one of our own pre-registrations was pre-registered at all.",
       "keys": [
         "n_defects",
         "n_retractions_lower"
@@ -114,9 +115,9 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "-",
-      "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "318b2c580584",
@@ -278,7 +279,7 @@
     },
     {
       "id": "f5a9645e0ed0",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "Three conditions, all required: the out-of-sample gap at h = 368 excludes zero under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500.",
       "keys": [],
       "artifacts": [],
@@ -290,7 +291,7 @@
     },
     {
       "id": "89791e359c69",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "Result.** Every condition {{m23_c1}}.",
       "keys": [
         "m23_c1"
@@ -306,7 +307,7 @@
     },
     {
       "id": "1b79c814239a",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes \u2014 an exact two-sided binomial test, p = **{{c3_sign_p}}**.",
       "keys": [
         "c3_sign_pos",
@@ -324,7 +325,7 @@
     },
     {
       "id": "41869b31316f",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "The in-sample arena, where the sample is larger.* The same comparison on the eight training episodes has {{nind_ins_400}} independent 400-step trajectories against the held-out arena's {{nind_oos_400}} \u2014 {{nind_ratio}}\u00d7 more \u2014 and gives the same direction at every horizon and checkpoint.",
       "keys": [
         "nind_ins_400",
@@ -342,7 +343,7 @@
     },
     {
       "id": "c3204ca09b05",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "The out-of-sample effect size, over {{d1_seeds}} seeds.* Autoregressive training reaches **{{d1_A_mean}} \u00b1 {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} \u00b1 {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`) \u2014 a factor of **{{d1_ratio}}\u00d7**.",
       "keys": [
         "d1_seeds",
@@ -363,7 +364,7 @@
     },
     {
       "id": "ff44600dc084",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "Seed spread is not symmetric between the arms and that is worth stating: Arm A ranges {{d1_A_lo}}\u2013{{d1_A_hi}} across seeds ({{d1_A_relsd}}% relative), Arm B {{d1_B_lo}}\u2013{{d1_B_hi}} ({{d1_B_relsd}}%).",
       "keys": [
         "d1_A_lo",
@@ -384,7 +385,7 @@
     },
     {
       "id": "ca8d296bf44d",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "Teacher forcing is more than twice as variable across seeds as autoregressive training at this horizon, so a single-seed comparison of these two arms is unreliable in a way a reader should know about.",
       "keys": [],
       "artifacts": [],
@@ -396,7 +397,7 @@
     },
     {
       "id": "ad1695104a2c",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "An earlier draft of this paper quoted the single-seed figures {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}\u00d7 rather than {{m23_ratio}}\u00d7.",
       "keys": [
         "m23_A",
@@ -416,7 +417,7 @@
     },
     {
       "id": "e6a63050db47",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "For a single seed the bootstrap over trajectories gives 95% interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories.",
       "keys": [
         "m23_ci_lo",
@@ -433,56 +434,8 @@
       "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
     },
     {
-      "id": "4307718cf905",
-      "section": "3. The base paper's central claim reproduces",
-      "claim": "Against a baseline, because neither number means anything without one.* The hold-last floor \u2014 predicting that nothing changes \u2014 scores **{{floor_h368}}** in the same cell.",
-      "keys": [
-        "floor_h368"
-      ],
-      "artifacts": [
-        "results/task4_arenas.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
-    },
-    {
-      "id": "beaf6b586404",
-      "section": "3. The base paper's central claim reproduces",
-      "claim": "Autoregressive training beats it by **{{floor_over_A}}\u00d7**.",
-      "keys": [
-        "floor_over_A"
-      ],
-      "artifacts": [
-        "results/task4_arenas.json + task5_analysis.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
-    },
-    {
-      "id": "b8cf445bdfdc",
-      "section": "3. The base paper's central claim reproduces",
-      "claim": "Teacher forcing is {{B_over_floor}}\u00d7 worse than assuming nothing changes at all**, which is the sharper statement of what exposure bias costs here: the arm that reaches a lower training loss ends up predicting the future worse than a model that makes no prediction.",
-      "keys": [
-        "B_over_floor"
-      ],
-      "artifacts": [
-        "results/task4_arenas.json + task5_analysis.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
-    },
-    {
       "id": "c4c8c028036a",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised to steps of {{c3_quant}}%, and the interval is coarse by construction.",
       "keys": [
         "c3_resamples",
@@ -498,8 +451,56 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
+      "id": "4307718cf905",
+      "section": "4. The base paper's central claim reproduces",
+      "claim": "Against a baseline, because neither number means anything without one.* The hold-last floor \u2014 predicting that nothing changes \u2014 scores **{{floor_h368}}** in the same cell.",
+      "keys": [
+        "floor_h368"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "beaf6b586404",
+      "section": "4. The base paper's central claim reproduces",
+      "claim": "Autoregressive training beats it by **{{floor_over_A}}\u00d7**.",
+      "keys": [
+        "floor_over_A"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json + task5_analysis.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "b8cf445bdfdc",
+      "section": "4. The base paper's central claim reproduces",
+      "claim": "Teacher forcing is {{B_over_floor}}\u00d7 worse than assuming nothing changes at all**, which is the sharper statement of what exposure bias costs here: the arm that reaches a lower training loss ends up predicting the future worse than a model that makes no prediction.",
+      "keys": [
+        "B_over_floor"
+      ],
+      "artifacts": [
+        "results/task4_arenas.json + task5_analysis.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
       "id": "73e96eb04496",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.",
       "keys": [
         "m23_h8_gap",
@@ -516,7 +517,7 @@
     },
     {
       "id": "565a75b35888",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells \u2014 both trajectory lengths crossed with both checkpoints \u2014 and in **{{ab_short_excl}} of {{ab_short_cells}}** at h = 8.",
       "keys": [
         "ab_long_excl",
@@ -535,7 +536,7 @@
     },
     {
       "id": "2a8460fa2afd",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leaving it to a reader.",
       "keys": [
         "ab_long_cells",
@@ -553,7 +554,7 @@
     },
     {
       "id": "714e025c8133",
-      "section": "3. The base paper's central claim reproduces",
+      "section": "4. The base paper's central claim reproduces",
       "claim": "All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm\u2013Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**.",
       "keys": [
         "c3_bonf_excl",
@@ -573,7 +574,7 @@
     },
     {
       "id": "f4539346e6e6",
-      "section": "4.1 Which quantity the method actually uses",
+      "section": "5.1 Which quantity the method actually uses",
       "claim": "We asked, and the first author confirms the code is operative: the penalty is applied to the standard deviation as intended, and Eq. 4 is \"more of a high-level explanation\" (personal communication, 21 August 2026).",
       "keys": [],
       "artifacts": [],
@@ -585,7 +586,7 @@
     },
     {
       "id": "8e0fb7de4bce",
-      "section": "4.1 Which quantity the method actually uses",
+      "section": "5.1 Which quantity the method actually uses",
       "claim": "It is reported in Fig. 3 (right) as an analysis of the model behavior.\" So what follows is not an implementation slip being reported back to its authors \u2014 it is the intended design, and the aleatoric head exists to shape training and be inspected rather than to be consumed.",
       "keys": [],
       "artifacts": [],
@@ -597,7 +598,7 @@
     },
     {
       "id": "60eefc01f2a6",
-      "section": "4.1 Which quantity the method actually uses",
+      "section": "5.1 Which quantity the method actually uses",
       "claim": "It is three things the papers do not address: that the aleatoric head is discarded before use, that neither quantity is usable as a scale, and that the low aleatoric value has a different cause than the one offered.",
       "keys": [],
       "artifacts": [],
@@ -608,20 +609,20 @@
       "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
     },
     {
-      "id": "87790a27dd92",
-      "section": "4.2 The measurement",
-      "claim": "On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1) \u2014 that is the quantity \u00a74.1 shows the method discards.",
+      "id": "59e7c5043002",
+      "section": "5.2 The measurement",
+      "claim": "On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1) \u2014 that is the quantity \u00a75.1 shows the method discards.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
       "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "-",
-      "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "22b3d3615b08",
-      "section": "4.2 The measurement",
+      "section": "5.2 The measurement",
       "claim": "The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint, out-of-sample, n = {{b2_nind}} independent trajectories:",
       "keys": [
         "b2_members",
@@ -638,7 +639,7 @@
     },
     {
       "id": "2b8285c24ad0",
-      "section": "4.2 The measurement",
+      "section": "5.2 The measurement",
       "claim": "Epistemic is two orders of magnitude better than aleatoric \u2014 {{b2_epi_over_alea_h1}}\u00d7 larger at h=1, {{b2_epi_over_alea_h368}}\u00d7 at h=368 \u2014 and still wrong by **{{b2_epi_ratio_h1}}\u00d7** at one step and **{{b2_epi_ratio_h368}}\u00d7** at the deployment horizon, with \u00b11\u03c3 coverage of {{b2_epi_cov1_h368}}% where a calibrated Gaussian gives 68.3%.",
       "keys": [
         "b2_epi_over_alea_h1",
@@ -658,7 +659,7 @@
     },
     {
       "id": "307da2161dc8",
-      "section": "4.2 The measurement",
+      "section": "5.2 The measurement",
       "claim": "The scalar penalty as actually applied \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 correlates {{b2_penalty_corr}} with total absolute error over the rollout.",
       "keys": [
         "b2_penalty_corr"
@@ -674,7 +675,7 @@
     },
     {
       "id": "d4f8d90d55f6",
-      "section": "4.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
       "claim": "Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a).",
       "keys": [
         "n_runs"
@@ -690,7 +691,7 @@
     },
     {
       "id": "56d2a28a2baf",
-      "section": "4.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
       "claim": "Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}} 10,000-iteration runs are excluded from the rate statistics because they continue seeds already counted at 2,500 and would double-weight them.",
       "keys": [
         "e2_fitted_runs",
@@ -706,9 +707,58 @@
       "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
     },
     {
-      "id": "2bdfd7f98f09",
-      "section": "4.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
-      "claim": "Two different things are being explained here, and \u00a74.5 separates them.** *Magnitude collapse is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of {{e2_mse_rate}} per iteration with a standard deviation of {{e2_mse_sd}} \u2014 **including the teacher-forced arm**, which shares the objective \u2014 and reverses to {{e2_nll_rate}} in the {{e2_nll_runs}} runs that change it.",
+      "id": "95ba8b548184",
+      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "Figure 3(a) shows all {{run_total}} trajectories; Figure 3(b) plots only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted statistic describe the same set.",
+      "keys": [
+        "run_total",
+        "e2_fitted_runs"
+      ],
+      "artifacts": [
+        "results/step5_arm*.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "5a073c0c6776",
+      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "The {{run_total}} runs, so a reader can count them:",
+      "keys": [
+        "run_total"
+      ],
+      "artifacts": [
+        "results/step5_arm*.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "7743add3eab9",
+      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "{{run_table}} Under the corrected objective the sign flips (Figure 3b) \u2014 which is the strongest evidence that the mechanism is the objective and not the optimiser, the data or the architecture.",
+      "keys": [
+        "run_table"
+      ],
+      "artifacts": [
+        "results/step5_arm*.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "63c1d3196261",
+      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "Two different things are being explained here, and \u00a75.5 separates them.** *Magnitude collapse is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of {{e2_mse_rate}} per iteration with a standard deviation of {{e2_mse_sd}} \u2014 **including the teacher-forced arm**, which shares the objective \u2014 and reverses to {{e2_nll_rate}} in the {{e2_nll_runs}} runs that change it.",
       "keys": [
         "e2_mse_runs",
         "e2_mse_rate",
@@ -721,13 +771,13 @@
       ],
       "n_keys": 5,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
     },
     {
       "id": "3ae4dd000f59",
-      "section": "4.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "section": "5.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
       "claim": "Input-independence is not.* That varies by a factor of {{cal_armB_over_faithA_cov}} between two arms trained under the same objective, so the objective cannot be what produces it.",
       "keys": [
         "cal_armB_over_faithA_cov"
@@ -743,7 +793,7 @@
     },
     {
       "id": "0ed44d3f861c",
-      "section": "4.4 The correction fails differently rather than succeeding",
+      "section": "5.4 The correction fails differently rather than succeeding",
       "claim": "Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}\u00d7 to {{cal_nll_ratio}}\u00d7 overconfident.",
       "keys": [
         "cal_faithA_ratio",
@@ -760,7 +810,7 @@
     },
     {
       "id": "a8fb8df2201c",
-      "section": "4.4 The correction fails differently rather than succeeding",
+      "section": "5.4 The correction fails differently rather than succeeding",
       "claim": "It does not produce a usable estimate, and it destroys something the faithful arm had: the \u03c3-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positively correlated (P = {{cal_faithA_p}}) to {{cal_nll_npos}}/{{cal_nll_ndim}} (P = {{cal_nll_p}}, chance).",
       "keys": [
         "cal_faithA_npos",
@@ -781,7 +831,7 @@
     },
     {
       "id": "2af9118239cc",
-      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "section": "5.5 The failure is one of magnitude, not of ordering",
       "claim": "Arm B's \u03c3 is {{cal_armB_over_faithA_cov}}\u00d7 more input-dependent than the faithful arm's, and its ordering is the strongest of the four by a wide margin (mean r = {{cal_armB_r}}).",
       "keys": [
         "cal_armB_over_faithA_cov",
@@ -798,7 +848,7 @@
     },
     {
       "id": "d585e9d69a12",
-      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "section": "5.5 The failure is one of magnitude, not of ordering",
       "claim": "It is still {{cal_armB_ratio}}\u00d7 overconfident.",
       "keys": [
         "cal_armB_ratio"
@@ -814,7 +864,7 @@
     },
     {
       "id": "537e14ef90d2",
-      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "section": "5.5 The failure is one of magnitude, not of ordering",
       "claim": "The teacher-forced arm collapses in magnitude exactly like the autoregressive ones \u2014 same objective, same rate \u2014 while retaining {{cal_armB_over_faithA_cov}}\u00d7 more variation across inputs.",
       "keys": [
         "cal_armB_over_faithA_cov"
@@ -830,7 +880,7 @@
     },
     {
       "id": "716676892281",
-      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "section": "5.5 The failure is one of magnitude, not of ordering",
       "claim": "The same pattern holds for the quantity the method uses, with the strongest evidence in this paper.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, P = {{b2_epi_p_h368}} \u2014 a better ranking than any aleatoric head here \u2014 while being {{b2_epi_ratio_h368}}\u00d7 overconfident.",
       "keys": [
         "b2_epi_npos_h368",
@@ -849,7 +899,7 @@
     },
     {
       "id": "851b1b2fc523",
-      "section": "4.5 The failure is one of magnitude, not of ordering",
+      "section": "5.5 The failure is one of magnitude, not of ordering",
       "claim": "And it fails the horizon test the same way: \u03c3 grows {{b2_epi_sigma_growth}}\u00d7 from h=1 to h=368 while error grows {{b2_epi_err_growth}}\u00d7.",
       "keys": [
         "b2_epi_sigma_growth",
@@ -866,7 +916,7 @@
     },
     {
       "id": "32348f363a95",
-      "section": "4.6 One scalar does not fix it",
+      "section": "5.6 One scalar does not fix it",
       "claim": "On the epistemic term \u2014 the quantity the method uses \u2014 a scalar of {{d2_epi_c_lo}}\u2013{{d2_epi_c_hi}} brings h=1 coverage to {{d2_epi_cov1_lo}}\u2013{{d2_epi_cov1_hi}}%, essentially calibrated against the {{d2_target}}% target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%.",
       "keys": [
         "d2_epi_c_lo",
@@ -888,7 +938,7 @@
     },
     {
       "id": "6641dbaaab94",
-      "section": "4.6 One scalar does not fix it",
+      "section": "5.6 One scalar does not fix it",
       "claim": "On the aleatoric term a scalar of {{d2_ale_c_lo}}\u2013{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}}\u2013{{d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}\u2013{{d2_ale_cov368_hi}}% at h=368.",
       "keys": [
         "d2_ale_c_lo",
@@ -909,7 +959,7 @@
     },
     {
       "id": "aaa2804dc8b4",
-      "section": "4.7 The structural excuse does not survive",
+      "section": "5.7 The structural excuse does not survive",
       "claim": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7.",
       "keys": [
         "sig_faithA_growth",
@@ -926,7 +976,7 @@
     },
     {
       "id": "3865d2a0c04a",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "The window builder reads a termination column that is identically zero, so it marks all {{win_naive}} windows valid.",
       "keys": [
         "win_naive"
@@ -942,7 +992,7 @@
     },
     {
       "id": "68bd110f4fa9",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "Scored correctly the released checkpoint is materially better than its own released evaluation reports: nRMSE at h = 368 falls from {{stale_nrmse}} under the released pairing to {{causal_nrmse}} under the causal one, so the released evaluation overstates its own model's error by {{stale_pct}}%.",
       "keys": [
         "stale_nrmse",
@@ -959,9 +1009,9 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "e14b58dfd9b5",
-      "section": "5. Defects in the released pipeline",
-      "claim": "5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows}} windows \u2014 the clean {{arm_clean_windows}} plus {{arm_splices}} splices \u2014 and, because that confounds *content* with *count*, a duplication control adding the same {{arm_splices}} windows as exact copies of windows already present.",
+      "id": "daa86c50b1ef",
+      "section": "6. Defects in the released pipeline",
+      "claim": "6.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows}} windows \u2014 the clean {{arm_clean_windows}} plus {{arm_splices}} splices \u2014 and, because that confounds *content* with *count*, a duplication control adding the same {{arm_splices}} windows as exact copies of windows already present.",
       "keys": [
         "arm_contam_windows",
         "arm_clean_windows",
@@ -974,13 +1024,13 @@
       ],
       "n_keys": 4,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
     },
     {
       "id": "6d0f5a55482e",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%.",
       "keys": [
         "arm_contam_pct",
@@ -998,7 +1048,7 @@
     },
     {
       "id": "b3ee37340ab6",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training episodes, because {{bound_touch_holdout}} of the {{bound_total}} put held-out rows into training.",
       "keys": [
         "bound_both_train",
@@ -1016,7 +1066,7 @@
     },
     {
       "id": "351639629dee",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "That is a leakage problem rather than a physics one, and including it would have invalidated our own comparison.",
       "keys": [],
       "artifacts": [],
@@ -1028,7 +1078,7 @@
     },
     {
       "id": "2a0742f49fcc",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost_pct}}%.",
       "keys": [
         "dup_cost_pct",
@@ -1045,7 +1095,7 @@
     },
     {
       "id": "cf8a27d9770a",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "The bootstrap interval on duplicated \u2212 clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero.",
       "keys": [
         "dup_ci_lo",
@@ -1062,7 +1112,7 @@
     },
     {
       "id": "50d895c651db",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory lengths \u00d7 two checkpoints \u00d7 two horizons \u00d7 two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} (Figure 5a).",
       "keys": [
         "tw_cells",
@@ -1081,7 +1131,7 @@
     },
     {
       "id": "04ab531e3a05",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells.",
       "keys": [
         "tw_dc_cluster_helped"
@@ -1097,7 +1147,7 @@
     },
     {
       "id": "6b9ad2413a1f",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "\"Costs nothing\" is the wrong summary, and we should not use it.** Splicing raises training loss by {{contam_cost_pct}}% against duplication's {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells.",
       "keys": [
         "contam_cost_pct",
@@ -1117,7 +1167,7 @@
     },
     {
       "id": "20a63340af15",
-      "section": "5. Defects in the released pipeline",
+      "section": "6. Defects in the released pipeline",
       "claim": "Both are measured effects in opposite directions, which is the signature of regularisation: the spliced windows contain transitions the model cannot fit, it fits the rest less tightly as a result, and it rolls out slightly better.",
       "keys": [],
       "artifacts": [],
@@ -1129,7 +1179,7 @@
     },
     {
       "id": "32ba77174758",
-      "section": "6. The released checkpoint's variance state is unreachable at the stated iteration counts",
+      "section": "7. The released checkpoint's variance state is unreachable at the stated iteration counts",
       "claim": "Fitting it across our runs and extrapolating to the released checkpoint's \u03c3 state implies **{{implied_iters}}** optimisation steps at the configured learning rate.",
       "keys": [
         "implied_iters"
@@ -1145,7 +1195,7 @@
     },
     {
       "id": "68b9e59b9fb0",
-      "section": "6. The released checkpoint's variance state is unreachable at the stated iteration counts",
+      "section": "7. The released checkpoint's variance state is unreachable at the stated iteration counts",
       "claim": "The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}}, spreading {{implied_spread_pct}}% across the three fits \u2014 a linear extrapolation validated over a fourfold extension.",
       "keys": [
         "q4_implied_A",
@@ -1164,7 +1214,7 @@
     },
     {
       "id": "a0112c4bd6a3",
-      "section": "6. The released checkpoint's variance state is unreachable at the stated iteration counts",
+      "section": "7. The released checkpoint's variance state is unreachable at the stated iteration counts",
       "claim": "So the defensible claim is narrower than \"cannot have come from the released recipe\": **no constant-rate run from the released initialisation at the configured learning rate reaches this checkpoint's variance state in 500, 2,500 or 5,000 iterations.** A warm start or a different initialisation would explain the gap without any inconsistency, and we cannot exclude either.",
       "keys": [],
       "artifacts": [],
@@ -1176,7 +1226,7 @@
     },
     {
       "id": "0d1b5b192253",
-      "section": "6. The released checkpoint's variance state is unreachable at the stated iteration counts",
+      "section": "7. The released checkpoint's variance state is unreachable at the stated iteration counts",
       "claim": "He replied the same day: the released `max_iterations: 500` is \"a typo\"; his recollection is 5,000 iterations, \"as I always did\"; he does not recall how the checkpoint was obtained; and \u2014 the part that matters most \u2014 \"the checkpoint was released after a few iterations of the repo than the setup I used for the submission.\"",
       "keys": [],
       "artifacts": [],
@@ -1188,7 +1238,7 @@
     },
     {
       "id": "bfa02cae679c",
-      "section": "6. The released checkpoint's variance state is unreachable at the stated iteration counts",
+      "section": "7. The released checkpoint's variance state is unreachable at the stated iteration counts",
       "claim": "It is that **the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repository is not the one that trained it.** That is a documentation gap between a release and a run \u2014 common, worth recording, and much less interesting than an inconsistency.",
       "keys": [],
       "artifacts": [],
@@ -1200,7 +1250,7 @@
     },
     {
       "id": "4211a0dea899",
-      "section": "7. Method",
+      "section": "8. Method",
       "claim": "An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries).",
       "keys": [
         "n_entries"
@@ -1216,7 +1266,7 @@
     },
     {
       "id": "1db61e732582",
-      "section": "7. Method",
+      "section": "8. Method",
       "claim": "Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip-pattern rule by {{lead_flip}}, the difficulty-bias rule by {{lead_m22}}, the long-horizon rule by {{lead_m23}}.",
       "keys": [
         "lead_m16",
@@ -1234,9 +1284,9 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "8f21c91311f5",
-      "section": "7. Method",
-      "claim": "The rule for the duplication control (\u00a75.4) was stated in conversation before the runs but reached git **{{lead_task3}} after the runs finished**, and we found this only by auditing our own `git log`.",
+      "id": "0765b3a83a7e",
+      "section": "8. Method",
+      "claim": "The rule for the duplication control (\u00a76.4) was stated in conversation before the runs but reached git **{{lead_task3}} after the runs finished**, and we found this only by auditing our own `git log`.",
       "keys": [
         "lead_task3"
       ],
@@ -1245,13 +1295,13 @@
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
     },
     {
       "id": "310e07ba5798",
-      "section": "7. Method",
+      "section": "8. Method",
       "claim": "{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record.",
       "keys": [
         "n_retractions_word",
@@ -1267,20 +1317,24 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "5131c9c3bc39",
-      "section": "7. Method",
-      "claim": "The pre-registration claim above retracts a framing rather than a number and is counted separately.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "-",
-      "note": "Bookkeeping statement about S-12, checkable in the ledger."
+      "id": "314510bf296f",
+      "section": "8. Method",
+      "claim": "The pre-registration claim above is **not** among those {{n_retractions_lower}}: it withdraws a framing rather than a number, and is counted separately.",
+      "keys": [
+        "n_retractions_lower"
+      ],
+      "artifacts": [
+        "FINDINGS_LEDGER.md"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "5a75a4a8195b",
-      "section": "7. Method",
+      "section": "8. Method",
       "claim": "Resampling trajectories correctly \u2014 carrying all seeds with each draw \u2014 widens intervals by a mean factor of {{bu_mean_ratio}}\u00d7 (range {{bu_min_ratio}}\u2013{{bu_max_ratio}}) and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable.",
       "keys": [
         "bu_mean_ratio",
@@ -1300,7 +1354,7 @@
     },
     {
       "id": "d6d5a295e9b8",
-      "section": "7. Method",
+      "section": "8. Method",
       "claim": "Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing.",
       "keys": [
         "ver_files",
@@ -1320,7 +1374,7 @@
     },
     {
       "id": "304f894f3cd3",
-      "section": "7. Method",
+      "section": "8. Method",
       "claim": "Excluded and reported separately: {{ver_timing}} timing fields, and the {{ver_machine}} values in `results/step4_5_timing.json`.",
       "keys": [
         "ver_timing",
@@ -1337,7 +1391,7 @@
     },
     {
       "id": "ccf8cda42bd8",
-      "section": "7. Method",
+      "section": "8. Method",
       "claim": "That file is the CPU budget \u2014 projected runtimes for configurations we did not run, peak resident memory, and the standard deviation across repeats \u2014 and every number in it measures the host rather than the model.",
       "keys": [],
       "artifacts": [],
@@ -1349,7 +1403,7 @@
     },
     {
       "id": "e713a1b6aa83",
-      "section": "8. Actionable lessons",
+      "section": "9. Actionable lessons",
       "claim": "Report uncertainty in this model family as an ordering, not as a scale.** Both of the released checkpoint's uncertainty outputs rank which predictions will be worse \u2014 the epistemic term at {{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}} dimensions, P = {{b2_epi_p_h368}} \u2014 and neither is within an order of magnitude of a usable interval.",
       "keys": [
         "b2_epi_npos_h368",
@@ -1367,7 +1421,7 @@
     },
     {
       "id": "e4b3f63239bc",
-      "section": "8. Actionable lessons",
+      "section": "9. Actionable lessons",
       "claim": "The held-out arena here contains {{nind_oos_400}} independent 400-step trajectories however many windows are drawn from it, and that number \u2014 not the window count \u2014 bounds every long-horizon claim.",
       "keys": [
         "nind_oos_400"
@@ -1382,9 +1436,9 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "eff0c489e42f",
-      "section": "8. Actionable lessons",
-      "claim": "Reporting an interval beside a trajectory count rather than an independent-trajectory count overstates precision, and resampling pooled seed \u00d7 trajectory values instead of trajectories narrows intervals by a further {{bu_mean_ratio}}\u00d7 (\u00a77).",
+      "id": "9e5cfc71baaf",
+      "section": "9. Actionable lessons",
+      "claim": "Reporting an interval beside a trajectory count rather than an independent-trajectory count overstates precision, and resampling pooled seed \u00d7 trajectory values instead of trajectories narrows intervals by a further {{bu_mean_ratio}}\u00d7 (\u00a78).",
       "keys": [
         "bu_mean_ratio"
       ],
@@ -1393,13 +1447,13 @@
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
     },
     {
       "id": "fdd6b6aaa3c6",
-      "section": "8. Actionable lessons",
+      "section": "9. Actionable lessons",
       "claim": "Check that the implemented loss is the described loss before reproducing any number from it.** The paper describes two loss terms; the implementation has {{diff_terms}}.",
       "keys": [
         "diff_terms"
@@ -1415,7 +1469,7 @@
     },
     {
       "id": "7f9ebf680b50",
-      "section": "8. Actionable lessons",
+      "section": "9. Actionable lessons",
       "claim": "The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error.",
       "keys": [
         "cal_rel_ratio"
@@ -1431,7 +1485,7 @@
     },
     {
       "id": "e6a71e938009",
-      "section": "9. Broader impact",
+      "section": "10. Broader impact",
       "claim": "But a downstream user who reads the same quantity as a *calibrated interval* \u2014 a safety margin, a confidence bound, a gate on when to hand control to a fallback controller \u2014 would be materially misled: at the deployment horizon the released checkpoint's ensemble disagreement is {{b2_epi_ratio_h368}}\u00d7 smaller than the realised error, giving {{b2_epi_cov1_h368}}% coverage where 68.3% is expected.",
       "keys": [
         "b2_epi_ratio_h368",
@@ -1447,20 +1501,20 @@
       "note": "An implication drawn from a measured overconfidence factor, flagged as such in the text; the factor itself is derived."
     },
     {
-      "id": "83572538ff1d",
-      "section": "9. Broader impact",
-      "claim": "We think that makes the finding worth publishing rather than the reverse, and it is the reason \u00a74 reports coverage rather than only correlation.",
+      "id": "fb68c1895cc5",
+      "section": "10. Broader impact",
+      "claim": "We think that makes the finding worth publishing rather than the reverse, and it is the reason \u00a75 reports coverage rather than only correlation.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
       "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "-",
-      "note": "A judgement, presented as one."
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "05038c4640f0",
-      "section": "10. Limitations",
+      "section": "11. Limitations",
       "claim": "Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent 400-step trajectories.",
       "keys": [
         "m23_nind"
@@ -1476,7 +1530,7 @@
     },
     {
       "id": "70b6010104ed",
-      "section": "11. Conclusion",
+      "section": "12. Conclusion",
       "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of the gradient.",
       "keys": [
         "cal_rel_ratio"
@@ -1492,7 +1546,7 @@
     },
     {
       "id": "821ab7bb5ed8",
-      "section": "11. Conclusion",
+      "section": "12. Conclusion",
       "claim": "The epistemic term the method actually penalises with is better by two orders of magnitude and still {{b2_epi_ratio_h368}}\u00d7 overconfident where it is used.",
       "keys": [
         "b2_epi_ratio_h368"
@@ -1508,7 +1562,7 @@
     },
     {
       "id": "44513c92c70d",
-      "section": "11. Conclusion",
+      "section": "12. Conclusion",
       "claim": "The more useful finding is that ranking survives where scale does not, in both components.",
       "keys": [],
       "artifacts": [],
@@ -1520,7 +1574,7 @@
     },
     {
       "id": "ee328cdfe27f",
-      "section": "11. Conclusion",
+      "section": "12. Conclusion",
       "claim": "The teacher-forced arm has input-dependent \u03c3 and good ordering; the epistemic term ranks better still, at {{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}} dimensions positively correlated with realised error.",
       "keys": [
         "b2_epi_npos_h368",

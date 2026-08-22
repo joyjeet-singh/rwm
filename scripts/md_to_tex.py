@@ -146,7 +146,10 @@ def convert(md, title, author):
                     x.startswith(chr(92) + "appendix") for x in out):
                 out.append(r"\appendix")
             if txt.strip().startswith("Appendix"):
+                # LaTeX supplies the letter; strip "Appendix X — " and capitalise what
+                # is left, or the heading renders as "A verification chain".
                 txt = re.sub(r"^Appendix [A-Z]\s*[—-]\s*", "", txt)
+                txt = txt[:1].upper() + txt[1:]
             if txt.strip().lower() == "abstract":
                 out.append(r"\begin{abstract}")
                 i += 1

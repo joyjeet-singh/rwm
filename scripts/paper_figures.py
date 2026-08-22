@@ -125,15 +125,19 @@ def fig3_collapse(rec):
             slopes.append((tag, d["collapse_fit"]["slope_per_iter"]))
     ax[0].set(xlabel="iteration", ylabel=r"mean $\log\Delta_{\log\sigma}$",
               title=f"(a) collapse trajectory,\nall {len(runs)} runs superimposed")
-    mse = [s for t, s in slopes if not t.endswith("_nll")]
-    nll = [s for t, s in slopes if t.endswith("_nll")]
+    # Panel (b) must plot the same set the quoted rate is fitted on. The six
+    # 10,000-iteration runs continue seeds already present at 2,500, so including
+    # them here would show n=18 beside a statistic computed on n=12.
+    fitted = [(t, s) for t, s in slopes if "_10k" not in t]
+    mse = [s for t, s in fitted if not t.endswith("_nll")]
+    nll = [s for t, s in fitted if t.endswith("_nll")]
     ax[1].axhline(0, color="k", lw=1)
     for vals, lab, col in ((mse, "sampled-MSE runs", C["faithful"]),
                            (nll, "gaussian_nll runs", C["corrected"])):
         if vals:
             ax[1].scatter(np.arange(len(vals)), vals, s=18, color=col, label=f"{lab} (n={len(vals)})")
     ax[1].set(xlabel="run", ylabel="fitted slope per iteration",
-              title="(b) fitted rate: sign flips\nwith the objective")
+              title="(b) fitted rate, non-double-counting subset:\nsign flips with the objective")
     ax[1].legend(fontsize=7)
     rec["fig3"] = {"n_runs": len(runs), "slopes": dict(slopes)}
     fig.tight_layout()

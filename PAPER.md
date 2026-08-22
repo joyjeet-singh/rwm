@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     199 values substituted from 29 artifacts. -->
+     202 values substituted from 29 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -24,9 +24,10 @@ decision rule committed to git before the runs that tested it existed.
 
 Neither of the follow-up's uncertainty outputs survives contact with a calibration measurement.
 The checkpoint emits a per-member **aleatoric** σ and an **epistemic** ensemble disagreement, and
-the method penalises rewards with the second while discarding the first. We measure both. The
-aleatoric σ is **7,878× smaller than its own mean absolute error**
-(0.56% coverage at ±1σ against a calibrated 68.3%), and we show analytically why: the
+the method penalises rewards with the second while discarding the first. We measure both. At the
+368-step deployment horizon the aleatoric σ is **7,878× smaller than the realised
+error**, giving **0.04%** coverage at ±1σ against a calibrated 68.3%, and we show
+analytically why: the
 state loss is squared error on a reparameterised sample with no log-σ term, minimised at σ = 0,
 with the bound term that should oppose this cancelling algebraically. Running the correction —
 the authors' own unused `gaussian_nll` branch — fails differently rather than succeeding, at
@@ -41,12 +42,12 @@ P = 5.68e-14), and is still 315× overconfident. These models can learn *which*
 predictions will be worse. They cannot learn *how wrong* they will be. A downstream user who needs
 a ranking may be served; one who needs an interval is not, under any of the four.
 
-We also report four defects in the released pipeline, evidence that the released checkpoint's
+We also report 0 defects in the released pipeline, evidence that the released checkpoint's
 variance state is not reachable from the released artifacts at the iteration count its author
 recalls — which he attributes to the repository having moved on between training and release —
 and
-six retractions of our own numbered claims —
-one of which is the finding that one of our own pre-registrations was not, in fact, pre-registered.
+six retractions of our own numbered claims, and a
+seventh withdrawing the claim that one of our own pre-registrations was pre-registered at all.
 Every number in this paper is generated from a file in `results/`; none is typed by hand.
 
 ---
@@ -66,7 +67,7 @@ uses by one to two — and for the first of them the reason is structural rather
 
 This is a reproduction paper, and we mean the term in its stronger sense: the contribution is not
 that the numbers came out the same, but what systematically re-measuring the method reveals about
-where it is robust and where it is not. §8 collects the lessons in a form a practitioner can apply
+where it is robust and where it is not. §9 collects the lessons in a form a practitioner can apply
 without reading the rest. Three things distinguish the work from a re-run of the authors' code.
 
 **We rebuilt rather than imported.** The forward pass, the loss and the training step are written
@@ -76,7 +77,7 @@ gradients match to 0.000e+00 across 7 loss terms and
 (Appendix A). A discrepancy found later is therefore a property of the method, not of our wiring.
 
 **Decision rules were committed before the data.** The verdicts below were fixed in advance, in
-git, with timestamps a reader can check (§7, Figure 4). One of them returned "cannot be settled"
+git, with timestamps a reader can check (§8, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
 **We retract our own findings when they fail.** Six claims in this work are
@@ -111,27 +112,27 @@ bootstrap over independent trajectories, and every table reports that count.
 
 ---
 
-## 2b. What the original papers claim, and which claims we test
+## 3. What the original papers claim, and which claims we test
 
 A reproduction that does not say what it left alone invites the reader to assume it tested
 everything. It did not.
 
 | claim, and where | tested | verdict |
 |---|---|---|
-| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **reproduces** at long horizon (§3) |
+| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **reproduces** at long horizon (§4) |
 | Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | reproduces, and more strongly: Arm B is worse than the hold-last floor |
 | M=32, N=8 is the optimal configuration (§IV-C) | no | we use the released configuration and did not sweep it |
 | Beats MLP, RSSM and transformer baselines (§IV-D) | no | the lite release ships only the RNN variant |
 | Zero-shot hardware transfer (§IV-E) | no | no hardware; this is a dynamics-model reproduction |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | no policy learning reproduced |
 | Generality across quadruped, humanoid, manipulation (§IV-D) | no | one released dataset, ANYmal D flat |
-| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 §5.1) | **yes** | **supported as an ordering** (§4.2); not as a scale |
-| Aleatoric "remains low, reflecting small stochasticity" (§5.1) | **yes** | the observation holds; the explanation does not (§4.3) |
+| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680 §5.1) | **yes** | **supported as an ordering** (§5.2, §5.5); not as a scale |
+| Aleatoric "remains low, reflecting small stochasticity" (§5.1) | **yes** | the observation holds; the explanation does not (§5.3) |
 | Offline MBRL on real robots (2504.16680) | no | not tested |
 
 ---
 
-## 3. The base paper's central claim reproduces
+## 4. The base paper's central claim reproduces
 
 **Claim under test.** Training the dynamics model on its own autoregressive rollouts beats
 training it with teacher forcing, at deployment horizons.
@@ -167,23 +168,20 @@ reader should know about. An earlier draft of this paper quoted the single-seed 
 unfavourable to Arm B, and the three-seed ratio is 4.61× rather than 4.4×.
 
 For a single seed the bootstrap over trajectories gives 95% interval
-[0.56, 2.05] on n = 4 independent trajectories.
+[0.56, 2.05] on n = 4 independent trajectories. **That interval should not be read as an ordinary one:** four trajectories admit 256 distinct resamples, so any bootstrap tail is quantised to steps of 0.39%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
 *Against a baseline, because neither number means anything without one.* The hold-last floor —
 predicting that nothing changes — scores **0.9930** in the same cell. Autoregressive
 training beats it by **2.8×**. **Teacher forcing is 1.56× worse than
 assuming nothing changes at all**, which is the sharper statement of what exposure bias costs
 here: the arm that reaches a lower training loss ends up predicting the future worse than a
-model that makes no prediction. **That interval should not be read as an ordinary
-one:** four trajectories admit 256 distinct resamples, so any bootstrap tail is
-quantised to steps of 0.39%, and the interval is coarse by construction. It is offered as
-corroboration of the sign test, not as the primary evidence.
+model that makes no prediction. 
 
 **What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
 comparison out-of-sample gives a gap of 0.008 whose interval includes zero.
 The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored
 at h = 8, returned "cannot be settled"; anchoring a rule to the horizon the claim is actually
-about was a correction we had to make in advance of the runs, not after them (§7).
+about was a correction we had to make in advance of the runs, not after them (§8).
 
 The pattern is consistent across the design. Under the correct cluster bootstrap, the
 out-of-sample gap excludes zero in **4 of 4** long-horizon cells —
@@ -199,9 +197,9 @@ unaffected either way.
 
 ---
 
-## 4. Neither of the checkpoint's uncertainty outputs is usable as an interval
+## 5. Neither of the checkpoint's uncertainty outputs is usable as an interval
 
-### 4.1 Which quantity the method actually uses
+### 5.1 Which quantity the method actually uses
 
 The released checkpoint emits **two** uncertainty quantities, and the method consumes only one of
 them. This has to be settled before any calibration number means anything.
@@ -229,7 +227,7 @@ what follows is not an implementation slip being reported back to its authors �
 intended design, and the aleatoric head exists to shape training and be inspected rather than to
 be consumed.
 
-So the aleatoric head — the one the state loss and the bound loss shape, and the one §4.3
+So the aleatoric head — the one the state loss and the bound loss shape, and the one §5.3
 explains — is computed on every imagination step and discarded. We report both quantities below.
 Our own arms are ensemble size 1, where the epistemic term is identically zero by construction,
 so the epistemic measurement is possible only on the released checkpoint.
@@ -244,12 +242,12 @@ three things the papers do not address: that the aleatoric head is discarded bef
 neither quantity is usable as a scale, and that the low aleatoric value has a different cause
 than the one offered.
 
-### 4.2 The measurement
+### 5.2 The measurement
 
 For each model we compute the mean predicted σ, the mean absolute realised error, and the fraction
 of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside ±1σ.
 
-| model | mean \|error\| / mean σ | coverage at ±1σ, h=1 | coverage at h=368 |
+| model | mean \|error\| / mean σ, whole 368-step rollout | coverage at ±1σ, h=1 | coverage at ±1σ, h=368 |
 |---|---|---|---|
 | faithful Arm A (sampled MSE) | 52.2× | 11.67% | 1.75% |
 | corrected Arm A (`gaussian_nll`) | 10.9× | 42.78% | 8.57% |
@@ -257,7 +255,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside
 | released checkpoint | 7,878× | 0.56% | 0.04% |
 
 On the aleatoric head every model is overconfident by between one and four orders of magnitude
-(Figure 1) — that is the quantity §4.1 shows the method discards.
+(Figure 1) — that is the quantity §5.1 shows the method discards.
 
 **The quantity the method does use is also uncalibrated.** On the released
 5-member checkpoint, out-of-sample, n = 4 independent trajectories:
@@ -280,12 +278,12 @@ figures at every horizon, because the aleatoric term is too small to move it.
 The scalar penalty as actually applied — `means.std(0).sum(-1)` at `envs/base.py:166` —
 correlates +0.348 with total absolute error over the rollout.
 
-### 4.3 Why the aleatoric head collapses: the optimum is σ = 0
+### 5.3 Why the aleatoric head collapses: the optimum is σ = 0
 
 This subsection explains the aleatoric column and only that column. Ensemble disagreement is not
 shaped by the mechanism below, and why *it* is miscalibrated is not established here.
 
-It also supplies the alternative explanation promised in §4.1. The follow-up reads the low
+It also supplies the alternative explanation promised in §5.1. The follow-up reads the low
 aleatoric value as reflecting "small stochasticity in the environment". The observation is
 correct and the reading is not: σ is low because σ = 0 is the optimum of the loss that trains it,
 and it would be low on any dataset, stochastic or not.
@@ -307,10 +305,24 @@ We predicted the collapse from this algebra before training, then observed it. A
 21 runs the collapse is linear in iteration count and its rate is nearly identical
 (Figure 3a). Rates are fitted on 15 of those runs: the 6
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Under the corrected objective the sign flips (Figure 3b) — which is the strongest
+counted at 2,500 and would double-weight them. Figure 3(a) shows all 21 trajectories;
+Figure 3(b) plots only the 15 the rate is fitted on, so the scatter and the quoted
+statistic describe the same set.
+
+The 21 runs, so a reader can count them:
+
+| arm | iterations | objective | dataset | seeds | seed ids |
+|---|---|---|---|---|---|
+| Arm A | 2,500 | gaussian_nll | clean | 3 | 0, 1, 2 |
+| Arm A | 2,500 | mse | clean | 3 | 0, 1, 2 |
+| Arm A | 2,500 | mse | contaminated | 3 | 0, 1, 2 |
+| Arm A | 2,500 | mse | duplicated | 3 | 0, 1, 2 |
+| Arm A | 10,000 | mse | clean | 3 | 0, 1, 2 |
+| Arm B | 2,500 | mse | clean | 3 | 0, 1, 2 |
+| Arm B | 10,000 | mse | clean | 3 | 0, 1, 2 | Under the corrected objective the sign flips (Figure 3b) — which is the strongest
 evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
 
-**Two different things are being explained here, and §4.5 separates them.** *Magnitude collapse
+**Two different things are being explained here, and §5.5 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all 12 sampled-MSE runs at a rate of
 -9.3986e-05 per iteration with a standard deviation of 6.8e-07 — **including the
 teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05 in the
@@ -318,7 +330,7 @@ teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05
 15.6 between two arms trained under the same objective, so the objective
 cannot be what produces it.
 
-### 4.4 The correction fails differently rather than succeeding
+### 5.4 The correction fails differently rather than succeeding
 
 The reference contains an unused `gaussian_nll` branch. Running it reverses the collapse and
 improves the magnitude from 52.2× to 10.9× overconfident. It does not
@@ -326,9 +338,9 @@ produce a usable estimate, and it destroys something the faithful arm had: the �
 ordering falls from 39/45 dimensions positively correlated
 (P = 5.42e-07) to 21/45 (P = 7.66e-01, chance).
 
-### 4.5 The failure is one of magnitude, not of ordering
+### 5.5 The failure is one of magnitude, not of ordering
 
-Measuring the teacher-forced arm — which we had trained for §3, and which our own first three
+Measuring the teacher-forced arm — which we had trained for §4, and which our own first three
 calibration tables omitted — sharpens the finding:
 
 | model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 | P |
@@ -362,7 +374,7 @@ error grows 13.33×.
 
 **The failure is specifically magnitude calibration, in both components.**
 
-### 4.6 One scalar does not fix it
+### 5.6 One scalar does not fix it
 
 If σ had the right shape and the wrong scale, a single multiplier would repair it, and the
 finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on
@@ -378,11 +390,11 @@ and leaves h=368 at 17–21%. On the aleatoric term a scalar of
 drives one-step coverage to 100% — an interval wide enough to be vacuous where the model is
 accurate — while still falling short at the far end.
 
-The reason is §4.7's mechanism: a constant multiplier cannot track an error that grows while σ
+The reason is §5.7's mechanism: a constant multiplier cannot track an error that grows while σ
 does not. So "right shape, wrong scale" is the charitable reading of these tables and it does not
 survive. A per-horizon or input-dependent correction might still work; a constant one does not.
 
-### 4.7 The structural excuse does not survive
+### 5.7 The structural excuse does not survive
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
@@ -401,12 +413,12 @@ growing error against a fixed σ.
 
 ---
 
-## 5. Defects in the released pipeline
+## 6. Defects in the released pipeline
 
-**5.1 Ten unmarked episode boundaries.** §2. The window builder reads a termination column that is
+**6.1 Ten unmarked episode boundaries.** §2. The window builder reads a termination column that is
 identically zero, so it marks all 9,961 windows valid.
 
-**5.2 Training and evaluation disagree on action alignment, and evaluation is the broken one.**
+**6.2 Training and evaluation disagree on action alignment, and evaluation is the broken one.**
 Row *t* holds the action that *produced* state *t*. The training path pairs states and actions
 index-for-index, which is causally correct. The evaluation path feeds the action from *t−1* to
 predict state *t* — stale by one step. Scored correctly the released checkpoint is materially
@@ -414,10 +426,10 @@ better than its own released evaluation reports: nRMSE at h = 368 falls from 1.3
 under the released pairing to 0.7572 under the causal one, so the released evaluation
 overstates its own model's error by 75%.
 
-**5.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
+**6.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all.
 
-**5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on
+**6.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on
 7,882 windows — the clean 7,687 plus 195 splices — and,
 because that confounds *content* with *count*, a duplication control adding the same
 195 windows as exact copies of windows already present.
@@ -453,7 +465,7 @@ detectable at this rate.**
 
 ---
 
-## 6. The released checkpoint's variance state is unreachable at the stated iteration counts
+## 7. The released checkpoint's variance state is unreachable at the stated iteration counts
 
 The collapse rate is a clock. Fitting it across our runs and extrapolating to the released
 checkpoint's σ state implies **153,270** optimisation steps at the configured learning
@@ -491,8 +503,9 @@ I used for the submission."
 
 That last point reframes this section. The extrapolation above assumes the *released*
 initialisation and the *released* learning rate. If the repository drifted between the training
-run and the release, those are not necessarily the values that produced the checkpoint, and E5
-already lists a changed `log_delta_logstd` initialisation as the assumption it cannot rule out.
+run and the release, those are not necessarily the values that produced the checkpoint — and a
+changed `log_delta_logstd` initialisation is precisely the assumption the table above cannot rule
+out.
 
 So the finding is not that the release is internally inconsistent. It is that **the released
 artifacts do not reproduce the released checkpoint's variance state, and the author's account is
@@ -503,7 +516,7 @@ the work.
 
 ---
 
-## 7. Method
+## 8. Method
 
 **An append-only ledger.** Every claim in this work has a permanent identifier, an evidence class
 (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md`
@@ -515,7 +528,7 @@ that tested them — with one exception, which we report below. Figure 4 shows t
 each, computed from commit timestamps: the A/B rule by 1.3 hours, the flip-pattern rule by
 4.8 hours, the difficulty-bias rule by 5 minutes, the long-horizon rule by 2 minutes.
 
-The fifth bar is negative. The rule for the duplication control (§5.4) was stated in conversation
+The fifth bar is negative. The rule for the duplication control (§6.4) was stated in conversation
 before the runs but reached git **2.9 hours after the runs finished**, and we found this only by
 auditing our own `git log`. The measurement stands — the arm was built and run without reference
 to its outcome — but the claim that it was pre-registered does not, and we withdraw it. We report
@@ -526,9 +539,13 @@ kept in the record. In order: a premise about forecast decay that turned out not
 code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate
 we ourselves showed to be biased low; an aggregation artifact that inverted a published-model
 comparison in our favour, withdrawn when the gating checks we had written refuted it; a
-per-dimension comparison that turned out to be unmatched; and the claim that σ is input-independent
-"in all four models", made against a table holding three. The pre-registration claim above retracts a framing rather
-than a number and is counted separately.
+per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent
+"in all four models", made against a table holding three; and the phrase "the released checkpoint's
+uncertainty output", singular, when the checkpoint emits two and we had measured the one the method
+discards.
+
+The pre-registration claim above is **not** among those six: it withdraws a
+framing rather than a number, and is counted separately.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three training seeds over
 a shared set of evaluation trajectories and resampled the pooled vector, while reporting the
@@ -549,7 +566,7 @@ timed at 46.5 s idle took 109.7 s with training running concurrently.
 
 ---
 
-## 8. Actionable lessons
+## 9. Actionable lessons
 
 Four things a practitioner can apply without reading the rest of this paper.
 
@@ -558,14 +575,14 @@ checkpoint's uncertainty outputs rank which predictions will be worse — the ep
 45 of 45 dimensions, P = 5.7e-14 — and neither is
 within an order of magnitude of a usable interval. A ranking use is supported by our measurements
 and by the follow-up's own claim. A risk gate, a safety margin, or anything that reads σ as a
-distance is not, and no single scalar repairs it (§4.6).
+distance is not, and no single scalar repairs it (§5.6).
 
 **Count independent trajectories, not trajectories.** Two 400-step windows that overlap at all
 are one piece of evidence, not two. The held-out arena here contains 4 independent
 400-step trajectories however many windows are drawn from it, and that number — not the window
 count — bounds every long-horizon claim. Reporting an interval beside a trajectory count rather
 than an independent-trajectory count overstates precision, and resampling pooled seed × trajectory
-values instead of trajectories narrows intervals by a further 1.42× (§7).
+values instead of trajectories narrows intervals by a further 1.42× (§8).
 
 **Anchor a decision rule to the horizon the claim is about.** Our first pre-registered rule was
 anchored at h = 8, the training forecast horizon, and returned "cannot be settled". The claim was
@@ -580,7 +597,7 @@ result that would otherwise have looked like a training bug.
 
 ---
 
-## 9. Broader impact
+## 10. Broader impact
 
 This is a reproduction of a dynamics model on public simulation data, and the reproduction itself
 carries no significant risk of harm: no new capability, no personal data, no deployment.
@@ -596,34 +613,35 @@ where 68.3% is expected. On hardware, a margin that is wrong by that factor is t
 between a conservative controller and one that believes it is safe when it is not.
 
 We think that makes the finding worth publishing rather than the reverse, and it is the reason
-§4 reports coverage rather than only correlation.
+§5 reports coverage rather than only correlation.
 
 ---
 
-## 10. Limitations
+## 11. Limitations
 
 **Effective sample size bounds every long-horizon claim.** The out-of-sample arena has
-4 independent 400-step trajectories. That is the binding constraint on §3, and no
+4 independent 400-step trajectories. That is the binding constraint on §4, and no
 amount of trajectory oversampling changes it.
 
 **Ensemble size.** Our main experiment runs at ensemble size 1 against the reference's 5, for CPU
 budget, so our own arms have no epistemic component — it is identically zero by construction at
-ensemble size 1. The epistemic measurement in §4.2 is therefore made on the released checkpoint
+ensemble size 1. The epistemic measurement in §5.2 is therefore made on the released checkpoint
 only, and we cannot say how ensemble disagreement would behave in a model we trained.
 
 **One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait
 is a single trot throughout. "Generalisation" here means across velocity commands, not across
 gaits or terrain.
 
-**Two of our headline analyses rest on a single training seed**, because only one
-10,000-iteration run per arm exists. This is recorded in the artifacts themselves.
+**Two secondary analyses rest on a single training seed** — the long-horizon trend fit and the
+per-dimension matched comparison, both computed on seed 1 alone. The headline A/B result is not
+among them: it is a three-seed mean with per-seed values reported (§4). This is recorded in the artifacts themselves.
 
 **We did not reproduce the policy-learning results** of either paper. This is a dynamics-model
 reproduction only.
 
 ---
 
-## 11. Conclusion
+## 12. Conclusion
 
 The Robotic World Model's central training claim reproduces, and the margin is large. Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
@@ -648,8 +666,8 @@ supplementary material, and will be released under a permanent archival identifi
 acceptance. Neither upstream repository is redistributed; `setup.sh` fetches both at pinned
 commits and verifies two SHA-256 hashes.
 
-The pre-registration argument in §7 rests on commit timestamps, and those are author-settable via
-`git commit --date`. That matters, because §7 is load-bearing. Two things address it. The
+The pre-registration argument in §8 rests on commit timestamps, and those are author-settable via
+`git commit --date`. That matters, because §8 is load-bearing. Two things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
 ordering in Figure 4 is checkable at review time. And **the repository was archived by Software
 Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit
@@ -660,7 +678,7 @@ What that archive establishes should be stated precisely, because it is easy to 
 does **not** prove any individual commit date is genuine. It proves that the repository, with the
 whole pre-registration history in the form this paper cites, existed no later than that archival
 moment, as recorded by a third party with no interest in the claim — so nothing in the record can
-have been back-dated afterwards. That bounds §7 rather than proving it, and a reviewer should
+have been back-dated afterwards. That bounds §8 rather than proving it, and a reviewer should
 read it as such.
 
 ## References

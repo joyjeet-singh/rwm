@@ -71,6 +71,18 @@ def main():
 
     L = []
     A = L.append
+    # HuggingFace requires YAML front matter in the repo card; without it the Hub
+    # shows "empty or missing yaml metadata in repo card".
+    A("---")
+    A("license: apache-2.0")
+    A("library_name: pytorch")
+    A("tags:")
+    for t in ("robotics", "world-models", "model-based-rl", "reproduction",
+              "uncertainty-quantification", "legged-robotics"):
+        A(f"  - {t}")
+    A("pipeline_tag: robotics")
+    A("---")
+    A("")
     A("# Model card — RWM reproduction checkpoints")
     A("")
     A("Independent reproduction of the proprioceptive dynamics model of Li, Krause & Hutter,")
