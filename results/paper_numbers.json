@@ -2012,7 +2012,7 @@
     "value": "+0.181"
   },
   "d2b_n_horizons_tested": {
-    "source": "results/task_d_nind20.json",
+    "source": "results/task_d3_ens5.json (index_defined_at)",
     "value": 4
   },
   "d2b_n_index_wins": {
@@ -2116,7 +2116,7 @@
     "value": "+0.556"
   },
   "d2p_n_horizons": {
-    "source": "results/task_d_nind20.json",
+    "source": "results/task_d3_ens5.json (index_defined_at)",
     "value": 4
   },
   "d2p_n_overlap": {

@@ -445,16 +445,23 @@ def main():
         put(f"d2p_diff_{k}", f'{r["paired_diff"]:+.3f}', "results/task_d_nind20.json")
         put(f"d2p_ci_{k}", f'[{r["paired_ci_lo"]:+.3f}, {r["paired_ci_hi"]:+.3f}]',
             "results/task_d_nind20.json")
-    _sep = [h for h in ("8", "32", "128", "368")
-            if D["d2_forecast_index"][h]["paired_excludes_zero"]]
-    _ovl = [h for h in ("8", "32", "128", "368")
-            if D["d2_forecast_index"][h]["marginal_ci_overlap"]]
+    # The horizons at which the forecast index is DEFINED. h=1 has one forecast
+    # step, so the index is constant there and its correlation does not exist.
+    # This set is fixed by M-43's own text and must NOT follow the reporting grid:
+    # moving it would retroactively change a discharged pre-registration. It is
+    # read from the artifact -- where task_d3_ens5.py records it as
+    # index_defined_at -- rather than typed here, so it is derived AND fixed.
+    _IDX = [str(h) for h in J("task_d3_ens5.json")["design"]["index_defined_at"]]
+    assert all(h in D["d2_forecast_index"] for h in _IDX), \
+        "an index-defined horizon is missing from the n=20 table"
+    _sep = [h for h in _IDX if D["d2_forecast_index"][h]["paired_excludes_zero"]]
+    _ovl = [h for h in _IDX if D["d2_forecast_index"][h]["marginal_ci_overlap"]]
     put("d2p_n_separating", len(_sep), "results/task_d_nind20.json")
-    put("d2p_n_horizons", 4, "results/task_d_nind20.json")
+    put("d2p_n_horizons", len(_IDX), "results/task_d3_ens5.json (index_defined_at)")
     put("d2p_overlap_h", ", ".join(f"h={x}" for x in _ovl) or "none",
         "results/task_d_nind20.json")
     put("d2p_n_overlap", len(_ovl), "results/task_d_nind20.json")
-    _narrow = min(("8", "32", "128", "368"),
+    _narrow = min(_IDX,
                   key=lambda h: D["d2_forecast_index"][h]["paired_ci_lo"])
     put("d2p_narrowest_h", _narrow, "results/task_d_nind20.json")
     put("d2p_narrowest_lo", f'{D["d2_forecast_index"][_narrow]["paired_ci_lo"]:+.3f}',
@@ -465,9 +472,9 @@ def main():
     put("d2_epi_ci_h1", f'[{_h1["ci"]["epistemic"]["lo"]:+.3f}, '
                         f'{_h1["ci"]["epistemic"]["hi"]:+.3f}]',
         "results/task_d_nind20.json")
-    _dw = [h for h in ("8", "32", "128", "368") if D["d2_forecast_index"][h]["index_wins"]]
+    _dw = [h for h in _IDX if D["d2_forecast_index"][h]["index_wins"]]
     put("d2b_n_index_wins", len(_dw), "results/task_d_nind20.json")
-    put("d2b_n_horizons_tested", 4, "results/task_d_nind20.json")
+    put("d2b_n_horizons_tested", len(_IDX), "results/task_d3_ens5.json (index_defined_at)")
     _all = D["d2_forecast_index"]["all"]
     put("d2b_shrink_all", f'{_all["r_epistemic"] - _all["r_partial"]:+.3f}',
         "results/task_d_nind20.json")
@@ -1127,6 +1134,38 @@ def main():
         "results/t1_bibliography_verified.json")
     put("t1_n_frag_ok", T1["verification"]["n_fragments_verbatim"],
         "results/t1_bibliography_verified.json")
+
+    # ------------------------------------------------------------------
+    # Surface every value that is a LITERAL in this file rather than read from
+    # an artifact.
+    #
+    # This revision hit the same defect three times: n_lessons split on the
+    # literal "## 9." and silently moved to the Method section; the worst
+    # recalibration cell was pinned to h=128 and moved to h=100; and agree_nh was
+    # a literal 5 that stayed 5 when the horizon grid grew to six, so the paper
+    # said "5 of 5" over a six-row table AND named the wrong horizon.
+    #
+    # Each was found by a different accident. A literal here is not always wrong
+    # -- a tolerance, a nominal, a fixed convention -- but it is always worth
+    # LOOKING at, which is what build_paper.py's typed-numeral report does for
+    # prose. This does it for the collector, so the class has to be looked at
+    # rather than rediscovered.
+    import ast as _ast
+    _src = _ast.parse(open(__file__).read())
+    _lits = []
+    for _n in _ast.walk(_src):
+        if (isinstance(_n, _ast.Call) and isinstance(_n.func, _ast.Name)
+                and _n.func.id == "put" and len(_n.args) >= 2):
+            _k, _v = _n.args[0], _n.args[1]
+            if isinstance(_v, _ast.Constant) and isinstance(_v.value, (int, float)) \
+                    and not isinstance(_v.value, bool) \
+                    and isinstance(_k, _ast.Constant):
+                _lits.append((_k.value, _v.value, _v.lineno))
+    if _lits:
+        print(f"\n  LITERAL VALUES ({len(_lits)}) — each is typed here, not read from an "
+              f"artifact. Check that none is bound to something that can move:")
+        for _k, _v, _ln in sorted(_lits):
+            print(f"    line {_ln:>5}  {_k:<24} = {_v}")
 
     op = os.path.join(R.RESULTS, "paper_numbers.json")
     json.dump(N, open(op, "w"), indent=2, sort_keys=True)
