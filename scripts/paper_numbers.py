@@ -176,9 +176,19 @@ def main():
     CC = J("comparative_claims.json")
     put("cc_n", CC["n_claims"], "results/comparative_claims.json")
     put("cc_pass", CC["n_pass"], "results/comparative_claims.json")
-    _st = CC.get("self_test", {})
-    put("cc_st_n", _st.get("n", 0), "results/comparative_claims.json")
-    put("cc_st_caught", _st.get("caught", 0), "results/comparative_claims.json")
+    # Assert, do not default. check_comparative_claims.py writes the self_test
+    # block only when run with --self-test; running it without leaves the block
+    # absent, and .get(..., 0) turned that into "0 of 0 corruptions caught" in the
+    # paper -- a sentence claiming the self-test found nothing, which is exactly
+    # what it would say if the self-test had silently stopped running. Same shape
+    # as M-36's "0 defects". reproduce.sh stage 28a always passes --self-test.
+    assert "self_test" in CC, (
+        "results/comparative_claims.json has no self_test block: re-run "
+        "scripts/check_comparative_claims.py --self-test")
+    _st = CC["self_test"]
+    assert _st["n"] > 0, "self-test ran zero corruptions"
+    put("cc_st_n", _st["n"], "results/comparative_claims.json")
+    put("cc_st_caught", _st["caught"], "results/comparative_claims.json")
     put("cc_kinds", len({c["kind"] for c in CC["claims"]}), "results/comparative_claims.json")
     put("diff_terms", dif.get("n_terms", 7), "results/step4_3_differential.json")
     t5d = J("task5_differential.json")

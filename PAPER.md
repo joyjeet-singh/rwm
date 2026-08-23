@@ -597,7 +597,7 @@ the work.
 **Reproducibility, and a build that checks its own prose.**
 `./reproduce.sh --quick --force` regenerates 28 artifact files and 5,999
 numeric values from a clean clone, 5,999 of them bitwise identical (100.00%),
-0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **21 comparative claims** across 8 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 0 of 0 caught. **Appendix D gives the argument, the kinds, the self-test, two defects found in the checker itself, and the two exclusions from the numeric comparison.**
+0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **21 comparative claims** across 8 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 20 of 20 caught. **Appendix D gives the argument, the kinds, the self-test, two defects found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -793,7 +793,7 @@ guards nothing; a check that only matches text guards nothing either.
 **The self-test.** Every assertion is run against a deliberately corrupted expectation on each
 build and must fail: the interval relation inverted, the extremum replaced by the *runner-up*
 rather than an absent label, the sign flipped, the order of magnitude and the dimension counts
-moved by one. 0 of 0 are caught. An assertion that has quietly stopped
+moved by one. 20 of 20 are caught. An assertion that has quietly stopped
 being able to fail is worth less than no assertion, because it reads as coverage.
 
 **Two defects the self-test found in the checker itself.** Its first version applied a fixed

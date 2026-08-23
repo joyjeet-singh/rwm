@@ -745,11 +745,11 @@
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 0
+    "value": 20
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 0
+    "value": 20
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
