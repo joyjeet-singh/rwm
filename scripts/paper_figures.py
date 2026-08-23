@@ -172,6 +172,12 @@ def fig4_timeline(rec):
         ("flip pattern\ninterpretation", "0fe2bca", "e5aee6f", "all six main runs"),
         ("M-22\ndifficulty-bias rule", "0648a32", "d88e9ff", "M-16 re-evaluated"),
         ("M-23\nlong-horizon rule", "efc35b8", "d9f7bba", "10k runs launched"),
+        # The ensemble-5 rule and the two rules of the pre-submission revision.
+        # P1 required the last two to be committed before any Phase 1 or Phase 2
+        # artifact and their hash recorded here, which is what these rows are.
+        ("M-43\nensemble-5 replication", "b17f1b5", "cdac035", "ens5 result committed"),
+        ("M-45\nwithin-trajectory control", "81b49f7", "7859309", "A2 result committed"),
+        ("M-44\ntrunk-sharing mechanism", "81b49f7", "0288b47", "R2 result committed"),
     ]
     rows = []
     for lab, rule, data, dlab in CASES:

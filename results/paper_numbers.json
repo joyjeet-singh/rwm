@@ -2687,6 +2687,18 @@
     "source": "results/task2_sigma_profile.json",
     "value": 1.79
   },
+  "f4_n_negative": {
+    "source": "results/paper_figures.json",
+    "value": 1
+  },
+  "f4_n_positive": {
+    "source": "results/paper_figures.json",
+    "value": 7
+  },
+  "f4_n_rules": {
+    "source": "results/paper_figures.json",
+    "value": 8
+  },
   "floor_h368": {
     "source": "results/task4_arenas.json",
     "value": "0.9930"

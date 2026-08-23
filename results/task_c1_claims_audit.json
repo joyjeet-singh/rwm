@@ -1,7 +1,8 @@
 {
-  "n_claims": 279,
+  "n_claims": 280,
   "by_verdict": {
-    "SUPPORTED": 279
+    "SUPPORTED": 278,
+    "UNREVIEWED": 2
   },
   "claims": [
     {
@@ -3591,9 +3592,27 @@
       "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "5855651d4256",
+      "id": "480f86259bca",
       "section": "9. Method",
-      "claim": "The fifth bar is negative: the duplication-control rule (\u00a77.4) was stated in conversation before the runs but reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`.",
+      "claim": "Figure 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive and {{f4_n_negative}} is not.",
+      "keys": [
+        "f4_n_rules",
+        "f4_n_positive",
+        "f4_n_negative"
+      ],
+      "artifacts": [
+        "results/paper_figures.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "6c0db25b3b22",
+      "section": "9. Method",
+      "claim": "The negative one is the duplication-control rule (\u00a77.4), which was stated in conversation before the runs but reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`.",
       "keys": [
         "lead_task3"
       ],
@@ -3602,9 +3621,9 @@
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "see the named artifact",
-      "note": "revision review: assertion checked against the named artifact, not merely the numerals substituted (results/paper_figures.json)"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "06d17526f8b4",

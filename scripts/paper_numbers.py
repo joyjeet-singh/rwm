@@ -1123,6 +1123,17 @@ def main():
         put("pdf_overfull", CP["overfull_hboxes"], "results/compile_paper.json")
         put("pdf_warnings", CP["latex_warnings"], "results/compile_paper.json")
 
+    # --- Figure 4: the pre-registration record -------------------------------
+    # Counted from the figure's own data, so the prose cannot describe a bar by a
+    # position that moves when a rule is added. "The fifth bar is negative" became
+    # wrong the moment M-43, M-44 and M-45 joined the panel.
+    _f4 = J("paper_figures.json")["fig4"]
+    put("f4_n_rules", len(_f4), "results/paper_figures.json")
+    put("f4_n_positive", sum(1 for v in _f4.values() if v["lead_hours"] > 0),
+        "results/paper_figures.json")
+    put("f4_n_negative", sum(1 for v in _f4.values() if v["lead_hours"] <= 0),
+        "results/paper_figures.json")
+
     # --- R2 / M-44: the independent-initialisation ensemble ------------------
     R2 = J("r2_independent_ensemble.json")
     _m44, _dec = R2["m44"], R2["decomposition"]
