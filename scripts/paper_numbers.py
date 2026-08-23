@@ -927,6 +927,18 @@ def main():
     put("v1_total_params", f'{_ref["total_params"]:,}', "results/v1_ensemble_topology.json")
     put("v1_hidden_states", _ref["n_independent_recurrent_states"],
         "results/v1_ensemble_topology.json")
+    # Rendered as a word too: "There is 1 hidden-state trajectory" reads badly and
+    # "one" cannot be typed under this paper's own rule. Same pattern as
+    # n_retractions_word.
+    # WORDS is capitalised for sentence-initial use; both of these render
+    # mid-sentence, so lower them.
+    put("v1_hidden_states_word",
+        WORDS.get(_ref["n_independent_recurrent_states"],
+                  str(_ref["n_independent_recurrent_states"])).lower(),
+        "results/v1_ensemble_topology.json")
+    put("v1_members_word",
+        WORDS.get(_ref["ensemble_size"], str(_ref["ensemble_size"])).lower(),
+        "results/v1_ensemble_topology.json")
     put("v1_n_citations", len(V1["source_citations"]), "results/v1_ensemble_topology.json")
     put("v1_our_arms_match",
         "yes" if V1["gate"]["our_arms_match_reference_topology"] else "NO",

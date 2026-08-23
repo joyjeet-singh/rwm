@@ -557,7 +557,7 @@ hands the identical feature vector to every head; `system_dynamics.py:126` then 
 epistemic term as the standard deviation across those heads.
 
 The parameter counts make the scale of the sharing concrete. The state pathway is a
-{{v1_shared_params}}-parameter two-layer GRU trunk plus {{v1_members}} heads of
+{{v1_shared_params}}-parameter two-layer GRU trunk plus {{v1_members_word}} heads of
 {{v1_private_params}} parameters each. Per member, {{v1_shared_params}} of
 {{v1_member_params}} parameters — **{{v1_shared_pct}}%** — are numerically identical to every
 other member's. Only {{v1_private_pct}}% differ. Across the whole released object, the two shared
@@ -566,10 +566,10 @@ trunks are {{v1_shared_pct_model}}% of {{v1_total_params}} parameters.
 **The sharing is stronger than the parameter count suggests, and this is the part that matters.**
 The trunk owns a *single* recurrent hidden state (`rnn.py:40`), and an autoregressive rollout
 feeds the ensemble **mean** back into it (`system_dynamics.py:115`; `src/rwm_model.py:223` in our
-reimplementation). So the {{v1_members}} members do not roll out independently at all. There is
-{{v1_hidden_states}} hidden-state trajectory, and disagreement at step *t* is the spread of
-{{v1_members}} two-layer MLPs read off one 256-dimensional vector at the point that single
-trajectory has reached.
+reimplementation). So the {{v1_members_word}} members do not roll out independently at all. There is exactly
+{{v1_hidden_states_word}} hidden-state trajectory between them, and disagreement at step *t* is
+the spread of {{v1_members_word}} two-layer MLPs read off a single 256-dimensional vector, at
+whatever point that one trajectory has reached.
 
 That is the argument. **Members which share a feature extractor have correlated errors by
 construction, and their spread cannot express uncertainty the shared trunk does not already
