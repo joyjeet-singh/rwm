@@ -53,24 +53,24 @@
     "caution_seeds_are_not_trajectories": "in task1_calibration.py the per-seed error and sigma arrays are concatenated along axis 0 before pooling, so seeds enter the coverage average as if they were extra trajectories. That is fine for a point estimate -- it is a mean of means over a balanced design -- but it is NOT a valid resampling unit. Every interval in this paper resamples whole trajectories; pooling seed x trajectory and resampling the pooled vector narrows intervals by about sqrt(3) (M-27).",
     "citations": [
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:65",
+        "cite": "rwm_repro/scripts/task1_calibration.py:78",
         "note": "the z statistic",
         "text": "z=err/np.maximum(sig,1e-30)"
       },
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:73",
+        "cite": "rwm_repro/scripts/task1_calibration.py:102",
         "note": "the coverage itself: cumulative over steps 1..h, flat mean over all axes",
         "text": "c1=float((z[:,:h]<=1).mean()); c2=float((z[:,:h]<=2).mean())"
       },
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:64",
+        "cite": "rwm_repro/scripts/task1_calibration.py:77",
         "note": "where seeds join the trajectory axis",
         "text": "err=np.concatenate(E_,0); sig=np.concatenate(SG,0)          # (n*seeds, T', 45)"
       },
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:74",
+        "cite": "rwm_repro/scripts/task1_calibration.py:103",
         "note": "the nominal it is judged against",
-        "text": "rec[\"coverage\"][h]={\"pm1\":c1,\"pm2\":c2,\"dev1\":c1-0.683,\"dev2\":c2-0.954}"
+        "text": "rec[\"coverage\"][h]={\"pm1\":c1,\"pm2\":c2,\"dev1\":c1-0.683,\"dev2\":c2-0.954,"
       }
     ],
     "cumulative_not_pointwise": "IMPORTANT. cov(h) averages steps 1..h. It is not the coverage at step h. The same convention is used for the err/sigma ratio and for every horizon-indexed quantity in the paper.",
@@ -136,7 +136,7 @@
       "calibrated_value_of_rho": 0.7978845608028654,
       "citations": [
         {
-          "cite": "rwm_repro/scripts/task1_calibration.py:67",
+          "cite": "rwm_repro/scripts/task1_calibration.py:80",
           "note": "ratio of means, computed once",
           "text": "\"ratio_err_over_sigma\":float(err.mean()/sig.mean()),\"coverage\":{},\"groups\":{},"
         }

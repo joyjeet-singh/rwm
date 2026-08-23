@@ -601,7 +601,7 @@ tensor names and parameter counts match the released checkpoint exactly —
 636,672 shared, 77,492 per head, 1,995,569 in total, on all
 3 arms checked. So §6.2's "our arms fail the same way at
 10.5×" compares two instances of one architecture, not two architectures.
-20 source citations support the paragraphs above and each is read back from the
+21 source citations support the paragraphs above and each is read back from the
 pinned upstream and checked on every build (`results/v1_ensemble_topology.json`).
 
 **What this is and is not.** It is a *candidate* mechanism, established structurally. It is not

@@ -5429,7 +5429,7 @@
   },
   "v1_n_citations": {
     "source": "results/v1_ensemble_topology.json",
-    "value": 20
+    "value": 21
   },
   "v1_our_arms_match": {
     "source": "results/v1_ensemble_topology.json",

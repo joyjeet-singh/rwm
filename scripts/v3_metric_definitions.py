@@ -36,15 +36,42 @@ RWML = os.path.join(PDM, "robotic_world_model_lite")
 
 
 def cite(path, line, must_contain, note=""):
+    """
+    Cite path:line, verified by reading the line back.
+
+    Two regimes, because two kinds of file are being cited and they fail
+    differently.
+
+    UPSTREAM files are pinned at a commit. A citation that no longer matches
+    means the PIN MOVED, which is a fact about the world that must fail loudly --
+    so the line number is asserted exactly.
+
+    OUR OWN files change whenever we edit them, and a line number is the most
+    fragile possible reference into a file under active development. Adding the
+    A1 bootstrap block to task1_calibration.py moved its z statistic from line 65
+    to line 78 and broke four citations here, which the clean-clone run caught.
+    So for repo-local files the fingerprint is LOCATED and its current line is
+    reported: the citation cannot go stale, and it still fails if the line it
+    names disappears entirely or stops being unique.
+    """
     with open(path) as f:
         lines = f.read().split("\n")
-    assert 1 <= line <= len(lines), f"{path}:{line} past end of file"
-    text = lines[line - 1]
-    assert must_contain in text, (
-        f"citation drift at {path}:{line}\n  expected: {must_contain!r}\n"
-        f"  actual:   {text.strip()!r}")
+    local = os.path.abspath(path).startswith(REPO + os.sep)
+    if local:
+        hits = [i + 1 for i, t in enumerate(lines) if must_contain in t]
+        assert hits, (f"citation lost at {os.path.relpath(path, PDM)}: no line contains "
+                      f"{must_contain!r} — the code it names is gone or was reworded")
+        assert len(hits) == 1, (
+            f"ambiguous citation in {os.path.relpath(path, PDM)}: {must_contain!r} "
+            f"occurs on lines {hits}; make the fingerprint unique")
+        line = hits[0]
+    else:
+        assert 1 <= line <= len(lines), f"{path}:{line} past end of file"
+        assert must_contain in lines[line - 1], (
+            f"citation drift at {path}:{line} — the upstream pin moved\n"
+            f"  expected: {must_contain!r}\n  actual:   {lines[line - 1].strip()!r}")
     return {"cite": f"{os.path.relpath(path, PDM)}:{line}",
-            "text": text.strip(), "note": note}
+            "text": lines[line - 1].strip(), "note": note}
 
 
 def main():

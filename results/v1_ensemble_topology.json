@@ -238,10 +238,15 @@
       "note": "OUR heads are the replicated part",
       "text": "self.state_heads = nn.ModuleList(["
     },
-    "ours_mean_fed_back": {
-      "cite": "rwm_repro/src/rwm_model.py:223",
-      "note": "OUR rollout feeds the ensemble mean back into the single trunk, so the members share one hidden-state trajectory end to end",
-      "text": "pred[:, i] = m"
+    "ours_hidden_state_carried": {
+      "cite": "rwm_repro/src/rwm_model.py:231",
+      "note": "OUR rollout carries ONE hidden state across every forecast step, so the members share a single recurrent trajectory end to end",
+      "text": "later steps a single timestep, hidden state carried throughout."
+    },
+    "ours_mean_returned": {
+      "cite": "rwm_repro/src/rwm_model.py:198",
+      "note": "OUR forward returns the ensemble MEAN, which is what an autoregressive rollout feeds back \u2014 so the members never see each other's predictions",
+      "text": "return (means.mean(0),                              # :114 ensemble mean"
     },
     "ours_trunk_once": {
       "cite": "rwm_repro/src/rwm_model.py:164",

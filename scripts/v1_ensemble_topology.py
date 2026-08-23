@@ -55,20 +55,35 @@ def cite(path, line, must_contain, note):
     Read path:line, assert it contains `must_contain`, return the citation record.
 
     The assert is the point. A file:line in a paper is a promise about a byte
-    offset in someone else's repository; without a read-back it is a promise
-    nothing checks. Both upstreams are pinned, so a failure here means the pin
-    moved, not that the fact changed.
+    offset in a source file; without a read-back it is a promise nothing checks.
+
+    Two regimes, because the two kinds of file fail differently. UPSTREAM files
+    are pinned, so a mismatch means THE PIN MOVED and must fail loudly at the
+    exact line. OUR OWN files change whenever we edit them, and a fixed line
+    number into a file under active development is the most fragile reference
+    there is -- adding a block to task1_calibration.py silently invalidated four
+    citations in the sibling V3 script, which only the clean-clone run caught. So
+    a repo-local fingerprint is LOCATED and its current line reported: the
+    citation cannot go stale, and it still fails if the code it names disappears
+    or stops being unique.
     """
     with open(path) as f:
         lines = f.read().split("\n")
-    assert 1 <= line <= len(lines), f"{path}:{line} is past end of file ({len(lines)} lines)"
-    text = lines[line - 1]
-    assert must_contain in text, (
-        f"citation drift at {path}:{line}\n"
-        f"  expected to contain: {must_contain!r}\n"
-        f"  actually reads:      {text.strip()!r}")
     rel = os.path.relpath(path, PDM)
-    return {"cite": f"{rel}:{line}", "text": text.strip(), "note": note}
+    if os.path.abspath(path).startswith(REPO + os.sep):
+        hits = [i + 1 for i, t in enumerate(lines) if must_contain in t]
+        assert hits, (f"citation lost in {rel}: no line contains {must_contain!r} — "
+                      f"the code it names is gone or was reworded")
+        assert len(hits) == 1, (f"ambiguous citation in {rel}: {must_contain!r} occurs "
+                                f"on lines {hits}; make the fingerprint unique")
+        line = hits[0]
+    else:
+        assert 1 <= line <= len(lines), f"{path}:{line} is past end of file ({len(lines)} lines)"
+        assert must_contain in lines[line - 1], (
+            f"citation drift at {rel}:{line} — the upstream pin moved\n"
+            f"  expected to contain: {must_contain!r}\n"
+            f"  actually reads:      {lines[line - 1].strip()!r}")
+    return {"cite": f"{rel}:{line}", "text": lines[line - 1].strip(), "note": note}
 
 
 def group_params(state_dict):
@@ -237,10 +252,19 @@ def main():
     C["ours_epistemic"] = cite(
         ours_py, 200, "means.std(0).sum(1)",
         "OUR epistemic term is the same head spread")
-    C["ours_mean_fed_back"] = cite(
-        ours_py, 223, "pred[:, i] = m",
-        "OUR rollout feeds the ensemble mean back into the single trunk, so the "
-        "members share one hidden-state trajectory end to end")
+    # `pred[:, i] = m` appears in BOTH rollout paths, so it is not a unique
+    # fingerprint and the read-back rejects it. These two are unique and are
+    # closer to the claim anyway: the first is where the ensemble mean is formed
+    # and returned, the second is the trainer's own statement that the hidden
+    # state is carried across the whole rollout.
+    C["ours_mean_returned"] = cite(
+        ours_py, 198, "# :114 ensemble mean",
+        "OUR forward returns the ensemble MEAN, which is what an autoregressive "
+        "rollout feeds back — so the members never see each other's predictions")
+    C["ours_hidden_state_carried"] = cite(
+        ours_py, 231, "hidden state carried throughout",
+        "OUR rollout carries ONE hidden state across every forecast step, so the "
+        "members share a single recurrent trajectory end to end")
     print(f"source: {len(C)} citations read back and verified")
 
     # -------------------------------------------------- 2. the checkpoint
