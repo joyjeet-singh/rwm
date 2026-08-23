@@ -58,6 +58,7 @@ if os.path.exists(_rl):
 tot=exact=close=diff=timing=nans=0; report=[]; dropped=[]; machine=0
 time_bounded_files=[]      # excluded because the RUN was wall-clock bounded
 host_sourced_keys=[]       # paper_numbers keys whose SOURCE is a host-dependent artifact
+self_referential_keys=[]   # paper_numbers keys that describe THIS comparison
 
 # Determine the wall-clock-bounded files BEFORE the main loop. They are needed
 # while processing paper_numbers.json, which sorts earlier alphabetically than
@@ -98,6 +99,26 @@ for fn in sorted(os.listdir(B)):
         host |= {k for k, d in vals.items()
                  if isinstance(d, dict) and any(
                      tb.rstrip(".json") in str(d.get("source", "")) for tb in time_bounded_files)}
+        # SELF-REFERENCE. paper_numbers keys sourced from verify_reproduction.json
+        # are statements ABOUT THIS COMPARISON -- how many files it regenerated,
+        # how many values matched, how many differed. A clone necessarily carries
+        # in the PREVIOUS run's figures, regenerates paper_numbers from them, and
+        # is then compared against a tree holding the CURRENT run's figures. They
+        # cannot converge: writing this run's result into the tree changes the
+        # thing the next run measures. That is a fixed point that does not exist,
+        # not a reproducibility failure, and the paper's own figure would oscillate
+        # if it were treated as one.
+        #
+        # Excluded on the same principle as the host-dependent keys above and by
+        # the same mechanism -- following the provenance the file already carries,
+        # so a future ver_* key is covered without anyone remembering. Reported
+        # separately, because a silent exclusion is how M-28 inflated a figure
+        # fiftyfold.
+        selfref = {k for k, d in vals.items()
+                   if isinstance(d, dict)
+                   and "verify_reproduction" in str(d.get("source", ""))}
+        self_referential_keys.extend(sorted(selfref))
+        host |= selfref
         if host:
             drop = {f".{k}.value" for k in host} | {f".{k}.source" for k in host}
             n_before = len(mb)
@@ -149,6 +170,13 @@ if host_sourced_keys:
           f"{', '.join(host_sourced_keys)}")
     print("      (paper_numbers.json records each key's source; these are sourced from an")
     print("       artifact already excluded above, so the exclusion follows the provenance)")
+if self_referential_keys:
+    print(f"  self-referential paper numbers excluded : {len(self_referential_keys)} key(s) -- "
+          f"{', '.join(self_referential_keys)}")
+    print("      (these describe THIS comparison. A clone carries in the previous run's")
+    print("       figures and is compared against a tree holding the current run's, so")
+    print("       they cannot converge -- writing the result changes what the next run")
+    print("       measures. Excluded by provenance, and counted here rather than hidden.)")
 print(f"  timing fields excluded  : {timing}  (machine-dependent by design, see README)")
 print(f"  bitwise identical       : {exact} ({100*exact/max(tot,1):.2f}%)")
 print(f"  identical to 1e-9       : {close}")
@@ -173,6 +201,7 @@ json.dump({"regenerated_files": sorted(regen), "values_compared": tot,
            "machine_file_values_excluded": machine,
            "machine_files": list(MACHINE_FILES),
            "time_bounded_files_excluded": time_bounded_files,
+           "self_referential_keys_excluded": self_referential_keys,
            "host_sourced_keys_excluded": host_sourced_keys},
           open(os.path.join(B, "verify_reproduction.json"), "w"), indent=2)
 print(f"\n  wrote {os.path.join(B, 'verify_reproduction.json')}")

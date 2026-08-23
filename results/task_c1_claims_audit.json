@@ -1,7 +1,7 @@
 {
-  "n_claims": 280,
+  "n_claims": 283,
   "by_verdict": {
-    "SUPPORTED": 280
+    "SUPPORTED": 283
   },
   "claims": [
     {
@@ -4602,6 +4602,50 @@
       "verdict": "SUPPORTED",
       "sample_size": "clean-clone comparison, 28 regenerated files",
       "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance"
+    },
+    {
+      "id": "296dae121b63",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "One further class, excluded by the same mechanism and worth naming because it sounds like an excuse.** {{ver_selfref}} keys in `paper_numbers.json` are sourced from `verify_reproduction.json` \u2014 that is, they are this paper's statements *about this very comparison*: how many files it regenerated, how many values matched, how many differed.",
+      "keys": [
+        "ver_selfref"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 a property of the clean-clone comparison, not a sample",
+      "note": "revision review: exclusion counts and the reproduction figure checked against the verifier's own emitted output from the clean-clone run that produced them"
+    },
+    {
+      "id": "7104448521aa",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "There is no fixed point to converge to, and treating it as a reproducibility failure would make the reported figure oscillate rather than settle.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 not a quantitative claim",
+      "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
+    },
+    {
+      "id": "6937ed386a1f",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "They are dropped by provenance like the others and counted in the output rather than hidden \u2014 the same discipline \u00a79's own {{ver_files}}-file figure rests on, since a silent exclusion is exactly how an earlier version of this claim was inflated fiftyfold.",
+      "keys": [
+        "ver_files"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 a property of the clean-clone comparison, not a sample",
+      "note": "revision review: exclusion counts and the reproduction figure checked against the verifier's own emitted output from the clean-clone run that produced them"
     },
     {
       "id": "fa8cd3746239",

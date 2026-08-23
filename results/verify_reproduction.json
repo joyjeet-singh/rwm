@@ -6,7 +6,6 @@
     "comparative_claims.json",
     "manifest.json",
     "paper_numbers.json",
-    "part_f_gate.json",
     "step0_strat.json",
     "step2_acceptance.json",
     "step4_0a_results.json",
@@ -36,29 +35,51 @@
     "v2_deployment_horizon.json",
     "v3_metric_definitions.json"
   ],
-  "values_compared": 6692,
-  "bitwise_identical": 6691,
+  "values_compared": 6680,
+  "bitwise_identical": 6680,
   "identical_to_1e-9": 0,
-  "differing": 1,
-  "timing_excluded": 4489,
+  "differing": 0,
+  "timing_excluded": 4488,
   "nan_in_both": 4,
-  "copied_file_values": 800675,
-  "copied_identical": 800671,
-  "copied_differing": 4,
-  "machine_file_values_excluded": 586,
+  "copied_file_values": 800683,
+  "copied_identical": 800672,
+  "copied_differing": 11,
+  "machine_file_values_excluded": 591,
   "machine_files": [
     "step4_5_timing.json"
   ],
   "time_bounded_files_excluded": [
     "step4_4_overfit_ens1.json"
   ],
+  "self_referential_keys_excluded": [
+    "ver_differing",
+    "ver_files",
+    "ver_hostkeys",
+    "ver_identical",
+    "ver_machine",
+    "ver_pct",
+    "ver_timebound",
+    "ver_timebound_n",
+    "ver_timing",
+    "ver_values"
+  ],
   "host_sourced_keys_excluded": [
     "time_cfgs",
     "time_rel_hi",
     "time_rel_lo",
     "time_worst_cfg",
+    "ver_differing",
+    "ver_files",
+    "ver_hostkeys",
+    "ver_identical",
+    "ver_machine",
+    "ver_pct",
     "ver_tb_budget",
     "ver_tb_cap",
-    "ver_tb_ran"
+    "ver_tb_ran",
+    "ver_timebound",
+    "ver_timebound_n",
+    "ver_timing",
+    "ver_values"
   ]
 }

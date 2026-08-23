@@ -110,6 +110,10 @@ ARTIFACT = {
         "n_independent = 4 out-of-sample trajectories, 3 seeds pooled within each "
         "bootstrap draw",
         "revision review: assertion re-checked with the intervals A1 added"),
+    "results/verify_reproduction.json": (
+        "n/a — a property of the clean-clone comparison, not a sample",
+        "revision review: exclusion counts and the reproduction figure checked against "
+        "the verifier's own emitted output from the clean-clone run that produced them"),
     "results/paper_figures.json": (
         "n/a — commit timestamps, not a sample; 8 pre-registered rules",
         "revision review: lead times and the positive/negative split checked against "

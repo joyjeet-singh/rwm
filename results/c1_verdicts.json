@@ -301,6 +301,11 @@
     "sample_size": "see the named artifact",
     "verdict": "SUPPORTED"
   },
+  "296dae121b63": {
+    "note": "revision review: exclusion counts and the reproduction figure checked against the verifier's own emitted output from the clean-clone run that produced them",
+    "sample_size": "n/a \u2014 a property of the clean-clone comparison, not a sample",
+    "verdict": "SUPPORTED"
+  },
   "29e04802f599": {
     "claim": "The contamination rate is {{contam_pct}}%.",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -912,6 +917,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "6937ed386a1f": {
+    "note": "revision review: exclusion counts and the reproduction figure checked against the verifier's own emitted output from the clean-clone run that produced them",
+    "sample_size": "n/a \u2014 a property of the clean-clone comparison, not a sample",
+    "verdict": "SUPPORTED"
+  },
   "694b267cef95": {
     "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
     "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
@@ -977,6 +987,11 @@
     "claim": "The aleatoric \u03c3 is {{cal_rel_ratio}}\u00d7 smaller than its own error, and the cause is that the objective's optimu",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "7104448521aa": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "714e025c8133": {

@@ -5573,23 +5573,27 @@
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 29
+    "value": 34
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
-    "value": 7
+    "value": 17
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "6,073"
+    "value": "6,680"
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
-    "value": 586
+    "value": 591
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
     "value": "100.00"
+  },
+  "ver_selfref": {
+    "source": "results/verify_reproduction.json",
+    "value": 10
   },
   "ver_tb_budget": {
     "source": "results/step4_4_overfit_ens1.json",
@@ -5613,11 +5617,11 @@
   },
   "ver_timing": {
     "source": "results/verify_reproduction.json",
-    "value": "4,282"
+    "value": "4,488"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "6,073"
+    "value": "6,680"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

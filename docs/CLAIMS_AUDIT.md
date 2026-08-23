@@ -5,7 +5,7 @@ One row per declarative claim in the paper. Claims are enumerated mechanically f
 only judgement, and is keyed to the claim's text so that rewording a claim resets it
 to UNREVIEWED rather than carrying a stale verdict forward.
 
-**280 claims.** SUPPORTED: 280
+**283 claims.** SUPPORTED: 283
 
 | # | § | claim | backed by | verdict |
 |---|---|---|---|---|
@@ -287,5 +287,8 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 276 | Appendix D — verifying the | One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, so it rea… | `step4_4_overfit_ens1.json`, `verify_reproduction.json` | **SUPPORTED** |
 | 277 | Appendix D — verifying the | Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact — … | — | **SUPPORTED** |
 | 278 | Appendix D — verifying the | The verifier now drops any key whose recorded source is an excluded artifact ({{ver_hostkeys}} of them), which follows the provenance the file already… | `verify_reproduction.json` | **SUPPORTED** |
-| 279 | Appendix E — what testing  | §4's table marks {{orig_n_tested}} claims tested and the rest not. "Not tested" is an apology unless it comes with a price, so here is what each would… | `original_paper_figures.json` | **SUPPORTED** |
-| 280 | Appendix F — every claim o | References to arXiv:2504.16680 follow **v1**, which is the version we read; it is now at {{v4_current}} ({{v4_current_date}}), where §5.1 and Eq. 4–5 … | `original_paper_figures.json`, `v2_deployment_horizon.json` | **SUPPORTED** |
+| 279 | Appendix D — verifying the | One further class, excluded by the same mechanism and worth naming because it sounds like an excuse.** {{ver_selfref}} keys in `paper_numbers.json` ar… | `verify_reproduction.json` | **SUPPORTED** |
+| 280 | Appendix D — verifying the | There is no fixed point to converge to, and treating it as a reproducibility failure would make the reported figure oscillate rather than settle. | — | **SUPPORTED** |
+| 281 | Appendix D — verifying the | They are dropped by provenance like the others and counted in the output rather than hidden — the same discipline §9's own {{ver_files}}-file figure r… | `verify_reproduction.json` | **SUPPORTED** |
+| 282 | Appendix E — what testing  | §4's table marks {{orig_n_tested}} claims tested and the rest not. "Not tested" is an apology unless it comes with a price, so here is what each would… | `original_paper_figures.json` | **SUPPORTED** |
+| 283 | Appendix F — every claim o | References to arXiv:2504.16680 follow **v1**, which is the version we read; it is now at {{v4_current}} ({{v4_current_date}}), where §5.1 and Eq. 4–5 … | `original_paper_figures.json`, `v2_deployment_horizon.json` | **SUPPORTED** |

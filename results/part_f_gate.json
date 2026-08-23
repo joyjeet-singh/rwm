@@ -22,13 +22,13 @@
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
       "pass": true,
-      "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 29 files regenerated, 6,073 values, 6,073 identical, 0 differing; carried-in partition present (762,418 copied values held out); artifact post-dates the regeneration marker"
+      "detail": "verify_reproduction.json vs the clone run at rwm_clone: 34 files regenerated, 6,680 values, 6,680 identical, 0 differing; carried-in partition present (800,683 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "133 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
+      "detail": "134 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
     },
     {
       "n": 6,

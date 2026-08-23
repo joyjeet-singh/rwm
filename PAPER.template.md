@@ -1258,6 +1258,18 @@ clone duly differed on it. The verifier now drops any key whose recorded source 
 artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather
 than requiring anyone to remember.
 
+**One further class, excluded by the same mechanism and worth naming because it sounds like an
+excuse.** {{ver_selfref}} keys in `paper_numbers.json` are sourced from
+`verify_reproduction.json` — that is, they are this paper's statements *about this very
+comparison*: how many files it regenerated, how many values matched, how many differed. A clean
+clone necessarily carries in the **previous** run's figures and is then compared against a tree
+holding the **current** run's, so they cannot agree: writing a result into the tree changes the
+thing the next run measures. There is no fixed point to converge to, and treating it as a
+reproducibility failure would make the reported figure oscillate rather than settle. They are
+dropped by provenance like the others and counted in the output rather than hidden — the same
+discipline §9's own {{ver_files}}-file figure rests on, since a silent exclusion is exactly how an
+earlier version of this claim was inflated fiftyfold.
+
 ## Appendix E — what testing the untested claims would require
 
 §4's table marks {{orig_n_tested}} claims tested and the rest not. "Not tested" is an apology
