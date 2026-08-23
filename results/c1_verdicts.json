@@ -610,6 +610,11 @@
     "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
     "verdict": "SUPPORTED"
   },
+  "480f86259bca": {
+    "note": "revision review: lead times and the positive/negative split checked against the figure's own emitted values, so the prose cannot describe its panel by a position that moves when a rule is added",
+    "sample_size": "n/a \u2014 commit timestamps, not a sample; 8 pre-registered rules",
+    "verdict": "SUPPORTED"
+  },
   "49405a99c548": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
@@ -930,6 +935,11 @@
   "6bff90b6929f": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "6c0db25b3b22": {
+    "note": "revision review: lead times and the positive/negative split checked against the figure's own emitted values, so the prose cannot describe its panel by a position that moves when a rule is added",
+    "sample_size": "n/a \u2014 commit timestamps, not a sample; 8 pre-registered rules",
     "verdict": "SUPPORTED"
   },
   "6c46da82cd4f": {

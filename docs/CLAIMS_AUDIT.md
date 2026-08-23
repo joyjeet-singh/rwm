@@ -5,7 +5,7 @@ One row per declarative claim in the paper. Claims are enumerated mechanically f
 only judgement, and is keyed to the claim's text so that rewording a claim resets it
 to UNREVIEWED rather than carrying a stale verdict forward.
 
-**280 claims.** SUPPORTED: 278, UNREVIEWED: 2
+**280 claims.** SUPPORTED: 280
 
 | # | § | claim | backed by | verdict |
 |---|---|---|---|---|
@@ -225,8 +225,8 @@ to UNREVIEWED rather than carrying a stale verdict forward.
 | 214 | 8. The released checkpoint | He replied the same day; the exchange is reproduced in full, anonymised, in the supplementary material (`SUPPLEMENTARY_CORRESPONDENCE.md`): the releas… | — | **SUPPORTED** |
 | 215 | 8. The released checkpoint | It is that **the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repositor… | — | **SUPPORTED** |
 | 216 | 9. Method | An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FIN… | `FINDINGS_LEDGER.md` | **SUPPORTED** |
-| 217 | 9. Method | Figure 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive and {{f4_n_negative}} is not. | `paper_figures.json` | **UNREVIEWED** |
-| 218 | 9. Method | The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **{{lead_task3}} after they … | `paper_figures.json` | **UNREVIEWED** |
+| 217 | 9. Method | Figure 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive and {{f4_n_negative}} is not. | `paper_figures.json` | **SUPPORTED** |
+| 218 | 9. Method | The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **{{lead_task3}} after they … | `paper_figures.json` | **SUPPORTED** |
 | 219 | 9. Method | {{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}… | `FINDINGS_LEDGER.md` | **SUPPORTED** |
 | 220 | 9. Method | Resampling trajectories instead widens intervals by a mean {{bu_mean_ratio}}× and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell al… | `review_bootstrap_unit.json` | **SUPPORTED** |
 | 221 | 9. Method | Reproducibility, and a build that checks its own prose.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}}… | `verify_reproduction.json` | **SUPPORTED** |

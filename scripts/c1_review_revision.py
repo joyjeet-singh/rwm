@@ -110,6 +110,11 @@ ARTIFACT = {
         "n_independent = 4 out-of-sample trajectories, 3 seeds pooled within each "
         "bootstrap draw",
         "revision review: assertion re-checked with the intervals A1 added"),
+    "results/paper_figures.json": (
+        "n/a — commit timestamps, not a sample; 8 pre-registered rules",
+        "revision review: lead times and the positive/negative split checked against "
+        "the figure's own emitted values, so the prose cannot describe its panel by a "
+        "position that moves when a rule is added"),
     "results/task_c3_multiplicity.json": (
         "n_independent = 4; 4^4 = 256 distinct bootstrap resamples",
         "revision review: quantisation figure checked against the multiplicity artifact"),
@@ -155,6 +160,18 @@ def main():
 
     print("C1 REVIEW — pre-submission revision")
     print("=" * 92)
+    print("  WARNING: this script APPROVES whatever is currently UNREVIEWED. It is a")
+    print("  record of a review a person did, not a substitute for one, and it is")
+    print("  deliberately NOT a reproduce.sh stage for that reason. Re-running it after")
+    print("  a prose change silently approves the new wording. Read the list below.")
+    print()
+    # With only a handful outstanding, print them in full: a bulk approval of two
+    # claims should show what those two claims are.
+    if len(un) <= 8:
+        for c in un:
+            print(f"    [{c['id']}] {c['section'][:34]}")
+            print(f"        {c['claim'][:150]}")
+        print()
     print(f"  claims returned to UNREVIEWED by the revision: {len(un)}")
     print(f"  reviewed here                                : {added}")
     print("\n  by backing artifact:")

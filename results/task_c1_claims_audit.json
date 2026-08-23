@@ -1,8 +1,7 @@
 {
   "n_claims": 280,
   "by_verdict": {
-    "SUPPORTED": 278,
-    "UNREVIEWED": 2
+    "SUPPORTED": 280
   },
   "claims": [
     {
@@ -3605,9 +3604,9 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 commit timestamps, not a sample; 8 pre-registered rules",
+      "note": "revision review: lead times and the positive/negative split checked against the figure's own emitted values, so the prose cannot describe its panel by a position that moves when a rule is added"
     },
     {
       "id": "6c0db25b3b22",
@@ -3621,9 +3620,9 @@
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
+      "verdict": "SUPPORTED",
+      "sample_size": "n/a \u2014 commit timestamps, not a sample; 8 pre-registered rules",
+      "note": "revision review: lead times and the positive/negative split checked against the figure's own emitted values, so the prose cannot describe its panel by a position that moves when a rule is added"
     },
     {
       "id": "06d17526f8b4",
