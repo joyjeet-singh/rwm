@@ -32,6 +32,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
+import warnings  # noqa: E402
 import numpy as np  # noqa: E402
 import torch  # noqa: E402
 import rwm_data as R  # noqa: E402
@@ -65,6 +66,12 @@ def rollout_independent(models, state, action, start_step=START, action_offset=1
 
     Mirrors ReferenceRWM.rollout_uncertainty exactly, except that the per-member
     recurrent state is per MEMBER rather than shared. Returns the same tuple.
+
+    ReferenceRWM.step computes means.std(0) internally for its own epistemic
+    term. With ensemble=1 that is a std over one element: NaN, with a warning.
+    We never read it -- the whole point here is that the spread is taken across
+    the five MODELS, below -- so the warning is noise about an unused value. It
+    is suppressed narrowly, and every output is asserted finite by the caller.
     """
     B, T, D = state.shape
     pred = state.clone()
@@ -74,6 +81,7 @@ def rollout_independent(models, state, action, start_step=START, action_offset=1
     alea_s = torch.zeros(B, T)
     h = [None] * len(models)
     ha = [None] * len(models)
+    warnings.filterwarnings("ignore", message="std\\(\\): degrees of freedom is <= 0")
     for i in range(start_step, T):
         if i > start_step:
             s_in = pred[:, i - 1:i]
@@ -161,6 +169,8 @@ def main():
     # A five-member independent ensemble MUST have a non-zero spread; a zero would
     # mean the five models are the same object and the whole contrast is void.
     assert epi_i[:, START:].mean() > 0, "the independent ensemble has zero spread"
+    assert np.isfinite(err_i[:, START:]).all(), "non-finite error in the independent rollout"
+    assert np.isfinite(epi_i[:, START:]).all(), "non-finite spread in the independent rollout"
 
     # ------------------------------------------------ the shared-trunk arms
     shared = {}
@@ -239,6 +249,46 @@ def main():
         print(f"    {s:>9} {np.exp(lr):>22.3f} "
               f"{f'[{np.exp(lo1):.3f}, {np.exp(hi1):.3f}]':>26} {dc:>15.2f} "
               f"{f'[{lo2:.2f}, {hi2:.2f}]':>26}")
+    # WHERE THE IMPROVEMENT COMES FROM.
+    #
+    # rho = mean|error| / mean sigma, so a lower rho can mean a larger sigma OR a
+    # smaller error, and only the first is the trunk-sharing mechanism. Five
+    # independent models also DENOISE better than five heads on one trunk, which
+    # is an ordinary ensembling effect and not the thing under test. Splitting the
+    # log improvement into the two additive parts is the only honest way to
+    # report it, and it changes the reading at long horizon.
+    decomp = {}
+    for h in HORIZONS:
+        i = out["independent"][str(h)]
+        sd_ = out["shared_trunk"][str(h)]["per_seed"].values()
+        se = float(np.mean([x["mean_abs_err"] for x in sd_]))
+        ss = float(np.mean([x["mean_sigma"] for x in sd_]))
+        sig_r = i["mean_sigma"] / ss                 # >1 means a larger sigma
+        err_r = se / i["mean_abs_err"]               # >1 means a smaller error
+        tot = sig_r * err_r
+        lt = np.log(tot)
+        decomp[str(h)] = {
+            "sigma_ratio_indep_over_shared": sig_r,
+            "error_ratio_shared_over_indep": err_r,
+            "total_rho_improvement": float(tot),
+            "share_from_sigma": float(np.log(sig_r) / lt) if lt > 0 else None,
+            "share_from_accuracy": float(np.log(err_r) / lt) if lt > 0 else None,
+            "indep_mean_sigma": i["mean_sigma"], "shared_mean_sigma": ss,
+            "indep_mean_abs_err": i["mean_abs_err"], "shared_mean_abs_err": se,
+        }
+    out["decomposition"] = decomp
+    print(f"\n  Where the improvement comes from — rho is error over sigma, so both "
+          f"can move")
+    print(f"    {'h':>5} {'sigma x':>10} {'accuracy x':>12} {'total x':>10} "
+          f"{'from sigma':>12} {'from accuracy':>15}")
+    for h in HORIZONS:
+        d_ = decomp[str(h)]
+        print(f"    {h:>5} {d_['sigma_ratio_indep_over_shared']:>10.3f} "
+              f"{d_['error_ratio_shared_over_indep']:>12.3f} "
+              f"{d_['total_rho_improvement']:>10.3f} "
+              f"{100 * d_['share_from_sigma']:>11.1f}% "
+              f"{100 * d_['share_from_accuracy']:>14.1f}%")
+
     out["comparison"] = {"horizon": DEPLOY, "per_shared_seed": per_pair}
 
     # --------------------------------------------------------- M-44's verdict

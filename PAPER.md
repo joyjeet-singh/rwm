@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     525 values substituted from 48 artifacts. -->
+     593 values substituted from 49 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -528,19 +528,19 @@ and `min_logstd` cancels algebraically, taking no gradient from that term. The f
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 We predicted the collapse from this algebra before training, then observed it. Across all
-24 runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Rates are fitted on 18 of those runs: the 6
+26 runs the collapse is linear in iteration count and its rate is nearly identical
+(Figure 3a). Rates are fitted on 20 of those runs: the 6
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 3(a) shows all 24 runs;
-Figure 3(b) plots only the 18 the rate is fitted on, so the scatter and the quoted
+counted at 2,500 and would double-weight them. Figure 3(a) shows all 26 runs;
+Figure 3(b) plots only the 20 the rate is fitted on, so the scatter and the quoted
 statistic describe the same set.
 
-The 24 runs, so a reader can count them:
+The 26 runs, so a reader can count them:
 
 | arm | iterations | ensemble | objective | dataset | seeds | seed ids |
 |---|---|---|---|---|---|---|
 | Arm A | 2,500 | 1 | gaussian_nll | clean | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 1 | mse | clean | 3 | 0, 1, 2 |
+| Arm A | 2,500 | 1 | mse | clean | 5 | 0, 1, 2, 3, 4 |
 | Arm A | 2,500 | 1 | mse | contaminated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 1 | mse | duplicated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 5 | mse | clean | 3 | 0, 1, 2 |
@@ -549,8 +549,8 @@ The 24 runs, so a reader can count them:
 | Arm B | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
-is objective-driven.* It occurs in all 15 sampled-MSE runs at a rate of
--9.3894e-05 per iteration with a standard deviation of 6.3e-07 — **including the
+is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
+-9.3857e-05 per iteration with a standard deviation of 6.0e-07 — **including the
 teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05 in the
 3 runs that change it. *Input-independence is not.* That varies by a factor of
 15.6 between two arms trained under the same objective, so the objective
@@ -809,6 +809,86 @@ The faithful arm's σ *declines* (0.9241×) while its error grows
 3.49×. The coverage collapse in Figure 1(b) is therefore driven entirely by
 growing error against a fixed σ.
 
+### 6.10 Testing the mechanism: an ensemble that shares nothing
+
+§6.4 establishes the topology as a fact and the mechanism as a hypothesis. This subsection tests
+the hypothesis, under a rule (M-44) committed to git before any of the artifacts below existed,
+together with a power check estimating what that rule could detect at the sample size it would
+face.
+
+**The contrast, and why it is affordable.** Training a genuinely independent five-model ensemble
+the usual way would cost roughly 17 CPU-hours. Arm A at ensemble size 1 already existed at seeds
+0, 1 and 2; we added seeds 3 and 4 at about 1.2 h each and scored the 5 together as an
+ensemble **at evaluation time**. No new training code and no new architecture — and the
+disagreement across 5 independently-initialised *full models* is exactly the contrast
+§6.4 asks for. The rollout protocol mirrors the shared-trunk one in every respect except the one
+under test: each member sees the same input state, each keeps **its own** recurrent hidden state,
+and the ensemble mean is fed back to all of them.
+
+| h | independent err/σ | shared-trunk err/σ | independent ±1σ | shared-trunk ±1σ |
+|---|---|---|---|---|
+| 1 | 1.4× | 2.1× | 50.00% | 35.93% |
+| 8 | 3.4× | 6.3× | 22.64% | 14.10% |
+| 32 | 4.4× | 8.0× | 17.92% | 10.79% |
+| **100** | **5.2×** | **10.5×** | **15.31%** | **8.19%** |
+| 128 | 5.3× | 11.0× | 15.03% | 7.79% |
+| 368 | 5.1× | 13.0× | 15.00% | 6.30% |
+
+*Same trajectories, same harness, n_independent = 4. The shared-trunk column is the mean
+over 3 seeds; the comparison below is paired against each of them separately.*
+
+**M-44 returns MECHANISM SUPPORTED.** All 6 of its
+6 conditions hold, against every one of the 3 shared-trunk seeds.
+At h = 100 the independent ensemble's overconfidence factor is
+0.485–0.503× the shared-trunk arms' — a **2.03×**
+improvement against a pre-registered minimum detectable effect of 1.45× — and its
+±1σ coverage is 6.69 to 7.33 points higher, a mean of +7.12 against
+an MDE of 2.26. Every paired interval excludes zero. **Members that share a feature
+extractor do produce a smaller spread, and the effect is large enough to matter.**
+
+**Where the improvement comes from, which is not all one thing.** The overconfidence factor is
+error over σ, so it improves if σ grows *or* if error shrinks — and only the first is the
+trunk-sharing mechanism. Five independent models also denoise better than five heads on one
+trunk, which is an ordinary ensembling effect and not the thing under test. Splitting the
+improvement into its two multiplicative parts:
+
+| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
+|---|---|---|---|---|---|
+| 1 | 1.56× | 0.97× | 1.52× | 106% | -6% |
+| 8 | 1.81× | 1.02× | 1.84× | 97% | 3% |
+| 32 | 1.68× | 1.08× | 1.83× | 87% | 13% |
+| **100** | **1.65×** | 1.23× | 2.03× | **71%** | 29% |
+| 128 | 1.62× | 1.29× | 2.09× | 65% | 35% |
+| 368 | 1.49× | 1.70× | 2.53× | 43% | 57% |
+
+*Shares are of the log improvement, so they add to 100%. A share above 100% at h=1 means the
+independent ensemble is very slightly the **worse** predictor there and the σ gain more than
+covers it.*
+
+**The reading, stated at the horizon the rule is stated over.** σ is larger by
+1.56–1.81× at every horizon, which is the direction trunk-sharing
+predicts, and at h = 100 it is **71%** of the improvement. So the
+mechanism is supported and it is the larger part of the effect where the method operates. At the
+open-loop diagnostic horizon of h = 368 the split reverses — 57% of
+the improvement there is the ensemble simply predicting better — so a reader who takes the
+2.53× figure at that horizon as a measure of the architectural effect would
+overstate it. We report both columns for that reason.
+
+**What this does and does not license.** It licenses saying that **the released ensemble's
+disagreement understates epistemic uncertainty partly because its members are not independent
+models**, with a measured size at the horizon that matters. It does not license attributing the
+whole gap to trunk-sharing: §12 sets out that independently-seeded runs differ in *both*
+initialisation and data ordering, so this comparison **bounds** the architectural effect rather
+than isolating it, and the bound is generous to the mechanism by construction.
+
+**And it does not repair the interval.** The independent ensemble is
+5.2× overconfident at h = 100 with
+15.31% coverage where a calibrated Gaussian gives 68.27%. Better by
+a factor of 2.03, and still not an interval. Building the ensemble properly is worth
+doing and it is not sufficient; §6.8's per-horizon multiplier remains the only thing in this paper
+that restores nominal coverage.
+
+
 ---
 
 ## 7. Defects in the released pipeline
@@ -917,7 +997,7 @@ the work.
 
 ## 9. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (189 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (191 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps. The fifth bar is negative: the duplication-control rule (§7.4) was stated in conversation before the runs but reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1109,7 +1189,7 @@ What every downstream number rests on. Each level was passed before the next was
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 24 runs takes **45 hours** of recorded wall clock on two CPU cores: 20 hours for the 6 runs at 10,000 iterations and 25 for the remaining 18 at 2,500. The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 26 runs takes **46 hours** of recorded wall clock on two CPU cores: 20 hours for the 6 runs at 10,000 iterations and 27 for the remaining 20 at 2,500. The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
 
 ## Appendix C — figures
 
@@ -1219,8 +1299,8 @@ GPU-parallel simulation, not a data-loading problem.
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
 | Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §12's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 45 h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 24 runs took 45 h on two cores; a modest sweep is a small multiple of that |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 46 h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 26 runs took 46 h on two cores; a modest sweep is a small multiple of that |
 
 **The two at the bottom are within reach of this setup** and are the honest next steps for anyone
 extending this work on CPU. The four above them are not, and no amount of care with the released

@@ -46,6 +46,11 @@ INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex"]
 # their own scan. They are tooling for the submission, not evidence within it.
 EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            "scripts/submission_check.py",
+           # Same reason as the three above, and stated in both files: an
+           # anonymiser necessarily contains the strings it scrubs for, so it
+           # trips its own scan. make_anon_bundle.py excludes itself and the
+           # transcript generator from its own staging for exactly this.
+           "scripts/make_anon_bundle.py", "scripts/t5_anon_transcript.py",
            "MODEL_CARD.md", "CITATION.cff", "NOTICE",
            # working documents for outward-facing steps; they necessarily carry the
            # repository URL and the author's correspondents

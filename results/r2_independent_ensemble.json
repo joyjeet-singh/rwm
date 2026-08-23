@@ -1,0 +1,410 @@
+{
+  "comparison": {
+    "horizon": 100,
+    "per_shared_seed": {
+      "0": {
+        "coverage_beats_mde": true,
+        "coverage_ci_pts": [
+          5.844444444444444,
+          7.544444444444445
+        ],
+        "coverage_diff_pts": 6.694444444444445,
+        "coverage_excludes_zero": true,
+        "coverage_improves": true,
+        "log_ratio": -0.6878755438862724,
+        "log_ratio_ci": [
+          -0.8153950969533326,
+          -0.5699808764377179
+        ],
+        "ratio": 0.5026427780995469,
+        "ratio_beats_mde": true,
+        "ratio_ci": [
+          0.4424644764554901,
+          0.5655362536638961
+        ],
+        "ratio_excludes_zero": true,
+        "ratio_improves": true
+      },
+      "1": {
+        "coverage_beats_mde": true,
+        "coverage_ci_pts": [
+          6.477777777777777,
+          8.18888888888889
+        ],
+        "coverage_diff_pts": 7.333333333333333,
+        "coverage_excludes_zero": true,
+        "coverage_improves": true,
+        "log_ratio": -0.7241682085360451,
+        "log_ratio_ci": [
+          -0.8648304062014499,
+          -0.600257050129828
+        ],
+        "ratio": 0.48472759359059187,
+        "ratio_beats_mde": true,
+        "ratio_ci": [
+          0.42112296641501323,
+          0.548670582121465
+        ],
+        "ratio_excludes_zero": true,
+        "ratio_improves": true
+      },
+      "2": {
+        "coverage_beats_mde": true,
+        "coverage_ci_pts": [
+          6.288888888888888,
+          8.366666666666669
+        ],
+        "coverage_diff_pts": 7.3277777777777775,
+        "coverage_excludes_zero": true,
+        "coverage_improves": true,
+        "log_ratio": -0.7067241619956028,
+        "log_ratio_ci": [
+          -0.832541801368724,
+          -0.5877279810378951
+        ],
+        "ratio": 0.49325738503562355,
+        "ratio_beats_mde": true,
+        "ratio_ci": [
+          0.4349423430596554,
+          0.5555881586589753
+        ],
+        "ratio_excludes_zero": true,
+        "ratio_improves": true
+      }
+    }
+  },
+  "decomposition": {
+    "1": {
+      "error_ratio_shared_over_indep": 0.9744648336945494,
+      "indep_mean_abs_err": 0.0626550795057685,
+      "indep_mean_sigma": 0.04477751011856728,
+      "share_from_accuracy": -0.06217716098160981,
+      "share_from_sigma": 1.06217716098161,
+      "shared_mean_abs_err": 0.06105517163070747,
+      "shared_mean_sigma": 0.02878402923406274,
+      "sigma_ratio_indep_over_shared": 1.5556373207673793,
+      "total_rho_improvement": 1.5159138630706186
+    },
+    "100": {
+      "error_ratio_shared_over_indep": 1.2295873065517362,
+      "indep_mean_abs_err": 0.22786218659274488,
+      "indep_mean_sigma": 0.04384271414399781,
+      "share_from_accuracy": 0.2926468784303177,
+      "share_from_sigma": 0.7073531215696822,
+      "shared_mean_abs_err": 0.2801764522775623,
+      "shared_mean_sigma": 0.026603646895419202,
+      "sigma_ratio_indep_over_shared": 1.6479963937405495,
+      "total_rho_improvement": 2.026355446986417
+    },
+    "128": {
+      "error_ratio_shared_over_indep": 1.2910374253387873,
+      "indep_mean_abs_err": 0.226693136262323,
+      "indep_mean_sigma": 0.04292836813441328,
+      "share_from_accuracy": 0.3465406726472706,
+      "share_from_sigma": 0.6534593273527293,
+      "shared_mean_abs_err": 0.29266932298208437,
+      "shared_mean_sigma": 0.02651862486858489,
+      "sigma_ratio_indep_over_shared": 1.6188006862025521,
+      "total_rho_improvement": 2.089932270051605
+    },
+    "32": {
+      "error_ratio_shared_over_indep": 1.084298646713107,
+      "indep_mean_abs_err": 0.17608177559147103,
+      "indep_mean_sigma": 0.04031775150733665,
+      "share_from_accuracy": 0.1344707010423291,
+      "share_from_sigma": 0.865529298957671,
+      "shared_mean_abs_err": 0.19092523098467307,
+      "shared_mean_sigma": 0.02394738252200181,
+      "sigma_ratio_indep_over_shared": 1.683597423237987,
+      "total_rho_improvement": 1.8255224076266232
+    },
+    "368": {
+      "error_ratio_shared_over_indep": 1.696209614718612,
+      "indep_mean_abs_err": 0.20597974264856547,
+      "indep_mean_sigma": 0.04021377840152496,
+      "share_from_accuracy": 0.5680667751042009,
+      "share_from_sigma": 0.4319332248957991,
+      "shared_mean_abs_err": 0.3493848199177621,
+      "shared_mean_sigma": 0.026908448110769378,
+      "sigma_ratio_indep_over_shared": 1.4944666535945819,
+      "total_rho_improvement": 2.534928706703479
+    },
+    "8": {
+      "error_ratio_shared_over_indep": 1.0157225713109954,
+      "indep_mean_abs_err": 0.15589037288074098,
+      "indep_mean_sigma": 0.04524402963838333,
+      "share_from_accuracy": 0.025593804732059758,
+      "share_from_sigma": 0.9744061952679403,
+      "shared_mean_abs_err": 0.1583413703850561,
+      "shared_mean_sigma": 0.024981576529993346,
+      "sigma_ratio_indep_over_shared": 1.8110958523399237,
+      "total_rho_improvement": 1.8395709360293862
+    }
+  },
+  "design": {
+    "action_offset": 1,
+    "arena": "out-of-sample held-out pair",
+    "bootstrap_unit": "whole trajectory (M-27)",
+    "holdout_episodes": [
+      1,
+      8
+    ],
+    "independent_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "iterations": 2500,
+    "mde_coverage_pts": 2.26,
+    "mde_ratio": 1.45,
+    "mde_source": "results/p1_power_check.json, cross-architecture calibration",
+    "n_boot": 20000,
+    "n_independent": 4,
+    "n_trajectories": 4,
+    "protocol": "every member sees the same input state and keeps its own recurrent hidden state; the ensemble mean is fed back to all members. Identical to the shared-trunk protocol except that the trunk is replicated rather than shared.",
+    "shared_trunk_seeds": [
+      0,
+      1,
+      2
+    ],
+    "start_step": 32,
+    "traj_len": 400
+  },
+  "independent": {
+    "1": {
+      "coverage_pm1": 0.5,
+      "coverage_pm2": 0.7722222222222223,
+      "mean_abs_err": 0.0626550795057685,
+      "mean_sigma": 0.04477751011856728,
+      "ratio_err_over_sigma": 1.399253315779793
+    },
+    "100": {
+      "coverage_pm1": 0.15311111111111111,
+      "coverage_pm2": 0.2946111111111111,
+      "mean_abs_err": 0.22786218659274488,
+      "mean_sigma": 0.04384271414399781,
+      "ratio_err_over_sigma": 5.197264609219907
+    },
+    "128": {
+      "coverage_pm1": 0.15034722222222222,
+      "coverage_pm2": 0.2877170138888889,
+      "mean_abs_err": 0.226693136262323,
+      "mean_sigma": 0.04292836813441328,
+      "ratio_err_over_sigma": 5.280730344850815
+    },
+    "32": {
+      "coverage_pm1": 0.17916666666666667,
+      "coverage_pm2": 0.3315972222222222,
+      "mean_abs_err": 0.17608177559147103,
+      "mean_sigma": 0.04031775150733665,
+      "ratio_err_over_sigma": 4.367351080067778
+    },
+    "368": {
+      "coverage_pm1": 0.15004528985507246,
+      "coverage_pm2": 0.28683574879227053,
+      "mean_abs_err": 0.20597974264856547,
+      "mean_sigma": 0.04021377840152496,
+      "ratio_err_over_sigma": 5.122118608003133
+    },
+    "8": {
+      "coverage_pm1": 0.2263888888888889,
+      "coverage_pm2": 0.40208333333333335,
+      "mean_abs_err": 0.15589037288074098,
+      "mean_sigma": 0.04524402963838333,
+      "ratio_err_over_sigma": 3.4455457245233845
+    }
+  },
+  "m44": {
+    "conditions": {
+      "coverage_higher_in_all": true,
+      "coverage_interval_excludes_zero_in_all": true,
+      "coverage_shift_at_least_mde": true,
+      "overconfidence_improvement_at_least_mde": true,
+      "overconfidence_interval_excludes_zero_in_all": true,
+      "overconfidence_lower_in_all": true
+    },
+    "convention": "a condition holds only if it holds against EVERY shared-trunk seed, the same all-three convention M-43 used",
+    "design_limitation": "independently-seeded runs differ in BOTH initialisation and data ordering, whereas the shared-trunk heads differ only in head initialisation. This comparison therefore conflates trunk-sharing with data-order diversity and BOUNDS the effect rather than isolating it. If the overconfidence factor barely moves despite that generous handicap, the finding is strong in the direction of 'architecture is not the explanation'. If it moves a lot, the design flaw is identified but not cleanly attributed.",
+    "horizon": 100,
+    "mde_coverage_pts": 2.26,
+    "mde_ratio": 1.45,
+    "mean_coverage_gain_pts": 7.118518518518518,
+    "mean_ratio_improvement": 2.026390175565096,
+    "rule": "M-44, committed 2026-08-23 before any artifact here existed",
+    "supported": true,
+    "unresolvable": false,
+    "verdict": "MECHANISM SUPPORTED"
+  },
+  "shared_trunk": {
+    "1": {
+      "mean_cov1": 0.3592592592592592,
+      "mean_cov2": 0.6037037037037037,
+      "mean_ratio": 2.129049036930278,
+      "per_seed": {
+        "0": {
+          "coverage_pm1": 0.35,
+          "coverage_pm2": 0.5833333333333334,
+          "mean_abs_err": 0.059723917441442606,
+          "mean_sigma": 0.030418464836354058,
+          "ratio_err_over_sigma": 1.963409980179693
+        },
+        "1": {
+          "coverage_pm1": 0.37777777777777777,
+          "coverage_pm2": 0.6611111111111111,
+          "mean_abs_err": 0.06685872721071873,
+          "mean_sigma": 0.03088758731674817,
+          "ratio_err_over_sigma": 2.1645823781926126
+        },
+        "2": {
+          "coverage_pm1": 0.35,
+          "coverage_pm2": 0.5666666666666667,
+          "mean_abs_err": 0.056582870239961065,
+          "mean_sigma": 0.025046035549086,
+          "ratio_err_over_sigma": 2.2591547524185294
+        }
+      }
+    },
+    "100": {
+      "mean_cov1": 0.08192592592592593,
+      "mean_cov2": 0.1611111111111111,
+      "mean_ratio": 10.532842273024178,
+      "per_seed": {
+        "0": {
+          "coverage_pm1": 0.08616666666666667,
+          "coverage_pm2": 0.173,
+          "mean_abs_err": 0.2851582652222908,
+          "mean_sigma": 0.02757849626803848,
+          "ratio_err_over_sigma": 10.339877216321218
+        },
+        "1": {
+          "coverage_pm1": 0.07977777777777778,
+          "coverage_pm2": 0.15283333333333332,
+          "mean_abs_err": 0.2901662438311226,
+          "mean_sigma": 0.027062617682379723,
+          "ratio_err_over_sigma": 10.722031668800753
+        },
+        "2": {
+          "coverage_pm1": 0.07983333333333334,
+          "coverage_pm2": 0.1575,
+          "mean_abs_err": 0.2652048477792737,
+          "mean_sigma": 0.025169826735839403,
+          "ratio_err_over_sigma": 10.53661793395056
+        }
+      }
+    },
+    "128": {
+      "mean_cov1": 0.07789351851851851,
+      "mean_cov2": 0.15339988425925924,
+      "mean_ratio": 11.035567000177087,
+      "per_seed": {
+        "0": {
+          "coverage_pm1": 0.08255208333333333,
+          "coverage_pm2": 0.16358506944444445,
+          "mean_abs_err": 0.292217748032403,
+          "mean_sigma": 0.027297797676303363,
+          "ratio_err_over_sigma": 10.704810384248361
+        },
+        "1": {
+          "coverage_pm1": 0.07521701388888889,
+          "coverage_pm2": 0.14696180555555555,
+          "mean_abs_err": 0.3094782238796142,
+          "mean_sigma": 0.027019922464261173,
+          "ratio_err_over_sigma": 11.453705105518203
+        },
+        "2": {
+          "coverage_pm1": 0.07591145833333333,
+          "coverage_pm2": 0.14965277777777777,
+          "mean_abs_err": 0.2763119970342359,
+          "mean_sigma": 0.02523815446519014,
+          "ratio_err_over_sigma": 10.948185510764693
+        }
+      }
+    },
+    "32": {
+      "mean_cov1": 0.10792824074074074,
+      "mean_cov2": 0.20497685185185185,
+      "mean_ratio": 7.988039393243748,
+      "per_seed": {
+        "0": {
+          "coverage_pm1": 0.11684027777777778,
+          "coverage_pm2": 0.22083333333333333,
+          "mean_abs_err": 0.19569920901914076,
+          "mean_sigma": 0.025646454872912727,
+          "ratio_err_over_sigma": 7.630653436855101
+        },
+        "1": {
+          "coverage_pm1": 0.10503472222222222,
+          "coverage_pm2": 0.20208333333333334,
+          "mean_abs_err": 0.19039578298187634,
+          "mean_sigma": 0.02374408078335869,
+          "ratio_err_over_sigma": 8.01866303939285
+        },
+        "2": {
+          "coverage_pm1": 0.10190972222222222,
+          "coverage_pm2": 0.1920138888888889,
+          "mean_abs_err": 0.1866807009530021,
+          "mean_sigma": 0.022451611909734007,
+          "ratio_err_over_sigma": 8.314801703483292
+        }
+      }
+    },
+    "368": {
+      "mean_cov1": 0.06297805958132045,
+      "mean_cov2": 0.12509057971014492,
+      "mean_ratio": 12.989333873756692,
+      "per_seed": {
+        "0": {
+          "coverage_pm1": 0.06422101449275362,
+          "coverage_pm2": 0.12737016908212562,
+          "mean_abs_err": 0.34680258098126876,
+          "mean_sigma": 0.027735160275309076,
+          "ratio_err_over_sigma": 12.504077046564104
+        },
+        "1": {
+          "coverage_pm1": 0.060733695652173916,
+          "coverage_pm2": 0.1216334541062802,
+          "mean_abs_err": 0.3640040474151616,
+          "mean_sigma": 0.026742476363047583,
+          "ratio_err_over_sigma": 13.61145626431731
+        },
+        "2": {
+          "coverage_pm1": 0.06397946859903382,
+          "coverage_pm2": 0.126268115942029,
+          "mean_abs_err": 0.3373478313568559,
+          "mean_sigma": 0.026247707693951468,
+          "ratio_err_over_sigma": 12.852468310388662
+        }
+      }
+    },
+    "8": {
+      "mean_cov1": 0.14097222222222222,
+      "mean_cov2": 0.2662037037037037,
+      "mean_ratio": 6.3309749173752,
+      "per_seed": {
+        "0": {
+          "coverage_pm1": 0.15,
+          "coverage_pm2": 0.27152777777777776,
+          "mean_abs_err": 0.16746536466719894,
+          "mean_sigma": 0.026175704321617053,
+          "ratio_err_over_sigma": 6.3977405386910124
+        },
+        "1": {
+          "coverage_pm1": 0.13541666666666666,
+          "coverage_pm2": 0.2569444444444444,
+          "mean_abs_err": 0.16628851157988214,
+          "mean_sigma": 0.025766710324064156,
+          "ratio_err_over_sigma": 6.453618234089482
+        },
+        "2": {
+          "coverage_pm1": 0.1375,
+          "coverage_pm2": 0.2701388888888889,
+          "mean_abs_err": 0.14127023490808724,
+          "mean_sigma": 0.023002314944298833,
+          "ratio_err_over_sigma": 6.141565979345106
+        }
+      }
+    }
+  }
+}

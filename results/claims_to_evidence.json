@@ -2245,7 +2245,7 @@
       "id": "M-44",
       "claim": "PRE-REGISTERED decision rule for the trunk-sharing mechanism",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [
         "RUN"
       ],
@@ -2261,7 +2261,7 @@
       "id": "M-45",
       "claim": "PRE-REGISTERED decision rule for the within-trajectory control on \u00a75.6",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [
         "RUN"
       ],
@@ -2327,6 +2327,37 @@
         "scripts/verify_original_quotes.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-68",
+      "claim": "Trunk-sharing is part of why the epistemic spread is too small",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/p1_power_check.json",
+        "results/r2_independent_ensemble.json",
+        "results/v1_ensemble_topology.json",
+        "scripts/r2_independent_ensemble.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-69",
+      "claim": "The within-rollout signal survives, and the control it replaces was measuring something ",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/a2_trajectory_level_control.json",
+        "results/p1_power_check.json",
+        "scripts/a2_trajectory_level_control.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -2335,7 +2366,7 @@
     "D": 13,
     "M": 45,
     "O": 14,
-    "R": 67,
+    "R": 69,
     "S": 15,
     "X": 15
   }

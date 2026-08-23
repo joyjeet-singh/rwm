@@ -96,3 +96,5 @@ One row per CONTRIB ledger entry.
 | `R-67` | The ensemble-5 replication: the direction holds, the pre-registered rule does not | `RUN` | CONFIRMED | `results/task_d3_ens5.json`, `results/task_d3b_ens5_power.json` |
 | `X-12` | The five ensemble members share a trunk, a hidden state, and 89% of their parameters | `SRC` | CONFIRMED | `results/v1_ensemble_topology.json`, `scripts/v1_ensemble_topology.py` |
 | `X-13` | h=368 is the upstream's open-loop diagnostic length, not a deployment horizon | `SRC` | CONFIRMED | `results/v2_deployment_horizon.json`, `scripts/v2_deployment_horizon.py` |
+| `R-68` | Trunk-sharing is part of why the epistemic spread is too small | `RUN` | CONFIRMED | `results/p1_power_check.json`, `results/r2_independent_ensemble.json` |
+| `R-69` | The within-rollout signal survives, and the control it replaces was measuring something  | `RUN` | CONFIRMED | `results/a2_trajectory_level_control.json`, `results/p1_power_check.json` |

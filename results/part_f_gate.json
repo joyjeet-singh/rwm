@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "28 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "30 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -15,8 +15,8 @@
     {
       "n": 3,
       "name": "no hand-typed numbers",
-      "pass": false,
-      "detail": "55 distinct numerals typed; unexplained: ['6.10']"
+      "pass": true,
+      "detail": "56 distinct numerals typed, 54 section numbers derived from the headings; unexplained: none"
     },
     {
       "n": 4,
@@ -27,8 +27,8 @@
     {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
-      "pass": false,
-      "detail": "128 section refs, unresolved ['6.10']; figures ['1', '2', '3', '4', '5'], dangling none"
+      "pass": true,
+      "detail": "133 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
     },
     {
       "n": 6,
@@ -37,6 +37,6 @@
       "detail": "5 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
-  "n_pass": 4,
+  "n_pass": 6,
   "n": 6
 }

@@ -100,6 +100,19 @@ def main():
                    re.finditer(r"(?<![\w.])(\d[\d,]*\.?\d*)(?![\w])", tpl)} - {""})
     # every typed numeral must be a section number, a source line number, an
     # arXiv id, or a constant of the reference implementation / of statistics
+    # Section numbers are DERIVED from the document's own headings rather than
+    # matched by a regex. "6.10" is a perfectly good section number and
+    # `\d\.\d` does not match it, which is how a two-digit subsection came to be
+    # reported as an unexplained typed numeral. Deriving them means the allow-list
+    # cannot go stale when a section is added, and cannot silently admit a RESULT
+    # that happens to look like a section number.
+    _tpl_raw = open("PAPER.template.md").read()
+    SECTIONS = set()
+    for _m in re.finditer(r"^#{2,3} (\d+(?:\.\d+)?)[.  ]", _tpl_raw, re.M):
+        SECTIONS.add(_m.group(1))
+        SECTIONS.add(_m.group(1) + ".")
+    for _m in re.finditer(r"^\*\*(\d+\.\d+) ", _tpl_raw, re.M):
+        SECTIONS.add(_m.group(1))
     ALLOW = re.compile(
         r"^(\d{1,2}\.?|\d\.\d|1[012]\.?|"                 # section and list numbers
         r"1|8|32|45|128|368|400|500|2,?500|5,?000|10,?000|"   # horizons, dims, iters
@@ -107,9 +120,10 @@ def main():
         r"12[56]|142|158|166|"                            # source line numbers
         r"2501\.10100|2504\.16680|2026|21|"               # arXiv ids, the correspondence date
         r"0|2|3|4|5|6|7|9|10|11|12)$")
-    unexplained = [n for n in nums if not ALLOW.match(n)]
+    unexplained = [n for n in nums if not ALLOW.match(n) and n not in SECTIONS]
     chk(3, "no hand-typed numbers", not unexplained,
-        f"{len(nums)} distinct numerals typed; unexplained: {unexplained or 'none'}")
+        f"{len(nums)} distinct numerals typed, {len(SECTIONS)} section numbers derived "
+        f"from the headings; unexplained: {unexplained or 'none'}")
 
     # ---- 4 clean-clone reproduction ----
     # Read the CLONE's result when one is given. Reading the in-tree file would

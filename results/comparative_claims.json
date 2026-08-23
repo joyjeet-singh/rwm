@@ -258,5 +258,170 @@
       "pass": true,
       "detail": "3/3 quoted quantities carry their interval"
     }
-  ]
+  ],
+  "self_test": {
+    "n": 31,
+    "caught": 31,
+    "detail": [
+      {
+        "id": "C1.1",
+        "corruption": "{'expect': 'disjoint'}",
+        "caught": true
+      },
+      {
+        "id": "C1.2",
+        "corruption": "{'expect': 'overlap'}",
+        "caught": true
+      },
+      {
+        "id": "C2.1",
+        "corruption": "{'named': {'quantity': 'aleatoric', 'h': 128, 'fit_episode': 8}}",
+        "caught": true
+      },
+      {
+        "id": "C2.2",
+        "corruption": "{'named': {'h': '368'}}",
+        "caught": true
+      },
+      {
+        "id": "C3.1",
+        "corruption": "{'expect': 'rise'}",
+        "caught": true
+      },
+      {
+        "id": "C3.2",
+        "corruption": "{'expect': 'rise'}",
+        "caught": true
+      },
+      {
+        "id": "C3.3",
+        "corruption": "{'expect': 'fall'}",
+        "caught": true
+      },
+      {
+        "id": "C4.1",
+        "skipped": "quotes the ratio directly, no orders claim to corrupt"
+      },
+      {
+        "id": "C4.2",
+        "corruption": "{'stated_orders': 14}",
+        "caught": true
+      },
+      {
+        "id": "C5.1",
+        "corruption": "{'expect_observed': 1}",
+        "caught": true
+      },
+      {
+        "id": "C5.2",
+        "corruption": "{'expect_observed': 21}",
+        "caught": true
+      },
+      {
+        "id": "C5.3",
+        "corruption": "{'expect_observed': 45}",
+        "caught": true
+      },
+      {
+        "id": "C2.3",
+        "corruption": "{'named': {'label': 'faithful (mse)'}}",
+        "caught": true
+      },
+      {
+        "id": "C2.4",
+        "corruption": "{'named': {'h': '8'}}",
+        "caught": true
+      },
+      {
+        "id": "C2.5",
+        "corruption": "{'named': {'label': 'released EPISTEMIC h=1'}}",
+        "caught": true
+      },
+      {
+        "id": "C3.4",
+        "corruption": "{'expect': 'gt'}",
+        "caught": true
+      },
+      {
+        "id": "C3.5",
+        "corruption": "{'expect': 'lt'}",
+        "caught": true
+      },
+      {
+        "id": "C3.6",
+        "corruption": "{'expect': 'lt'}",
+        "caught": true
+      },
+      {
+        "id": "C7.1",
+        "corruption": "{'_forced': 7}",
+        "caught": true
+      },
+      {
+        "id": "C7.2",
+        "corruption": "{'_forced': 3}",
+        "caught": true
+      },
+      {
+        "id": "C6.1",
+        "corruption": "{'at_least': 200.0}",
+        "caught": true
+      },
+      {
+        "id": "C8.1",
+        "corruption": "{'must_quote': ('task_d_nind20.json', 'd1_by_horizon.368.epistemic.ratio_err_over_sigma')}",
+        "caught": true
+      },
+      {
+        "id": "C8.2",
+        "corruption": "{'fmt': '{:.4f}'}",
+        "caught": true
+      },
+      {
+        "id": "C8.3",
+        "corruption": "{'forbid': ['deployment horizon of h = 368', '368-step deployment horizon', 'at the 368-step deployment horizon', 'open-loop diagnostic']}",
+        "caught": true
+      },
+      {
+        "id": "C9.1",
+        "corruption": "{'sections': ['Abstract', '10. Actionable lessons', '13. Conclusion', 'Nonexistent section']}",
+        "caught": true
+      },
+      {
+        "id": "C10.1",
+        "corruption": "{'retracted': 'reproduction'}",
+        "caught": true
+      },
+      {
+        "id": "C10.2",
+        "corruption": "{'retracted': 'reproduction'}",
+        "caught": true
+      },
+      {
+        "id": "C11.1",
+        "corruption": "{'keys': ['n_runs', 'ver_values', 'ver_files', 'd1_ratio'], 'file': 'requirements.txt'}",
+        "caught": true
+      },
+      {
+        "id": "C11.2",
+        "corruption": "{'keys': ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'd1_ratio'], 'file': 'requirements.txt'}",
+        "caught": true
+      },
+      {
+        "id": "C12.1",
+        "corruption": "{'max_words': 10}",
+        "caught": true
+      },
+      {
+        "id": "C13.1",
+        "corruption": "{'quantities': [('cal_faithA_ratio', 'cal_faithA_ratio_ci'), ('cal_nll_ratio', 'cal_nll_ratio_ci'), ('cal_armB_ratio', 'cal_armB_ratio_ci'), ('cal_rel_ratio', 'cal_rel_ratio_ci'), ('planted', 'no_such_interval_key')]}",
+        "caught": true
+      },
+      {
+        "id": "C13.2",
+        "corruption": "{'quantities': [('d1n_epi_ratio_h100', 'd1n_epi_ratio_ci_h100'), ('d1n_epi_cov1_h100', 'd1n_epi_cov1_ci_h100'), ('d1n_alea_ratio_h100', 'd1n_alea_ratio_ci_h100'), ('planted', 'no_such_interval_key')]}",
+        "caught": true
+      }
+    ]
+  }
 }

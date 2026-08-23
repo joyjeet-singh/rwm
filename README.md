@@ -16,10 +16,10 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-28 pages, 0 overfull boxes, [] LaTeX warnings
+30 pages, 0 overfull boxes, [] LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 189 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 191 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
 are never edited in place: 15 are marked `SUPERSEDED` and kept, Six
 of them retractions of our own numbered claims on evidence this project produced.
@@ -151,7 +151,7 @@ python scripts/ledger_check.py
 ## Environment
 
 Intel Mac x86_64, CPU only, Python 3.11.15, torch 2.2.2, numpy 1.26.4.
-24 training runs, all on CPU.
+26 training runs, all on CPU.
 Reference commits: `robotic_world_model_lite` `13a798e9`, `rsl_rl_rwm` `18eebcdd`.
 
 ## Licence and attribution

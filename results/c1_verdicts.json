@@ -9,6 +9,11 @@
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
     "verdict": "SUPPORTED"
   },
+  "025f253c1649": {
+    "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
+    "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "029d4ca60cdd": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
@@ -22,6 +27,11 @@
   "0418c199d02a": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
+  "045012fe3ab5": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "048004dcf84b": {
@@ -44,6 +54,11 @@
   "0555d64775cb": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "06afe8c17f1f": {
+    "note": "revision review: assertion re-checked with the intervals A1 added",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds pooled within each bootstrap draw",
     "verdict": "SUPPORTED"
   },
   "06d17526f8b4": {
@@ -72,6 +87,11 @@
     "sample_size": "n_independent = 2 per fit direction; 4 non-overlapping 400-step trajectories across the two held-out episodes",
     "verdict": "SUPPORTED"
   },
+  "0a3de4fb517f": {
+    "note": "revision review (V4/X-15): location checked against both the version read and the current one, since every figure and appendix table moved",
+    "sample_size": "n/a \u2014 transcribed from the published papers (EXT), with the version map",
+    "verdict": "SUPPORTED"
+  },
   "0a51978739b8": {
     "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
     "sample_size": "",
@@ -87,6 +107,11 @@
     "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
+  "0c32387631df": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "0c8fde7f2259": {
     "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance",
     "sample_size": "clean-clone comparison, 28 regenerated files",
@@ -97,9 +122,24 @@
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "0cf4872ba6c3": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "0d1b5b192253": {
     "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested.",
     "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "0d2902087023": {
+    "note": "revision review (T1): counts checked against the per-entry verification record; attributed sentences matched verbatim against the source paper",
+    "sample_size": "n/a \u2014 bibliographic metadata, verified against the arXiv record",
+    "verdict": "SUPPORTED"
+  },
+  "0d4b6379cf05": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
     "verdict": "SUPPORTED"
   },
   "0e5fbeef0d49": {
@@ -111,6 +151,11 @@
     "claim": "Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}\u00d7 to {{cal_nll_ratio}}\u00d7 o",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "0f98115d6056": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "100fc86c7410": {
@@ -133,6 +178,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "151927512281": {
+    "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
+    "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "154ac3587ab6": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
@@ -141,6 +191,11 @@
   "155563e54f91": {
     "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "17c01b315f18": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "17cf243e4b5a": {
@@ -169,6 +224,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "1c4a4a8181e8": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "1db61e732582": {
     "claim": "Figure 4 shows the lead time for each, computed from commit timestamps: the A/B rule by {{lead_m16}}, the flip",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -178,6 +238,11 @@
   "1f5f79ee65ec": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "1fd4e7c8d2da": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "2006b614663c": {
@@ -211,9 +276,29 @@
     "sample_size": "n_independent = 4 held-out trajectories",
     "verdict": "SUPPORTED"
   },
+  "23d9cf0d5223": {
+    "note": "revision review (V3/X-14): formula and pooling axes checked against the implementation, whose file:line is read back on every build",
+    "sample_size": "n/a \u2014 a definition read from the implementation",
+    "verdict": "SUPPORTED"
+  },
   "2786140b6e93": {
     "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "28abdcae4d51": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "293dc254899e": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
+    "verdict": "SUPPORTED"
+  },
+  "29614fce80a6": {
+    "note": "revision review: assertion checked against the named artifact, not merely the numerals substituted (results/step5_arm*.json)",
+    "sample_size": "see the named artifact",
     "verdict": "SUPPORTED"
   },
   "29e04802f599": {
@@ -250,14 +335,39 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "2be630cca18d": {
+    "note": "revision review (V3/X-14): formula and pooling axes checked against the implementation, whose file:line is read back on every build",
+    "sample_size": "n/a \u2014 a definition read from the implementation",
+    "verdict": "SUPPORTED"
+  },
+  "2c28af511299": {
+    "note": "revision review (V2/X-13): horizon checked against the upstream config, the arithmetic 400 - 32 = 368, and the follow-up's Table S9 (v1) / S11 (v3)",
+    "sample_size": "n/a \u2014 a configuration fact, from the pinned upstream and the published hyperparameter table",
+    "verdict": "SUPPORTED"
+  },
   "2d00e293c70a": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "2e28b39e6c32": {
+    "note": "revision review: assertion unchanged in substance; re-checked because the surrounding prose was rewritten",
+    "sample_size": "3 seeds at 10,000 iterations; n_independent = 4 out-of-sample trajectories",
+    "verdict": "SUPPORTED"
+  },
   "2ea2240f0364": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "2eb72348b508": {
+    "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
+    "verdict": "SUPPORTED"
+  },
+  "2f9ee0cf37b5": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
     "verdict": "SUPPORTED"
   },
   "304f894f3cd3": {
@@ -297,6 +407,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "3152dceadee9": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "318b2c580584": {
     "claim": "A world model that reports its own uncertainty is more useful than one that does not, and the uncertainty-awar",
     "note": "Framing, not a measurement claim.",
@@ -317,6 +432,11 @@
     "claim": "Fitting it across our runs and extrapolating to the released checkpoint's \u03c3 state implies **{{implied_iters}}*",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "3348bb6ada94": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
     "verdict": "SUPPORTED"
   },
   "3362d8b35e48": {
@@ -378,9 +498,19 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "38c502f3f8d8": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "3ae4dd000f59": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "3b1f7c9a1c01": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
     "verdict": "SUPPORTED"
   },
   "3c2bda7baacc": {
@@ -398,9 +528,19 @@
     "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
     "verdict": "SUPPORTED"
   },
+  "3de0592a7af9": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "3ea8fb0aa0d0": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
+    "verdict": "SUPPORTED"
+  },
+  "40d24aa7745b": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
     "verdict": "SUPPORTED"
   },
   "41869b31316f": {
@@ -440,6 +580,11 @@
     "sample_size": "-",
     "verdict": "SUPPORTED"
   },
+  "44cf66afb17e": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "44e4fd4a6efd": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
@@ -475,6 +620,21 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "4a8009b61ebe": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
+    "verdict": "SUPPORTED"
+  },
+  "4af7fd8a4635": {
+    "note": "revision review: assertion checked against the named artifact, not merely the numerals substituted (results/step5_armA_seed0.json, results/step5_armA_seed0_contam.json)",
+    "sample_size": "see the named artifact",
+    "verdict": "SUPPORTED"
+  },
+  "4b046f7c489a": {
+    "note": "revision review: assertion re-checked, and the description of the within-step control corrected -- A2 shows it is itself a between-trajectory statistic",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "4ca6c7926219": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
@@ -483,6 +643,11 @@
   "4cfd2662cd13": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
+    "verdict": "SUPPORTED"
+  },
+  "4ee38fd130d1": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "4ef32d11164c": {
@@ -507,6 +672,11 @@
     "sample_size": "-",
     "verdict": "SUPPORTED"
   },
+  "514f48c553ed": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "516d892a0fab": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
@@ -522,9 +692,24 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "53a9e3da5058": {
+    "note": "revision review (V3/X-14): formula and pooling axes checked against the implementation, whose file:line is read back on every build",
+    "sample_size": "n/a \u2014 a definition read from the implementation",
+    "verdict": "SUPPORTED"
+  },
   "53bfdf70e4c5": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "53dd83898caf": {
+    "note": "revision review: assertion re-checked with the third caution A4 added, so the cell count is not read as independent trials",
+    "sample_size": "2 held-out episodes, fit/eval swapped; n_independent = 2 per fit, 12 held-out cells over 6 horizons",
+    "verdict": "SUPPORTED"
+  },
+  "54056016c6d8": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "557a3c572a29": {
@@ -553,6 +738,26 @@
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
     "verdict": "SUPPORTED"
   },
+  "5855651d4256": {
+    "note": "revision review: assertion checked against the named artifact, not merely the numerals substituted (results/paper_figures.json)",
+    "sample_size": "see the named artifact",
+    "verdict": "SUPPORTED"
+  },
+  "5863bb1daa4c": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "58a743c5e5f8": {
+    "note": "revision review: assertion unchanged in substance; re-checked because the surrounding prose was rewritten",
+    "sample_size": "3 seeds at 10,000 iterations; n_independent = 4 out-of-sample trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "5963f534c99a": {
+    "note": "revision review: assertion checked against the named artifact, not merely the numerals substituted (results/task_b2_epistemic.json + task_d_nind20.json)",
+    "sample_size": "see the named artifact",
+    "verdict": "SUPPORTED"
+  },
   "59e7c5043002": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
@@ -577,6 +782,16 @@
   "5b9e6443eab1": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "5bb5a4758cb5": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "5da04ccaa368": {
+    "note": "revision review (V2/X-13): horizon checked against the upstream config, the arithmetic 400 - 32 = 368, and the follow-up's Table S9 (v1) / S11 (v3)",
+    "sample_size": "n/a \u2014 a configuration fact, from the pinned upstream and the published hyperparameter table",
     "verdict": "SUPPORTED"
   },
   "5e3f8e590db3": {
@@ -610,6 +825,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "61b07eb30891": {
+    "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
+    "verdict": "SUPPORTED"
+  },
   "61b7f2a74e7b": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
@@ -623,6 +843,11 @@
   "62f385ff0f04": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "633909209147": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
     "verdict": "SUPPORTED"
   },
   "63c1d3196261": {
@@ -641,6 +866,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "6606b9913ffc": {
+    "note": "revision review (V2/X-13): horizon checked against the upstream config, the arithmetic 400 - 32 = 368, and the follow-up's Table S9 (v1) / S11 (v3)",
+    "sample_size": "n/a \u2014 a configuration fact, from the pinned upstream and the published hyperparameter table",
+    "verdict": "SUPPORTED"
+  },
   "6641dbaaab94": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -649,6 +879,16 @@
   "664a8c8ec170": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "666c1c66a1f6": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "67c28e0ae8ed": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "68b384c1feca": {
@@ -667,6 +907,21 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "694b267cef95": {
+    "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
+    "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "697192f1bec4": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "6b3df013f5b4": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "6b9ad2413a1f": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -677,15 +932,30 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "6c46da82cd4f": {
+    "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
+    "verdict": "SUPPORTED"
+  },
   "6d0f5a55482e": {
     "claim": "The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%.",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "6e267285f114": {
+    "note": "revision review: assertion checked against the named artifact, not merely the numerals substituted (FINDINGS_LEDGER.md)",
+    "sample_size": "see the named artifact",
+    "verdict": "SUPPORTED"
+  },
   "6f8f4435c5aa": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
+    "verdict": "SUPPORTED"
+  },
+  "6fb65d777941": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "7065d6ef998b": {
@@ -725,6 +995,11 @@
     "sample_size": "n_independent = 4 held-out trajectories",
     "verdict": "SUPPORTED"
   },
+  "733874293d76": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "735250c082e5": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
@@ -734,6 +1009,31 @@
     "claim": "What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison out-",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "73fa0f0cd9ae": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "74f4891ebdb4": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
+    "verdict": "SUPPORTED"
+  },
+  "7525d160a528": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "7533153c41e1": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "7556ee33ccc0": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "75c11305e547": {
@@ -746,14 +1046,39 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "76e6f96cc0e7": {
+    "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
+    "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "76f24c295113": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "7743add3eab9": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "78167d4ab26a": {
+    "note": "revision review: assertion re-checked against the held-out arena, including the seeds-are-not-trajectories resampling unit",
+    "sample_size": "n_independent = 4 out-of-sample trajectories",
+    "verdict": "SUPPORTED"
+  },
   "784210c99684": {
     "note": "aleatoric err/sigma at h=368, n_independent=20, results/task_d_nind20.json; switched from the n=4 held-out figure so it matches the abstract's arena",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "79114e7a9748": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "7923817c0c4e": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "7b4068efe820": {
@@ -774,6 +1099,11 @@
   "7cac9dc7d9d8": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "21 training runs",
+    "verdict": "SUPPORTED"
+  },
+  "7d7e415f7063": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
     "verdict": "SUPPORTED"
   },
   "7d8f408696e9": {
@@ -822,6 +1152,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "848d8b330887": {
+    "note": "revision review: assertion re-checked with the third caution A4 added, so the cell count is not read as independent trials",
+    "sample_size": "2 held-out episodes, fit/eval swapped; n_independent = 2 per fit, 12 held-out cells over 6 horizons",
+    "verdict": "SUPPORTED"
+  },
   "84b8f57e0683": {
     "note": "scripts/verify_reproduction.py time_bounded(): excludes when iterations_run < config.iters; step4_4_overfit_b32lr1e3.json (2001 of a 2000 cap) is NOT excluded and reproduces bitwise",
     "sample_size": "clean-clone comparison, 27 regenerated files",
@@ -839,6 +1174,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "869c7b9ba773": {
+    "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
+    "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "86ddd35f09c3": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "2 held-out episodes, fit/eval swapped, 10 held-out cells per quantity",
@@ -849,9 +1189,24 @@
     "sample_size": "-",
     "verdict": "SUPPORTED"
   },
+  "879f20cb87cc": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
+    "verdict": "SUPPORTED"
+  },
   "8850f26d55c2": {
     "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "887b7b64cf09": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "896c7a96db55": {
+    "note": "revision review: assertion re-checked with the third caution A4 added, so the cell count is not read as independent trials",
+    "sample_size": "2 held-out episodes, fit/eval swapped; n_independent = 2 per fit, 12 held-out cells over 6 horizons",
     "verdict": "SUPPORTED"
   },
   "89791e359c69": {
@@ -865,9 +1220,19 @@
     "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
+  "8cff21335bc1": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "8d89a6bcc5f7": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "21 training runs",
+    "verdict": "SUPPORTED"
+  },
+  "8dfea9dd2620": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
     "verdict": "SUPPORTED"
   },
   "8e0fb7de4bce": {
@@ -907,6 +1272,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "9382c4ac1ba6": {
+    "note": "revision review: assertion re-checked against the differential artifact",
+    "sample_size": "n/a \u2014 a gradient-level equality check across 7 loss terms and 106 tensors",
+    "verdict": "SUPPORTED"
+  },
   "9397a5d9422f": {
     "note": "Part C: results/comparative_claims.json, regenerated with --self-test; the counts in this sentence are read from that artifact",
     "sample_size": "12 comparative claims, 11 corruptions",
@@ -938,6 +1308,36 @@
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "9a2509c920f7": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "9abbffeae411": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "9aceade7df6b": {
+    "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
+    "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "9ad231f5142f": {
+    "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated",
+    "sample_size": "permutation over whole trajectories; n_independent = 4 out-of-sample, 20 over all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "9ad790dc2fef": {
+    "note": "revision review (V3/X-14): formula and pooling axes checked against the implementation, whose file:line is read back on every build",
+    "sample_size": "n/a \u2014 a definition read from the implementation",
+    "verdict": "SUPPORTED"
+  },
+  "9dfc393e77da": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "9e5cfc71baaf": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 vs 16 by arena",
@@ -964,6 +1364,36 @@
     "sample_size": "12 comparative claims, 11 corruptions",
     "verdict": "SUPPORTED"
   },
+  "a1224d96b46e": {
+    "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
+    "verdict": "SUPPORTED"
+  },
+  "a12f95373278": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "a1bb45693d7c": {
+    "note": "revision review: assertion re-checked against the held-out arena, including the seeds-are-not-trajectories resampling unit",
+    "sample_size": "n_independent = 4 out-of-sample trajectories",
+    "verdict": "SUPPORTED"
+  },
+  "a2f1a2feeb57": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
+    "verdict": "SUPPORTED"
+  },
+  "a3df7bbd0552": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
+    "verdict": "SUPPORTED"
+  },
+  "a45fb0fffb4a": {
+    "note": "revision review: assertion re-checked with the third caution A4 added, so the cell count is not read as independent trials",
+    "sample_size": "2 held-out episodes, fit/eval swapped; n_independent = 2 per fit, 12 held-out cells over 6 horizons",
+    "verdict": "SUPPORTED"
+  },
   "a4b20dbdb1f0": {
     "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
     "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
@@ -985,15 +1415,30 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "a989d0da022c": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
+    "verdict": "SUPPORTED"
+  },
   "a9dea322d5ff": {
     "note": "same; section 5.2's four-model table retains the n=4 figure and says so, because that table compares our arms on their only fair arena",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "aa48cc98f67d": {
+    "note": "revision review (V2/X-13): horizon checked against the upstream config, the arithmetic 400 - 32 = 368, and the follow-up's Table S9 (v1) / S11 (v3)",
+    "sample_size": "n/a \u2014 a configuration fact, from the pinned upstream and the published hyperparameter table",
     "verdict": "SUPPORTED"
   },
   "aaa2804dc8b4": {
     "claim": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7.",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "aacb498d802e": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
     "verdict": "SUPPORTED"
   },
   "abb258cd0617": {
@@ -1026,14 +1471,34 @@
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "b1410c423b9e": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "b1acef498ca8": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "b276e7f3b47a": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "b32c2e89b0b1": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "b32e19647d7d": {
+    "note": "revision review (P1): threshold checked against the power artifact, and against the rule text it was committed with",
+    "sample_size": "n_independent = 20 for M-45, 4 for M-44; MDE from the cluster-bootstrap SE",
+    "verdict": "SUPPORTED"
+  },
+  "b3842f76b50d": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
     "verdict": "SUPPORTED"
   },
   "b3897b72105a": {
@@ -1045,6 +1510,16 @@
     "claim": "It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training e",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "b3f5979670ba": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "b4b98c7b355b": {
+    "note": "revision review: assertion re-checked with the third caution A4 added, so the cell count is not read as independent trials",
+    "sample_size": "2 held-out episodes, fit/eval swapped; n_independent = 2 per fit, 12 held-out cells over 6 horizons",
     "verdict": "SUPPORTED"
   },
   "b5ad19cf6aae": {
@@ -1060,6 +1535,11 @@
   "b6ac3d009270": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "b7bc10696f28": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
     "verdict": "SUPPORTED"
   },
   "b80ece631b68": {
@@ -1082,6 +1562,21 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "ba65a57baacd": {
+    "note": "revision review (V4/X-15): location checked against both the version read and the current one, since every figure and appendix table moved",
+    "sample_size": "n/a \u2014 transcribed from the published papers (EXT), with the version map",
+    "verdict": "SUPPORTED"
+  },
+  "ba69c986cf74": {
+    "note": "revision review (V4/X-15): location checked against both the version read and the current one, since every figure and appendix table moved",
+    "sample_size": "n/a \u2014 transcribed from the published papers (EXT), with the version map",
+    "verdict": "SUPPORTED"
+  },
+  "ba92ec34b541": {
+    "note": "revision review (V4/X-15): location checked against both the version read and the current one, since every figure and appendix table moved",
+    "sample_size": "n/a \u2014 transcribed from the published papers (EXT), with the version map",
+    "verdict": "SUPPORTED"
+  },
   "bab37b3ae6d5": {
     "claim": "Two 400-step trajectories whose spans overlap are not independent evidence, and the out-of-sample arena contai",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -1091,6 +1586,11 @@
   "bb4fa6407fde": {
     "note": "A6: transcribed from arXiv:2501.10100v1/v2 and 2504.16680v1, read 2026-08-22; recorded with the quoted sentence in results/original_paper_figures.json",
     "sample_size": "n/a \u2014 a statement about the source papers",
+    "verdict": "SUPPORTED"
+  },
+  "bde62a847e4e": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "beaf6b586404": {
@@ -1108,6 +1608,11 @@
     "sample_size": "-",
     "verdict": "SUPPORTED"
   },
+  "c008b97249de": {
+    "note": "revision review: assertion re-checked against the held-out arena, including the seeds-are-not-trajectories resampling unit",
+    "sample_size": "n_independent = 4 out-of-sample trajectories",
+    "verdict": "SUPPORTED"
+  },
   "c0690281938b": {
     "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move",
     "sample_size": "",
@@ -1115,6 +1620,11 @@
   },
   "c1a05ea91a4c": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "c21d153cc38c": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
     "sample_size": "n_independent = 20 trajectories, all ten episodes",
     "verdict": "SUPPORTED"
   },
@@ -1139,9 +1649,19 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "c4b27d11a8b7": {
+    "note": "revision review (T1): counts checked against the per-entry verification record; attributed sentences matched verbatim against the source paper",
+    "sample_size": "n/a \u2014 bibliographic metadata, verified against the arXiv record",
+    "verdict": "SUPPORTED"
+  },
   "c4c8c028036a": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "c73da1cf6e12": {
+    "note": "revision review (R2/M-44): assertion checked against the per-seed paired comparison and the sigma/accuracy decomposition, so the architectural part of the effect is not conflated with the ensembling part",
+    "sample_size": "n_independent = 4 out-of-sample trajectories; 5 independent models against 3 shared-trunk seeds, paired, cluster bootstrap",
     "verdict": "SUPPORTED"
   },
   "c7fc30eb1a9f": {
@@ -1243,6 +1763,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "d65655db6de0": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "d6b152e9068d": {
     "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
     "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
@@ -1252,6 +1777,11 @@
     "claim": "Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "d798e6429975": {
+    "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
     "verdict": "SUPPORTED"
   },
   "d7cbb32f2b73": {
@@ -1264,9 +1794,24 @@
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "d8e2ee44b248": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
+    "verdict": "SUPPORTED"
+  },
   "daa86c50b1ef": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "dc22793d0b94": {
+    "note": "revision review (V4/X-15): location checked against both the version read and the current one, since every figure and appendix table moved",
+    "sample_size": "n/a \u2014 transcribed from the published papers (EXT), with the version map",
+    "verdict": "SUPPORTED"
+  },
+  "dcdaa2d15ddb": {
+    "note": "revision review: assertion checked against the named artifact, not merely the numerals substituted (results/review_bootstrap_unit.json)",
+    "sample_size": "see the named artifact",
     "verdict": "SUPPORTED"
   },
   "debc47a09ac8": {
@@ -1283,6 +1828,16 @@
     "claim": "5.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "e18b8c251792": {
+    "note": "revision review (V2/X-13): horizon checked against the upstream config, the arithmetic 400 - 32 = 368, and the follow-up's Table S9 (v1) / S11 (v3)",
+    "sample_size": "n/a \u2014 a configuration fact, from the pinned upstream and the published hyperparameter table",
+    "verdict": "SUPPORTED"
+  },
+  "e18ea2528287": {
+    "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
     "verdict": "SUPPORTED"
   },
   "e1d0009b3214": {
@@ -1326,6 +1881,11 @@
     "sample_size": "n_ind=4",
     "verdict": "SUPPORTED"
   },
+  "e710ae8dc870": {
+    "note": "revision review: assertion re-checked, and the description of the within-step control corrected -- A2 shows it is itself a between-trajectory statistic",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
   "e713a1b6aa83": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -1362,6 +1922,16 @@
     "sample_size": "3 seeds, n_ind=4",
     "verdict": "SUPPORTED"
   },
+  "ef934b13b287": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "efa933f00f95": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "eff0c489e42f": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -1383,6 +1953,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "f096f7bbec69": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "f0e7b09f6f99": {
     "note": "results/verify_reproduction.json timing_excluded=3972, machine_file_values_excluded=584",
     "sample_size": "clean-clone comparison, 27 regenerated files",
@@ -1397,6 +1972,21 @@
   "f12ed8e05b19": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "f2061a9ea553": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "f2b6e07822d7": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
+    "verdict": "SUPPORTED"
+  },
+  "f31952b6ff79": {
+    "note": "revision review: assertion re-checked with the third caution A4 added, so the cell count is not read as independent trials",
+    "sample_size": "2 held-out episodes, fit/eval swapped; n_independent = 2 per fit, 12 held-out cells over 6 horizons",
     "verdict": "SUPPORTED"
   },
   "f38a00bfda30": {
@@ -1436,6 +2026,11 @@
     "sample_size": "committed efc35b8",
     "verdict": "SUPPORTED"
   },
+  "f66d9499c647": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "f70c4a7d7e7e": {
     "claim": "At h = 368 out-of-sample after 10,000 iterations, autoregressive training reaches **{{m23_A}}** against teache",
     "note": "Same single-seed issue, plus the n=4 bootstrap leads the evidence. C2 requires reordering: sign test (10/10, exact, n-independent) first, in-sample n=16 second, n=4 bootstrap third with its limitation inline.",
@@ -1447,9 +2042,29 @@
     "sample_size": "n_independent = 4 held-out trajectories",
     "verdict": "SUPPORTED"
   },
+  "f7981646ad0c": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
+  "f8529684da67": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "f8cc6aa35089": {
     "note": "counts read from results/comparative_claims.json, regenerated with --self-test; the 7 kinds are overlap, extremum, sign, orders, cell, compare, relvar",
     "sample_size": "19 comparative claims, 18 corruptions",
+    "verdict": "SUPPORTED"
+  },
+  "f9966758d3ff": {
+    "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
+    "verdict": "SUPPORTED"
+  },
+  "f9c90d57c477": {
+    "note": "revision review (V2/X-13): horizon checked against the upstream config, the arithmetic 400 - 32 = 368, and the follow-up's Table S9 (v1) / S11 (v3)",
+    "sample_size": "n/a \u2014 a configuration fact, from the pinned upstream and the published hyperparameter table",
     "verdict": "SUPPORTED"
   },
   "f9f83b6ba39c": {
@@ -1462,14 +2077,29 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "fa8cd3746239": {
+    "note": "revision review (V4/X-15): location checked against both the version read and the current one, since every figure and appendix table moved",
+    "sample_size": "n/a \u2014 transcribed from the published papers (EXT), with the version map",
+    "verdict": "SUPPORTED"
+  },
   "fb68c1895cc5": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "fbee02b3a86e": {
+    "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own.",
+    "sample_size": "n/a \u2014 not a quantitative claim",
+    "verdict": "SUPPORTED"
+  },
   "fcab37327de8": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "fd07a35efa84": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
     "verdict": "SUPPORTED"
   },
   "fd24f9b8b21e": {
@@ -1482,9 +2112,24 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "ff0ec50d7861": {
+    "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it",
+    "sample_size": "n_independent = 20 trajectories, all ten episodes",
+    "verdict": "SUPPORTED"
+  },
+  "ff3dcd43a073": {
+    "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected",
+    "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
+    "verdict": "SUPPORTED"
+  },
   "ff44600dc084": {
     "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation.",
     "sample_size": "3 seeds, n_ind=4",
+    "verdict": "SUPPORTED"
+  },
+  "ffd952e1d296": {
+    "note": "revision review (V1/X-12): counts checked against the checkpoint state_dict and the 20 source citations, each read back from the pinned upstream and fingerprinted on every build",
+    "sample_size": "n/a \u2014 parameter counts from the released checkpoint's tensors, not a sample",
     "verdict": "SUPPORTED"
   }
 }

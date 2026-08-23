@@ -1123,6 +1123,64 @@ def main():
         put("pdf_overfull", CP["overfull_hboxes"], "results/compile_paper.json")
         put("pdf_warnings", CP["latex_warnings"], "results/compile_paper.json")
 
+    # --- R2 / M-44: the independent-initialisation ensemble ------------------
+    R2 = J("r2_independent_ensemble.json")
+    _m44, _dec = R2["m44"], R2["decomposition"]
+    put("r2_nind", R2["design"]["n_independent"], "results/r2_independent_ensemble.json")
+    put("r2_n_indep", len(R2["design"]["independent_seeds"]),
+        "results/r2_independent_ensemble.json")
+    put("r2_n_shared", len(R2["design"]["shared_trunk_seeds"]),
+        "results/r2_independent_ensemble.json")
+    put("m44_verdict", _m44["verdict"], "results/r2_independent_ensemble.json")
+    put("m44_supported", "yes" if _m44["supported"] else "no",
+        "results/r2_independent_ensemble.json")
+    put("m44_h", _m44["horizon"], "results/r2_independent_ensemble.json")
+    put("m44_ratio_gain", f'{_m44["mean_ratio_improvement"]:.2f}',
+        "results/r2_independent_ensemble.json")
+    put("m44_cov_gain", f'{_m44["mean_coverage_gain_pts"]:+.2f}',
+        "results/r2_independent_ensemble.json")
+    put("m44_mde_ratio", f'{_m44["mde_ratio"]:.2f}', "results/r2_independent_ensemble.json")
+    put("m44_mde_cov", f'{_m44["mde_coverage_pts"]:.2f}',
+        "results/r2_independent_ensemble.json")
+    put("m44_n_conditions", len(_m44["conditions"]), "results/r2_independent_ensemble.json")
+    put("m44_n_conditions_met", sum(1 for v in _m44["conditions"].values() if v),
+        "results/r2_independent_ensemble.json")
+    # the paired range across the three shared-trunk seeds
+    _pp = list(R2["comparison"]["per_shared_seed"].values())
+    put("r2_ratio_lo", f'{min(p["ratio"] for p in _pp):.3f}',
+        "results/r2_independent_ensemble.json")
+    put("r2_ratio_hi", f'{max(p["ratio"] for p in _pp):.3f}',
+        "results/r2_independent_ensemble.json")
+    put("r2_cov_lo", f'{min(p["coverage_diff_pts"] for p in _pp):.2f}',
+        "results/r2_independent_ensemble.json")
+    put("r2_cov_hi", f'{max(p["coverage_diff_pts"] for p in _pp):.2f}',
+        "results/r2_independent_ensemble.json")
+    for h in (1, 8, 32, 100, 128, 368):
+        i = R2["independent"][str(h)]
+        sh = R2["shared_trunk"][str(h)]
+        d_ = _dec[str(h)]
+        put(f"r2_indep_ratio_h{h}", f'{i["ratio_err_over_sigma"]:.1f}',
+            "results/r2_independent_ensemble.json")
+        put(f"r2_indep_cov1_h{h}", f'{100 * i["coverage_pm1"]:.2f}',
+            "results/r2_independent_ensemble.json")
+        put(f"r2_indep_cov2_h{h}", f'{100 * i["coverage_pm2"]:.2f}',
+            "results/r2_independent_ensemble.json")
+        put(f"r2_shared_ratio_h{h}", f'{sh["mean_ratio"]:.1f}',
+            "results/r2_independent_ensemble.json")
+        put(f"r2_shared_cov1_h{h}", f'{100 * sh["mean_cov1"]:.2f}',
+            "results/r2_independent_ensemble.json")
+        put(f"r2_sigma_x_h{h}", f'{d_["sigma_ratio_indep_over_shared"]:.2f}',
+            "results/r2_independent_ensemble.json")
+        put(f"r2_acc_x_h{h}", f'{d_["error_ratio_shared_over_indep"]:.2f}',
+            "results/r2_independent_ensemble.json")
+        put(f"r2_total_x_h{h}", f'{d_["total_rho_improvement"]:.2f}',
+            "results/r2_independent_ensemble.json")
+        if d_["share_from_sigma"] is not None:
+            put(f"r2_from_sigma_h{h}", f'{100 * d_["share_from_sigma"]:.0f}',
+                "results/r2_independent_ensemble.json")
+            put(f"r2_from_acc_h{h}", f'{100 * d_["share_from_accuracy"]:.0f}',
+                "results/r2_independent_ensemble.json")
+
     # --- T1: the bibliography ----------------------------------------------
     T1 = J("t1_bibliography_verified.json")
     put("t1_n_refs", T1["n_entries"], "results/t1_bibliography_verified.json")

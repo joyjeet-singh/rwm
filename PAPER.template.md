@@ -796,6 +796,86 @@ The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows
 {{err_faithA_growth}}×. The coverage collapse in Figure 1(b) is therefore driven entirely by
 growing error against a fixed σ.
 
+### 6.10 Testing the mechanism: an ensemble that shares nothing
+
+§6.4 establishes the topology as a fact and the mechanism as a hypothesis. This subsection tests
+the hypothesis, under a rule (M-44) committed to git before any of the artifacts below existed,
+together with a power check estimating what that rule could detect at the sample size it would
+face.
+
+**The contrast, and why it is affordable.** Training a genuinely independent five-model ensemble
+the usual way would cost roughly 17 CPU-hours. Arm A at ensemble size 1 already existed at seeds
+0, 1 and 2; we added seeds 3 and 4 at about 1.2 h each and scored the {{r2_n_indep}} together as an
+ensemble **at evaluation time**. No new training code and no new architecture — and the
+disagreement across {{r2_n_indep}} independently-initialised *full models* is exactly the contrast
+§6.4 asks for. The rollout protocol mirrors the shared-trunk one in every respect except the one
+under test: each member sees the same input state, each keeps **its own** recurrent hidden state,
+and the ensemble mean is fed back to all of them.
+
+| h | independent err/σ | shared-trunk err/σ | independent ±1σ | shared-trunk ±1σ |
+|---|---|---|---|---|
+| 1 | {{r2_indep_ratio_h1}}× | {{r2_shared_ratio_h1}}× | {{r2_indep_cov1_h1}}% | {{r2_shared_cov1_h1}}% |
+| 8 | {{r2_indep_ratio_h8}}× | {{r2_shared_ratio_h8}}× | {{r2_indep_cov1_h8}}% | {{r2_shared_cov1_h8}}% |
+| 32 | {{r2_indep_ratio_h32}}× | {{r2_shared_ratio_h32}}× | {{r2_indep_cov1_h32}}% | {{r2_shared_cov1_h32}}% |
+| **{{v2_deploy_h}}** | **{{r2_indep_ratio_h100}}×** | **{{r2_shared_ratio_h100}}×** | **{{r2_indep_cov1_h100}}%** | **{{r2_shared_cov1_h100}}%** |
+| 128 | {{r2_indep_ratio_h128}}× | {{r2_shared_ratio_h128}}× | {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% |
+| {{v2_diag_h}} | {{r2_indep_ratio_h368}}× | {{r2_shared_ratio_h368}}× | {{r2_indep_cov1_h368}}% | {{r2_shared_cov1_h368}}% |
+
+*Same trajectories, same harness, n_independent = {{r2_nind}}. The shared-trunk column is the mean
+over {{r2_n_shared}} seeds; the comparison below is paired against each of them separately.*
+
+**M-44 returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its
+{{m44_n_conditions}} conditions hold, against every one of the {{r2_n_shared}} shared-trunk seeds.
+At h = {{v2_deploy_h}} the independent ensemble's overconfidence factor is
+{{r2_ratio_lo}}–{{r2_ratio_hi}}× the shared-trunk arms' — a **{{m44_ratio_gain}}×**
+improvement against a pre-registered minimum detectable effect of {{m44_mde_ratio}}× — and its
+±1σ coverage is {{r2_cov_lo}} to {{r2_cov_hi}} points higher, a mean of {{m44_cov_gain}} against
+an MDE of {{m44_mde_cov}}. Every paired interval excludes zero. **Members that share a feature
+extractor do produce a smaller spread, and the effect is large enough to matter.**
+
+**Where the improvement comes from, which is not all one thing.** The overconfidence factor is
+error over σ, so it improves if σ grows *or* if error shrinks — and only the first is the
+trunk-sharing mechanism. Five independent models also denoise better than five heads on one
+trunk, which is an ordinary ensembling effect and not the thing under test. Splitting the
+improvement into its two multiplicative parts:
+
+| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
+|---|---|---|---|---|---|
+| 1 | {{r2_sigma_x_h1}}× | {{r2_acc_x_h1}}× | {{r2_total_x_h1}}× | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% |
+| 8 | {{r2_sigma_x_h8}}× | {{r2_acc_x_h8}}× | {{r2_total_x_h8}}× | {{r2_from_sigma_h8}}% | {{r2_from_acc_h8}}% |
+| 32 | {{r2_sigma_x_h32}}× | {{r2_acc_x_h32}}× | {{r2_total_x_h32}}× | {{r2_from_sigma_h32}}% | {{r2_from_acc_h32}}% |
+| **{{v2_deploy_h}}** | **{{r2_sigma_x_h100}}×** | {{r2_acc_x_h100}}× | {{r2_total_x_h100}}× | **{{r2_from_sigma_h100}}%** | {{r2_from_acc_h100}}% |
+| 128 | {{r2_sigma_x_h128}}× | {{r2_acc_x_h128}}× | {{r2_total_x_h128}}× | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% |
+| {{v2_diag_h}} | {{r2_sigma_x_h368}}× | {{r2_acc_x_h368}}× | {{r2_total_x_h368}}× | {{r2_from_sigma_h368}}% | {{r2_from_acc_h368}}% |
+
+*Shares are of the log improvement, so they add to 100%. A share above 100% at h=1 means the
+independent ensemble is very slightly the **worse** predictor there and the σ gain more than
+covers it.*
+
+**The reading, stated at the horizon the rule is stated over.** σ is larger by
+{{r2_sigma_x_h1}}–{{r2_sigma_x_h8}}× at every horizon, which is the direction trunk-sharing
+predicts, and at h = {{v2_deploy_h}} it is **{{r2_from_sigma_h100}}%** of the improvement. So the
+mechanism is supported and it is the larger part of the effect where the method operates. At the
+open-loop diagnostic horizon of h = {{v2_diag_h}} the split reverses — {{r2_from_acc_h368}}% of
+the improvement there is the ensemble simply predicting better — so a reader who takes the
+{{r2_total_x_h368}}× figure at that horizon as a measure of the architectural effect would
+overstate it. We report both columns for that reason.
+
+**What this does and does not license.** It licenses saying that **the released ensemble's
+disagreement understates epistemic uncertainty partly because its members are not independent
+models**, with a measured size at the horizon that matters. It does not license attributing the
+whole gap to trunk-sharing: §12 sets out that independently-seeded runs differ in *both*
+initialisation and data ordering, so this comparison **bounds** the architectural effect rather
+than isolating it, and the bound is generous to the mechanism by construction.
+
+**And it does not repair the interval.** The independent ensemble is
+{{r2_indep_ratio_h100}}× overconfident at h = {{v2_deploy_h}} with
+{{r2_indep_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. Better by
+a factor of {{m44_ratio_gain}}, and still not an interval. Building the ensemble properly is worth
+doing and it is not sufficient; §6.8's per-horizon multiplier remains the only thing in this paper
+that restores nominal coverage.
+
+
 ---
 
 ## 7. Defects in the released pipeline

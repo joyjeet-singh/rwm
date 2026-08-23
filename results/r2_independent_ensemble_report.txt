@@ -1,0 +1,44 @@
+R2 — THE INDEPENDENT-INITIALISATION ENSEMBLE, AND M-44's VERDICT
+========================================================================================================
+  out-of-sample, episodes [1, 8], 4 trajectories, n_independent = 4
+
+  loaded 5 independently-initialised ens1 models: seeds [0, 1, 2, 3, 4]
+  loaded 3 shared-trunk ens5 arms: seeds [0, 1, 2]
+
+  Independent-init ensemble against the shared-trunk arms, same trajectories
+        h      independent err/σ     shared-trunk err/σ    ratio   indep ±1σ  shared ±1σ
+    --------------------------------------------------------------------------------------------
+        1                    1.4                    2.1    0.657      50.00%      35.93%
+        8                    3.4                    6.3    0.544      22.64%      14.10%
+       32                    4.4                    8.0    0.547      17.92%      10.79%
+      100                    5.2                   10.5    0.493      15.31%       8.19%
+      128                    5.3                   11.0    0.479      15.03%       7.79%
+      368                    5.1                   13.0    0.394      15.00%       6.30%
+
+  M-44's governing comparison at h = 100, paired over the same trajectories
+      vs seed   ratio (indep/shared)                     95% CI   Δcoverage pts                     95% CI
+    ------------------------------------------------------------------------------------------------------
+            0                  0.503             [0.442, 0.566]            6.69               [5.84, 7.54]
+            1                  0.485             [0.421, 0.549]            7.33               [6.48, 8.19]
+            2                  0.493             [0.435, 0.556]            7.33               [6.29, 8.37]
+
+  Where the improvement comes from — rho is error over sigma, so both can move
+        h    sigma x   accuracy x    total x   from sigma   from accuracy
+        1      1.556        0.974      1.516       106.2%           -6.2%
+        8      1.811        1.016      1.840        97.4%            2.6%
+       32      1.684        1.084      1.826        86.6%           13.4%
+      100      1.648        1.230      2.026        70.7%           29.3%
+      128      1.619        1.291      2.090        65.3%           34.7%
+      368      1.494        1.696      2.535        43.2%           56.8%
+
+  M-44 VERDICT: MECHANISM SUPPORTED
+     yes  overconfidence_lower_in_all
+     yes  overconfidence_interval_excludes_zero_in_all
+     yes  overconfidence_improvement_at_least_mde
+     yes  coverage_higher_in_all
+     yes  coverage_interval_excludes_zero_in_all
+     yes  coverage_shift_at_least_mde
+    mean overconfidence improvement 2.03× (MDE 1.45×)
+    mean coverage gain +7.12 points (MDE 2.26)
+
+  wrote results/r2_independent_ensemble.json

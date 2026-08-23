@@ -4428,9 +4428,13 @@ calibrated but not calibrated — a partial mechanism rather than the whole one.
 a pre-registration, and it carries none of the weight one does; the same distinction §5.6 draws about
 its own forecast-index baseline and the one S-12 exists to retract.
 
-**Evidence** `RUN` pending; the rule is discharged by `results/r2_independent_ensemble.json`.
+**Outcome: MECHANISM SUPPORTED.** The runs were launched after this entry reached git and the
+rule was applied by code, exactly as written. All six conditions hold against all three
+shared-trunk seeds. R-68 reports the result, including the decomposition that keeps it from being
+overstated.
+**Evidence** `RUN` `results/r2_independent_ensemble.json`.
 Power: `results/p1_power_check.json`. Mechanism: `results/v1_ensemble_topology.json`.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 
 ### M-45 — PRE-REGISTERED decision rule for the within-trajectory control on §5.6 · **NEW**
@@ -4501,9 +4505,13 @@ only the pairing — puts the detection threshold between a true r_dd of 0.086 (
 smaller than the pooled +0.605, because some of the pooled correlation is certainly between-trajectory.
 That is a belief and not a pre-registration.
 
-**Evidence** `RUN` pending; the rule is discharged by `results/a2_trajectory_level_control.json`.
+**Outcome: DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION.** r_dd = +0.419
+[+0.318, +0.576] at n_independent = 20, comfortably above the rule's own MDE of 0.183. The
+supporting branch applies and 6.7 keeps its strength. R-69 reports the result, and the part the
+rule did not anticipate: the control it replaces was itself a between-trajectory statistic.
+**Evidence** `RUN` `results/a2_trajectory_level_control.json`.
 Power: `results/p1_power_check.json`.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 
 ### X-12 — The five ensemble members share a trunk, a hidden state, and 89% of their parameters · **NEW**
@@ -4630,6 +4638,101 @@ verified quotations into four asserted ones, with nothing reporting it. The gene
 block forward and says so on every run.
 **Evidence** `EXT` `results/original_paper_figures.json`; `scripts/original_paper_figures.py`.
 **Status** CONFIRMED · **Relevance** METHOD
+
+
+
+### R-68 — Trunk-sharing is part of why the epistemic spread is too small · `[RWM-U]` · **NEW**
+
+M-44's verdict, applied by code, exactly as the rule was committed.
+
+**The contrast.** Arm A at ensemble size 1, seeds 0–4, scored **together as a five-member
+ensemble at evaluation time** — five models sharing no parameters and no recurrent state —
+against the three shared-trunk `armA_seed{0,1,2}_ens5` arms, on the same four out-of-sample
+trajectories, through the same harness, with each member keeping its own hidden state and the
+ensemble mean fed back to all. Seeds 3 and 4 were trained for this at about 1.2 h each; seeds 0–2
+already existed. The protocol differs from the shared-trunk one in exactly the property under
+test.
+
+**The verdict: MECHANISM SUPPORTED.** All six conditions hold against all three shared-trunk
+seeds. At h = 100 — the deployment horizon X-13 establishes — the independent ensemble's
+overconfidence factor is 0.485–0.503× the shared-trunk arms', a **2.03× improvement** against a
+minimum detectable effect of 1.45× fixed in advance; ±1σ coverage is **+6.69 to +7.33 points**,
+mean +7.12 against an MDE of 2.26. Every paired cluster-bootstrap interval excludes zero.
+
+**What keeps this from being overstated, and it is the part worth reading.** The overconfidence
+factor is error over σ, so it improves if σ grows *or* if error shrinks, and only the first is the
+mechanism. Five independent models also denoise better than five heads on one trunk — an ordinary
+ensembling effect, not an architectural one. Decomposed multiplicatively:
+
+| h | σ larger by | error smaller by | total | from σ | from accuracy |
+|---|---|---|---|---|---|
+| 1 | 1.56× | 0.97× | 1.52× | 106% | −6% |
+| 8 | 1.81× | 1.02× | 1.84× | 97% | 3% |
+| 32 | 1.68× | 1.08× | 1.83× | 87% | 13% |
+| **100** | **1.65×** | 1.23× | 2.03× | **71%** | 29% |
+| 128 | 1.62× | 1.29× | 2.09× | 65% | 35% |
+| 368 | 1.49× | 1.70× | 2.53× | 43% | **57%** |
+
+σ is larger at **every** horizon, by 1.49–1.81×, which is the direction trunk-sharing predicts.
+At the deployment horizon it is 71% of the effect. At the open-loop diagnostic horizon of 368 the
+split reverses and most of the apparent gain is the ensemble simply predicting better — so
+quoting the 2.53× there as an architectural effect would overstate it, and 6.10 reports both
+columns for that reason.
+
+**What it licenses.** That the released ensemble's disagreement understates epistemic uncertainty
+**partly because its members are not independent models**, with a measured size at the horizon
+that matters. It does **not** license attributing the whole gap to trunk-sharing: independently
+seeded runs differ in both initialisation and data ordering, so the comparison bounds the
+architectural effect rather than isolating it, and the bound is generous to the mechanism by
+construction. M-44 stated that limitation before the runs and §12 repeats it.
+
+**And it does not repair the interval.** The independent ensemble is still 5.2× overconfident at
+h = 100 with 15.31% coverage against a calibrated 68.27%. Building the ensemble properly is worth
+doing and it is not sufficient.
+**Evidence** `RUN` `results/r2_independent_ensemble.json`; `scripts/r2_independent_ensemble.py`.
+Topology: `results/v1_ensemble_topology.json`. Power: `results/p1_power_check.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### R-69 — The within-rollout signal survives, and the control it replaces was measuring something else · `[RWM-U]` · **NEW**
+
+M-45's verdict, applied by code, exactly as the rule was committed.
+
+**The verdict: DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION.** Double-demeaning the
+(trajectory, step) panel — removing the trajectory mean *and* the step mean from both variables —
+and correlating the residuals gives **r_dd = +0.419, 95% CI [+0.318, +0.576]** over a cluster
+bootstrap on n_independent = 20. The interval excludes zero and the effect is well above the
+rule's own minimum detectable effect of 0.183, which a dilution study placed between a true 0.086
+(undetected) and 0.172 (detected). §6.7's supporting branch applies.
+
+**The part the rule did not anticipate, and it matters more than the verdict.** Splitting the
+pooled +0.605 shows the between-trajectory correlation is **+0.878**, carrying 51.7% of the
+pooled covariance. And §6.7's existing "decisive" control — the within-step one at +0.739 — is
+**itself a between-trajectory statistic**: `task_d2b_robustness.py:84` correlates *across
+trajectories* at each fixed step and averages, which removes forecast depth completely and removes
+trajectory difficulty not at all. That is why it reads **above** the pooled figure rather than
+below it, which was the symptom that prompted this analysis.
+
+So A2 does not merely add a sixth control. **It reinterprets the fifth**, and the description
+"the decisive one" is withdrawn. r_dd is the first statistic in this paper that isolates
+within-rollout information, and §13 now leans on it.
+
+**Two qualifications carried into the paper.** The within-rollout effect is materially smaller
+than the pooled figure — +0.419 against +0.605 — so disagreement separates *rollouts* better than
+it separates *moments within a rollout*. And it is **not established at short horizon**: r_dd's
+interval excludes zero at h = 100, 128 and 368 and spans zero at h = 8 and 32, where too few steps
+exist to demean against. That inverts the shape one might expect and is reported as measured.
+
+**The h=1 figure does not collapse, and it is not what it looked like.** The pre-registered
+diagnostic tested whether trajectory difficulty manufactures the +0.994: disagreement correlates
++0.006 with commanded speed and +0.040 with per-episode difficulty (D-12), and partialling both
+out of the disagreement–error correlation leaves +0.995. It does not move. The figure is real. It
+is nevertheless a correlation over **twenty trajectory-level points** — at h=1 the panel has one
+column, so nothing within a rollout is being tested at all — and §10 now says that rather than
+calling it a ranking of realised error without qualification.
+**Evidence** `RUN` `results/a2_trajectory_level_control.json`;
+`scripts/a2_trajectory_level_control.py`. Power: `results/p1_power_check.json`.
+**Status** CONFIRMED · **Relevance** CONTRIB
 
 
 
