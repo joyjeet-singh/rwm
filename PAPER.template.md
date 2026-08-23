@@ -448,7 +448,7 @@ than the one offered.
 ### 6.2 The measurement
 
 For each model we compute the mean predicted σ, the mean absolute realised error, and the fraction
-of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside ±1σ.
+of realised errors falling inside ±1σ. A calibrated Gaussian puts {{v3_cov_nominal1}}% inside ±1σ (§3.1).
 
 | model | mean \|error\| / mean σ, whole {{v2_diag_h}}-step rollout | coverage at ±1σ, h=1 | coverage at ±1σ, h={{v2_deploy_h}} |
 |---|---|---|---|
@@ -463,7 +463,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside
 
 *A note on the released checkpoint's row, so the next table does not read as a contradiction.* Its {{cal_rel_ratio}}× is measured on those same {{b2_nind}} trajectories, for comparability with the three arms beside it. The released checkpoint trained on all ten episodes, so its own best-sampled figure is the {{d1n_alea_ratio_h100}}× below, at n_independent = {{d1n_nind}}. Both are correct; they are different arenas, and neither is a held-out measurement *of the released checkpoint*, which has no held-out arena in this dataset.
 
-**The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories. We use all ten rather than the held-out pair here because the released checkpoint trained on all ten, so restricting it to two buys no independence and costs four fifths of the sample — the same argument this paper makes about that checkpoint elsewhere. The held-out-only version at n_independent = {{b2_nind}} is in the supplementary material (`results/task_b2_epistemic.json`). The epistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; the aleatoric column agrees at {{agree_alea}} of {{agree_nh}} — it flips sign at h=8, where both readings sit close enough to chance that the sign is not meaningful in either. Where the two tables differ materially we say so.
+**The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories. We use all ten rather than the held-out pair here because the released checkpoint trained on all ten, so restricting it to two buys no independence and costs four fifths of the sample — the same argument this paper makes about that checkpoint elsewhere. The held-out-only version at n_independent = {{b2_nind}} is in the supplementary material (`results/task_b2_epistemic.json`). The epistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; the aleatoric column agrees at {{agree_alea}} of {{agree_nh}} — it flips sign at {{agree_alea_dis}}, where both readings sit close enough to chance that the sign is not meaningful in either, and where the aleatoric σ is in any case three to four orders of magnitude too small for its ordering to be the interesting quantity. Where the two tables differ materially we say so.
 
 | h | aleatoric err/σ [95% CI] | aleatoric ±1σ | epistemic err/σ [95% CI] | epistemic ±1σ [95% CI] | epistemic ±2σ | dims r>0 | permutation P |
 |---|---|---|---|---|---|---|---|

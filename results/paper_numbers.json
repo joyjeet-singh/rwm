@@ -191,13 +191,17 @@
     "source": "results/task_b2_epistemic.json + task_d_nind20.json",
     "value": 4
   },
+  "agree_alea_dis": {
+    "source": "results/task_b2_epistemic.json + task_d_nind20.json",
+    "value": "h=8 and h=100"
+  },
   "agree_epi": {
     "source": "results/task_b2_epistemic.json + task_d_nind20.json",
-    "value": 5
+    "value": 6
   },
   "agree_nh": {
     "source": "results/task_b2_epistemic.json + task_d_nind20.json",
-    "value": 5
+    "value": 6
   },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",

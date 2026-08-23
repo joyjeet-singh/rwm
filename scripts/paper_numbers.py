@@ -581,7 +581,12 @@ def main():
     # horizons, and does NOT for the aleatoric column at one of them.
     _B4 = J("task_b2_epistemic.json")
     _agree_e = _agree_a = 0
-    for _h in ("1", "8", "32", "128", "368"):
+    # Derived from the horizons BOTH artifacts actually carry, not a typed list.
+    # The list was hard-coded to the pre-revision grid and did not follow h=100
+    # in, so the sentence said "5 of 5" over a six-horizon table.
+    _agree_hs = [_h for _h in D["d1_by_horizon"] if _h in _B4["by_horizon"]]
+    _agree_hs.sort(key=int)
+    for _h in _agree_hs:
         for _q, _c in (("epistemic", "e"), ("aleatoric", "a")):
             _x = (_B4["by_horizon"][_h][_q]["n_positive"]
                   > _B4["by_horizon"][_h][_q]["n_finite_corr"] / 2)
@@ -594,7 +599,19 @@ def main():
                     _agree_a += 1
     put("agree_epi", _agree_e, "results/task_b2_epistemic.json + task_d_nind20.json")
     put("agree_alea", _agree_a, "results/task_b2_epistemic.json + task_d_nind20.json")
-    put("agree_nh", 5, "results/task_b2_epistemic.json + task_d_nind20.json")
+    put("agree_nh", len(_agree_hs), "results/task_b2_epistemic.json + task_d_nind20.json")
+    # Which horizons the aleatoric column disagrees at, so the sentence naming them
+    # cannot go stale the way "it flips sign at h=8" did when h=100 was added.
+    _dis = []
+    for _h in _agree_hs:
+        _x = (_B4["by_horizon"][_h]["aleatoric"]["n_positive"]
+              > _B4["by_horizon"][_h]["aleatoric"]["n_finite_corr"] / 2)
+        _y = (D["d1_by_horizon"][_h]["aleatoric"]["n_positive"]
+              > D["d1_by_horizon"][_h]["aleatoric"]["n_finite_corr"] / 2)
+        if _x != _y:
+            _dis.append(_h)
+    put("agree_alea_dis", " and ".join("h=" + x for x in _dis),
+        "results/task_b2_epistemic.json + task_d_nind20.json")
     put("d3_tol", f'{100*D3["quantities"]["epistemic"]["verdict"]["tolerance"]:.0f}',
         "results/task_d3_perhorizon.json")
 
