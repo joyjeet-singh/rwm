@@ -24,12 +24,14 @@ Code, evidence and the full claim record: https://github.com/joyjeet-singh/rwm
 **These models' predicted standard deviation is not a usable uncertainty estimate.**
 It is not a matter of degree. Measured against realised error on held-out episodes:
 
-| checkpoint | mean \|error\| / mean σ | coverage at ±1σ | a calibrated model |
+| checkpoint | mean \|error\| / mean σ [95% CI] | coverage at ±1σ [95% CI] | a calibrated model |
 |---|---|---|---|
-| autoregressive (mse) | 52× | 11.67% | 68.3% |
-| corrected objective (nll) | 11× | 42.78% | 68.3% |
-| teacher-forced | 315× | 12.96% | 68.3% |
-| *released reference checkpoint, for comparison* | 7,878× | 0.56% | 68.3% |
+| autoregressive (mse) | 52× [40, 70] | 11.67% [7.96, 15.19] | 68.3% |
+| corrected objective (nll) | 11× [8, 15] | 42.78% [24.44, 62.04] | 68.3% |
+| teacher-forced | 315× [177, 509] | 12.96% [7.04, 20.93] | 68.3% |
+| *released reference checkpoint, for comparison* | 7,878× [5,410, 9,934] | 0.56% [0.00, 1.67] | 68.3% |
+
+Those are the ALEATORIC term, at one forecast step. The quantity the follow-up's method actually penalises rewards with is the EPISTEMIC one, and on the released 5-member checkpoint it is 33.4× [28.7, 39.0] out at h = 100 — the horizon the method's own imagination rollouts run to — with 4.61% coverage at ±1σ. Our ensemble-5 arms reach 10.5× [9.0, 11.5] on the same measurement. Better, and not calibrated.
 
 The cause is structural, not a training accident: the state loss is squared error on a
 reparameterised sample with no log-σ term, so its optimum is σ = 0, and the bound term that
@@ -51,7 +53,7 @@ safety margins, or anything that treats σ as a scale.
 **There is a remedy, and it is cheap.** A single multiplier does not work, because the
 miscalibration grows with forecast horizon. One multiplier *per horizon*, fitted on held-out
 data, does: on the released reference checkpoint it restored ±1σ coverage to within
-10 points of nominal on 10 of 10 held-out cells,
+10 points of nominal on 12 of 12 held-out cells,
 where a single global multiplier managed 2. We measured that on the
 reference checkpoint rather than on these arms, and on two episodes only, so refit it on your
 own data rather than copying our constants.
@@ -160,7 +162,8 @@ Ensemble size 5. The only checkpoints here with a non-zero epistemic term; the o
 - source: `runs/armA_seed0_ens5/weights_2500.pt`
 - size: 8,020,484 bytes
 - sha256: `923e3a0b935cff3cb611cf6b35eea83701df4a78f02a22e3f10a6a2e945b9496`
-- σ calibration, measured at iteration 2,500: 52× overconfident, coverage 11.67% at ±1σ (h=1)
+- σ calibration (aleatoric), measured on THIS arm at iteration 2,500: 7.7× overconfident with 12.22% coverage at ±1σ (h=1), and 42.4× with 2.44% at h=100
+- σ calibration (epistemic — the quantity the method penalises with): 2.0× at h=1 and 10.3× at h=100, coverage 8.62% at ±1σ
 
 ### `autoregressive-ens5-seed1`
 
@@ -169,7 +172,8 @@ Ensemble size 5, seed 1.
 - source: `runs/armA_seed1_ens5/weights_2500.pt`
 - size: 8,020,484 bytes
 - sha256: `e756ca16fe2cd4e1615ca27b47d9bb519dd0d4da6dfe263758b1d5bbdaabeaaa`
-- σ calibration, measured at iteration 2,500: 52× overconfident, coverage 11.67% at ±1σ (h=1)
+- σ calibration (aleatoric), measured on THIS arm at iteration 2,500: 9.7× overconfident with 11.11% coverage at ±1σ (h=1), and 43.6× with 2.12% at h=100
+- σ calibration (epistemic — the quantity the method penalises with): 2.2× at h=1 and 10.7× at h=100, coverage 7.98% at ±1σ
 
 ### `autoregressive-ens5-seed2`
 
@@ -178,7 +182,8 @@ Ensemble size 5, seed 2.
 - source: `runs/armA_seed2_ens5/weights_2500.pt`
 - size: 8,020,484 bytes
 - sha256: `2688b16030a57b4b4201bc844a9e1b3607df8734e7b62b1f7b7efb11ed5d9652`
-- σ calibration, measured at iteration 2,500: 52× overconfident, coverage 11.67% at ±1σ (h=1)
+- σ calibration (aleatoric), measured on THIS arm at iteration 2,500: 8.5× overconfident with 8.33% coverage at ±1σ (h=1), and 39.8× with 2.51% at h=100
+- σ calibration (epistemic — the quantity the method penalises with): 2.3× at h=1 and 10.5× at h=100, coverage 7.98% at ±1σ
 
 ## The result these support
 

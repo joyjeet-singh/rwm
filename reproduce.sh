@@ -226,6 +226,36 @@ REPORT=task_d3b_ens5_power_report.txt stage 20i "Ensemble-5 companion and power 
       results/task_d3b_ens5_power.json NEEDS_WEIGHTS $PY scripts/task_d3b_ens5_power.py
 REPORT=task_c2_data_budget_report.txt stage 20j "Data budget against the reference (C2)" "10 s" \
       results/task_c2_data_budget.json $PY scripts/task_c2_data_budget.py
+# ---------------------------------------------------------------------------
+# Pre-submission revision. V1-V4 and P1 are Phase 0: they establish facts the
+# rest depends on, and P1's power check is committed together with the two rules
+# it governs, before either was tested.
+# ---------------------------------------------------------------------------
+# Reads the pinned upstreams and the released checkpoint's tensors. Every
+# file:line it cites is read back and fingerprinted, so a citation that drifts
+# fails here rather than going stale in the PDF.
+stage 20k "V1 — ensemble topology: what is shared across the five members" "10 s" \
+      results/v1_ensemble_topology.json NEEDS_WEIGHTS $PY scripts/v1_ensemble_topology.py
+stage 20l "V2 — which horizon is the deployment horizon" "5 s" \
+      results/v2_deployment_horizon.json $PY scripts/v2_deployment_horizon.py
+stage 20m "V3 — metric and coverage definitions, from the implementation" "5 s" \
+      results/v3_metric_definitions.json $PY scripts/v3_metric_definitions.py
+# P1 estimates what M-44 and M-45 can detect at the sample sizes they face. M-43
+# was committed without this check and returned DOES NOT GENERALISE partly
+# because of it; so did M-24 before that.
+REPORT=p1_power_check_report.txt stage 20n "P1 — power check for M-44 and M-45" "12 min" \
+      results/p1_power_check.json NEEDS_WEIGHTS $PY scripts/p1_power_check.py
+# A2 discharges M-45.
+REPORT=a2_trajectory_level_control_report.txt stage 20o "A2 — the trajectory-level control, and M-45's verdict" "14 min" \
+      results/a2_trajectory_level_control.json $PY scripts/a2_trajectory_level_control.py
+# T1's bibliography. --verify needs the network and a clean clone must not, so
+# the recorded verification is what the build reads; refresh it with --verify.
+REPORT=t1_bibliography_report.txt stage 20p "T1 — the section 2 bibliography, verified" "5 s" \
+      results/t1_bibliography_verified.json $PY scripts/t1_bibliography.py
+# T5's anonymised correspondence transcript, generated from the ledger so the two
+# cannot drift, with every quotation the paper uses asserted present.
+stage 20q "T5 — anonymised correspondence transcript" "5 s" \
+      results/t5_anon_transcript.json $PY scripts/t5_anon_transcript.py
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 
@@ -240,6 +270,11 @@ stage 24 "Build PAPER.md and PAPER.tex" "5 s" \
       "" $PY scripts/build_paper.py
 stage 25 "Build MODEL_CARD.md (checkpoint sha256s and per-checkpoint limits)" "10 s" \
       "" $PY scripts/build_model_card.py
+# C2: the README is generated from the same paper_numbers.json the paper is, so
+# the two cannot drift. It had drifted materially -- including a claim section 8
+# had explicitly withdrawn, still standing here as a finding.
+stage 25a "Build README.md from its template" "5 s" \
+      "" $PY scripts/build_readme.py
 # Compiles PAPER.tex and fails on errors, overfull boxes, LaTeX warnings or stray
 # markdown emphasis. Skips loudly, not silently, where no TeX is installed.
 stage 26 "Compile PAPER.tex" "30 s" \
@@ -258,6 +293,11 @@ stage 28 "Assemble the anonymised supplementary archive" "20 s" \
 # quietly passing forever.
 REPORT=comparative_claims_report.txt stage 28a "Comparative-claim check, with self-test" "10 s" \
       results/comparative_claims.json $PY scripts/check_comparative_claims.py --self-test
+# C3: stages an anonymised copy, scrubbing by SUBSTITUTION rather than exclusion,
+# checks file paths as well as contents, and plants a deny-list string on every
+# run to prove the scan is still live.
+stage 28b "Anonymised submission bundle, with its self-test" "40 s" \
+      results/anon_bundle.json $PY scripts/make_anon_bundle.py
 stage 29a "Part F submission gate, six checks" "30 s" \
       results/part_f_gate.json $PY scripts/part_f_gate.py
 stage 29 "Submission readiness gate" "40 s" \

@@ -39,3 +39,10 @@ supplementary.zip
 
 # generated at release time by the HF upload
 checkpoint_manifest.json
+
+# scratch backups written by the patch scripts
+*.t2bak
+*.t3bak
+*.t4bak
+*.prebak
+*.tmpbak

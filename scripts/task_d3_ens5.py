@@ -202,14 +202,32 @@ def main():
           f"majority={majority}  {excl}")
 
     # ---- 2. calibration ----------------------------------------------------
-    print(f"\n  [2] calibration of the epistemic term, comparable to section 5.2")
-    print(f"    {'h':>5}{'err/sigma':>14}{'+-1 sigma':>12}{'+-2 sigma':>12}{'dims r>0':>11}")
+    print(f"\n  [2] calibration of the epistemic term, comparable to section 5.2, "
+          f"with 95% cluster-bootstrap intervals (A1)")
+    print(f"    {'h':>5}{'err/sigma [95% CI]':>30}{'+-1 sigma [95% CI]':>28}"
+          f"{'+-2 sigma [95% CI]':>28}{'dims r>0':>11}")
+    # A1 -- the ens5 table carried bare seed-means. The interval resamples whole
+    # TRAJECTORIES and pools the three seeds inside each draw: seeds are not
+    # independent evidence about the arena (M-27), they are three measurements of
+    # the same four trajectories.
+    _bidx = np.random.default_rng(0).integers(0, n_traj, (N_BOOT, n_traj))
+
+    def _ci(per_traj_num, per_traj_den=None):
+        """per_traj_*: (n_seeds, n_traj) -> [lo, hi] over resampled trajectories."""
+        a = per_traj_num.mean(axis=0)[_bidx].mean(axis=1)
+        v = a if per_traj_den is None else a / per_traj_den.mean(axis=0)[_bidx].mean(axis=1)
+        v = v[np.isfinite(v)]
+        return ([float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))]
+                if len(v) > 1 else [None, None])
+
     cal = {}
     for h in HORIZONS:
         rows = []
+        pe, pg, p1, p2 = [], [], [], []          # (n_seeds, n_traj) partials
         for s in SEEDS:
-            e = R5[s]["err"][:, START:START + h].reshape(-1, 45)
-            g = R5[s]["epi"][:, START:START + h].reshape(-1, 45)
+            eT = R5[s]["err"][:, START:START + h]        # (n_traj, h, 45)
+            gT = R5[s]["epi"][:, START:START + h]
+            e, g = eT.reshape(-1, 45), gT.reshape(-1, 45)
             npos = 0
             for d in range(45):
                 a, b = g[:, d], e[:, d]
@@ -220,15 +238,59 @@ def main():
                          "coverage_pm1": float(np.nanmean(e <= g)),
                          "coverage_pm2": float(np.nanmean(e <= 2 * g)),
                          "n_positive": npos})
+            pe.append(np.nanmean(eT, axis=(1, 2))); pg.append(np.nanmean(gT, axis=(1, 2)))
+            p1.append(np.nanmean(eT <= gT, axis=(1, 2)))
+            p2.append(np.nanmean(eT <= 2 * gT, axis=(1, 2)))
+        pe, pg, p1, p2 = map(np.asarray, (pe, pg, p1, p2))
         cal[str(h)] = {"per_seed": rows,
                        "mean_ratio": statistics.mean(r["ratio_err_over_sigma"] for r in rows),
                        "mean_cov1": statistics.mean(r["coverage_pm1"] for r in rows),
                        "mean_cov2": statistics.mean(r["coverage_pm2"] for r in rows),
-                       "mean_npos": statistics.mean(r["n_positive"] for r in rows)}
+                       "mean_npos": statistics.mean(r["n_positive"] for r in rows),
+                       "ratio_ci": _ci(pe, pg), "cov1_ci": _ci(p1), "cov2_ci": _ci(p2),
+                       "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+                       "n_independent": n_ind}
         c = cal[str(h)]
-        print(f"    {h:>5}{c['mean_ratio']:>14.1f}{100*c['mean_cov1']:>11.2f}%"
-              f"{100*c['mean_cov2']:>11.2f}%{c['mean_npos']:>8.1f}/45")
+        rc, k1, k2 = c["ratio_ci"], c["cov1_ci"], c["cov2_ci"]
+        s_ratio = f"{c['mean_ratio']:,.1f} [{rc[0]:,.1f}, {rc[1]:,.1f}]"
+        s_cov1 = f"{100 * c['mean_cov1']:.2f}% [{100 * k1[0]:.2f}, {100 * k1[1]:.2f}]"
+        s_cov2 = f"{100 * c['mean_cov2']:.2f}% [{100 * k2[0]:.2f}, {100 * k2[1]:.2f}]"
+        print(f"    {h:>5}{s_ratio:>30}{s_cov1:>28}{s_cov2:>28}"
+              f"{c['mean_npos']:>8.1f}/45")
     out["calibration"] = cal
+
+    # ---- 2b. ALEATORIC calibration of the ens5 arms -------------------------
+    # The model card carried the ens1 Arm A aleatoric figure -- 52x, 11.67% -- on
+    # all three ens5 entries, pasted across three different models, and unlike the
+    # 10k entries it carried no "not re-measured" caveat. The rollouts above
+    # already contain each arm's own aleatoric sigma, so measuring it properly
+    # costs nothing and is strictly better than caveating a wrong number.
+    print(f"\n  [2b] ALEATORIC calibration of the same arms, per seed "
+          f"(the model card quotes these)")
+    print(f"    {'seed':>5}{'h':>6}{'err/sigma':>16}{'+-1 sigma':>12}{'+-2 sigma':>12}")
+    acal = {}
+    for h in HORIZONS:
+        rows = []
+        for s in SEEDS:
+            e = R5[s]["err"][:, START:START + h]
+            g = R5[s]["alea"][:, START:START + h]
+            rows.append({"seed": s,
+                         "ratio_err_over_sigma": float(np.nanmean(e) / np.nanmean(g)),
+                         "coverage_pm1": float(np.nanmean(e <= g)),
+                         "coverage_pm2": float(np.nanmean(e <= 2 * g))})
+            if h in (1, 100):
+                print(f"    {s:>5}{h:>6}{rows[-1]['ratio_err_over_sigma']:>16,.1f}"
+                      f"{100*rows[-1]['coverage_pm1']:>11.2f}%"
+                      f"{100*rows[-1]['coverage_pm2']:>11.2f}%")
+        acal[str(h)] = {
+            "per_seed": rows,
+            "mean_ratio": statistics.mean(r["ratio_err_over_sigma"] for r in rows),
+            "mean_cov1": statistics.mean(r["coverage_pm1"] for r in rows),
+            "mean_cov2": statistics.mean(r["coverage_pm2"] for r in rows),
+            "n_independent": n_ind,
+        }
+    out["aleatoric_calibration"] = acal
+    print(f"    -> measured per arm; the model card no longer inherits the ens1 figure")
 
     # ---- 3. the aleatoric collapse rate ------------------------------------
     e5 = [json.load(open(f"results/step5_armA_seed{s}_ens5.json"))["collapse_fit"]["slope_per_iter"]

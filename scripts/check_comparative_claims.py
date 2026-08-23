@@ -46,10 +46,27 @@ WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Sev
          8: "Eight", 9: "Nine", 10: "Ten"}
 
 
+def _find(text, frag):
+    """
+    Locate a prose fragment, tolerating rewrapping.
+
+    A `says` fragment pins a sentence in the built paper. Matching it literally
+    means every reflow of a paragraph breaks a check that has not actually
+    drifted -- and this project's own patching rule has said to use a
+    whitespace-tolerant matcher since single-line search strings started failing
+    on wrapped prose. Same rule here.
+
+    Returns (start, end) or None.
+    """
+    pat = re.compile(r"[\s>]+".join(re.escape(w) for w in frag.split()))
+    m = pat.search(text)
+    return (m.start(), m.end()) if m else None
+
+
 def _window(text, frag, span=160):
     """The text around a fragment, where the count that qualifies it must appear."""
-    i = text.find(frag)
-    return "" if i < 0 else text[max(0, i - span):i + len(frag) + span]
+    loc = _find(text, frag)
+    return "" if loc is None else text[max(0, loc[0] - span):loc[1] + span]
 
 
 def art(name):
@@ -69,50 +86,50 @@ def dig(name, path):
 # ---------------------------------------------------------------- the claims
 CLAIMS = [
     # ---- C1 overlap (A2) -------------------------------------------------
-    {"id": "C1.1", "kind": "overlap", "where": "5.6",
+    {"id": "C1.1", "kind": "overlap", "where": "6.7",
      "says": "the marginal intervals *do* overlap",
      "a": ("task_d_nind20.json", "d2_forecast_index.128.ci.index"),
      "b": ("task_d_nind20.json", "d2_forecast_index.128.ci.epistemic"),
      "expect": "overlap"},
-    {"id": "C1.2", "kind": "overlap", "where": "5.6",
+    {"id": "C1.2", "kind": "overlap", "where": "6.7",
      "says": "excludes zero at",
      "a": ("task_d_nind20.json", "d2_forecast_index.368.ci.index"),
      "b": ("task_d_nind20.json", "d2_forecast_index.368.ci.epistemic"),
      "expect": "disjoint"},
     # ---- C2 extremum (A4) ------------------------------------------------
-    {"id": "C2.1", "kind": "extremum", "where": "5.7",
+    {"id": "C2.1", "kind": "extremum", "where": "6.8",
      "says": "The largest deviation over all",
      "family": ("task_d3_perhorizon.json", "d3_cells"),
-     "named": {"quantity": "aleatoric", "h": 128, "fit_episode": 8},
+     "named": {"quantity": "aleatoric", "h": 100, "fit_episode": 8},
      "expect": "max"},
-    {"id": "C2.2", "kind": "extremum", "where": "5.6",
+    {"id": "C2.2", "kind": "extremum", "where": "6.7",
      "says": "is the smallest lower bound in the table",
      "family": ("task_d_nind20.json", "d2_paired_lo"),
      "named": {"h": "128"},
      "expect": "min"},
     # ---- C3 sign (A3) ----------------------------------------------------
-    {"id": "C3.1", "kind": "sign", "where": "5.6",
+    {"id": "C3.1", "kind": "sign", "where": "6.7",
      "says": "*lowers* disagreement's correlation by",
      "a": ("task_d2b_robustness.json", "raw.r_disagreement_error"),
      "b": ("task_d2b_robustness.json", "controls.linear.r_disagreement_given_index"),
      "expect": "fall"},
-    {"id": "C3.2", "kind": "sign", "where": "abstract",
-     "says": "lowers disagreement's correlation by only",
+    {"id": "C3.2", "kind": "sign", "where": "6.7",
+     "says": "*lowers* disagreement's correlation by",
      "a": ("task_d2b_robustness.json", "raw.r_disagreement_error"),
      "b": ("task_d2b_robustness.json", "controls.linear.r_disagreement_given_index"),
      "expect": "fall"},
-    {"id": "C3.3", "kind": "sign", "where": "5.6",
+    {"id": "C3.3", "kind": "sign", "where": "6.7",
      "says": "removing the shared depth trend",
      "a": ("task_d2b_robustness.json", "raw.r_disagreement_error"),
      "b": ("task_d2b_robustness.json", "controls.within_step.r_disagreement_given_index"),
      "expect": "rise", "optional": True},
     # ---- C4 orders of magnitude (A5) -------------------------------------
-    {"id": "C4.1", "kind": "orders", "where": "5.2 / abstract / 12",
-     "says": "× better than aleatoric at the deployment horizon",
+    {"id": "C4.1", "kind": "orders", "where": "6.2 / 13",
+     "says": "× better than aleatoric and still wrong by",
      "num": ("task_d_nind20.json", "d1_by_horizon.368.aleatoric.ratio_err_over_sigma"),
      "den": ("task_d_nind20.json", "d1_by_horizon.368.epistemic.ratio_err_over_sigma"),
      "stated_orders": None},
-    {"id": "C4.2", "kind": "orders", "where": "5.5",
+    {"id": "C4.2", "kind": "orders", "where": "6.6",
      "says": "a factor of about 10^",
      "num": ("task_b_permutation.json",
              "arenas.in-sample.models.teacher-forced armB.368.p_permutation"),
@@ -120,17 +137,17 @@ CLAIMS = [
              "arenas.in-sample.models.teacher-forced armB.368.p_binomial_two_sided"),
      "stated_orders": 13},
     # ---- C5 arena / horizon provenance (A1) ------------------------------
-    {"id": "C5.1", "kind": "cell", "where": "12",
+    {"id": "C5.1", "kind": "cell", "where": "13",
      "says": "inversely on every one of",
      "cell": ("task_b_permutation.json",
               "arenas.all-episodes.models.released aleatoric.368"),
      "expect_observed": 0, "expect_n": 45},
-    {"id": "C5.2", "kind": "cell", "where": "5.5",
+    {"id": "C5.2", "kind": "cell", "where": "6.6",
      "says": "negatively correlated with error on",
      "cell": ("task_b_permutation.json",
               "arenas.out-of-sample.models.released aleatoric.368"),
      "expect_observed": 20, "expect_n": 45},
-    {"id": "C5.3", "kind": "cell", "where": "5.2",
+    {"id": "C5.3", "kind": "cell", "where": "6.2",
      "says": "of 45 at h=1, with mean r",
      "cell": ("task_b_permutation.json",
               "arenas.all-episodes.models.released EPISTEMIC.1"),
@@ -141,52 +158,137 @@ CLAIMS = [
     # of error -- a correct number in a wrong relation -- is what this checker
     # exists for, and a checker covering only known failures protects nothing
     # that has not already been fixed.
-    {"id": "C2.3", "kind": "extremum", "where": "5.5",
+    {"id": "C2.3", "kind": "extremum", "where": "6.6",
      "says": "it has the largest mean correlation of the four",
      "family": ("task1_calibration.json", "cal_mean_r"),
      "named": {"label": "teacher-forced armB"}, "expect": "max"},
-    {"id": "C2.4", "kind": "extremum", "where": "5.6",
+    {"id": "C2.4", "kind": "extremum", "where": "6.7",
      "says": "it is the largest anywhere in this work",
      "family": ("task_d_nind20.json", "d2_epistemic_r"),
      "named": {"h": "1"}, "expect": "max"},
-    {"id": "C2.5", "kind": "extremum", "where": "5.2",
+    {"id": "C2.5", "kind": "extremum", "where": "6.2",
      "says": "the smallest is faithful (mse) h=368",
      "family": ("task_b_permutation.json", "holm_all"),
      "named": {"label": "faithful (mse) h=368"}, "expect": "min"},
-    {"id": "C3.4", "kind": "compare", "where": "5.5",
+    {"id": "C3.4", "kind": "compare", "where": "6.6",
      "says": "It does not beat Arm B's head on strength either",
      "a": ("task_b2_epistemic.json", "by_horizon.368.epistemic.corr_mean"),
      "b": ("task1_calibration.json", "teacher-forced armB.sigma_err_corr_mean"),
      "expect": "lt"},
-    {"id": "C3.5", "kind": "compare", "where": "5.5",
+    {"id": "C3.5", "kind": "compare", "where": "6.6",
      "says": "which already exceeds the smallest Holm threshold",
      "a": ("task_b_permutation.json", "arenas.out-of-sample.p_floor"),
      "b": ("task_b_permutation.json", "arenas.out-of-sample.holm.smallest_threshold"),
      "expect": "gt"},
-    {"id": "C3.6", "kind": "compare", "where": "9",
+    {"id": "C3.6", "kind": "compare", "where": "10",
      "says": "very nearly a perfect ranking. Over the full",
      "a": ("task_d_nind20.json", "d2_forecast_index.1.r_epistemic"),
      "b": ("task_d_nind20.json", "d2_forecast_index.368.r_epistemic"),
      "expect": "gt"},
-    {"id": "C7.1", "kind": "count-consistency", "where": "1 / abstract / 8",
+    {"id": "C7.1", "kind": "count-consistency", "where": "1 / abstract / 9",
      "label": "numbered retractions",
      "says": "numbered claims in this work are withdrawn",
      "value": ("paper_numbers.json", "n_retractions.value"),
      "sites": ["numbered claims in this work are withdrawn",
                "retractions of our own numbered claims",
                "retractions on our own evidence"]},
-    {"id": "C7.2", "kind": "count-consistency", "where": "1 / abstract / 8",
+    {"id": "C7.2", "kind": "count-consistency", "where": "1 / abstract / 9",
      "label": "framing retractions",
      "says": "further retractions withdraw framings rather than numbers",
      "value": ("paper_numbers.json", "n_retract_framing.value"),
      "sites": ["further retractions withdraw framings rather than numbers",
-               "more that withdraw framings rather than numbers",
                "that withdraw framings rather than numbers"]},
-    {"id": "C6.1", "kind": "relvar", "where": "4",
+    {"id": "C6.1", "kind": "relvar", "where": "5",
      "says": "Teacher forcing is more than twice as variable across seeds",
      "a": ("task_d1_threeseed.json", "aggregate.A.sd_ddof1", "aggregate.A.mean"),
      "b": ("task_d1_threeseed.json", "aggregate.B.sd_ddof1", "aggregate.B.mean"),
      "at_least": 2.0},
+    # ================================================================
+    # C1 (pre-submission revision) — six new kinds.
+    #
+    # Every defect the revision brief found that had reached a PDF was a
+    # relation between provenanced numbers, which is the class this checker
+    # exists for, and four of them got through it. These are the kinds that
+    # would have caught them.
+    # ================================================================
+
+    # ---- C8 horizon-label -------------------------------------------------
+    # The paper called h=368 "the deployment horizon" and put its numbers in the
+    # abstract. h=368 is the upstream's open-loop DIAGNOSTIC length; the method's
+    # own imagination rollouts run to 100 (X-13). A prose phrase that names a
+    # horizon must resolve to the horizon the artifact says it is.
+    {"id": "C8.1", "kind": "horizon-label", "where": "6.2",
+     "says": "at h = 100, the method's own imagination rollout length",
+     "horizon": ("v2_deployment_horizon.json", "verdict.deployment_horizon_is"),
+     "must_quote": ("task_d_nind20.json",
+                    "d1_by_horizon.100.epistemic.ratio_err_over_sigma"),
+     "fmt": "{:.1f}", "span": 100},
+    {"id": "C8.2", "kind": "horizon-label", "where": "3.1",
+     "says": "is the method's own imagination rollout length",
+     "horizon": ("v2_deployment_horizon.json", "verdict.deployment_horizon_is"),
+     "must_quote": ("v2_deployment_horizon.json", "verdict.deployment_horizon_is"),
+     "fmt": "{:.0f}"},
+    {"id": "C8.3", "kind": "horizon-forbidden", "where": "whole paper",
+     "says": "open-loop diagnostic",
+     "forbid": ["deployment horizon of h = 368", "368-step deployment horizon",
+                "at the 368-step deployment horizon"]},
+
+    # ---- C9 count-dependence ---------------------------------------------
+    # "368 of 368 forecast steps" and "10 of 10 held-out cells" invite the
+    # independent-trials reading this paper elsewhere warns against. A k-of-N
+    # count in the abstract, the lessons or the conclusion must carry an
+    # interval beside it or a footnote saying the units are not independent.
+    {"id": "C9.1", "kind": "count-dependence", "where": "abstract / 10 / 13",
+     "says": "restores nominal coverage on every held-out cell",
+     "sections": ["Abstract", "10. Actionable lessons", "13. Conclusion"]},
+
+    # ---- C10 retraction-consistency --------------------------------------
+    # A claim the ledger marks SUPERSEDED must not still be asserted anywhere
+    # reader-facing. The README carried one for weeks after 8 narrowed it.
+    {"id": "C10.1", "kind": "retraction-consistency", "where": "8 / README",
+     "says": "the released artifacts do not reproduce the released",
+     "retracted": "The released checkpoint cannot have come from the released recipe",
+     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md"]},
+    {"id": "C10.2", "kind": "retraction-consistency", "where": "6.6 / README",
+     "says": "no per-dimension count in this paper reaches significance",
+     "retracted": "sign test on 45 dimensions",
+     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md"]},
+
+    # ---- C11 cross-artifact-sync -----------------------------------------
+    # README and MODEL_CARD are reader-facing and were materially behind the
+    # paper: 17 training runs against 24, 4,804 regenerated values against
+    # 6,073, a headline the paper had reframed.
+    {"id": "C11.1", "kind": "cross-artifact-sync", "where": "README",
+     "says": "No number here is typed",
+     "keys": ["n_runs", "ver_values", "ver_files"],
+     "file": "README.md"},
+    {"id": "C11.2", "kind": "cross-artifact-sync", "where": "MODEL_CARD",
+     "says": "No number here is typed",
+     "keys": ["d1n_epi_ratio_h100", "e5_ratio_h100"],
+     "file": "MODEL_CARD.md"},
+
+    # ---- C12 abstract-budget ---------------------------------------------
+    # The abstract was ~650 words and ~25 numerals: unreadable as an abstract,
+    # and it front-loaded our retractions ahead of our findings.
+    {"id": "C12.1", "kind": "abstract-budget", "where": "abstract",
+     "says": "The base paper's central training claim reproduces",
+     "max_words": 250, "max_numerals": 6},
+
+    # ---- C13 interval-required -------------------------------------------
+    # 6.2's ratios and coverages were bare point estimates in a paper whose
+    # declared standard (3) is that every interval is a bootstrap over
+    # independent trajectories and every table reports that count.
+    {"id": "C13.1", "kind": "interval-required", "where": "6.2",
+     "says": "mean \\|error\\| / mean σ",
+     "quantities": [("cal_faithA_ratio", "cal_faithA_ratio_ci"),
+                    ("cal_nll_ratio", "cal_nll_ratio_ci"),
+                    ("cal_armB_ratio", "cal_armB_ratio_ci"),
+                    ("cal_rel_ratio", "cal_rel_ratio_ci")]},
+    {"id": "C13.2", "kind": "interval-required", "where": "6.2",
+     "says": "epistemic err/σ",
+     "quantities": [("d1n_epi_ratio_h100", "d1n_epi_ratio_ci_h100"),
+                    ("d1n_epi_cov1_h100", "d1n_epi_cov1_ci_h100"),
+                    ("d1n_alea_ratio_h100", "d1n_alea_ratio_ci_h100")]},
 ]
 
 
@@ -238,7 +340,7 @@ def evaluate(c, paper, override=None):
     if override:
         exp.update(override)
 
-    said = exp["says"] in paper
+    said = _find(paper, exp["says"]) is not None
     if not said and not exp.get("optional"):
         return False, f'the paper does not contain "{exp["says"][:48]}"'
 
@@ -271,9 +373,8 @@ def evaluate(c, paper, override=None):
         forms = {str(want), WORDS.get(int(want), ""), WORDS.get(int(want), "").lower()}
         forms.discard("")
         missing = [frag for frag in exp["sites"]
-                   if not any(f"{frag} {f}" in paper or f"{f} {frag}" in paper
-                              or (frag in paper and any(f in _window(paper, frag) for f in forms))
-                              for f in forms)]
+                   if not any(any(f in _window(paper, frag, span=90) for f in forms)
+                              for _ in (0,))]
         return not missing, (f'{exp["label"]} = {want} ({"/".join(sorted(forms))}); '
                              f'{len(exp["sites"]) - len(missing)}/{len(exp["sites"])} sites agree'
                              + (f'; disagreeing: {missing}' if missing else ''))
@@ -303,6 +404,80 @@ def evaluate(c, paper, override=None):
         ok = (cell["observed"] == exp["expect_observed"] and cell["n_dims"] == exp["expect_n"])
         return ok, (f'{exp["cell"][1]} -> {cell["observed"]}/{cell["n_dims"]}, '
                     f'text cites {exp["expect_observed"]}/{exp["expect_n"]}')
+    if k == "horizon-label":
+        # A prose phrase naming a horizon must resolve to the horizon the artifact
+        # says it is, and the numbers next to it must be that horizon's numbers.
+        h = dig(*exp["horizon"])
+        val = dig(*exp["must_quote"])
+        want = exp["fmt"].format(val)
+        win = _window(paper, exp["says"], span=exp.get("span", 420))
+        return want in win, (f'horizon {h}; expected "{want}" within '
+                             f'{exp.get("span", 420)} chars of "{exp["says"][:40]}"; '
+                             f'{"found" if want in win else "ABSENT"}')
+    if k == "horizon-forbidden":
+        hits = [f for f in exp["forbid"] if f in paper]
+        return not hits, (f'{len(exp["forbid"])} forbidden horizon labels checked; '
+                          + (f'PRESENT: {hits}' if hits else 'none present'))
+    if k == "count-dependence":
+        # Any clean "k of k" in these sections must carry an interval or a
+        # footnote marker within a short window. A partial count does not invite
+        # the independent-trials reading a clean sweep does.
+        bad = []
+        for sec in exp["sections"]:
+            i = paper.find("## " + sec)
+            if i < 0:
+                bad.append(f"section {sec!r} not found")
+                continue
+            j = paper.find("\n## ", i + 4)
+            body = paper[i:j if j > 0 else len(paper)]
+            for m in re.finditer(r"(\d+) of (\d+)", body):
+                if m.group(1) != m.group(2):
+                    continue
+                w = body[max(0, m.start() - 260):m.end() + 260]
+                if re.search(r"\[[-+\d]", w) or "[^" in w or "not independent" in w:
+                    continue
+                bad.append(f"{sec}: '{m.group(0)}' with no interval or footnote")
+        return not bad, ("every clean k-of-k count carries an interval or a "
+                         "not-independent footnote" if not bad else "; ".join(bad))
+    if k == "retraction-consistency":
+        hits = [f for f in exp["files"]
+                if os.path.exists(f) and exp["retracted"] in open(f).read()]
+        return not hits, (f'retracted assertion "{exp["retracted"][:44]}" '
+                          + (f'STILL ASSERTED in {hits}' if hits
+                             else f'absent from all {len(exp["files"])} files'))
+    if k == "cross-artifact-sync":
+        if not os.path.exists(exp["file"]):
+            return False, f'{exp["file"]} does not exist'
+        txt = open(exp["file"]).read()
+        N = art("paper_numbers.json")
+        missing = [key for key in exp["keys"]
+                   if key not in N or str(N[key]["value"]) not in txt]
+        return not missing, (f'{len(exp["keys"]) - len(missing)}/{len(exp["keys"])} '
+                             f'headline values present in {exp["file"]}'
+                             + (f'; missing {missing}' if missing else ''))
+    if k == "abstract-budget":
+        a = paper.split("## Abstract")[1].split("\n## 1.")[0]
+        a = re.sub(r"^---\s*$", "", a, flags=re.M)
+        words = len(a.split())
+        # arXiv identifiers and section cross-references are addresses, not claims
+        b = re.sub(r"arXiv:\d{4}\.\d{4,5}\w*", "", a)
+        b = re.sub(r"\u00a7\d+(\.\d+)?", "", b)
+        nums = re.findall(r"(?<![\w.])\d[\d,]*\.?\d*(?![\w])", b)
+        ok = words <= exp["max_words"] and len(nums) <= exp["max_numerals"]
+        return ok, (f'{words} words (max {exp["max_words"]}), '
+                    f'{len(nums)} numerals (max {exp["max_numerals"]}) {nums}')
+    if k == "interval-required":
+        N = art("paper_numbers.json")
+        bad = []
+        for point, interval in exp["quantities"]:
+            if interval not in N:
+                bad.append(f"{point}: no interval key {interval}")
+                continue
+            if str(N[interval]["value"]) not in paper:
+                bad.append(f"{point}: interval {interval} not quoted in the paper")
+        return not bad, (f'{len(exp["quantities"]) - len(bad)}/{len(exp["quantities"])} '
+                         f'quoted quantities carry their interval'
+                         + (f'; {bad}' if bad else ''))
     raise ValueError(k)
 
 
@@ -334,6 +509,28 @@ def corruption_for(c):
         return {"expect": "lt" if c["expect"] == "gt" else "gt"}
     if k == "relvar":
         return {"at_least": c["at_least"] * 100}
+    if k == "horizon-label":
+        # demand the OTHER horizon's number -- the diagnostic one, which is the
+        # exact substitution X-13 found in the shipped paper
+        if ".100." in c["must_quote"][1]:
+            return {"must_quote": (c["must_quote"][0],
+                                   c["must_quote"][1].replace(".100.", ".368."))}
+        return {"fmt": "{:.4f}"}
+    if k == "horizon-forbidden":
+        # plant a label the check would have to reject
+        return {"forbid": c["forbid"] + ["open-loop diagnostic"]}
+    if k == "count-dependence":
+        # name a section that is not there, so the scan cannot vacuously pass
+        return {"sections": c["sections"] + ["Nonexistent section"]}
+    if k == "retraction-consistency":
+        # a string that IS present, standing in for a retracted claim never removed
+        return {"retracted": "reproduction"}
+    if k == "cross-artifact-sync":
+        return {"keys": c["keys"] + ["d1_ratio"], "file": "requirements.txt"}
+    if k == "abstract-budget":
+        return {"max_words": 10}
+    if k == "interval-required":
+        return {"quantities": c["quantities"] + [("planted", "no_such_interval_key")]}
     if k == "extremum":
         fam = _family(c["family"])
         ranked = sorted(fam, key=fam.get, reverse=(c["expect"] == "max"))

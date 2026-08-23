@@ -45,6 +45,14 @@
         {
           "fit_episode": 1,
           "test_episode": 8,
+          "h": 100,
+          "c": 2988.3960680601504,
+          "coverage_after": 0.6068888888888889,
+          "coverage_before": 0.0008888888888888889
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
           "h": 128,
           "c": 3631.1587288078886,
           "coverage_after": 0.6018229166666667,
@@ -81,6 +89,14 @@
           "c": 1595.9156648519288,
           "coverage_after": 0.65625,
           "coverage_before": 0.0010416666666666667
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
+          "h": 100,
+          "c": 4169.979142109762,
+          "coverage_after": 0.7747777777777778,
+          "coverage_before": 0.0007777777777777777
         },
         {
           "fit_episode": 8,
@@ -124,6 +140,13 @@
         {
           "fit_episode": 1,
           "test_episode": 8,
+          "h": 100,
+          "c": 592.5602452517332,
+          "coverage_after": 0.20622222222222222
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
           "h": 128,
           "c": 592.5602452517332,
           "coverage_after": 0.18107638888888888
@@ -159,6 +182,13 @@
         {
           "fit_episode": 8,
           "test_episode": 1,
+          "h": 100,
+          "c": 611.1163286413264,
+          "coverage_after": 0.24444444444444444
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
           "h": 128,
           "c": 611.1163286413264,
           "coverage_after": 0.2232638888888889
@@ -172,17 +202,17 @@
         }
       ],
       "verdict": {
-        "per_horizon_cells_calibrated": 10,
-        "n_cells": 10,
+        "per_horizon_cells_calibrated": 12,
+        "n_cells": 12,
         "constant_cells_calibrated": 2,
         "per_horizon_restores_calibration": true,
         "worst_cell": {
           "fit_episode": 8,
           "test_episode": 1,
-          "h": 128,
-          "c": 5112.633214444101,
-          "coverage_after": 0.7655381944444445,
-          "coverage_before": 0.0006076388888888889
+          "h": 100,
+          "c": 4169.979142109762,
+          "coverage_after": 0.7747777777777778,
+          "coverage_before": 0.0007777777777777777
         },
         "c_ratio_max_over_min": 13.13331137739728,
         "tolerance": 0.1
@@ -213,6 +243,14 @@
           "c": 13.80463151386988,
           "coverage_after": 0.7090277777777778,
           "coverage_before": 0.08923611111111111
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
+          "h": 100,
+          "c": 22.034394273813465,
+          "coverage_after": 0.6543333333333333,
+          "coverage_before": 0.05633333333333333
         },
         {
           "fit_episode": 1,
@@ -257,6 +295,14 @@
         {
           "fit_episode": 8,
           "test_episode": 1,
+          "h": 100,
+          "c": 24.416620331486193,
+          "coverage_after": 0.7078888888888889,
+          "coverage_before": 0.057777777777777775
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
           "h": 128,
           "c": 29.09813386768436,
           "coverage_after": 0.7189236111111111,
@@ -296,6 +342,13 @@
         {
           "fit_episode": 1,
           "test_episode": 8,
+          "h": 100,
+          "c": 5.0817340086935285,
+          "coverage_after": 0.24955555555555556
+        },
+        {
+          "fit_episode": 1,
+          "test_episode": 8,
           "h": 128,
           "c": 5.0817340086935285,
           "coverage_after": 0.23055555555555557
@@ -331,6 +384,13 @@
         {
           "fit_episode": 8,
           "test_episode": 1,
+          "h": 100,
+          "c": 5.8172019694958585,
+          "coverage_after": 0.2952222222222222
+        },
+        {
+          "fit_episode": 8,
+          "test_episode": 1,
           "h": 128,
           "c": 5.8172019694958585,
           "coverage_after": 0.2747395833333333
@@ -344,8 +404,8 @@
         }
       ],
       "verdict": {
-        "per_horizon_cells_calibrated": 10,
-        "n_cells": 10,
+        "per_horizon_cells_calibrated": 12,
+        "n_cells": 12,
         "constant_cells_calibrated": 2,
         "per_horizon_restores_calibration": true,
         "worst_cell": {

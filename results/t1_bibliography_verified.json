@@ -1,0 +1,290 @@
+{
+  "entries": [
+    {
+      "arxiv": "2110.04135",
+      "authors": [
+        "Cong Lu",
+        "Philip J. Ball",
+        "Jack Parker-Holder",
+        "Michael A. Osborne",
+        "Stephen J. Roberts"
+      ],
+      "establishes": "a calibration comparison of uncertainty heuristics in offline MBRL, under a protocol built to capture the covariate shift model-based RL induces, reporting rank and bivariate correlation against true model error SEPARATELY",
+      "fragments": [
+        "We measure Spearman rank",
+        "despite the similar rank correlations",
+        "the bivariate correlations",
+        "for the first time, capture the specific covariate shift induced by model-based RL",
+        "the ensemble standard deviation is statistically strikingly similar to that used in"
+      ],
+      "key": "lu2022",
+      "title": "Revisiting Design Choices in Offline Model-Based Reinforcement Learning",
+      "venue": "ICLR 2022 (Spotlight)",
+      "why_we_engage": "This is direct precedent for 5.6's framing, four years earlier, on the same family of ensemble-disagreement penalties. It also independently supports our result rather than undercutting it: Lu et al. find the ensemble standard deviation -- the exact quantity system_dynamics.py:126 computes and envs/base.py:166 applies -- to have better correlation with model error than the MOPO and MOReL penalties. Our contribution is not the idea of checking; it is checking a RELEASED checkpoint from a pipeline deployed on hardware, and separating ranking from scale, which Lu et al. do not do because they never ask whether the penalty is a calibrated interval.",
+      "year": 2022
+    },
+    {
+      "arxiv": "1805.12114",
+      "authors": [
+        "Kurtland Chua",
+        "Roberto Calandra",
+        "Rowan McAllister",
+        "Sergey Levine"
+      ],
+      "establishes": "the bounded log-variance head with a softplus squeeze between learned min and max bounds, plus a small regulariser on those bounds -- paired with a Gaussian negative-log-likelihood objective",
+      "fragments": [
+        "logvar = max_logvar - tf.nn.softplus(max_logvar - logvar)",
+        "logvar = min_logvar + tf.nn.softplus(logvar - min_logvar)",
+        "with a small regularization penalty on term on max_logvar",
+        "We use the negative log prediction probability as our loss function"
+      ],
+      "key": "chua2018",
+      "title": "Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models",
+      "venue": "NeurIPS 2018",
+      "why_we_engage": "5.3's parameterisation is inherited from this lineage LINE FOR LINE. PETS Appendix A.1 gives\n    logvar = max_logvar - softplus(max_logvar - logvar)\n    logvar = min_logvar + softplus(logvar - min_logvar)\nand mlp.py:92-93 is the same two lines in log-sigma rather than log-variance, with compute_bound_loss (system_dynamics.py:302) supplying PETS's regulariser on the bounds. What is NOT inherited is the objective: PETS uses 'the negative log prediction probability as our loss function', whose log-sigma term is exactly what opposes sigma -> 0. system_dynamics.py:283 substitutes squared error on a reparameterised sample, which has no such term. So the collapse 5.3 derives is a consequence of the SUBSTITUTION, not of the parameterisation -- and that makes 5.3 bigger than one repository, because any descendant that made the same substitution inherits the same optimum. We have not tested any other descendant and mark this as a hypothesis (11).",
+      "year": 2018
+    },
+    {
+      "arxiv": "2005.13239",
+      "authors": [
+        "Tianhe Yu",
+        "Garrett Thomas",
+        "Lantao Yu",
+        "Stefano Ermon",
+        "James Zou",
+        "Sergey Levine",
+        "Chelsea Finn",
+        "Tengyu Ma"
+      ],
+      "establishes": "penalising the reward by an ensemble uncertainty estimate, solving a pessimistic MDP that lower-bounds the true one",
+      "fragments": [],
+      "key": "yu2020",
+      "title": "MOPO: Model-based Offline Policy Optimization",
+      "venue": "NeurIPS 2020",
+      "why_we_engage": "the method the follow-up adapts. MOPO-PPO is named for it, and Eq. 5's r~ = r - lambda u is MOPO's construction.",
+      "year": 2020
+    },
+    {
+      "arxiv": "2005.05951",
+      "authors": [
+        "Rahul Kidambi",
+        "Aravind Rajeswaran",
+        "Praneeth Netrapalli",
+        "Thorsten Joachims"
+      ],
+      "establishes": "an unknown-state-action detector built from pairwise ensemble disagreement, used to construct a pessimistic MDP",
+      "fragments": [],
+      "key": "kidambi2020",
+      "title": "MOReL : Model-Based Offline Reinforcement Learning",
+      "venue": "NeurIPS 2020",
+      "why_we_engage": "the alternative heuristic in the same family. Lu et al. find the ensemble standard deviation 'strikingly similar' to MOReL's quantity but better behaved, which is the quantity the follow-up applies.",
+      "year": 2020
+    },
+    {
+      "arxiv": "1612.01474",
+      "authors": [
+        "Balaji Lakshminarayanan",
+        "Alexander Pritzel",
+        "Charles Blundell"
+      ],
+      "establishes": "deep ensembles: several networks trained from DIFFERENT random initialisations and different data orderings, whose spread is the uncertainty estimate",
+      "fragments": [],
+      "key": "lakshminarayanan2017",
+      "title": "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles",
+      "venue": "NeurIPS 2017",
+      "why_we_engage": "This is what 'ensemble' is supposed to mean, and it is the contrast X-12 and M-44 rest on. The released checkpoint's five members share one GRU trunk and one recurrent hidden state and differ only in a 77,492-parameter output head -- 89.15% of each member is numerically identical to every other. That is not a deep ensemble in this sense, and 5.4 says so.",
+      "year": 2017
+    },
+    {
+      "arxiv": "1807.00263",
+      "authors": [
+        "Volodymyr Kuleshov",
+        "Nathan Fenner",
+        "Stefano Ermon"
+      ],
+      "establishes": "recalibration of regression uncertainties by fitting a post-hoc map on held-out data",
+      "fragments": [],
+      "key": "kuleshov2018",
+      "title": "Accurate Uncertainties for Deep Learning Using Calibrated Regression",
+      "venue": "ICML 2018",
+      "why_we_engage": "5.7's per-horizon multiplier is a coarse instance of this: one scalar per forecast horizon, fitted on one held-out episode and scored on the other. We say so rather than presenting it as new.",
+      "year": 2018
+    },
+    {
+      "arxiv": "1706.04599",
+      "authors": [
+        "Chuan Guo",
+        "Geoff Pleiss",
+        "Yu Sun",
+        "Kilian Q. Weinberger"
+      ],
+      "establishes": "that modern networks are systematically miscalibrated, and that a single temperature parameter often repairs it",
+      "fragments": [],
+      "key": "guo2017",
+      "title": "On Calibration of Modern Neural Networks",
+      "venue": "ICML 2017",
+      "why_we_engage": "background, and the closest precedent for the shape of 5.7's result: a one-parameter post-hoc fix for a miscalibration that is not a modelling failure.",
+      "year": 2017
+    },
+    {
+      "arxiv": "1906.02530",
+      "authors": [
+        "Yaniv Ovadia",
+        "Emily Fertig",
+        "Jie Ren",
+        "Zachary Nado",
+        "D Sculley",
+        "Sebastian Nowozin",
+        "Joshua V. Dillon",
+        "Balaji Lakshminarayanan",
+        "Jasper Snoek"
+      ],
+      "establishes": "that calibration degrades under covariate shift, and that the degradation is worse the further from the training distribution the input lies",
+      "fragments": [],
+      "key": "ovadia2019",
+      "title": "Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift",
+      "venue": "NeurIPS 2019",
+      "why_we_engage": "why horizon-dependent failure is the expected shape rather than a surprise. An autoregressive rollout generates its own covariate shift, increasing with depth -- which is what 5.8's flat sigma against growing error looks like from here.",
+      "year": 2019
+    },
+    {
+      "arxiv": "2007.02418",
+      "authors": [
+        "Zaheer Abbas",
+        "Samuel Sokota",
+        "Erin J. Talvitie",
+        "Martha White"
+      ],
+      "establishes": "that predictive uncertainty in MBRL has three sources -- aleatoric, parameter, and MODEL INADEQUACY -- and that prior selective-planning work attends only to the second",
+      "fragments": [],
+      "key": "abbas2020",
+      "title": "Selective Dyna-style Planning Under Limited Model Capacity",
+      "venue": "ICML 2020",
+      "why_we_engage": "prior comparison of what the penalty quantity is actually measuring. It also names the distinction our 5.1 turns on: the released checkpoint emits an aleatoric term and a parameter-uncertainty term, discards the first, and has no estimate of model inadequacy at all -- which is the source that grows with rollout depth.",
+      "year": 2020
+    },
+    {
+      "arxiv": "1906.08253",
+      "authors": [
+        "Michael Janner",
+        "Justin Fu",
+        "Marvin Zhang",
+        "Sergey Levine"
+      ],
+      "establishes": "MBPO: short model rollouts branched from real states, with the rollout length traded against model error",
+      "fragments": [],
+      "key": "janner2019",
+      "title": "When to Trust Your Model: Model-Based Policy Optimization",
+      "venue": "NeurIPS 2019",
+      "why_we_engage": "the loop MOPO-PPO adapts, and the origin of the rollout-length-versus-model-error trade the follow-up's 100-step imagination horizon sits inside (X-13).",
+      "year": 2019
+    }
+  ],
+  "evidence_class": "EXT",
+  "n_entries": 10,
+  "n_references_after": 12,
+  "n_references_before": 2,
+  "purpose": "every section 2 reference, verified against the paper itself",
+  "rule": "no entry is added that was not verified. Title, full author list and venue come from the arXiv API; anything our text asserts the paper SAYS is additionally matched verbatim against its HTML.",
+  "untested_hypothesis": {
+    "grounds": "the parameterisation is inherited line for line (chua2018 fragments); the objective is not (system_dynamics.py:283)",
+    "statement": "the sigma = 0 optimum affects any descendant of the PETS parameterisation that replaced the Gaussian NLL with squared error on a reparameterised sample",
+    "status": "NOT TESTED outside this repository. Flagged in 2 and 11 as a hypothesis and deliberately out of scope."
+  },
+  "verification": {
+    "checked_on": "2026-08-23",
+    "method": "arXiv API metadata for title, author list and venue comment; for any entry whose 'why_we_engage' asserts what the paper SAYS, the asserted fragments were additionally matched as substrings of that paper's own arXiv HTML rendering after tag-stripping and whitespace collapse",
+    "n_entries": 10,
+    "n_fragments_checked": 9,
+    "n_fragments_verbatim": 9,
+    "n_metadata_verified": 10,
+    "n_with_fragment_checks": 2,
+    "per_entry": [
+      {
+        "arxiv_version": "2110.04135v2",
+        "authors_match": true,
+        "comment": "Spotlight @ ICLR 2022; Spotlight @ RL4RealLife Workshop ICML2021",
+        "key": "lu2022",
+        "n_fragments": 5,
+        "n_fragments_found": 5,
+        "published": "2021-10-08",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1805.12114v2",
+        "authors_match": true,
+        "comment": "NIPS 2018, video and code available",
+        "key": "chua2018",
+        "n_fragments": 4,
+        "n_fragments_found": 4,
+        "published": "2018-05-30",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "2005.13239v6",
+        "authors_match": true,
+        "comment": "NeurIPS 2020. First two authors contributed equally.",
+        "key": "yu2020",
+        "published": "2020-05-27",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "2005.05951v3",
+        "authors_match": true,
+        "comment": "Published at NeurIPS 2020.",
+        "key": "kidambi2020",
+        "published": "2020-05-12",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1612.01474v3",
+        "authors_match": true,
+        "comment": "NIPS 2017",
+        "key": "lakshminarayanan2017",
+        "note": "arXiv preprint dated 2016; the venue year is 2017 and the entry cites the venue year, as the brief's table does",
+        "published": "2016-12-05",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1807.00263v1",
+        "authors_match": true,
+        "comment": "ICML 2018",
+        "key": "kuleshov2018",
+        "published": "2018-07-01",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1706.04599v2",
+        "authors_match": true,
+        "comment": "ICML 2017",
+        "key": "guo2017",
+        "published": "2017-06-14",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1906.02530v2",
+        "authors_match": true,
+        "comment": "Advances in Neural Information Processing Systems, 2019",
+        "key": "ovadia2019",
+        "published": "2019-06-06",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "2007.02418v3",
+        "authors_match": true,
+        "comment": "Accepted at ICML 2020",
+        "key": "abbas2020",
+        "published": "2020-07-05",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1906.08253v3",
+        "authors_match": true,
+        "comment": "NeurIPS 2019.",
+        "key": "janner2019",
+        "published": "2019-06-19",
+        "title_matches": true
+      }
+    ]
+  }
+}

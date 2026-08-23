@@ -84,12 +84,61 @@ def partial_corr(x, y, z):
     return float(np.corrcoef(ra, rb)[0, 1])
 
 
-def block(err, sig):
+def cluster_ci_from_per_traj(num, den, rng, n_boot=N_BOOT):
+    """
+    95% cluster-bootstrap interval for a ratio of means, resampling whole
+    trajectories, computed from PER-TRAJECTORY partial sums.
+
+    This is exact, not an approximation. The design is balanced -- every
+    trajectory contributes the same h x 45 cells -- so the mean over any
+    resampled set of trajectories is the mean of those trajectories' own means,
+    and the ratio of pooled means is the ratio of the resampled per-trajectory
+    means. Bootstrapping n numbers instead of n x h x 45 makes 20,000 draws
+    cost nothing, which is why every cell in 5.2 can now carry an interval
+    rather than only the ones that were cheap.
+
+    num, den: (n_traj,) per-trajectory means. For coverage, den is None and num
+    is the per-trajectory hit rate.
+    """
+    n = len(num)
+    idx = rng.integers(0, n, (n_boot, n))
+    a = num[idx].mean(axis=1)
+    v = a if den is None else a / den[idx].mean(axis=1)
+    v = v[np.isfinite(v)]
+    if len(v) < 2:
+        return None, None, 0
+    return float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5)), len(v)
+
+
+def block(err, sig, rng=None):
+    """
+    err, sig: (n_traj, h, 45). Everything is pooled over the last two axes for the
+    point estimate and resampled over the FIRST for the interval -- M-27's unit.
+    """
     e = err.reshape(-1, err.shape[-1]); s = sig.reshape(-1, sig.shape[-1])
     rec = {"mean_sigma": float(np.nanmean(s)), "mean_abs_err": float(np.nanmean(e)),
            "ratio_err_over_sigma": float(np.nanmean(e) / np.nanmean(s)),
            "coverage_pm1": float(np.nanmean(e <= s)),
            "coverage_pm2": float(np.nanmean(e <= 2 * s))}
+
+    # A1 -- every ratio and every coverage in 5.2 now carries a 95% interval over
+    # independent trajectories, which is the standard this paper declares for
+    # itself in 2 and had not been applying to its own calibration tables.
+    if rng is not None:
+        ax = (1, 2)
+        pe = np.nanmean(err, axis=ax)                       # (n_traj,)
+        ps = np.nanmean(sig, axis=ax)
+        p1 = np.nanmean(err <= sig, axis=ax)
+        p2 = np.nanmean(err <= 2 * sig, axis=ax)
+        n_traj = err.shape[0]
+        for key, (a, b) in (("ratio_err_over_sigma", (pe, ps)),
+                            ("coverage_pm1", (p1, None)),
+                            ("coverage_pm2", (p2, None))):
+            lo, hi, nb = cluster_ci_from_per_traj(a, b, rng)
+            rec[f"{key}_ci"] = [lo, hi]
+            rec[f"{key}_n_boot_finite"] = nb
+        rec["bootstrap_unit"] = "whole trajectory (M-27)"
+        rec["n_trajectories_resampled"] = int(n_traj)
     cors = []
     for d in range(e.shape[1]):
         sd, ed = s[:, d], e[:, d]
@@ -144,20 +193,26 @@ def main():
           f"400-step trajectories\n")
 
     # ---------------- D1 ----------------
-    print("  D1 — the uncertainty table, n_independent = %d" % n_ind)
-    hdr = (f"  {'h':>4} {'quantity':<11} {'err/sigma':>11} {'cov+-1s':>9} {'cov+-2s':>9} "
-           f"{'dims r>0':>10} {'mean r':>9}")
+    print("  D1 — the uncertainty table, n_independent = %d, every cell with a "
+          "95%% cluster-bootstrap interval (A1)" % n_ind)
+    hdr = (f"  {'h':>4} {'quantity':<11} {'err/sigma [95% CI]':>30} "
+           f"{'cov+-1s [95% CI]':>28} {'cov+-2s [95% CI]':>28} {'dims r>0':>10}")
     print(hdr); print("  " + "-" * (len(hdr) - 2))
     for h in HORIZONS:
         sl = slice(START, START + h)
         rec = {}
         for name, sig in (("aleatoric", alea[:, sl]), ("epistemic", epi[:, sl]),
                           ("total", total[:, sl])):
-            b = block(abs_err[:, sl], sig)
+            b = block(abs_err[:, sl], sig, rng=np.random.default_rng(0))
             rec[name] = b
-            print(f"  {h:>4} {name:<11} {b['ratio_err_over_sigma']:>11.1f} "
-                  f"{100*b['coverage_pm1']:>8.2f}% {100*b['coverage_pm2']:>8.2f}% "
-                  f"{b['n_positive']:>4}/{b['n_finite_corr']:<4} {b['corr_mean']:>+9.3f}")
+            rr, rc = b["ratio_err_over_sigma"], b["ratio_err_over_sigma_ci"]
+            c1, c1c = b["coverage_pm1"], b["coverage_pm1_ci"]
+            c2, c2c = b["coverage_pm2"], b["coverage_pm2_ci"]
+            print(f"  {h:>4} {name:<11} "
+                  f"{f'{rr:,.1f} [{rc[0]:,.1f}, {rc[1]:,.1f}]':>30} "
+                  f"{f'{100*c1:.2f}% [{100*c1c[0]:.2f}, {100*c1c[1]:.2f}]':>28} "
+                  f"{f'{100*c2:.2f}% [{100*c2c[0]:.2f}, {100*c2c[1]:.2f}]':>28} "
+                  f"{b['n_positive']:>4}/{b['n_finite_corr']:<4}")
         out["d1_by_horizon"][str(h)] = rec
         print()
 

@@ -1,0 +1,21 @@
+{
+  "includes_previously_excluded": [
+    "MODEL_CARD.md",
+    "CITATION.cff",
+    "NOTICE",
+    "docs/ARCHIVAL_IDENTIFIERS.md"
+  ],
+  "n_detection_patterns": 9,
+  "n_files_content_scrubbed": 8,
+  "n_files_staged": 270,
+  "n_paths_scrubbed": 0,
+  "n_residual_hits": 0,
+  "n_substitution_rules": 16,
+  "residual_hits": [],
+  "self_test": {
+    "detected": true,
+    "n_hits_on_probe": 6,
+    "planted": "a file whose NAME and CONTENTS both carry deny-list strings"
+  },
+  "zip_written": null
+}

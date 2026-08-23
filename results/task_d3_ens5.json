@@ -156,6 +156,44 @@
       "mean_r_index": 0.12007111458264068,
       "mean_r_disagreement": 0.5472019527761951
     },
+    "100": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "r_index": 0.47615775220904244,
+          "r_disagreement": 0.7592428180827997,
+          "r_partial": 0.7619694633226667,
+          "paired_diff": 0.28308506587375726,
+          "paired_ci_lo": 0.06940096163908349,
+          "paired_ci_hi": 0.549871378007153,
+          "paired_n_boot": 20000
+        },
+        {
+          "seed": 1,
+          "r_index": 0.5169478369554754,
+          "r_disagreement": 0.7496721814347007,
+          "r_partial": 0.7416803586185947,
+          "paired_diff": 0.2327243444792253,
+          "paired_ci_lo": 0.0613567100560205,
+          "paired_ci_hi": 0.37716395292108046,
+          "paired_n_boot": 20000
+        },
+        {
+          "seed": 2,
+          "r_index": 0.4771378754682164,
+          "r_disagreement": 0.7560026868000274,
+          "r_partial": 0.7472142844261169,
+          "paired_diff": 0.27886481133181096,
+          "paired_ci_lo": 0.06676800611816835,
+          "paired_ci_hi": 0.6094094143399198,
+          "paired_n_boot": 20000
+        }
+      ],
+      "disagreement_leads_all_seeds": true,
+      "paired_excludes_zero_all_seeds": true,
+      "mean_r_index": 0.4900811548775781,
+      "mean_r_disagreement": 0.7549725621058426
+    },
     "128": {
       "per_seed": [
         {
@@ -261,7 +299,21 @@
       "mean_ratio": 2.129049036930278,
       "mean_cov1": 0.3592592592592592,
       "mean_cov2": 0.6037037037037037,
-      "mean_npos": 35
+      "mean_npos": 35,
+      "ratio_ci": [
+        1.7010166008122694,
+        2.477311345059171
+      ],
+      "cov1_ci": [
+        0.2962962962962963,
+        0.4222222222222222
+      ],
+      "cov2_ci": [
+        0.537037037037037,
+        0.6703703703703704
+      ],
+      "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+      "n_independent": 4
     },
     "8": {
       "per_seed": [
@@ -290,7 +342,21 @@
       "mean_ratio": 6.3309749173752,
       "mean_cov1": 0.14097222222222222,
       "mean_cov2": 0.26620370370370366,
-      "mean_npos": 37.333333333333336
+      "mean_npos": 37.333333333333336,
+      "ratio_ci": [
+        4.448603876870001,
+        7.475211590013358
+      ],
+      "cov1_ci": [
+        0.11018518518518519,
+        0.17175925925925928
+      ],
+      "cov2_ci": [
+        0.21111111111111108,
+        0.3212962962962963
+      ],
+      "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+      "n_independent": 4
     },
     "32": {
       "per_seed": [
@@ -319,7 +385,64 @@
       "mean_ratio": 7.9880393932437475,
       "mean_cov1": 0.10792824074074074,
       "mean_cov2": 0.20497685185185185,
-      "mean_npos": 34.333333333333336
+      "mean_npos": 34.333333333333336,
+      "ratio_ci": [
+        5.939594211044423,
+        9.806199564178701
+      ],
+      "cov1_ci": [
+        0.08530092592592592,
+        0.1370949074074074
+      ],
+      "cov2_ci": [
+        0.16099537037037037,
+        0.2544560185185185
+      ],
+      "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+      "n_independent": 4
+    },
+    "100": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "ratio_err_over_sigma": 10.339877216321218,
+          "coverage_pm1": 0.08616666666666667,
+          "coverage_pm2": 0.173,
+          "n_positive": 45
+        },
+        {
+          "seed": 1,
+          "ratio_err_over_sigma": 10.722031668800753,
+          "coverage_pm1": 0.07977777777777778,
+          "coverage_pm2": 0.15283333333333332,
+          "n_positive": 43
+        },
+        {
+          "seed": 2,
+          "ratio_err_over_sigma": 10.53661793395056,
+          "coverage_pm1": 0.07983333333333334,
+          "coverage_pm2": 0.1575,
+          "n_positive": 44
+        }
+      ],
+      "mean_ratio": 10.532842273024176,
+      "mean_cov1": 0.08192592592592593,
+      "mean_cov2": 0.1611111111111111,
+      "mean_npos": 44,
+      "ratio_ci": [
+        8.965000248093578,
+        11.504394494044844
+      ],
+      "cov1_ci": [
+        0.068,
+        0.09585185185185185
+      ],
+      "cov2_ci": [
+        0.13448148148148148,
+        0.18774074074074076
+      ],
+      "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+      "n_independent": 4
     },
     "128": {
       "per_seed": [
@@ -348,7 +471,21 @@
       "mean_ratio": 11.035567000177085,
       "mean_cov1": 0.07789351851851851,
       "mean_cov2": 0.15339988425925927,
-      "mean_npos": 44
+      "mean_npos": 44,
+      "ratio_ci": [
+        9.46691521976081,
+        11.862939409905724
+      ],
+      "cov1_ci": [
+        0.06811342592592592,
+        0.0876736111111111
+      ],
+      "cov2_ci": [
+        0.13466435185185185,
+        0.17213541666666665
+      ],
+      "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+      "n_independent": 4
     },
     "368": {
       "per_seed": [
@@ -377,7 +514,21 @@
       "mean_ratio": 12.989333873756692,
       "mean_cov1": 0.06297805958132045,
       "mean_cov2": 0.12509057971014492,
-      "mean_npos": 40.666666666666664
+      "mean_npos": 40.666666666666664,
+      "ratio_ci": [
+        11.914687297984132,
+        13.940168536084947
+      ],
+      "cov1_ci": [
+        0.05835346215780999,
+        0.06772342995169081
+      ],
+      "cov2_ci": [
+        0.1174718196457327,
+        0.13270933977455718
+      ],
+      "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+      "n_independent": 4
     }
   },
   "collapse": {
@@ -470,5 +621,163 @@
     "majority_met": false,
     "verdict": "DOES NOT GENERALISE",
     "note": "applied per seed: a horizon counts as leading only if disagreement leads the index in ALL THREE seeds, and as excluding zero only if the paired interval excludes zero in all three. That is stricter than pooling and is the reading that cannot be gamed by a favourable seed."
+  },
+  "aleatoric_calibration": {
+    "1": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "ratio_err_over_sigma": 7.737481915691129,
+          "coverage_pm1": 0.12222222222222222,
+          "coverage_pm2": 0.2222222222222222
+        },
+        {
+          "seed": 1,
+          "ratio_err_over_sigma": 9.676661493274828,
+          "coverage_pm1": 0.1111111111111111,
+          "coverage_pm2": 0.2388888888888889
+        },
+        {
+          "seed": 2,
+          "ratio_err_over_sigma": 8.482937420654586,
+          "coverage_pm1": 0.08333333333333333,
+          "coverage_pm2": 0.2388888888888889
+        }
+      ],
+      "mean_ratio": 8.632360276540181,
+      "mean_cov1": 0.10555555555555556,
+      "mean_cov2": 0.23333333333333334,
+      "n_independent": 4
+    },
+    "8": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "ratio_err_over_sigma": 23.52389323344586,
+          "coverage_pm1": 0.050694444444444445,
+          "coverage_pm2": 0.10277777777777777
+        },
+        {
+          "seed": 1,
+          "ratio_err_over_sigma": 24.65238941225662,
+          "coverage_pm1": 0.043055555555555555,
+          "coverage_pm2": 0.08819444444444445
+        },
+        {
+          "seed": 2,
+          "ratio_err_over_sigma": 21.19505446089078,
+          "coverage_pm1": 0.03958333333333333,
+          "coverage_pm2": 0.09861111111111111
+        }
+      ],
+      "mean_ratio": 23.123779035531086,
+      "mean_cov1": 0.044444444444444446,
+      "mean_cov2": 0.09652777777777778,
+      "n_independent": 4
+    },
+    "32": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "ratio_err_over_sigma": 28.662315767864705,
+          "coverage_pm1": 0.034027777777777775,
+          "coverage_pm2": 0.07048611111111111
+        },
+        {
+          "seed": 1,
+          "ratio_err_over_sigma": 28.585547291246467,
+          "coverage_pm1": 0.029861111111111113,
+          "coverage_pm2": 0.06041666666666667
+        },
+        {
+          "seed": 2,
+          "ratio_err_over_sigma": 28.102364133676932,
+          "coverage_pm1": 0.030555555555555555,
+          "coverage_pm2": 0.06649305555555556
+        }
+      ],
+      "mean_ratio": 28.450075730929367,
+      "mean_cov1": 0.03148148148148148,
+      "mean_cov2": 0.06579861111111111,
+      "n_independent": 4
+    },
+    "100": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "ratio_err_over_sigma": 42.35894478569174,
+          "coverage_pm1": 0.02438888888888889,
+          "coverage_pm2": 0.049666666666666665
+        },
+        {
+          "seed": 1,
+          "ratio_err_over_sigma": 43.637236212762915,
+          "coverage_pm1": 0.021222222222222222,
+          "coverage_pm2": 0.041944444444444444
+        },
+        {
+          "seed": 2,
+          "ratio_err_over_sigma": 39.84044536153517,
+          "coverage_pm1": 0.025055555555555557,
+          "coverage_pm2": 0.050277777777777775
+        }
+      ],
+      "mean_ratio": 41.94554211999661,
+      "mean_cov1": 0.023555555555555555,
+      "mean_cov2": 0.047296296296296295,
+      "n_independent": 4
+    },
+    "128": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "ratio_err_over_sigma": 43.57142087002156,
+          "coverage_pm1": 0.023480902777777778,
+          "coverage_pm2": 0.04704861111111111
+        },
+        {
+          "seed": 1,
+          "ratio_err_over_sigma": 46.61093714097965,
+          "coverage_pm1": 0.01970486111111111,
+          "coverage_pm2": 0.039149305555555555
+        },
+        {
+          "seed": 2,
+          "ratio_err_over_sigma": 41.55015290811128,
+          "coverage_pm1": 0.02361111111111111,
+          "coverage_pm2": 0.046961805555555555
+        }
+      ],
+      "mean_ratio": 43.9108369730375,
+      "mean_cov1": 0.022265625,
+      "mean_cov2": 0.04438657407407407,
+      "n_independent": 4
+    },
+    "368": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "ratio_err_over_sigma": 52.04489189409034,
+          "coverage_pm1": 0.01684782608695652,
+          "coverage_pm2": 0.03354468599033816
+        },
+        {
+          "seed": 1,
+          "ratio_err_over_sigma": 55.00558991005723,
+          "coverage_pm1": 0.015504227053140097,
+          "coverage_pm2": 0.031053743961352655
+        },
+        {
+          "seed": 2,
+          "ratio_err_over_sigma": 50.70012897336267,
+          "coverage_pm1": 0.017376207729468598,
+          "coverage_pm2": 0.035265700483091786
+        }
+      ],
+      "mean_ratio": 52.583536925836746,
+      "mean_cov1": 0.01657608695652174,
+      "mean_cov2": 0.033288043478260865,
+      "n_independent": 4
+    }
   }
 }

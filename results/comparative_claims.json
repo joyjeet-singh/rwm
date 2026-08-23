@@ -1,11 +1,11 @@
 {
-  "n_claims": 21,
-  "n_pass": 21,
+  "n_claims": 32,
+  "n_pass": 32,
   "claims": [
     {
       "id": "C1.1",
       "kind": "overlap",
-      "where": "5.6",
+      "where": "6.7",
       "says": "the marginal intervals *do* overlap",
       "pass": true,
       "detail": "[0.42129,0.64340] vs [0.60396,0.84563] -> overlap, expected overlap"
@@ -13,7 +13,7 @@
     {
       "id": "C1.2",
       "kind": "overlap",
-      "where": "5.6",
+      "where": "6.7",
       "says": "excludes zero at",
       "pass": true,
       "detail": "[0.10634,0.43058] vs [0.54457,0.69396] -> disjoint, expected disjoint"
@@ -21,15 +21,15 @@
     {
       "id": "C2.1",
       "kind": "extremum",
-      "where": "5.7",
+      "where": "6.8",
       "says": "The largest deviation over all",
       "pass": true,
-      "detail": "max of 20 is aleatoric|h=128|ep8 (0.082838); paper names aleatoric|h=128|ep8 (0.082838)"
+      "detail": "max of 24 is aleatoric|h=100|ep8 (0.092078); paper names aleatoric|h=100|ep8 (0.092078)"
     },
     {
       "id": "C2.2",
       "kind": "extremum",
-      "where": "5.6",
+      "where": "6.7",
       "says": "is the smallest lower bound in the table",
       "pass": true,
       "detail": "min of 4 is h=128 (0.010697); paper names h=128 (0.010697)"
@@ -37,7 +37,7 @@
     {
       "id": "C3.1",
       "kind": "sign",
-      "where": "5.6",
+      "where": "6.7",
       "says": "*lowers* disagreement's correlation by",
       "pass": true,
       "detail": "0.60534 -> 0.59571 is a fall of 0.00963, text says fall"
@@ -45,15 +45,15 @@
     {
       "id": "C3.2",
       "kind": "sign",
-      "where": "abstract",
-      "says": "lowers disagreement's correlation by only",
+      "where": "6.7",
+      "says": "*lowers* disagreement's correlation by",
       "pass": true,
       "detail": "0.60534 -> 0.59571 is a fall of 0.00963, text says fall"
     },
     {
       "id": "C3.3",
       "kind": "sign",
-      "where": "5.6",
+      "where": "6.7",
       "says": "removing the shared depth trend",
       "pass": true,
       "detail": "0.60534 -> 0.73919 is a rise of 0.13386, text says rise"
@@ -61,15 +61,15 @@
     {
       "id": "C4.1",
       "kind": "orders",
-      "where": "5.2 / abstract / 12",
-      "says": "\u00d7 better than aleatoric at the deployment horizon",
+      "where": "6.2 / 13",
+      "says": "\u00d7 better than aleatoric and still wrong by",
       "pass": true,
       "detail": "ratio 600.0x quoted directly, not as orders (log10=2.78)"
     },
     {
       "id": "C4.2",
       "kind": "orders",
-      "where": "5.5",
+      "where": "6.6",
       "says": "a factor of about 10^",
       "pass": true,
       "detail": "ratio 9.95e+12, round(log10)=13, text says 13"
@@ -77,7 +77,7 @@
     {
       "id": "C5.1",
       "kind": "cell",
-      "where": "12",
+      "where": "13",
       "says": "inversely on every one of",
       "pass": true,
       "detail": "arenas.all-episodes.models.released aleatoric.368 -> 0/45, text cites 0/45"
@@ -85,7 +85,7 @@
     {
       "id": "C5.2",
       "kind": "cell",
-      "where": "5.5",
+      "where": "6.6",
       "says": "negatively correlated with error on",
       "pass": true,
       "detail": "arenas.out-of-sample.models.released aleatoric.368 -> 20/45, text cites 20/45"
@@ -93,7 +93,7 @@
     {
       "id": "C5.3",
       "kind": "cell",
-      "where": "5.2",
+      "where": "6.2",
       "says": "of 45 at h=1, with mean r",
       "pass": true,
       "detail": "arenas.all-episodes.models.released EPISTEMIC.1 -> 44/45, text cites 44/45"
@@ -101,7 +101,7 @@
     {
       "id": "C2.3",
       "kind": "extremum",
-      "where": "5.5",
+      "where": "6.6",
       "says": "it has the largest mean correlation of the four",
       "pass": true,
       "detail": "max of 4 is teacher-forced armB (0.25686); paper names teacher-forced armB (0.25686)"
@@ -109,7 +109,7 @@
     {
       "id": "C2.4",
       "kind": "extremum",
-      "where": "5.6",
+      "where": "6.7",
       "says": "it is the largest anywhere in this work",
       "pass": true,
       "detail": "max of 5 is h=1 (0.99391); paper names h=1 (0.99391)"
@@ -117,7 +117,7 @@
     {
       "id": "C2.5",
       "kind": "extremum",
-      "where": "5.2",
+      "where": "6.2",
       "says": "the smallest is faithful (mse) h=368",
       "pass": true,
       "detail": "min of 25 is faithful (mse) h=368 (0.0042); paper names faithful (mse) h=368 (0.0042)"
@@ -125,7 +125,7 @@
     {
       "id": "C3.4",
       "kind": "compare",
-      "where": "5.5",
+      "where": "6.6",
       "says": "It does not beat Arm B's head on strength either",
       "pass": true,
       "detail": "0.150935 vs 0.256859 -> lt, text says lt"
@@ -133,7 +133,7 @@
     {
       "id": "C3.5",
       "kind": "compare",
-      "where": "5.5",
+      "where": "6.6",
       "says": "which already exceeds the smallest Holm threshold",
       "pass": true,
       "detail": "0.0416667 vs 0.002 -> gt, text says gt"
@@ -141,7 +141,7 @@
     {
       "id": "C3.6",
       "kind": "compare",
-      "where": "9",
+      "where": "10",
       "says": "very nearly a perfect ranking. Over the full",
       "pass": true,
       "detail": "0.993913 vs 0.605338 -> gt, text says gt"
@@ -149,7 +149,7 @@
     {
       "id": "C7.1",
       "kind": "count-consistency",
-      "where": "1 / abstract / 8",
+      "where": "1 / abstract / 9",
       "says": "numbered claims in this work are withdrawn",
       "pass": true,
       "detail": "numbered retractions = 6 (6/Six/six); 3/3 sites agree"
@@ -157,23 +157,111 @@
     {
       "id": "C7.2",
       "kind": "count-consistency",
-      "where": "1 / abstract / 8",
+      "where": "1 / abstract / 9",
       "says": "further retractions withdraw framings rather than numbers",
       "pass": true,
-      "detail": "framing retractions = 2 (2/Two/two); 3/3 sites agree"
+      "detail": "framing retractions = 2 (2/Two/two); 2/2 sites agree"
     },
     {
       "id": "C6.1",
       "kind": "relvar",
-      "where": "4",
+      "where": "5",
       "says": "Teacher forcing is more than twice as variable across seeds",
       "pass": true,
       "detail": "relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 2.0x"
+    },
+    {
+      "id": "C8.1",
+      "kind": "horizon-label",
+      "where": "6.2",
+      "says": "at h = 100, the method's own imagination rollout length",
+      "pass": true,
+      "detail": "horizon 100; expected \"33.4\" within 100 chars of \"at h = 100, the method's own imagination\"; found"
+    },
+    {
+      "id": "C8.2",
+      "kind": "horizon-label",
+      "where": "3.1",
+      "says": "is the method's own imagination rollout length",
+      "pass": true,
+      "detail": "horizon 100; expected \"100\" within 420 chars of \"is the method's own imagination rollout \"; found"
+    },
+    {
+      "id": "C8.3",
+      "kind": "horizon-forbidden",
+      "where": "whole paper",
+      "says": "open-loop diagnostic",
+      "pass": true,
+      "detail": "3 forbidden horizon labels checked; none present"
+    },
+    {
+      "id": "C9.1",
+      "kind": "count-dependence",
+      "where": "abstract / 10 / 13",
+      "says": "restores nominal coverage on every held-out cell",
+      "pass": true,
+      "detail": "every clean k-of-k count carries an interval or a not-independent footnote"
+    },
+    {
+      "id": "C10.1",
+      "kind": "retraction-consistency",
+      "where": "8 / README",
+      "says": "the released artifacts do not reproduce the released",
+      "pass": true,
+      "detail": "retracted assertion \"The released checkpoint cannot have come fro\" absent from all 3 files"
+    },
+    {
+      "id": "C10.2",
+      "kind": "retraction-consistency",
+      "where": "6.6 / README",
+      "says": "no per-dimension count in this paper reaches significance",
+      "pass": true,
+      "detail": "retracted assertion \"sign test on 45 dimensions\" absent from all 3 files"
+    },
+    {
+      "id": "C11.1",
+      "kind": "cross-artifact-sync",
+      "where": "README",
+      "says": "No number here is typed",
+      "pass": true,
+      "detail": "3/3 headline values present in README.md"
+    },
+    {
+      "id": "C11.2",
+      "kind": "cross-artifact-sync",
+      "where": "MODEL_CARD",
+      "says": "No number here is typed",
+      "pass": true,
+      "detail": "2/2 headline values present in MODEL_CARD.md"
+    },
+    {
+      "id": "C12.1",
+      "kind": "abstract-budget",
+      "where": "abstract",
+      "says": "The base paper's central training claim reproduces",
+      "pass": true,
+      "detail": "248 words (max 250), 6 numerals (max 6) ['4.61', '33.4', '4.61', '0.', '0.419', '2']"
+    },
+    {
+      "id": "C13.1",
+      "kind": "interval-required",
+      "where": "6.2",
+      "says": "mean \\|error\\| / mean \u03c3",
+      "pass": true,
+      "detail": "4/4 quoted quantities carry their interval"
+    },
+    {
+      "id": "C13.2",
+      "kind": "interval-required",
+      "where": "6.2",
+      "says": "epistemic err/\u03c3",
+      "pass": true,
+      "detail": "3/3 quoted quantities carry their interval"
     }
   ],
   "self_test": {
-    "n": 20,
-    "caught": 20,
+    "n": 31,
+    "caught": 31,
     "detail": [
       {
         "id": "C1.1",
@@ -187,7 +275,7 @@
       },
       {
         "id": "C2.1",
-        "corruption": "{'named': {'quantity': 'aleatoric', 'h': 128, 'fit_episode': 1}}",
+        "corruption": "{'named': {'quantity': 'aleatoric', 'h': 128, 'fit_episode': 8}}",
         "caught": true
       },
       {
@@ -277,6 +365,61 @@
       {
         "id": "C6.1",
         "corruption": "{'at_least': 200.0}",
+        "caught": true
+      },
+      {
+        "id": "C8.1",
+        "corruption": "{'must_quote': ('task_d_nind20.json', 'd1_by_horizon.368.epistemic.ratio_err_over_sigma')}",
+        "caught": true
+      },
+      {
+        "id": "C8.2",
+        "corruption": "{'fmt': '{:.4f}'}",
+        "caught": true
+      },
+      {
+        "id": "C8.3",
+        "corruption": "{'forbid': ['deployment horizon of h = 368', '368-step deployment horizon', 'at the 368-step deployment horizon', 'open-loop diagnostic']}",
+        "caught": true
+      },
+      {
+        "id": "C9.1",
+        "corruption": "{'sections': ['Abstract', '10. Actionable lessons', '13. Conclusion', 'Nonexistent section']}",
+        "caught": true
+      },
+      {
+        "id": "C10.1",
+        "corruption": "{'retracted': 'reproduction'}",
+        "caught": true
+      },
+      {
+        "id": "C10.2",
+        "corruption": "{'retracted': 'reproduction'}",
+        "caught": true
+      },
+      {
+        "id": "C11.1",
+        "corruption": "{'keys': ['n_runs', 'ver_values', 'ver_files', 'd1_ratio'], 'file': 'requirements.txt'}",
+        "caught": true
+      },
+      {
+        "id": "C11.2",
+        "corruption": "{'keys': ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'd1_ratio'], 'file': 'requirements.txt'}",
+        "caught": true
+      },
+      {
+        "id": "C12.1",
+        "corruption": "{'max_words': 10}",
+        "caught": true
+      },
+      {
+        "id": "C13.1",
+        "corruption": "{'quantities': [('cal_faithA_ratio', 'cal_faithA_ratio_ci'), ('cal_nll_ratio', 'cal_nll_ratio_ci'), ('cal_armB_ratio', 'cal_armB_ratio_ci'), ('cal_rel_ratio', 'cal_rel_ratio_ci'), ('planted', 'no_such_interval_key')]}",
+        "caught": true
+      },
+      {
+        "id": "C13.2",
+        "corruption": "{'quantities': [('d1n_epi_ratio_h100', 'd1n_epi_ratio_ci_h100'), ('d1n_epi_cov1_h100', 'd1n_epi_cov1_ci_h100'), ('d1n_alea_ratio_h100', 'd1n_alea_ratio_ci_h100'), ('planted', 'no_such_interval_key')]}",
         "caught": true
       }
     ]

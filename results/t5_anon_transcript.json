@@ -1,0 +1,16 @@
+{
+  "anonymisation_selftest": "passed \u2014 a planted deny-list string is detected",
+  "consent_recorded": false,
+  "deny_list_hits": 0,
+  "deny_list_size": 11,
+  "evidence_class": "EXT",
+  "generated_from": "FINDINGS_LEDGER.md, entry X-10",
+  "human_actions_outstanding": [
+    "obtain the first author's explicit consent to quote this correspondence on the record, and state in the paper that consent was given",
+    "declare the conflict to the Action Editor: the original authors know this paper exists and none of them should be assigned to review it"
+  ],
+  "n_quotations": 6,
+  "n_quotations_present_in_transcript": 6,
+  "n_quotations_used_in_paper": 4,
+  "output": "docs/SUPPLEMENTARY_CORRESPONDENCE.md"
+}

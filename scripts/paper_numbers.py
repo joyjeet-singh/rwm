@@ -59,6 +59,19 @@ def main():
             "results/task1_calibration.json")
         put(f"cal_{tag}_cov1", round(100 * m["coverage"]["1"]["pm1"], 2), "results/task1_calibration.json")
         put(f"cal_{tag}_cov368", round(100 * m["coverage"]["368"]["pm1"], 2), "results/task1_calibration.json")
+        # A1 -- every ratio and coverage in the 6.2 table now carries a 95%
+        # cluster-bootstrap interval over whole trajectories. The paper declares
+        # that standard for itself in section 3 and was not applying it here.
+        _rc = m["ratio_err_over_sigma_ci"]
+        _f = (lambda v: f"{v:,.0f}") if rr >= 100 else (lambda v: f"{v:.1f}")
+        put(f"cal_{tag}_ratio_ci", f"{_f(_rc[0])}, {_f(_rc[1])}",
+            "results/task1_calibration.json")
+        put(f"cal_{tag}_cov100", round(100 * m["coverage"]["100"]["pm1"], 2),
+            "results/task1_calibration.json")
+        for _h in ("1", "100", "368"):
+            _cc = m["coverage"][_h]["pm1_ci"]
+            put(f"cal_{tag}_cov{_h}_ci", f"{100*_cc[0]:.2f}, {100*_cc[1]:.2f}",
+                "results/task1_calibration.json")
         put(f"cal_{tag}_cov", round(m["cov_of_sigma_across_batch"], 4), "results/task1_calibration.json")
         put(f"cal_{tag}_npos", m["sigma_err_corr_n_positive"], "results/task1_calibration.json")
         put(f"cal_{tag}_ndim", m["n_finite_corr"], "results/task1_calibration.json")
@@ -314,12 +327,18 @@ def main():
         "results/task_d3_ens5.json")
     put("e5_diff_hi", f'{max(r["paired_diff"] for _, r in _cells):+.3f}',
         "results/task_d3_ens5.json")
-    for h in (1, 8, 32, 128, 368):
+    for h in (1, 8, 32, 100, 128, 368):
         c = E5["calibration"][str(h)]
         put(f"e5_ratio_h{h}", f'{c["mean_ratio"]:.1f}', "results/task_d3_ens5.json")
         put(f"e5_cov1_h{h}", f'{100*c["mean_cov1"]:.2f}', "results/task_d3_ens5.json")
         put(f"e5_cov2_h{h}", f'{100*c["mean_cov2"]:.2f}', "results/task_d3_ens5.json")
         put(f"e5_npos_h{h}", f'{c["mean_npos"]:.1f}', "results/task_d3_ens5.json")
+        put(f"e5_ratio_ci_h{h}", f'{c["ratio_ci"][0]:.1f}, {c["ratio_ci"][1]:.1f}',
+            "results/task_d3_ens5.json")
+        put(f"e5_cov1_ci_h{h}", f'{100*c["cov1_ci"][0]:.2f}, {100*c["cov1_ci"][1]:.2f}',
+            "results/task_d3_ens5.json")
+        put(f"e5_cov2_ci_h{h}", f'{100*c["cov2_ci"][0]:.2f}, {100*c["cov2_ci"][1]:.2f}',
+            "results/task_d3_ens5.json")
     put("e5_collapse", f'{E5["collapse"]["ens5_mean"]:.4e}', "results/task_d3_ens5.json")
     put("e5_collapse_ens1", f'{E5["collapse"]["ens1_mean"]:.4e}', "results/task_d3_ens5.json")
     put("e5_collapse_pct", f'{100*E5["collapse"]["relative_difference"]:+.2f}',
@@ -372,7 +391,7 @@ def main():
     put("d1n_nind", D["design"]["n_independent"], "results/task_d_nind20.json")
     put("d1n_ntraj", D["design"]["trajectories"], "results/task_d_nind20.json")
     put("d1n_eps", len(D["design"]["episodes"]), "results/task_d_nind20.json")
-    for h in (1, 8, 32, 128, 368):
+    for h in (1, 8, 32, 100, 128, 368):
         r = D["d1_by_horizon"][str(h)]
         for q, tg in (("aleatoric", "alea"), ("epistemic", "epi"), ("total", "tot")):
             m = r[q]
@@ -381,6 +400,14 @@ def main():
                 "results/task_d_nind20.json")
             put(f"d1n_{tg}_cov1_h{h}", f'{100*m["coverage_pm1"]:.2f}',
                 "results/task_d_nind20.json")
+            _rc = m["ratio_err_over_sigma_ci"]
+            _f = (lambda v: f"{v:,.0f}") if rr >= 100 else (lambda v: f"{v:.1f}")
+            put(f"d1n_{tg}_ratio_ci_h{h}", f"{_f(_rc[0])}, {_f(_rc[1])}",
+                "results/task_d_nind20.json")
+            for _q, _k in (("cov1", "coverage_pm1_ci"), ("cov2", "coverage_pm2_ci")):
+                _cc = m[_k]
+                put(f"d1n_{tg}_{_q}_ci_h{h}", f"{100*_cc[0]:.2f}, {100*_cc[1]:.2f}",
+                    "results/task_d_nind20.json")
             put(f"d1n_{tg}_cov2_h{h}", f'{100*m["coverage_pm2"]:.2f}',
                 "results/task_d_nind20.json")
             put(f"d1n_{tg}_npos_h{h}", m["n_positive"], "results/task_d_nind20.json")
@@ -491,13 +518,30 @@ def main():
     put("d3_neps", len(_tp), "results/task_d3_perhorizon.json")
     put("d3_nind_fit", min(_tp.values()), "results/task_d3_perhorizon.json")
     put("d3_nind_tot", sum(_tp.values()), "results/task_d3_perhorizon.json")
+    # T2.4 -- the "N of N held-out cells" count is horizons x fold directions on
+    # the SAME trajectories, not N independent successes. The caption states the
+    # decomposition, so the horizon count has to be derived rather than typed.
+    _d3h = sorted({f["h"] for f in D3["quantities"]["epistemic"]["fits"]})
+    put("d3_nhoriz", len(_d3h), "results/task_d3_perhorizon.json")
 
-    # Section 9 opens by counting its own lessons. It said "Four" while carrying a
-    # different number after Part D added two; count the bold leads instead.
-    _s9 = TPL.split("## 9.")[1].split("\n## ")[0]
+    # The lessons section opens by counting its own lessons. It said "Four" while
+    # carrying a different number after Part D added two; count the bold leads
+    # instead.
+    #
+    # Bound to the section's TITLE, not its number — exactly as n_defects is, and
+    # for exactly the same reason. This used to split on the literal "## 9.", and
+    # when Related Work was inserted and the section moved to 10, that split
+    # silently returned the METHOD section instead and put its bold-lead count in
+    # the lessons sentence. It was caught by the same comment n_defects carries,
+    # which is the argument for writing such comments down.
+    _lsec = re.search(r"^## (\d+)\. Actionable lessons\s*$", TPL, re.M)
+    assert _lsec, "no section titled 'Actionable lessons'"
+    _s9 = TPL[_lsec.end():]
+    _s9 = _s9[:_s9.find("\n## ")] if "\n## " in _s9 else _s9
     _n9 = len(re.findall(r"^\*\*[A-Z]", _s9, re.M))
-    put("n_lessons", _n9, "PAPER.template.md section 9")
-    put("n_lessons_word", WORDS.get(_n9, str(_n9)), "PAPER.template.md section 9")
+    assert _n9 > 0, "the lessons section has no bold-led lessons"
+    put("n_lessons", _n9, "PAPER.template.md, Actionable lessons")
+    put("n_lessons_word", WORDS.get(_n9, str(_n9)), "PAPER.template.md, Actionable lessons")
 
     # E4 -- appendix B claimed "roughly 22 hours" for a full run. Recomputed from
     # the top-level wall_clock_s of every training run. (The per-checkpoint
@@ -574,7 +618,7 @@ def main():
 
     # B2 -- the uncertainty the method actually consumes (C-14, R-58)
     B = J("task_b2_epistemic.json")
-    for h in (1, 8, 32, 128, 368):
+    for h in (1, 8, 32, 100, 128, 368):
         rec = B["by_horizon"][str(h)]
         for q, tag in (("aleatoric", "alea"), ("epistemic", "epi"), ("total", "tot")):
             m = rec[q]
@@ -858,6 +902,192 @@ def main():
         "results/task_c3_multiplicity.json")
     put("c3_quant", f'{C3["bootstrap_resolution_note"]["quantisation_pct"]:.2f}',
         "results/task_c3_multiplicity.json")
+
+    # ==================================================================
+    # Pre-submission revision: V1-V4, P1, A2, T1.
+    # ==================================================================
+
+    # --- V1 / X-12: what is shared across the five ensemble members --------
+    V1 = J("v1_ensemble_topology.json")
+    _ref = V1["reference"]
+    _mech = V1["mechanism"]
+    put("v1_members", _ref["ensemble_size"], "results/v1_ensemble_topology.json")
+    put("v1_shared_params", f'{_mech["shared_params_per_member"]:,}',
+        "results/v1_ensemble_topology.json")
+    put("v1_private_params", f'{_mech["private_params_per_member"]:,}',
+        "results/v1_ensemble_topology.json")
+    put("v1_member_params", f'{_ref["state_pathway_params_per_member"]:,}',
+        "results/v1_ensemble_topology.json")
+    put("v1_shared_pct", f'{_mech["shared_pct_of_member"]:.2f}',
+        "results/v1_ensemble_topology.json")
+    put("v1_private_pct", f'{_mech["private_pct_of_member"]:.2f}',
+        "results/v1_ensemble_topology.json")
+    put("v1_shared_pct_model", f'{100 * _ref["shared_fraction_of_model"]:.2f}',
+        "results/v1_ensemble_topology.json")
+    put("v1_total_params", f'{_ref["total_params"]:,}', "results/v1_ensemble_topology.json")
+    put("v1_hidden_states", _ref["n_independent_recurrent_states"],
+        "results/v1_ensemble_topology.json")
+    put("v1_n_citations", len(V1["source_citations"]), "results/v1_ensemble_topology.json")
+    put("v1_our_arms_match",
+        "yes" if V1["gate"]["our_arms_match_reference_topology"] else "NO",
+        "results/v1_ensemble_topology.json")
+    put("v1_n_arms_checked", len(V1["our_arms"]), "results/v1_ensemble_topology.json")
+
+    # --- V2 / X-13: which horizon is the deployment horizon ----------------
+    V2 = J("v2_deployment_horizon.json")
+    put("v2_deploy_h", V2["verdict"]["deployment_horizon_is"],
+        "results/v2_deployment_horizon.json")
+    put("v2_diag_h", V2["horizons"]["open_loop_diagnostic"]["value"],
+        "results/v2_deployment_horizon.json")
+    put("v2_ratio", f'{V2["verdict"]["h368_over_deployment"]:.2f}',
+        "results/v2_deployment_horizon.json")
+    put("v2_lite_cap", V2["horizons"]["imagination_episode_cap_lite_release"]["value"],
+        "results/v2_deployment_horizon.json")
+    put("v2_len_eval",
+        V2["horizons"]["open_loop_diagnostic"]["arithmetic"]["len_eval_trajectory"],
+        "results/v2_deployment_horizon.json")
+    put("v2_history",
+        V2["horizons"]["open_loop_diagnostic"]["arithmetic"]["history_horizon"],
+        "results/v2_deployment_horizon.json")
+    put("v2_fig_v1", V2["followup_figure"]["v1"]["figure"],
+        "results/v2_deployment_horizon.json")
+    put("v2_fig_v3", V2["followup_figure"]["v3"]["figure"],
+        "results/v2_deployment_horizon.json")
+
+    # --- V3 / X-14: the metric definitions ---------------------------------
+    V3 = J("v3_metric_definitions.json")
+    put("v3_n_citations", V3["n_citations_verified"], "results/v3_metric_definitions.json")
+    put("v3_rel_l1", V3["metrics"]["relative_l1"]["latex_per_step"],
+        "results/v3_metric_definitions.json")
+    put("v3_rel_l1_agg", V3["metrics"]["relative_l1"]["latex_aggregate"],
+        "results/v3_metric_definitions.json")
+    put("v3_nrmse", V3["metrics"]["nrmse_pooled"]["latex"],
+        "results/v3_metric_definitions.json")
+    put("v3_scale", V3["constants"]["nrmse_scale"]["latex"],
+        "results/v3_metric_definitions.json")
+    put("v3_coverage", V3["coverage"]["latex"], "results/v3_metric_definitions.json")
+    put("v3_rho", V3["metrics"]["overconfidence_factor"]["latex"],
+        "results/v3_metric_definitions.json")
+    put("v3_rho_calibrated",
+        f'{V3["metrics"]["overconfidence_factor"]["calibrated_value_of_rho"]:.4f}',
+        "results/v3_metric_definitions.json")
+    put("v3_cov_nominal1", f'{100 * V3["coverage"]["nominal"]["pm1"]:.2f}',
+        "results/v3_metric_definitions.json")
+    put("v3_cov_nominal2", f'{100 * V3["coverage"]["nominal"]["pm2"]:.2f}',
+        "results/v3_metric_definitions.json")
+
+    # --- V4 / X-15: the follow-up's version map ----------------------------
+    _fv = J("original_paper_figures.json")["followup_version_map"]
+    put("v4_read", _fv["we_read"], "results/original_paper_figures.json")
+    put("v4_read_date", _fv["we_read_dated"], "results/original_paper_figures.json")
+    put("v4_current", _fv["current"], "results/original_paper_figures.json")
+    put("v4_current_date", _fv["current_dated"], "results/original_paper_figures.json")
+    put("v4_n_moved", len(_fv["moved"]), "results/original_paper_figures.json")
+    put("v4_n_unchanged", len(_fv["unchanged"]), "results/original_paper_figures.json")
+
+    # --- P1: what the two new rules can detect -----------------------------
+    P1 = J("p1_power_check.json")
+    put("p1_m45_n", P1["m45"]["n_independent_faced"], "results/p1_power_check.json")
+    put("p1_m45_mde", f'{P1["m45"]["mde_80pct_power"]:.3f}', "results/p1_power_check.json")
+    put("p1_m44_n", P1["m44"]["n_independent_faced"], "results/p1_power_check.json")
+    put("p1_m44_mde_ratio",
+        f'{P1["m44"]["mde_80pct_power"]["overconfidence_ratio_multiplicative"]:.2f}',
+        "results/p1_power_check.json")
+    put("p1_m44_mde_cov", f'{P1["m44"]["mde_80pct_power"]["coverage_pts"]:.2f}',
+        "results/p1_power_check.json")
+    put("p1_m44_mde_ratio_opt",
+        f'{P1["m44"]["null_calibration_same_architecture"]["mde_ratio_multiplicative"]:.2f}',
+        "results/p1_power_check.json")
+    put("p1_m44_resamples", P1["m44"]["distinct_bootstrap_resamples"],
+        "results/p1_power_check.json")
+    # the dilution levels that bracket M-45's detection threshold, read off the
+    # curve rather than asserted
+    _pc = P1["m45"]["power_curve"]
+    _miss = max((c for c in _pc if c["detection_rate"] < 0.5),
+                key=lambda c: c["true_effect_mean"])
+    _hit = min((c for c in _pc if c["detection_rate"] >= 0.8),
+               key=lambda c: c["true_effect_mean"])
+    put("p1_m45_undetected", f'{_miss["true_effect_mean"]:.3f}',
+        "results/p1_power_check.json")
+    put("p1_m45_detected", f'{_hit["true_effect_mean"]:.3f}', "results/p1_power_check.json")
+
+    # --- A2 / M-45: the trajectory-level control ---------------------------
+    A2 = J("a2_trajectory_level_control.json")
+    _vd, _dd, _h1 = A2["variance_decomposition"], A2["double_demeaning"], A2["h1_diagnostic"]
+    _ci = lambda c: f"[{c[0]:+.3f}, {c[1]:+.3f}]"
+    put("a2_nind", A2["design"]["n_independent"], "results/a2_trajectory_level_control.json")
+    put("a2_r_pooled", f'{_vd["r_pooled"]:+.3f}', "results/a2_trajectory_level_control.json")
+    put("a2_r_pooled_ci", _ci(_vd["r_pooled_ci"]), "results/a2_trajectory_level_control.json")
+    put("a2_r_between", f'{_vd["r_between_trajectory"]:+.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_r_between_ci", _ci(_vd["r_between_ci"]),
+        "results/a2_trajectory_level_control.json")
+    put("a2_r_within", f'{_vd["r_within_trajectory"]:+.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_r_within_ci", _ci(_vd["r_within_ci"]), "results/a2_trajectory_level_control.json")
+    put("a2_share_between", f'{100 * _vd["share_between"]:.1f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_share_within", f'{100 * _vd["share_within"]:.1f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_rdd", f'{_dd["r_dd"]:+.3f}', "results/a2_trajectory_level_control.json")
+    put("a2_rdd_ci", _ci(_dd["ci"]), "results/a2_trajectory_level_control.json")
+    put("a2_step_only", f'{_dd["r_step_demeaned_only"]:+.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_h1_r", f'{_h1["r_h1"]:+.3f}', "results/a2_trajectory_level_control.json")
+    put("a2_h1_ci", _ci(_h1["r_h1_ci"]), "results/a2_trajectory_level_control.json")
+    put("a2_h1_partial_both", f'{_h1["partial_on_both"]:+.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_h1_speed_r",
+        f'{_h1["confounders"]["commanded_speed"]["r_disagreement_vs_confounder"]:+.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_h1_diff_r",
+        f'{_h1["confounders"]["episode_difficulty_D12"]["r_disagreement_vs_confounder"]:+.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_h1_npoints", _h1["n_points"], "results/a2_trajectory_level_control.json")
+    # D-12's per-episode difficulty range, seed-averaged, as A2 uses it. The
+    # ledger's D-12 quotes the range over all (seed, episode) cells and is
+    # therefore slightly wider; this is the quantity 6.7 partials out, so this is
+    # the one 6.7 quotes.
+    put("d12_lo", f'{_h1["episode_difficulty_range"][0]:.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("d12_hi", f'{_h1["episode_difficulty_range"][1]:.3f}',
+        "results/a2_trajectory_level_control.json")
+    put("a2_win_existing", f'{A2["reconciliation"]["existing_within_step_mean_r"]:+.3f}',
+        "results/a2_trajectory_level_control.json")
+    _hd = A2["horizon_dependence"]
+    put("a2_excl_h", ", ".join(f"h={h}" for h in _hd["r_dd_excludes_zero_at"]),
+        "results/a2_trajectory_level_control.json")
+    put("a2_spans_h", " and ".join(f"h={h}" for h in _hd["r_dd_spans_zero_at"]),
+        "results/a2_trajectory_level_control.json")
+    put("a2_n_excl", len(_hd["r_dd_excludes_zero_at"]),
+        "results/a2_trajectory_level_control.json")
+    put("m45_verdict", "SUPPORTED" if A2["m45"]["supported"] else "NOT SUPPORTED",
+        "results/a2_trajectory_level_control.json")
+    # the per-horizon partial on trajectory level, for the 6.7 table
+    for h in (8, 32, 100, 128, 368):
+        _p = A2["partial_by_horizon"][str(h)]
+        if _p["r_partial_trajectory_level"] is not None:
+            put(f"a2_par_h{h}", f'{_p["r_partial_trajectory_level"]:+.3f}',
+                "results/a2_trajectory_level_control.json")
+            put(f"a2_par_ci_h{h}", _ci(_p["r_partial_ci"]),
+                "results/a2_trajectory_level_control.json")
+        if _p["r_dd"] is not None:
+            put(f"a2_rdd_h{h}", f'{_p["r_dd"]:+.3f}',
+                "results/a2_trajectory_level_control.json")
+            put(f"a2_rdd_ci_h{h}", _ci(_p["r_dd_ci"]),
+                "results/a2_trajectory_level_control.json")
+
+    # --- T1: the bibliography ----------------------------------------------
+    T1 = J("t1_bibliography_verified.json")
+    put("t1_n_refs", T1["n_entries"], "results/t1_bibliography_verified.json")
+    put("t1_refs_before", T1["n_references_before"], "results/t1_bibliography_verified.json")
+    put("t1_refs_after", T1["n_references_after"], "results/t1_bibliography_verified.json")
+    put("t1_n_verified", T1["verification"]["n_metadata_verified"],
+        "results/t1_bibliography_verified.json")
+    put("t1_n_frag", T1["verification"]["n_fragments_checked"],
+        "results/t1_bibliography_verified.json")
+    put("t1_n_frag_ok", T1["verification"]["n_fragments_verbatim"],
+        "results/t1_bibliography_verified.json")
 
     op = os.path.join(R.RESULTS, "paper_numbers.json")
     json.dump(N, open(op, "w"), indent=2, sort_keys=True)

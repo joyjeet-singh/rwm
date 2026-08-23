@@ -1,0 +1,17 @@
+T1 — BIBLIOGRAPHY VERIFICATION
+====================================================================================================
+  [ok] lu2022                 ICLR 2022 (Spotlight)  arXiv:2110.04135   fragments 5/5
+  [ok] chua2018               NeurIPS 2018           arXiv:1805.12114   fragments 4/4
+  [ok] yu2020                 NeurIPS 2020           arXiv:2005.13239
+  [ok] kidambi2020            NeurIPS 2020           arXiv:2005.05951
+  [ok] lakshminarayanan2017   NeurIPS 2017           arXiv:1612.01474
+  [ok] kuleshov2018           ICML 2018              arXiv:1807.00263
+  [ok] guo2017                ICML 2017              arXiv:1706.04599
+  [ok] ovadia2019             NeurIPS 2019           arXiv:1906.02530
+  [ok] abbas2020              ICML 2020              arXiv:2007.02418
+  [ok] janner2019             NeurIPS 2019           arXiv:1906.08253
+
+  10 of 10 entries metadata-verified; 9 of 9 asserted fragments verbatim
+  references: 2 -> 12
+
+  wrote results/t1_bibliography_verified.json

@@ -3,6 +3,174 @@
     "source": "results/task4_arenas.json + task5_analysis.json",
     "value": "1.56"
   },
+  "a2_excl_h": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "h=100, h=128, h=368"
+  },
+  "a2_h1_ci": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.917, +0.999]"
+  },
+  "a2_h1_diff_r": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.040"
+  },
+  "a2_h1_npoints": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": 20
+  },
+  "a2_h1_partial_both": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.995"
+  },
+  "a2_h1_r": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.994"
+  },
+  "a2_h1_speed_r": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.006"
+  },
+  "a2_n_excl": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": 3
+  },
+  "a2_nind": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": 20
+  },
+  "a2_par_ci_h100": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.390, +0.760]"
+  },
+  "a2_par_ci_h128": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.461, +0.778]"
+  },
+  "a2_par_ci_h32": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[-0.082, +0.532]"
+  },
+  "a2_par_ci_h368": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.374, +0.593]"
+  },
+  "a2_par_ci_h8": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[-0.373, +0.647]"
+  },
+  "a2_par_h100": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.481"
+  },
+  "a2_par_h128": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.556"
+  },
+  "a2_par_h32": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.123"
+  },
+  "a2_par_h368": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.451"
+  },
+  "a2_par_h8": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.227"
+  },
+  "a2_r_between": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.878"
+  },
+  "a2_r_between_ci": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.817, +0.956]"
+  },
+  "a2_r_pooled": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.605"
+  },
+  "a2_r_pooled_ci": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.545, +0.695]"
+  },
+  "a2_r_within": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.470"
+  },
+  "a2_r_within_ci": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.389, +0.604]"
+  },
+  "a2_rdd": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.419"
+  },
+  "a2_rdd_ci": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.318, +0.576]"
+  },
+  "a2_rdd_ci_h100": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.283, +0.701]"
+  },
+  "a2_rdd_ci_h128": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.359, +0.713]"
+  },
+  "a2_rdd_ci_h32": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[-0.032, +0.636]"
+  },
+  "a2_rdd_ci_h368": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[+0.315, +0.573]"
+  },
+  "a2_rdd_ci_h8": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "[-0.387, +0.713]"
+  },
+  "a2_rdd_h100": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.385"
+  },
+  "a2_rdd_h128": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.453"
+  },
+  "a2_rdd_h32": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.186"
+  },
+  "a2_rdd_h368": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.419"
+  },
+  "a2_rdd_h8": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.306"
+  },
+  "a2_share_between": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "51.7"
+  },
+  "a2_share_within": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "48.3"
+  },
+  "a2_spans_h": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "h=8 and h=32"
+  },
+  "a2_step_only": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.589"
+  },
+  "a2_win_existing": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "+0.739"
+  },
   "ab_long_cells": {
     "source": "results/review_bootstrap_unit.json",
     "value": 4
@@ -51,6 +219,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "0.56"
   },
+  "b2_alea_cov1_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.08"
+  },
   "b2_alea_cov1_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "0.07"
@@ -71,6 +243,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "0.56"
   },
+  "b2_alea_cov2_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "0.13"
+  },
   "b2_alea_cov2_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "0.10"
@@ -88,6 +264,10 @@
     "value": "0.35"
   },
   "b2_alea_ndim_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_alea_ndim_h100": {
     "source": "results/task_b2_epistemic.json",
     "value": 45
   },
@@ -111,6 +291,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": 20
   },
+  "b2_alea_npos_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 8
+  },
   "b2_alea_npos_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": 29
@@ -130,6 +314,10 @@
   "b2_alea_p_h1": {
     "source": "results/task_b2_epistemic.json",
     "value": "5.5e-01"
+  },
+  "b2_alea_p_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "1.5e-05"
   },
   "b2_alea_p_h128": {
     "source": "results/task_b2_epistemic.json",
@@ -151,6 +339,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "-0.034"
   },
+  "b2_alea_r_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "-0.122"
+  },
   "b2_alea_r_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "+0.043"
@@ -170,6 +362,10 @@
   "b2_alea_ratio_h1": {
     "source": "results/task_b2_epistemic.json",
     "value": "597"
+  },
+  "b2_alea_ratio_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "4,316"
   },
   "b2_alea_ratio_h128": {
     "source": "results/task_b2_epistemic.json",
@@ -191,6 +387,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "17.78"
   },
+  "b2_epi_cov1_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.71"
+  },
   "b2_epi_cov1_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "5.42"
@@ -210,6 +410,10 @@
   "b2_epi_cov2_h1": {
     "source": "results/task_b2_epistemic.json",
     "value": "37.22"
+  },
+  "b2_epi_cov2_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "11.76"
   },
   "b2_epi_cov2_h128": {
     "source": "results/task_b2_epistemic.json",
@@ -235,6 +439,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": 45
   },
+  "b2_epi_ndim_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
   "b2_epi_ndim_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": 45
@@ -254,6 +462,10 @@
   "b2_epi_npos_h1": {
     "source": "results/task_b2_epistemic.json",
     "value": 23
+  },
+  "b2_epi_npos_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
   },
   "b2_epi_npos_h128": {
     "source": "results/task_b2_epistemic.json",
@@ -283,6 +495,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "1.0e+00"
   },
+  "b2_epi_p_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.7e-14"
+  },
   "b2_epi_p_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "5.7e-14"
@@ -303,6 +519,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "-0.002"
   },
+  "b2_epi_r_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.272"
+  },
   "b2_epi_r_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "+0.241"
@@ -322,6 +542,10 @@
   "b2_epi_ratio_h1": {
     "source": "results/task_b2_epistemic.json",
     "value": "4.7"
+  },
+  "b2_epi_ratio_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "25.7"
   },
   "b2_epi_ratio_h128": {
     "source": "results/task_b2_epistemic.json",
@@ -359,6 +583,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "17.78"
   },
+  "b2_tot_cov1_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.71"
+  },
   "b2_tot_cov1_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "5.42"
@@ -379,6 +607,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "37.22"
   },
+  "b2_tot_cov2_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "11.76"
+  },
   "b2_tot_cov2_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "10.95"
@@ -396,6 +628,10 @@
     "value": "25.14"
   },
   "b2_tot_ndim_h1": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
+  "b2_tot_ndim_h100": {
     "source": "results/task_b2_epistemic.json",
     "value": 45
   },
@@ -419,6 +655,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": 23
   },
+  "b2_tot_npos_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": 45
+  },
   "b2_tot_npos_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": 45
@@ -438,6 +678,10 @@
   "b2_tot_p_h1": {
     "source": "results/task_b2_epistemic.json",
     "value": "1.0e+00"
+  },
+  "b2_tot_p_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "5.7e-14"
   },
   "b2_tot_p_h128": {
     "source": "results/task_b2_epistemic.json",
@@ -459,6 +703,10 @@
     "source": "results/task_b2_epistemic.json",
     "value": "-0.002"
   },
+  "b2_tot_r_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "+0.272"
+  },
   "b2_tot_r_h128": {
     "source": "results/task_b2_epistemic.json",
     "value": "+0.241"
@@ -478,6 +726,10 @@
   "b2_tot_ratio_h1": {
     "source": "results/task_b2_epistemic.json",
     "value": "4.7"
+  },
+  "b2_tot_ratio_h100": {
+    "source": "results/task_b2_epistemic.json",
+    "value": "25.7"
   },
   "b2_tot_ratio_h128": {
     "source": "results/task_b2_epistemic.json",
@@ -603,9 +855,25 @@
     "source": "results/task1_calibration.json",
     "value": 12.96
   },
+  "cal_armB_cov100": {
+    "source": "results/task1_calibration.json",
+    "value": 1.22
+  },
+  "cal_armB_cov100_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "0.84, 1.61"
+  },
+  "cal_armB_cov1_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "7.04, 20.93"
+  },
   "cal_armB_cov368": {
     "source": "results/task1_calibration.json",
     "value": 0.56
+  },
+  "cal_armB_cov368_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "0.37, 0.76"
   },
   "cal_armB_ndim": {
     "source": "results/task1_calibration.json",
@@ -631,6 +899,10 @@
     "source": "results/task1_calibration.json",
     "value": "315"
   },
+  "cal_armB_ratio_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "177, 509"
+  },
   "cal_faithA_cov": {
     "source": "results/task1_calibration.json",
     "value": 0.0076
@@ -639,9 +911,25 @@
     "source": "results/task1_calibration.json",
     "value": 11.67
   },
+  "cal_faithA_cov100": {
+    "source": "results/task1_calibration.json",
+    "value": 2.17
+  },
+  "cal_faithA_cov100_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "1.59, 2.75"
+  },
+  "cal_faithA_cov1_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "7.96, 15.19"
+  },
   "cal_faithA_cov368": {
     "source": "results/task1_calibration.json",
     "value": 1.75
+  },
+  "cal_faithA_cov368_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "1.31, 2.05"
   },
   "cal_faithA_ndim": {
     "source": "results/task1_calibration.json",
@@ -663,6 +951,10 @@
     "source": "results/task1_calibration.json",
     "value": "52.2"
   },
+  "cal_faithA_ratio_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "39.6, 69.7"
+  },
   "cal_nll_cov": {
     "source": "results/task1_calibration.json",
     "value": 0.0059
@@ -671,9 +963,25 @@
     "source": "results/task1_calibration.json",
     "value": 42.78
   },
+  "cal_nll_cov100": {
+    "source": "results/task1_calibration.json",
+    "value": 9.8
+  },
+  "cal_nll_cov100_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "6.80, 12.81"
+  },
+  "cal_nll_cov1_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "24.44, 62.04"
+  },
   "cal_nll_cov368": {
     "source": "results/task1_calibration.json",
     "value": 8.57
+  },
+  "cal_nll_cov368_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "6.01, 11.13"
   },
   "cal_nll_ndim": {
     "source": "results/task1_calibration.json",
@@ -695,6 +1003,10 @@
     "source": "results/task1_calibration.json",
     "value": "10.9"
   },
+  "cal_nll_ratio_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "7.8, 14.7"
+  },
   "cal_rel_cov": {
     "source": "results/task1_calibration.json",
     "value": 0.0177
@@ -703,9 +1015,25 @@
     "source": "results/task1_calibration.json",
     "value": 0.56
   },
+  "cal_rel_cov100": {
+    "source": "results/task1_calibration.json",
+    "value": 0.08
+  },
+  "cal_rel_cov100_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "0.06, 0.11"
+  },
+  "cal_rel_cov1_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "0.00, 1.67"
+  },
   "cal_rel_cov368": {
     "source": "results/task1_calibration.json",
     "value": 0.04
+  },
+  "cal_rel_cov368_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "0.03, 0.05"
   },
   "cal_rel_ndim": {
     "source": "results/task1_calibration.json",
@@ -727,29 +1055,33 @@
     "source": "results/task1_calibration.json",
     "value": "7,878"
   },
+  "cal_rel_ratio_ci": {
+    "source": "results/task1_calibration.json",
+    "value": "5,410, 9,934"
+  },
   "causal_nrmse": {
     "source": "results/step4_0a_results.json",
     "value": "0.7572"
   },
   "cc_kinds": {
     "source": "results/comparative_claims.json",
-    "value": 8
+    "value": 15
   },
   "cc_n": {
     "source": "results/comparative_claims.json",
-    "value": 21
+    "value": 32
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 21
+    "value": 32
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 20
+    "value": 31
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 20
+    "value": 31
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -762,6 +1094,14 @@
   "contam_pct": {
     "source": "results/step0_regimes.json",
     "value": 3.53
+  },
+  "d12_hi": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "1.591"
+  },
+  "d12_lo": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "0.562"
   },
   "d1_A_hi": {
     "source": "results/task_d1_threeseed.json",
@@ -823,9 +1163,37 @@
     "source": "results/task_d1_threeseed.json",
     "value": "90,000"
   },
+  "d1n_alea_cov1_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.00, 0.33"
+  },
+  "d1n_alea_cov1_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.02, 0.05"
+  },
+  "d1n_alea_cov1_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.02, 0.04"
+  },
+  "d1n_alea_cov1_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.03, 0.10"
+  },
+  "d1n_alea_cov1_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.01, 0.03"
+  },
+  "d1n_alea_cov1_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.03, 0.15"
+  },
   "d1n_alea_cov1_h1": {
     "source": "results/task_d_nind20.json",
     "value": "0.11"
+  },
+  "d1n_alea_cov1_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.04"
   },
   "d1n_alea_cov1_h128": {
     "source": "results/task_d_nind20.json",
@@ -843,9 +1211,37 @@
     "source": "results/task_d_nind20.json",
     "value": "0.08"
   },
+  "d1n_alea_cov2_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.00, 0.33"
+  },
+  "d1n_alea_cov2_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.03, 0.08"
+  },
+  "d1n_alea_cov2_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.03, 0.07"
+  },
+  "d1n_alea_cov2_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.06, 0.16"
+  },
+  "d1n_alea_cov2_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.02, 0.04"
+  },
+  "d1n_alea_cov2_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.06, 0.28"
+  },
   "d1n_alea_cov2_h1": {
     "source": "results/task_d_nind20.json",
     "value": "0.11"
+  },
+  "d1n_alea_cov2_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "0.06"
   },
   "d1n_alea_cov2_h128": {
     "source": "results/task_d_nind20.json",
@@ -864,6 +1260,10 @@
     "value": "0.15"
   },
   "d1n_alea_ndim_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_alea_ndim_h100": {
     "source": "results/task_d_nind20.json",
     "value": 45
   },
@@ -887,6 +1287,10 @@
     "source": "results/task_d_nind20.json",
     "value": 7
   },
+  "d1n_alea_npos_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": 38
+  },
   "d1n_alea_npos_h128": {
     "source": "results/task_d_nind20.json",
     "value": 28
@@ -907,6 +1311,10 @@
     "source": "results/task_d_nind20.json",
     "value": "-0.145"
   },
+  "d1n_alea_r_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.038"
+  },
   "d1n_alea_r_h128": {
     "source": "results/task_d_nind20.json",
     "value": "+0.006"
@@ -923,9 +1331,37 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.047"
   },
+  "d1n_alea_ratio_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "915, 3,110"
+  },
+  "d1n_alea_ratio_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "7,970, 15,846"
+  },
+  "d1n_alea_ratio_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "10,564, 19,700"
+  },
+  "d1n_alea_ratio_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "2,492, 7,196"
+  },
+  "d1n_alea_ratio_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "15,666, 25,688"
+  },
+  "d1n_alea_ratio_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "1,638, 4,849"
+  },
   "d1n_alea_ratio_h1": {
     "source": "results/task_d_nind20.json",
     "value": "1,827"
+  },
+  "d1n_alea_ratio_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "11,683"
   },
   "d1n_alea_ratio_h128": {
     "source": "results/task_d_nind20.json",
@@ -943,9 +1379,37 @@
     "source": "results/task_d_nind20.json",
     "value": "3,034"
   },
+  "d1n_epi_cov1_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "13.44, 18.89"
+  },
+  "d1n_epi_cov1_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "4.12, 5.09"
+  },
+  "d1n_epi_cov1_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "3.96, 4.81"
+  },
+  "d1n_epi_cov1_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "5.99, 7.85"
+  },
+  "d1n_epi_cov1_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "3.27, 3.92"
+  },
+  "d1n_epi_cov1_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.60, 11.32"
+  },
   "d1n_epi_cov1_h1": {
     "source": "results/task_d_nind20.json",
     "value": "16.22"
+  },
+  "d1n_epi_cov1_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "4.61"
   },
   "d1n_epi_cov1_h128": {
     "source": "results/task_d_nind20.json",
@@ -963,9 +1427,37 @@
     "source": "results/task_d_nind20.json",
     "value": "9.99"
   },
+  "d1n_epi_cov2_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "25.78, 34.33"
+  },
+  "d1n_epi_cov2_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.30, 10.22"
+  },
+  "d1n_epi_cov2_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "7.99, 9.55"
+  },
+  "d1n_epi_cov2_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "11.82, 15.41"
+  },
+  "d1n_epi_cov2_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "6.60, 7.81"
+  },
+  "d1n_epi_cov2_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "17.06, 22.24"
+  },
   "d1n_epi_cov2_h1": {
     "source": "results/task_d_nind20.json",
     "value": "30.11"
+  },
+  "d1n_epi_cov2_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "9.27"
   },
   "d1n_epi_cov2_h128": {
     "source": "results/task_d_nind20.json",
@@ -984,6 +1476,10 @@
     "value": "19.76"
   },
   "d1n_epi_ndim_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_epi_ndim_h100": {
     "source": "results/task_d_nind20.json",
     "value": 45
   },
@@ -1006,6 +1502,10 @@
   "d1n_epi_npos_h1": {
     "source": "results/task_d_nind20.json",
     "value": 44
+  },
+  "d1n_epi_npos_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
   },
   "d1n_epi_npos_h128": {
     "source": "results/task_d_nind20.json",
@@ -1031,6 +1531,10 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.662"
   },
+  "d1n_epi_r_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.351"
+  },
   "d1n_epi_r_h128": {
     "source": "results/task_d_nind20.json",
     "value": "+0.338"
@@ -1047,9 +1551,37 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.427"
   },
+  "d1n_epi_ratio_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "6.1, 9.7"
+  },
+  "d1n_epi_ratio_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "28.7, 39.0"
+  },
+  "d1n_epi_ratio_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "30.6, 38.2"
+  },
+  "d1n_epi_ratio_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "15.5, 28.7"
+  },
+  "d1n_epi_ratio_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "29.8, 40.3"
+  },
+  "d1n_epi_ratio_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "10.3, 19.2"
+  },
   "d1n_epi_ratio_h1": {
     "source": "results/task_d_nind20.json",
     "value": "8.3"
+  },
+  "d1n_epi_ratio_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "33.4"
   },
   "d1n_epi_ratio_h128": {
     "source": "results/task_d_nind20.json",
@@ -1079,9 +1611,37 @@
     "source": "results/task_d_nind20.json",
     "value": 20
   },
+  "d1n_tot_cov1_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "13.44, 18.89"
+  },
+  "d1n_tot_cov1_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "4.12, 5.09"
+  },
+  "d1n_tot_cov1_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "3.96, 4.81"
+  },
+  "d1n_tot_cov1_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "5.99, 7.85"
+  },
+  "d1n_tot_cov1_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "3.27, 3.92"
+  },
+  "d1n_tot_cov1_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.60, 11.32"
+  },
   "d1n_tot_cov1_h1": {
     "source": "results/task_d_nind20.json",
     "value": "16.22"
+  },
+  "d1n_tot_cov1_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "4.61"
   },
   "d1n_tot_cov1_h128": {
     "source": "results/task_d_nind20.json",
@@ -1099,9 +1659,37 @@
     "source": "results/task_d_nind20.json",
     "value": "9.99"
   },
+  "d1n_tot_cov2_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "25.78, 34.33"
+  },
+  "d1n_tot_cov2_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "8.30, 10.22"
+  },
+  "d1n_tot_cov2_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "7.99, 9.55"
+  },
+  "d1n_tot_cov2_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "11.82, 15.41"
+  },
+  "d1n_tot_cov2_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "6.60, 7.81"
+  },
+  "d1n_tot_cov2_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "17.06, 22.24"
+  },
   "d1n_tot_cov2_h1": {
     "source": "results/task_d_nind20.json",
     "value": "30.11"
+  },
+  "d1n_tot_cov2_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "9.27"
   },
   "d1n_tot_cov2_h128": {
     "source": "results/task_d_nind20.json",
@@ -1120,6 +1708,10 @@
     "value": "19.76"
   },
   "d1n_tot_ndim_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
+  "d1n_tot_ndim_h100": {
     "source": "results/task_d_nind20.json",
     "value": 45
   },
@@ -1143,6 +1735,10 @@
     "source": "results/task_d_nind20.json",
     "value": 44
   },
+  "d1n_tot_npos_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": 45
+  },
   "d1n_tot_npos_h128": {
     "source": "results/task_d_nind20.json",
     "value": 45
@@ -1163,6 +1759,10 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.662"
   },
+  "d1n_tot_r_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.351"
+  },
   "d1n_tot_r_h128": {
     "source": "results/task_d_nind20.json",
     "value": "+0.338"
@@ -1179,9 +1779,37 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.427"
   },
+  "d1n_tot_ratio_ci_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "6.1, 9.7"
+  },
+  "d1n_tot_ratio_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "28.7, 39.0"
+  },
+  "d1n_tot_ratio_ci_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "30.6, 38.2"
+  },
+  "d1n_tot_ratio_ci_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "15.5, 28.7"
+  },
+  "d1n_tot_ratio_ci_h368": {
+    "source": "results/task_d_nind20.json",
+    "value": "29.8, 40.3"
+  },
+  "d1n_tot_ratio_ci_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "10.3, 19.2"
+  },
   "d1n_tot_ratio_h1": {
     "source": "results/task_d_nind20.json",
     "value": "8.3"
+  },
+  "d1n_tot_ratio_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "33.4"
   },
   "d1n_tot_ratio_h128": {
     "source": "results/task_d_nind20.json",
@@ -1577,7 +2205,7 @@
   },
   "d3_ale_cells": {
     "source": "results/task_d3_perhorizon.json",
-    "value": 10
+    "value": 12
   },
   "d3_ale_const_ok": {
     "source": "results/task_d3_perhorizon.json",
@@ -1589,15 +2217,15 @@
   },
   "d3_ale_ok": {
     "source": "results/task_d3_perhorizon.json",
-    "value": 10
+    "value": 12
   },
   "d3_ale_worst_cov": {
     "source": "results/task_d3_perhorizon.json",
-    "value": "76.55"
+    "value": "77.48"
   },
   "d3_ale_worst_h": {
     "source": "results/task_d3_perhorizon.json",
-    "value": 128
+    "value": 100
   },
   "d3_epi_c_hi": {
     "source": "results/task_d3_perhorizon.json",
@@ -1609,7 +2237,7 @@
   },
   "d3_epi_cells": {
     "source": "results/task_d3_perhorizon.json",
-    "value": 10
+    "value": 12
   },
   "d3_epi_const_ok": {
     "source": "results/task_d3_perhorizon.json",
@@ -1621,7 +2249,7 @@
   },
   "d3_epi_ok": {
     "source": "results/task_d3_perhorizon.json",
-    "value": 10
+    "value": 12
   },
   "d3_epi_worst_cov": {
     "source": "results/task_d3_perhorizon.json",
@@ -1633,11 +2261,15 @@
   },
   "d3_ncells_all": {
     "source": "results/task_d3_perhorizon.json",
-    "value": 20
+    "value": 24
   },
   "d3_neps": {
     "source": "results/task_d3_perhorizon.json",
     "value": 2
+  },
+  "d3_nhoriz": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 6
   },
   "d3_nind_fit": {
     "source": "results/task_d3_perhorizon.json",
@@ -1649,7 +2281,7 @@
   },
   "d3_second_cov": {
     "source": "results/task_d3_perhorizon.json",
-    "value": "60.18"
+    "value": "76.55"
   },
   "d3_target": {
     "source": "results/task_d3_perhorizon.json",
@@ -1661,11 +2293,11 @@
   },
   "d3_worst_cov": {
     "source": "results/task_d3_perhorizon.json",
-    "value": "76.55"
+    "value": "77.48"
   },
   "d3_worst_dev": {
     "source": "results/task_d3_perhorizon.json",
-    "value": "8.28"
+    "value": "9.21"
   },
   "d3_worst_ep": {
     "source": "results/task_d3_perhorizon.json",
@@ -1673,7 +2305,7 @@
   },
   "d3_worst_h": {
     "source": "results/task_d3_perhorizon.json",
-    "value": 128
+    "value": 100
   },
   "d3_worst_q": {
     "source": "results/task_d3_perhorizon.json",
@@ -1783,9 +2415,37 @@
     "source": "results/task_d3b_ens5_power.json",
     "value": "true"
   },
+  "e5_cov1_ci_h1": {
+    "source": "results/task_d3_ens5.json",
+    "value": "29.63, 42.22"
+  },
+  "e5_cov1_ci_h100": {
+    "source": "results/task_d3_ens5.json",
+    "value": "6.80, 9.59"
+  },
+  "e5_cov1_ci_h128": {
+    "source": "results/task_d3_ens5.json",
+    "value": "6.81, 8.77"
+  },
+  "e5_cov1_ci_h32": {
+    "source": "results/task_d3_ens5.json",
+    "value": "8.53, 13.71"
+  },
+  "e5_cov1_ci_h368": {
+    "source": "results/task_d3_ens5.json",
+    "value": "5.84, 6.77"
+  },
+  "e5_cov1_ci_h8": {
+    "source": "results/task_d3_ens5.json",
+    "value": "11.02, 17.18"
+  },
   "e5_cov1_h1": {
     "source": "results/task_d3_ens5.json",
     "value": "35.93"
+  },
+  "e5_cov1_h100": {
+    "source": "results/task_d3_ens5.json",
+    "value": "8.19"
   },
   "e5_cov1_h128": {
     "source": "results/task_d3_ens5.json",
@@ -1803,9 +2463,37 @@
     "source": "results/task_d3_ens5.json",
     "value": "14.10"
   },
+  "e5_cov2_ci_h1": {
+    "source": "results/task_d3_ens5.json",
+    "value": "53.70, 67.04"
+  },
+  "e5_cov2_ci_h100": {
+    "source": "results/task_d3_ens5.json",
+    "value": "13.45, 18.77"
+  },
+  "e5_cov2_ci_h128": {
+    "source": "results/task_d3_ens5.json",
+    "value": "13.47, 17.21"
+  },
+  "e5_cov2_ci_h32": {
+    "source": "results/task_d3_ens5.json",
+    "value": "16.10, 25.45"
+  },
+  "e5_cov2_ci_h368": {
+    "source": "results/task_d3_ens5.json",
+    "value": "11.75, 13.27"
+  },
+  "e5_cov2_ci_h8": {
+    "source": "results/task_d3_ens5.json",
+    "value": "21.11, 32.13"
+  },
   "e5_cov2_h1": {
     "source": "results/task_d3_ens5.json",
     "value": "60.37"
+  },
+  "e5_cov2_h100": {
+    "source": "results/task_d3_ens5.json",
+    "value": "16.11"
   },
   "e5_cov2_h128": {
     "source": "results/task_d3_ens5.json",
@@ -1879,6 +2567,10 @@
     "source": "results/task_d3_ens5.json",
     "value": "35.0"
   },
+  "e5_npos_h100": {
+    "source": "results/task_d3_ens5.json",
+    "value": "44.0"
+  },
   "e5_npos_h128": {
     "source": "results/task_d3_ens5.json",
     "value": "44.0"
@@ -1907,9 +2599,37 @@
     "source": "results/task_d3b_ens5_power.json",
     "value": 8
   },
+  "e5_ratio_ci_h1": {
+    "source": "results/task_d3_ens5.json",
+    "value": "1.7, 2.5"
+  },
+  "e5_ratio_ci_h100": {
+    "source": "results/task_d3_ens5.json",
+    "value": "9.0, 11.5"
+  },
+  "e5_ratio_ci_h128": {
+    "source": "results/task_d3_ens5.json",
+    "value": "9.5, 11.9"
+  },
+  "e5_ratio_ci_h32": {
+    "source": "results/task_d3_ens5.json",
+    "value": "5.9, 9.8"
+  },
+  "e5_ratio_ci_h368": {
+    "source": "results/task_d3_ens5.json",
+    "value": "11.9, 13.9"
+  },
+  "e5_ratio_ci_h8": {
+    "source": "results/task_d3_ens5.json",
+    "value": "4.4, 7.5"
+  },
   "e5_ratio_h1": {
     "source": "results/task_d3_ens5.json",
     "value": "2.1"
+  },
+  "e5_ratio_h100": {
+    "source": "results/task_d3_ens5.json",
+    "value": "10.5"
   },
   "e5_ratio_h128": {
     "source": "results/task_d3_ens5.json",
@@ -2059,24 +2779,28 @@
     "source": "results/task5_analysis.json",
     "value": true
   },
+  "m45_verdict": {
+    "source": "results/a2_trajectory_level_control.json",
+    "value": "SUPPORTED"
+  },
   "n_defects": {
-    "source": "PAPER.template.md section 6 subsections",
+    "source": "PAPER.template.md section 7 subsections",
     "value": "four"
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 183
+    "value": 189
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",
     "value": 2
   },
   "n_lessons": {
-    "source": "PAPER.template.md section 9",
+    "source": "PAPER.template.md, Actionable lessons",
     "value": 6
   },
   "n_lessons_word": {
-    "source": "PAPER.template.md section 9",
+    "source": "PAPER.template.md, Actionable lessons",
     "value": "Six"
   },
   "n_retract_framing": {
@@ -2170,6 +2894,42 @@
   "overfit_reduction": {
     "source": "results/step4_4_overfit_b32lr1e3.json",
     "value": "1,506"
+  },
+  "p1_m44_mde_cov": {
+    "source": "results/p1_power_check.json",
+    "value": "2.26"
+  },
+  "p1_m44_mde_ratio": {
+    "source": "results/p1_power_check.json",
+    "value": "1.45"
+  },
+  "p1_m44_mde_ratio_opt": {
+    "source": "results/p1_power_check.json",
+    "value": "1.05"
+  },
+  "p1_m44_n": {
+    "source": "results/p1_power_check.json",
+    "value": 4
+  },
+  "p1_m44_resamples": {
+    "source": "results/p1_power_check.json",
+    "value": 256
+  },
+  "p1_m45_detected": {
+    "source": "results/p1_power_check.json",
+    "value": "0.172"
+  },
+  "p1_m45_mde": {
+    "source": "results/p1_power_check.json",
+    "value": "0.183"
+  },
+  "p1_m45_n": {
+    "source": "results/p1_power_check.json",
+    "value": 20
+  },
+  "p1_m45_undetected": {
+    "source": "results/p1_power_check.json",
+    "value": "0.086"
   },
   "perm_all_armB_binom_h1": {
     "source": "results/task_b_permutation.json",
@@ -4195,6 +4955,30 @@
     "source": "results/step4_0a_results.json",
     "value": "75"
   },
+  "t1_n_frag": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 9
+  },
+  "t1_n_frag_ok": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 9
+  },
+  "t1_n_refs": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 10
+  },
+  "t1_n_verified": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 10
+  },
+  "t1_refs_after": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 12
+  },
+  "t1_refs_before": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 2
+  },
   "t5_seeds": {
     "source": "results/task5_analysis.json",
     "value": 1
@@ -4298,6 +5082,150 @@
   "unreach_recalled_iters": {
     "source": "docs/E4_AUTHOR_CONTACT.md",
     "value": "5,000"
+  },
+  "v1_hidden_states": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": 1
+  },
+  "v1_member_params": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "714,164"
+  },
+  "v1_members": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": 5
+  },
+  "v1_n_arms_checked": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": 3
+  },
+  "v1_n_citations": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": 20
+  },
+  "v1_our_arms_match": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "yes"
+  },
+  "v1_private_params": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "77,492"
+  },
+  "v1_private_pct": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "10.85"
+  },
+  "v1_shared_params": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "636,672"
+  },
+  "v1_shared_pct": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "89.15"
+  },
+  "v1_shared_pct_model": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "63.81"
+  },
+  "v1_total_params": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "1,995,569"
+  },
+  "v2_deploy_h": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": 100
+  },
+  "v2_diag_h": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": 368
+  },
+  "v2_fig_v1": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": "Figure 2 (right)"
+  },
+  "v2_fig_v3": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": "Figure 3 (right)"
+  },
+  "v2_history": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": 32
+  },
+  "v2_len_eval": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": 400
+  },
+  "v2_lite_cap": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": 256
+  },
+  "v2_ratio": {
+    "source": "results/v2_deployment_horizon.json",
+    "value": "3.68"
+  },
+  "v3_cov_nominal1": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "68.27"
+  },
+  "v3_cov_nominal2": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "95.45"
+  },
+  "v3_coverage": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "\\mathrm{cov}_{\\pm k\\sigma}(h) \\;=\\; \\frac{1}{B\\,h\\,45}\\sum_{b=1}^{B}\\sum_{t=t_0+1}^{t_0+h}\\sum_{d=1}^{45}\\mathbf{1}\\!\\left[\\;\\frac{\\bigl|\\hat{s}^{(b)}_{t,d}-s^{(b)}_{t,d}\\bigr|}{\\sigma^{(b)}_{t,d}} \\;\\le\\; k \\;\\right]"
+  },
+  "v3_n_citations": {
+    "source": "results/v3_metric_definitions.json",
+    "value": 20
+  },
+  "v3_nrmse": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "\\mathrm{nRMSE}_t \\;=\\; \\frac{\\sqrt{\\dfrac{1}{45}\\sum_{d=1}^{45}\\mathrm{MSE}_{t,d}}}{\\dfrac{1}{45}\\sum_{d=1}^{45}\\sigma^{\\mathrm{tr}}_{d}}\\quad\\text{with}\\quad \\mathrm{MSE}_{t,d}=\\frac{1}{B}\\sum_{b=1}^{B}\\bigl(\\hat{s}^{(b)}_{t,d}-s^{(b)}_{t,d}\\bigr)^{2}"
+  },
+  "v3_rel_l1": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "r_t \\;=\\; \\frac{\\sum_{d=1}^{45}\\bigl|\\hat{s}_{t,d}-s_{t,d}\\bigr|}{\\sum_{d=1}^{45}\\bigl|s_{t,d}\\bigr|}"
+  },
+  "v3_rel_l1_agg": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "e \\;=\\; \\frac{1}{B\\,(T-t_0)}\\sum_{b=1}^{B}\\sum_{t=t_0+1}^{T} r_{t}^{(b)}"
+  },
+  "v3_rho": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "\\rho(h) \\;=\\; \\frac{\\operatorname{mean}_{b,t\\le h,d}\\bigl|\\hat{s}^{(b)}_{t,d}-s^{(b)}_{t,d}\\bigr|}{\\operatorname{mean}_{b,t\\le h,d}\\ \\sigma^{(b)}_{t,d}}"
+  },
+  "v3_rho_calibrated": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "0.7979"
+  },
+  "v3_scale": {
+    "source": "results/v3_metric_definitions.json",
+    "value": "\\sigma^{\\mathrm{tr}}_{d} \\;=\\; \\operatorname{sd}\\bigl(\\{\\,\\tilde{s}_{i,d}\\;:\\; \\mathrm{episode}(i)\\in\\mathcal{E}_{\\mathrm{train}}\\,\\}\\bigr)"
+  },
+  "v4_current": {
+    "source": "results/original_paper_figures.json",
+    "value": "v3"
+  },
+  "v4_current_date": {
+    "source": "results/original_paper_figures.json",
+    "value": "8 Jan 2026"
+  },
+  "v4_n_moved": {
+    "source": "results/original_paper_figures.json",
+    "value": 7
+  },
+  "v4_n_unchanged": {
+    "source": "results/original_paper_figures.json",
+    "value": 4
+  },
+  "v4_read": {
+    "source": "results/original_paper_figures.json",
+    "value": "v1"
+  },
+  "v4_read_date": {
+    "source": "results/original_paper_figures.json",
+    "value": "23 Apr 2025"
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",

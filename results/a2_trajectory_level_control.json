@@ -1,0 +1,296 @@
+{
+  "design": {
+    "arena": "released checkpoint, all ten episodes",
+    "bootstrap_unit": "whole trajectory (M-27)",
+    "episodes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "n_boot": 20000,
+    "n_independent": 20,
+    "n_steps": 368,
+    "n_trajectories": 20,
+    "start_step": 32,
+    "traj_len": 400,
+    "trajectory_episode": [
+      0,
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6,
+      7,
+      7,
+      8,
+      8,
+      9,
+      9
+    ],
+    "x": "epistemic disagreement, means.std(0).sum(-1) (envs/base.py:166)",
+    "y": "total absolute error over the 45 state dimensions"
+  },
+  "double_demeaning": {
+    "above_mde": true,
+    "ci": [
+      0.31840403901145076,
+      0.576208696869502
+    ],
+    "excludes_zero": true,
+    "mde": 0.183,
+    "n_boot_finite": 20000,
+    "r_dd": 0.4190723154149937,
+    "r_pooled": 0.6053377910794817,
+    "r_step_demeaned_only": 0.5886801931248029,
+    "r_trajectory_demeaned_only": 0.470189961630553,
+    "reading": "removing depth alone leaves the trajectory-level confound in; removing the trajectory mean alone leaves depth in; only the two-way removal answers the within-rollout question.",
+    "statistic": "Pearson r between double-demeaned disagreement and double-demeaned |error|"
+  },
+  "h1_diagnostic": {
+    "collapses": false,
+    "commanded_speed_range": [
+      0.5511843066393628,
+      1.1655251978326377
+    ],
+    "confounders": {
+      "commanded_speed": {
+        "partial_ci": [
+          0.9214547393147738,
+          0.9988750515376321
+        ],
+        "partial_r": 0.9940583823295934,
+        "r_disagreement_vs_confounder": 0.00607071968780275,
+        "r_error_vs_confounder": 0.023196366832986343,
+        "shrinkage": -0.00014496712739309192
+      },
+      "episode_difficulty_D12": {
+        "partial_ci": [
+          0.8921267997195389,
+          0.9990121823905409
+        ],
+        "partial_r": 0.9949174990078126,
+        "r_disagreement_vs_confounder": 0.040262817055881445,
+        "r_error_vs_confounder": 0.08548969637505231,
+        "shrinkage": -0.0010040838056122325
+      }
+    },
+    "difficulty_source": "D-12, results/step4_0a_results.json -> per_episode_e, averaged over the seeds that measured it",
+    "episode_difficulty_range": [
+      0.5619921982288361,
+      1.5913493633270264
+    ],
+    "n_points": 20,
+    "note": "at h=1 the panel has one column, so this correlation is over TWENTY trajectory-level points and nothing within a rollout is being tested at all",
+    "partial_on_both": 0.9950306370527148,
+    "r_h1": 0.9939134152022003,
+    "r_h1_ci": [
+      0.9169317138279357,
+      0.9987633569865388
+    ]
+  },
+  "horizon_dependence": {
+    "r_dd_excludes_zero_at": [
+      100,
+      128,
+      368
+    ],
+    "r_dd_spans_zero_at": [
+      8,
+      32
+    ],
+    "reading": "the within-rollout signal is established at the longer horizons and NOT established at the shorter ones, where four hundred-odd steps are not yet available to demean against. This inverts the shape a reader might expect and is reported as measured."
+  },
+  "m45": {
+    "above_mde": true,
+    "ci": [
+      0.31840403901145076,
+      0.576208696869502
+    ],
+    "excludes_zero": true,
+    "mde": 0.183,
+    "power_note": "the rule's MDE at this n is |r_dd| >= 0.183 (results/p1_power_check.json). The observed |r_dd| = 0.4191 is above it, so the result is resolvable by this rule",
+    "r_dd": 0.4190723154149937,
+    "rule": "M-45, committed 2026-08-23 before this artifact existed",
+    "statistic": "r_dd on the (trajectory, step) panel, n_independent = 20",
+    "supported": true,
+    "underpowered_null": false,
+    "verdict": "DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION",
+    "what_the_paper_says": "5.6 keeps its strength and gains a sixth control \u2014 the only one that removes trajectory difficulty rather than depth \u2014 and 12 leans on it."
+  },
+  "partial_by_horizon": {
+    "1": {
+      "n_independent": 20,
+      "n_steps": 1,
+      "r_dd": null,
+      "r_dd_ci": [
+        null,
+        null
+      ],
+      "r_partial_ci": [
+        null,
+        null
+      ],
+      "r_partial_trajectory_level": null,
+      "r_raw": 0.9939134152022003,
+      "r_raw_ci": [
+        0.9181570889372426,
+        0.9987666511920948
+      ],
+      "undefined_reason": "h=1 has one forecast step per trajectory, so within a trajectory there is nothing to demean and both the partial and r_dd are undefined"
+    },
+    "100": {
+      "n_independent": 20,
+      "n_steps": 100,
+      "r_dd": 0.3853917529411539,
+      "r_dd_ci": [
+        0.2832965065548438,
+        0.701097782450486
+      ],
+      "r_partial_ci": [
+        0.3899053622600725,
+        0.7602080108207244
+      ],
+      "r_partial_trajectory_level": 0.48098534691788275,
+      "r_raw": 0.6278529855604081,
+      "r_raw_ci": [
+        0.573433678174212,
+        0.8420626481476804
+      ],
+      "undefined_reason": null
+    },
+    "128": {
+      "n_independent": 20,
+      "n_steps": 128,
+      "r_dd": 0.4529332791030114,
+      "r_dd_ci": [
+        0.3589084844803619,
+        0.7134644042323675
+      ],
+      "r_partial_ci": [
+        0.46141425518061563,
+        0.7784905404286859
+      ],
+      "r_partial_trajectory_level": 0.5557864703125105,
+      "r_raw": 0.6707784948153711,
+      "r_raw_ci": [
+        0.6029848337085941,
+        0.8497700710197944
+      ],
+      "undefined_reason": null
+    },
+    "32": {
+      "n_independent": 20,
+      "n_steps": 32,
+      "r_dd": 0.1858075773922142,
+      "r_dd_ci": [
+        -0.031710040801624505,
+        0.635759983503735
+      ],
+      "r_partial_ci": [
+        -0.08151499303170093,
+        0.5320345771132566
+      ],
+      "r_partial_trajectory_level": 0.12289394745784156,
+      "r_raw": 0.7351513185146253,
+      "r_raw_ci": [
+        0.5766090296186728,
+        0.8233635197291176
+      ],
+      "undefined_reason": null
+    },
+    "368": {
+      "n_independent": 20,
+      "n_steps": 368,
+      "r_dd": 0.4190723154149937,
+      "r_dd_ci": [
+        0.3150603698630378,
+        0.573381576646822
+      ],
+      "r_partial_ci": [
+        0.3743575824771707,
+        0.5934852483942098
+      ],
+      "r_partial_trajectory_level": 0.4513158159156356,
+      "r_raw": 0.6053377910794817,
+      "r_raw_ci": [
+        0.5462105771449421,
+        0.6934176785888047
+      ],
+      "undefined_reason": null
+    },
+    "8": {
+      "n_independent": 20,
+      "n_steps": 8,
+      "r_dd": 0.3064634264463858,
+      "r_dd_ci": [
+        -0.3872724047244031,
+        0.7125736870042934
+      ],
+      "r_partial_ci": [
+        -0.3730091880505566,
+        0.6471093275570775
+      ],
+      "r_partial_trajectory_level": 0.22696674854943438,
+      "r_raw": 0.7375680065206663,
+      "r_raw_ci": [
+        0.5414838193285693,
+        0.8063116448356181
+      ],
+      "undefined_reason": null
+    }
+  },
+  "reconciliation": {
+    "consequence": "A2 does not only add a sixth control; it reinterprets the fifth. r_dd is the first statistic in this paper that isolates WITHIN-ROLLOUT information, and 12 should lean on it rather than on the within-step figure.",
+    "existing_within_step_is": "the mean over forecast steps of the correlation ACROSS TRAJECTORIES at that step (scripts/task_d2b_robustness.py:84)",
+    "existing_within_step_mean_r": 0.7391948537019067,
+    "ordering": {
+      "between_trajectory": 0.8775329491722521,
+      "double_demeaned": 0.4190723154149937,
+      "pooled": 0.6053377910794817,
+      "step_demeaned_pooled": 0.5886801931248029,
+      "trajectory_demeaned": 0.470189961630553,
+      "within_step_existing": 0.7391948537019067
+    },
+    "which_makes_it": "a between-trajectory statistic evaluated at fixed depth. It removes depth completely and removes trajectory difficulty not at all.",
+    "why_it_exceeds_the_pooled_figure": "because the between-trajectory correlation is larger than the pooled one: +0.8775 against +0.6053. A control that isolates the between-trajectory channel therefore reads HIGHER, which is the symptom that prompted this analysis rather than a sign of strength."
+  },
+  "variance_decomposition": {
+    "cov_between": 28.935613118222882,
+    "cov_total": 55.982472529187895,
+    "cov_within_mean": 27.04685941096501,
+    "n_between_points": 20,
+    "r_between_ci": [
+      0.8170606223223118,
+      0.956163043420788
+    ],
+    "r_between_trajectory": 0.8775329491722521,
+    "r_pooled": 0.6053377910794817,
+    "r_pooled_ci": [
+      0.5447978984175453,
+      0.6945668105277448
+    ],
+    "r_within_ci": [
+      0.38933121806831816,
+      0.6043680602657302
+    ],
+    "r_within_trajectory": 0.470189961630553,
+    "reading": "the between component correlates the 20 trajectory means; the within component correlates deviations from each trajectory's own mean. The shares are of the pooled covariance, not of r.",
+    "share_between": 0.5168691522714821,
+    "share_within": 0.48313084772851783
+  }
+}

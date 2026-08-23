@@ -18,37 +18,37 @@ which refuses to emit a paper if any placeholder is unresolved. This README is g
 way, from the same file, so the two cannot disagree. The checkpoints are described in
 [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 189 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — {{n_entries}} entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
-are never edited in place: 15 are marked `SUPERSEDED` and kept, Six
+are never edited in place: {{n_superseded}} are marked `SUPERSEDED` and kept, {{n_retractions_word}}
 of them retractions of our own numbered claims on evidence this project produced.
 
 ## What this found
 
 **1 — The base paper's central training claim reproduces.** Autoregressive training beats teacher
-forcing by a factor of **4.61×** on the reference's own relative-L1 error at the
-368-step open-loop horizon, over 3 seeds on held-out episodes
-(0.3582 against 1.6497), under a decision rule committed to git before the runs that
+forcing by a factor of **{{d1_ratio}}×** on the reference's own relative-L1 error at the
+{{v2_diag_h}}-step open-loop horizon, over {{d1_seeds}} seeds on held-out episodes
+({{d1_A_mean}} against {{d1_B_mean}}), under a decision rule committed to git before the runs that
 tested it existed.
 
 **2 — Neither uncertainty output of the follow-up is usable as an interval.** At
-h = 100 — the horizon the method's own imagination rollouts run to — the ensemble
-disagreement it penalises rewards with is **33.4×
-[28.7, 39.0]** smaller than the realised error, covering
-4.61% at ±1σ where a calibrated Gaussian covers 68.27%. The
-per-member σ is 11,683× out, and that one is derived rather than observed: the
+h = {{v2_deploy_h}} — the horizon the method's own imagination rollouts run to — the ensemble
+disagreement it penalises rewards with is **{{d1n_epi_ratio_h100}}×
+[{{d1n_epi_ratio_ci_h100}}]** smaller than the realised error, covering
+{{d1n_epi_cov1_h100}}% at ±1σ where a calibrated Gaussian covers {{v3_cov_nominal1}}%. The
+per-member σ is {{d1n_alea_ratio_h100}}× out, and that one is derived rather than observed: the
 implemented objective is squared error on a sampled prediction, whose optimum is σ = 0.
 
 **3 — As a ranking it survives adversarial testing.** Ensemble disagreement beats the forecast
 step index — a free counter neither original paper compared against — at every horizon. With both
-the rollout and the forecast depth held constant it still correlates **+0.419
-[+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard.
+the rollout and the forecast depth held constant it still correlates **{{a2_rdd}}
+{{a2_rdd_ci}}** with realised error, so it is not merely reporting which episode is hard.
 
 **4 — The interval is repairable.** One multiplier per forecast horizon, fitted on one held-out
 episode and scored on the other, restores nominal coverage on every held-out cell; a single global
-multiplier manages 2 of them.
+multiplier manages {{d3_epi_const_ok}} of them.
 
-**And four defects in the released pipeline**, plus evidence that the released
+**And {{n_defects}} defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
 its author recalls — which the first author attributes to the repository having moved on between
 training and release. **The released artifacts do not reproduce the released checkpoint's
@@ -70,7 +70,7 @@ paper's §4 and Appendix F give the claim-by-claim breakdown.
 | Wiring | inference outputs match the reference module | **0.000e+00**, bitwise |
 | Indexing | the harness feeds the actions it claims | bitwise against the raw CSV |
 | Residual | zero-delta model is the hold-last floor | 1.19e-07 |
-| **Objective** | **losses and gradients match** | **0.000e+00 across 7 loss terms, 106 parameter tensors** |
+| **Objective** | **losses and gradients match** | **{{diff_grad_max}} across {{diff_terms}} loss terms, {{diff_n_params}} parameter tensors** |
 
 Everything from Step 5 onward inherits all five.
 
@@ -122,9 +122,9 @@ Training is bitwise reproducible under a fixed seed: the 10,000-iteration run re
 existing 2,500-iteration run exactly at every logged iteration, and `weights_2500.pt` is
 byte-identical between them.
 
-A clean-clone run of `reproduce.sh --quick --force` regenerates **29 artifact files and
-6,073 numeric values, 6,073 of them bitwise identical (100.00%),
-0 differing**, with 0 keys lost (`results/verify_reproduction.json`).
+A clean-clone run of `reproduce.sh --quick --force` regenerates **{{ver_files}} artifact files and
+{{ver_values}} numeric values, {{ver_identical}} of them bitwise identical ({{ver_pct}}%),
+{{ver_differing}} differing**, with 0 keys lost (`results/verify_reproduction.json`).
 
 **A note on what that number is not.** An earlier version of this section counted every numeric
 value in the committed `results/` directory. Because `results/` is committed, a clean clone
@@ -137,10 +137,10 @@ regenerates and the verifier partitions on that (`M-28`, `M-29`).
 ## The build checks its own prose
 
 Verifying that every numeral came from an artifact says nothing about the sentence built around
-it. The build therefore also verifies **32 comparative claims** across 15 kinds,
+it. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds,
 each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts.
 Every one is run against a deliberately corrupted expectation on each build and must fail:
-31 of 31 caught.
+{{cc_st_caught}} of {{cc_st_n}} caught.
 
 ```bash
 python scripts/check_comparative_claims.py --self-test
@@ -150,7 +150,7 @@ python scripts/ledger_check.py
 ## Environment
 
 Intel Mac x86_64, CPU only, Python 3.11.15, torch 2.2.2, numpy 1.26.4.
-24 training runs, all on CPU.
+{{n_runs}} training runs, all on CPU.
 Reference commits: `robotic_world_model_lite` `13a798e9`, `rsl_rl_rwm` `18eebcdd`.
 
 ## Licence and attribution

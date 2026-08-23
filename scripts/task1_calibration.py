@@ -26,7 +26,7 @@ def _sign_p(k, n):
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 import numpy as np, torch
 import rwm_data as R, rollout_eval as E, rwm_metrics as MET, rwm_model as M, score_reference as S
-START=E.START_STEP; SEEDS=(0,1,2); HS=(1,8,32,100,128,368)
+START=E.START_STEP; SEEDS=(0,1,2); HS=(1,8,32,100,128,368); N_BOOT=20000
 GROUPS=[("base lin vel",R.LIN_VEL),("base ang vel",R.ANG_VEL),("proj gravity",R.GRAVITY),
         ("joint pos",R.JOINT_POS),("joint vel",R.JOINT_VEL),("joint torque",R.JOINT_TAU)]
 paths=R.repo_paths(); cfg=R.load_reference_config(paths["lite"])
@@ -61,18 +61,51 @@ for name,ms in MODELS.items():
     for m in ms:
         pr,sg=m.rollout_full(ST.clone(),AC,START,action_offset=1)
         E_.append((pr[:,START:]-ST[:,START:]).abs().numpy()); SG.append(sg[:,START:].numpy())
+    # Two views of the same rollouts, deliberately kept apart.
+    #
+    # `err`/`sig` concatenate seeds onto the trajectory axis. That is fine for a
+    # POINT estimate over this balanced design and it is what every number here
+    # has always used.
+    #
+    # `errS`/`sigS` keep the seed axis separate: (n_seeds, n_traj, T', 45). Only
+    # this view can be resampled correctly. Seeds are not trajectories -- pooling
+    # seed x trajectory and resampling the pooled vector narrows every interval by
+    # about sqrt(n_seeds) (M-27). The A1 intervals below resample the TRAJECTORY
+    # axis and pool seeds inside each draw, so three seeds buy precision on the
+    # mean without inflating the apparent sample size.
+    errS=np.stack(E_,0); sigS=np.stack(SG,0)                    # (seeds, n, T', 45)
     err=np.concatenate(E_,0); sig=np.concatenate(SG,0)          # (n*seeds, T', 45)
     z=err/np.maximum(sig,1e-30)
     rec={"sigma_mean":float(sig.mean()),"err_mean":float(err.mean()),
          "ratio_err_over_sigma":float(err.mean()/sig.mean()),"coverage":{},"groups":{},
-         "sigma_by_step":[float(sig[:,:h].mean()) for h in HS]}
+         "sigma_by_step":[float(sig[:,:h].mean()) for h in HS],
+         "n_seeds":int(errS.shape[0]),"n_trajectories":int(errS.shape[1]),
+         "bootstrap_unit":"whole trajectory, seeds pooled within each draw (M-27)"}
+    _rng=np.random.default_rng(0)
+    _bidx=_rng.integers(0,errS.shape[1],(N_BOOT,errS.shape[1]))
+    def _ci(per_traj_num, per_traj_den=None):
+        """per_traj_*: (seeds, n_traj). Pool seeds, resample trajectories."""
+        a=per_traj_num.mean(axis=0)[_bidx].mean(axis=1)
+        v=a if per_traj_den is None else a/per_traj_den.mean(axis=0)[_bidx].mean(axis=1)
+        v=v[np.isfinite(v)]
+        return ([float(np.percentile(v,2.5)),float(np.percentile(v,97.5))]
+                if len(v)>1 else [None,None])
+    _ax=(2,3)
+    rec["ratio_err_over_sigma_ci"]=_ci(errS.mean(axis=_ax), sigS.mean(axis=_ax))
+    _rr=rec["ratio_err_over_sigma"]; _rc=rec["ratio_err_over_sigma_ci"]
     print(f"  {name.upper()}   mean sigma {sig.mean():.3e}   mean |err| {err.mean():.3e}"
-          f"   |err|/sigma {err.mean()/sig.mean():.1f}x")
-    print(f"    {'h':>5s} {'cov +-1s':>10s} {'dev':>8s} {'cov +-2s':>10s} {'dev':>8s} {'mean sigma':>12s}")
+          f"   |err|/sigma {_rr:,.1f}x [{_rc[0]:,.1f}, {_rc[1]:,.1f}]"
+          f"   ({rec['n_seeds']} seeds x {rec['n_trajectories']} trajectories)")
+    print(f"    {'h':>5s} {'cov +-1s [95% CI]':>26s} {'dev':>8s} {'cov +-2s [95% CI]':>26s} {'dev':>8s} {'mean sigma':>12s}")
+    zS=errS/np.maximum(sigS,1e-30)
     for h in HS:
         c1=float((z[:,:h]<=1).mean()); c2=float((z[:,:h]<=2).mean())
-        rec["coverage"][h]={"pm1":c1,"pm2":c2,"dev1":c1-0.683,"dev2":c2-0.954}
-        print(f"    {h:>5d} {100*c1:>9.2f}% {100*(c1-0.683):>+7.1f} {100*c2:>9.2f}%"
+        rec["coverage"][h]={"pm1":c1,"pm2":c2,"dev1":c1-0.683,"dev2":c2-0.954,
+                            "pm1_ci":_ci((zS[:,:,:h]<=1).mean(axis=(2,3))),
+                            "pm2_ci":_ci((zS[:,:,:h]<=2).mean(axis=(2,3)))}
+        k1,k2=rec["coverage"][h]["pm1_ci"],rec["coverage"][h]["pm2_ci"]
+        print(f"    {h:>5d} {f'{100*c1:.2f}% [{100*k1[0]:.2f}, {100*k1[1]:.2f}]':>26s}"
+              f" {100*(c1-0.683):>+7.1f} {f'{100*c2:.2f}% [{100*k2[0]:.2f}, {100*k2[1]:.2f}]':>26s}"
               f" {100*(c2-0.954):>+7.1f} {sig[:,:h].mean():>12.3e}")
     for gn,cols in GROUPS:
         c=list(cols)

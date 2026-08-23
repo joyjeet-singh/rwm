@@ -6,6 +6,7 @@ calibrated sigma head, and the card has to say so where someone will read it bef
 using the weights, not only in the paper.
 """
 import hashlib
+import re
 import json
 import os
 import sys
@@ -49,6 +50,12 @@ def sha256(p):
 
 def main():
     cal = json.load(open(os.path.join(R.RESULTS, "task1_calibration.json")))
+    _e5 = json.load(open(os.path.join(R.RESULTS, "task_d3_ens5.json")))
+    E5A = _e5.get("aleatoric_calibration")
+    E5E = _e5.get("calibration")
+    NOM1 = f'{100 * json.load(open(os.path.join(R.RESULTS, "v3_metric_definitions.json")))["coverage"]["nominal"]["pm1"]:.1f}'
+    DEPLOY_H = json.load(open(os.path.join(R.RESULTS, "v2_deployment_horizon.json"))
+                         )["verdict"]["deployment_horizon_is"]
     N = json.load(open(os.path.join(R.RESULTS, "paper_numbers.json")))
     v = lambda k: N[k]["value"]  # noqa: E731
 
@@ -106,15 +113,28 @@ def main():
     A("**These models' predicted standard deviation is not a usable uncertainty estimate.**")
     A("It is not a matter of degree. Measured against realised error on held-out episodes:")
     A("")
-    A(r"| checkpoint | mean \|error\| / mean σ | coverage at ±1σ | a calibrated model |")
+    A(r"| checkpoint | mean \|error\| / mean σ [95% CI] | coverage at ±1σ [95% CI] "
+      r"| a calibrated model |")
     A("|---|---|---|---|")
     for lab, key in (("autoregressive (mse)", "faithful (mse)"),
                      ("corrected objective (nll)", "corrected (nll)"),
                      ("teacher-forced", "teacher-forced armB"),
                      ("*released reference checkpoint, for comparison*", "released ckpt")):
         m = cal[key]
-        A(f"| {lab} | {m['ratio_err_over_sigma']:,.0f}× | "
-          f"{100*m['coverage']['1']['pm1']:.2f}% | 68.3% |")
+        rc = m["ratio_err_over_sigma_ci"]
+        cc = m["coverage"]["1"]["pm1_ci"]
+        A(f"| {lab} | {m['ratio_err_over_sigma']:,.0f}× "
+          f"[{rc[0]:,.0f}, {rc[1]:,.0f}] | "
+          f"{100*m['coverage']['1']['pm1']:.2f}% "
+          f"[{100*cc[0]:.2f}, {100*cc[1]:.2f}] | {NOM1}% |")
+    A("")
+    A(f"Those are the ALEATORIC term, at one forecast step. The quantity the follow-up's method "
+      f"actually penalises rewards with is the EPISTEMIC one, and on the released "
+      f"{v('b2_members')}-member checkpoint it is {v('d1n_epi_ratio_h100')}× "
+      f"[{v('d1n_epi_ratio_ci_h100')}] out at h = {DEPLOY_H} — the horizon the method's own "
+      f"imagination rollouts run to — with {v('d1n_epi_cov1_h100')}% coverage at ±1σ. Our "
+      f"ensemble-5 arms reach {v('e5_ratio_h100')}× [{v('e5_ratio_ci_h100')}] on the same "
+      f"measurement. Better, and not calibrated.")
     A("")
     A("The cause is structural, not a training accident: the state loss is squared error on a")
     A("reparameterised sample with no log-σ term, so its optimum is σ = 0, and the bound term that")
@@ -178,14 +198,41 @@ def main():
             A(f"- source: `runs/{path}`")
             A(f"- size: {size:,} bytes")
             A(f"- sha256: `{digest}`")
-        m = cal.get(calkey)
-        if m:
-            # task1_calibration.py measures weights_2500.pt. Attaching that figure to a
-            # 10,000-iteration checkpoint would mis-attribute it, so say which it is.
-            at = "2,500" if "2500" in path else "2,500 (this arm; not re-measured at 10,000)"
-            A(f"- σ calibration, measured at iteration {at}: "
-              f"{m['ratio_err_over_sigma']:,.0f}× overconfident, "
-              f"coverage {100*m['coverage']['1']['pm1']:.2f}% at ±1σ (h=1)")
+        # The ens5 arms get their OWN aleatoric calibration, not the ens1 arm's.
+        #
+        # All three autoregressive-ens5-* entries used to carry "52x overconfident,
+        # coverage 11.67%" -- the ens1 Arm A figure pasted onto three different
+        # models, and unlike the 10k entries it carried no "not re-measured"
+        # caveat. task_d3_ens5.py now measures each arm's own aleatoric sigma on
+        # the same rollouts it already computes, so the number is measured rather
+        # than inherited or caveated.
+        seed = None
+        if "_ens5" in path:
+            seed = int(re.search(r"seed(\d+)_ens5", path).group(1))
+        if seed is not None and E5A:
+            r1 = next(r for r in E5A["1"]["per_seed"] if r["seed"] == seed)
+            rD = next(r for r in E5A[str(DEPLOY_H)]["per_seed"] if r["seed"] == seed)
+            A(f"- σ calibration (aleatoric), measured on THIS arm at iteration 2,500: "
+              f"{r1['ratio_err_over_sigma']:,.1f}× overconfident with "
+              f"{100*r1['coverage_pm1']:.2f}% coverage at ±1σ (h=1), and "
+              f"{rD['ratio_err_over_sigma']:,.1f}× with "
+              f"{100*rD['coverage_pm1']:.2f}% at h={DEPLOY_H}")
+            e1 = E5E["1"]["per_seed"]; eD = E5E[str(DEPLOY_H)]["per_seed"]
+            q1 = next(r for r in e1 if r["seed"] == seed)
+            qD = next(r for r in eD if r["seed"] == seed)
+            A(f"- σ calibration (epistemic — the quantity the method penalises with): "
+              f"{q1['ratio_err_over_sigma']:,.1f}× at h=1 and "
+              f"{qD['ratio_err_over_sigma']:,.1f}× at h={DEPLOY_H}, coverage "
+              f"{100*qD['coverage_pm1']:.2f}% at ±1σ")
+        else:
+            m = cal.get(calkey)
+            if m:
+                # task1_calibration.py measures weights_2500.pt. Attaching that figure to a
+                # 10,000-iteration checkpoint would mis-attribute it, so say which it is.
+                at = "2,500" if "2500" in path else "2,500 (this arm; not re-measured at 10,000)"
+                A(f"- σ calibration, measured at iteration {at}: "
+                  f"{m['ratio_err_over_sigma']:,.0f}× overconfident, "
+                  f"coverage {100*m['coverage']['1']['pm1']:.2f}% at ±1σ (h=1)")
         A("")
     A("## The result these support")
     A("")

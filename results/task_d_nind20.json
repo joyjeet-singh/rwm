@@ -32,6 +32,23 @@
         "ratio_err_over_sigma": 1827.315813711484,
         "coverage_pm1": 0.0011111111111111111,
         "coverage_pm2": 0.0011111111111111111,
+        "ratio_err_over_sigma_ci": [
+          915.4737686069586,
+          3110.4360300429166
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.0,
+          0.003333333333333333
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.0,
+          0.003333333333333333
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 7,
         "corr_mean": -0.14491811736206808
@@ -42,6 +59,23 @@
         "ratio_err_over_sigma": 8.30435143196931,
         "coverage_pm1": 0.1622222222222222,
         "coverage_pm2": 0.3011111111111111,
+        "ratio_err_over_sigma_ci": [
+          6.090629309700047,
+          9.6975805135728
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.13444444444444442,
+          0.18888888888888888
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.2577777777777777,
+          0.3433333333333334
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 44,
         "corr_mean": 0.6616493150620982
@@ -52,6 +86,23 @@
         "ratio_err_over_sigma": 8.304210219787517,
         "coverage_pm1": 0.1622222222222222,
         "coverage_pm2": 0.3011111111111111,
+        "ratio_err_over_sigma_ci": [
+          6.0904399464174865,
+          9.697485014314985
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.13444444444444442,
+          0.18888888888888888
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.2577777777777777,
+          0.3433333333333334
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 44,
         "corr_mean": 0.6616505208172327
@@ -64,6 +115,23 @@
         "ratio_err_over_sigma": 3033.74148728726,
         "coverage_pm1": 0.0008333333333333334,
         "coverage_pm2": 0.0015277777777777779,
+        "ratio_err_over_sigma_ci": [
+          1638.2465935548864,
+          4848.5886118176795
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.0002777777777777778,
+          0.0015277777777777779
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.0005555555555555556,
+          0.002777777777777778
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 25,
         "corr_mean": 0.046816381471857266
@@ -74,6 +142,23 @@
         "ratio_err_over_sigma": 15.115970159605686,
         "coverage_pm1": 0.09986111111111111,
         "coverage_pm2": 0.1976388888888889,
+        "ratio_err_over_sigma_ci": [
+          10.269380071121038,
+          19.18167977581858
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.08597222222222224,
+          0.11319444444444444
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.17055555555555554,
+          0.2223611111111111
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.42742648407057937
@@ -84,6 +169,23 @@
         "ratio_err_over_sigma": 15.115692453624561,
         "coverage_pm1": 0.09986111111111111,
         "coverage_pm2": 0.1976388888888889,
+        "ratio_err_over_sigma_ci": [
+          10.269111624194673,
+          19.18138743452741
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.08597222222222224,
+          0.11319444444444444
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.17055555555555554,
+          0.2223611111111111
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.42742607759168944
@@ -96,6 +198,23 @@
         "ratio_err_over_sigma": 4525.165373850021,
         "coverage_pm1": 0.0006597222222222222,
         "coverage_pm2": 0.0010763888888888889,
+        "ratio_err_over_sigma_ci": [
+          2491.899250226231,
+          7195.636381666216
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.00034722222222222224,
+          0.0010069444444444442
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.0005902777777777779,
+          0.001597222222222222
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 0,
         "corr_mean": -0.185201151447878
@@ -106,6 +225,23 @@
         "ratio_err_over_sigma": 22.603090852247888,
         "coverage_pm1": 0.06954861111111112,
         "coverage_pm2": 0.13680555555555557,
+        "ratio_err_over_sigma_ci": [
+          15.457085070988688,
+          28.740498999064716
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.05989583333333333,
+          0.07854166666666668
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.11815885416666666,
+          0.15409722222222222
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.4256587492085992
@@ -116,9 +252,109 @@
         "ratio_err_over_sigma": 22.602681000112952,
         "coverage_pm1": 0.06954861111111112,
         "coverage_pm2": 0.13684027777777777,
+        "ratio_err_over_sigma_ci": [
+          15.456700252585318,
+          28.74008858526471
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.05989583333333333,
+          0.07854166666666668
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.11815972222222222,
+          0.15413194444444445
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.42565830884303374
+      }
+    },
+    "100": {
+      "aleatoric": {
+        "mean_sigma": 5.7621582289054155e-05,
+        "mean_abs_err": 0.6731757156239732,
+        "ratio_err_over_sigma": 11682.700975600424,
+        "coverage_pm1": 0.00036666666666666667,
+        "coverage_pm2": 0.0005555555555555556,
+        "ratio_err_over_sigma_ci": [
+          7969.920781322959,
+          15845.50925926002
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.00022222222222222223,
+          0.0005333333333333334
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.0003222222222222223,
+          0.0008111111111111112
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
+        "n_finite_corr": 45,
+        "n_positive": 38,
+        "corr_mean": 0.03797839612049942
+      },
+      "epistemic": {
+        "mean_sigma": 0.020138476670634474,
+        "mean_abs_err": 0.6731757156239732,
+        "ratio_err_over_sigma": 33.427340440579826,
+        "coverage_pm1": 0.0461,
+        "coverage_pm2": 0.09265555555555556,
+        "ratio_err_over_sigma_ci": [
+          28.653456485486565,
+          39.04203567337152
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.041199722222222214,
+          0.05088888888888889
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.08303333333333333,
+          0.10221138888888887
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.35121178560970256
+      },
+      "total": {
+        "mean_sigma": 0.02013864701375081,
+        "mean_abs_err": 0.6731757156239732,
+        "ratio_err_over_sigma": 33.42705769480562,
+        "coverage_pm1": 0.0461,
+        "coverage_pm2": 0.09266666666666666,
+        "ratio_err_over_sigma_ci": [
+          28.653179232589025,
+          39.04169432479715
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.041199722222222214,
+          0.05088888888888889
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.08303333333333333,
+          0.10223333333333333
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
+        "n_finite_corr": 45,
+        "n_positive": 45,
+        "corr_mean": 0.3512110114647255
       }
     },
     "128": {
@@ -128,6 +364,23 @@
         "ratio_err_over_sigma": 14934.063670620557,
         "coverage_pm1": 0.00028645833333333333,
         "coverage_pm2": 0.00045138888888888887,
+        "ratio_err_over_sigma_ci": [
+          10563.629627362461,
+          19700.00260665528
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.0001736111111111111,
+          0.0004166666666666666
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.00026041666666666666,
+          0.0006684027777777776
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 28,
         "corr_mean": 0.005585774463633368
@@ -138,6 +391,23 @@
         "ratio_err_over_sigma": 34.160179382515274,
         "coverage_pm1": 0.04372395833333333,
         "coverage_pm2": 0.08751736111111111,
+        "ratio_err_over_sigma_ci": [
+          30.609903471151572,
+          38.1806704152378
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.039617838541666665,
+          0.04806423611111111
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.07990451388888889,
+          0.09552105034722222
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.3377729103069927
@@ -148,6 +418,23 @@
         "ratio_err_over_sigma": 34.159966590948244,
         "coverage_pm1": 0.04372395833333333,
         "coverage_pm2": 0.08752604166666667,
+        "ratio_err_over_sigma_ci": [
+          30.609713252491723,
+          38.18034795880836
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.039617838541666665,
+          0.04806423611111111
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.07991297743055556,
+          0.09552973090277776
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.3377722425271824
@@ -160,6 +447,23 @@
         "ratio_err_over_sigma": 20668.601428164817,
         "coverage_pm1": 0.000196256038647343,
         "coverage_pm2": 0.0003079710144927536,
+        "ratio_err_over_sigma_ci": [
+          15665.785852320818,
+          25687.891825458
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.00012379227053140097,
+          0.0002777777777777777
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.00019927536231884057,
+          0.00042572463768115933
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 0,
         "corr_mean": -0.03978073436747495
@@ -170,6 +474,23 @@
         "ratio_err_over_sigma": 34.44684216302222,
         "coverage_pm1": 0.035905797101449276,
         "coverage_pm2": 0.0718780193236715,
+        "ratio_err_over_sigma_ci": [
+          29.78763080931341,
+          40.27771402335079
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.03268719806763285,
+          0.03923309178743962
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.06600528381642512,
+          0.07807669082125604
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.29849725892856455
@@ -180,6 +501,23 @@
         "ratio_err_over_sigma": 34.446710531491256,
         "coverage_pm1": 0.035905797101449276,
         "coverage_pm2": 0.07188405797101449,
+        "ratio_err_over_sigma_ci": [
+          29.78756278046209,
+          40.277504065205974
+        ],
+        "ratio_err_over_sigma_n_boot_finite": 20000,
+        "coverage_pm1_ci": [
+          0.03268719806763285,
+          0.03923309178743962
+        ],
+        "coverage_pm1_n_boot_finite": 20000,
+        "coverage_pm2_ci": [
+          0.0660054347826087,
+          0.0780798611111111
+        ],
+        "coverage_pm2_n_boot_finite": 20000,
+        "bootstrap_unit": "whole trajectory (M-27)",
+        "n_trajectories_resampled": 20,
         "n_finite_corr": 45,
         "n_positive": 45,
         "corr_mean": 0.29849671972201747
@@ -279,6 +617,38 @@
       "paired_diff": 0.5607090598639064,
       "paired_ci_lo": 0.29830039701004313,
       "paired_ci_hi": 0.6739795568337537,
+      "paired_n_boot_finite": 20000,
+      "paired_excludes_zero": true,
+      "index_wins": false
+    },
+    "100": {
+      "horizon": 100,
+      "n_steps": 100,
+      "n_independent": 20,
+      "r_index": 0.4902248581803412,
+      "r_epistemic": 0.6278529855604081,
+      "r_partial": 0.5840283203484287,
+      "ci": {
+        "index": {
+          "lo": 0.3937766508571836,
+          "hi": 0.6041536517470018,
+          "n_boot_finite": 20000
+        },
+        "epistemic": {
+          "lo": 0.5736721468633487,
+          "hi": 0.8390461930935389,
+          "n_boot_finite": 20000
+        },
+        "partial": {
+          "lo": 0.5157919918977188,
+          "hi": 0.8149755889855921,
+          "n_boot_finite": 20000
+        }
+      },
+      "marginal_ci_overlap": true,
+      "paired_diff": 0.1376281273800669,
+      "paired_ci_lo": 0.03389555225007991,
+      "paired_ci_hi": 0.3620577901315389,
       "paired_n_boot_finite": 20000,
       "paired_excludes_zero": true,
       "index_wins": false
