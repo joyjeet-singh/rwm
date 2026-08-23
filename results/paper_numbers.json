@@ -4305,7 +4305,7 @@
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 28
+    "value": 29
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
@@ -4313,7 +4313,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "5,999"
+    "value": "6,073"
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
@@ -4345,11 +4345,11 @@
   },
   "ver_timing": {
     "source": "results/verify_reproduction.json",
-    "value": "3,973"
+    "value": "4,282"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "5,999"
+    "value": "6,073"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

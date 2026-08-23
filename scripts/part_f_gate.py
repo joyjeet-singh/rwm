@@ -163,8 +163,10 @@ def main():
     N = N.get("values", N)
     abstract = T.split("## Abstract")[1].split("\n## ")[0]
     body = T.split("\n## 1.")[1]
-    ak = set(re.findall(r"\{\{(\w+)\}\}", abstract))
-    bk = set(re.findall(r"\{\{(\w+)\}\}", body))
+    # {{FIGURES}} is a placement marker, not a value, and has no entry in
+    # paper_numbers.json. It entered the body when Appendix D was added.
+    ak = set(re.findall(r"\{\{(\w+)\}\}", abstract)) - {"FIGURES"}
+    bk = set(re.findall(r"\{\{(\w+)\}\}", body)) - {"FIGURES"}
     OKA = {"n_defects", "n_retract_framing_word", "m23_n_episodes", "m23_n_episodes_positive",
            "unreach_recalled_iters", "unreach_factor"}
     orphan = []

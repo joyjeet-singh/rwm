@@ -138,6 +138,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "155563e54f91": {
+    "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "17cf243e4b5a": {
     "note": "interpretive-layer pass: assertion re-verified against the named artifact, including arena, sign, extremum and overlap relations",
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
@@ -507,6 +512,11 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "5265dc2e8ecf": {
+    "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "537e14ef90d2": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
@@ -807,6 +817,11 @@
     "sample_size": "-",
     "verdict": "SUPPORTED"
   },
+  "846a818fed6d": {
+    "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use",
+    "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
   "84b8f57e0683": {
     "note": "scripts/verify_reproduction.py time_bounded(): excludes when iterations_run < config.iters; step4_4_overfit_b32lr1e3.json (2001 of a 2000 cap) is NOT excluded and reproduces bitwise",
     "sample_size": "clean-clone comparison, 27 regenerated files",
@@ -832,6 +847,11 @@
   "87790a27dd92": {
     "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
     "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "8850f26d55c2": {
+    "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "89791e359c69": {
@@ -1158,6 +1178,11 @@
   "ccf8cda42bd8": {
     "note": "Framing or scoping statement; the numbers it refers to are backed adjacently.",
     "sample_size": "-",
+    "verdict": "SUPPORTED"
+  },
+  "cdec0ce5dadd": {
+    "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use",
+    "sample_size": "",
     "verdict": "SUPPORTED"
   },
   "cf8a27d9770a": {

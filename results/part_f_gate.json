@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "19 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "22 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -16,19 +16,19 @@
       "n": 3,
       "name": "no hand-typed numbers",
       "pass": true,
-      "detail": "54 distinct numerals typed; unexplained: none"
+      "detail": "58 distinct numerals typed; unexplained: none"
     },
     {
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
       "pass": true,
-      "detail": "verify_reproduction.json vs the clone run at clone3: 28 files regenerated, 5,999 values, 5,999 identical, 0 differing; carried-in partition present (705,856 copied values held out); artifact post-dates the regeneration marker"
+      "detail": "verify_reproduction.json vs the clone run at clone4: 29 files regenerated, 6,073 values, 6,073 identical, 0 differing; carried-in partition present (762,418 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "63 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
+      "detail": "82 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
     },
     {
       "n": 6,

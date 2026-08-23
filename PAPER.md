@@ -255,8 +255,9 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.3% inside
 | teacher-forced Arm B | 315× | 12.96% | 0.56% |
 | released checkpoint | 7,878× | 0.56% | 0.04% |
 
-On the aleatoric head every model is overconfident by between one and four orders of magnitude
-(Figure 1) — that is the quantity §5.1 shows the method discards.
+**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1); that is the quantity §5.1 shows the method discards.
+
+*A note on the released checkpoint's row, so the next table does not read as a contradiction.* Its 7,878× is measured on those same 4 trajectories, for comparability with the three arms beside it. The released checkpoint trained on all ten episodes, so its own best-sampled figure is the 20,669× below, at n_independent = 20. Both are correct; they are different arenas, and neither is a held-out measurement *of the released checkpoint*, which has no held-out arena in this dataset.
 
 **The quantity the method does use is also uncalibrated.** On the released 5-member checkpoint over all 10 episodes, n_independent = **20** non-overlapping 400-step trajectories. We use all ten rather than the held-out pair here because the released checkpoint trained on all ten, so restricting it to two buys no independence and costs four fifths of the sample — the same argument this paper makes about that checkpoint elsewhere. The held-out-only version at n_independent = 4 is in the supplementary material (`results/task_b2_epistemic.json`). The epistemic column agrees in direction with this one at all 5 of 5 horizons; the aleatoric column agrees at 4 of 5 — it flips sign at h=8, where both readings sit close enough to chance that the sign is not meaningful in either. Where the two tables differ materially we say so.
 
@@ -595,8 +596,8 @@ the work.
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
 **Reproducibility, and a build that checks its own prose.**
-`./reproduce.sh --quick --force` regenerates 28 artifact files and 5,999
-numeric values from a clean clone, 5,999 of them bitwise identical (100.00%),
+`./reproduce.sh --quick --force` regenerates 29 artifact files and 6,073
+numeric values from a clean clone, 6,073 of them bitwise identical (100.00%),
 0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **21 comparative claims** across 8 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 20 of 20 caught. **Appendix D gives the argument, the kinds, the self-test, two defects found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
@@ -605,7 +606,7 @@ numeric values from a clean clone, 5,999 of them bitwise identical (100.00%),
 
 Six things a practitioner can apply without reading the rest of this paper.
 
-**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it correlates +0.994 [+0.918, +0.999] with realised error — very nearly a perfect ranking. Over the full 20-trajectory rollout it falls to +0.605 [+0.545, +0.694]. That decay is the useful part: the signal is excellent where you can check it cheaply and merely good where you most need it. It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at 4 of 4, and it retains +0.596 once that index is partialled out (§5.6). That is a real signal, not a re-encoding of how far ahead you are looking: holding forecast depth exactly constant it still correlates +0.739 with error, at 368 of 368 steps (§5.6). But it is 34.4× too small to be an interval, and a risk gate or safety margin that reads σ as a distance is not supported at any horizon.
+**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it correlates +0.994 [+0.918, +0.999] with realised error — very nearly a perfect ranking. Over the full 20-trajectory rollout it falls to +0.605 [+0.545, +0.694]. That decay is the useful part: the signal is excellent where you can check it cheaply and merely good where you most need it. It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at 4 of 4, and it retains +0.596 once that index is partialled out (§5.6). That is a real signal, not a re-encoding of how far ahead you are looking: holding forecast depth exactly constant it still correlates +0.739 with error, at 368 of 368 steps (§5.6). But it is too small to be an interval by a wide margin — 34.4× on the released checkpoint and 13.0× on the ensemble-5 arms we trained — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
 
 **If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within 10 points of nominal on 10 of 10 held-out cells; a single global multiplier manages 2 (§5.7). The fitted multipliers span 9.31× across horizons, which is precisely why one number cannot serve.
 
@@ -808,7 +809,7 @@ surfaced because the checks were run rather than assumed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model.
 
-*The CPU budget.* 3,973 timing fields and the 586 values of
+*The CPU budget.* 4,282 timing fields and the 586 values of
 `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
 resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on
 another machine, or on this one under different load, and it records that about itself: across

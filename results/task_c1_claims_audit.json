@@ -1,7 +1,7 @@
 {
-  "n_claims": 209,
+  "n_claims": 212,
   "by_verdict": {
-    "SUPPORTED": 209
+    "SUPPORTED": 212
   },
   "claims": [
     {
@@ -947,16 +947,67 @@
       "note": "Framing or scoping statement; the numbers it refers to are backed adjacently."
     },
     {
-      "id": "59e7c5043002",
+      "id": "155563e54f91",
       "section": "5.2 The measurement",
-      "claim": "On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1) \u2014 that is the quantity \u00a75.1 shows the method discards.",
+      "claim": "All four rows are the held-out arena** \u2014 the two episodes withheld from our own arms, n_independent = {{b2_nind}} \u2014 because that is the only arena on which our arms can be scored fairly.",
+      "keys": [
+        "b2_nind"
+      ],
+      "artifacts": [
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use"
+    },
+    {
+      "id": "cdec0ce5dadd",
+      "section": "5.2 The measurement",
+      "claim": "On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1); that is the quantity \u00a75.1 shows the method discards.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
       "generated": false,
       "verdict": "SUPPORTED",
       "sample_size": "",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use"
+    },
+    {
+      "id": "8850f26d55c2",
+      "section": "5.2 The measurement",
+      "claim": "A note on the released checkpoint's row, so the next table does not read as a contradiction.* Its {{cal_rel_ratio}}\u00d7 is measured on those same {{b2_nind}} trajectories, for comparability with the three arms beside it.",
+      "keys": [
+        "cal_rel_ratio",
+        "b2_nind"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json",
+        "results/task_b2_epistemic.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use"
+    },
+    {
+      "id": "846a818fed6d",
+      "section": "5.2 The measurement",
+      "claim": "The released checkpoint trained on all ten episodes, so its own best-sampled figure is the {{d1n_alea_ratio_h368}}\u00d7 below, at n_independent = {{d1n_nind}}.",
+      "keys": [
+        "d1n_alea_ratio_h368",
+        "d1n_nind"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "",
+      "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use"
     },
     {
       "id": "37beb7c04f41",
@@ -2766,20 +2817,22 @@
       "note": "checked against results/task_d2b_robustness.json controls block"
     },
     {
-      "id": "580d222d4346",
+      "id": "5265dc2e8ecf",
       "section": "9. Actionable lessons",
-      "claim": "But it is {{d1n_epi_ratio_h368}}\u00d7 too small to be an interval, and a risk gate or safety margin that reads \u03c3 as a distance is not supported at any horizon.",
+      "claim": "But it is too small to be an interval by a wide margin \u2014 {{d1n_epi_ratio_h368}}\u00d7 on the released checkpoint and {{e5_ratio_h368}}\u00d7 on the ensemble-5 arms we trained \u2014 and a risk gate or safety margin that reads \u03c3 as a distance is not supported at any horizon, on either.",
       "keys": [
-        "d1n_epi_ratio_h368"
+        "d1n_epi_ratio_h368",
+        "e5_ratio_h368"
       ],
       "artifacts": [
+        "results/task_d3_ens5.json",
         "results/task_d_nind20.json"
       ],
-      "n_keys": 1,
+      "n_keys": 2,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "",
+      "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use"
     },
     {
       "id": "86ddd35f09c3",
