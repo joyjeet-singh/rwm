@@ -1,0 +1,15 @@
+C2 — DATA BUDGET
+============================================================================================
+  training episodes [0, 2, 3, 4, 5, 6, 7, 9]
+    rows                             7,999
+    episode boundaries                   8  (contribute no transition)
+    DISTINCT TRANSITIONS             7,991
+    training windows                 7,687  (overlapping; not a data count)
+    window draws per run           640,000  (iterations x batch, with replacement)
+  whole dataset                      9,989 transitions over 9,999 rows
+
+  reference (Table I)            6,000,000 state transitions
+  ratio                                751x more than ours
+  ours as a fraction                 0.133% of the reference budget
+
+  wrote results/task_c2_data_budget.json

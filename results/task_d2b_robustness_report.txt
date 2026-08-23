@@ -1,0 +1,21 @@
+D2b — IS THE FORECAST-INDEX CONTROL ADEQUATE?
+====================================================================================================
+  released checkpoint, n_independent = 20, 368 forecast steps
+
+  raw r(disagreement, error) = +0.605
+  raw r(step index,   error) = +0.269
+
+  control           r(disagr, err . index)    r(index, err . disagr)
+  ----------------------------------------------------------------
+  linear           +0.596 [+0.526, +0.688]                     0.235
+  log              +0.589 [+0.512, +0.688]                     0.185
+  cubic            +0.582 [+0.495, +0.676]                     0.171
+  spearman         +0.906 [+0.856, +0.921]                     0.264
+  within-step      +0.739 [+0.711, +0.852]       n/a by construction
+
+  within-step: positive on 368 of 368 forecast steps, median r = +0.737
+
+  weakest partial across all controls: +0.582
+  survives every control: True
+
+  wrote results/task_d2b_robustness.json

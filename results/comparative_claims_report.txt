@@ -1,0 +1,73 @@
+PART C — COMPARATIVE CLAIM CHECK
+========================================================================================================
+  PASS  C1.1   overlap   §6.7                [0.42129,0.64340] vs [0.60396,0.84563] -> overlap, expected overlap
+  PASS  C1.2   overlap   §6.7                [0.10634,0.43058] vs [0.54457,0.69396] -> disjoint, expected disjoint
+  PASS  C2.1   extremum  §6.8                max of 24 is aleatoric|h=100|ep8 (0.092078); paper names aleatoric|h=100|ep8 (0.092078)
+  PASS  C2.2   extremum  §6.7                min of 4 is h=128 (0.010697); paper names h=128 (0.010697)
+  PASS  C3.1   sign      §6.7                0.60534 -> 0.59571 is a fall of 0.00963, text says fall
+  PASS  C3.2   sign      §6.7                0.60534 -> 0.59571 is a fall of 0.00963, text says fall
+  PASS  C3.3   sign      §6.7                0.60534 -> 0.73919 is a rise of 0.13386, text says rise
+  PASS  C4.1   orders    §6.2 / 13           ratio 600.0x quoted directly, not as orders (log10=2.78)
+  PASS  C4.2   orders    §6.6                ratio 9.95e+12, round(log10)=13, text says 13
+  PASS  C5.1   cell      §13                 arenas.all-episodes.models.released aleatoric.368 -> 0/45, text cites 0/45
+  PASS  C5.2   cell      §6.6                arenas.out-of-sample.models.released aleatoric.368 -> 20/45, text cites 20/45
+  PASS  C5.3   cell      §6.2                arenas.all-episodes.models.released EPISTEMIC.1 -> 44/45, text cites 44/45
+  PASS  C2.3   extremum  §6.6                max of 4 is teacher-forced armB (0.25686); paper names teacher-forced armB (0.25686)
+  PASS  C2.4   extremum  §6.7                max of 5 is h=1 (0.99391); paper names h=1 (0.99391)
+  PASS  C2.5   extremum  §6.2                min of 25 is faithful (mse) h=368 (0.0042); paper names faithful (mse) h=368 (0.0042)
+  PASS  C3.4   compare   §6.6                0.150935 vs 0.256859 -> lt, text says lt
+  PASS  C3.5   compare   §6.6                0.0416667 vs 0.002 -> gt, text says gt
+  PASS  C3.6   compare   §10                 0.993913 vs 0.605338 -> gt, text says gt
+  PASS  C7.1   count-consistency §1 / abstract / 9   numbered retractions = 6 (6/Six/six); 3/3 sites agree
+  PASS  C7.2   count-consistency §1 / abstract / 9   framing retractions = 2 (2/Two/two); 2/2 sites agree
+  PASS  C6.1   relvar    §5                  relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 2.0x
+  PASS  C8.1   horizon-label §6.2                horizon 100; expected "33.4" within 100 chars of "at h = 100, the method's own imagination"; found
+  PASS  C8.2   horizon-label §3.1                horizon 100; expected "100" within 420 chars of "is the method's own imagination rollout "; found
+  PASS  C8.3   horizon-forbidden §whole paper        3 forbidden horizon labels checked; none present
+  PASS  C9.1   count-dependence §abstract / 10 / 13 every clean k-of-k count carries an interval or a not-independent footnote
+  PASS  C10.1  retraction-consistency §8 / README         retracted assertion "The released checkpoint cannot have come fro" absent from all 3 files
+  PASS  C10.2  retraction-consistency §6.6 / README       retracted assertion "sign test on 45 dimensions" absent from all 3 files
+  PASS  C11.1  cross-artifact-sync §README             3/3 headline values present in README.md
+  PASS  C11.2  cross-artifact-sync §MODEL_CARD         2/2 headline values present in MODEL_CARD.md
+  PASS  C12.1  abstract-budget §abstract           248 words (max 250), 6 numerals (max 6) ['4.61', '33.4', '4.61', '0.', '0.419', '2']
+  PASS  C13.1  interval-required §6.2                4/4 quoted quantities carry their interval
+  PASS  C13.2  interval-required §6.2                3/3 quoted quantities carry their interval
+========================================================================================================
+  32/32 comparative claims verified
+
+  SELF-TEST — every check must FAIL when its expectation is corrupted
+  ----------------------------------------------------------------------------------------------------
+  caught C1.1   [0.42129,0.64340] vs [0.60396,0.84563] -> overlap, expected disjoint
+  caught C1.2   [0.10634,0.43058] vs [0.54457,0.69396] -> disjoint, expected overlap
+  caught C2.1   max of 24 is aleatoric|h=100|ep8 (0.092078); paper names aleatoric|h=128|ep8 (0.082838)
+  caught C2.2   min of 4 is h=128 (0.010697); paper names h=368 (0.14688)
+  caught C3.1   0.60534 -> 0.59571 is a fall of 0.00963, text says rise
+  caught C3.2   0.60534 -> 0.59571 is a fall of 0.00963, text says rise
+  caught C3.3   0.60534 -> 0.73919 is a rise of 0.13386, text says fall
+  n/a   C4.1   quotes the ratio directly — nothing to corrupt
+  caught C4.2   ratio 9.95e+12, round(log10)=13, text says 14
+  caught C5.1   arenas.all-episodes.models.released aleatoric.368 -> 0/45, text cites 1/45
+  caught C5.2   arenas.out-of-sample.models.released aleatoric.368 -> 20/45, text cites 21/45
+  caught C5.3   arenas.all-episodes.models.released EPISTEMIC.1 -> 44/45, text cites 45/45
+  caught C2.3   max of 4 is teacher-forced armB (0.25686); paper names faithful (mse) (0.033773)
+  caught C2.4   max of 5 is h=1 (0.99391); paper names h=8 (0.73757)
+  caught C2.5   min of 25 is faithful (mse) h=368 (0.0042); paper names released EPISTEMIC h=1 (0.00605)
+  caught C3.4   0.150935 vs 0.256859 -> lt, text says gt
+  caught C3.5   0.0416667 vs 0.002 -> gt, text says lt
+  caught C3.6   0.993913 vs 0.605338 -> gt, text says lt
+  caught C7.1   numbered retractions = 7 (7/Seven/seven); 0/3 sites agree; disagreeing: ['numbered claims in this work are withdrawn', 'retractions of our own numbered claims', 'retractions on our own evidence']
+  caught C7.2   framing retractions = 3 (3/Three/three); 0/2 sites agree; disagreeing: ['further retractions withdraw framings rather than numbers', 'that withdraw framings rather than numbers']
+  caught C6.1   relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 200.0x
+  caught C8.1   horizon 100; expected "34.4" within 100 chars of "at h = 100, the method's own imagination"; ABSENT
+  caught C8.2   horizon 100; expected "100.0000" within 420 chars of "is the method's own imagination rollout "; ABSENT
+  caught C8.3   4 forbidden horizon labels checked; PRESENT: ['open-loop diagnostic']
+  caught C9.1   section 'Nonexistent section' not found
+  caught C10.1  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'README.md', 'MODEL_CARD.md']
+  caught C10.2  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'README.md', 'MODEL_CARD.md']
+  caught C11.1  1/4 headline values present in requirements.txt; missing ['ver_values', 'ver_files', 'd1_ratio']
+  caught C11.2  0/3 headline values present in requirements.txt; missing ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'd1_ratio']
+  caught C12.1  248 words (max 10), 6 numerals (max 6) ['4.61', '33.4', '4.61', '0.', '0.419', '2']
+  caught C13.1  4/5 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
+  caught C13.2  3/4 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
+  ----------------------------------------------------------------------------------------------------
+  31/31 corruptions caught
