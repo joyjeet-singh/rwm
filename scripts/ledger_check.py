@@ -40,14 +40,27 @@ print(f"  entries parsed: {len(rows)}   tagged CONTRIB: {len(contrib)}")
 hard={"SRC","DATA","RUN"}
 flagged=[r for r in contrib if not (set(r["evidence"]) & hard)]
 missing=[]
+pending=[]
 for r in rows:
+    # A rule that is pre-registered but not yet discharged names the artifact that
+    # WILL discharge it, and that artifact does not exist yet -- that is the whole
+    # point of pre-registering. Such an entry is listed as pending rather than
+    # flagged as a blocker; anything else would make it impossible to commit a rule
+    # before the data, which is the standard this project holds itself to (M-24,
+    # M-43, S-12). Every other entry's artifacts must exist.
+    prereg = "NOT YET DISCHARGED" in r["status"].upper()
     for a in r["artifacts"]:
-        if not os.path.exists(a): missing.append((r["id"],a))
+        if os.path.exists(a): continue
+        (pending if prereg else missing).append((r["id"],a))
 print(f"\n  CONTRIB entries lacking SRC/DATA/RUN evidence: {len(flagged)}")
 for r in flagged:
     print(f"    !! {r['id']}  evidence={r['evidence'] or 'NONE PARSED'}  {r['claim'][:60]}")
 print(f"\n  named artifacts that do not exist: {len(missing)}")
 for eid,a in missing[:20]: print(f"    !! {eid} -> {a}")
+prereg_ids=sorted({r["id"] for r in rows if "NOT YET DISCHARGED" in r["status"].upper()})
+print(f"\n  pre-registered rules not yet discharged: {len(prereg_ids)}"
+      + (f"  ({', '.join(prereg_ids)})" if prereg_ids else ""))
+for eid,a in pending: print(f"     - {eid} awaits {a}")
 
 by_id={r["id"]:r for r in rows}
 supersessions=[(r["id"],t) for r in rows for t in r["retracts"]]

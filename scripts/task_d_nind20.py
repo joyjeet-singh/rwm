@@ -42,7 +42,7 @@ import rollout_eval as E  # noqa: E402
 import rwm_metrics as MET  # noqa: E402
 import score_reference as S  # noqa: E402
 
-HORIZONS = (1, 8, 32, 128, 368)
+HORIZONS = (1, 8, 32, 100, 128, 368)
 START, LEN, N_BOOT = E.START_STEP, 400, 20000
 
 

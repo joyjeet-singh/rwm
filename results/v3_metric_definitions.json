@@ -1,0 +1,221 @@
+{
+  "constants": {
+    "config_normalisation": {
+      "citations": [
+        {
+          "cite": "robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:47",
+          "note": "the means",
+          "text": "state_data_mean: List[float] = field(default_factory=lambda: ["
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:55",
+          "note": "the stds",
+          "text": "state_data_std: List[float] = field(default_factory=lambda: ["
+        }
+      ],
+      "definition": "the config's own per-dimension mean and std, applied before any metric is taken, so every quantity here lives in the space the model predicts in"
+    },
+    "nrmse_scale": {
+      "citations": [
+        {
+          "cite": "rwm_repro/src/rwm_metrics.py:39",
+          "note": "the computation",
+          "text": "scale = norm.std(axis=0)"
+        },
+        {
+          "cite": "rwm_repro/src/rwm_metrics.py:37",
+          "note": "training rows only",
+          "text": "rows = np.isin(episode_id, list(train_episodes)) & (episode_id >= 0)"
+        },
+        {
+          "cite": "rwm_repro/src/rwm_metrics.py:41",
+          "note": "the positivity assertion",
+          "text": "assert np.all(scale > 0), \"a state dimension is constant over the training episodes\""
+        }
+      ],
+      "definition": "the standard deviation of config-normalised state dimension d, taken over the rows belonging to TRAINING episodes only",
+      "latex": "\\sigma^{\\mathrm{tr}}_{d} \\;=\\; \\operatorname{sd}\\bigl(\\{\\,\\tilde{s}_{i,d}\\;:\\; \\mathrm{episode}(i)\\in\\mathcal{E}_{\\mathrm{train}}\\,\\}\\bigr)",
+      "max": 1.3872834068795359,
+      "mean": 0.9106174287760361,
+      "min": 0.029190393432147452,
+      "n_dims": 45,
+      "properties": [
+        "computed ONCE and stored; never recomputed per timestep",
+        "never derived from held-out data, so the metric's denominator carries no information about the arena it is scored on",
+        "strictly positive by assertion, so the metric cannot go non-finite"
+      ],
+      "stored_at": "results/step4_0a_results.json -> nrmse_scale",
+      "symbol": "\\sigma^{\\mathrm{tr}}_{d}"
+    }
+  },
+  "coverage": {
+    "aggregation": "an unweighted mean over the flattened array; every triple carries equal weight, so a horizon-h figure is dominated by the deepest steps only in as much as they are more numerous, which they are not -- each step contributes equally",
+    "caution_seeds_are_not_trajectories": "in task1_calibration.py the per-seed error and sigma arrays are concatenated along axis 0 before pooling, so seeds enter the coverage average as if they were extra trajectories. That is fine for a point estimate -- it is a mean of means over a balanced design -- but it is NOT a valid resampling unit. Every interval in this paper resamples whole trajectories; pooling seed x trajectory and resampling the pooled vector narrows intervals by about sqrt(3) (M-27).",
+    "citations": [
+      {
+        "cite": "rwm_repro/scripts/task1_calibration.py:65",
+        "note": "the z statistic",
+        "text": "z=err/np.maximum(sig,1e-30)"
+      },
+      {
+        "cite": "rwm_repro/scripts/task1_calibration.py:73",
+        "note": "the coverage itself: cumulative over steps 1..h, flat mean over all axes",
+        "text": "c1=float((z[:,:h]<=1).mean()); c2=float((z[:,:h]<=2).mean())"
+      },
+      {
+        "cite": "rwm_repro/scripts/task1_calibration.py:64",
+        "note": "where seeds join the trajectory axis",
+        "text": "err=np.concatenate(E_,0); sig=np.concatenate(SG,0)          # (n*seeds, T', 45)"
+      },
+      {
+        "cite": "rwm_repro/scripts/task1_calibration.py:74",
+        "note": "the nominal it is judged against",
+        "text": "rec[\"coverage\"][h]={\"pm1\":c1,\"pm2\":c2,\"dev1\":c1-0.683,\"dev2\":c2-0.954}"
+      }
+    ],
+    "cumulative_not_pointwise": "IMPORTANT. cov(h) averages steps 1..h. It is not the coverage at step h. The same convention is used for the err/sigma ratio and for every horizon-indexed quantity in the paper.",
+    "definition_in_words": "the fraction of scalar (trajectory, forecast step, state dimension) triples whose absolute realised error is at most k times the sigma predicted for that same triple",
+    "latex": "\\mathrm{cov}_{\\pm k\\sigma}(h) \\;=\\; \\frac{1}{B\\,h\\,45}\\sum_{b=1}^{B}\\sum_{t=t_0+1}^{t_0+h}\\sum_{d=1}^{45}\\mathbf{1}\\!\\left[\\;\\frac{\\bigl|\\hat{s}^{(b)}_{t,d}-s^{(b)}_{t,d}\\bigr|}{\\sigma^{(b)}_{t,d}} \\;\\le\\; k \\;\\right]",
+    "name": "coverage at +-k sigma",
+    "nominal": {
+      "pm1": 0.6826894921370859,
+      "pm2": 0.9544997361036416,
+      "why": "z is built from an ABSOLUTE error, so z <= k is the two-sided event and the nominal is erf(k/sqrt(2)): 68.27% at k=1, 95.45% at k=2. The paper quotes these as 68.3% and 95.4%."
+    },
+    "pooling_axes_in_order": [
+      "axis 0: trajectory (and, where several seeds are scored together, seeds are CONCATENATED onto this same axis before pooling -- see the caution below)",
+      "axis 1: forecast step, taken cumulatively over steps 1..h so coverage at h is an average over the whole rollout up to h, not the value AT step h",
+      "axis 2: state dimension, all 45"
+    ],
+    "which_sigma": {
+      "aleatoric": "the mean over ensemble members of each member's predicted per-dimension sigma (system_dynamics.py:125)",
+      "epistemic": "the per-dimension standard deviation across members' mean predictions. NOTE the scalar the METHOD applies is this summed over dimensions (system_dynamics.py:126); for a per-dimension coverage the per-dimension form is the only one that types."
+    },
+    "z_statistic": "z^{(b)}_{t,d} = \\bigl|\\hat{s}^{(b)}_{t,d}-s^{(b)}_{t,d}\\bigr| / \\max(\\sigma^{(b)}_{t,d}, 10^{-30})"
+  },
+  "metrics": {
+    "nrmse_form2": {
+      "aggregation_form": "form 2: divide per dimension, then average. A mean of ratios.",
+      "citations": [
+        {
+          "cite": "rwm_repro/src/rwm_metrics.py:137",
+          "note": "",
+          "text": "\"\"\"FORM 2, retained for continuity with everything reported before M-19.\"\"\""
+        }
+      ],
+      "latex": "\\mathrm{nRMSE}^{(2)}_t \\;=\\; \\frac{1}{45}\\sum_{d=1}^{45}\\frac{\\sqrt{\\mathrm{MSE}_{t,d}}}{\\sigma^{\\mathrm{tr}}_{d}}",
+      "name": "nRMSE (form 2) -- reported only for continuity",
+      "status": "superseded as the primary aggregation by form 1 at Task 3d"
+    },
+    "nrmse_pooled": {
+      "aggregation_form": "form 1: POOL over dimensions, then divide. A ratio of means, not a mean of ratios.",
+      "citations": [
+        {
+          "cite": "rwm_repro/src/rwm_metrics.py:119",
+          "note": "the formula, as documented",
+          "text": "sqrt( mean over dims of MSE_d ) / mean over dims of scale_d"
+        },
+        {
+          "cite": "rwm_repro/src/rwm_metrics.py:133",
+          "note": "form 1, the primary aggregation",
+          "text": "return float((_np.sqrt(mse.mean(axis=1)) / sc.mean()).mean())"
+        },
+        {
+          "cite": "rwm_repro/src/rwm_metrics.py:144",
+          "note": "form 2, retained for continuity only",
+          "text": "return float((_np.sqrt(mse) / sc).mean())"
+        }
+      ],
+      "latex": "\\mathrm{nRMSE}_t \\;=\\; \\frac{\\sqrt{\\dfrac{1}{45}\\sum_{d=1}^{45}\\mathrm{MSE}_{t,d}}}{\\dfrac{1}{45}\\sum_{d=1}^{45}\\sigma^{\\mathrm{tr}}_{d}}\\quad\\text{with}\\quad \\mathrm{MSE}_{t,d}=\\frac{1}{B}\\sum_{b=1}^{B}\\bigl(\\hat{s}^{(b)}_{t,d}-s^{(b)}_{t,d}\\bigr)^{2}",
+      "name": "nRMSE (form 1, pooled) -- THE PRIMARY AGGREGATION",
+      "reading": "1.0 means no better than predicting the training mean; below 1.0 means the model carries information",
+      "what_it_is": "normalised RMSE with a denominator fixed once over the training episodes, so it cannot approach zero",
+      "why_form_1": "form 2 (mean over d of RMSE_d / scale_d) is a mean of ratios and gives whichever dimension has the smallest scale unbounded leverage. The choice between them once inverted a comparison against the released model (M-19, R-27, R-29). Form 2 is retained only for continuity with numbers reported before M-19."
+    },
+    "overconfidence_factor": {
+      "calibrated_value_of_rho": 0.7978845608028654,
+      "citations": [
+        {
+          "cite": "rwm_repro/scripts/task1_calibration.py:67",
+          "note": "ratio of means, computed once",
+          "text": "\"ratio_err_over_sigma\":float(err.mean()/sig.mean()),\"coverage\":{},\"groups\":{},"
+        }
+      ],
+      "it_is_a_ratio_of_means": "NOT a mean of ratios. mean|error| and mean sigma are each averaged over the same pooled axes first, and the ratio is taken once at the end. The mean-of-ratios form is unbounded whenever a single sigma is near zero, which is exactly the regime 5.3 puts these models in.",
+      "latex": "\\rho(h) \\;=\\; \\frac{\\operatorname{mean}_{b,t\\le h,d}\\bigl|\\hat{s}^{(b)}_{t,d}-s^{(b)}_{t,d}\\bigr|}{\\operatorname{mean}_{b,t\\le h,d}\\ \\sigma^{(b)}_{t,d}}",
+      "name": "overconfidence factor (mean |error| / mean sigma)",
+      "reads_as": "rho = 1 is not calibration -- a calibrated Gaussian has mean|error| / sigma = sqrt(2/pi) = 0.7979. rho is reported as a magnitude of miscalibration, and coverage is the calibrated reading. Both are given everywhere for that reason.",
+      "what_it_is": "the headline calibration number: how many times larger the typical realised error is than the typical predicted sigma"
+    },
+    "relative_l1": {
+      "citations": [
+        {
+          "cite": "rwm_repro/src/rollout_eval.py:143",
+          "note": "the formula, as documented",
+          "text": "r_t = sum_d |pred[t,d] - true[t,d]| / sum_d |true[t,d]|"
+        },
+        {
+          "cite": "rwm_repro/src/rollout_eval.py:149",
+          "note": "numerator",
+          "text": "num = (pred[:, start_step:] - true[:, start_step:]).abs().sum(dim=-1)"
+        },
+        {
+          "cite": "rwm_repro/src/rollout_eval.py:150",
+          "note": "denominator",
+          "text": "den = true[:, start_step:].abs().sum(dim=-1)"
+        },
+        {
+          "cite": "rwm_repro/src/rollout_eval.py:152",
+          "note": "the aggregate is a flat mean",
+          "text": "return float(r.mean().item()), r"
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/model_training.py:203",
+          "note": "the upstream line this reproduces, verbatim in behaviour",
+          "text": "traj_autoregressive_error = ((state_traj_pred[:, self.start_step:] - state_traj[:, self.start_step:]).abs().sum(dim=-1) / state_traj[:, self.start_step:].abs().sum(dim=-1)).mean().item()"
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/model_training.py:201",
+          "note": "where t_0 comes from",
+          "text": "self.start_step = self.history_horizon"
+        }
+      ],
+      "denominator": "the TRUE state at the same timestep, summed over all 45 dimensions. It is recomputed at every timestep and is not a constant.",
+      "known_pathology": "the denominator is a 45-term sum in normalised space and can pass through zero, which is why relative-L1 goes non-finite on low-dimensional state groups (M-09: `inf` on base angular velocity from h>=8, an 11.4% blow-up rate on projected gravity at h=368). This is the reason a second metric exists.",
+      "latex_aggregate": "e \\;=\\; \\frac{1}{B\\,(T-t_0)}\\sum_{b=1}^{B}\\sum_{t=t_0+1}^{T} r_{t}^{(b)}",
+      "latex_per_step": "r_t \\;=\\; \\frac{\\sum_{d=1}^{45}\\bigl|\\hat{s}_{t,d}-s_{t,d}\\bigr|}{\\sum_{d=1}^{45}\\bigl|s_{t,d}\\bigr|}",
+      "name": "relative-L1",
+      "space": "normalised state space: both numerator and denominator are in the config-normalised units, not physical units",
+      "start": "t_0 = history_horizon = 32; the first 32 steps are teacher-forced and excluded from the metric",
+      "what_it_is": "the reference metric, reproduced verbatim in behaviour so our numbers are comparable to the upstream's printed one"
+    }
+  },
+  "n_citations_verified": 20,
+  "which_is_headline": {
+    "A_over_B_training_claim": {
+      "metric": "relative-L1",
+      "must_be_named_in": [
+        "abstract",
+        "4"
+      ],
+      "why": "it is the upstream's own metric; the claim is about reproducing the upstream's comparison"
+    },
+    "calibration_claims": {
+      "metric": "overconfidence factor and coverage at +-1 sigma",
+      "must_be_named_in": [
+        "abstract",
+        "5.2",
+        "12"
+      ],
+      "why": "a calibration claim is about sigma against realised error, and neither relative-L1 nor nRMSE involves sigma"
+    },
+    "ranking_claims": {
+      "metric": "Pearson r between the applied scalar penalty and total absolute error over a rollout",
+      "must_be_named_in": [
+        "abstract",
+        "5.6"
+      ],
+      "why": "a ranking claim is about order, not scale"
+    }
+  }
+}

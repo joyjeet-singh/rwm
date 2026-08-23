@@ -1,0 +1,266 @@
+{
+  "caveats": [
+    "The all-ten pool is IN-SAMPLE for our own arms, which trained on eight of the ten episodes. Power figures transferred from it to our arms are UPPER bounds. M-45 is stated over the released checkpoint, where the pool is the arena, so this does not bind M-45; it binds any reading of M-44's numbers against it.",
+    "The dilution power curve holds the panel shape, the depth profile and every marginal fixed and varies only the pairing. It therefore measures power against a loss of PAIRING, which is the alternative M-45 cares about. It does not measure power against a different panel shape.",
+    "The dilution curve is sharp \u2014 0% below the threshold and 100% above it \u2014 rather than a smooth sigmoid. That is not a bug and it is not power being overstated: each trial re-diluted the WHOLE 20-trajectory panel, so the true effect at a given w is nearly deterministic (its across-trial sd is in the third decimal) and the only thing that varies is which side of the threshold it lands. The curve locates the MDE; it does not describe trial-to-trial sampling noise, which the bootstrap SE beside it does.",
+    "At n_independent = 4 the bootstrap has 256 distinct resamples. Every M-44 interval is quantised at that resolution and no interpolation is applied.",
+    "MDE is computed from a bootstrap SE and a normal approximation. At n = 4 the bootstrap distribution is not normal, so the MDE is indicative rather than exact \u2014 which is the honest form of the statement the rules need."
+  ],
+  "committed_before": "any Phase 1 or Phase 2 artifact",
+  "m44": {
+    "arena": "out-of-sample held-out pair",
+    "calibration_cross_architecture": {
+      "coverage_diff_se_pts": 0.8072300654386917,
+      "from": "released-checkpoint-vs-ens5 pairs \u2014 two different ensemble constructions, which is the kind of contrast M-44 makes. Their errors decorrelate more across trajectories, so less cancels and the SE is larger. BINDING.",
+      "log_ratio_se": 0.13154472648317048,
+      "n_pairs": 3
+    },
+    "distinct_bootstrap_resamples": 256,
+    "horizon": 100,
+    "horizon_source": "results/v2_deployment_horizon.json \u2014 the method's own imagination rollout length",
+    "mde_80pct_power": {
+      "coverage_pts": 2.261523819342549,
+      "overconfidence_ratio_multiplicative": 1.445613445594126,
+      "which": "cross-architecture (conservative); the rule text quotes these"
+    },
+    "n_independent_faced": 4,
+    "n_trajectories": 4,
+    "null_calibration_same_architecture": {
+      "coverage_diff_se_pts": 0.25540591846215166,
+      "from": "ens5 seed pairs \u2014 two models differing only in seed, scored on the same four trajectories, so the paired statistic cancels nearly all trajectory-level variation. OPTIMISTIC.",
+      "log_ratio_se": 0.018064245463482526,
+      "mde_coverage_pts": 0.7155414459065209,
+      "mde_ratio_multiplicative": 1.051911013779444,
+      "n_pairs": 3
+    },
+    "pairs": [
+      {
+        "coverage_diff_ci95_pts": [
+          -0.05555555555555591,
+          1.3333333333333335
+        ],
+        "coverage_diff_observed_pts": 0.6388888888888888,
+        "coverage_diff_se_pts": 0.3427706420054784,
+        "coverage_mde_pts": 0.9603011640125805,
+        "log_ratio_ci95": [
+          -0.0575406517147869,
+          -0.016971987580074187
+        ],
+        "log_ratio_observed": -0.03629266464977279,
+        "log_ratio_se": 0.010736519878656885,
+        "pair": "ens5_seed0 vs ens5_seed1",
+        "ratio_mde_multiplicative": 1.030536226877938,
+        "ratio_observed": 0.9643580186774174,
+        "same_architecture": true
+      },
+      {
+        "coverage_diff_ci95_pts": [
+          0.38333333333333275,
+          0.838888888888889
+        ],
+        "coverage_diff_observed_pts": 0.633333333333333,
+        "coverage_diff_se_pts": 0.11657030239126366,
+        "coverage_mde_pts": 0.32658163610709645,
+        "log_ratio_ci95": [
+          -0.06679617253318056,
+          0.022933912810116797
+        ],
+        "log_ratio_observed": -0.018848618109330542,
+        "log_ratio_se": 0.025365819714014547,
+        "pair": "ens5_seed0 vs ens5_seed2",
+        "ratio_mde_multiplicative": 1.0736504800692321,
+        "ratio_observed": 0.9813279062729026,
+        "same_architecture": true
+      },
+      {
+        "coverage_diff_ci95_pts": [
+          1.3444444444444439,
+          4.311111111111112
+        ],
+        "coverage_diff_observed_pts": 2.9111111111111114,
+        "coverage_diff_se_pts": 0.8066122214998855,
+        "coverage_mde_pts": 2.2597928768961886,
+        "log_ratio_ci95": [
+          -1.115173855669702,
+          -0.612935843410125
+        ],
+        "log_ratio_observed": -0.9100254029600796,
+        "log_ratio_se": 0.12899944051681447,
+        "pair": "ens5_seed0 vs released",
+        "ratio_mde_multiplicative": 1.435341680517815,
+        "ratio_observed": 0.4025139988567172,
+        "same_architecture": false
+      },
+      {
+        "coverage_diff_ci95_pts": [
+          -0.5666666666666667,
+          0.5555555555555564
+        ],
+        "coverage_diff_observed_pts": -0.005555555555555869,
+        "coverage_diff_se_pts": 0.30687681098971303,
+        "coverage_mde_pts": 0.8597415375998859,
+        "log_ratio_ci95": [
+          -0.017987888781857565,
+          0.051121631619648736
+        ],
+        "log_ratio_observed": 0.01744404654044221,
+        "log_ratio_se": 0.018090396797776156,
+        "pair": "ens5_seed1 vs ens5_seed2",
+        "ratio_mde_multiplicative": 1.0519880850647054,
+        "ratio_observed": 1.0175970824805902,
+        "same_architecture": true
+      },
+      {
+        "coverage_diff_ci95_pts": [
+          0.8666666666666669,
+          3.6777777777777785
+        ],
+        "coverage_diff_observed_pts": 2.2722222222222226,
+        "coverage_diff_se_pts": 0.7435772641385198,
+        "coverage_mde_pts": 2.0831950720975048,
+        "log_ratio_ci95": [
+          -1.0868626111585473,
+          -0.5095974188675308
+        ],
+        "log_ratio_observed": -0.8737327383103068,
+        "log_ratio_se": 0.1352693450102277,
+        "pair": "ens5_seed1 vs released",
+        "ratio_mde_multiplicative": 1.4607771629834456,
+        "ratio_observed": 0.4173906278176136,
+        "same_architecture": false
+      },
+      {
+        "coverage_diff_ci95_pts": [
+          0.6388888888888888,
+          3.8666666666666667
+        ],
+        "coverage_diff_observed_pts": 2.2777777777777786,
+        "coverage_diff_se_pts": 0.8715007106776701,
+        "coverage_mde_pts": 2.441583509033955,
+        "log_ratio_ci95": [
+          -1.0974267510695246,
+          -0.5908769879086129
+        ],
+        "log_ratio_observed": -0.8911767848507491,
+        "log_ratio_se": 0.13036539392246924,
+        "pair": "ens5_seed2 vs released",
+        "ratio_mde_multiplicative": 1.4408450195807194,
+        "ratio_observed": 0.4101727835148102,
+        "same_architecture": false
+      }
+    ],
+    "quantisation_note": "4 clusters give 256 distinct resamples, so the percentile interval moves in steps of about 0.39 points of the bootstrap distribution. Section 4 states the same for the A/B interval.",
+    "reading": "at n_independent = 4 the rule resolves an overconfidence ratio of about 1.45x or better and a coverage shift of about 2.3 percentage points or more. That is tighter than it looks for n = 4, because the two ensembles are scored on the SAME trajectories and the paired statistic cancels most of the between-trajectory variation. So M-44 is adequately powered for effects of the size that would make trunk-sharing the explanation, and this is recorded before the test rather than after it.",
+    "statistics": [
+      "log ratio of overconfidence factors (mean |error| / mean sigma_epistemic) at h = 100, two ensembles scored on the SAME trajectories",
+      "difference in +-1 sigma coverage at h = 100"
+    ]
+  },
+  "m45": {
+    "arena": "released checkpoint, all ten episodes",
+    "bootstrap_ci95": [
+      0.3139995568981054,
+      0.5732435704188433
+    ],
+    "bootstrap_se": 0.06535745065307695,
+    "mde_80pct_power": 0.18310446767503927,
+    "mde_by_n": [
+      {
+        "mde": 0.4443373342311693,
+        "n_independent": 4,
+        "se": 0.15860211257582674
+      },
+      {
+        "mde": 0.35846440098210475,
+        "n_independent": 6,
+        "se": 0.12795056120450107
+      },
+      {
+        "mde": 0.3085844864209773,
+        "n_independent": 8,
+        "se": 0.1101463858290851
+      },
+      {
+        "mde": 0.278782932060235,
+        "n_independent": 10,
+        "se": 0.09950899591037521
+      },
+      {
+        "mde": 0.23139992032753406,
+        "n_independent": 14,
+        "se": 0.08259606696639005
+      },
+      {
+        "mde": 0.18473268747774801,
+        "n_independent": 20,
+        "se": 0.06593862869181688
+      }
+    ],
+    "n_independent_faced": 20,
+    "n_steps": 368,
+    "n_trajectories": 20,
+    "n_valid_boot": 4000,
+    "observed_double_demeaned_r": 0.4190723154149937,
+    "observed_pooled_r": 0.6053377910794817,
+    "power_curve": [
+      {
+        "detection_rate": 0.0,
+        "dilution_w": 0.0,
+        "true_effect_mean": -0.00019433360275835471,
+        "true_effect_sd": 0.01124422617172217
+      },
+      {
+        "detection_rate": 0.0,
+        "dilution_w": 0.05,
+        "true_effect_mean": 0.01847417329734733,
+        "true_effect_sd": 0.011427800480401274
+      },
+      {
+        "detection_rate": 0.0,
+        "dilution_w": 0.1,
+        "true_effect_mean": 0.03855138916664492,
+        "true_effect_sd": 0.011974816986348398
+      },
+      {
+        "detection_rate": 0.0,
+        "dilution_w": 0.2,
+        "true_effect_mean": 0.0855934339139571,
+        "true_effect_sd": 0.01109346980223264
+      },
+      {
+        "detection_rate": 1.0,
+        "dilution_w": 0.35,
+        "true_effect_mean": 0.17238512657877433,
+        "true_effect_sd": 0.010321598294976479
+      },
+      {
+        "detection_rate": 1.0,
+        "dilution_w": 0.5,
+        "true_effect_mean": 0.27066861990549673,
+        "true_effect_sd": 0.008861421410393568
+      },
+      {
+        "detection_rate": 1.0,
+        "dilution_w": 0.75,
+        "true_effect_mean": 0.38955991843565074,
+        "true_effect_sd": 0.0039789975405420145
+      },
+      {
+        "detection_rate": 1.0,
+        "dilution_w": 1.0,
+        "true_effect_mean": 0.4190723154149936,
+        "true_effect_sd": 5.55806705462024e-17
+      }
+    ],
+    "reading": "at the n it faces the rule resolves |r_dd| down to about 0.183. Effects smaller than that are not distinguishable from zero by this rule and the rule says so.",
+    "statistic": "Pearson r between double-demeaned disagreement and double-demeaned |error| on the (trajectory, step) panel"
+  },
+  "method": {
+    "bootstrap_unit": "whole trajectory (M-27); never trajectory x step",
+    "mde": "(z_.975 + z_.80) x cluster-bootstrap SE of the statistic; two-sided alpha = .05, power = .80",
+    "n_boot": 4000,
+    "n_trials_per_level": 400,
+    "power_curve": "dilution -- the disagreement column is replaced by w * real + (1 - w) * (real permuted independently within each forecast step). Permuting WITHIN a step preserves the depth profile and every marginal and destroys only the pairing with error, so w traces true effects from the observed one down to zero with nothing else moving."
+  },
+  "purpose": "estimate what M-44 and M-45 can detect at the sample sizes they will actually face, BEFORE either is tested"
+}

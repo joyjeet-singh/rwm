@@ -71,6 +71,8 @@ CLAIMS = [
                   'justifying "its role as a trust metric"'),
         "where_v1": "2504.16680v1 5.1",
         "where_v2": None,
+        "where_v3": "2504.16680v3 5.1 (section number unchanged; the figure moved, "
+                    "see followup_version_map)",
         "original_figure": None,
         "original_states": (
             "the estimated epistemic uncertainty (dark blue) closely follows the trend of the "
@@ -78,7 +80,7 @@ CLAIMS = [
             "regions where the model generalization deteriorates. ... The strong correlation "
             "between epistemic uncertainty and model prediction error justifies its role as a "
             "trust metric for policy optimization."),
-        "form": "qualitative; shown in Figure 2 (right)",
+        "form": "qualitative; shown in Figure 2 (right) [v1] = Figure 3 (right) [v3]",
         "numeral_in_text": False,
         "note": ('The paper asserts a "strong correlation" and gives no correlation coefficient, '
                  "no interval and no sample size. Our +0.605 [+0.545, +0.694] at n_independent "
@@ -89,11 +91,13 @@ CLAIMS = [
         "claim": 'Aleatoric uncertainty "remains low, reflecting small stochasticity"',
         "where_v1": "2504.16680v1 5.1",
         "where_v2": None,
+        "where_v3": "2504.16680v3 5.1 (section number unchanged; the figure moved, "
+                    "see followup_version_map)",
         "original_figure": None,
         "original_states": (
             "the aleatoric uncertainty (light blue) remains low, reflecting small stochasticity "
             "in the environment."),
-        "form": "qualitative; shown in Figure 2 (right)",
+        "form": "qualitative; shown in Figure 2 (right) [v1] = Figure 3 (right) [v3]",
         "numeral_in_text": False,
         "note": ('"Low" is relative to the plotted epistemic curve on the same axes; no absolute '
                  "value, ratio or comparison against realised error is given."),
@@ -117,6 +121,75 @@ SAMPLE_EFFICIENCY = {
 }
 
 
+# V4 — the follow-up is version-pinned the way 2501.10100 already was.
+#
+# We read 2504.16680 at v1 (23 Apr 2025). It is now at v3, last revised 8 Jan
+# 2026 and substantially expanded: a Related Work section, a new training
+# diagram, a results table and two more deployment figures. A reviewer opening
+# the current version will not find our figure references where we put them.
+#
+# What did NOT move, checked against both HTML renderings: section 5.1 keeps its
+# number, and Eq. 4 (u = Var_b[mu_b]) and Eq. 5 (r~ = r - lambda u) keep theirs
+# and are character-identical. So every SECTION and EQUATION reference in our
+# paper resolves in v3 unchanged. What moved is every FIGURE and every appendix
+# TABLE, and the model was renamed RWM-O -> RWM-U.
+FOLLOWUP_VERSIONS = {
+    "arxiv_id": "2504.16680",
+    "we_read": "v1",
+    "we_read_dated": "23 Apr 2025",
+    "current": "v3",
+    "current_dated": "8 Jan 2026",
+    "all_versions": [
+        {"version": "v1", "date": "23 Apr 2025", "size_kb": 7854},
+        {"version": "v2", "date": "7 Jan 2026", "size_kb": 38854},
+        {"version": "v3", "date": "8 Jan 2026", "size_kb": 38854},
+    ],
+    "checked_on": "2026-08-23",
+    "method": "both HTML renderings fetched and compared: figure and table captions "
+              "enumerated from <figcaption>, equations located by their rendered "
+              "bodies, section headings enumerated from the document outline",
+    "unchanged": [
+        {"what": "section 5.1", "v1": "5.1 Autoregressive Uncertainty Estimation",
+         "v3": "5.1 Autoregressive Uncertainty Estimation",
+         "note": "both quoted sentences are in it in both versions"},
+        {"what": "Eq. 4", "v1": "Eq. 4", "v3": "Eq. 4",
+         "body": "u_{t+1} = u_{p_phi}(...) = Var_b[mu^b_{o_{t+1}}]",
+         "note": "character-identical rendering in both"},
+        {"what": "Eq. 5", "v1": "Eq. 5", "v3": "Eq. 5",
+         "body": "r~(o_t,a_t) = r_t(o_t,a_t) - lambda u_{p_phi}(...)",
+         "note": "character-identical rendering in both"},
+        {"what": "imagination steps per iteration", "v1": "100 (Table S9)",
+         "v3": "100 (Table S11)",
+         "note": "the value is unchanged; only the table number moved. v3 adds the "
+                 "same figure in prose: '100-step episodic rollouts'"},
+    ],
+    "moved": [
+        {"what": "uncertainty estimation figure — the one our 5.1, 5.2 and 5.6 discuss",
+         "v1": "Figure 2 (right)", "v3": "Figure 3 (right)",
+         "caption_v3_adds": "The epistemic uncertainty estimate by RWM-U aligns with the "
+                            "long-horizon prediction error and thus sets a reliable metric "
+                            "in policy training."},
+        {"what": "epistemic uncertainty under three penalty weights during MOPO-PPO "
+                 "training — where our section 3 table says the aleatoric term is reported",
+         "v1": "Figure 3 (right)", "v3": "Figure 4 (right)"},
+        {"what": "normalised episodic rewards across environments",
+         "v1": "Figure 4", "v3": "Figure 5"},
+        {"what": "MOPO-PPO training hyperparameters, including the imagination horizon",
+         "v1": "Table S9", "v3": "Table S11"},
+        {"what": "world-model architecture table", "v1": "Table S6 (RWM-O architecture)",
+         "v3": "Table S7 (RWM-U architecture)"},
+        {"what": "world-model training parameters", "v1": "Table S8", "v3": "Table S10"},
+        {"what": "the model's name", "v1": "RWM-O", "v3": "RWM-U",
+         "note": "a rename, not a different model: the architecture tables and Eq. 4 are "
+                 "unchanged. Our paper quotes v1 sentences containing 'RWM-O'."},
+    ],
+    "consequence": "every in-text citation of 2504.16680 in this paper names the version "
+                   "it was read from, and the reference-list entry pins v1 with the v3 "
+                   "revision date recorded. Section and equation references resolve in "
+                   "both; figure references need the map above, which is why it is here.",
+}
+
+
 def main():
     out = {"read_on": READ_ON,
            "sources": ["arXiv:2501.10100v1 (17 Jan 2025)",
@@ -127,7 +200,10 @@ def main():
                "Our section references use v1's Roman-numeral sectioning (IV-C, IV-D, IV-E). "
                "v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1, so a "
                "reader opening the current arXiv version will not find IV-C. Both locations are "
-               "recorded for every claim."),
+               "recorded for every claim. The follow-up 2504.16680 gets the same treatment in "
+               "followup_version_map: we read v1, it is now at v3, sections and equations are "
+               "unchanged and every figure and appendix table has moved."),
+           "followup_version_map": FOLLOWUP_VERSIONS,
            "claims": CLAIMS,
            "sample_efficiency": SAMPLE_EFFICIENCY,
            "n_tested_claims": len(CLAIMS),
@@ -144,6 +220,25 @@ def main():
     print(f"\n  {out['n_without']} of {out['n_tested_claims']} tested claims are stated with no "
           f"quantitative figure at all.")
     op = os.path.join(R.RESULTS, "original_paper_figures.json")
+
+    # verify_original_quotes.py writes a `verification` block into this same file
+    # -- the record that every EXT quotation was matched as a substring of the
+    # published HTML. It needs the network, so it is not a reproduce.sh stage and
+    # cannot simply be re-run after this one. This script used to rewrite the file
+    # wholesale and silently drop that block, which is the difference between a
+    # verified quotation and an asserted one. Carry it forward.
+    if os.path.exists(op):
+        prev = json.load(open(op))
+        if "verification" in prev:
+            out["verification"] = prev["verification"]
+            print(f"\n  carried forward the verification block "
+                  f"({prev['verification'].get('n_verbatim')} of "
+                  f"{prev['verification'].get('n_checked')} quotations verbatim, "
+                  f"checked {prev['verification'].get('date')})")
+        else:
+            print("\n  NOTE: no verification block to carry forward. Run "
+                  "scripts/verify_original_quotes.py to add one.")
+
     json.dump(out, open(op, "w"), indent=2)
     print(f"\n  wrote {R.rel(op)}")
 

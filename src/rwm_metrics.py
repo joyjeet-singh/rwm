@@ -67,7 +67,7 @@ def nrmse_groups(pred, true, scale, start_step):
     return out
 
 
-def summarise(curve, horizons=(1, 8, 32, 128, 368)):
+def summarise(curve, horizons=(1, 8, 32, 100, 128, 368)):
     """Cumulative mean of a per-step curve at each horizon."""
     return {h: float(curve[:h].mean()) for h in horizons if h <= len(curve)}
 

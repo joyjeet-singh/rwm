@@ -2240,16 +2240,103 @@
         "scripts/task_b_permutation.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-44",
+      "claim": "PRE-REGISTERED decision rule for the trunk-sharing mechanism",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/p1_power_check.json",
+        "results/r2_independent_ensemble.json",
+        "results/v1_ensemble_topology.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-45",
+      "claim": "PRE-REGISTERED decision rule for the within-trajectory control on \u00a75.6",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/a2_trajectory_level_control.json",
+        "results/p1_power_check.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "X-12",
+      "claim": "The five ensemble members share a trunk, a hidden state, and 89% of their parameters",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/v1_ensemble_topology.json",
+        "scripts/v1_ensemble_topology.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "X-13",
+      "claim": "h=368 is the upstream's open-loop diagnostic length, not a deployment horizon",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json",
+        "scripts/v2_deployment_horizon.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "X-14",
+      "claim": "The metrics were never defined, in a paper whose metrics have twice changed a verdict",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/v3_metric_definitions.json",
+        "scripts/v3_metric_definitions.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "X-15",
+      "claim": "The follow-up moved to v3 and every figure reference in our paper went stale",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "EXT"
+      ],
+      "artifacts": [
+        "results/original_paper_figures.json",
+        "scripts/original_paper_figures.py",
+        "scripts/verify_original_quotes.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 43,
+    "M": 45,
     "O": 14,
     "R": 67,
     "S": 15,
-    "X": 11
+    "X": 15
   }
 }

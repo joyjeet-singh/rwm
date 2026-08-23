@@ -43,7 +43,7 @@ import rwm_metrics as MET  # noqa: E402
 import rwm_model as M  # noqa: E402
 import score_reference as S  # noqa: E402
 
-HORIZONS = (1, 8, 32, 128, 368)
+HORIZONS = (1, 8, 32, 100, 128, 368)
 INDEX_DEFINED = (8, 32, 128, 368)      # h=1 has a single forecast step
 START, LEN, SEEDS, N_BOOT = E.START_STEP, 400, (0, 1, 2), 20000
 

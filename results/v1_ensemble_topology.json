@@ -1,0 +1,268 @@
+{
+  "gate": {
+    "members_are_fully_independent_models": false,
+    "our_arms_heads_share_trunk": true,
+    "our_arms_match_reference_topology": true,
+    "reference_heads_share_trunk": true,
+    "verdict": "TRUNK-SHARING CONFIRMED; our ens5 arms are identical to the reference in this respect, so 5.2's comparison is like with like and Phase 2 keeps its motivation"
+  },
+  "mechanism": {
+    "n_independent_recurrent_states": 1,
+    "n_members": 5,
+    "private_params_per_member": 77492,
+    "private_pct_of_member": 10.85,
+    "shared_params_per_member": 636672,
+    "shared_pct_of_member": 89.15,
+    "statement": "the five members share the feature extractor and the recurrent state; only the output heads differ, so member disagreement is head disagreement over identical features and cannot express uncertainty the trunk does not already carry",
+    "status": "candidate mechanism, established from source and parameter counts; whether it is THE explanation is tested by M-44 (Phase 2)",
+    "symmetry_with_5_3": "5.3 shows the aleatoric head is trained by an objective whose optimum is sigma = 0. This shows the epistemic term is computed over an architecture whose members cannot disagree about anything the shared trunk does not already disagree with itself about. Both are structural, not incidental."
+  },
+  "our_arms": {
+    "armA_seed0_ens5": {
+      "ensemble_size": 5,
+      "heads_share_trunk": true,
+      "label": "armA_seed0_ens5",
+      "n_independent_recurrent_states": 1,
+      "per_member_modules": {
+        "auxiliary_heads": {
+          "params_each": 66953,
+          "params_total": 334765,
+          "tensors_total": 40
+        },
+        "state_heads": {
+          "params_each": 77492,
+          "params_total": 387460,
+          "tensors_total": 50
+        }
+      },
+      "private_fraction_of_member": 0.10850728964215502,
+      "shared_fraction_of_member": 0.8914927103578449,
+      "shared_fraction_of_model": 0.6380856788214289,
+      "shared_modules": {
+        "auxiliary_base": {
+          "params": 636672,
+          "tensors": 8
+        },
+        "state_base": {
+          "params": 636672,
+          "tensors": 8
+        }
+      },
+      "state_pathway_params_per_member": 714164,
+      "total_params": 1995569
+    },
+    "armA_seed1_ens5": {
+      "ensemble_size": 5,
+      "heads_share_trunk": true,
+      "label": "armA_seed1_ens5",
+      "n_independent_recurrent_states": 1,
+      "per_member_modules": {
+        "auxiliary_heads": {
+          "params_each": 66953,
+          "params_total": 334765,
+          "tensors_total": 40
+        },
+        "state_heads": {
+          "params_each": 77492,
+          "params_total": 387460,
+          "tensors_total": 50
+        }
+      },
+      "private_fraction_of_member": 0.10850728964215502,
+      "shared_fraction_of_member": 0.8914927103578449,
+      "shared_fraction_of_model": 0.6380856788214289,
+      "shared_modules": {
+        "auxiliary_base": {
+          "params": 636672,
+          "tensors": 8
+        },
+        "state_base": {
+          "params": 636672,
+          "tensors": 8
+        }
+      },
+      "state_pathway_params_per_member": 714164,
+      "total_params": 1995569
+    },
+    "armA_seed2_ens5": {
+      "ensemble_size": 5,
+      "heads_share_trunk": true,
+      "label": "armA_seed2_ens5",
+      "n_independent_recurrent_states": 1,
+      "per_member_modules": {
+        "auxiliary_heads": {
+          "params_each": 66953,
+          "params_total": 334765,
+          "tensors_total": 40
+        },
+        "state_heads": {
+          "params_each": 77492,
+          "params_total": 387460,
+          "tensors_total": 50
+        }
+      },
+      "private_fraction_of_member": 0.10850728964215502,
+      "shared_fraction_of_member": 0.8914927103578449,
+      "shared_fraction_of_model": 0.6380856788214289,
+      "shared_modules": {
+        "auxiliary_base": {
+          "params": 636672,
+          "tensors": 8
+        },
+        "state_base": {
+          "params": 636672,
+          "tensors": 8
+        }
+      },
+      "state_pathway_params_per_member": 714164,
+      "total_params": 1995569
+    }
+  },
+  "pins": {
+    "robotic_world_model_lite": "13a798e9d35dabf12c0e6e02977b25ec64dfb2bd",
+    "rsl_rl_rwm": "18eebcdd7145284c8d5eed5d8ed1a4b96c649693"
+  },
+  "reference": {
+    "checkpoint_iter": 5000,
+    "ensemble_size": 5,
+    "heads_share_trunk": true,
+    "label": "released pretrain_rnn_ens.pt",
+    "n_independent_recurrent_states": 1,
+    "per_member_modules": {
+      "auxiliary_heads": {
+        "params_each": 66953,
+        "params_total": 334765,
+        "tensors_total": 40
+      },
+      "state_heads": {
+        "params_each": 77492,
+        "params_total": 387460,
+        "tensors_total": 50
+      }
+    },
+    "private_fraction_of_member": 0.10850728964215502,
+    "shared_fraction_of_member": 0.8914927103578449,
+    "shared_fraction_of_model": 0.6380856788214289,
+    "shared_modules": {
+      "auxiliary_base": {
+        "params": 636672,
+        "tensors": 8
+      },
+      "state_base": {
+        "params": 636672,
+        "tensors": 8
+      }
+    },
+    "state_pathway_params_per_member": 714164,
+    "tensor_name_prefixes": [
+      "auxiliary_base",
+      "auxiliary_heads",
+      "state_base",
+      "state_heads"
+    ],
+    "total_params": 1995569
+  },
+  "source_citations": {
+    "aux_trunk_constructed_once": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:44",
+      "note": "the auxiliary pathway shares a trunk the same way",
+      "text": "self.auxiliary_base = self._create_base()"
+    },
+    "bounded_logstd_init": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/architectures/mlp.py:78",
+      "note": "the PETS-lineage bounded log-sigma parameterisation (see 5.3 and the related work)",
+      "text": "self.state_min_logstd = nn.Parameter(torch.ones(1, state_dim, device=self.device) * -5.0)"
+    },
+    "ensemble_size_is_five": {
+      "cite": "robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:70",
+      "note": "the configured ensemble size for the released ANYmal D flat model",
+      "text": "ensemble_size: int = 5"
+    },
+    "epistemic_is_head_spread": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:126",
+      "note": "the epistemic term IS the spread of the heads over those identical features",
+      "text": "epistemic_uncertainty = state_means.std(dim=0).sum(dim=1) if self.ensemble_size > 1 else torch.zeros(output_state_means.shape[0], device=self.device)"
+    },
+    "forward_heads_read_same_features": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:90",
+      "note": "every head reads the identical feature vector -- the argument is loop-invariant",
+      "text": "state_mean, state_std = head(state_base_output, x_state_batch)"
+    },
+    "forward_shares_features": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:87",
+      "note": "the trunk is evaluated ONCE per forward pass",
+      "text": "state_base_output = self.state_base(x_state_batch, x_action_batch)"
+    },
+    "head_is_two_small_mlps": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/architectures/mlp.py:59",
+      "note": "each member's private part is a 256->128->45 mean tower plus a matching logstd tower",
+      "text": "state_mean_layers.append(nn.Linear(self.state_mean_shape[-1], state_dim))"
+    },
+    "heads_replicated": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:35",
+      "note": "the heads, and only the heads, are replicated ensemble_size times",
+      "text": "self.state_heads = nn.ModuleList(["
+    },
+    "heads_replication_count": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:41",
+      "note": "the replication factor is ensemble_size; the trunk above it is not in the loop",
+      "text": ").to(self.device) for _ in range(self.ensemble_size)"
+    },
+    "mean_is_fed_back": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:115",
+      "note": "with model_ids=None the ensemble MEAN is what leaves forward() and, in an autoregressive rollout, what is fed back into the single trunk",
+      "text": "output_state_means = state_means.mean(dim=0)"
+    },
+    "one_hidden_state": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/architectures/rnn.py:40",
+      "note": "a single recurrent state, owned by the trunk, shared by every member",
+      "text": "self.hidden_states = None"
+    },
+    "ours_epistemic": {
+      "cite": "rwm_repro/src/rwm_model.py:200",
+      "note": "OUR epistemic term is the same head spread",
+      "text": "means.std(0).sum(1) if self.ensemble_size > 1"
+    },
+    "ours_forward_shares": {
+      "cite": "rwm_repro/src/rwm_model.py:182",
+      "note": "OUR forward evaluates the trunk once",
+      "text": "base = self.state_base(x_state_batch, x_action_batch)"
+    },
+    "ours_heads_read_same": {
+      "cite": "rwm_repro/src/rwm_model.py:185",
+      "note": "OUR heads read the identical feature vector",
+      "text": "m, s = head(base, x_state_batch)"
+    },
+    "ours_heads_replicated": {
+      "cite": "rwm_repro/src/rwm_model.py:165",
+      "note": "OUR heads are the replicated part",
+      "text": "self.state_heads = nn.ModuleList(["
+    },
+    "ours_mean_fed_back": {
+      "cite": "rwm_repro/src/rwm_model.py:223",
+      "note": "OUR rollout feeds the ensemble mean back into the single trunk, so the members share one hidden-state trajectory end to end",
+      "text": "pred[:, i] = m"
+    },
+    "ours_trunk_once": {
+      "cite": "rwm_repro/src/rwm_model.py:164",
+      "note": "OUR arms build one trunk the same way",
+      "text": "self.state_base = mk_base()"
+    },
+    "penalty_consumes_epistemic": {
+      "cite": "robotic_world_model_lite/scripts/envs/base.py:166",
+      "note": "the head spread is the quantity the method penalises rewards with",
+      "text": "rewards += self.uncertainty_penalty_weight * self.epistemic_uncertainty * self._step_dt"
+    },
+    "trunk_constructed_once": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/system_dynamics.py:34",
+      "note": "ONE state trunk is built. Not a ModuleList, not indexed per member.",
+      "text": "self.state_base = self._create_base()"
+    },
+    "trunk_is_one_gru": {
+      "cite": "rsl_rl_rwm/rsl_rl/modules/architectures/rnn.py:39",
+      "note": "the trunk is a single nn.GRU; Memory.hidden_states is one tensor for all members",
+      "text": "self.rnn = rnn_cls(input_size=self.input_dim, hidden_size=hidden_size, num_layers=num_layers, device=self.device, batch_first=True)"
+    }
+  },
+  "what_this_measures": "which parameters are replicated across the 5 ensemble members and which are shared, established from upstream source, from the released checkpoint tensors, and from our own ensemble-5 arms"
+}

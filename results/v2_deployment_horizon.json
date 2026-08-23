@@ -1,0 +1,179 @@
+{
+  "followup_figure": {
+    "evidence_class": "EXT",
+    "horizontal_axis": "time step t, predictions commencing at t=32",
+    "note": "The figure is the open-loop diagnostic, matching the 368-step construction above -- not the 100-step imagination rollout. So the follow-up's uncertainty evidence is itself gathered at a horizon 3.68x longer than the one its method deploys at. We report that as an observation about the original, not as a defect: a diagnostic may legitimately run past the deployment horizon. What it does mean is that OUR h=368 is comparable to the original's figure, while our h=100 is comparable to the original's method.",
+    "plotted_horizon": "not stated numerically in either version; the axis is a time index and no rollout length is given in the caption or in \u00a75.1",
+    "ratio_diagnostic_over_deployed": 3.68,
+    "v1": {
+      "caption_fragment": "Predictions commence at t=32 using historical observations, with future observations predicted autoregressively by feeding prior predictions back into the model.",
+      "figure": "Figure 2 (right)",
+      "model_name": "RWM-O",
+      "section": "5.1"
+    },
+    "v3": {
+      "caption_fragment": "The epistemic uncertainty estimate by RWM-U aligns with the long-horizon prediction error and thus sets a reliable metric in policy training.",
+      "figure": "Figure 3 (right)",
+      "model_name": "RWM-U",
+      "section": "5.1"
+    }
+  },
+  "horizons": {
+    "collection_segment_lite_release": {
+      "citations": [
+        {
+          "cite": "robotic_world_model_lite/scripts/configs/base_cfg.py:147",
+          "note": "PPO collection segment per iteration",
+          "text": "num_steps_per_env: int = 24"
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/policy_training.py:48",
+          "note": "called ONCE, before the iteration loop",
+          "text": "state_history, action_history = self.env.prepare_imagination()"
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/policy_training.py:59",
+          "note": "the iteration loop it sits outside",
+          "text": "for it in range(start_iter, tot_iter):"
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/policy_training.py:64",
+          "note": "24 steps per iteration, chained: the imagined trajectory persists across iterations and is reset only by termination or the episode cap",
+          "text": "for i in range(self.num_steps_per_env):"
+        }
+      ],
+      "evidence_class": "SRC",
+      "note": "a segment length, not a rollout length. Recorded so the 24 is not mistaken for the horizon.",
+      "value": 24
+    },
+    "command_resample_interval": {
+      "citations": [
+        {
+          "cite": "robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:31",
+          "note": "resamples the velocity command mid-rollout",
+          "text": "command_resample_interval_range: List[int] | None = field(default_factory=lambda: [100, 120])"
+        }
+      ],
+      "evidence_class": "SRC",
+      "note": "This resamples the COMMAND. It does not reset the rollout and is not a horizon. Recorded because its range brackets 100 and it is the obvious thing to mistake for the rollout length.",
+      "value": [
+        100,
+        120
+      ]
+    },
+    "episodic_rollout_length_published": {
+      "evidence_class": "EXT",
+      "note": "prose added in v3 and absent from v1; it states the same figure as the hyperparameter table, in the form a reader would quote",
+      "source": "arXiv:2504.16680v3 \u00a71, 'propagate and manage uncertainty over 100-step episodic rollouts'",
+      "value": 100
+    },
+    "imagination_episode_cap_lite_release": {
+      "citations": [
+        {
+          "cite": "robotic_world_model_lite/scripts/configs/base_cfg.py:20",
+          "note": "the shipped default in the reduced `lite` release",
+          "text": "max_episode_length: int = 256"
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/envs/base.py:174",
+          "note": "where the cap is enforced: an imagined episode is reset here",
+          "text": "time_outs = self.episode_length_buf >= self._max_episode_length"
+        }
+      ],
+      "evidence_class": "SRC",
+      "note": "the lite release's own cap on an imagined episode. It is NOT the published figure and it is not 368; the two releases differ and the published one governs what the method does.",
+      "value": 256
+    },
+    "imagination_steps_per_iteration_published": {
+      "evidence_class": "EXT",
+      "note": "identical in both versions; this is the horizon the uncertainty-penalised policy loop rolls the model over",
+      "source": "arXiv:2504.16680 Table S9 (v1) / Table S11 (v3), 'imagination steps per iteration'",
+      "value": 100
+    },
+    "open_loop_diagnostic": {
+      "arithmetic": {
+        "autoregressive_steps": 368,
+        "history_horizon": 32,
+        "len_eval_trajectory": 400
+      },
+      "citations": [
+        {
+          "cite": "robotic_world_model_lite/scripts/configs/base_cfg.py:46",
+          "note": "the evaluation trajectory length",
+          "text": "len_eval_trajectory: int = 400"
+        },
+        {
+          "cite": "rsl_rl_rwm/rsl_rl/algorithms/mbpo_ppo.py:61",
+          "note": "the same 400 in the algorithm",
+          "text": "system_dynamics_len_eval_trajectory=400,"
+        },
+        {
+          "cite": "rsl_rl_rwm/rsl_rl/algorithms/mbpo_ppo.py:284",
+          "note": "the forecast starts AFTER the 32-step teacher-forced prefix, so the autoregressive part is 400 - 32 = 368 steps",
+          "text": "for i in range(self.system_dynamics.history_horizon, self.system_dynamics_len_eval_trajectory):"
+        },
+        {
+          "cite": "robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:68",
+          "note": "the prefix length",
+          "text": "history_horizon: int = 32 # the window size of the input state transitions"
+        }
+      ],
+      "evidence_class": "SRC",
+      "note": "This is what h=368 is. It is an open-loop diagnostic that the upstream plots; it is not a horizon the method deploys at.",
+      "value": 368
+    },
+    "runner_knob_not_shipped": {
+      "citations": [
+        {
+          "cite": "rsl_rl_rwm/rsl_rl/runners/mbpo_on_policy_runner.py:438",
+          "note": "the published 100 enters here",
+          "text": "self.num_imagination_steps = self.imagination_cfg[\"num_steps_per_env\"]"
+        },
+        {
+          "cite": "rsl_rl_rwm/rsl_rl/runners/mbpo_on_policy_runner.py:439",
+          "note": "and the episode cap here",
+          "text": "self.max_imagination_episode_length = self.imagination_cfg[\"max_episode_length\"]"
+        }
+      ],
+      "evidence_class": "SRC",
+      "note": "the full-stack runner reads both from an imagination_cfg that the released repositories do not ship, so the published table is the only authority for the values actually used.",
+      "value": null
+    }
+  },
+  "our_grid": {
+    "deployment_horizon": 100,
+    "grid_after": [
+      1,
+      8,
+      32,
+      100,
+      128,
+      368
+    ],
+    "grid_before": [
+      1,
+      8,
+      32,
+      128,
+      368
+    ],
+    "metrics_default_grid": [
+      1,
+      8,
+      32,
+      100,
+      128,
+      368
+    ],
+    "nearest_measured_at_or_below_before": 32,
+    "resolution": "h=100 is added to the evaluation grid rather than approximated. The per-step curves already run to 368, so measuring the method's own horizon exactly costs a cumulative mean and removes the need for a 'nearest grid point' argument."
+  },
+  "question": "which horizon does the method actually run its world model over, and what is h=368",
+  "verdict": {
+    "deployment_horizon_is": 100,
+    "h368_is": "the open-loop diagnostic horizon (len_eval_trajectory 400 minus the 32-step teacher-forced prefix)",
+    "h368_over_deployment": 3.68,
+    "label_change": "h=368 is relabelled \"the open-loop diagnostic horizon, beyond the method's own rollout length\"; the headline re-anchors to h=100",
+    "tables": "every h=368 row is kept"
+  }
+}

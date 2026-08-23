@@ -4355,6 +4355,284 @@ and this project has now twice found real defects in it (compare S-11).
 **Status** CONFIRMED · **Relevance** METHOD
 
 
+### M-44 — PRE-REGISTERED decision rule for the trunk-sharing mechanism · **NEW**
+
+**Entered before any independent-init ensemble exists.** No `runs/armA_seed3` or `runs/armA_seed4`
+directory existed when this was committed, and no scoring of an independently-initialised ensemble
+had been run. The commit containing this entry precedes both, and the ordering is checkable from
+`git log` exactly as M-16's, M-23's and M-43's are.
+
+**Why the rule is needed.** §5.3 explains why the *aleatoric* head collapses and then says outright
+that the mechanism behind the *epistemic* miscalibration "is not established here". X-12 now
+supplies a candidate from source: the released five-member ensemble is not five models. One GRU
+trunk of 636,672 parameters is shared by all five, and each member owns only a 77,492-parameter
+output head — **89.15% of every member's state-prediction pathway is numerically identical to every
+other member's**, and in an autoregressive rollout the members share a single recurrent hidden-state
+trajectory, because the ensemble *mean* is what gets fed back. Member disagreement is therefore head
+disagreement over identical features. Members that share a feature extractor have correlated errors
+by construction and their spread understates epistemic uncertainty. That is a mechanism structurally
+symmetric to §5.3's, and it is either the explanation or it is not.
+
+**Governing measurement.** Arm A at seeds 0–4, ensemble size 1, 2,500 iterations, clean dataset,
+identical in every other setting, **scored together as a five-member ensemble at evaluation time** —
+the epistemic term being the standard deviation across the five models' mean predictions. Compared
+against the shared-trunk `armA_seed{0,1,2}_ens5` arms on the **same** out-of-sample trajectories,
+through the **same** harness, at **h = 100**, the method's own imagination rollout length
+(`results/v2_deployment_horizon.json`). Two quantities:
+
+- the **overconfidence factor**, mean |error| / mean σ_epistemic;
+- **coverage at ±1σ**.
+
+Both with a cluster bootstrap over whole trajectories (M-27), n_independent = 4.
+
+**The mechanism is SUPPORTED** if the independent ensemble's overconfidence factor is lower than the
+shared-trunk arms' by at least the minimum detectable effect **and** the 95% paired interval on the
+log ratio excludes zero, **and** its ±1σ coverage is higher by at least the minimum detectable
+effect with its paired interval excluding zero.
+
+**The mechanism is NOT SUPPORTED** if the independent ensemble is not materially better calibrated —
+that is, if either paired interval spans zero, or the point estimates move by less than the minimum
+detectable effect. Explicitly, and stated as a condition rather than as an outcome: *if the
+independent ensemble is not materially better calibrated, the mechanism is not supported and the
+paper says so.*
+
+**The result is UNRESOLVABLE** if the two quantities disagree in direction — overconfidence improves
+while coverage worsens, or the reverse — in which case the paper reports both and claims neither.
+
+**What this rule can and cannot settle, measured before it was tested.** `results/p1_power_check.json`
+estimates the minimum detectable effect at the n_independent = 4 this rule actually faces, by cluster
+bootstrap over the held-out pair, calibrated two ways. Against same-architecture seed pairs, which
+differ only in seed and cancel almost all between-trajectory variation, the MDE is 1.05× on the
+overconfidence ratio and 0.72 coverage points — optimistic. Against cross-architecture pairs, which
+is the kind of contrast this rule makes, the MDE is **1.45× on the overconfidence ratio and 2.26
+coverage points**, and those are the figures this rule is written against. So:
+
+- an improvement of **1.45× or more** in the overconfidence factor is detectable here;
+- an improvement smaller than that is **not**, and this rule cannot settle it either way;
+- at n_independent = 4 the bootstrap has 4⁴ = 256 distinct resamples, so every interval is quantised
+  at that resolution, exactly as §4 already states for the A/B interval.
+
+This is the check M-43 was committed without, and M-24 before it. It is recorded here so that a
+result near the threshold is read as near the threshold rather than as a finding.
+
+**A limitation of the design, stated in advance and repeated in §11.** Independently-seeded runs
+differ in **both** initialisation and data ordering, whereas the shared-trunk heads differ only in
+head initialisation. The comparison therefore conflates trunk-sharing with data-order diversity and
+**bounds** the effect rather than isolating it. If the overconfidence factor barely moves despite
+that generous handicap, the finding is strong in the direction of "architecture is not the
+explanation". If it moves a lot, the design flaw is identified but not cleanly attributed. Whichever
+the data gives is what gets written.
+
+**Our expectation, recorded as an expectation only.** We expect the independent ensemble to be better
+calibrated but not calibrated — a partial mechanism rather than the whole one. That is a belief, not
+a pre-registration, and it carries none of the weight one does; the same distinction §5.6 draws about
+its own forecast-index baseline and the one S-12 exists to retract.
+
+**Evidence** `RUN` pending; the rule is discharged by `results/r2_independent_ensemble.json`.
+Power: `results/p1_power_check.json`. Mechanism: `results/v1_ensemble_topology.json`.
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
+
+### M-45 — PRE-REGISTERED decision rule for the within-trajectory control on §5.6 · **NEW**
+
+**Entered before the statistic was computed.** No `results/a2_trajectory_level_control.json` existed
+when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is
+checkable from `git log`.
+
+**Why the rule is needed.** §5.6 controls for the forecast-index confound five ways and that is the
+strongest part of this paper. Every one of those controls removes **depth**. **None removes
+trajectory difficulty.** Per-episode difficulty in this dataset spans 0.601 to 1.674 (D-12) and is
+uncorrelated with commanded speed, so the units being correlated differ a great deal in level. Harder
+trajectories plausibly have both larger realised error and larger disagreement, which would produce
+the observed correlation with disagreement carrying no within-rollout information at all. Two
+symptoms point at exactly this: r = +0.994 at h=1 on twenty points is not the shape of a genuine
+per-step signal, and the within-step figure (+0.739) being *higher* than the pooled one (+0.605) is
+the signature of a between-unit effect.
+
+**Governing statistic.** On the pooled (trajectory, step) panel from the released checkpoint over all
+ten episodes, n_independent = 20: subtract **both** the trajectory mean and the step mean from each of
+disagreement and |error| — a two-way additive removal — and correlate the residuals. Call it r_dd.
+95% interval from a cluster bootstrap over whole trajectories. This asks the only question that
+matters for a practitioner mid-rollout: *at a given depth, in a given rollout, does disagreement
+know?*
+
+**Disagreement CARRIES WITHIN-ROLLOUT INFORMATION** if r_dd is positive and its 95% cluster-bootstrap
+interval excludes zero.
+
+**Disagreement is LARGELY REPORTING WHICH EPISODE IS HARD** if r_dd's interval includes zero, or r_dd
+is negative.
+
+**What the paper says under each outcome — pre-written here so there is nothing to negotiate later.**
+
+*Under the supporting branch:* §5.6 keeps its current strength and gains a sixth control, the only
+one that removes trajectory difficulty rather than depth. §12 leans on this one rather than on the
+within-step figure. The sentence is: *with both the rollout and the depth held constant,
+disagreement still tracks error, so it is not merely reporting which episode is hard.*
+
+*Under the non-supporting branch:* the honest sentence is that **disagreement mostly identifies which
+rollouts will go wrong rather than when within a rollout**. That is still a usable ranking signal for
+a practitioner choosing between candidate trajectories, and it is materially weaker than the claim
+§5.6, §9 and §12 currently make. §9's "very nearly a perfect ranking" for the h=1 figure goes, and
+§12's sentence is rewritten to the between-rollout form. The abstract's ranking claim is qualified to
+"between rollouts".
+
+**Reported alongside, not governing:** the variance decomposition of the pooled +0.605 into
+between-trajectory and within-trajectory components; the partial correlation controlling for
+per-trajectory mean |error| at each horizon; and the h=1 diagnostic, in which disagreement is
+correlated against commanded speed and against per-episode difficulty (D-12) and each is partialled
+out of the disagreement–error correlation. If the h=1 figure of +0.994 collapses under that, it is
+reported as collapsing.
+
+**What this rule can and cannot settle, measured before it was tested.**
+`results/p1_power_check.json` estimates the minimum detectable effect at the n_independent = 20 this
+rule faces. The cluster-bootstrap standard error of r_dd gives an MDE of **|r_dd| ≥ 0.183** at 80%
+power, two-sided α = .05. A dilution study — replacing disagreement by a weighted mix of itself and a
+within-step permutation of itself, which preserves the depth profile and every marginal and destroys
+only the pairing — puts the detection threshold between a true r_dd of 0.086 (not detected) and 0.172
+(detected), consistent with that MDE. So:
+
+- an effect of **|r_dd| ≥ 0.183** is detectable here;
+- an effect below about 0.1 is **not**, and a null result at that magnitude would be an
+  under-powered null rather than evidence of absence — the paper says so if it lands there;
+- the same statistic at n_independent = 4 would have an MDE of 0.444, which is why this rule is
+  stated over the released checkpoint's twenty trajectories and not over our own arms' four.
+
+**Our expectation, recorded as an expectation only.** We expect r_dd to be positive and materially
+smaller than the pooled +0.605, because some of the pooled correlation is certainly between-trajectory.
+That is a belief and not a pre-registration.
+
+**Evidence** `RUN` pending; the rule is discharged by `results/a2_trajectory_level_control.json`.
+Power: `results/p1_power_check.json`.
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
+
+### X-12 — The five ensemble members share a trunk, a hidden state, and 89% of their parameters · **NEW**
+
+Established from pinned upstream source, from the released checkpoint's tensors, and from our own
+ensemble-5 arms. Nothing here is trained and nothing is inferred.
+
+**The construction.** `system_dynamics.py:34` builds **one** `state_base`. `system_dynamics.py:35-41`
+replicates the *heads* `ensemble_size` times, and only the heads. `system_dynamics.py:44` does the
+same for the auxiliary pathway. In the forward pass `system_dynamics.py:87` evaluates the trunk
+**once** and `:90` hands the identical feature vector to every head. `system_dynamics.py:126` then
+computes the epistemic term as the standard deviation *across those heads*.
+
+**The counts, from `assets/models/pretrain_rnn_ens.pt`.** The state pathway is a 636,672-parameter
+two-layer GRU trunk plus five 77,492-parameter heads. Per member, 636,672 of 714,164 parameters —
+**89.15%** — are numerically identical to every other member's. Across the whole object, both trunks
+together are 1,273,344 of 1,995,569 parameters, 63.81%.
+
+**The stronger form, which is not about parameter counts.** The trunk owns a single recurrent hidden
+state (`rnn.py:40`), and an autoregressive rollout feeds the ensemble **mean** back into it
+(`system_dynamics.py:115`, and `src/rwm_model.py:223` in our reimplementation). So the five members
+do not roll out independently at all: there is one hidden-state trajectory, and disagreement at step
+t is the spread of five 256→128→45 MLPs read off one 256-vector. The members cannot express
+uncertainty the shared trunk does not already carry.
+
+**Our own ens5 arms are identical in this respect** — `src/rwm_model.py:164-167, 182, 185, 200` —
+with the same 636,672 / 77,492 split and the same 1,995,569 total. §5.2's "our arms fail the same way"
+is therefore a comparison of like with like, not an assumption.
+
+**Status of the mechanism claim.** This is a *candidate* explanation for the epistemic
+miscalibration §5.3 leaves unexplained, established structurally. Whether it is *the* explanation is
+what M-44 tests. The two are kept separate deliberately: the topology is a fact, the mechanism is a
+hypothesis about that fact.
+**Evidence** `SRC` `results/v1_ensemble_topology.json`; `scripts/v1_ensemble_topology.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### X-13 — h=368 is the upstream's open-loop diagnostic length, not a deployment horizon · **NEW**
+
+The paper calls h=368 "the deployment horizon" and puts the numbers measured there in the abstract.
+Nothing defended the label, and it is wrong in both directions.
+
+**Where 368 comes from.** `base_cfg.py:46` sets `len_eval_trajectory = 400`; `mbpo_ppo.py:61` carries
+the same 400; `mbpo_ppo.py:284` starts the autoregressive forecast *after* the `history_horizon = 32`
+teacher-forced prefix (`anymal_d_flat_cfg.py:68`). 400 − 32 = 368. It is the length of the upstream's
+own **open-loop diagnostic** — the curve the follow-up plots as its uncertainty figure — and our
+h=368 inherits it because our harness reproduces that evaluation.
+
+**What the method actually rolls out over.** 100 steps. arXiv:2504.16680 Table S9 (v1) / Table S11
+(v3) gives "imagination steps per iteration = 100", unchanged between versions, and v3 adds the same
+figure in prose: "propagate and manage uncertainty over 100-step episodic rollouts". The shipped
+`lite` release instead caps an imagined episode at 256 (`base_cfg.py:20`, enforced at
+`envs/base.py:174`) and collects 24 steps per iteration (`base_cfg.py:147`); those are the reduced
+release's defaults and the published table governs. Neither is 368.
+
+**The consequence.** h=368 is 3.68× the method's own rollout length. h=100 is added to the evaluation
+grid — the per-step curves already ran to 368, so measuring the method's own horizon exactly costs a
+cumulative mean — and the headline re-anchors there. Every h=368 row is kept and relabelled as the
+open-loop diagnostic horizon.
+
+**An observation about the original, not a defect.** The follow-up's uncertainty evidence is itself
+gathered at the 368-step diagnostic horizon, 3.68× the one its method deploys at. A diagnostic may
+legitimately run past the deployment horizon. What it means for us is that our h=368 is comparable to
+the original's *figure* and our h=100 is comparable to the original's *method*, and the paper now
+says which is which.
+**Evidence** `SRC` `results/v2_deployment_horizon.json`; `scripts/v2_deployment_horizon.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+
+### X-14 — The metrics were never defined, in a paper whose metrics have twice changed a verdict · **NEW**
+
+The paper reported "normalised error 0.3582" and never defined the metric; it named relative-L1 and
+nRMSE and gave the formula for neither; "coverage" was never defined operationally. In this project
+specifically that is not a presentational gap. Two metrics here disagree in **direction** at h=1
+(R-20), and the choice between pooling-before-dividing and dividing-before-pooling once **inverted**
+a comparison against the released model (R-27, M-19, R-29). A reader who cannot see the denominator
+cannot check the headline and cannot tell which aggregation produced it.
+
+`results/v3_metric_definitions.json` now carries, for each of relative-L1, nRMSE form 1 (the primary
+pooled aggregation), nRMSE form 2 (retained only for continuity), the overconfidence factor and
+coverage: the formula as LaTeX, the implementation's `file:line` read back and fingerprinted, the
+denominator and where its constants come from, and — for coverage — the pooling axes in order and the
+nominal it is judged against. Twenty implementation citations are verified on every run.
+
+**Three things the definitions make visible that the prose did not.** Coverage at h is *cumulative*
+over steps 1..h, not the value at step h, and the same convention governs every horizon-indexed
+quantity in the paper. The overconfidence factor is a **ratio of means**, not a mean of ratios, and
+its calibrated value is √(2/π) = 0.798 rather than 1. And in `task1_calibration.py:64` seeds are
+concatenated onto the trajectory axis before pooling — fine for a point estimate over a balanced
+design, and *not* a valid resampling unit, which is M-27 restated where a reader can see it.
+**Evidence** `SRC` `results/v3_metric_definitions.json`; `scripts/v3_metric_definitions.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
+### X-15 — The follow-up moved to v3 and every figure reference in our paper went stale · **NEW**
+
+Our paper pins section numbering for `arXiv:2501.10100v1` and records v2's renumbering. It did not do
+this for `arXiv:2504.16680`, whose §5.1 and Eq. 4–5 it cites repeatedly. That paper is now at **v3**,
+last revised **8 January 2026** and substantially expanded — a Related Work section, a training
+diagram, a results table and two further deployment figures.
+
+**What did not move**, checked against both HTML renderings: §5.1 keeps its number and both quoted
+sentences are in it; Eq. 4 (`u = Var_b[μ^b]`) and Eq. 5 (`r̃ = r − λu`) keep their numbers and render
+character-identically. So every **section** and **equation** reference in our paper resolves in v3
+unchanged.
+
+**What moved:** the uncertainty-estimation figure our §5.1, §5.2 and §5.6 discuss is **Figure 2
+(right) in v1 and Figure 3 (right) in v3**; the MOPO-PPO training figure is **Figure 3 → Figure 4**;
+the episodic-rewards figure **Figure 4 → Figure 5**; the MOPO-PPO hyperparameter table, which is where
+the 100-step imagination horizon lives, is **Table S9 → Table S11**; the architecture table **S6 →
+S7**; the training-parameter table **S8 → S10**. The model was renamed **RWM-O → RWM-U**, and our
+paper quotes v1 sentences containing "RWM-O".
+
+Recorded in `results/original_paper_figures.json` under `followup_version_map`, the same treatment
+2501.10100 already had. Every in-text citation of the follow-up now names the version it was read
+from.
+
+**A pipeline defect found while doing this.** `scripts/original_paper_figures.py` rewrote that JSON
+wholesale and silently dropped the `verification` block that `scripts/verify_original_quotes.py`
+writes into the same file — the record that all four EXT quotations were matched as substrings of the
+published HTML. Since the quote checker needs the network it is deliberately not a `reproduce.sh`
+stage, so it could not simply re-run afterwards: any regeneration of the figures artifact turned four
+verified quotations into four asserted ones, with nothing reporting it. The generator now carries the
+block forward and says so on every run.
+**Evidence** `EXT` `results/original_paper_figures.json`; `scripts/original_paper_figures.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+
+
 ---
 
 ## Candidate paper contributions

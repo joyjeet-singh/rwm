@@ -6,7 +6,101 @@
     "arXiv:2504.16680v1 (23 Apr 2025)"
   ],
   "evidence_class": "EXT \u2014 transcribed from the published papers, not computed",
-  "version_note": "Our section references use v1's Roman-numeral sectioning (IV-C, IV-D, IV-E). v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1, so a reader opening the current arXiv version will not find IV-C. Both locations are recorded for every claim.",
+  "version_note": "Our section references use v1's Roman-numeral sectioning (IV-C, IV-D, IV-E). v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1, so a reader opening the current arXiv version will not find IV-C. Both locations are recorded for every claim. The follow-up 2504.16680 gets the same treatment in followup_version_map: we read v1, it is now at v3, sections and equations are unchanged and every figure and appendix table has moved.",
+  "followup_version_map": {
+    "arxiv_id": "2504.16680",
+    "we_read": "v1",
+    "we_read_dated": "23 Apr 2025",
+    "current": "v3",
+    "current_dated": "8 Jan 2026",
+    "all_versions": [
+      {
+        "version": "v1",
+        "date": "23 Apr 2025",
+        "size_kb": 7854
+      },
+      {
+        "version": "v2",
+        "date": "7 Jan 2026",
+        "size_kb": 38854
+      },
+      {
+        "version": "v3",
+        "date": "8 Jan 2026",
+        "size_kb": 38854
+      }
+    ],
+    "checked_on": "2026-08-23",
+    "method": "both HTML renderings fetched and compared: figure and table captions enumerated from <figcaption>, equations located by their rendered bodies, section headings enumerated from the document outline",
+    "unchanged": [
+      {
+        "what": "section 5.1",
+        "v1": "5.1 Autoregressive Uncertainty Estimation",
+        "v3": "5.1 Autoregressive Uncertainty Estimation",
+        "note": "both quoted sentences are in it in both versions"
+      },
+      {
+        "what": "Eq. 4",
+        "v1": "Eq. 4",
+        "v3": "Eq. 4",
+        "body": "u_{t+1} = u_{p_phi}(...) = Var_b[mu^b_{o_{t+1}}]",
+        "note": "character-identical rendering in both"
+      },
+      {
+        "what": "Eq. 5",
+        "v1": "Eq. 5",
+        "v3": "Eq. 5",
+        "body": "r~(o_t,a_t) = r_t(o_t,a_t) - lambda u_{p_phi}(...)",
+        "note": "character-identical rendering in both"
+      },
+      {
+        "what": "imagination steps per iteration",
+        "v1": "100 (Table S9)",
+        "v3": "100 (Table S11)",
+        "note": "the value is unchanged; only the table number moved. v3 adds the same figure in prose: '100-step episodic rollouts'"
+      }
+    ],
+    "moved": [
+      {
+        "what": "uncertainty estimation figure \u2014 the one our 5.1, 5.2 and 5.6 discuss",
+        "v1": "Figure 2 (right)",
+        "v3": "Figure 3 (right)",
+        "caption_v3_adds": "The epistemic uncertainty estimate by RWM-U aligns with the long-horizon prediction error and thus sets a reliable metric in policy training."
+      },
+      {
+        "what": "epistemic uncertainty under three penalty weights during MOPO-PPO training \u2014 where our section 3 table says the aleatoric term is reported",
+        "v1": "Figure 3 (right)",
+        "v3": "Figure 4 (right)"
+      },
+      {
+        "what": "normalised episodic rewards across environments",
+        "v1": "Figure 4",
+        "v3": "Figure 5"
+      },
+      {
+        "what": "MOPO-PPO training hyperparameters, including the imagination horizon",
+        "v1": "Table S9",
+        "v3": "Table S11"
+      },
+      {
+        "what": "world-model architecture table",
+        "v1": "Table S6 (RWM-O architecture)",
+        "v3": "Table S7 (RWM-U architecture)"
+      },
+      {
+        "what": "world-model training parameters",
+        "v1": "Table S8",
+        "v3": "Table S10"
+      },
+      {
+        "what": "the model's name",
+        "v1": "RWM-O",
+        "v3": "RWM-U",
+        "note": "a rename, not a different model: the architecture tables and Eq. 4 are unchanged. Our paper quotes v1 sentences containing 'RWM-O'."
+      }
+    ],
+    "consequence": "every in-text citation of 2504.16680 in this paper names the version it was read from, and the reference-list entry pins v1 with the v3 revision date recorded. Section and equation references resolve in both; figure references need the map above, which is why it is here."
+  },
   "claims": [
     {
       "key": "ar_beats_tf",
@@ -35,9 +129,10 @@
       "claim": "Epistemic uncertainty \"closely follows the trend of the prediction error\", justifying \"its role as a trust metric\"",
       "where_v1": "2504.16680v1 5.1",
       "where_v2": null,
+      "where_v3": "2504.16680v3 5.1 (section number unchanged; the figure moved, see followup_version_map)",
       "original_figure": null,
       "original_states": "the estimated epistemic uncertainty (dark blue) closely follows the trend of the prediction error, demonstrating that RWM-O effectively captures uncertainty in regions where the model generalization deteriorates. ... The strong correlation between epistemic uncertainty and model prediction error justifies its role as a trust metric for policy optimization.",
-      "form": "qualitative; shown in Figure 2 (right)",
+      "form": "qualitative; shown in Figure 2 (right) [v1] = Figure 3 (right) [v3]",
       "numeral_in_text": false,
       "note": "The paper asserts a \"strong correlation\" and gives no correlation coefficient, no interval and no sample size. Our +0.605 [+0.545, +0.694] at n_independent = 20 appears to be the first number attached to this claim."
     },
@@ -46,9 +141,10 @@
       "claim": "Aleatoric uncertainty \"remains low, reflecting small stochasticity\"",
       "where_v1": "2504.16680v1 5.1",
       "where_v2": null,
+      "where_v3": "2504.16680v3 5.1 (section number unchanged; the figure moved, see followup_version_map)",
       "original_figure": null,
       "original_states": "the aleatoric uncertainty (light blue) remains low, reflecting small stochasticity in the environment.",
-      "form": "qualitative; shown in Figure 2 (right)",
+      "form": "qualitative; shown in Figure 2 (right) [v1] = Figure 3 (right) [v3]",
       "numeral_in_text": false,
       "note": "\"Low\" is relative to the plotted epistemic curve on the same axes; no absolute value, ratio or comparison against realised error is given."
     }

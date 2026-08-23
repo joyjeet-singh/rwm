@@ -26,7 +26,7 @@ def _sign_p(k, n):
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 import numpy as np, torch
 import rwm_data as R, rollout_eval as E, rwm_metrics as MET, rwm_model as M, score_reference as S
-START=E.START_STEP; SEEDS=(0,1,2); HS=(1,8,32,128,368)
+START=E.START_STEP; SEEDS=(0,1,2); HS=(1,8,32,100,128,368)
 GROUPS=[("base lin vel",R.LIN_VEL),("base ang vel",R.ANG_VEL),("proj gravity",R.GRAVITY),
         ("joint pos",R.JOINT_POS),("joint vel",R.JOINT_VEL),("joint torque",R.JOINT_TAU)]
 paths=R.repo_paths(); cfg=R.load_reference_config(paths["lite"])
