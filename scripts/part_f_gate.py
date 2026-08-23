@@ -79,6 +79,21 @@ def main():
     # ---- 3 no hand-typed numbers ----
     tpl = re.sub(r"\{\{\w+\}\}", " ", open("PAPER.template.md").read())
     tpl = re.sub(r"```.*?```", "", tpl, flags=re.S).split("## References")[0]
+    # Three classes of numeral are ADDRESSES rather than results, and stripping
+    # the class is safer than allow-listing each value -- an allow-list of line
+    # numbers would silently permit a result that happened to equal one.
+    #
+    #   a) anything inside an inline code span. In this paper a backticked
+    #      numeral is always a file:line citation, a tensor index or an
+    #      identifier: `system_dynamics.py:126`, `:182`, `swh:1:`.
+    #   b) an arXiv identifier, with or without a version suffix. The suffix is
+    #      why "arXiv:2501.10100v1" used to leave a bare "2501" behind: the
+    #      trailing v1 makes the whole id fail the word-boundary lookahead.
+    #   c) a four-digit publication year in the related-work prose. No result in
+    #      this paper is a bare number in 1900-2099.
+    tpl = re.sub(r"`[^`\n]*`", " ", tpl)                         # (a)
+    tpl = re.sub(r"arXiv:\d{4}\.\d{4,5}(\*{0,2}v\d+\*{0,2})?", " ", tpl)   # (b)
+    tpl = re.sub(r"(?<![\w.])(19|20)\d{2}(?![\w.])", " ", tpl)   # (c)
     # strip trailing sentence punctuation the numeral regex sweeps up, or "368."
     # at the end of a sentence reads as a different token from "368"
     nums = sorted({m.group(1).rstrip(".,") for m in

@@ -1077,6 +1077,16 @@ def main():
             put(f"a2_rdd_ci_h{h}", _ci(_p["r_dd_ci"]),
                 "results/a2_trajectory_level_control.json")
 
+    # --- the compiled PDF, so the README cannot quote a stale page count ----
+    # (compile_paper.py runs AFTER this in the pipeline, so on a first-ever build
+    # the key is absent; the README's line is optional for that reason.)
+    _cp = os.path.join(R.RESULTS, "compile_paper.json")
+    if os.path.exists(_cp):
+        CP = J("compile_paper.json")
+        put("pdf_pages", CP["pages"], "results/compile_paper.json")
+        put("pdf_overfull", CP["overfull_hboxes"], "results/compile_paper.json")
+        put("pdf_warnings", CP["latex_warnings"], "results/compile_paper.json")
+
     # --- T1: the bibliography ----------------------------------------------
     T1 = J("t1_bibliography_verified.json")
     put("t1_n_refs", T1["n_entries"], "results/t1_bibliography_verified.json")

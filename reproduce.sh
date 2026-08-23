@@ -256,6 +256,11 @@ REPORT=t1_bibliography_report.txt stage 20p "T1 — the section 2 bibliography, 
 # cannot drift, with every quotation the paper uses asserted present.
 stage 20q "T5 — anonymised correspondence transcript" "5 s" \
       results/t5_anon_transcript.json $PY scripts/t5_anon_transcript.py
+# R1/R2: the independent-initialisation contrast M-44 governs. R1 is the two extra
+# Arm A ens1 seeds (./run_indep_ens.sh, ~1.2 h each); R2 scores seeds 0-4 together
+# as an ensemble and returns M-44's verdict.
+REPORT=r2_independent_ensemble_report.txt stage 20r "R2 — the independent-init ensemble, and M-44's verdict" "10 min" \
+      results/r2_independent_ensemble.json NEEDS_WEIGHTS $PY scripts/r2_independent_ensemble.py
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 

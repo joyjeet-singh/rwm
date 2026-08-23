@@ -142,7 +142,7 @@
       "id": "C3.6",
       "kind": "compare",
       "where": "10",
-      "says": "very nearly a perfect ranking. Over the full",
+      "says": "ranks whole rollouts almost perfectly",
       "pass": true,
       "detail": "0.993913 vs 0.605338 -> gt, text says gt"
     },

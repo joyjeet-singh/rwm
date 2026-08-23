@@ -15,8 +15,9 @@ gradients before anything was trained.
 **The paper is [`PAPER.md`](PAPER.md)** (LaTeX: [`PAPER.tex`](PAPER.tex)). It is generated, not
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
-way, from the same file, so the two cannot disagree. The checkpoints are described in
-[`MODEL_CARD.md`](MODEL_CARD.md).
+way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
+{{pdf_pages}} pages, {{pdf_overfull}} overfull boxes, {{pdf_warnings}} LaTeX warnings
+(`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — {{n_entries}} entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims

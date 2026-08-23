@@ -2931,6 +2931,18 @@
     "source": "results/p1_power_check.json",
     "value": "0.086"
   },
+  "pdf_overfull": {
+    "source": "results/compile_paper.json",
+    "value": 0
+  },
+  "pdf_pages": {
+    "source": "results/compile_paper.json",
+    "value": 28
+  },
+  "pdf_warnings": {
+    "source": "results/compile_paper.json",
+    "value": []
+  },
   "perm_all_armB_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "5.68e-14"

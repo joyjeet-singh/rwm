@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "22 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "28 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -15,28 +15,28 @@
     {
       "n": 3,
       "name": "no hand-typed numbers",
-      "pass": true,
-      "detail": "58 distinct numerals typed; unexplained: none"
+      "pass": false,
+      "detail": "55 distinct numerals typed; unexplained: ['6.10']"
     },
     {
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
       "pass": true,
-      "detail": "verify_reproduction.json vs the clone run at clone4: 29 files regenerated, 6,073 values, 6,073 identical, 0 differing; carried-in partition present (762,418 copied values held out); artifact post-dates the regeneration marker"
+      "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 29 files regenerated, 6,073 values, 6,073 identical, 0 differing; carried-in partition present (762,418 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
-      "pass": true,
-      "detail": "82 section refs, unresolved none; figures ['1', '2', '3', '4', '5'], dangling none"
+      "pass": false,
+      "detail": "128 section refs, unresolved ['6.10']; figures ['1', '2', '3', '4', '5'], dangling none"
     },
     {
       "n": 6,
       "name": "numeric consistency, abstract vs body",
       "pass": true,
-      "detail": "44 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
+      "detail": "5 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
-  "n_pass": 6,
+  "n_pass": 4,
   "n": 6
 }

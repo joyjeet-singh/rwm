@@ -181,7 +181,7 @@ CLAIMS = [
      "b": ("task_b_permutation.json", "arenas.out-of-sample.holm.smallest_threshold"),
      "expect": "gt"},
     {"id": "C3.6", "kind": "compare", "where": "10",
-     "says": "very nearly a perfect ranking. Over the full",
+     "says": "ranks whole rollouts almost perfectly",
      "a": ("task_d_nind20.json", "d2_forecast_index.1.r_epistemic"),
      "b": ("task_d_nind20.json", "d2_forecast_index.368.r_epistemic"),
      "expect": "gt"},

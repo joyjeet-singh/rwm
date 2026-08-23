@@ -102,7 +102,8 @@ in Offline Model-Based Reinforcement Learning*, ICLR 2022) compare uncertainty h
 offline model-based RL under protocols built, in their words, to "capture the specific covariate
 shift induced by model-based RL", explicitly in order to assess calibration. They report Spearman
 rank and Pearson bivariate correlation against true model error **separately**, and observe that
-"despite the similar rank correlations ρ, the bivariate correlations r can vary considerably" —
+"despite the similar rank correlations $\rho$, the bivariate correlations $r$ can vary
+considerably" —
 that is, a configuration can preserve ordering while changing the relationship between the
 penalty's magnitude and the error's. That is our ranking-versus-scale distinction, on the same
 family of penalties.
@@ -225,11 +226,11 @@ denominator cannot check the headline.
 (`model_training.py:203`) so that our numbers are comparable to the upstream's printed one. On
 config-normalised states, per forecast step,
 
-{{v3_rel_l1}}
+$${{v3_rel_l1}}$$
 
 and the reported figure is the flat mean over trajectories and steps,
 
-{{v3_rel_l1_agg}}
+$${{v3_rel_l1_agg}}$$
 
 with $t_0$ = `history_horizon` = {{v2_history}}: the first {{v2_history}} steps are teacher-forced
 and excluded. The denominator is recomputed at every step and is a 45-term sum in normalised
@@ -238,11 +239,11 @@ state groups, and why a second one exists.
 
 **Normalised RMSE** fixes the denominator once, over the training episodes only:
 
-{{v3_nrmse}}
+$${{v3_nrmse}}$$
 
 where the scale constant is
 
-{{v3_scale}}
+$${{v3_scale}}$$
 
 computed once, stored in `results/step4_0a_results.json`, never recomputed per step and never
 derived from held-out data. A value of 1.0 means no better than predicting the training mean.
@@ -255,7 +256,7 @@ figures published before that was found.
 **Coverage at ±kσ** is the fraction of scalar (trajectory, forecast step, state dimension) triples
 whose absolute realised error falls within k times the σ predicted for that same triple:
 
-{{v3_coverage}}
+$${{v3_coverage}}$$
 
 Three things a reader needs and the prose did not previously give. It is pooled over all three
 axes with equal weight per triple. It is **cumulative** over steps 1..h — coverage "at h" averages
@@ -267,12 +268,12 @@ $\mathrm{erf}(k/\sqrt{2})$: **{{v3_cov_nominal1}}%** at ±1σ and **{{v3_cov_nom
 **The overconfidence factor** is how many times larger the typical realised error is than the
 typical predicted σ:
 
-{{v3_rho}}
+$${{v3_rho}}$$
 
 It too is a **ratio of means**, not a mean of ratios — the latter is unbounded whenever a single σ
 approaches zero, which is exactly the regime §6.3 puts these models in. One caution on reading it:
-ρ = 1 is *not* calibration. A calibrated Gaussian has mean|error| / σ = √(2/π) =
-{{v3_rho_calibrated}}. ρ is reported as a magnitude of miscalibration and coverage is the
+$\rho = 1$ is *not* calibration. A calibrated Gaussian has mean|error| / σ = $\sqrt{2/\pi}$ =
+{{v3_rho_calibrated}}. $\rho$ is reported as a magnitude of miscalibration and coverage is the
 calibrated reading, which is why both appear everywhere.
 
 **Which metric each headline uses.** The A/B training claim (§5) is relative-L1, because the claim
@@ -282,7 +283,7 @@ at all. The ranking claims (§6.7) are Pearson correlations between the applied 
 total absolute error, because a ranking claim is about order rather than scale. Every headline
 number in the abstract names its metric.
 
-**Horizons.** Curves are reported at h ∈ {1, 8, 32, {{v2_deploy_h}}, 128, {{v2_diag_h}}}.
+**Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,{{v2_deploy_h}},\,128,\,{{v2_diag_h}}\}$.
 Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's
 own imagination rollout length — the horizon over which the uncertainty-penalised policy loop
 actually runs this model (arXiv:2504.16680 Table S9 in v1, Table S11 in v3; the value is unchanged
@@ -919,7 +920,7 @@ numeric values from a clean clone, {{ver_identical}} of them bitwise identical (
 
 {{n_lessons_word}} things a practitioner can apply without reading the rest of this paper.
 
-**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it correlates {{d2_epi_h1}} {{d2_epi_ci_h1}} with realised error — very nearly a perfect ranking. Over the full {{d1n_nind}}-trajectory rollout it falls to {{d4_r}} {{d4_ci}}. That decay is the useful part: the signal is excellent where you can check it cheaply and merely good where you most need it. It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at every horizon where the index is defined, and it retains {{d2b_par_all}} once that index is partialled out (§6.7). That is a real signal, not a re-encoding of how far ahead you are looking — and not merely a report of which episode is hard: with both the forecast depth and the rollout held constant it still correlates {{a2_rdd}} {{a2_rdd_ci}} with error (§6.7). But it is too small to be an interval by a wide margin — {{d1n_epi_ratio_h368}}× on the released checkpoint and {{e5_ratio_h368}}× on the ensemble-5 arms we trained — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
+**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it ranks whole rollouts almost perfectly — {{a2_h1_r}} {{a2_h1_ci}} across the {{a2_h1_npoints}} trajectories, and that is a ranking of *rollouts*, not of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to {{d4_r}} {{d4_ci}}. That decay is the useful part: the signal is excellent where you can check it cheaply and merely good where you most need it. It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at every horizon where the index is defined, and it retains {{d2b_par_all}} once that index is partialled out (§6.7). That is a real signal, not a re-encoding of how far ahead you are looking — and not merely a report of which episode is hard: with both the forecast depth and the rollout held constant it still correlates {{a2_rdd}} {{a2_rdd_ci}} with error (§6.7). But it is too small to be an interval by a wide margin — {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}× [{{e5_ratio_ci_h100}}] on the ensemble-5 arms we trained, both at the horizon the method itself rolls out over — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
 
 **If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within {{d3_tol}} points of nominal on every held-out cell; a single global multiplier manages {{d3_epi_const_ok}} of them (§6.8). The held-out cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, not independent trials, so read the sweep as consistency and the per-cell deviations as the evidence. The fitted multipliers span {{d3_epi_cspread}}× across horizons, which is precisely why one number cannot serve.
 
@@ -983,6 +984,30 @@ among them: it is a three-seed mean with per-seed values reported (§5). This is
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's {{perm_oos_nind}} independent trajectories admit a smallest attainable P-value of {{perm_oos_floor}} — coarser than the multiplicity-corrected threshold {{perm_oos_holm_thr}}, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving this needs more episodes than the released dataset contains, not a better test. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
 
+**The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it.**
+§6.10's contrast trains five models at five seeds and scores them together. Independently-seeded
+runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ
+only in head initialisation. So the comparison conflates trunk-sharing with data-order diversity.
+That asymmetry is deliberate and it is generous to the mechanism: if the overconfidence factor
+barely moves despite the handicap, the finding is strong in the direction of *architecture is not
+the explanation*; if it moves a great deal, the design flaw is identified but not cleanly
+attributed to trunk-sharing alone. Isolating it would need an ensemble that shares data ordering
+and not parameters, which is a different experiment. M-44 states this in its own text, committed
+before the runs.
+
+**§6.4's mechanism is a structural fact plus a hypothesis, and the two are separable.** That the
+five members share a trunk, a hidden state and {{v1_shared_pct}}% of each member's parameters is
+measured, from source and from the checkpoint's tensors. That this *causes* the epistemic
+miscalibration is the hypothesis, and only §6.10 bears on it.
+
+**Deliberately out of scope, and stated so a reader does not assume otherwise.** No policy-learning
+result of either paper is tested — no simulator, no RL loop, no ANYmal, and no policy is trained
+anywhere in this work. The sample-efficiency comparison (roughly 6M against 250M transitions) is
+not tested for the same reason. Nothing here uses a GPU. And **we did not test whether the σ = 0
+optimum affects other descendants of the PETS parameterisation** (§2): the parameterisation is
+inherited line for line and the objective is not, which makes the hypothesis well-founded and
+untested. Testing it needs other repositories, and we make no claim about them.
+
 **We did not reproduce the policy-learning results** of either paper. This is a dynamics-model reproduction only.
 
 ---
@@ -991,11 +1016,9 @@ among them: it is a three-seed mean with per-seed values reported (§5). This is
 
 The Robotic World Model's central training claim reproduces, and the margin is large. Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
-The aleatoric σ is {{d1n_alea_ratio_h368}}× smaller than its own error, and the cause is that the
-objective's optimum is σ = 0 with the term that should prevent this cancelling out of the
-gradient. The epistemic term the method actually penalises with is {{d1n_epi_over_alea_h368}}× better and still {{d1n_epi_ratio_h368}}× overconfident where it is used.
+At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to, the aleatoric σ is {{d1n_alea_ratio_h100}}× smaller than its own error, and the cause is that the objective's optimum is σ = 0 with the term that should prevent this cancelling out of the gradient. The epistemic term the method actually penalises with is better by a factor of {{d1n_epi_over_alea_h368}} and still {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] overconfident where it is used.
 
-The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large — but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, restores nominal coverage on every held-out cell where a global multiplier restores {{d3_epi_const_ok}} of them — {{d3_nhoriz}} horizons in each of two fold directions, on the same {{d3_nind_tot}} trajectories, so not independent trials. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon, keeps {{d2b_par_all}} once the index is partialled out, and still reaches {{d2r_win}} when depth is held exactly constant — so it is not a re-encoding of the clock. That is the one claim of either original work that this reproduction strengthens rather than qualifies.
+The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large — but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, restores nominal coverage on every held-out cell where a global multiplier restores {{d3_epi_const_ok}} of them — {{d3_nhoriz}} horizons in each of two fold directions, on the same {{d3_nind_tot}} trajectories, so not independent trials. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. **The control this rests on is the one that removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (§6.7, M-45). That is a smaller number than the {{a2_r_pooled}} pooled figure and it is the one that means what a practitioner needs it to mean — so it is not a re-encoding of the clock, and not merely a report of which episode is hard. That is the one claim of either original work that this reproduction strengthens rather than qualifies.
 
 What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on every one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials — the dimensions are physically coupled, and the permutation test over whole trajectories is the statistic (§6.6). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely on every one of {{perm_all_relale_ndim_h368}} dimensions over all ten episodes and at chance on the held-out pair alone — a dependence on arena that §6.6 sets out. The corrected arm sits at chance in both. And once the physical coupling between state dimensions is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction. We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about {{perm_worst_factor}} on the cells we had cited as evidence. Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
 
