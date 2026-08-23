@@ -1,6 +1,6 @@
 {
   "n_claims": 21,
-  "n_pass": 19,
+  "n_pass": 21,
   "claims": [
     {
       "id": "C1.1",
@@ -86,9 +86,9 @@
       "id": "C5.2",
       "kind": "cell",
       "where": "5.5",
-      "says": "the arena \u00a75.5's table reports",
-      "pass": false,
-      "detail": "the paper does not contain \"the arena \u00a75.5's table reports\""
+      "says": "negatively correlated with error on",
+      "pass": true,
+      "detail": "arenas.out-of-sample.models.released aleatoric.368 -> 20/45, text cites 20/45"
     },
     {
       "id": "C5.3",
@@ -159,8 +159,8 @@
       "kind": "count-consistency",
       "where": "1 / abstract / 8",
       "says": "further retractions withdraw framings rather than numbers",
-      "pass": false,
-      "detail": "framing retractions = 2 (2/Two/two); 2/3 sites agree; disagreeing: ['further retractions are **not** among those']"
+      "pass": true,
+      "detail": "framing retractions = 2 (2/Two/two); 3/3 sites agree"
     },
     {
       "id": "C6.1",

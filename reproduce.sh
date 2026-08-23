@@ -164,6 +164,8 @@ if [ $QUICK -eq 0 ]; then
         results/step5_armA_seed2_nll.json ./run_tasks45.sh
   stage 11b "TRAINING — duplication control arm" "2 h" \
         results/step5_armA_seed2_dup.json ./run_control.sh
+  stage 11c "TRAINING — ensemble-5 arms (M-43)" "13 h" \
+        results/step5_armA_seed2_ens5.json ./run_ens5.sh
 else
   echo ""
   echo " STAGES 9-11 (training, ~20 h) SKIPPED in --quick mode."
@@ -218,6 +220,12 @@ REPORT=task_d2b_robustness_report.txt stage 20f "Forecast-index control, four st
       results/task_d2b_robustness.json $PY scripts/task_d2b_robustness.py
 REPORT=task_d3_perhorizon_report.txt stage 20g "Per-horizon recalibration (R-64)" "3 min" \
       results/task_d3_perhorizon.json $PY scripts/task_d3_perhorizon.py
+REPORT=task_d3_ens5_report.txt stage 20h "Ensemble-5 replication and M-43's verdict (R-67)" "8 min" \
+      results/task_d3_ens5.json NEEDS_WEIGHTS $PY scripts/task_d3_ens5.py
+REPORT=task_d3b_ens5_power_report.txt stage 20i "Ensemble-5 companion and power at n=4 (R-67)" "6 min" \
+      results/task_d3b_ens5_power.json NEEDS_WEIGHTS $PY scripts/task_d3b_ens5_power.py
+REPORT=task_c2_data_budget_report.txt stage 20j "Data budget against the reference (C2)" "10 s" \
+      results/task_c2_data_budget.json $PY scripts/task_c2_data_budget.py
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 

@@ -24,6 +24,11 @@
     "sample_size": "n_independent = 20 (all ten episodes) unless the sentence says otherwise",
     "verdict": "SUPPORTED"
   },
+  "048004dcf84b": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+    "verdict": "SUPPORTED"
+  },
   "04ab531e3a05": {
     "claim": "The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells.",
     "note": "Quantitative, substituted from the named artifact by the build.",
@@ -75,6 +80,11 @@
   "0aa88aa0cb0d": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "0aaa0573b4e3": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "0c8fde7f2259": {
@@ -175,6 +185,11 @@
     "sample_size": "-",
     "verdict": "SUPPORTED"
   },
+  "219515068da5": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+    "verdict": "SUPPORTED"
+  },
   "21ff8e40e77a": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 held-out trajectories, 3 seeds",
@@ -248,6 +263,11 @@
   "3066edab61b5": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "306f408ac4ad": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "307a4ef9f224": {
@@ -356,6 +376,11 @@
   "3ae4dd000f59": {
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "3c2bda7baacc": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "3cdd91dd6324": {
@@ -746,6 +771,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "7da1f58f22a2": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+    "verdict": "SUPPORTED"
+  },
   "7e50cf9f3bcd": {
     "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I",
     "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
@@ -810,6 +840,11 @@
     "sample_size": "",
     "verdict": "SUPPORTED"
   },
+  "8ccb2b2db158": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+    "verdict": "SUPPORTED"
+  },
   "8d89a6bcc5f7": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "21 training runs",
@@ -824,6 +859,16 @@
     "claim": "The rule for the duplication control (\u00a75.4) was stated in conversation before the runs but reached git **{{lea",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "8fff962a3327": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+    "verdict": "SUPPORTED"
+  },
+  "90a1e31e31bd": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "90c1e7fdf6d0": {
@@ -899,6 +944,11 @@
     "sample_size": "12 comparative claims, 11 corruptions",
     "verdict": "SUPPORTED"
   },
+  "a4b20dbdb1f0": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+    "verdict": "SUPPORTED"
+  },
   "a53d00d681e8": {
     "note": "counts read from results/comparative_claims.json, regenerated with --self-test; the 7 kinds are overlap, extremum, sign, orders, cell, compare, relvar",
     "sample_size": "19 comparative claims, 18 corruptions",
@@ -924,6 +974,11 @@
     "claim": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7.",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "abb258cd0617": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "acc0f21ea900": {
@@ -1163,10 +1218,20 @@
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
     "verdict": "SUPPORTED"
   },
+  "d6b152e9068d": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+    "verdict": "SUPPORTED"
+  },
   "d6d5a295e9b8": {
     "claim": "Reproducibility.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}",
     "note": "Quantitative, substituted from the named artifact by the build.",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "d7cbb32f2b73": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "d8e0cf99008e": {
@@ -1249,6 +1314,11 @@
   "ede32a03443a": {
     "note": "results/step4_5_timing.json: std/s_per_iter per configuration is 5.4%% (ens5_bs256), 11.3%% (ens1_bs1024), 14.3%% (ens5_bs1024), 31.8%% (ens1_bs256); min and max reported, worst named",
     "sample_size": "",
+    "verdict": "SUPPORTED"
+  },
+  "ee17fd0ab6cb": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "ee328cdfe27f": {
@@ -1375,6 +1445,11 @@
   "fcab37327de8": {
     "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted",
     "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
+    "verdict": "SUPPORTED"
+  },
+  "fd24f9b8b21e": {
+    "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted",
+    "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
     "verdict": "SUPPORTED"
   },
   "fdd6b6aaa3c6": {

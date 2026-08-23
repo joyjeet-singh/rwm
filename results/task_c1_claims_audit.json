@@ -1,7 +1,7 @@
 {
-  "n_claims": 196,
+  "n_claims": 209,
   "by_verdict": {
-    "SUPPORTED": 196
+    "SUPPORTED": 209
   },
   "claims": [
     {
@@ -1093,9 +1093,45 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "6bff90b6929f",
+      "id": "219515068da5",
       "section": "5.2 The measurement",
-      "claim": "The last column gives permutation P-values over whole trajectories, not binomial ones, computed on the same {{perm_all_nind}} trajectories as the counts beside them; \u00a75.5 explains why a binomial null is inadmissible here and how far it was wrong.",
+      "claim": "The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (\u00a75.6, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}}) give, averaged over seeds:",
+      "keys": [
+        "e5_seeds",
+        "e5_nind"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "a4b20dbdb1f0",
+      "section": "5.2 The measurement",
+      "claim": "Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h368}}\u00d7 overconfident at the deployment horizon against its {{d1n_epi_ratio_h368}}\u00d7, with {{e5_cov1_h368}}% coverage where a calibrated Gaussian gives 68.3%.",
+      "keys": [
+        "e5_ratio_h368",
+        "d1n_epi_ratio_h368",
+        "e5_cov1_h368"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json",
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "306f408ac4ad",
+      "section": "5.2 The measurement",
+      "claim": "The last column of the table above gives permutation P-values over whole trajectories, not binomial ones, computed on the same {{perm_all_nind}} trajectories as the counts beside them; \u00a75.5 explains why a binomial null is inadmissible here and how far it was wrong.",
       "keys": [
         "perm_all_nind"
       ],
@@ -1105,8 +1141,8 @@
       "n_keys": 1,
       "generated": true,
       "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
     },
     {
       "id": "b6ac3d009270",
@@ -1302,6 +1338,25 @@
       "verdict": "SUPPORTED",
       "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+    },
+    {
+      "id": "048004dcf84b",
+      "section": "5.5 The failure is one of magnitude; the ordering is weaker than it looks",
+      "claim": "Our ensemble-5 arms have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at {{e5_cov_lo}}\u2013{{e5_cov_hi}} against the released checkpoint's {{cal_rel_cov}} (\u00a75.6).",
+      "keys": [
+        "e5_cov_lo",
+        "e5_cov_hi",
+        "cal_rel_cov"
+      ],
+      "artifacts": [
+        "results/task1_calibration.json",
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
     },
     {
       "id": "61b7f2a74e7b",
@@ -1932,16 +1987,140 @@
       "note": "checked against results/task_d2b_robustness.json controls block"
     },
     {
-      "id": "e2cd3cf2204a",
+      "id": "0aaa0573b4e3",
       "section": "5.6 Ensemble disagreement beats the trivial baseline",
-      "claim": "We ran this expecting it to go the other way.** A counter matching disagreement would have been the more consequential result \u2014 it would make the trust metric close to vacuous, since a counter is free \u2014 and that is the outcome this test was set up to expose.",
+      "claim": "It returns {{e5_verdict}}.** The first condition passes completely \u2014 disagreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired estimate positive, {{e5_diff_lo}} to {{e5_diff_hi}}.",
+      "keys": [
+        "e5_verdict",
+        "e5_lead_cells",
+        "e5_total_cells",
+        "e5_diff_lo",
+        "e5_diff_hi"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "d6b152e9068d",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "The second fails: the paired difference excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a majority.",
+      "keys": [
+        "e5_n_excl",
+        "e5_n_horizons"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "7da1f58f22a2",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = {{e5_nind}}, where \u00a75.6's own finding used {{d1n_nind}}.",
+      "keys": [
+        "e5_nind",
+        "d1n_nind"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json",
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "d7cbb32f2b73",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}.",
+      "keys": [
+        "e5_power_mean",
+        "e5_power_worst",
+        "e5_power_worst_h"
+      ],
+      "artifacts": [
+        "results/task_d3b_ens5_power.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "fd24f9b8b21e",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "That estimate is an **upper bound**, because the pool it subsamples is in-sample for these arms, where the effect is {{e5_eff_ins}} against {{e5_eff_oos}} on the held-out pair.",
+      "keys": [
+        "e5_eff_ins",
+        "e5_eff_oos"
+      ],
+      "artifacts": [
+        "results/task_d3b_ens5_power.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "90a1e31e31bd",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}}, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions.",
+      "keys": [
+        "e5_comp_nind",
+        "e5_comp_excl",
+        "e5_comp_n"
+      ],
+      "artifacts": [
+        "results/task_d3b_ens5_power.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "ee17fd0ab6cb",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "It cannot discharge M-43, which is stated over the out-of-sample arena, and we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.",
+      "keys": [
+        "d1n_nind"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "abb258cd0617",
+      "section": "5.6 Ensemble disagreement beats the trivial baseline",
+      "claim": "We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result \u2014 it would make the trust metric close to vacuous, since a counter is free \u2014 and that is the outcome this test was set up to expose.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
       "generated": false,
       "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "a statement of expectation, explicitly NOT claimed as a pre-registration; the sentence following it says so and points at section 8's standard (cf. S-12)"
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
     },
     {
       "id": "32348f363a95",
@@ -2761,6 +2940,59 @@
       "verdict": "SUPPORTED",
       "sample_size": "",
       "note": "Quantitative, substituted from the named artifact by the build."
+    },
+    {
+      "id": "3c2bda7baacc",
+      "section": "11. Limitations",
+      "claim": "We since trained {{e5_seeds}} Arm A arms at ensemble size 5 (\u00a75.6).",
+      "keys": [
+        "e5_seeds"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "8fff962a3327",
+      "section": "11. Limitations",
+      "claim": "They reproduce the *direction* of \u00a75.6's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration* failure at {{e5_ratio_h368}}\u00d7 \u2014 but the pre-registered rule governing the replication returns **{{e5_verdict}}**, because its second condition needs the paired difference to exclude zero at a majority of horizons and it does so at {{e5_n_excl}} of {{e5_n_horizons}}.",
+      "keys": [
+        "e5_lead_cells",
+        "e5_total_cells",
+        "e5_ratio_h368",
+        "e5_verdict",
+        "e5_n_excl",
+        "e5_n_horizons"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 6,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "8ccb2b2db158",
+      "section": "11. Limitations",
+      "claim": "The binding constraint is the same one this section opens with: our arms have a genuine held-out arena of only {{e5_nind}} independent trajectories, and the rule was written without checking what it could detect there.",
+      "keys": [
+        "e5_nind"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "SUPPORTED",
+      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
+      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
     },
     {
       "id": "d5c99562d8a7",

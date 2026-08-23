@@ -178,7 +178,23 @@ Epistemic is 600$\times$ better than aleatoric at the deployment horizon and sti
 
 \textbf{The larger sample changes one thing materially, and it is a correction to our own earlier reading.} At n\_independent = 4 the epistemic ordering looked like chance at short horizon --- 23 of 45 dimensions at h=1 --- and we had described it as a long-horizon effect. At n\_independent = 20 it is 44 of 45 at h=1, with mean r = +0.662, the \emph{strongest} mean correlation of any horizon. The in-sample permutation test says the same (\S{}5.5). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model, and we record it as such rather than keeping the more interesting-sounding horizon story.
 
-The last column gives permutation P-values over whole trajectories, not binomial ones, computed on the same 20 trajectories as the counts beside them; \S{}5.5 explains why a binomial null is inadmissible here and how far it was wrong. These are five tests on one family and none survives Holm--Bonferroni across the arena's 25 cells --- the smallest is faithful (mse) h=368 at 0.0042 against a threshold of 0.002. Read the column as a consistency check on direction, not as five independent findings.
+\textbf{The released checkpoint is no longer the only ensemble measured.} Three Arm A arms at ensemble size 5 (\S{}5.6, 3 seeds, out-of-sample, n\_independent = 4) give, averaged over seeds:
+
+\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{lllll}
+\toprule
+h & epistemic err/$\sigma$ & $\pm$1$\sigma$ & $\pm$2$\sigma$ & dims r$>$0 \\
+\midrule
+1 & 2.1$\times$ & 35.93\% & 60.37\% & 35.0/45 \\
+8 & 6.3$\times$ & 14.10\% & 26.62\% & 37.3/45 \\
+32 & 8.0$\times$ & 10.79\% & 20.50\% & 34.3/45 \\
+128 & 11.0$\times$ & 7.79\% & 15.34\% & 44.0/45 \\
+368 & \textbf{13.0$\times$} & 6.30\% & 12.51\% & 40.7/45 \\
+\bottomrule\end{tabular}}\end{center}
+
+Our arms are \textbf{better calibrated than the released checkpoint and fail the same way}: 13.0$\times$ overconfident at the deployment horizon against its 34.4$\times$, with 6.30\% coverage where a calibrated Gaussian gives 68.3\%. Being an order of magnitude closer to calibrated is not being calibrated.
+
+The last column of the table above gives permutation P-values over whole trajectories, not binomial ones, computed on the same 20 trajectories as the counts beside them; \S{}5.5 explains why a binomial null is inadmissible here and how far it was wrong. These are five tests on one family and none survives Holm--Bonferroni across the arena's 25 cells --- the smallest is faithful (mse) h=368 at 0.0042 against a threshold of 0.002. Read the column as a consistency check on direction, not as five independent findings.
 
 The scalar penalty as actually applied --- \texttt{means.std(0).sum(-1)} at \texttt{envs/base.py:166} --- correlates \textbf{+0.605} with total absolute error over the rollout, 95\% CI [+0.545, +0.694] from a bootstrap over whole trajectories, n\_independent = 20 (7,360 pooled trajectory-step points). An earlier draft quoted this correlation with neither an interval nor an n. The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
 
@@ -198,25 +214,26 @@ which is minimised at $\sigma$ = 0 for any $\mu$. There is no log-$\sigma$ term 
 
 and \texttt{min\_logstd} cancels algebraically, taking no gradient from that term. The floor the interval closes onto therefore freezes while the interval closes: a one-way ratchet.
 
-We predicted the collapse from this algebra before training, then observed it. Across all 22 runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a). Rates are fitted on 16 of those runs: the 6 10,000-iteration runs are excluded from the rate statistics because they continue seeds already counted at 2,500 and would double-weight them. Figure 3(a) shows all 22 runs; Figure 3(b) plots only the 16 the rate is fitted on, so the scatter and the quoted statistic describe the same set.
+We predicted the collapse from this algebra before training, then observed it. Across all 24 runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a). Rates are fitted on 18 of those runs: the 6 10,000-iteration runs are excluded from the rate statistics because they continue seeds already counted at 2,500 and would double-weight them. Figure 3(a) shows all 24 runs; Figure 3(b) plots only the 18 the rate is fitted on, so the scatter and the quoted statistic describe the same set.
 
-The 22 runs, so a reader can count them:
+The 24 runs, so a reader can count them:
 
 \begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{llllll}
+\begin{tabular}{lllllll}
 \toprule
-arm & iterations & objective & dataset & seeds & seed ids \\
+arm & iterations & ensemble & objective & dataset & seeds & seed ids \\
 \midrule
-Arm A & 2,500 & gaussian\_nll & clean & 3 & 0, 1, 2 \\
-Arm A & 2,500 & mse & clean & 4 & 0, 0, 1, 2 \\
-Arm A & 2,500 & mse & contaminated & 3 & 0, 1, 2 \\
-Arm A & 2,500 & mse & duplicated & 3 & 0, 1, 2 \\
-Arm A & 10,000 & mse & clean & 3 & 0, 1, 2 \\
-Arm B & 2,500 & mse & clean & 3 & 0, 1, 2 \\
-Arm B & 10,000 & mse & clean & 3 & 0, 1, 2 \\
+Arm A & 2,500 & 1 & gaussian\_nll & clean & 3 & 0, 1, 2 \\
+Arm A & 2,500 & 1 & mse & clean & 3 & 0, 1, 2 \\
+Arm A & 2,500 & 1 & mse & contaminated & 3 & 0, 1, 2 \\
+Arm A & 2,500 & 1 & mse & duplicated & 3 & 0, 1, 2 \\
+Arm A & 2,500 & 5 & mse & clean & 3 & 0, 1, 2 \\
+Arm A & 10,000 & 1 & mse & clean & 3 & 0, 1, 2 \\
+Arm B & 2,500 & 1 & mse & clean & 3 & 0, 1, 2 \\
+Arm B & 10,000 & 1 & mse & clean & 3 & 0, 1, 2 \\
 \bottomrule\end{tabular}}\end{center}
 
-\textbf{Two different things are being explained here, and \S{}5.5 separates them.} \emph{Magnitude collapse is objective-driven.} It occurs in all 13 sampled-MSE runs at a rate of -9.3950e-05 per iteration with a standard deviation of 6.6e-07 --- \textbf{including the teacher-forced arm}, which shares the objective --- and reverses to +3.2332e-05 in the 3 runs that change it. \emph{Input-independence is not.} That varies by a factor of 15.6 between two arms trained under the same objective, so the objective cannot be what produces it.
+\textbf{Two different things are being explained here, and \S{}5.5 separates them.} \emph{Magnitude collapse is objective-driven.} It occurs in all 15 sampled-MSE runs at a rate of -9.3894e-05 per iteration with a standard deviation of 6.3e-07 --- \textbf{including the teacher-forced arm}, which shares the objective --- and reverses to +3.2332e-05 in the 3 runs that change it. \emph{Input-independence is not.} That varies by a factor of 15.6 between two arms trained under the same objective, so the objective cannot be what produces it.
 
 Under the corrected objective the sign flips (Figure 3b) --- which is the strongest evidence that the mechanism is the objective and not the optimiser, the data or the architecture.
 
@@ -239,7 +256,7 @@ corrected Arm A & 0.0059 & 21/45 & 1.0000 & 0.8734 \\
 released checkpoint & 0.0177 & 20/45 & 0.6957 & 0.9738 \\
 \bottomrule\end{tabular}}\end{center}
 
-\textbf{The count column is the out-of-sample arena} (n\_independent = 4), so that all four models are compared on trajectories none of our own arms was trained on. It is not the only arena, and for the released checkpoint's aleatoric head it is not the most informative one: at n\_independent = 20 over all ten episodes that head is 0/45 --- negatively correlated with error on \emph{every} dimension --- against 20/45 here. \S{}12 quotes the larger arena and says so.
+\textbf{The CoV column is the aleatoric $\sigma$ in every row}, which is the only $\sigma$ the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric CoV is comparable to the other arms', and their \emph{epistemic} term is far more input-dependent than any aleatoric head here, at 0.379--0.395 against the released checkpoint's 0.0177 (\S{}5.6). \textbf{The count column is the out-of-sample arena} (n\_independent = 4), so that all four models are compared on trajectories none of our own arms was trained on. It is not the only arena, and for the released checkpoint's aleatoric head it is not the most informative one: at n\_independent = 20 over all ten episodes that head is 0/45 --- negatively correlated with error on \emph{every} dimension --- against 20/45 here. \S{}12 quotes the larger arena and says so.
 
 Arm B's $\sigma$ is 15.6$\times$ more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = 0.257). It is still 315$\times$ overconfident.
 
@@ -297,7 +314,15 @@ The distinction matters at exactly one place. At h=128 the marginal intervals \e
 
 The decisive one needs no model of the index-error relationship at all. Computing the correlation \textbf{within each forecast step} --- across trajectories, with depth held exactly constant, so the index cannot contribute by construction --- and averaging over steps gives \textbf{+0.739 [+0.711, +0.852]}, positive at \textbf{368 of 368} forecast steps with a median of +0.737. The weakest figure across all 5 controls is +0.582. Disagreement is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong.
 
-\textbf{We ran this expecting it to go the other way.} A counter matching disagreement would have been the more consequential result --- it would make the trust metric close to vacuous, since a counter is free --- and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (\S{}8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way. \textbf{On this axis the follow-up's claim survives adversarial testing against a real baseline}, and that is the strongest form of support this paper offers any claim of either original work. It coexists with \S{}5.5 without contradiction: the \emph{scalar} the method applies tracks error well, while the \emph{per-dimension} sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
+\textbf{Does it hold on a model we trained?} Everything above is measured on the released checkpoint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore trained three Arm A arms at \textbf{ensemble size 5}, identical in every other setting, under a rule committed to git before the runs existed (\S{}8, M-43). The rule asked for two things: that disagreement lead the index at every horizon, and that the paired difference exclude zero at a majority of them.
+
+\textbf{It returns DOES NOT GENERALISE.} The first condition passes completely --- disagreement leads the index in \textbf{12 of 12} seed-horizon cells, every paired estimate positive, +0.204 to +0.545. The second fails: the paired difference excludes zero at 1 of 4 horizons, not a majority. We report the verdict the rule returns and do not rewrite the rule.
+
+\textbf{What separates the two conditions is sample size, and we measured that rather than asserting it.} Our own arms can only be scored out-of-sample on the held-out pair, n\_independent = 4, where \S{}5.6's own finding used 20. Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on 75\% of draws on average and on only 24\% at h=8. That estimate is an \textbf{upper bound}, because the pool it subsamples is in-sample for these arms, where the effect is +0.425 to +0.790 against +0.204 to +0.545 on the held-out pair. So the rule was under-powered at the sample size it faced, decisively at one horizon --- and we do not claim it could not have passed, only that it was committed without anyone checking what it could detect. That is a failure of ours, and it is the same one the ledger already records as M-24: a rule anchored without regard to the regime it would be applied in.
+
+\emph{Reported as a companion and not as a discharge:} on all ten episodes (n\_independent = 20, \textbf{in-sample} for these arms, which trained on eight of them) the same measurement excludes zero at 4 of 4 horizons and would have satisfied both conditions. It cannot discharge M-43, which is stated over the out-of-sample arena, and we record it only so the comparison with the released checkpoint's 20 is like for like.
+
+\textbf{We ran the baseline test expecting it to go the other way.} A counter matching disagreement would have been the more consequential result --- it would make the trust metric close to vacuous, since a counter is free --- and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (\S{}8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way. \textbf{On this axis the follow-up's claim survives adversarial testing against a real baseline}, and that is the strongest form of support this paper offers any claim of either original work. It coexists with \S{}5.5 without contradiction: the \emph{scalar} the method applies tracks error well, while the \emph{per-dimension} sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
 
 \subsection{One constant scalar does not fix it, but a per-horizon one does}
 
@@ -392,7 +417,7 @@ So the finding is not that the release is internally inconsistent. It is that \t
 
 \section{Method}
 
-\textbf{An append-only ledger.} Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (182 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+\textbf{An append-only ledger.} Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (183 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 \textbf{Pre-registration, and one failure of it.} Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps. The fifth bar is negative: the duplication-control rule (\S{}6.4) was stated in conversation before the runs but reached git \textbf{2.9 hours after they finished}, and we found it only by auditing our own \texttt{git log}. The measurement stands --- the arm was built without reference to its outcome --- but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -400,7 +425,7 @@ So the finding is not that the release is internally inconsistent. It is that \t
 
 \textbf{A statistic that was resampling the wrong unit.} Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42$\times$ and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
-\textbf{Reproducibility, and a build that checks its own prose.} \texttt{./reproduce.sh --quick --force} regenerates 28 artifact files and 5,999 numeric values from a clean clone, 5,999 of them bitwise identical (100.00\%), 0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it --- six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies \textbf{21 comparative claims} across 8 kinds, each pinning a fragment of the paper's own text \emph{and} a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 20 of 20 caught. \textbf{Appendix D gives the argument, the kinds, the self-test, two defects found in the checker itself, and the two exclusions from the numeric comparison.}
+\textbf{Reproducibility, and a build that checks its own prose.} \texttt{./reproduce.sh --quick --force} regenerates 28 artifact files and 5,999 numeric values from a clean clone, 5,999 of them bitwise identical (100.00\%), 0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it --- six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies \textbf{21 comparative claims} across 8 kinds, each pinning a fragment of the paper's own text \emph{and} a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 0 of 0 caught. \textbf{Appendix D gives the argument, the kinds, the self-test, two defects found in the checker itself, and the two exclusions from the numeric comparison.}
 
 
 \section{Actionable lessons}
@@ -433,7 +458,7 @@ We think that makes the finding worth publishing rather than the reverse, and it
 
 \textbf{Effective sample size bounds every long-horizon claim.} The out-of-sample arena has 4 independent 400-step trajectories. That is the binding constraint on \S{}4, and no amount of trajectory oversampling changes it.
 
-\textbf{Ensemble size.} Our main experiment runs at ensemble size 1 against the reference's 5, for CPU budget, so our own arms have no epistemic component --- it is identically zero by construction at ensemble size 1. The epistemic measurement in \S{}5.2 is therefore made on the released checkpoint only, and we cannot say how ensemble disagreement would behave in a model we trained.
+\textbf{Ensemble size --- no longer an open question, but not a closed one either.} Our main experiment runs at ensemble size 1, where the epistemic term is identically zero by construction, so every epistemic measurement here was originally made on the released checkpoint alone. We since trained 3 Arm A arms at ensemble size 5 (\S{}5.6). They reproduce the \emph{direction} of \S{}5.6's finding in 12 of 12 seed-horizon cells and the \emph{calibration} failure at 13.0$\times$ --- but the pre-registered rule governing the replication returns \textbf{DOES NOT GENERALISE}, because its second condition needs the paired difference to exclude zero at a majority of horizons and it does so at 1 of 4. The binding constraint is the same one this section opens with: our arms have a genuine held-out arena of only 4 independent trajectories, and the rule was written without checking what it could detect there. \textbf{So \S{}5.6's finding is established on the released checkpoint and supported but not established on a model we trained.}
 
 \textbf{One dataset, one gait, one terrain.} All commands are drawn from one bounded box and the gait is a single trot throughout. "Generalisation" here means across velocity commands, not across gaits or terrain.
 
@@ -500,7 +525,7 @@ pip install -r requirements.txt
 \end{verbatim}
 \texttt{--force} matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-\textbf{Runtime.} Training stages are excluded by \texttt{--quick}, which is what makes the quick path practical. Training all 22 runs takes \textbf{36 hours} of recorded wall clock on two CPU cores: 20 hours for the 6 runs at 10,000 iterations and 16 for the remaining 16 at 2,500. The longest single run is 4.0 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the \texttt{wall\_clock\_s} field of every run artifact rather than re-estimated.
+\textbf{Runtime.} Training stages are excluded by \texttt{--quick}, which is what makes the quick path practical. Training all 24 runs takes \textbf{45 hours} of recorded wall clock on two CPU cores: 20 hours for the 6 runs at 10,000 iterations and 25 for the remaining 18 at 2,500. The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the \texttt{wall\_clock\_s} field of every run artifact rather than re-estimated.
 
 \section{Figures}
 
@@ -534,7 +559,7 @@ None is a numeral. None appears in \texttt{results/paper\_numbers.json}. Each wa
 
 Each entry pins two things and requires both: a \textbf{fragment of the paper's own text}, so that rewording a sentence fails the check rather than silently detaching it from the claim it guards, and a \textbf{relation recomputed from the artifacts}. A check that only re-asserts an artifact fact guards nothing; a check that only matches text guards nothing either.
 
-\textbf{The self-test.} Every assertion is run against a deliberately corrupted expectation on each build and must fail: the interval relation inverted, the extremum replaced by the \emph{runner-up} rather than an absent label, the sign flipped, the order of magnitude and the dimension counts moved by one. 20 of 20 are caught. An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage.
+\textbf{The self-test.} Every assertion is run against a deliberately corrupted expectation on each build and must fail: the interval relation inverted, the extremum replaced by the \emph{runner-up} rather than an absent label, the sign flipped, the order of magnitude and the dimension counts moved by one. 0 of 0 are caught. An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage.
 
 \textbf{Two defects the self-test found in the checker itself.} Its first version applied a fixed corruption per kind --- \texttt{expect: "disjoint"} to every overlap check --- so for claims that already expected that value the corruption was a no-op, and two of eleven assertions reported as missed. They were not missed; nothing had been corrupted. Corruptions now invert relative to each claim's own expectation. Later, a label helper prefixed a horizon to family keys that were already model names, producing \texttt{h=teacher-forced armB}, which matched nothing and failed two checks whose extrema were correct. Both were defects in the checker rather than in the paper, and both surfaced because the checks were run rather than assumed.
 
@@ -561,8 +586,8 @@ Sample efficiency, 6,000,000 against \textasciitilde{}250M transitions (\S{}IV-E
 MBPO-PPO beats SHAC and Dreamer (\S{}IV-E) & the above, plus SHAC and Dreamer implementations at matched budgets & three policy-learning stacks, each tuned enough that the comparison is fair --- the largest engineering item here \\
 Zero-shot hardware transfer (\S{}IV-E) & all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack & not estimable in compute; the binding constraint is hardware access, not GPU hours \\
 Whether the penalty improves the learned policy (2504.16680 \S{}5) & Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero & one policy-learning stack; the cheapest of the four, and the one that would bound \S{}11's open question about what the miscalibration costs \\
-Beats MLP, RSSM, transformer baselines (\S{}IV-D) & no simulator needed --- but the lite release ships only the RNN variant, so all three baselines would have to be implemented & comparable to our own model's 36 h of CPU training per architecture, times three, if run at our data budget \\
-M=32, N=8 optimal (\S{}IV-C) & no simulator needed; a sweep over M and N at our data budget & our 22 runs took 36 h on two cores; a modest sweep is a small multiple of that \\
+Beats MLP, RSSM, transformer baselines (\S{}IV-D) & no simulator needed --- but the lite release ships only the RNN variant, so all three baselines would have to be implemented & comparable to our own model's 45 h of CPU training per architecture, times three, if run at our data budget \\
+M=32, N=8 optimal (\S{}IV-C) & no simulator needed; a sweep over M and N at our data budget & our 24 runs took 45 h on two cores; a modest sweep is a small multiple of that \\
 \bottomrule\end{tabular}}\end{center}
 
 \textbf{The two at the bottom are within reach of this setup} and are the honest next steps for anyone extending this work on CPU. The four above them are not, and no amount of care with the released CSV changes that.

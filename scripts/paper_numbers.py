@@ -285,6 +285,65 @@ def main():
     put("unreach_recalled_iters", f"{_rec:,}", "docs/E4_AUTHOR_CONTACT.md")
     put("unreach_factor", f"{_imp / _rec:.0f}", "results/step6_analysis.json")
 
+    # --- D3: the ensemble-5 arms (M-43) ------------------------------------
+    E5 = J("task_d3_ens5.json")
+    P5 = J("task_d3b_ens5_power.json")
+    put("e5_nind", E5["design"]["n_independent"], "results/task_d3_ens5.json")
+    put("e5_seeds", len(E5["design"]["seeds"]), "results/task_d3_ens5.json")
+    put("e5_verdict", E5["m43_verdict"]["verdict"], "results/task_d3_ens5.json")
+    put("e5_leads_all", str(E5["m43_verdict"]["leads_at_every_horizon"]).lower(),
+        "results/task_d3_ens5.json")
+    put("e5_n_excl", E5["m43_verdict"]["n_excluding_zero"], "results/task_d3_ens5.json")
+    put("e5_n_horizons", len(E5["m43_verdict"]["horizons_tested"]), "results/task_d3_ens5.json")
+    _cells = [(h, r) for h in ("8", "32", "128", "368")
+              for r in E5["governing"][h]["per_seed"]]
+    put("e5_lead_cells", sum(1 for _, r in _cells if r["r_disagreement"] > r["r_index"]),
+        "results/task_d3_ens5.json")
+    put("e5_total_cells", len(_cells), "results/task_d3_ens5.json")
+    put("e5_diff_lo", f'{min(r["paired_diff"] for _, r in _cells):+.3f}',
+        "results/task_d3_ens5.json")
+    put("e5_diff_hi", f'{max(r["paired_diff"] for _, r in _cells):+.3f}',
+        "results/task_d3_ens5.json")
+    for h in (1, 8, 32, 128, 368):
+        c = E5["calibration"][str(h)]
+        put(f"e5_ratio_h{h}", f'{c["mean_ratio"]:.1f}', "results/task_d3_ens5.json")
+        put(f"e5_cov1_h{h}", f'{100*c["mean_cov1"]:.2f}', "results/task_d3_ens5.json")
+        put(f"e5_cov2_h{h}", f'{100*c["mean_cov2"]:.2f}', "results/task_d3_ens5.json")
+        put(f"e5_npos_h{h}", f'{c["mean_npos"]:.1f}', "results/task_d3_ens5.json")
+    put("e5_collapse", f'{E5["collapse"]["ens5_mean"]:.4e}', "results/task_d3_ens5.json")
+    put("e5_collapse_ens1", f'{E5["collapse"]["ens1_mean"]:.4e}', "results/task_d3_ens5.json")
+    put("e5_collapse_pct", f'{100*E5["collapse"]["relative_difference"]:+.2f}',
+        "results/task_d3_ens5.json")
+    _cov = [v["cov_across_batch"] for v in E5["input_dependence"].values()]
+    _sg = [v["sigma_growth_1_to_8"] for v in E5["input_dependence"].values()]
+    _eg = [v["err_growth_1_to_8"] for v in E5["input_dependence"].values()]
+    put("e5_cov_lo", f"{min(_cov):.3f}", "results/task_d3_ens5.json")
+    put("e5_cov_hi", f"{max(_cov):.3f}", "results/task_d3_ens5.json")
+    put("e5_sg_lo", f"{min(_sg):.2f}", "results/task_d3_ens5.json")
+    put("e5_sg_hi", f"{max(_sg):.2f}", "results/task_d3_ens5.json")
+    put("e5_eg_lo", f"{min(_eg):.1f}", "results/task_d3_ens5.json")
+    put("e5_eg_hi", f"{max(_eg):.1f}", "results/task_d3_ens5.json")
+    for h in (8, 368):
+        a_ = E5["accuracy_vs_ens1"][str(h)]
+        put(f"e5_acc_h{h}", f'{a_["ens5_over_ens1"]:.3f}', "results/task_d3_ens5.json")
+    # power and the in-sample companion
+    put("e5_power_mean", f'{100*P5["power_summary"]["mean_power_at_n4"]:.0f}',
+        "results/task_d3b_ens5_power.json")
+    put("e5_power_worst", f'{100*P5["power_summary"]["worst_power"]:.0f}',
+        "results/task_d3b_ens5_power.json")
+    put("e5_power_worst_h", P5["power_summary"]["worst_horizon"],
+        "results/task_d3b_ens5_power.json")
+    put("e5_comp_nind", P5["design"]["n_independent"], "results/task_d3b_ens5_power.json")
+    put("e5_comp_excl", P5["companion_summary"]["n_excluding_zero"],
+        "results/task_d3b_ens5_power.json")
+    put("e5_comp_n", P5["companion_summary"]["n_horizons"], "results/task_d3b_ens5_power.json")
+    put("e5_comp_pass", str(P5["companion_summary"]["would_have_passed_m43"]).lower(),
+        "results/task_d3b_ens5_power.json")
+    _ci = P5["power_summary"]["in_sample_effect_range"]
+    _co = P5["power_summary"]["out_of_sample_effect_range"]
+    put("e5_eff_ins", f"{_ci[0]:+.3f} to {_ci[1]:+.3f}", "results/task_d3b_ens5_power.json")
+    put("e5_eff_oos", f"{_co[0]:+.3f} to {_co[1]:+.3f}", "results/task_d3b_ens5_power.json")
+
     # --- C2: the data budget ----------------------------------------------
     C2 = J("task_c2_data_budget.json")
     put("c2_trans", f'{C2["ours"]["distinct_transitions"]:,}', "results/task_c2_data_budget.json")
@@ -758,13 +817,17 @@ def main():
         d = json.load(open(f))
         h = d["hyperparameters"]
         arm = d["arm"] if "arm" in d else ("B" if "armB" in f else "A")
-        key = (arm, h["iterations"], h.get("loss_type", "mse"),
+        # ensemble is part of the key. Without it the ens1 and ens5 Arm A runs
+        # collapsed into one row reading "6 | 0, 0, 1, 1, 2, 2" -- three seeds
+        # listed twice, which reads as a duplication bug rather than as two
+        # configurations.
+        key = (arm, h["iterations"], h.get("ensemble", 1), h.get("loss_type", "mse"),
                "contaminated" if h.get("contaminated") else
                ("duplicated" if h.get("duplicated") else "clean"))
         inv.setdefault(key, []).append(d["seed"])
     rows = []
-    for (arm, it, loss, ds), seeds in sorted(inv.items()):
-        rows.append(f"| Arm {arm} | {it:,} | {loss} | {ds} | {len(seeds)} | "
+    for (arm, it, ens, loss, ds), seeds in sorted(inv.items()):
+        rows.append(f"| Arm {arm} | {it:,} | {ens} | {loss} | {ds} | {len(seeds)} | "
                     f"{', '.join(str(x) for x in sorted(seeds))} |")
     put("run_table", "\n".join(rows), "results/step5_arm*.json")
     put("run_total", sum(len(v) for v in inv.values()), "results/step5_arm*.json")

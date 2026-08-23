@@ -1,0 +1,224 @@
+{
+  "design": {
+    "arena": "all-episodes",
+    "episodes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "train_episodes": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    "holdout_episodes": [
+      1,
+      8
+    ],
+    "n_independent": 20,
+    "n_trajectories": 20,
+    "in_sample_for_our_arms": true,
+    "governs_m43": false,
+    "n_boot": 4000,
+    "n_subsample_draws": 400,
+    "subsample_n": 4
+  },
+  "companion": {
+    "8": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "r_index": 0.1900274327672333,
+          "r_disagreement": 0.7578174376973966,
+          "paired_diff": 0.5677900049301636,
+          "ci_lo": 0.19311495740924514,
+          "ci_hi": 0.8286985651426115,
+          "excludes_zero": true
+        },
+        {
+          "seed": 1,
+          "r_index": 0.17958242413879064,
+          "r_disagreement": 0.7447825326574204,
+          "paired_diff": 0.5652001085186302,
+          "ci_lo": 0.08441607543361578,
+          "ci_hi": 0.8318471499110417,
+          "excludes_zero": true
+        },
+        {
+          "seed": 2,
+          "r_index": 0.1808899681641023,
+          "r_disagreement": 0.7893239188878896,
+          "paired_diff": 0.6084339507237874,
+          "ci_lo": 0.23551992425491988,
+          "ci_hi": 0.8466360572432072,
+          "excludes_zero": true
+        }
+      ],
+      "leads_all_seeds": true,
+      "excludes_zero_all_seeds": true
+    },
+    "32": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "r_index": -0.023680528043890536,
+          "r_disagreement": 0.7664350358402187,
+          "paired_diff": 0.7901155638841091,
+          "ci_lo": 0.5934965044540488,
+          "ci_hi": 0.9266619479587623,
+          "excludes_zero": true
+        },
+        {
+          "seed": 1,
+          "r_index": -0.030929127689178496,
+          "r_disagreement": 0.7435431925945033,
+          "paired_diff": 0.7744723202836821,
+          "ci_lo": 0.524214890455095,
+          "ci_hi": 0.9345497985628617,
+          "excludes_zero": true
+        },
+        {
+          "seed": 2,
+          "r_index": -0.02539135540526469,
+          "r_disagreement": 0.7644802278598993,
+          "paired_diff": 0.7898715832651637,
+          "ci_lo": 0.5350435822654797,
+          "ci_hi": 0.9321754275683903,
+          "excludes_zero": true
+        }
+      ],
+      "leads_all_seeds": true,
+      "excludes_zero_all_seeds": true
+    },
+    "128": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "r_index": 0.27980750810647953,
+          "r_disagreement": 0.7043374259270542,
+          "paired_diff": 0.4245299178205747,
+          "ci_lo": 0.2641846291043548,
+          "ci_hi": 0.6223783630354567,
+          "excludes_zero": true
+        },
+        {
+          "seed": 1,
+          "r_index": 0.2906028756717754,
+          "r_disagreement": 0.6631664096278818,
+          "paired_diff": 0.37256353395610614,
+          "ci_lo": 0.2006919922471205,
+          "ci_hi": 0.577558520039782,
+          "excludes_zero": true
+        },
+        {
+          "seed": 2,
+          "r_index": 0.25714728555682553,
+          "r_disagreement": 0.7036485156187207,
+          "paired_diff": 0.44650123006189546,
+          "ci_lo": 0.2654863660796632,
+          "ci_hi": 0.6600767053638089,
+          "excludes_zero": true
+        }
+      ],
+      "leads_all_seeds": true,
+      "excludes_zero_all_seeds": true
+    },
+    "368": {
+      "per_seed": [
+        {
+          "seed": 0,
+          "r_index": 0.17180070522080954,
+          "r_disagreement": 0.6194066726062641,
+          "paired_diff": 0.447605967385454,
+          "ci_lo": 0.3287546572929376,
+          "ci_hi": 0.5570754409479144,
+          "excludes_zero": true
+        },
+        {
+          "seed": 1,
+          "r_index": 0.11629361317467667,
+          "r_disagreement": 0.5655265352251976,
+          "paired_diff": 0.4492329220505201,
+          "ci_lo": 0.2976806204228836,
+          "ci_hi": 0.6271695937340309,
+          "excludes_zero": true
+        },
+        {
+          "seed": 2,
+          "r_index": 0.15399779310131573,
+          "r_disagreement": 0.5991240498325161,
+          "paired_diff": 0.44512625673119854,
+          "ci_lo": 0.31691179445814066,
+          "ci_hi": 0.580350548280332,
+          "excludes_zero": true
+        }
+      ],
+      "leads_all_seeds": true,
+      "excludes_zero_all_seeds": true
+    }
+  },
+  "power": {
+    "8": {
+      "effect_at_n20": 0.5677900049301636,
+      "power_at_n4": 0.24,
+      "n_draws": 400,
+      "subsample_n": 4,
+      "seed_used": 0
+    },
+    "32": {
+      "effect_at_n20": 0.7901155638841091,
+      "power_at_n4": 0.9375,
+      "n_draws": 400,
+      "subsample_n": 4,
+      "seed_used": 0
+    },
+    "128": {
+      "effect_at_n20": 0.4245299178205747,
+      "power_at_n4": 0.9625,
+      "n_draws": 400,
+      "subsample_n": 4,
+      "seed_used": 0
+    },
+    "368": {
+      "effect_at_n20": 0.447605967385454,
+      "power_at_n4": 0.8475,
+      "n_draws": 400,
+      "subsample_n": 4,
+      "seed_used": 0
+    }
+  },
+  "companion_summary": {
+    "leads_at_every_horizon": true,
+    "n_excluding_zero": 4,
+    "n_horizons": 4,
+    "would_have_passed_m43": true,
+    "caveat": "this arena is in-sample for our arms and therefore cannot discharge M-43, which is stated over the out-of-sample arena"
+  },
+  "power_summary": {
+    "mean_power_at_n4": 0.746875,
+    "worst_horizon": 8,
+    "worst_power": 0.24,
+    "in_sample_effect_range": [
+      0.4245299178205747,
+      0.7901155638841091
+    ],
+    "out_of_sample_effect_range": [
+      0.20393968388673644,
+      0.544776323795606
+    ],
+    "is_upper_bound": true,
+    "statement": "At n_independent = 4, M-43's paired-difference criterion fires on 75% of draws on average and on only 24% at h=8. That estimate is an UPPER BOUND on the power the rule actually had: it subsamples a pool that is in-sample for these arms, where the effect is +0.425 to +0.790, against +0.204 to +0.545 on the held-out pair the rule is stated over. So the rule was under-powered at n=4 -- decisively at h=8 -- and we do not claim it could not have passed, only that it was committed without anyone checking what it could detect."
+  }
+}

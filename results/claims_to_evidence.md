@@ -93,3 +93,4 @@ One row per CONTRIB ledger entry.
 | `R-64` | A per-horizon scalar restores calibration where a constant one cannot | `RUN` | CONFIRMED | `results/task_d3_perhorizon.json`, `scripts/task_d3_perhorizon.py` |
 | `R-65` | The penalty correlation, with the interval and the n it never had | `RUN` | CONFIRMED | `results/task_d_nind20.json` |
 | `R-66` | The forecast-index control was too weak to be believed, so we strengthened it four ways | `RUN` | CONFIRMED | `results/task_d2b_robustness.json`, `scripts/task_d2b_robustness.py` |
+| `R-67` | The ensemble-5 replication: the direction holds, the pre-registered rule does not | `RUN` | CONFIRMED | `results/task_d3_ens5.json`, `results/task_d3b_ens5_power.json` |

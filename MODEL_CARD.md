@@ -56,6 +56,29 @@ where a single global multiplier managed 2. We measured that on the
 reference checkpoint rather than on these arms, and on two episodes only, so refit it on your
 own data rather than copying our constants.
 
+## The ensemble-5 checkpoints, and what they are for
+
+Six of the nine checkpoints here run at **ensemble size 1**, where the epistemic
+term -- the disagreement across ensemble members -- is *identically zero by
+construction*. Nothing about ensemble disagreement can be reproduced from them.
+
+The three `autoregressive-ens5-*` checkpoints exist for that reason. On them:
+
+- ensemble disagreement correlates with realised error in 12 of
+  12 seed-horizon cells more strongly than the forecast step index does,
+  which is the property our paper argues makes it a usable ranking signal;
+- the epistemic term is **13.0x** smaller than the realised error at a
+  368-step horizon, with 6.30% coverage at +-1 sigma against a calibrated
+  68.3%. Better than the released reference checkpoint, and still not an interval;
+- it is input-dependent, CoV 0.379-0.395 across a batch.
+
+**The pre-registered rule governing this replication returned DOES NOT GENERALISE**, on its
+second condition: the paired difference against the index excludes zero at 1
+of 4 horizons, not a majority. The direction replicated everywhere; the
+separation did not, on the four independent trajectories our held-out arena has. Treat the
+ranking property as supported on these checkpoints and established only on the released
+reference one.
+
 ## Checkpoints
 
 ### `autoregressive-10k-seed0`
@@ -129,6 +152,33 @@ Trained with the reference's unused `gaussian_nll` branch. This is the CORRECTED
 - size: 5,683,374 bytes
 - sha256: `a1a339b27b077712b0a87b4df4718437933db3e6a370b8b08f941fab30129367`
 - σ calibration, measured at iteration 2,500: 11× overconfident, coverage 42.78% at ±1σ (h=1)
+
+### `autoregressive-ens5-seed0`
+
+Ensemble size 5. The only checkpoints here with a non-zero epistemic term; the others have exactly zero by construction. See the ensemble-5 block below.
+
+- source: `runs/armA_seed0_ens5/weights_2500.pt`
+- size: 8,020,484 bytes
+- sha256: `923e3a0b935cff3cb611cf6b35eea83701df4a78f02a22e3f10a6a2e945b9496`
+- σ calibration, measured at iteration 2,500: 52× overconfident, coverage 11.67% at ±1σ (h=1)
+
+### `autoregressive-ens5-seed1`
+
+Ensemble size 5, seed 1.
+
+- source: `runs/armA_seed1_ens5/weights_2500.pt`
+- size: 8,020,484 bytes
+- sha256: `e756ca16fe2cd4e1615ca27b47d9bb519dd0d4da6dfe263758b1d5bbdaabeaaa`
+- σ calibration, measured at iteration 2,500: 52× overconfident, coverage 11.67% at ±1σ (h=1)
+
+### `autoregressive-ens5-seed2`
+
+Ensemble size 5, seed 2.
+
+- source: `runs/armA_seed2_ens5/weights_2500.pt`
+- size: 8,020,484 bytes
+- sha256: `2688b16030a57b4b4201bc844a9e1b3607df8734e7b62b1f7b7efb11ed5d9652`
+- σ calibration, measured at iteration 2,500: 52× overconfident, coverage 11.67% at ±1σ (h=1)
 
 ## The result these support
 

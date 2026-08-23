@@ -4234,8 +4234,76 @@ distinction §5.6 draws about its own forecast-index baseline, and the one S-12 
 retract when this project failed to observe it. The rule above is what governs; the expectation
 is recorded so that a reader can see it was held in advance and can judge accordingly if the
 result agrees with it.
-**Evidence** `RUN` pending — the runs this governs have not been launched.
-**Status** PRE-REGISTERED · **Relevance** METHOD
+**Outcome: DOES NOT GENERALISE.** The runs were launched after this entry reached git and the rule was applied by code, exactly as written. R-67 reports the result and the power the rule turned out to have.
+**Evidence** `RUN` `results/task_d3_ens5.json`.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
+
+
+### R-67 — The ensemble-5 replication: the direction holds, the pre-registered rule does not · `[RWM-U]` · **NEW**
+**Retracts nothing; it bounds R-63.** Three Arm A arms at ensemble size 5, seeds 0/1/2, 2,500
+iterations, every other setting identical to the ens1 arms. Governed by M-43, committed before
+the runs existed.
+
+**M-43 returns DOES NOT GENERALISE.**
+
+| condition | result |
+|---|---|
+| disagreement leads the index at every horizon tested | **TRUE** — 12 of 12 seed-horizon cells |
+| paired difference excludes zero at a majority | **FALSE** — 1 of 4 |
+
+The rule is applied per seed: a horizon counts as leading only if disagreement leads in all three
+seeds, and as excluding zero only if the interval excludes zero in all three. That is stricter
+than pooling and cannot be carried by one favourable seed.
+
+**The two conditions diverge, and the reason is measurable.** Every paired point estimate is
+positive, +0.204 to +0.545.
+What fails is separation on 4 independent trajectories — the held-out
+pair is the only genuine out-of-sample arena our own arms have, where R-63's finding was measured
+at 20.
+
+**The power the rule actually had.** Subsampling 4 trajectories at a
+time from a 20-trajectory pool, M-43's criterion fires on 75% of
+draws on average and on only 24% at h=8. **That is an
+upper bound**: the pool is in-sample for these arms, where the effect is
++0.425 to +0.790 against
++0.204 to +0.545 on the
+held-out pair. So the rule was under-powered where it was applied, decisively at one horizon.
+**We do not claim it could not have passed** — at three of four horizons it had 85-96% power
+against the in-sample effect — only that it was committed without anyone checking what it could
+detect at n=4.
+
+**That is the same failure M-24 records**, committed by the same project that wrote M-24 down: a
+pre-registered rule anchored without regard to the regime it would be applied in. M-24's version
+anchored to the wrong horizon; this one to a sample size whose power nobody computed.
+
+**Companion, in-sample, non-governing.** On all ten episodes (n_independent =
+20, of which eight are training data for these arms) the same
+measurement excludes zero at 4 of
+4 horizons and would have satisfied both conditions. It
+cannot discharge M-43 and is recorded only so the comparison with R-63's arena is like for like.
+
+**The four non-governing measurements, all confirmatory:**
+
+| measurement | ens5 | reference |
+|---|---|---|
+| epistemic err/σ at h=368 | 13.0× | released checkpoint 34.4× |
+| ±1σ coverage at h=368 | 6.30% | calibrated 68.3% |
+| aleatoric collapse rate | -9.3526e-05 | ens1 -9.3617e-05, +0.10% |
+| epistemic CoV across batch | 0.379–0.395 | released checkpoint 0.0177 |
+
+Our arms are **better calibrated than the released checkpoint and fail the same way**, their
+collapse rate is unchanged by ensemble size as the objective predicts, and their epistemic term is
+far more input-dependent than any aleatoric head measured here. Prediction accuracy at ensemble 5
+is better at h=8 (0.878× the error) and marginally
+worse at h=368 (1.044×).
+
+**What this settles and what it leaves open.** R-63 is established on the released checkpoint and
+**supported but not established** on a model we trained. The distinction is the whole point of
+running these arms, and reporting the rule's verdict rather than the direction it points is the
+only way the distinction survives.
+**Evidence** `RUN` `results/task_d3_ens5.json`, `results/task_d3b_ens5_power.json`;
+`scripts/task_d3_ens5.py`, `scripts/task_d3b_ens5_power.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
 
 ### S-15 — The binomial P-values attached to every dimension count · **NEW**
 **Retracts** — a shared inference, not a numbered claim; the counts it was computed from all stand

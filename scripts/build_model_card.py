@@ -26,6 +26,16 @@ CKPTS = [
     ("armA_seed0_nll/weights_2500.pt", "corrected-objective-2500", "corrected (nll)",
      "Trained with the reference's unused `gaussian_nll` branch. This is the CORRECTED-OBJECTIVE "
      "artifact, not a calibrated one \u2014 see the limitation above."),
+    # Ensemble 5. These are the only checkpoints here with a non-zero EPISTEMIC
+    # term -- at ensemble size 1 it is identically zero by construction, so the
+    # other six cannot be used to reproduce anything in section 5.6 at all.
+    ("armA_seed0_ens5/weights_2500.pt", "autoregressive-ens5-seed0", "faithful (mse)",
+     "Ensemble size 5. The only checkpoints here with a non-zero epistemic term; the others "
+     "have exactly zero by construction. See the ensemble-5 block below."),
+    ("armA_seed1_ens5/weights_2500.pt", "autoregressive-ens5-seed1", "faithful (mse)",
+     "Ensemble size 5, seed 1."),
+    ("armA_seed2_ens5/weights_2500.pt", "autoregressive-ens5-seed2", "faithful (mse)",
+     "Ensemble size 5, seed 2."),
 ]
 
 
@@ -130,6 +140,30 @@ def main():
     A(f"where a single global multiplier managed {v('d3_epi_const_ok')}. We measured that on the")
     A("reference checkpoint rather than on these arms, and on two episodes only, so refit it on your")
     A("own data rather than copying our constants.")
+    A("")
+    A("## The ensemble-5 checkpoints, and what they are for")
+    A("")
+    A("Six of the nine checkpoints here run at **ensemble size 1**, where the epistemic")
+    A("term -- the disagreement across ensemble members -- is *identically zero by")
+    A("construction*. Nothing about ensemble disagreement can be reproduced from them.")
+    A("")
+    A("The three `autoregressive-ens5-*` checkpoints exist for that reason. On them:")
+    A("")
+    A(f"- ensemble disagreement correlates with realised error in {v('e5_lead_cells')} of")
+    A(f"  {v('e5_total_cells')} seed-horizon cells more strongly than the forecast step index does,")
+    A("  which is the property our paper argues makes it a usable ranking signal;")
+    A(f"- the epistemic term is **{v('e5_ratio_h368')}x** smaller than the realised error at a")
+    A(f"  368-step horizon, with {v('e5_cov1_h368')}% coverage at +-1 sigma against a calibrated")
+    A("  68.3%. Better than the released reference checkpoint, and still not an interval;")
+    A(f"- it is input-dependent, CoV {v('e5_cov_lo')}-{v('e5_cov_hi')} across a batch.")
+    A("")
+    A("**The pre-registered rule governing this replication returned "
+      f"{v('e5_verdict')}**, on its")
+    A(f"second condition: the paired difference against the index excludes zero at {v('e5_n_excl')}")
+    A(f"of {v('e5_n_horizons')} horizons, not a majority. The direction replicated everywhere; the")
+    A("separation did not, on the four independent trajectories our held-out arena has. Treat the")
+    A("ranking property as supported on these checkpoints and established only on the released")
+    A("reference one.")
     A("")
     A("## Checkpoints")
     A("")

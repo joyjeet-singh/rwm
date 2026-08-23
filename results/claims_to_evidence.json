@@ -2188,11 +2188,29 @@
       "id": "M-43",
       "claim": "PRE-REGISTERED decision rule for the ensemble-5 replication",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [
         "RUN"
       ],
-      "artifacts": [],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-67",
+      "claim": "The ensemble-5 replication: the direction holds, the pre-registered rule does not",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json",
+        "results/task_d3b_ens5_power.json",
+        "scripts/task_d3_ens5.py",
+        "scripts/task_d3b_ens5_power.py"
+      ],
       "retracts": []
     },
     {
@@ -2230,7 +2248,7 @@
     "D": 13,
     "M": 43,
     "O": 14,
-    "R": 66,
+    "R": 67,
     "S": 15,
     "X": 11
   }
