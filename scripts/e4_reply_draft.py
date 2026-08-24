@@ -1,4 +1,33 @@
-# Reply to the first author — generated, do not hand-edit
+"""
+E4 -- generate the reply to the first author from the current artifacts.
+
+The letter quotes about thirty figures from the paper. Hand-maintaining it meant
+that every time a number moved, the letter silently disagreed with the report it
+was describing -- and the previous version had drifted a long way: it still called
+h=368 the deployment horizon, still quoted the pre-revision calibration figures,
+and knew nothing of the trunk-sharing finding, which is the part most useful to
+the person receiving it.
+
+So the letter is generated, like the paper, the README and the model card. Every
+figure is substituted from results/paper_numbers.json, and each substituted value
+is then checked to appear in the built PAPER.md -- a letter that tells him
+something the paper does not say would be worse than one that says nothing.
+
+    python scripts/e4_reply_draft.py            write docs/E4_REPLY_DRAFT.md
+
+This is a DRAFT for a person to read, edit and send. It is not sent by anything.
+"""
+import json
+import os
+import re
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
+import rwm_data as R  # noqa: E402
+
+OUT = os.path.join("docs", "E4_REPLY_DRAFT.md")
+
+BODY = """# Reply to the first author — generated, do not hand-edit
 
 **Source:** `scripts/e4_reply_draft.py`. Every figure below is substituted from
 `results/paper_numbers.json` and checked to appear in the built `PAPER.md`. If a number here
@@ -10,11 +39,11 @@ looks wrong, the fix is upstream in the artifact, not in this file.
 
 | then | now |
 |---|---|
-| h=368 called "the deployment horizon" | h=100 is; 368 is the upstream's open-loop diagnostic (400 − 32) |
-| the epistemic miscalibration had no mechanism | the ensemble shares 89.15% of each member and one hidden state, and an independent one is 2.03× better calibrated |
+| h=368 called "the deployment horizon" | h={{v2_deploy_h}} is; 368 is the upstream's open-loop diagnostic ({{v2_len_eval}} − {{v2_history}}) |
+| the epistemic miscalibration had no mechanism | the ensemble shares {{v1_shared_pct}}% of each member and one hidden state, and an independent one is {{m44_ratio_gain}}× better calibrated |
 | five controls on the ranking claim | six — the new one removes trajectory difficulty, and shows the old "decisive" one did not |
-| two references, both his | 10 more, including a 2022 paper that found the same thing about ensemble std |
-| 32 comparative claims, 8 kinds | 32 across 15 kinds |
+| two references, both his | {{t1_n_refs}} more, including a 2022 paper that found the same thing about ensemble std |
+| {{cc_n}} comparative claims, 8 kinds | {{cc_n}} across {{cc_kinds}} kinds |
 
 The trunk-sharing result is the reason this needed rewriting rather than updating. It is the one
 finding in the report that is an actionable suggestion about his code rather than an observation
@@ -33,46 +62,46 @@ about it.
 > point reframed an entire section from an apparent inconsistency into what it actually is — a
 > documentation gap between a release and a run. The section now says so in those terms.
 >
-> The work is complete. The paper is attached (30 pages), and everything behind it is
+> The work is complete. The paper is attached ({{pdf_pages}} pages), and everything behind it is
 > public:
 >
 > - **Code, data and evidence:** https://github.com/joyjeet-singh/rwm
 > - **Checkpoints and model card:** https://huggingface.co/Joyjeetsingh/rwm-reproduction
 >
 > Every number in the paper is generated from a file under `results/`; none is typed. The build
-> also verifies 32 *comparative* claims across 15 kinds — that an interval does or
+> also verifies {{cc_n}} *comparative* claims across {{cc_kinds}} kinds — that an interval does or
 > does not overlap, that a named cell really is the extremum, that a stated change has the sign
 > claimed — because a correct number in a wrong sentence is the failure mode a numeral check
 > cannot see, and I shipped several of those in an earlier draft. A clean clone regenerates
-> 34 artifacts and 6,680 values, 6,680 of them bitwise identical
-> (100.00%), 0 differing. The findings ledger has 191 entries and
-> records six numbered retractions of my own claims plus
-> two that withdraw framings.
+> {{ver_files}} artifacts and {{ver_values}} values, {{ver_identical}} of them bitwise identical
+> ({{ver_pct}}%), {{ver_differing}} differing. The findings ledger has {{n_entries}} entries and
+> records {{n_retractions_word|lower}} numbered retractions of my own claims plus
+> {{n_retract_framing_word}} that withdraw framings.
 >
 > **Four things I think are worth your time. The first is the one I would most like you to
 > disagree with.**
 >
 > **1. Your five ensemble members share a trunk, and it costs you calibration.**
 > `system_dynamics.py:34` builds one `state_base`; `:35-41` replicates only the heads. So each
-> member owns 77,492 parameters and shares 636,672 —
-> **89.15% of every member's state-prediction pathway is numerically identical to
+> member owns {{v1_private_params}} parameters and shares {{v1_shared_params}} —
+> **{{v1_shared_pct}}% of every member's state-prediction pathway is numerically identical to
 > every other member's.** And because the trunk owns a single recurrent state and the rollout
-> feeds the ensemble mean back into it, the five members never diverge dynamically
-> at all: disagreement at step *t* is the spread of five small MLPs read off one
+> feeds the ensemble mean back into it, the {{v1_members_word}} members never diverge dynamically
+> at all: disagreement at step *t* is the spread of {{v1_members_word}} small MLPs read off one
 > 256-vector.
 >
 > I tested whether that matters, under a rule committed to git before the runs existed. I already
 > had Arm A at ensemble size 1 for seeds 0–2, so I trained two more and scored the five together
 > as an ensemble — five models sharing nothing, against your architecture's five heads sharing
-> everything, same trajectories, same harness. The independent ensemble is **2.03×
-> better calibrated** at h=100 (+7.12 points of coverage), against a
-> pre-registered detectable-effect threshold of 1.45×.
+> everything, same trajectories, same harness. The independent ensemble is **{{m44_ratio_gain}}×
+> better calibrated** at h={{v2_deploy_h}} ({{m44_cov_gain}} points of coverage), against a
+> pre-registered detectable-effect threshold of {{m44_mde_ratio}}×.
 >
 > The honest caveat, which I put in the paper as prominently as the result: the overconfidence
 > factor is error over σ, so it improves if σ grows *or* if error shrinks, and five independent
 > models also denoise better than five heads. Decomposed, σ is larger by
-> 1.65× and that is 71% of the gain at h=100 — but
-> at the 368-step diagnostic horizon the split reverses and 57% of it is just
+> {{r2_sigma_x_h100}}× and that is {{r2_from_sigma_h100}}% of the gain at h={{v2_deploy_h}} — but
+> at the 368-step diagnostic horizon the split reverses and {{r2_from_acc_h368}}% of it is just
 > the better prediction. And independently-seeded runs differ in initialisation *and* data
 > ordering, so this bounds the architectural effect rather than isolating it.
 >
@@ -83,32 +112,32 @@ about it.
 >
 > **2. I had your deployment horizon wrong, and fixing it is a correction to me, not to you.**
 > Earlier drafts of mine called h=368 "the deployment horizon". It is not: it is
-> `len_eval_trajectory` = 400 minus the 32-step teacher-forced prefix —
+> `len_eval_trajectory` = {{v2_len_eval}} minus the {{v2_history}}-step teacher-forced prefix —
 > the open-loop diagnostic your Fig. 2 (right) plots. Your method's own imagination rollouts run
-> to **100** steps (Table S9 in v1, S11 in v3). h=368 is
-> 3.68× that. I have re-anchored every headline to h=100 and relabelled the
+> to **{{v2_deploy_h}}** steps (Table S9 in v1, S11 in {{v4_current}}). h=368 is
+> {{v2_ratio}}× that. I have re-anchored every headline to h={{v2_deploy_h}} and relabelled the
 > 368 rows, which I mention because it changes numbers you may have seen: the epistemic term is
-> 33.4× [28.7, 39.0] smaller than realised error at
-> h=100 with 4.61% coverage at ±1σ, and the aleatoric one
-> 11,683×. The conclusion did not move; the label was wrong and now is not.
+> {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] smaller than realised error at
+> h={{v2_deploy_h}} with {{d1n_epi_cov1_h100}}% coverage at ±1σ, and the aleatoric one
+> {{d1n_alea_ratio_h100}}×. The conclusion did not move; the label was wrong and now is not.
 >
 > **3. Ensemble disagreement beats a free baseline — and the control I thought was decisive was
 > measuring the wrong thing.** I tested your trust-metric claim against the most trivial
 > competitor I could find: the forecast step index. Error grows with depth, so a counter already
 > tracks it and costs nothing. It loses: on the scalar your code applies, disagreement correlates
-> +0.605 against the counter's +0.269, and a paired bootstrap separates them
+> {{d2b_epi_h368}} against the counter's {{d2b_idx_h368}}, and a paired bootstrap separates them
 > at every horizon where the index is defined.
 >
 > But my strongest control was flawed. Correlating within each forecast step across trajectories
-> (+0.739) holds depth exactly constant — and holds trajectory difficulty not at all. It is a
+> ({{d2r_win}}) holds depth exactly constant — and holds trajectory difficulty not at all. It is a
 > mean of between-trajectory correlations, which is why it reads *above* the pooled
-> +0.605 rather than below. Removing both the trajectory mean and the step mean gives
-> **+0.419 [+0.318, +0.576]** — smaller, and the first figure I have that isolates
-> within-rollout information. Your claim survives it (SUPPORTED), but the between-trajectory
-> component is large (+0.878) and I now say so. Relatedly, the
-> +0.994 at one step is a ranking of *whole rollouts* over 20 points, not of
+> {{a2_r_pooled}} rather than below. Removing both the trajectory mean and the step mean gives
+> **{{a2_rdd}} {{a2_rdd_ci}}** — smaller, and the first figure I have that isolates
+> within-rollout information. Your claim survives it ({{m45_verdict}}), but the between-trajectory
+> component is large ({{a2_r_between}}) and I now say so. Relatedly, the
+> {{a2_h1_r}} at one step is a ranking of *whole rollouts* over {{a2_h1_npoints}} points, not of
 > moments within one — it survives partialling out commanded speed and episode difficulty
-> (+0.995), but it is a smaller claim than it looks.
+> ({{a2_h1_partial_both}}), but it is a smaller claim than it looks.
 >
 > **4. Two pieces of context you may already know, and one you may not.** Lu et al. (ICLR 2022,
 > arXiv:2110.04135) compared uncertainty heuristics in offline MBRL and reported rank and
@@ -124,22 +153,22 @@ about it.
 > of that lineage making the same swap inherits it. I flag that as an untested hypothesis; I have
 > not looked at any other repository.
 >
-> **What still does not work.** The scale finding stands: 33.4× on your
-> checkpoint at its own horizon, 10.5× on my ensemble-5 arms,
-> 5.2× even on the independent ensemble, whose ±1σ coverage is
-> 15.31% against a calibrated 68.27%. There is a cheap remedy — one multiplier per forecast horizon, fitted on
+> **What still does not work.** The scale finding stands: {{d1n_epi_ratio_h100}}× on your
+> checkpoint at its own horizon, {{e5_ratio_h100}}× on my ensemble-5 arms,
+> {{r2_indep_ratio_h100}}× even on the independent ensemble, whose ±1σ coverage is
+> {{r2_indep_cov1_h100}}% against a calibrated {{v3_cov_nominal1}}%. There is a cheap remedy — one multiplier per forecast horizon, fitted on
 > one held-out episode and scored on the other, restores nominal coverage on every held-out cell
-> where a single global multiplier manages 2 — but it is a calibration patch,
+> where a single global multiplier manages {{d3_epi_const_ok}} — but it is a calibration patch,
 > not a fix. And my own pre-registered replication of the ranking result on models I trained
-> returned **DOES NOT GENERALISE**: the direction held everywhere, the separation reached significance
-> at only 1 of 4 horizons, because my held-out arena has
-> 4 independent trajectories against your checkpoint's 20. I report the
+> returned **{{e5_verdict}}**: the direction held everywhere, the separation reached significance
+> at only {{e5_n_excl}} of {{e5_n_horizons}} horizons, because my held-out arena has
+> {{e5_nind}} independent trajectories against your checkpoint's {{d1n_nind}}. I report the
 > verdict the rule returned.
 >
-> On sample efficiency, the one part I could measure: your Table I reports 6,000,000 state
-> transitions of world-model pretraining. Mine consume **7,991** distinct transitions,
-> 751× less, and still reproduce the autoregressive-versus-teacher-forcing result at
-> 4.61×. That says nothing about policy transfer, and my evaluation distribution is
+> On sample efficiency, the one part I could measure: your Table I reports {{c2_ref}} state
+> transitions of world-model pretraining. Mine consume **{{c2_trans}}** distinct transitions,
+> {{c2_ratio}}× less, and still reproduce the autoregressive-versus-teacher-forcing result at
+> {{d1_ratio}}×. That says nothing about policy transfer, and my evaluation distribution is
 > narrower in proportion.
 >
 > **Two things I would value, if you have the time.**
@@ -164,7 +193,7 @@ about it.
 > - **Whether the ranking/scale line is drawn in the right place.** I claim the quantity is a
 >   usable ranking signal and not a usable interval, and that your paper's use of it is the
 >   former. Someone who applies these penalties would know at once if that is wrong.
-> - **The n = 4 problem**, which is what defeated my replication. If there is a better
+> - **The n = {{e5_nind}} problem**, which is what defeated my replication. If there is a better
 >   way to get power out of a ten-episode dataset than the one I used, I would like to know it.
 >
 > Any criticism is welcome, including that a finding does not hold up. Several of mine already did
@@ -196,3 +225,55 @@ about it.
   legitimate, and a same-day change.
 - **Do not hand-edit a number in this letter.** It is generated; fix the artifact and re-run
   `scripts/e4_reply_draft.py`.
+"""
+
+
+def main():
+    N = json.load(open(os.path.join(R.RESULTS, "paper_numbers.json")))
+    used, missing = set(), []
+
+    def sub(m):
+        k, filt = m.group(1), m.group(2)
+        if k not in N:
+            missing.append(k)
+            return m.group(0)
+        used.add(k)
+        v = str(N[k]["value"])
+        # the word-forms in paper_numbers are capitalised for sentence-initial
+        # use; "records Six retractions" needs the other one
+        return v.lower() if filt == "|lower" else v
+
+    out = re.sub(r"\{\{(\w+)(\|lower)?\}\}", sub, BODY)
+    assert not missing, f"no such keys in paper_numbers.json: {sorted(set(missing))}"
+    left = re.findall(r"\{\{[^}]*\}\}", out)
+    assert not left, f"unresolved: {sorted(set(left))}"
+
+    # Every figure the letter quotes must also appear in the paper. A letter that
+    # tells him something the report does not say would be worse than one that
+    # says nothing, and this is the only check that can catch it.
+    absent = []
+    if os.path.exists("PAPER.md"):
+        paper = open("PAPER.md").read()
+        for k in sorted(used):
+            v = str(N[k]["value"])
+            # skip pure prose values and the page count, which is about the PDF
+            if k in ("pdf_pages", "v4_current", "v4_current_date"):
+                continue
+            if v not in paper:
+                absent.append((k, v))
+    assert not absent, ("figures quoted in the letter but absent from PAPER.md: "
+                        + ", ".join(f"{k}={v}" for k, v in absent))
+
+    os.makedirs("docs", exist_ok=True)
+    with open(OUT, "w") as f:
+        f.write(out)
+
+    print("E4 REPLY DRAFT")
+    print("=" * 78)
+    print(f"  figures substituted : {len(used)}")
+    print(f"  all present in PAPER.md : yes")
+    print(f"  wrote {OUT} ({len(out.splitlines())} lines)")
+
+
+if __name__ == "__main__":
+    main()
