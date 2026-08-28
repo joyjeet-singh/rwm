@@ -1,0 +1,8 @@
+HORIZON SWEEP — PAPER.template.md
+========================================================================================================
+  horizon grid           : [1, 8, 32, 100, 128, 368]
+  deployment / diagnostic: h=100 / h=368
+
+========================================================================================================
+  0 findings — 0 calibration figures unscoped at sentence level, 0 other values unscoped at paragraph level
+  wrote results/horizon_sweep.json

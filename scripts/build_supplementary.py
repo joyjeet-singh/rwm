@@ -45,6 +45,13 @@ INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex"]
 # Submission build tools carry the identity patterns they search for, so they trip
 # their own scan. They are tooling for the submission, not evidence within it.
 EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
+           # Transient: written by ONE reproduce.sh run and describing that run,
+           # not the repository -- which is why .gitignore excludes it and why
+           # reproduce.sh deletes it at the start of every full run. It has no
+           # business in a submission bundle, and leaving it in made this
+           # bundle's own file count differ between a tree that had just run the
+           # pipeline and one that had not.
+           "results/_regenerated.txt",
            "scripts/submission_check.py",
            # Same reason as the three above, and stated in both files: an
            # anonymiser necessarily contains the strings it scrubs for, so it
@@ -56,6 +63,13 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # repository URL and the author's correspondents
            "docs/E4_AUTHOR_CONTACT.md", "docs/E6_ARCHIVAL.md",
            "docs/E4_REPLY_DRAFT.md",
+           # ...and the script that GENERATES that document, which carries the
+           # letter body and therefore the same repository URL and the same
+           # name. Excluding the output and not its generator left this stage
+           # failing from the commit that added the generator; nothing noticed,
+           # because the committed supplementary.zip predated it and the stage
+           # that would have said so was not re-run until the revision-2 gate.
+           "scripts/e4_reply_draft.py",
            "docs/ARCHIVAL_IDENTIFIERS.md"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",

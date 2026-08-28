@@ -103,6 +103,13 @@ INCLUDE_FILES = [
 ]
 # This file and its sibling carry the very patterns they search for.
 EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
+           # Transient: written by ONE reproduce.sh run and describing that run,
+           # not the repository -- which is why .gitignore excludes it and why
+           # reproduce.sh deletes it at the start of every full run. It has no
+           # business in a submission bundle, and leaving it in made this
+           # bundle's own file count differ between a tree that had just run the
+           # pipeline and one that had not.
+           "results/_regenerated.txt",
            "scripts/submission_check.py", "scripts/t5_anon_transcript.py"}
 SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".prebak", ".t2bak", ".t3bak", ".t4bak",
                ".tmpbak", ".zip", ".pdf")

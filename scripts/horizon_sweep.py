@@ -282,7 +282,10 @@ def main():
     json.dump({"n_flagged": len(findings), "n_strict": n_s, "grid": grid,
                "deployment_horizon": d, "diagnostic_horizon": g,
                "findings": findings}, open(out, "w"), indent=2)
-    print(f"  wrote {out}")
+    # R.rel, not the absolute path: this report is a committed artifact and goes
+    # into the anonymised bundle, where an absolute path carries the author's
+    # home directory. The identity scan caught it.
+    print(f"  wrote {R.rel(out)}")
     return 1 if findings else 0
 
 

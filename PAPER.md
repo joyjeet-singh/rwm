@@ -1035,9 +1035,9 @@ the work.
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
 **Reproducibility, and a build that checks its own prose.**
-`./reproduce.sh --quick --force` regenerates 34 artifact files and 6,680
-numeric values from a clean clone, 6,680 of them bitwise identical (100.00%),
-0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **46 comparative claims** across 19 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 46 of 46 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+`./reproduce.sh --quick --force` regenerates 36 artifact files and 6,789
+numeric values from a clean clone, 6,787 of them bitwise identical (99.97%),
+2 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **46 comparative claims** across 19 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 46 of 46 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1327,7 +1327,7 @@ the checker rather than written here, so a fourth entry cannot be forgotten.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model.
 
-*The CPU budget.* 4,488 timing fields and the 591 values of
+*The CPU budget.* 4,488 timing fields and the 592 values of
 `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
 resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on
 another machine, or on this one under different load, and it records that about itself: across
@@ -1349,11 +1349,11 @@ time-bounded.
 *source* of every value it holds, and it had copied that diagnostic's iteration count into a key
 of its own — so the host-dependence leaked through a file that was not excluded, and the clean
 clone duly differed on it. The verifier now drops any key whose recorded source is an excluded
-artifact (17 of them), which follows the provenance the file already carries rather
+artifact (18 of them), which follows the provenance the file already carries rather
 than requiring anyone to remember.
 
 **One further class, excluded by the same mechanism and worth naming because it sounds like an
-excuse.** 10 keys in `paper_numbers.json` are sourced from
+excuse.** 11 keys in `paper_numbers.json` are sourced from
 `verify_reproduction.json` — that is, they are this paper's statements *about this very
 comparison*: how many files it regenerated, how many values matched, how many differed. A clean
 clone necessarily carries in the **previous** run's figures and is then compared against a tree
@@ -1361,7 +1361,7 @@ holding the **current** run's, so they cannot agree: writing a result into the t
 thing the next run measures. There is no fixed point to converge to, and treating it as a
 reproducibility failure would make the reported figure oscillate rather than settle. They are
 dropped by provenance like the others and counted in the output rather than hidden — the same
-discipline §9's own 34-file figure rests on, since a silent exclusion is exactly how an
+discipline §9's own 36-file figure rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
 
 ## Appendix E — what testing the untested claims would require
