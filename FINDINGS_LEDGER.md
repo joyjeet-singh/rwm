@@ -4984,9 +4984,19 @@ summary and the public README were found still asserting it by the second pre-su
 ### M-48 — The correspondence transcript was published on a named repository for 46 minutes · **NEW**
 **What happened.** `docs/SUPPLEMENTARY_CORRESPONDENCE.md` was committed on 23 August (`7859309`)
 and pushed to `github.com/<author>/rwm` on **2026-08-28 at 11:46:49 +0530**, in the push that
-brought the public repository up to date for submission. It was removed, and the history rewritten
-to purge it, the same day. **Exposure window: 2026-08-28 11:46 to 12:32 +0530, 46 minutes**, on a
-public repository under the author's own name, in full.
+brought the public repository up to date for submission. The history was rewritten to purge it and
+force-pushed at **16:47 +0530 the same day**. **Exposure window: 2026-08-28, 11:46 to 16:47
++0530 — five hours**, on a public repository under the author's own name, in full.
+
+**What the purge does and does not achieve, stated precisely because the difference matters.** A
+fresh clone from GitHub after the force-push carries zero commits and zero blobs with that path,
+which is checkable and was checked. It does **not** reach two things. Unreachable objects survive
+on GitHub's side until GitHub garbage-collects them, so for some period the blob may still be
+fetchable by hash by anyone who recorded one; asking GitHub Support to run `gc` on the repository
+is the only way to force that, and it is a human action. And anyone who cloned, forked or fetched
+during the five-hour window holds a complete copy that no rewrite can reach. Neither is likely for
+a repository with no announced release; neither is impossible; and this entry says so rather than
+implying the removal was total.
 
 **What the file is.** The verbatim exchange with the first author of both papers under
 reproduction, anonymised as to both parties but not consented to. The paper's own header on that
