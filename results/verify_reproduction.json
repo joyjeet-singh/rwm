@@ -37,14 +37,14 @@
     "v3_metric_definitions.json"
   ],
   "values_compared": 6811,
-  "bitwise_identical": 6810,
+  "bitwise_identical": 6811,
   "identical_to_1e-9": 0,
-  "differing": 1,
+  "differing": 0,
   "timing_excluded": 4488,
   "nan_in_both": 4,
   "copied_file_values": 801154,
-  "copied_identical": 801150,
-  "copied_differing": 4,
+  "copied_identical": 801153,
+  "copied_differing": 1,
   "machine_file_values_excluded": 592,
   "machine_files": [
     "step4_5_timing.json"
