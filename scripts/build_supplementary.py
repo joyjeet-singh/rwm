@@ -117,6 +117,15 @@ def main():
                     continue
                 files.append(os.path.join(root, n))
     files += [f for f in INCLUDE_FILES if os.path.exists(f)]
+    # The same invariant make_anon_bundle.py asserts, for the same reason: this
+    # archive must be reproducible from a clean clone, and a gitignored file is
+    # one a clone does not have. Two got into the other bundler that way.
+    _ig = subprocess.run(["git", "check-ignore", "--stdin"], input="\n".join(sorted(set(files))),
+                         capture_output=True, text=True)
+    _ignored = [x for x in _ig.stdout.split("\n") if x.strip()]
+    assert not _ignored, (
+        "these files are gitignored and would go into the archive, which a clean clone "
+        "cannot reproduce: " + ", ".join(sorted(_ignored)))
     files = sorted(set(files) - EXCLUDE)
 
     log = anon_git_log()

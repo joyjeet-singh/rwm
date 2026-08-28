@@ -101,7 +101,14 @@ INCLUDE_FILES = [
     "CITATION.cff", "NOTICE", "LICENSE", "reproduce.sh", "setup.sh",
     "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
     "run_control.sh", "run_nll.sh", "run_ens5.sh", "run_indep_ens.sh",
-    "run_tasks45.sh", "checkpoint_manifest.json",
+    "run_tasks45.sh",
+    # checkpoint_manifest.json was here and is gitignored -- written at release
+    # time by the Hugging Face upload. A clean clone never has it, so the bundle
+    # contained a file whose presence depended on whether the author had run an
+    # upload step, and its own staged-file count differed between the two. The
+    # checkpoint hashes it holds are already in MODEL_CARD.md, which IS in the
+    # bundle. The assertion below makes the whole class impossible rather than
+    # this one instance.
 ]
 # This file and its sibling carry the very patterns they search for.
 EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
@@ -173,7 +180,24 @@ def collect():
     for f in INCLUDE_FILES:
         if os.path.exists(f) and f not in EXCLUDE:
             files.append(f)
-    return sorted(set(files))
+    files = sorted(set(files))
+    # Nothing git ignores may be staged.
+    #
+    # The bundle must be reproducible from a clean clone, and a gitignored file
+    # is by definition one a clone does not have. Two got in: results/
+    # _regenerated.txt, which describes one pipeline run, and
+    # checkpoint_manifest.json, which is written by the release upload. Both
+    # made the bundle's own file count depend on what the author had happened to
+    # run, and that count was the only thing standing between this project and a
+    # 100% clean-clone comparison. Asked of git rather than maintained by hand,
+    # because a hand-maintained list is how both of them got in.
+    ig = subprocess.run(["git", "check-ignore", "--stdin"], input="\n".join(files),
+                        capture_output=True, text=True)
+    ignored = [x for x in ig.stdout.split("\n") if x.strip()]
+    assert not ignored, (
+        "these staged files are gitignored, so a clean clone does not have them and "
+        "the bundle is not reproducible from one: " + ", ".join(sorted(ignored)))
+    return files
 
 
 # Files that live OUTSIDE the repository tree and must nevertheless reach

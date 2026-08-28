@@ -6521,11 +6521,11 @@
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 2
+    "value": 1
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 36
+    "value": 35
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
@@ -6533,7 +6533,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "6,787"
+    "value": "6,810"
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
@@ -6541,7 +6541,7 @@
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "99.97"
+    "value": "99.99"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
@@ -6573,7 +6573,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "6,789"
+    "value": "6,811"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",
