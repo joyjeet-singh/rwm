@@ -4436,6 +4436,16 @@ overstated.
 Power: `results/p1_power_check.json`. Mechanism: `results/v1_ensemble_topology.json`.
 **Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
+> **Addendum, 2026-08-28 — not part of the pre-registered text, and deliberately below it.**
+> A third respect in which the two arms differ was found after this rule was discharged:
+> **capacity**. The independent arm carries 3,570,820 state-pathway parameters against the
+> shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk
+> (**X-17**). The rule's text above is unchanged and its verdict is unaffected — the rule was
+> committed before the runs and states its own limitation on two axes; this is a third, found
+> afterwards, and writing it into the rule would make a pre-registration say something it did not
+> say. §12 names all three. This addendum is a pointer, not an amendment, which is why it is
+> quoted rather than inlined.
+
 
 ### M-45 — PRE-REGISTERED decision rule for the within-trajectory control on §5.6 · **NEW**
 

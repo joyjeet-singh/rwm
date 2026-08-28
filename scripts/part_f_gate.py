@@ -179,8 +179,13 @@ def main():
             | set(re.findall(r"^### (\d+\.\d+)", md, re.M))
             | set(re.findall(r"^\*\*(\d+\.\d+) ", md, re.M)))
     bad = sorted({x for x in re.findall(r"§\s*(\d+(?:\.\d+)?)", md) if x not in have})
-    fig_caps = set(re.findall(r"Figure (\d+)[:.]", txt))
-    fig_refs = {m for m in re.findall(r"Figure (\d+)", txt)}
+    # \s* on both sides: pdf text extraction reproduces the typeset kerning, and a
+    # caption can come back as "Figure6: ..." with no space at all. Figure 6's did,
+    # and the gate reported it dangling when it is on page 30 with its caption
+    # intact. A whitespace-sensitive regex over extracted PDF text is a bug in
+    # the checker, not a finding about the paper.
+    fig_caps = set(re.findall(r"Figure\s*(\d+)\s*[:.]", txt))
+    fig_refs = {m for m in re.findall(r"Figure\s*(\d+)", txt)}
     figmiss = sorted(fig_refs - fig_caps)
     chk(5, "cross-references resolve (sections and figures)", not bad and not figmiss,
         f"{len(re.findall(chr(167), md))} section refs, unresolved {bad or 'none'}; "

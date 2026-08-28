@@ -21,8 +21,13 @@ way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean 
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — {{n_entries}} entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
-are never edited in place: {{n_superseded}} are marked `SUPERSEDED` and kept, {{n_retractions_word}}
-of them retractions of our own numbered claims on evidence this project produced.
+are never edited in place: {{n_superseded}} are marked `SUPERSEDED` and kept.
+{{n_retractions_word}} of those are retractions of our own **numbered claims** on evidence this
+project produced, and {{n_retract_framing_word}} withdraw **framings** — a sentence the paper
+asserted that turned out to be false, rather than a number that turned out to be wrong. The two
+counts are separate and the paper keeps them separate; four of the framing retractions were
+entered by the second pre-submission review, and one of those is the record of a claim §8 had
+already narrowed in the paper while the ledger and this README went on asserting it.
 
 ## What this found
 

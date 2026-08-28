@@ -314,11 +314,16 @@ CLAIMS = [
     # 6,073, a headline the paper had reframed.
     {"id": "C11.1", "kind": "cross-artifact-sync", "where": "README",
      "says": "No number here is typed",
-     "keys": ["n_runs", "ver_values", "ver_files"],
+     # C3(rev2): the page count is here because the README quoted "9 pages" for a
+     # 30-page PDF for two revisions, and nothing compared them. It moves every
+     # time the paper grows, which is exactly the property that made it drift.
+     "keys": ["n_runs", "ver_values", "ver_files", "pdf_pages",
+              "n_retractions_word", "n_retract_framing_word"],
      "file": "README.md"},
     {"id": "C11.2", "kind": "cross-artifact-sync", "where": "MODEL_CARD",
      "says": "No number here is typed",
-     "keys": ["d1n_epi_ratio_h100", "e5_ratio_h100"],
+     "keys": ["d1n_epi_ratio_h100", "e5_ratio_h100", "m44_ratio_gain",
+              "r2_indep_ratio_h100"],
      "file": "MODEL_CARD.md"},
 
     # ---- C12 abstract-budget ---------------------------------------------

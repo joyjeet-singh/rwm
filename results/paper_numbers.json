@@ -3521,7 +3521,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 32
+    "value": 34
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",

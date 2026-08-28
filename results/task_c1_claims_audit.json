@@ -1,14 +1,14 @@
 {
-  "n_claims": 311,
+  "n_claims": 324,
   "by_verdict": {
-    "UNREVIEWED": 67,
-    "SUPPORTED": 244
+    "UNREVIEWED": 89,
+    "SUPPORTED": 235
   },
   "claims": [
     {
-      "id": "b356a8b0df58",
+      "id": "0910c2db4ebc",
       "section": "Abstract",
-      "claim": "The base paper's central training claim reproduces.** Under a rule committed to git before the runs that tested it, autoregressive training beats teacher forcing on held-out episodes by {{d1_ratio}}\u00d7 on the reference's own relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, and {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}.",
+      "claim": "The base paper's central training claim reproduces, and the advantage grows with horizon.** Under a rule committed to git before the runs that tested it, autoregressive training beats teacher forcing on held-out episodes by {{d1_ratio}}\u00d7 on the reference's own relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, rising monotonically to that figure from {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, where the method deploys.",
       "keys": [
         "d1_ratio",
         "v2_diag_h",
@@ -26,9 +26,9 @@
       "note": ""
     },
     {
-      "id": "79f72d991057",
+      "id": "9a49d672e357",
       "section": "Abstract",
-      "claim": "Neither uncertainty output the follow-up adds is usable as an interval.** At h = {{v2_deploy_h}}, the horizon its own imagination rollouts run to, the ensemble disagreement it penalises rewards with is {{d1n_epi_ratio_h100}}\u00d7 smaller than the realised error: {{d1n_epi_cov1_h100}}% of outcomes fall inside \u00b11\u03c3 where {{v3_cov_nominal1}}% is calibrated.",
+      "claim": "Neither uncertainty output the follow-up adds is usable as an interval.** At h = {{v2_deploy_h}} the ensemble disagreement it penalises rewards with is {{d1n_epi_ratio_h100}}\u00d7 smaller than realised error: {{d1n_epi_cov1_h100}}% of outcomes fall inside \u00b11\u03c3 where {{v3_cov_nominal1}}% is calibrated.",
       "keys": [
         "v2_deploy_h",
         "d1n_epi_ratio_h100",
@@ -47,9 +47,9 @@
       "note": ""
     },
     {
-      "id": "71174795af92",
+      "id": "daeac4312859",
       "section": "Abstract",
-      "claim": "The per-member \u03c3, which the method computes and discards, is a further {{d1n_epi_over_alea_h100}}\u00d7 worse at h = {{v2_deploy_h}}, and we derive why: the implemented objective's optimum is \u03c3 = 0.",
+      "claim": "The per-member \u03c3 the method computes and discards is a further {{d1n_epi_over_alea_h100}}\u00d7 worse at h = {{v2_deploy_h}}, and we derive why: the implemented objective's optimum is \u03c3 = 0.",
       "keys": [
         "d1n_epi_over_alea_h100",
         "v2_deploy_h"
@@ -65,9 +65,9 @@
       "note": ""
     },
     {
-      "id": "c079e4b6fc19",
+      "id": "80950dc91e9d",
       "section": "Abstract",
-      "claim": "As a ranking it survives adversarial testing.** It beats the forecast step index \u2014 a free counter neither paper ran \u2014 at every horizon, and with the rollout and the forecast depth both held constant still correlates {{a2_rdd}} with realised error over the full rollout: not merely a report of which episode is hard.",
+      "claim": "As a ranking it survives adversarial testing.** It beats the forecast step index \u2014 a free counter neither paper ran \u2014 at every horizon, and with the rollout and the depth both held constant still correlates {{a2_rdd}} with realised error: not merely a report of which episode is hard.",
       "keys": [
         "a2_rdd"
       ],
@@ -168,21 +168,27 @@
       "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
     },
     {
-      "id": "6b5355766f0b",
+      "id": "63d34c425a82",
       "section": "1. Introduction",
-      "claim": "A from-scratch reimplementation verified at the gradient level.** Outputs match the released module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training (Appendix A). - **The base paper's central training claim reproduces**, at a factor of {{d1_ratio}}\u00d7 on relative-L1 over {{d1_seeds}} seeds, under a rule committed to git before the runs existed (\u00a75). - **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (\u00a72); we measure coverage against a nominal, on a checkpoint its authors deployed.",
+      "claim": "A from-scratch reimplementation verified at the gradient level.** Outputs match the released module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training (Appendix A). - **The base paper's central training claim reproduces, and the advantage grows with forecast horizon**: a factor of {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds, under a rule committed to git before the runs existed, rising monotonically to that from {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} and a gap that spans zero at {{a1_spans_zero_at}} (\u00a75). - **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (\u00a72); we measure coverage against a nominal, on a checkpoint its authors deployed.",
       "keys": [
         "diff_grad_max",
         "diff_terms",
         "diff_n_params",
         "d1_ratio",
-        "d1_seeds"
+        "v2_diag_h",
+        "d1_seeds",
+        "d1_ratio_h100",
+        "v2_deploy_h",
+        "a1_spans_zero_at"
       ],
       "artifacts": [
+        "results/a1_ab_by_horizon.json",
         "results/step4_3_differential.json",
-        "results/task_d1_threeseed.json"
+        "results/task_d1_threeseed.json",
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 5,
+      "n_keys": 9,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -680,20 +686,22 @@
       "note": "revision review (V4/X-15): location checked against both the version read and the current one, since every figure and appendix table moved"
     },
     {
-      "id": "58a743c5e5f8",
+      "id": "b4cdc138bf8c",
       "section": "4. What the original papers claim, and which claims we test",
-      "claim": "So our {{d1_ratio}}\u00d7 is neither a confirmation of a published figure nor a contradiction of one \u2014 it is the first figure attached to the claim, and the same is true of the follow-up's \"strong correlation\" between disagreement and error, for which \u00a76.7 supplies the first coefficient.",
+      "claim": "So our {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} is neither a confirmation of a published figure nor a contradiction of one \u2014 it is the first figure attached to the claim, and the same is true of the follow-up's \"strong correlation\" between disagreement and error, for which \u00a76.7 supplies the first coefficient.",
       "keys": [
-        "d1_ratio"
+        "d1_ratio",
+        "v2_diag_h"
       ],
       "artifacts": [
-        "results/task_d1_threeseed.json"
+        "results/task_d1_threeseed.json",
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 1,
+      "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "3 seeds at 10,000 iterations; n_independent = 4 out-of-sample trajectories",
-      "note": "revision review: assertion unchanged in substance; re-checked because the surrounding prose was rewritten"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "076e064f48b8",
@@ -768,22 +776,46 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "1b79c814239a",
+      "id": "a902f321bcfc",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes \u2014 an exact two-sided binomial test, p = **{{c3_sign_p}}**.",
+      "claim": "The sign test, which does not depend on n.* At h = {{v2_diag_h}} the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes \u2014 an exact two-sided binomial test, p = **{{c3_sign_p}}**.",
       "keys": [
+        "v2_diag_h",
         "c3_sign_pos",
         "c3_sign_n",
         "c3_sign_p"
       ],
       "artifacts": [
-        "results/task_c3_multiplicity.json"
+        "results/task_c3_multiplicity.json",
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 3,
+      "n_keys": 4,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
+    },
+    {
+      "id": "32257eea2645",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "At h = {{v2_deploy_h}} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, so the count the abstract leans on is not an artifact of the longest horizon; at h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, which is the same story the interval tells.",
+      "keys": [
+        "v2_deploy_h",
+        "a1_sign_pos_h100",
+        "a1_sign_n_h100",
+        "a1_sign_p_h100",
+        "a1_sign_pos_h1",
+        "a1_sign_n_h1"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 6,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "f56c878ef10a",
@@ -838,39 +870,16 @@
       "note": "Both counts derived from review_bootstrap_unit.json."
     },
     {
-      "id": "b00e19ce9c91",
+      "id": "ba5d5da83d54",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "The out-of-sample effect size, over {{d1_seeds}} seeds.* At h = {{v2_diag_h}}, the horizon M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} \u00b1 {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} \u00b1 {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`) \u2014 a factor of **{{d1_ratio}}\u00d7**.",
+      "claim": "The out-of-sample effect size, at every horizon rather than one.* At h = {{v2_diag_h}}, the horizon M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} \u00b1 {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} \u00b1 {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`) \u2014 a factor of **{{d1_ratio}}\u00d7**.",
       "keys": [
-        "d1_seeds",
         "v2_diag_h",
         "d1_A_mean",
         "d1_A_sd",
         "d1_B_mean",
         "d1_B_sd",
         "d1_ratio"
-      ],
-      "artifacts": [
-        "results/task_d1_threeseed.json",
-        "results/v2_deployment_horizon.json"
-      ],
-      "n_keys": 7,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "d1e7dcfdb07e",
-      "section": "5. The base paper's central claim reproduces",
-      "claim": "At the deployment horizon the same comparison is smaller, and we report it rather than leaving the reader to assume the headline transfers.** At h = {{v2_deploy_h}} \u2014 the method's own imagination rollout length, and the horizon everything in \u00a76 is anchored to \u2014 the same three seeds give **{{d1_A_mean_h100}} \u00b1 {{d1_A_sd_h100}}** against **{{d1_B_mean_h100}} \u00b1 {{d1_B_sd_h100}}**, a factor of **{{d1_ratio_h100}}\u00d7**.",
-      "keys": [
-        "v2_deploy_h",
-        "d1_A_mean_h100",
-        "d1_A_sd_h100",
-        "d1_B_mean_h100",
-        "d1_B_sd_h100",
-        "d1_ratio_h100"
       ],
       "artifacts": [
         "results/task_d1_threeseed.json",
@@ -883,9 +892,146 @@
       "note": ""
     },
     {
-      "id": "95236dd8a3bc",
+      "id": "de37328b224f",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "M-23's verdict stands as returned at h = {{v2_diag_h}}**; this figure is reported beside it and discharges nothing.",
+      "claim": "At h = {{v2_deploy_h}}, the method's own imagination rollout length and the horizon everything in \u00a76 is anchored to, the same three seeds give **{{d1_ratio_h100}}\u00d7**.",
+      "keys": [
+        "v2_deploy_h",
+        "d1_ratio_h100"
+      ],
+      "artifacts": [
+        "results/task_d1_threeseed.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "5acaa997376b",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories:",
+      "keys": [
+        "d1_seeds",
+        "a1_nind"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "2417e78f3e7f",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "The advantage {{a1_monotone}} grow monotonically with forecast depth.** The gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}.",
+      "keys": [
+        "a1_monotone",
+        "a1_n_excl",
+        "a1_n_horizons",
+        "a1_spans_zero_at"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "258b6403d0c5",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "That is the reading a single figure cannot give: h = {{v2_diag_h}} is the end of a trend rather than a point we picked, h = {{v2_deploy_h}} sits partway along it, and the claim is weakest exactly where the model is trained.",
+      "keys": [
+        "v2_diag_h",
+        "v2_deploy_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "119483c00c4b",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "Only the h = {{v2_diag_h}} row is pre-registered.** M-23 was committed at that horizon, before the runs, and its verdict stands as returned.",
+      "keys": [
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "b72417d4c809",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "Nothing in the table discharges or re-opens M-23; the rule's anchor being the diagnostic horizon rather than the deployment one is recorded as M-46.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "92f9544e020b",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "Two things in that table were not visible from h = {{v2_diag_h}} alone, and one of them cuts against us.** Teacher forcing is worse than the hold-last floor at {{a1_B_worse_than_floor_at}}, so \u00a75's sharpest line is not an artifact of the longest horizon \u2014 at h = {{v2_deploy_h}} it is still {{a1_B_over_floor_h100}}\u00d7 worse than assuming nothing changes.",
+      "keys": [
+        "v2_diag_h",
+        "a1_B_worse_than_floor_at",
+        "v2_deploy_h",
+        "a1_B_over_floor_h100"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "2a6531c20e7b",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "But **at h = 1 the floor beats *both* arms**: it scores {{a1_floor_h1}} against autoregressive training's {{a1_A_h1}}, the only horizon where a trained model loses to predicting no change at all.",
+      "keys": [
+        "a1_floor_h1",
+        "a1_A_h1"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "5ac0a5f60654",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "At 50 Hz one step is 20 ms and the state barely moves, so that is what one should expect; it is stated because \u00a75 quoted the h = {{v2_diag_h}} margin over the floor with no indication that it does not hold everywhere.",
       "keys": [
         "v2_diag_h"
       ],
@@ -932,24 +1078,26 @@
       "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
     },
     {
-      "id": "ad1695104a2c",
+      "id": "f66c95ffb76e",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "An earlier draft of this paper quoted the single-seed figures {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}\u00d7 rather than {{m23_ratio}}\u00d7.",
+      "claim": "An earlier draft of this paper quoted the single-seed figures {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and unfavourable to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_ratio}}\u00d7 rather than {{m23_ratio}}\u00d7.",
       "keys": [
         "m23_A",
         "m23_B",
+        "v2_diag_h",
         "d1_ratio",
         "m23_ratio"
       ],
       "artifacts": [
         "results/task5_analysis.json",
-        "results/task_d1_threeseed.json"
+        "results/task_d1_threeseed.json",
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 4,
+      "n_keys": 5,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "3 seeds, n_ind=4",
-      "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "e6a63050db47",
@@ -987,54 +1135,65 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "70e37ea25eca",
+      "id": "6c6f787ca058",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "Against a baseline, because neither number means anything without one.* The hold-last floor \u2014 predicting that nothing changes \u2014 scores **{{floor_h368}}** in the same h = {{v2_diag_h}} cell.",
+      "claim": "Against a baseline, because neither number means anything without one.* The hold-last floor \u2014 predicting that nothing changes \u2014 scores **{{floor_h368}}** in the same h = {{v2_diag_h}} cell, and autoregressive training beats it by **{{floor_over_A}}\u00d7** there and by {{a1_floor_over_A_h100}}\u00d7 at h = {{v2_deploy_h}}.",
       "keys": [
         "floor_h368",
-        "v2_diag_h"
+        "v2_diag_h",
+        "floor_over_A",
+        "a1_floor_over_A_h100",
+        "v2_deploy_h"
       ],
       "artifacts": [
+        "results/a1_ab_by_horizon.json",
         "results/task4_arenas.json",
+        "results/task4_arenas.json + task5_analysis.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 2,
+      "n_keys": 5,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "beaf6b586404",
+      "id": "9f6c5fd6ce83",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "Autoregressive training beats it by **{{floor_over_A}}\u00d7**.",
+      "claim": "Teacher forcing is {{B_over_floor}}\u00d7 worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and {{a1_B_over_floor_h100}}\u00d7 worse at h = {{v2_deploy_h}}: the arm that reaches a lower training loss ends up predicting the future worse than a model that makes no prediction, at {{a1_B_worse_than_floor_at}} we measured.",
       "keys": [
-        "floor_over_A"
+        "B_over_floor",
+        "v2_diag_h",
+        "a1_B_over_floor_h100",
+        "v2_deploy_h",
+        "a1_B_worse_than_floor_at"
       ],
       "artifacts": [
-        "results/task4_arenas.json + task5_analysis.json"
+        "results/a1_ab_by_horizon.json",
+        "results/task4_arenas.json + task5_analysis.json",
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 1,
+      "n_keys": 5,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
     },
     {
-      "id": "b8cf445bdfdc",
+      "id": "71ee848327ac",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "Teacher forcing is {{B_over_floor}}\u00d7 worse than assuming nothing changes at all**, which is the sharper statement of what exposure bias costs here: the arm that reaches a lower training loss ends up predicting the future worse than a model that makes no prediction.",
+      "claim": "The floor is not a weak baseline everywhere**, and the table above says where it is not: at {{a1_A_worse_than_floor_at}} it beats the autoregressive arm as well.",
       "keys": [
-        "B_over_floor"
+        "a1_A_worse_than_floor_at"
       ],
       "artifacts": [
-        "results/task4_arenas.json + task5_analysis.json"
+        "results/a1_ab_by_horizon.json"
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Quantitative, substituted from the named artifact by the build."
+      "note": ""
     },
     {
       "id": "73e96eb04496",
@@ -1180,24 +1339,30 @@
       "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
     },
     {
-      "id": "478128517331",
+      "id": "0578641f6bc7",
       "section": "5.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
-      "claim": "A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result at {{d1_ratio}}\u00d7 and still beats the hold-last floor by {{floor_over_A}}\u00d7 at h=368.",
+      "claim": "A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result \u2014 {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} and {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} \u2014 and still beats the hold-last floor, by {{floor_over_A}}\u00d7 and {{a1_floor_over_A_h100}}\u00d7 at those two horizons.",
       "keys": [
         "c2_pct",
         "d1_ratio",
-        "floor_over_A"
+        "v2_diag_h",
+        "d1_ratio_h100",
+        "v2_deploy_h",
+        "floor_over_A",
+        "a1_floor_over_A_h100"
       ],
       "artifacts": [
+        "results/a1_ab_by_horizon.json",
         "results/task4_arenas.json + task5_analysis.json",
         "results/task_c2_data_budget.json",
-        "results/task_d1_threeseed.json"
+        "results/task_d1_threeseed.json",
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 3,
+      "n_keys": 7,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "8 training episodes, 7,999 rows, 8 boundaries",
-      "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "57571c1d6f8b",
@@ -2391,23 +2556,28 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "36d9bea02350",
+      "id": "8a84c6bdfd68",
       "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-      "claim": "Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}.",
+      "claim": "Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at {{perm_all_epi_p_h100}} sitting between h=32's {{perm_all_epi_p_h32}} and h=128's {{perm_all_epi_p_h128}} \u2014 the horizon added by this revision falls where the existing reading says it should, which is worth stating because it was not free to.",
       "keys": [
         "perm_all_nind",
         "perm_all_epi_p_h1",
         "perm_all_epi_p_h8",
+        "perm_all_epi_p_h128",
+        "v2_deploy_h",
+        "perm_all_epi_p_h100",
+        "perm_all_epi_p_h32",
         "perm_all_epi_p_h128"
       ],
       "artifacts": [
-        "results/task_b_permutation.json"
+        "results/task_b_permutation.json",
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 4,
+      "n_keys": 8,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "acf504182236",
@@ -3079,6 +3249,54 @@
       "verdict": "SUPPORTED",
       "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
       "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+    },
+    {
+      "id": "87b1b99ce2ce",
+      "section": "6.7 Ensemble disagreement beats the trivial baseline",
+      "claim": "And we do not rewrite its denominator either, which is the less obvious half of the same discipline.** M-43 was committed over {{e5_n_horizons}} horizons, before the data.",
+      "keys": [
+        "e5_n_horizons"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "30a035c793c0",
+      "section": "6.7 Ensemble disagreement beats the trivial baseline",
+      "claim": "Adding h = {{v2_deploy_h}} to the evaluation grid after the fact would change what \"a majority of horizons\" means in a rule already discharged \u2014 a way of moving a threshold that looks like reporting rather than like moving a threshold.",
+      "keys": [
+        "v2_deploy_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "c51002de54b7",
+      "section": "6.7 Ensemble disagreement beats the trivial baseline",
+      "claim": "The verdict above is over M-43's own {{e5_n_horizons}}.",
+      "keys": [
+        "e5_n_horizons"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "f9966758d3ff",
@@ -4138,20 +4356,22 @@
       "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it"
     },
     {
-      "id": "3348bb6ada94",
+      "id": "2d24835cfdbf",
       "section": "10. Actionable lessons",
-      "claim": "It still beats the free alternative \u2014 the forecast step index \u2014 at every horizon we tested, on a paired test that excludes zero at every horizon where the index is defined, and it retains {{d2b_par_all}} once that index is partialled out (\u00a76.7).",
+      "claim": "It still beats the free alternative \u2014 the forecast step index \u2014 at every horizon we tested, on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons where the index is defined \u2014 every one of them \u2014 and it retains {{d2b_par_all}} once that index is partialled out (\u00a76.7).",
       "keys": [
+        "d2p_n_separating",
+        "d2p_n_horizons",
         "d2b_par_all"
       ],
       "artifacts": [
         "results/task_d_nind20.json"
       ],
-      "n_keys": 1,
+      "n_keys": 3,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "a989d0da022c",
@@ -4713,6 +4933,34 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
+      "id": "366a81e42ef0",
+      "section": "Data and code",
+      "claim": "The repository's history was rewritten once, and \u00a79 depends on that history, so we say what changed.** A supplementary file quoting private correspondence was committed and briefly published before consent to quote it had been given; it was purged from the history rather than merely deleted, because a deletion commit leaves the content recoverable from a public repository indefinitely.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "198e6a364873",
+      "section": "Data and code",
+      "claim": "Purging a path rewrites every commit from the one that introduced it onward, so **{{f4_n_commits}} of the commits Figure 4 cites keep their identifiers and two do not** \u2014 the two whose data post-dates that file.",
+      "keys": [
+        "f4_n_commits"
+      ],
+      "artifacts": [
+        "results/paper_figures.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "d4d66e70bac3",
       "section": "Data and code",
       "claim": "And **the repository was archived by Software Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit timestamp is not author-controllable; the identifier resolves to a named repository and is therefore disclosed on acceptance rather than here.",
@@ -4890,16 +5138,16 @@
       "note": ""
     },
     {
-      "id": "b3f5979670ba",
+      "id": "c2863900b3f0",
       "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "an interval relation that is not the one asserted** \u2014 \"the intervals do not overlap\", where at h=128 they overlap across 0.604\u20130.643; - **an extremum that is not the extremum** \u2014 the worst-calibrated held-out cell named as epistemic at h=1, which is third; the largest deviation is aleatoric at h=128; - **a stated change with the wrong sign** \u2014 \"a change of **+**0.010\", where partialling the forecast index out *reduces* the correlation; - **two prose descriptions of one ratio that disagree** \u2014 \"nearly three orders of magnitude\" in the abstract against \"two orders\" in \u00a713, of 600\u00d7; - **a count attributed to the wrong evaluation arena** \u2014 0 of 45 over all ten episodes asserted where the table beside it printed the held-out arena's 20 of 45.",
+      "claim": "A stated *frequency* \u2014 \"at exactly one place\", \"in all four\", \"the only\" \u2014 is a claim about a count, and no kind bound one to a recomputed count until `frequency-consistency`; - **an extremum that is not the extremum** \u2014 the worst-calibrated held-out cell named as epistemic at h=1, which is third; the largest deviation is aleatoric at h=128; - **a stated change with the wrong sign** \u2014 \"a change of **+**0.010\", where partialling the forecast index out *reduces* the correlation; - **two prose descriptions of one ratio that disagree** \u2014 \"nearly three orders of magnitude\" in the abstract against \"two orders\" in \u00a713, of 600\u00d7; - **a count attributed to the wrong evaluation arena** \u2014 0 of 45 over all ten episodes asserted where the table beside it printed the held-out arena's 20 of 45.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
       "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "n/a \u2014 not a quantitative claim",
-      "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "6b2537046283",

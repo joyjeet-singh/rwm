@@ -16,13 +16,18 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-32 pages, 0 overfull boxes, 0 LaTeX warnings
+34 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 201 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
-are never edited in place: 19 are marked `SUPERSEDED` and kept, Six
-of them retractions of our own numbered claims on evidence this project produced.
+are never edited in place: 19 are marked `SUPERSEDED` and kept.
+Six of those are retractions of our own **numbered claims** on evidence this
+project produced, and six withdraw **framings** — a sentence the paper
+asserted that turned out to be false, rather than a number that turned out to be wrong. The two
+counts are separate and the paper keeps them separate; four of the framing retractions were
+entered by the second pre-submission review, and one of those is the record of a claim §8 had
+already narrowed in the paper while the ledger and this README went on asserting it.
 
 ## What this found
 

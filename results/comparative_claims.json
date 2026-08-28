@@ -248,7 +248,7 @@
       "where": "README",
       "says": "No number here is typed",
       "pass": true,
-      "detail": "3/3 headline values present in README.md"
+      "detail": "6/6 headline values present in README.md"
     },
     {
       "id": "C11.2",
@@ -256,7 +256,7 @@
       "where": "MODEL_CARD",
       "says": "No number here is typed",
       "pass": true,
-      "detail": "2/2 headline values present in MODEL_CARD.md"
+      "detail": "4/4 headline values present in MODEL_CARD.md"
     },
     {
       "id": "C12.1",
@@ -579,12 +579,12 @@
       },
       {
         "id": "C11.1",
-        "corruption": "{'keys': ['n_runs', 'ver_values', 'ver_files', 'd1_ratio'], 'file': 'requirements.txt'}",
+        "corruption": "{'keys': ['n_runs', 'ver_values', 'ver_files', 'pdf_pages', 'n_retractions_word', 'n_retract_framing_word', 'd1_ratio'], 'file': 'requirements.txt'}",
         "caught": true
       },
       {
         "id": "C11.2",
-        "corruption": "{'keys': ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'd1_ratio'], 'file': 'requirements.txt'}",
+        "corruption": "{'keys': ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'm44_ratio_gain', 'r2_indep_ratio_h100', 'd1_ratio'], 'file': 'requirements.txt'}",
         "caught": true
       },
       {
