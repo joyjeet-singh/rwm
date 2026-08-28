@@ -348,6 +348,44 @@ def main():
                   "whether it is THE explanation is tested by M-44 (Phase 2)",
     }
 
+    # C4(rev2), 4.3 -- the THIRD confound in the M-44 contrast, and the one 12
+    # did not name. M-44 compares five independently-initialised full models
+    # against five heads on one trunk. Section 12 records that the two differ in
+    # initialisation AND data ordering. They also differ in CAPACITY: the
+    # independent arm carries a whole trunk per member. More capacity can inflate
+    # sigma as well as shrink error, and sigma is the column the mechanism claim
+    # rests on, so the factor has to be stated with a number rather than waved at.
+    #
+    # Measured from the checkpoints on both sides, not estimated. The state
+    # pathway is the comparable unit: it is what produces the mean predictions
+    # whose spread IS the epistemic term.
+    _shared_trunk = ref["shared_modules"]["state_base"]["params"]
+    _head = ref["per_member_modules"]["state_heads"]["params_each"]
+    _n = ref["ensemble_size"]
+    _shared_arm = _shared_trunk + _n * _head          # one trunk, n heads
+    _indep_arm = _n * (_shared_trunk + _head)         # n whole models
+    out["capacity_confound"] = {
+        "what": "state-pathway parameters carried by each arm of the M-44 contrast",
+        "shared_trunk_arm_params": _shared_arm,
+        "independent_ensemble_params": _indep_arm,
+        "ratio_independent_over_shared": _indep_arm / _shared_arm,
+        "measured_from": "the released checkpoint's and our ens5 arms' own tensors, "
+                         "via topology() above; nothing here is estimated",
+        "why_it_matters":
+            "the independent arm has more capacity as well as more independence, and "
+            "greater capacity can raise sigma as well as lower error. 6.10's "
+            "decomposition separates the sigma gain from the accuracy gain; it does "
+            "NOT separate capacity from independence. M-44 therefore bounds the "
+            "trunk-sharing effect from above on a third axis as well as the two "
+            "section 12 already names.",
+        "clean_version_would_be":
+            "five trunks at 1/5 the width each, matched on total state-pathway "
+            "capacity, five independent recurrent states. That is a different "
+            "architecture and a different training run; out of scope here and "
+            "recorded so a reader can see what would settle it.",
+        "n_members": _n,
+    }
+
     dst = os.path.join(R.RESULTS, "v1_ensemble_topology.json")
     with open(dst, "w") as f:
         json.dump(out, f, indent=2, sort_keys=True)

@@ -1,4 +1,14 @@
 {
+  "capacity_confound": {
+    "clean_version_would_be": "five trunks at 1/5 the width each, matched on total state-pathway capacity, five independent recurrent states. That is a different architecture and a different training run; out of scope here and recorded so a reader can see what would settle it.",
+    "independent_ensemble_params": 3570820,
+    "measured_from": "the released checkpoint's and our ens5 arms' own tensors, via topology() above; nothing here is estimated",
+    "n_members": 5,
+    "ratio_independent_over_shared": 3.486679451476958,
+    "shared_trunk_arm_params": 1024132,
+    "what": "state-pathway parameters carried by each arm of the M-44 contrast",
+    "why_it_matters": "the independent arm has more capacity as well as more independence, and greater capacity can raise sigma as well as lower error. 6.10's decomposition separates the sigma gain from the accuracy gain; it does NOT separate capacity from independence. M-44 therefore bounds the trunk-sharing effect from above on a third axis as well as the two section 12 already names."
+  },
   "gate": {
     "members_are_fully_independent_models": false,
     "our_arms_heads_share_trunk": true,

@@ -298,6 +298,14 @@ stage 28 "Assemble the anonymised supplementary archive" "20 s" \
 # quietly passing forever.
 REPORT=comparative_claims_report.txt stage 28a "Comparative-claim check, with self-test" "10 s" \
       results/comparative_claims.json $PY scripts/check_comparative_claims.py --self-test
+# The h=100 sweep. Registered as the `horizon-consistency` kind above and run
+# again here on its own, because its report is the useful artifact when it
+# fails: it names every sentence, the horizon its numbers came from, and the
+# horizon the sentence claims. The re-anchoring from h=368 left 28 findings
+# across 20 locations in the 24 August draft, and no provenance check could see
+# one of them.
+REPORT=horizon_sweep_report.txt stage 28c "Horizon sweep over the paper's own prose" "5 s" \
+      results/horizon_sweep.json $PY scripts/horizon_sweep.py
 # C3: stages an anonymised copy, scrubbing by SUBSTITUTION rather than exclusion,
 # checks file paths as well as contents, and plants a deny-list string on every
 # run to prove the scan is still live.

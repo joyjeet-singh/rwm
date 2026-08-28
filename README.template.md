@@ -49,6 +49,21 @@ the rollout and the forecast depth held constant it still correlates **{{a2_rdd}
 episode and scored on the other, restores nominal coverage on every held-out cell; a single global
 multiplier manages {{d3_epi_const_ok}} of them.
 
+**5 — The released five-member ensemble is not five models.** One GRU trunk, one recurrent hidden
+state, and {{v1_shared_pct}}% of each member's state-prediction parameters numerically identical
+across members — measured from the checkpoint's own tensors and from source (§6.4). Members that
+share a feature extractor have correlated errors by construction, so their spread is a lower bound
+on epistemic uncertainty by design rather than by accident.
+
+**6 — That mechanism is tested, not merely asserted, and it holds.** Five independently
+initialised full models, sharing nothing, scored together as an ensemble are
+**{{m44_ratio_gain}}×** better calibrated than the shared-trunk arms at h = {{v2_deploy_h}} —
+against a minimum detectable effect of {{m44_mde_ratio}}× fixed before the runs existed. σ is
+larger by {{r2_sigma_x_h100}}×, which is {{r2_from_sigma_h100}}% of the improvement there, and the
+split reverses at the {{v2_diag_h}}-step diagnostic horizon. The rule (M-44) returns
+**{{m44_verdict}}**. It is still {{r2_indep_ratio_h100}}× overconfident: building the ensemble
+properly is worth doing and is not sufficient (§6.10).
+
 **And {{n_defects}} defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
 its author recalls — which the first author attributes to the repository having moved on between
@@ -134,6 +149,22 @@ regenerated — inflating the figure by about fiftyfold. `reproduce.sh` now reco
 regenerates and the verifier partitions on that (`M-28`, `M-29`).
 
 `step4_5_timing.json` is excluded wholesale: it measures the host, not the model.
+
+## Every figure names its horizon
+
+The paper reports two load-bearing horizons and they are not interchangeable.
+**h = {{v2_deploy_h}}** is the method's own imagination rollout length — the horizon the
+uncertainty-penalised policy loop actually runs this model over. **h = {{v2_diag_h}}** is the
+upstream's open-loop *diagnostic* length, {{v2_ratio}}× longer, and it is not a deployment
+horizon; an earlier draft of the paper called it one and that label is withdrawn.
+
+Re-anchoring the tables from one to the other left prose behind: sentences quoting a correct,
+provenanced h = {{v2_diag_h}} figure sat beside h = {{v2_deploy_h}} tables saying nothing about
+it. No provenance check can see that. `scripts/horizon_sweep.py` walks the template, resolves
+every numeral to the artifact cell it came from, and reports that cell's horizon against the
+horizon the sentence names — a calibration ratio or coverage must name it in its own sentence,
+everything else horizon-indexed in its own paragraph. It runs on every build as the
+`horizon-consistency` check and the build fails on any finding.
 
 ## The build checks its own prose
 

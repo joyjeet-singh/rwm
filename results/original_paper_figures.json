@@ -96,7 +96,27 @@
         "what": "the model's name",
         "v1": "RWM-O",
         "v3": "RWM-U",
-        "note": "a rename, not a different model: the architecture tables and Eq. 4 are unchanged. Our paper quotes v1 sentences containing 'RWM-O'."
+        "v1_expansion": "Offline Robotic World Model",
+        "v3_expansion": "Uncertainty-Aware Robotic World Model",
+        "v1_sentence": "To this end, we introduce Offline Robotic World Model (RWM-O), where we explicitly incorporate uncertainty quantification",
+        "v3_sentence": "To this end, we introduce Uncertainty-Aware Robotic World Model (RWM-U), where we explicitly incorporate uncertainty quantification",
+        "occurrences": {
+          "v1": {
+            "RWM-O": 39,
+            "RWM-U": 0
+          },
+          "v2": {
+            "RWM-O": 0,
+            "RWM-U": 43
+          },
+          "v3": {
+            "RWM-O": 0,
+            "RWM-U": 43
+          }
+        },
+        "occurrences_checked_on": "2026-08-28",
+        "occurrences_method": "arxiv.org/html/2504.16680v{1,2,3} fetched and the two strings counted; no version contains both",
+        "note": "a rename, not a different model, and the two names never co-occur: v1 uses RWM-O throughout and v2/v3 use RWM-U throughout. The introducing sentence is identical but for the expansion, and the architecture tables and Eq. 4 are unchanged. Our paper quotes v1 sentences containing 'RWM-O'."
       }
     ],
     "consequence": "every in-text citation of 2504.16680 in this paper names the version it was read from, and the reference-list entry pins v1 with the v3 revision date recorded. Section and equation references resolve in both; figure references need the map above, which is why it is here."

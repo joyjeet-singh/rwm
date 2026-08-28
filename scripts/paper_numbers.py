@@ -20,6 +20,13 @@ def J(n):
     return json.load(open(os.path.join(R.RESULTS, n)))
 
 
+# Number words, at module scope because keys derived near the top of main() need
+# them too. This lived inside main() below the ledger block and the first caller
+# above it raised UnboundLocalError.
+WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
+         8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen"}
+
+
 def main():
     N = {}
     def put(k, v, src):
@@ -205,6 +212,56 @@ def main():
     put("cc_st_n", _st["n"], "results/comparative_claims.json")
     put("cc_st_caught", _st["caught"], "results/comparative_claims.json")
     put("cc_kinds", len({c["kind"] for c in CC["claims"]}), "results/comparative_claims.json")
+    # C5(rev2), 3.5. Section 9 said "N kinds" from this key while appendix D
+    # enumerated eight by hand, and the two had drifted seven apart. The
+    # enumeration is generated from the same set the count comes from, so the
+    # `kind-count` check has something to compare and the two cannot disagree.
+    # The defects the self-test found in the checker rather than in the paper.
+    # Appendix D said "Two" and listed two; there are more, and a typed count in
+    # the appendix about count consistency is not defensible.
+    _cd = CC.get("checker_defects", [])
+    put("cc_selfdefects", len(_cd), "results/comparative_claims.json")
+    put("cc_selfdefects_word", WORDS.get(len(_cd), str(len(_cd))), "results/comparative_claims.json")
+    put("cc_selfdefects_lower",
+        WORDS.get(len(_cd), str(len(_cd))).lower(), "results/comparative_claims.json")
+    put("cc_selfdefect_list",
+        "".join(f"\n\n- {d[0].upper()}{d[1:]}." for d in _cd),
+        "results/comparative_claims.json")
+    _kinds = sorted({c["kind"] for c in CC["claims"]})
+    _blurb = {
+        "overlap": "two intervals do or do not overlap",
+        "extremum": "a named cell is the max or min of its family",
+        "sign": "a stated rise or fall matches the direction of the difference",
+        "orders": "a stated count of orders of magnitude matches `round(log10(ratio))`, "
+                  "or a ratio quoted directly appears in the sentence that quotes it",
+        "cell": "a k-of-45 count is the arena and horizon the text names",
+        "compare": "a stated ordering between two scalars",
+        "relvar": "a stated ratio of relative variabilities",
+        "count-consistency": "one count asserted in several places, in words, numerals or "
+                             "numeric-string variants, agrees everywhere",
+        "horizon-label": "a phrase naming a horizon resolves to the horizon the artifact says "
+                         "it is, and the numbers beside it are that horizon's",
+        "horizon-forbidden": "a withdrawn horizon label appears nowhere in the paper",
+        "horizon-consistency": "every horizon-indexed figure in the prose names its horizon, "
+                               "and names the one its artifact cell came from",
+        "count-dependence": "a clean k-of-k count carries an interval or a not-independent note",
+        "retraction-consistency": "a claim the ledger marks superseded is asserted nowhere "
+                                  "reader-facing",
+        "cross-artifact-sync": "the README and model card carry the paper's headline values",
+        "abstract-budget": "the abstract stays inside its word and numeral budget",
+        "interval-required": "a quoted ratio or coverage is accompanied by its interval",
+        "arithmetic": "a stated total equals the sum of its stated parts",
+        "kind-count": "the number of kinds section 9 claims, appendix D enumerates and the "
+                      "checker registers are one number",
+        "scope-consistency": "a universal quantifier is checked against the set it quantifies "
+                             "over",
+    }
+    _missing = [k for k in _kinds if k not in _blurb]
+    assert not _missing, f"check kinds with no appendix D description: {_missing}"
+    put("cc_kind_list",
+        ", ".join(f"*{k}* ({_blurb[k]})" for k in _kinds[:-1])
+        + f", and *{_kinds[-1]}* ({_blurb[_kinds[-1]]})",
+        "results/comparative_claims.json")
     put("diff_terms", dif.get("n_terms", 7), "results/step4_3_differential.json")
     t5d = J("task5_differential.json")
     import re as _re
@@ -286,8 +343,22 @@ def main():
     put("n_superseded", len(sup), "FINDINGS_LEDGER.md")
     put("n_retractions", len(retr), "FINDINGS_LEDGER.md")
     put("n_retract_framing", len(fram), "FINDINGS_LEDGER.md")
-    WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
-             8: "Eight", 9: "Nine", 10: "Ten"}
+    # Section 9 and appendix D each ENUMERATED the framing retractions in prose
+    # ("the claim that a pre-registration was pre-registered, and the binomial
+    # inference of 6.6"). Two more were entered by the second revision and a
+    # third recorded a narrowing the paper had made without ever entering it, so
+    # a typed enumeration beside a generated count is a count-consistency defect
+    # waiting to happen. The list is built from the entry titles.
+    def _title(sid):
+        blk = led[led.index("### " + sid + " "):]
+        line = blk[:blk.find("\n")]
+        t = line.split("—", 1)[1] if "—" in line else line
+        return t.split("·")[0].strip().strip('"')
+    _ftitles = [_title(x) for x in fram]
+    put("n_retract_framing_list",
+        "".join(f"\n\n- **{t}** (`{sid}`)." for sid, t in zip(fram, _ftitles)),
+        "FINDINGS_LEDGER.md")
+    put("n_retract_framing_ids", ", ".join(f"`{x}`" for x in fram), "FINDINGS_LEDGER.md")
     put("n_retractions_word", WORDS.get(len(retr), str(len(retr))), "FINDINGS_LEDGER.md")
     put("n_retractions_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
     put("n_retractions_word_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
@@ -416,15 +487,25 @@ def main():
             put(f"d1n_{tg}_ndim_h{h}", m["n_finite_corr"], "results/task_d_nind20.json")
             put(f"d1n_{tg}_r_h{h}", f'{m["corr_mean"]:+.3f}', "results/task_d_nind20.json")
     _e1, _e368 = D["d1_by_horizon"]["1"], D["d1_by_horizon"]["368"]
-    # A5: quote the ratio itself rather than an orders-of-magnitude phrase. 600x is
+    # A5: quote the ratio itself rather than an orders-of-magnitude phrase. It is
     # exact and generated; "two orders" and "nearly three orders" disagreed with
     # each other across the abstract and section 12 while both described this value.
-    put("d1n_epi_over_alea_h368",
-        f'{_e368["aleatoric"]["ratio_err_over_sigma"]/_e368["epistemic"]["ratio_err_over_sigma"]:,.0f}',
-        "results/task_d_nind20.json")
+    #
+    # C1(rev2): it is HORIZON-DEPENDENT, and only the h=368 form existed, so the
+    # abstract, 6.2 and 13 all paired an h=368 ratio (600x) with an h=100 figure in
+    # the same sentence. The ratio at the deployment horizon is 350x. Generated at
+    # every horizon so that a sentence can quote the one it is scoped to.
+    for _h in (1, 8, 32, 100, 128, 368):
+        _r = D["d1_by_horizon"][str(_h)]
+        put(f"d1n_epi_over_alea_h{_h}",
+            f'{_r["aleatoric"]["ratio_err_over_sigma"]/_r["epistemic"]["ratio_err_over_sigma"]:,.0f}',
+            "results/task_d_nind20.json")
 
     # D2 -- the forecast-index baseline
-    for h in ("1", "8", "32", "128", "368", "all"):
+    #
+    # C1(rev2): h=100 was absent from this table while 3.1 declares it part of the
+    # grid and the abstract is anchored to it. The rollouts already carried it.
+    for h in ("1", "8", "32", "100", "128", "368", "all"):
         r = D["d2_forecast_index"][h]
         k = h if h == "all" else f"h{h}"
         for nm, tg in (("r_index", "idx"), ("r_epistemic", "epi"), ("r_partial", "par")):
@@ -441,7 +522,7 @@ def main():
     # marginal-overlap comparison, which is not the right test for two correlations
     # measured on the same trajectories -- and which the artifact shows is false at
     # h=128 anyway.
-    for h in ("8", "32", "128", "368", "all"):
+    for h in ("8", "32", "100", "128", "368", "all"):
         r = D["d2_forecast_index"][h]
         k = h if h == "all" else f"h{h}"
         put(f"d2p_diff_{k}", f'{r["paired_diff"]:+.3f}', "results/task_d_nind20.json")
@@ -456,14 +537,24 @@ def main():
     _IDX = [str(h) for h in J("task_d3_ens5.json")["design"]["index_defined_at"]]
     assert all(h in D["d2_forecast_index"] for h in _IDX), \
         "an index-defined horizon is missing from the n=20 table"
-    _sep = [h for h in _IDX if D["d2_forecast_index"][h]["paired_excludes_zero"]]
-    _ovl = [h for h in _IDX if D["d2_forecast_index"][h]["marginal_ci_overlap"]]
+    # ...and the RELEASED CHECKPOINT's own table follows the reporting grid, which
+    # now carries h=100. These are two different sets and were one key. Keeping
+    # them one would have made "N of 4" sit under a five-row table, or -- worse --
+    # silently widened a discharged pre-registration to a horizon it never named.
+    # Derived from the artifact both times: a horizon is in the released
+    # checkpoint's set exactly when its index correlation exists.
+    _IDX_REL = [h for h in ("1", "8", "32", "100", "128", "368")
+                if D["d2_forecast_index"][h]["r_index"] is not None]
+    assert set(_IDX) <= set(_IDX_REL), \
+        "M-43's index_defined_at is not a subset of the reporting grid"
+    _sep = [h for h in _IDX_REL if D["d2_forecast_index"][h]["paired_excludes_zero"]]
+    _ovl = [h for h in _IDX_REL if D["d2_forecast_index"][h]["marginal_ci_overlap"]]
     put("d2p_n_separating", len(_sep), "results/task_d_nind20.json")
-    put("d2p_n_horizons", len(_IDX), "results/task_d3_ens5.json (index_defined_at)")
-    put("d2p_overlap_h", ", ".join(f"h={x}" for x in _ovl) or "none",
+    put("d2p_n_horizons", len(_IDX_REL), "results/task_d_nind20.json")
+    put("d2p_overlap_h", " and ".join(f"h={x}" for x in _ovl) or "none",
         "results/task_d_nind20.json")
     put("d2p_n_overlap", len(_ovl), "results/task_d_nind20.json")
-    _narrow = min(_IDX,
+    _narrow = min(_IDX_REL,
                   key=lambda h: D["d2_forecast_index"][h]["paired_ci_lo"])
     put("d2p_narrowest_h", _narrow, "results/task_d_nind20.json")
     put("d2p_narrowest_lo", f'{D["d2_forecast_index"][_narrow]["paired_ci_lo"]:+.3f}',
@@ -474,9 +565,14 @@ def main():
     put("d2_epi_ci_h1", f'[{_h1["ci"]["epistemic"]["lo"]:+.3f}, '
                         f'{_h1["ci"]["epistemic"]["hi"]:+.3f}]',
         "results/task_d_nind20.json")
-    _dw = [h for h in _IDX if D["d2_forecast_index"][h]["index_wins"]]
+    _dw = [h for h in _IDX_REL if D["d2_forecast_index"][h]["index_wins"]]
     put("d2b_n_index_wins", len(_dw), "results/task_d_nind20.json")
-    put("d2b_n_horizons_tested", len(_IDX), "results/task_d3_ens5.json (index_defined_at)")
+    put("d2b_n_horizons_tested", len(_IDX_REL), "results/task_d_nind20.json")
+    # The horizon at which the counter is strongest, so 6.7's sentence naming it
+    # cannot go stale the way "at h=128 the intervals overlap" did when a second
+    # overlapping horizon appeared.
+    _idxmax = max(_IDX_REL, key=lambda h: D["d2_forecast_index"][h]["r_index"])
+    put("d2b_idx_strongest_h", f"h={_idxmax}", "results/task_d_nind20.json")
     _all = D["d2_forecast_index"]["all"]
     put("d2b_shrink_all", f'{_all["r_epistemic"] - _all["r_partial"]:+.3f}',
         "results/task_d_nind20.json")
@@ -523,6 +619,23 @@ def main():
     put("d3_worst_dev", f'{100*_w[0]:.2f}', "results/task_d3_perhorizon.json")
     put("d3_second_cov", f'{100*_all_cells[1][2]["coverage_after"]:.2f}',
         "results/task_d3_perhorizon.json")
+    # C3(rev2), 3.1. 6.8 said the two largest deviations were "both at h=100 on the
+    # aleatoric term, in opposite directions". Neither half was true: the second
+    # largest is at h=128, and both sit ABOVE the target. The sentence is now
+    # assembled from the artifact -- horizon, quantity and side -- so the only way
+    # to state it wrongly is for the artifact to be wrong.
+    _sd = _all_cells[1]
+    put("d3_second_h", _sd[2]["h"], "results/task_d3_perhorizon.json")
+    put("d3_second_q", _sd[1], "results/task_d3_perhorizon.json")
+    put("d3_second_dev", f'{100*_sd[0]:.2f}', "results/task_d3_perhorizon.json")
+    _side = lambda c: "above" if c["coverage_after"] > D3["target_coverage"] else "below"
+    put("d3_worst_side", _side(_w[2]), "results/task_d3_perhorizon.json")
+    put("d3_second_side", _side(_sd[2]), "results/task_d3_perhorizon.json")
+    put("d3_top2_same_side",
+        "both above" if _side(_w[2]) == _side(_sd[2]) == "above" else
+        ("both below" if _side(_w[2]) == _side(_sd[2]) == "below" else
+         "in opposite directions"),
+        "results/task_d3_perhorizon.json")
     _tp = D3["design"]["trajectories_per_episode"]
     put("d3_neps", len(_tp), "results/task_d3_perhorizon.json")
     put("d3_nind_fit", min(_tp.values()), "results/task_d3_perhorizon.json")
@@ -566,9 +679,14 @@ def main():
     _t10 = sum(w for i, w in _runs if i == 10000)
     put("rt_runs", len(_runs), "results/step5_*.json")
     put("rt_runs_10k", sum(1 for i, _ in _runs if i == 10000), "results/step5_*.json")
-    put("rt_hours", f"{_t/3600:.0f}", "results/step5_*.json")
-    put("rt_hours_10k", f"{_t10/3600:.0f}", "results/step5_*.json")
-    put("rt_hours_short", f"{(_t-_t10)/3600:.0f}", "results/step5_*.json")
+    # C3(rev2), 3.4. These were rounded to whole hours independently, and appendix
+    # B then read "46 hours ... 20 for the 6 ten-thousand-iteration runs and 27 for
+    # the remaining 20". 20 + 27 = 47. Neither figure was typed and neither was
+    # wrong; the presentation was. One decimal makes the parts sum to the total,
+    # and the `arithmetic` check asserts that they do on every build.
+    put("rt_hours", f"{_t/3600:.1f}", "results/step5_*.json")
+    put("rt_hours_10k", f"{_t10/3600:.1f}", "results/step5_*.json")
+    put("rt_hours_short", f"{(_t-_t10)/3600:.1f}", "results/step5_*.json")
     put("rt_runs_short", sum(1 for i, _ in _runs if i != 10000), "results/step5_*.json")
 
     # Section 8 illustrated the host-dependence of step4_5_timing.json with a
@@ -702,8 +820,13 @@ def main():
             "results/task_b_permutation.json")
         put(f"perm_{_pre}_holm_min_cell", H["steps"][0]["cell"],
             "results/task_b_permutation.json")
+        # C2(rev2), 2.3. This was a typed (1, 8, 32, 128, 368) while the artifact
+        # carried the grid, so when h=100 -- the horizon the abstract is anchored
+        # to -- was added to the measurement, the paper's permutation column would
+        # still have printed "--" for it. Follow the artifact.
+        _PH = sorted((int(k) for k in A["models"][next(iter(_ptag))]))
         for _lab, _tg in _ptag.items():
-            for _h in (1, 8, 32, 128, 368):
+            for _h in _PH:
                 r = A["models"][_lab][str(_h)]
                 put(f"perm_{_pre}_{_tg}_p_h{_h}", f'{r["p_permutation"]:.4f}',
                     "results/task_b_permutation.json")
@@ -739,9 +862,46 @@ def main():
         "results/task_b_permutation.json")
     put("relale_oos_nind", _ra["out-of-sample"]["n_independent"],
         "results/task_b_permutation.json")
+    # C5(rev2), 3.3 / scope-consistency. Section 4 said the eight untested claims
+    # were "without exception" about policy learning or hardware, while appendix E
+    # says of two of them "no simulator needed" and puts both within CPU reach.
+    # Both counts are now derived from the two tables that carry them, so the
+    # quantifier in 4 cannot outrun the enumeration two appendices later.
+    def _table_rows(section_title):
+        """The data rows of the first Markdown table under a section heading."""
+        m = re.search(r"^## " + re.escape(section_title) + r".*$", TPL, re.M)
+        assert m, f"no section titled {section_title!r}"
+        body = TPL[m.end():]
+        nxt = body.find("\n## ")
+        body = body[:nxt] if nxt > 0 else body
+        rows = [ln.strip() for ln in body.split("\n") if ln.strip().startswith("|")]
+        # drop the header and the |---| separator
+        return [r for r in rows[2:] if set(r.replace("|", "").strip()) - set("-: ")]
+
+    _appF = _table_rows("Appendix F")
+    _appE = _table_rows("Appendix E")
+    _f_tested = [r for r in _appF if re.split(r"(?<!\\)\|", r.strip("|"))[1].strip()
+                 .lower().strip("* ") == "yes"]
+    _f_untested = [r for r in _appF if r not in _f_tested]
+    put("appF_n_claims", len(_appF), "PAPER.template.md, Appendix F table")
+    put("n_untested", len(_f_untested), "PAPER.template.md, Appendix F table")
+    put("n_untested_word", WORDS.get(len(_f_untested), str(len(_f_untested))).lower(),
+        "PAPER.template.md, Appendix F table")
+    _e_cpu = [r for r in _appE if "no simulator needed" in r]
+    put("appE_n_cpu", len(_e_cpu), "PAPER.template.md, Appendix E table")
+    put("appE_n_cpu_word", WORDS.get(len(_e_cpu), str(len(_e_cpu))).lower(),
+        "PAPER.template.md, Appendix E table")
+    _n_sim = len(_f_untested) - len(_e_cpu)
+    put("appE_n_sim", _n_sim, "PAPER.template.md, Appendix E + F tables")
+    put("appE_n_sim_word", WORDS.get(_n_sim, str(_n_sim)).lower(),
+        "PAPER.template.md, Appendix E + F tables")
+
     # A6 -- what the originals report for each claim we tested
     OP = J("original_paper_figures.json")
     put("orig_n_tested", OP["n_tested_claims"], "results/original_paper_figures.json")
+    assert len(_f_tested) == OP["n_tested_claims"], (
+        f"Appendix F marks {len(_f_tested)} claims tested; "
+        f"original_paper_figures.json says {OP['n_tested_claims']}")
     put("orig_n_without", OP["n_without"], "results/original_paper_figures.json")
     put("orig_n_with", OP["n_with_quantitative_figure"], "results/original_paper_figures.json")
     _se = OP["sample_efficiency"]["figures"]
@@ -754,6 +914,14 @@ def main():
         "results/original_paper_figures.json")
     put("perm_ngroups", PM["arenas"]["out-of-sample"]["models"]["released EPISTEMIC"]["368"]["n_groups"],
         "results/task_b_permutation.json")
+    # How many horizons the epistemic permutation column of 6.2 actually reports.
+    # 6.2 said "these are five tests on one family" over what is now a six-row
+    # column; a typed count under a generated table is the defect this whole
+    # build exists to prevent.
+    _nperm_h = len(PM["arenas"]["all-episodes"]["models"]["released EPISTEMIC"])
+    put("perm_n_tests_col", _nperm_h, "results/task_b_permutation.json")
+    put("perm_n_tests_col_word", WORDS.get(_nperm_h, str(_nperm_h)).lower(),
+        "results/task_b_permutation.json")
     _r, _ar, _lab, _h, _rec = _big
     # Rendered as a power of ten. "17,592,186,044,416" is not a number a reader
     # parses; "about 10^13" is the claim being made.
@@ -764,8 +932,9 @@ def main():
     put("perm_worst_h", _h, "results/task_b_permutation.json")
     put("perm_worst_arena", _ar, "results/task_b_permutation.json")
     put("perm_worst_null", f'{_rec["null_mean"]:.1f}', "results/task_b_permutation.json")
-    _nulls = [PM["arenas"][a]["models"][l][str(h)]["null_mean"]
-              for a in PM["arenas"] for l in _ptag for h in (1, 8, 32, 128, 368)]
+    _nulls = [PM["arenas"][a]["models"][l][h]["null_mean"]
+              for a in PM["arenas"] for l in _ptag
+              for h in PM["arenas"][a]["models"][l]]
     put("perm_null_lo", f"{min(_nulls):.1f}", "results/task_b_permutation.json")
     put("perm_null_hi", f"{max(_nulls):.1f}", "results/task_b_permutation.json")
 
@@ -826,7 +995,14 @@ def main():
         cs = [f["scalar"] for f in fs]
         put(f"d2_{tag}_c_lo", f"{min(cs):.3g}", "results/task_d2_recalibration.json")
         put(f"d2_{tag}_c_hi", f"{max(cs):.3g}", "results/task_d2_recalibration.json")
-    put("d2_target", f'{100*_d2["target_coverage"]:.1f}', "results/task_d2_recalibration.json")
+    # C3(rev2), 3.9. This printed 68.3 while 3.1 derives and everything else quotes
+    # 68.27, so the paper carried two numeric strings for one constant. The
+    # recalibration artifact stores its own target to fewer places; assert the two
+    # agree and then quote V3's, which is the one 3.1 derives.
+    _nom1 = f'{100 * J("v3_metric_definitions.json")["coverage"]["nominal"]["pm1"]:.2f}'
+    assert abs(100 * _d2["target_coverage"] - float(_nom1)) < 0.05, \
+        "the recalibration target and the derived nominal coverage disagree"
+    put("d2_target", _nom1, "results/v3_metric_definitions.json")
 
     # E2: magnitude collapse is objective-driven, input-independence is arm-driven
     import glob as _g, statistics as _st
@@ -883,6 +1059,20 @@ def main():
     put("d1_A_hi", f'{max(_A["per_seed"].values()):.4f}', "results/task_d1_threeseed.json")
     put("d1_B_lo", f'{min(_B["per_seed"].values()):.4f}', "results/task_d1_threeseed.json")
     put("d1_B_hi", f'{max(_B["per_seed"].values()):.4f}', "results/task_d1_threeseed.json")
+    put("d1_rule_h", _d1["rule_horizon"], "results/task_d1_threeseed.json")
+    # C1(rev2), 2.2. The A/B comparison at the DEPLOYMENT horizon, beside the
+    # pre-registered figure at h=368. M-23 is stated over h=368 and its verdict is
+    # untouched; this is the same measurement at the horizon the rest of the paper
+    # is anchored to, and it is materially smaller. The abstract quoted 4.61x with
+    # no horizon at all, in a revision whose central move was horizon labelling.
+    for _hh, _hk in ((_d1["horizons"][0], "h100"),):
+        _bh = _d1["by_horizon"][str(_hh)]
+        put(f"d1_ratio_{_hk}", f'{_bh["ratio_B_over_A"]:.2f}',
+            "results/task_d1_threeseed.json")
+        put(f"d1_A_mean_{_hk}", f'{_bh["A"]["mean"]:.4f}', "results/task_d1_threeseed.json")
+        put(f"d1_A_sd_{_hk}", f'{_bh["A"]["sd_ddof1"]:.4f}', "results/task_d1_threeseed.json")
+        put(f"d1_B_mean_{_hk}", f'{_bh["B"]["mean"]:.4f}', "results/task_d1_threeseed.json")
+        put(f"d1_B_sd_{_hk}", f'{_bh["B"]["sd_ddof1"]:.4f}', "results/task_d1_threeseed.json")
     _xc = _d1["cross_check"]
     put("d1_xc_runs", len(_xc), "results/task_d1_threeseed.json")
     put("d1_xc_values", f'{sum(r.get("values_compared", 0) for r in _xc):,}',
@@ -970,6 +1160,15 @@ def main():
         "yes" if V1["gate"]["our_arms_match_reference_topology"] else "NO",
         "results/v1_ensemble_topology.json")
     put("v1_n_arms_checked", len(V1["our_arms"]), "results/v1_ensemble_topology.json")
+    # C4(rev2), 4.3 -- the capacity confound in 6.10's contrast, measured from the
+    # checkpoints rather than estimated.
+    _cc = V1["capacity_confound"]
+    put("v1_cap_shared", f'{_cc["shared_trunk_arm_params"]:,}',
+        "results/v1_ensemble_topology.json")
+    put("v1_cap_indep", f'{_cc["independent_ensemble_params"]:,}',
+        "results/v1_ensemble_topology.json")
+    put("v1_cap_ratio", f'{_cc["ratio_independent_over_shared"]:.2f}',
+        "results/v1_ensemble_topology.json")
 
     # --- V2 / X-13: which horizon is the deployment horizon ----------------
     V2 = J("v2_deployment_horizon.json")
@@ -1022,6 +1221,20 @@ def main():
     put("v4_current_date", _fv["current_dated"], "results/original_paper_figures.json")
     put("v4_n_moved", len(_fv["moved"]), "results/original_paper_figures.json")
     put("v4_n_unchanged", len(_fv["unchanged"]), "results/original_paper_figures.json")
+    # C4(rev2), 4.4. The rename was asserted in two places and challenged as
+    # possibly being two model variants. It is a rename: the two names never
+    # co-occur in any version, and only the expansion of the letter changed.
+    _nm = next(m for m in _fv["moved"] if m["what"] == "the model's name")
+    put("v4_name_v1", _nm["v1"], "results/original_paper_figures.json")
+    put("v4_name_v3", _nm["v3"], "results/original_paper_figures.json")
+    put("v4_exp_v1", _nm["v1_expansion"], "results/original_paper_figures.json")
+    put("v4_exp_v3", _nm["v3_expansion"], "results/original_paper_figures.json")
+    put("v4_name_n_v1", _nm["occurrences"]["v1"][_nm["v1"]],
+        "results/original_paper_figures.json")
+    put("v4_name_n_v3", _nm["occurrences"]["v3"][_nm["v3"]],
+        "results/original_paper_figures.json")
+    assert _nm["occurrences"]["v1"][_nm["v3"]] == 0 and _nm["occurrences"]["v3"][_nm["v1"]] == 0, \
+        "the two model names co-occur in a version; the rename claim does not hold"
 
     # --- P1: what the two new rules can detect -----------------------------
     P1 = J("p1_power_check.json")
@@ -1123,7 +1336,9 @@ def main():
         CP = J("compile_paper.json")
         put("pdf_pages", CP["pages"], "results/compile_paper.json")
         put("pdf_overfull", CP["overfull_hboxes"], "results/compile_paper.json")
-        put("pdf_warnings", CP["latex_warnings"], "results/compile_paper.json")
+        # This put the LIST here, so the README read "0 overfull boxes, [] LaTeX
+        # warnings". The sentence wants a count.
+        put("pdf_warnings", len(CP["latex_warnings"]), "results/compile_paper.json")
 
     # --- Figure 4: the pre-registration record -------------------------------
     # Counted from the figure's own data, so the prose cannot describe a bar by a
@@ -1168,7 +1383,8 @@ def main():
         "results/r2_independent_ensemble.json")
     put("r2_cov_hi", f'{max(p["coverage_diff_pts"] for p in _pp):.2f}',
         "results/r2_independent_ensemble.json")
-    for h in (1, 8, 32, 100, 128, 368):
+    _R2H = sorted(int(h) for h in R2["independent"])
+    for h in _R2H:
         i = R2["independent"][str(h)]
         sh = R2["shared_trunk"][str(h)]
         d_ = _dec[str(h)]
@@ -1193,6 +1409,18 @@ def main():
                 "results/r2_independent_ensemble.json")
             put(f"r2_from_acc_h{h}", f'{100 * d_["share_from_accuracy"]:.0f}',
                 "results/r2_independent_ensemble.json")
+    # The RANGE of the sigma gain across horizons. 6.10 wrote it as
+    # "{{r2_sigma_x_h1}}-{{r2_sigma_x_h8}}x at every horizon" -- two named
+    # horizons standing in for a range they do not span: h=368's 1.49 sits below
+    # the stated lower bound. Found by the horizon sweep, which flagged the
+    # sentence for carrying h=1 and h=8 figures while naming h=100 and h=368.
+    _sx = [R2["decomposition"][str(h)]["sigma_ratio_indep_over_shared"] for h in _R2H]
+    put("r2_sigma_x_lo", f"{min(_sx):.2f}", "results/r2_independent_ensemble.json")
+    put("r2_sigma_x_hi", f"{max(_sx):.2f}", "results/r2_independent_ensemble.json")
+    put("r2_sigma_x_lo_h", min(_R2H, key=lambda h: _sx[_R2H.index(h)]),
+        "results/r2_independent_ensemble.json")
+    put("r2_sigma_x_hi_h", max(_R2H, key=lambda h: _sx[_R2H.index(h)]),
+        "results/r2_independent_ensemble.json")
 
     # --- T1: the bibliography ----------------------------------------------
     T1 = J("t1_bibliography_verified.json")

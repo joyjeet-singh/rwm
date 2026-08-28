@@ -1,4 +1,6 @@
 {
+  "cited_files_absent": [],
+  "cited_files_checked": 11,
   "includes_previously_excluded": [
     "MODEL_CARD.md",
     "CITATION.cff",
@@ -6,11 +8,16 @@
     "docs/ARCHIVAL_IDENTIFIERS.md"
   ],
   "n_detection_patterns": 9,
-  "n_files_content_scrubbed": 8,
-  "n_files_staged": 282,
+  "n_files_content_scrubbed": 9,
+  "n_files_staged": 288,
   "n_paths_scrubbed": 0,
   "n_residual_hits": 0,
   "n_substitution_rules": 16,
+  "required_files_present": [
+    "docs/SUPPLEMENTARY_CORRESPONDENCE.md",
+    "FINDINGS_LEDGER.md",
+    "results/original_paper_figures.json"
+  ],
   "residual_hits": [],
   "self_test": {
     "detected": true,

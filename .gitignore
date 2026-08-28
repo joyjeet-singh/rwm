@@ -42,6 +42,8 @@ checkpoint_manifest.json
 
 # scratch backups written by the patch scripts
 *.t2bak
+*.c2bak
+*.rev2bak
 *.t3bak
 *.t4bak
 *.prebak

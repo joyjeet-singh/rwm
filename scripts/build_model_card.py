@@ -37,6 +37,21 @@ CKPTS = [
      "Ensemble size 5, seed 1."),
     ("armA_seed2_ens5/weights_2500.pt", "autoregressive-ens5-seed2", "faithful (mse)",
      "Ensemble size 5, seed 2."),
+    # C6(rev2), 6.2. 6.10 scores seeds 0-4 of Arm A together as a genuinely
+    # independent five-model ensemble, and the two seeds that experiment added
+    # were not released. A reader cannot reproduce the strongest new result in
+    # the paper without them.
+    ("armA_seed3/weights_2500.pt", "autoregressive-ens1-seed3", None,
+     "Arm A at ensemble size 1, seed 3. Trained for the independent-ensemble test: seeds 0-4 "
+     "of this arm are scored together as a five-model ensemble that shares nothing (§6.10). "
+     "Not part of the three-seed headline. **No per-arm σ calibration is quoted below**: "
+     "`task1_calibration.py` measures seed 0 only, and pasting seed 0's figure onto this "
+     "checkpoint is exactly the mis-attribution this card was corrected for elsewhere. What "
+     "was measured on this checkpoint is its contribution to the ensemble above."),
+    ("armA_seed4/weights_2500.pt", "autoregressive-ens1-seed4", None,
+     "Arm A at ensemble size 1, seed 4. The second of the two seeds added for the "
+     "independent-ensemble test, and the same caveat applies: no individually measured σ "
+     "calibration exists for it, only its contribution to the five-model ensemble above."),
 ]
 
 
@@ -53,7 +68,10 @@ def main():
     _e5 = json.load(open(os.path.join(R.RESULTS, "task_d3_ens5.json")))
     E5A = _e5.get("aleatoric_calibration")
     E5E = _e5.get("calibration")
-    NOM1 = f'{100 * json.load(open(os.path.join(R.RESULTS, "v3_metric_definitions.json")))["coverage"]["nominal"]["pm1"]:.1f}'
+    # C3(rev2), 3.9. This rounded to one decimal while the paper derives and
+    # quotes 68.27 everywhere, so the card and the paper disagreed about a
+    # constant. count-consistency now forbids the 68.3 spelling in this file.
+    NOM1 = f'{100 * json.load(open(os.path.join(R.RESULTS, "v3_metric_definitions.json")))["coverage"]["nominal"]["pm1"]:.2f}'
     DEPLOY_H = json.load(open(os.path.join(R.RESULTS, "v2_deployment_horizon.json"))
                          )["verdict"]["deployment_horizon_is"]
     N = json.load(open(os.path.join(R.RESULTS, "paper_numbers.json")))
@@ -163,18 +181,28 @@ def main():
     A("")
     A("## The ensemble-5 checkpoints, and what they are for")
     A("")
-    A("Six of the nine checkpoints here run at **ensemble size 1**, where the epistemic")
-    A("term -- the disagreement across ensemble members -- is *identically zero by")
-    A("construction*. Nothing about ensemble disagreement can be reproduced from them.")
+    _n_ens1 = sum(1 for _, n, _, _ in CKPTS if "ens5" not in n)
+    _n_ens5 = sum(1 for _, n, _, _ in CKPTS if "ens5" in n)
+    _W = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
+          8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen"}
+    A(f"{_W.get(_n_ens1, _n_ens1)} of the {_W.get(len(CKPTS), len(CKPTS)).lower()} checkpoints "
+      "here run at **ensemble size 1**, where the")
+    A("epistemic term -- the disagreement across ensemble members -- is *identically zero by")
+    A("construction*. Nothing about ensemble disagreement can be reproduced from one of them")
+    A("alone; the block above says what to do with five of them.")
     A("")
-    A("The three `autoregressive-ens5-*` checkpoints exist for that reason. On them:")
+    A(f"The {_W.get(_n_ens5, _n_ens5).lower()} `autoregressive-ens5-*` checkpoints carry it "
+      "directly. On them:")
     A("")
     A(f"- ensemble disagreement correlates with realised error in {v('e5_lead_cells')} of")
     A(f"  {v('e5_total_cells')} seed-horizon cells more strongly than the forecast step index does,")
     A("  which is the property our paper argues makes it a usable ranking signal;")
-    A(f"- the epistemic term is **{v('e5_ratio_h368')}x** smaller than the realised error at a")
-    A(f"  368-step horizon, with {v('e5_cov1_h368')}% coverage at +-1 sigma against a calibrated")
-    A("  68.3%. Better than the released reference checkpoint, and still not an interval;")
+    A(f"- the epistemic term is **{v('e5_ratio_h100')}x** smaller than the realised error at")
+    A(f"  h={DEPLOY_H} -- the horizon the method's own imagination rollouts run to -- with")
+    A(f"  {v('e5_cov1_h100')}% coverage at +-1 sigma against a calibrated {NOM1}%, and")
+    A(f"  {v('e5_ratio_h368')}x with {v('e5_cov1_h368')}% at the {v('v2_diag_h')}-step open-loop")
+    A("  diagnostic horizon. Better than the released reference checkpoint, and still not an")
+    A("  interval;")
     A(f"- it is input-dependent, CoV {v('e5_cov_lo')}-{v('e5_cov_hi')} across a batch.")
     A("")
     A("**The pre-registered rule governing this replication returned "
@@ -184,6 +212,34 @@ def main():
     A("separation did not, on the four independent trajectories our held-out arena has. Treat the")
     A("ranking property as supported on these checkpoints and established only on the released")
     A("reference one.")
+    A("")
+    A("## Scoring five of these together: the independent-ensemble result")
+    A("")
+    A("**If you download the ensemble-size-1 autoregressive checkpoints, score them as an")
+    A("ensemble.** The paper's §6.10 takes seeds 0-4 of Arm A -- five separately initialised,")
+    A("separately trained models, sharing no parameters and no recurrent state -- and scores")
+    A("their disagreement the way the method scores its own. That is the contrast the released")
+    A("five-member checkpoint cannot provide, because its five members share one GRU trunk and")
+    A(f"one hidden state: {v('v1_shared_pct')}% of each member's state-pathway parameters are")
+    A("numerically identical to every other member's.")
+    A("")
+    A(f"- **The independent ensemble is {v('m44_ratio_gain')}x better calibrated** than the")
+    A(f"  shared-trunk `autoregressive-ens5-*` arms at h={DEPLOY_H}, against a pre-registered")
+    A(f"  minimum detectable effect of {v('m44_mde_ratio')}x. Coverage is {v('m44_cov_gain')}")
+    A(f"  points higher, against an MDE of {v('m44_mde_cov')} points. The rule (M-44, committed")
+    A(f"  before the runs) returns **{v('m44_verdict')}**.")
+    A(f"- **It is still not an interval.** {v('r2_indep_ratio_h100')}x overconfident at")
+    A(f"  h={DEPLOY_H} with {v('r2_indep_cov1_h100')}% coverage at +-1 sigma, against a")
+    A(f"  calibrated {NOM1}%. Building the ensemble properly is worth doing and is not")
+    A("  sufficient.")
+    A(f"- **What the gain is made of.** sigma larger by {v('r2_sigma_x_h100')}x --")
+    A(f"  {v('r2_from_sigma_h100')}% of the improvement at h={DEPLOY_H} -- and the rest ordinary")
+    A(f"  ensembling accuracy. At the {v('v2_diag_h')}-step diagnostic horizon the split reverses:")
+    A(f"  {v('r2_from_acc_h368')}% of it is the ensemble simply predicting better.")
+    A(f"- **What it does not isolate.** Five independent models differ from five shared heads in")
+    A(f"  initialisation, in data ordering AND in capacity: {v('v1_cap_indep')} state-pathway")
+    A(f"  parameters against {v('v1_cap_shared')}, a factor of {v('v1_cap_ratio')}. The comparison")
+    A("  bounds the trunk-sharing effect rather than isolating it.")
     A("")
     A("## Checkpoints")
     A("")
@@ -236,8 +292,10 @@ def main():
         A("")
     A("## The result these support")
     A("")
-    A("Normalised error at a 368-step horizon on held-out episodes, over three training seeds "
-      "(standard deviation with `ddof=1`):")
+    A(f"Normalised error at a {v('v2_diag_h')}-step horizon on held-out episodes, over three "
+      "training seeds (standard deviation with `ddof=1`). That is the horizon the paper's "
+      f"pre-registered rule names; at h={DEPLOY_H}, the method's own rollout length, the same "
+      f"comparison gives {v('d1_ratio_h100')}\u00d7.")
     A("")
     A("| arm | seed 0 | seed 1 | seed 2 | mean \u00b1 sd |")
     A("|---|---|---|---|---|")
@@ -248,11 +306,12 @@ def main():
     A("")
     A(f"Autoregressive training is better by a factor of "
       f"**{AG['ratio_B_over_A']:.2f}\u00d7**. For reference the hold-last floor \u2014 predicting "
-      f"that nothing changes \u2014 scores 0.9930 in the same cell, so teacher forcing is worse "
+      f"that nothing changes \u2014 scores {v('floor_h368')} in the same cell, so teacher forcing "
+      f"is worse "
       f"than making no prediction at all.")
     A("")
     A("Every 10,000-iteration checkpoint was cross-checked against the 2,500-iteration run at "
-      "the same seed: 90,000 logged values compared, 0 differing.")
+      f"the same seed: {v('d1_xc_values')} logged values compared, {v('d1_xc_diff')} differing.")
     A("")
     A("## What these are")
     A("")
@@ -278,8 +337,9 @@ def main():
     A("")
     A("## Limitations")
     A("")
-    A("- **Ensemble size 1**, against the reference's 5. The epistemic component of the released "
-      "model's uncertainty is not reproduced; the σ discussed above is aleatoric.")
+    A("- **Most of these run at ensemble size 1**, against the reference's 5. On those the "
+      "epistemic term is identically zero and the σ discussed above is aleatoric. The "
+      "`ens5` arms and the five-seed independent ensemble cover the epistemic term.")
     A("- **One gait, one terrain, one command distribution.** Generalisation here means across "
       "velocity commands only.")
     A(f"- **Long-horizon claims rest on {v('m23_nind')} independent 400-step trajectories** in the "

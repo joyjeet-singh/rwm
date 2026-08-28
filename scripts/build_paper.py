@@ -43,6 +43,52 @@ def main():
     leftover = [x for x in re.findall(r"\{\{[^}]*\}\}", out) if x != "{{FIGURES}}"]
     assert not leftover, f"unresolved placeholders remain: {sorted(set(leftover))}"
 
+    # C3(rev2), 3.2 -- the gate widened past {{...}} syntax.
+    #
+    # §9 claims zero unresolved placeholders and the claim was true, yet a whole
+    # sentence of §6.7 reached the PDF as a one-column table: "|r_dd| >= 0.183"
+    # wrapped onto its own line, the converter read a leading pipe as a table
+    # row, and the prose vanished into a booktabs box. Every placeholder had
+    # resolved. The gate could not see it because it only ever looked at brace
+    # syntax.
+    #
+    # Three further failure shapes, each of which reached a PDF at some point in
+    # this project or would have:
+    #   1. a stray table row -- a pipe-led line with no separator row under it;
+    #   2. a placeholder written with one brace, {key}, which substitutes to
+    #      nothing and reads as prose;
+    #   3. an empty or literal-None value reaching the text.
+    lines = out.split("\n")
+    stray = []
+    in_code = False
+    for n, ln in enumerate(lines):
+        if ln.strip().startswith("```"):
+            in_code = not in_code
+        if in_code or not ln.startswith("|"):
+            continue
+        # a row belongs to a table if it or an earlier contiguous pipe-line is
+        # followed by the |---| separator
+        j = n
+        while j > 0 and lines[j - 1].startswith("|"):
+            j -= 1
+        sep = (j + 1 < len(lines) and lines[j + 1].startswith("|")
+               and set(lines[j + 1].replace("|", "").strip()) <= set("-: "))
+        if not sep:
+            stray.append(f"line {n + 1}: {ln[:80]}")
+    assert not stray, ("pipe-led lines that are not table rows -- these render as "
+                       "one-column tables and swallow the sentence:\n  "
+                       + "\n  ".join(stray[:5]))
+
+    # Only a single-braced token that IS a known key is a mis-typed placeholder;
+    # \mathrm{Var} and \mathrm{erf} are not, and matching brace shape alone
+    # flags every one of them.
+    single = [k for k in re.findall(r"(?<!\{)\{([A-Za-z][A-Za-z0-9_]{2,})\}(?!\})", out)
+              if k in N]
+    assert not single, f"single-brace placeholders that substituted nothing: {sorted(set(single))[:5]}"
+
+    empties = sorted(k for k in used if str(N[k]["value"]).strip() in ("", "None", "nan", "[]"))
+    assert not empties, f"placeholders that resolved to an empty or null value: {empties}"
+
     unused = sorted(set(N) - used)
 
     # Typed-number check. The paper claims no number in it is typed by hand, and a
@@ -71,13 +117,17 @@ def main():
     # Captions. The body makes numbered references ("Figure 1", "Figure 3b"), so
     # the figures must actually carry numbers; without \caption LaTeX assigns
     # none and every one of those references dangles.
+    # C3(rev2), 3.9. The caption had 68.3 typed into it while 3.1 derives 68.27,
+    # so the figure's own caption disagreed with the section that defines the
+    # constant. It comes from the same key the prose uses.
+    NOMINAL1 = str(N["v3_cov_nominal1"]["value"])
     CAPS = {
         "paper_fig1_calibration.png":
             "Calibration of all four models on the held-out arena. "
             "(a) reliability: observed against predicted coverage, with the calibrated diagonal. "
             "(b) coverage at $\\pm1\\sigma$ against forecast horizon, log scale, against the "
-            "68.3\\% a calibrated Gaussian gives. Every curve sits far below the diagonal and "
-            "falls further with horizon.",
+            + NOMINAL1 + "\\% a calibrated Gaussian gives. Every curve sits far below the "
+            "diagonal and falls further with horizon.",
         "paper_fig2_sigma_profile.png":
             "Why the coverage collapse is a horizon effect. Both panels are normalised to "
             "forecast step 1. (a) predicted $\\sigma$ barely moves, and for the faithful arm it "

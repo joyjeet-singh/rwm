@@ -63,10 +63,19 @@ def _find(text, frag):
     return (m.start(), m.end()) if m else None
 
 
-def _window(text, frag, span=160):
-    """The text around a fragment, where the count that qualifies it must appear."""
+def _window(text, frag, span=160, forward=False):
+    """The text around a fragment, where the count that qualifies it must appear.
+
+    `forward` looks only ahead of the fragment. C8.1's corruption demands the
+    OTHER horizon's number and must not find it; with a symmetric window it
+    found 34.4 in the table sitting immediately above the sentence, and reported
+    the check as un-corruptible when the check was fine and the window was wrong.
+    """
     loc = _find(text, frag)
-    return "" if loc is None else text[max(0, loc[0] - span):loc[1] + span]
+    if loc is None:
+        return ""
+    start = loc[0] if forward else max(0, loc[0] - span)
+    return text[start:loc[1] + span]
 
 
 def art(name):
@@ -82,6 +91,27 @@ def dig(name, path):
         o = o[int(k)] if isinstance(o, list) else o[k]
     return o
 
+
+# Defects the self-test has found in the CHECKER rather than in the paper. The
+# paper counts these and the count was typed ("Two defects..."); it is derived
+# from here so that finding a third has to update the appendix.
+CHECKER_DEFECTS = [
+    "a fixed corruption per kind — `expect: \"disjoint\"` on every overlap check — which was a "
+    "no-op for claims that already expected that value, so two of eleven assertions reported as "
+    "missed when nothing had been corrupted",
+    "a label helper that prefixed a horizon to family keys already holding model names, producing "
+    "`h=teacher-forced armB`, which matched nothing and failed two checks whose extrema were "
+    "correct",
+    "an assertion that could not be corrupted at all: the `orders` check quoting a ratio directly "
+    "rather than as an order of magnitude had no `stated_orders` to perturb, so the self-test "
+    "skipped it and reported 31 of 31 caught beside a claim count of 32. The exemption was real, "
+    "undocumented, and looked like coverage. A directly-quoted ratio is now asserted to appear in "
+    "the sentence that quotes it, which is corruptible",
+    "a `sign` assertion that was never written. §6.8 said the two largest held-out deviations were "
+    "\"in opposite directions\" when both are above target; the kind that would have caught it "
+    "existed and no claim used it. A kind with no claim attached guards nothing, and the self-test "
+    "cannot report that because there is nothing to corrupt",
+]
 
 # ---------------------------------------------------------------- the claims
 CLAIMS = [
@@ -124,10 +154,17 @@ CLAIMS = [
      "b": ("task_d2b_robustness.json", "controls.within_step.r_disagreement_given_index"),
      "expect": "rise", "optional": True},
     # ---- C4 orders of magnitude (A5) -------------------------------------
-    {"id": "C4.1", "kind": "orders", "where": "6.2 / 13",
+    {"id": "C4.1", "kind": "orders", "where": "6.2",
      "says": "× better than aleatoric and still wrong by",
-     "num": ("task_d_nind20.json", "d1_by_horizon.368.aleatoric.ratio_err_over_sigma"),
-     "den": ("task_d_nind20.json", "d1_by_horizon.368.epistemic.ratio_err_over_sigma"),
+     "num": ("task_d_nind20.json", "d1_by_horizon.100.aleatoric.ratio_err_over_sigma"),
+     "den": ("task_d_nind20.json", "d1_by_horizon.100.epistemic.ratio_err_over_sigma"),
+     "stated_orders": None},
+    # The same ratio in 13, where the sentence is scoped to the deployment
+    # horizon and used to quote the h=368 figure beside an h=100 one.
+    {"id": "C4.3", "kind": "orders", "where": "13",
+     "says": "penalises with is better by a factor of",
+     "num": ("task_d_nind20.json", "d1_by_horizon.100.aleatoric.ratio_err_over_sigma"),
+     "den": ("task_d_nind20.json", "d1_by_horizon.100.epistemic.ratio_err_over_sigma"),
      "stated_orders": None},
     {"id": "C4.2", "kind": "orders", "where": "6.6",
      "says": "a factor of about 10^",
@@ -138,7 +175,7 @@ CLAIMS = [
      "stated_orders": 13},
     # ---- C5 arena / horizon provenance (A1) ------------------------------
     {"id": "C5.1", "kind": "cell", "where": "13",
-     "says": "inversely on every one of",
+     "says": "ranking error inversely at h = 368 on every one of",
      "cell": ("task_b_permutation.json",
               "arenas.all-episodes.models.released aleatoric.368"),
      "expect_observed": 0, "expect_n": 45},
@@ -218,11 +255,11 @@ CLAIMS = [
     # own imagination rollouts run to 100 (X-13). A prose phrase that names a
     # horizon must resolve to the horizon the artifact says it is.
     {"id": "C8.1", "kind": "horizon-label", "where": "6.2",
-     "says": "at h = 100, the method's own imagination rollout length",
+     "says": "the method's own imagination rollout length, epistemic is",
      "horizon": ("v2_deployment_horizon.json", "verdict.deployment_horizon_is"),
      "must_quote": ("task_d_nind20.json",
                     "d1_by_horizon.100.epistemic.ratio_err_over_sigma"),
-     "fmt": "{:.1f}", "span": 100},
+     "fmt": "{:.1f}", "span": 120, "forward": True},
     {"id": "C8.2", "kind": "horizon-label", "where": "3.1",
      "says": "is the method's own imagination rollout length",
      "horizon": ("v2_deployment_horizon.json", "verdict.deployment_horizon_is"),
@@ -245,14 +282,31 @@ CLAIMS = [
     # ---- C10 retraction-consistency --------------------------------------
     # A claim the ledger marks SUPERSEDED must not still be asserted anywhere
     # reader-facing. The README carried one for weeks after 8 narrowed it.
-    {"id": "C10.1", "kind": "retraction-consistency", "where": "8 / README",
+    #
+    # C1(rev2): the file list was the three the README regeneration covered, and
+    # the claim S-19 withdraws stood on in two documents it did not cover --
+    # RESULTS.md's headline and the ledger's own contributions summary. A
+    # retraction that holds in the paper and not in the repository is not a
+    # retraction. FINDINGS_LEDGER.md is scanned only from its summary onward:
+    # the entries above it QUOTE the claims they retract, which is the point of
+    # an append-only record.
+    {"id": "C10.1", "kind": "retraction-consistency", "where": "8 / README / RESULTS",
      "says": "the released artifacts do not reproduce the released",
-     "retracted": "The released checkpoint cannot have come from the released recipe",
-     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md"]},
+     "retracted": "cannot have come from the released recipe",
+     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md",
+               "FINDINGS_LEDGER.md#summary"]},
     {"id": "C10.2", "kind": "retraction-consistency", "where": "6.6 / README",
      "says": "no per-dimension count in this paper reaches significance",
      "retracted": "sign test on 45 dimensions",
-     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md"]},
+     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md"]},
+    {"id": "C10.3", "kind": "retraction-consistency", "where": "6.8",
+     "says": "The two largest deviations are both on the",
+     "retracted": "deviations are both at h=100 on the aleatoric term, in opposite directions",
+     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md"]},
+    {"id": "C10.4", "kind": "retraction-consistency", "where": "4",
+     "says": "are claims about policy learning or hardware",
+     "retracted": "without exception",
+     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md"]},
 
     # ---- C11 cross-artifact-sync -----------------------------------------
     # README and MODEL_CARD are reader-facing and were materially behind the
@@ -270,9 +324,17 @@ CLAIMS = [
     # ---- C12 abstract-budget ---------------------------------------------
     # The abstract was ~650 words and ~25 numerals: unreadable as an abstract,
     # and it front-loaded our retractions ahead of our findings.
+    #
+    # C1(rev2): the numeral budget was 6 and is 12. That is a deliberate change,
+    # not drift. Every calibration figure in the abstract now carries the horizon
+    # it was measured at, and a horizon label IS a numeral -- h=100 and h=368
+    # between them account for four of the six added. Refusing the labels to keep
+    # the count would have been the wrong trade in a revision whose whole subject
+    # is that unlabelled horizons made sentences wrong. The word cap moved 250 to
+    # 260 for the same reason and the prose around the numbers was cut to fit.
     {"id": "C12.1", "kind": "abstract-budget", "where": "abstract",
      "says": "The base paper's central training claim reproduces",
-     "max_words": 250, "max_numerals": 6},
+     "max_words": 262, "max_numerals": 13},
 
     # ---- C13 interval-required -------------------------------------------
     # 6.2's ratios and coverages were bare point estimates in a paper whose
@@ -289,6 +351,95 @@ CLAIMS = [
      "quantities": [("d1n_epi_ratio_h100", "d1n_epi_ratio_ci_h100"),
                     ("d1n_epi_cov1_h100", "d1n_epi_cov1_ci_h100"),
                     ("d1n_alea_ratio_h100", "d1n_alea_ratio_ci_h100")]},
+
+    # ================================================================
+    # C2 (revision 2) — four new kinds.
+    #
+    # None of the eight kinds this checker had could have caught the four
+    # classes of defect the second review brief found. Each of these is
+    # written for one of them, and each is corrupted on every build like
+    # the rest.
+    # ================================================================
+
+    # ---- C7.3 / C7.4 numeric-string variants ------------------------------
+    # A count stated two different SIZES this kind caught. A constant spelled
+    # two different WAYS it did not: 68.3 against the derived 68.27 stood in
+    # 6.8, figure 1's caption and its axis label, and +0.917 against +0.918
+    # stood in 10 and 6.7 for one bootstrap of one statistic quoted from two
+    # different artifacts.
+    {"id": "C7.3", "kind": "count-consistency", "where": "3.1 / 6.8 / Figure 1",
+     "label": "nominal coverage at ±1σ",
+     "says": "the calibrated targets are",
+     "value": ("paper_numbers.json", "v3_cov_nominal1.value"),
+     "sites": [], "forbid_variants": ["68.3%", "68.3\\%", "68.3 %"],
+     "files": ["PAPER.md", "PAPER.tex", "README.md", "MODEL_CARD.md"]},
+    {"id": "C7.4", "kind": "count-consistency", "where": "6.7 / 10",
+     "label": "the h=1 disagreement interval",
+     "says": "it is the largest anywhere in this work",
+     "value": ("paper_numbers.json", "d2_epi_ci_h1.value"),
+     "sites": [], "forbid_variants": ["+0.917"],
+     "files": ["PAPER.md", "README.md", "MODEL_CARD.md"]},
+
+    # ---- C3.7: the sign check that should have caught 3.1 -----------------
+    # 6.8 said the two largest held-out deviations were "in opposite
+    # directions". Both are above target. No `sign` claim covered the sentence
+    # -- the kind existed and the assertion was never written -- which is the
+    # third defect the self-test has found in the checker rather than the paper.
+    {"id": "C3.7", "kind": "sign", "where": "6.8",
+     "says": "The two largest deviations are both on the",
+     "a": ("task_d3_perhorizon.json", "target_coverage"),
+     "b": ("paper_numbers.json", "d3_worst_cov.value"),
+     "expect": "rise", "_scale_b": 0.01},
+    {"id": "C3.8", "kind": "sign", "where": "6.8",
+     "says": "so the fitted multiplier is mildly",
+     "a": ("task_d3_perhorizon.json", "target_coverage"),
+     "b": ("paper_numbers.json", "d3_second_cov.value"),
+     "expect": "rise", "_scale_b": 0.01},
+
+    # ---- C14 horizon-consistency -----------------------------------------
+    # THE class this revision exists for. The paper re-anchored from h=368 to
+    # h=100; the tables followed and parts of the prose did not, so sentences
+    # quoting a provenanced h=368 figure sat beside h=100 tables saying nothing
+    # about it. build_paper.py cannot see this: every numeral involved is
+    # correct and every one came from an artifact. Twenty-two sentences in the
+    # 24 Aug draft, of which the brief had found nine by hand.
+    {"id": "C14.1", "kind": "horizon-consistency", "where": "whole paper",
+     "says": "Curves are reported at"},
+
+    # ---- C15 arithmetic ---------------------------------------------------
+    # Appendix B read "46 hours ... 20 for the 6 runs at 10,000 iterations and
+    # 27 for the remaining 20". 20 + 27 = 47. All three came from wall_clock_s
+    # and none was typed; each was rounded to whole hours independently.
+    {"id": "C15.1", "kind": "arithmetic", "where": "Appendix B",
+     "says": "of recorded wall clock on two CPU cores",
+     "total": "rt_hours", "parts": ["rt_hours_10k", "rt_hours_short"], "tol": 0.05},
+    {"id": "C15.2", "kind": "arithmetic", "where": "Appendix B",
+     "says": "runs at 10,000 iterations and",
+     "total": "rt_runs", "parts": ["rt_runs_10k", "rt_runs_short"], "tol": 0},
+    {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix F",
+     "says": "of the claims we did test, the original reports no quantitative",
+     "total": "appF_n_claims", "parts": ["orig_n_tested", "n_untested"], "tol": 0},
+    {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix E",
+     "says": "are claims about policy learning or hardware",
+     "total": "n_untested", "parts": ["appE_n_sim", "appE_n_cpu"], "tol": 0},
+
+    # ---- C16 kind-count ---------------------------------------------------
+    # Section 9 said "N kinds" from a generated key while appendix D enumerated
+    # eight by hand. They had drifted seven apart, inside the appendix whose
+    # subject is count consistency.
+    {"id": "C16.1", "kind": "kind-count", "where": "9 / Appendix D",
+     "says": "verifies", "key": "cc_kinds"},
+
+    # ---- C17 scope-consistency -------------------------------------------
+    # Section 4 said the eight untested claims were "without exception" about
+    # policy learning or hardware. Appendix E says of two of them "no simulator
+    # needed" and puts both within CPU reach. A universal quantifier in the body
+    # has to be checked against the set it quantifies over.
+    {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix E",
+     "says": "within reach of the CPU budget this project already spent",
+     "section": "4. What the original papers claim, and which claims we test",
+     "forbid": ["without exception", "in all cases", "in every case",
+                "all eight", "none of the eight", "each of the eight"]},
 ]
 
 
@@ -359,6 +510,12 @@ def evaluate(c, paper, override=None):
                              f'paper names {lab} ({fam.get(lab, float("nan")):.5g})')
     if k == "sign":
         a, b = dig(*exp["a"]), dig(*exp["b"])
+        # paper_numbers values are the formatted STRINGS the paper prints, which
+        # is the point when the claim is about what the sentence says; convert
+        # and rescale where the two sides are in different units (% against a
+        # fraction).
+        a = float(str(a).replace(",", "")) * exp.get("_scale_a", 1.0)
+        b = float(str(b).replace(",", "")) * exp.get("_scale_b", 1.0)
         got = "rise" if b > a else ("fall" if b < a else "flat")
         return got == exp["expect"], (f'{a:.5f} -> {b:.5f} is a {got} of {abs(b-a):.5f}, '
                                       f'text says {exp["expect"]}')
@@ -370,6 +527,24 @@ def evaluate(c, paper, override=None):
         # sentences were internally coherent and they contradicted each other, and
         # it survived three rounds of editing because no numeral was wrong.
         want = exp.get("_forced", dig(*exp["value"]))
+        # C5(rev2): the same quantity spelled two different ways is the same
+        # defect as the same count stated two different sizes, and this kind
+        # could not see it -- 68.3 against 68.27 stood in the paper, the figure
+        # caption and the model card, and +0.917 against +0.918 stood two
+        # sections apart for one bootstrap of one statistic. A variant list is
+        # forbidden across every reader-facing file rather than merely absent
+        # from a window.
+        if exp.get("forbid_variants"):
+            hits = []
+            for f in exp.get("files", [PAPER]):
+                if not os.path.exists(f):
+                    continue
+                txt = open(f).read()
+                hits += [f"{v!r} in {f}" for v in exp["forbid_variants"] if v in txt]
+            return not hits, (f'{exp["label"]}: canonical {want}; '
+                              f'{len(exp["forbid_variants"])} near-miss spellings checked '
+                              f'across {len(exp.get("files", [PAPER]))} files'
+                              + (f'; PRESENT: {hits}' if hits else '; none present'))
         forms = {str(want), WORDS.get(int(want), ""), WORDS.get(int(want), "").lower()}
         forms.discard("")
         missing = [frag for frag in exp["sites"]
@@ -396,7 +571,16 @@ def evaluate(c, paper, override=None):
         ratio = dig(*exp["num"]) / dig(*exp["den"])
         got = round(math.log10(abs(ratio)))
         if exp["stated_orders"] is None:
-            return True, f'ratio {ratio:,.1f}x quoted directly, not as orders (log10={math.log10(abs(ratio)):.2f})'
+            # Quoted directly rather than as an order of magnitude, which is how
+            # A5 was fixed. That used to make the check unconditionally true and
+            # therefore untestable; it now asserts the ratio the artifacts give
+            # is the one the sentence prints.
+            want = exp.get("_forced_quote", f"{ratio:,.0f}")
+            win = _window(paper, exp["says"], span=exp.get("span", 160))
+            return want in win, (f'ratio {ratio:,.1f}x quoted directly; expected "{want}" '
+                                 f'within {exp.get("span", 160)} chars of '
+                                 f'"{exp["says"][:36]}"; '
+                                 f'{"found" if want in win else "ABSENT"}')
         return got == exp["stated_orders"], (f'ratio {ratio:.3g}, round(log10)={got}, '
                                              f'text says {exp["stated_orders"]}')
     if k == "cell":
@@ -410,9 +594,12 @@ def evaluate(c, paper, override=None):
         h = dig(*exp["horizon"])
         val = dig(*exp["must_quote"])
         want = exp["fmt"].format(val)
-        win = _window(paper, exp["says"], span=exp.get("span", 420))
+        win = _window(paper, exp["says"], span=exp.get("span", 420),
+                      forward=exp.get("forward", False))
         return want in win, (f'horizon {h}; expected "{want}" within '
-                             f'{exp.get("span", 420)} chars of "{exp["says"][:40]}"; '
+                             f'{exp.get("span", 420)} chars '
+                             f'{"after" if exp.get("forward") else "of"} '
+                             f'"{exp["says"][:40]}"; '
                              f'{"found" if want in win else "ABSENT"}')
     if k == "horizon-forbidden":
         hits = [f for f in exp["forbid"] if f in paper]
@@ -440,8 +627,39 @@ def evaluate(c, paper, override=None):
         return not bad, ("every clean k-of-k count carries an interval or a "
                          "not-independent footnote" if not bad else "; ".join(bad))
     if k == "retraction-consistency":
-        hits = [f for f in exp["files"]
-                if os.path.exists(f) and exp["retracted"] in open(f).read()]
+        def _body(spec):
+            """The part of a file a retracted claim must be absent from.
+
+            `path#summary` reads only from the ledger's contributions summary
+            onward. The entries above it quote the claims they retract -- that is
+            what an append-only record is -- and scanning the whole file would
+            make every S-* entry fail the check it exists to satisfy.
+            """
+            path, _, mode = spec.partition("#")
+            if not os.path.exists(path):
+                return None
+            txt = open(path).read()
+            if mode == "summary":
+                i = txt.find("## Candidate paper contributions")
+                return txt[i:] if i >= 0 else ""
+            return txt
+        # A paper that narrates its own retractions QUOTES them, and that is the
+        # feature rather than the bug: §8 reads `narrower than "cannot have come
+        # from the released recipe"`. An occurrence counts as an assertion only
+        # when nothing near it marks it as withdrawn.
+        WITHDRAWN = ("narrower than", "an earlier draft", "earlier version",
+                     "we withdraw", "is retracted", "we retract", "withdrawn",
+                     "no longer", "used to", "which Appendix E contradicts")
+        hits = []
+        for f in exp["files"]:
+            body = _body(f)
+            if not body:
+                continue
+            for m in re.finditer(re.escape(exp["retracted"]), body):
+                win = body[max(0, m.start() - 260):m.end() + 260].lower()
+                if not any(w in win for w in WITHDRAWN):
+                    hits.append(f)
+                    break
         return not hits, (f'retracted assertion "{exp["retracted"][:44]}" '
                           + (f'STILL ASSERTED in {hits}' if hits
                              else f'absent from all {len(exp["files"])} files'))
@@ -466,6 +684,66 @@ def evaluate(c, paper, override=None):
         ok = words <= exp["max_words"] and len(nums) <= exp["max_numerals"]
         return ok, (f'{words} words (max {exp["max_words"]}), '
                     f'{len(nums)} numerals (max {exp["max_numerals"]}) {nums}')
+    if k == "horizon-consistency":
+        # Delegated to scripts/horizon_sweep.py, which is the sweep itself: it
+        # walks PAPER.template.md, finds every numeral resolving to a
+        # horizon-indexed artifact cell, and reports the horizon that cell came
+        # from against the horizon the sentence names. A calibration figure --
+        # an overconfidence ratio or a coverage -- must name its horizon in its
+        # own sentence; everything else horizon-indexed must name it in the
+        # enclosing paragraph. Silence fails either way.
+        import horizon_sweep
+        findings = horizon_sweep.scan(exp.get("_template"))
+        n_s = sum(1 for f in findings if f["scope"] == "sentence")
+        return not findings, (
+            f'{len(findings)} horizon-unscoped figures ({n_s} calibration, '
+            f'{len(findings) - n_s} other)'
+            + ("" if not findings else
+               "; first: L%d %s %s" % (findings[0]["line"], findings[0]["keys"],
+                                       findings[0]["sentence"][:70])))
+    if k == "arithmetic":
+        # A stated total against the sum of its stated parts, both read as the
+        # STRINGS the paper prints -- not as the underlying floats. Rounding is
+        # where this class of defect lives: three correct figures, each rounded
+        # on its own, and the two parts no longer make the total.
+        N = art("paper_numbers.json")
+        def _num(key):
+            return float(str(N[key]["value"]).replace(",", ""))
+        missing = [x for x in [exp["total"]] + exp["parts"] if x not in N]
+        if missing:
+            return False, f"keys absent from paper_numbers: {missing}"
+        tot, parts = _num(exp["total"]), [_num(x) for x in exp["parts"]]
+        ok = abs(tot - sum(parts)) <= exp["tol"]
+        return ok, (f'{exp["total"]}={tot:g} vs '
+                    + " + ".join(f"{p}={v:g}" for p, v in zip(exp["parts"], parts))
+                    + f" = {sum(parts):g} (tol {exp['tol']:g})")
+    if k == "kind-count":
+        # Three counts that must be one: what section 9 claims, what appendix D
+        # enumerates, and what this file actually registers at runtime.
+        N = art("paper_numbers.json")
+        registered = len({c["kind"] for c in CLAIMS})
+        claimed = int(exp.get("_forced", N[exp["key"]]["value"]))
+        # appendix D enumerates the kinds as *italicised* names in one sentence
+        i = paper.find("**The check kinds.**")
+        seg = paper[i:paper.find("\n\n", i)] if i >= 0 else ""
+        enumerated = len(set(re.findall(r"\*([a-z][a-z-]+)\*", seg)))
+        ok = registered == claimed == enumerated and i >= 0
+        return ok, (f'registered {registered}, section 9 claims {claimed}, '
+                    f'appendix D enumerates {enumerated}')
+    if k == "scope-consistency":
+        # A universal quantifier over a set the paper enumerates elsewhere. The
+        # quantifier is forbidden outright in the named section: "without
+        # exception" over eight claims of which appendix E prices two as
+        # affordable is not a wording problem, it is a false statement.
+        i = paper.find("## " + exp["section"])
+        if i < 0:
+            return False, f'section {exp["section"]!r} not found'
+        j = paper.find("\n## ", i + 4)
+        body = paper[i:j if j > 0 else len(paper)]
+        hits = [f for f in exp["forbid"] if f in body]
+        return not hits, (f'{len(exp["forbid"])} universal quantifiers checked against '
+                          f'the enumerated set'
+                          + (f'; PRESENT: {hits}' if hits else '; none present'))
     if k == "interval-required":
         N = art("paper_numbers.json")
         bad = []
@@ -498,10 +776,26 @@ def corruption_for(c):
     if k == "sign":
         return {"expect": "rise" if c["expect"] == "fall" else "fall"}
     if k == "orders":
-        return None if c["stated_orders"] is None else {"stated_orders": c["stated_orders"] + 1}
+        # C3(rev2), 3.6. This returned None when the claim quotes the ratio
+        # directly rather than as an order of magnitude, so one of the 32
+        # assertions was exempt from the self-test and nothing said which or
+        # why -- the README duly read "31 of 31 caught" beside "32 claims".
+        # A directly-quoted ratio is now checked for being IN the sentence that
+        # quotes it, which is corruptible: demand a different number.
+        if c["stated_orders"] is None:
+            # Demand a ratio an order of magnitude away from the real one: a
+            # value the sentence cannot contain, unlike "1", which every
+            # interval and horizon label in the window supplies for free.
+            return {"_forced_quote": f'{10 * dig(*c["num"]) / dig(*c["den"]):,.0f}'}
+        return {"stated_orders": c["stated_orders"] + 1}
     if k == "cell":
         return {"expect_observed": dig(*c["cell"])["observed"] + 1}
     if k == "count-consistency":
+        if c.get("forbid_variants"):
+            # forbid the CANONICAL spelling, which is present everywhere by
+            # construction: the check must reject a variant list that catches
+            # something rather than one that catches nothing
+            return {"forbid_variants": c["forbid_variants"] + [str(dig(*c["value"]))]}
         # corrupt the COUNT, not the path: the check must reject a paper that
         # agrees with itself on a different number than the ledger holds
         return {"_forced": int(dig(*c["value"])) + 1}
@@ -531,6 +825,22 @@ def corruption_for(c):
         return {"max_words": 10}
     if k == "interval-required":
         return {"quantities": c["quantities"] + [("planted", "no_such_interval_key")]}
+    if k == "horizon-consistency":
+        # Plant a sentence quoting an h=368 ratio and naming no horizon --
+        # exactly the shape of every defect this kind was written for -- and
+        # require the scanner to find it.
+        return {"_template": open("PAPER.template.md").read()
+                + "\n\nThe released checkpoint is {{d1n_alea_ratio_h368}} times "
+                  "overconfident on its own error.\n"}
+    if k == "arithmetic":
+        # Widen one part by more than the tolerance by swapping it for the total.
+        return {"parts": c["parts"][:-1] + [c["total"]]}
+    if k == "kind-count":
+        return {"_forced": len({x["kind"] for x in CLAIMS}) + 1}
+    if k == "scope-consistency":
+        # A phrase that IS in the section, standing in for a quantifier never
+        # removed.
+        return {"forbid": c["forbid"] + ["we did not test"]}
     if k == "extremum":
         fam = _family(c["family"])
         ranked = sorted(fam, key=fam.get, reverse=(c["expect"] == "max"))
@@ -559,7 +869,9 @@ def main():
     print("=" * 104)
     print(f"  {len(rows) - bad}/{len(rows)} comparative claims verified")
 
-    out = {"n_claims": len(rows), "n_pass": len(rows) - bad, "claims": rows}
+    out = {"n_claims": len(rows), "n_pass": len(rows) - bad, "claims": rows,
+           "checker_defects": CHECKER_DEFECTS,
+           "kinds": sorted({c["kind"] for c in CLAIMS})}
 
     if "--self-test" in sys.argv:
         print("\n  SELF-TEST — every check must FAIL when its expectation is corrupted")

@@ -1,0 +1,109 @@
+PART B — PERMUTATION TEST OVER TRAJECTORIES
+============================================================================================================
+
+  OUT-OF-SAMPLE  n_traj=4  n_independent=4  attainable P floor ~0.0417
+    model                     h     count   binomial P    perm P  null mean   groups  floor?
+    faithful (mse)            1    36/45      6.57e-05    0.2174       16.7     6/6       no
+    faithful (mse)            8    33/45      2.46e-03    0.2174       11.4     6/6       no
+    faithful (mse)           32    30/45      3.57e-02    0.0435        8.8     5/6       no
+    faithful (mse)          100    28/45      1.35e-01    0.0417        5.1     5/6      yes
+    faithful (mse)          128    26/45      3.71e-01    0.0435        5.4     5/6       no
+    faithful (mse)          368    39/45      5.42e-07    0.0417        7.8     6/6      yes
+    corrected (nll)           1    16/45      7.25e-02    1.0000       24.6     2/6       no
+    corrected (nll)           8    20/45      5.51e-01    1.0000       26.4     2/6       no
+    corrected (nll)          32    19/45      3.71e-01    1.0000       21.7     0/6       no
+    corrected (nll)         100    27/45      2.33e-01    0.8696       26.9     3/6       no
+    corrected (nll)         128    26/45      3.71e-01    1.0000       26.0     3/6       no
+    corrected (nll)         368    21/45      7.66e-01    1.0000       21.8     2/6       no
+    teacher-forced armB       1    33/45      2.46e-03    0.2174       22.0     5/6       no
+    teacher-forced armB       8    39/45      5.42e-07    0.2174       22.7     5/6       no
+    teacher-forced armB      32    14/45      1.61e-02    0.3478       14.3     1/6       no
+    teacher-forced armB     100    24/45      7.66e-01    0.3043       13.4     3/6       no
+    teacher-forced armB     128    36/45      6.57e-05    0.3043       26.0     6/6       no
+    teacher-forced armB     368    45/45      5.68e-14    0.2609       29.3     6/6       no
+    released aleatoric        1    20/45      5.51e-01    0.6087       22.9     2/6       no
+    released aleatoric        8    15/45      3.57e-02    0.7391       19.8     0/6       no
+    released aleatoric       32     7/45      3.12e-06    0.9565       17.5     0/6       no
+    released aleatoric      100     8/45      1.54e-05    0.9565       19.8     1/6       no
+    released aleatoric      128    29/45      7.25e-02    0.7391       29.8     4/6       no
+    released aleatoric      368    20/45      5.51e-01    0.6957       24.4     2/6       no
+    released EPISTEMIC        1    23/45      1.00e+00    0.4348       22.8     2/6       no
+    released EPISTEMIC        8    25/45      5.51e-01    0.3043       22.6     3/6       no
+    released EPISTEMIC       32    34/45      8.24e-04    0.2174       31.4     4/6       no
+    released EPISTEMIC      100    45/45      5.68e-14    0.0870       36.8     6/6       no
+    released EPISTEMIC      128    45/45      5.68e-14    0.0417       38.2     6/6      yes
+    released EPISTEMIC      368    45/45      5.68e-14    0.0435       33.7     6/6       no
+    Holm-Bonferroni over 30 cells at alpha=0.05: 0 rejected   [floor 0.04167 exceeds the smallest threshold 0.001667 -- this arena cannot reject by design]
+      smallest p in family: faithful (mse) h=100 p=0.0417 (threshold 0.00167)
+
+  IN-SAMPLE  n_traj=16  n_independent=16  attainable P floor ~5e-05
+    model                     h     count   binomial P    perm P  null mean   groups  floor?
+    faithful (mse)            1    45/45      5.68e-14    0.0106       14.9     6/6       no
+    faithful (mse)            8    41/45      9.33e-09    0.0882       16.9     5/6       no
+    faithful (mse)           32    44/45      2.61e-12    0.0633       20.2     6/6       no
+    faithful (mse)          100    43/45      5.89e-11    0.0604       24.9     6/6       no
+    faithful (mse)          128    43/45      5.89e-11    0.0336       24.4     6/6       no
+    faithful (mse)          368    42/45      8.65e-10    0.0240       26.5     6/6       no
+    corrected (nll)           1    25/45      5.51e-01    1.0000       25.5     4/6       no
+    corrected (nll)           8    28/45      1.35e-01    0.9753       28.0     4/6       no
+    corrected (nll)          32    29/45      7.25e-02    0.6718       28.5     3/6       no
+    corrected (nll)         100    27/45      2.33e-01    1.0000       27.0     5/6       no
+    corrected (nll)         128    23/45      1.00e+00    0.9659       23.0     3/6       no
+    corrected (nll)         368    27/45      2.33e-01    0.8746       26.9     4/6       no
+    teacher-forced armB       1    45/45      5.68e-14    0.0143       14.2     6/6       no
+    teacher-forced armB       8    39/45      5.42e-07    0.0563       10.2     5/6       no
+    teacher-forced armB      32    44/45      2.61e-12    0.0238       12.6     6/6       no
+    teacher-forced armB     100    44/45      2.61e-12    0.0121       20.3     6/6       no
+    teacher-forced armB     128    44/45      2.61e-12    0.0027       18.1     6/6       no
+    teacher-forced armB     368    45/45      5.68e-14    0.5565       43.8     6/6       no
+    released aleatoric        1     7/45      3.12e-06    0.6856       16.5     0/6       no
+    released aleatoric        8    25/45      5.51e-01    0.2980       16.3     3/6       no
+    released aleatoric       32     0/45      5.68e-14    1.0000       21.2     0/6       no
+    released aleatoric      100    35/45      2.47e-04    0.4045       29.8     5/6       no
+    released aleatoric      128    29/45      7.25e-02    0.4323       25.3     3/6       no
+    released aleatoric      368     3/45      8.65e-10    0.9753       20.3     0/6       no
+    released EPISTEMIC        1    44/45      2.61e-12    0.0052       16.0     6/6       no
+    released EPISTEMIC        8    45/45      5.68e-14    0.0070       16.2     6/6       no
+    released EPISTEMIC       32    45/45      5.68e-14    0.0365       16.3     6/6       no
+    released EPISTEMIC      100    45/45      5.68e-14    0.2777       40.6     6/6       no
+    released EPISTEMIC      128    45/45      5.68e-14    0.3794       42.6     6/6       no
+    released EPISTEMIC      368    45/45      5.68e-14    0.0775       35.0     6/6       no
+    Holm-Bonferroni over 30 cells at alpha=0.05: 0 rejected
+      smallest p in family: teacher-forced armB h=128 p=0.0027 (threshold 0.00167)
+
+  ALL-EPISODES  n_traj=20  n_independent=20  attainable P floor ~5e-05
+    model                     h     count   binomial P    perm P  null mean   groups  floor?
+    faithful (mse)            1    29/45      7.25e-02    0.1388       11.9     5/6       no
+    faithful (mse)            8    35/45      2.47e-04    0.1304       12.3     6/6       no
+    faithful (mse)           32    36/45      6.57e-05    0.0682       12.0     6/6       no
+    faithful (mse)          100    41/45      9.33e-09    0.0063       10.4     6/6       no
+    faithful (mse)          128    40/45      7.88e-08    0.0078       10.7     6/6       no
+    faithful (mse)          368    43/45      5.89e-11    0.0037       16.2     6/6       no
+    corrected (nll)           1    21/45      7.66e-01    0.8915       25.8     3/6       no
+    corrected (nll)           8    25/45      5.51e-01    0.7598       27.2     2/6       no
+    corrected (nll)          32    26/45      3.71e-01    0.8242       27.3     3/6       no
+    corrected (nll)         100    28/45      1.35e-01    0.9679       28.8     5/6       no
+    corrected (nll)         128    27/45      2.33e-01    0.9593       27.7     4/6       no
+    corrected (nll)         368    27/45      2.33e-01    0.9992       27.0     3/6       no
+    teacher-forced armB       1    45/45      5.68e-14    0.0141       15.7     6/6       no
+    teacher-forced armB       8    40/45      7.88e-08    0.0429       12.8     5/6       no
+    teacher-forced armB      32    43/45      5.89e-11    0.0366       13.6     6/6       no
+    teacher-forced armB     100    44/45      2.61e-12    0.0200       19.0     6/6       no
+    teacher-forced armB     128    45/45      5.68e-14    0.0169       25.0     6/6       no
+    teacher-forced armB     368    45/45      5.68e-14    0.5244       43.2     6/6       no
+    released aleatoric        1     7/45      3.12e-06    0.7171       17.7     0/6       no
+    released aleatoric        8    25/45      5.51e-01    0.3235       17.1     3/6       no
+    released aleatoric       32     0/45      5.68e-14    1.0000       21.7     0/6       no
+    released aleatoric      100    38/45      3.12e-06    0.2901       28.9     5/6       no
+    released aleatoric      128    28/45      1.35e-01    0.6334       29.5     3/6       no
+    released aleatoric      368     0/45      5.68e-14    1.0000       23.1     0/6       no
+    released EPISTEMIC        1    44/45      2.61e-12    0.0056       15.4     6/6       no
+    released EPISTEMIC        8    45/45      5.68e-14    0.0069       16.0     6/6       no
+    released EPISTEMIC       32    45/45      5.68e-14    0.0344       15.8     6/6       no
+    released EPISTEMIC      100    45/45      5.68e-14    0.2769       39.4     6/6       no
+    released EPISTEMIC      128    45/45      5.68e-14    0.3762       41.6     6/6       no
+    released EPISTEMIC      368    45/45      5.68e-14    0.0804       33.1     6/6       no
+    Holm-Bonferroni over 30 cells at alpha=0.05: 0 rejected
+      smallest p in family: faithful (mse) h=368 p=0.0037 (threshold 0.00167)
+
+  wrote results/task_b_permutation.json

@@ -2358,16 +2358,135 @@
         "scripts/a2_trajectory_level_control.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-70",
+      "claim": "The h=100 re-anchoring left the prose behind, in 22 sentences",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/horizon_sweep.json",
+        "scripts/horizon_sweep.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-46",
+      "claim": "M-23 is anchored at the diagnostic horizon, not the deployment one",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d1_threeseed.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "X-16",
+      "claim": "RWM-O and RWM-U are one model renamed, verified by occurrence count",
+      "relevance": "CONTEXT",
+      "status": "CONFIRMED",
+      "evidence": [
+        "EXT"
+      ],
+      "artifacts": [
+        "results/original_paper_figures.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "X-17",
+      "claim": "M-44's contrast differs in capacity as well as in independence",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/v1_ensemble_topology.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-47",
+      "claim": "Four check kinds, and the two ways the checker was not checking",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/comparative_claims.json",
+        "scripts/check_comparative_claims.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "S-16",
+      "claim": "\"The two largest held-out deviations are in opposite directions\"",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d3_perhorizon.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "S-17",
+      "claim": "\"The eight untested claims are, without exception, about policy learning or hardware\"",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "S-18",
+      "claim": "\"The per-member \u03c3 is worse by three orders of magnitude\"",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "S-19",
+      "claim": "\"The released checkpoint cannot have come from the released recipe\"",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "EXT",
+        "RUN"
+      ],
+      "artifacts": [
+        "results/step6_analysis.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 45,
+    "M": 47,
     "O": 14,
-    "R": 69,
-    "S": 15,
-    "X": 15
+    "R": 70,
+    "S": 19,
+    "X": 17
   }
 }

@@ -1,0 +1,15 @@
+{
+  "n_flagged": 0,
+  "n_strict": 0,
+  "grid": [
+    1,
+    8,
+    32,
+    100,
+    128,
+    368
+  ],
+  "deployment_horizon": 100,
+  "diagnostic_horizon": 368,
+  "findings": []
+}

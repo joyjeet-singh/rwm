@@ -179,9 +179,40 @@ FOLLOWUP_VERSIONS = {
         {"what": "world-model architecture table", "v1": "Table S6 (RWM-O architecture)",
          "v3": "Table S7 (RWM-U architecture)"},
         {"what": "world-model training parameters", "v1": "Table S8", "v3": "Table S10"},
+        # C4(rev2), 4.4. This claim was challenged: a reviewer read the public v3
+        # as containing BOTH names -- RWM-U in the abstract and RWM-O in the
+        # experiments -- which would make them two variants rather than one
+        # rename. Re-checked against the rendered HTML of all three versions on
+        # 28 Aug 2026, by counting occurrences rather than by reading:
+        #
+        #   v1  RWM-O x39   RWM-U x0
+        #   v2  RWM-O x0    RWM-U x43
+        #   v3  RWM-O x0    RWM-U x43
+        #
+        # The two names are disjoint across versions, and the introducing
+        # sentence is otherwise word-for-word identical in v1 and v3. What
+        # changed is the EXPANSION of the O/U: "Offline" became
+        # "Uncertainty-Aware". It is a rename of one model, the claim stands,
+        # and the expansions are recorded here because they are what makes it
+        # checkable rather than asserted.
         {"what": "the model's name", "v1": "RWM-O", "v3": "RWM-U",
-         "note": "a rename, not a different model: the architecture tables and Eq. 4 are "
-                 "unchanged. Our paper quotes v1 sentences containing 'RWM-O'."},
+         "v1_expansion": "Offline Robotic World Model",
+         "v3_expansion": "Uncertainty-Aware Robotic World Model",
+         "v1_sentence": "To this end, we introduce Offline Robotic World Model (RWM-O), "
+                        "where we explicitly incorporate uncertainty quantification",
+         "v3_sentence": "To this end, we introduce Uncertainty-Aware Robotic World Model "
+                        "(RWM-U), where we explicitly incorporate uncertainty quantification",
+         "occurrences": {"v1": {"RWM-O": 39, "RWM-U": 0},
+                         "v2": {"RWM-O": 0, "RWM-U": 43},
+                         "v3": {"RWM-O": 0, "RWM-U": 43}},
+         "occurrences_checked_on": "2026-08-28",
+         "occurrences_method": "arxiv.org/html/2504.16680v{1,2,3} fetched and the two "
+                               "strings counted; no version contains both",
+         "note": "a rename, not a different model, and the two names never co-occur: v1 "
+                 "uses RWM-O throughout and v2/v3 use RWM-U throughout. The introducing "
+                 "sentence is identical but for the expansion, and the architecture tables "
+                 "and Eq. 4 are unchanged. Our paper quotes v1 sentences containing "
+                 "'RWM-O'."},
     ],
     "consequence": "every in-text citation of 2504.16680 in this paper names the version "
                    "it was read from, and the reference-list entry pins v1 with the v3 "

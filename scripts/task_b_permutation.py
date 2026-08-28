@@ -41,7 +41,12 @@ import rwm_model as M  # noqa: E402
 import score_reference as S  # noqa: E402
 
 START, LEN = E.START_STEP, 400
-HORIZONS = (1, 8, 32, 128, 368)
+# The paper's horizon grid (3.1). h=100 -- the method's own imagination rollout
+# length -- carries the abstract and 6.2's headline, and was the one horizon with
+# no permutation test: its cell printed "--" while the prose called the column
+# "five tests on one family" and corrected over 25 cells. Six horizons make it
+# 30, and the Holm thresholds below follow the family size rather than a typed one.
+HORIZONS = (1, 8, 32, 100, 128, 368)
 SEEDS = (0, 1, 2)
 N_PERM = 20000
 GROUPS = {"base lin vel": (0, 3), "base ang vel": (3, 6), "proj gravity": (6, 9),

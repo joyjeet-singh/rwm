@@ -236,6 +236,26 @@ def main():
         # ------------------------------------------------------- the real scan
         bad = scan_tree(staging)
 
+        # Files the PAPER cites by name must actually be in the bundle. §6.1 and
+        # §8 each quote the author correspondence and say it is "reproduced in
+        # full, anonymised, in the supplementary material"; a bundle that does
+        # not carry it makes both citations false, and nothing here would have
+        # noticed -- `docs/` is included by directory, so the file's presence was
+        # incidental rather than asserted.
+        cited = sorted({m for m in re.findall(r"`([\w./-]+\.(?:md|json|txt|py|cff))`",
+                                              open("PAPER.md").read())
+                        if m.startswith(("results/", "docs/", "scripts/", "src/"))
+                        or m.isupper() or m.endswith(".md")})
+        REQUIRED = ["docs/SUPPLEMENTARY_CORRESPONDENCE.md", "FINDINGS_LEDGER.md",
+                    "results/original_paper_figures.json"]
+        staged_set = set(written)
+        missing_required = [f for f in REQUIRED if f not in staged_set]
+        assert not missing_required, (
+            "the paper cites these by name and the bundle does not carry them: "
+            + ", ".join(missing_required))
+        missing_cited = [f for f in cited
+                         if ("/" in f and f not in staged_set)]
+
         rec = {
             "n_files_staged": len(written),
             "n_paths_scrubbed": path_fixes,
@@ -249,6 +269,9 @@ def main():
             },
             "residual_hits": [{"file": f, "hits": h} for f, h in bad],
             "n_residual_hits": len(bad),
+            "required_files_present": REQUIRED,
+            "cited_files_checked": len(cited),
+            "cited_files_absent": missing_cited,
             "includes_previously_excluded": [
                 f for f in ("MODEL_CARD.md", "CITATION.cff", "NOTICE",
                             "docs/ARCHIVAL_IDENTIFIERS.md")
@@ -267,6 +290,10 @@ def main():
               f"({n_probe_hits} hits) — the scan is live")
         print(f"  now included that the exclusion-based builder dropped: "
               f"{', '.join(rec['includes_previously_excluded']) or 'none'}")
+        print(f"  files the paper cites by name : {len(cited)} checked, "
+              f"{len(missing_cited)} absent from the bundle"
+              + (f"  {missing_cited[:4]}" if missing_cited else ""))
+        print(f"  required present  : {', '.join(REQUIRED)}")
         print(f"  residual identifying hits: {len(bad)}")
         for f, h in bad[:20]:
             print(f"    !! {f}: {h}")

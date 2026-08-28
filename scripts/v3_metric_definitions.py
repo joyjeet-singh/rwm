@@ -231,7 +231,10 @@ def main():
             "pm2": 0.9544997361036416,
             "why": "z is built from an ABSOLUTE error, so z <= k is the two-sided event "
                    "and the nominal is erf(k/sqrt(2)): 68.27% at k=1, 95.45% at k=2. "
-                   "The paper quotes these as 68.3% and 95.4%.",
+                   "The paper quotes these to two decimals throughout -- 68.27% and 95.45% -- "
+                   "rather than the 68.3/95.4 rounding, which once had the same "
+                   "constant appearing in two numeric spellings across a figure "
+                   "caption and the section that derives it.",
         },
         "which_sigma": {
             "aleatoric": "the mean over ensemble members of each member's predicted "

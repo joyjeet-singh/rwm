@@ -16,12 +16,12 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-30 pages, 0 overfull boxes, [] LaTeX warnings
+32 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 191 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 200 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
-are never edited in place: 15 are marked `SUPERSEDED` and kept, Six
+are never edited in place: 19 are marked `SUPERSEDED` and kept, Six
 of them retractions of our own numbered claims on evidence this project produced.
 
 ## What this found
@@ -48,6 +48,21 @@ the rollout and the forecast depth held constant it still correlates **+0.419
 **4 — The interval is repairable.** One multiplier per forecast horizon, fitted on one held-out
 episode and scored on the other, restores nominal coverage on every held-out cell; a single global
 multiplier manages 2 of them.
+
+**5 — The released five-member ensemble is not five models.** One GRU trunk, one recurrent hidden
+state, and 89.15% of each member's state-prediction parameters numerically identical
+across members — measured from the checkpoint's own tensors and from source (§6.4). Members that
+share a feature extractor have correlated errors by construction, so their spread is a lower bound
+on epistemic uncertainty by design rather than by accident.
+
+**6 — That mechanism is tested, not merely asserted, and it holds.** Five independently
+initialised full models, sharing nothing, scored together as an ensemble are
+**2.03×** better calibrated than the shared-trunk arms at h = 100 —
+against a minimum detectable effect of 1.45× fixed before the runs existed. σ is
+larger by 1.65×, which is 71% of the improvement there, and the
+split reverses at the 368-step diagnostic horizon. The rule (M-44) returns
+**MECHANISM SUPPORTED**. It is still 5.2× overconfident: building the ensemble
+properly is worth doing and is not sufficient (§6.10).
 
 **And four defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
@@ -135,13 +150,29 @@ regenerates and the verifier partitions on that (`M-28`, `M-29`).
 
 `step4_5_timing.json` is excluded wholesale: it measures the host, not the model.
 
+## Every figure names its horizon
+
+The paper reports two load-bearing horizons and they are not interchangeable.
+**h = 100** is the method's own imagination rollout length — the horizon the
+uncertainty-penalised policy loop actually runs this model over. **h = 368** is the
+upstream's open-loop *diagnostic* length, 3.68× longer, and it is not a deployment
+horizon; an earlier draft of the paper called it one and that label is withdrawn.
+
+Re-anchoring the tables from one to the other left prose behind: sentences quoting a correct,
+provenanced h = 368 figure sat beside h = 100 tables saying nothing about
+it. No provenance check can see that. `scripts/horizon_sweep.py` walks the template, resolves
+every numeral to the artifact cell it came from, and reports that cell's horizon against the
+horizon the sentence names — a calibration ratio or coverage must name it in its own sentence,
+everything else horizon-indexed in its own paragraph. It runs on every build as the
+`horizon-consistency` check and the build fails on any finding.
+
 ## The build checks its own prose
 
 Verifying that every numeral came from an artifact says nothing about the sentence built around
-it. The build therefore also verifies **32 comparative claims** across 15 kinds,
+it. The build therefore also verifies **46 comparative claims** across 19 kinds,
 each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts.
 Every one is run against a deliberately corrupted expectation on each build and must fail:
-31 of 31 caught.
+46 of 46 caught.
 
 ```bash
 python scripts/check_comparative_claims.py --self-test

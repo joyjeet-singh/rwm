@@ -52,8 +52,13 @@ def fig1_calibration(rec):
     for k, lab, col in order:
         ax[1].plot(hs, [100 * d[k]["coverage"][str(h)]["pm1"] for h in hs],
                    "o-", ms=3, lw=1.4, color=col, label=lab)
-    ax[1].axhline(68.3, color="k", ls="--", lw=1)
-    ax[1].text(hs[-1], 70, "calibrated 68.3%", ha="right", fontsize=7)
+    # C3(rev2), 3.9. This was a typed 68.3 while 3.1 derives 68.27 and the paper
+    # quotes that everywhere else, so the figure and its caption disagreed with
+    # the text about a constant. Read from V3, which is where 3.1 derives it.
+    _nom1 = 100 * json.load(open(os.path.join(
+        R.RESULTS, "v3_metric_definitions.json")))["coverage"]["nominal"]["pm1"]
+    ax[1].axhline(_nom1, color="k", ls="--", lw=1)
+    ax[1].text(hs[-1], _nom1 + 1.7, f"calibrated {_nom1:.2f}%", ha="right", fontsize=7)
     ax[1].set(xscale="log", xlabel="forecast horizon (steps)",
               ylabel=r"coverage at $\pm1\sigma$ (%)", # was "(b) coverage collapses with horizon", which rendered at 1.10x the
               # axes width and clipped. The caption carries the full statement.

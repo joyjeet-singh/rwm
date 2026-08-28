@@ -80,6 +80,60 @@
     },
     "ratio_B_over_A": 4.606099791039669
   },
+  "by_horizon": {
+    "100": {
+      "A": {
+        "per_seed": {
+          "0": 0.3953671157360077,
+          "1": 0.37629789113998413,
+          "2": 0.3383881449699402
+        },
+        "mean": 0.37001771728197735,
+        "sd_ddof1": 0.029003986194231782,
+        "n_seeds": 3
+      },
+      "B": {
+        "per_seed": {
+          "0": 0.9802587032318115,
+          "1": 0.9415786266326904,
+          "2": 0.9464605450630188
+        },
+        "mean": 0.956099291642507,
+        "sd_ddof1": 0.0210645711597973,
+        "n_seeds": 3
+      },
+      "ratio_B_over_A": 2.583928409335863
+    },
+    "368": {
+      "A": {
+        "per_seed": {
+          "0": 0.3894190788269043,
+          "1": 0.35089385509490967,
+          "2": 0.3341435194015503
+        },
+        "mean": 0.3581521511077881,
+        "sd_ddof1": 0.028343588573156813,
+        "n_seeds": 3
+      },
+      "B": {
+        "per_seed": {
+          "0": 1.971046805381775,
+          "1": 1.5539506673812866,
+          "2": 1.4240561723709106
+        },
+        "mean": 1.6496845483779907,
+        "sd_ddof1": 0.2857856191770762,
+        "n_seeds": 3
+      },
+      "ratio_B_over_A": 4.606099791039669
+    }
+  },
+  "horizons": [
+    100,
+    368
+  ],
   "n_independent": 4,
-  "horizon": 368
+  "horizon": 368,
+  "rule_horizon": 368,
+  "rule_horizon_note": "M-23 (commit efc35b8) is stated over h=368, which 3.1 labels the upstream's open-loop diagnostic length. Its verdict stands as returned at that horizon. by_horizon['100'] reports the same comparison at the method's own imagination rollout length and is reported alongside, not substituted for it."
 }

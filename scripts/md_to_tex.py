@@ -72,6 +72,18 @@ def esc(s):
     return s
 
 
+def _is_table(lines, i):
+    """True when the pipe-line at `i` opens a real Markdown table.
+
+    The separator row is what distinguishes a table from a sentence that
+    happened to wrap onto a line beginning with a pipe. Markdown itself makes
+    the same distinction; this converter did not.
+    """
+    return (i + 1 < len(lines) and lines[i + 1].startswith("|")
+            and set(lines[i + 1].replace("|", "").strip()) <= set("-: ")
+            and lines[i + 1].strip() != "")
+
+
 def convert(md, title, author):
     lines = md.split("\n")
     out, unhandled = [], []
@@ -168,7 +180,15 @@ def convert(md, title, author):
             out.append(f"\\{cmd}{{{esc(txt)}}}")
             i += 1
             continue
-        if ln.startswith("|"):
+        # A Markdown table is a run of pipe-delimited lines whose SECOND line is
+        # the |---|---| separator. Without that condition any wrapped prose line
+        # beginning with a pipe became a one-column tabular: "the rule's minimum
+        # detectable effect at this sample size is |r_dd| >= 0.183" wrapped so
+        # that "|r_dd| >= ..." started a line, and the sentence was replaced in
+        # the PDF by a booktabs box containing the words "r_dd". Nothing in the
+        # build could see it -- every placeholder resolved, so the unresolved-
+        # placeholder gate passed. build_paper.py now also refuses a stray row.
+        if ln.startswith("|") and _is_table(lines, i):
             tbl = []
             while i < len(lines) and lines[i].startswith("|"):
                 tbl.append(lines[i])

@@ -26,10 +26,10 @@ It is not a matter of degree. Measured against realised error on held-out episod
 
 | checkpoint | mean \|error\| / mean σ [95% CI] | coverage at ±1σ [95% CI] | a calibrated model |
 |---|---|---|---|
-| autoregressive (mse) | 52× [40, 70] | 11.67% [7.96, 15.19] | 68.3% |
-| corrected objective (nll) | 11× [8, 15] | 42.78% [24.44, 62.04] | 68.3% |
-| teacher-forced | 315× [177, 509] | 12.96% [7.04, 20.93] | 68.3% |
-| *released reference checkpoint, for comparison* | 7,878× [5,410, 9,934] | 0.56% [0.00, 1.67] | 68.3% |
+| autoregressive (mse) | 52× [40, 70] | 11.67% [7.96, 15.19] | 68.27% |
+| corrected objective (nll) | 11× [8, 15] | 42.78% [24.44, 62.04] | 68.27% |
+| teacher-forced | 315× [177, 509] | 12.96% [7.04, 20.93] | 68.27% |
+| *released reference checkpoint, for comparison* | 7,878× [5,410, 9,934] | 0.56% [0.00, 1.67] | 68.27% |
 
 Those are the ALEATORIC term, at one forecast step. The quantity the follow-up's method actually penalises rewards with is the EPISTEMIC one, and on the released 5-member checkpoint it is 33.4× [28.7, 39.0] out at h = 100 — the horizon the method's own imagination rollouts run to — with 4.61% coverage at ±1σ. Our ensemble-5 arms reach 10.5× [9.0, 11.5] on the same measurement. Better, and not calibrated.
 
@@ -60,18 +60,22 @@ own data rather than copying our constants.
 
 ## The ensemble-5 checkpoints, and what they are for
 
-Six of the nine checkpoints here run at **ensemble size 1**, where the epistemic
-term -- the disagreement across ensemble members -- is *identically zero by
-construction*. Nothing about ensemble disagreement can be reproduced from them.
+Ten of the thirteen checkpoints here run at **ensemble size 1**, where the
+epistemic term -- the disagreement across ensemble members -- is *identically zero by
+construction*. Nothing about ensemble disagreement can be reproduced from one of them
+alone; the block above says what to do with five of them.
 
-The three `autoregressive-ens5-*` checkpoints exist for that reason. On them:
+The three `autoregressive-ens5-*` checkpoints carry it directly. On them:
 
 - ensemble disagreement correlates with realised error in 12 of
   12 seed-horizon cells more strongly than the forecast step index does,
   which is the property our paper argues makes it a usable ranking signal;
-- the epistemic term is **13.0x** smaller than the realised error at a
-  368-step horizon, with 6.30% coverage at +-1 sigma against a calibrated
-  68.3%. Better than the released reference checkpoint, and still not an interval;
+- the epistemic term is **10.5x** smaller than the realised error at
+  h=100 -- the horizon the method's own imagination rollouts run to -- with
+  8.19% coverage at +-1 sigma against a calibrated 68.27%, and
+  13.0x with 6.30% at the 368-step open-loop
+  diagnostic horizon. Better than the released reference checkpoint, and still not an
+  interval;
 - it is input-dependent, CoV 0.379-0.395 across a batch.
 
 **The pre-registered rule governing this replication returned DOES NOT GENERALISE**, on its
@@ -80,6 +84,34 @@ of 4 horizons, not a majority. The direction replicated everywhere; the
 separation did not, on the four independent trajectories our held-out arena has. Treat the
 ranking property as supported on these checkpoints and established only on the released
 reference one.
+
+## Scoring five of these together: the independent-ensemble result
+
+**If you download the ensemble-size-1 autoregressive checkpoints, score them as an
+ensemble.** The paper's §6.10 takes seeds 0-4 of Arm A -- five separately initialised,
+separately trained models, sharing no parameters and no recurrent state -- and scores
+their disagreement the way the method scores its own. That is the contrast the released
+five-member checkpoint cannot provide, because its five members share one GRU trunk and
+one hidden state: 89.15% of each member's state-pathway parameters are
+numerically identical to every other member's.
+
+- **The independent ensemble is 2.03x better calibrated** than the
+  shared-trunk `autoregressive-ens5-*` arms at h=100, against a pre-registered
+  minimum detectable effect of 1.45x. Coverage is +7.12
+  points higher, against an MDE of 2.26 points. The rule (M-44, committed
+  before the runs) returns **MECHANISM SUPPORTED**.
+- **It is still not an interval.** 5.2x overconfident at
+  h=100 with 15.31% coverage at +-1 sigma, against a
+  calibrated 68.27%. Building the ensemble properly is worth doing and is not
+  sufficient.
+- **What the gain is made of.** sigma larger by 1.65x --
+  71% of the improvement at h=100 -- and the rest ordinary
+  ensembling accuracy. At the 368-step diagnostic horizon the split reverses:
+  57% of it is the ensemble simply predicting better.
+- **What it does not isolate.** Five independent models differ from five shared heads in
+  initialisation, in data ordering AND in capacity: 3,570,820 state-pathway
+  parameters against 1,024,132, a factor of 3.49. The comparison
+  bounds the trunk-sharing effect rather than isolating it.
 
 ## Checkpoints
 
@@ -185,9 +217,25 @@ Ensemble size 5, seed 2.
 - σ calibration (aleatoric), measured on THIS arm at iteration 2,500: 8.5× overconfident with 8.33% coverage at ±1σ (h=1), and 39.8× with 2.51% at h=100
 - σ calibration (epistemic — the quantity the method penalises with): 2.3× at h=1 and 10.5× at h=100, coverage 7.98% at ±1σ
 
+### `autoregressive-ens1-seed3`
+
+Arm A at ensemble size 1, seed 3. Trained for the independent-ensemble test: seeds 0-4 of this arm are scored together as a five-model ensemble that shares nothing (§6.10). Not part of the three-seed headline. **No per-arm σ calibration is quoted below**: `task1_calibration.py` measures seed 0 only, and pasting seed 0's figure onto this checkpoint is exactly the mis-attribution this card was corrected for elsewhere. What was measured on this checkpoint is its contribution to the ensemble above.
+
+- source: `runs/armA_seed3/weights_2500.pt`
+- size: 5,683,374 bytes
+- sha256: `e44e15f5fc31556c7d16647c96edf91bb0d5a4b8b8ad72078ad841a3e60ad260`
+
+### `autoregressive-ens1-seed4`
+
+Arm A at ensemble size 1, seed 4. The second of the two seeds added for the independent-ensemble test, and the same caveat applies: no individually measured σ calibration exists for it, only its contribution to the five-model ensemble above.
+
+- source: `runs/armA_seed4/weights_2500.pt`
+- size: 5,683,374 bytes
+- sha256: `b5e0fa1123cb4ae935a3b925fb0801e765cfd3ac25f8f1cf0b653582eb69d24a`
+
 ## The result these support
 
-Normalised error at a 368-step horizon on held-out episodes, over three training seeds (standard deviation with `ddof=1`):
+Normalised error at a 368-step horizon on held-out episodes, over three training seeds (standard deviation with `ddof=1`). That is the horizon the paper's pre-registered rule names; at h=100, the method's own rollout length, the same comparison gives 2.58×.
 
 | arm | seed 0 | seed 1 | seed 2 | mean ± sd |
 |---|---|---|---|---|
@@ -211,7 +259,7 @@ Reproduction, verification and further study of the claims in the two papers abo
 
 ## Limitations
 
-- **Ensemble size 1**, against the reference's 5. The epistemic component of the released model's uncertainty is not reproduced; the σ discussed above is aleatoric.
+- **Most of these run at ensemble size 1**, against the reference's 5. On those the epistemic term is identically zero and the σ discussed above is aleatoric. The `ens5` arms and the five-seed independent ensemble cover the epistemic term.
 - **One gait, one terrain, one command distribution.** Generalisation here means across velocity commands only.
 - **Long-horizon claims rest on 4 independent 400-step trajectories** in the held-out arena. That is the binding statistical constraint.
 - **The 10k checkpoints are one seed per arm.** Recorded in the artifacts.

@@ -8,9 +8,19 @@ Two jobs, in order, because the second is worthless if the first fails.
    [0, 2500) must therefore be identical. Any mismatch means the runs are not
    comparable and the three-seed aggregate must not be formed.
 
-2. AGGREGATE. Recompute the h=368 out-of-sample comparison over three seeds,
-   reporting mean +- sd with ddof=1, alongside the single-seed figure the paper
-   currently quotes.
+2. AGGREGATE. Recompute the out-of-sample comparison over three seeds, reporting
+   mean +- sd with ddof=1, alongside the single-seed figure the paper currently
+   quotes.
+
+   Reported at TWO horizons and the distinction matters. M-23 -- the rule that
+   governs this comparison -- is stated over h=368, which 3.1 now labels the
+   upstream's open-loop DIAGNOSTIC length rather than a deployment horizon. The
+   rule's verdict stands as returned at the horizon it was written over; nothing
+   here re-anchors it. h=100, the method's own imagination rollout length, is
+   added beside it so the section can say what the same comparison does at the
+   horizon the method actually deploys at, which the rest of the paper is
+   anchored to. The top-level `aggregate` block stays h=368 so that M-23's
+   verdict and every downstream key keep the horizon they were computed at.
 
 Writes results/task_d1_threeseed.json.
 """
@@ -31,7 +41,18 @@ import rwm_model as M  # noqa: E402
 SEEDS = (0, 1, 2)
 ARMS = ("A", "B")
 START = E.START_STEP
-LEN, H = 400, 368
+LEN, H = 400, 368               # H: the horizon M-23 is stated over. Do not re-anchor.
+
+
+def _deployment_horizon():
+    """The method's own imagination rollout length, from V2 rather than typed, so
+    that a change to which horizon the method deploys at cannot leave this script
+    measuring the old one."""
+    p = os.path.join(R.RESULTS, "v2_deployment_horizon.json")
+    return int(json.load(open(p))["verdict"]["deployment_horizon_is"])
+
+
+HORIZONS = (_deployment_horizon(), H)
 CURVES = ("state", "bound", "contact", "termination", "total", "grad_norm")
 
 
@@ -87,9 +108,9 @@ def aggregate():
                          verbose=False)
     hold = list(split["holdout_episodes"])
     starts = MET.non_overlapping_starts(ep, hold, LEN)
-    per_arm = {}
+    per_arm = {h: {} for h in HORIZONS}
     for a in ARMS:
-        vals = {}
+        vals = {h: {} for h in HORIZONS}
         for s in SEEDS:
             w = f"runs/arm{a}_seed{s}_10k/weights_10000.pt"
             if not os.path.exists(w):
@@ -97,8 +118,13 @@ def aggregate():
             m = M.build_from_config(R.CFG, ensemble_size=1)
             m.load_state_dict(torch.load(w, map_location="cpu")["model_state_dict"], strict=True)
             m.eval()
-            vals[s] = float(per_traj(m, starts, LEN, H).mean())
-        per_arm[a] = vals
+            # One rollout per seed, sliced at each horizon: the h=100 figure is a
+            # prefix of the same rollout, not a second pass, so the two cannot
+            # disagree about anything but their depth.
+            for h in HORIZONS:
+                vals[h][s] = float(per_traj(m, starts, LEN, h).mean())
+        for h in HORIZONS:
+            per_arm[h][a] = vals[h]
     return per_arm, int(MET.n_independent(starts, LEN))
 
 
@@ -128,25 +154,40 @@ def main():
         print(f"\n     {len(missing)} run(s) not yet present; aggregate is partial.")
 
     per_arm, n_ind = aggregate()
-    print(f"\n  2. h={H} out-of-sample, n_independent = {n_ind}\n")
-    agg = {}
-    for a in ARMS:
-        v = per_arm[a]
-        if len(v) >= 2:
-            mean, sd = st.mean(v.values()), st.stdev(v.values())
-        else:
-            mean, sd = (list(v.values())[0], float("nan")) if v else (float("nan"),) * 2
-        agg[a] = {"per_seed": v, "mean": mean, "sd_ddof1": sd, "n_seeds": len(v)}
-        seeds = "  ".join(f"seed{s} {x:.4f}" for s, x in sorted(v.items()))
-        print(f"     Arm {a}: {seeds}")
-        print(f"             mean {mean:.4f} ± {sd:.4f}  (n={len(v)}, ddof=1)")
-    if agg["A"]["n_seeds"] and agg["B"]["n_seeds"]:
-        ratio = agg["B"]["mean"] / agg["A"]["mean"]
-        print(f"\n     ratio B/A over {agg['A']['n_seeds']} seeds: {ratio:.2f}×")
-        agg["ratio_B_over_A"] = ratio
+    by_h = {}
+    for h in HORIZONS:
+        print(f"\n  2. h={h} out-of-sample, n_independent = {n_ind}"
+              + ("   [M-23's horizon]" if h == H else "   [the deployment horizon]") + "\n")
+        agg = {}
+        for a in ARMS:
+            v = per_arm[h][a]
+            if len(v) >= 2:
+                mean, sd = st.mean(v.values()), st.stdev(v.values())
+            else:
+                mean, sd = (list(v.values())[0], float("nan")) if v else (float("nan"),) * 2
+            agg[a] = {"per_seed": v, "mean": mean, "sd_ddof1": sd, "n_seeds": len(v)}
+            seeds = "  ".join(f"seed{s} {x:.4f}" for s, x in sorted(v.items()))
+            print(f"     Arm {a}: {seeds}")
+            print(f"             mean {mean:.4f} ± {sd:.4f}  (n={len(v)}, ddof=1)")
+        if agg["A"]["n_seeds"] and agg["B"]["n_seeds"]:
+            ratio = agg["B"]["mean"] / agg["A"]["mean"]
+            print(f"\n     ratio B/A over {agg['A']['n_seeds']} seeds: {ratio:.2f}×")
+            agg["ratio_B_over_A"] = ratio
+        by_h[str(h)] = agg
+    # `aggregate` stays the h=368 block: M-23 is stated there and every key the
+    # paper already carries was computed there. `by_horizon` is the addition.
+    agg = by_h[str(H)]
     out["aggregate"] = agg
+    out["by_horizon"] = by_h
+    out["horizons"] = list(HORIZONS)
     out["n_independent"] = n_ind
     out["horizon"] = H
+    out["rule_horizon"] = H
+    out["rule_horizon_note"] = (
+        "M-23 (commit efc35b8) is stated over h=368, which 3.1 labels the upstream's "
+        "open-loop diagnostic length. Its verdict stands as returned at that horizon. "
+        "by_horizon['100'] reports the same comparison at the method's own imagination "
+        "rollout length and is reported alongside, not substituted for it.")
     op = os.path.join(R.RESULTS, "task_d1_threeseed.json")
     json.dump(out, open(op, "w"), indent=2)
     print(f"\n  wrote {R.rel(op)}")

@@ -203,6 +203,26 @@
     "source": "results/task_b2_epistemic.json + task_d_nind20.json",
     "value": 6
   },
+  "appE_n_cpu": {
+    "source": "PAPER.template.md, Appendix E table",
+    "value": 2
+  },
+  "appE_n_cpu_word": {
+    "source": "PAPER.template.md, Appendix E table",
+    "value": "two"
+  },
+  "appE_n_sim": {
+    "source": "PAPER.template.md, Appendix E + F tables",
+    "value": 6
+  },
+  "appE_n_sim_word": {
+    "source": "PAPER.template.md, Appendix E + F tables",
+    "value": "six"
+  },
+  "appF_n_claims": {
+    "source": "PAPER.template.md, Appendix F table",
+    "value": 12
+  },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
     "value": "7,687"
@@ -1067,25 +1087,45 @@
     "source": "results/step4_0a_results.json",
     "value": "0.7572"
   },
+  "cc_kind_list": {
+    "source": "results/comparative_claims.json",
+    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 9 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference)"
+  },
   "cc_kinds": {
     "source": "results/comparative_claims.json",
-    "value": 15
+    "value": 19
   },
   "cc_n": {
     "source": "results/comparative_claims.json",
-    "value": 32
+    "value": 46
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 32
+    "value": 46
+  },
+  "cc_selfdefect_list": {
+    "source": "results/comparative_claims.json",
+    "value": "\n\n- A fixed corruption per kind \u2014 `expect: \"disjoint\"` on every overlap check \u2014 which was a no-op for claims that already expected that value, so two of eleven assertions reported as missed when nothing had been corrupted.\n\n- A label helper that prefixed a horizon to family keys already holding model names, producing `h=teacher-forced armB`, which matched nothing and failed two checks whose extrema were correct.\n\n- An assertion that could not be corrupted at all: the `orders` check quoting a ratio directly rather than as an order of magnitude had no `stated_orders` to perturb, so the self-test skipped it and reported 31 of 31 caught beside a claim count of 32. The exemption was real, undocumented, and looked like coverage. A directly-quoted ratio is now asserted to appear in the sentence that quotes it, which is corruptible.\n\n- A `sign` assertion that was never written. \u00a76.8 said the two largest held-out deviations were \"in opposite directions\" when both are above target; the kind that would have caught it existed and no claim used it. A kind with no claim attached guards nothing, and the self-test cannot report that because there is nothing to corrupt."
+  },
+  "cc_selfdefects": {
+    "source": "results/comparative_claims.json",
+    "value": 4
+  },
+  "cc_selfdefects_lower": {
+    "source": "results/comparative_claims.json",
+    "value": "four"
+  },
+  "cc_selfdefects_word": {
+    "source": "results/comparative_claims.json",
+    "value": "Four"
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 31
+    "value": 46
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 31
+    "value": 46
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -1119,6 +1159,10 @@
     "source": "results/task_d1_threeseed.json",
     "value": "0.3582"
   },
+  "d1_A_mean_h100": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.3700"
+  },
   "d1_A_relsd": {
     "source": "results/task_d1_threeseed.json",
     "value": "7.9"
@@ -1126,6 +1170,10 @@
   "d1_A_sd": {
     "source": "results/task_d1_threeseed.json",
     "value": "0.0283"
+  },
+  "d1_A_sd_h100": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.0290"
   },
   "d1_B_hi": {
     "source": "results/task_d1_threeseed.json",
@@ -1139,6 +1187,10 @@
     "source": "results/task_d1_threeseed.json",
     "value": "1.6497"
   },
+  "d1_B_mean_h100": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.9561"
+  },
   "d1_B_relsd": {
     "source": "results/task_d1_threeseed.json",
     "value": "17.3"
@@ -1147,9 +1199,21 @@
     "source": "results/task_d1_threeseed.json",
     "value": "0.2858"
   },
+  "d1_B_sd_h100": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "0.0211"
+  },
   "d1_ratio": {
     "source": "results/task_d1_threeseed.json",
     "value": "4.61"
+  },
+  "d1_ratio_h100": {
+    "source": "results/task_d1_threeseed.json",
+    "value": "2.58"
+  },
+  "d1_rule_h": {
+    "source": "results/task_d1_threeseed.json",
+    "value": 368
   },
   "d1_seeds": {
     "source": "results/task_d1_threeseed.json",
@@ -1527,9 +1591,29 @@
     "source": "results/task_d_nind20.json",
     "value": 45
   },
+  "d1n_epi_over_alea_h1": {
+    "source": "results/task_d_nind20.json",
+    "value": "220"
+  },
+  "d1n_epi_over_alea_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "349"
+  },
+  "d1n_epi_over_alea_h128": {
+    "source": "results/task_d_nind20.json",
+    "value": "437"
+  },
+  "d1n_epi_over_alea_h32": {
+    "source": "results/task_d_nind20.json",
+    "value": "200"
+  },
   "d1n_epi_over_alea_h368": {
     "source": "results/task_d_nind20.json",
     "value": "600"
+  },
+  "d1n_epi_over_alea_h8": {
+    "source": "results/task_d_nind20.json",
+    "value": "201"
   },
   "d1n_epi_r_h1": {
     "source": "results/task_d_nind20.json",
@@ -1912,8 +1996,8 @@
     "value": "9"
   },
   "d2_target": {
-    "source": "results/task_d2_recalibration.json",
-    "value": "68.3"
+    "source": "results/v3_metric_definitions.json",
+    "value": "68.27"
   },
   "d2b_epi_all": {
     "source": "results/task_d_nind20.json",
@@ -1926,6 +2010,10 @@
   "d2b_epi_ci_h1": {
     "source": "results/task_d_nind20.json",
     "value": "[+0.918, +0.999]"
+  },
+  "d2b_epi_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.574, +0.839]"
   },
   "d2b_epi_ci_h128": {
     "source": "results/task_d_nind20.json",
@@ -1946,6 +2034,10 @@
   "d2b_epi_h1": {
     "source": "results/task_d_nind20.json",
     "value": "+0.994"
+  },
+  "d2b_epi_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.628"
   },
   "d2b_epi_h128": {
     "source": "results/task_d_nind20.json",
@@ -1975,6 +2067,10 @@
     "source": "results/task_d_nind20.json",
     "value": "n/a"
   },
+  "d2b_idx_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.394, +0.604]"
+  },
   "d2b_idx_ci_h128": {
     "source": "results/task_d_nind20.json",
     "value": "[+0.421, +0.643]"
@@ -1995,6 +2091,10 @@
     "source": "results/task_d_nind20.json",
     "value": "n/a"
   },
+  "d2b_idx_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.490"
+  },
   "d2b_idx_h128": {
     "source": "results/task_d_nind20.json",
     "value": "+0.526"
@@ -2011,9 +2111,13 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.181"
   },
+  "d2b_idx_strongest_h": {
+    "source": "results/task_d_nind20.json",
+    "value": "h=128"
+  },
   "d2b_n_horizons_tested": {
-    "source": "results/task_d3_ens5.json (index_defined_at)",
-    "value": 4
+    "source": "results/task_d_nind20.json",
+    "value": 5
   },
   "d2b_n_index_wins": {
     "source": "results/task_d_nind20.json",
@@ -2030,6 +2134,10 @@
   "d2b_par_ci_h1": {
     "source": "results/task_d_nind20.json",
     "value": "n/a"
+  },
+  "d2b_par_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.516, +0.815]"
   },
   "d2b_par_ci_h128": {
     "source": "results/task_d_nind20.json",
@@ -2050,6 +2158,10 @@
   "d2b_par_h1": {
     "source": "results/task_d_nind20.json",
     "value": "n/a"
+  },
+  "d2b_par_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.584"
   },
   "d2b_par_h128": {
     "source": "results/task_d_nind20.json",
@@ -2079,6 +2191,10 @@
     "source": "results/task_d_nind20.json",
     "value": "[+0.147, +0.544]"
   },
+  "d2p_ci_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "[+0.034, +0.362]"
+  },
   "d2p_ci_h128": {
     "source": "results/task_d_nind20.json",
     "value": "[+0.011, +0.324]"
@@ -2099,6 +2215,10 @@
     "source": "results/task_d_nind20.json",
     "value": "+0.337"
   },
+  "d2p_diff_h100": {
+    "source": "results/task_d_nind20.json",
+    "value": "+0.138"
+  },
   "d2p_diff_h128": {
     "source": "results/task_d_nind20.json",
     "value": "+0.145"
@@ -2116,16 +2236,16 @@
     "value": "+0.556"
   },
   "d2p_n_horizons": {
-    "source": "results/task_d3_ens5.json (index_defined_at)",
-    "value": 4
+    "source": "results/task_d_nind20.json",
+    "value": 5
   },
   "d2p_n_overlap": {
     "source": "results/task_d_nind20.json",
-    "value": 1
+    "value": 2
   },
   "d2p_n_separating": {
     "source": "results/task_d_nind20.json",
-    "value": 4
+    "value": 5
   },
   "d2p_narrowest_h": {
     "source": "results/task_d_nind20.json",
@@ -2137,7 +2257,7 @@
   },
   "d2p_overlap_h": {
     "source": "results/task_d_nind20.json",
-    "value": "h=128"
+    "value": "h=100 and h=128"
   },
   "d2r_cub": {
     "source": "results/task_d2b_robustness.json",
@@ -2287,6 +2407,22 @@
     "source": "results/task_d3_perhorizon.json",
     "value": "76.55"
   },
+  "d3_second_dev": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "8.28"
+  },
+  "d3_second_h": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": 128
+  },
+  "d3_second_q": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "aleatoric"
+  },
+  "d3_second_side": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "above"
+  },
   "d3_target": {
     "source": "results/task_d3_perhorizon.json",
     "value": "68.27"
@@ -2294,6 +2430,10 @@
   "d3_tol": {
     "source": "results/task_d3_perhorizon.json",
     "value": "10"
+  },
+  "d3_top2_same_side": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "both above"
   },
   "d3_worst_cov": {
     "source": "results/task_d3_perhorizon.json",
@@ -2314,6 +2454,10 @@
   "d3_worst_q": {
     "source": "results/task_d3_perhorizon.json",
     "value": "aleatoric"
+  },
+  "d3_worst_side": {
+    "source": "results/task_d3_perhorizon.json",
+    "value": "above"
   },
   "d4_ci": {
     "source": "results/task_d_nind20.json",
@@ -2841,7 +2985,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 191
+    "value": 200
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",
@@ -2857,23 +3001,31 @@
   },
   "n_retract_framing": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 2
+    "value": 6
+  },
+  "n_retract_framing_ids": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "`S-12`, `S-15`, `S-16`, `S-17`, `S-18`, `S-19`"
+  },
+  "n_retract_framing_list": {
+    "source": "FINDINGS_LEDGER.md",
+    "value": "\n\n- **Task 3's duplication rule was pre-registered** (`S-12`).\n\n- **The binomial P-values attached to every dimension count** (`S-15`).\n\n- **The two largest held-out deviations are in opposite directions** (`S-16`).\n\n- **The eight untested claims are, without exception, about policy learning or hardware** (`S-17`).\n\n- **The per-member \u03c3 is worse by three orders of magnitude** (`S-18`).\n\n- **The released checkpoint cannot have come from the released recipe** (`S-19`)."
   },
   "n_retract_framing_phrase": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "two further"
+    "value": "6 further"
   },
   "n_retract_framing_word": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "two"
+    "value": "six"
   },
   "n_retract_framing_word_cap": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "Two"
+    "value": "Six"
   },
   "n_retract_total": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 8
+    "value": 12
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",
@@ -2897,11 +3049,19 @@
   },
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 15
+    "value": 19
   },
   "n_train_eps": {
     "source": "results/step5_armA_seed0.json (split)",
     "value": 8
+  },
+  "n_untested": {
+    "source": "PAPER.template.md, Appendix F table",
+    "value": 8
+  },
+  "n_untested_word": {
+    "source": "PAPER.template.md, Appendix F table",
+    "value": "eight"
   },
   "nind_ins_400": {
     "source": "results/review_bootstrap_unit.json",
@@ -2989,15 +3149,19 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 30
+    "value": 32
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
-    "value": []
+    "value": 0
   },
   "perm_all_armB_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "5.68e-14"
+  },
+  "perm_all_armB_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.61e-12"
   },
   "perm_all_armB_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -3016,6 +3180,10 @@
     "value": "7.88e-08"
   },
   "perm_all_armB_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_armB_grp_h100": {
     "source": "results/task_b_permutation.json",
     "value": 6
   },
@@ -3039,6 +3207,10 @@
     "source": "results/task_b_permutation.json",
     "value": 45
   },
+  "perm_all_armB_ndim_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
   "perm_all_armB_ndim_h128": {
     "source": "results/task_b_permutation.json",
     "value": 45
@@ -3058,6 +3230,10 @@
   "perm_all_armB_npos_h1": {
     "source": "results/task_b_permutation.json",
     "value": 45
+  },
+  "perm_all_armB_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 44
   },
   "perm_all_armB_npos_h128": {
     "source": "results/task_b_permutation.json",
@@ -3079,13 +3255,17 @@
     "source": "results/task_b_permutation.json",
     "value": "15.7"
   },
+  "perm_all_armB_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "19.0"
+  },
   "perm_all_armB_null_h128": {
     "source": "results/task_b_permutation.json",
     "value": "25.0"
   },
   "perm_all_armB_null_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "13.5"
+    "value": "13.6"
   },
   "perm_all_armB_null_h368": {
     "source": "results/task_b_permutation.json",
@@ -3093,31 +3273,39 @@
   },
   "perm_all_armB_null_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "13.1"
+    "value": "12.8"
   },
   "perm_all_armB_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0137"
+    "value": "0.0141"
+  },
+  "perm_all_armB_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0200"
   },
   "perm_all_armB_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0174"
+    "value": "0.0169"
   },
   "perm_all_armB_p_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0360"
+    "value": "0.0366"
   },
   "perm_all_armB_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.5214"
+    "value": "0.5244"
   },
   "perm_all_armB_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0457"
+    "value": "0.0429"
   },
   "perm_all_epi_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "2.61e-12"
+  },
+  "perm_all_epi_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
   },
   "perm_all_epi_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -3136,6 +3324,10 @@
     "value": "5.68e-14"
   },
   "perm_all_epi_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_all_epi_grp_h100": {
     "source": "results/task_b_permutation.json",
     "value": 6
   },
@@ -3159,6 +3351,10 @@
     "source": "results/task_b_permutation.json",
     "value": 45
   },
+  "perm_all_epi_ndim_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
   "perm_all_epi_ndim_h128": {
     "source": "results/task_b_permutation.json",
     "value": 45
@@ -3178,6 +3374,10 @@
   "perm_all_epi_npos_h1": {
     "source": "results/task_b_permutation.json",
     "value": 44
+  },
+  "perm_all_epi_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
   },
   "perm_all_epi_npos_h128": {
     "source": "results/task_b_permutation.json",
@@ -3199,6 +3399,10 @@
     "source": "results/task_b_permutation.json",
     "value": "15.4"
   },
+  "perm_all_epi_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "39.4"
+  },
   "perm_all_epi_null_h128": {
     "source": "results/task_b_permutation.json",
     "value": "41.6"
@@ -3213,31 +3417,39 @@
   },
   "perm_all_epi_null_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "15.8"
+    "value": "16.0"
   },
   "perm_all_epi_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0060"
+    "value": "0.0056"
+  },
+  "perm_all_epi_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2769"
   },
   "perm_all_epi_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.3725"
+    "value": "0.3762"
   },
   "perm_all_epi_p_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0355"
+    "value": "0.0344"
   },
   "perm_all_epi_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0823"
+    "value": "0.0804"
   },
   "perm_all_epi_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0085"
+    "value": "0.0069"
   },
   "perm_all_faithA_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "7.25e-02"
+  },
+  "perm_all_faithA_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "9.33e-09"
   },
   "perm_all_faithA_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -3259,6 +3471,10 @@
     "source": "results/task_b_permutation.json",
     "value": 5
   },
+  "perm_all_faithA_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
   "perm_all_faithA_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 6
@@ -3276,6 +3492,10 @@
     "value": 6
   },
   "perm_all_faithA_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_faithA_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -3299,6 +3519,10 @@
     "source": "results/task_b_permutation.json",
     "value": 29
   },
+  "perm_all_faithA_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 41
+  },
   "perm_all_faithA_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 40
@@ -3317,11 +3541,15 @@
   },
   "perm_all_faithA_null_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "11.8"
+    "value": "11.9"
+  },
+  "perm_all_faithA_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "10.4"
   },
   "perm_all_faithA_null_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "10.6"
+    "value": "10.7"
   },
   "perm_all_faithA_null_h32": {
     "source": "results/task_b_permutation.json",
@@ -3329,7 +3557,7 @@
   },
   "perm_all_faithA_null_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "16.3"
+    "value": "16.2"
   },
   "perm_all_faithA_null_h8": {
     "source": "results/task_b_permutation.json",
@@ -3337,23 +3565,27 @@
   },
   "perm_all_faithA_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.1343"
+    "value": "0.1388"
+  },
+  "perm_all_faithA_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0063"
   },
   "perm_all_faithA_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0076"
+    "value": "0.0078"
   },
   "perm_all_faithA_p_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0672"
+    "value": "0.0682"
   },
   "perm_all_faithA_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0042"
+    "value": "0.0037"
   },
   "perm_all_faithA_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.1303"
+    "value": "0.1304"
   },
   "perm_all_floor": {
     "source": "results/task_b_permutation.json",
@@ -3365,11 +3597,11 @@
   },
   "perm_all_holm_min_p": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0042"
+    "value": "0.0037"
   },
   "perm_all_holm_n": {
     "source": "results/task_b_permutation.json",
-    "value": 25
+    "value": 30
   },
   "perm_all_holm_rej": {
     "source": "results/task_b_permutation.json",
@@ -3377,7 +3609,7 @@
   },
   "perm_all_holm_thr": {
     "source": "results/task_b_permutation.json",
-    "value": "0.002"
+    "value": "0.001667"
   },
   "perm_all_nind": {
     "source": "results/task_b_permutation.json",
@@ -3386,6 +3618,10 @@
   "perm_all_nll_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "7.66e-01"
+  },
+  "perm_all_nll_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.35e-01"
   },
   "perm_all_nll_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -3407,6 +3643,10 @@
     "source": "results/task_b_permutation.json",
     "value": 3
   },
+  "perm_all_nll_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
   "perm_all_nll_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 4
@@ -3424,6 +3664,10 @@
     "value": 2
   },
   "perm_all_nll_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_nll_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -3447,6 +3691,10 @@
     "source": "results/task_b_permutation.json",
     "value": 21
   },
+  "perm_all_nll_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 28
+  },
   "perm_all_nll_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 27
@@ -3465,7 +3713,11 @@
   },
   "perm_all_nll_null_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "25.9"
+    "value": "25.8"
+  },
+  "perm_all_nll_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "28.8"
   },
   "perm_all_nll_null_h128": {
     "source": "results/task_b_permutation.json",
@@ -3485,25 +3737,33 @@
   },
   "perm_all_nll_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.8914"
+    "value": "0.8915"
+  },
+  "perm_all_nll_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9679"
   },
   "perm_all_nll_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.9601"
+    "value": "0.9593"
   },
   "perm_all_nll_p_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "0.8240"
+    "value": "0.8242"
   },
   "perm_all_nll_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.9995"
+    "value": "0.9992"
   },
   "perm_all_nll_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.7596"
+    "value": "0.7598"
   },
   "perm_all_relale_binom_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": "3.12e-06"
+  },
+  "perm_all_relale_binom_h100": {
     "source": "results/task_b_permutation.json",
     "value": "3.12e-06"
   },
@@ -3527,6 +3787,10 @@
     "source": "results/task_b_permutation.json",
     "value": 0
   },
+  "perm_all_relale_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
   "perm_all_relale_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 3
@@ -3544,6 +3808,10 @@
     "value": 3
   },
   "perm_all_relale_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_all_relale_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -3567,6 +3835,10 @@
     "source": "results/task_b_permutation.json",
     "value": 7
   },
+  "perm_all_relale_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 38
+  },
   "perm_all_relale_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 28
@@ -3585,15 +3857,19 @@
   },
   "perm_all_relale_null_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "17.6"
+    "value": "17.7"
+  },
+  "perm_all_relale_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "28.9"
   },
   "perm_all_relale_null_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "29.4"
+    "value": "29.5"
   },
   "perm_all_relale_null_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "21.6"
+    "value": "21.7"
   },
   "perm_all_relale_null_h368": {
     "source": "results/task_b_permutation.json",
@@ -3605,11 +3881,15 @@
   },
   "perm_all_relale_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.7157"
+    "value": "0.7171"
+  },
+  "perm_all_relale_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2901"
   },
   "perm_all_relale_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.6250"
+    "value": "0.6334"
   },
   "perm_all_relale_p_h32": {
     "source": "results/task_b_permutation.json",
@@ -3621,11 +3901,15 @@
   },
   "perm_all_relale_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.3258"
+    "value": "0.3235"
   },
   "perm_ins_armB_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "5.68e-14"
+  },
+  "perm_ins_armB_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.61e-12"
   },
   "perm_ins_armB_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -3644,6 +3928,10 @@
     "value": "5.42e-07"
   },
   "perm_ins_armB_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_armB_grp_h100": {
     "source": "results/task_b_permutation.json",
     "value": 6
   },
@@ -3667,6 +3955,10 @@
     "source": "results/task_b_permutation.json",
     "value": 45
   },
+  "perm_ins_armB_ndim_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
   "perm_ins_armB_ndim_h128": {
     "source": "results/task_b_permutation.json",
     "value": 45
@@ -3687,6 +3979,10 @@
     "source": "results/task_b_permutation.json",
     "value": 45
   },
+  "perm_ins_armB_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 44
+  },
   "perm_ins_armB_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 44
@@ -3705,15 +4001,19 @@
   },
   "perm_ins_armB_null_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "14.4"
+    "value": "14.2"
+  },
+  "perm_ins_armB_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "20.3"
   },
   "perm_ins_armB_null_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "18.0"
+    "value": "18.1"
   },
   "perm_ins_armB_null_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "12.7"
+    "value": "12.6"
   },
   "perm_ins_armB_null_h368": {
     "source": "results/task_b_permutation.json",
@@ -3721,11 +4021,15 @@
   },
   "perm_ins_armB_null_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "10.5"
+    "value": "10.2"
   },
   "perm_ins_armB_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0150"
+    "value": "0.0143"
+  },
+  "perm_ins_armB_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0121"
   },
   "perm_ins_armB_p_h128": {
     "source": "results/task_b_permutation.json",
@@ -3733,19 +4037,23 @@
   },
   "perm_ins_armB_p_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0249"
+    "value": "0.0238"
   },
   "perm_ins_armB_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.5656"
+    "value": "0.5565"
   },
   "perm_ins_armB_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0575"
+    "value": "0.0563"
   },
   "perm_ins_epi_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "2.61e-12"
+  },
+  "perm_ins_epi_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
   },
   "perm_ins_epi_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -3764,6 +4072,10 @@
     "value": "5.68e-14"
   },
   "perm_ins_epi_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_epi_grp_h100": {
     "source": "results/task_b_permutation.json",
     "value": 6
   },
@@ -3787,6 +4099,10 @@
     "source": "results/task_b_permutation.json",
     "value": 45
   },
+  "perm_ins_epi_ndim_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
   "perm_ins_epi_ndim_h128": {
     "source": "results/task_b_permutation.json",
     "value": 45
@@ -3806,6 +4122,10 @@
   "perm_ins_epi_npos_h1": {
     "source": "results/task_b_permutation.json",
     "value": 44
+  },
+  "perm_ins_epi_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
   },
   "perm_ins_epi_npos_h128": {
     "source": "results/task_b_permutation.json",
@@ -3827,17 +4147,21 @@
     "source": "results/task_b_permutation.json",
     "value": "16.0"
   },
+  "perm_ins_epi_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "40.6"
+  },
   "perm_ins_epi_null_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "42.7"
+    "value": "42.6"
   },
   "perm_ins_epi_null_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "16.1"
+    "value": "16.3"
   },
   "perm_ins_epi_null_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "34.9"
+    "value": "35.0"
   },
   "perm_ins_epi_null_h8": {
     "source": "results/task_b_permutation.json",
@@ -3845,27 +4169,35 @@
   },
   "perm_ins_epi_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0060"
+    "value": "0.0052"
+  },
+  "perm_ins_epi_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.2777"
   },
   "perm_ins_epi_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.3804"
+    "value": "0.3794"
   },
   "perm_ins_epi_p_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0349"
+    "value": "0.0365"
   },
   "perm_ins_epi_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0758"
+    "value": "0.0775"
   },
   "perm_ins_epi_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0084"
+    "value": "0.0070"
   },
   "perm_ins_faithA_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "5.68e-14"
+  },
+  "perm_ins_faithA_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.89e-11"
   },
   "perm_ins_faithA_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -3884,6 +4216,10 @@
     "value": "9.33e-09"
   },
   "perm_ins_faithA_grp_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_ins_faithA_grp_h100": {
     "source": "results/task_b_permutation.json",
     "value": 6
   },
@@ -3907,6 +4243,10 @@
     "source": "results/task_b_permutation.json",
     "value": 45
   },
+  "perm_ins_faithA_ndim_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
   "perm_ins_faithA_ndim_h128": {
     "source": "results/task_b_permutation.json",
     "value": 45
@@ -3926,6 +4266,10 @@
   "perm_ins_faithA_npos_h1": {
     "source": "results/task_b_permutation.json",
     "value": 45
+  },
+  "perm_ins_faithA_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 43
   },
   "perm_ins_faithA_npos_h128": {
     "source": "results/task_b_permutation.json",
@@ -3947,9 +4291,13 @@
     "source": "results/task_b_permutation.json",
     "value": "14.9"
   },
+  "perm_ins_faithA_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "24.9"
+  },
   "perm_ins_faithA_null_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "24.3"
+    "value": "24.4"
   },
   "perm_ins_faithA_null_h32": {
     "source": "results/task_b_permutation.json",
@@ -3957,7 +4305,7 @@
   },
   "perm_ins_faithA_null_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "26.6"
+    "value": "26.5"
   },
   "perm_ins_faithA_null_h8": {
     "source": "results/task_b_permutation.json",
@@ -3967,9 +4315,13 @@
     "source": "results/task_b_permutation.json",
     "value": "0.0106"
   },
+  "perm_ins_faithA_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0604"
+  },
   "perm_ins_faithA_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0293"
+    "value": "0.0336"
   },
   "perm_ins_faithA_p_h32": {
     "source": "results/task_b_permutation.json",
@@ -3977,7 +4329,7 @@
   },
   "perm_ins_faithA_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.0232"
+    "value": "0.0240"
   },
   "perm_ins_faithA_p_h8": {
     "source": "results/task_b_permutation.json",
@@ -3997,7 +4349,7 @@
   },
   "perm_ins_holm_n": {
     "source": "results/task_b_permutation.json",
-    "value": 25
+    "value": 30
   },
   "perm_ins_holm_rej": {
     "source": "results/task_b_permutation.json",
@@ -4005,7 +4357,7 @@
   },
   "perm_ins_holm_thr": {
     "source": "results/task_b_permutation.json",
-    "value": "0.002"
+    "value": "0.001667"
   },
   "perm_ins_nind": {
     "source": "results/task_b_permutation.json",
@@ -4014,6 +4366,10 @@
   "perm_ins_nll_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "5.51e-01"
+  },
+  "perm_ins_nll_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.33e-01"
   },
   "perm_ins_nll_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -4035,6 +4391,10 @@
     "source": "results/task_b_permutation.json",
     "value": 4
   },
+  "perm_ins_nll_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
   "perm_ins_nll_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 3
@@ -4052,6 +4412,10 @@
     "value": 4
   },
   "perm_ins_nll_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_nll_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -4075,6 +4439,10 @@
     "source": "results/task_b_permutation.json",
     "value": 25
   },
+  "perm_ins_nll_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 27
+  },
   "perm_ins_nll_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 23
@@ -4093,7 +4461,11 @@
   },
   "perm_ins_nll_null_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "25.6"
+    "value": "25.5"
+  },
+  "perm_ins_nll_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "27.0"
   },
   "perm_ins_nll_null_h128": {
     "source": "results/task_b_permutation.json",
@@ -4115,25 +4487,33 @@
     "source": "results/task_b_permutation.json",
     "value": "1.0000"
   },
+  "perm_ins_nll_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.0000"
+  },
   "perm_ins_nll_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.9651"
+    "value": "0.9659"
   },
   "perm_ins_nll_p_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "0.6750"
+    "value": "0.6718"
   },
   "perm_ins_nll_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.8734"
+    "value": "0.8746"
   },
   "perm_ins_nll_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.9744"
+    "value": "0.9753"
   },
   "perm_ins_relale_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "3.12e-06"
+  },
+  "perm_ins_relale_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.47e-04"
   },
   "perm_ins_relale_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -4155,6 +4535,10 @@
     "source": "results/task_b_permutation.json",
     "value": 0
   },
+  "perm_ins_relale_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
   "perm_ins_relale_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 3
@@ -4172,6 +4556,10 @@
     "value": 3
   },
   "perm_ins_relale_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_ins_relale_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -4195,6 +4583,10 @@
     "source": "results/task_b_permutation.json",
     "value": 7
   },
+  "perm_ins_relale_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 35
+  },
   "perm_ins_relale_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 29
@@ -4213,7 +4605,11 @@
   },
   "perm_ins_relale_null_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "16.7"
+    "value": "16.5"
+  },
+  "perm_ins_relale_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "29.8"
   },
   "perm_ins_relale_null_h128": {
     "source": "results/task_b_permutation.json",
@@ -4221,23 +4617,27 @@
   },
   "perm_ins_relale_null_h32": {
     "source": "results/task_b_permutation.json",
-    "value": "21.1"
+    "value": "21.2"
   },
   "perm_ins_relale_null_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "20.4"
+    "value": "20.3"
   },
   "perm_ins_relale_null_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "16.7"
+    "value": "16.3"
   },
   "perm_ins_relale_p_h1": {
     "source": "results/task_b_permutation.json",
-    "value": "0.6854"
+    "value": "0.6856"
+  },
+  "perm_ins_relale_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.4045"
   },
   "perm_ins_relale_p_h128": {
     "source": "results/task_b_permutation.json",
-    "value": "0.4345"
+    "value": "0.4323"
   },
   "perm_ins_relale_p_h32": {
     "source": "results/task_b_permutation.json",
@@ -4245,11 +4645,19 @@
   },
   "perm_ins_relale_p_h368": {
     "source": "results/task_b_permutation.json",
-    "value": "0.9738"
+    "value": "0.9753"
   },
   "perm_ins_relale_p_h8": {
     "source": "results/task_b_permutation.json",
-    "value": "0.3085"
+    "value": "0.2980"
+  },
+  "perm_n_tests_col": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
+  "perm_n_tests_col_word": {
+    "source": "results/task_b_permutation.json",
+    "value": "six"
   },
   "perm_ngroups": {
     "source": "results/task_b_permutation.json",
@@ -4261,11 +4669,15 @@
   },
   "perm_null_lo": {
     "source": "results/task_b_permutation.json",
-    "value": "5.4"
+    "value": "5.1"
   },
   "perm_oos_armB_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "2.46e-03"
+  },
+  "perm_oos_armB_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "7.66e-01"
   },
   "perm_oos_armB_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -4287,6 +4699,10 @@
     "source": "results/task_b_permutation.json",
     "value": 5
   },
+  "perm_oos_armB_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
   "perm_oos_armB_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 6
@@ -4304,6 +4720,10 @@
     "value": 5
   },
   "perm_oos_armB_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_armB_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -4327,6 +4747,10 @@
     "source": "results/task_b_permutation.json",
     "value": 33
   },
+  "perm_oos_armB_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 24
+  },
   "perm_oos_armB_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 36
@@ -4346,6 +4770,10 @@
   "perm_oos_armB_null_h1": {
     "source": "results/task_b_permutation.json",
     "value": "22.0"
+  },
+  "perm_oos_armB_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "13.4"
   },
   "perm_oos_armB_null_h128": {
     "source": "results/task_b_permutation.json",
@@ -4367,6 +4795,10 @@
     "source": "results/task_b_permutation.json",
     "value": "0.2174"
   },
+  "perm_oos_armB_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.3043"
+  },
   "perm_oos_armB_p_h128": {
     "source": "results/task_b_permutation.json",
     "value": "0.3043"
@@ -4386,6 +4818,10 @@
   "perm_oos_epi_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "1.00e+00"
+  },
+  "perm_oos_epi_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.68e-14"
   },
   "perm_oos_epi_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -4407,6 +4843,10 @@
     "source": "results/task_b_permutation.json",
     "value": 2
   },
+  "perm_oos_epi_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 6
+  },
   "perm_oos_epi_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 6
@@ -4424,6 +4864,10 @@
     "value": 3
   },
   "perm_oos_epi_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_epi_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -4447,6 +4891,10 @@
     "source": "results/task_b_permutation.json",
     "value": 23
   },
+  "perm_oos_epi_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
   "perm_oos_epi_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 45
@@ -4466,6 +4914,10 @@
   "perm_oos_epi_null_h1": {
     "source": "results/task_b_permutation.json",
     "value": "22.8"
+  },
+  "perm_oos_epi_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "36.8"
   },
   "perm_oos_epi_null_h128": {
     "source": "results/task_b_permutation.json",
@@ -4487,6 +4939,10 @@
     "source": "results/task_b_permutation.json",
     "value": "0.4348"
   },
+  "perm_oos_epi_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0870"
+  },
   "perm_oos_epi_p_h128": {
     "source": "results/task_b_permutation.json",
     "value": "0.0417"
@@ -4506,6 +4962,10 @@
   "perm_oos_faithA_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "6.57e-05"
+  },
+  "perm_oos_faithA_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.35e-01"
   },
   "perm_oos_faithA_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -4527,6 +4987,10 @@
     "source": "results/task_b_permutation.json",
     "value": 6
   },
+  "perm_oos_faithA_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 5
+  },
   "perm_oos_faithA_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 5
@@ -4544,6 +5008,10 @@
     "value": 6
   },
   "perm_oos_faithA_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_faithA_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -4567,6 +5035,10 @@
     "source": "results/task_b_permutation.json",
     "value": 36
   },
+  "perm_oos_faithA_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 28
+  },
   "perm_oos_faithA_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 26
@@ -4587,6 +5059,10 @@
     "source": "results/task_b_permutation.json",
     "value": "16.7"
   },
+  "perm_oos_faithA_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "5.1"
+  },
   "perm_oos_faithA_null_h128": {
     "source": "results/task_b_permutation.json",
     "value": "5.4"
@@ -4606,6 +5082,10 @@
   "perm_oos_faithA_p_h1": {
     "source": "results/task_b_permutation.json",
     "value": "0.2174"
+  },
+  "perm_oos_faithA_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.0417"
   },
   "perm_oos_faithA_p_h128": {
     "source": "results/task_b_permutation.json",
@@ -4629,7 +5109,7 @@
   },
   "perm_oos_holm_min_cell": {
     "source": "results/task_b_permutation.json",
-    "value": "faithful (mse) h=368"
+    "value": "faithful (mse) h=100"
   },
   "perm_oos_holm_min_p": {
     "source": "results/task_b_permutation.json",
@@ -4637,7 +5117,7 @@
   },
   "perm_oos_holm_n": {
     "source": "results/task_b_permutation.json",
-    "value": 25
+    "value": 30
   },
   "perm_oos_holm_rej": {
     "source": "results/task_b_permutation.json",
@@ -4645,7 +5125,7 @@
   },
   "perm_oos_holm_thr": {
     "source": "results/task_b_permutation.json",
-    "value": "0.002"
+    "value": "0.001667"
   },
   "perm_oos_nind": {
     "source": "results/task_b_permutation.json",
@@ -4654,6 +5134,10 @@
   "perm_oos_nll_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "7.25e-02"
+  },
+  "perm_oos_nll_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "2.33e-01"
   },
   "perm_oos_nll_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -4675,6 +5159,10 @@
     "source": "results/task_b_permutation.json",
     "value": 2
   },
+  "perm_oos_nll_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 3
+  },
   "perm_oos_nll_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 3
@@ -4692,6 +5180,10 @@
     "value": 2
   },
   "perm_oos_nll_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_nll_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -4715,6 +5207,10 @@
     "source": "results/task_b_permutation.json",
     "value": 16
   },
+  "perm_oos_nll_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 27
+  },
   "perm_oos_nll_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 26
@@ -4734,6 +5230,10 @@
   "perm_oos_nll_null_h1": {
     "source": "results/task_b_permutation.json",
     "value": "24.6"
+  },
+  "perm_oos_nll_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "26.9"
   },
   "perm_oos_nll_null_h128": {
     "source": "results/task_b_permutation.json",
@@ -4755,6 +5255,10 @@
     "source": "results/task_b_permutation.json",
     "value": "1.0000"
   },
+  "perm_oos_nll_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.8696"
+  },
   "perm_oos_nll_p_h128": {
     "source": "results/task_b_permutation.json",
     "value": "1.0000"
@@ -4774,6 +5278,10 @@
   "perm_oos_relale_binom_h1": {
     "source": "results/task_b_permutation.json",
     "value": "5.51e-01"
+  },
+  "perm_oos_relale_binom_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "1.54e-05"
   },
   "perm_oos_relale_binom_h128": {
     "source": "results/task_b_permutation.json",
@@ -4795,6 +5303,10 @@
     "source": "results/task_b_permutation.json",
     "value": 2
   },
+  "perm_oos_relale_grp_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 1
+  },
   "perm_oos_relale_grp_h128": {
     "source": "results/task_b_permutation.json",
     "value": 4
@@ -4812,6 +5324,10 @@
     "value": 0
   },
   "perm_oos_relale_ndim_h1": {
+    "source": "results/task_b_permutation.json",
+    "value": 45
+  },
+  "perm_oos_relale_ndim_h100": {
     "source": "results/task_b_permutation.json",
     "value": 45
   },
@@ -4835,6 +5351,10 @@
     "source": "results/task_b_permutation.json",
     "value": 20
   },
+  "perm_oos_relale_npos_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": 8
+  },
   "perm_oos_relale_npos_h128": {
     "source": "results/task_b_permutation.json",
     "value": 29
@@ -4855,6 +5375,10 @@
     "source": "results/task_b_permutation.json",
     "value": "22.9"
   },
+  "perm_oos_relale_null_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "19.8"
+  },
   "perm_oos_relale_null_h128": {
     "source": "results/task_b_permutation.json",
     "value": "29.8"
@@ -4874,6 +5398,10 @@
   "perm_oos_relale_p_h1": {
     "source": "results/task_b_permutation.json",
     "value": "0.6087"
+  },
+  "perm_oos_relale_p_h100": {
+    "source": "results/task_b_permutation.json",
+    "value": "0.9565"
   },
   "perm_oos_relale_p_h128": {
     "source": "results/task_b_permutation.json",
@@ -4901,7 +5429,7 @@
   },
   "perm_worst_factor_exact": {
     "source": "results/task_b_permutation.json",
-    "value": "9.95e+12"
+    "value": "9.79e+12"
   },
   "perm_worst_h": {
     "source": "results/task_b_permutation.json",
@@ -5167,6 +5695,22 @@
     "source": "results/r2_independent_ensemble.json",
     "value": "1.81"
   },
+  "r2_sigma_x_hi": {
+    "source": "results/r2_independent_ensemble.json",
+    "value": "1.81"
+  },
+  "r2_sigma_x_hi_h": {
+    "source": "results/r2_independent_ensemble.json",
+    "value": 8
+  },
+  "r2_sigma_x_lo": {
+    "source": "results/r2_independent_ensemble.json",
+    "value": "1.49"
+  },
+  "r2_sigma_x_lo_h": {
+    "source": "results/r2_independent_ensemble.json",
+    "value": 368
+  },
   "r2_total_x_h1": {
     "source": "results/r2_independent_ensemble.json",
     "value": "1.52"
@@ -5229,15 +5773,15 @@
   },
   "rt_hours": {
     "source": "results/step5_*.json",
-    "value": "46"
+    "value": "46.3"
   },
   "rt_hours_10k": {
     "source": "results/step5_*.json",
-    "value": "20"
+    "value": "19.7"
   },
   "rt_hours_short": {
     "source": "results/step5_*.json",
-    "value": "27"
+    "value": "26.6"
   },
   "rt_longest": {
     "source": "results/step5_*.json",
@@ -5415,6 +5959,18 @@
     "source": "docs/E4_AUTHOR_CONTACT.md",
     "value": "5,000"
   },
+  "v1_cap_indep": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "3,570,820"
+  },
+  "v1_cap_ratio": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "3.49"
+  },
+  "v1_cap_shared": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "1,024,132"
+  },
   "v1_hidden_states": {
     "source": "results/v1_ensemble_topology.json",
     "value": 1
@@ -5551,6 +6107,14 @@
     "source": "results/original_paper_figures.json",
     "value": "8 Jan 2026"
   },
+  "v4_exp_v1": {
+    "source": "results/original_paper_figures.json",
+    "value": "Offline Robotic World Model"
+  },
+  "v4_exp_v3": {
+    "source": "results/original_paper_figures.json",
+    "value": "Uncertainty-Aware Robotic World Model"
+  },
   "v4_n_moved": {
     "source": "results/original_paper_figures.json",
     "value": 7
@@ -5558,6 +6122,22 @@
   "v4_n_unchanged": {
     "source": "results/original_paper_figures.json",
     "value": 4
+  },
+  "v4_name_n_v1": {
+    "source": "results/original_paper_figures.json",
+    "value": 39
+  },
+  "v4_name_n_v3": {
+    "source": "results/original_paper_figures.json",
+    "value": 43
+  },
+  "v4_name_v1": {
+    "source": "results/original_paper_figures.json",
+    "value": "RWM-O"
+  },
+  "v4_name_v3": {
+    "source": "results/original_paper_figures.json",
+    "value": "RWM-U"
   },
   "v4_read": {
     "source": "results/original_paper_figures.json",
