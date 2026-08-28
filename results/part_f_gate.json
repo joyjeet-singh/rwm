@@ -21,8 +21,8 @@
     {
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
-      "pass": true,
-      "detail": "verify_reproduction.json vs the clone run at rwm_clone_rev2: 36 files regenerated, 6,821 values, 6,821 identical, 0 differing; carried-in partition present (801,146 copied values held out); artifact post-dates the regeneration marker"
+      "pass": false,
+      "detail": "verify_reproduction.json vs the clone run at rwm_clone_rev2: 36 files regenerated, 6,821 values, 6,821 identical, 0 differing; carried-in partition present (801,146 copied values held out); artifact PREDATES the regeneration marker"
     },
     {
       "n": 5,
@@ -37,7 +37,7 @@
       "detail": "10 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
-  "n_pass": 6,
+  "n_pass": 5,
   "n_run": 6,
   "n_not_run": 0,
   "n": 6

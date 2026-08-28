@@ -1,0 +1,30 @@
+{
+  "origin": "https://github.com/joyjeet-singh/rwm",
+  "watched_path": "docs/SUPPLEMENTARY_CORRESPONDENCE.md",
+  "window": {
+    "open": "2026-08-28T11:46:49+05:30",
+    "shut": "2026-08-28T16:47:00+05:30",
+    "open_utc": "2026-08-28T06:16:49+00:00",
+    "shut_utc": "2026-08-28T11:17:00+00:00",
+    "hours": 5.0,
+    "source": "M-48; git reflog for origin/main"
+  },
+  "checked_on": "2026-08-28T18:38:14.917299+00:00",
+  "visits": [
+    {
+      "visit": 1,
+      "date": "2026-08-21T13:24:43.685000+00:00",
+      "date_utc": "2026-08-21T13:24:43.685000+00:00",
+      "status": "full",
+      "type": "git",
+      "snapshot": "a6ec9d2f04c6e4763818cab9166b238d045bed93",
+      "inside_exposure_window": false,
+      "days_before_window": 6.7,
+      "archived_tree_contains_path": false,
+      "branch_head": "ab06447e69d390e56c7d38b34b5786a60547200f"
+    }
+  ],
+  "visits_in_window": [],
+  "verdict": "not exposed",
+  "reason": "1 visit(s) to this origin, none inside the window, and no archived tree contains docs/SUPPLEMENTARY_CORRESPONDENCE.md. The archived snapshot predates the commit that introduced the file."
+}
