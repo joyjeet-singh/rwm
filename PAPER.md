@@ -1095,8 +1095,8 @@ the work.
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
 **Reproducibility, and a build that checks its own prose.**
-`./reproduce.sh --quick --force` regenerates 35 artifact files and 6,811
-numeric values from a clean clone, 6,810 of them bitwise identical (99.99%),
+`./reproduce.sh --quick --force` regenerates 36 artifact files and 6,819
+numeric values from a clean clone, 6,818 of them bitwise identical (99.99%),
 1 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **49 comparative claims** across 20 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 49 of 49 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
@@ -1439,7 +1439,7 @@ holding the **current** run's, so they cannot agree: writing a result into the t
 thing the next run measures. There is no fixed point to converge to, and treating it as a
 reproducibility failure would make the reported figure oscillate rather than settle. They are
 dropped by provenance like the others and counted in the output rather than hidden — the same
-discipline §9's own 35-file figure rests on, since a silent exclusion is exactly how an
+discipline §9's own 36-file figure rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
 
 ## Appendix E — what testing the untested claims would require

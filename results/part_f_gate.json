@@ -21,8 +21,8 @@
     {
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
-      "pass": false,
-      "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 36 files regenerated, 6,789 values, 6,787 identical, 2 differing; carried-in partition present (800,909 copied values held out); artifact post-dates the regeneration marker"
+      "pass": null,
+      "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 36 files regenerated, 6,819 values, 6,818 identical, 1 differing; carried-in partition present (801,146 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": 5,
@@ -38,5 +38,7 @@
     }
   ],
   "n_pass": 5,
+  "n_run": 5,
+  "n_not_run": 1,
   "n": 6
 }

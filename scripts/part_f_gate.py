@@ -39,7 +39,16 @@ rows = []
 
 
 def chk(n, name, ok, detail):
-    rows.append({"n": n, "name": name, "pass": bool(ok), "detail": detail})
+    """ok=None means NOT RUN: the check could not see what it checks.
+
+    A not-run check is neither a pass nor a failure and is kept out of both
+    counts. Scoring it as a pass overstates the gate; scoring it as a failure
+    makes a clean pipeline look broken. Check 4 needs a clone that the pipeline
+    does not have, and inferring its verdict from whichever comparison last
+    wrote an artifact is what made this gate's own result fail to reproduce.
+    """
+    rows.append({"n": n, "name": name,
+                 "pass": None if ok is None else bool(ok), "detail": detail})
 
 
 def main():
@@ -155,7 +164,20 @@ def main():
             marks = [os.path.join(clone, "_regenerated.txt")]
             fresh = all(os.path.getmtime(vp) >= os.path.getmtime(m)
                         for m in marks if os.path.exists(m))
+        # WITHOUT a clone to point at, this check reports rather than asserts.
+        #
+        # It reads the in-tree verify_reproduction.json, which is written by
+        # whichever comparison last ran. So in the pipeline -- where no clone is
+        # given -- its verdict is a property of the last thing someone did, not
+        # of this run. That made n_pass oscillate between 5 and 6 across trees
+        # and it was the last differing value in the clean-clone comparison: the
+        # gate's own result was the thing that would not reproduce. Exactly the
+        # self-referential class appendix D describes for the ver_* keys, in an
+        # artifact the ver_* exclusion does not cover.
+        #
+        # A check that cannot see what it is checking should say so, not infer.
         chk(4, "clean clone ./reproduce.sh --quick --force",
+            None if not clone else
             v["differing"] == 0 and nregen > 0 and sane and fresh,
             # repo-relative, never absolute: an absolute path contains the home
             # directory, which contains the author's name, and this detail string
@@ -244,16 +266,25 @@ def main():
         f"{len(ak)} abstract keys; asserted-but-absent-from-body {orphan or 'none'}; "
         f"same quantity at two aggregations in the abstract {clash or 'none'}")
 
-    out = {"checks": rows, "n_pass": sum(r["pass"] for r in rows), "n": len(rows)}
+    # A not-run check is counted in neither column. n_run is the denominator so
+    # that this artifact's own numbers do not move between a tree with a clone
+    # comparison and one without -- which is what made part_f_gate.json the last
+    # value in the build that would not reproduce.
+    ran = [r for r in rows if r["pass"] is not None]
+    notrun = [r for r in rows if r["pass"] is None]
+    out = {"checks": rows, "n_pass": sum(bool(r["pass"]) for r in ran),
+           "n_run": len(ran), "n_not_run": len(notrun), "n": len(rows)}
     json.dump(out, open(os.path.join(R.RESULTS, "part_f_gate.json"), "w"), indent=2)
     print("PART F — SUBMISSION GATE")
     print("=" * 100)
     for r in rows:
-        print(f"  {'PASS' if r['pass'] else 'FAIL'}  {r['n']}. {r['name']}")
+        state = "NOT RUN" if r["pass"] is None else ("PASS" if r["pass"] else "FAIL")
+        print(f"  {state:<7} {r['n']}. {r['name']}")
         print(f"          {r['detail']}")
     print("=" * 100)
-    print(f"  {out['n_pass']}/{out['n']} checks pass")
-    return 0 if out["n_pass"] == out["n"] else 1
+    print(f"  {out['n_pass']}/{out['n_run']} checks pass"
+          + (f"; {out['n_not_run']} not run (needs CLONE_RESULTS)" if notrun else ""))
+    return 0 if out["n_pass"] == out["n_run"] else 1
 
 
 if __name__ == "__main__":

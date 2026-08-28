@@ -6525,7 +6525,7 @@
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 35
+    "value": 36
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
@@ -6533,7 +6533,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "6,810"
+    "value": "6,818"
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
@@ -6573,7 +6573,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "6,811"
+    "value": "6,819"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",
