@@ -117,16 +117,23 @@ def main():
                     continue
                 files.append(os.path.join(root, n))
     files += [f for f in INCLUDE_FILES if os.path.exists(f)]
+    files = sorted(set(files) - EXCLUDE)
     # The same invariant make_anon_bundle.py asserts, for the same reason: this
     # archive must be reproducible from a clean clone, and a gitignored file is
     # one a clone does not have. Two got into the other bundler that way.
-    _ig = subprocess.run(["git", "check-ignore", "--stdin"], input="\n".join(sorted(set(files))),
+    #
+    # AFTER the EXCLUDE subtraction, not before. It was before, and it fired on
+    # results/_regenerated.txt -- a file EXCLUDE already removes -- but only in a
+    # tree that had actually run the pipeline, which is to say only in the clean
+    # clone and never here. An assertion about clean-clone reproducibility that
+    # passes locally and fails on a clone is the exact asymmetry it was written
+    # to catch, so it caught itself.
+    _ig = subprocess.run(["git", "check-ignore", "--stdin"], input="\n".join(files),
                          capture_output=True, text=True)
     _ignored = [x for x in _ig.stdout.split("\n") if x.strip()]
     assert not _ignored, (
         "these files are gitignored and would go into the archive, which a clean clone "
         "cannot reproduce: " + ", ".join(sorted(_ignored)))
-    files = sorted(set(files) - EXCLUDE)
 
     log = anon_git_log()
     problems, total = [], 0

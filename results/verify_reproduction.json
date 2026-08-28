@@ -37,15 +37,15 @@
     "v2_deployment_horizon.json",
     "v3_metric_definitions.json"
   ],
-  "values_compared": 6819,
-  "bitwise_identical": 6818,
+  "values_compared": 6821,
+  "bitwise_identical": 6821,
   "identical_to_1e-9": 0,
-  "differing": 1,
+  "differing": 0,
   "timing_excluded": 4488,
   "nan_in_both": 4,
   "copied_file_values": 801146,
-  "copied_identical": 801145,
-  "copied_differing": 1,
+  "copied_identical": 801146,
+  "copied_differing": 0,
   "machine_file_values_excluded": 592,
   "machine_files": [
     "step4_5_timing.json"
