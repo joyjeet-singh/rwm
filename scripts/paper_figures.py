@@ -114,6 +114,57 @@ def fig2_sigma_profile(rec):
     return p
 
 
+def fig6_ab_by_horizon(rec):
+    """The A/B advantage as a curve, because as a point it looks selected.
+
+    5 led with 4.61x at h=368 while 3.1 says h=368 is not a deployment horizon,
+    and the same comparison at h=100 is 2.58x. The curve is the honest form: the
+    advantage grows monotonically with forecast depth, it is not established at
+    h=1 -- where the interval spans zero and teacher forcing is nominally ahead
+    -- and h=368 is the end of a trend rather than a point someone picked.
+    """
+    d = J("a1_ab_by_horizon.json")
+    hs = d["design"]["horizons"]
+    fig, ax = plt.subplots(1, 2, figsize=(7.6, 3.2))
+
+    r = [d["by_horizon"][str(h)]["ratio_B_over_A"] for h in hs]
+    ax[0].plot(hs, r, "o-", ms=4, lw=1.6, color=C["armB"])
+    ax[0].axhline(1.0, color="k", ls="--", lw=1)
+    ax[0].text(hs[0], 1.06, "no difference", fontsize=6.5, color="#555555")
+    for h, y in zip(hs, r):
+        ax[0].annotate(f"{y:.2f}x", (h, y), textcoords="offset points",
+                       xytext=(0, 6), ha="center", fontsize=6.5)
+    ax[0].set(xscale="log", xlabel="forecast horizon (steps)",
+              ylabel="teacher forcing / autoregressive",
+              title="(a) the advantage grows with horizon")
+
+    # the gap and its interval, so "not established at h=1" is visible rather
+    # than asserted
+    g = np.array([d["by_horizon"][str(h)]["gap"] for h in hs])
+    lo = np.array([d["by_horizon"][str(h)]["gap_ci"][0] for h in hs])
+    hi = np.array([d["by_horizon"][str(h)]["gap_ci"][1] for h in hs])
+    ax[1].errorbar(hs, g, yerr=[g - lo, hi - g], fmt="o", ms=4, lw=1.4,
+                   capsize=3, color=C["faithful"])
+    ax[1].axhline(0.0, color="k", ls="--", lw=1)
+    ax[1].set(xscale="log", xlabel="forecast horizon (steps)",
+              ylabel="Arm B $-$ Arm A (relative-L1)",
+              title="(b) gap, 95% cluster bootstrap")
+    ax[1].text(0.99, 0.04, f"n_independent = {d['design']['n_independent']}; "
+                           f"the interval spans zero only at h=1",
+               transform=ax[1].transAxes, ha="right", fontsize=6.5, color="#555555")
+
+    for h in (100, 368):
+        for a in ax:
+            a.axvline(h, color="#bbbbbb", lw=0.8, ls=":", zorder=0)
+    rec["fig6"] = {"ratios": {str(h): d["by_horizon"][str(h)]["ratio_B_over_A"] for h in hs},
+                   "monotone_increasing": d["trend"]["monotone_increasing"],
+                   "spans_zero_at": d["trend"]["spans_zero_at"]}
+    fig.tight_layout()
+    p = os.path.join(R.FIGURES, "paper_fig6_ab_by_horizon.png")
+    fig.savefig(p); plt.close(fig)
+    return p
+
+
 def fig3_collapse(rec):
     """The variance collapse is linear, identical across every run."""
     import glob
@@ -328,7 +379,7 @@ def fig5_three_way(rec):
 def main():
     rec = {}
     made = [fig1_calibration(rec), fig2_sigma_profile(rec), fig3_collapse(rec),
-            fig4_timeline(rec), fig5_three_way(rec)]
+            fig4_timeline(rec), fig5_three_way(rec), fig6_ab_by_horizon(rec)]
     op = os.path.join(R.RESULTS, "paper_figures.json")
     json.dump(rec, open(op, "w"), indent=2)
     print("PAPER FIGURES")

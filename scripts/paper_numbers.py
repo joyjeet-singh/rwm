@@ -1073,6 +1073,59 @@ def main():
         put(f"d1_A_sd_{_hk}", f'{_bh["A"]["sd_ddof1"]:.4f}', "results/task_d1_threeseed.json")
         put(f"d1_B_mean_{_hk}", f'{_bh["B"]["mean"]:.4f}', "results/task_d1_threeseed.json")
         put(f"d1_B_sd_{_hk}", f'{_bh["B"]["sd_ddof1"]:.4f}', "results/task_d1_threeseed.json")
+    # --- A1: the A/B result across the whole horizon grid --------------------
+    # 5 led with h=368 while 3.1 says h=368 is not a deployment horizon, and the
+    # same comparison at h=100 is 2.58x. As a line item that reads as horizon
+    # shopping; as a curve it is a finding, because the advantage GROWS with
+    # horizon and h=368 is the end of a trend. Everything here except h=368 was
+    # computed after the data existed and carries no pre-registration weight.
+    A1 = J("a1_ab_by_horizon.json")
+    _a1h = A1["design"]["horizons"]
+    for _h in _a1h:
+        _r = A1["by_horizon"][str(_h)]
+        put(f"a1_ratio_h{_h}", f'{_r["ratio_B_over_A"]:.2f}', "results/a1_ab_by_horizon.json")
+        put(f"a1_A_h{_h}", f'{_r["A"]["mean"]:.4f}', "results/a1_ab_by_horizon.json")
+        put(f"a1_A_sd_h{_h}", f'{_r["A"]["sd_ddof1"]:.4f}', "results/a1_ab_by_horizon.json")
+        put(f"a1_B_h{_h}", f'{_r["B"]["mean"]:.4f}', "results/a1_ab_by_horizon.json")
+        put(f"a1_B_sd_h{_h}", f'{_r["B"]["sd_ddof1"]:.4f}', "results/a1_ab_by_horizon.json")
+        put(f"a1_gap_h{_h}", f'{_r["gap"]:+.4f}', "results/a1_ab_by_horizon.json")
+        put(f"a1_gap_ci_h{_h}", f'[{_r["gap_ci"][0]:+.4f}, {_r["gap_ci"][1]:+.4f}]',
+            "results/a1_ab_by_horizon.json")
+        put(f"a1_excl_h{_h}", "yes" if _r["gap_excludes_zero"] else "no",
+            "results/a1_ab_by_horizon.json")
+        put(f"a1_floor_h{_h}", f'{_r["floor"]:.4f}', "results/a1_ab_by_horizon.json")
+        put(f"a1_floor_over_A_h{_h}", f'{_r["floor_over_A"]:.1f}',
+            "results/a1_ab_by_horizon.json")
+        put(f"a1_B_over_floor_h{_h}", f'{_r["B_over_floor"]:.2f}',
+            "results/a1_ab_by_horizon.json")
+        _sg = A1["sign_test"][str(_h)]
+        put(f"a1_sign_pos_h{_h}", _sg["n_positive"], "results/a1_ab_by_horizon.json")
+        put(f"a1_sign_n_h{_h}", _sg["n_episodes"], "results/a1_ab_by_horizon.json")
+        put(f"a1_sign_p_h{_h}", f'{_sg["exact_two_sided_p"]:.4f}',
+            "results/a1_ab_by_horizon.json")
+    _t = A1["trend"]
+    put("a1_monotone", "does" if _t["monotone_increasing"] else "does not",
+        "results/a1_ab_by_horizon.json")
+    put("a1_n_excl", _t["n_excluding_zero"], "results/a1_ab_by_horizon.json")
+    put("a1_n_horizons", _t["n_horizons"], "results/a1_ab_by_horizon.json")
+    put("a1_spans_zero_at", " and ".join(f"h={h}" for h in _t["spans_zero_at"]) or "no horizon",
+        "results/a1_ab_by_horizon.json")
+    put("a1_nind", A1["design"]["n_independent"], "results/a1_ab_by_horizon.json")
+    # Where teacher forcing loses to the trivial baseline, and where the trained
+    # arm does. The second is the one nobody had looked at: at one step the
+    # hold-last floor beats BOTH arms, and 5 quoted the h=368 margin as if it
+    # held everywhere.
+    _bwf = [h for h in _a1h if A1["by_horizon"][str(h)]["B_worse_than_floor"]]
+    _awf = [h for h in _a1h if A1["by_horizon"][str(h)]["floor_over_A"] < 1]
+    put("a1_B_worse_than_floor_at",
+        "every horizon" if len(_bwf) == len(_a1h)
+        else (" and ".join(f"h={h}" for h in _bwf) or "no horizon"),
+        "results/a1_ab_by_horizon.json")
+    put("a1_A_worse_than_floor_at",
+        " and ".join(f"h={h}" for h in _awf) or "no horizon",
+        "results/a1_ab_by_horizon.json")
+    put("a1_n_A_worse_than_floor", len(_awf), "results/a1_ab_by_horizon.json")
+
     _xc = _d1["cross_check"]
     put("d1_xc_runs", len(_xc), "results/task_d1_threeseed.json")
     put("d1_xc_values", f'{sum(r.get("values_compared", 0) for r in _xc):,}',

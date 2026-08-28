@@ -26,11 +26,15 @@ of them retractions of our own numbered claims on evidence this project produced
 
 ## What this found
 
-**1 — The base paper's central training claim reproduces.** Autoregressive training beats teacher
-forcing by a factor of **4.61×** on the reference's own relative-L1 error at the
-368-step open-loop horizon, over 3 seeds on held-out episodes
-(0.3582 against 1.6497), under a decision rule committed to git before the runs that
-tested it existed.
+**1 — The base paper's central training claim reproduces, and the advantage grows with horizon.**
+Autoregressive training beats teacher forcing by a factor of **4.61×** on the reference's
+own relative-L1 error at the 368-step open-loop horizon, over 3 seeds on
+held-out episodes (0.3582 against 1.6497), under a decision rule committed to git
+before the runs that tested it existed. Across the whole horizon grid the ratio rises
+monotonically to that figure — **2.58×** at h = 100, the horizon the
+method deploys at — and the gap excludes zero at 5 of 6 horizons,
+spanning it only at h=1. Only the h = 368 figure is pre-registered;
+the rest were computed after the data existed and are marked as such.
 
 **2 — Neither uncertainty output of the follow-up is usable as an interval.** At
 h = 100 — the horizon the method's own imagination rollouts run to — the ensemble

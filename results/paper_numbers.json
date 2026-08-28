@@ -3,6 +3,374 @@
     "source": "results/task4_arenas.json + task5_analysis.json",
     "value": "1.56"
   },
+  "a1_A_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.1447"
+  },
+  "a1_A_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3700"
+  },
+  "a1_A_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3558"
+  },
+  "a1_A_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3415"
+  },
+  "a1_A_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3582"
+  },
+  "a1_A_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3087"
+  },
+  "a1_A_sd_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0023"
+  },
+  "a1_A_sd_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0290"
+  },
+  "a1_A_sd_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0231"
+  },
+  "a1_A_sd_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0491"
+  },
+  "a1_A_sd_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0283"
+  },
+  "a1_A_sd_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0318"
+  },
+  "a1_A_worse_than_floor_at": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "h=1"
+  },
+  "a1_B_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.1319"
+  },
+  "a1_B_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.9561"
+  },
+  "a1_B_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.9881"
+  },
+  "a1_B_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.6555"
+  },
+  "a1_B_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.6497"
+  },
+  "a1_B_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3572"
+  },
+  "a1_B_over_floor_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.66"
+  },
+  "a1_B_over_floor_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.27"
+  },
+  "a1_B_over_floor_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.24"
+  },
+  "a1_B_over_floor_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.10"
+  },
+  "a1_B_over_floor_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.66"
+  },
+  "a1_B_over_floor_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.08"
+  },
+  "a1_B_sd_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0172"
+  },
+  "a1_B_sd_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0211"
+  },
+  "a1_B_sd_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0376"
+  },
+  "a1_B_sd_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0699"
+  },
+  "a1_B_sd_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.2858"
+  },
+  "a1_B_sd_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0088"
+  },
+  "a1_B_worse_than_floor_at": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "every horizon"
+  },
+  "a1_excl_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "no"
+  },
+  "a1_excl_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "yes"
+  },
+  "a1_excl_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "yes"
+  },
+  "a1_excl_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "yes"
+  },
+  "a1_excl_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "yes"
+  },
+  "a1_excl_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "yes"
+  },
+  "a1_floor_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0796"
+  },
+  "a1_floor_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.7558"
+  },
+  "a1_floor_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.7999"
+  },
+  "a1_floor_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.5950"
+  },
+  "a1_floor_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.9930"
+  },
+  "a1_floor_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3298"
+  },
+  "a1_floor_over_A_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.5"
+  },
+  "a1_floor_over_A_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "2.0"
+  },
+  "a1_floor_over_A_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "2.2"
+  },
+  "a1_floor_over_A_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.7"
+  },
+  "a1_floor_over_A_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "2.8"
+  },
+  "a1_floor_over_A_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.1"
+  },
+  "a1_gap_ci_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "[-0.0329, +0.0013]"
+  },
+  "a1_gap_ci_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "[+0.2174, +0.9547]"
+  },
+  "a1_gap_ci_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "[+0.2716, +0.9931]"
+  },
+  "a1_gap_ci_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "[+0.1233, +0.5047]"
+  },
+  "a1_gap_ci_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "[+0.7004, +2.3390]"
+  },
+  "a1_gap_ci_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "[+0.0271, +0.0844]"
+  },
+  "a1_gap_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "-0.0128"
+  },
+  "a1_gap_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "+0.5861"
+  },
+  "a1_gap_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "+0.6324"
+  },
+  "a1_gap_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "+0.3140"
+  },
+  "a1_gap_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "+1.2915"
+  },
+  "a1_gap_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "+0.0485"
+  },
+  "a1_monotone": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "does"
+  },
+  "a1_n_A_worse_than_floor": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 1
+  },
+  "a1_n_excl": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 5
+  },
+  "a1_n_horizons": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 6
+  },
+  "a1_nind": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 4
+  },
+  "a1_ratio_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.91"
+  },
+  "a1_ratio_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "2.58"
+  },
+  "a1_ratio_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "2.78"
+  },
+  "a1_ratio_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.92"
+  },
+  "a1_ratio_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "4.61"
+  },
+  "a1_ratio_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "1.16"
+  },
+  "a1_sign_n_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_n_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_n_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_n_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_n_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_n_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_p_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.3438"
+  },
+  "a1_sign_p_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0020"
+  },
+  "a1_sign_p_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0020"
+  },
+  "a1_sign_p_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0020"
+  },
+  "a1_sign_p_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0020"
+  },
+  "a1_sign_p_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "0.0020"
+  },
+  "a1_sign_pos_h1": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 3
+  },
+  "a1_sign_pos_h100": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_pos_h128": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_pos_h32": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_pos_h368": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_sign_pos_h8": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": 10
+  },
+  "a1_spans_zero_at": {
+    "source": "results/a1_ab_by_horizon.json",
+    "value": "h=1"
+  },
   "a2_excl_h": {
     "source": "results/a2_trajectory_level_control.json",
     "value": "h=100, h=128, h=368"

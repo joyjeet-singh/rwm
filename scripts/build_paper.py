@@ -145,6 +145,15 @@ def main():
             "Positive is a rule committed before the data that tested it existed; negative is a "
             "rule written afterwards. The one negative bar is the Task 3 duplication rule, "
             "retracted as a pre-registration in this paper.",
+        "paper_fig6_ab_by_horizon.png":
+            "The autoregressive-versus-teacher-forcing advantage as a function of forecast "
+            "horizon, out-of-sample over three seeds. (a) the ratio, which grows monotonically "
+            "with depth: h = 368 is the end of a trend rather than a selected point, and the "
+            "method's own rollout length of h = 100 sits partway along it. (b) the same "
+            "comparison as a gap with its 95\\% cluster-bootstrap interval over whole "
+            "trajectories; the interval spans zero only at h = 1, where teacher forcing is "
+            "nominally ahead. Only the h = 368 figure is pre-registered (M-23); the rest were "
+            "computed after the data existed.",
         "paper_fig5_three_way.png":
             "The contamination control. (a) outcome across 32 cells for each arm pair, naive "
             "bootstrap on the left of each position and cluster bootstrap on the right; the "

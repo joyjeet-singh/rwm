@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     649 values substituted from 51 artifacts. -->
+     731 values substituted from 52 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -14,23 +14,23 @@ We rebuild the proprioceptive dynamics model of Li, Krause and Hutter (*Robotic 
 Model*, arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from
 scratch on CPU, checked against the released reference at gradient level.
 
-**The base paper's central training claim reproduces.** Under a rule committed to git
-before the runs that tested it, autoregressive training beats teacher forcing on held-out
-episodes by 4.61× on the reference's own relative-L1 error at h = 368, the
-horizon the rule names, and 2.58× at h = 100.
+**The base paper's central training claim reproduces, and the advantage grows with
+horizon.** Under a rule committed to git before the runs that tested it, autoregressive
+training beats teacher forcing on held-out episodes by 4.61× on the reference's own
+relative-L1 error at h = 368, the horizon the rule names, rising monotonically to
+that figure from 2.58× at h = 100, where the method deploys.
 
 **Neither uncertainty output the follow-up adds is usable as an interval.** At
-h = 100, the horizon its own imagination rollouts run to, the ensemble
-disagreement it penalises rewards with is 33.4× smaller than the realised
-error: 4.61% of outcomes fall inside ±1σ where 68.27% is
-calibrated. The per-member σ, which the method computes and discards, is a further
-349× worse at h = 100, and we derive why: the
-implemented objective's optimum is σ = 0.
+h = 100 the ensemble disagreement it penalises rewards with is
+33.4× smaller than realised error: 4.61% of outcomes fall
+inside ±1σ where 68.27% is calibrated. The per-member σ the method computes
+and discards is a further 349× worse at h = 100, and we
+derive why: the implemented objective's optimum is σ = 0.
 
 **As a ranking it survives adversarial testing.** It beats the forecast step index — a free
-counter neither paper ran — at every horizon, and with the rollout and the forecast depth
-both held constant still correlates +0.419 with realised error over the full rollout:
-not merely a report of which episode is hard.
+counter neither paper ran — at every horizon, and with the rollout and the depth both held
+constant still correlates +0.419 with realised error: not merely a report of which
+episode is hard.
 
 **The interval is repairable.** One multiplier per horizon, fitted on one held-out episode
 and scored on the other, restores nominal coverage on every held-out cell; one global
@@ -77,8 +77,11 @@ and we report that too.
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise; losses and gradients match to 0.000e+00 across 7 loss terms
   and 106 parameter tensors, before any training (Appendix A).
-- **The base paper's central training claim reproduces**, at a factor of 4.61× on
-  relative-L1 over 3 seeds, under a rule committed to git before the runs existed (§5).
+- **The base paper's central training claim reproduces, and the advantage grows with
+  forecast horizon**: a factor of 4.61× on relative-L1 at h = 368 over
+  3 seeds, under a rule committed to git before the runs existed, rising
+  monotonically to that from 2.58× at h = 100 and a gap that spans
+  zero at h=1 (§5).
 - **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon; and the aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.2, §6.3).
 - **A candidate mechanism for the epistemic failure, from source.** The five members share one
   trunk, one recurrent state and 89.15% of each member's parameters, so their spread
@@ -325,7 +328,7 @@ derived from those two tables rather than typed. §12 states what that bounds, a
 
 **For all 4 of the claims we did test, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
-caption or table. So our 4.61× is neither a confirmation of a published figure nor a
+caption or table. So our 4.61× at h = 368 is neither a confirmation of a published figure nor a
 contradiction of one — it is the first figure attached to the claim, and the same is true of the
 follow-up's "strong correlation" between disagreement and error, for which §6.7 supplies the first
 coefficient. Where a magnitude is legible only from a plotted curve we say so rather than
@@ -350,7 +353,7 @@ effect survives at 10,000 iterations rather than only at the paper's 2,500.
 **Result.** Every condition holds. We give the evidence in order of how little it depends
 on the small held-out sample.
 
-*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **10 of 10** episodes — an exact two-sided binomial test, p = **0.0020**. This is one test on ten paired episodes, it uses no bootstrap, and no multiplicity correction touches it. Unlike the per-dimension counts in §6, episodes are genuinely separable units, so a binomial null is admissible here.
+*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **10 of 10** episodes — an exact two-sided binomial test, p = **0.0020**. At h = 100 it is **10 of 10**, p = **0.0020**, so the count the abstract leans on is not an artifact of the longest horizon; at h = 1 it is 3 of 10, which is the same story the interval tells. This is one test on ten paired episodes, it uses no bootstrap, and no multiplicity correction touches it. Unlike the per-dimension counts in §6, episodes are genuinely separable units, so a binomial null is admissible here.
 
 **Its scope needs stating plainly, because the arena labels invite a stronger reading than it supports.** 8 of the 10 episodes are training data for *both* arms. The test is therefore a valid **paired** comparison — the two arms saw identical data, so any episode-level difference is attributable to the training rule and not to what either model had memorised — but it is not ten out-of-sample episodes, and it does not measure generalisation. The out-of-sample effect size below carries that burden, on 4 independent trajectories.
 
@@ -359,9 +362,48 @@ episodes has 16 independent 400-step trajectories against the held-out arena's
 4 — 4× more — and gives the same direction at every horizon and
 checkpoint.
 
-*The out-of-sample effect size, over 3 seeds.* At h = 368, the horizon M-23 is stated over, autoregressive training reaches **0.3582 ± 0.0283** against teacher forcing's **1.6497 ± 0.2858** (standard deviation over seeds, `ddof=1`) — a factor of **4.61×**.
+*The out-of-sample effect size, at every horizon rather than one.* At h = 368,
+the horizon M-23 is stated over, autoregressive training reaches **0.3582 ±
+0.0283** against teacher forcing's **1.6497 ± 0.2858** (standard deviation
+over seeds, `ddof=1`) — a factor of **4.61×**. At h = 100, the method's
+own imagination rollout length and the horizon everything in §6 is anchored to, the same
+three seeds give **2.58×**.
 
-**At the deployment horizon the same comparison is smaller, and we report it rather than leaving the reader to assume the headline transfers.** At h = 100 — the method's own imagination rollout length, and the horizon everything in §6 is anchored to — the same three seeds give **0.3700 ± 0.0290** against **0.9561 ± 0.0211**, a factor of **2.58×**. The direction is the same and the margin is roughly half. **M-23's verdict stands as returned at h = 368**; this figure is reported beside it and discharges nothing.
+**Quoting one of those and not the other would be a choice, so we report the curve**
+(Figure 6). Same rollouts, same 3 seeds, same held-out arena, n_independent =
+4, with a cluster bootstrap over whole trajectories:
+
+| h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0.1447 ± 0.0023 | 0.1319 ± 0.0172 | 0.91× | -0.0128 [-0.0329, +0.0013] | **no** | 0.0796 | 0.5× | 1.66× | 3/10 |
+| 8 | 0.3087 ± 0.0318 | 0.3572 ± 0.0088 | 1.16× | +0.0485 [+0.0271, +0.0844] | yes | 0.3298 | 1.1× | 1.08× | 10/10 |
+| 32 | 0.3415 ± 0.0491 | 0.6555 ± 0.0699 | 1.92× | +0.3140 [+0.1233, +0.5047] | yes | 0.5950 | 1.7× | 1.10× | 10/10 |
+| **100** | **0.3700 ± 0.0290** | **0.9561 ± 0.0211** | **2.58×** | **+0.5861 [+0.2174, +0.9547]** | **yes** | 0.7558 | **2.0×** | **1.27×** | **10/10** |
+| 128 | 0.3558 ± 0.0231 | 0.9881 ± 0.0376 | 2.78× | +0.6324 [+0.2716, +0.9931] | yes | 0.7999 | 2.2× | 1.24× | 10/10 |
+| **368** *(M-23)* | **0.3582 ± 0.0283** | **1.6497 ± 0.2858** | **4.61×** | **+1.2915 [+0.7004, +2.3390]** | **yes** | 0.9930 | **2.8×** | **1.66×** | **10/10** |
+
+**The advantage does grow monotonically with forecast depth.** The gap excludes
+zero at 5 of 6 horizons and spans it at h=1.
+That is the reading a single figure cannot give: h = 368 is the end of a trend
+rather than a point we picked, h = 100 sits partway along it, and the claim is
+weakest exactly where the model is trained.
+
+**Only the h = 368 row is pre-registered.** M-23 was committed at that horizon,
+before the runs, and its verdict stands as returned. Every other row was computed after the
+data existed, so by this paper's own standard (§9) it is not a pre-registration and carries
+none of the weight one would — the same treatment §6.7 gives the expectation we held about
+the counter-baseline. Nothing in the table discharges or re-opens M-23; the rule's anchor
+being the diagnostic horizon rather than the deployment one is recorded as M-46.
+
+**Two things in that table were not visible from h = 368 alone, and one of them
+cuts against us.** Teacher forcing is worse than the hold-last floor at
+every horizon, so §5's sharpest line is not an artifact of the longest
+horizon — at h = 100 it is still 1.27× worse than assuming
+nothing changes. But **at h = 1 the floor beats *both* arms**: it scores 0.0796
+against autoregressive training's 0.1447, the only horizon where a trained model loses
+to predicting no change at all. At 50 Hz one step is 20 ms and the state barely moves, so
+that is what one should expect; it is stated because §5 quoted the h = 368 margin
+over the floor with no indication that it does not hold everywhere.
 
 Seed spread is not symmetric between the arms and that is worth stating: Arm A ranges
 0.3341–0.3894 across seeds (7.9% relative), Arm B 1.4241–1.9710
@@ -369,16 +411,21 @@ Seed spread is not symmetric between the arms and that is worth stating: Arm A r
 training at this horizon, so a single-seed comparison of these two arms is unreliable in a way a
 reader should know about. An earlier draft of this paper quoted the single-seed figures
 0.3509 and 1.5540; those came from the seed that happened to be favourable to Arm A and
-unfavourable to Arm B, and the three-seed ratio is 4.61× rather than 4.4×.
+unfavourable to Arm B, and the three-seed ratio at h = 368 is 4.61× rather than 4.4×.
 
 For a single seed the bootstrap over trajectories gives 95% interval
 [0.56, 2.05] on n = 4 independent trajectories. **That interval should not be read as an ordinary one:** four trajectories admit 256 distinct resamples, so any bootstrap tail is quantised to steps of 0.39%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
-*Against a baseline, because neither number means anything without one.* The hold-last floor — predicting that nothing changes — scores **0.9930** in the same h = 368 cell. Autoregressive
-training beats it by **2.8×**. **Teacher forcing is 1.56× worse than
-assuming nothing changes at all**, which is the sharper statement of what exposure bias costs
-here: the arm that reaches a lower training loss ends up predicting the future worse than a
-model that makes no prediction. 
+*Against a baseline, because neither number means anything without one.* The hold-last
+floor — predicting that nothing changes — scores **0.9930** in the same
+h = 368 cell, and autoregressive training beats it by **2.8×** there
+and by 2.0× at h = 100. **Teacher forcing is
+1.56× worse than assuming nothing changes at all** at h = 368, and
+1.27× worse at h = 100: the arm that reaches a lower
+training loss ends up predicting the future worse than a model that makes no prediction, at
+every horizon we measured. That is the sharper statement of what exposure
+bias costs here. **The floor is not a weak baseline everywhere**, and the table above says
+where it is not: at h=1 it beats the autoregressive arm as well. 
 
 **What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
 comparison out-of-sample gives a gap of 0.008 whose interval includes zero.
@@ -403,7 +450,7 @@ The base paper's headline is a sample-efficiency result: policies transfer to ha
 
 **Our arms consume 7,991 distinct state transitions.** That is the 7,999 rows of the eight training episodes less one per episode boundary (8 of them), a transition being a consecutive pair of rows inside one episode. It is deliberately not the 7,687 training windows, which overlap almost completely — consecutive 33-step windows start one row apart — nor the 640,000 window draws a run makes, which resample the same data with replacement. Against the reference's 6,000,000, that is **751× less data, 0.133% of its world-model budget**.
 
-A dynamics model trained on 0.133% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result at 4.61× and still beats the hold-last floor by 2.8× at h=368. That is what this paper can contribute to the sample-efficiency question without training a policy.
+A dynamics model trained on 0.133% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result — 4.61× at h = 368 and 2.58× at h = 100 — and still beats the hold-last floor, by 2.8× and 2.0× at those two horizons. That is what this paper can contribute to the sample-efficiency question without training a policy.
 
 **Three limits, in the same breath.** It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning and which we do not touch. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the same narrow distribution it trained on — one robot, one gait, one terrain, velocity commands from a single bounded box — where the reference's 6,000,000 transitions span considerably more. A smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
@@ -1241,6 +1288,8 @@ What every downstream number rests on. Each level was passed before the next was
 ![Pre-registration lead time for each decision rule, from git commit timestamps. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. The one negative bar is the Task 3 duplication rule, retracted as a pre-registration in this paper.](figures/paper_fig4_prereg_timeline.png)
 
 ![The contamination control. (a) outcome across 32 cells for each arm pair, naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling trajectory-step pairs rather than whole trajectories narrows every interval.](figures/paper_fig5_three_way.png)
+
+![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is nominally ahead. Only the h = 368 figure is pre-registered (M-23); the rest were computed after the data existed.](figures/paper_fig6_ab_by_horizon.png)
 
 ## Appendix D — verifying the paper's own claims
 

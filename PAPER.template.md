@@ -8,23 +8,23 @@ We rebuild the proprioceptive dynamics model of Li, Krause and Hutter (*Robotic 
 Model*, arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from
 scratch on CPU, checked against the released reference at gradient level.
 
-**The base paper's central training claim reproduces.** Under a rule committed to git
-before the runs that tested it, autoregressive training beats teacher forcing on held-out
-episodes by {{d1_ratio}}× on the reference's own relative-L1 error at h = {{v2_diag_h}}, the
-horizon the rule names, and {{d1_ratio_h100}}× at h = {{v2_deploy_h}}.
+**The base paper's central training claim reproduces, and the advantage grows with
+horizon.** Under a rule committed to git before the runs that tested it, autoregressive
+training beats teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own
+relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, rising monotonically to
+that figure from {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, where the method deploys.
 
 **Neither uncertainty output the follow-up adds is usable as an interval.** At
-h = {{v2_deploy_h}}, the horizon its own imagination rollouts run to, the ensemble
-disagreement it penalises rewards with is {{d1n_epi_ratio_h100}}× smaller than the realised
-error: {{d1n_epi_cov1_h100}}% of outcomes fall inside ±1σ where {{v3_cov_nominal1}}% is
-calibrated. The per-member σ, which the method computes and discards, is a further
-{{d1n_epi_over_alea_h100}}× worse at h = {{v2_deploy_h}}, and we derive why: the
-implemented objective's optimum is σ = 0.
+h = {{v2_deploy_h}} the ensemble disagreement it penalises rewards with is
+{{d1n_epi_ratio_h100}}× smaller than realised error: {{d1n_epi_cov1_h100}}% of outcomes fall
+inside ±1σ where {{v3_cov_nominal1}}% is calibrated. The per-member σ the method computes
+and discards is a further {{d1n_epi_over_alea_h100}}× worse at h = {{v2_deploy_h}}, and we
+derive why: the implemented objective's optimum is σ = 0.
 
 **As a ranking it survives adversarial testing.** It beats the forecast step index — a free
-counter neither paper ran — at every horizon, and with the rollout and the forecast depth
-both held constant still correlates {{a2_rdd}} with realised error over the full rollout:
-not merely a report of which episode is hard.
+counter neither paper ran — at every horizon, and with the rollout and the depth both held
+constant still correlates {{a2_rdd}} with realised error: not merely a report of which
+episode is hard.
 
 **The interval is repairable.** One multiplier per horizon, fitted on one held-out episode
 and scored on the other, restores nominal coverage on every held-out cell; one global
@@ -71,8 +71,11 @@ and we report that too.
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms
   and {{diff_n_params}} parameter tensors, before any training (Appendix A).
-- **The base paper's central training claim reproduces**, at a factor of {{d1_ratio}}× on
-  relative-L1 over {{d1_seeds}} seeds, under a rule committed to git before the runs existed (§5).
+- **The base paper's central training claim reproduces, and the advantage grows with
+  forecast horizon**: a factor of {{d1_ratio}}× on relative-L1 at h = {{v2_diag_h}} over
+  {{d1_seeds}} seeds, under a rule committed to git before the runs existed, rising
+  monotonically to that from {{d1_ratio_h100}}× at h = {{v2_deploy_h}} and a gap that spans
+  zero at {{a1_spans_zero_at}} (§5).
 - **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon; and the aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.2, §6.3).
 - **A candidate mechanism for the epistemic failure, from source.** The five members share one
   trunk, one recurrent state and {{v1_shared_pct}}% of each member's parameters, so their spread
@@ -319,7 +322,7 @@ derived from those two tables rather than typed. §12 states what that bounds, a
 
 **For all {{orig_n_tested}} of the claims we did test, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
-caption or table. So our {{d1_ratio}}× is neither a confirmation of a published figure nor a
+caption or table. So our {{d1_ratio}}× at h = {{v2_diag_h}} is neither a confirmation of a published figure nor a
 contradiction of one — it is the first figure attached to the claim, and the same is true of the
 follow-up's "strong correlation" between disagreement and error, for which §6.7 supplies the first
 coefficient. Where a magnitude is legible only from a plotted curve we say so rather than
@@ -344,7 +347,7 @@ effect survives at 10,000 iterations rather than only at the paper's 2,500.
 **Result.** Every condition {{m23_c1}}. We give the evidence in order of how little it depends
 on the small held-out sample.
 
-*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact two-sided binomial test, p = **{{c3_sign_p}}**. This is one test on ten paired episodes, it uses no bootstrap, and no multiplicity correction touches it. Unlike the per-dimension counts in §6, episodes are genuinely separable units, so a binomial null is admissible here.
+*The sign test, which does not depend on n.* At h = {{v2_diag_h}} the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact two-sided binomial test, p = **{{c3_sign_p}}**. At h = {{v2_deploy_h}} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, so the count the abstract leans on is not an artifact of the longest horizon; at h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, which is the same story the interval tells. This is one test on ten paired episodes, it uses no bootstrap, and no multiplicity correction touches it. Unlike the per-dimension counts in §6, episodes are genuinely separable units, so a binomial null is admissible here.
 
 **Its scope needs stating plainly, because the arena labels invite a stronger reading than it supports.** {{n_train_eps}} of the {{c3_sign_n}} episodes are training data for *both* arms. The test is therefore a valid **paired** comparison — the two arms saw identical data, so any episode-level difference is attributable to the training rule and not to what either model had memorised — but it is not ten out-of-sample episodes, and it does not measure generalisation. The out-of-sample effect size below carries that burden, on {{nind_oos_400}} independent trajectories.
 
@@ -353,9 +356,48 @@ episodes has {{nind_ins_400}} independent 400-step trajectories against the held
 {{nind_oos_400}} — {{nind_ratio}}× more — and gives the same direction at every horizon and
 checkpoint.
 
-*The out-of-sample effect size, over {{d1_seeds}} seeds.* At h = {{v2_diag_h}}, the horizon M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`) — a factor of **{{d1_ratio}}×**.
+*The out-of-sample effect size, at every horizon rather than one.* At h = {{v2_diag_h}},
+the horizon M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} ±
+{{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation
+over seeds, `ddof=1`) — a factor of **{{d1_ratio}}×**. At h = {{v2_deploy_h}}, the method's
+own imagination rollout length and the horizon everything in §6 is anchored to, the same
+three seeds give **{{d1_ratio_h100}}×**.
 
-**At the deployment horizon the same comparison is smaller, and we report it rather than leaving the reader to assume the headline transfers.** At h = {{v2_deploy_h}} — the method's own imagination rollout length, and the horizon everything in §6 is anchored to — the same three seeds give **{{d1_A_mean_h100}} ± {{d1_A_sd_h100}}** against **{{d1_B_mean_h100}} ± {{d1_B_sd_h100}}**, a factor of **{{d1_ratio_h100}}×**. The direction is the same and the margin is roughly half. **M-23's verdict stands as returned at h = {{v2_diag_h}}**; this figure is reported beside it and discharges nothing.
+**Quoting one of those and not the other would be a choice, so we report the curve**
+(Figure 6). Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independent =
+{{a1_nind}}, with a cluster bootstrap over whole trajectories:
+
+| h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | {{a1_A_h1}} ± {{a1_A_sd_h1}} | {{a1_B_h1}} ± {{a1_B_sd_h1}} | {{a1_ratio_h1}}× | {{a1_gap_h1}} {{a1_gap_ci_h1}} | **{{a1_excl_h1}}** | {{a1_floor_h1}} | {{a1_floor_over_A_h1}}× | {{a1_B_over_floor_h1}}× | {{a1_sign_pos_h1}}/{{a1_sign_n_h1}} |
+| 8 | {{a1_A_h8}} ± {{a1_A_sd_h8}} | {{a1_B_h8}} ± {{a1_B_sd_h8}} | {{a1_ratio_h8}}× | {{a1_gap_h8}} {{a1_gap_ci_h8}} | {{a1_excl_h8}} | {{a1_floor_h8}} | {{a1_floor_over_A_h8}}× | {{a1_B_over_floor_h8}}× | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} |
+| 32 | {{a1_A_h32}} ± {{a1_A_sd_h32}} | {{a1_B_h32}} ± {{a1_B_sd_h32}} | {{a1_ratio_h32}}× | {{a1_gap_h32}} {{a1_gap_ci_h32}} | {{a1_excl_h32}} | {{a1_floor_h32}} | {{a1_floor_over_A_h32}}× | {{a1_B_over_floor_h32}}× | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} |
+| **{{v2_deploy_h}}** | **{{a1_A_h100}} ± {{a1_A_sd_h100}}** | **{{a1_B_h100}} ± {{a1_B_sd_h100}}** | **{{a1_ratio_h100}}×** | **{{a1_gap_h100}} {{a1_gap_ci_h100}}** | **{{a1_excl_h100}}** | {{a1_floor_h100}} | **{{a1_floor_over_A_h100}}×** | **{{a1_B_over_floor_h100}}×** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** |
+| 128 | {{a1_A_h128}} ± {{a1_A_sd_h128}} | {{a1_B_h128}} ± {{a1_B_sd_h128}} | {{a1_ratio_h128}}× | {{a1_gap_h128}} {{a1_gap_ci_h128}} | {{a1_excl_h128}} | {{a1_floor_h128}} | {{a1_floor_over_A_h128}}× | {{a1_B_over_floor_h128}}× | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} |
+| **{{v2_diag_h}}** *(M-23)* | **{{a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap_h368}} {{a1_gap_ci_h368}}** | **{{a1_excl_h368}}** | {{a1_floor_h368}} | **{{a1_floor_over_A_h368}}×** | **{{a1_B_over_floor_h368}}×** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** |
+
+**The advantage {{a1_monotone}} grow monotonically with forecast depth.** The gap excludes
+zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}.
+That is the reading a single figure cannot give: h = {{v2_diag_h}} is the end of a trend
+rather than a point we picked, h = {{v2_deploy_h}} sits partway along it, and the claim is
+weakest exactly where the model is trained.
+
+**Only the h = {{v2_diag_h}} row is pre-registered.** M-23 was committed at that horizon,
+before the runs, and its verdict stands as returned. Every other row was computed after the
+data existed, so by this paper's own standard (§9) it is not a pre-registration and carries
+none of the weight one would — the same treatment §6.7 gives the expectation we held about
+the counter-baseline. Nothing in the table discharges or re-opens M-23; the rule's anchor
+being the diagnostic horizon rather than the deployment one is recorded as M-46.
+
+**Two things in that table were not visible from h = {{v2_diag_h}} alone, and one of them
+cuts against us.** Teacher forcing is worse than the hold-last floor at
+{{a1_B_worse_than_floor_at}}, so §5's sharpest line is not an artifact of the longest
+horizon — at h = {{v2_deploy_h}} it is still {{a1_B_over_floor_h100}}× worse than assuming
+nothing changes. But **at h = 1 the floor beats *both* arms**: it scores {{a1_floor_h1}}
+against autoregressive training's {{a1_A_h1}}, the only horizon where a trained model loses
+to predicting no change at all. At 50 Hz one step is 20 ms and the state barely moves, so
+that is what one should expect; it is stated because §5 quoted the h = {{v2_diag_h}} margin
+over the floor with no indication that it does not hold everywhere.
 
 Seed spread is not symmetric between the arms and that is worth stating: Arm A ranges
 {{d1_A_lo}}–{{d1_A_hi}} across seeds ({{d1_A_relsd}}% relative), Arm B {{d1_B_lo}}–{{d1_B_hi}}
@@ -363,16 +405,21 @@ Seed spread is not symmetric between the arms and that is worth stating: Arm A r
 training at this horizon, so a single-seed comparison of these two arms is unreliable in a way a
 reader should know about. An earlier draft of this paper quoted the single-seed figures
 {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and
-unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{m23_ratio}}×.
+unfavourable to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_ratio}}× rather than {{m23_ratio}}×.
 
 For a single seed the bootstrap over trajectories gives 95% interval
 [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories. **That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised to steps of {{c3_quant}}%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
-*Against a baseline, because neither number means anything without one.* The hold-last floor — predicting that nothing changes — scores **{{floor_h368}}** in the same h = {{v2_diag_h}} cell. Autoregressive
-training beats it by **{{floor_over_A}}×**. **Teacher forcing is {{B_over_floor}}× worse than
-assuming nothing changes at all**, which is the sharper statement of what exposure bias costs
-here: the arm that reaches a lower training loss ends up predicting the future worse than a
-model that makes no prediction. 
+*Against a baseline, because neither number means anything without one.* The hold-last
+floor — predicting that nothing changes — scores **{{floor_h368}}** in the same
+h = {{v2_diag_h}} cell, and autoregressive training beats it by **{{floor_over_A}}×** there
+and by {{a1_floor_over_A_h100}}× at h = {{v2_deploy_h}}. **Teacher forcing is
+{{B_over_floor}}× worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and
+{{a1_B_over_floor_h100}}× worse at h = {{v2_deploy_h}}: the arm that reaches a lower
+training loss ends up predicting the future worse than a model that makes no prediction, at
+{{a1_B_worse_than_floor_at}} we measured. That is the sharper statement of what exposure
+bias costs here. **The floor is not a weak baseline everywhere**, and the table above says
+where it is not: at {{a1_A_worse_than_floor_at}} it beats the autoregressive arm as well. 
 
 **What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
 comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.
@@ -397,7 +444,7 @@ The base paper's headline is a sample-efficiency result: policies transfer to ha
 
 **Our arms consume {{c2_trans}} distinct state transitions.** That is the {{c2_rows}} rows of the eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecutive pair of rows inside one episode. It is deliberately not the {{c2_windows}} training windows, which overlap almost completely — consecutive 33-step windows start one row apart — nor the {{c2_draws}} window draws a run makes, which resample the same data with replacement. Against the reference's {{c2_ref}}, that is **{{c2_ratio}}× less data, {{c2_pct}}% of its world-model budget**.
 
-A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result at {{d1_ratio}}× and still beats the hold-last floor by {{floor_over_A}}× at h=368. That is what this paper can contribute to the sample-efficiency question without training a policy.
+A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result — {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}} — and still beats the hold-last floor, by {{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons. That is what this paper can contribute to the sample-efficiency question without training a policy.
 
 **Three limits, in the same breath.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning and which we do not touch. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the same narrow distribution it trained on — one robot, one gait, one terrain, velocity commands from a single bounded box — where the reference's {{c2_ref}} transitions span considerably more. A smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 

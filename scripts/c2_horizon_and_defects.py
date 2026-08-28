@@ -904,6 +904,219 @@ EDITS = [
      "The pre-registration argument in §9 rests on commit timestamps, and those are\n"
      "author-settable via `git commit --date`. That matters, because §9 is load-bearing. Two\n"
      "things address it."),
+
+    # =====================================================================
+    # PART A (pending-work brief) -- the A/B result becomes a curve.
+    #
+    # 2.58x at h=100 against 4.61x at h=368 is the largest substantive change in
+    # this revision, and 3.1 declares h=368 not a deployment horizon. Left as a
+    # line item beside the headline that reads as horizon shopping. As a curve it
+    # is a finding: the advantage grows monotonically with depth and h=368 is the
+    # end of a trend.
+    # =====================================================================
+
+    ("A1/A2/A3 5: the effect size becomes a curve, with the pre-registered point marked",
+     "*The out-of-sample effect size, over {{d1_seeds}} seeds.* At h = {{v2_diag_h}}, the "
+     "horizon M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} ± "
+     "{{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation "
+     "over seeds, `ddof=1`) — a factor of **{{d1_ratio}}×**.\n"
+     "\n"
+     "**At the deployment horizon the same comparison is smaller, and we report it rather than "
+     "leaving the reader to assume the headline transfers.** At h = {{v2_deploy_h}} — the "
+     "method's own imagination rollout length, and the horizon everything in §6 is anchored to — "
+     "the same three seeds give **{{d1_A_mean_h100}} ± {{d1_A_sd_h100}}** against "
+     "**{{d1_B_mean_h100}} ± {{d1_B_sd_h100}}**, a factor of **{{d1_ratio_h100}}×**. The direction "
+     "is the same and the margin is roughly half. **M-23's verdict stands as returned at "
+     "h = {{v2_diag_h}}**; this figure is reported beside it and discharges nothing.",
+
+     "*The out-of-sample effect size, at every horizon rather than one.* At h = {{v2_diag_h}},\n"
+     "the horizon M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} ±\n"
+     "{{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation\n"
+     "over seeds, `ddof=1`) — a factor of **{{d1_ratio}}×**. At h = {{v2_deploy_h}}, the method's\n"
+     "own imagination rollout length and the horizon everything in §6 is anchored to, the same\n"
+     "three seeds give **{{d1_ratio_h100}}×**.\n"
+     "\n"
+     "**Quoting one of those and not the other would be a choice, so we report the curve**\n"
+     "(Figure 6). Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independent =\n"
+     "{{a1_nind}}, with a cluster bootstrap over whole trajectories:\n"
+     "\n"
+     "| h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |\n"
+     "|---|---|---|---|---|---|---|---|---|---|\n"
+     "| 1 | {{a1_A_h1}} ± {{a1_A_sd_h1}} | {{a1_B_h1}} ± {{a1_B_sd_h1}} | {{a1_ratio_h1}}× | {{a1_gap_h1}} {{a1_gap_ci_h1}} | **{{a1_excl_h1}}** | {{a1_floor_h1}} | {{a1_floor_over_A_h1}}× | {{a1_B_over_floor_h1}}× | {{a1_sign_pos_h1}}/{{a1_sign_n_h1}} |\n"
+     "| 8 | {{a1_A_h8}} ± {{a1_A_sd_h8}} | {{a1_B_h8}} ± {{a1_B_sd_h8}} | {{a1_ratio_h8}}× | {{a1_gap_h8}} {{a1_gap_ci_h8}} | {{a1_excl_h8}} | {{a1_floor_h8}} | {{a1_floor_over_A_h8}}× | {{a1_B_over_floor_h8}}× | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} |\n"
+     "| 32 | {{a1_A_h32}} ± {{a1_A_sd_h32}} | {{a1_B_h32}} ± {{a1_B_sd_h32}} | {{a1_ratio_h32}}× | {{a1_gap_h32}} {{a1_gap_ci_h32}} | {{a1_excl_h32}} | {{a1_floor_h32}} | {{a1_floor_over_A_h32}}× | {{a1_B_over_floor_h32}}× | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} |\n"
+     "| **{{v2_deploy_h}}** | **{{a1_A_h100}} ± {{a1_A_sd_h100}}** | **{{a1_B_h100}} ± {{a1_B_sd_h100}}** | **{{a1_ratio_h100}}×** | **{{a1_gap_h100}} {{a1_gap_ci_h100}}** | **{{a1_excl_h100}}** | {{a1_floor_h100}} | **{{a1_floor_over_A_h100}}×** | **{{a1_B_over_floor_h100}}×** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** |\n"
+     "| 128 | {{a1_A_h128}} ± {{a1_A_sd_h128}} | {{a1_B_h128}} ± {{a1_B_sd_h128}} | {{a1_ratio_h128}}× | {{a1_gap_h128}} {{a1_gap_ci_h128}} | {{a1_excl_h128}} | {{a1_floor_h128}} | {{a1_floor_over_A_h128}}× | {{a1_B_over_floor_h128}}× | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} |\n"
+     "| **{{v2_diag_h}}** *(M-23)* | **{{a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap_h368}} {{a1_gap_ci_h368}}** | **{{a1_excl_h368}}** | {{a1_floor_h368}} | **{{a1_floor_over_A_h368}}×** | **{{a1_B_over_floor_h368}}×** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** |\n"
+     "\n"
+     "**The advantage {{a1_monotone}} grow monotonically with forecast depth.** The gap excludes\n"
+     "zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}.\n"
+     "That is the reading a single figure cannot give: h = {{v2_diag_h}} is the end of a trend\n"
+     "rather than a point we picked, h = {{v2_deploy_h}} sits partway along it, and the claim is\n"
+     "weakest exactly where the model is trained.\n"
+     "\n"
+     "**Only the h = {{v2_diag_h}} row is pre-registered.** M-23 was committed at that horizon,\n"
+     "before the runs, and its verdict stands as returned. Every other row was computed after the\n"
+     "data existed, so by this paper's own standard (§9) it is not a pre-registration and carries\n"
+     "none of the weight one would — the same treatment §6.7 gives the expectation we held about\n"
+     "the counter-baseline. Nothing in the table discharges or re-opens M-23; the rule's anchor\n"
+     "being the diagnostic horizon rather than the deployment one is recorded as M-46.\n"
+     "\n"
+     "**Two things in that table were not visible from h = {{v2_diag_h}} alone, and one of them\n"
+     "cuts against us.** Teacher forcing is worse than the hold-last floor at\n"
+     "{{a1_B_worse_than_floor_at}}, so §5's sharpest line is not an artifact of the longest\n"
+     "horizon — at h = {{v2_deploy_h}} it is still {{a1_B_over_floor_h100}}× worse than assuming\n"
+     "nothing changes. But **at h = 1 the floor beats *both* arms**: it scores {{a1_floor_h1}}\n"
+     "against autoregressive training's {{a1_A_h1}}, the only horizon where a trained model loses\n"
+     "to predicting no change at all. At 50 Hz one step is 20 ms and the state barely moves, so\n"
+     "that is what one should expect; it is stated because §5 quoted the h = {{v2_diag_h}} margin\n"
+     "over the floor with no indication that it does not hold everywhere."),
+
+    ("A3 5: the sign test is reported at the deployment horizon too",
+     "*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours "
+     "autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact "
+     "two-sided binomial test, p = **{{c3_sign_p}}**.",
+
+     "*The sign test, which does not depend on n.* At h = {{v2_diag_h}} the per-episode gap "
+     "favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact "
+     "two-sided binomial test, p = **{{c3_sign_p}}**. At h = {{v2_deploy_h}} it is "
+     "**{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, so the count "
+     "the abstract leans on is not an artifact of the longest horizon; at h = 1 it is "
+     "{{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, which is the same story the interval tells."),
+
+    ("A4 abstract: the A/B claim quotes the curve rather than two points",
+     "**The base paper's central training claim reproduces.** Under a rule committed to git\n"
+     "before the runs that tested it, autoregressive training beats teacher forcing on held-out\n"
+     "episodes by {{d1_ratio}}× on the reference's own relative-L1 error at h = {{v2_diag_h}}, the\n"
+     "horizon the rule names, and {{d1_ratio_h100}}× at h = {{v2_deploy_h}}.",
+
+     "**The base paper's central training claim reproduces, and the advantage grows with\n"
+     "horizon.** Under a rule committed to git before the runs that tested it, autoregressive\n"
+     "training beats teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own\n"
+     "relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names. Across the grid the\n"
+     "ratio rises monotonically to that figure — {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, the\n"
+     "horizon the method deploys at — and the gap excludes zero at {{a1_n_excl}} of\n"
+     "{{a1_n_horizons}} horizons."),
+
+    # The abstract is over its budget again after Part A. The horizon labels stay
+    # and the interval count goes: it is in 5 and in Figure 6, and the abstract
+    # has to say what the shape is, not enumerate it.
+    ("abstract: trim Part A back inside the budget",
+     "**The base paper's central training claim reproduces, and the advantage grows with\n"
+     "horizon.** Under a rule committed to git before the runs that tested it, autoregressive\n"
+     "training beats teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own\n"
+     "relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names. Across the grid the\n"
+     "ratio rises monotonically to that figure — {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, the\n"
+     "horizon the method deploys at — and the gap excludes zero at {{a1_n_excl}} of\n"
+     "{{a1_n_horizons}} horizons.",
+
+     "**The base paper's central training claim reproduces, and the advantage grows with\n"
+     "horizon.** Under a rule committed to git before the runs that tested it, autoregressive\n"
+     "training beats teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own\n"
+     "relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, rising monotonically to\n"
+     "that figure from {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, where the method deploys."),
+
+    # Fourteen words over. The uncertainty paragraph is the longest and carries
+    # the most repetition ("the horizon its own imagination rollouts run to" is
+    # said twice in the abstract by this point).
+    ("abstract: the uncertainty paragraph, tightened once more",
+     "**Neither uncertainty output the follow-up adds is usable as an interval.** At\n"
+     "h = {{v2_deploy_h}}, the horizon its own imagination rollouts run to, the ensemble\n"
+     "disagreement it penalises rewards with is {{d1n_epi_ratio_h100}}× smaller than the realised\n"
+     "error: {{d1n_epi_cov1_h100}}% of outcomes fall inside ±1σ where {{v3_cov_nominal1}}% is\n"
+     "calibrated. The per-member σ, which the method computes and discards, is a further\n"
+     "{{d1n_epi_over_alea_h100}}× worse at h = {{v2_deploy_h}}, and we derive why: the\n"
+     "implemented objective's optimum is σ = 0.",
+
+     "**Neither uncertainty output the follow-up adds is usable as an interval.** At\n"
+     "h = {{v2_deploy_h}} the ensemble disagreement it penalises rewards with is\n"
+     "{{d1n_epi_ratio_h100}}× smaller than the realised error: {{d1n_epi_cov1_h100}}% of outcomes\n"
+     "fall inside ±1σ where {{v3_cov_nominal1}}% is calibrated. The per-member σ, which the method\n"
+     "computes and discards, is a further {{d1n_epi_over_alea_h100}}× worse there, and we derive\n"
+     "why: the implemented objective's optimum is σ = 0."),
+
+    ("abstract: the ranking paragraph, tightened once more",
+     "**As a ranking it survives adversarial testing.** It beats the forecast step index — a free\n"
+     "counter neither paper ran — at every horizon, and with the rollout and the forecast depth\n"
+     "both held constant still correlates {{a2_rdd}} with realised error over the full rollout:\n"
+     "not merely a report of which episode is hard.",
+
+     "**As a ranking it survives adversarial testing.** It beats the forecast step index — a free\n"
+     "counter neither paper ran — at every horizon, and with the rollout and the depth both held\n"
+     "constant still correlates {{a2_rdd}} with realised error: not merely a report of which\n"
+     "episode is hard."),
+
+    # The horizon-consistency check caught the previous trim: "a further 349x
+    # worse THERE" is a back-reference, and a back-reference is what the whole
+    # sweep exists to refuse. The label goes back in and the words come out of
+    # the prose around it.
+    ("abstract: restore the horizon the trim dropped, and pay for it in prose",
+     "**Neither uncertainty output the follow-up adds is usable as an interval.** At\n"
+     "h = {{v2_deploy_h}} the ensemble disagreement it penalises rewards with is\n"
+     "{{d1n_epi_ratio_h100}}× smaller than the realised error: {{d1n_epi_cov1_h100}}% of outcomes\n"
+     "fall inside ±1σ where {{v3_cov_nominal1}}% is calibrated. The per-member σ, which the method\n"
+     "computes and discards, is a further {{d1n_epi_over_alea_h100}}× worse there, and we derive\n"
+     "why: the implemented objective's optimum is σ = 0.",
+
+     "**Neither uncertainty output the follow-up adds is usable as an interval.** At\n"
+     "h = {{v2_deploy_h}} the ensemble disagreement it penalises rewards with is\n"
+     "{{d1n_epi_ratio_h100}}× smaller than realised error: {{d1n_epi_cov1_h100}}% of outcomes fall\n"
+     "inside ±1σ where {{v3_cov_nominal1}}% is calibrated. The per-member σ the method computes\n"
+     "and discards is a further {{d1n_epi_over_alea_h100}}× worse at h = {{v2_deploy_h}}, and we\n"
+     "derive why: the implemented objective's optimum is σ = 0."),
+
+    # =====================================================================
+    # A4 -- propagate. Every remaining site that quotes the A/B factor or the
+    # floor margin as if one horizon spoke for all of them.
+    # =====================================================================
+
+    ("A4 contributions: the training bullet quotes the curve",
+     "- **The base paper's central training claim reproduces**, at a factor of {{d1_ratio}}× on\n"
+     "  relative-L1 over {{d1_seeds}} seeds, under a rule committed to git before the runs existed (§5).",
+
+     "- **The base paper's central training claim reproduces, and the advantage grows with\n"
+     "  forecast horizon**: a factor of {{d1_ratio}}× on relative-L1 at h = {{v2_diag_h}} over\n"
+     "  {{d1_seeds}} seeds, under a rule committed to git before the runs existed, rising\n"
+     "  monotonically to that from {{d1_ratio_h100}}× at h = {{v2_deploy_h}} and a gap that spans\n"
+     "  zero at {{a1_spans_zero_at}} (§5)."),
+
+    ("A4 4: name the horizon on the figure the originals never gave",
+     "So our {{d1_ratio}}× is neither a confirmation of a published figure nor a",
+     "So our {{d1_ratio}}× at h = {{v2_diag_h}} is neither a confirmation of a published figure nor a"),
+
+    ("A4 5: the earlier single-seed comparison names its horizon",
+     "unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{m23_ratio}}×.",
+     "unfavourable to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_ratio}}× rather "
+     "than {{m23_ratio}}×."),
+
+    ("A4 5: the floor paragraph reports both horizons and the one place it inverts",
+     "*Against a baseline, because neither number means anything without one.* The hold-last "
+     "floor — predicting that nothing changes — scores **{{floor_h368}}** in the same "
+     "h = {{v2_diag_h}} cell. Autoregressive training beats it by **{{floor_over_A}}×**. "
+     "**Teacher forcing is {{B_over_floor}}× worse than assuming nothing changes at all**, which "
+     "is the sharper statement of what exposure bias costs here: the arm that reaches a lower "
+     "training loss ends up predicting the future worse than a model that makes no prediction.",
+
+     "*Against a baseline, because neither number means anything without one.* The hold-last\n"
+     "floor — predicting that nothing changes — scores **{{floor_h368}}** in the same\n"
+     "h = {{v2_diag_h}} cell, and autoregressive training beats it by **{{floor_over_A}}×** there\n"
+     "and by {{a1_floor_over_A_h100}}× at h = {{v2_deploy_h}}. **Teacher forcing is\n"
+     "{{B_over_floor}}× worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and\n"
+     "{{a1_B_over_floor_h100}}× worse at h = {{v2_deploy_h}}: the arm that reaches a lower\n"
+     "training loss ends up predicting the future worse than a model that makes no prediction, at\n"
+     "{{a1_B_worse_than_floor_at}} we measured. That is the sharper statement of what exposure\n"
+     "bias costs here. **The floor is not a weak baseline everywhere**, and the table above says\n"
+     "where it is not: at {{a1_A_worse_than_floor_at}} it beats the autoregressive arm as well."),
+
+    ("A4 5.1: the data-budget sentence quotes one horizon and reads as if it held at all",
+     "A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the "
+     "autoregressive-versus-teacher-forcing result at {{d1_ratio}}× and still beats the hold-last "
+     "floor by {{floor_over_A}}× at h=368.",
+
+     "A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the "
+     "autoregressive-versus-teacher-forcing result — {{d1_ratio}}× at h = {{v2_diag_h}} and "
+     "{{d1_ratio_h100}}× at h = {{v2_deploy_h}} — and still beats the hold-last floor, by "
+     "{{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons."),
 ]
 
 
