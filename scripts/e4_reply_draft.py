@@ -168,8 +168,8 @@ about it.
 > On sample efficiency, the one part I could measure: your Table I reports {{c2_ref}} state
 > transitions of world-model pretraining. Mine consume **{{c2_trans}}** distinct transitions,
 > {{c2_ratio}}× less, and still reproduce the autoregressive-versus-teacher-forcing result at
-> {{d1_ratio}}×. That says nothing about policy transfer, and my evaluation distribution is
-> narrower in proportion.
+> {{d1_ratio}}× at h={{v2_diag_h}} and {{d1_ratio_h100}}× at h={{v2_deploy_h}}. That says nothing
+> about policy transfer, and my evaluation distribution is narrower in proportion.
 >
 > **Two things I would value, if you have the time.**
 >

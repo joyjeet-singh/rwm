@@ -139,8 +139,8 @@ about it.
 > On sample efficiency, the one part I could measure: your Table I reports 6,000,000 state
 > transitions of world-model pretraining. Mine consume **7,991** distinct transitions,
 > 751× less, and still reproduce the autoregressive-versus-teacher-forcing result at
-> 4.61×. That says nothing about policy transfer, and my evaluation distribution is
-> narrower in proportion.
+> 4.61× at h=368 and 2.58× at h=100. That says nothing
+> about policy transfer, and my evaluation distribution is narrower in proportion.
 >
 > **Two things I would value, if you have the time.**
 >
