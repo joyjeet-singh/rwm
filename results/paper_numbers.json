@@ -2831,6 +2831,10 @@
     "source": "results/task2_sigma_profile.json",
     "value": 1.79
   },
+  "f4_n_commits": {
+    "source": "results/paper_figures.json",
+    "value": 13
+  },
   "f4_n_negative": {
     "source": "results/paper_figures.json",
     "value": 1
@@ -2985,7 +2989,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 200
+    "value": 201
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",

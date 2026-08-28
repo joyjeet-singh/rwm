@@ -1139,8 +1139,20 @@ supplementary material, and will be released under a permanent archival identifi
 acceptance. Neither upstream repository is redistributed; `setup.sh` fetches both at pinned
 commits and verifies two SHA-256 hashes.
 
-The pre-registration argument in §9 rests on commit timestamps, and those are author-settable via
-`git commit --date`. That matters, because §9 is load-bearing. Two things address it. The
+**The repository's history was rewritten once, and §9 depends on that history, so we say
+what changed.** A supplementary file quoting private correspondence was committed and
+briefly published before consent to quote it had been given; it was purged from the history
+rather than merely deleted, because a deletion commit leaves the content recoverable from a
+public repository indefinitely. Purging a path rewrites every commit from the one that
+introduced it onward, so **{{f4_n_commits}} of the commits Figure 4 cites keep their
+identifiers and two do not** — the two whose data post-dates that file. Timestamps, content
+and ordering are unchanged; only the hashes moved, and Figure 4 resolves each rule by its
+commit subject for that reason. The transcript itself reaches reviewers in the anonymised
+supplementary archive, which is not published.
+
+The pre-registration argument in §9 rests on commit timestamps, and those are
+author-settable via `git commit --date`. That matters, because §9 is load-bearing. Two
+things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
 ordering in Figure 4 is checkable at review time. And **the repository was archived by Software
 Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit

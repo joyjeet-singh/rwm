@@ -171,21 +171,82 @@ def fig4_timeline(rec):
                            capture_output=True, text=True, cwd=here)
         return int(o.stdout.strip())
 
-    # (label, rule commit, the commit or event whose data tested it)
+    def resolve(h, subject):
+        """The commit for this rule, by hash if it still exists and by SUBJECT if
+        it does not.
+
+        Figure 4's whole argument is that a reader can check these hashes against
+        the published history, so a dangling one is not cosmetic. Two of them
+        dangled: purging the correspondence transcript from history (M-48)
+        rewrote every commit from the one that introduced it onward, and the two
+        Phase-1/Phase-2 data commits took new identifiers. Nothing about the
+        ordering moved -- same timestamps, same content but for the removed file
+        -- but the identifiers the figure cited stopped resolving.
+
+        Subjects are stable across a path filter and hashes are not, so the
+        subject is the lookup key and the hash is what gets printed. Both are
+        asserted: exactly one commit must match, and if the recorded hash still
+        exists its subject must be the recorded one.
+        """
+        o = subprocess.run(["git", "log", "--all", "--format=%H\t%s"],
+                           capture_output=True, text=True, cwd=here)
+        hits = [ln.split("\t", 1) for ln in o.stdout.splitlines() if "\t" in ln]
+        match = [c for c, subj in hits if subj == subject]
+        assert len(match) == 1, (
+            f"{len(match)} commits have the subject {subject!r}; Figure 4 needs "
+            f"exactly one, because the subject is what survives a history rewrite")
+        cur = subprocess.run(["git", "rev-parse", "-q", "--verify", h + "^{commit}"],
+                             capture_output=True, text=True, cwd=here)
+        if cur.returncode == 0:
+            got = subprocess.run(["git", "show", "-s", "--format=%s", h],
+                                 capture_output=True, text=True, cwd=here).stdout.strip()
+            assert got == subject, (
+                f"the hash recorded for {subject!r} ({h}) is a different commit: {got!r}")
+        return match[0][:7]
+
+    # (label, rule commit, its subject, data commit, its subject, data label).
+    # The subjects are here because hashes do not survive a history rewrite and
+    # subjects do; see resolve() above and M-48.
     CASES = [
-        ("M-16\nthe A/B decision rule", "84ff01b", "f25e656", "first main-run data"),
-        ("flip pattern\ninterpretation", "0fe2bca", "e5aee6f", "all six main runs"),
-        ("M-22\ndifficulty-bias rule", "0648a32", "d88e9ff", "M-16 re-evaluated"),
-        ("M-23\nlong-horizon rule", "efc35b8", "d9f7bba", "10k runs launched"),
+        ("M-16\nthe A/B decision rule", "84ff01b",
+         "Step 5: pre-register the decision rule before launching any main run", "f25e656",
+         "Step 5: Arm A seed 0 complete; collapse prediction confirmed to 3 dp",
+         "first main-run data"),
+        ("flip pattern\ninterpretation", "0fe2bca",
+         "Pre-register interpretation of one M-16 flip pattern", "e5aee6f",
+         "Step 5.4: Arms A and B, three seeds each - M-16 evaluated",
+         "all six main runs"),
+        ("M-22\ndifficulty-bias rule", "0648a32",
+         "Pre-register the Task 4b difficulty-bias rule, and the two-arena convention", "d88e9ff",
+         "M-16 returns CANNOT BE SETTLED under corrected measurement",
+         "M-16 re-evaluated"),
+        ("M-23\nlong-horizon rule", "efc35b8",
+         "5.1: pre-register M-23, the long-horizon decision rule", "d9f7bba",
+         "5.2: bootstrap CIs over independent trajectories; launch the 10k runs", "10k runs launched"),
         # The ensemble-5 rule and the two rules of the pre-submission revision.
         # P1 required the last two to be committed before any Phase 1 or Phase 2
         # artifact and their hash recorded here, which is what these rows are.
-        ("M-43\nensemble-5 replication", "b17f1b5", "cdac035", "ens5 result committed"),
-        ("M-45\nwithin-trajectory control", "81b49f7", "7859309", "A2 result committed"),
-        ("M-44\ntrunk-sharing mechanism", "81b49f7", "0288b47", "R2 result committed"),
+        ("M-43\nensemble-5 replication", "b17f1b5",
+         "PRE-REGISTER the ensemble-5 replication rule, before the runs exist", "cdac035",
+         "Parts D and E: the ensemble-5 replication, M-43's verdict, and the cascade",
+         "ens5 result committed"),
+        ("M-45\nwithin-trajectory control", "81b49f7",
+         "PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without",
+         "2eccc1f",
+         "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
+         "A2 result committed"),
+        ("M-44\ntrunk-sharing mechanism", "81b49f7",
+         "PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without",
+         "d88a106",
+         "Phase 2: M-44 returns MECHANISM SUPPORTED, with the part that keeps it honest",
+         "R2 result committed"),
     ]
     rows = []
-    for lab, rule, data, dlab in CASES:
+    resolved = []
+    for lab, rule, rule_subj, data, data_subj, dlab in CASES:
+        rule, data = resolve(rule, rule_subj), resolve(data, data_subj)
+        resolved.append({"rule": lab.replace("\n", " "), "rule_commit": rule,
+                         "data_commit": data, "tested_by": dlab})
         rows.append((lab, (when(data) - when(rule)) / 3600.0, dlab))
     # Task 3: the control runs finished before any threshold reached git.
     RUNS_DONE = when("3ee9d97") - 0  # placeholder replaced below
@@ -217,6 +278,7 @@ def fig4_timeline(rec):
     ax.text(0.99, 0.04, "green: rule in git before the data existed\n"
                         "red: rule written once the answer was known (S-12)",
             transform=ax.transAxes, ha="right", fontsize=6.5, color="#555555")
+    rec["fig4_commits"] = resolved
     rec["fig4"] = {lab.replace("\n", " "): {"lead_hours": v, "tested_by": dlab}
                    for lab, v, dlab in rows}
     fig.tight_layout()

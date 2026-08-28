@@ -1345,6 +1345,15 @@ def main():
     # position that moves when a rule is added. "The fifth bar is negative" became
     # wrong the moment M-43, M-44 and M-45 joined the panel.
     _f4 = J("paper_figures.json")["fig4"]
+    # M-48: purging the correspondence transcript from history rewrote every
+    # commit from the one that introduced it onward, and two of Figure 4's cited
+    # identifiers changed with it. The figure resolves them by commit SUBJECT now
+    # (subjects survive a path filter, hashes do not), and the paper discloses the
+    # rewrite because a reviewer checking those hashes is exactly who would notice.
+    _f4c = J("paper_figures.json")["fig4_commits"]
+    put("f4_n_commits", len({c["rule_commit"] for c in _f4c}
+                            | {c["data_commit"] for c in _f4c}),
+        "results/paper_figures.json")
     put("f4_n_rules", len(_f4), "results/paper_figures.json")
     put("f4_n_positive", sum(1 for v in _f4.values() if v["lead_hours"] > 0),
         "results/paper_figures.json")

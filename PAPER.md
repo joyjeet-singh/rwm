@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     648 values substituted from 51 artifacts. -->
+     649 values substituted from 51 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -1026,7 +1026,7 @@ the work.
 
 ## 9. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (200 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (201 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all 8 rules; 7 are positive and 1 is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1152,8 +1152,20 @@ supplementary material, and will be released under a permanent archival identifi
 acceptance. Neither upstream repository is redistributed; `setup.sh` fetches both at pinned
 commits and verifies two SHA-256 hashes.
 
-The pre-registration argument in §9 rests on commit timestamps, and those are author-settable via
-`git commit --date`. That matters, because §9 is load-bearing. Two things address it. The
+**The repository's history was rewritten once, and §9 depends on that history, so we say
+what changed.** A supplementary file quoting private correspondence was committed and
+briefly published before consent to quote it had been given; it was purged from the history
+rather than merely deleted, because a deletion commit leaves the content recoverable from a
+public repository indefinitely. Purging a path rewrites every commit from the one that
+introduced it onward, so **13 of the commits Figure 4 cites keep their
+identifiers and two do not** — the two whose data post-dates that file. Timestamps, content
+and ordering are unchanged; only the hashes moved, and Figure 4 resolves each rule by its
+commit subject for that reason. The transcript itself reaches reviewers in the anonymised
+supplementary archive, which is not published.
+
+The pre-registration argument in §9 rests on commit timestamps, and those are
+author-settable via `git commit --date`. That matters, because §9 is load-bearing. Two
+things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
 ordering in Figure 4 is checkable at review time. And **the repository was archived by Software
 Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit

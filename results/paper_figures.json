@@ -90,6 +90,50 @@
       "armB_seed2_10k": -9.153792403589667e-05
     }
   },
+  "fig4_commits": [
+    {
+      "rule": "M-16 the A/B decision rule",
+      "rule_commit": "84ff01b",
+      "data_commit": "f25e656",
+      "tested_by": "first main-run data"
+    },
+    {
+      "rule": "flip pattern interpretation",
+      "rule_commit": "0fe2bca",
+      "data_commit": "e5aee6f",
+      "tested_by": "all six main runs"
+    },
+    {
+      "rule": "M-22 difficulty-bias rule",
+      "rule_commit": "0648a32",
+      "data_commit": "d88e9ff",
+      "tested_by": "M-16 re-evaluated"
+    },
+    {
+      "rule": "M-23 long-horizon rule",
+      "rule_commit": "efc35b8",
+      "data_commit": "d9f7bba",
+      "tested_by": "10k runs launched"
+    },
+    {
+      "rule": "M-43 ensemble-5 replication",
+      "rule_commit": "b17f1b5",
+      "data_commit": "cdac035",
+      "tested_by": "ens5 result committed"
+    },
+    {
+      "rule": "M-45 within-trajectory control",
+      "rule_commit": "81b49f7",
+      "data_commit": "2eccc1f",
+      "tested_by": "A2 result committed"
+    },
+    {
+      "rule": "M-44 trunk-sharing mechanism",
+      "rule_commit": "81b49f7",
+      "data_commit": "d88a106",
+      "tested_by": "R2 result committed"
+    }
+  ],
   "fig4": {
     "M-16 the A/B decision rule": {
       "lead_hours": 1.3322222222222222,

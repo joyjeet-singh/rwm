@@ -878,6 +878,32 @@ EDITS = [
      "h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}× falls below the stated floor. Found by the\n"
      "horizon sweep, which flagged the sentence for carrying two horizons' figures while naming\n"
      "two others.)"),
+
+    # =====================================================================
+    # P0 (pending-work brief) -- the history rewrite has to be disclosed,
+    # because the people most likely to notice it are the ones checking the
+    # pre-registration argument against the repository.
+    # =====================================================================
+
+    ("Data and code: disclose the history rewrite and what it moved",
+     "The pre-registration argument in §9 rests on commit timestamps, and those are "
+     "author-settable via `git commit --date`. That matters, because §9 is load-bearing. Two "
+     "things address it.",
+
+     "**The repository's history was rewritten once, and §9 depends on that history, so we say\n"
+     "what changed.** A supplementary file quoting private correspondence was committed and\n"
+     "briefly published before consent to quote it had been given; it was purged from the history\n"
+     "rather than merely deleted, because a deletion commit leaves the content recoverable from a\n"
+     "public repository indefinitely. Purging a path rewrites every commit from the one that\n"
+     "introduced it onward, so **{{f4_n_commits}} of the commits Figure 4 cites keep their\n"
+     "identifiers and two do not** — the two whose data post-dates that file. Timestamps, content\n"
+     "and ordering are unchanged; only the hashes moved, and Figure 4 resolves each rule by its\n"
+     "commit subject for that reason. The transcript itself reaches reviewers in the anonymised\n"
+     "supplementary archive, which is not published.\n"
+     "\n"
+     "The pre-registration argument in §9 rests on commit timestamps, and those are\n"
+     "author-settable via `git commit --date`. That matters, because §9 is load-bearing. Two\n"
+     "things address it."),
 ]
 
 
