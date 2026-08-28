@@ -38,7 +38,30 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.p
 import rwm_data as R  # noqa: E402
 
 LEDGER = "FINDINGS_LEDGER.md"
-OUT_MD = os.path.join("docs", "SUPPLEMENTARY_CORRESPONDENCE.md")
+
+# NOT under the repository tree, and this is the whole point.
+#
+# This transcript is a private exchange with the first author, and consent to
+# quote it on the record has not been given. It lived at docs/ and was committed;
+# on 2026-08-28 it was pushed to a NAMED public repository, where it stood for
+# 46 minutes before this was written. Two things that cost: the letter asking him
+# for permission offers to withdraw any quotation the same day, which is not an
+# offer that can be honoured once the whole exchange is published; and 6.1 and 8
+# cite the file as ANONYMISED supplementary material, so anyone searching a
+# quoted sentence reaches the named repository and the submission's anonymity
+# goes with it. Neither is repairable by editing prose (M-48).
+#
+# So it is written OUTSIDE the tree, gitignored inside it as a second line of
+# defence, and copied into the anonymised bundle -- where reviewers need it and
+# where it is not public -- by make_anon_bundle.py. submission_check.py fails the
+# build if it reappears anywhere git can see.
+PRIVATE_DIR = os.environ.get(
+    "RWM_PRIVATE_DIR",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir,
+                 "rwm_private"))
+OUT_MD = os.path.normpath(os.path.join(PRIVATE_DIR, "SUPPLEMENTARY_CORRESPONDENCE.md"))
+# The name it takes INSIDE the anonymised bundle, which is what 6.1 and 8 cite.
+BUNDLE_PATH = os.path.join("docs", "SUPPLEMENTARY_CORRESPONDENCE.md")
 
 # Identifying strings that must not appear in the transcript. Kept here and
 # imported by make_anon_bundle.py so there is one list, not two.
@@ -169,12 +192,19 @@ def main():
         used = []
 
     os.makedirs("docs", exist_ok=True)
+    os.makedirs(os.path.dirname(OUT_MD), exist_ok=True)
     with open(OUT_MD, "w") as f:
         f.write(out)
 
     rec = {
         "generated_from": "FINDINGS_LEDGER.md, entry X-10",
-        "output": OUT_MD,
+        # The BUNDLE path, not the private one: this artifact is committed and
+        # goes into the anonymised archive, and the private path carries a home
+        # directory. Where the file actually sits is deliberately not recorded
+        # anywhere git can see.
+        "output": BUNDLE_PATH,
+        "output_note": ("written outside the repository tree and copied into the "
+                        "anonymised bundle at this path; see M-48"),
         "n_quotations": len(PAPER_QUOTES),
         "n_quotations_present_in_transcript": len(PAPER_QUOTES) - len(missing),
         "n_quotations_used_in_paper": len(used),
@@ -197,6 +227,9 @@ def main():
     print("T5 — ANONYMISED CORRESPONDENCE TRANSCRIPT")
     print("=" * 88)
     print(f"  wrote {OUT_MD} ({len(out.splitlines())} lines)")
+    print("  NOT in the repository tree: this is private correspondence and consent")
+    print("  to quote it has not been given. It reaches reviewers through the")
+    print(f"  anonymised bundle as {BUNDLE_PATH}, and nowhere else.")
     print(f"  quotations checked present: {len(PAPER_QUOTES) - len(missing)}"
           f"/{len(PAPER_QUOTES)}   used in PAPER.md: {len(used)}")
     print(f"  deny-list entries: {len(DENY)}, hits: 0, self-test passed")

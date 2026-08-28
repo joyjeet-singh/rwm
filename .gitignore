@@ -48,3 +48,12 @@ checkpoint_manifest.json
 *.t4bak
 *.prebak
 *.tmpbak
+
+# NEVER-PUBLISH. Private correspondence with the first author; consent to quote
+# it on the record has not been given. It is generated OUTSIDE this tree by
+# scripts/t5_anon_transcript.py and reaches reviewers only through the
+# anonymised bundle. It was committed and briefly public on 2026-08-28 (M-48);
+# this pattern, and submission_check.py's public-tree gate, are what stop it
+# coming back.
+docs/SUPPLEMENTARY_CORRESPONDENCE.md
+SUPPLEMENTARY_CORRESPONDENCE.md

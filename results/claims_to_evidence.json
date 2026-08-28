@@ -2477,13 +2477,28 @@
         "results/step6_analysis.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-48",
+      "claim": "The correspondence transcript was published on a named repository for 46 minutes",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "INFER"
+      ],
+      "artifacts": [
+        "results/anon_bundle.json",
+        "scripts/submission_check.py",
+        "scripts/t5_anon_transcript.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 13,
-    "M": 47,
+    "M": 48,
     "O": 14,
     "R": 70,
     "S": 19,

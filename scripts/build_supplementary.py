@@ -153,6 +153,18 @@ def main():
         for f in files:
             z.write(f, arcname=os.path.join("supplementary", f))
             size += os.path.getsize(f)
+        # The correspondence transcript, from OUTSIDE the tree. 6.1 and 8 cite it
+        # and it must not be in the repository: it is private, consent to quote it
+        # has not been given, and it was briefly public (M-48). The archive is
+        # where reviewers get it, and the archive is not published.
+        from t5_anon_transcript import OUT_MD as TRANSCRIPT_SRC, BUNDLE_PATH as TRANSCRIPT_DST
+        assert os.path.exists(TRANSCRIPT_SRC), (
+            f"the correspondence transcript is not at {TRANSCRIPT_SRC}; "
+            f"run scripts/t5_anon_transcript.py, or set RWM_PRIVATE_DIR")
+        for hit in scrub(open(TRANSCRIPT_SRC, encoding="utf-8", errors="replace").read()):
+            raise AssertionError(f"the transcript carries identifying material: {hit}")
+        z.write(TRANSCRIPT_SRC, arcname=os.path.join("supplementary", TRANSCRIPT_DST))
+        size += os.path.getsize(TRANSCRIPT_SRC)
         z.writestr("supplementary/GIT_LOG_ANONYMISED.txt", log)
     open(OUT, "wb").write(buf.getvalue())
     zb = os.path.getsize(OUT)

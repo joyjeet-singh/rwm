@@ -42,6 +42,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 import rwm_data as R  # noqa: E402
 from t5_anon_transcript import DENY as TRANSCRIPT_DENY  # noqa: E402
+from t5_anon_transcript import OUT_MD as TRANSCRIPT_SRC  # noqa: E402
+from t5_anon_transcript import BUNDLE_PATH as TRANSCRIPT_DST  # noqa: E402
 
 OUT_ZIP = "supplementary_anon.zip"
 
@@ -174,11 +176,22 @@ def collect():
     return sorted(set(files))
 
 
+# Files that live OUTSIDE the repository tree and must nevertheless reach
+# reviewers. There is exactly one, and the reason it is outside is the reason it
+# has to be here: the correspondence transcript is private, consent to quote it
+# has not been given, and 6.1 and 8 both cite it. It must not be in the
+# repository (M-48) and it must be in the bundle. Sourced from
+# t5_anon_transcript.py so there is one path, not two.
+def external_files():
+    return {TRANSCRIPT_SRC: TRANSCRIPT_DST}
+
+
 def stage(files, staging):
     """Copy every file into `staging`, scrubbing contents and paths."""
     written, path_fixes, content_fixes = [], 0, 0
-    for src in files:
-        dst_rel = scrub_text(src)
+    ext = external_files()
+    for src in list(files) + [p for p in ext if os.path.exists(p)]:
+        dst_rel = ext.get(src) or scrub_text(src)
         if dst_rel != src:
             path_fixes += 1
         dst = os.path.join(staging, dst_rel)
@@ -253,7 +266,11 @@ def main():
                                               open("PAPER.md").read())
                         if m.startswith(("results/", "docs/", "scripts/", "src/"))
                         or m.isupper() or m.endswith(".md")})
-        REQUIRED = ["docs/SUPPLEMENTARY_CORRESPONDENCE.md", "FINDINGS_LEDGER.md",
+        assert os.path.exists(TRANSCRIPT_SRC), (
+            f"the correspondence transcript is not at {TRANSCRIPT_SRC}. It is generated "
+            f"OUTSIDE this tree by scripts/t5_anon_transcript.py and must not be inside it "
+            f"(M-48); run that script, or set RWM_PRIVATE_DIR.")
+        REQUIRED = [TRANSCRIPT_DST, "FINDINGS_LEDGER.md",
                     "results/original_paper_figures.json"]
         staged_set = set(written)
         missing_required = [f for f in REQUIRED if f not in staged_set]

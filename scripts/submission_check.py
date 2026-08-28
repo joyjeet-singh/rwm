@@ -82,6 +82,44 @@ def main():
     chk("A2 TMLR style file, submission mode", bool(m) and not (m.group(1) if m else None),
         f"line is {m.group(0)!r}" if m else "no \\usepackage{tmlr} found")
 
+    # A0 -- the public-tree gate.
+    #
+    # Written after `docs/SUPPLEMENTARY_CORRESPONDENCE.md` was pushed to a NAMED
+    # public repository for 46 minutes on 2026-08-28 (M-48). Private
+    # correspondence, consent to quote not given, and cited by 6.1 and 8 as
+    # ANONYMISED supplementary material -- so publishing it also defeats the
+    # submission's anonymity, not merely that file's.
+    #
+    # Three places it could come back from and all three are checked: the working
+    # tree, git's index, and the tip commit. .gitignore stops the first kind of
+    # accident and stops neither of the others -- `git add -f` and an already-
+    # tracked file both walk straight past it.
+    NEVER_PUBLISH = ["docs/SUPPLEMENTARY_CORRESPONDENCE.md",
+                     "SUPPLEMENTARY_CORRESPONDENCE.md"]
+    found = []
+    for f in NEVER_PUBLISH:
+        if os.path.exists(f):
+            found.append(f"{f} (working tree)")
+    for where, cmd in (("index", ["git", "ls-files", "--"]),
+                       ("HEAD", ["git", "ls-tree", "-r", "--name-only", "HEAD", "--"])):
+        try:
+            out = subprocess.run(cmd + NEVER_PUBLISH, capture_output=True, text=True)
+            found += [f"{x} ({where})" for x in out.stdout.split() if x]
+        except Exception as e:                                  # noqa: BLE001
+            found.append(f"could not check {where}: {e}")
+    # ...and in history, which is the part a deletion commit does not fix.
+    try:
+        h = subprocess.run(["git", "log", "--all", "--format=%H", "--"] + NEVER_PUBLISH,
+                           capture_output=True, text=True)
+        n_hist = len([x for x in h.stdout.split() if x])
+        if n_hist:
+            found.append(f"{n_hist} commit(s) in reachable history still carry it")
+    except Exception as e:                                      # noqa: BLE001
+        found.append(f"could not check history: {e}")
+    chk("A0 never-publish files absent from the public tree", not found,
+        f"{len(NEVER_PUBLISH)} paths checked in working tree, index, HEAD and history"
+        + (f"; PRESENT: {found}" if found else "; none present"))
+
     # A3
     if os.path.exists("supplementary.zip"):
         z = zipfile.ZipFile("supplementary.zip")
