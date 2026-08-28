@@ -715,7 +715,7 @@ variation to key on. We have not tested it.
 
 **The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **45 of 45** dimensions, matching the best aleatoric head here on the sign count, while being 39.7× overconfident at h = 368. **All figures in this paragraph are the held-out arena (n_independent = 4)**, so that the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes 34.4× for the same ratio at h = 368 and n_independent = 20. The figure the abstract and §13 use is neither of those: it is 33.4× at h = 100, on the same 20 trajectories. It does not beat Arm B's head on strength either: its mean correlation at h=368 is +0.151 against 0.257. The two quantities rank comparably; neither is close to an interval. Under the permutation null that count gives P = 0.0435 out of sample and 0.0775 in sample, against 5.68e-14 from the independent-trials test we should not have used. It still fails the horizon test the same way: σ grows 1.59× from h=1 to h=368 while error grows 13.33×.
 
-**The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = 4 out of sample, the epistemic ordering looked strongest at long horizon (0.0417 at h=128, 0.0435 at h=368) and unremarkable at short (0.4348 at h=1). Both larger arenas invert that. In sample (n_independent = 16): 0.0052 at h=1, 0.0070 at h=8, against 0.3794 at h=128. Over all ten episodes (n_independent = 20): 0.0056, 0.0069 and 0.3762. Two independent arenas at four and five times the sample say the effect is strongest at *short* horizon.
+**The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = 4 out of sample, the epistemic ordering looked strongest at long horizon (0.0417 at h=128, 0.0435 at h=368) and unremarkable at short (0.4348 at h=1). Both larger arenas invert that. In sample (n_independent = 16): 0.0052 at h=1, 0.0070 at h=8, against 0.3794 at h=128. Over all ten episodes (n_independent = 20): 0.0056, 0.0069 and 0.3762, with h = 100 at 0.2769 sitting between h=32's 0.0344 and h=128's 0.3762 — the horizon added by this revision falls where the existing reading says it should, which is worth stating because it was not free to. Two independent arenas at four and five times the sample say the effect is strongest at *short* horizon.
 
 The null means explain why, and the explanation is the same one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to 41.6 of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near 15.4 and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at 4 trajectories its smallest attainable P-value is 0.04167, so it cannot distinguish a strong effect from a marginal one at any horizon. We report the small arena's numbers alongside because it is the only arena that is out-of-sample for our own arms, not because it is the better measurement.
 
@@ -824,7 +824,20 @@ calling it a ranking of realised error without qualification.
 
 **Does it hold on a model we trained?** Everything above is measured on the released checkpoint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed to git before the runs existed (§9, M-43). The rule asked for two things: that disagreement lead the index at every horizon, and that the paired difference exclude zero at a majority of them.
 
-**It returns DOES NOT GENERALISE.** The first condition passes completely — disagreement leads the index in **12 of 12** seed-horizon cells, every paired estimate positive, +0.204 to +0.545. The second fails: the paired difference excludes zero at 1 of 4 horizons, not a majority. We report the verdict the rule returns and do not rewrite the rule.
+**It returns DOES NOT GENERALISE.** The first condition passes completely — disagreement leads
+the index in **12 of 12** seed-horizon cells, every paired
+estimate positive, +0.204 to +0.545. The second fails: the paired difference
+excludes zero at 1 of 4 horizons, not a majority. We report the
+verdict the rule returns and do not rewrite the rule.
+
+**And we do not rewrite its denominator either, which is the less obvious half of the same
+discipline.** M-43 was committed over 4 horizons, before the data. Adding
+h = 100 to the evaluation grid after the fact would change what "a majority of
+horizons" means in a rule already discharged — a way of moving a threshold that looks like
+reporting rather than like moving a threshold. The verdict above is over M-43's own
+4. The released checkpoint's table in §6.7 does follow the six-horizon grid,
+because no pre-registration is stated over it; the two counts are deliberately different
+numbers and the build keeps them in separate keys for that reason.
 
 **What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = 4, where §6.7's own finding used 20. Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on 75% of draws on average and on only 24% at h=8. That estimate is an **upper bound**, because the pool it subsamples is in-sample for these arms, where the effect is +0.425 to +0.790 against +0.204 to +0.545 on the held-out pair. So the rule was under-powered at the sample size it faced, decisively at one horizon — and we do not claim it could not have passed, only that it was committed without anyone checking what it could detect. That is a failure of ours, and it is the same one the ledger already records as M-24: a rule anchored without regard to the regime it would be applied in.
 
@@ -1084,7 +1097,7 @@ the work.
 **Reproducibility, and a build that checks its own prose.**
 `./reproduce.sh --quick --force` regenerates 36 artifact files and 6,789
 numeric values from a clean clone, 6,787 of them bitwise identical (99.97%),
-2 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **46 comparative claims** across 19 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 46 of 46 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+2 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **49 comparative claims** across 20 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 49 of 49 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1092,7 +1105,7 @@ numeric values from a clean clone, 6,787 of them bitwise identical (99.97%),
 
 Six things a practitioner can apply without reading the rest of this paper.
 
-**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it ranks whole rollouts almost perfectly — +0.994 [+0.918, +0.999] across the 20 trajectories, and that is a ranking of *rollouts*, not of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to +0.605 [+0.545, +0.694]. That decay is the useful part: the signal is excellent where you can check it cheaply and merely good where you most need it. It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at every horizon where the index is defined, and it retains +0.596 once that index is partialled out (§6.7). That is a real signal, not a re-encoding of how far ahead you are looking — and not merely a report of which episode is hard: with both the forecast depth and the rollout held constant it still correlates +0.419 [+0.318, +0.576] with error (§6.7). But it is too small to be an interval by a wide margin — at h = 100, the horizon the method itself rolls out over, 33.4× [28.7, 39.0] on the released checkpoint and 10.5× [9.0, 11.5] on the ensemble-5 arms we trained — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
+**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it ranks whole rollouts almost perfectly — +0.994 [+0.918, +0.999] across the 20 trajectories, and that is a ranking of *rollouts*, not of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to +0.605 [+0.545, +0.694]. That decay is the useful part: the signal is excellent where you can check it cheaply and merely good where you most need it. It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at 5 of the 5 horizons where the index is defined — every one of them — and it retains +0.596 once that index is partialled out (§6.7). That is a real signal, not a re-encoding of how far ahead you are looking — and not merely a report of which episode is hard: with both the forecast depth and the rollout held constant it still correlates +0.419 [+0.318, +0.576] with error (§6.7). But it is too small to be an interval by a wide margin — at h = 100, the horizon the method itself rolls out over, 33.4× [28.7, 39.0] on the released checkpoint and 10.5× [9.0, 11.5] on the ensemble-5 arms we trained — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
 
 **If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within 10 points of nominal on every held-out cell; a single global multiplier manages 2 of them (§6.8). The held-out cells are 6 horizons × two fold directions on the same 4 trajectories, not independent trials, so read the sweep as consistency and the per-cell deviations as the evidence. The fitted multipliers span 9.31× across horizons, which is precisely why one number cannot serve.
 
@@ -1323,8 +1336,12 @@ three. Each is an entry in `FINDINGS_LEDGER.md` with its evidence and its succes
 guarantee about *provenance*, and it is silent about *relations between* provenanced numbers.
 Six failure modes survive it, and all six occurred in this paper. Five are relations between provenanced numbers; the sixth is not a relation at all and is set out after the list:
 
-- **an interval relation that is not the one asserted** — "the intervals do not overlap", where at
-  h=128 they overlap across 0.604–0.643;
+- **an interval relation that is not the one asserted** — "the intervals do not overlap",
+  where at h=128 they overlap across 0.604–0.643. **This one has now been wrong twice.**
+  The correction said the distinction mattered "at exactly one place"; adding h = 100 to
+  the grid made it two, and the sentence recording the first error carried the second. A
+  stated *frequency* — "at exactly one place", "in all four", "the only" — is a claim
+  about a count, and no kind bound one to a recomputed count until `frequency-consistency`;
 - **an extremum that is not the extremum** — the worst-calibrated held-out cell named as
   epistemic at h=1, which is third; the largest deviation is aleatoric at h=128;
 - **a stated change with the wrong sign** — "a change of **+**0.010", where partialling the
@@ -1346,8 +1363,8 @@ unresolved braces: a pipe-led line with no separator row beneath it, a single-br
 that names a real key, and any key resolving to an empty or null value. The converter
 requires the separator row before it will build a table.
 
-**The check kinds.** `scripts/check_comparative_claims.py` verifies 46 claims across
-19 kinds: *abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 9 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference).
+**The check kinds.** `scripts/check_comparative_claims.py` verifies 49 claims across
+20 kinds: *abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *frequency-consistency* (a frequency stated in words -- "at every horizon", "at exactly one place" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 9 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference).
 
 That list is generated from the checker's own registry rather than written here. It was
 written here, and §9 quoted a generated count beside it; the two had drifted seven kinds
@@ -1363,7 +1380,7 @@ guards nothing; a check that only matches text guards nothing either.
 **The self-test.** Every assertion is run against a deliberately corrupted expectation on each
 build and must fail: the interval relation inverted, the extremum replaced by the *runner-up*
 rather than an absent label, the sign flipped, the order of magnitude and the dimension counts
-moved by one. 46 of 46 are caught. An assertion that has quietly stopped
+moved by one. 49 of 49 are caught. An assertion that has quietly stopped
 being able to fail is worth less than no assertion, because it reads as coverage.
 
 **Four defects the self-test has found in the checker itself**, rather
@@ -1381,8 +1398,8 @@ both of which read as protection and are not:
 - A `sign` assertion that was never written. §6.8 said the two largest held-out deviations were "in opposite directions" when both are above target; the kind that would have caught it existed and no claim used it. A kind with no claim attached guards nothing, and the self-test cannot report that because there is nothing to corrupt.
 
 Corruptions now invert relative to each claim's own expectation, every registered kind
-carries at least one claim, and every claim is corrupted on every build: 46 of
-46 caught against 46 claims, with no exemptions. This list is generated from
+carries at least one claim, and every claim is corrupted on every build: 49 of
+49 caught against 49 claims, with no exemptions. This list is generated from
 the checker rather than written here, so a fourth entry cannot be forgotten.
 
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number

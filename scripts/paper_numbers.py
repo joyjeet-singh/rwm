@@ -255,6 +255,9 @@ def main():
                       "checker registers are one number",
         "scope-consistency": "a universal quantifier is checked against the set it quantifies "
                              "over",
+        "frequency-consistency": "a frequency stated in words -- \"at every horizon\", \"at "
+                                 "exactly one place\" -- matches a count recomputed from the "
+                                 "artifacts",
     }
     _missing = [k for k in _kinds if k not in _blurb]
     assert not _missing, f"check kinds with no appendix D description: {_missing}"

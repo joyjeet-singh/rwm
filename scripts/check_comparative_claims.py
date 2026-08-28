@@ -435,6 +435,30 @@ CLAIMS = [
     # policy learning or hardware. Appendix E says of two of them "no simulator
     # needed" and puts both within CPU reach. A universal quantifier in the body
     # has to be checked against the set it quantifies over.
+    # ---- C18 frequency-consistency ---------------------------------------
+    # A stated FREQUENCY is a claim about a count, and no kind bound one to a
+    # recomputed count. §6.7 said the distinction between the marginal and the
+    # paired test "matters at exactly one place"; adding h=100 to the grid made
+    # it two, and the sentence carrying that error was the one recording the
+    # previous version of the same error. count-consistency compares a count
+    # against the ledger; this compares a WORD against a relation recomputed
+    # from the artifacts.
+    {"id": "C18.1", "kind": "frequency-consistency", "where": "10",
+     "says": "on a paired test that excludes zero at",
+     "count": ("paper_numbers.json", "d2p_n_separating.value"),
+     "total": ("paper_numbers.json", "d2p_n_horizons.value"),
+     "expect": "all", "span": 220},
+    {"id": "C18.2", "kind": "frequency-consistency", "where": "6.7",
+     "says": "Disagreement wins at every horizon tested",
+     "count": ("paper_numbers.json", "d2b_n_index_wins.value"),
+     "total": ("paper_numbers.json", "d2b_n_horizons_tested.value"),
+     "expect": "none", "span": 200},
+    {"id": "C18.3", "kind": "frequency-consistency", "where": "6.10",
+     "says": "conditions hold, against every one of the",
+     "count": ("paper_numbers.json", "m44_n_conditions_met.value"),
+     "total": ("paper_numbers.json", "m44_n_conditions.value"),
+     "expect": "all", "span": 140},
+
     {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix E",
      "says": "within reach of the CPU budget this project already spent",
      "section": "4. What the original papers claim, and which claims we test",
@@ -730,6 +754,30 @@ def evaluate(c, paper, override=None):
         ok = registered == claimed == enumerated and i >= 0
         return ok, (f'registered {registered}, section 9 claims {claimed}, '
                     f'appendix D enumerates {enumerated}')
+    if k == "frequency-consistency":
+        # A stated frequency IS a claim about a count. "at exactly one place",
+        # "in all four", "the only", "at every horizon" -- each asserts a
+        # relation between a count and a total, and each was previously written
+        # in words and checked by nobody. The count and the total come from the
+        # artifacts; the sentence has to use wording that matches what they say.
+        c_ = int(str(exp.get("_forced_count", dig(*exp["count"]))).replace(",", ""))
+        t_ = int(str(dig(*exp["total"])).replace(",", ""))
+        want = exp["expect"]
+        got = "all" if c_ == t_ else ("none" if c_ == 0 else ("one" if c_ == 1 else "some"))
+        WORDS_FOR = {
+            "all": ("every", "all ", "always", "each of", "every one of them"),
+            # "leads in 0 of 5" states the frequency as a numeral; that is a
+            # perfectly good way to say "never" and the check must accept it.
+            "none": ("no ", "never", "none", "not at any", "zero", "in 0 of", "0 of"),
+            "one": ("exactly one", "the only", "one place", "a single"),
+            "some": ("of the", "of its", "of them"),
+        }
+        win = _window(paper, exp["says"], span=exp.get("span", 200)).lower()
+        said = [w for w in WORDS_FOR[want] if w in win]
+        ok = got == want and bool(win) and bool(said)
+        return ok, (f'{c_} of {t_} -> "{got}", text claims "{want}"'
+                    + (f'; wording {said[:2]}' if said else '; NO matching wording in the window')
+                    + ('' if win else '; the fragment is not in the paper'))
     if k == "scope-consistency":
         # A universal quantifier over a set the paper enumerates elsewhere. The
         # quantifier is forbidden outright in the named section: "without
@@ -837,6 +885,10 @@ def corruption_for(c):
         return {"parts": c["parts"][:-1] + [c["total"]]}
     if k == "kind-count":
         return {"_forced": len({x["kind"] for x in CLAIMS}) + 1}
+    if k == "frequency-consistency":
+        # Move the count off the frequency the sentence claims: "every" must
+        # reject a count that is not the total, "none" one that is not zero.
+        return {"_forced_count": 1 if c["expect"] in ("all", "none") else 0}
     if k == "scope-consistency":
         # A phrase that IS in the section, standing in for a quantifier never
         # removed.

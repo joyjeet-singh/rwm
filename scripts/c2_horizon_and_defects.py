@@ -1117,6 +1117,63 @@ EDITS = [
      "autoregressive-versus-teacher-forcing result — {{d1_ratio}}× at h = {{v2_diag_h}} and "
      "{{d1_ratio_h100}}× at h = {{v2_deploy_h}} — and still beats the hold-last floor, by "
      "{{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons."),
+
+    # =====================================================================
+    # PART B (pending-work brief) -- the h=100 consequences still open.
+    # =====================================================================
+
+    ("B1 10: bind the frequency claim to the recomputed count",
+     "on a paired test that excludes zero at every horizon where the index is defined, and it "
+     "retains {{d2b_par_all}} once that index is partialled out (§6.7).",
+
+     "on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} "
+     "horizons where the index is defined — every one of them — and it retains {{d2b_par_all}} "
+     "once that index is partialled out (§6.7)."),
+
+    ("B2 6.7: M-43's denominator is its own four horizons and does not follow the grid",
+     "**It returns {{e5_verdict}}.** The first condition passes completely — disagreement leads "
+     "the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired "
+     "estimate positive, {{e5_diff_lo}} to {{e5_diff_hi}}. The second fails: the paired difference "
+     "excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a majority. We report the "
+     "verdict the rule returns and do not rewrite the rule.",
+
+     "**It returns {{e5_verdict}}.** The first condition passes completely — disagreement leads\n"
+     "the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired\n"
+     "estimate positive, {{e5_diff_lo}} to {{e5_diff_hi}}. The second fails: the paired difference\n"
+     "excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a majority. We report the\n"
+     "verdict the rule returns and do not rewrite the rule.\n"
+     "\n"
+     "**And we do not rewrite its denominator either, which is the less obvious half of the same\n"
+     "discipline.** M-43 was committed over {{e5_n_horizons}} horizons, before the data. Adding\n"
+     "h = {{v2_deploy_h}} to the evaluation grid after the fact would change what \"a majority of\n"
+     "horizons\" means in a rule already discharged — a way of moving a threshold that looks like\n"
+     "reporting rather than like moving a threshold. The verdict above is over M-43's own\n"
+     "{{e5_n_horizons}}. The released checkpoint's table in §6.7 does follow the six-horizon grid,\n"
+     "because no pre-registration is stated over it; the two counts are deliberately different\n"
+     "numbers and the build keeps them in separate keys for that reason."),
+
+    ("B3 Appendix D: the overlap claim has now been wrong twice",
+     "- **an interval relation that is not the one asserted** — \"the intervals do not overlap\", "
+     "where at\n  h=128 they overlap across 0.604–0.643;",
+
+     "- **an interval relation that is not the one asserted** — \"the intervals do not overlap\",\n"
+     "  where at h=128 they overlap across 0.604–0.643. **This one has now been wrong twice.**\n"
+     "  The correction said the distinction mattered \"at exactly one place\"; adding h = 100 to\n"
+     "  the grid made it two, and the sentence recording the first error carried the second. A\n"
+     "  stated *frequency* — \"at exactly one place\", \"in all four\", \"the only\" — is a claim\n"
+     "  about a count, and no kind bound one to a recomputed count until `frequency-consistency`;"),
+
+    ("B4 6.6: h=100 belongs in the horizon story, where it supports the reading",
+     "Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, "
+     "{{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}. Two independent arenas at four and five "
+     "times the sample say the effect is strongest at *short* horizon.",
+
+     "Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, "
+     "{{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at "
+     "{{perm_all_epi_p_h100}} sitting between h=32's {{perm_all_epi_p_h32}} and h=128's "
+     "{{perm_all_epi_p_h128}} — the horizon added by this revision falls where the existing "
+     "reading says it should, which is worth stating because it was not free to. Two independent "
+     "arenas at four and five times the sample say the effect is strongest at *short* horizon."),
 ]
 
 
