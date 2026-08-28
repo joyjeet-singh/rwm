@@ -830,6 +830,54 @@ EDITS = [
      "retraction that holds in one document and not in the repository is not a retraction, and\n"
      "the `retraction-consistency` check now reads all five reader-facing files rather than\n"
      "three. Each is an entry in `FINDINGS_LEDGER.md` with its evidence and its successor."),
+
+    # =====================================================================
+    # 2.3 (cont.) -- the table cell the prose was rewritten around. The
+    # permutation column printed "--" at h=100 because the test had never been
+    # run there; it has been now, in all three arenas.
+    # =====================================================================
+
+    ("2.3b 6.2 table: the h=100 permutation cell is a P-value, not a dash",
+     "| 100 | {{d1n_alea_ratio_h100}}× [{{d1n_alea_ratio_ci_h100}}] | {{d1n_alea_cov1_h100}}% | "
+     "**{{d1n_epi_ratio_h100}}×** [{{d1n_epi_ratio_ci_h100}}] | {{d1n_epi_cov1_h100}}% "
+     "[{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi_cov2_h100}}% | "
+     "{{d1n_epi_npos_h100}}/{{d1n_epi_ndim_h100}} | — |",
+
+     "| **{{v2_deploy_h}}** | {{d1n_alea_ratio_h100}}× [{{d1n_alea_ratio_ci_h100}}] | "
+     "{{d1n_alea_cov1_h100}}% | **{{d1n_epi_ratio_h100}}×** [{{d1n_epi_ratio_ci_h100}}] | "
+     "{{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi_cov2_h100}}% | "
+     "{{d1n_epi_npos_h100}}/{{d1n_epi_ndim_h100}} | {{perm_all_epi_p_h100}} |"),
+
+    # =====================================================================
+    # Readability: the note about the withdrawn range interrupted the sentence
+    # it corrected. Move it to the end of the paragraph, where the other
+    # earlier-draft notes in this paper sit.
+    # =====================================================================
+
+    ("6.10: move the withdrawn-range note out of the middle of the reading",
+     "σ is larger at every horizon — by {{r2_sigma_x_lo}}× at its weakest "
+     "(h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its strongest "
+     "(h = {{r2_sigma_x_hi_h}}) — which is the direction trunk-sharing predicts, and at "
+     "h = {{v2_deploy_h}} it is {{r2_sigma_x_h100}}×, **{{r2_from_sigma_h100}}%** of the "
+     "improvement. An earlier draft gave that range as the h = 1 and h = 8 values, which do not "
+     "span it. So the",
+
+     "σ is larger at every horizon — by {{r2_sigma_x_lo}}× at its weakest\n"
+     "(h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its strongest\n"
+     "(h = {{r2_sigma_x_hi_h}}) — which is the direction trunk-sharing predicts, and at\n"
+     "h = {{v2_deploy_h}} it is {{r2_sigma_x_h100}}×, **{{r2_from_sigma_h100}}%** of the\n"
+     "improvement. So the"),
+
+    ("6.10: and put it where the paragraph ends",
+     "so a reader who takes the {{r2_total_x_h368}}× figure at that horizon as a measure of the "
+     "architectural effect would overstate it. We report both columns for that reason.",
+
+     "so a reader who takes the {{r2_total_x_h368}}× figure at that horizon as a measure of the\n"
+     "architectural effect would overstate it. We report both columns for that reason. (An\n"
+     "earlier draft gave the σ range above as the h = 1 and h = 8 values, which do not span it —\n"
+     "h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}× falls below the stated floor. Found by the\n"
+     "horizon sweep, which flagged the sentence for carrying two horizons' figures while naming\n"
+     "two others.)"),
 ]
 
 

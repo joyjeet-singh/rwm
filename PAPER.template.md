@@ -486,7 +486,7 @@ no held-out arena in this dataset.
 | 1 | {{d1n_alea_ratio_h1}}× [{{d1n_alea_ratio_ci_h1}}] | {{d1n_alea_cov1_h1}}% | **{{d1n_epi_ratio_h1}}×** [{{d1n_epi_ratio_ci_h1}}] | {{d1n_epi_cov1_h1}}% [{{d1n_epi_cov1_ci_h1}}] | {{d1n_epi_cov2_h1}}% | {{d1n_epi_npos_h1}}/{{d1n_epi_ndim_h1}} | {{perm_all_epi_p_h1}} |
 | 8 | {{d1n_alea_ratio_h8}}× [{{d1n_alea_ratio_ci_h8}}] | {{d1n_alea_cov1_h8}}% | {{d1n_epi_ratio_h8}}× [{{d1n_epi_ratio_ci_h8}}] | {{d1n_epi_cov1_h8}}% [{{d1n_epi_cov1_ci_h8}}] | {{d1n_epi_cov2_h8}}% | {{d1n_epi_npos_h8}}/{{d1n_epi_ndim_h8}} | {{perm_all_epi_p_h8}} |
 | 32 | {{d1n_alea_ratio_h32}}× [{{d1n_alea_ratio_ci_h32}}] | {{d1n_alea_cov1_h32}}% | {{d1n_epi_ratio_h32}}× [{{d1n_epi_ratio_ci_h32}}] | {{d1n_epi_cov1_h32}}% [{{d1n_epi_cov1_ci_h32}}] | {{d1n_epi_cov2_h32}}% | {{d1n_epi_npos_h32}}/{{d1n_epi_ndim_h32}} | {{perm_all_epi_p_h32}} |
-| 100 | {{d1n_alea_ratio_h100}}× [{{d1n_alea_ratio_ci_h100}}] | {{d1n_alea_cov1_h100}}% | **{{d1n_epi_ratio_h100}}×** [{{d1n_epi_ratio_ci_h100}}] | {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi_cov2_h100}}% | {{d1n_epi_npos_h100}}/{{d1n_epi_ndim_h100}} | — |
+| **{{v2_deploy_h}}** | {{d1n_alea_ratio_h100}}× [{{d1n_alea_ratio_ci_h100}}] | {{d1n_alea_cov1_h100}}% | **{{d1n_epi_ratio_h100}}×** [{{d1n_epi_ratio_ci_h100}}] | {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi_cov2_h100}}% | {{d1n_epi_npos_h100}}/{{d1n_epi_ndim_h100}} | {{perm_all_epi_p_h100}} |
 | 128 | {{d1n_alea_ratio_h128}}× [{{d1n_alea_ratio_ci_h128}}] | {{d1n_alea_cov1_h128}}% | {{d1n_epi_ratio_h128}}× [{{d1n_epi_ratio_ci_h128}}] | {{d1n_epi_cov1_h128}}% [{{d1n_epi_cov1_ci_h128}}] | {{d1n_epi_cov2_h128}}% | {{d1n_epi_npos_h128}}/{{d1n_epi_ndim_h128}} | {{perm_all_epi_p_h128}} |
 | 368 | {{d1n_alea_ratio_h368}}× [{{d1n_alea_ratio_ci_h368}}] | {{d1n_alea_cov1_h368}}% | {{d1n_epi_ratio_h368}}× [{{d1n_epi_ratio_ci_h368}}] | {{d1n_epi_cov1_h368}}% [{{d1n_epi_cov1_ci_h368}}] | {{d1n_epi_cov2_h368}}% | {{d1n_epi_npos_h368}}/{{d1n_epi_ndim_h368}} | {{perm_all_epi_p_h368}} |
 
@@ -876,12 +876,19 @@ improvement into its two multiplicative parts:
 independent ensemble is very slightly the **worse** predictor there and the σ gain more than
 covers it.*
 
-**The reading, stated at the horizon the rule is stated over.** σ is larger at every horizon — by {{r2_sigma_x_lo}}× at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its strongest (h = {{r2_sigma_x_hi_h}}) — which is the direction trunk-sharing predicts, and at h = {{v2_deploy_h}} it is {{r2_sigma_x_h100}}×, **{{r2_from_sigma_h100}}%** of the improvement. An earlier draft gave that range as the h = 1 and h = 8 values, which do not span it. So the
+**The reading, stated at the horizon the rule is stated over.** σ is larger at every horizon — by {{r2_sigma_x_lo}}× at its weakest
+(h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its strongest
+(h = {{r2_sigma_x_hi_h}}) — which is the direction trunk-sharing predicts, and at
+h = {{v2_deploy_h}} it is {{r2_sigma_x_h100}}×, **{{r2_from_sigma_h100}}%** of the
+improvement. So the
 mechanism is supported and it is the larger part of the effect where the method operates. At the
 open-loop diagnostic horizon of h = {{v2_diag_h}} the split reverses — {{r2_from_acc_h368}}% of
-the improvement there is the ensemble simply predicting better — so a reader who takes the
-{{r2_total_x_h368}}× figure at that horizon as a measure of the architectural effect would
-overstate it. We report both columns for that reason.
+the improvement there is the ensemble simply predicting better — so a reader who takes the {{r2_total_x_h368}}× figure at that horizon as a measure of the
+architectural effect would overstate it. We report both columns for that reason. (An
+earlier draft gave the σ range above as the h = 1 and h = 8 values, which do not span it —
+h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}× falls below the stated floor. Found by the
+horizon sweep, which flagged the sentence for carrying two horizons' figures while naming
+two others.)
 
 **What this does and does not license.** It licenses saying that **the released ensemble's
 disagreement understates epistemic uncertainty partly because its members are not independent

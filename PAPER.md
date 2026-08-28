@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     647 values substituted from 51 artifacts. -->
+     648 values substituted from 51 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -492,7 +492,7 @@ no held-out arena in this dataset.
 | 1 | 1,827× [915, 3,110] | 0.11% | **8.3×** [6.1, 9.7] | 16.22% [13.44, 18.89] | 30.11% | 44/45 | 0.0056 |
 | 8 | 3,034× [1,638, 4,849] | 0.08% | 15.1× [10.3, 19.2] | 9.99% [8.60, 11.32] | 19.76% | 45/45 | 0.0069 |
 | 32 | 4,525× [2,492, 7,196] | 0.07% | 22.6× [15.5, 28.7] | 6.95% [5.99, 7.85] | 13.68% | 45/45 | 0.0344 |
-| 100 | 11,683× [7,970, 15,846] | 0.04% | **33.4×** [28.7, 39.0] | 4.61% [4.12, 5.09] | 9.27% | 45/45 | — |
+| **100** | 11,683× [7,970, 15,846] | 0.04% | **33.4×** [28.7, 39.0] | 4.61% [4.12, 5.09] | 9.27% | 45/45 | 0.2769 |
 | 128 | 14,934× [10,564, 19,700] | 0.03% | 34.2× [30.6, 38.2] | 4.37% [3.96, 4.81] | 8.75% | 45/45 | 0.3762 |
 | 368 | 20,669× [15,666, 25,688] | 0.02% | 34.4× [29.8, 40.3] | 3.59% [3.27, 3.92] | 7.19% | 45/45 | 0.0804 |
 
@@ -889,12 +889,19 @@ improvement into its two multiplicative parts:
 independent ensemble is very slightly the **worse** predictor there and the σ gain more than
 covers it.*
 
-**The reading, stated at the horizon the rule is stated over.** σ is larger at every horizon — by 1.49× at its weakest (h = 368) and 1.81× at its strongest (h = 8) — which is the direction trunk-sharing predicts, and at h = 100 it is 1.65×, **71%** of the improvement. An earlier draft gave that range as the h = 1 and h = 8 values, which do not span it. So the
+**The reading, stated at the horizon the rule is stated over.** σ is larger at every horizon — by 1.49× at its weakest
+(h = 368) and 1.81× at its strongest
+(h = 8) — which is the direction trunk-sharing predicts, and at
+h = 100 it is 1.65×, **71%** of the
+improvement. So the
 mechanism is supported and it is the larger part of the effect where the method operates. At the
 open-loop diagnostic horizon of h = 368 the split reverses — 57% of
-the improvement there is the ensemble simply predicting better — so a reader who takes the
-2.53× figure at that horizon as a measure of the architectural effect would
-overstate it. We report both columns for that reason.
+the improvement there is the ensemble simply predicting better — so a reader who takes the 2.53× figure at that horizon as a measure of the
+architectural effect would overstate it. We report both columns for that reason. (An
+earlier draft gave the σ range above as the h = 1 and h = 8 values, which do not span it —
+h = 368's 1.49× falls below the stated floor. Found by the
+horizon sweep, which flagged the sentence for carrying two horizons' figures while naming
+two others.)
 
 **What this does and does not license.** It licenses saying that **the released ensemble's
 disagreement understates epistemic uncertainty partly because its members are not independent

@@ -14,7 +14,7 @@ looks wrong, the fix is upstream in the artifact, not in this file.
 | the epistemic miscalibration had no mechanism | the ensemble shares 89.15% of each member and one hidden state, and an independent one is 2.03× better calibrated |
 | five controls on the ranking claim | six — the new one removes trajectory difficulty, and shows the old "decisive" one did not |
 | two references, both his | 10 more, including a 2022 paper that found the same thing about ensemble std |
-| 32 comparative claims, 8 kinds | 32 across 15 kinds |
+| 46 comparative claims, 8 kinds | 46 across 19 kinds |
 
 The trunk-sharing result is the reason this needed rewriting rather than updating. It is the one
 finding in the report that is an actionable suggestion about his code rather than an observation
@@ -33,21 +33,21 @@ about it.
 > point reframed an entire section from an apparent inconsistency into what it actually is — a
 > documentation gap between a release and a run. The section now says so in those terms.
 >
-> The work is complete. The paper is attached (30 pages), and everything behind it is
+> The work is complete. The paper is attached (32 pages), and everything behind it is
 > public:
 >
 > - **Code, data and evidence:** https://github.com/joyjeet-singh/rwm
 > - **Checkpoints and model card:** https://huggingface.co/Joyjeetsingh/rwm-reproduction
 >
 > Every number in the paper is generated from a file under `results/`; none is typed. The build
-> also verifies 32 *comparative* claims across 15 kinds — that an interval does or
+> also verifies 46 *comparative* claims across 19 kinds — that an interval does or
 > does not overlap, that a named cell really is the extremum, that a stated change has the sign
 > claimed — because a correct number in a wrong sentence is the failure mode a numeral check
 > cannot see, and I shipped several of those in an earlier draft. A clean clone regenerates
 > 34 artifacts and 6,680 values, 6,680 of them bitwise identical
-> (100.00%), 0 differing. The findings ledger has 191 entries and
+> (100.00%), 0 differing. The findings ledger has 200 entries and
 > records six numbered retractions of my own claims plus
-> two that withdraw framings.
+> six that withdraw framings.
 >
 > **Four things I think are worth your time. The first is the one I would most like you to
 > disagree with.**
