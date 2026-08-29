@@ -2575,12 +2575,21 @@
         "results/p2_capacity_power.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-19",
+      "claim": "The title promised a reveal the paper withdraws two sections later",
+      "relevance": "METHOD",
+      "status": "RESOLVED \u2014 alternative 1 adopted",
+      "evidence": [],
+      "artifacts": [],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 18,
+    "D": 19,
     "M": 49,
     "O": 14,
     "R": 70,

@@ -5205,6 +5205,30 @@ whatever axes remain confounded after this, as it named these.
 **Evidence** `RUN` `results/p2_capacity_power.json`
 **Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
 
+### D-19 — The title promised a reveal the paper withdraws two sections later · **NEW**
+**What it was.** *"What a world model's uncertainty outputs actually report: an independent
+reproduction of the Robotic World Model."* The construction "what X *actually* reports" promises
+that the paper will show the outputs report something other than advertised.
+
+**Why that is a problem here.** §6.1 concedes, before measuring anything, that the follow-up never
+claims its uncertainty is a calibrated interval. So the reveal the title implies is one the paper
+itself withdraws two sections in, and a reviewer who reads the title, then §6.1, has been set up
+and let down inside four pages. The finding is real and worth reporting; the framing overclaims it.
+
+**Alternatives considered**, all describing the measurement rather than implying a reveal:
+
+1. *Measuring the uncertainty outputs of a released robotic world model: an independent
+   reproduction.* **Chosen.** Names what was done, claims nothing §6.1 takes back, and keeps the
+   two words that make the work distinctive: *released* (a checkpoint its authors deployed, not
+   one we trained to criticise) and *independent reproduction*.
+2. *Calibrated as a scale, usable as a ranking: an independent reproduction of the Robotic World
+   Model.* States both results including the positive one, but "calibrated as a scale" reads on
+   first pass as the claim that it IS calibrated, which is the opposite of the finding.
+3. *An independent reproduction of the Robotic World Model and its uncertainty-aware follow-up.*
+   Cannot overclaim and carries no information; a reviewer scanning titles learns nothing.
+
+**Status** RESOLVED — alternative 1 adopted · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

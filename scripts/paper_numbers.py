@@ -298,7 +298,7 @@ def main():
     put("appG_rule_texts", _texts.rstrip(), "results/appendix_g_rules.json")
     put("tn_classes", TN["n_classes"], "results/typed_numerals.json")
     put("tn_exceptions", TN["n_exceptions"], "results/typed_numerals.json")
-    # C5(rev2), 3.5. Section 9 said "N kinds" from this key while appendix D
+    # C5(rev2), 3.5. Section 8 said "N kinds" from this key while appendix D
     # enumerated eight by hand, and the two had drifted seven apart. The
     # enumeration is generated from the same set the count comes from, so the
     # `kind-count` check has something to compare and the two cannot disagree.
@@ -337,7 +337,7 @@ def main():
         "abstract-budget": "the abstract stays inside its word and numeral budget",
         "interval-required": "a quoted ratio or coverage is accompanied by its interval",
         "arithmetic": "a stated total equals the sum of its stated parts",
-        "kind-count": "the number of kinds section 9 claims, appendix D enumerates and the "
+        "kind-count": "the number of kinds section 8 claims, appendix D enumerates and the "
                       "checker registers are one number",
         "scope-consistency": "a universal quantifier is checked against the set it quantifies "
                              "over",
@@ -435,7 +435,7 @@ def main():
     put("n_superseded", len(sup), "FINDINGS_LEDGER.md")
     put("n_retractions", len(retr), "FINDINGS_LEDGER.md")
     put("n_retract_framing", len(fram), "FINDINGS_LEDGER.md")
-    # Section 9 and appendix D each ENUMERATED the framing retractions in prose
+    # Section 8 and appendix D each ENUMERATED the framing retractions in prose
     # ("the claim that a pre-registration was pre-registered, and the binomial
     # inference of 6.6"). Two more were entered by the second revision and a
     # third recorded a narrowing the paper had made without ever entering it, so
@@ -463,7 +463,7 @@ def main():
     # B4/B5. Which review entered which framing retraction, from git rather than
     # from memory.
     #
-    # §9 said "the second pre-submission review entered three more framing
+    # §8 said "the second pre-submission review entered three more framing
     # retractions"; appendix D said "The last four were entered by the second
     # pre-submission review", and enumerated four. Both sentences restate a
     # quantity that neither of them computes, and one of them was wrong: the

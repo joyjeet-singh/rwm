@@ -161,7 +161,7 @@ CLAIMS = [
      "stated_orders": None},
     # The same ratio in 13, where the sentence is scoped to the deployment
     # horizon and used to quote the h=368 figure beside an h=100 one.
-    {"id": "C4.3", "kind": "orders", "where": "13",
+    {"id": "C4.3", "kind": "orders", "where": "12",
      "says": "penalises with is better by a factor of",
      "num": ("task_d_nind20.json", "d1_by_horizon.100.aleatoric.ratio_err_over_sigma"),
      "den": ("task_d_nind20.json", "d1_by_horizon.100.epistemic.ratio_err_over_sigma"),
@@ -174,7 +174,7 @@ CLAIMS = [
              "arenas.in-sample.models.teacher-forced armB.368.p_binomial_two_sided"),
      "stated_orders": 13},
     # ---- C5 arena / horizon provenance (A1) ------------------------------
-    {"id": "C5.1", "kind": "cell", "where": "13",
+    {"id": "C5.1", "kind": "cell", "where": "12",
      "says": "ranking error inversely at h = 368 on every one of",
      "cell": ("task_b_permutation.json",
               "arenas.all-episodes.models.released aleatoric.368"),
@@ -217,7 +217,7 @@ CLAIMS = [
      "a": ("task_b_permutation.json", "arenas.out-of-sample.p_floor"),
      "b": ("task_b_permutation.json", "arenas.out-of-sample.holm.smallest_threshold"),
      "expect": "gt"},
-    {"id": "C3.6", "kind": "compare", "where": "10",
+    {"id": "C3.6", "kind": "compare", "where": "9",
      "says": "ranks whole rollouts almost perfectly",
      "a": ("task_d_nind20.json", "d2_forecast_index.1.r_epistemic"),
      "b": ("task_d_nind20.json", "d2_forecast_index.368.r_epistemic"),
@@ -228,13 +228,13 @@ CLAIMS = [
     # kind is unchanged and so is what it asserts; only the list of places the
     # count must agree in has moved, and it has to move with the prose or it
     # guards nothing.
-    {"id": "C7.1", "kind": "count-consistency", "where": "9 / Appendix D",
+    {"id": "C7.1", "kind": "count-consistency", "where": "8 / Appendix D",
      "label": "numbered retractions",
      "says": "retractions on our own evidence",
      "value": ("paper_numbers.json", "n_retractions.value"),
      "sites": ["retractions on our own evidence",
                "numbered retractions, in order"]},
-    {"id": "C7.2", "kind": "count-consistency", "where": "9 / Appendix D",
+    {"id": "C7.2", "kind": "count-consistency", "where": "8 / Appendix D",
      "label": "framing retractions",
      "says": "that withdraw framings rather than numbers",
      "value": ("paper_numbers.json", "n_retract_framing.value"),
@@ -289,9 +289,9 @@ CLAIMS = [
     # independent-trials reading this paper elsewhere warns against. A k-of-N
     # count in the abstract, the lessons or the conclusion must carry an
     # interval beside it or a footnote saying the units are not independent.
-    {"id": "C9.1", "kind": "count-dependence", "where": "abstract / 10 / 13",
+    {"id": "C9.1", "kind": "count-dependence", "where": "abstract / 9 / 12",
      "says": "restores nominal coverage on every held-out cell",
-     "sections": ["Abstract", "10. Actionable lessons", "13. Conclusion"]},
+     "sections": ["Abstract", "9. Actionable lessons", "12. Conclusion"]},
 
     # ---- C10 retraction-consistency --------------------------------------
     # A claim the ledger marks SUPERSEDED must not still be asserted anywhere
@@ -304,7 +304,7 @@ CLAIMS = [
     # retraction. FINDINGS_LEDGER.md is scanned only from its summary onward:
     # the entries above it QUOTE the claims they retract, which is the point of
     # an append-only record.
-    {"id": "C10.1", "kind": "retraction-consistency", "where": "8 / README / RESULTS",
+    {"id": "C10.1", "kind": "retraction-consistency", "where": "7.5 / README / RESULTS",
      "says": "the released artifacts do not reproduce the released",
      "retracted": "cannot have come from the released recipe",
      "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md",
@@ -474,7 +474,7 @@ CLAIMS = [
     # Section 9 said "N kinds" from a generated key while appendix D enumerated
     # eight by hand. They had drifted seven apart, inside the appendix whose
     # subject is count consistency.
-    {"id": "C16.1", "kind": "kind-count", "where": "9 / Appendix D",
+    {"id": "C16.1", "kind": "kind-count", "where": "8 / Appendix D",
      "says": "verifies", "key": "cc_kinds"},
 
     # ---- C17 scope-consistency -------------------------------------------
@@ -490,7 +490,7 @@ CLAIMS = [
     # previous version of the same error. count-consistency compares a count
     # against the ledger; this compares a WORD against a relation recomputed
     # from the artifacts.
-    {"id": "C18.1", "kind": "frequency-consistency", "where": "10",
+    {"id": "C18.1", "kind": "frequency-consistency", "where": "9",
      "says": "on a paired test that excludes zero at",
      "count": ("paper_numbers.json", "d2p_n_separating.value"),
      "total": ("paper_numbers.json", "d2p_n_horizons.value"),
@@ -811,7 +811,7 @@ def evaluate(c, paper, override=None):
         seg = paper[i:paper.find("\n\n", i)] if i >= 0 else ""
         enumerated = len(set(re.findall(r"\*([a-z][a-z-]+)\*", seg)))
         ok = registered == claimed == enumerated and i >= 0
-        return ok, (f'registered {registered}, section 9 claims {claimed}, '
+        return ok, (f'registered {registered}, section 8 claims {claimed}, '
                     f'appendix D enumerates {enumerated}')
     if k == "frequency-consistency":
         # A stated frequency IS a claim about a count. "at exactly one place",

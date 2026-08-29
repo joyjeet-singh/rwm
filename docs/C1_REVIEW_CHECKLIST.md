@@ -10,41 +10,41 @@ A second pass happens if, and only if, the first pass ends with either:
 If neither holds, there is no second pass. The reason for fixing this now is that a stopping rule chosen after seeing the results is chosen to stop, and this project has a rule (`S-12`) it had to withdraw for exactly that.
 **A claim is not approved by being unflagged.** The flags say where to slow down. Every row needs a yes.
 ## How the tiers were chosen
-Tier 0 is **40 claims** whose paragraph contains a sentence older than a revision that moved the quantity it talks about. The cohorts:
+Tier 0 is **39 claims** whose paragraph contains a sentence older than a revision that moved the quantity it talks about. The cohorts:
 - **three-seed** — `6628f3d`, D1: the headline over three seeds. All 21 criteria met.. §5's headline moved from one seed to three. The A/B ratio went 4.4x to 4.61x and everything downstream of the 0.3509 / 1.5540 pair moved with it -- except the hold-last floor ratio, which is B1.
 - **h100-grid** — `81b49f7`, PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without. h = 100 entered the evaluation grid. Every calibration extremum, every "at the deployment horizon" figure and every per-horizon cell count moved.
 
-Of 314 sentences in the template, 93 predate at least one of those, and 44 of those carry a substituted value.
+Of 341 sentences in the template, 86 predate at least one of those, and 43 of those carry a substituted value.
 The existing tiering — by section and by newness — would have put neither confirmed defect near the top: Appendix D is old text nobody expected to move, and §5's table is new. Both sentences predate the revision that made them wrong. That is why this tier exists and why it goes first.
 ## Same-quantity candidates, to read before Tier 0
-34 values are printed in more than one place from more than one key. None is wrong today. Each is the question **"are these two keys the same quantity?"** — and where the answer is yes, the pair is one revision away from B1, which is exactly the state §5 was in before one of its two floor ratios moved to three seeds and the other did not.
+36 values are printed in more than one place from more than one key. None is wrong today. Each is the question **"are these two keys the same quantity?"** — and where the answer is yes, the pair is one revision away from B1, which is exactly the state §5 was in before one of its two floor ratios moved to three seeds and the other did not.
 | value | keys | places |
 |---|---|---|
-| `368` | `None`, `d2r_win_n`, `d2r_win_pos`, `perm_worst_h`, `r2_sigma_x_lo_h`, `v2_diag_h` | 1. Introduction; 10. Actionable lessons; 12. Limitations; 13. Conclusion; 3.1 Metrics; 4. What the original papers claim,; 5. The base paper's central claim ; 5.1 The data budget, which is the ; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.5 The correction fails different; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 7. Defects in the released pipelin; Abstract; Appendix F — every claim of the or |
-| `1` | `None`, `bu_changes`, `e5_n_excl`, `f4_n_negative`, `orphan_rows` | 10. Actionable lessons; 12. Limitations; 3. Setup; 3.1 Metrics; 5. The base paper's central claim ; 6.1 Which quantity the method actu; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 6.9 The structural excuse does not; 7. Defects in the released pipelin; 9. Method; Appendix F — every claim of the or |
-| `20` | `None`, `a2_h1_npoints`, `a2_nind`, `cal_rel_npos`, `cc_kinds`, `d1n_nind`, `d4_nind`, `e2_fitted_runs`, `e5_comp_nind`, `perm_all_nind`, `relale_all_nind`, `relale_oos_pos_h368`, `rt_runs_short`, `v3_n_citations` | 10. Actionable lessons; 3. Setup; 3.1 Metrics; 5. The base paper's central claim ; 6.2 The measurement; 6.3 Why the aleatoric head collaps; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 9. Method; Abstract; Appendix B — reproducing; Appendix D — verifying the paper's; Appendix F — every claim of the or |
-| `10` | `None`, `a1_sign_n_h1`, `a1_sign_n_h100`, `a1_sign_n_h128`, `a1_sign_n_h32`, `a1_sign_n_h368`, `a1_sign_n_h8`, `a1_sign_pos_h100`, `a1_sign_pos_h128`, `a1_sign_pos_h32`, `a1_sign_pos_h368`, `a1_sign_pos_h8`, `c3_sign_n`, `c3_sign_pos`, `d1n_eps`, `d3_tol`, `t1_n_refs`, `t1_n_verified` | 10. Actionable lessons; 2. Related work; 5. The base paper's central claim ; 6.2 The measurement; 6.8 One constant scalar does not f; Appendix D — verifying the paper's; References |
-| `5` | `None`, `a1_n_excl`, `b2_members`, `bound_both_train`, `d2b_n_horizons_tested`, `d2p_n_horizons`, `d2p_n_separating`, `d2r_ncontrols`, `r2_n_indep`, `time_rel_lo` | 1. Introduction; 10. Actionable lessons; 12. Limitations; 5. The base paper's central claim ; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.4 Why the epistemic term may be ; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 7. Defects in the released pipelin; Appendix D — verifying the paper's; Appendix F — every claim of the or |
-| `0` | `None`, `ab_short_excl`, `d2b_n_index_wins`, `perm_all_holm_rej`, `perm_ins_holm_rej`, `perm_oos_holm_rej`, `relale_all_pos_h368`, `tw_cc_cluster_hurt`, `ver_differing` | 12. Limitations; 13. Conclusion; 2. Related work; 5. The base paper's central claim ; 6.2 The measurement; 6.3 Why the aleatoric head collaps; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 7. Defects in the released pipelin; 9. Method; Appendix D — verifying the paper's |
-| `2` | `None`, `appE_n_cpu`, `d2p_n_overlap`, `d3_ale_const_ok`, `d3_epi_const_ok`, `d3_nind_fit`, `tw_dc_cluster_helped` | 10. Actionable lessons; 13. Conclusion; 3.1 Metrics; 6.10 Testing the mechanism: an ens; 6.3 Why the aleatoric head collaps; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 7. Defects in the released pipelin; Appendix E — what testing the unte |
-| `8` | `None`, `c2_bounds`, `c3_family`, `d3_worst_ep`, `e5_power_worst_h`, `f4_n_rules`, `n_train_eps`, `r2_sigma_x_hi_h`, `win_fore` | 3. Setup; 5. The base paper's central claim ; 5.1 The data budget, which is the ; 6.10 Testing the mechanism: an ens; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 6.9 The structural excuse does not; 9. Method; Appendix E — what testing the unte; Appendix F — every claim of the or |
-| `+0.605` | `a2_r_pooled`, `d2b_epi_all`, `d2b_epi_h368`, `d4_r` | 10. Actionable lessons; 13. Conclusion; 6.2 The measurement; 6.7 Ensemble disagreement beats th; Appendix F — every claim of the or |
-| `4.61` | `a1_ratio_h368`, `d1_ratio`, `d1n_epi_cov1_h100` | 1. Introduction; 11. Broader impact; 4. What the original papers claim,; 5. The base paper's central claim ; 5.1 The data budget, which is the ; 6.2 The measurement; Abstract |
+| `368` | `None`, `d2r_win_n`, `d2r_win_pos`, `perm_worst_h`, `r2_sigma_x_lo_h`, `v2_diag_h` | 1. Introduction; 11. Limitations; 12. Conclusion; 3.1 Metrics; 4. What the original papers claim,; 5. The base paper's central claim ; 5.1 The data budget, which is the ; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.5 The correction fails different; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 7. Defects in the released pipelin; 9. Actionable lessons; Abstract; Appendix D — verifying the paper's; Appendix F — every claim of the or |
+| `1` | `None`, `appG_n_negative`, `bu_changes`, `e5_n_excl`, `f4_n_negative`, `orphan_rows` | 1. Introduction; 11. Limitations; 3. Setup; 3.1 Metrics; 5. The base paper's central claim ; 6.1 Which quantity the method actu; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 6.9 The structural excuse does not; 7. Defects in the released pipelin; 8. Method; 9. Actionable lessons; Appendix F — every claim of the or; Appendix G — every pre-registered ; Appendix I — the two nRMSE aggrega |
+| `20` | `None`, `a2_h1_npoints`, `a2_nind`, `cal_rel_npos`, `d1n_nind`, `d4_nind`, `e5_comp_nind`, `perm_all_nind`, `relale_all_nind`, `relale_oos_pos_h368`, `v3_n_citations` | 3. Setup; 3.1 Metrics; 5. The base paper's central claim ; 6.2 The measurement; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 9. Actionable lessons; Appendix B — reproducing; Appendix D — verifying the paper's; Appendix F — every claim of the or |
+| `5` | `None`, `a1_n_excl`, `b2_members`, `bound_both_train`, `d2b_n_horizons_tested`, `d2p_n_horizons`, `d2p_n_separating`, `d2r_ncontrols`, `e4_n_inert`, `r2_n_indep`, `time_rel_lo` | 1. Introduction; 11. Limitations; 5. The base paper's central claim ; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.3 Why the aleatoric head collaps; 6.4 Why the epistemic term may be ; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 7. Defects in the released pipelin; 9. Actionable lessons; Appendix D — verifying the paper's; Appendix F — every claim of the or |
+| `10` | `None`, `a1_sign_n_h1`, `a1_sign_n_h100`, `a1_sign_n_h128`, `a1_sign_n_h32`, `a1_sign_n_h368`, `a1_sign_n_h8`, `a1_sign_pos_h100`, `a1_sign_pos_h128`, `a1_sign_pos_h32`, `a1_sign_pos_h368`, `a1_sign_pos_h8`, `c3_sign_n`, `c3_sign_pos`, `d1n_eps`, `d3_tol` | 5. The base paper's central claim ; 6.2 The measurement; 6.8 One constant scalar does not f; 9. Actionable lessons; Appendix D — verifying the paper's |
+| `2` | `None`, `appE_n_cpu`, `d2p_n_overlap`, `d3_ale_const_ok`, `d3_epi_const_ok`, `d3_nind_fit`, `e4_n_touch`, `tw_dc_cluster_helped` | 12. Conclusion; 3.1 Metrics; 6.10 Testing the mechanism: an ens; 6.3 Why the aleatoric head collaps; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 7. Defects in the released pipelin; 9. Actionable lessons; Appendix E — what testing the unte; Appendix I — the two nRMSE aggrega |
+| `8` | `None`, `appG_n_rules`, `c2_bounds`, `c3_family`, `d3_worst_ep`, `e5_power_worst_h`, `f4_n_rules`, `n_train_eps`, `r2_sigma_x_hi_h`, `win_fore` | 3. Setup; 5. The base paper's central claim ; 5.1 The data budget, which is the ; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.7 Ensemble disagreement beats th; 6.8 One constant scalar does not f; 6.9 The structural excuse does not; 8. Method; Appendix E — what testing the unte; Appendix F — every claim of the or; Appendix G — every pre-registered  |
+| `0` | `None`, `ab_short_excl`, `d2b_n_index_wins`, `perm_all_holm_rej`, `perm_ins_holm_rej`, `perm_oos_holm_rej`, `relale_all_pos_h368`, `tw_cc_cluster_hurt`, `ver_differing` | 11. Limitations; 12. Conclusion; 2. Related work; 5. The base paper's central claim ; 6.2 The measurement; 6.3 Why the aleatoric head collaps; 6.6 The failure is one of magnitud; 6.7 Ensemble disagreement beats th; 7. Defects in the released pipelin; 8. Method; Appendix D — verifying the paper's |
+| `3` | `None`, `a1_sign_pos_h1`, `d1_seeds`, `e2_nll_runs`, `e5_seeds`, `r2_from_acc_h8`, `r2_n_shared`, `v1_n_arms_checked` | 1. Introduction; 11. Limitations; 5. The base paper's central claim ; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.3 Why the aleatoric head collaps; 6.4 Why the epistemic term may be ; Appendix G — every pre-registered  |
+| `+0.605` | `a2_r_pooled`, `d2b_epi_all`, `d2b_epi_h368`, `d4_r` | 12. Conclusion; 6.2 The measurement; 6.7 Ensemble disagreement beats th; 9. Actionable lessons; Appendix F — every claim of the or |
+| `4.61` | `a1_ratio_h368`, `d1_ratio`, `d1n_epi_cov1_h100` | 1. Introduction; 10. Broader impact; 4. What the original papers claim,; 5. The base paper's central claim ; 5.1 The data budget, which is the ; 6.2 The measurement; Abstract |
 | `32` | `None`, `time_rel_hi`, `tw_cells`, `v2_history`, `win_hist` | 3. Setup; 3.1 Metrics; 6.6 The failure is one of magnitud; 7. Defects in the released pipelin; Appendix D — verifying the paper's |
-| `400` | `None`, `v2_len_eval` | 10. Actionable lessons; 12. Limitations; 3. Setup; 3.1 Metrics; 5. The base paper's central claim ; 6.2 The measurement; 6.8 One constant scalar does not f |
-| `10,000` | `None`, `rows` | 3. Setup; 5. The base paper's central claim ; 6.3 Why the aleatoric head collaps; 8. The released checkpoint's varia; Appendix B — reproducing |
-| `10.5` | `e5_ratio_h100`, `r2_shared_ratio_h100` | 10. Actionable lessons; 12. Limitations; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.4 Why the epistemic term may be  |
+| `400` | `None`, `v2_len_eval` | 11. Limitations; 3. Setup; 3.1 Metrics; 5. The base paper's central claim ; 6.2 The measurement; 6.8 One constant scalar does not f; 9. Actionable lessons |
+| `10,000` | `None`, `rows` | 3. Setup; 5. The base paper's central claim ; 6.3 Why the aleatoric head collaps; Appendix B — reproducing; Appendix H — the variance-state ar |
+| `10.5` | `e5_ratio_h100`, `r2_shared_ratio_h100` | 11. Limitations; 6.10 Testing the mechanism: an ens; 6.2 The measurement; 6.4 Why the epistemic term may be ; 9. Actionable lessons |
+| `27` | `None`, `n_runs`, `rt_runs`, `run_total` | 6.3 Why the aleatoric head collaps; Appendix B — reproducing; Appendix E — what testing the unte |
 | `2.58` | `a1_ratio_h100`, `d1_ratio_h100` | 1. Introduction; 5. The base paper's central claim ; 5.1 The data budget, which is the ; Abstract |
-| `+0.994` | `a2_h1_r`, `d2_epi_h1` | 10. Actionable lessons; 6.7 Ensemble disagreement beats th |
+| `+0.994` | `a2_h1_r`, `d2_epi_h1` | 6.7 Ensemble disagreement beats th; 9. Actionable lessons |
 | `106` | `diff_n_params`, `r2_from_sigma_h1` | 1. Introduction; 6.10 Testing the mechanism: an ens; Appendix A — verification chain |
 | `128` | `None`, `d3_second_h` | 6.6 The failure is one of magnitud; 6.8 One constant scalar does not f; Appendix D — verifying the paper's |
-| `256` | `None`, `c3_resamples` | 5. The base paper's central claim ; 6.2 The measurement; 6.4 Why the epistemic term may be ; Data and code |
-| `3.49` | `err_faithA_growth`, `v1_cap_ratio` | 12. Limitations; 6.9 The structural excuse does not |
 
-## Tier 0 — 40 claims
+## Tier 0 — 39 claims
 
 ### 1. §10. Actionable lessons — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 1144); original tier 2 — placeholders changed: -[] +['d1n_alea_ratio_h100', 'v2_deploy_h', 'v2_diag_h']*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 1196); original tier 2 — placeholders changed: -[] +['d1n_alea_ratio_h100', 'v2_deploy_h', 'v2_diag_h']*
 **Now.** The predicted variance has an optimum at zero under the implemented one, which is why the released checkpoint's σ is {{d1n_alea_ratio_h100}}× smaller than its own error at h = {{v2_deploy_h}}, and {{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}.
 **Last approved.** The predicted variance
 has an optimum at zero under the implemented one, which is why the released checkpoint's σ is
@@ -64,7 +64,7 @@ has an optimum at zero under the implemented one, which is why the released chec
 ---
 
 ### 2. §12. Limitations — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 1167); original tier 2 — placeholders changed: -[] +['e5_ratio_h100', 'v2_deploy_h', 'v2_diag_h']*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 1219); original tier 2 — placeholders changed: -[] +['e5_ratio_h100', 'v2_deploy_h', 'v2_diag_h']*
 **Now.** They reproduce the *direction* of §6.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration* failure at {{e5_ratio_h100}}× at h = {{v2_deploy_h}} ({{e5_ratio_h368}}× at h = {{v2_diag_h}}) — but the pre-registered rule governing the replication returns **{{e5_verdict}}**, because its second condition needs the paired difference to exclude zero at a majority of horizons and it does so at {{e5_n_excl}} of {{e5_n_horizons}}.
 **Last approved.** They reproduce the *direction* of §6.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration* failure at {{e5_ratio_h368}}× — but the pre-registered rule governing the replication returns **{{e5_verdict}}**, because its second condition needs the paired difference to exclude zero at a majority of horizons and it does so at {{e5_n_excl}} of {{e5_n_horizons}}.
 
@@ -87,7 +87,7 @@ has an optimum at zero under the implemented one, which is why the released chec
 ---
 
 ### 3. §13. Conclusion — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 1219); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 1271); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
 **Now.** The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_h368}} dimensions over all ten episodes and at chance on the held-out pair alone — a dependence on arena that §6.6 sets out.
 **Last approved.** The released checkpoint's *aleatoric* head does the opposite, ranking error inversely on every one of {{perm_all_relale_ndim_h368}} dimensions over all ten episodes and at chance on the held-out pair alone — a dependence on arena that §6.6 sets out.
 
@@ -103,7 +103,7 @@ has an optimum at zero under the implemented one, which is why the released chec
 ---
 
 ### 4. §13. Conclusion — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 1207); original tier 2 — placeholders changed: -['d1n_epi_over_alea_h368'] +['d1n_epi_over_alea_h100', 'v2_deploy_h']*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 1259); original tier 2 — placeholders changed: -['d1n_epi_over_alea_h368'] +['d1n_epi_over_alea_h100', 'v2_deploy_h']*
 **Now.** The epistemic term the method actually penalises with is better by a factor of {{d1n_epi_over_alea_h100}} and still {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] overconfident where it is used — both figures at h = {{v2_deploy_h}}.
 **Last approved.** The epistemic term the method actually penalises with is better by a factor of {{d1n_epi_over_alea_h368}} and still {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] overconfident where it is used.
 
@@ -121,7 +121,7 @@ has an optimum at zero under the implemented one, which is why the released chec
 ---
 
 ### 5. §5. The base paper's central claim reproduces — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 373); original tier 1 — text added or changed by the Part A / Part B commits*
+*paragraph contains a sentence predating h100-grid (template line 406); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** At h = {{v2_deploy_h}} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, so the count the abstract leans on is not an artifact of the longest horizon; at h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, which is the same story the interval tells.
 **Last approved.** — (new, or no approved text on record)
 
@@ -141,7 +141,7 @@ has an optimum at zero under the implemented one, which is why the released chec
 ---
 
 ### 6. §5. The base paper's central claim reproduces — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 445); original tier 1 — text added or changed by the Part A / Part B commits*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 488); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** Against a baseline, because neither number means anything without one.* The hold-last floor — predicting that nothing changes — scores **{{floor_h368}}** in the same h = {{v2_diag_h}} cell, and autoregressive training beats it by **{{floor_over_A}}×** there and by {{a1_floor_over_A_h100}}× at h = {{v2_deploy_h}}.
 **Last approved.** *Against a baseline, because neither number means anything without one.* The hold-last floor —
 predicting that nothing changes — scores **{{floor_h368}}** in the same cell.
@@ -161,7 +161,7 @@ predicting that nothing changes — scores **{{floor_h368}}** in the same cell.
 ---
 
 ### 7. §5. The base paper's central claim reproduces — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 445); original tier 1 — text added or changed by the Part A / Part B commits*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 488); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** The floor is not a weak baseline everywhere**, and the table above says where it is not: at {{a1_A_worse_than_floor_at}} it beats the autoregressive arm as well.
 **Last approved.** — (new, or no approved text on record)
 
@@ -176,7 +176,7 @@ predicting that nothing changes — scores **{{floor_h368}}** in the same cell.
 ---
 
 ### 8. §5. The base paper's central claim reproduces — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 373); original tier 1 — text added or changed by the Part A / Part B commits*
+*paragraph contains a sentence predating h100-grid (template line 406); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** The sign test, which does not depend on n.* At h = {{v2_diag_h}} the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact two-sided binomial test, p = **{{c3_sign_p}}**.
 **Last approved.** *The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact two-sided binomial test, p = **{{c3_sign_p}}**.
 
@@ -194,7 +194,7 @@ predicting that nothing changes — scores **{{floor_h368}}** in the same cell.
 ---
 
 ### 9. §5. The base paper's central claim reproduces — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 431); original tier 1 — text added or changed by the Part A / Part B commits*
+*paragraph contains a sentence predating h100-grid (template line 464); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** An earlier draft of this paper quoted the single-seed figures {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and unfavourable to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_ratio}}× rather than {{m23_ratio}}×.
 **Last approved.** An earlier draft of this paper quoted the single-seed figures
 {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and
@@ -215,7 +215,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 10. §5. The base paper's central claim reproduces — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 363); original tier 3 — a genuinely new sentence, never reviewed*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 396); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** Which horizon, stated before the result.** The rule below is anchored at h = {{v2_diag_h}}, which §3.1 identifies as the upstream's **open-loop diagnostic** length and explicitly not a deployment horizon.
 **Last approved.** — (new, or no approved text on record)
 
@@ -230,7 +230,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 11. §5. The base paper's central claim reproduces — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 363); original tier 3 — a genuinely new sentence, never reviewed*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 396); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** But the paper's own deployment horizon is h = {{v2_deploy_h}}, so the same comparison is reported there too, below, and the two differ in size.
 **Last approved.** — (new, or no approved text on record)
 
@@ -245,7 +245,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 12. §5.1 The data budget, which is the one part of the sample-efficiency claim we can measure — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 470); original tier 1 — text added or changed by the Part A / Part B commits*
+*paragraph contains a sentence predating h100-grid (template line 513); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result — {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}} — and still beats the hold-last floor, by {{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons.
 **Last approved.** A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result at {{d1_ratio}}× and still beats the hold-last floor by {{floor_over_A}}× at h=368.
 
@@ -266,7 +266,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 13. §6.2 The measurement — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 587); original tier 2 — resolved value changed: perm_all_holm_min_p 0.0042→0.0037, perm_all_holm_n 25→30, perm_all_holm_thr 0.002→0.001667; placeholders changed: -[] +['perm_n_tests_col_word']*
+*paragraph contains a sentence predating h100-grid (template line 656); original tier 2 — resolved value changed: perm_all_holm_min_p 0.0042→0.0037, perm_all_holm_n 25→30, perm_all_holm_thr 0.002→0.001667; placeholders changed: -[] +['perm_n_tests_col_word']*
 **Now.** These are {{perm_n_tests_col_word}} tests on one family and none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells — the smallest is {{perm_all_holm_min_cell}} at {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}.
 **Last approved.** These are five tests on one family and none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells — the smallest is {{perm_all_holm_min_cell}} at {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}.
 
@@ -285,7 +285,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 14. §6.2 The measurement — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 587); original tier 2 — placeholders changed: -[] +['perm_n_tests_col_word']*
+*paragraph contains a sentence predating h100-grid (template line 656); original tier 2 — placeholders changed: -[] +['perm_n_tests_col_word']*
 **Now.** Read the column as a consistency check on direction, not as {{perm_n_tests_col_word}} independent findings.
 **Last approved.** Read the column as a consistency check on direction, not as five independent findings.
 
@@ -300,7 +300,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 15. §6.2 The measurement — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 587); original tier 3 — a genuinely new sentence, never reviewed*
+*paragraph contains a sentence predating h100-grid (template line 656); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** h = {{v2_deploy_h}} carries the abstract, so it is tested rather than left blank**: an earlier draft ran the permutation test on the pre-revision five-horizon grid and printed "—" in the one row the headline rests on.
 **Last approved.** — (new, or no approved text on record)
 
@@ -315,7 +315,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 16. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 730); original tier 1 — text added or changed by the Part A / Part B commits*
+*paragraph contains a sentence predating h100-grid (template line 816); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at {{perm_all_epi_p_h100}} sitting between h=32's {{perm_all_epi_p_h32}} and h=128's {{perm_all_epi_p_h128}} — the horizon added by this revision falls where the existing reading says it should, which is worth stating because it was not free to.
 **Last approved.** — (new, or no approved text on record)
 
@@ -337,7 +337,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 17. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 707); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
+*paragraph contains a sentence predating h100-grid (template line 793); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
 **Now.** It is not the only arena, and for the released checkpoint's aleatoric head it is not the most informative one: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}} — negatively correlated with error on *every* dimension — against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here. §13 quotes the larger arena and says so.
 **Last approved.** It is not the only arena, and for the released checkpoint's aleatoric head it is not the most informative one: at n_independent = {{relale_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}} — negatively correlated with error on *every* dimension — against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here.
 
@@ -357,7 +357,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 18. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 0
-*paragraph contains a sentence predating three-seed, h100-grid (template line 713); original tier 2 — resolved value changed: perm_ins_armB_p_h368 0.5656→0.5565; placeholders changed: -[] +['v2_diag_h']*
+*paragraph contains a sentence predating three-seed, h100-grid (template line 799); original tier 2 — resolved value changed: perm_ins_armB_p_h368 0.5656→0.5565; placeholders changed: -[] +['v2_diag_h']*
 **Now.** At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}} — a factor of about {{perm_worst_factor}} — because under a null that preserves the dependence, a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average.
 **Last approved.** It moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}} — a factor of about {{perm_worst_factor}} — because under a null that preserves the dependence, a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average.
 
@@ -377,7 +377,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 19. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 730); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
+*paragraph contains a sentence predating h100-grid (template line 816); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
 **Now.** The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, matching the best aleatoric head here on the sign count, while being {{b2_epi_ratio_h368}}× overconfident at h = {{v2_diag_h}}.
 **Last approved.** **The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, matching the best aleatoric head here on the sign count, while being {{b2_epi_ratio_h368}}× overconfident.
 
@@ -395,7 +395,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 20. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 730); original tier 2 — horizon named changed: none → [1, 128]*
+*paragraph contains a sentence predating h100-grid (template line 816); original tier 2 — horizon named changed: none → [1, 128]*
 **Now.** At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising.
 **Last approved.** At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45, so a count of 45 is close to what chance alone delivers; at short horizon the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising.
 
@@ -411,7 +411,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 ---
 
 ### 21. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 730); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
+*paragraph contains a sentence predating h100-grid (template line 816); original tier 2 — placeholders changed: -[] +['v2_diag_h']*
 **Now.** All figures in this paragraph are the held-out arena (n_independent = {{b2_nind}})**, so that the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes {{d1n_epi_ratio_h368}}× for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}.
 **Last approved.** **All figures in this paragraph are the held-out arena (n_independent = {{b2_nind}})**, so that the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes {{d1n_epi_ratio_h368}}× for the same ratio at n_independent = {{d1n_nind}}, which is the figure the abstract and §13 use.
 
@@ -428,25 +428,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 22. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 730); original tier 3 — a genuinely new sentence, never reviewed*
-**Now.** The figure the abstract and §13 use is neither of those: it is {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}, on the same {{d1n_nind}} trajectories.
-**Last approved.** — (new, or no approved text on record)
-
-| key | value | artifact |
-|---|---|---|
-| `d1n_epi_ratio_h100` | 33.4 | `results/task_d_nind20.json` |
-| `v2_deploy_h` | 100 | `results/v2_deployment_horizon.json` |
-| `d1n_nind` | 20 | `results/task_d_nind20.json` |
-
-**Flags.** `mixed-horizon-para`
-
-**Verdict** ☐ approve  ☐ amend  ☐ reject  ☐ defer   **Reviewer** ______  **Date** ______
-
----
-
-### 23. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 852); original tier 1 — text added or changed by the Part A / Part B commits*
+### 22. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 938); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** Adding h = {{v2_deploy_h}} to the evaluation grid after the fact would change what "a majority of horizons" means in a rule already discharged — a way of moving a threshold that looks like reporting rather than like moving a threshold.
 **Last approved.** — (new, or no approved text on record)
 
@@ -460,8 +443,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 24. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 852); original tier 1 — text added or changed by the Part A / Part B commits*
+### 23. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 938); original tier 1 — text added or changed by the Part A / Part B commits*
 **Now.** And we do not rewrite its denominator either, which is the less obvious half of the same discipline.** M-43 was committed over {{e5_n_horizons}} horizons, before the data.
 **Last approved.** — (new, or no approved text on record)
 
@@ -475,8 +458,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 25. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 761); original tier 2 — placeholders changed: -[] +['d2p_n_horizons', 'd2p_n_overlap']*
+### 24. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 847); original tier 2 — placeholders changed: -[] +['d2p_n_horizons', 'd2p_n_overlap']*
 **Now.** The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons.
 **Last approved.** The distinction matters at exactly one place.
 
@@ -491,8 +474,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 26. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 761); original tier 2 — placeholders changed: -[] +['d2b_idx_h128', 'd2b_idx_strongest_h', 'd2p_overlap_h']; hedging changed: +['never'] -[]*
+### 25. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 847); original tier 2 — placeholders changed: -[] +['d2b_idx_h128', 'd2b_idx_strongest_h', 'd2p_overlap_h']; hedging changed: +['never'] -[]*
 **Now.** At {{d2p_overlap_h}} the marginal intervals *do* overlap, and an earlier draft of this paper wrongly asserted that they never do. {{d2b_idx_strongest_h}} is where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest: the paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero, but only just — {{d2p_narrowest_lo}} is the smallest lower bound in the table and we would not rest anything on that horizon alone.
 **Last approved.** The paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero, but only just: {{d2p_narrowest_lo}} is the smallest lower bound in the table and we would not rest anything on that horizon alone.
 
@@ -511,8 +494,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 27. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 761); original tier 3 — a genuinely new sentence, never reviewed*
+### 26. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 847); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** At h = {{v2_deploy_h}} the paired difference is {{d2p_diff_h100}} {{d2p_ci_h100}}, which also excludes zero.
 **Last approved.** — (new, or no approved text on record)
 
@@ -528,8 +511,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 28. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 852); original tier 3 — a genuinely new sentence, never reviewed*
+### 27. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 938); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** The verdict above is over M-43's own {{e5_n_horizons}}.
 **Last approved.** — (new, or no approved text on record)
 
@@ -543,8 +526,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 29. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 757); original tier 3 — a genuinely new sentence, never reviewed*
+### 28. §6.7 Ensemble disagreement beats the trivial baseline — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 843); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** Disagreement wins at every horizon tested.** Over the full h = {{v2_diag_h}} rollout the counter reaches {{d2b_idx_h368}} against disagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons.
 **Last approved.** — (new, or no approved text on record)
 
@@ -562,8 +545,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 30. §6.8 One constant scalar does not fix it, but a per-horizon one does — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 885); original tier 3 — a genuinely new sentence, never reviewed*
+### 29. §6.8 One constant scalar does not fix it, but a per-horizon one does — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 971); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** The two largest deviations are both on the {{d3_second_q}} term and {{d3_top2_same_side}} target — {{d3_worst_cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions.
 **Last approved.** — (new, or no approved text on record)
 
@@ -582,8 +565,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 31. §9. Method — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1116); original tier 2 — placeholders changed: -[] +['cc_selfdefects_lower']*
+### 30. §9. Method — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1168); original tier 2 — placeholders changed: -[] +['cc_selfdefects_lower']*
 **Now.** Appendix D gives the argument, the kinds, the self-test, the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.
 **Last approved.** **Appendix D gives the argument, the kinds, the self-test, two defects found in the checker itself, and the two exclusions from the numeric comparison.**
 
@@ -601,8 +584,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 32. §9. Method — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1105); original tier 3 — a genuinely new sentence, never reviewed*
+### 31. §9. Method — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1157); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** It was named by position here until the second pre-submission review entered three more framing retractions and moved it.
 **Last approved.** — (new, or no approved text on record)
 
@@ -612,19 +595,19 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 33. §Appendix B — reproducing — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1303); original tier 3 — a genuinely new sentence, never reviewed*
+### 32. §Appendix B — reproducing — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1355); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of recorded wall clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is {{rt_longest}} hours.
 **Last approved.** — (new, or no approved text on record)
 
 | key | value | artifact |
 |---|---|---|
-| `rt_runs` | 26 | `results/step5_*.json` |
-| `rt_hours` | 46.3 | `results/step5_*.json` |
+| `rt_runs` | 27 | `results/step5_*.json` |
+| `rt_hours` | 47.2 | `results/step5_*.json` |
 | `rt_hours_10k` | 19.7 | `results/step5_*.json` |
 | `rt_runs_10k` | 6 | `results/step5_*.json` |
-| `rt_hours_short` | 26.6 | `results/step5_*.json` |
-| `rt_runs_short` | 20 | `results/step5_*.json` |
+| `rt_hours_short` | 27.5 | `results/step5_*.json` |
+| `rt_runs_short` | 21 | `results/step5_*.json` |
 | `rt_longest` | 4.4 | `results/step5_*.json` |
 
 **Flags.** `ambiguous-numeral`
@@ -633,8 +616,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 34. §Appendix D — verifying the paper's own claims — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1375); original tier 3 — a genuinely new sentence, never reviewed*
+### 33. §Appendix D — verifying the paper's own claims — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1427); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** That list is generated from the checker's own registry rather than written here.
 **Last approved.** — (new, or no approved text on record)
 
@@ -644,8 +627,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 35. §Appendix D — verifying the paper's own claims — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1397); original tier 3 — a genuinely new sentence, never reviewed*
+### 34. §Appendix D — verifying the paper's own claims — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1449); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** This list is generated from the checker rather than written here, so a fourth entry cannot be forgotten.
 **Last approved.** — (new, or no approved text on record)
 
@@ -655,8 +638,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 36. §Appendix D — verifying the paper's own claims — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1397); original tier 3 — a genuinely new sentence, never reviewed*
+### 35. §Appendix D — verifying the paper's own claims — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1449); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** {{cc_selfdefects_word}} defects the self-test has found in the checker itself**, rather than in the paper.
 **Last approved.** — (new, or no approved text on record)
 
@@ -670,8 +653,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 37. §Appendix D — verifying the paper's own claims — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1329); original tier 3 — a genuinely new sentence, never reviewed*
+### 36. §Appendix D — verifying the paper's own claims — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1381); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** A retraction that holds in one document and not in the repository is not a retraction, and the `retraction-consistency` check now reads all five reader-facing files rather than three.
 **Last approved.** — (new, or no approved text on record)
 
@@ -681,8 +664,8 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 38. §Appendix D — verifying the paper's own claims — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1397); original tier 3 — a genuinely new sentence, never reviewed*
+### 37. §Appendix D — verifying the paper's own claims — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1449); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** Each surfaced because the checks were run rather than assumed, and the last two are the ones a reader should weigh, because both are failures of *coverage* rather than of arithmetic — an assertion that cannot fail, and a kind with no assertion attached, both of which read as protection and are not:{{cc_selfdefect_list}}
 **Last approved.** — (new, or no approved text on record)
 
@@ -704,16 +687,16 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 39. §Appendix D — verifying the paper's own claims — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1397); original tier 3 — a genuinely new sentence, never reviewed*
+### 38. §Appendix D — verifying the paper's own claims — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1449); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** Corruptions now invert relative to each claim's own expectation, every registered kind carries at least one claim, and every claim is corrupted on every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} claims, with no exemptions.
 **Last approved.** — (new, or no approved text on record)
 
 | key | value | artifact |
 |---|---|---|
-| `cc_st_caught` | 50 | `results/comparative_claims.json` |
-| `cc_st_n` | 50 | `results/comparative_claims.json` |
-| `cc_n` | 50 | `results/comparative_claims.json` |
+| `cc_st_caught` | 51 | `results/comparative_claims.json` |
+| `cc_st_n` | 51 | `results/comparative_claims.json` |
+| `cc_n` | 51 | `results/comparative_claims.json` |
 
 **Flags.** none
 
@@ -721,16 +704,16 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 40. §Appendix D — verifying the paper's own claims — Tier 0
-*paragraph contains a sentence predating h100-grid (template line 1375); original tier 3 — a genuinely new sentence, never reviewed*
+### 39. §Appendix D — verifying the paper's own claims — Tier 0
+*paragraph contains a sentence predating h100-grid (template line 1427); original tier 3 — a genuinely new sentence, never reviewed*
 **Now.** The check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: {{cc_kind_list}}.
 **Last approved.** — (new, or no approved text on record)
 
 | key | value | artifact |
 |---|---|---|
-| `cc_n` | 50 | `results/comparative_claims.json` |
+| `cc_n` | 51 | `results/comparative_claims.json` |
 | `cc_kinds` | 21 | `results/comparative_claims.json` |
-| `cc_kind_list` | *abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *frequency-consistency* (a frequency stated in words -- "at every horizon", "at exactly one place" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 9 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference) | `results/comparative_claims.json` |
+| `cc_kind_list` | *abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *frequency-consistency* (a frequency stated in words -- "at every horizon", "at exactly one place" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 8 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference) | `results/comparative_claims.json` |
 
 **Flags.** none
 
@@ -738,9 +721,9 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-## Tiers 1–4 — 49 claims
+## Tiers 1–4 — 50 claims
 
-### 41. §1. Introduction — Tier 1
+### 40. §1. Introduction — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** A from-scratch reimplementation verified at the gradient level.** Outputs match the released module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training (Appendix A). - **The base paper's central training claim reproduces, and the advantage grows with forecast horizon**: a factor of {{d1_ratio}}× on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds, under a rule committed to git before the runs existed, rising monotonically to that from {{d1_ratio_h100}}× at h = {{v2_deploy_h}} and a gap that spans zero at {{a1_spans_zero_at}} (§5). - **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed.
 **Last approved.** — (new, or no approved text on record)
@@ -763,7 +746,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 42. §10. Actionable lessons — Tier 1
+### 41. §10. Actionable lessons — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** And expect it to degrade with horizon.** At one forecast step it ranks whole rollouts almost perfectly — {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npoints}} trajectories, and that is a ranking of *rollouts*, not of moments within one, because at h=1 there is only one moment.
 **Last approved.** And expect it to degrade with horizon.** At one forecast step it ranks whole rollouts almost perfectly — {{a2_h1_r}} {{a2_h1_ci}} across the {{a2_h1_npoints}} trajectories, and that is a ranking of *rollouts*, not of moments within one, because at h=1 there is only one moment.
@@ -780,7 +763,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 43. §10. Actionable lessons — Tier 1
+### 42. §10. Actionable lessons — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons where the index is defined — every one of them — and it retains {{d2b_par_all}} once that index is partialled out (§6.7).
 **Last approved.** It still beats the free alternative — the forecast step index — at every horizon we tested, on a paired test that excludes zero at every horizon where the index is defined, and it retains {{d2b_par_all}} once that index is partialled out (§6.7).
@@ -797,7 +780,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 44. §10. Actionable lessons — Tier 1
+### 43. §10. Actionable lessons — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** But it is too small to be an interval by a wide margin — at h = {{v2_deploy_h}}, the horizon the method itself rolls out over, {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}× [{{e5_ratio_ci_h100}}] on the ensemble-5 arms we trained — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
 **Last approved.** But it is too small to be an interval by a wide margin — {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}× [{{e5_ratio_ci_h100}}] on the ensemble-5 arms we trained, both at the horizon the method itself rolls out over — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
@@ -816,7 +799,7 @@ unfavourable to Arm B, and the three-seed ratio is {{d1_ratio}}× rather than {{
 
 ---
 
-### 45. §4. What the original papers claim, and which claims we test — Tier 1
+### 44. §4. What the original papers claim, and which claims we test — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** So our {{d1_ratio}}× at h = {{v2_diag_h}} is neither a confirmation of a published figure nor a contradiction of one — it is the first figure attached to the claim, and the same is true of the follow-up's "strong correlation" between disagreement and error, for which §6.7 supplies the first coefficient.
 **Last approved.** So our {{d1_ratio}}× is neither a confirmation of a published figure nor a
@@ -835,7 +818,7 @@ coefficient.
 
 ---
 
-### 46. §5. The base paper's central claim reproduces — Tier 1
+### 45. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** Only the h = {{v2_diag_h}} row is pre-registered.** M-23 was committed at that horizon, before the runs, and its verdict stands as returned.
 **Last approved.** — (new, or no approved text on record)
@@ -850,7 +833,7 @@ coefficient.
 
 ---
 
-### 47. §5. The base paper's central claim reproduces — Tier 1
+### 46. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** The advantage {{a1_monotone}} grow monotonically with forecast depth.** The gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}.
 **Last approved.** — (new, or no approved text on record)
@@ -868,7 +851,7 @@ coefficient.
 
 ---
 
-### 48. §5. The base paper's central claim reproduces — Tier 1
+### 47. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** That is the reading a single figure cannot give: h = {{v2_diag_h}} is the end of a trend rather than a point we picked, h = {{v2_deploy_h}} sits partway along it, and the claim is weakest exactly where the model is trained.
 **Last approved.** — (new, or no approved text on record)
@@ -884,7 +867,7 @@ coefficient.
 
 ---
 
-### 49. §5. The base paper's central claim reproduces — Tier 1
+### 48. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** But **at h = 1 the floor beats *both* arms**: it scores {{a1_floor_h1}} against autoregressive training's {{a1_A_h1}}, the only horizon where a trained model loses to predicting no change at all.
 **Last approved.** — (new, or no approved text on record)
@@ -900,7 +883,7 @@ coefficient.
 
 ---
 
-### 50. §5. The base paper's central claim reproduces — Tier 1
+### 49. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** At 50 Hz one step is 20 ms and the state barely moves, so that is what one should expect; it is stated because §5 quoted the h = {{v2_diag_h}} margin over the floor with no indication that it does not hold everywhere.
 **Last approved.** — (new, or no approved text on record)
@@ -915,7 +898,7 @@ coefficient.
 
 ---
 
-### 51. §5. The base paper's central claim reproduces — Tier 1
+### 50. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories:
 **Last approved.** — (new, or no approved text on record)
@@ -931,7 +914,7 @@ coefficient.
 
 ---
 
-### 52. §5. The base paper's central claim reproduces — Tier 1
+### 51. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** Two things in that table were not visible from h = {{v2_diag_h}} alone, and one of them cuts against us.** Teacher forcing is worse than the hold-last floor at {{a1_B_worse_than_floor_at}}, so §5's sharpest line is not an artifact of the longest horizon — at h = {{v2_deploy_h}} it is still {{a1_B_over_floor_h100}}× worse than assuming nothing changes.
 **Last approved.** — (new, or no approved text on record)
@@ -949,7 +932,7 @@ coefficient.
 
 ---
 
-### 53. §5. The base paper's central claim reproduces — Tier 1
+### 52. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** Teacher forcing is {{B_over_floor}}× worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and {{a1_B_over_floor_h100}}× worse at h = {{v2_deploy_h}}: the arm that reaches a lower training loss ends up predicting the future worse than a model that makes no prediction, at {{a1_B_worse_than_floor_at}} we measured.
 **Last approved.** **Teacher forcing is {{B_over_floor}}× worse than
@@ -971,7 +954,7 @@ model that makes no prediction.
 
 ---
 
-### 54. §5. The base paper's central claim reproduces — Tier 1
+### 53. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** Nothing in the table discharges or re-opens M-23; the rule's anchor being the diagnostic horizon rather than the deployment one is recorded as M-46.
 **Last approved.** — (new, or no approved text on record)
@@ -982,7 +965,7 @@ model that makes no prediction.
 
 ---
 
-### 55. §5. The base paper's central claim reproduces — Tier 1
+### 54. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** The out-of-sample effect size, at every horizon rather than one.* At h = {{v2_diag_h}}, the horizon M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`) — a factor of **{{d1_ratio}}×**.
 **Last approved.** *The out-of-sample effect size, over {{d1_seeds}} seeds.* Autoregressive training reaches
@@ -1004,7 +987,7 @@ model that makes no prediction.
 
 ---
 
-### 56. §5. The base paper's central claim reproduces — Tier 1
+### 55. §5. The base paper's central claim reproduces — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** At h = {{v2_deploy_h}}, the method's own imagination rollout length and the horizon everything in §6 is anchored to, the same three seeds give **{{d1_ratio_h100}}×**.
 **Last approved.** — (new, or no approved text on record)
@@ -1020,7 +1003,7 @@ model that makes no prediction.
 
 ---
 
-### 57. §Abstract — Tier 1
+### 56. §Abstract — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** The base paper's central training claim reproduces, and the advantage grows with horizon.** Under a rule committed to git before the runs that tested it, autoregressive training beats teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, rising monotonically to that figure from {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, where the method deploys.
 **Last approved.** — (new, or no approved text on record)
@@ -1038,7 +1021,7 @@ model that makes no prediction.
 
 ---
 
-### 58. §Abstract — Tier 1
+### 57. §Abstract — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** As a ranking it survives adversarial testing.** It beats the forecast step index — a free counter neither paper ran — at every horizon, and with the rollout and the depth both held constant still correlates {{a2_rdd}} with realised error: not merely a report of which episode is hard.
 **Last approved.** **As a ranking it survives adversarial testing.** It beats the forecast step index
@@ -1056,7 +1039,7 @@ merely reporting which episode is hard.
 
 ---
 
-### 59. §Abstract — Tier 1
+### 58. §Abstract — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** Neither uncertainty output the follow-up adds is usable as an interval.** At h = {{v2_deploy_h}} the ensemble disagreement it penalises rewards with is {{d1n_epi_ratio_h100}}× smaller than realised error: {{d1n_epi_cov1_h100}}% of outcomes fall inside ±1σ where {{v3_cov_nominal1}}% is calibrated.
 **Last approved.** **Neither uncertainty output the follow-up adds is usable as an interval.** At the horizon its own
@@ -1077,7 +1060,7 @@ outcomes at ±1σ against a calibrated two thirds.
 
 ---
 
-### 60. §Abstract — Tier 1
+### 59. §Abstract — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** The per-member σ the method computes and discards is a further {{d1n_epi_over_alea_h100}}× worse at h = {{v2_deploy_h}}, and we derive why: the implemented objective's optimum is σ = 0.
 **Last approved.** The per-member σ, which the method computes and
@@ -1095,7 +1078,7 @@ objective's optimum is σ = 0.
 
 ---
 
-### 61. §Appendix D — verifying the paper's own claims — Tier 1
+### 60. §Appendix D — verifying the paper's own claims — Tier 1
 *text added or changed by the Part A / Part B commits*
 **Now.** A stated *frequency* — "at exactly one place", "in all four", "the only" — is a claim about a count, and no kind bound one to a recomputed count until `frequency-consistency`; - **an extremum that is not the extremum** — the worst-calibrated held-out cell named as epistemic at h=1, which is third; the largest deviation is aleatoric at h=128; - **a stated change with the wrong sign** — "a change of **+**0.010", where partialling the forecast index out *reduces* the correlation; - **two prose descriptions of one ratio that disagree** — "nearly three orders of magnitude" in the abstract against "two orders" in §13, of 600×; - **a count attributed to the wrong evaluation arena** — 0 of 45 over all ten episodes asserted where the table beside it printed the held-out arena's 20 of 45.
 **Last approved.** Five failure modes survive it, and all five occurred in this paper:
@@ -1117,7 +1100,7 @@ objective's optimum is σ = 0.
 
 ---
 
-### 62. §4. What the original papers claim, and which claims we test — Tier 2
+### 61. §4. What the original papers claim, and which claims we test — Tier 2
 *placeholders changed: -[] +['appE_n_sim_word', 'n_untested_word']*
 **Now.** Of the {{n_untested_word}} we did not test, **{{appE_n_sim_word}} are claims about policy learning or hardware**: zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, generality across robot morphologies, and the core claim that penalising rewards by disagreement improves the learned policy.
 **Last approved.** The eight we
@@ -1137,7 +1120,7 @@ learned policy.
 
 ---
 
-### 63. §6.2 The measurement — Tier 2
+### 62. §6.2 The measurement — Tier 2
 *placeholders changed: -[] +['v2_diag_h']*
 **Now.** A note on the released checkpoint's row, so the next table does not read as a contradiction.* Its {{cal_rel_ratio}}× is the whole {{v2_diag_h}}-step rollout on those same {{b2_nind}} trajectories, for comparability with the three arms beside it.
 **Last approved.** *A note on the released checkpoint's row, so the next table does not read as a contradiction.* Its {{cal_rel_ratio}}× is measured on those same {{b2_nind}} trajectories, for comparability with the three arms beside it.
@@ -1154,7 +1137,7 @@ learned policy.
 
 ---
 
-### 64. §6.2 The measurement — Tier 2
+### 63. §6.2 The measurement — Tier 2
 *placeholders changed: -[] +['v2_deploy_h']*
 **Now.** The released checkpoint trained on all ten episodes, so its own best-sampled figure is the {{d1n_alea_ratio_h100}}× below — cumulative to h = {{v2_deploy_h}}, at n_independent = {{d1n_nind}}.
 **Last approved.** The released checkpoint trained on all ten episodes, so its own best-sampled figure is the {{d1n_alea_ratio_h100}}× below, at n_independent = {{d1n_nind}}.
@@ -1171,7 +1154,7 @@ learned policy.
 
 ---
 
-### 65. §6.4 Why the epistemic term may be miscalibrated: the members are not independent models — Tier 2
+### 64. §6.4 Why the epistemic term may be miscalibrated: the members are not independent models — Tier 2
 *placeholders changed: -[] +['e5_ratio_h100', 'v2_deploy_h']*
 **Now.** So §6.2's "our arms fail the same way at {{e5_ratio_h100}}× at h = {{v2_deploy_h}}" compares two instances of one architecture, not two architectures. {{v1_n_citations}} source citations support the paragraphs above and each is read back from the pinned upstream and checked on every build (`results/v1_ensemble_topology.json`).
 **Last approved.** {{v1_n_citations}} source citations support the paragraphs above and each is read back from the
@@ -1189,7 +1172,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 66. §6.5 The correction fails differently rather than succeeding — Tier 2
+### 65. §6.5 The correction fails differently rather than succeeding — Tier 2
 *resolved value changed: perm_ins_faithA_p_h368 0.0232→0.0240, perm_ins_nll_p_h368 0.8734→0.8746; placeholders changed: -[] +['v2_diag_h']*
 **Now.** Under the trajectory permutation test of §6.6, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample.
 **Last approved.** Under the trajectory permutation test of §6.6 those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample.
@@ -1208,7 +1191,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 67. §References — Tier 2
+### 66. §References — Tier 2
 *placeholders changed: -[] +['v4_current', 'v4_current_date', 'v4_exp_v1']*
 **Now.** Read at v1; now at {{v4_current}}, last revised {{v4_current_date}}. §5.1 and Eq. 4–5 keep their numbers there; every figure and appendix table has moved, and the model is renamed {{v4_name_v1}} to {{v4_name_v3}} — the same model, with the letter re-expanded from "{{v4_exp_v1}}" to "{{v4_exp_v3}}".
 **Last approved.** 4–5
@@ -1230,7 +1213,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 68. §1. Introduction — Tier 3
+### 67. §1. Introduction — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon; and the aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.2, §6.3). - **A candidate mechanism for the epistemic failure, from source.** The five members share one trunk, one recurrent state and {{v1_shared_pct}}% of each member's parameters, so their spread cannot express uncertainty the trunk does not already carry (§6.4). - **The ranking claim tested against a free baseline neither original ran**, and against six controls, the last of which removes trajectory difficulty rather than forecast depth and is the only one that isolates within-rollout information (§6.7). - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of {{r2_n_indep}} independently-initialised full models, sharing nothing, is {{m44_ratio_gain}}× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of {{m44_mde_ratio}}×.
 **Last approved.** — (new, or no approved text on record)
@@ -1248,7 +1231,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 69. §1. Introduction — Tier 3
+### 68. §1. Introduction — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** The decomposition says what that is made of: σ larger by {{r2_sigma_x_h100}}×, {{r2_from_sigma_h100}}% of the improvement at h = {{v2_deploy_h}}, reversing to {{r2_from_acc_h368}}% from accuracy at h = {{v2_diag_h}} (§6.10). - **A working repair**: one multiplier per horizon, fitted on one held-out episode and scored on the other, restores nominal coverage where a global multiplier does not (§6.8). - **{{n_retractions_word}} retractions of our own numbered claims**, plus {{n_retract_framing_word}} of framings, kept in the record with the evidence that withdrew them (§9).
 **Last approved.** — (new, or no approved text on record)
@@ -1269,7 +1252,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 70. §12. Limitations — Tier 3
+### 69. §12. Limitations — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** They also differ in **capacity**: the independent arm carries {{v1_cap_indep}} state-pathway parameters against the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own trunk.
 **Last approved.** — (new, or no approved text on record)
@@ -1286,7 +1269,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 71. §4. What the original papers claim, and which claims we test — Tier 3
+### 70. §4. What the original papers claim, and which claims we test — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** The remaining {{appE_n_cpu_word}} need none of that and we still did not run them**: the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison are within reach of the CPU budget this project already spent, and Appendix E prices both.
 **Last approved.** — (new, or no approved text on record)
@@ -1301,7 +1284,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 72. §4. What the original papers claim, and which claims we test — Tier 3
+### 71. §4. What the original papers claim, and which claims we test — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** An earlier draft made this a universal claim about all {{n_untested_word}}, which Appendix E contradicts two rows later; the `scope-consistency` check now reads the quantifier here against the enumeration there, and both counts above are derived from those two tables rather than typed. §12 states what that bounds, and Appendix E sets out what testing them would take.
 **Last approved.** — (new, or no approved text on record)
@@ -1316,7 +1299,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 73. §6.10 Testing the mechanism: an ensemble that shares nothing — Tier 3
+### 72. §6.10 Testing the mechanism: an ensemble that shares nothing — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** The reading, stated at the horizon the rule is stated over.** σ is larger at every horizon — by {{r2_sigma_x_lo}}× at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its strongest (h = {{r2_sigma_x_hi_h}}) — which is the direction trunk-sharing predicts, and at h = {{v2_deploy_h}} it is {{r2_sigma_x_h100}}×, **{{r2_from_sigma_h100}}%** of the improvement.
 **Last approved.** — (new, or no approved text on record)
@@ -1337,7 +1320,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 74. §6.10 Testing the mechanism: an ensemble that shares nothing — Tier 3
+### 73. §6.10 Testing the mechanism: an ensemble that shares nothing — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** We report both columns for that reason. (An earlier draft gave the σ range above as the h = 1 and h = 8 values, which do not span it — h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}× falls below the stated floor.
 **Last approved.** — (new, or no approved text on record)
@@ -1353,7 +1336,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 75. §6.2 The measurement — Tier 3
+### 74. §6.2 The measurement — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** At one step it is **{{d1n_epi_ratio_h1}}×** out and {{d1n_epi_over_alea_h1}}× better than aleatoric; at h = {{v2_diag_h}} the two-term ratio is {{d1n_epi_over_alea_h368}}×.
 **Last approved.** — (new, or no approved text on record)
@@ -1371,7 +1354,7 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 
 ---
 
-### 76. §6.2 The measurement — Tier 3
+### 75. §6.2 The measurement — Tier 3
 *a genuinely new sentence, never reviewed*
 **Now.** At h = {{v2_deploy_h}}, the method's own imagination rollout length, epistemic is {{d1n_epi_over_alea_h100}}× better than aleatoric and still wrong by **{{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}]**, with ±1σ coverage of {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] where a calibrated Gaussian gives {{v3_cov_nominal1}}%.
 **Last approved.** — (new, or no approved text on record)
@@ -1387,6 +1370,23 @@ pinned upstream and checked on every build (`results/v1_ensemble_topology.json`)
 | `v3_cov_nominal1` | 68.27 | `results/v3_metric_definitions.json` |
 
 **Flags.** `ambiguous-numeral`, `missing-arena`, `mixed-horizon-para`
+
+**Verdict** ☐ approve  ☐ amend  ☐ reject  ☐ defer   **Reviewer** ______  **Date** ______
+
+---
+
+### 76. §6.6 The failure is one of magnitude; the ordering is weaker than it looks — Tier 3
+*a genuinely new sentence, never reviewed*
+**Now.** The figure the abstract and §13 use is neither of those: it is {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}, on the same {{d1n_nind}} trajectories.
+**Last approved.** — (new, or no approved text on record)
+
+| key | value | artifact |
+|---|---|---|
+| `d1n_epi_ratio_h100` | 33.4 | `results/task_d_nind20.json` |
+| `v2_deploy_h` | 100 | `results/v2_deployment_horizon.json` |
+| `d1n_nind` | 20 | `results/task_d_nind20.json` |
+
+**Flags.** `missing-arena`
 
 **Verdict** ☐ approve  ☐ amend  ☐ reject  ☐ defer   **Reviewer** ______  **Date** ______
 

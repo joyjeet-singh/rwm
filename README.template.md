@@ -2,7 +2,7 @@
      Every number below is a placeholder substituted from results/paper_numbers.json
      by scripts/build_readme.py, the same machinery that builds the paper. The README
      drifted materially behind the paper once — a retracted claim stood here for weeks
-     after §8 withdrew it — and this is the fix. -->
+     after §7.5 withdrew it — and this is the fix. -->
 
 # RWM reproduction — proprioceptive dynamics model
 
@@ -26,7 +26,7 @@ are never edited in place: {{n_superseded}} are marked `SUPERSEDED` and kept.
 project produced, and {{n_retract_framing_word}} withdraw **framings** — a sentence the paper
 asserted that turned out to be false, rather than a number that turned out to be wrong. The two
 counts are separate and the paper keeps them separate; four of the framing retractions were
-entered by the second pre-submission review, and one of those is the record of a claim §8 had
+entered by the second pre-submission review, and one of those is the record of a claim §7.5 had
 already narrowed in the paper while the ledger and this README went on asserting it.
 
 ## What this found

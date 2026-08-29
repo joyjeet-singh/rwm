@@ -2,7 +2,7 @@
      Every number below is a placeholder substituted from results/paper_numbers.json
      by scripts/build_readme.py, the same machinery that builds the paper. The README
      drifted materially behind the paper once — a retracted claim stood here for weeks
-     after §8 withdrew it — and this is the fix. -->
+     after §7.5 withdrew it — and this is the fix. -->
 
 # RWM reproduction — proprioceptive dynamics model
 
@@ -26,7 +26,7 @@ Six of those are retractions of our own **numbered claims** on evidence this
 project produced, and six withdraw **framings** — a sentence the paper
 asserted that turned out to be false, rather than a number that turned out to be wrong. The two
 counts are separate and the paper keeps them separate; four of the framing retractions were
-entered by the second pre-submission review, and one of those is the record of a claim §8 had
+entered by the second pre-submission review, and one of those is the record of a claim §7.5 had
 already narrowed in the paper while the ledger and this README went on asserting it.
 
 ## What this found
@@ -73,7 +73,7 @@ split reverses at the 368-step diagnostic horizon. The rule (M-44) returns
 **MECHANISM SUPPORTED**. It is still 5.2× overconfident: building the ensemble
 properly is worth doing and is not sufficient (§6.10).
 
-**And four defects in the released pipeline**, plus evidence that the released
+**And five defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
 its author recalls — which the first author attributes to the repository having moved on between
 training and release. **The released artifacts do not reproduce the released checkpoint's
@@ -178,10 +178,10 @@ everything else horizon-indexed in its own paragraph. It runs on every build as 
 ## The build checks its own prose
 
 Verifying that every numeral came from an artifact says nothing about the sentence built around
-it. The build therefore also verifies **50 comparative claims** across 21 kinds,
+it. The build therefore also verifies **51 comparative claims** across 21 kinds,
 each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts.
 Every one is run against a deliberately corrupted expectation on each build and must fail:
-50 of 50 caught.
+51 of 51 caught.
 
 ```bash
 python scripts/check_comparative_claims.py --self-test
@@ -191,7 +191,7 @@ python scripts/ledger_check.py
 ## Environment
 
 Intel Mac x86_64, CPU only, Python 3.11.15, torch 2.2.2, numpy 1.26.4.
-26 training runs, all on CPU.
+27 training runs, all on CPU.
 Reference commits: `robotic_world_model_lite` `13a798e9`, `rsl_rl_rwm` `18eebcdd`.
 
 ## Licence and attribution
