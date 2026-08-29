@@ -111,6 +111,10 @@ CLASSES = [
 # the exact context it is allowed in. Deliberately specific: a reason like
 # "constant" would let anything through.
 EXCEPTIONS = [
+    (r"\bTask 3\b|\bTask 4b\b|\bTask 1\b|\bTask 2\b|\bStep 5\b|\bStep 3\b|\bStep 1\b|"
+     r"\bPhase 1\b|\bPhase 2\b|\bPart A\b|\bPart B\b",
+     "the name of a stage of this project's own work, which the ledger and the "
+     "commit log use as an identifier"),
     (r"\bform 1\b|\bForm 1\b|\bform 2\b|\bForm 2\b",
      "the two nRMSE aggregation forms, named 1 and 2 by this paper (§3.1)"),
     (r"σ = 0\b|σ = 0\.|optimum at σ = 0|to σ = 0",

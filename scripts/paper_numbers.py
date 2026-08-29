@@ -239,6 +239,63 @@ def main():
         f"{TN['n_unclassified']} typed numerals are unclassified; the paper may not "
         "claim its numerals are all addresses or declared constants until they are")
     put("tn_typed", TN["n_typed"], "results/typed_numerals.json")
+
+    # D3. Appendix G, generated from the ledger. Ledger identifiers ran through the
+    # body with no table behind them, so an identifier was either decoration or an
+    # instruction to open a 330 KB file. With the table, the identifier can stay
+    # only where a pre-registered verdict is reported and come out elsewhere.
+    # E4. All seven loss terms and what each does to sigma, MEASURED. §6.3's
+    # derivation addresses two of them; its completeness rests on the other five
+    # being inert with respect to sigma, and that was asserted rather than shown.
+    E4 = J("e4_sigma_gradients.json")
+    put("e4_n_terms", E4["n_terms"], "results/e4_sigma_gradients.json")
+    put("e4_n_live", E4["n_live"], "results/e4_sigma_gradients.json")
+    put("e4_n_touch", E4["n_touching_sigma"], "results/e4_sigma_gradients.json")
+    put("e4_n_inert", E4["n_terms"] - E4["n_touching_sigma"],
+        "results/e4_sigma_gradients.json")
+    put("e4_touching", " and ".join(f"`{t}`" for t in E4["touching"]),
+        "results/e4_sigma_gradients.json")
+    def _g(v):
+        return "0" if v == 0 else f"{v:.3g}"
+    put("e4_table", "".join(
+        "| `{t}` | {live} | {w:.2f} | `{where}` | {gs} | {gd} | {gm} |\n".format(
+            t=r["term"], live=("live" if not r["identically_zero"] else "**dead**"),
+            w=r["weight"], where=r["where"],
+            gs=_g(r["grad_logstd_tower_norm"]), gd=_g(r["grad_log_delta_logstd_abs"]),
+            gm=_g(r["grad_min_logstd_abs"]))
+        for r in E4["terms"]).rstrip(),
+        "results/e4_sigma_gradients.json")
+
+    # Appendix G's reason for existing quotes the ledger's size, so it is read
+    # from the file rather than typed -- the ledger grows every revision.
+    put("ledger_kb", f'{os.path.getsize("FINDINGS_LEDGER.md") / 1024:.0f}',
+        "FINDINGS_LEDGER.md, on disk")
+
+    AG = J("appendix_g_rules.json")
+    put("appG_n_rules", AG["n_rules"], "results/appendix_g_rules.json")
+    put("appG_n_lead", AG["n_with_lead_time"], "results/appendix_g_rules.json")
+    _pos = [r for r in AG["rules"] if (r["lead_hours"] or 0) > 0]
+    _neg = [r for r in AG["rules"] if r["lead_hours"] is not None and r["lead_hours"] < 0]
+    put("appG_n_positive", len(_pos), "results/appendix_g_rules.json")
+    put("appG_n_negative", len(_neg), "results/appendix_g_rules.json")
+    def _lead(r):
+        if r["lead_hours"] is None:
+            return "not computed"
+        v = r["lead_hours"]
+        return f"{v * 60:+.0f} min" if abs(v) < 1 else f"{v:+.1f} h"
+    _rows = "".join(
+        "| `{id}` | {title} | {commit} | {lead} | {tested} | {verdict} |\n".format(
+            id=r["id"], title=r["title"].replace("|", "/"),
+            commit=(f'`{r["rule_commit"]}` {r["commit_subject"]}'
+                    if r["rule_commit"] else "—"),
+            lead=_lead(r), tested=r["tested_by"] or "—",
+            verdict=r["verdict"].replace("|", "/"))
+        for r in AG["rules"])
+    put("appG_table", _rows.rstrip(), "results/appendix_g_rules.json")
+    _texts = "".join(
+        f"\n**`{r['id']}` — {r['title']}.** {r['rule_text']}\n"
+        for r in AG["rules"])
+    put("appG_rule_texts", _texts.rstrip(), "results/appendix_g_rules.json")
     put("tn_classes", TN["n_classes"], "results/typed_numerals.json")
     put("tn_exceptions", TN["n_exceptions"], "results/typed_numerals.json")
     # C5(rev2), 3.5. Section 9 said "N kinds" from this key while appendix D

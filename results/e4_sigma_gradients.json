@@ -1,0 +1,103 @@
+{
+  "n_terms": 7,
+  "n_live": 4,
+  "n_touching_sigma": 2,
+  "touching": [
+    "state",
+    "bound"
+  ],
+  "batch_size": 64,
+  "terms": [
+    {
+      "term": "state",
+      "value": 44.37788009643555,
+      "identically_zero": false,
+      "differentiable": true,
+      "weight": 1.0,
+      "grad_logstd_tower_norm": 0.00032513070618733764,
+      "grad_log_delta_logstd_abs": 0.05088302493095398,
+      "grad_min_logstd_abs": 0.07029780000448227,
+      "touches_sigma": true,
+      "where": "system_dynamics.py:270-289",
+      "note": "squared error on a reparameterised SAMPLE"
+    },
+    {
+      "term": "sequence",
+      "value": 0.0,
+      "identically_zero": true,
+      "differentiable": false,
+      "weight": 1.0,
+      "grad_logstd_tower_norm": 0.0,
+      "grad_log_delta_logstd_abs": 0.0,
+      "grad_min_logstd_abs": 0.0,
+      "touches_sigma": false,
+      "where": "system_dynamics.py:274-277",
+      "note": "guarded by prediction_type == 'sequence'"
+    },
+    {
+      "term": "bound",
+      "value": 1.0,
+      "identically_zero": false,
+      "differentiable": true,
+      "weight": 1.0,
+      "grad_logstd_tower_norm": 0.0,
+      "grad_log_delta_logstd_abs": 0.20000000298023224,
+      "grad_min_logstd_abs": 0.0,
+      "touches_sigma": true,
+      "where": "system_dynamics.py:301-302",
+      "note": "mean(max_logstd) - mean(min_logstd)"
+    },
+    {
+      "term": "kl",
+      "value": 0.0,
+      "identically_zero": true,
+      "differentiable": false,
+      "weight": 0.1,
+      "grad_logstd_tower_norm": 0.0,
+      "grad_log_delta_logstd_abs": 0.0,
+      "grad_min_logstd_abs": 0.0,
+      "touches_sigma": false,
+      "where": "system_dynamics.py:223",
+      "note": "rssm branch only"
+    },
+    {
+      "term": "extension",
+      "value": 0.0,
+      "identically_zero": true,
+      "differentiable": false,
+      "weight": 1.0,
+      "grad_logstd_tower_norm": 0.0,
+      "grad_log_delta_logstd_abs": 0.0,
+      "grad_min_logstd_abs": 0.0,
+      "touches_sigma": false,
+      "where": "system_dynamics.py:233-268",
+      "note": "auxiliary head, extension_dim = 0"
+    },
+    {
+      "term": "contact",
+      "value": 0.6909809112548828,
+      "identically_zero": false,
+      "differentiable": true,
+      "weight": 1.0,
+      "grad_logstd_tower_norm": 0.0,
+      "grad_log_delta_logstd_abs": 0.0,
+      "grad_min_logstd_abs": 0.0,
+      "touches_sigma": false,
+      "where": "system_dynamics.py:233-268",
+      "note": "auxiliary head, contact_dim = 8"
+    },
+    {
+      "term": "termination",
+      "value": 0.715945839881897,
+      "identically_zero": false,
+      "differentiable": true,
+      "weight": 1.0,
+      "grad_logstd_tower_norm": 0.0,
+      "grad_log_delta_logstd_abs": 0.0,
+      "grad_min_logstd_abs": 0.0,
+      "touches_sigma": false,
+      "where": "system_dynamics.py:233-268",
+      "note": "auxiliary head, termination_dim = 1"
+    }
+  ]
+}

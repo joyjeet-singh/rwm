@@ -178,11 +178,126 @@
       "venue": "NeurIPS 2019",
       "why_we_engage": "the loop MOPO-PPO adapts, and the origin of the rollout-length-versus-model-error trade the follow-up's 100-step imagination horizon sits inside (X-13).",
       "year": 2019
+    },
+    {
+      "arxiv": "1906.08312",
+      "authors": [
+        "Ali Malik",
+        "Volodymyr Kuleshov",
+        "Jiaming Song",
+        "Danny Nemer",
+        "Harlan Seymour",
+        "Stefano Ermon"
+      ],
+      "establishes": "that model-based RL needs uncertainties that are CALIBRATED rather than merely ranked, and recalibrates a dynamics model's uncertainty to obtain them",
+      "fragments": [
+        "good uncertainties must be calibrated"
+      ],
+      "key": "malik2019",
+      "title": "Calibrated Model-Based Deep Reinforcement Learning",
+      "venue": "ICML 2019 (PMLR 97:4314-4323)",
+      "why_we_engage": "This is the closest published work to 6.8, which is this paper's only constructive contribution, and citing Kuleshov 2018 without it left that section looking less positioned than it is. 6.8 says what is new relative to it: the conditioning variable is the FORECAST HORIZON, and a single global multiplier fails where a per-horizon one works. The distinction matters because open-loop rollout error accumulates with depth and a horizon-blind recalibration cannot follow it.",
+      "year": 2019
+    },
+    {
+      "arxiv": "1511.06314",
+      "authors": [
+        "Stefan Lee",
+        "Senthil Purushwalkam",
+        "Michael Cogswell",
+        "David Crandall",
+        "Dhruv Batra"
+      ],
+      "establishes": "that multi-head architectures sharing a trunk are a distinct and weaker form of ensembling than independently trained networks, and that diversity has to be engineered rather than assumed",
+      "fragments": [
+        "ensembling as a first-class problem",
+        "diverse"
+      ],
+      "key": "lee2015",
+      "title": "Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks",
+      "venue": "arXiv:1511.06314",
+      "why_we_engage": "6.4 observes that five heads on one trunk cannot disagree about what the trunk does not already carry. That is not new, and saying so is the difference between a finding and a rediscovery. What IS new is finding it in a released robotics checkpoint whose authors deployed it on hardware, with the sharing quantified and the cost measured.",
+      "year": 2015
+    },
+    {
+      "arxiv": "1912.02757",
+      "authors": [
+        "Stanislav Fort",
+        "Huiyi Hu",
+        "Balaji Lakshminarayanan"
+      ],
+      "establishes": "that the diversity of a deep ensemble comes from independent random initialisation exploring different modes, and that subspace methods do not match it",
+      "fragments": [
+        "random initialization",
+        "diversity"
+      ],
+      "key": "fort2019",
+      "title": "Deep Ensembles: A Loss Landscape Perspective",
+      "venue": "arXiv:1912.02757",
+      "why_we_engage": "It supplies the mechanism behind 6.4 and behind M-44's contrast: what independent initialisation buys is decorrelation that a shared trunk cannot produce. It is also the reason M-49 exists -- if independence is what matters, the contrast must hold capacity fixed to show it.",
+      "year": 2019
+    },
+    {
+      "arxiv": "2010.06610",
+      "authors": [
+        "Marton Havasi",
+        "Rodolphe Jenatton",
+        "Stanislav Fort",
+        "Jeremiah Zhe Liu",
+        "Jasper Snoek",
+        "Balaji Lakshminarayanan",
+        "Andrew M. Dai",
+        "Dustin Tran"
+      ],
+      "establishes": "that ensemble-like uncertainty can be obtained inside one network's forward pass (MIMO), and what that costs",
+      "fragments": [
+        "single model"
+      ],
+      "key": "havasi2021",
+      "title": "Training independent subnetworks for robust prediction",
+      "venue": "ICLR 2021",
+      "why_we_engage": "One of the two standard answers to the trunk-sharing problem 6.4 describes. A reader of 6.4 asks what to do instead; this and BatchEnsemble are the cheap answers, and 6.10's independent ensemble is the expensive one.",
+      "year": 2021
+    },
+    {
+      "arxiv": "2002.06715",
+      "authors": [
+        "Yeming Wen",
+        "Dustin Tran",
+        "Jimmy Ba"
+      ],
+      "establishes": "an ensemble whose members share a weight matrix and differ by a rank-one factor each, trading diversity for cost explicitly rather than incidentally",
+      "fragments": [
+        "a shared weight among all ensemble members and a rank-one matrix per member"
+      ],
+      "key": "wen2020",
+      "title": "BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning",
+      "venue": "ICLR 2020",
+      "why_we_engage": "The contrast that makes 6.4's point precise. BatchEnsemble shares deliberately and says what it gives up; the released checkpoint shares {{v1_shared_pct}}% of each member and reports the resulting spread as an uncertainty. The problem is not sharing, it is sharing and then reading the spread as if the members were independent.",
+      "year": 2020
+    },
+    {
+      "arxiv": "2203.09168",
+      "authors": [
+        "Maximilian Seitzer",
+        "Arash Tavakoli",
+        "Dimitrije Antic",
+        "Georg Martius"
+      ],
+      "establishes": "that training a heteroscedastic Gaussian head by maximising log-likelihood with gradient-based optimisers has failure modes, demonstrated on a synthetic example",
+      "fragments": [
+        "log-likelihood"
+      ],
+      "key": "seitzer2022",
+      "title": "On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks",
+      "venue": "ICLR 2022",
+      "why_we_engage": "The natural neighbour of 6.3. Seitzer et al. show a log-likelihood objective misbehaving on a sigma head; 6.3 shows a released model whose objective is not a log-likelihood at all -- a sample enters a squared error, whose optimum is sigma = 0 -- so the failure is more basic than the one they characterise, and E5 demonstrates it against known noise.",
+      "year": 2022
     }
   ],
   "evidence_class": "EXT",
-  "n_entries": 10,
-  "n_references_after": 12,
+  "n_entries": 16,
+  "n_references_after": 18,
   "n_references_before": 2,
   "purpose": "every section 2 reference, verified against the paper itself",
   "rule": "no entry is added that was not verified. Title, full author list and venue come from the arXiv API; anything our text asserts the paper SAYS is additionally matched verbatim against its HTML.",
@@ -192,97 +307,396 @@
     "status": "NOT TESTED outside this repository. Flagged in 2 and 11 as a hypothesis and deliberately out of scope."
   },
   "verification": {
-    "checked_on": "2026-08-23",
+    "checked_on": "RE-VERIFIED THIS RUN",
     "method": "arXiv API metadata for title, author list and venue comment; for any entry whose 'why_we_engage' asserts what the paper SAYS, the asserted fragments were additionally matched as substrings of that paper's own arXiv HTML rendering after tag-stripping and whitespace collapse",
-    "n_entries": 10,
-    "n_fragments_checked": 9,
-    "n_fragments_verbatim": 9,
-    "n_metadata_verified": 10,
-    "n_with_fragment_checks": 2,
+    "n_entries": 16,
+    "n_fragments_checked": 17,
+    "n_fragments_verbatim": 17,
+    "n_metadata_verified": 16,
     "per_entry": [
       {
+        "arxiv": "2110.04135",
         "arxiv_version": "2110.04135v2",
+        "authors_arxiv": [
+          "Cong Lu",
+          "Philip J. Ball",
+          "Jack Parker-Holder",
+          "Michael A. Osborne",
+          "Stephen J. Roberts"
+        ],
         "authors_match": true,
         "comment": "Spotlight @ ICLR 2022; Spotlight @ RL4RealLife Workshop ICML2021",
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "We measure Spearman rank"
+          },
+          {
+            "found": true,
+            "fragment": "despite the similar rank correlations"
+          },
+          {
+            "found": true,
+            "fragment": "the bivariate correlations"
+          },
+          {
+            "found": true,
+            "fragment": "for the first time, capture the specific covariate shift induced by mo"
+          },
+          {
+            "found": true,
+            "fragment": "the ensemble standard deviation is statistically strikingly similar to"
+          }
+        ],
         "key": "lu2022",
         "n_fragments": 5,
         "n_fragments_found": 5,
         "published": "2021-10-08",
+        "title_arxiv": "Revisiting Design Choices in Offline Model-Based Reinforcement Learning",
         "title_matches": true
       },
       {
+        "arxiv": "1805.12114",
         "arxiv_version": "1805.12114v2",
+        "authors_arxiv": [
+          "Kurtland Chua",
+          "Roberto Calandra",
+          "Rowan McAllister",
+          "Sergey Levine"
+        ],
         "authors_match": true,
-        "comment": "NIPS 2018, video and code available",
+        "comment": "NIPS 2018, video and code available at https://sites.google.com/view/drl-in-a-handful-of-trials/",
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "logvar = max_logvar - tf.nn.softplus(max_logvar - logvar)"
+          },
+          {
+            "found": true,
+            "fragment": "logvar = min_logvar + tf.nn.softplus(logvar - min_logvar)"
+          },
+          {
+            "found": true,
+            "fragment": "with a small regularization penalty on term on max_logvar"
+          },
+          {
+            "found": true,
+            "fragment": "We use the negative log prediction probability as our loss function"
+          }
+        ],
         "key": "chua2018",
         "n_fragments": 4,
         "n_fragments_found": 4,
         "published": "2018-05-30",
+        "title_arxiv": "Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models",
         "title_matches": true
       },
       {
+        "arxiv": "2005.13239",
         "arxiv_version": "2005.13239v6",
+        "authors_arxiv": [
+          "Tianhe Yu",
+          "Garrett Thomas",
+          "Lantao Yu",
+          "Stefano Ermon",
+          "James Zou",
+          "Sergey Levine",
+          "Chelsea Finn",
+          "Tengyu Ma"
+        ],
         "authors_match": true,
-        "comment": "NeurIPS 2020. First two authors contributed equally.",
+        "comment": "NeurIPS 2020. First two authors contributed equally. Last two authors advised equally",
+        "found": true,
         "key": "yu2020",
         "published": "2020-05-27",
+        "title_arxiv": "MOPO: Model-based Offline Policy Optimization",
         "title_matches": true
       },
       {
+        "arxiv": "2005.05951",
         "arxiv_version": "2005.05951v3",
+        "authors_arxiv": [
+          "Rahul Kidambi",
+          "Aravind Rajeswaran",
+          "Praneeth Netrapalli",
+          "Thorsten Joachims"
+        ],
         "authors_match": true,
-        "comment": "Published at NeurIPS 2020.",
+        "comment": "First two authors contributed equally. Published at NeurIPS 2020. After publication at NeurIPS 2020, (1) D4RL benchmark results have been added; (2) hyper-parameter ablation studies have been added; (3) scope of Lemma 3 has been extended",
+        "found": true,
         "key": "kidambi2020",
         "published": "2020-05-12",
+        "title_arxiv": "MOReL : Model-Based Offline Reinforcement Learning",
         "title_matches": true
       },
       {
+        "arxiv": "1612.01474",
         "arxiv_version": "1612.01474v3",
+        "authors_arxiv": [
+          "Balaji Lakshminarayanan",
+          "Alexander Pritzel",
+          "Charles Blundell"
+        ],
         "authors_match": true,
         "comment": "NIPS 2017",
+        "found": true,
         "key": "lakshminarayanan2017",
-        "note": "arXiv preprint dated 2016; the venue year is 2017 and the entry cites the venue year, as the brief's table does",
         "published": "2016-12-05",
+        "title_arxiv": "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles",
         "title_matches": true
       },
       {
+        "arxiv": "1807.00263",
         "arxiv_version": "1807.00263v1",
+        "authors_arxiv": [
+          "Volodymyr Kuleshov",
+          "Nathan Fenner",
+          "Stefano Ermon"
+        ],
         "authors_match": true,
         "comment": "ICML 2018",
+        "found": true,
         "key": "kuleshov2018",
         "published": "2018-07-01",
+        "title_arxiv": "Accurate Uncertainties for Deep Learning Using Calibrated Regression",
         "title_matches": true
       },
       {
+        "arxiv": "1706.04599",
         "arxiv_version": "1706.04599v2",
+        "authors_arxiv": [
+          "Chuan Guo",
+          "Geoff Pleiss",
+          "Yu Sun",
+          "Kilian Q. Weinberger"
+        ],
         "authors_match": true,
         "comment": "ICML 2017",
+        "found": true,
         "key": "guo2017",
         "published": "2017-06-14",
+        "title_arxiv": "On Calibration of Modern Neural Networks",
         "title_matches": true
       },
       {
+        "arxiv": "1906.02530",
         "arxiv_version": "1906.02530v2",
+        "authors_arxiv": [
+          "Yaniv Ovadia",
+          "Emily Fertig",
+          "Jie Ren",
+          "Zachary Nado",
+          "D Sculley",
+          "Sebastian Nowozin",
+          "Joshua V. Dillon",
+          "Balaji Lakshminarayanan",
+          "Jasper Snoek"
+        ],
         "authors_match": true,
         "comment": "Advances in Neural Information Processing Systems, 2019",
+        "found": true,
         "key": "ovadia2019",
         "published": "2019-06-06",
+        "title_arxiv": "Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift",
         "title_matches": true
       },
       {
+        "arxiv": "2007.02418",
         "arxiv_version": "2007.02418v3",
+        "authors_arxiv": [
+          "Zaheer Abbas",
+          "Samuel Sokota",
+          "Erin J. Talvitie",
+          "Martha White"
+        ],
         "authors_match": true,
         "comment": "Accepted at ICML 2020",
+        "found": true,
         "key": "abbas2020",
         "published": "2020-07-05",
+        "title_arxiv": "Selective Dyna-style Planning Under Limited Model Capacity",
         "title_matches": true
       },
       {
+        "arxiv": "1906.08253",
         "arxiv_version": "1906.08253v3",
+        "authors_arxiv": [
+          "Michael Janner",
+          "Justin Fu",
+          "Marvin Zhang",
+          "Sergey Levine"
+        ],
         "authors_match": true,
-        "comment": "NeurIPS 2019.",
+        "comment": "NeurIPS 2019. Code at https://github.com/JannerM/mbpo, project page at: https://jannerm.github.io/mbpo-www/",
+        "found": true,
         "key": "janner2019",
         "published": "2019-06-19",
+        "title_arxiv": "When to Trust Your Model: Model-Based Policy Optimization",
+        "title_matches": true
+      },
+      {
+        "arxiv": "1906.08312",
+        "arxiv_version": "1906.08312v1",
+        "authors_arxiv": [
+          "Ali Malik",
+          "Volodymyr Kuleshov",
+          "Jiaming Song",
+          "Danny Nemer",
+          "Harlan Seymour",
+          "Stefano Ermon"
+        ],
+        "authors_match": true,
+        "comment": null,
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "good uncertainties must be calibrated"
+          }
+        ],
+        "key": "malik2019",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2019-06-19",
+        "title_arxiv": "Calibrated Model-Based Deep Reinforcement Learning",
+        "title_matches": true
+      },
+      {
+        "arxiv": "1511.06314",
+        "arxiv_version": "1511.06314v1",
+        "authors_arxiv": [
+          "Stefan Lee",
+          "Senthil Purushwalkam",
+          "Michael Cogswell",
+          "David Crandall",
+          "Dhruv Batra"
+        ],
+        "authors_match": true,
+        "comment": null,
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "ensembling as a first-class problem"
+          },
+          {
+            "found": true,
+            "fragment": "diverse"
+          }
+        ],
+        "key": "lee2015",
+        "n_fragments": 2,
+        "n_fragments_found": 2,
+        "published": "2015-11-19",
+        "title_arxiv": "Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks",
+        "title_matches": true
+      },
+      {
+        "arxiv": "1912.02757",
+        "arxiv_version": "1912.02757v2",
+        "authors_arxiv": [
+          "Stanislav Fort",
+          "Huiyi Hu",
+          "Balaji Lakshminarayanan"
+        ],
+        "authors_match": true,
+        "comment": null,
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "random initialization"
+          },
+          {
+            "found": true,
+            "fragment": "diversity"
+          }
+        ],
+        "key": "fort2019",
+        "n_fragments": 2,
+        "n_fragments_found": 2,
+        "published": "2019-12-05",
+        "title_arxiv": "Deep Ensembles: A Loss Landscape Perspective",
+        "title_matches": true
+      },
+      {
+        "arxiv": "2010.06610",
+        "arxiv_version": "2010.06610v2",
+        "authors_arxiv": [
+          "Marton Havasi",
+          "Rodolphe Jenatton",
+          "Stanislav Fort",
+          "Jeremiah Zhe Liu",
+          "Jasper Snoek",
+          "Balaji Lakshminarayanan",
+          "Andrew M. Dai",
+          "Dustin Tran"
+        ],
+        "authors_match": true,
+        "comment": "Updated to the ICLR camera ready version, added reference to Soflaei et al. 2020",
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "single model"
+          }
+        ],
+        "key": "havasi2021",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2020-10-13",
+        "title_arxiv": "Training independent subnetworks for robust prediction",
+        "title_matches": true
+      },
+      {
+        "arxiv": "2002.06715",
+        "arxiv_version": "2002.06715v2",
+        "authors_arxiv": [
+          "Yeming Wen",
+          "Dustin Tran",
+          "Jimmy Ba"
+        ],
+        "authors_match": true,
+        "comment": null,
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "a shared weight among all ensemble members and a rank-one matrix per m"
+          }
+        ],
+        "key": "wen2020",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2020-02-17",
+        "title_arxiv": "BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning",
+        "title_matches": true
+      },
+      {
+        "arxiv": "2203.09168",
+        "arxiv_version": "2203.09168v2",
+        "authors_arxiv": [
+          "Maximilian Seitzer",
+          "Arash Tavakoli",
+          "Dimitrije Antic",
+          "Georg Martius"
+        ],
+        "authors_match": true,
+        "comment": "ICLR 2022 camera-ready version. Code available at http://github.com/martius-lab/beta-nll",
+        "found": true,
+        "fragments": [
+          {
+            "found": true,
+            "fragment": "log-likelihood"
+          }
+        ],
+        "key": "seitzer2022",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2022-03-17",
+        "title_arxiv": "On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks",
         "title_matches": true
       }
     ]

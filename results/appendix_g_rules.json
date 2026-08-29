@@ -1,0 +1,94 @@
+{
+  "n_rules": 8,
+  "n_with_lead_time": 7,
+  "rules": [
+    {
+      "id": "M-16",
+      "title": "The Arm A / Arm B comparison",
+      "status": "SETTLED \u2014 rule pre-registered in `84ff01b`, annotation in `0fe2bca`, both before any",
+      "verdict": "SETTLED \u2014 rule pre-registered",
+      "rule_text": "**Entered before any main-run result exists.** Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. **The claim reproduces, or fails to, and can be reported** only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the **sam",
+      "lead_hours": 1.3322222222222222,
+      "tested_by": "first main-run data",
+      "rule_commit": "84ff01b",
+      "commit_subject": "Step 5: pre-register the decision rule before launching any main run"
+    },
+    {
+      "id": "M-22",
+      "title": "Whether episode difficulty biases the A/B comparison",
+      "status": "RESOLVED \u2014 branch 1, 4c not run",
+      "verdict": "RESOLVED \u2014 branch 1, 4c not run",
+      "rule_text": "**Entered before Task 4b runs.** Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097).",
+      "lead_hours": 0.08861111111111111,
+      "tested_by": "M-16 re-evaluated",
+      "rule_commit": "0648a32",
+      "commit_subject": "Pre-register the Task 4b difficulty-bias rule, and the two-arena convention"
+    },
+    {
+      "id": "M-23",
+      "title": "The 10,000-iteration comparison",
+      "status": "RESOLVED \u2014 reproduces at long horizon",
+      "verdict": "RESOLVED \u2014 reproduces at long horizon",
+      "rule_text": "**Entered before any 10,000-iteration result exists.** Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not ",
+      "lead_hours": 0.03638888888888889,
+      "tested_by": "10k runs launched",
+      "rule_commit": "efc35b8",
+      "commit_subject": "5.1: pre-register M-23, the long-horizon decision rule"
+    },
+    {
+      "id": "M-43",
+      "title": "The ensemble-5 replication",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "DOES NOT GENERALISE",
+      "rule_text": "*The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed.* **Entered before any ensemble-5 result exists.** No `runs/armA_s",
+      "lead_hours": 13.290555555555555,
+      "tested_by": "ens5 result committed",
+      "rule_commit": "b17f1b5",
+      "commit_subject": "PRE-REGISTER the ensemble-5 replication rule, before the runs exist"
+    },
+    {
+      "id": "M-44",
+      "title": "The trunk-sharing mechanism",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "MECHANISM SUPPORTED",
+      "rule_text": "**Entered before any independent-init ensemble exists.** No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git ",
+      "lead_hours": 6.3741666666666665,
+      "tested_by": "R2 result committed",
+      "rule_commit": "81b49f7",
+      "commit_subject": "PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without"
+    },
+    {
+      "id": "M-45",
+      "title": "The within-trajectory control on \u00a75.6",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "SUPPORTED",
+      "rule_text": "**Entered before the statistic was computed.** No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.",
+      "lead_hours": 4.4494444444444445,
+      "tested_by": "A2 result committed",
+      "rule_commit": "81b49f7",
+      "commit_subject": "PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without"
+    },
+    {
+      "id": "M-49",
+      "title": "Pre-registered: does trunk-sharing survive capacity matching?",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "verdict": "not yet discharged",
+      "rule_text": "- **MECHANISM SURVIVES CAPACITY MATCHING** \u2014 the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - **CAPACITY EXPLAINS IT** \u2014 the matched ",
+      "lead_hours": null,
+      "tested_by": null,
+      "rule_commit": null,
+      "commit_subject": null
+    },
+    {
+      "id": "S-12",
+      "title": "\"Task 3's duplication rule was pre-registered\"",
+      "status": "RETRACTED",
+      "verdict": "RETRACTED",
+      "rule_text": "**Retracts** \u2014 a framing, not a numbered claim; the wording was corrected in place **What is retracted:** the description of the Task 3 decision rule as *pre-registered*, in the sense this project has used that word everywhere else \u2014 a rule committed to git before the data testing it exists (M-16, M",
+      "lead_hours": -2.9366666666666665,
+      "tested_by": "control runs finished",
+      "rule_commit": null,
+      "commit_subject": null
+    }
+  ]
+}

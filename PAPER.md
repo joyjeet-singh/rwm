@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     755 values substituted from 55 artifacts. -->
+     768 values substituted from 57 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -72,7 +72,7 @@ gradients match to 0.000e+00 across 7 loss terms and
 git, with timestamps a reader can check (§9, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail.** Six numbered claims in this work are withdrawn on evidence this project produced, and six further retractions withdraw framings rather than numbers — one of them the claim that a pre-registration was pre-registered at all. All of them are kept in the record rather than deleted (§9).
+**We retract our own findings when they fail.** 12 claims of ours are withdrawn on this project's own evidence and kept in the record; §9 and Appendix D give them in full.
 
 **Contributions.**
 
@@ -94,9 +94,15 @@ and we report that too.
 - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of 5 independently-initialised full models, sharing nothing, is 2.03× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of 1.45×. The decomposition says what that is made of: σ larger by 1.65×, 71% of the improvement at h = 100, reversing to 57% from accuracy at h = 368 (§6.10).
 - **A working repair**: one multiplier per horizon, fitted on one held-out episode and
   scored on the other, restores nominal coverage where a global multiplier does not (§6.8).
-- **Six retractions of our own numbered claims**, plus
-  six of framings, kept in the record with the evidence that withdrew them
-  (§9).
+- **The released evaluation is misaligned by one step, and the checkpoint is materially better
+  than its own evaluation reports.** Training pairs states and actions index-for-index; evaluation
+  feeds the action from *t−1*. Scored causally, nRMSE at h = 368 falls from
+  1.3228 to 0.7572 — the released harness overstates its own model's error by
+  75% (§7.2). This is the finding most immediately useful to anyone using that
+  repository, and it costs one line to fix.
+- **12 retractions of our own claims**, kept in the record with the evidence
+  that withdrew them, and Appendix G's table of every pre-registered rule with its lead time and
+  its verdict (§9).
 
 ---
 
@@ -192,10 +198,38 @@ multiplier is a coarse instance of calibrated regression (Kuleshov, Fenner and E
 a post-hoc map fitted on held-out data. We present it as an application of that idea to a horizon
 index, not as a new one.
 
+**The closest published work to our one constructive result.** Malik, Kuleshov, Song, Nemer,
+Seymour and Ermon (ICML 2019) recalibrate a dynamics model's uncertainty inside model-based RL,
+and argue that "good uncertainties must be calibrated" rather than merely well ranked — which is
+the distinction §6.7 and §6.2 draw between what the released checkpoint's disagreement does and
+does not do. §6.8 is a horizon-indexed instance of that idea, and §6.8 says what is new relative
+to it rather than leaving a reader to work it out: the conditioning variable is the forecast
+horizon, and a single global multiplier **fails** where a per-horizon one works. That distinction
+is not decoration — an open-loop rollout's error accumulates with depth, so a horizon-blind
+recalibration cannot follow it, and ours is the measurement showing it does not.
+
+**§6.4's mechanism is known, and we say so.** That heads sharing a trunk under-report disagreement
+relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell,
+Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be engineered
+rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what independent
+initialisation buys is decorrelation that subspace methods do not match; and BatchEnsemble (Wen,
+Tran and Ba, ICLR 2020) and MIMO (Havasi, Jenatton, Fort, Liu, Snoek, Lakshminarayanan, Dai and
+Tran, ICLR 2021) share deliberately and state what they trade away. §6.4 is not the discovery of
+that effect. **What is ours is finding it in a released robotics checkpoint that its authors
+deployed on hardware, with the sharing quantified at 89.15% of each member and the
+cost measured at 2.03× (§6.10).** The problem is not sharing; it is sharing and then
+reading the spread as though the members were independent.
+
+**And the objective in §6.3 has a neighbour.** Seitzer, Tavakoli, Antic and Martius (ICLR 2022)
+identify failure modes of heteroscedastic σ heads trained by maximising log-likelihood. The
+released model's state loss is not a log-likelihood at all — a *sample* enters a squared error —
+so the failure §6.3 derives is more basic than the ones they characterise, and it does not depend
+on the optimiser. §6.3 gives the derivation and Appendix H demonstrates it against known noise.
+
 *Every entry above was checked against the paper itself — title, full author list, venue and year
 from the arXiv record, and for any sentence we attribute, the sentence matched verbatim against
-the paper's own text. 10 of 10 entries verified,
-9 of 9 attributed fragments verbatim
+the paper's own text. 16 of 16 entries verified,
+17 of 17 attributed fragments verbatim
 (`results/t1_bibliography_verified.json`). No entry was added that was not verified.*
 
 ---
@@ -614,6 +648,29 @@ $$\overline{\log\sigma_{\max}} - \overline{\log\sigma_{\min}} \;=\; \overline{\e
 
 and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval
 closes onto therefore freezes while the interval closes: a one-way ratchet.
+
+**The derivation above covers two terms, and the objective has 7.** Its completeness
+rests on the other 5 being inert with respect to σ, and a reader should not have to
+take that on trust. Each term is therefore computed alone on one real batch and back-propagated
+alone, and the gradient reaching the log-σ tower, `state_log_delta_logstd` and `state_min_logstd`
+is recorded. A term that cannot move σ produces exactly zero on all three.
+
+| loss term | live? | weight | where the reference computes it | ∂/∂ log-σ tower | ∂/∂ `log_delta_logstd` | ∂/∂ `min_logstd` |
+|---|---|---|---|---|---|---|
+| `state` | live | 1.00 | `system_dynamics.py:270-289` | 0.000325 | 0.0509 | 0.0703 |
+| `sequence` | **dead** | 1.00 | `system_dynamics.py:274-277` | 0 | 0 | 0 |
+| `bound` | live | 1.00 | `system_dynamics.py:301-302` | 0 | 0.2 | 0 |
+| `kl` | **dead** | 0.10 | `system_dynamics.py:223` | 0 | 0 | 0 |
+| `extension` | **dead** | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
+| `contact` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
+| `termination` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
+
+4 of the 7 configured terms are live at all under the released
+configuration — `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
+`"single"` on both paths, and `kl` and `extension` are zero because their dimensions are. Of the
+7, exactly 2 reach σ: `state` and `bound`. The remaining 5
+produce a gradient of exactly zero, which is a stronger statement than reading the code and
+concluding they do not matter (`results/e4_sigma_gradients.json`).
 
 We predicted the collapse from this algebra before training, then observed it. Across all
 26 runs the collapse is linear in iteration count and its rate is nearly identical
@@ -1109,7 +1166,7 @@ the work.
 
 ## 9. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (201 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (207 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all 8 rules; 7 are positive and 1 is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1287,7 +1344,7 @@ is in `results/original_paper_figures.json`.*
 11. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530.
 12. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239.
 
-*Entries 3–12 are the §2 bibliography. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 10 of 10 entries and 9 of 9 attributed fragments (`results/t1_bibliography_verified.json`).*
+*Entries 3–12 are the §2 bibliography. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 16 of 16 entries and 17 of 17 attributed fragments (`results/t1_bibliography_verified.json`).*
 
 ## Appendix A — verification chain
 
@@ -1478,6 +1535,59 @@ reproducibility failure would make the reported figure oscillate rather than set
 dropped by provenance like the others and counted in the output rather than hidden — the same
 discipline §9's own 36-file figure rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
+
+## Appendix G — every pre-registered rule, its lead time and its verdict
+
+§9's argument rests on decision rules committed to git before the data that tested them, and the
+body names those rules by identifier. An identifier with no table behind it is either decoration
+or an instruction to open a 330 KB ledger, so here is the table. It is generated from
+`FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
+
+**Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
+it tested, resolved by commit *subject* rather than by hash — the history was rewritten once and
+hashes did not survive it, while subjects did. Positive means the rule was in git before the data
+existed. This is the same computation Figure 4 plots.
+
+| rule | what it governs | commit | lead time | tested by | verdict |
+|---|---|---|---|---|---|
+| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED — rule pre-registered |
+| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED — branch 1, 4c not run |
+| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED — reproduces at long horizon |
+| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |
+| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |
+| `M-45` | The within-trajectory control on §5.6 | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |
+| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | not computed | — | not yet discharged |
+| `S-12` | "Task 3's duplication rule was pre-registered" | — | -2.9 h | control runs finished | RETRACTED |
+
+8 rules, 7 with a computed lead time, of which
+6 are positive and 1 negative. **The negative one is
+kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
+pre-registered; the control runs had finished before any threshold reached git. A table that
+dropped it would be asserting exactly what the ledger retracts.
+
+`M-49` has no lead time because the data it tests does not exist yet: it is committed, with its
+minimum detectable effect, before the runs it governs. That is what a pre-registration in progress
+looks like, and it is included so the table is a census rather than a highlights reel.
+
+**What each rule says, in its own committed words:**
+
+**`M-16` — The Arm A / Arm B comparison.** **Entered before any main-run result exists.** Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. **The claim reproduces, or fails to, and can be reported** only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the **sam
+
+**`M-22` — Whether episode difficulty biases the A/B comparison.** **Entered before Task 4b runs.** Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097).
+
+**`M-23` — The 10,000-iteration comparison.** **Entered before any 10,000-iteration result exists.** Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not 
+
+**`M-43` — The ensemble-5 replication.** *The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed.* **Entered before any ensemble-5 result exists.** No `runs/armA_s
+
+**`M-44` — The trunk-sharing mechanism.** **Entered before any independent-init ensemble exists.** No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git 
+
+**`M-45` — The within-trajectory control on §5.6.** **Entered before the statistic was computed.** No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.
+
+**`M-49` — Pre-registered: does trunk-sharing survive capacity matching?.** - **MECHANISM SURVIVES CAPACITY MATCHING** — the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - **CAPACITY EXPLAINS IT** — the matched 
+
+**`S-12` — "Task 3's duplication rule was pre-registered".** **Retracts** — a framing, not a numbered claim; the wording was corrected in place **What is retracted:** the description of the Task 3 decision rule as *pre-registered*, in the sense this project has used that word everywhere else — a rule committed to git before the data testing it exists (M-16, M
+
+---
 
 ## Appendix E — what testing the untested claims would require
 

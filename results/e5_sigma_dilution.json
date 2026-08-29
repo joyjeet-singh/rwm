@@ -1,0 +1,276 @@
+{
+  "n_train": 4000,
+  "n_test": 2000,
+  "iters": 3000,
+  "null_repeats": 12,
+  "dilutions": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "calibrated_on": "gaussian_nll",
+  "why": "the null and the ladder are built under the objective that CAN recover sigma; calibrating on the objective under test would let it set its own threshold",
+  "null": {
+    "r_mean": -0.11036477885070928,
+    "r_sd": 0.4614390470440416,
+    "r_abs_p95": 0.7238631244554639,
+    "ratio_median_mean": 0.32587503327822837,
+    "ratio_median_min": 0.31061012241654046,
+    "runs": [
+      {
+        "r_log_sigma": 0.4222458198650887,
+        "median_sigma_hat": 0.03157893195748329,
+        "median_sigma_true": 0.10017669923029768,
+        "ratio_median": 0.31523230651557027,
+        "sigma_hat_range": [
+          0.03156254068017006,
+          0.03161170333623886
+        ],
+        "sigma_true_range": [
+          0.020007223848893523,
+          0.499994897926442
+        ],
+        "sigma_hat_spread_factor": 1.0015576266995416,
+        "rmse_mean": 0.10857573009638453
+      },
+      {
+        "r_log_sigma": -0.1777635614255891,
+        "median_sigma_hat": 0.033800018951296806,
+        "median_sigma_true": 0.09870251356002188,
+        "ratio_median": 0.3424433454852466,
+        "sigma_hat_range": [
+          0.0337875671684742,
+          0.03381766006350517
+        ],
+        "sigma_true_range": [
+          0.020032475266304212,
+          0.4999228599245024
+        ],
+        "sigma_hat_spread_factor": 1.0008906499506438,
+        "rmse_mean": 0.1448951125102723
+      },
+      {
+        "r_log_sigma": -0.04689836177045972,
+        "median_sigma_hat": 0.03212922438979149,
+        "median_sigma_true": 0.09801601968758378,
+        "ratio_median": 0.3277956449588564,
+        "sigma_hat_range": [
+          0.03211615979671478,
+          0.0321510024368763
+        ],
+        "sigma_true_range": [
+          0.02002539049146357,
+          0.4999733819610828
+        ],
+        "sigma_hat_spread_factor": 1.0010848943454653,
+        "rmse_mean": 0.15577512142689398
+      },
+      {
+        "r_log_sigma": -0.6135105124138659,
+        "median_sigma_hat": 0.03151610866189003,
+        "median_sigma_true": 0.09738200956908023,
+        "ratio_median": 0.3236337882258769,
+        "sigma_hat_range": [
+          0.03150113299489021,
+          0.03154674172401428
+        ],
+        "sigma_true_range": [
+          0.020005167487505377,
+          0.4993944008521111
+        ],
+        "sigma_hat_spread_factor": 1.00144784408648,
+        "rmse_mean": 0.13803678157308247
+      },
+      {
+        "r_log_sigma": -0.1313287646165983,
+        "median_sigma_hat": 0.032938577234745026,
+        "median_sigma_true": 0.0993114112930022,
+        "ratio_median": 0.33166961183911786,
+        "sigma_hat_range": [
+          0.0329267680644989,
+          0.03296123445034027
+        ],
+        "sigma_true_range": [
+          0.02002463001728827,
+          0.49988400194036536
+        ],
+        "sigma_hat_spread_factor": 1.0010467588490268,
+        "rmse_mean": 0.16784738157638082
+      },
+      {
+        "r_log_sigma": -0.3639077871855934,
+        "median_sigma_hat": 0.032196613028645515,
+        "median_sigma_true": 0.10220629349846383,
+        "ratio_median": 0.31501595377910296,
+        "sigma_hat_range": [
+          0.03217132389545441,
+          0.032241057604551315
+        ],
+        "sigma_true_range": [
+          0.020029338862209537,
+          0.49977253700852947
+        ],
+        "sigma_hat_spread_factor": 1.002167573498794,
+        "rmse_mean": 0.1432448724629151
+      },
+      {
+        "r_log_sigma": 0.49187370325358365,
+        "median_sigma_hat": 0.03261987678706646,
+        "median_sigma_true": 0.097253340167055,
+        "ratio_median": 0.33541137745021726,
+        "sigma_hat_range": [
+          0.03259613364934921,
+          0.03264888375997543
+        ],
+        "sigma_true_range": [
+          0.020019319062740206,
+          0.49878182021276524
+        ],
+        "sigma_hat_spread_factor": 1.0016182934820945,
+        "rmse_mean": 0.11548333211523527
+      },
+      {
+        "r_log_sigma": 0.030654992809756584,
+        "median_sigma_hat": 0.03227120637893677,
+        "median_sigma_true": 0.09983224788913103,
+        "ratio_median": 0.3232543297510003,
+        "sigma_hat_range": [
+          0.03225226700305939,
+          0.032306402921676636
+        ],
+        "sigma_true_range": [
+          0.020043158944343827,
+          0.49985540296418984
+        ],
+        "sigma_hat_spread_factor": 1.001678515144753,
+        "rmse_mean": 0.18643677169293696
+      },
+      {
+        "r_log_sigma": -0.6744046638006028,
+        "median_sigma_hat": 0.03265542350709438,
+        "median_sigma_true": 0.10273918455704459,
+        "ratio_median": 0.3178477972925986,
+        "sigma_hat_range": [
+          0.03264201804995537,
+          0.03269428014755249
+        ],
+        "sigma_true_range": [
+          0.020004063941097813,
+          0.49949751248922897
+        ],
+        "sigma_hat_spread_factor": 1.0016010682157317,
+        "rmse_mean": 0.20629553751988117
+      },
+      {
+        "r_log_sigma": 0.64916634620888,
+        "median_sigma_hat": 0.03316715732216835,
+        "median_sigma_true": 0.0973137139798709,
+        "ratio_median": 0.34082716572742144,
+        "sigma_hat_range": [
+          0.03315265476703644,
+          0.03319330886006355
+        ],
+        "sigma_true_range": [
+          0.02000278008238386,
+          0.49999391654535197
+        ],
+        "sigma_hat_spread_factor": 1.0012262696098635,
+        "rmse_mean": 0.18808105208594622
+      },
+      {
+        "r_log_sigma": -0.1261922029883723,
+        "median_sigma_hat": 0.03230503015220165,
+        "median_sigma_true": 0.0988650182930744,
+        "ratio_median": 0.32675895589719073,
+        "sigma_hat_range": [
+          0.032278355211019516,
+          0.03233068808913231
+        ],
+        "sigma_true_range": [
+          0.02002925178220973,
+          0.49865750934003333
+        ],
+        "sigma_hat_spread_factor": 1.001621299405458,
+        "rmse_mean": 0.21603109124745265
+      },
+      {
+        "r_log_sigma": -0.7843123541447387,
+        "median_sigma_hat": 0.03263652138411999,
+        "median_sigma_true": 0.10507230456692304,
+        "ratio_median": 0.31061012241654046,
+        "sigma_hat_range": [
+          0.032615941017866135,
+          0.032687049359083176
+        ],
+        "sigma_true_range": [
+          0.020009074243609478,
+          0.4988997095712609
+        ],
+        "sigma_hat_spread_factor": 1.0021801713823952,
+        "rmse_mean": 0.12569988725544648
+      }
+    ]
+  },
+  "ladder": [
+    {
+      "dilution": 0.0,
+      "r": [
+        0.45182947783775407,
+        -0.0319488872592156,
+        -0.09066004669165272
+      ],
+      "r_mean": 0.10974018129562857,
+      "detection_rate": 0.0
+    },
+    {
+      "dilution": 0.25,
+      "r": [
+        0.599539916700368,
+        -0.022017260253917467,
+        0.2397704933653654
+      ],
+      "r_mean": 0.27243104993727196,
+      "detection_rate": 0.0
+    },
+    {
+      "dilution": 0.5,
+      "r": [
+        0.6483738740793598,
+        0.061089378734280296,
+        0.3539246186896885
+      ],
+      "r_mean": 0.3544626238344429,
+      "detection_rate": 0.0
+    },
+    {
+      "dilution": 0.75,
+      "r": [
+        0.729402858577118,
+        0.1388077200300431,
+        0.46021066512791714
+      ],
+      "r_mean": 0.44280708124502605,
+      "detection_rate": 0.3333333333333333
+    },
+    {
+      "dilution": 1.0,
+      "r": [
+        0.7803478525938518,
+        0.2898740815255866,
+        0.5010876542547212
+      ],
+      "r_mean": 0.5237698627913865,
+      "detection_rate": 0.3333333333333333
+    }
+  ],
+  "mde": {
+    "r_threshold": 0.7238631244554639,
+    "smallest_dilution_detected_80pct": null,
+    "collapse_ratio_threshold": 0.1,
+    "collapse_threshold_justification": "the null -- a model with nothing to learn about WHERE the noise is -- still recovers the marginal scale, with median sigma_hat / sigma_true no lower than 0.311 across 12 repeats. A collapse criterion of 0.1 sits far below anything this design produces without one, so meeting it cannot be an artifact of the sample size or of the head's floor.",
+    "recovery_factor_threshold": 3.0,
+    "recovery_threshold_justification": "under gaussian_nll on undiluted data the head recovers the median true sigma to within a factor the ladder measures; 3.0 is set wider than the observed spread so the rule is not tuned to one run."
+  }
+}

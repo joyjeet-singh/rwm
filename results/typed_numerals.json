@@ -1,15 +1,15 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 490,
+  "n_typed": 513,
   "by_class": {
-    "arxiv-id": 14,
-    "exception": 153,
+    "arxiv-id": 16,
+    "exception": 155,
     "markdown-heading": 25,
-    "section-ref": 135,
-    "figure-ref": 19,
-    "citation-year": 11,
+    "section-ref": 147,
+    "figure-ref": 20,
+    "citation-year": 15,
     "code-location": 35,
-    "ledger-id": 24,
+    "ledger-id": 26,
     "math-mode": 10,
     "table-row-label": 32,
     "equation-ref": 8,
@@ -22,7 +22,7 @@
   "n_unclassified": 0,
   "unclassified": [],
   "n_classes": 18,
-  "n_exceptions": 22,
+  "n_exceptions": 23,
   "classes": [
     {
       "name": "section-ref",
@@ -98,6 +98,10 @@
     }
   ],
   "exceptions": [
+    {
+      "pattern": "\\bTask 3\\b|\\bTask 4b\\b|\\bTask 1\\b|\\bTask 2\\b|\\bStep 5\\b|\\bStep 3\\b|\\bStep 1\\b|\\bPhase 1\\b|\\bPhase 2\\b|\\bPart A\\b|\\bPart B\\b",
+      "why": "the name of a stage of this project's own work, which the ledger and the commit log use as an identifier"
+    },
     {
       "pattern": "\\bform 1\\b|\\bForm 1\\b|\\bform 2\\b|\\bForm 2\\b",
       "why": "the two nRMSE aggregation forms, named 1 and 2 by this paper (\u00a73.1)"

@@ -619,6 +619,30 @@
     "source": "PAPER.template.md, Appendix F verdict tags",
     "value": "zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, generality across robot morphologies, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy"
   },
+  "appG_n_lead": {
+    "source": "results/appendix_g_rules.json",
+    "value": 7
+  },
+  "appG_n_negative": {
+    "source": "results/appendix_g_rules.json",
+    "value": 1
+  },
+  "appG_n_positive": {
+    "source": "results/appendix_g_rules.json",
+    "value": 6
+  },
+  "appG_n_rules": {
+    "source": "results/appendix_g_rules.json",
+    "value": 8
+  },
+  "appG_rule_texts": {
+    "source": "results/appendix_g_rules.json",
+    "value": "\n**`M-16` \u2014 The Arm A / Arm B comparison.** **Entered before any main-run result exists.** Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. **The claim reproduces, or fails to, and can be reported** only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the **sam\n\n**`M-22` \u2014 Whether episode difficulty biases the A/B comparison.** **Entered before Task 4b runs.** Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097).\n\n**`M-23` \u2014 The 10,000-iteration comparison.** **Entered before any 10,000-iteration result exists.** Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not \n\n**`M-43` \u2014 The ensemble-5 replication.** *The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed.* **Entered before any ensemble-5 result exists.** No `runs/armA_s\n\n**`M-44` \u2014 The trunk-sharing mechanism.** **Entered before any independent-init ensemble exists.** No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git \n\n**`M-45` \u2014 The within-trajectory control on \u00a75.6.** **Entered before the statistic was computed.** No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.\n\n**`M-49` \u2014 Pre-registered: does trunk-sharing survive capacity matching?.** - **MECHANISM SURVIVES CAPACITY MATCHING** \u2014 the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - **CAPACITY EXPLAINS IT** \u2014 the matched \n\n**`S-12` \u2014 \"Task 3's duplication rule was pre-registered\".** **Retracts** \u2014 a framing, not a numbered claim; the wording was corrected in place **What is retracted:** the description of the Task 3 decision rule as *pre-registered*, in the sense this project has used that word everywhere else \u2014 a rule committed to git before the data testing it exists (M-16, M"
+  },
+  "appG_table": {
+    "source": "results/appendix_g_rules.json",
+    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED \u2014 rule pre-registered |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control on \u00a75.6 | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | \u2014 | not computed | \u2014 | not yet discharged |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | \u2014 | -2.9 h | control runs finished | RETRACTED |"
+  },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
     "value": "7,687"
@@ -1497,7 +1521,7 @@
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 49
+    "value": 50
   },
   "cc_selfdefect_list": {
     "source": "results/comparative_claims.json",
@@ -2923,6 +2947,30 @@
     "source": "results/step5_arm*.json",
     "value": 3
   },
+  "e4_n_inert": {
+    "source": "results/e4_sigma_gradients.json",
+    "value": 5
+  },
+  "e4_n_live": {
+    "source": "results/e4_sigma_gradients.json",
+    "value": 4
+  },
+  "e4_n_terms": {
+    "source": "results/e4_sigma_gradients.json",
+    "value": 7
+  },
+  "e4_n_touch": {
+    "source": "results/e4_sigma_gradients.json",
+    "value": 2
+  },
+  "e4_table": {
+    "source": "results/e4_sigma_gradients.json",
+    "value": "| `state` | live | 1.00 | `system_dynamics.py:270-289` | 0.000325 | 0.0509 | 0.0703 |\n| `sequence` | **dead** | 1.00 | `system_dynamics.py:274-277` | 0 | 0 | 0 |\n| `bound` | live | 1.00 | `system_dynamics.py:301-302` | 0 | 0.2 | 0 |\n| `kl` | **dead** | 0.10 | `system_dynamics.py:223` | 0 | 0 | 0 |\n| `extension` | **dead** | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |\n| `contact` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |\n| `termination` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |"
+  },
+  "e4_touching": {
+    "source": "results/e4_sigma_gradients.json",
+    "value": "`state` and `bound`"
+  },
   "e5_acc_h368": {
     "source": "results/task_d3_ens5.json",
     "value": "1.044"
@@ -3405,7 +3453,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 201
+    "value": 207
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -6329,23 +6377,23 @@
   },
   "t1_n_frag": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 9
+    "value": 17
   },
   "t1_n_frag_ok": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 9
+    "value": 17
   },
   "t1_n_refs": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 10
+    "value": 16
   },
   "t1_n_verified": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 10
+    "value": 16
   },
   "t1_refs_after": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 12
+    "value": 18
   },
   "t1_refs_before": {
     "source": "results/t1_bibliography_verified.json",

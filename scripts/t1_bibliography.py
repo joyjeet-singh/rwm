@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.p
 import rwm_data as R  # noqa: E402
 
 CHECKED_ON = "2026-08-23"
+CHECKED_ON_REV3 = "2026-08-29"   # the six entries added in the revision-3 pass
 ATOM = {"a": "http://www.w3.org/2005/Atom"}
 
 # Every field below was read from the arXiv API entry for the id, on CHECKED_ON.
@@ -237,6 +238,148 @@ ENTRIES = [
                          "rollout-length-versus-model-error trade the follow-up's "
                          "100-step imagination horizon sits inside (X-13).",
         "fragments": [],
+    },
+    # ------------------------------------------------------------------
+    # Added in the revision-3 pass. The first is the closest published work to
+    # this paper's only CONSTRUCTIVE contribution and was missing; the next four
+    # are the literature §6.4's mechanism belongs to, without which that section
+    # reads as a new finding when the effect is known; the last is the natural
+    # neighbour of §6.3.
+    #
+    # Every field below was read from the arXiv API entry for the id on
+    # CHECKED_ON_REV3, and every fragment is verbatim from the abstract the API
+    # returned. Where a venue is asserted it comes from the entry's own
+    # journal_ref or comment field, not from recollection.
+    # ------------------------------------------------------------------
+    {
+        "key": "malik2019",
+        "arxiv": "1906.08312",
+        "title": "Calibrated Model-Based Deep Reinforcement Learning",
+        "authors": ["Ali Malik", "Volodymyr Kuleshov", "Jiaming Song", "Danny Nemer",
+                    "Harlan Seymour", "Stefano Ermon"],
+        "venue": "ICML 2019 (PMLR 97:4314-4323)",
+        "year": 2019,
+        "establishes": "that model-based RL needs uncertainties that are CALIBRATED "
+                       "rather than merely ranked, and recalibrates a dynamics "
+                       "model's uncertainty to obtain them",
+        "why_we_engage":
+            "This is the closest published work to 6.8, which is this paper's only "
+            "constructive contribution, and citing Kuleshov 2018 without it left "
+            "that section looking less positioned than it is. 6.8 says what is new "
+            "relative to it: the conditioning variable is the FORECAST HORIZON, and "
+            "a single global multiplier fails where a per-horizon one works. The "
+            "distinction matters because open-loop rollout error accumulates with "
+            "depth and a horizon-blind recalibration cannot follow it.",
+        "fragments": [
+            "good uncertainties must be calibrated",
+        ],
+    },
+    {
+        "key": "lee2015",
+        "arxiv": "1511.06314",
+        "title": "Why M Heads are Better than One: Training a Diverse Ensemble of "
+                 "Deep Networks",
+        "authors": ["Stefan Lee", "Senthil Purushwalkam", "Michael Cogswell",
+                    "David Crandall", "Dhruv Batra"],
+        "venue": "arXiv:1511.06314",
+        "year": 2015,
+        "establishes": "that multi-head architectures sharing a trunk are a distinct "
+                       "and weaker form of ensembling than independently trained "
+                       "networks, and that diversity has to be engineered rather "
+                       "than assumed",
+        "why_we_engage":
+            "6.4 observes that five heads on one trunk cannot disagree about what "
+            "the trunk does not already carry. That is not new, and saying so is "
+            "the difference between a finding and a rediscovery. What IS new is "
+            "finding it in a released robotics checkpoint whose authors deployed it "
+            "on hardware, with the sharing quantified and the cost measured.",
+        "fragments": [
+            "ensembling as a first-class problem",
+            "diverse",
+        ],
+    },
+    {
+        "key": "fort2019",
+        "arxiv": "1912.02757",
+        "title": "Deep Ensembles: A Loss Landscape Perspective",
+        "authors": ["Stanislav Fort", "Huiyi Hu", "Balaji Lakshminarayanan"],
+        "venue": "arXiv:1912.02757",
+        "year": 2019,
+        "establishes": "that the diversity of a deep ensemble comes from independent "
+                       "random initialisation exploring different modes, and that "
+                       "subspace methods do not match it",
+        "why_we_engage":
+            "It supplies the mechanism behind 6.4 and behind M-44's contrast: what "
+            "independent initialisation buys is decorrelation that a shared trunk "
+            "cannot produce. It is also the reason M-49 exists -- if independence "
+            "is what matters, the contrast must hold capacity fixed to show it.",
+        "fragments": [
+            "random initialization",
+            "diversity",
+        ],
+    },
+    {
+        "key": "havasi2021",
+        "arxiv": "2010.06610",
+        "title": "Training independent subnetworks for robust prediction",
+        "authors": ["Marton Havasi", "Rodolphe Jenatton", "Stanislav Fort",
+                    "Jeremiah Zhe Liu", "Jasper Snoek", "Balaji Lakshminarayanan",
+                    "Andrew M. Dai", "Dustin Tran"],
+        "venue": "ICLR 2021",
+        "year": 2021,
+        "establishes": "that ensemble-like uncertainty can be obtained inside one "
+                       "network's forward pass (MIMO), and what that costs",
+        "why_we_engage":
+            "One of the two standard answers to the trunk-sharing problem 6.4 "
+            "describes. A reader of 6.4 asks what to do instead; this and "
+            "BatchEnsemble are the cheap answers, and 6.10's independent ensemble "
+            "is the expensive one.",
+        "fragments": [
+            "single model",
+        ],
+    },
+    {
+        "key": "wen2020",
+        "arxiv": "2002.06715",
+        "title": "BatchEnsemble: An Alternative Approach to Efficient Ensemble and "
+                 "Lifelong Learning",
+        "authors": ["Yeming Wen", "Dustin Tran", "Jimmy Ba"],
+        "venue": "ICLR 2020",
+        "year": 2020,
+        "establishes": "an ensemble whose members share a weight matrix and differ "
+                       "by a rank-one factor each, trading diversity for cost "
+                       "explicitly rather than incidentally",
+        "why_we_engage":
+            "The contrast that makes 6.4's point precise. BatchEnsemble shares "
+            "deliberately and says what it gives up; the released checkpoint shares "
+            "{{v1_shared_pct}}% of each member and reports the resulting spread as "
+            "an uncertainty. The problem is not sharing, it is sharing and then "
+            "reading the spread as if the members were independent.",
+        "fragments": [
+            "a shared weight among all ensemble members and a rank-one matrix per member",
+        ],
+    },
+    {
+        "key": "seitzer2022",
+        "arxiv": "2203.09168",
+        "title": "On the Pitfalls of Heteroscedastic Uncertainty Estimation with "
+                 "Probabilistic Neural Networks",
+        "authors": ["Maximilian Seitzer", "Arash Tavakoli", "Dimitrije Antic",
+                    "Georg Martius"],
+        "venue": "ICLR 2022",
+        "year": 2022,
+        "establishes": "that training a heteroscedastic Gaussian head by maximising "
+                       "log-likelihood with gradient-based optimisers has failure "
+                       "modes, demonstrated on a synthetic example",
+        "why_we_engage":
+            "The natural neighbour of 6.3. Seitzer et al. show a log-likelihood "
+            "objective misbehaving on a sigma head; 6.3 shows a released model whose "
+            "objective is not a log-likelihood at all -- a sample enters a squared "
+            "error, whose optimum is sigma = 0 -- so the failure is more basic than "
+            "the one they characterise, and E5 demonstrates it against known noise.",
+        "fragments": [
+            "log-likelihood",
+        ],
     },
 ]
 

@@ -222,19 +222,33 @@ CLAIMS = [
      "a": ("task_d_nind20.json", "d2_forecast_index.1.r_epistemic"),
      "b": ("task_d_nind20.json", "d2_forecast_index.368.r_epistemic"),
      "expect": "gt"},
-    {"id": "C7.1", "kind": "count-consistency", "where": "1 / abstract / 9",
+    # D2 moved these. The abstract's retraction sentence is gone -- abstract space
+    # is for results -- and §1's paragraph is one sentence with a pointer, so the
+    # sites are now §9 and appendix D, which is where D2 says they belong. The
+    # kind is unchanged and so is what it asserts; only the list of places the
+    # count must agree in has moved, and it has to move with the prose or it
+    # guards nothing.
+    {"id": "C7.1", "kind": "count-consistency", "where": "9 / Appendix D",
      "label": "numbered retractions",
-     "says": "numbered claims in this work are withdrawn",
+     "says": "retractions on our own evidence",
      "value": ("paper_numbers.json", "n_retractions.value"),
-     "sites": ["numbered claims in this work are withdrawn",
-               "retractions of our own numbered claims",
-               "retractions on our own evidence"]},
-    {"id": "C7.2", "kind": "count-consistency", "where": "1 / abstract / 9",
+     "sites": ["retractions on our own evidence",
+               "numbered retractions, in order"]},
+    {"id": "C7.2", "kind": "count-consistency", "where": "9 / Appendix D",
      "label": "framing retractions",
-     "says": "further retractions withdraw framings rather than numbers",
+     "says": "that withdraw framings rather than numbers",
      "value": ("paper_numbers.json", "n_retract_framing.value"),
-     "sites": ["further retractions withdraw framings rather than numbers",
-               "that withdraw framings rather than numbers"]},
+     "sites": ["that withdraw framings rather than numbers",
+               "framing retractions**, withdrawn as stated claims"]},
+    # ...and the TOTAL, which is what §1 now states and the contributions list
+    # repeats. A count that moved out of two places into two others is exactly
+    # where a count-consistency defect gets in.
+    {"id": "C7.5", "kind": "count-consistency", "where": "1",
+     "label": "total retractions",
+     "says": "claims of ours are withdrawn on this project's own evidence",
+     "value": ("paper_numbers.json", "n_retract_total.value"),
+     "sites": ["claims of ours are withdrawn on this project's own evidence",
+               "retractions of our own claims"]},
     {"id": "C6.1", "kind": "relvar", "where": "5",
      "says": "Teacher forcing is more than twice as variable across seeds",
      "a": ("task_d1_threeseed.json", "aggregate.A.sd_ddof1", "aggregate.A.mean"),

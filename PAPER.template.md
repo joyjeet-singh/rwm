@@ -66,7 +66,7 @@ gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
 git, with timestamps a reader can check (§9, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail.** {{n_retractions_word}} numbered claims in this work are withdrawn on evidence this project produced, and {{n_retract_framing_word}} further retractions withdraw framings rather than numbers — one of them the claim that a pre-registration was pre-registered at all. All of them are kept in the record rather than deleted (§9).
+**We retract our own findings when they fail.** {{n_retract_total}} claims of ours are withdrawn on this project's own evidence and kept in the record; §9 and Appendix D give them in full.
 
 **Contributions.**
 
@@ -88,9 +88,15 @@ and we report that too.
 - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of {{r2_n_indep}} independently-initialised full models, sharing nothing, is {{m44_ratio_gain}}× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of {{m44_mde_ratio}}×. The decomposition says what that is made of: σ larger by {{r2_sigma_x_h100}}×, {{r2_from_sigma_h100}}% of the improvement at h = {{v2_deploy_h}}, reversing to {{r2_from_acc_h368}}% from accuracy at h = {{v2_diag_h}} (§6.10).
 - **A working repair**: one multiplier per horizon, fitted on one held-out episode and
   scored on the other, restores nominal coverage where a global multiplier does not (§6.8).
-- **{{n_retractions_word}} retractions of our own numbered claims**, plus
-  {{n_retract_framing_word}} of framings, kept in the record with the evidence that withdrew them
-  (§9).
+- **The released evaluation is misaligned by one step, and the checkpoint is materially better
+  than its own evaluation reports.** Training pairs states and actions index-for-index; evaluation
+  feeds the action from *t−1*. Scored causally, nRMSE at h = {{v2_diag_h}} falls from
+  {{stale_nrmse}} to {{causal_nrmse}} — the released harness overstates its own model's error by
+  {{stale_pct}}% (§7.2). This is the finding most immediately useful to anyone using that
+  repository, and it costs one line to fix.
+- **{{n_retract_total}} retractions of our own claims**, kept in the record with the evidence
+  that withdrew them, and Appendix G's table of every pre-registered rule with its lead time and
+  its verdict (§9).
 
 ---
 
@@ -185,6 +191,34 @@ axis is the *magnitude* and the *mechanism*, not the direction. Finally, §6.8's
 multiplier is a coarse instance of calibrated regression (Kuleshov, Fenner and Ermon, ICML 2018):
 a post-hoc map fitted on held-out data. We present it as an application of that idea to a horizon
 index, not as a new one.
+
+**The closest published work to our one constructive result.** Malik, Kuleshov, Song, Nemer,
+Seymour and Ermon (ICML 2019) recalibrate a dynamics model's uncertainty inside model-based RL,
+and argue that "good uncertainties must be calibrated" rather than merely well ranked — which is
+the distinction §6.7 and §6.2 draw between what the released checkpoint's disagreement does and
+does not do. §6.8 is a horizon-indexed instance of that idea, and §6.8 says what is new relative
+to it rather than leaving a reader to work it out: the conditioning variable is the forecast
+horizon, and a single global multiplier **fails** where a per-horizon one works. That distinction
+is not decoration — an open-loop rollout's error accumulates with depth, so a horizon-blind
+recalibration cannot follow it, and ours is the measurement showing it does not.
+
+**§6.4's mechanism is known, and we say so.** That heads sharing a trunk under-report disagreement
+relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell,
+Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be engineered
+rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what independent
+initialisation buys is decorrelation that subspace methods do not match; and BatchEnsemble (Wen,
+Tran and Ba, ICLR 2020) and MIMO (Havasi, Jenatton, Fort, Liu, Snoek, Lakshminarayanan, Dai and
+Tran, ICLR 2021) share deliberately and state what they trade away. §6.4 is not the discovery of
+that effect. **What is ours is finding it in a released robotics checkpoint that its authors
+deployed on hardware, with the sharing quantified at {{v1_shared_pct}}% of each member and the
+cost measured at {{m44_ratio_gain}}× (§6.10).** The problem is not sharing; it is sharing and then
+reading the spread as though the members were independent.
+
+**And the objective in §6.3 has a neighbour.** Seitzer, Tavakoli, Antic and Martius (ICLR 2022)
+identify failure modes of heteroscedastic σ heads trained by maximising log-likelihood. The
+released model's state loss is not a log-likelihood at all — a *sample* enters a squared error —
+so the failure §6.3 derives is more basic than the ones they characterise, and it does not depend
+on the optimiser. §6.3 gives the derivation and Appendix H demonstrates it against known noise.
 
 *Every entry above was checked against the paper itself — title, full author list, venue and year
 from the arXiv record, and for any sentence we attribute, the sentence matched verbatim against
@@ -608,6 +642,23 @@ $$\overline{\log\sigma_{\max}} - \overline{\log\sigma_{\min}} \;=\; \overline{\e
 
 and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval
 closes onto therefore freezes while the interval closes: a one-way ratchet.
+
+**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Its completeness
+rests on the other {{e4_n_inert}} being inert with respect to σ, and a reader should not have to
+take that on trust. Each term is therefore computed alone on one real batch and back-propagated
+alone, and the gradient reaching the log-σ tower, `state_log_delta_logstd` and `state_min_logstd`
+is recorded. A term that cannot move σ produces exactly zero on all three.
+
+| loss term | live? | weight | where the reference computes it | ∂/∂ log-σ tower | ∂/∂ `log_delta_logstd` | ∂/∂ `min_logstd` |
+|---|---|---|---|---|---|---|
+{{e4_table}}
+
+{{e4_n_live}} of the {{e4_n_terms}} configured terms are live at all under the released
+configuration — `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
+`"single"` on both paths, and `kl` and `extension` are zero because their dimensions are. Of the
+{{e4_n_terms}}, exactly {{e4_n_touch}} reach σ: {{e4_touching}}. The remaining {{e4_n_inert}}
+produce a gradient of exactly zero, which is a stronger statement than reading the code and
+concluding they do not matter (`results/e4_sigma_gradients.json`).
 
 We predicted the collapse from this algebra before training, then observed it. Across all
 {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical
@@ -1433,6 +1484,37 @@ reproducibility failure would make the reported figure oscillate rather than set
 dropped by provenance like the others and counted in the output rather than hidden — the same
 discipline §9's own {{ver_files}}-file figure rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
+
+## Appendix G — every pre-registered rule, its lead time and its verdict
+
+§9's argument rests on decision rules committed to git before the data that tested them, and the
+body names those rules by identifier. An identifier with no table behind it is either decoration
+or an instruction to open a {{ledger_kb}} KB ledger, so here is the table. It is generated from
+`FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
+
+**Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
+it tested, resolved by commit *subject* rather than by hash — the history was rewritten once and
+hashes did not survive it, while subjects did. Positive means the rule was in git before the data
+existed. This is the same computation Figure 4 plots.
+
+| rule | what it governs | commit | lead time | tested by | verdict |
+|---|---|---|---|---|---|
+{{appG_table}}
+
+{{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which
+{{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is
+kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
+pre-registered; the control runs had finished before any threshold reached git. A table that
+dropped it would be asserting exactly what the ledger retracts.
+
+`M-49` has no lead time because the data it tests does not exist yet: it is committed, with its
+minimum detectable effect, before the runs it governs. That is what a pre-registration in progress
+looks like, and it is included so the table is a census rather than a highlights reel.
+
+**What each rule says, in its own committed words:**
+{{appG_rule_texts}}
+
+---
 
 ## Appendix E — what testing the untested claims would require
 
