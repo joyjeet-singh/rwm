@@ -188,6 +188,16 @@ def main():
     if "--self-test" in sys.argv:
         return self_test()
     path = next((a for a in sys.argv[1:] if not a.startswith("-")), DEFAULT)
+    # The self-test is a PRECONDITION of the scan, not a flag. reproduce.sh
+    # invoked this script without it, so the scan ran on every build and the
+    # proof that it can catch a planted identity ran on none -- the same shape
+    # as the typed-numeral audit, whose flag-only self-test had silently broken.
+    if os.path.exists(path):
+        print("  self-test first, because a scan that cannot fail proves nothing:")
+        if self_test() != 0:
+            print("  SCAN NOT RUN — the self-test did not catch its own probe.")
+            return 1
+        print()
     if not os.path.exists(path):
         print(f"  {path} does not exist — run scripts/compile_paper.py first")
         return 1

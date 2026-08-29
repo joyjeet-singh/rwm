@@ -455,6 +455,31 @@ def acceptance():
 def main():
     if "--acceptance" in sys.argv:
         return acceptance()
+    # The acceptance run is a PRECONDITION of reporting, not a flag.
+    #
+    # reproduce.sh invoked this script without --acceptance, so on every build the
+    # index ran and the proof that it can fire on a real defect ran never. The
+    # typed-numeral audit had the same shape and its self-test had been broken for
+    # several commits before anything noticed. A check whose validation only runs
+    # when asked is a check whose validation stops running.
+    #
+    # Skipped only where git history is unavailable, and then loudly: the
+    # acceptance replays two historical commits, and a shallow clone has neither.
+    if "--no-acceptance" not in sys.argv:
+        import subprocess as _sp
+        _has_git = _sp.run(["git", "rev-parse", "--verify", "-q",
+                            ACCEPTANCE[0]["commit"] + "^{commit}"],
+                           capture_output=True).returncode == 0
+        if not _has_git:
+            print("  WARNING: acceptance skipped — commit "
+                  f"{ACCEPTANCE[0]['commit']} is not in this clone's history, so "
+                  "the check cannot be shown to fire on the defects it was written "
+                  "for. The index below is reported without that proof.")
+        elif acceptance() != 0:
+            print("\n  ACCEPTANCE FAILED — the index is not reported. A restatement "
+                  "check that no longer fires on B1, B2 or B9 is not a check.")
+            return 1
+        print()
     path = TEMPLATE
     if "--against" in sys.argv:
         path = sys.argv[sys.argv.index("--against") + 1]

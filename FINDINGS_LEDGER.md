@@ -5527,6 +5527,46 @@ an error from it.
 **Evidence** `RUN` `results/e7_free_baselines.json`
 **Status** ACTIVE · **Relevance** METHOD
 
+### M-55 — Three self-tests were written, wired to a flag, and never run by any build · **NEW**
+**What happened.** The revision added three checks, each with a self-test that plants a defect and
+requires it to be caught: `typed_numeral_audit.py --self-test`, `restatement_index.py
+--acceptance`, and `f5_pdf_channels.py --self-test`. All three were added to `reproduce.sh`
+**without those flags**. So on every build the check ran and the proof that it *can* fail ran
+never.
+
+**And one of them had silently broken.** `typed_numeral_audit`'s self-test plants a measurement
+before a heading it located by the literal string `"## 12. Limitations"`. When §8 was collapsed
+into §7.5 and sections 9–13 became 8–12, that heading became `"## 11. Limitations"` and the plant
+raised `AssertionError: no anchor for the self-test plant`. It had been broken for several commits.
+Nothing noticed, because nothing ran it.
+
+**Why this is the worst class of defect in this project's own terms.** §8 asserts that every
+assertion here is run against a corrupted expectation on every build. That assertion was false for
+three of the newest checks, and it was false in the direction that flatters: the checks reported
+coverage while the proof of coverage was absent. `results/comparative_claims.json` reports "N of N
+corruptions caught" for the claim checker and says nothing at all about these three, so the gap
+was not even visible in the artifact.
+
+**The fix is not another stage.** A stage can be added without its flag exactly as these were.
+Each self-test is now a **precondition of the check reporting anything**: the audit refuses to
+report if its plant is not caught, the restatement index refuses to report if it no longer fires
+on `B1`, `B2` and `B9`, and the PDF scan refuses to scan if its planted identity is not detected.
+Verified by sabotage: breaking the detection makes the audit exit 1 with
+`SELF-TEST FAILED ... The audit is not run`.
+
+The heading anchor is now a regex on the heading *text* rather than its number, so the next
+renumbering cannot break it.
+
+**How it was found.** Not by a check — by an independent adversarial audit of this revision
+against its own completion criteria, which asked whether each new assertion is actually run
+against a corrupted expectation on every build. That is the same lesson as `F4`: the apparatus
+here is good at verifying that the paper agrees with its artifacts and cannot verify that it is
+checking what it claims to check.
+
+**Evidence** `SRC` `scripts/typed_numeral_audit.py`, `scripts/restatement_index.py`,
+`scripts/f5_pdf_channels.py`, `reproduce.sh`
+**Status** ACTIVE · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

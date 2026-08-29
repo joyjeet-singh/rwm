@@ -261,7 +261,38 @@ def classify(sp, classes=CLASSES, exceptions=EXCEPTIONS):
     return None
 
 
+def _self_test_passes():
+    """Plant a measurement in the body and require the audit to catch it.
+
+    Run on EVERY invocation, not only under a flag. The flag version was never
+    invoked by any build -- reproduce.sh called this script without it -- so the
+    audit ran on every build while the proof that it CAN fail ran on none, and
+    when the plant's anchor broke, nothing said so. A self-test that only runs
+    when asked is a self-test that stops running.
+    """
+    text = open(TEMPLATE).read()
+    m = re.search(r"^## \d+\. Limitations", text, re.M)
+    if not m:
+        return False, "no '## N. Limitations' heading to plant before"
+    planted = (text[:m.start()]
+               + "The released checkpoint is 12.7 times overconfident on the "
+                 "quantity the method uses.\n\n"
+               + text[m.start():])
+    prepared = prepare(planted)
+    caught = [sp for sp in _spans(planted, prepared)
+              if sp["num"] == "12.7" and classify(sp) is None]
+    return bool(caught), ("planted measurement 12.7 caught" if caught
+                          else "planted measurement 12.7 was classified as benign")
+
+
 def main():
+    ok, why = _self_test_passes()
+    if not ok:
+        print("B8 — TYPED NUMERAL AUDIT")
+        print("=" * 92)
+        print(f"  SELF-TEST FAILED: {why}")
+        print("  The audit is not run: a scan that cannot fail proves nothing.")
+        return 1
     text = open(TEMPLATE).read()
     if "--self-test" in sys.argv:
         # A sentence with a number that is plainly a measurement and matches no
@@ -272,12 +303,18 @@ def main():
         # self-test planted a probe the scan never saw and then reported the audit
         # as unable to fail. That is the vacuous-assertion shape this project has
         # now recorded four times, and it took one run to reproduce it.
-        marker = "\n## 12. Limitations"
-        assert marker in text, "no anchor for the self-test plant"
-        text = text.replace(
-            marker,
-            "\n\nThe released checkpoint is 12.7 times overconfident on the "
-            "quantity the method uses.\n" + marker, 1)
+        # Anchored by REGEX on the heading text, not by its number. The literal
+        # "## 12. Limitations" broke silently when §8 was collapsed and 9-13
+        # became 8-12, and nothing noticed because nothing ran the self-test.
+        # A self-test that cannot run is worse than none: it reports coverage
+        # that does not exist.
+        m = re.search(r"^## \d+\. Limitations", text, re.M)
+        assert m, ("no anchor for the self-test plant: no '## N. Limitations' "
+                   "heading in the template")
+        text = (text[:m.start()]
+                + "The released checkpoint is 12.7 times overconfident on the "
+                  "quantity the method uses.\n\n"
+                + text[m.start():])
     spans = _spans(text)
     rows, unclassified = [], []
     for sp in spans:
@@ -294,6 +331,7 @@ def main():
 
     print("B8 — TYPED NUMERAL AUDIT")
     print("=" * 92)
+    print(f"  self-test          : passed — {why}")
     print(f"  numerals typed in {TEMPLATE}: {len(rows)}")
     for k in sorted(counts, key=lambda x: -counts[x]):
         print(f"    {k:<22} {counts[k]:>4}")

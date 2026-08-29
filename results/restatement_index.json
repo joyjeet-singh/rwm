@@ -3,8 +3,8 @@
   "n_substituted": 1038,
   "n_typed": 190,
   "n_restatements": 75,
-  "n_blocking": 36,
-  "n_advisory": 39,
+  "n_blocking": 37,
+  "n_advisory": 38,
   "restatements": [
     {
       "value": "+0.419",
@@ -2219,14 +2219,13 @@
     },
     {
       "value": "20",
-      "n_locations": 34,
+      "n_locations": 33,
       "blocking": true,
       "n_typed": 4,
-      "n_substituted": 30,
+      "n_substituted": 29,
       "sources": [
         "results/a2_trajectory_level_control.json",
         "results/e7_free_baselines.json",
-        "results/step5_*.json",
         "results/step5_arm*.json",
         "results/task1_calibration.json",
         "results/task_b_permutation.json",
@@ -2247,7 +2246,6 @@
         "perm_all_nind",
         "relale_all_nind",
         "relale_oos_pos_h368",
-        "rt_runs_short",
         "v3_n_citations"
       ],
       "locations": [
@@ -2420,12 +2418,6 @@
           "ctx": "erfectly \u2014 {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npoints}} trajectories, and that is a ranking of "
         },
         {
-          "section": "Appendix B \u2014 reproducing",
-          "line": 1463,
-          "key": "rt_runs_short",
-          "ctx": " iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole "
-        },
-        {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
           "line": 1778,
           "key": "d4_nind",
@@ -2459,12 +2451,13 @@
     },
     {
       "value": "21",
-      "n_locations": 7,
+      "n_locations": 8,
       "blocking": false,
       "n_typed": 0,
-      "n_substituted": 7,
+      "n_substituted": 8,
       "sources": [
         "results/comparative_claims.json",
+        "results/step5_*.json",
         "results/task1_calibration.json",
         "results/task_d2_recalibration.json",
         "results/v1_ensemble_topology.json"
@@ -2473,6 +2466,7 @@
         "cal_nll_npos",
         "cc_kinds",
         "d2_epi_cov368_hi",
+        "rt_runs_short",
         "v1_n_citations"
       ],
       "locations": [
@@ -2511,6 +2505,12 @@
           "line": 1252,
           "key": "cc_kinds",
           "ctx": "fore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds, each pinning a fragment of the p"
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1463,
+          "key": "rt_runs_short",
+          "ctx": " iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole "
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
@@ -2632,27 +2632,21 @@
       ]
     },
     {
-      "value": "26",
+      "value": "27",
       "n_locations": 5,
-      "blocking": false,
-      "n_typed": 0,
-      "n_substituted": 5,
+      "blocking": true,
+      "n_typed": 1,
+      "n_substituted": 4,
       "sources": [
         "results/step5_*.json",
         "results/step5_arm*.json"
       ],
       "keys": [
-        "n_runs",
+        "None",
         "rt_runs",
         "run_total"
       ],
       "locations": [
-        {
-          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
-          "line": 740,
-          "key": "n_runs",
-          "ctx": " this algebra before training, then observed it. Across all {{n_runs}} runs the collapse is linear in iteratio"
-        },
         {
           "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
           "line": 743,
@@ -2676,6 +2670,12 @@
           "line": 1737,
           "key": "rt_runs",
           "ctx": "ator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; "
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1434,
+          "key": null,
+          "ctx": " to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a "
         }
       ]
     },

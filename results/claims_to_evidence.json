@@ -2680,13 +2680,29 @@
         "results/e7_free_baselines.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-55",
+      "claim": "Three self-tests were written, wired to a flag, and never run by any build",
+      "relevance": "METHOD",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/comparative_claims.json",
+        "scripts/f5_pdf_channels.py",
+        "scripts/restatement_index.py",
+        "scripts/typed_numeral_audit.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 19,
-    "M": 54,
+    "M": 55,
     "O": 14,
     "R": 72,
     "S": 19,
