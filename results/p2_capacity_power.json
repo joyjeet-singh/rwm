@@ -1,0 +1,52 @@
+{
+  "committed_before": "any capacity-matched training run",
+  "purpose": "M-49 \u2014 isolate trunk-sharing from capacity, which X-17 records as the third axis M-44's contrast confounds",
+  "capacity": {
+    "shared_trunk_state_pathway_params": 1024132,
+    "independent_as_run_params": 3570820,
+    "independent_as_run_ratio": 3.486679451476958,
+    "matched_hidden_size": 124,
+    "reference_hidden_size": 256,
+    "matched_total_params": 1023880,
+    "matched_per_member_params": 204776,
+    "matched_ratio": 0.9997539379689336
+  },
+  "arena": "out-of-sample held-out pair",
+  "n_independent_faced": 4,
+  "horizon": 100,
+  "method": "subsampling without replacement, 4000 draws of 4 trajectories from the 20-trajectory pool",
+  "pairs": [
+    {
+      "pair": "ens5_seed0 vs released",
+      "n_draws": 4000,
+      "log_ratio_sd_across_subsamples": 0.2376283492577299,
+      "coverage_diff_sd_pts": 1.2147571949109037,
+      "ratio_mde_multiplicative": 1.945922330923938,
+      "coverage_mde_pts": 3.4032458014503866
+    },
+    {
+      "pair": "ens5_seed1 vs released",
+      "n_draws": 4000,
+      "log_ratio_sd_across_subsamples": 0.24811132015318557,
+      "coverage_diff_sd_pts": 1.5428467834660295,
+      "ratio_mde_multiplicative": 2.003919488684627,
+      "coverage_mde_pts": 4.322416743122982
+    },
+    {
+      "pair": "ens5_seed2 vs released",
+      "n_draws": 4000,
+      "log_ratio_sd_across_subsamples": 0.23952259624536476,
+      "coverage_diff_sd_pts": 1.4391018859868543,
+      "ratio_mde_multiplicative": 1.9562765853352388,
+      "coverage_mde_pts": 4.031766571840153
+    }
+  ],
+  "mde_80pct_power": {
+    "overconfidence_ratio_multiplicative": 2.003919488684627,
+    "coverage_pts": 4.322416743122982,
+    "which": "cross-architecture, the largest across pairs (conservative)"
+  },
+  "observed_unmatched_ratio_gain": 2.03,
+  "powered_for_observed_effect": true,
+  "caution": "the twenty-trajectory pool is IN-SAMPLE for our arms, which trained on eight of the ten episodes. Power taken from it and applied to the held-out arena is an UPPER bound, so this MDE is a LOWER bound. Stated in M-49's own text."
+}

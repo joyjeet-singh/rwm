@@ -5140,6 +5140,71 @@ against Appendix F's untested count. Neither table had ever been counted against
 **Evidence** `SRC` `results/paper_numbers.json`
 **Status** ACTIVE
 
+### M-49 — Pre-registered: does trunk-sharing survive capacity matching? · **NEW**
+**Committed before any capacity-matched model exists.** The artifact this rule quotes,
+`results/p2_capacity_power.json`, was written first and is committed in the same commit as this
+text. No run at hidden size 124 had started when either was written.
+
+**The question.** §6.10 finds five independently-initialised full models 2.03× better
+calibrated than five heads on one shared trunk, and reads that as evidence that trunk-sharing
+suppresses disagreement. `X-17` records that the two arms differ in **capacity** as well as in
+independence: 3,570,820 state-pathway parameters against
+1,024,132, a factor of 3.49. The
+overconfidence factor is error over σ, and more capacity can raise σ as easily as sharing can
+suppress it. §12 concedes this and §6.10 claims only to *bound* the architectural effect.
+
+**The arm.** Five independently-initialised members at `rnn_hidden_size`
+124 against the released 256, giving
+1,023,880 state-pathway parameters across the five —
+0.9998× the shared-trunk arm. Everything else matches the runs of §6.10
+exactly: same data, same split, same optimiser, same iteration count, same evaluation protocol,
+same held-out arena. Seeds 0–4.
+
+**Statistic.** As M-44: the ratio of overconfidence factors (mean |error| / mean σ) between the
+two ensembles at h = 100, and the difference in ±1σ coverage, both scored on the same
+4 non-overlapping held-out trajectories, with a cluster bootstrap over
+whole trajectories.
+
+**Minimum detectable effect, and the reason this rule is stated the way it is.** By subsampling —
+subsampling without replacement, 4000 draws of 4 trajectories from the 20-trajectory pool — the rule resolves an overconfidence ratio of **2.004×**
+or better and a coverage shift of **4.32 percentage points** or more, at 80% power,
+two-sided α = 0.05.
+
+**That MDE is almost exactly the size of the effect being re-tested.** §6.10 observed
+2.03× with capacity unmatched, against an MDE of
+2.004×. So this rule can answer one question and not another:
+
+- it CAN detect whether the effect survives capacity matching **at close to its full size**;
+- it CANNOT resolve a partial attenuation. If capacity accounts for, say, half the effect, the
+  matched contrast will fall below the MDE and the rule will return NOT DETECTED — which is not
+  evidence that trunk-sharing does nothing.
+
+This is written here rather than discovered afterwards because `M-43` was committed without such
+an estimate and returned a verdict it was under-powered to return, and `M-24` before it. The
+caution in `results/p2_capacity_power.json` applies: the twenty-trajectory pool the MDE is
+estimated from is **in-sample** for our arms, so the power figure is an upper bound and the MDE
+above is a lower bound.
+
+**Verdict, decided in advance.**
+
+- **MECHANISM SURVIVES CAPACITY MATCHING** — the matched independent ensemble's overconfidence
+  ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap
+  interval on the log ratio excludes zero, against every shared-trunk seed.
+- **CAPACITY EXPLAINS IT** — the matched ensemble is *not* better, and the interval includes zero
+  or favours the shared-trunk arm. §6.10's finding would then be a capacity result wearing a
+  trunk-sharing label, and §6.4, §6.10 and the abstract would all be rewritten.
+- **UNDER-POWERED** — the point estimate favours the matched independent ensemble but by less
+  than the MDE. Reported as returned, with the point estimate and its interval, and §12 says the
+  question is open and what would close it.
+
+**What this rule does NOT claim.** It holds capacity fixed. It does not hold *data ordering*
+fixed, and it does not separate independence of initialisation from independence of the recurrent
+state — both members of the matched arm carry their own hidden state, as in §6.10. §12 will name
+whatever axes remain confounded after this, as it named these.
+
+**Evidence** `RUN` `results/p2_capacity_power.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

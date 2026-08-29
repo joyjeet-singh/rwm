@@ -128,11 +128,22 @@ def main():
                     choices=["mse", "gaussian_nll"])
     ap.add_argument("--batch", type=int, default=256)
     ap.add_argument("--ensemble", type=int, default=1)
+    # M-49. The capacity-matched arm needs five members at reduced width, and
+    # nothing else about the run changes. Default None means "the released
+    # architecture", so every existing run is bit-identical to before.
+    ap.add_argument("--hidden", type=int, default=None,
+                    help="override rnn_hidden_size; M-49's capacity-matched arm "
+                         "trains five members at 124 against the released 256")
     args = ap.parse_args()
     teacher_forcing = args.arm == "B"
 
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
+    if args.hidden is not None:
+        assert args.tag, ("--hidden must carry a --tag: a run at a different width "
+                          "would otherwise overwrite the released-width run of the "
+                          "same arm and seed")
+        cfg["architecture_config"]["rnn_hidden_size"] = args.hidden
     data, episode_id = R.load_data(paths["csv"], verbose=False)
     split = E.make_split(seed=0, strat_path=os.path.join(R.RESULTS, "step0_strat.json"),
                          verbose=False)
@@ -153,6 +164,8 @@ def main():
     print(f"  auxiliary branch: teacher-forced in BOTH arms (system_dynamics.py:264)")
     print(f"  ensemble {args.ensemble}, batch {args.batch}, lr {cfg['learning_rate']},"
           f" weight_decay {cfg['weight_decay']}, {args.iters} iterations")
+    print(f"  rnn_hidden_size {cfg['architecture_config']['rnn_hidden_size']}"
+          + ("  (RELEASED)" if args.hidden is None else "  (M-49 capacity-matched)"))
     print(f"  action alignment: causal, offset=1 (X-05)")
     print(f"  gradient clipping: NONE -- the reference has none in this path (5.7a)")
 

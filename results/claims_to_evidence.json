@@ -2562,13 +2562,26 @@
         "results/paper_numbers.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-49",
+      "claim": "Pre-registered: does trunk-sharing survive capacity matching?",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/p2_capacity_power.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 18,
-    "M": 48,
+    "M": 49,
     "O": 14,
     "R": 70,
     "S": 19,
