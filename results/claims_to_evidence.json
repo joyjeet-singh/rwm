@@ -2492,12 +2492,82 @@
         "scripts/t5_anon_transcript.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-14",
+      "claim": "Four defects reached the PDF, and all four restate a quantity another section owns",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/restatement_index.json",
+        "results/typed_numerals.json",
+        "scripts/restatement_index.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-15",
+      "claim": "The typed-numeral count was printed on every build and asserted by nothing",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/typed_numerals.json",
+        "scripts/typed_numeral_audit.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-16",
+      "claim": "The clean-clone figure came from a run that silently excluded a file",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "scripts/build_supplementary.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-17",
+      "claim": "A hand-maintained list of what the paper quotes had drifted from the paper",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/a1_consent_letter.json",
+        "scripts/a1_consent_letter.py",
+        "scripts/t5_anon_transcript.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-18",
+      "claim": "Appendix E promised a price for each untested claim and gave six of eight",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/paper_numbers.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 13,
+    "D": 18,
     "M": 48,
     "O": 14,
     "R": 70,

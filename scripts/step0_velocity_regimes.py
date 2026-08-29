@@ -326,6 +326,51 @@ def main():
                "usable_episode_respecting_windows": int(naive - crossing),
                "derivation": f"{len(data)} rows - {Wn - 1} tail = {naive} naive "
                              f"- {crossing} crossing = {naive - crossing} usable"}
+
+    # B7. The row structure itself, so a reader can check the counts above rather
+    # than trusting them.
+    #
+    # §3 said "ten concatenated 20-second episodes". A reader who takes that
+    # literally computes ten segments of 1,000 rows, gets 351 crossing windows and
+    # 9,610 usable, and concludes the paper is off by one. It is not: episode 0 is
+    # 999 rows, episodes 1-9 are 1,000 each, and row 9,999 is a one-row orphan
+    # (rwm_data.STUB_ROW), which is what makes 9,961 / 352 / 9,609 correct. That
+    # structure is asserted against the data in rwm_data.assert_episode_structure
+    # and was nowhere the reader could see it.
+    #
+    # The lengths are recomputed here from episode_id rather than read from the
+    # constants, so this records what the DATA says and not what the constants do.
+    _lens = [int((episode_id == e).sum()) for e in range(R.N_EPISODES)]
+    _orphan = int((episode_id == -1).sum())
+    # The same crossing count, derived a second way -- from the segment lengths
+    # alone, with no reference to episode_id. A window crosses a boundary iff its
+    # start is within Wn-1 rows of the end of its segment, so each segment
+    # contributes min(Wn - 1, len) starts that cannot complete inside it, less the
+    # tail the last segment loses to the end of the file anyway.
+    _starts = []
+    _off = 0
+    for L in _lens:
+        _starts.append((_off, L))
+        _off += L
+    _cross_from_lengths = 0
+    for _i, (_st, _L) in enumerate(_starts):
+        _last_start_in_seg = _st + _L - Wn          # last start whose window fits
+        for _c in range(_st, _st + _L):
+            if _c > _last_start_in_seg and _c < naive:
+                _cross_from_lengths += 1
+    # the orphan rows at the very end start windows that cross too
+    _cross_from_lengths += sum(1 for _c in range(_off, naive))
+    assert _cross_from_lengths == crossing, (
+        f"the boundary-crossing count derived from the segment lengths "
+        f"({_cross_from_lengths}) disagrees with the one derived from episode_id "
+        f"({crossing}); §3's stated row structure would not reproduce §5.1's counts")
+    windows["episode_lengths"] = _lens
+    windows["orphan_rows"] = _orphan
+    windows["reset_rows"] = list(R.RESET_ROWS)
+    windows["stub_row"] = int(R.STUB_ROW)
+    windows["row_structure"] = (
+        f"{_lens[0]:,} + {len(_lens) - 1} \u00d7 {_lens[1]:,} + {_orphan}")
+    windows["crossing_from_segment_lengths"] = int(_cross_from_lengths)
     print(f"\n  window accounting (D-06):")
     print(f"    naive windows the reference builder marks valid : {naive}")
     print(f"    of which cross an episode boundary              : {crossing}")

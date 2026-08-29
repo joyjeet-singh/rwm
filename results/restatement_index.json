@@ -1,0 +1,4340 @@
+{
+  "scanned": "PAPER.template.md",
+  "n_substituted": 943,
+  "n_typed": 176,
+  "n_restatements": 74,
+  "n_blocking": 34,
+  "n_advisory": 40,
+  "restatements": [
+    {
+      "value": "+0.419",
+      "n_locations": 8,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 8,
+      "sources": [
+        "results/a2_trajectory_level_control.json"
+      ],
+      "keys": [
+        "a2_rdd",
+        "a2_rdd_h368"
+      ],
+      "locations": [
+        {
+          "section": "Abstract",
+          "line": 26,
+          "key": "a2_rdd",
+          "ctx": "ounter neither paper ran \u2014 at every horizon, and correlates {{a2_rdd}} with error holding rollout and depth co"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 789,
+          "key": "a2_rdd",
+          "ctx": " {{a2_r_within_ci}} | \u2014 | | **both, additively (r_dd)** | **{{a2_rdd}}** | **{{a2_rdd_ci}}** | **at a given de"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 802,
+          "key": "a2_rdd",
+          "ctx": "n from both variables and correlating the residuals gives **{{a2_rdd}} {{a2_rdd_ci}}**, on n_independent = {{a"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 816,
+          "key": "a2_rdd_h368",
+          "ctx": "d_h128}} | {{a2_rdd_ci_h128}} | yes | | {{v2_diag_h}} | {{a2_rdd_h368}} | {{a2_rdd_ci_h368}} | yes | *(h = 1 h"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 820,
+          "key": "a2_rdd",
+          "ctx": "t effect is **materially smaller than the pooled figure** \u2014 {{a2_rdd}} against {{a2_r_pooled}} \u2014 so a practiti"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "a2_rdd",
+          "ctx": "ast depth and the rollout held constant it still correlates {{a2_rdd}} {{a2_rdd_ci}} with error (\u00a76.7). But it"
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1211,
+          "key": "a2_rdd",
+          "ctx": " and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.7"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1498,
+          "key": "a2_rdd",
+          "ctx": "s \u2014 plus a sixth on trajectory difficulty \u2014 the last giving {{a2_rdd}} {{a2_rdd_ci}} with both the rollout and"
+        }
+      ]
+    },
+    {
+      "value": "+0.582",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task_d2b_robustness.json"
+      ],
+      "keys": [
+        "d2r_cub",
+        "d2r_weakest"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 763,
+          "key": "d2r_cub",
+          "ctx": "ves {{d2r_log}} {{d2r_log_ci}}; a cubic in the index gives {{d2r_cub}} {{d2r_cub_ci}}; a rank partial correlat"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 765,
+          "key": "d2r_weakest",
+          "ctx": "eakest figure across all {{d2r_ncontrols}} controls is {{d2r_weakest}}. Disagreement is not re-encoding the cl"
+        }
+      ]
+    },
+    {
+      "value": "+0.589",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a2_trajectory_level_control.json",
+        "results/task_d2b_robustness.json"
+      ],
+      "keys": [
+        "a2_step_only",
+        "d2r_log"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 763,
+          "key": "d2r_log",
+          "ctx": "latters disagreement. Partialling out log(1 + index) gives {{d2r_log}} {{d2r_log_ci}}; a cubic in the index gi"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 787,
+          "key": "a2_step_only",
+          "ctx": "ollouts disagree more? | | forecast-step means only | {{a2_step_only}} | \u2014 | the existing within-step control,"
+        }
+      ]
+    },
+    {
+      "value": "+0.596",
+      "n_locations": 5,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 5,
+      "sources": [
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "d2b_par_all",
+        "d2b_par_h368"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 751,
+          "key": "d2b_par_h368",
+          "ctx": "i_h368}} | **{{d2b_epi_h368}}** {{d2b_epi_ci_h368}} | {{d2b_par_h368}} {{d2b_par_ci_h368}} | {{d2p_diff_h368}}"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 761,
+          "key": "d2b_par_all",
+          "ctx": "ion by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what disagreement knows"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "d2b_par_all",
+          "ctx": " index is defined \u2014 every one of them \u2014 and it retains {{d2b_par_all}} once that index is partialled out (\u00a76.7"
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1211,
+          "key": "d2b_par_all",
+          "ctx": " ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. **The"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1498,
+          "key": "d2b_par_all",
+          "ctx": "rols on forecast depth \u2014 the linear partial that keeps {{d2b_par_all}}, and four harder ones \u2014 plus a sixth on"
+        }
+      ]
+    },
+    {
+      "value": "+0.605",
+      "n_locations": 10,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 10,
+      "sources": [
+        "results/a2_trajectory_level_control.json",
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "a2_r_pooled",
+        "d2b_epi_all",
+        "d2b_epi_h368",
+        "d4_r"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 587,
+          "key": "d4_r",
+          "ctx": "\u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 correlates **{{d4_r}}** with total absolute error over the ro"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 751,
+          "key": "d2b_epi_h368",
+          "ctx": "}} | | 368 | {{d2b_idx_h368}} {{d2b_idx_ci_h368}} | **{{d2b_epi_h368}}** {{d2b_epi_ci_h368}} | {{d2b_par_h368}"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 755,
+          "key": "d2b_epi_h368",
+          "ctx": "unter reaches {{d2b_idx_h368}} against disagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_w"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 761,
+          "key": "d2b_epi_all",
+          "ctx": "greement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 785,
+          "key": "a2_r_pooled",
+          "ctx": "at it answers | |---|---|---|---| | nothing (pooled) | {{a2_r_pooled}} | {{a2_r_pooled_ci}} | \u2014 | | everything"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 797,
+          "key": "a2_r_pooled",
+          "ctx": ", which is why it reads {{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it. It was described "
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 820,
+          "key": "a2_r_pooled",
+          "ctx": " smaller than the pooled figure** \u2014 {{a2_rdd}} against {{a2_r_pooled}} \u2014 so a practitioner should expect disag"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "d4_r",
+          "ctx": "1 there is only one moment. Over the full rollout it falls to {{d4_r}} {{d4_ci}}. That decay is the useful par"
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1211,
+          "key": "a2_r_pooled",
+          "ctx": " error (\u00a76.7, M-45). That is a smaller number than the {{a2_r_pooled}} pooled figure and it is the one that me"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1498,
+          "key": "d4_r",
+          "ctx": "ng, against a real baseline** \u2014 the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_inde"
+        }
+      ]
+    },
+    {
+      "value": "+0.994",
+      "n_locations": 4,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 4,
+      "sources": [
+        "results/a2_trajectory_level_control.json",
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "a2_h1_r",
+        "d2_epi_h1"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 746,
+          "key": "d2_epi_h1",
+          "ctx": "greement \u2212 index | |---|---|---|---|---| | **1** | \u2014 | **{{d2_epi_h1}}** {{d2_epi_ci_h1}} | \u2014 | \u2014 | | 8 | {{d2"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 778,
+          "key": "a2_h1_r",
+          "ctx": "orth checking: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine pe"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 823,
+          "key": "a2_h1_r",
+          "ctx": "at it looked like.** At h = 1 the panel has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}}"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "d2_epi_h1",
+          "ctx": "forecast step it ranks whole rollouts almost perfectly \u2014 {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npo"
+        }
+      ]
+    },
+    {
+      "value": "0",
+      "n_locations": 19,
+      "blocking": true,
+      "n_typed": 11,
+      "n_substituted": 8,
+      "sources": [
+        "results/review_bootstrap_unit.json",
+        "results/task3_three_way.json",
+        "results/task_b_permutation.json",
+        "results/task_d_nind20.json",
+        "results/verify_reproduction.json"
+      ],
+      "keys": [
+        "None",
+        "ab_short_excl",
+        "d2b_n_index_wins",
+        "perm_all_holm_rej",
+        "perm_ins_holm_rej",
+        "perm_oos_holm_rej",
+        "relale_all_pos_h368",
+        "tw_cc_cluster_hurt",
+        "ver_differing"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 453,
+          "key": "ab_short_excl",
+          "ctx": "ory lengths crossed with both checkpoints \u2014 and in **{{ab_short_excl}} of {{ab_short_cells}}** at h = 8. These"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 705,
+          "key": "relale_all_pos_h368",
+          "ctx": "_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}} \u2014 negativ"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 730,
+          "key": "perm_oos_holm_rej",
+          "ctx": "lm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 730,
+          "key": "perm_ins_holm_rej",
+          "ctx": ".05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} ove"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 730,
+          "key": "perm_all_holm_rej",
+          "ctx": "t of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample th"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 755,
+          "key": "d2b_n_index_wins",
+          "ctx": "eement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons. "
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1029,
+          "key": "tw_cc_cluster_hurt",
+          "ctx": "rizons \u00d7 two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_"
+        },
+        {
+          "section": "9. Method",
+          "line": 1110,
+          "key": "ver_differing",
+          "ctx": "dentical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing. Verifying that every numeral"
+        },
+        {
+          "section": "2. Related work",
+          "line": 133,
+          "key": null,
+          "ctx": "og-\u03c3 head that \u00a76.3 shows has its optimum at \u03c3 = 0 is not this codebase's invention. It is inherited, line for"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 388,
+          "key": null,
+          "ctx": "eacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A le"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 549,
+          "key": null,
+          "ctx": " epistemic \u00b11\u03c3 [95% CI] | epistemic \u00b12\u03c3 | dims r>0 | permutation P | |---|---|---|---|---|---|---|---| | 1 | \u2400"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 571,
+          "key": null,
+          "ctx": "mic err/\u03c3 [95% CI] | \u00b11\u03c3 [95% CI] | \u00b12\u03c3 | dims r>0 | |---|---|---|---|---| | 1 | \u2400\u00d7 [\u2400] | \u2400% [\u2400] | \u2400% | \u2400/45 |"
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 586,
+          "key": null,
+          "ctx": " the aleatoric head collapses: the optimum is \u03c3 = 0 This subsection explains the aleatoric column and only tha"
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 593,
+          "key": null,
+          "ctx": "ect and the reading is not: \u03c3 is low because \u03c3 = 0 is the optimum of the loss that trains it, and it would be "
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 600,
+          "key": null,
+          "ctx": "mu - y)^2 + \\sigma^2$$ which is minimised at \u03c3 = 0 for any \u03bc. There is no log-\u03c3 term to oppose it. The bound t"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 695,
+          "key": null,
+          "ctx": "on across inputs (CoV) | dims with r(\u03c3, error) > 0 at h=\u2400, out-of-sample | perm P at h=\u2400, out-of-sample | perm"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1193,
+          "key": null,
+          "ctx": "ses a GPU. And **we did not test whether the \u03c3 = 0 optimum affects other descendants of the PETS parameterisat"
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1206,
+          "key": null,
+          "ctx": "the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of th"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1321,
+          "key": null,
+          "ctx": "count attributed to the wrong evaluation arena** \u2014 0 of 45 over all ten episodes asserted where the table besi"
+        }
+      ]
+    },
+    {
+      "value": "0.001667",
+      "n_locations": 5,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 5,
+      "sources": [
+        "results/task_b_permutation.json"
+      ],
+      "keys": [
+        "perm_all_holm_thr",
+        "perm_ins_holm_thr",
+        "perm_oos_holm_thr"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 585,
+          "key": "perm_all_holm_thr",
+          "ctx": "t {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Read the column as a consistency check"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 730,
+          "key": "perm_oos_holm_thr",
+          "ctx": "hich already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have be"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 730,
+          "key": "perm_ins_holm_thr",
+          "ctx": "at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}. So the honest form of this section's "
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1178,
+          "key": "perm_oos_holm_thr",
+          "ctx": "oarser than the multiplicity-corrected threshold {{perm_oos_holm_thr}}, so that arena cannot reject at any eff"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1178,
+          "key": "perm_all_holm_thr",
+          "ctx": "s {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving this needs more episodes tha"
+        }
+      ]
+    },
+    {
+      "value": "0.0020",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_c3_multiplicity.json"
+      ],
+      "keys": [
+        "a1_sign_p_h100",
+        "c3_sign_p"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "c3_sign_p",
+          "ctx": "n}}** episodes \u2014 an exact two-sided binomial test, p = **{{c3_sign_p}}**. At h = {{v2_deploy_h}} it is **{{a1_"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "a1_sign_p_h100",
+          "ctx": "{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, so the count the abstract leans on i"
+        }
+      ]
+    },
+    {
+      "value": "0.010",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 1,
+      "n_substituted": 1,
+      "sources": [
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "None",
+        "d2b_shrink_all_abs"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 761,
+          "key": "d2b_shrink_all_abs",
+          "ctx": "ariables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1317,
+          "key": null,
+          "ctx": "ange with the wrong sign** \u2014 \"a change of **+**0.010\", where partialling the forecast index out *reduces* the "
+        }
+      ]
+    },
+    {
+      "value": "0.0283",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "keys": [
+        "a1_A_sd_h368",
+        "d1_A_sd"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 382,
+          "key": "d1_A_sd",
+          "ctx": "ed over, autoregressive training reaches **{{d1_A_mean}} \u00b1 {{d1_A_sd}}** against teacher forcing's **{{d1_B_me"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "a1_A_sd_h368",
+          "ctx": "}} | | **{{v2_diag_h}}** *(M-23)* | **{{a1_A_h368}} \u00b1 {{a1_A_sd_h368}}** | **{{a1_B_h368}} \u00b1 {{a1_B_sd_h368}}*"
+        }
+      ]
+    },
+    {
+      "value": "0.0417",
+      "n_locations": 3,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/task_b_permutation.json"
+      ],
+      "keys": [
+        "perm_oos_epi_p_h128",
+        "perm_oos_faithA_p_h368"
+      ],
+      "locations": [
+        {
+          "section": "6.5 The correction fails differently rather than succeeding",
+          "line": 691,
+          "key": "perm_oos_faithA_p_h368",
+          "ctx": "at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of samp"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 700,
+          "key": "perm_oos_faithA_p_h368",
+          "ctx": "| {{cal_faithA_npos}}/{{cal_faithA_ndim}} | {{perm_oos_faithA_p_h368}} | {{perm_ins_faithA_p_h368}} | | correc"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 726,
+          "key": "perm_oos_epi_p_h128",
+          "ctx": "mic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h="
+        }
+      ]
+    },
+    {
+      "value": "0.08",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task1_calibration.json",
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "cal_rel_cov100",
+        "d1n_alea_cov1_h8"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 535,
+          "key": "cal_rel_cov100",
+          "ctx": "io_ci}}] | {{cal_rel_cov1}}% [{{cal_rel_cov1_ci}}] | {{cal_rel_cov100}}% [{{cal_rel_cov100_ci}}] | *Every cell"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 555,
+          "key": "d1n_alea_cov1_h8",
+          "ctx": "d1n_alea_ratio_h8}}\u00d7 [{{d1n_alea_ratio_ci_h8}}] | {{d1n_alea_cov1_h8}}% | {{d1n_epi_ratio_h8}}\u00d7 [{{d1n_epi_rat"
+        }
+      ]
+    },
+    {
+      "value": "0.2858",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "keys": [
+        "a1_B_sd_h368",
+        "d1_B_sd"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 382,
+          "key": "d1_B_sd",
+          "ctx": " {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} \u00b1 {{d1_B_sd}}** (standard deviation over seeds, `ddof"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "a1_B_sd_h368",
+          "ctx": "{a1_A_h368}} \u00b1 {{a1_A_sd_h368}}** | **{{a1_B_h368}} \u00b1 {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}\u00d7** | **{{a1_gap"
+        }
+      ]
+    },
+    {
+      "value": "0.3582",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "keys": [
+        "a1_A_h368",
+        "d1_A_mean"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 381,
+          "key": "d1_A_mean",
+          "ctx": "n M-23 is stated over, autoregressive training reaches **{{d1_A_mean}} \u00b1 {{d1_A_sd}}** against teacher forcing"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "a1_A_h368",
+          "ctx": "}}/{{a1_sign_n_h128}} | | **{{v2_diag_h}}** *(M-23)* | **{{a1_A_h368}} \u00b1 {{a1_A_sd_h368}}** | **{{a1_B_h368}} "
+        }
+      ]
+    },
+    {
+      "value": "0.56",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task1_calibration.json",
+        "results/task5_analysis.json"
+      ],
+      "keys": [
+        "cal_rel_cov1",
+        "m23_ci_lo"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 432,
+          "key": "m23_ci_lo",
+          "ctx": "seed the bootstrap over trajectories gives 95% interval [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} ind"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 535,
+          "key": "cal_rel_cov1",
+          "ctx": "ckpoint | {{cal_rel_ratio}}\u00d7 [{{cal_rel_ratio_ci}}] | {{cal_rel_cov1}}% [{{cal_rel_cov1_ci}}] | {{cal_rel_cov1"
+        }
+      ]
+    },
+    {
+      "value": "1",
+      "n_locations": 36,
+      "blocking": true,
+      "n_typed": 31,
+      "n_substituted": 5,
+      "sources": [
+        "results/paper_figures.json",
+        "results/review_bootstrap_unit.json",
+        "results/step0_regimes.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "None",
+        "bu_changes",
+        "e5_n_excl",
+        "f4_n_negative",
+        "orphan_rows"
+      ],
+      "locations": [
+        {
+          "section": "3. Setup",
+          "line": 206,
+          "key": "orphan_rows",
+          "ctx": "rst}}, {{reset_rows_second}} \u2026 {{reset_rows_last}} and {{orphan_rows}} orphan row at the end of the file that "
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 838,
+          "key": "e5_n_excl",
+          "ctx": "The second fails: the paired difference excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a ma"
+        },
+        {
+          "section": "9. Method",
+          "line": 1101,
+          "key": "f4_n_negative",
+          "ctx": "_n_rules}} rules; {{f4_n_positive}} are positive and {{f4_n_negative}} is not. The negative one is the duplica"
+        },
+        {
+          "section": "9. Method",
+          "line": 1105,
+          "key": "bu_changes",
+          "ctx": "dens intervals by a mean {{bu_mean_ratio}}\u00d7 and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 c"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1165,
+          "key": "e5_n_excl",
+          "ctx": "exclude zero at a majority of horizons and it does so at {{e5_n_excl}} of {{e5_n_horizons}}. The binding const"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 266,
+          "key": null,
+          "ctx": "ning mean. **The aggregation matters and is form 1**: pool the per-dimension mean squared errors, then divide "
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 291,
+          "key": null,
+          "ctx": "se models in. One caution on reading it: $\\rho = 1$ is *not* calibration. A calibrated Gaussian has mean|error"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 368,
+          "key": null,
+          "ctx": "s not an artifact of the longest horizon; at h = 1 it is \u2400 of \u2400, which is the same story the interval tells. T"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 414,
+          "key": null,
+          "ctx": "orse than assuming nothing changes. But **at h = 1 the floor beats *both* arms**: it scores \u2400 against autoregr"
+        },
+        {
+          "section": "6.1 Which quantity the method actually uses",
+          "line": 491,
+          "key": null,
+          "ctx": " a **standard deviation**, which with $\\lambda = 1$ differ by a square. We asked, and the first author confirm"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 527,
+          "key": null,
+          "ctx": "ean \u03c3, whole \u2400-step rollout | coverage at \u00b11\u03c3, h=1 | coverage at \u00b11\u03c3, h=\u2400 | |---|---|---|---| | faithful Arm A"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 567,
+          "key": null,
+          "ctx": "chance at short horizon \u2014 \u2400 of \u2400 dimensions at h=1 \u2014 and we had described it as a long-horizon effect. At n_in"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 702,
+          "key": null,
+          "ctx": "ery row**, which is the only \u03c3 the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric C"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 721,
+          "key": null,
+          "ctx": " the horizon test the same way: \u03c3 grows \u2400\u00d7 from h=1 to h=368 while error grows \u2400\u00d7. **The horizon story we firs"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 723,
+          "key": null,
+          "ctx": "8, \u2400 at h=368) and unremarkable at short (\u2400 at h=1). Both larger arenas invert that. In sample (n_independent "
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 725,
+          "key": null,
+          "ctx": "5 is close to what chance alone delivers; at h = 1 the null sits near \u2400 and the same count is genuinely surpri"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 750,
+          "key": null,
+          "ctx": " | \u2400 \u2400 | | 368 | \u2400 \u2400 | **\u2400** \u2400 | \u2400 \u2400 | \u2400 \u2400 | *(h=1 has a single forecast step, so the index is constant and it"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 760,
+          "key": null,
+          "ctx": "l and flatters disagreement. Partialling out log(1 + index) gives \u2400 \u2400; a cubic in the index gives \u2400 \u2400; a rank "
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 774,
+          "key": null,
+          "ctx": "ggested that was worth checking: the \u2400-point h = 1 figure of \u2400, which is not the shape of a genuine per-step s"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 815,
+          "key": null,
+          "ctx": " | 128 | \u2400 | \u2400 | yes | | \u2400 | \u2400 | \u2400 | yes | *(h = 1 has one forecast step per trajectory, so there is nothing w"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 819,
+          "key": null,
+          "ctx": "d. At h = \u2400 it is established, at \u2400 \u2400. **The h = 1 figure survives the same test, but it is not what it looked"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 819,
+          "key": null,
+          "ctx": "est, but it is not what it looked like.** At h = 1 the panel has one column, so \u2400 is a correlation over \u2400 *tra"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 830,
+          "key": null,
+          "ctx": "oint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore "
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 861,
+          "key": null,
+          "ctx": "ntity the method uses \u2014 a scalar of \u2400\u2013\u2400 brings h=1 coverage to \u2400\u2013\u2400%, essentially calibrated against the \u2400% tar"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 864,
+          "key": null,
+          "ctx": "e aleatoric term a scalar of \u2400\u2013\u2400 gives \u2400\u2013\u2400% at h=1 and \u2400\u2013\u2400% at h=368. Fitting over the whole rollout instead d"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 878,
+          "key": null,
+          "ctx": "nstant scalar manages \u2400 of \u2400, and those are the h=1 cells it was fitted at. Three cautions a reader should app"
+        },
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 890,
+          "key": null,
+          "ctx": "error grows (Figure 2): | model | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful A"
+        },
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 890,
+          "key": null,
+          "ctx": "odel | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A | \u2400\u00d7 | \u2400\u00d7 | | correcte"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 911,
+          "key": null,
+          "ctx": " h for the whole project. Arm A at ensemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at abo"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 911,
+          "key": null,
+          "ctx": "A at ensemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at about \u2400 h each, \u2400 h in total, and"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 955,
+          "key": null,
+          "ctx": "nt, so they add to 100%. A share above 100% at h=1 means the independent ensemble is very slightly the **worse"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 968,
+          "key": null,
+          "ctx": " earlier draft gave the \u03c3 range above as the h = 1 and h = 8 values, which do not span it \u2014 h = \u2400's \u2400\u00d7 falls b"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 997,
+          "key": null,
+          "ctx": "ct. The evaluation path feeds the action from *t\u22121* to predict state *t* \u2014 stale by one step. Scored correctly"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1115,
+          "key": null,
+          "ctx": "llouts*, not of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1170,
+          "key": null,
+          "ctx": "ension matched comparison, both computed on seed 1 alone. The headline A/B result is not among them: it is a t"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1462,
+          "key": null,
+          "ctx": "ly numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the ho"
+        }
+      ]
+    },
+    {
+      "value": "1.08",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/r2_independent_ensemble.json"
+      ],
+      "keys": [
+        "a1_B_over_floor_h8",
+        "r2_acc_x_h32"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 394,
+          "key": "a1_B_over_floor_h8",
+          "ctx": "} | {{a1_floor_h8}} | {{a1_floor_over_A_h8}}\u00d7 | {{a1_B_over_floor_h8}}\u00d7 | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} "
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 953,
+          "key": "r2_acc_x_h32",
+          "ctx": " | {{r2_from_acc_h8}}% | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_acc_x_h32}}\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigm"
+        }
+      ]
+    },
+    {
+      "value": "1.49",
+      "n_locations": 3,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/r2_independent_ensemble.json"
+      ],
+      "keys": [
+        "r2_sigma_x_h368",
+        "r2_sigma_x_lo"
+      ],
+      "locations": [
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 956,
+          "key": "r2_sigma_x_h368",
+          "ctx": "128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}}\u00d7 | {{r2_acc_x_h368}}\u00d7 | {{r2_total_x_h3"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 962,
+          "key": "r2_sigma_x_lo",
+          "ctx": " is stated over.** \u03c3 is larger at every horizon \u2014 by {{r2_sigma_x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 972,
+          "key": "r2_sigma_x_lo",
+          "ctx": "es, which do not span it \u2014 h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}\u00d7 falls below the stated floor. Found by"
+        }
+      ]
+    },
+    {
+      "value": "1.6497",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "keys": [
+        "a1_B_h368",
+        "d1_B_mean"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 382,
+          "key": "d1_B_mean",
+          "ctx": "{d1_A_mean}} \u00b1 {{d1_A_sd}}** against teacher forcing's **{{d1_B_mean}} \u00b1 {{d1_B_sd}}** (standard deviation ove"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "a1_B_h368",
+          "ctx": "}}** *(M-23)* | **{{a1_A_h368}} \u00b1 {{a1_A_sd_h368}}** | **{{a1_B_h368}} \u00b1 {{a1_B_sd_h368}}** | **{{a1_ratio_h36"
+        }
+      ]
+    },
+    {
+      "value": "1.7",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/step5_armA_seed*.json"
+      ],
+      "keys": [
+        "a1_floor_over_A_h32",
+        "r2_added_h_total"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 395,
+          "key": "a1_floor_over_A_h32",
+          "ctx": "i_h32}} | {{a1_excl_h32}} | {{a1_floor_h32}} | {{a1_floor_over_A_h32}}\u00d7 | {{a1_B_over_floor_h32}}\u00d7 | {{a1_sign"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 915,
+          "key": "r2_added_h_total",
+          "ctx": "added_word}} more at about {{r2_added_h}} h each, {{r2_added_h_total}} h in total, and scored the {{r2_n_indep"
+        }
+      ]
+    },
+    {
+      "value": "1.81",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json"
+      ],
+      "keys": [
+        "r2_sigma_x_h8",
+        "r2_sigma_x_hi"
+      ],
+      "locations": [
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 952,
+          "key": "r2_sigma_x_h8",
+          "ctx": " {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sigma_x_h8}}\u00d7 | {{r2_acc_x_h8}}\u00d7 | {{r2_total_x_h8}}"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 963,
+          "key": "r2_sigma_x_hi",
+          "ctx": "x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}\u00d7 at its strongest (h = {{r2_sigma_x_hi_"
+        }
+      ]
+    },
+    {
+      "value": "10",
+      "n_locations": 26,
+      "blocking": true,
+      "n_typed": 1,
+      "n_substituted": 25,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/t1_bibliography_verified.json",
+        "results/task_c3_multiplicity.json",
+        "results/task_d3_perhorizon.json",
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "None",
+        "a1_sign_n_h1",
+        "a1_sign_n_h100",
+        "a1_sign_n_h128",
+        "a1_sign_n_h32",
+        "a1_sign_n_h368",
+        "a1_sign_n_h8",
+        "a1_sign_pos_h100",
+        "a1_sign_pos_h128",
+        "a1_sign_pos_h32",
+        "a1_sign_pos_h368",
+        "a1_sign_pos_h8",
+        "c3_sign_n",
+        "c3_sign_pos",
+        "d1n_eps",
+        "d3_tol",
+        "t1_n_refs",
+        "t1_n_verified"
+      ],
+      "locations": [
+        {
+          "section": "2. Related work",
+          "line": 191,
+          "key": "t1_n_verified",
+          "ctx": "tence matched verbatim against the paper's own text. {{t1_n_verified}} of {{t1_n_refs}} entries verified, {{t1"
+        },
+        {
+          "section": "2. Related work",
+          "line": 191,
+          "key": "t1_n_refs",
+          "ctx": "batim against the paper's own text. {{t1_n_verified}} of {{t1_n_refs}} entries verified, {{t1_n_frag_ok}} of {"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "c3_sign_pos",
+          "ctx": "e per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes \u2014 an exact "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "c3_sign_n",
+          "ctx": " favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes \u2014 an exact two-sided binomia"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "a1_sign_pos_h100",
+          "ctx": "**{{c3_sign_p}}**. At h = {{v2_deploy_h}} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sig"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "a1_sign_n_h100",
+          "ctx": "h = {{v2_deploy_h}} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, so the c"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "a1_sign_n_h1",
+          "ctx": "longest horizon; at h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, which is the same story the interval t"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 373,
+          "key": "c3_sign_n",
+          "ctx": "onger reading than it supports.** {{n_train_eps}} of the {{c3_sign_n}} episodes are training data for *both* a"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 393,
+          "key": "a1_sign_n_h1",
+          "ctx": "_h1}}\u00d7 | {{a1_B_over_floor_h1}}\u00d7 | {{a1_sign_pos_h1}}/{{a1_sign_n_h1}} | | 8 | {{a1_A_h8}} \u00b1 {{a1_A_sd_h8}} | "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 394,
+          "key": "a1_sign_pos_h8",
+          "ctx": "{{a1_floor_over_A_h8}}\u00d7 | {{a1_B_over_floor_h8}}\u00d7 | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} | | 32 | {{a1_A_h32}} "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 394,
+          "key": "a1_sign_n_h8",
+          "ctx": "_h8}}\u00d7 | {{a1_B_over_floor_h8}}\u00d7 | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} | | 32 | {{a1_A_h32}} \u00b1 {{a1_A_sd_h32}}"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 395,
+          "key": "a1_sign_pos_h32",
+          "ctx": "1_floor_over_A_h32}}\u00d7 | {{a1_B_over_floor_h32}}\u00d7 | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} | | **{{v2_deploy_h}}"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 395,
+          "key": "a1_sign_n_h32",
+          "ctx": "}}\u00d7 | {{a1_B_over_floor_h32}}\u00d7 | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} | | **{{v2_deploy_h}}** | **{{a1_A_h100"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 396,
+          "key": "a1_sign_pos_h100",
+          "ctx": "r_A_h100}}\u00d7** | **{{a1_B_over_floor_h100}}\u00d7** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** | | 128 | {{a1_A_h"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 396,
+          "key": "a1_sign_n_h100",
+          "ctx": "{a1_B_over_floor_h100}}\u00d7** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** | | 128 | {{a1_A_h128}} \u00b1 {{a1_A_sd_h"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 397,
+          "key": "a1_sign_pos_h128",
+          "ctx": "loor_over_A_h128}}\u00d7 | {{a1_B_over_floor_h128}}\u00d7 | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} | | **{{v2_diag_h}}*"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 397,
+          "key": "a1_sign_n_h128",
+          "ctx": " | {{a1_B_over_floor_h128}}\u00d7 | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} | | **{{v2_diag_h}}** *(M-23)* | **{{a1"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "a1_sign_pos_h368",
+          "ctx": "er_A_h368}}\u00d7** | **{{a1_B_over_floor_h368}}\u00d7** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** | **The advantage"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "a1_sign_n_h368",
+          "ctx": "{{a1_B_over_floor_h368}}\u00d7** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** | **The advantage {{a1_monotone}} gr"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 550,
+          "key": "d1n_eps",
+          "ctx": " On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 876,
+          "key": "d3_tol",
+          "ctx": "e other {{d3_nind_fit}}: | quantity | held-out cells within {{d3_tol}} points of {{d3_target}}%, per-horizon c"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 881,
+          "key": "d3_tol",
+          "ctx": "}} ({{d3_epi_cspread}}\u00d7) | Every held-out cell lands within {{d3_tol}} points of the {{d3_target}}% target for"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1120,
+          "key": "d3_tol",
+          "ctx": "st horizon, fitted on held-out data, brings coverage within {{d3_tol}} points of nominal on every held-out cel"
+        },
+        {
+          "section": "References",
+          "line": 1277,
+          "key": "t1_n_verified",
+          "ctx": "nce matched verbatim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_fra"
+        },
+        {
+          "section": "References",
+          "line": 1277,
+          "key": "t1_n_refs",
+          "ctx": "tim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1278,
+          "key": null,
+          "ctx": "nt as \"clearly informative\" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregati"
+        }
+      ]
+    },
+    {
+      "value": "10,000",
+      "n_locations": 6,
+      "blocking": true,
+      "n_typed": 4,
+      "n_substituted": 2,
+      "sources": [
+        "results/step0_regimes.json"
+      ],
+      "keys": [
+        "None",
+        "rows"
+      ],
+      "locations": [
+        {
+          "section": "3. Setup",
+          "line": 199,
+          "key": "rows",
+          "ctx": " verified.* --- ## 3. Setup **Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state a"
+        },
+        {
+          "section": "3. Setup",
+          "line": 218,
+          "key": "rows",
+          "ctx": "art. The usable, episode-respecting count is {{win_usable}} \u2014 {{rows}} rows, less {{win_tail}} that cannot sta"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 363,
+          "key": null,
+          "ctx": " across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. **Result"
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 612,
+          "key": null,
+          "ctx": " Rates are fitted on \u2400 of those runs: the \u2400 10,000-iteration runs are excluded from the rate statistics becaus"
+        },
+        {
+          "section": "8. The released checkpoint's variance state is unreachable at the stated iteration counts",
+          "line": 1046,
+          "key": null,
+          "ctx": "onfigured learning rate. The refit from our 10,000-iteration runs gives \u2400 and \u2400, spreading \u2400% across the three"
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1272,
+          "key": null,
+          "ctx": "on two CPU cores: \u2400 hours for the \u2400 runs at 10,000 iterations and \u2400 for the remaining \u2400 at 2,500. (Those were "
+        }
+      ]
+    },
+    {
+      "value": "10.5",
+      "n_locations": 6,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 6,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_ratio_h100",
+        "r2_shared_ratio_h100"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 579,
+          "key": "e5_ratio_h100",
+          "ctx": " | {{e5_cov2_h32}}% | {{e5_npos_h32}}/45 | | 100 | **{{e5_ratio_h100}}\u00d7** [{{e5_ratio_ci_h100}}] | {{e5_cov1_h"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 583,
+          "key": "e5_ratio_h100",
+          "ctx": "han the released checkpoint and fail the same way**: {{e5_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} a"
+        },
+        {
+          "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
+          "line": 677,
+          "key": "e5_ratio_h100",
+          "ctx": "ms checked. So \u00a76.2's \"our arms fail the same way at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}\" compares two i"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 927,
+          "key": "r2_shared_ratio_h100",
+          "ctx": "ploy_h}}** | **{{r2_indep_ratio_h100}}\u00d7** | **{{r2_shared_ratio_h100}}\u00d7** | **{{r2_indep_cov1_h100}}%** | **{{"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "e5_ratio_h100",
+          "ctx": "_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}\u00d7 [{{e5_ratio_ci_h100}}] on the ensemble"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1165,
+          "key": "e5_ratio_h100",
+          "ctx": " seed-horizon cells and the *calibration* failure at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h36"
+        }
+      ]
+    },
+    {
+      "value": "10.79",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_cov1_h32",
+        "r2_shared_cov1_h32"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 578,
+          "key": "e5_cov1_h32",
+          "ctx": "/45 | | 32 | {{e5_ratio_h32}}\u00d7 [{{e5_ratio_ci_h32}}] | {{e5_cov1_h32}}% [{{e5_cov1_ci_h32}}] | {{e5_cov2_h32}}"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 926,
+          "key": "r2_shared_cov1_h32",
+          "ctx": "_shared_ratio_h32}}\u00d7 | {{r2_indep_cov1_h32}}% | {{r2_shared_cov1_h32}}% | | **{{v2_deploy_h}}** | **{{r2_indep"
+        }
+      ]
+    },
+    {
+      "value": "106",
+      "n_locations": 4,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 4,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/step4_3_differential.json"
+      ],
+      "keys": [
+        "diff_n_params",
+        "r2_from_sigma_h1"
+      ],
+      "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 62,
+          "key": "diff_n_params",
+          "ctx": "diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors before any training b"
+        },
+        {
+          "section": "1. Introduction",
+          "line": 75,
+          "key": "diff_n_params",
+          "ctx": "diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training "
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 951,
+          "key": "r2_from_sigma_h1",
+          "ctx": "x_h1}}\u00d7 | {{r2_acc_x_h1}}\u00d7 | {{r2_total_x_h1}}\u00d7 | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sig"
+        },
+        {
+          "section": "Appendix A \u2014 verification chain",
+          "line": 1289,
+          "key": "diff_n_params",
+          "ctx": "* | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | trainer | can memorise a "
+        }
+      ]
+    },
+    {
+      "value": "11",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task_d2_recalibration.json",
+        "results/verify_reproduction.json"
+      ],
+      "keys": [
+        "d2_ale_cov368_lo",
+        "ver_selfref"
+      ],
+      "locations": [
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 868,
+          "key": "d2_ale_cov368_lo",
+          "ctx": "{{d2_ale_cov1_lo}}\u2013{{d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}\u2013{{d2_ale_cov368_hi}}% at h=368. Fitting"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1425,
+          "key": "ver_selfref",
+          "ctx": "m and worth naming because it sounds like an excuse.** {{ver_selfref}} keys in `paper_numbers.json` are source"
+        }
+      ]
+    },
+    {
+      "value": "11.0",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_ratio_h128",
+        "r2_shared_ratio_h128"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 580,
+          "key": "e5_ratio_h128",
+          "ctx": " | {{e5_cov2_h100}}% | {{e5_npos_h100}}/45 | | 128 | {{e5_ratio_h128}}\u00d7 [{{e5_ratio_ci_h128}}] | {{e5_cov1_h12"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 928,
+          "key": "r2_shared_ratio_h128",
+          "ctx": "100}}%** | | 128 | {{r2_indep_ratio_h128}}\u00d7 | {{r2_shared_ratio_h128}}\u00d7 | {{r2_indep_cov1_h128}}% | {{r2_share"
+        }
+      ]
+    },
+    {
+      "value": "12",
+      "n_locations": 13,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 13,
+      "sources": [
+        "results/task_d3_ens5.json",
+        "results/task_d3_perhorizon.json"
+      ],
+      "keys": [
+        "d3_ale_cells",
+        "d3_ale_ok",
+        "d3_epi_cells",
+        "d3_epi_ok",
+        "e5_lead_cells",
+        "e5_total_cells"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 836,
+          "key": "e5_lead_cells",
+          "ctx": "asses completely \u2014 disagreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon ce"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 836,
+          "key": "e5_total_cells",
+          "ctx": "agreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired esti"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 878,
+          "key": "d3_ale_ok",
+          "ctx": " | range of fitted c | |---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_o"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 878,
+          "key": "d3_ale_cells",
+          "ctx": "c | |---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cell"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 878,
+          "key": "d3_ale_cells",
+          "ctx": "ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3_ale_c_lo}} \u2013 {{d3_ale_c_hi}} ({{"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 879,
+          "key": "d3_epi_ok",
+          "ctx": " {{d3_ale_c_hi}} ({{d3_ale_cspread}}\u00d7) | | epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_o"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 879,
+          "key": "d3_epi_cells",
+          "ctx": "{d3_ale_cspread}}\u00d7) | | epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cell"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 879,
+          "key": "d3_epi_cells",
+          "ctx": "epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3_epi_c_lo}} \u2013 {{d3_epi_c_hi}} ({{"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 881,
+          "key": "d3_epi_cells",
+          "ctx": "e. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the h=1 cells it was fit"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 883,
+          "key": "d3_epi_cells",
+          "ctx": "-out column is thinner than its count suggests:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons \u00d7 two "
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 883,
+          "key": "d3_epi_cells",
+          "ctx": "and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value at"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1165,
+          "key": "e5_lead_cells",
+          "ctx": " They reproduce the *direction* of \u00a76.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cell"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1165,
+          "key": "e5_total_cells",
+          "ctx": "irection* of \u00a76.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration"
+        }
+      ]
+    },
+    {
+      "value": "128",
+      "n_locations": 4,
+      "blocking": true,
+      "n_typed": 3,
+      "n_substituted": 1,
+      "sources": [
+        "results/task_d3_perhorizon.json"
+      ],
+      "keys": [
+        "None",
+        "d3_second_h"
+      ],
+      "locations": [
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 881,
+          "key": "d3_second_h",
+          "ctx": "cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} \u2014 so the fitted multiplier is mildly **"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 721,
+          "key": null,
+          "ctx": " is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with rea"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 723,
+          "key": null,
+          "ctx": "with h = \u2400 at \u2400 sitting between h=32's \u2400 and h=128's \u2400 \u2014 the horizon added by this revision falls where the ex"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1305,
+          "key": null,
+          "ctx": "* \u2014 \"the intervals do not overlap\", where at h=128 they overlap across 0.604\u20130.643. **This one has now been wr"
+        }
+      ]
+    },
+    {
+      "value": "13",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/paper_figures.json",
+        "results/r2_independent_ensemble.json"
+      ],
+      "keys": [
+        "f4_n_commits",
+        "r2_from_acc_h32"
+      ],
+      "locations": [
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 953,
+          "key": "r2_from_acc_h32",
+          "ctx": "\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigma_h32}}% | {{r2_from_acc_h32}}% | | **{{v2_deploy_h}}** | **{{r2_sigma"
+        },
+        {
+          "section": "Data and code",
+          "line": 1230,
+          "key": "f4_n_commits",
+          "ctx": "y commit from the one that introduced it onward, so **{{f4_n_commits}} of the commits Figure 4 cites keep thei"
+        }
+      ]
+    },
+    {
+      "value": "13.0",
+      "n_locations": 3,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_ratio_h368",
+        "r2_shared_ratio_h368"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 581,
+          "key": "e5_ratio_h368",
+          "ctx": " {{e5_cov2_h128}}% | {{e5_npos_h128}}/45 | | 368 | **{{e5_ratio_h368}}\u00d7** [{{e5_ratio_ci_h368}}] | {{e5_cov1_h"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 929,
+          "key": "r2_shared_ratio_h368",
+          "ctx": " | {{v2_diag_h}} | {{r2_indep_ratio_h368}}\u00d7 | {{r2_shared_ratio_h368}}\u00d7 | {{r2_indep_cov1_h368}}% | {{r2_share"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1165,
+          "key": "e5_ratio_h368",
+          "ctx": "ailure at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h368}}\u00d7 at h = {{v2_diag_h}}) \u2014 but the pre-re"
+        }
+      ]
+    },
+    {
+      "value": "14.10",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_cov1_h8",
+        "r2_shared_cov1_h8"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 577,
+          "key": "e5_cov1_h8",
+          "ctx": "h1}}/45 | | 8 | {{e5_ratio_h8}}\u00d7 [{{e5_ratio_ci_h8}}] | {{e5_cov1_h8}}% [{{e5_cov1_ci_h8}}] | {{e5_cov2_h8}}% "
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 925,
+          "key": "r2_shared_cov1_h8",
+          "ctx": "{r2_shared_ratio_h8}}\u00d7 | {{r2_indep_cov1_h8}}% | {{r2_shared_cov1_h8}}% | | 32 | {{r2_indep_ratio_h32}}\u00d7 | {{r"
+        }
+      ]
+    },
+    {
+      "value": "16",
+      "n_locations": 3,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/review_bootstrap_unit.json",
+        "results/task_b_permutation.json"
+      ],
+      "keys": [
+        "bu_cells",
+        "nind_ins_400",
+        "perm_ins_nind"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 376,
+          "key": "nind_ins_400",
+          "ctx": "he same comparison on the eight training episodes has {{nind_ins_400}} independent 400-step trajectories again"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 726,
+          "key": "perm_ins_nind",
+          "ctx": "arger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_"
+        },
+        {
+          "section": "9. Method",
+          "line": 1105,
+          "key": "bu_cells",
+          "ctx": "y a mean {{bu_mean_ratio}}\u00d7 and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already reco"
+        }
+      ]
+    },
+    {
+      "value": "17",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/step5_arm*.json",
+        "results/task_d2_recalibration.json"
+      ],
+      "keys": [
+        "d2_epi_cov368_lo",
+        "e2_mse_runs"
+      ],
+      "locations": [
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 627,
+          "key": "e2_mse_runs",
+          "ctx": "nitude collapse is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of {{e2_mse_"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 866,
+          "key": "d2_epi_cov368_lo",
+          "ctx": "st the {{d2_target}}% target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%. On the aleatoric"
+        }
+      ]
+    },
+    {
+      "value": "2",
+      "n_locations": 19,
+      "blocking": true,
+      "n_typed": 7,
+      "n_substituted": 12,
+      "sources": [
+        "PAPER.template.md, Appendix E table",
+        "results/task3_three_way.json",
+        "results/task_d3_perhorizon.json",
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "None",
+        "appE_n_cpu",
+        "d2p_n_overlap",
+        "d3_ale_const_ok",
+        "d3_epi_const_ok",
+        "d3_nind_fit",
+        "tw_dc_cluster_helped"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 759,
+          "key": "d2p_n_overlap",
+          "ctx": "_n_horizons}}** horizons. The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons. At "
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 874,
+          "key": "d3_nind_fit",
+          "ctx": "etween them, so each direction fits on n_independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fi"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 874,
+          "key": "d3_nind_fit",
+          "ctx": "ndependent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fit}}: | quantity | held-out cells within {{"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 878,
+          "key": "d3_ale_const_ok",
+          "ctx": "aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3_ale_c_lo}} \u2013 "
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 879,
+          "key": "d3_epi_const_ok",
+          "ctx": "epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3_epi_c_lo}} \u2013 "
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 881,
+          "key": "d3_epi_const_ok",
+          "ctx": " covers this sentence. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the "
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 883,
+          "key": "d3_nind_fit",
+          "ctx": "ries, and each multiplier is fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 883,
+          "key": "d3_nind_fit",
+          "ctx": "_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independ"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1031,
+          "key": "tw_dc_cluster_helped",
+          "ctx": " The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells. **\"Costs nothing\" is the wrong "
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1120,
+          "key": "d3_epi_const_ok",
+          "ctx": " held-out cell; a single global multiplier manages {{d3_epi_const_ok}} of them (\u00a76.8). The held-out cells are "
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1211,
+          "key": "d3_epi_const_ok",
+          "ctx": "y held-out cell where a global multiplier restores {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in eac"
+        },
+        {
+          "section": "Appendix E \u2014 what testing the untested claims would require",
+          "line": 1462,
+          "key": "appE_n_cpu",
+          "ctx": "t. This table has one row per untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion tha"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 269,
+          "key": null,
+          "ctx": "shed-model comparison in this project (\u00a79). Form 2 is reported only for continuity with figures published befo"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 282,
+          "key": null,
+          "ctx": " the calibrated targets are $\\mathrm{erf}(k/\\sqrt{2})$: **\u2400%** at \u00b11\u03c3 and **\u2400%** at \u00b12\u03c3. **The overconfidence "
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 291,
+          "key": null,
+          "ctx": "calibrated Gaussian has mean|error| / \u03c3 = $\\sqrt{2/\\pi}$ = \u2400. $\\rho$ is reported as a magnitude of miscalibrat"
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 598,
+          "key": null,
+          "ctx": ";=\\; \\mathbb{E}\\big[(\\mu + \\sigma\\varepsilon - y)^2\\big] \\;=\\; (\\mu - y)^2 + \\sigma^2$$ which is minimised at "
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 598,
+          "key": null,
+          "ctx": "u + \\sigma\\varepsilon - y)^2\\big] \\;=\\; (\\mu - y)^2 + \\sigma^2$$ which is minimised at \u03c3 = 0 for any \u03bc. There "
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 598,
+          "key": null,
+          "ctx": "varepsilon - y)^2\\big] \\;=\\; (\\mu - y)^2 + \\sigma^2$$ which is minimised at \u03c3 = 0 for any \u03bc. There is no log-\u03c3"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 911,
+          "key": null,
+          "ctx": "nsemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at about \u2400 h each, \u2400 h in total, and score"
+        }
+      ]
+    },
+    {
+      "value": "2.03",
+      "n_locations": 4,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 4,
+      "sources": [
+        "results/r2_independent_ensemble.json"
+      ],
+      "keys": [
+        "m44_ratio_gain",
+        "r2_total_x_h100"
+      ],
+      "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 88,
+          "key": "m44_ratio_gain",
+          "ctx": "dently-initialised full models, sharing nothing, is {{m44_ratio_gain}}\u00d7 better calibrated than the shared-trun"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 937,
+          "key": "m44_ratio_gain",
+          "ctx": "_lo}}\u2013{{r2_ratio_hi}}\u00d7 the shared-trunk arms' \u2014 a **{{m44_ratio_gain}}\u00d7** improvement against a pre-registered"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 954,
+          "key": "r2_total_x_h100",
+          "ctx": " | **{{r2_sigma_x_h100}}\u00d7** | {{r2_acc_x_h100}}\u00d7 | {{r2_total_x_h100}}\u00d7 | **{{r2_from_sigma_h100}}%** | {{r2_f"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 986,
+          "key": "m44_ratio_gain",
+          "ctx": "n gives {{v3_cov_nominal1}}%. Better by a factor of {{m44_ratio_gain}}, and still not an interval. Building th"
+        }
+      ]
+    },
+    {
+      "value": "2.1",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_ratio_h1",
+        "r2_shared_ratio_h1"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 576,
+          "key": "e5_ratio_h1",
+          "ctx": "95% CI] | \u00b12\u03c3 | dims r>0 | |---|---|---|---|---| | 1 | {{e5_ratio_h1}}\u00d7 [{{e5_ratio_ci_h1}}] | {{e5_cov1_h1}}%"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 924,
+          "key": "r2_shared_ratio_h1",
+          "ctx": "---|---|---|---| | 1 | {{r2_indep_ratio_h1}}\u00d7 | {{r2_shared_ratio_h1}}\u00d7 | {{r2_indep_cov1_h1}}% | {{r2_shared_"
+        }
+      ]
+    },
+    {
+      "value": "2.58",
+      "n_locations": 5,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 5,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "keys": [
+        "a1_ratio_h100",
+        "d1_ratio_h100"
+      ],
+      "locations": [
+        {
+          "section": "Abstract",
+          "line": 15,
+          "key": "a1_ratio_h100",
+          "ctx": "g_h}}, the horizon the rule names, rising to it from {{a1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, where the meth"
+        },
+        {
+          "section": "1. Introduction",
+          "line": 79,
+          "key": "d1_ratio_h100",
+          "ctx": " the runs existed, rising monotonically to that from {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} and a gap that "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 385,
+          "key": "d1_ratio_h100",
+          "ctx": "ing in \u00a76 is anchored to, the same three seeds give **{{d1_ratio_h100}}\u00d7**. **Quoting one of those and not the"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 396,
+          "key": "a1_ratio_h100",
+          "ctx": "_h100}}** | **{{a1_B_h100}} \u00b1 {{a1_B_sd_h100}}** | **{{a1_ratio_h100}}\u00d7** | **{{a1_gap_h100}} {{a1_gap_ci_h100"
+        },
+        {
+          "section": "5.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+          "line": 468,
+          "key": "d1_ratio_h100",
+          "ctx": "cing result \u2014 {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} and {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} \u2014 and still bea"
+        }
+      ]
+    },
+    {
+      "value": "20",
+      "n_locations": 35,
+      "blocking": true,
+      "n_typed": 4,
+      "n_substituted": 31,
+      "sources": [
+        "results/a2_trajectory_level_control.json",
+        "results/comparative_claims.json",
+        "results/step5_*.json",
+        "results/step5_arm*.json",
+        "results/task1_calibration.json",
+        "results/task_b_permutation.json",
+        "results/task_d3b_ens5_power.json",
+        "results/task_d_nind20.json",
+        "results/v3_metric_definitions.json"
+      ],
+      "keys": [
+        "None",
+        "a2_h1_npoints",
+        "a2_nind",
+        "cal_rel_npos",
+        "cc_kinds",
+        "d1n_nind",
+        "d4_nind",
+        "e2_fitted_runs",
+        "e5_comp_nind",
+        "perm_all_nind",
+        "relale_all_nind",
+        "relale_oos_pos_h368",
+        "rt_runs_short",
+        "v3_n_citations"
+      ],
+      "locations": [
+        {
+          "section": "Abstract",
+          "line": 36,
+          "key": "cc_kinds",
+          "ctx": "t fails otherwise, and {{cc_n}} comparative claims across {{cc_kinds}} kinds are recomputed each build against"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 239,
+          "key": "v3_n_citations",
+          "ctx": "checked against its own source text on every build ({{v3_n_citations}} of them). This section exists because t"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 546,
+          "key": "d1n_nind",
+          "ctx": "w \u2014 cumulative to h = {{v2_deploy_h}}, at n_independent = {{d1n_nind}}. **Both are correct and they differ in "
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 550,
+          "key": "d1n_nind",
+          "ctx": "eckpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 570,
+          "key": "d1n_nind",
+          "ctx": "described it as a long-horizon effect. At n_independent = {{d1n_nind}} it is {{d1n_epi_npos_h1}} of {{d1n_epi_"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 585,
+          "key": "perm_all_nind",
+          "ctx": "rajectories, not binomial ones, computed on the same {{perm_all_nind}} trajectories as the counts beside them;"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 587,
+          "key": "d4_nind",
+          "ctx": " from a bootstrap over whole trajectories, n_independent = {{d4_nind}} ({{d4_npoints}} pooled trajectory-step "
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 614,
+          "key": "e2_fitted_runs",
+          "ctx": "s nearly identical (Figure 3a). Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}} "
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 617,
+          "key": "e2_fitted_runs",
+          "ctx": " all {{run_total}} runs; Figure 3(b) plots only the {{e2_fitted_runs}} the rate is fitted on, so the scatter a"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 703,
+          "key": "cal_rel_npos",
+          "ctx": "_h368}}** | | released checkpoint | {{cal_rel_cov}} | {{cal_rel_npos}}/{{cal_rel_ndim}} | {{perm_oos_relale_p_"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 705,
+          "key": "relale_all_nind",
+          "ctx": "tive one: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{re"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 705,
+          "key": "relale_oos_pos_h368",
+          "ctx": "ated with error on *every* dimension \u2014 against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here. \u00a713"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 724,
+          "key": "d1n_nind",
+          "ctx": "r the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}. The figure the abstract and \u00a713 use is"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 724,
+          "key": "d1n_nind",
+          "ctx": "d1n_epi_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, on the same {{d1n_nind}} trajectories. It does not beat Arm B's "
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 726,
+          "key": "perm_all_nind",
+          "ctx": "8}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 742,
+          "key": "d1n_nind",
+          "ctx": "166` \u2014 against total absolute error, over n_independent = {{d1n_nind}} trajectories, with 95% intervals from a"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 767,
+          "key": "a2_nind",
+          "ctx": "g wrong. [^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent \u2014 st"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 777,
+          "key": "a2_h1_npoints",
+          "ctx": "r. Two things suggested that was worth checking: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, whic"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 786,
+          "key": "a2_nind",
+          "ctx": "r_pooled_ci}} | \u2014 | | everything within a trajectory \u2014 the {{a2_nind}} trajectory means alone | {{a2_r_between"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 802,
+          "key": "a2_nind",
+          "ctx": "als gives **{{a2_rdd}} {{a2_rdd_ci}}**, on n_independent = {{a2_nind}} with a cluster bootstrap over whole tra"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 807,
+          "key": "a2_nind",
+          "ctx": "eporting which episode is hard. **Per horizon, on the same {{a2_nind}} trajectories and the same cluster boots"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 823,
+          "key": "a2_h1_npoints",
+          "ctx": "has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}} *trajectory-level* points and nothing w"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 829,
+          "key": "a2_h1_npoints",
+          "ctx": "out **ranking whole rollouts at one step ahead**, on {{a2_h1_npoints}} points, and \u00a710 now says that rather th"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 850,
+          "key": "d1n_nind",
+          "ctx": "_independent = {{e5_nind}}, where \u00a76.7's own finding used {{d1n_nind}}. Subsampling four trajectories at a tim"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 852,
+          "key": "e5_comp_nind",
+          "ctx": "as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}}, **in-sample** for these arms, which tr"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 852,
+          "key": "d1n_nind",
+          "ctx": "d it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like. **We ran the baselin"
+        },
+        {
+          "section": "9. Method",
+          "line": 1110,
+          "key": "cc_kinds",
+          "ctx": "fore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds, each pinning a fragment of the p"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "a2_h1_npoints",
+          "ctx": "erfectly \u2014 {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npoints}} trajectories, and that is a ranking of "
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1301,
+          "key": "rt_runs_short",
+          "ctx": " iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole "
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1366,
+          "key": "cc_kinds",
+          "ctx": "eck_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: {{cc_kind_list}}. That list is "
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1498,
+          "key": "d4_nind",
+          "ctx": " {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at ev"
+        },
+        {
+          "section": "3. Setup",
+          "line": 197,
+          "key": null,
+          "ctx": "It is not one recording: it is ten concatenated 20-second episodes, and its termination column is identically "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 416,
+          "key": null,
+          "ctx": "edicting no change at all. At 50 Hz one step is 20 ms and the state barely moves, so that is what one should e"
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1272,
+          "key": null,
+          "ctx": "unded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts th"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1322,
+          "key": null,
+          "ctx": "the table beside it printed the held-out arena's 20 of 45. None is a numeral. None appears in `results/paper_n"
+        }
+      ]
+    },
+    {
+      "value": "21",
+      "n_locations": 4,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 4,
+      "sources": [
+        "results/task1_calibration.json",
+        "results/task_d2_recalibration.json",
+        "results/v1_ensemble_topology.json"
+      ],
+      "keys": [
+        "cal_nll_npos",
+        "d2_epi_cov368_hi",
+        "v1_n_citations"
+      ],
+      "locations": [
+        {
+          "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
+          "line": 678,
+          "key": "v1_n_citations",
+          "ctx": "stances of one architecture, not two architectures. {{v1_n_citations}} source citations support the paragraphs"
+        },
+        {
+          "section": "6.5 The correction fails differently rather than succeeding",
+          "line": 691,
+          "key": "cal_nll_npos",
+          "ctx": "cal_faithA_ndim}} dimensions positively correlated to {{cal_nll_npos}}/{{cal_nll_ndim}}, which is chance. Unde"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 701,
+          "key": "cal_nll_npos",
+          "ctx": "ithA_p_h368}} | | corrected Arm A | {{cal_nll_cov}} | {{cal_nll_npos}}/{{cal_nll_ndim}} | {{perm_oos_nll_p_h36"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 866,
+          "key": "d2_epi_cov368_hi",
+          "ctx": " target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%. On the aleatoric term a scalar of {{d"
+        }
+      ]
+    },
+    {
+      "value": "24",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task_d3_perhorizon.json",
+        "results/task_d3b_ens5_power.json"
+      ],
+      "keys": [
+        "d3_ncells_all",
+        "e5_power_worst"
+      ],
+      "locations": [
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 850,
+          "key": "e5_power_worst",
+          "ctx": " {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estima"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 881,
+          "key": "d3_ncells_all",
+          "ctx": " for both quantities. The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={"
+        }
+      ]
+    },
+    {
+      "value": "256",
+      "n_locations": 4,
+      "blocking": true,
+      "n_typed": 2,
+      "n_substituted": 2,
+      "sources": [
+        "results/task_c3_multiplicity.json"
+      ],
+      "keys": [
+        "None",
+        "c3_resamples"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 432,
+          "key": "c3_resamples",
+          "ctx": "be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap ta"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 537,
+          "key": "c3_resamples",
+          "ctx": "\u00a79). At n_independent = {{b2_nind}} the bootstrap has {{c3_resamples}} distinct resamples and the intervals ar"
+        },
+        {
+          "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
+          "line": 659,
+          "key": null,
+          "ctx": "e spread of \u2400 two-layer MLPs read off a single 256-dimensional vector, at whatever point that one trajectory h"
+        },
+        {
+          "section": "Data and code",
+          "line": 1220,
+          "key": null,
+          "ctx": "hes both at pinned commits and verifies two SHA-256 hashes. **The repository's history was rewritten once, and"
+        }
+      ]
+    },
+    {
+      "value": "26",
+      "n_locations": 5,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 5,
+      "sources": [
+        "results/step5_*.json",
+        "results/step5_arm*.json"
+      ],
+      "keys": [
+        "n_runs",
+        "rt_runs",
+        "run_total"
+      ],
+      "locations": [
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 613,
+          "key": "n_runs",
+          "ctx": " this algebra before training, then observed it. Across all {{n_runs}} runs the collapse is linear in iteratio"
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 616,
+          "key": "run_total",
+          "ctx": ",500 and would double-weight them. Figure 3(a) shows all {{run_total}} runs; Figure 3(b) plots only the {{e2_f"
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 620,
+          "key": "run_total",
+          "ctx": "atter and the quoted statistic describe the same set. The {{run_total}} runs, so a reader can count them: | ar"
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1301,
+          "key": "rt_runs",
+          "ctx": "which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of re"
+        },
+        {
+          "section": "Appendix E \u2014 what testing the untested claims would require",
+          "line": 1457,
+          "key": "rt_runs",
+          "ctx": "ator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; "
+        }
+      ]
+    },
+    {
+      "value": "3",
+      "n_locations": 11,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 11,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/r2_independent_ensemble.json",
+        "results/step5_arm*.json",
+        "results/task_d1_threeseed.json",
+        "results/task_d3_ens5.json",
+        "results/v1_ensemble_topology.json"
+      ],
+      "keys": [
+        "a1_sign_pos_h1",
+        "d1_seeds",
+        "e2_nll_runs",
+        "e5_seeds",
+        "r2_from_acc_h8",
+        "r2_n_shared",
+        "v1_n_arms_checked"
+      ],
+      "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 78,
+          "key": "d1_seeds",
+          "ctx": "of {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds, under a rule committed to git be"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "a1_sign_pos_h1",
+          "ctx": " an artifact of the longest horizon; at h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, which is the same "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 388,
+          "key": "d1_seeds",
+          "ctx": " so we report the curve** (Figure 6). Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independe"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 393,
+          "key": "a1_sign_pos_h1",
+          "ctx": "{{a1_floor_over_A_h1}}\u00d7 | {{a1_B_over_floor_h1}}\u00d7 | {{a1_sign_pos_h1}}/{{a1_sign_n_h1}} | | 8 | {{a1_A_h8}} \u00b1 "
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 572,
+          "key": "e5_seeds",
+          "ctx": "le measured.** Three Arm A arms at ensemble size 5 (\u00a76.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {"
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 630,
+          "key": "e2_nll_runs",
+          "ctx": "the objective \u2014 and reverses to {{e2_nll_rate}} in the {{e2_nll_runs}} runs that change it. *Input-independenc"
+        },
+        {
+          "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
+          "line": 677,
+          "key": "v1_n_arms_checked",
+          "ctx": "} per head, {{v1_total_params}} in total, on all {{v1_n_arms_checked}} arms checked. So \u00a76.2's \"our arms fail "
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 932,
+          "key": "r2_n_shared",
+          "ctx": " {{r2_nind}}. The shared-trunk column is the mean over {{r2_n_shared}} seeds; the comparison below is paired a"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 935,
+          "key": "r2_n_shared",
+          "ctx": "conditions}} conditions hold, against every one of the {{r2_n_shared}} shared-trunk seeds. At h = {{v2_deploy_"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 952,
+          "key": "r2_from_acc_h8",
+          "ctx": "8}}\u00d7 | {{r2_total_x_h8}}\u00d7 | {{r2_from_sigma_h8}}% | {{r2_from_acc_h8}}% | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_ac"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1165,
+          "key": "e5_seeds",
+          "ctx": "y made on the released checkpoint alone. We since trained {{e5_seeds}} Arm A arms at ensemble size 5 (\u00a76.7). T"
+        }
+      ]
+    },
+    {
+      "value": "3.49",
+      "n_locations": 3,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/task2_sigma_profile.json",
+        "results/v1_ensemble_topology.json"
+      ],
+      "keys": [
+        "err_faithA_growth",
+        "v1_cap_ratio"
+      ],
+      "locations": [
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 895,
+          "key": "err_faithA_growth",
+          "ctx": "---| | faithful Arm A | {{sig_faithA_growth}}\u00d7 | {{err_faithA_growth}}\u00d7 | | corrected Arm A | {{sig_nll_growth"
+        },
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 901,
+          "key": "err_faithA_growth",
+          "ctx": "* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7. The coverage collapse in Figure 1(b) "
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1180,
+          "key": "v1_cap_ratio",
+          "ctx": "the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own tru"
+        }
+      ]
+    },
+    {
+      "value": "30",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task_b_permutation.json"
+      ],
+      "keys": [
+        "perm_all_holm_n",
+        "perm_oos_holm_n"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 585,
+          "key": "perm_all_holm_n",
+          "ctx": "d none survives Holm\u2013Bonferroni across the arena's {{perm_all_holm_n}} cells \u2014 the smallest is {{perm_all_holm"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 730,
+          "key": "perm_oos_holm_n",
+          "ctx": " three arenas.** Holm\u2013Bonferroni over each arena's {{perm_oos_holm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejec"
+        }
+      ]
+    },
+    {
+      "value": "32",
+      "n_locations": 9,
+      "blocking": true,
+      "n_typed": 1,
+      "n_substituted": 8,
+      "sources": [
+        "results/step0_regimes.json",
+        "results/step4_5_timing.json",
+        "results/task3_three_way.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "keys": [
+        "None",
+        "time_rel_hi",
+        "tw_cells",
+        "v2_history",
+        "win_hist"
+      ],
+      "locations": [
+        {
+          "section": "3. Setup",
+          "line": 215,
+          "key": "win_hist",
+          "ctx": " alone, and the two agree. A window is {{win_len}} rows \u2014 {{win_hist}} of history and {{win_fore}} of forecast"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 254,
+          "key": "v2_history",
+          "ctx": " $${{v3_rel_l1_agg}}$$ with $t_0$ = `history_horizon` = {{v2_history}}: the first {{v2_history}} steps are tea"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 254,
+          "key": "v2_history",
+          "ctx": "h $t_0$ = `history_horizon` = {{v2_history}}: the first {{v2_history}} steps are teacher-forced and excluded. "
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 310,
+          "key": "v2_history",
+          "ctx": "ngth: `len_eval_trajectory` = {{v2_len_eval}} minus the {{v2_history}}-step teacher-forced prefix, which is th"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1028,
+          "key": "tw_cells",
+          "ctx": "ing inferred the mechanism without it. In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory leng"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1029,
+          "key": "tw_cells",
+          "ctx": "cs), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} ("
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1035,
+          "key": "tw_cells",
+          "ctx": "t}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measured effects in opp"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1404,
+          "key": "time_rel_hi",
+          "ctx": "iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) \u2014 on "
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 723,
+          "key": null,
+          "ctx": ": \u2400, \u2400 and \u2400, with h = \u2400 at \u2400 sitting between h=32's \u2400 and h=128's \u2400 \u2014 the horizon added by this revision fall"
+        }
+      ]
+    },
+    {
+      "value": "35.93",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_cov1_h1",
+        "r2_shared_cov1_h1"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 576,
+          "key": "e5_cov1_h1",
+          "ctx": "|---|---| | 1 | {{e5_ratio_h1}}\u00d7 [{{e5_ratio_ci_h1}}] | {{e5_cov1_h1}}% [{{e5_cov1_ci_h1}}] | {{e5_cov2_h1}}% "
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 924,
+          "key": "r2_shared_cov1_h1",
+          "ctx": "{r2_shared_ratio_h1}}\u00d7 | {{r2_indep_cov1_h1}}% | {{r2_shared_cov1_h1}}% | | 8 | {{r2_indep_ratio_h8}}\u00d7 | {{r2_"
+        }
+      ]
+    },
+    {
+      "value": "368",
+      "n_locations": 57,
+      "blocking": true,
+      "n_typed": 7,
+      "n_substituted": 50,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_b_permutation.json",
+        "results/task_d2b_robustness.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "keys": [
+        "None",
+        "d2r_win_n",
+        "d2r_win_pos",
+        "perm_worst_h",
+        "r2_sigma_x_lo_h",
+        "v2_diag_h"
+      ],
+      "locations": [
+        {
+          "section": "Abstract",
+          "line": 14,
+          "key": "v2_diag_h",
+          "ctx": "ratio}}\u00d7 on the reference's own relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, rising to "
+        },
+        {
+          "section": "1. Introduction",
+          "line": 77,
+          "key": "v2_diag_h",
+          "ctx": "horizon**: a factor of {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds, under a rule"
+        },
+        {
+          "section": "1. Introduction",
+          "line": 88,
+          "key": "v2_diag_h",
+          "ctx": " reversing to {{r2_from_acc_h368}}% from accuracy at h = {{v2_diag_h}} (\u00a76.10). - **A working repair**: one mu"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 305,
+          "key": "v2_diag_h",
+          "ctx": "eported at $h \\in \\{1,\\,8,\\,32,\\,{{v2_deploy_h}},\\,128,\\,{{v2_diag_h}}\\}$. Two of those are load-bearing and t"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 309,
+          "key": "v2_diag_h",
+          "ctx": " between them, and v3 states it in prose as well). **h = {{v2_diag_h}}** is the upstream's open-loop diagnosti"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 314,
+          "key": "v2_diag_h",
+          "ctx": " is withdrawn. Both are kept in every table, because h = {{v2_diag_h}} is what makes our numbers comparable to"
+        },
+        {
+          "section": "4. What the original papers claim, and which claims we test",
+          "line": 346,
+          "key": "v2_diag_h",
+          "ctx": "r in text, caption or table. So our {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} is neither a confirmation of a publishe"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 361,
+          "key": "v2_diag_h",
+          "ctx": "d before the result.** The rule below is anchored at h = {{v2_diag_h}}, which \u00a73.1 identifies as the upstream'"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 371,
+          "key": "v2_diag_h",
+          "ctx": "ple. *The sign test, which does not depend on n.* At h = {{v2_diag_h}} the per-episode gap favours autoregress"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 380,
+          "key": "v2_diag_h",
+          "ctx": "e effect size, at every horizon rather than one.* At h = {{v2_diag_h}}, the horizon M-23 is stated over, autor"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "v2_diag_h",
+          "ctx": "_h128}}\u00d7 | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} | | **{{v2_diag_h}}** *(M-23)* | **{{a1_A_h368}} \u00b1 {{a1_A_s"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 402,
+          "key": "v2_diag_h",
+          "ctx": "}}. That is the reading a single figure cannot give: h = {{v2_diag_h}} is the end of a trend rather than a poi"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 406,
+          "key": "v2_diag_h",
+          "ctx": "akest exactly where the model is trained. **Only the h = {{v2_diag_h}} row is pre-registered.** M-23 was commi"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 413,
+          "key": "v2_diag_h",
+          "ctx": "46. **Two things in that table were not visible from h = {{v2_diag_h}} alone, and one of them cuts against us."
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 420,
+          "key": "v2_diag_h",
+          "ctx": "ne should expect; it is stated because \u00a75 quoted the h = {{v2_diag_h}} margin over the floor with no indicatio"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 429,
+          "key": "v2_diag_h",
+          "ctx": "d unfavourable to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_ratio}}\u00d7 rather than {{m23_rati"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 436,
+          "key": "v2_diag_h",
+          "ctx": "g changes \u2014 scores **{{a1_floor_h368}}** in the same h = {{v2_diag_h}} cell, and autoregressive training beats"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 438,
+          "key": "v2_diag_h",
+          "ctx": "8}}\u00d7 worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and {{a1_B_over_floor_h100}}\u00d7 worse at"
+        },
+        {
+          "section": "5.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+          "line": 468,
+          "key": "v2_diag_h",
+          "ctx": "ive-versus-teacher-forcing result \u2014 {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} and {{d1_ratio_h100}}\u00d7 at h = {{v2_depl"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 530,
+          "key": "v2_diag_h",
+          "ctx": "ide \u00b11\u03c3 (\u00a73.1). | model | mean \\|error\\| / mean \u03c3, whole {{v2_diag_h}}-step rollout | coverage at \u00b11\u03c3, h=1 | c"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 542,
+          "key": "v2_diag_h",
+          "ctx": "as a contradiction.* Its {{cal_rel_ratio}}\u00d7 is the whole {{v2_diag_h}}-step rollout on those same {{b2_nind}} "
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 566,
+          "key": "v2_diag_h",
+          "ctx": " {{d1n_epi_over_alea_h1}}\u00d7 better than aleatoric; at h = {{v2_diag_h}} the two-term ratio is {{d1n_epi_over_al"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 568,
+          "key": "v2_diag_h",
+          "ctx": "ts horizon.** At the open-loop diagnostic horizon of h = {{v2_diag_h}} it is {{d1n_epi_ratio_h368}}\u00d7 [{{d1n_ep"
+        },
+        {
+          "section": "6.5 The correction fails differently rather than succeeding",
+          "line": 691,
+          "key": "v2_diag_h",
+          "ctx": "e. Under the trajectory permutation test of \u00a76.6, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faith"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 698,
+          "key": "v2_diag_h",
+          "ctx": "ion across inputs (CoV) | dims with r(\u03c3, error) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 698,
+          "key": "v2_diag_h",
+          "ctx": "ror) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 698,
+          "key": "v2_diag_h",
+          "ctx": "| perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, in-sample | |---|---|---|---|---| | fa"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 705,
+          "key": "v2_diag_h",
+          "ctx": "leatoric head it is not the most informative one: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}}"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 711,
+          "key": "perm_worst_h",
+          "ctx": " The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At "
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 711,
+          "key": "v2_diag_h",
+          "ctx": "erm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h36"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 724,
+          "key": "v2_diag_h",
+          "ctx": " while being {{b2_epi_ratio_h368}}\u00d7 overconfident at h = {{v2_diag_h}}. **All figures in this paragraph are th"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 724,
+          "key": "v2_diag_h",
+          "ctx": "quotes {{d1n_epi_ratio_h368}}\u00d7 for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}. The f"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 755,
+          "key": "v2_diag_h",
+          "ctx": "eement wins at every horizon tested.** Over the full h = {{v2_diag_h}} rollout the counter reaches {{d2b_idx_h"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 765,
+          "key": "d2r_win_pos",
+          "ctx": "teps gives **{{d2r_win}} {{d2r_win_ci}}**, positive at {{d2r_win_pos}} of {{d2r_win_n}} forecast steps with a "
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 765,
+          "key": "d2r_win_n",
+          "ctx": "r_win}} {{d2r_win_ci}}**, positive at {{d2r_win_pos}} of {{d2r_win_n}} forecast steps with a median of {{d2r_w"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 767,
+          "key": "d2r_win_pos",
+          "ctx": "r_win_ci}} is the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}. **All five of those con"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 767,
+          "key": "d2r_win_n",
+          "ctx": "the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}. **All five of those controls remove f"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 796,
+          "key": "d2r_win_n",
+          "ctx": "emoves trajectory difficulty not at all. It is a mean of {{d2r_win_n}} between-trajectory correlations, which "
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 816,
+          "key": "v2_diag_h",
+          "ctx": "| | 128 | {{a2_rdd_h128}} | {{a2_rdd_ci_h128}} | yes | | {{v2_diag_h}} | {{a2_rdd_h368}} | {{a2_rdd_ci_h368}} "
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 929,
+          "key": "v2_diag_h",
+          "ctx": "| {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h368}}\u00d7 | {{r2_share"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 956,
+          "key": "v2_diag_h",
+          "ctx": "}\u00d7 | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}}\u00d7 | {{r2_acc_x_h36"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 963,
+          "key": "r2_sigma_x_lo_h",
+          "ctx": "orizon \u2014 by {{r2_sigma_x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}\u00d7 at its stronges"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 968,
+          "key": "v2_diag_h",
+          "ctx": "hod operates. At the open-loop diagnostic horizon of h = {{v2_diag_h}} the split reverses \u2014 {{r2_from_acc_h368"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 972,
+          "key": "r2_sigma_x_lo_h",
+          "ctx": "h = 1 and h = 8 values, which do not span it \u2014 h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}\u00d7 falls below the st"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1137,
+          "key": "v2_diag_h",
+          "ctx": "h = {{v2_deploy_h}}, and {{d1n_alea_ratio_h368}}\u00d7 at h = {{v2_diag_h}}. Reading the loss took an afternoon and"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1165,
+          "key": "v2_diag_h",
+          "ctx": "100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h368}}\u00d7 at h = {{v2_diag_h}}) \u2014 but the pre-registered rule governin"
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1213,
+          "key": "v2_diag_h",
+          "ctx": "ry one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar"
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1213,
+          "key": "v2_diag_h",
+          "ctx": "* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1498,
+          "key": "v2_diag_h",
+          "ctx": " **Weaker per-dimension than we first reported**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1498,
+          "key": "v2_diag_h",
+          "ctx": "n rollout length, and {{d1n_epi_ratio_h368}}\u00d7 at the h = {{v2_diag_h}} diagnostic horizon; repairable per hori"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 361,
+          "key": null,
+          "ctx": "ns, all required: the out-of-sample gap at h = 368 excludes zero under a bootstrap over independent trajectori"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 721,
+          "key": null,
+          "ctx": "the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised erro"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 721,
+          "key": null,
+          "ctx": " on strength either: its mean correlation at h=368 is \u2400 against \u2400. The two quantities rank comparably; neither"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 721,
+          "key": null,
+          "ctx": "zon test the same way: \u03c3 grows \u2400\u00d7 from h=1 to h=368 while error grows \u2400\u00d7. **The horizon story we first told wa"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 723,
+          "key": null,
+          "ctx": " strongest at long horizon (\u2400 at h=128, \u2400 at h=368) and unremarkable at short (\u2400 at h=1). Both larger arenas i"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 863,
+          "key": null,
+          "ctx": "calibrated against the \u2400% target, and leaves h=368 at \u2400\u2013\u2400%. On the aleatoric term a scalar of \u2400\u2013\u2400 gives \u2400\u2013\u2400% a"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 999,
+          "key": null,
+          "ctx": " own released evaluation reports: nRMSE at h = 368 falls from \u2400 under the released pairing to \u2400 under the caus"
+        }
+      ]
+    },
+    {
+      "value": "39",
+      "n_locations": 4,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 4,
+      "sources": [
+        "results/original_paper_figures.json",
+        "results/step0_regimes.json",
+        "results/task1_calibration.json"
+      ],
+      "keys": [
+        "cal_faithA_npos",
+        "v4_name_n_v1",
+        "win_tail"
+      ],
+      "locations": [
+        {
+          "section": "3. Setup",
+          "line": 218,
+          "key": "win_tail",
+          "ctx": "-respecting count is {{win_usable}} \u2014 {{rows}} rows, less {{win_tail}} that cannot start a full window, less {"
+        },
+        {
+          "section": "6.5 The correction fails differently rather than succeeding",
+          "line": 691,
+          "key": "cal_faithA_npos",
+          "ctx": "ul arm had: the \u03c3-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positive"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 700,
+          "key": "cal_faithA_npos",
+          "ctx": "-|---|---| | faithful Arm A | {{cal_faithA_cov}} | {{cal_faithA_npos}}/{{cal_faithA_ndim}} | {{perm_oos_faithA"
+        },
+        {
+          "section": "References",
+          "line": 1264,
+          "key": "v4_name_n_v1",
+          "ctx": " The two names never co-occur: v1 uses {{v4_name_v1}} {{v4_name_n_v1}} times and no {{v4_name_v3}}, v3 the rev"
+        }
+      ]
+    },
+    {
+      "value": "4.4",
+      "n_locations": 3,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/step5_*.json",
+        "results/task5_analysis.json"
+      ],
+      "keys": [
+        "m23_ratio",
+        "r2_indep_ratio_h32",
+        "rt_longest"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 429,
+          "key": "m23_ratio",
+          "ctx": "d ratio at h = {{v2_diag_h}} is {{d1_ratio}}\u00d7 rather than {{m23_ratio}}\u00d7. For a single seed the bootstrap over"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 926,
+          "key": "r2_indep_ratio_h32",
+          "ctx": "ep_cov1_h8}}% | {{r2_shared_cov1_h8}}% | | 32 | {{r2_indep_ratio_h32}}\u00d7 | {{r2_shared_ratio_h32}}\u00d7 | {{r2_inde"
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1301,
+          "key": "rt_longest",
+          "ctx": "the sum of its stated parts.) The longest single run is {{rt_longest}} hours. An earlier version of this appen"
+        }
+      ]
+    },
+    {
+      "value": "4.61",
+      "n_locations": 10,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 10,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_d1_threeseed.json",
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "a1_ratio_h368",
+        "d1_ratio",
+        "d1n_epi_cov1_h100"
+      ],
+      "locations": [
+        {
+          "section": "Abstract",
+          "line": 13,
+          "key": "d1_ratio",
+          "ctx": "ve training beats teacher forcing on held-out episodes by {{d1_ratio}}\u00d7 on the reference's own relative-L1 err"
+        },
+        {
+          "section": "1. Introduction",
+          "line": 77,
+          "key": "d1_ratio",
+          "ctx": " the advantage grows with forecast horizon**: a factor of {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}} ov"
+        },
+        {
+          "section": "4. What the original papers claim, and which claims we test",
+          "line": 346,
+          "key": "d1_ratio",
+          "ctx": " none is given a number in text, caption or table. So our {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} is neither a conf"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 383,
+          "key": "d1_ratio",
+          "ctx": "(standard deviation over seeds, `ddof=1`) \u2014 a factor of **{{d1_ratio}}\u00d7**. At h = {{v2_deploy_h}}, the method'"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 398,
+          "key": "a1_ratio_h368",
+          "ctx": "_h368}}** | **{{a1_B_h368}} \u00b1 {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}\u00d7** | **{{a1_gap_h368}} {{a1_gap_ci_h368"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 429,
+          "key": "d1_ratio",
+          "ctx": "to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_ratio}}\u00d7 rather than {{m23_ratio}}\u00d7. For a sin"
+        },
+        {
+          "section": "5.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+          "line": 468,
+          "key": "d1_ratio",
+          "ctx": "oduces the autoregressive-versus-teacher-forcing result \u2014 {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} and {{d1_ratio_h1"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 557,
+          "key": "d1n_epi_cov1_h100",
+          "ctx": "pi_ratio_h100}}\u00d7** [{{d1n_epi_ratio_ci_h100}}] | {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 564,
+          "key": "d1n_epi_cov1_h100",
+          "ctx": "d1n_epi_ratio_ci_h100}}]**, with \u00b11\u03c3 coverage of {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] where a cal"
+        },
+        {
+          "section": "11. Broader impact",
+          "line": 1151,
+          "key": "d1n_epi_cov1_h100",
+          "ctx": "_h100}}\u00d7 smaller than the realised error, giving {{d1n_epi_cov1_h100}}% coverage where {{v3_cov_nominal1}}% is"
+        }
+      ]
+    },
+    {
+      "value": "400",
+      "n_locations": 9,
+      "blocking": true,
+      "n_typed": 8,
+      "n_substituted": 1,
+      "sources": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "keys": [
+        "None",
+        "v2_len_eval"
+      ],
+      "locations": [
+        {
+          "section": "3.1 Metrics",
+          "line": 310,
+          "key": "v2_len_eval",
+          "ctx": "s open-loop diagnostic length: `len_eval_trajectory` = {{v2_len_eval}} minus the {{v2_history}}-step teacher-f"
+        },
+        {
+          "section": "3. Setup",
+          "line": 227,
+          "key": null,
+          "ctx": "ze.** Trajectory count is not sample size. Two 400-step trajectories whose spans overlap are not independent e"
+        },
+        {
+          "section": "3. Setup",
+          "line": 229,
+          "key": null,
+          "ctx": "arena contains only \u2400 mutually non-overlapping 400-step trajectories. Every interval in this paper is a bootst"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 373,
+          "key": null,
+          "ctx": " the eight training episodes has \u2400 independent 400-step trajectories against the held-out arena's \u2400 \u2014 \u2400\u00d7 more "
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 547,
+          "key": null,
+          "ctx": "pisodes, n_independent = **\u2400** non-overlapping 400-step trajectories. We use all ten rather than the held-out "
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 871,
+          "key": null,
+          "ctx": "held-out episodes contribute \u2400 non-overlapping 400-step trajectories between them, so each direction fits on n"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1121,
+          "key": null,
+          "ctx": "ependent trajectories, not trajectories.** Two 400-step windows that overlap at all are one piece of evidence,"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1123,
+          "key": null,
+          "ctx": "The held-out arena here contains \u2400 independent 400-step trajectories however many windows are drawn from it, a"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1159,
+          "key": null,
+          "ctx": "m.** The out-of-sample arena has \u2400 independent 400-step trajectories. That is the binding constraint on \u00a75, an"
+        }
+      ]
+    },
+    {
+      "value": "43.8",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task_b_permutation.json"
+      ],
+      "keys": [
+        "perm_null_hi",
+        "perm_worst_null"
+      ],
+      "locations": [
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 711,
+          "key": "perm_worst_null",
+          "ctx": "the dependence, a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensio"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 711,
+          "key": "perm_null_hi",
+          "ctx": "eserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena. "
+        }
+      ]
+    },
+    {
+      "value": "44.0",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_npos_h100",
+        "e5_npos_h128"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 579,
+          "key": "e5_npos_h100",
+          "ctx": "1_h100}}% [{{e5_cov1_ci_h100}}] | {{e5_cov2_h100}}% | {{e5_npos_h100}}/45 | | 128 | {{e5_ratio_h128}}\u00d7 [{{e5_r"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 580,
+          "key": "e5_npos_h128",
+          "ctx": "1_h128}}% [{{e5_cov1_ci_h128}}] | {{e5_cov2_h128}}% | {{e5_npos_h128}}/45 | | 368 | **{{e5_ratio_h368}}\u00d7** [{{"
+        }
+      ]
+    },
+    {
+      "value": "49",
+      "n_locations": 10,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 10,
+      "sources": [
+        "results/comparative_claims.json"
+      ],
+      "keys": [
+        "cc_n",
+        "cc_st_caught",
+        "cc_st_n"
+      ],
+      "locations": [
+        {
+          "section": "Abstract",
+          "line": 36,
+          "key": "cc_n",
+          "ctx": "ed from a named artifact by a build that fails otherwise, and {{cc_n}} comparative claims across {{cc_kinds}} "
+        },
+        {
+          "section": "9. Method",
+          "line": 1110,
+          "key": "cc_n",
+          "ctx": "ream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}"
+        },
+        {
+          "section": "9. Method",
+          "line": 1110,
+          "key": "cc_st_caught",
+          "ctx": "y corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix D giv"
+        },
+        {
+          "section": "9. Method",
+          "line": 1110,
+          "key": "cc_st_n",
+          "ctx": "ectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix D gives the argument"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1365,
+          "key": "cc_n",
+          "ctx": "check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: {{cc_"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1382,
+          "key": "cc_st_caught",
+          "ctx": "r of magnitude and the dimension counts moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught. An assertion"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1382,
+          "key": "cc_st_n",
+          "ctx": "and the dimension counts moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught. An assertion that has quiet"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1392,
+          "key": "cc_st_caught",
+          "ctx": "e claim, and every claim is corrupted on every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} "
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1393,
+          "key": "cc_st_n",
+          "ctx": "ery claim is corrupted on every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} claims, with no"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1393,
+          "key": "cc_n",
+          "ctx": "n every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} claims, with no exemptions. This list i"
+        }
+      ]
+    },
+    {
+      "value": "5",
+      "n_locations": 22,
+      "blocking": true,
+      "n_typed": 6,
+      "n_substituted": 16,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/r2_independent_ensemble.json",
+        "results/step4_5_timing.json",
+        "results/step5_armA_seed0.json (split)",
+        "results/task_b2_epistemic.json",
+        "results/task_d2b_robustness.json",
+        "results/task_d_nind20.json"
+      ],
+      "keys": [
+        "None",
+        "a1_n_excl",
+        "b2_members",
+        "bound_both_train",
+        "d2b_n_horizons_tested",
+        "d2p_n_horizons",
+        "d2p_n_separating",
+        "d2r_ncontrols",
+        "r2_n_indep",
+        "time_rel_lo"
+      ],
+      "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 88,
+          "key": "r2_n_indep",
+          "ctx": "nder a rule committed before the runs.** An ensemble of {{r2_n_indep}} independently-initialised full models, "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 401,
+          "key": "a1_n_excl",
+          "ctx": "onically with forecast depth.** The gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 550,
+          "key": "b2_members",
+          "ctx": "method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} "
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 755,
+          "key": "d2b_n_horizons_tested",
+          "ctx": "nd the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons. **The last column answers th"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 757,
+          "key": "d2p_n_separating",
+          "ctx": "t and the more powerful one. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The "
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 757,
+          "key": "d2p_n_horizons",
+          "ctx": "l one. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The distinction matters at"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 759,
+          "key": "d2p_n_horizons",
+          "ctx": "The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons. At {{d2p_overlap_h}} the marg"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 765,
+          "key": "d2r_ncontrols",
+          "ctx": "win_med}}.[^stepcount] The weakest figure across all {{d2r_ncontrols}} controls is {{d2r_weakest}}. Disagreeme"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 911,
+          "key": "r2_n_indep",
+          "ctx": "e. **The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models from scrat"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 915,
+          "key": "r2_n_indep",
+          "ctx": "h each, {{r2_added_h_total}} h in total, and scored the {{r2_n_indep}} together as an ensemble **at evaluation"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 917,
+          "key": "r2_n_indep",
+          "ctx": "e and no new architecture \u2014 and the disagreement across {{r2_n_indep}} independently-initialised *full models*"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1015,
+          "key": "bound_both_train",
+          "ctx": "}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are train"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "d2p_n_separating",
+          "ctx": "we tested, on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons wher"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1118,
+          "key": "d2p_n_horizons",
+          "ctx": "t that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons where the index is defined \u2014 e"
+        },
+        {
+          "section": "Appendix D \u2014 verifying the paper's own claims",
+          "line": 1404,
+          "key": "time_rel_lo",
+          "ctx": "tion of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{tim"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1498,
+          "key": "d2r_ncontrols",
+          "ctx": "forecast-index counter at every horizon and survives {{d2r_ncontrols}} controls on forecast depth \u2014 the linear"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 569,
+          "key": null,
+          "ctx": "le measured.** Three Arm A arms at ensemble size 5 (\u00a76.7, \u2400 seeds, out-of-sample, n_independent = \u2400) give, ave"
+        },
+        {
+          "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
+          "line": 670,
+          "key": null,
+          "ctx": "is why \u00a76.2's comparison is fair.** Our ensemble-5 arms build one trunk the same way (`src/rwm_model.py:164-16"
+        },
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 702,
+          "key": null,
+          "ctx": "ly \u03c3 the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric CoV is comparable to the ot"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 830,
+          "key": null,
+          "ctx": "fore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1115,
+          "key": null,
+          "ctx": "e released checkpoint and \u2400\u00d7 [\u2400] on the ensemble-5 arms we trained \u2014 and a risk gate or safety margin that rea"
+        },
+        {
+          "section": "12. Limitations",
+          "line": 1162,
+          "key": null,
+          "ctx": ". We since trained \u2400 Arm A arms at ensemble size 5 (\u00a76.7). They reproduce the *direction* of \u00a76.7's finding in"
+        }
+      ]
+    },
+    {
+      "value": "5.1",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_b_permutation.json"
+      ],
+      "keys": [
+        "perm_null_lo",
+        "r2_indep_ratio_h368"
+      ],
+      "locations": [
+        {
+          "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+          "line": 711,
+          "key": "perm_null_lo",
+          "ctx": "}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 929,
+          "key": "r2_indep_ratio_h368",
+          "ctx": "| {{r2_shared_cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h368}}\u00d7 | {{r2_shared_ratio_h368}}\u00d7 | {{r2_ind"
+        }
+      ]
+    },
+    {
+      "value": "5.2",
+      "n_locations": 3,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/step6_3_min_logstd.json"
+      ],
+      "keys": [
+        "o12_rate_ratio",
+        "r2_indep_ratio_h100"
+      ],
+      "locations": [
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 927,
+          "key": "r2_indep_ratio_h100",
+          "ctx": "shared_cov1_h32}}% | | **{{v2_deploy_h}}** | **{{r2_indep_ratio_h100}}\u00d7** | **{{r2_shared_ratio_h100}}\u00d7** | **"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 984,
+          "key": "r2_indep_ratio_h100",
+          "ctx": "ir the interval.** The independent ensemble is {{r2_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} w"
+        },
+        {
+          "section": "8. The released checkpoint's variance state is unreachable at the stated iteration counts",
+          "line": 1064,
+          "key": "o12_rate_ratio",
+          "ctx": "og_delta_logstd` travel at rates differing by about {{o12_rate_ratio}}\u00d7, and a uniform schedule scales both, s"
+        }
+      ]
+    },
+    {
+      "value": "6",
+      "n_locations": 12,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 12,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/r2_independent_ensemble.json",
+        "results/step5_*.json",
+        "results/step5_arm*.json",
+        "results/task_b2_epistemic.json + task_d_nind20.json",
+        "results/task_d3_perhorizon.json"
+      ],
+      "keys": [
+        "a1_n_horizons",
+        "agree_epi",
+        "agree_nh",
+        "d3_nhoriz",
+        "e2_excluded_10k",
+        "m44_n_conditions",
+        "m44_n_conditions_met",
+        "rt_runs_10k"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 401,
+          "key": "a1_n_horizons",
+          "ctx": "t depth.** The gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zer"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 550,
+          "key": "agree_epi",
+          "ctx": "pistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; the aleatoric"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 550,
+          "key": "agree_nh",
+          "ctx": "agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; the aleatoric column agrees a"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 550,
+          "key": "agree_nh",
+          "ctx": "orizons; the aleatoric column agrees at {{agree_alea}} of {{agree_nh}} \u2014 it flips sign at {{agree_alea_dis}}, "
+        },
+        {
+          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+          "line": 614,
+          "key": "e2_excluded_10k",
+          "ctx": "re fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}} 10,000-iteration runs are excluded from"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 883,
+          "key": "d3_nhoriz",
+          "ctx": "han its count suggests:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons \u00d7 two fold directions on the s"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 934,
+          "key": "m44_n_conditions_met",
+          "ctx": "ately.* **M-44 returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions "
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 935,
+          "key": "m44_n_conditions",
+          "ctx": "_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions hold, against every one of t"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1120,
+          "key": "d3_nhoriz",
+          "ctx": "d3_epi_const_ok}} of them (\u00a76.8). The held-out cells are {{d3_nhoriz}} horizons \u00d7 two fold directions on the s"
+        },
+        {
+          "section": "13. Conclusion",
+          "line": 1211,
+          "key": "d3_nhoriz",
+          "ctx": "global multiplier restores {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in each of two fold directions"
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1301,
+          "key": "rt_runs_10k",
+          "ctx": "clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hour"
+        },
+        {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1301,
+          "key": "rt_runs_10k",
+          "ctx": " this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for t"
+        }
+      ]
+    },
+    {
+      "value": "6,821",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/verify_reproduction.json"
+      ],
+      "keys": [
+        "ver_identical",
+        "ver_values"
+      ],
+      "locations": [
+        {
+          "section": "9. Method",
+          "line": 1108,
+          "key": "ver_values",
+          "ctx": "k --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ve"
+        },
+        {
+          "section": "9. Method",
+          "line": 1109,
+          "key": "ver_identical",
+          "ctx": "nd {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%"
+        }
+      ]
+    },
+    {
+      "value": "6.3",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_ratio_h8",
+        "r2_shared_ratio_h8"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 577,
+          "key": "e5_ratio_h8",
+          "ctx": "ci_h1}}] | {{e5_cov2_h1}}% | {{e5_npos_h1}}/45 | | 8 | {{e5_ratio_h8}}\u00d7 [{{e5_ratio_ci_h8}}] | {{e5_cov1_h8}}%"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 925,
+          "key": "r2_shared_ratio_h8",
+          "ctx": "red_cov1_h1}}% | | 8 | {{r2_indep_ratio_h8}}\u00d7 | {{r2_shared_ratio_h8}}\u00d7 | {{r2_indep_cov1_h8}}% | {{r2_shared_"
+        }
+      ]
+    },
+    {
+      "value": "6.30",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_cov1_h368",
+        "r2_shared_cov1_h368"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 581,
+          "key": "e5_cov1_h368",
+          "ctx": "368 | **{{e5_ratio_h368}}\u00d7** [{{e5_ratio_ci_h368}}] | {{e5_cov1_h368}}% [{{e5_cov1_ci_h368}}] | {{e5_cov2_h368"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 929,
+          "key": "r2_shared_cov1_h368",
+          "ctx": "hared_ratio_h368}}\u00d7 | {{r2_indep_cov1_h368}}% | {{r2_shared_cov1_h368}}% | *Same trajectories, same harness, n"
+        }
+      ]
+    },
+    {
+      "value": "7",
+      "n_locations": 6,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 6,
+      "sources": [
+        "results/paper_figures.json",
+        "results/step4_3_differential.json"
+      ],
+      "keys": [
+        "diff_terms",
+        "f4_n_positive"
+      ],
+      "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 61,
+          "key": "diff_terms",
+          "ctx": " losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parame"
+        },
+        {
+          "section": "1. Introduction",
+          "line": 74,
+          "key": "diff_terms",
+          "ctx": "e; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} para"
+        },
+        {
+          "section": "3. Setup",
+          "line": 223,
+          "key": "diff_terms",
+          "ctx": "e paper describes two loss terms; the implementation has {{diff_terms}}. **Evaluation.** Two arenas, held sepa"
+        },
+        {
+          "section": "9. Method",
+          "line": 1101,
+          "key": "f4_n_positive",
+          "ctx": "from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive and {{f4_n_negative}} is n"
+        },
+        {
+          "section": "10. Actionable lessons",
+          "line": 1137,
+          "key": "diff_terms",
+          "ctx": " paper describes two loss terms; the implementation has {{diff_terms}}. The predicted variance has an optimum "
+        },
+        {
+          "section": "Appendix A \u2014 verification chain",
+          "line": 1289,
+          "key": "diff_terms",
+          "ctx": "sses and gradients match** | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | "
+        }
+      ]
+    },
+    {
+      "value": "7,687",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/step5_armA_seed0.json",
+        "results/task_c2_data_budget.json"
+      ],
+      "keys": [
+        "arm_clean_windows",
+        "c2_windows"
+      ],
+      "locations": [
+        {
+          "section": "5.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+          "line": 466,
+          "key": "c2_windows",
+          "ctx": " of rows inside one episode. It is deliberately not the {{c2_windows}} training windows, which overlap almost "
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1010,
+          "key": "arm_clean_windows",
+          "ctx": "rm on {{arm_contam_windows}} windows \u2014 the clean {{arm_clean_windows}} plus {{arm_splices}} splices \u2014 and, bec"
+        }
+      ]
+    },
+    {
+      "value": "7.79",
+      "n_locations": 2,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_cov1_h128",
+        "r2_shared_cov1_h128"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 580,
+          "key": "e5_cov1_h128",
+          "ctx": "| | 128 | {{e5_ratio_h128}}\u00d7 [{{e5_ratio_ci_h128}}] | {{e5_cov1_h128}}% [{{e5_cov1_ci_h128}}] | {{e5_cov2_h128"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 928,
+          "key": "r2_shared_cov1_h128",
+          "ctx": "ared_ratio_h128}}\u00d7 | {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h"
+        }
+      ]
+    },
+    {
+      "value": "75",
+      "n_locations": 3,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/step4_0a_results.json",
+        "results/task_d3b_ens5_power.json"
+      ],
+      "keys": [
+        "e5_power_mean",
+        "stale_pct"
+      ],
+      "locations": [
+        {
+          "section": "Abstract",
+          "line": 33,
+          "key": "stale_pct",
+          "ctx": "ction, overstating the released checkpoint's own error by {{stale_pct}}%. Every quantity here is substituted f"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 850,
+          "key": "e5_power_mean",
+          "ctx": "wenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_p"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1004,
+          "key": "stale_pct",
+          "ctx": "e released evaluation overstates its own model's error by {{stale_pct}}%. **7.3 No held-out evaluation.** Eval"
+        }
+      ]
+    },
+    {
+      "value": "8",
+      "n_locations": 18,
+      "blocking": true,
+      "n_typed": 9,
+      "n_substituted": 9,
+      "sources": [
+        "results/paper_figures.json",
+        "results/r2_independent_ensemble.json",
+        "results/step0_regimes.json",
+        "results/step5_armA_seed0.json (split)",
+        "results/task_c2_data_budget.json",
+        "results/task_c3_multiplicity.json",
+        "results/task_d3_perhorizon.json",
+        "results/task_d3b_ens5_power.json"
+      ],
+      "keys": [
+        "None",
+        "c2_bounds",
+        "c3_family",
+        "d3_worst_ep",
+        "e5_power_worst_h",
+        "f4_n_rules",
+        "n_train_eps",
+        "r2_sigma_x_hi_h",
+        "win_fore"
+      ],
+      "locations": [
+        {
+          "section": "3. Setup",
+          "line": 215,
+          "key": "win_fore",
+          "ctx": " window is {{win_len}} rows \u2014 {{win_hist}} of history and {{win_fore}} of forecast \u2014 so the reference window b"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 373,
+          "key": "n_train_eps",
+          "ctx": "a labels invite a stronger reading than it supports.** {{n_train_eps}} of the {{c3_sign_n}} episodes are train"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 457,
+          "key": "c3_family",
+          "ctx": "city.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state "
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 459,
+          "key": "c3_family",
+          "ctx": "_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm\u2013Bonferroni rejects **{{c3_hol"
+        },
+        {
+          "section": "5.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
+          "line": 466,
+          "key": "c2_bounds",
+          "ctx": "e eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecut"
+        },
+        {
+          "section": "6.7 Ensemble disagreement beats the trivial baseline",
+          "line": 850,
+          "key": "e5_power_worst_h",
+          "ctx": "s on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, b"
+        },
+        {
+          "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
+          "line": 881,
+          "key": "d3_worst_ep",
+          "ctx": " {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 964,
+          "key": "r2_sigma_x_hi_h",
+          "ctx": "_h}}) and {{r2_sigma_x_hi}}\u00d7 at its strongest (h = {{r2_sigma_x_hi_h}}) \u2014 which is the direction trunk-sharing"
+        },
+        {
+          "section": "9. Method",
+          "line": 1101,
+          "key": "f4_n_rules",
+          "ctx": "e 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive a"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 442,
+          "key": null,
+          "ctx": "l. **What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison"
+        },
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 886,
+          "key": null,
+          "ctx": "rvive One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated uncert"
+        },
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 887,
+          "key": null,
+          "ctx": "y about step 368. It cannot report it about step 8 either. Inside the trained horizon, \u03c3 is flat while error g"
+        },
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 890,
+          "key": null,
+          "ctx": "r grows (Figure 2): | model | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A"
+        },
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 890,
+          "key": null,
+          "ctx": " | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A | \u2400\u00d7 | \u2400\u00d7 | | corrected Ar"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 968,
+          "key": null,
+          "ctx": "raft gave the \u03c3 range above as the h = 1 and h = 8 values, which do not span it \u2014 h = \u2400's \u2400\u00d7 falls below the s"
+        },
+        {
+          "section": "9. Method",
+          "line": 1102,
+          "key": null,
+          "ctx": "a mean \u2400\u00d7 and changes \u2400 of \u2400 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon v"
+        },
+        {
+          "section": "Appendix E \u2014 what testing the untested claims would require",
+          "line": 1428,
+          "key": null,
+          "ctx": "mes three, if run at our data budget | | M=32, N=8 optimal (\u00a7IV-C) | no simulator needed; a sweep over M and N"
+        },
+        {
+          "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
+          "line": 1463,
+          "key": null,
+          "ctx": " B is worse than the hold-last floor | | M=32, N=8 is the optimal configuration (\u00a7IV-C) | no | \u2014 | `[cpu: the "
+        }
+      ]
+    },
+    {
+      "value": "8.0",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_ratio_h32",
+        "r2_shared_ratio_h32"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 578,
+          "key": "e5_ratio_h32",
+          "ctx": "_h8}}] | {{e5_cov2_h8}}% | {{e5_npos_h8}}/45 | | 32 | {{e5_ratio_h32}}\u00d7 [{{e5_ratio_ci_h32}}] | {{e5_cov1_h32}"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 926,
+          "key": "r2_shared_ratio_h32",
+          "ctx": "_cov1_h8}}% | | 32 | {{r2_indep_ratio_h32}}\u00d7 | {{r2_shared_ratio_h32}}\u00d7 | {{r2_indep_cov1_h32}}% | {{r2_shared"
+        }
+      ]
+    },
+    {
+      "value": "8.19",
+      "n_locations": 3,
+      "blocking": true,
+      "n_typed": 0,
+      "n_substituted": 3,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json"
+      ],
+      "keys": [
+        "e5_cov1_h100",
+        "r2_shared_cov1_h100"
+      ],
+      "locations": [
+        {
+          "section": "6.2 The measurement",
+          "line": 579,
+          "key": "e5_cov1_h100",
+          "ctx": "100 | **{{e5_ratio_h100}}\u00d7** [{{e5_ratio_ci_h100}}] | {{e5_cov1_h100}}% [{{e5_cov1_ci_h100}}] | {{e5_cov2_h100"
+        },
+        {
+          "section": "6.2 The measurement",
+          "line": 583,
+          "key": "e5_cov1_h100",
+          "ctx": "_deploy_h}} against its {{d1n_epi_ratio_h100}}\u00d7, with {{e5_cov1_h100}}% coverage where a calibrated Gaussian g"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 927,
+          "key": "r2_shared_cov1_h100",
+          "ctx": "io_h100}}\u00d7** | **{{r2_indep_cov1_h100}}%** | **{{r2_shared_cov1_h100}}%** | | 128 | {{r2_indep_ratio_h128}}\u00d7 |"
+        }
+      ]
+    },
+    {
+      "value": "9",
+      "n_locations": 7,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 7,
+      "sources": [
+        "results/step5_armA_seed0.json (split)",
+        "results/t1_bibliography_verified.json",
+        "results/task3_three_way.json"
+      ],
+      "keys": [
+        "bound_total",
+        "t1_n_frag",
+        "t1_n_frag_ok",
+        "tw_cc_cluster_helped"
+      ],
+      "locations": [
+        {
+          "section": "2. Related work",
+          "line": 192,
+          "key": "t1_n_frag_ok",
+          "ctx": " {{t1_n_verified}} of {{t1_n_refs}} entries verified, {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments v"
+        },
+        {
+          "section": "2. Related work",
+          "line": 192,
+          "key": "t1_n_frag",
+          "ctx": "} of {{t1_n_refs}} entries verified, {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments verbatim (`results"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1016,
+          "key": "bound_total",
+          "ctx": "ining episodes, because {{bound_touch_holdout}} of the {{bound_total}} put held-out rows into training. That i"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1030,
+          "key": "tw_cc_cluster_helped",
+          "ctx": "cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} (Figure 5a). The control is inert, diff"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1035,
+          "key": "tw_cc_cluster_helped",
+          "ctx": "'s {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measure"
+        },
+        {
+          "section": "References",
+          "line": 1277,
+          "key": "t1_n_frag_ok",
+          "ctx": "text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments ("
+        },
+        {
+          "section": "References",
+          "line": 1277,
+          "key": "t1_n_frag",
+          "ctx": "ified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments (`results/t1_bibli"
+        }
+      ]
+    },
+    {
+      "value": "999",
+      "n_locations": 2,
+      "blocking": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/step0_regimes.json"
+      ],
+      "keys": [
+        "ep0_rows",
+        "reset_rows_first"
+      ],
+      "locations": [
+        {
+          "section": "3. Setup",
+          "line": 204,
+          "key": "ep0_rows",
+          "ctx": " not work if one assumes they are.** The first episode is {{ep0_rows}} rows and the other {{n_ep_rest_word}} a"
+        },
+        {
+          "section": "3. Setup",
+          "line": 205,
+          "key": "reset_rows_first",
+          "ctx": "} are {{ep_rest_rows}} each, with a reset at rows {{reset_rows_first}}, {{reset_rows_second}} \u2026 {{reset_rows_l"
+        }
+      ]
+    }
+  ],
+  "n_ambiguous": 0,
+  "ambiguous": [],
+  "n_typed_restatements": 0,
+  "typed_restatements": [],
+  "coincidences": {
+    "1.66": "the hold-last floor ratio at h=368 and the sigma-growth factor at h=1 in \u00a76.10's decomposition table; unrelated quantities, and the pair that made \u00a75's stale 1.56 look plausible for a revision",
+    "2.8": "Arm A's margin over the floor at h=368, and the trunk-sharing improvement in \u00a76.10; both are ratios of unrelated things",
+    "45": "the state dimensionality, which is the denominator of every per-dimension count and is one quantity appearing many times",
+    "1.0": "the value a ratio takes when two quantities are equal",
+    "2.0": "Arm A's margin over the floor at h=100, and the ensemble-topology member count; unrelated",
+    "4": "the independent-trajectory count of the out-of-sample arena and several small counts; \u00a73 fixes the first and \u00a712 bounds every claim by it",
+    "100": "the deployment horizon, a percentage, and a share; the horizon is substituted from v2_deploy_h everywhere it is a horizon",
+    "68.27": "the calibrated coverage at +-1 sigma, one constant used in many places"
+  }
+}

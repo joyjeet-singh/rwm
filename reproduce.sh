@@ -317,6 +317,19 @@ stage 28 "Assemble the anonymised supplementary archive" "20 s" \
 # quietly passing forever.
 REPORT=comparative_claims_report.txt stage 28a "Comparative-claim check, with self-test" "10 s" \
       results/comparative_claims.json $PY scripts/check_comparative_claims.py --self-test
+# B8. The abstract used to claim "No number here is typed". It was false and it
+# was unenforced: build_paper.py PRINTED the count of typed numerals every run
+# and asserted nothing about them. This classifies every one against a narrow
+# class or a declared exception, and fails on anything left over -- a measurement
+# in prose. --self-test plants one and requires it to be caught.
+REPORT=typed_numerals_report.txt stage 28a1 "Typed-numeral audit, with self-test" "5 s" \
+      results/typed_numerals.json $PY scripts/typed_numeral_audit.py
+# C1. The kind that would have caught the four defects an hour of reading found
+# and twenty-two check kinds did not: a sentence restating a quantity another
+# section owns. --acceptance re-runs it against the drafts each defect actually
+# stood in and asserts it fires, then asserts it is silent on this tree.
+REPORT=restatement_index_report.txt stage 28a2 "Restatement index over the paper's own numerals" "10 s" \
+      results/restatement_index.json $PY scripts/restatement_index.py
 # The h=100 sweep. Registered as the `horizon-consistency` kind above and run
 # again here on its own, because its report is the useful artifact when it
 # fails: it names every sentence, the horizon its numbers came from, and the

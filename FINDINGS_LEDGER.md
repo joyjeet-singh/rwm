@@ -5043,6 +5043,103 @@ history check would have.
 **Evidence** `INFER` `results/anon_bundle.json` `scripts/submission_check.py`.
 **Status** CONFIRMED · **Relevance** METHOD
 
+### D-14 — Four defects reached the PDF, and all four restate a quantity another section owns · **NEW**
+**What happened.** An independent read of `PAPER.pdf` found four defects by hand, in about an
+hour, in a paper whose abstract claimed "No number here is typed". Twenty-two gates had passed.
+
+**The four.** §5 said teacher forcing is 1.56× worse than the hold-last floor at h = 368 where
+the table three paragraphs above printed 1.66×; the 1.56 is 1.5540/0.9930, the **single-seed**
+Arm B figure, left behind when §5 moved to three seeds and re-derived 4.4× to 4.61× without
+re-deriving what sat downstream of the same pair. Appendix D said the largest held-out deviation
+is aleatoric at h=128 where §6.8 says h=100; h=128 was the extremum before h = 100 entered the
+grid, and the sentence describing the *correction* of an earlier defect went stale itself. §4
+stated a count of six and enumerated five. §9 said the second pre-submission review entered three
+framing retractions where Appendix D said four; git says four, in one commit.
+
+**The single cause.** Every one is **a sentence restating a quantity another section owns**, left
+stale by a revision that correctly updated the owning section. Two revisions produced three of the
+four: adding h = 100 to the evaluation grid, and moving §5 from one seed to three.
+
+**Why twenty-two kinds could not see it.** Every kind checks a sentence against the artifact **in
+the section that computes it**. None looks at a restatement. All four numerals were substituted,
+all from named artifacts, all correct about the artifact they named.
+
+**Evidence** `SRC` `results/restatement_index.json`, `results/typed_numerals.json`,
+`scripts/restatement_index.py`
+**Status** ACTIVE · fixed in the revision-3 pass; the `restatement` kind is the control
+
+### D-15 — The typed-numeral count was printed on every build and asserted by nothing · **NEW**
+**What happened.** `build_paper.py` has printed "numerals typed in prose: N" on every run since
+the paper existed. Nothing consumed it. The abstract meanwhile claimed that no number in the paper
+is typed, which was false in more ways than the one an independent read found.
+
+**What the audit found once written.** Three typed measurements: "roughly 17 CPU-hours" for five
+independent models, where the five ens-1 runs this project recorded cost **4.8 h** of wall clock —
+a factor of three and a half; "about 1.2 h each" for the two added seeds, which took 0.9 h; and
+"rates differing by about 5×", where `step6_3_min_logstd.json` records the ratio as 5.2. A fourth,
+a typed `600×`, was a live derived value with a key already in `paper_numbers.json`.
+
+**A defect in the audit itself, found by its own self-test.** The first version planted its probe
+after `## References`, which the scanner strips — so the probe was never scanned and the audit
+reported that it could not fail. The strip was inherited from `build_paper.py` and removed **every
+appendix** from the scan, this paper's appendices all coming after the bibliography: about a third
+of the document, including Appendix D. That is the vacuous-assertion failure recorded three times
+above, and it took one run to reproduce.
+
+**Evidence** `SRC` `results/typed_numerals.json`, `scripts/typed_numeral_audit.py`
+**Status** ACTIVE
+
+### D-16 — The clean-clone figure came from a run that silently excluded a file · **NEW**
+**What happened.** The paper published 100.00%, 6,821 of 6,821. That run's regenerated set omitted
+`supplementary_manifest.json`, for two independent reasons, either of which would have sufficed.
+
+Stage 28 exited non-zero: the Software Heritage exposure checker and its artifact name the origin
+they ask the archive about, so the repository URL and the account name are the tool's *input*, and
+the bundle's identity scan rejected them. And stage 28 declared no output, so its manifest never
+entered the regenerated-file list `reproduce.sh` writes **even on runs where the stage
+passed**, and
+`verify_reproduction.py` counted it as carried in rather than rewritten.
+
+**Why it matters more than one file.** Appendix D says, in this paper's own words, that a silent
+exclusion is how an earlier version of this claim was inflated fiftyfold (`M-28`). This is that
+shape, inside the claim `M-28` is about.
+
+**Evidence** `SRC` `scripts/build_supplementary.py`, `reproduce.sh`
+**Status** ACTIVE · both fixed; the figure is republished from a run in which stage 28 passes
+
+### D-17 — A hand-maintained list of what the paper quotes had drifted from the paper · **NEW**
+**What happened.** `scripts/t5_anon_transcript.py` gated the correspondence transcript on
+`PAPER_QUOTES`, a typed list of six fragments, each asserted present in the transcript. Two of the
+six were not in the paper: §6.1 lowers "The aleatoric term" to fit its sentence, and the paper
+quotes `"a typo"` with the `is` outside the quotation marks.
+
+**So two of six assertions guarded text that is not there**, while a quotation *added* to the paper
+would have been guarded by nothing. The artifact recorded the drift itself —
+`n_quotations` 6 against `n_quotations_used_in_paper` 4 — and no check compared them.
+
+**Why it was found now.** The consent letter must list exactly what the paper quotes, or consent
+is not informed. Generating that list from `PAPER.template.md` and comparing it against the typed
+one is what surfaced the gap.
+
+**Evidence** `SRC` `results/a1_consent_letter.json`, `scripts/a1_consent_letter.py`
+**Status** ACTIVE · the list is derived from the paper; the typed one is gone
+
+### D-18 — Appendix E promised a price for each untested claim and gave six of eight · **NEW**
+**What happened.** Appendix E opens "so here is what each would cost" over the eight claims
+Appendix F marks untested. It carried six rows. The two missing were generality across
+morphologies and offline MBRL on real robots — the two whose cost is hardest to state honestly.
+
+**And the classification behind §4's sentence was wrong for one claim.** §4 called all six
+simulator-requiring claims "claims about policy learning or hardware". Generality across
+quadruped, humanoid and manipulation is a claim about the **model**: it needs a simulator and
+recorded data from other robots, and no policy. Five of six, not six.
+
+**Found by** the assertion written for `D-14`'s §4 count, which compares Appendix E's row count
+against Appendix F's untested count. Neither table had ever been counted against the other.
+
+**Evidence** `SRC` `results/paper_numbers.json`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

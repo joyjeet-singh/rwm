@@ -1,0 +1,190 @@
+{
+  "template": "PAPER.template.md",
+  "n_typed": 490,
+  "by_class": {
+    "arxiv-id": 14,
+    "exception": 153,
+    "markdown-heading": 25,
+    "section-ref": 135,
+    "figure-ref": 19,
+    "citation-year": 11,
+    "code-location": 35,
+    "ledger-id": 24,
+    "math-mode": 10,
+    "table-row-label": 32,
+    "equation-ref": 8,
+    "date": 7,
+    "table-denominator": 6,
+    "subsection-heading": 4,
+    "withdrawn-figure": 6,
+    "originals-figure": 1
+  },
+  "n_unclassified": 0,
+  "unclassified": [],
+  "n_classes": 18,
+  "n_exceptions": 22,
+  "classes": [
+    {
+      "name": "section-ref",
+      "why": "a cross-reference to a section of this paper or of an original"
+    },
+    {
+      "name": "subsection-heading",
+      "why": "a bold subsection number opening its own paragraph"
+    },
+    {
+      "name": "markdown-heading",
+      "why": "a section heading"
+    },
+    {
+      "name": "arxiv-id",
+      "why": "an arXiv identifier, with or without the arXiv: prefix -- appendices E and F name the originals by bare identifier inside table cells"
+    },
+    {
+      "name": "version-tag",
+      "why": "a version of a cited paper"
+    },
+    {
+      "name": "ledger-id",
+      "why": "a ledger entry identifier"
+    },
+    {
+      "name": "figure-ref",
+      "why": "a figure number in this paper or an original"
+    },
+    {
+      "name": "equation-ref",
+      "why": "an equation number in an original"
+    },
+    {
+      "name": "table-ref",
+      "why": "a table or appendix locator in an original"
+    },
+    {
+      "name": "orig-section",
+      "why": "a section of an original, which uses Roman-numeral sectioning"
+    },
+    {
+      "name": "code-location",
+      "why": "a file:line, a config key or an identifier, inside a code span"
+    },
+    {
+      "name": "citation-year",
+      "why": "the year of a cited publication"
+    },
+    {
+      "name": "date",
+      "why": "a calendar date, with or without the year -- \"the 24 August draft\" names one without repeating the year the sentence already carries"
+    },
+    {
+      "name": "math-mode",
+      "why": "inside a LaTeX math span -- horizon sets, indices and symbolic constants"
+    },
+    {
+      "name": "withdrawn-figure",
+      "why": "a figure this paper QUOTES from its own withdrawn text. It cannot be substituted: no artifact holds it any more, and that is the point of quoting it. Appendix D is largely made of these"
+    },
+    {
+      "name": "originals-figure",
+      "why": "a figure reported by one of the papers under reproduction, on their hardware. Ours cannot produce it and must not appear to"
+    },
+    {
+      "name": "table-row-label",
+      "why": "the leading label cell of a table row, naming the horizon that row reports"
+    },
+    {
+      "name": "table-denominator",
+      "why": "the denominator of a substituted k-of-n count inside a table cell; the numerator is substituted and the total is the fixed state dimensionality"
+    }
+  ],
+  "exceptions": [
+    {
+      "pattern": "\\bform 1\\b|\\bForm 1\\b|\\bform 2\\b|\\bForm 2\\b",
+      "why": "the two nRMSE aggregation forms, named 1 and 2 by this paper (\u00a73.1)"
+    },
+    {
+      "pattern": "\u03c3 = 0\\b|\u03c3 = 0\\.|optimum at \u03c3 = 0|to \u03c3 = 0",
+      "why": "the value the derived optimum takes, which is exactly zero and is the finding"
+    },
+    {
+      "pattern": "identically zero|exactly zero|excludes? zero|spans? zero|above zero|indistinguishable from zero|\\u03c3 \\u2192 0|> 0 at|weight at zero|penalty weight at zero|not zero|zero at",
+      "why": "the word zero, or a comparison against it"
+    },
+    {
+      "pattern": "\\b95% (CI|confidence)|\\b95% interval|at 95%",
+      "why": "the confidence level every interval in this paper is reported at, fixed in \u00a73"
+    },
+    {
+      "pattern": "\u00b11\u03c3|\u00b1 1\u03c3|\u00b12\u03c3|\u00b1 2\u03c3|\u00b13\u03c3|\u00b1 3\u03c3",
+      "why": "the interval width a coverage is reported at, which names the quantity"
+    },
+    {
+      "pattern": "\\b50 Hz\\b",
+      "why": "the dataset's sampling rate, a property of the release"
+    },
+    {
+      "pattern": "\\b20-second episodes\\b|\\b20 ms\\b",
+      "why": "the episode duration and the step interval, both fixed by the sampling rate"
+    },
+    {
+      "pattern": "ensemble size \\d|size-\\d ensemble|\\bM=32, N=8\\b|\\bN=1\\b|\\bM and N\\b|ensemble-5|\\bens5\\b|five-model|\\bfive members\\b|\\bfive independent\\b|\\bM = \\d|\\bN = \\d",
+      "why": "an ensemble configuration named by the originals or by our own arms"
+    },
+    {
+      "pattern": "\\b(500|2,500|5,000|10,000|250)[- ]iterations?\\b|at 2,500\\b|at 10,000\\b|tagged 5,000|says 500|says 2,500|\\b500, 2,500 or 5,000\\b|final 250\\b|paper's 2,500|only at the paper's|rather than only at|\\b(500|2,500|5,000|10,000)-iteration\\b|fourfold extension",
+      "why": "an iteration count that is a configuration setting, not a measurement -- \u00a78's whole subject is that three of these disagree"
+    },
+    {
+      "pattern": "\\b400-step\\b|\\bh = 8\\b|\\bh=8\\b|\\bh = 1\\b|\\bh=1\\b|\\bh = 32\\b|\\bh=32\\b|\\bh = 128\\b|\\bh=128\\b|\\bh = 100\\b|\\bh=100\\b|\\bh = 368\\b|\\bh=368\\b|\\bstep 32\\b|\\bfirst 32\\b|32 of history|8 of forecast|\\b100-step\\b|\\b368-step\\b|steps 1\\.\\.h|1\\.\\.h|\\bh = 400\\b|to h = |up to h|\\b8-step horizon\\b|\\bstep 368\\b|\\bstep 8\\b|step 1 \\u2192 8|\\bstep 1\\b|\\btrained on an 8\\b",
+      "why": "a horizon or trajectory length naming the cell a figure is reported for; the grid itself is fixed in \u00a73.1 and the figures at each are substituted"
+    },
+    {
+      "pattern": "\\b45[- ](term|dimension|state|coupled)|of 45\\b|45 state dimensions|all 45\\b|/45\\b|\\b45 coupled\\b|\\b45 dimensions\\b",
+      "why": "the state dimensionality of the released model, fixed by the checkpoint"
+    },
+    {
+      "pattern": "256-dimensional",
+      "why": "the released model's hidden width, fixed by the checkpoint"
+    },
+    {
+      "pattern": "Bonferroni level of 0\\.05|\\b0\\.05/|\u03b1 = 0\\.05|alpha = 0\\.05",
+      "why": "the significance level, declared in \u00a73 before the tests"
+    },
+    {
+      "pattern": "coverage to 100%|\\b100% coverage\\b|to 100% \\u2014",
+      "why": "the saturation value of a coverage. A recalibration that drives one-step coverage to 100% has produced a vacuous interval; the bound is definitional"
+    },
+    {
+      "pattern": "A value of 1\\.0 means|\\b1\\.0 means no better|weight \\u22121\\.0|\\bweight -1\\.0|\\u03bb = 1\\b|lambda = 1\\b",
+      "why": "the value a ratio or a penalty weight takes as a definitional constant"
+    },
+    {
+      "pattern": "\\bten concatenated\\b|\\bten episodes\\b|\\bthe ten\\b|\\ball ten\\b",
+      "why": "the episode count of the released dataset, a property of the release"
+    },
+    {
+      "pattern": "seeds 0, 1 and 2|seeds 3 and 4|\\bseed \\d\\b|\\bseeds 0-4\\b|\\bseeds 0\\u20134\\b|\\bseed \\d alone\\b",
+      "why": "a seed index"
+    },
+    {
+      "pattern": "SHA-256|sha256",
+      "why": "the name of a hash algorithm"
+    },
+    {
+      "pattern": "log\\(1 \\+ index\\)|\\blog\\(1 ?\\+",
+      "why": "a functional form named in a control's specification"
+    },
+    {
+      "pattern": "\\*t\\u22121\\*|\\*t-1\\*|from \\*t\\u2212|stale by one step|k = -1|k = \\u22121",
+      "why": "an index offset in the action convention, which is what \u00a77.2 is about"
+    },
+    {
+      "pattern": "is \\\"5,000 iterations|his recollection is 5,000|\\\"as I always did\\\"|max_iterations: 500` is",
+      "why": "inside a verbatim quotation from the correspondence, which cannot be rewritten to carry a substituted value without ceasing to be a quotation"
+    },
+    {
+      "pattern": "\\btwo-layer\\b|\\btwo layers\\b|\\bfour HAA\\b|\\btwelve joint\\b|\\btwelve actions\\b",
+      "why": "a count fixed by the released architecture or the released CSV's columns"
+    }
+  ]
+}

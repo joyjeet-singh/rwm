@@ -9,30 +9,32 @@ Model*, arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.1668
 scratch on CPU, checked against the released reference at gradient level.
 
 **The base paper's central training claim reproduces, and the advantage grows with
-horizon.** Under a rule committed to git before the runs that tested it, autoregressive
-training beats teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own
-relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, rising monotonically to
-that figure from {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, where the method deploys.
+horizon.** Under a rule committed to git before the runs, autoregressive training beats
+teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own relative-L1
+error at h = {{v2_diag_h}}, the horizon the rule names, rising to it from
+{{a1_ratio_h100}}× at h = {{v2_deploy_h}}, where the method deploys.
 
-**Neither uncertainty output the follow-up adds is usable as an interval.** At
-h = {{v2_deploy_h}} the ensemble disagreement it penalises rewards with is
-{{d1n_epi_ratio_h100}}× smaller than realised error: {{d1n_epi_cov1_h100}}% of outcomes fall
-inside ±1σ where {{v3_cov_nominal1}}% is calibrated. The per-member σ the method computes
-and discards is a further {{d1n_epi_over_alea_h100}}× worse at h = {{v2_deploy_h}}, and we
-derive why: the implemented objective's optimum is σ = 0.
+**Neither uncertainty output is usable as an interval, and that is not accumulated rollout
+error.** One step ahead, where nothing has accumulated, the ensemble disagreement the method
+penalises rewards with is already {{d1n_epi_ratio_h1}}× smaller than realised error:
+{{d1n_epi_cov1_h1}}% of outcomes fall inside ±1σ where {{v3_cov_nominal1}}% is calibrated. It
+deteriorates from there to {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}. The σ the method
+computes and discards is worse at one step by {{d1n_alea_ratio_h1}}×, and we derive why: the
+implemented objective's optimum is σ = 0.
 
-**As a ranking it survives adversarial testing.** It beats the forecast step index — a free
-counter neither paper ran — at every horizon, and with the rollout and the depth both held
-constant still correlates {{a2_rdd}} with realised error: not merely a report of which
-episode is hard.
+**As a ranking it is far better, with two limits.** It beats the forecast step index — a free
+counter neither paper ran — at every horizon, and correlates {{a2_rdd}} with error holding
+rollout and depth constant. But that evidence is in-sample for a checkpoint trained on all ten
+episodes, and a pre-registered replication on models we trained returns {{e5_verdict}}.
 
-**The interval is repairable.** One multiplier per horizon, fitted on one held-out episode
-and scored on the other, restores nominal coverage on every held-out cell; one global
-multiplier manages {{d3_epi_const_ok}}.
+**Two defects are repairable.** One multiplier per horizon, fitted on one held-out episode and
+scored on the other, restores nominal coverage on every held-out cell. And the released
+evaluation pairs each state with the previous step's action, overstating the released
+checkpoint's own error by {{stale_pct}}%.
 
-No number here is typed, and every claim this work has retracted is kept in the record
-(§9).
-
+Every quantity here is substituted from a named artifact by a build that fails otherwise, and
+{{cc_n}} comparative claims across {{cc_kinds}} kinds are recomputed each build against a
+corrupted expectation, so a check that can no longer fail is caught.
 
 ---
 
@@ -196,8 +198,22 @@ the paper's own text. {{t1_n_verified}} of {{t1_n_refs}} entries verified,
 
 **Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state and policy
 actions at 50 Hz. It is not one recording: it is ten concatenated 20-second episodes, and its
-termination column is identically zero, so nothing in the file marks the boundaries. The reference
-window builder therefore marks all {{win_naive}} windows valid, including {{win_cross}} that
+termination column is identically zero, so nothing in the file marks the boundaries.
+
+**The segments are not all the same length, and the arithmetic below does not work if one
+assumes they are.** The first episode is {{ep0_rows}} rows and the other {{n_ep_rest_word}} are
+{{ep_rest_rows}} each, with a reset at rows {{reset_rows_first}}, {{reset_rows_second}} …
+{{reset_rows_last}} and {{orphan_rows}} orphan row at the end of the file that begins an eleventh
+episode and ends immediately: {{row_structure}}. The boundaries are recovered from the data
+rather than assumed — at every reset row the twelve joint velocities, the four HAA joint
+positions and all twelve actions are exactly zero, and no other row has that fingerprint. Ten
+equal segments of {{ep_rest_rows}} would give one fewer crossing window and one more usable one,
+so a reader checking the counts below against the obvious reading would find them off by one and
+be right to. `results/step0_regimes.json` re-derives the crossing count a second time from the
+segment lengths alone, and the two agree.
+
+A window is {{win_len}} rows — {{win_hist}} of history and {{win_fore}} of forecast — so the
+reference window builder marks all {{win_naive}} windows valid, including {{win_cross}} that
 splice one episode's end onto the next one's start. The usable, episode-respecting count is
 {{win_usable}} — {{rows}} rows, less {{win_tail}} that cannot start a full window, less
 {{win_cross}} that cross a boundary. The contamination rate is {{contam_pct}}%.
@@ -307,18 +323,23 @@ everything. It did not.
 
 **We tested four claims and left eight untested.** The four are the base paper's autoregressive
 -versus-teacher-forcing comparison and its claim that teacher forcing generalises poorly
-(§5), and the follow-up's two claims about what its uncertainty outputs report (§6). Of the {{n_untested_word}} we did not test, **{{appE_n_sim_word}} are claims about policy
-learning or hardware**: zero-shot transfer, the sample-efficiency result, the comparisons
-against SHAC and Dreamer, generality across robot morphologies, and the core claim that
-penalising rewards by disagreement improves the learned policy. Those need a simulator, an
-RL loop and an ANYmal; this work trains no policy at all. **The remaining
-{{appE_n_cpu_word}} need none of that and we still did not run them**: the M/N configuration
-sweep and the MLP/RSSM/transformer baseline comparison are within reach of the CPU budget
-this project already spent, and Appendix E prices both. They are unrun for want of time, not
-for want of hardware. An earlier draft made this a universal claim about all
-{{n_untested_word}}, which Appendix E contradicts two rows later; the `scope-consistency`
-check now reads the quantifier here against the enumeration there, and both counts above are
-derived from those two tables rather than typed. §12 states what that bounds, and Appendix E sets out what testing them would take.
+(§5), and the follow-up's two claims about what its uncertainty outputs report (§6). Of the {{n_untested_word}} we did not test, **{{appE_n_sim_word}} need a simulator we do not
+have**: {{appF_sim_list}}. **{{appF_n_polhw_word}} of those {{appE_n_sim_word}} are claims about
+policy learning or hardware** — every one but {{appF_model_list}}, which needs a simulator and
+recorded data from other robots but is a claim about the model rather than about a policy, and
+does not belong in that bucket however convenient it is to put it there. This work trains no
+policy at all and runs on two CPU cores. **The remaining {{appE_n_cpu_word}} need none of that
+and we still did not run them**: {{appF_cpu_list}} are within reach of the CPU budget this
+project already spent, and Appendix E prices both. They are unrun for want of time, not for want
+of hardware.
+
+Both counts and both lists above are generated from a classification tag carried in Appendix F's
+verdict column, so the enumeration cannot disagree with the count beside it. It did: an earlier
+draft of *this* sentence — itself the replacement for retracted claim `S-17`, which was a count
+defect in this same place — said {{appE_n_sim_word}} and then named {{appF_n_polhw_word}}, and
+called all of them claims about policy learning or hardware when one of them is not. `S-17`
+withdrew a universal quantifier here; its replacement got the arithmetic wrong instead, which is
+the worse failure of the two because the sentence had just been rewritten under scrutiny. §12 states what that bounds, and Appendix E sets out what testing them would take.
 
 **For all {{orig_n_tested}} of the claims we did test, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
@@ -411,10 +432,10 @@ For a single seed the bootstrap over trajectories gives 95% interval
 [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories. **That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised to steps of {{c3_quant}}%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
 *Against a baseline, because neither number means anything without one.* The hold-last
-floor — predicting that nothing changes — scores **{{floor_h368}}** in the same
-h = {{v2_diag_h}} cell, and autoregressive training beats it by **{{floor_over_A}}×** there
+floor — predicting that nothing changes — scores **{{a1_floor_h368}}** in the same
+h = {{v2_diag_h}} cell, and autoregressive training beats it by **{{a1_floor_over_A_h368}}×** there
 and by {{a1_floor_over_A_h100}}× at h = {{v2_deploy_h}}. **Teacher forcing is
-{{B_over_floor}}× worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and
+{{a1_B_over_floor_h368}}× worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and
 {{a1_B_over_floor_h100}}× worse at h = {{v2_deploy_h}}: the arm that reaches a lower
 training loss ends up predicting the future worse than a model that makes no prediction, at
 {{a1_B_worse_than_floor_at}} we measured. That is the sharper statement of what exposure
@@ -442,7 +463,7 @@ and Holm–Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**. The sign 
 
 The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). We cannot test it — it is a claim about policy learning and hardware. But its *world-model* half is a claim about a quantity we can count exactly, and ours is directly comparable.
 
-**Our arms consume {{c2_trans}} distinct state transitions.** That is the {{c2_rows}} rows of the eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecutive pair of rows inside one episode. It is deliberately not the {{c2_windows}} training windows, which overlap almost completely — consecutive 33-step windows start one row apart — nor the {{c2_draws}} window draws a run makes, which resample the same data with replacement. Against the reference's {{c2_ref}}, that is **{{c2_ratio}}× less data, {{c2_pct}}% of its world-model budget**.
+**Our arms consume {{c2_trans}} distinct state transitions.** That is the {{c2_rows}} rows of the eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecutive pair of rows inside one episode. It is deliberately not the {{c2_windows}} training windows, which overlap almost completely — consecutive {{win_len}}-row windows start one row apart — nor the {{c2_draws}} window draws a run makes, which resample the same data with replacement. Against the reference's {{c2_ref}}, that is **{{c2_ratio}}× less data, {{c2_pct}}% of its world-model budget**.
 
 A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result — {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}} — and still beats the hold-last floor, by {{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons. That is what this paper can contribute to the sample-efficiency question without training a policy.
 
@@ -687,7 +708,7 @@ Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faith
 
 **The P column above is not a binomial one, and an earlier draft of this paper was wrong to make it one.** Converting a count of positive per-dimension correlations to a P-value against a fair-coin null assumes the 45 state dimensions are independent trials. They are not. Position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error — including one it was never paired with.
 
-We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which leaves both marginal distributions and the entire cross-dimension dependence structure intact and destroys only the association under test. The correction is large, and it is largest exactly where we leaned hardest. The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}} — a factor of about {{perm_worst_factor}} — because under a null that preserves the dependence, a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average. Observing {{perm_ins_armB_npos_h368}} of {{perm_ins_armB_ndim_h368}} against that null is close to unremarkable. A fair coin, by contrast, centres the count at 22.5 of 45; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena.
+We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which leaves both marginal distributions and the entire cross-dimension dependence structure intact and destroys only the association under test. The correction is large, and it is largest exactly where we leaned hardest. The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}} — a factor of about {{perm_worst_factor}} — because under a null that preserves the dependence, a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average. Observing {{perm_ins_armB_npos_h368}} of {{perm_ins_armB_ndim_h368}} against that null is close to unremarkable. A fair coin, by contrast, centres the count at {{perm_faircoin}} of {{perm_ins_armB_ndim_h368}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena.
 
 So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not.
 The teacher-forced arm collapses in magnitude exactly like the autoregressive ones — same
@@ -887,9 +908,11 @@ the hypothesis, under a rule (M-44) committed to git before any of the artifacts
 together with a power check estimating what that rule could detect at the sample size it would
 face.
 
-**The contrast, and why it is affordable.** Training a genuinely independent five-model ensemble
-the usual way would cost roughly 17 CPU-hours. Arm A at ensemble size 1 already existed at seeds
-0, 1 and 2; we added seeds 3 and 4 at about 1.2 h each and scored the {{r2_n_indep}} together as an
+**The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models
+from scratch costs about {{r2_scratch_h}} h of wall clock on two cores at the iteration count these
+runs use — {{r2_scratch_h}} h against Appendix B's {{rt_hours}} h for the whole project. Arm A at
+ensemble size 1 already existed at seeds 0, 1 and 2; we added {{r2_n_added_word}} more at about
+{{r2_added_h}} h each, {{r2_added_h_total}} h in total, and scored the {{r2_n_indep}} together as an
 ensemble **at evaluation time**. No new training code and no new architecture — and the
 disagreement across {{r2_n_indep}} independently-initialised *full models* is exactly the contrast
 §6.4 asks for. The rollout protocol mirrors the shared-trunk one in every respect except the one
@@ -1038,7 +1061,7 @@ they are not equally plausible:
 
 | assumption | if violated | ruled out by the second parameter? |
 |---|---|---|
-| no learning-rate schedule | a decaying schedule inflates the implied count; a warm-up deflates it | **partly** — `min_logstd` and `log_delta_logstd` travel at rates differing by about 5×, and a uniform schedule scales both, so a schedule alone cannot reconcile them without also changing their ratio |
+| no learning-rate schedule | a decaying schedule inflates the implied count; a warm-up deflates it | **partly** — `min_logstd` and `log_delta_logstd` travel at rates differing by about {{o12_rate_ratio}}×, and a uniform schedule scales both, so a schedule alone cannot reconcile them without also changing their ratio |
 | `log_delta_logstd` initialised as released | a different initialisation moves the origin of the fit and rescales the count linearly | **no** — this is the weakest point of the argument |
 | no warm start from an earlier checkpoint | a warm start makes the count a lower bound on total optimisation, not an estimate of one run | **no** |
 | no gradient clipping in this path | clipping would slow the collapse and inflate the implied count | **partly** — the reference does not clip in the world-model path (X-08), so this is ruled out by source rather than by measurement |
@@ -1077,7 +1100,7 @@ the work.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive and {{f4_n_negative}} is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
-**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix D lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered three more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
+**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix D lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean {{bu_mean_ratio}}× and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
@@ -1283,11 +1306,19 @@ What every downstream number rests on. Each level was passed before the next was
 
 **The {{n_retractions_word_lower}} numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The {{n_retract_framing_word}} framing retractions**, withdrawn as stated claims rather
 than as numbers, and generated from the ledger rather than listed here — a typed
-enumeration beside a generated count is the same defect as a typed count, and this list was
-typed with two entries when the ledger held two:{{n_retract_framing_list}}
+enumeration beside a generated count is the same defect as a typed count. This one was typed
+with {{n_framing_before_last_word}} entries at a time when the ledger held
+{{n_framing_before_last_word}}, and the revision that added {{n_framing_last_cohort_word}} more
+replaced it with a generated list in the same commit, so it never actually stood wrong. It
+appears here as a note rather than above as an entry for that reason, and the reason is luck:
+nothing compared the typed enumeration against the count beside it, and had the two changes
+landed in separate commits the paper would have said {{n_retract_framing_word}} and enumerated
+{{n_framing_before_last_word}}:{{n_retract_framing_list}}
 
-The last four were entered by the second pre-submission review. `S-16`, `S-17` and `S-18`
-are sentences of the 24 August draft that were false. `S-19` is different in kind and worse
+The last {{n_framing_last_cohort_word}} were entered by the second pre-submission review, in a
+single commit — which is how that count is established rather than recalled.
+{{framing_last_cohort_ids_but_last}}
+are sentences of the 24 August draft that were false. {{framing_last_cohort_final}} is different in kind and worse
 in one respect: §8 had already narrowed that claim in the paper, and the narrowing was never
 entered in the ledger, so the withdrawn version went on standing in the ledger's own
 contributions summary and in the public README after the paper had withdrawn it. A
@@ -1306,11 +1337,17 @@ Six failure modes survive it, and all six occurred in this paper. Five are relat
   stated *frequency* — "at exactly one place", "in all four", "the only" — is a claim
   about a count, and no kind bound one to a recomputed count until `frequency-consistency`;
 - **an extremum that is not the extremum** — the worst-calibrated held-out cell named as
-  epistemic at h=1, which is third; the largest deviation is aleatoric at h=128;
+  epistemic at h=1, which is third; the largest deviation is {{d3_worst_q}} at
+  h={{d3_worst_h}}. **This one has now been wrong twice as well**, and the second time was
+  here rather than in §6.8. This sentence named h=128, which was the extremum before h = 100
+  entered the evaluation grid; §6.8 was re-derived when the grid changed and the sentence
+  describing the *correction* was not. Both now read the same key, and the `extremum` kind
+  covers this appendix and not only the section that computes it;
 - **a stated change with the wrong sign** — "a change of **+**0.010", where partialling the
   forecast index out *reduces* the correlation;
 - **two prose descriptions of one ratio that disagree** — "nearly three orders of magnitude" in
-  the abstract against "two orders" in §13, of 600×;
+  the abstract against "two orders" in §13, of the same {{d1n_epi_over_alea_h368}}× at
+  h = {{v2_diag_h}};
 - **a count attributed to the wrong evaluation arena** — 0 of 45 over all ten episodes asserted
   where the table beside it printed the held-out arena's 20 of 45.
 
@@ -1414,13 +1451,18 @@ GPU-parallel simulation, not a data-loading problem.
 | Sample efficiency, {{c2_ref}} against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports {{c2_ref}} pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
 | Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our {{rt_hours}} h scale; the model training is the cheap half and the data is not |
+| Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §12's open question about what the miscalibration costs |
 | Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's {{rt_hours}} h of CPU training per architecture, times three, if run at our data budget |
 | M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; a modest sweep is a small multiple of that |
 
-**The two at the bottom are within reach of this setup** and are the honest next steps for anyone
-extending this work on CPU. The four above them are not, and no amount of care with the released
-CSV changes that.
+**The {{appE_n_cpu_word}} at the bottom are within reach of this setup** — {{appF_cpu_list}} —
+and are the honest next steps for anyone extending this work on CPU. The {{appE_n_sim_word}} above
+them are not, and no amount of care with the released CSV changes that. This table has one row per
+untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion that counts its rows
+against Appendix F's was written, and the two it omitted were the two whose cost is hardest to
+state honestly.
 
 **What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
 items, it bears directly on the one limitation §12 states that our measurements cannot bound —
@@ -1448,15 +1490,15 @@ names. All locations, and the occurrence counts that establish that, are recorde
 |---|---|---|---|
 | RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 4 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
 | Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
-| M=32, N=8 is the optimal configuration (§IV-C) | no | — | we use the released configuration and did not sweep it |
-| Beats MLP, RSSM and transformer baselines (§IV-D) | no | plotted in Fig. 4; no numbers in text | the lite release ships only the RNN variant |
-| Zero-shot hardware transfer (§IV-E) | no | — | no hardware; this is a dynamics-model reproduction |
-| Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **{{orig_se_rwm}} against {{orig_se_ppo}} state transitions** at equal real tracking reward ({{orig_se_rwm_rew}} against {{orig_se_ppo_rew}}), Table I — the only table of numbers in either paper | **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
-| MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | no policy learning reproduced |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | no | plotted in Fig. 4; no numbers in text | one released dataset, ANYmal D flat |
+| M=32, N=8 is the optimal configuration (§IV-C) | no | — | `[cpu: the M/N configuration sweep]` we use the released configuration and did not sweep it |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[cpu: the MLP/RSSM/transformer baseline comparison]` the lite release ships only the RNN variant |
+| Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |
+| Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **{{orig_se_rwm}} against {{orig_se_ppo}} state transitions** at equal real tracking reward ({{orig_se_rwm_rew}} against {{orig_se_ppo_rew}}), Table I — the only table of numbers in either paper | `[policy, hardware: the sample-efficiency result]` **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
+| MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | `[policy: the comparisons against SHAC and Dreamer]` no policy learning reproduced |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[model: generality across robot morphologies]` one released dataset, ANYmal D flat |
 | Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** A "strong correlation" is asserted with no coefficient, interval or sample size; plotted in Fig. 2 (right) | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at every horizon and survives {{d2r_ncontrols}} controls on forecast depth — the linear partial that keeps {{d2b_par_all}}, and four harder ones — plus a sixth on trajectory difficulty — the last giving {{a2_rdd}} {{a2_rdd_ci}} with both the rollout and the depth held constant (§6.7, M-45). **Weaker per-dimension than we first reported**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_ndim_h368}} sign count gives a permutation P of {{perm_oos_epi_p_h368}} (out-of-sample) and {{perm_ins_epi_p_h368}} (in-sample), and no cell survives multiplicity correction (§6.6). **Not supported as a scale**: {{d1n_epi_ratio_h100}}× overconfident at h = {{v2_deploy_h}}, the method's own rollout length, and {{d1n_epi_ratio_h368}}× at the h = {{v2_diag_h}} diagnostic horizon; repairable per horizon (§6.8) |
 | Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§6.3) |
-| Offline MBRL on real robots (2504.16680v1) | no | — | not tested |
-| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.7), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§12) |
+| Offline MBRL on real robots (2504.16680v1) | no | — | `[policy, hardware: offline MBRL on real robots]` not tested |
+| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.7), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§12) |
 
 ---

@@ -54,6 +54,26 @@ def main():
     put("contam_pct", round(100 * w["boundary_crossing_windows"]
                             / w["naive_windows_reference_builder_marks_valid"], 2),
         "results/step0_regimes.json")
+    # B6/B7. The window LENGTH -- §5.1 said 33 where the config says 32 history +
+    # 8 forecast = 40, which is the only length consistent with 10,000 - 39 =
+    # 9,961 -- and the ROW STRUCTURE that makes the counts above derivable. §3
+    # said "ten concatenated 20-second episodes"; taken literally that is ten
+    # segments of 1,000, which gives 351 crossing and 9,610 usable and makes the
+    # paper look off by one.
+    put("win_len", w["window"], "results/step0_regimes.json")
+    put("win_hist", w["history_horizon"], "results/step0_regimes.json")
+    put("win_fore", w["forecast_horizon"], "results/step0_regimes.json")
+    put("ep0_rows", f'{w["episode_lengths"][0]:,}', "results/step0_regimes.json")
+    put("ep_rest_rows", f'{w["episode_lengths"][1]:,}', "results/step0_regimes.json")
+    put("n_ep_rest", len(w["episode_lengths"]) - 1, "results/step0_regimes.json")
+    put("n_ep_rest_word", WORDS.get(len(w["episode_lengths"]) - 1,
+                                    str(len(w["episode_lengths"]) - 1)).lower(),
+        "results/step0_regimes.json")
+    put("orphan_rows", w["orphan_rows"], "results/step0_regimes.json")
+    put("row_structure", w["row_structure"], "results/step0_regimes.json")
+    put("reset_rows_first", f'{w["reset_rows"][0]:,}', "results/step0_regimes.json")
+    put("reset_rows_second", f'{w["reset_rows"][1]:,}', "results/step0_regimes.json")
+    put("reset_rows_last", f'{w["reset_rows"][-1]:,}', "results/step0_regimes.json")
 
     # --- calibration (contribution 1) -------------------------------------
     lab = {"faithful (mse)": "faithA", "corrected (nll)": "nll",
@@ -212,6 +232,15 @@ def main():
     put("cc_st_n", _st["n"], "results/comparative_claims.json")
     put("cc_st_caught", _st["caught"], "results/comparative_claims.json")
     put("cc_kinds", len({c["kind"] for c in CC["claims"]}), "results/comparative_claims.json")
+    # B8. What the abstract is now allowed to claim about its own numbers, from
+    # the audit that enforces it rather than from a sentence that asserted it.
+    TN = J("typed_numerals.json")
+    assert TN["n_unclassified"] == 0, (
+        f"{TN['n_unclassified']} typed numerals are unclassified; the paper may not "
+        "claim its numerals are all addresses or declared constants until they are")
+    put("tn_typed", TN["n_typed"], "results/typed_numerals.json")
+    put("tn_classes", TN["n_classes"], "results/typed_numerals.json")
+    put("tn_exceptions", TN["n_exceptions"], "results/typed_numerals.json")
     # C5(rev2), 3.5. Section 9 said "N kinds" from this key while appendix D
     # enumerated eight by hand, and the two had drifted seven apart. The
     # enumeration is generated from the same set the count comes from, so the
@@ -258,6 +287,9 @@ def main():
         "frequency-consistency": "a frequency stated in words -- \"at every horizon\", \"at "
                                  "exactly one place\" -- matches a count recomputed from the "
                                  "artifacts",
+        "restatement": "no sentence restates a quantity another section owns -- no numeral is "
+                       "typed into the slot a substituted one fills elsewhere, and no section "
+                       "prints two different quantities as the same numeral",
     }
     _missing = [k for k in _kinds if k not in _blurb]
     assert not _missing, f"check kinds with no appendix D description: {_missing}"
@@ -370,6 +402,54 @@ def main():
     ORD = {1: "a seventh", 2: "two further", 3: "three further", 4: "four further"}
     put("n_retract_framing_phrase", ORD.get(len(fram), f"{len(fram)} further"), "FINDINGS_LEDGER.md")
     put("n_retract_total", len(retr) + len(fram), "FINDINGS_LEDGER.md")
+
+    # B4/B5. Which review entered which framing retraction, from git rather than
+    # from memory.
+    #
+    # §9 said "the second pre-submission review entered three more framing
+    # retractions"; appendix D said "The last four were entered by the second
+    # pre-submission review", and enumerated four. Both sentences restate a
+    # quantity that neither of them computes, and one of them was wrong: the
+    # commit that entered S-16, S-17, S-18 and S-19 is a single commit and it
+    # entered four.
+    #
+    # A framing retraction's COHORT is the commit that first introduced its
+    # ledger heading. Cohorts are ordered by commit time; the last cohort is the
+    # most recent review's, which is what both sentences are about.
+    _sha = {}
+    for sid in fram:
+        _out = subprocess.run(
+            ["git", "log", "--format=%H\t%ct", "-S", "### " + sid + " \u2014",
+             "--", "FINDINGS_LEDGER.md"],
+            capture_output=True, text=True).stdout.strip().split("\n")
+        assert _out and _out[-1], f"no commit introduces the ledger heading for {sid}"
+        _h, _t = _out[-1].split("\t")
+        _sha[sid] = (_h, int(_t))
+    _cohorts = {}
+    for sid, (h, t) in _sha.items():
+        _cohorts.setdefault(h, {"t": t, "ids": []})["ids"].append(sid)
+    _ordered = sorted(_cohorts.values(), key=lambda c: c["t"])
+    _last = _ordered[-1]["ids"]
+    _earlier = [x for c in _ordered[:-1] for x in c["ids"]]
+    put("n_framing_last_cohort", len(_last), "FINDINGS_LEDGER.md + git log")
+    put("n_framing_last_cohort_word", WORDS.get(len(_last), str(len(_last))).lower(),
+        "FINDINGS_LEDGER.md + git log")
+    put("n_framing_before_last", len(_earlier), "FINDINGS_LEDGER.md + git log")
+    put("n_framing_before_last_word", WORDS.get(len(_earlier), str(len(_earlier))).lower(),
+        "FINDINGS_LEDGER.md + git log")
+    put("n_framing_cohorts", len(_ordered), "FINDINGS_LEDGER.md + git log")
+    put("framing_last_cohort_ids", ", ".join(f"`{x}`" for x in sorted(_last)),
+        "FINDINGS_LEDGER.md + git log")
+    # The last cohort's entries, less the final one, which appendix D describes
+    # separately because it is different in kind: "`S-16`, `S-17` and `S-18` are
+    # sentences of the 24 August draft that were false. `S-19` is different..."
+    put("framing_last_cohort_ids_but_last",
+        ", ".join(f"`{x}`" for x in sorted(_last)[:-1][:-1])
+        + " and " + f"`{sorted(_last)[:-1][-1]}`" if len(_last) > 2 else "",
+        "FINDINGS_LEDGER.md + git log")
+    put("framing_last_cohort_final", f"`{sorted(_last)[-1]}`",
+        "FINDINGS_LEDGER.md + git log")
+    assert len(_last) + len(_earlier) == len(fram)
 
     # E2 -- the residual factor between the implied iteration count and the one
     # the checkpoint's author recalls. The abstract said only "not reachable",
@@ -692,6 +772,35 @@ def main():
     put("rt_hours_short", f"{(_t-_t10)/3600:.1f}", "results/step5_*.json")
     put("rt_runs_short", sum(1 for i, _ in _runs if i != 10000), "results/step5_*.json")
 
+    # B8. Three measured quantities that were TYPED in prose, found by classifying
+    # every numeral the template carries rather than by reading (see
+    # scripts/typed_numeral_audit.py). "roughly 17 CPU-hours" and "about 1.2 h
+    # each" describe runs whose wall clock this project records to the second, and
+    # the first was not close: five ens-1 seeds at the iteration count R2 uses cost
+    # about a fifth of it.
+    _R2d = J("r2_independent_ensemble.json")["design"]
+    _r2_iters = _R2d["iterations"]
+    _r2_seeds = _R2d["independent_seeds"]
+    _r2_shared = _R2d["shared_trunk_seeds"]
+    _r2_added = [x for x in _r2_seeds if x not in _r2_shared]
+    _seed_h = {}
+    for _sd in _r2_seeds:
+        _f = f"results/step5_armA_seed{_sd}.json"
+        _d = json.load(open(_f))
+        assert _d["hyperparameters"]["iterations"] == _r2_iters, (
+            f"{_f} ran {_d['hyperparameters']['iterations']} iterations; R2's design "
+            f"says {_r2_iters}, so its wall clock does not price R2's ensemble")
+        _seed_h[_sd] = _d["wall_clock_s"] / 3600.0
+    _mean_h = sum(_seed_h.values()) / len(_seed_h)
+    put("r2_n_added", len(_r2_added), "results/r2_independent_ensemble.json")
+    put("r2_n_added_word", WORDS.get(len(_r2_added), str(len(_r2_added))).lower(),
+        "results/r2_independent_ensemble.json")
+    put("r2_added_h", f"{sum(_seed_h[s] for s in _r2_added) / len(_r2_added):.1f}",
+        "results/step5_armA_seed*.json")
+    put("r2_scratch_h", f"{_mean_h * len(_r2_seeds):.1f}", "results/step5_armA_seed*.json")
+    put("r2_added_h_total", f"{sum(_seed_h[s] for s in _r2_added):.1f}",
+        "results/step5_armA_seed*.json")
+
     # Section 8 illustrated the host-dependence of step4_5_timing.json with a
     # typed anecdote ("46.5 s idle took 109.7 s under load") that appears in no
     # artifact. The file records its own across-repeat standard deviation, which
@@ -894,10 +1003,83 @@ def main():
     put("appE_n_cpu", len(_e_cpu), "PAPER.template.md, Appendix E table")
     put("appE_n_cpu_word", WORDS.get(len(_e_cpu), str(len(_e_cpu))).lower(),
         "PAPER.template.md, Appendix E table")
-    _n_sim = len(_f_untested) - len(_e_cpu)
+
+    # B3. §4 stated a count of six and then ENUMERATED five. The count came from
+    # here; the list was typed. That sentence is the replacement for retracted
+    # claim S-17, which was itself a count defect in the same place, so a second
+    # count defect in the replacement is worse than the first.
+    #
+    # Both now come from a `[tag]` at the head of each untested row's verdict cell
+    # in Appendix F. The tags also settle a question the enumeration was hiding:
+    # "generality across quadruped, humanoid, manipulation" is tagged `model`, not
+    # `policy` or `hardware`. It needs a simulator and datasets from other robots,
+    # but it is a claim about the MODEL, so the sentence saying all six are about
+    # policy learning or hardware was false about one of them even once the count
+    # was right.
+    def _cell(row, i):
+        return re.split(r"(?<!\\)\|", row.strip("|"))[i].strip()
+
+    def _tag(row):
+        """`[class, class: short name]` at the head of an untested row's verdict.
+
+        The classes drive §4's counts; the short name is what §4 calls the claim.
+        Both live beside the claim rather than in prose, so the enumeration and
+        the count cannot disagree with the table or with each other.
+        """
+        m = re.match(r"`\[([^\]]+)\]`", _cell(row, 3))
+        if not m:
+            return None
+        classes, _, name = m.group(1).partition(":")
+        return ([c.strip() for c in classes.split(",")], name.strip())
+
+    def _tags(row):
+        t = _tag(row)
+        return t[0] if t else []
+
+    def _label(row):
+        t = _tag(row)
+        assert t and t[1], f"no short name in the tag for: {_cell(row, 0)[:60]}"
+        return t[1]
+
+    _untagged = [_label(r) for r in _f_untested if not _tags(r)]
+    assert not _untagged, (
+        "untested Appendix F rows with no `[tag]` in their verdict cell, so §4's "
+        f"count and enumeration cannot be derived from them: {_untagged}")
+    _f_cpu = [r for r in _f_untested if "cpu" in _tags(r)]
+    _f_sim = [r for r in _f_untested if "cpu" not in _tags(r)]
+    assert len(_f_cpu) == len(_e_cpu), (
+        f"Appendix F tags {len(_f_cpu)} untested claims `cpu` while Appendix E "
+        f"prices {len(_e_cpu)} as needing no simulator")
+    # Appendix E promises a price for EACH untested claim. It listed six of eight.
+    assert len(_appE) == len(_f_untested), (
+        f"Appendix E prices {len(_appE)} claims; Appendix F marks {len(_f_untested)} "
+        "untested, and Appendix E's own opening says it prices each of them")
+    _f_polhw = [r for r in _f_sim if {"policy", "hardware"} & set(_tags(r))]
+    _f_model = [r for r in _f_sim if not ({"policy", "hardware"} & set(_tags(r)))]
+    _n_sim = len(_f_sim)
+    assert _n_sim == len(_f_untested) - len(_e_cpu)
     put("appE_n_sim", _n_sim, "PAPER.template.md, Appendix E + F tables")
     put("appE_n_sim_word", WORDS.get(_n_sim, str(_n_sim)).lower(),
         "PAPER.template.md, Appendix E + F tables")
+    put("appF_n_polhw", len(_f_polhw), "PAPER.template.md, Appendix F verdict tags")
+    put("appF_n_polhw_word", WORDS.get(len(_f_polhw), str(len(_f_polhw))),
+        "PAPER.template.md, Appendix F verdict tags")
+    put("appF_n_model", len(_f_model), "PAPER.template.md, Appendix F verdict tags")
+
+    def _english(items):
+        items = list(items)
+        if len(items) == 1:
+            return items[0]
+        return ", ".join(items[:-1]) + " and " + items[-1]
+
+    put("appF_sim_list", _english(_label(r) for r in _f_sim),
+        "PAPER.template.md, Appendix F verdict tags")
+    put("appF_polhw_list", _english(_label(r) for r in _f_polhw),
+        "PAPER.template.md, Appendix F verdict tags")
+    put("appF_model_list", _english(_label(r) for r in _f_model),
+        "PAPER.template.md, Appendix F verdict tags")
+    put("appF_cpu_list", _english(_label(r) for r in _f_cpu),
+        "PAPER.template.md, Appendix F verdict tags")
 
     # A6 -- what the originals report for each claim we tested
     OP = J("original_paper_figures.json")
@@ -938,6 +1120,12 @@ def main():
     _nulls = [PM["arenas"][a]["models"][l][h]["null_mean"]
               for a in PM["arenas"] for l in _ptag
               for h in PM["arenas"][a]["models"][l]]
+    # B8. "rates differing by about 5x" in §8's assumption table was typed; the
+    # artifact that computes both rates also computes their ratio.
+    put("o12_rate_ratio", f'{J("step6_3_min_logstd.json")["rate_ratio"]:.1f}',
+        "results/step6_3_min_logstd.json")
+    put("perm_faircoin", f'{PM["arenas"]["in-sample"]["models"]["teacher-forced armB"]["368"]["n_dims"] / 2:g}',
+        "results/task_b_permutation.json")
     put("perm_null_lo", f"{min(_nulls):.1f}", "results/task_b_permutation.json")
     put("perm_null_hi", f"{max(_nulls):.1f}", "results/task_b_permutation.json")
 

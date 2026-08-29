@@ -313,7 +313,7 @@ CLAIMS = [
     # paper: 17 training runs against 24, 4,804 regenerated values against
     # 6,073, a headline the paper had reframed.
     {"id": "C11.1", "kind": "cross-artifact-sync", "where": "README",
-     "says": "No number here is typed",
+     "says": "recomputed each build against a",
      # C3(rev2): the page count is here because the README quoted "9 pages" for a
      # 30-page PDF for two revisions, and nothing compared them. It moves every
      # time the paper grows, which is exactly the property that made it drift.
@@ -321,7 +321,7 @@ CLAIMS = [
               "n_retractions_word", "n_retract_framing_word"],
      "file": "README.md"},
     {"id": "C11.2", "kind": "cross-artifact-sync", "where": "MODEL_CARD",
-     "says": "No number here is typed",
+     "says": "recomputed each build against a",
      "keys": ["d1n_epi_ratio_h100", "e5_ratio_h100", "m44_ratio_gain",
               "r2_indep_ratio_h100"],
      "file": "MODEL_CARD.md"},
@@ -337,9 +337,37 @@ CLAIMS = [
     # the count would have been the wrong trade in a revision whose whole subject
     # is that unlabelled horizons made sentences wrong. The word cap moved 250 to
     # 260 for the same reason and the prose around the numbers was cut to fit.
+    #
+    # C1(rev3): 262 to 324 words and 13 to 15 numerals. This is the second
+    # deliberate raise and it is larger than the first, so the reason is set out
+    # rather than asserted. Four things were ADDED to the abstract under the
+    # revision brief, against one removal:
+    #
+    #   E1  the calibration claim now LEADS with h = 1, and says in the abstract
+    #       that the failure is not accumulated rollout error. That objection --
+    #       a per-step conditional sigma is not an estimate of open-loop
+    #       accumulated error -- is the first thing a reviewer raises, and
+    #       meeting it in the abstract is worth more than the words it costs.
+    #   E2  the ranking claim now carries its two qualifications: the evidence is
+    #       in-sample for a checkpoint trained on all ten episodes, and the
+    #       pre-registered replication on our own models returned DOES NOT
+    #       GENERALISE. Both were in §6.7 and §12 and neither reached the
+    #       abstract, which is exactly the shape of an abstract a reader feels
+    #       managed by.
+    #   D4  §7.2's action-alignment defect, which is the most immediately useful
+    #       finding here for anyone using the released repository.
+    #   B8  the provenance sentence, which now states what the build ENFORCES
+    #       rather than the false claim it replaced.
+    #   D2  the retraction sentence was removed; abstract space is for results.
+    #
+    # The budget exists so the abstract stays readable, not so it stays short at
+    # the cost of qualifications the body already makes. 322 words is the tightest
+    # this content compresses to; two full passes were spent getting there from
+    # 379. The cap is set 2 above it so an ordinary rewording does not fail the
+    # build, and not so far above that the next addition goes unnoticed.
     {"id": "C12.1", "kind": "abstract-budget", "where": "abstract",
      "says": "The base paper's central training claim reproduces",
-     "max_words": 262, "max_numerals": 13},
+     "max_words": 324, "max_numerals": 15},
 
     # ---- C13 interval-required -------------------------------------------
     # 6.2's ratios and coverages were bare point estimates in a paper whose
@@ -463,6 +491,18 @@ CLAIMS = [
      "count": ("paper_numbers.json", "m44_n_conditions_met.value"),
      "total": ("paper_numbers.json", "m44_n_conditions.value"),
      "expect": "all", "span": 140},
+
+    # ---- C19 restatement --------------------------------------------------
+    # THE class this revision exists for, and the one none of the twenty kinds
+    # above could see. Every kind here verifies a sentence against the artifact
+    # in the section that COMPUTES it. None looks at a sentence restating a
+    # quantity another section owns, and all four defects an independent reader
+    # found by hand were of exactly that shape. Delegated to
+    # scripts/restatement_index.py, which also carries an acceptance run against
+    # the drafts each defect stood in -- a check validated only against the tree
+    # it was written from is the vacuous assertion recorded four times above.
+    {"id": "C19.1", "kind": "restatement", "where": "whole paper",
+     "says": "Curves are reported at"},
 
     {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix E",
      "says": "within reach of the CPU budget this project already spent",
@@ -783,6 +823,21 @@ def evaluate(c, paper, override=None):
         return ok, (f'{c_} of {t_} -> "{got}", text claims "{want}"'
                     + (f'; wording {said[:2]}' if said else '; NO matching wording in the window')
                     + ('' if win else '; the fragment is not in the paper'))
+    if k == "restatement":
+        import restatement_index
+        text = (exp["_template_text"] if exp.get("_template_text")
+                else open("PAPER.template.md").read())
+        vals = art("paper_numbers.json")
+        tr = restatement_index.typed_restatements(text, vals)
+        _, amb = restatement_index.analyse(restatement_index.scan(text, vals), vals)
+        return not (tr or amb), (
+            f'{len(tr)} typed restatement(s), {len(amb)} ambiguous numeral(s)'
+            + ('' if not tr else
+               f'; first: {tr[0]["typed"]} in §{tr[0]["typed_section"][:24]} against '
+               f'{tr[0]["key"]}={tr[0]["key_value"]}')
+            + ('' if not amb else
+               f'; ambiguous: {amb[0]["value"]} as {amb[0]["units"]} in '
+               f'§{amb[0]["section"][:24]}'))
     if k == "scope-consistency":
         # A universal quantifier over a set the paper enumerates elsewhere. The
         # quantifier is forbidden outright in the named section: "without
@@ -894,6 +949,17 @@ def corruption_for(c):
         # Move the count off the frequency the sentence claims: "every" must
         # reject a count that is not the total, "none" one that is not zero.
         return {"_forced_count": 1 if c["expect"] in ("all", "none") else 0}
+    if k == "restatement":
+        # Plant appendix D's actual defect back into the template: a typed
+        # horizon in the slot §6.8's derived extremum fills. The corruption is
+        # the sentence the 24 August draft really carried, not an invented one.
+        t = open("PAPER.template.md").read()
+        planted = t.replace(
+            "the largest deviation is {{d3_worst_q}} at\n  h={{d3_worst_h}}.",
+            "the largest deviation is aleatoric at h=128.", 1)
+        assert planted != t, ("the restatement corruption found nothing to replace; "
+                              "the appendix D sentence has been reworded")
+        return {"_template_text": planted, "_template_is_path": False}
     if k == "scope-consistency":
         # A phrase that IS in the section, standing in for a quantifier never
         # removed.
