@@ -227,6 +227,66 @@ def main():
     fig_caps = set(re.findall(r"Figure\s*(\d+)\s*[:.]", txt))
     fig_refs = {m for m in re.findall(r"Figure\s*(\d+)", txt)}
     figmiss = sorted(fig_refs - fig_caps)
+    # ---- 4b the shipped bundles must not be older than what they ship ----
+    #
+    # supplementary_anon.zip was built before the appendix reordering and shipped
+    # the exact defect HEAD calls blocking: its PAPER.tex carried A, B, C, D,
+    # variance-state, two-nRMSE, rules, untested, originals, so eight references
+    # in the reviewer's copy pointed at the wrong appendix. The bundle is what a
+    # reviewer receives, and nothing compared its age to the paper's.
+    # By CONTENT, not by mtime. An mtime rule is both too weak and too strong: it
+    # cannot tell a rebuild that changed nothing from one that changed everything,
+    # and this gate rebuilds the paper itself, so the first version reported the
+    # bundles stale every run after its own check 1 had touched PAPER.tex.
+    #
+    # What matters is exactly what the audit found: the PAPER.tex inside the
+    # archive carried the pre-reordering appendix sequence, so eight references in
+    # the reviewer's copy pointed at the wrong appendix. Comparing the bytes the
+    # reviewer opens against the bytes on disk answers that directly.
+    import zipfile as _zip
+    _bundles = [("supplementary_anon.zip", "the reviewer's copy"),
+                ("supplementary.zip", "the supplementary archive")]
+    _shipped = ["PAPER.tex", "PAPER.md", "FINDINGS_LEDGER.md"]
+    _stale = []
+    for _z, _what in _bundles:
+        if not os.path.exists(_z):
+            _stale.append(f"{_z} does not exist")
+            continue
+        try:
+            _zf = _zip.ZipFile(_z)
+        except Exception as _e:
+            _stale.append(f"{_z} unreadable: {_e}")
+            continue
+        _names = _zf.namelist()
+        for _src in _shipped:
+            if not os.path.exists(_src):
+                continue
+            _match = [n for n in _names if n.endswith("/" + _src) or n == _src]
+            if not _match:
+                _stale.append(f"{_z} ({_what}) does not contain {_src}")
+                continue
+            _in = _zf.read(_match[0]).decode("utf-8", "replace")
+            _on = open(_src, encoding="utf-8").read()
+            # NOT byte equality. The anon bundle SCRUBS what it ships -- that is
+            # its purpose -- so its copies can never match byte for byte and a
+            # byte test reports every bundle stale forever. Compare structural
+            # properties the scrubber does not touch, chosen to be the ones that
+            # actually went wrong: the appendix ORDER (D-25 shipped A,B,C,D,H,I,
+            # G,E,F to reviewers after HEAD had fixed it) and the reference
+            # COUNT (D-26 shipped ten entries under a note claiming sixteen).
+            for _what2, _pat in (("appendix order", r"^#+ +(?:Appendix|\\section\{Appendix) ([A-Z])"),
+                                 ("reference count", r"^(\d+)\. [A-Z]\.")):
+                _a = re.findall(_pat, _in, re.M)
+                _b = re.findall(_pat, _on, re.M)
+                if _a != _b:
+                    _stale.append(f"{_z} ({_what}) ships a different {_what2} in "
+                                  f"{_src} ({''.join(_a[:12])} vs {''.join(_b[:12])})")
+                    break
+    chk("4b", "shipped bundles carry the current paper's structure", not _stale,
+        f"{len(_bundles)} bundles x {len(_shipped)} files, appendix order and "
+        f"reference list compared; "
+        + ("all match" if not _stale else "; ".join(_stale)))
+
     # ---- 5b appendix letters must match DOCUMENT ORDER ----
     #
     # LaTeX auto-letters appendices in the order they appear and discards the

@@ -25,6 +25,12 @@
       "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 37 files regenerated, 6,825 values, 6,790 identical, 35 differing; carried-in partition present (801,507 copied values held out); artifact post-dates the regeneration marker"
     },
     {
+      "n": "4b",
+      "name": "shipped bundles carry the current paper's structure",
+      "pass": true,
+      "detail": "2 bundles x 3 files, appendix order and reference list compared; all match"
+    },
+    {
       "n": "5b",
       "name": "appendix letters match document order",
       "pass": true,
@@ -43,8 +49,8 @@
       "detail": "16 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
-  "n_pass": 6,
-  "n_run": 6,
+  "n_pass": 7,
+  "n_run": 7,
   "n_not_run": 1,
-  "n": 7
+  "n": 8
 }

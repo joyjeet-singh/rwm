@@ -5926,6 +5926,51 @@ weaken the result. It was still undisclosed, and a reader checking the claim "un
 **Evidence** `SRC` `scripts/e5_synthetic_sigma.py`
 **Status** ACTIVE
 
+### M-60 — Three de-anonymisation leaks in the bundle reviewers receive, and a bundle older than the paper · **NEW**
+The anonymised bundle passed its own scan throughout. The scan was looking for the wrong things.
+
+**1. The bare surname. Blocking.** `CITATION.cff` splits a name across two YAML fields. Every deny
+pattern matched `given-names` and none matched `family-names`, so the file reviewers receive read:
+
+```
+- family-names: Singh
+  given-names: ANONYMISED
+```
+
+A one-field de-anonymisation sitting beside the evidence that the file had been scrubbed.
+**Structured metadata defeats a scrubber written for prose.** The surname is in `SUBS` and `DETECT`
+now, checked first against the bibliography — no author of the sixteen verified references carries
+it, so scrubbing it cannot corrupt a citation. Adding it **immediately found a second file**,
+`scripts/swh_visit_check.py`, whose URL the substitutions had been rewriting while leaving the name
+in the prose beside it.
+
+**2. `docs/ARCHIVAL_IDENTIFIERS.md` was in the anonymous submission.** Its own first line reads
+*"Archival identifiers — NOT for the anonymous submission"*, and its fourth asserts it is excluded
+— true of `supplementary.zip`, false of the anon bundle, which deliberately re-includes the files
+the other one drops. That re-inclusion exists to give reviewers material they would otherwise lose;
+this file is a table of identifiers whose entire purpose is to resolve to a named repository.
+
+**And the scrubber could not have caught it.** Its SWHID pattern requires the `swh:1:…` prefix, so
+the bare 40-hex revision SHA printed beside each identifier survived — and `DETECT` uses the same
+pattern, so the post-scrub scan was blind to it too. That SHA resolves in the public repository.
+
+**3. The bundle was older than the paper.** `supplementary_anon.zip` predated the appendix
+reordering and shipped the `D-25` defect verbatim: its `PAPER.tex` carried the A, B, C, D, H, I, G,
+E, F order, so eight references in the reviewer's copy pointed at the wrong appendix — a defect
+HEAD had already fixed and called blocking. `supplementary.zip` was older still. **The bundle is
+what a reviewer receives and nothing compared its age to the paper's.** `part_f_gate` check 4b now
+does, against `PAPER.tex`, `PAPER.md`, `paper_numbers.json` and the ledger. Verified by touching
+one of them.
+
+**What the three have in common.** Each was invisible to a check that existed and passed: the
+scrubber ran and reported zero hits, the bundle builder ran and reported success, and the gate
+verified the PDF that was on disk rather than the one in the archive. A check is only as good as
+the surface it looks at, and none of these looked at the artifact a reviewer actually opens.
+
+**Evidence** `SRC` `results/anon_bundle.json`, `scripts/make_anon_bundle.py`,
+`scripts/part_f_gate.py`
+**Status** ACTIVE · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

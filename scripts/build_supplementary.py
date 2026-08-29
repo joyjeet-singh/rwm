@@ -35,7 +35,13 @@ IDENT = [re.compile(p, re.I) for p in (
 URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
 # Third-party repositories the work legitimately cites: the two upstreams and the
 # TMLR style file. Only a repository under the AUTHOR's account is identifying.
-SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli"}
+# Third-party organisations whose repositories the work legitimately cites. The
+# last two arrive from the bibliography's own verification record: several arXiv
+# entries give their code repository in the comment field, which t1 stores
+# verbatim as evidence. They identify the CITED authors, not us, and removing
+# them would make the one file whose purpose is accurate metadata inaccurate.
+SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli",
+             "jannerm", "martius-lab"}
 
 INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex"]
 # Excluded on purpose. MODEL_CARD.md and its builder are release artifacts for the
@@ -84,7 +90,11 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # was written by a run whose regenerated set silently omitted
            # supplementary_manifest.json -- the same silent-exclusion shape as M-28,
            # inside the claim M-28 is about.
-           "scripts/swh_visit_check.py", "results/swh_visit_check.json"}
+           "scripts/swh_visit_check.py", "results/swh_visit_check.json",
+           # Same reason as make_anon_bundle.py and t5_anon_transcript.py above:
+           # a scanner that plants a deny-list string to prove it can still
+           # detect one necessarily contains that string, and trips its own scan.
+           "scripts/f5_pdf_channels.py"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]

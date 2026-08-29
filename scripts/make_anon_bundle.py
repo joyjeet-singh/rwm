@@ -62,6 +62,16 @@ SUBS = [
     (r"\bJoyjeetsingh\b", "ANONYMISED"),
     (r"\bJoyjeet\b", "ANONYMISED"),
     (r"\bjoyjeet\b", "ANONYMISED"),
+    # The bare SURNAME. CITATION.cff splits the name across two YAML fields, so
+    # every pattern above matched `given-names` and none matched `family-names`,
+    # and the anonymised bundle shipped "family-names: Singh / given-names:
+    # ANONYMISED" -- a one-field de-anonymisation sitting beside the evidence that
+    # the file had been scrubbed. Structured metadata defeats a scrubber written
+    # for prose.
+    #
+    # Checked against the bibliography before adding: no author of the 16 verified
+    # references carries this surname, so scrubbing it cannot corrupt a citation.
+    (r"\bSingh\b", "ANONYMISED"),
     # ORCID identifiers resolve to a named person.
     (r"\b\d{4}-\d{4}-\d{4}-\d{3}[\dX]\b", "ORCID-ANONYMISED"),
     # A Software Heritage identifier is opaque but RESOLVABLE: the UI returns the
@@ -83,7 +93,7 @@ SUB_RE = [(re.compile(p), r) for p, r in SUBS]
 # has a gap, which is the whole point of scanning after scrubbing rather than
 # trusting the scrub.
 DETECT = [re.compile(p, re.I) for p in (
-    r"joyjeet", r"github\.com/joyjeet", r"huggingface\.co/joyjeet",
+    r"joyjeet", r"github\.com/joyjeet", r"huggingface\.co/joyjeet", r"\bSingh\b",
     r"/Users/joyjeetsingh", r"chenhli", r"breadli428",
     r"swh:1:(?:snp|rev|rel|dir|cnt):[0-9a-f]{40}",
     r"\b\d{4}-\d{4}-\d{4}-\d{3}[\dX]\b",
@@ -92,6 +102,8 @@ DETECT = [re.compile(p, re.I) for p in (
 # legitimately cites are not identifying.
 URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
 SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli", "jannerm",
+             # arrives from the bibliography's verification record, which stores
+             # arXiv comment fields verbatim as evidence
              # A CITED paper's own code repository. Seitzer et al. (ICLR 2022)
              # give it in their arXiv comment field, which the bibliography
              # verification records verbatim as evidence. It identifies THEM, not
@@ -125,7 +137,29 @@ EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            # bundle's own file count differ between a tree that had just run the
            # pipeline and one that had not.
            "results/_regenerated.txt",
-           "scripts/submission_check.py", "scripts/t5_anon_transcript.py"}
+           "scripts/submission_check.py", "scripts/t5_anon_transcript.py",
+           # Its own first line reads "Archival identifiers — NOT for the
+           # anonymous submission", and it was in the anonymous submission. The
+           # deliberate re-inclusion of the files build_supplementary.py excludes
+           # was meant to give reviewers material they would otherwise lose; this
+           # file is not that. It is a table of identifiers whose entire purpose
+           # is to resolve to a repository under the author's name, and the SWHID
+           # scrubber cannot reach the bare 40-hex revision SHA it prints beside
+           # them -- SUBS matches `swh:1:...` with its prefix, and DETECT uses the
+           # same pattern, so the post-scrub scan could not catch it either.
+           "docs/ARCHIVAL_IDENTIFIERS.md",
+           # The Software Heritage exposure checker and its artifact. Excluded
+           # from supplementary.zip on the same grounds and not from here: an
+           # archival check has to name the origin it asks the archive about, so
+           # the repository URL and the account name are its INPUT. Found by the
+           # surname pattern added above, immediately -- the scrubber's own
+           # substitutions had been rewriting the URL and leaving the name in the
+           # prose beside it.
+           "scripts/swh_visit_check.py", "results/swh_visit_check.json",
+           # Contains the deny-list probe it plants to prove its own scan is
+           # live, so it trips that scan -- the same reason this file and
+           # t5_anon_transcript.py are excluded above.
+           "scripts/f5_pdf_channels.py"}
 SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".prebak", ".t2bak", ".t3bak", ".t4bak",
                ".tmpbak", ".zip", ".pdf")
 BINARY_SUFFIX = (".png", ".jpg", ".gz")
@@ -327,9 +361,9 @@ def main():
             "cited_files_checked": len(cited),
             "cited_files_absent": missing_cited,
             "includes_previously_excluded": [
-                f for f in ("MODEL_CARD.md", "CITATION.cff", "NOTICE",
-                            "docs/ARCHIVAL_IDENTIFIERS.md")
+                f for f in ("MODEL_CARD.md", "CITATION.cff", "NOTICE")
                 if any(w == f for w in written)],
+            "excluded_as_identifying": ["docs/ARCHIVAL_IDENTIFIERS.md"],
             "zip_written": None,
         }
 

@@ -3673,7 +3673,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "380"
+    "value": "383"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3829,7 +3829,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 231
+    "value": 232
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
