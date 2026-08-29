@@ -2598,13 +2598,26 @@
         "src/rwm_model.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-51",
+      "claim": "Pre-registered: does the ranking claim survive more than one free adversary?",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines_power.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 19,
-    "M": 50,
+    "M": 51,
     "O": 14,
     "R": 70,
     "S": 19,

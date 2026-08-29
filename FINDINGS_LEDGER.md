@@ -5306,6 +5306,67 @@ experiment establishes, not the magnitude of the recovery.
 **Evidence** `RUN` `results/e5_sigma_dilution.json`
 **Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
 
+### M-51 — Pre-registered: does the ranking claim survive more than one free adversary? · **NEW**
+**Committed before either new baseline is computed.** `results/e7_free_baselines_power.json` —
+the power estimate this rule quotes — touches only disagreement, realised error and the forecast
+step index, all three of which §6.7 already reports. Neither new baseline existed when it or this
+text was written.
+
+**The question.** §6.7's ranking result rests on ensemble disagreement beating the **forecast step
+index**, a counter that costs nothing and that neither original paper ran. It is a good adversary
+and it is a single one, and a claim that survives exactly one competitor is a claim about that
+competitor rather than about the quantity.
+
+**Two more adversaries, both free in the same sense** — no ensemble, no second forward pass,
+nothing the rollout does not already produce:
+
+- **step-size**: ‖µ_t − µ_{t−1}‖, the magnitude of the model's own predicted state change. A
+  model moving fast is in a regime where it is more likely to be wrong.
+- **history-res**: the residual on the last **teacher-forced** step of the history window — the
+  model's one-step error at the moment the rollout begins, before any accumulation. One scalar per
+  trajectory, so it ranks trajectories and not steps. That is a real limit of the baseline and is
+  reported as one: being constant within a forecast step, it must be annihilated by the
+  within-step control, and if it is not, the control is broken rather than the baseline strong.
+
+**Statistics.** For each baseline *b*, on the released checkpoint over all ten episodes at
+n_independent = 20: the **margin** r(disagreement, error) − r(*b*, error), and
+the **partial** correlation of disagreement with error controlling for *b*. Both with a cluster
+bootstrap over whole trajectories. The symmetric partial — *b* given disagreement — is reported
+beside each, because neither should be quoted without the other.
+
+**Minimum detectable effect, measured before the baselines existed.** At
+n_independent = 20 the cluster bootstrap gives:
+
+- **margin: 0.2891** at 80% power, two-sided α = 0.05.
+- **partial: 0.1131**.
+
+**The two tests are not equally powered, and the rule says so rather than discovering it.** The
+observed margin over the *existing* index baseline is +0.3368
+against an MDE of 0.2891 — a factor of
+1.16, which is marginal. The observed partial is
++0.5957 against 0.1131, a factor of
+5.3. So **the partial is the load-bearing test
+and the margin is corroboration**, and a baseline that fails the margin test while passing the
+partial has not refuted §6.7. Requiring both is deliberate and conservative; requiring only the
+margin would be under-powered, and choosing which to require after seeing the answer is what
+`S-12` was withdrawn for.
+
+**Verdict, decided in advance.** Disagreement **beats** a baseline when the margin exceeds its MDE
+**and** the partial exceeds its own.
+
+- **SURVIVES BOTH** — §6.7 stops resting on one competitor and the claim is materially harder to
+  attack.
+- **SURVIVES NEITHER** — the ranking result is about the forecast index specifically, and §6.7's
+  framing is withdrawn.
+- **SURVIVES ONE** — reported as returned, naming which and which not, with both baselines' full
+  statistics printed. No re-framing of §6.7 without saying that this is what happened.
+
+**What this rule does not test.** Whether some *other* free baseline beats disagreement. Three
+adversaries are more than one and fewer than all, and §11 says so.
+
+**Evidence** `RUN` `results/e7_free_baselines_power.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

@@ -1,0 +1,18 @@
+{
+  "committed_before": "either new baseline is computed",
+  "estimated_from": "disagreement, realised error and the forecast index \u2014 all three already reported in \u00a76.7. Neither new baseline is touched here.",
+  "n_independent": 20,
+  "n_trajectories": 20,
+  "n_steps": 368,
+  "observed_r_disagreement": 0.6053377907582749,
+  "observed_r_index": 0.26857293876830163,
+  "observed_margin_over_index": 0.33676485198997325,
+  "observed_partial_given_index": 0.5957061697704849,
+  "bootstrap_se_margin": 0.10319538287935717,
+  "bootstrap_se_partial": 0.04036996998321707,
+  "mde_80pct_power": {
+    "margin": 0.2891106593025745,
+    "partial": 0.11309991118030661
+  },
+  "n_boot": 4000
+}
