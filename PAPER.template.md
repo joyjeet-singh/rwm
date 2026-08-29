@@ -1475,6 +1475,15 @@ What every downstream number rests on. Each level was passed before the next was
 
 **Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of recorded wall clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is {{rt_longest}} hours. An earlier version of this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
 
+**{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m49}} hours, are `M-49`'s capacity-matched
+arm at `rnn_hidden_size` {{m49_width}}** rather than the released {{released_width}}. They are part
+of this project's CPU spend and are counted in the total above; they are **not** part of the
+{{n_runs}} runs §6.3 fits the σ-collapse rate over, because that rate is a property of one
+architecture and mixing widths into it would make "nearly identical across runs" a claim about two
+different models. Every run artifact records the width it trained at, and `paper_numbers.py`
+selects the collapse family by that field rather than by filename — it did neither until the first
+capacity-matched run walked into the family through a glob.
+
 {{FIGURES}}
 
 ## Appendix D — verifying the paper's own claims

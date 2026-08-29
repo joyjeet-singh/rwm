@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     824 values substituted from 66 artifacts. -->
+     826 values substituted from 66 artifacts. -->
 
 # Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
 
@@ -41,7 +41,7 @@ scored on the other, restores nominal coverage on every held-out cell; and the r
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
 nRMSE at h = 368 by 75%.
 
-Every **measurement** here is substituted from a named artifact; the 561 numerals that
+Every **measurement** here is substituted from a named artifact; the 563 numerals that
 are not are addresses, horizon labels or declared constants, classified one by one by a build that
 fails on anything else. 51 comparative claims across 21 kinds are recomputed each
 build against a corrupted expectation, so a check that can no longer fail is caught.
@@ -1493,6 +1493,15 @@ What every downstream number rests on. Each level was passed before the next was
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
 **Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 31 runs takes **48.2 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 28.5 for the remaining 25 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+
+**5 of those 31 runs, 1.9 hours, are `M-49`'s capacity-matched
+arm at `rnn_hidden_size` 124** rather than the released 256. They are part
+of this project's CPU spend and are counted in the total above; they are **not** part of the
+26 runs §6.3 fits the σ-collapse rate over, because that rate is a property of one
+architecture and mixing widths into it would make "nearly identical across runs" a claim about two
+different models. Every run artifact records the width it trained at, and `paper_numbers.py`
+selects the collapse family by that field rather than by filename — it did neither until the first
+capacity-matched run walked into the family through a glob.
 
 ## Appendix C — figures
 
