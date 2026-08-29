@@ -256,6 +256,18 @@ REPORT=t1_bibliography_report.txt stage 20p "T1 — the section 2 bibliography, 
 # cannot drift, with every quotation the paper uses asserted present.
 stage 20q "T5 — anonymised correspondence transcript" "5 s" \
       results/t5_anon_transcript.json $PY scripts/t5_anon_transcript.py
+# A1. The consent letter, and the rewrite that runs if consent is refused. Both
+# generated, and placed here because 20q writes the transcript this reads.
+#
+# The fragment list is EXTRACTED from PAPER.template.md rather than typed:
+# consent obtained for a list that does not match what the paper prints is not
+# informed consent. Every fragment is then checked verbatim against the
+# transcript, and 20q's own quote list is derived from the same extractor -- it
+# was a typed list of six of which two were not in the paper.
+#
+# Nothing here sends anything. The letter is a draft for a person to send.
+stage 20q1 "A1 — consent letter and the no-quotation fallback" "5 s" \
+      results/a1_consent_letter.json $PY scripts/a1_consent_letter.py
 # R1/R2: the independent-initialisation contrast M-44 governs. R1 is the two extra
 # Arm A ens1 seeds (./run_indep_ens.sh, ~1.2 h each); R2 scores seeds 0-4 together
 # as an ensemble and returns M-44's verdict.

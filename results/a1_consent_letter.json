@@ -1,0 +1,39 @@
+{
+  "n_fragments": 5,
+  "fragments": [
+    {
+      "section": "6.1",
+      "text": "more of a high-level explanation",
+      "case_changed_from": null
+    },
+    {
+      "section": "6.1",
+      "text": "the aleatoric term is not used in downstream training. It is reported in Fig. 3 (right) as an analysis of the model behavior.",
+      "case_changed_from": "The aleatoric term is not used in downstream training. It is reported in Fig. 3 (right) as an analysis of the model behavior."
+    },
+    {
+      "section": "8",
+      "text": "a typo",
+      "case_changed_from": null
+    },
+    {
+      "section": "8",
+      "text": "as I always did",
+      "case_changed_from": null
+    },
+    {
+      "section": "8",
+      "text": "the checkpoint was released after a few iterations of the repo than the setup I used for the submission.",
+      "case_changed_from": null
+    }
+  ],
+  "sections": [
+    "6.1",
+    "8"
+  ],
+  "n_rewrites": 3,
+  "transcript": "SUPPLEMENTARY_CORRESPONDENCE.md",
+  "all_verbatim_in_transcript": true,
+  "swh_verdict": "not exposed",
+  "exposure_hours": 5.0
+}

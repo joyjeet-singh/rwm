@@ -71,16 +71,20 @@ DENY = [
     "github.com/joyjeet-singh", "huggingface.co/Joyjeetsingh",
 ]
 
-# Every quotation the paper attributes to the correspondence. Each is asserted to
-# appear in the transcript, so a quote cannot be in the paper and absent here.
-PAPER_QUOTES = [
-    "The aleatoric term is not used in downstream training",
-    "It is reported in Fig. 3 (right) as an analysis of the model behavior",
-    "more of a high-level explanation",
-    "as I always did",
-    "is a typo",
-    "the checkpoint was released after a few",
-]
+# Every quotation the paper attributes to the correspondence, EXTRACTED from
+# PAPER.template.md rather than listed here.
+#
+# It was a typed list of six strings, and two of them were not in the paper: the
+# paper lowers "The aleatoric term" to fit its sentence, and it quotes "a typo"
+# with the "is" outside the quotation marks. So two of the six assertions below
+# guarded text the paper does not print, while any quotation ADDED to the paper
+# would have been guarded by nothing. This artifact recorded the drift itself --
+# n_quotations 6 against n_quotations_used_in_paper 4 -- and no check compared
+# them. A hand-maintained list of what the paper quotes is the same defect class
+# as a hand-typed count, and it fails the same way: silently.
+import a1_consent_letter as A1  # noqa: E402
+
+PAPER_QUOTES = [f["text"] for f in A1.extract_fragments(open("PAPER.template.md").read())]
 
 HEADER = """# Supplementary — correspondence with the first author, 21 August 2026
 
@@ -181,8 +185,23 @@ def main():
     # across lines with "> " prefixes, which would otherwise land inside a quote
     # and make a correct transcription look like a missing one.
     flat = re.sub(r"\s+", " ", re.sub(r"^\s*>\s?", "", out, flags=re.M))
-    missing = [q for q in PAPER_QUOTES if re.sub(r"\s+", " ", q) not in flat]
+    # Case-insensitively on the first letter's account: §6.1 lowers "The aleatoric
+    # term" to "the aleatoric term" to fit the syntax of the sentence carrying it,
+    # which is ordinary editorial practice and not an alteration of what was said.
+    # Anything differing by MORE than case is an alteration, and is asserted
+    # separately -- the point of this gate is that the transcript backs what the
+    # paper prints, so a silently reworded quotation must fail here.
+    missing = [q for q in PAPER_QUOTES
+               if re.sub(r"\s+", " ", q).lower() not in flat.lower()]
     assert not missing, f"quotations used in the paper are absent from the transcript: {missing}"
+    altered = []
+    for q in PAPER_QUOTES:
+        qn = re.sub(r"\s+", " ", q)
+        i = flat.lower().find(qn.lower())
+        exact = flat[i:i + len(qn)]
+        if exact != qn and exact.lower() != qn.lower():
+            altered.append((qn, exact))
+    assert not altered, f"quotations in the paper differ from the transcript beyond case: {altered}"
 
     # ...and every quote in the transcript is one the paper is allowed to use
     if os.path.exists("PAPER.md"):
