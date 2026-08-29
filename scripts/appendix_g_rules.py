@@ -90,6 +90,19 @@ def main():
             continue
         if re.search(r"PRE-REGISTERED|Pre-registered", title):
             ids.append(eid)
+            continue
+        # ...and any entry whose STATUS says it is a pre-registration, whatever
+        # its title says. M-52's title is "M-51 named a quantity that does not
+        # exist, and what replaced it" -- no match on the title rule -- so the one
+        # mid-flight amendment to a pre-registration in this whole project was
+        # silently absent from a table headed "every pre-registered rule" and
+        # described in its own prose as "a census rather than a highlights reel".
+        # It is the row a hostile reviewer most wants to see.
+        blk_ = entry(txt, eid) or ""
+        st_ = re.search(r"^\*\*Status\*\*\s*(.+)$", blk_, re.M)
+        if st_ and "PRE-REGISTERED" in st_.group(1).upper() \
+                and "NOT PRE-REGISTERED" not in st_.group(1).upper():
+            ids.append(eid)
     # ...plus the rule S-12 withdraws, which no longer announces itself as
     # pre-registered BECAUSE it was withdrawn. A table that dropped it would be
     # making the claim the ledger retracts.
@@ -226,7 +239,27 @@ def main():
     print("=" * 100)
     print(f"  {len(rows)} rules, {n_lead} with a computed lead time")
 
-    json.dump({"n_rules": len(rows), "n_with_lead_time": n_lead, "rules": rows},
+    # The table and the ledger gate must count the same set. ledger_check.py
+    # reports "pre-registered rules not yet discharged" from the Status lines; a
+    # rule it counts and this table omits is exactly how M-52 went missing.
+    def _status_says_prereg(eid_):
+        b = entry(txt, eid_) or ""
+        m_ = re.search(r"^\*\*Status\*\*\s*(.+)$", b, re.M)
+        if not m_:
+            return False
+        st_ = m_.group(1).upper()
+        # "NOT PRE-REGISTERED as a verdict" is R-38 saying of ITSELF that it is not
+        # one. Matching the bare substring pulled it into a table of
+        # pre-registrations, which is the inverse of what that entry exists to say.
+        return "PRE-REGISTERED" in st_ and "NOT PRE-REGISTERED" not in st_
+    _gate_ids = sorted({m.group(1) for m in re.finditer(r"^### ([A-Z]-\d+) ", txt, re.M)
+                        if _status_says_prereg(m.group(1))})
+    _missing = [x for x in _gate_ids if x not in {r["id"] for r in rows}]
+    assert not _missing, (
+        f"entries whose Status names a pre-registration are absent from Appendix G: "
+        f"{_missing}. The table is headed 'every pre-registered rule'.")
+    json.dump({"n_rules": len(rows), "n_with_lead_time": n_lead,
+               "n_status_prereg": len(_gate_ids), "rules": rows},
               open(os.path.join(R.RESULTS, OUT), "w"), indent=2)
     print(f"  wrote results/{OUT}")
     return 0

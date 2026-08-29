@@ -1251,7 +1251,7 @@ it rests on, because it is what let us detect the gap at all.
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive and {{f4_n_negative}} is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for {{f4_n_rules}} of them and Appendix G for all {{appG_n_rules}}; {{f4_n_positive}} of Figure 4's are positive and {{f4_n_negative}} is not. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
 **{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix D lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
@@ -1722,9 +1722,15 @@ kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.
 
-`M-49` has no lead time because the data it tests does not exist yet: it is committed, with its
-minimum detectable effect, before the runs it governs. That is what a pre-registration in progress
-looks like, and it is included so the table is a census rather than a highlights reel.
+**`M-52` is in the table and that is deliberate.** It is the one mid-flight amendment to a
+pre-registration in this project: `M-51` named a baseline that does not exist in the artifact it
+named — the residual on the last teacher-forced step of the history window, which the rollout
+helper never computes because it copies the history rather than predicting it — and `M-52` names
+the replacement, committed before the replacement's statistic was computed. A table of
+pre-registrations that omitted the one amendment would be a highlights reel. It was omitted: the
+selector matched on entry TITLES, and `M-52`'s title does not contain the word, so the row a
+sceptical reader most wants was silently absent. Entries are selected by their `Status` line as
+well now, and the count is asserted against the same set `scripts/ledger_check.py` reports.
 
 **What each rule says, in its own committed words.** These are quotations, so their section
 references are the ones current when each rule was committed and some no longer resolve — `M-45`

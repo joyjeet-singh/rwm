@@ -741,7 +741,7 @@
   },
   "appG_n_lead": {
     "source": "results/appendix_g_rules.json",
-    "value": 10
+    "value": 11
   },
   "appG_n_negative": {
     "source": "results/appendix_g_rules.json",
@@ -749,19 +749,19 @@
   },
   "appG_n_positive": {
     "source": "results/appendix_g_rules.json",
-    "value": 9
+    "value": 10
   },
   "appG_n_rules": {
     "source": "results/appendix_g_rules.json",
-    "value": 10
+    "value": 11
   },
   "appG_rule_texts": {
     "source": "results/appendix_g_rules.json",
-    "value": "\n**`M-16` \u2014 The Arm A / Arm B comparison.** Entered before any main-run result exists. Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. The claim reproduces, or fails to, and can be reported only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the same at the \u2026\n\n**`M-22` \u2014 Whether episode difficulty biases the A/B comparison.** Entered before Task 4b runs. Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097). \u2026\n\n**`M-23` \u2014 The 10,000-iteration comparison.** Entered before any 10,000-iteration result exists. Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not to \u2026\n\n**`M-43` \u2014 The ensemble-5 replication.** The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed. Entered before any ensemble-5 result exists. No \u2026\n\n**`M-44` \u2014 The trunk-sharing mechanism.** Entered before any independent-init ensemble exists. No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git \u2026\n\n**`M-45` \u2014 The within-trajectory control.** Entered before the statistic was computed. No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.\n\n**`M-49` \u2014 Pre-registered: does trunk-sharing survive capacity matching?.** - MECHANISM SURVIVES CAPACITY MATCHING \u2014 the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT \u2014 the matched \u2026\n\n**`M-50` \u2014 Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.** - OBJECTIVE-DRIVEN \u2014 under `mse` the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under `gaussian_nll` the ratio is within the recovery factor and the slope is above the tracking threshold. \u00a76.3's derivation is demonstrated against ground truth and \u2026\n\n**`M-51` \u2014 Pre-registered: does the ranking claim survive more than one free adversary?.** and the partial exceeds its own.\n\n**`S-12` \u2014 \"Task 3's duplication rule was pre-registered\".** Retracts \u2014 a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else \u2014 a rule committed to git before the data testing it exists (M-16, M-23 \u2026"
+    "value": "\n**`M-16` \u2014 The Arm A / Arm B comparison.** Entered before any main-run result exists. Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. The claim reproduces, or fails to, and can be reported only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the same at the \u2026\n\n**`M-22` \u2014 Whether episode difficulty biases the A/B comparison.** Entered before Task 4b runs. Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097). \u2026\n\n**`M-23` \u2014 The 10,000-iteration comparison.** Entered before any 10,000-iteration result exists. Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not to \u2026\n\n**`M-43` \u2014 The ensemble-5 replication.** The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed. Entered before any ensemble-5 result exists. No \u2026\n\n**`M-44` \u2014 The trunk-sharing mechanism.** Entered before any independent-init ensemble exists. No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git \u2026\n\n**`M-45` \u2014 The within-trajectory control.** Entered before the statistic was computed. No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.\n\n**`M-49` \u2014 Pre-registered: does trunk-sharing survive capacity matching?.** - MECHANISM SURVIVES CAPACITY MATCHING \u2014 the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT \u2014 the matched \u2026\n\n**`M-50` \u2014 Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.** - OBJECTIVE-DRIVEN \u2014 under `mse` the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under `gaussian_nll` the ratio is within the recovery factor and the slope is above the tracking threshold. \u00a76.3's derivation is demonstrated against ground truth and \u2026\n\n**`M-51` \u2014 Pre-registered: does the ranking claim survive more than one free adversary?.** and the partial exceeds its own.\n\n**`M-52` \u2014 M-51 named a quantity that does not exist, and what replaced it.** Committed before the replacement statistic is computed. `M-51` stands as written; this entry records that one of its two baselines was mis-specified and fixes it. `M-51`'s other baseline, step-size, is unaffected and its statistic was computed under `M-51` as committed. What was wrong. `M-51` \u2026\n\n**`S-12` \u2014 \"Task 3's duplication rule was pre-registered\".** Retracts \u2014 a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else \u2014 a rule committed to git before the data testing it exists (M-16, M-23 \u2026"
   },
   "appG_table": {
     "source": "results/appendix_g_rules.json",
-    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED \u2014 rule pre-registered |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | \u2014 | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | \u2014 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | \u2014 | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | \u2014 | -2.9 h | control runs finished | RETRACTED |"
+    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED \u2014 rule pre-registered |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | \u2014 | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | \u2014 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | \u2014 | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | \u2014 | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
   },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
@@ -3585,7 +3585,7 @@
   },
   "f4_n_commits": {
     "source": "results/paper_figures.json",
-    "value": 13
+    "value": 14
   },
   "f4_n_negative": {
     "source": "results/paper_figures.json",
@@ -3649,7 +3649,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "368"
+    "value": "373"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3801,7 +3801,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 223
+    "value": 226
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -6797,7 +6797,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 563
+    "value": 567
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

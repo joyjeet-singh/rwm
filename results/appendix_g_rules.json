@@ -1,6 +1,7 @@
 {
-  "n_rules": 10,
-  "n_with_lead_time": 10,
+  "n_rules": 11,
+  "n_with_lead_time": 11,
+  "n_status_prereg": 8,
   "rules": [
     {
       "id": "M-16",
@@ -111,6 +112,18 @@
       "commit_subject": null
     },
     {
+      "id": "M-52",
+      "title": "M-51 named a quantity that does not exist, and what replaced it",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "SURVIVES entry-res ONLY",
+      "rule_text": "Committed before the replacement statistic is computed. `M-51` stands as written; this entry records that one of its two baselines was mis-specified and fixes it. `M-51`'s other baseline, step-size, is unaffected and its statistic was computed under `M-51` as committed. What was wrong. `M-51` \u2026",
+      "lead_hours": 0.15222222222222223,
+      "lead_source": "this appendix, from git",
+      "tested_by": "results/e7_free_baselines.json",
+      "rule_commit": null,
+      "commit_subject": null
+    },
+    {
       "id": "S-12",
       "title": "\"Task 3's duplication rule was pre-registered\"",
       "status": "RETRACTED",
@@ -118,9 +131,9 @@
       "rule_text": "Retracts \u2014 a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else \u2014 a rule committed to git before the data testing it exists (M-16, M-23 \u2026",
       "lead_hours": -2.9366666666666665,
       "lead_source": "Figure 4",
-      "tested_by": "control runs finished",
-      "rule_commit": null,
-      "commit_subject": null
+      "tested_by": "control runs finished 21:37:51",
+      "rule_commit": "3ee9d97",
+      "commit_subject": "Task 3: the duplication control confirms R-47's mechanism and refutes its statistic"
     }
   ]
 }

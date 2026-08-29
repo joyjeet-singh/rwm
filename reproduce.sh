@@ -322,8 +322,26 @@ stage 20q1 "A1 — consent letter and the no-quotation fallback" "5 s" \
 # as an ensemble and returns M-44's verdict.
 REPORT=r2_independent_ensemble_report.txt stage 20r "R2 — the independent-init ensemble, and M-44's verdict" "10 min" \
       results/r2_independent_ensemble.json NEEDS_WEIGHTS $PY scripts/r2_independent_ensemble.py
+# P2/M-49. The capacity-matched arm. p2 estimates the MDE from models that
+# already exist and must run BEFORE the rule's own comparison reads it; the
+# comparison itself is the same script as 20r with --m49, so the rollout
+# protocol, bootstrap, horizons and arena are identical between the two arms by
+# construction rather than by care.
+REPORT=p2_capacity_power_report.txt stage 20r1 "P2 — power for M-49, before the matched models exist" "6 min" \
+      results/p2_capacity_power.json NEEDS_WEIGHTS $PY scripts/p2_capacity_power.py
+REPORT=m49_capacity_matched_report.txt stage 20r2 "M-49 — the capacity-matched ensemble, and its verdict" "10 min" \
+      results/m49_capacity_matched.json NEEDS_WEIGHTS $PY scripts/r2_independent_ensemble.py --m49
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
+# Appendix G, generated from the ledger. It feeds six paper keys and its writer
+# was in no stage: paper_numbers.py read the artifact unconditionally, so stage
+# 23 only ever succeeded because a clean clone carries results/ in. That is the
+# M-28 shape, and it is the third time this pass that an artifact feeding the
+# paper turned out to have no stage behind it -- the first two audits for it were
+# themselves wrong, matching declared outputs and then bare filenames.
+# After ledger_check, because it reads the ledger the check has just validated.
+REPORT=appendix_g_rules_report.txt stage 21a "Appendix G — every pre-registered rule, from the ledger" "10 s" \
+      results/appendix_g_rules.json $PY scripts/appendix_g_rules.py
 
 # The paper is generated, not written by hand: paper_numbers.py collects every value
 # it quotes from the artifacts, build_paper.py substitutes them into PAPER.template.md
@@ -379,6 +397,15 @@ REPORT=typed_numerals_report.txt stage 28a1 "Typed-numeral audit, with self-test
 # stood in and asserts it fires, then asserts it is silent on this tree.
 REPORT=restatement_index_report.txt stage 28a2 "Restatement index over the paper's own numerals" "10 s" \
       results/restatement_index.json $PY scripts/restatement_index.py
+# Every artifact the paper's numbers come from must have a stage that writes it.
+# This gap was found three times by hand in one revision and two of the three
+# hand-audits were themselves wrong -- one matched declared outputs, which are
+# routinely a different file; one matched bare filenames, which made every
+# CONSUMER look like a producer. It is quiet by construction: paper_numbers.py
+# loads the artifact unconditionally and a clean clone already contains results/,
+# so a missing stage changes nothing that any check can see.
+REPORT=pipeline_coverage_report.txt stage 28a3 "Pipeline coverage: every paper artifact has a stage" "5 s" \
+      results/pipeline_coverage.json $PY scripts/pipeline_coverage.py
 # The h=100 sweep. Registered as the `horizon-consistency` kind above and run
 # again here on its own, because its report is the useful artifact when it
 # fails: it names every sentence, the horizon its numbers came from, and the

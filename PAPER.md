@@ -41,7 +41,7 @@ scored on the other, restores nominal coverage on every held-out cell; and the r
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
 nRMSE at h = 368 by 75%.
 
-Every **measurement** here is substituted from a named artifact; the 563 numerals that
+Every **measurement** here is substituted from a named artifact; the 567 numerals that
 are not are addresses, horizon labels or declared constants, classified one by one by a build that
 fails on anything else. 51 comparative claims across 21 kinds are recomputed each
 build against a corrupted expectation, so a check that can no longer fail is caught.
@@ -1268,9 +1268,9 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (223 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (226 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all 8 rules; 7 are positive and 1 is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for 8 of them and Appendix G for all 11; 7 of Figure 4's are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
 **Six retractions on our own evidence**, out of 19 superseded claims kept in the record, plus six that withdraw framings rather than numbers (Appendix D lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
@@ -1412,7 +1412,7 @@ what changed.** A supplementary file quoting private correspondence was committe
 briefly published before consent to quote it had been given; it was purged from the history
 rather than merely deleted, because a deletion commit leaves the content recoverable from a
 public repository indefinitely. Purging a path rewrites every commit from the one that
-introduced it onward, so **13 of the commits Figure 4 cites keep their
+introduced it onward, so **14 of the commits Figure 4 cites keep their
 identifiers and two do not** — the two whose data post-dates that file. Timestamps, content
 and ordering are unchanged; only the hashes moved, and Figure 4 resolves each rule by its
 commit subject for that reason. The transcript itself reaches reviewers in the anonymised
@@ -1755,7 +1755,7 @@ form 2.
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 368 KB ledger, so here is the table. It is generated from
+or an instruction to open a 373 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1774,17 +1774,24 @@ existed. This is the same computation Figure 4 plots.
 | `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED — favours the matched ensemble by less than the MDE |
 | `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | — | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |
 | `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | — | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
-| `S-12` | "Task 3's duplication rule was pre-registered" | — | -2.9 h | control runs finished | RETRACTED |
+| `M-52` | M-51 named a quantity that does not exist, and what replaced it | — | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
+| `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
 
-10 rules, 10 with a computed lead time, of which
-9 are positive and 1 negative. **The negative one is
+11 rules, 11 with a computed lead time, of which
+10 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.
 
-`M-49` has no lead time because the data it tests does not exist yet: it is committed, with its
-minimum detectable effect, before the runs it governs. That is what a pre-registration in progress
-looks like, and it is included so the table is a census rather than a highlights reel.
+**`M-52` is in the table and that is deliberate.** It is the one mid-flight amendment to a
+pre-registration in this project: `M-51` named a baseline that does not exist in the artifact it
+named — the residual on the last teacher-forced step of the history window, which the rollout
+helper never computes because it copies the history rather than predicting it — and `M-52` names
+the replacement, committed before the replacement's statistic was computed. A table of
+pre-registrations that omitted the one amendment would be a highlights reel. It was omitted: the
+selector matched on entry TITLES, and `M-52`'s title does not contain the word, so the row a
+sceptical reader most wants was silently absent. Entries are selected by their `Status` line as
+well now, and the count is asserted against the same set `scripts/ledger_check.py` reports.
 
 **What each rule says, in its own committed words.** These are quotations, so their section
 references are the ones current when each rule was committed and some no longer resolve — `M-45`
@@ -1809,6 +1816,8 @@ exempts this block by name.
 **`M-50` — Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.** - OBJECTIVE-DRIVEN — under `mse` the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under `gaussian_nll` the ratio is within the recovery factor and the slope is above the tracking threshold. §6.3's derivation is demonstrated against ground truth and …
 
 **`M-51` — Pre-registered: does the ranking claim survive more than one free adversary?.** and the partial exceeds its own.
+
+**`M-52` — M-51 named a quantity that does not exist, and what replaced it.** Committed before the replacement statistic is computed. `M-51` stands as written; this entry records that one of its two baselines was mis-specified and fixes it. `M-51`'s other baseline, step-size, is unaffected and its statistic was computed under `M-51` as committed. What was wrong. `M-51` …
 
 **`S-12` — "Task 3's duplication rule was pre-registered".** Retracts — a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else — a rule committed to git before the data testing it exists (M-16, M-23 …
 

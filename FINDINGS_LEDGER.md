@@ -5414,7 +5414,8 @@ the rule rather than by reading it, and all three are cheap to check before comm
 by asserting the baseline is non-constant, which the script now does.
 
 **Evidence** `SRC` `scripts/e7_free_baselines.py`, `results/e7_free_baselines_power.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Discharged** by `results/e7_free_baselines.json`, with `M-51`, whose thresholds and verdict it leaves unchanged. **It returns SURVIVES entry-res ONLY.** The replacement baseline `M-52` defines, `entry-res`, is the one disagreement does beat.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### R-71 — M-50 returns OBJECTIVE-DRIVEN: sigma collapses on data whose noise is known and large · **NEW**
 **The verdict `M-50` was written to return, returned as specified.** Both arms behaved as the rule
@@ -5745,6 +5746,80 @@ one just written to make something right.
 
 **Evidence** `SRC` `results/r2_independent_ensemble.json`, `results/m49_capacity_matched.json`
 **Status** ACTIVE
+
+### M-57 — The one negative bar in Figure 4 was computed by a different, unreproducible method · **NEW**
+Figure 4's argument is that decision rules reached git before their data, and the bar carrying the
+paper's self-criticism — `S-12`, the Task 3 duplication rule, the one rule that did **not** — was
+the only one not computed from two commit timestamps. Three defects in four lines:
+
+1. **The clock time was typed.** `21:37:51` was transcribed by hand from
+   `results/control_driver.log`. This project's own rule forbids exactly that, and Appendix G's
+   prose says "nothing in it is typed".
+2. **The conversion was local-time.** `datetime.fromtimestamp()` reads the *reader's* clock, so the
+   same arithmetic gave **−2.94 h** in IST, **−21.44 h** in UTC and **−14.44 h** in US/Pacific. §8
+   quotes that figure. A reviewer rebuilding outside the author's timezone got a different paper,
+   which also breaks the byte-identical rebuild this project requires before tagging.
+3. **The commit was not subject-guarded.** The seven positive bars go through `resolve()`, which
+   asserts hash-against-subject because hashes do not survive a history rewrite. This one used a
+   raw hash, twice, and carried a dead `RUNS_DONE` line beside it.
+
+**Fixed.** The finish time is parsed from the log's last `done seed` line. The date and the UTC
+offset come from the commit that introduced **that line** — not the commit that created the file,
+which is a day earlier and turned −2.94 into −26.94 on the first attempt. Verified identical in
+three timezones. §8 now says plainly that the negative bar's data side is a log line rather than a
+commit, and why that is the honest way to compute it.
+
+**Evidence** `SRC` `scripts/paper_figures.py`, `results/paper_figures.json`
+**Status** ACTIVE · **Relevance** METHOD
+
+### M-58 — Appendix G omitted the one amendment to a pre-registration, and contradicted its own table · **NEW**
+**The omission.** `appendix_g_rules.py` selected rows by matching entry TITLES for
+"PRE-REGISTERED". `M-52`'s title is "M-51 named a quantity that does not exist, and what replaced
+it" — no match — so it was silently absent from a table headed *every pre-registered rule* and
+described in its own prose as "a census rather than a highlights reel". `M-52` is the **one**
+mid-flight amendment to a pre-registration in this project: a baseline redefined after the rule
+was found to name a quantity that does not exist. It is the row a hostile reviewer most wants.
+
+The repository's own gate disagreed with the appendix throughout: `ledger_check.py` reported
+"pre-registered rules not yet discharged: 1", and the appendix showed ten rules and no such row.
+Entries are now selected by their `Status` line as well as their title, and the table's set is
+**asserted equal** to the set that gate counts. Excluding, explicitly, the entry whose status says
+`NOT PRE-REGISTERED` of itself.
+
+**The contradiction.** A hand-typed paragraph read "`M-49` has no lead time because the data it
+tests does not exist yet" — two lines below a generated table row giving M-49's lead time as
++9.4 h, and below a generated sentence reading "11 rules, 11 with a computed lead time". The table
+was regenerated when M-49 discharged and the prose was not. It shipped into `PAPER.md` and
+`PAPER.tex`, and passed every gate because it contains no numeral for the typed-numeral audit to
+catch. Prose that restates what a generated table says is the `D-14` shape with the table one line
+away.
+
+**Evidence** `SRC` `scripts/appendix_g_rules.py`, `results/appendix_g_rules.json`
+**Status** ACTIVE · **Relevance** METHOD
+
+### M-59 — Three more artifacts feeding the paper had no stage, and the audit for it is now a script · **NEW**
+`results/appendix_g_rules.json` (6 paper keys), `results/p2_capacity_power.json` (5) and
+`results/m49_capacity_matched.json` (6) supplied 17 substituted values and **no stage in
+`reproduce.sh` invoked the script that writes them**. `paper_numbers.py` loads all three
+unconditionally, so the build only ever succeeded because a clean clone carries `results/` in.
+That is the `M-28` shape, for the fourth time in this revision.
+
+**The three previous hunts for this class were done by hand and two were wrong.** One matched
+artifact paths against `reproduce.sh`, where a stage's *declared output* is routinely a different
+file from the one its script writes. One matched a filename appearing anywhere in a script, which
+counted every CONSUMER as a producer. The third got the method right and still missed these three,
+because it ran before they were written.
+
+`scripts/pipeline_coverage.py` does it on every build: for each artifact named as a source in
+`paper_numbers.json`, some script must write it — detected at a `json.dump` or a write-mode
+`open`, resolving module-level output constants and f-string filename prefixes — and
+`reproduce.sh` must invoke that script. Two artifacts are exempt with stated reasons. Verified by
+sabotage: disabling one stage makes it exit 1 naming the artifact and its key count.
+
+52 artifacts, 1,728 paper keys, all covered.
+
+**Evidence** `SRC` `results/pipeline_coverage.json`
+**Status** ACTIVE · **Relevance** METHOD
 
 ## Candidate paper contributions
 

@@ -299,14 +299,67 @@ def fig4_timeline(rec):
         resolved.append({"rule": lab.replace("\n", " "), "rule_commit": rule,
                          "data_commit": data, "tested_by": dlab})
         rows.append((lab, (when(data) - when(rule)) / 3600.0, dlab))
-    # Task 3: the control runs finished before any threshold reached git.
-    RUNS_DONE = when("3ee9d97") - 0  # placeholder replaced below
+    # Task 3: the control runs finished before any threshold reached git. This is
+    # the ONE negative bar in the figure and the one the paper's self-criticism
+    # rests on (S-12), so it has to be computed at least as carefully as the seven
+    # positive ones. It was not. Three defects, all fixed here:
+    #
+    #  1. "21:37:51" was TYPED, transcribed by hand from control_driver.log. It is
+    #     parsed from that log now -- the last "done seed" line -- so the figure's
+    #     own data side is read rather than remembered.
+    #  2. datetime.fromtimestamp() is LOCAL time, so the same arithmetic gave
+    #     -2.94 h in IST, -21.44 h in UTC and -14.44 h in US/Pacific. A reviewer
+    #     rebuilding the paper outside the author's timezone got a different
+    #     number, which also breaks the byte-identical rebuild this project
+    #     requires. The offset now comes from the COMMIT that introduced the log,
+    #     via %ci, so the conversion is the same everywhere.
+    #  3. "3ee9d97" was used raw while the other seven rows go through resolve(),
+    #     which asserts hash-against-subject precisely because hashes do not
+    #     survive a history rewrite. It is resolved now.
     import datetime
-    # runs finished 21:37:51 on the day before 3ee9d97 (from control_driver.log)
-    done = datetime.datetime.fromtimestamp(when("3ee9d97")).replace(hour=21, minute=37, second=51) \
-        - datetime.timedelta(days=1)
-    rows.append(("Task 3\nduplication rule", (done.timestamp() - when("3ee9d97")) / 3600.0,
-                 "control runs finished"))
+    import re as _re
+    T3_RULE_SUBJ = ("Task 3: the duplication control confirms R-47's mechanism "
+                    "and refutes its statistic")
+    t3_rule = resolve("3ee9d97", T3_RULE_SUBJ)
+
+    log_path = os.path.join(R.RESULTS, "control_driver.log")
+    assert os.path.exists(log_path), (
+        "results/control_driver.log is missing; the Task 3 bar's data side cannot "
+        "be derived and must not be typed")
+    _times = _re.findall(r"^=== (\d{2}:\d{2}:\d{2}) done seed", open(log_path).read(), _re.M)
+    assert _times, "no 'done seed' line in control_driver.log"
+    _finish_clock = _times[-1]
+
+    # The log records wall clock with no date and no offset. Both come from the
+    # commit that introduced THAT LINE -- not the one that created the file. The
+    # file was created a day earlier with partial content and the final "done
+    # seed" line landed in the rule's own commit; anchoring on file creation put
+    # the finish 24 hours early and turned -2.94 h into -26.94 h.
+    _line_commit = subprocess.run(
+        ["git", "log", "--format=%H", "-S", f"{_finish_clock} done seed",
+         "--", "results/control_driver.log"],
+        capture_output=True, text=True, cwd=here).stdout.split()
+    assert _line_commit, (
+        f"no commit introduces '{_finish_clock} done seed' into control_driver.log; "
+        "the Task 3 bar's date anchor cannot be derived")
+    t3_log = _line_commit[-1][:7]
+    _ci = subprocess.run(["git", "show", "-s", "--format=%ci", t3_log],
+                         capture_output=True, text=True, cwd=here).stdout.strip()
+    _log_dt = datetime.datetime.strptime(_ci, "%Y-%m-%d %H:%M:%S %z")
+    _h, _m, _sec = (int(x) for x in _finish_clock.split(":"))
+    done = _log_dt.replace(hour=_h, minute=_m, second=_sec)
+    # The runs finished before the log was committed; if the clock time is later
+    # in the day than the commit, the run finished the previous day.
+    if done > _log_dt:
+        done -= datetime.timedelta(days=1)
+    rows.append(("Task 3\nduplication rule",
+                 (done.timestamp() - when(t3_rule)) / 3600.0,
+                 f"control runs finished {_finish_clock}"))
+    resolved.append({"rule": "Task 3 duplication rule", "rule_commit": t3_rule,
+                     "data_commit": t3_log,
+                     "tested_by": f"control runs finished {_finish_clock}",
+                     "data_side": "results/control_driver.log, parsed; date and UTC "
+                                  "offset from the commit that introduced it"})
 
     fig, ax = plt.subplots(figsize=(7.8, 3.4))
     labs = [r[0] for r in rows]

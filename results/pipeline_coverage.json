@@ -1,0 +1,705 @@
+{
+  "n_artifacts": 52,
+  "n_paper_keys": 1728,
+  "n_uncovered": 0,
+  "uncovered": [],
+  "exempt": {
+    "verify_reproduction.json": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself.",
+    "compile_paper.json": "written by the LaTeX compile, which is stage 26; its declared output is the PDF rather than this artifact."
+  },
+  "artifacts": [
+    {
+      "artifact": "task_b_permutation.json",
+      "n_paper_keys": 581,
+      "writers": [
+        "check_comparative_claims",
+        "task_b_permutation"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task_b_permutation"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_d_nind20.json",
+      "n_paper_keys": 242,
+      "writers": [
+        "check_comparative_claims",
+        "task_d_nind20"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task_d_nind20"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_b2_epistemic.json",
+      "n_paper_keys": 137,
+      "writers": [
+        "check_comparative_claims",
+        "task_b2_epistemic"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task_b2_epistemic"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "a1_ab_by_horizon.json",
+      "n_paper_keys": 122,
+      "writers": [
+        "a1_ab_by_horizon"
+      ],
+      "invoked_writers": [
+        "a1_ab_by_horizon"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "r2_independent_ensemble.json",
+      "n_paper_keys": 82,
+      "writers": [
+        "r2_independent_ensemble"
+      ],
+      "invoked_writers": [
+        "r2_independent_ensemble"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_d3_ens5.json",
+      "n_paper_keys": 63,
+      "writers": [
+        "task_d3_ens5"
+      ],
+      "invoked_writers": [
+        "task_d3_ens5"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task1_calibration.json",
+      "n_paper_keys": 53,
+      "writers": [
+        "check_comparative_claims",
+        "task1_calibration"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task1_calibration"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "a2_trajectory_level_control.json",
+      "n_paper_keys": 45,
+      "writers": [
+        "a2_trajectory_level_control"
+      ],
+      "invoked_writers": [
+        "a2_trajectory_level_control"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_d3_perhorizon.json",
+      "n_paper_keys": 35,
+      "writers": [
+        "check_comparative_claims",
+        "task_d3_perhorizon"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task_d3_perhorizon"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_d1_threeseed.json",
+      "n_paper_keys": 21,
+      "writers": [
+        "check_comparative_claims",
+        "task_d1_threeseed"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task_d1_threeseed"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "e7_free_baselines.json",
+      "n_paper_keys": 21,
+      "writers": [
+        "e7_free_baselines"
+      ],
+      "invoked_writers": [
+        "e7_free_baselines"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task5_analysis.json",
+      "n_paper_keys": 19,
+      "writers": [
+        "task5_analyse"
+      ],
+      "invoked_writers": [
+        "task5_analyse"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "original_paper_figures.json",
+      "n_paper_keys": 19,
+      "writers": [
+        "original_paper_figures",
+        "verify_original_quotes"
+      ],
+      "invoked_writers": [
+        "original_paper_figures"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task3_three_way.json",
+      "n_paper_keys": 19,
+      "writers": [
+        "task3_three_way"
+      ],
+      "invoked_writers": [
+        "task3_three_way"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step0_regimes.json",
+      "n_paper_keys": 18,
+      "writers": [
+        "step0_velocity_regimes",
+        "task1c_policy_test",
+        "task1d_reset_argument"
+      ],
+      "invoked_writers": [
+        "step0_velocity_regimes",
+        "task1c_policy_test",
+        "task1d_reset_argument"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_d2_recalibration.json",
+      "n_paper_keys": 18,
+      "writers": [
+        "task_d2_recalibration"
+      ],
+      "invoked_writers": [
+        "task_d2_recalibration"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "v1_ensemble_topology.json",
+      "n_paper_keys": 17,
+      "writers": [
+        "v1_ensemble_topology"
+      ],
+      "invoked_writers": [
+        "v1_ensemble_topology"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_d2b_robustness.json",
+      "n_paper_keys": 15,
+      "writers": [
+        "check_comparative_claims",
+        "task_d2b_robustness"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task_d2b_robustness"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "e5_synthetic_sigma.json",
+      "n_paper_keys": 13,
+      "writers": [
+        "e5_synthetic_sigma"
+      ],
+      "invoked_writers": [
+        "e5_synthetic_sigma"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "review_bootstrap_unit.json",
+      "n_paper_keys": 12,
+      "writers": [
+        "review_bootstrap_unit"
+      ],
+      "invoked_writers": [
+        "review_bootstrap_unit"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "v3_metric_definitions.json",
+      "n_paper_keys": 11,
+      "writers": [
+        "v3_metric_definitions"
+      ],
+      "invoked_writers": [
+        "v3_metric_definitions"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "verify_reproduction.json",
+      "n_paper_keys": 11,
+      "writers": [
+        "part_f_gate",
+        "pipeline_coverage",
+        "verify_reproduction"
+      ],
+      "invoked_writers": [
+        "part_f_gate",
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
+    },
+    {
+      "artifact": "comparative_claims.json",
+      "n_paper_keys": 10,
+      "writers": [
+        "check_comparative_claims"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_c3_multiplicity.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "task_c3_multiplicity"
+      ],
+      "invoked_writers": [
+        "task_c3_multiplicity"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_d3b_ens5_power.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "task_d3b_ens5_power"
+      ],
+      "invoked_writers": [
+        "task_d3b_ens5_power"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "e5_sigma_dilution.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "e5_synthetic_sigma"
+      ],
+      "invoked_writers": [
+        "e5_synthetic_sigma"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "paper_figures.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "paper_figures",
+        "paper_numbers"
+      ],
+      "invoked_writers": [
+        "paper_figures",
+        "paper_numbers"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "p1_power_check.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "p1_power_check"
+      ],
+      "invoked_writers": [
+        "p1_power_check"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task_c2_data_budget.json",
+      "n_paper_keys": 8,
+      "writers": [
+        "task_c2_data_budget"
+      ],
+      "invoked_writers": [
+        "task_c2_data_budget"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task2_sigma_profile.json",
+      "n_paper_keys": 8,
+      "writers": [
+        "task2_sigma_profile"
+      ],
+      "invoked_writers": [
+        "task2_sigma_profile"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "v2_deployment_horizon.json",
+      "n_paper_keys": 8,
+      "writers": [
+        "check_comparative_claims",
+        "task_d1_threeseed",
+        "v2_deployment_horizon"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "task_d1_threeseed",
+        "v2_deployment_horizon"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "appendix_g_rules.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "appendix_g_rules",
+        "pipeline_coverage"
+      ],
+      "invoked_writers": [
+        "appendix_g_rules",
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step5_armA_seed0.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "pipeline_coverage",
+        "step5_train",
+        "step6_3_min_logstd",
+        "step6_analyse",
+        "task1_calibration",
+        "task3_4_power_and_ddof",
+        "task3_control_arm",
+        "task4_contamination_analysis",
+        "task5_analyse"
+      ],
+      "invoked_writers": [
+        "pipeline_coverage",
+        "step6_3_min_logstd",
+        "step6_analyse",
+        "task1_calibration",
+        "task3_4_power_and_ddof",
+        "task3_control_arm",
+        "task4_contamination_analysis",
+        "task5_analyse"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "e4_sigma_gradients.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "e4_sigma_gradients"
+      ],
+      "invoked_writers": [
+        "e4_sigma_gradients"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "m49_capacity_matched.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "r2_independent_ensemble"
+      ],
+      "invoked_writers": [
+        "r2_independent_ensemble"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "t1_bibliography_verified.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "t1_bibliography"
+      ],
+      "invoked_writers": [
+        "t1_bibliography"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "p2_capacity_power.json",
+      "n_paper_keys": 5,
+      "writers": [
+        "p2_capacity_power",
+        "r2_independent_ensemble"
+      ],
+      "invoked_writers": [
+        "p2_capacity_power",
+        "r2_independent_ensemble"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step4_0a_results.json",
+      "n_paper_keys": 4,
+      "writers": [
+        "step4_0a_restate"
+      ],
+      "invoked_writers": [
+        "step4_0a_restate"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step6_analysis.json",
+      "n_paper_keys": 4,
+      "writers": [
+        "step6_analyse"
+      ],
+      "invoked_writers": [
+        "step6_analyse"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task3_control_arm.json",
+      "n_paper_keys": 4,
+      "writers": [
+        "task3_control_arm"
+      ],
+      "invoked_writers": [
+        "task3_control_arm"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step4_5_timing.json",
+      "n_paper_keys": 4,
+      "writers": [
+        "step4_5_timing",
+        "verify_reproduction"
+      ],
+      "invoked_writers": [
+        "step4_5_timing"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task4_arenas.json",
+      "n_paper_keys": 3,
+      "writers": [
+        "task4_arenas_and_difficulty"
+      ],
+      "invoked_writers": [
+        "task4_arenas_and_difficulty"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step5_armA_seed0_contam.json",
+      "n_paper_keys": 3,
+      "writers": [
+        "pipeline_coverage",
+        "step5_train",
+        "step6_analyse",
+        "task1_calibration",
+        "task3_4_power_and_ddof",
+        "task3_control_arm",
+        "task4_contamination_analysis",
+        "task5_analyse"
+      ],
+      "invoked_writers": [
+        "pipeline_coverage",
+        "step6_analyse",
+        "task1_calibration",
+        "task3_4_power_and_ddof",
+        "task3_control_arm",
+        "task4_contamination_analysis",
+        "task5_analyse"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step4_3_differential.json",
+      "n_paper_keys": 3,
+      "writers": [
+        "step4_3_differential"
+      ],
+      "invoked_writers": [
+        "step4_3_differential"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "compile_paper.json",
+      "n_paper_keys": 3,
+      "writers": [
+        "compile_paper",
+        "paper_numbers",
+        "pipeline_coverage"
+      ],
+      "invoked_writers": [
+        "compile_paper",
+        "paper_numbers",
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": "written by the LaTeX compile, which is stage 26; its declared output is the PDF rather than this artifact."
+    },
+    {
+      "artifact": "typed_numerals.json",
+      "n_paper_keys": 3,
+      "writers": [
+        "typed_numeral_audit"
+      ],
+      "invoked_writers": [
+        "typed_numeral_audit"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step4_4_overfit_ens1.json",
+      "n_paper_keys": 3,
+      "writers": [
+        "pipeline_coverage",
+        "step4_4_overfit"
+      ],
+      "invoked_writers": [
+        "pipeline_coverage",
+        "step4_4_overfit"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "e7_free_baselines_power.json",
+      "n_paper_keys": 2,
+      "writers": [
+        "e7_free_baselines"
+      ],
+      "invoked_writers": [
+        "e7_free_baselines"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step6_3_min_logstd.json",
+      "n_paper_keys": 1,
+      "writers": [
+        "step6_3_min_logstd"
+      ],
+      "invoked_writers": [
+        "step6_3_min_logstd"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step4_4_overfit_b32lr1e3.json",
+      "n_paper_keys": 1,
+      "writers": [
+        "pipeline_coverage",
+        "step4_4_overfit"
+      ],
+      "invoked_writers": [
+        "pipeline_coverage",
+        "step4_4_overfit"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task5_differential.json",
+      "n_paper_keys": 1,
+      "writers": [
+        "task5_differential"
+      ],
+      "invoked_writers": [
+        "task5_differential"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "task3_hardening.json",
+      "n_paper_keys": 1,
+      "writers": [
+        "task3_harness_hardening"
+      ],
+      "invoked_writers": [
+        "task3_harness_hardening"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    }
+  ]
+}
