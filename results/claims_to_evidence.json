@@ -2869,12 +2869,52 @@
         "results/t1_bibliography_verified.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-27",
+      "claim": "Figure 3(b) carried the contamination the numbers had been guarded against",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/paper_figures.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-28",
+      "claim": "Three overstatements in text whose artifacts say something weaker",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/e5_synthetic_sigma.json",
+        "results/m49_capacity_matched.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-29",
+      "claim": "\"The same head, unmodified\" was a claim about the class, not the instantiation",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "scripts/e5_synthetic_sigma.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 26,
+    "D": 29,
     "M": 59,
     "O": 14,
     "R": 73,

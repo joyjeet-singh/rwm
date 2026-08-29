@@ -1637,11 +1637,11 @@
   },
   "cc_n": {
     "source": "results/comparative_claims.json",
-    "value": 51
+    "value": 52
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 51
+    "value": 52
   },
   "cc_selfdefect_list": {
     "source": "results/comparative_claims.json",
@@ -1661,11 +1661,11 @@
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 51
+    "value": 52
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 51
+    "value": 52
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -3403,6 +3403,10 @@
     "source": "results/e5_synthetic_sigma.json",
     "value": "1.003"
   },
+  "e5s_mse_spread_range": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "1.002\u20131.003"
+  },
   "e5s_mse_under": {
     "source": "results/e5_synthetic_sigma.json",
     "value": "22"
@@ -3423,9 +3427,29 @@
     "source": "results/e5_synthetic_sigma.json",
     "value": "+0.1330"
   },
+  "e5s_nll_slope_lo": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "0.0078"
+  },
+  "e5s_nll_slope_range": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "0.0078\u20130.3537"
+  },
+  "e5s_nll_slope_spread_factor": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "45"
+  },
   "e5s_nll_spread": {
     "source": "results/e5_synthetic_sigma.json",
     "value": "3.67"
+  },
+  "e5s_nll_spread_lo": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "1.02"
+  },
+  "e5s_nll_spread_range": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "1.02\u20133.67"
   },
   "e5s_null_r_max": {
     "source": "results/e5_sigma_dilution.json",
@@ -3649,7 +3673,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "376"
+    "value": "380"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3783,6 +3807,10 @@
     "source": "results/m49_capacity_matched.json",
     "value": "1.79"
   },
+  "m49_shrink": {
+    "source": "results/m49_capacity_matched.json + r2_independent_ensemble.json",
+    "value": "0.24"
+  },
   "m49_verdict": {
     "source": "results/m49_capacity_matched.json",
     "value": "UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE"
@@ -3801,7 +3829,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 228
+    "value": 231
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -6809,7 +6837,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 577
+    "value": 581
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

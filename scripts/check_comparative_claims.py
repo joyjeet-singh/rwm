@@ -336,6 +336,19 @@ CLAIMS = [
      "keys": ["n_runs", "ver_values", "ver_files", "pdf_pages",
               "n_retractions_word", "n_retract_framing_word"],
      "file": "README.md"},
+    # The external-read brief is a hand-written document that quotes the paper's
+    # headline figures, and it drifted within hours of being written: it still
+    # said "46.3 hours across 26 runs" after M-49's five capacity-matched runs
+    # landed, and described E5 and E7 as not yet run. A document that misdescribes
+    # the paper is worse than none, because the reader it is written for takes it
+    # as the paper's own account of itself.
+    {"id": "C11.3", "kind": "cross-artifact-sync", "where": "EXTERNAL_READ_BRIEF",
+     "says": "recomputed each build against a",
+     "keys": ["rt_hours", "rt_runs", "d1_ratio", "d1n_epi_ratio_h1",
+              "d1n_epi_cov1_h1", "v3_cov_nominal1", "a2_rdd", "stale_pct",
+              "v1_shared_pct", "m44_ratio_gain", "m49_ratio_gain",
+              "e7_step_r", "e7_r_dis", "e5s_span", "e5s_mse_under"],
+     "file": "docs/EXTERNAL_READ_BRIEF.md"},
     {"id": "C11.2", "kind": "cross-artifact-sync", "where": "MODEL_CARD",
      "says": "recomputed each build against a",
      "keys": ["d1n_epi_ratio_h100", "e5_ratio_h100", "m44_ratio_gain",

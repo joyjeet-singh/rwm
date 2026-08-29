@@ -1,15 +1,15 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 577,
+  "n_typed": 581,
   "by_class": {
     "arxiv-id": 18,
-    "exception": 167,
+    "exception": 168,
     "markdown-heading": 24,
     "section-ref": 173,
     "figure-ref": 21,
     "citation-year": 19,
-    "code-location": 38,
-    "ledger-id": 44,
+    "code-location": 37,
+    "ledger-id": 48,
     "math-mode": 10,
     "table-row-label": 32,
     "equation-ref": 8,
@@ -179,7 +179,7 @@
       "why": "a functional form named in a control's specification"
     },
     {
-      "pattern": "\\*t\\u22121\\*|\\*t-1\\*|from \\*t\\u2212|stale by one step|k = -1|k = \\u22121",
+      "pattern": "\\*t\\u22121\\*|\\*t-1\\*|from \\*t\\u2212|stale by one step|k = -1|k = \\u22121|_\\{t\\s*[\\u2212-]\\s*1\\}|\\u00b5_\\{t|\\u03bc_\\{t",
       "why": "an index offset in the action convention, which is what \u00a77.2 is about"
     },
     {

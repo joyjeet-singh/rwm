@@ -5259,7 +5259,7 @@ same iterations, same seeds. Nothing else differs.
 - **tracking** — the **slope** of log sigma-hat on log sigma-true. Not the correlation. A
   correlation is scale-free, so a sigma-hat that is essentially constant still returns a large one
   off its own numerical noise: under the permutation null a head whose sigma spanned a factor of
-  1.0004 returned correlations between −0.78 and +0.65. The slope is not scale-free — perfect
+  1.0004 returned correlations as large as ±0.24 (`results/e5_sigma_dilution.json`). An earlier version of this sentence said −0.78 to +0.65; those came from the superseded 3,000-iteration dilution run and were corrected in the paper and not here. The slope is not scale-free — perfect
   recovery is 1, a constant sigma-hat is 0 — and under the same null it is order 1e-5.
 
 **Thresholds, measured before the runs** (`results/e5_sigma_dilution.json`):
@@ -5869,6 +5869,61 @@ the mechanism as its own, with the concession five hundred lines earlier. Both s
 the positioning §2 promised they carried.
 
 **Evidence** `SRC` `results/t1_bibliography_verified.json`
+**Status** ACTIVE
+
+### D-27 — Figure 3(b) carried the contamination the numbers had been guarded against · **NEW**
+`M-49`'s five capacity-matched runs at width 124 were excluded from §6.3's σ-collapse family in
+`paper_numbers.py` and **not** in `paper_figures.py`, whose panel (b) filters on `"_10k"` alone.
+The published figure's legend therefore read **"sampled-MSE runs (n=22)"** beside a text that says
+17, under a sentence asserting that *"Figure 3(b) plots only the runs the rate is fitted on, so the
+scatter and the quoted statistic describe the same set"*.
+
+The guard existed, was written for exactly this, and was applied in one of the two places that
+needed it. Both now read the width each run artifact records for itself, and the figure records
+which runs it excluded.
+
+**Evidence** `SRC` `results/paper_figures.json` (`fig3_offwidth_excluded`)
+**Status** ACTIVE
+
+### D-28 — Three overstatements in text whose artifacts say something weaker · **NEW**
+Found by an adversarial read of §6.3, §6.7 and §11 against the artifacts they cite. None is a wrong
+number; each is a sentence claiming more than its artifact supports.
+
+**§6.7 called both new baselines free.** `M-52` exists to record that one of them is not — it costs
+an extra rollout in this harness, and is free only in deployment. §6.7 carried `M-51`'s uncorrected
+wording while `M-52`, three files away, said so explicitly. Fixed, with the distinction stated.
+
+**§6.3 reported the recovering arm's σ spread as 3.67×**, which is `spread_max` — the best of three
+seeds. The three are 3.67, 1.14 and 1.02, so two of them barely clear the 1.01× detection floor.
+The same key is *conservative* for the collapsing arm and *generous* for the recovering one, so the
+table's contrast was inflated at its widest by one seed. Both rows now print the range, and §6.3
+states the seed variability and its consequence — that this experiment establishes the **contrast**
+and not the magnitude of the recovery, which is what `M-50` committed to before the runs and what
+the paper had dropped.
+
+**§11 said "capacity accounts for some of §6.10's effect".** Nothing tests that. The point
+estimates fall 2.03× → 1.79×, a difference of 0.24 which is untested — no artifact pairs the two
+independent arms — and far below the 2.004× the comparison can resolve. `R-73` says the design
+cannot resolve how much belonged to capacity; §11 stated it as settled. Withdrawn.
+
+**Evidence** `SRC` `results/e5_synthetic_sigma.json`, `results/m49_capacity_matched.json`
+**Status** ACTIVE
+
+### D-29 — "The same head, unmodified" was a claim about the class, not the instantiation · **NEW**
+§6.3 described E5's head as *"the same bounded log-σ head as the released model, unmodified"*. The
+class is unmodified. The **instantiation** is a one-dimensional state with no recurrent trunk,
+where the released head predicts 45 dimensions from a GRU.
+
+The trunk's absence is deliberate and the script's docstring said so; the paper did not, and the
+dimensionality has a consequence neither stated: the state loss **sums** over state dimensions, so
+at one dimension it is roughly 45× smaller relative to the bound term than in the released path —
+and the bound term is the other term §6.3's derivation is about.
+
+That difference makes E5's conditions **more** favourable to σ surviving, not less, so it does not
+weaken the result. It was still undisclosed, and a reader checking the claim "unmodified" against
+`scripts/e5_synthetic_sigma.py` would have found something the paper had not told them.
+
+**Evidence** `SRC` `scripts/e5_synthetic_sigma.py`
 **Status** ACTIVE
 
 ## Candidate paper contributions

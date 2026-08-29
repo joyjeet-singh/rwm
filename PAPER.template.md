@@ -718,20 +718,39 @@ therefore built data where it is not.
 
 Synthetic data whose true noise level is **known** and varies by a factor of {{e5s_span}} across
 the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
-model, unmodified, including the clamp, the learnable floor and the bound loss at its configured
-weight; trained under each objective in turn on {{e5s_n_train}} points for {{e5s_iters}}
-iterations at {{e5s_seeds}} seeds. Nothing else differs between the arms.
+model — `MLPStateHead` unmodified, including the double-softplus clamp, the learnable
+`state_min_logstd` and `state_log_delta_logstd`, and the bound loss at its configured weight —
+trained under each objective in turn on {{e5s_n_train}} points for {{e5s_iters}} iterations at
+{{e5s_seeds}} seeds. Nothing else differs between the arms.
+
+*Two ways this is not the released setting, stated because "unmodified" is a claim about the class
+and not about the instantiation.* The head is built here over a **one-dimensional** state with no
+recurrent trunk in front of it, where the released one predicts {{cal_rel_ndim}} dimensions from a
+GRU. The trunk's absence is deliberate — the question is about the head's objective, and
+interposing a GRU adds a confound rather than removing one. The dimensionality has a consequence
+worth naming: the state loss sums over state dimensions, so at one dimension it is roughly
+{{cal_rel_ndim}}× smaller relative to the bound term than in the released path, and the bound term
+is the other term §6.3's derivation is about. That makes this arm's conditions *more* favourable to
+σ surviving, not less — the collapse happens anyway.
 
 | objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
 |---|---|---|---|
-| `mse` — the implemented branch | **{{e5s_mse_ratio}}** | {{e5s_mse_spread}}× | {{e5s_mse_slope}} |
-| `gaussian_nll` — the authors' unused branch | {{e5s_nll_ratio}} | {{e5s_nll_spread}}× | {{e5s_nll_slope}} |
+| `mse` — the implemented branch | **{{e5s_mse_ratio}}** | {{e5s_mse_spread_range}}× | {{e5s_mse_slope}} |
+| `gaussian_nll` — the authors' unused branch | {{e5s_nll_ratio}} | {{e5s_nll_spread_range}}× | {{e5s_nll_slope}} |
+
+*Ratios and slopes are means over {{e5s_seeds}} seeds; spreads are the range across them, because
+the mean of a spread hides which seeds recovered.*
 
 **Under the implemented objective σ sits {{e5s_mse_under}}× below the true noise and does not
 track it at all** — a spread of {{e5s_mse_spread}}× where the truth spans {{e5s_span}}×, and a
 slope below the {{e5s_slope_thr}} the design can detect. Under the authors' own branch, same data
-and same head, σ recovers the true level to a median ratio of {{e5s_nll_ratio}} and its slope is
-well above threshold. **{{e5s_verdict}}**, which is the verdict `M-50` names for that pattern.
+and same head, σ recovers the true level to a median ratio of {{e5s_nll_ratio}} and every seed's
+slope clears the threshold. **The recovering arm is seed-variable and `M-50` said so before the
+runs**: its slopes span {{e5s_nll_slope_range}}, a factor of
+{{e5s_nll_slope_spread_factor}}, and two of {{e5s_seeds}} seeds recover a σ spread of only
+{{e5s_nll_spread_lo}}× against the truth's {{e5s_span}}×. So what this experiment establishes is
+the **contrast** — one objective tracks the noise at all and the other does not — and not the
+magnitude of the recovery, which this training budget does not pin down. **{{e5s_verdict}}**, which is the verdict `M-50` names for that pattern.
 
 *The statistic is the slope and not the correlation, and the reason is worth one sentence: a
 correlation is scale-free, so a σ̂ that is essentially constant still returns a large one off its
@@ -1006,9 +1025,12 @@ numbers and the build keeps them in separate keys for that reason.
 **One adversary is one, so we added two more — and the ranking claim survives only one of them.**
 A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
 before either was computed (`M-51`, corrected by `M-52`), we added two further baselines needing
-no ensemble, no second model and nothing the rollout does not already produce: `step-size`, the
-magnitude of the model's own predicted state change ‖µ_t − µ_{t−1}‖; and `entry-res`, its
-one-step error at the step *before* the forecast window opens.
+no ensemble and no second model: `step-size`, the magnitude of the model's own predicted state
+change ‖µ_t − µ_{t−1}‖, which costs nothing because the rollout has already made those
+predictions; and `entry-res`, its one-step error at the step *before* the forecast window opens,
+which costs **one extra rollout in this harness** and nothing in deployment, where a model
+consumes the history to build its recurrent state anyway. `M-51` called both free without
+distinguishing those, and `M-52` records the correction.
 
 | baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? |
 |---|---|---|---|---|
@@ -1367,7 +1389,7 @@ anyone with a second dataset.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries {{v1_cap_indep}} state-pathway parameters against the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. **Capacity is no longer one of them.** `M-49`, committed with its minimum detectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size` {{m49_width}} against the released {{released_width}}, giving {{m49_matched_params}} state-pathway parameters against the shared-trunk arm's {{v1_cap_shared}} — a ratio of {{m49_matched_ratio}}, where §6.10's original contrast carried {{v1_cap_ratio}}. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of {{m49_cov_gain}} points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
-**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from {{m44_ratio_gain}}× unmatched to **{{m49_ratio_gain}}× matched**, against an MDE of {{m49_mde_ratio}}×. `M-49` therefore returns **{{m49_verdict_short}}** — {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions hold and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested; §6.10's own text said so before the runs rather than after them. So: capacity accounts for **some** of §6.10's effect, trunk-sharing is not explained away by it, and how the remainder divides is open. Closing it needs more independent trajectories than the released dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which `M-49` does not address and this paragraph does not claim it does.
+**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from {{m44_ratio_gain}}× unmatched to **{{m49_ratio_gain}}× matched**, against an MDE of {{m49_mde_ratio}}×. `M-49` therefore returns **{{m49_verdict_short}}** — {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions hold and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested; §6.10's own text said so before the runs rather than after them. So: trunk-sharing is **not** explained away by capacity — the effect is in the same direction on every pair with every interval excluding zero. Whether capacity accounts for *any* of it is a different question and this design does not answer it: the point estimates fall from {{m44_ratio_gain}}× to {{m49_ratio_gain}}×, a difference of about {{m49_shrink}}, which is untested — no artifact here pairs the two independent arms against each other — and far below the {{m49_mde_ratio}}× this comparison can resolve. An earlier draft of this sentence said capacity accounts for some of the effect; that is more than `R-73` supports and it is withdrawn. Closing it needs more independent trajectories than the released dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which `M-49` does not address and this paragraph does not claim it does.
 That asymmetry is deliberate and it is generous to the mechanism: if the overconfidence factor
 barely moves despite the handicap, the finding is strong in the direction of *architecture is not
 the explanation*; if it moves a great deal, the design flaw is identified but not cleanly

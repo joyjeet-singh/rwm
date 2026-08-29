@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     831 values substituted from 66 artifacts. -->
+     836 values substituted from 67 artifacts. -->
 
 # Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
 
@@ -41,9 +41,9 @@ scored on the other, restores nominal coverage on every held-out cell; and the r
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
 nRMSE at h = 368 by 75%.
 
-Every **measurement** here is substituted from a named artifact; the 577 numerals that
+Every **measurement** here is substituted from a named artifact; the 581 numerals that
 are not are addresses, horizon labels or declared constants, classified one by one by a build that
-fails on anything else. 51 comparative claims across 21 kinds are recomputed each
+fails on anything else. 52 comparative claims across 21 kinds are recomputed each
 build against a corrupted expectation, so a check that can no longer fail is caught.
 
 ---
@@ -730,20 +730,39 @@ therefore built data where it is not.
 
 Synthetic data whose true noise level is **known** and varies by a factor of 25 across
 the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
-model, unmodified, including the clamp, the learnable floor and the bound loss at its configured
-weight; trained under each objective in turn on 4,000 points for 12,000
-iterations at 3 seeds. Nothing else differs between the arms.
+model — `MLPStateHead` unmodified, including the double-softplus clamp, the learnable
+`state_min_logstd` and `state_log_delta_logstd`, and the bound loss at its configured weight —
+trained under each objective in turn on 4,000 points for 12,000 iterations at
+3 seeds. Nothing else differs between the arms.
+
+*Two ways this is not the released setting, stated because "unmodified" is a claim about the class
+and not about the instantiation.* The head is built here over a **one-dimensional** state with no
+recurrent trunk in front of it, where the released one predicts 45 dimensions from a
+GRU. The trunk's absence is deliberate — the question is about the head's objective, and
+interposing a GRU adds a confound rather than removing one. The dimensionality has a consequence
+worth naming: the state loss sums over state dimensions, so at one dimension it is roughly
+45× smaller relative to the bound term than in the released path, and the bound term
+is the other term §6.3's derivation is about. That makes this arm's conditions *more* favourable to
+σ surviving, not less — the collapse happens anyway.
 
 | objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
 |---|---|---|---|
-| `mse` — the implemented branch | **0.0460** | 1.003× | +0.000493 |
-| `gaussian_nll` — the authors' unused branch | 0.9779 | 3.67× | +0.1330 |
+| `mse` — the implemented branch | **0.0460** | 1.002–1.003× | +0.000493 |
+| `gaussian_nll` — the authors' unused branch | 0.9779 | 1.02–3.67× | +0.1330 |
+
+*Ratios and slopes are means over 3 seeds; spreads are the range across them, because
+the mean of a spread hides which seeds recovered.*
 
 **Under the implemented objective σ sits 22× below the true noise and does not
 track it at all** — a spread of 1.003× where the truth spans 25×, and a
 slope below the 0.00309 the design can detect. Under the authors' own branch, same data
-and same head, σ recovers the true level to a median ratio of 0.9779 and its slope is
-well above threshold. **OBJECTIVE-DRIVEN**, which is the verdict `M-50` names for that pattern.
+and same head, σ recovers the true level to a median ratio of 0.9779 and every seed's
+slope clears the threshold. **The recovering arm is seed-variable and `M-50` said so before the
+runs**: its slopes span 0.0078–0.3537, a factor of
+45, and two of 3 seeds recover a σ spread of only
+1.02× against the truth's 25×. So what this experiment establishes is
+the **contrast** — one objective tracks the noise at all and the other does not — and not the
+magnitude of the recovery, which this training budget does not pin down. **OBJECTIVE-DRIVEN**, which is the verdict `M-50` names for that pattern.
 
 *The statistic is the slope and not the correlation, and the reason is worth one sentence: a
 correlation is scale-free, so a σ̂ that is essentially constant still returns a large one off its
@@ -1025,9 +1044,12 @@ numbers and the build keeps them in separate keys for that reason.
 **One adversary is one, so we added two more — and the ranking claim survives only one of them.**
 A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
 before either was computed (`M-51`, corrected by `M-52`), we added two further baselines needing
-no ensemble, no second model and nothing the rollout does not already produce: `step-size`, the
-magnitude of the model's own predicted state change ‖µ_t − µ_{t−1}‖; and `entry-res`, its
-one-step error at the step *before* the forecast window opens.
+no ensemble and no second model: `step-size`, the magnitude of the model's own predicted state
+change ‖µ_t − µ_{t−1}‖, which costs nothing because the rollout has already made those
+predictions; and `entry-res`, its one-step error at the step *before* the forecast window opens,
+which costs **one extra rollout in this harness** and nothing in deployment, where a model
+consumes the history to build its recurrent state anyway. `M-51` called both free without
+distinguishing those, and `M-52` records the correction.
 
 | baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? |
 |---|---|---|---|---|
@@ -1292,7 +1314,7 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (228 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (231 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for 8 of them and Appendix G for all 11; 7 of Figure 4's are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1303,7 +1325,7 @@ it rests on, because it is what let us detect the gap at all.
 **Reproducibility, and a build that checks its own prose.**
 `./reproduce.sh --quick --force` regenerates 37 artifact files and 6,825
 numeric values from a clean clone, 6,790 of them bitwise identical (99.49%),
-35 differing. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 577 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **51 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+35 differing. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 581 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **52 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 52 of 52 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1386,7 +1408,7 @@ anyone with a second dataset.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. **Capacity is no longer one of them.** `M-49`, committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132 — a ratio of 0.9998, where §6.10's original contrast carried 3.49. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
-**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from 2.03× unmatched to **1.79× matched**, against an MDE of 2.00×. `M-49` therefore returns **UNDER-POWERED** — 5 of its 6 conditions hold and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested; §6.10's own text said so before the runs rather than after them. So: capacity accounts for **some** of §6.10's effect, trunk-sharing is not explained away by it, and how the remainder divides is open. Closing it needs more independent trajectories than the released dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which `M-49` does not address and this paragraph does not claim it does.
+**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from 2.03× unmatched to **1.79× matched**, against an MDE of 2.00×. `M-49` therefore returns **UNDER-POWERED** — 5 of its 6 conditions hold and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested; §6.10's own text said so before the runs rather than after them. So: trunk-sharing is **not** explained away by capacity — the effect is in the same direction on every pair with every interval excluding zero. Whether capacity accounts for *any* of it is a different question and this design does not answer it: the point estimates fall from 2.03× to 1.79×, a difference of about 0.24, which is untested — no artifact here pairs the two independent arms against each other — and far below the 2.00× this comparison can resolve. An earlier draft of this sentence said capacity accounts for some of the effect; that is more than `R-73` supports and it is withdrawn. Closing it needs more independent trajectories than the released dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which `M-49` does not address and this paragraph does not claim it does.
 That asymmetry is deliberate and it is generous to the mechanism: if the overconfidence factor
 barely moves despite the handicap, the finding is strong in the direction of *architecture is not
 the explanation*; if it moves a great deal, the design flaw is identified but not cleanly
@@ -1623,7 +1645,7 @@ unresolved braces: a pipe-led line with no separator row beneath it, a single-br
 that names a real key, and any key resolving to an empty or null value. The converter
 requires the separator row before it will build a table.
 
-**The check kinds.** `scripts/check_comparative_claims.py` verifies 51 claims across
+**The check kinds.** `scripts/check_comparative_claims.py` verifies 52 claims across
 21 kinds: *abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *frequency-consistency* (a frequency stated in words -- "at every horizon", "at exactly one place" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 8 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference).
 
 That list is generated from the checker's own registry rather than written here. It was
@@ -1640,7 +1662,7 @@ guards nothing; a check that only matches text guards nothing either.
 **The self-test.** Every assertion is run against a deliberately corrupted expectation on each
 build and must fail: the interval relation inverted, the extremum replaced by the *runner-up*
 rather than an absent label, the sign flipped, the order of magnitude and the dimension counts
-moved by one. 51 of 51 are caught. An assertion that has quietly stopped
+moved by one. 52 of 52 are caught. An assertion that has quietly stopped
 being able to fail is worth less than no assertion, because it reads as coverage.
 
 **Four defects the self-test has found in the checker itself**, rather
@@ -1658,8 +1680,8 @@ both of which read as protection and are not:
 - A `sign` assertion that was never written. §6.8 said the two largest held-out deviations were "in opposite directions" when both are above target; the kind that would have caught it existed and no claim used it. A kind with no claim attached guards nothing, and the self-test cannot report that because there is nothing to corrupt.
 
 Corruptions now invert relative to each claim's own expectation, every registered kind
-carries at least one claim, and every claim is corrupted on every build: 51 of
-51 caught against 51 claims, with no exemptions. This list is generated from
+carries at least one claim, and every claim is corrupted on every build: 52 of
+52 caught against 52 claims, with no exemptions. This list is generated from
 the checker rather than written here, so a fourth entry cannot be forgotten.
 
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
@@ -1774,7 +1796,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 376 KB ledger, so here is the table. It is generated from
+or an instruction to open a 380 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data

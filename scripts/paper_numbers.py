@@ -288,7 +288,27 @@ def main():
     put("e5s_nll_ratio", f'{_b5["ratio_mean"]:.4f}', "results/e5_synthetic_sigma.json")
     put("e5s_nll_pct_off", f'{abs(1 - _b5["ratio_mean"]) * 100:.0f}',
         "results/e5_synthetic_sigma.json")
+    # spread_max is the BEST of three seeds, and using it for the recovering arm
+    # while using it for the collapsing arm too is generous in one direction and
+    # conservative in the other: the mse spreads are 1.002/1.002/1.003 (max is the
+    # worst case for a collapse claim) and the gaussian_nll spreads are
+    # 3.668/1.137/1.023 (max is the best case for a recovery claim). The table now
+    # prints the RANGE for the recovering arm, so a reader sees that two of three
+    # seeds barely clear the 1.01x detection floor.
+    _nll_spreads = sorted(r["sigma_hat_spread_factor"] for r in _b5["runs"])
     put("e5s_nll_spread", f'{_b5["spread_max"]:.2f}', "results/e5_synthetic_sigma.json")
+    put("e5s_nll_spread_lo", f'{_nll_spreads[0]:.2f}', "results/e5_synthetic_sigma.json")
+    put("e5s_nll_spread_range", f'{_nll_spreads[0]:.2f}\u2013{_nll_spreads[-1]:.2f}',
+        "results/e5_synthetic_sigma.json")
+    _nll_slopes = sorted(r["slope_log_sigma"] for r in _b5["runs"])
+    put("e5s_nll_slope_lo", f'{_nll_slopes[0]:.4f}', "results/e5_synthetic_sigma.json")
+    put("e5s_nll_slope_range", f'{_nll_slopes[0]:.4f}\u2013{_nll_slopes[-1]:.4f}',
+        "results/e5_synthetic_sigma.json")
+    put("e5s_nll_slope_spread_factor", f'{_nll_slopes[-1] / _nll_slopes[0]:.0f}',
+        "results/e5_synthetic_sigma.json")
+    _mse_spreads = sorted(r["sigma_hat_spread_factor"] for r in _a5["runs"])
+    put("e5s_mse_spread_range", f'{_mse_spreads[0]:.3f}\u2013{_mse_spreads[-1]:.3f}',
+        "results/e5_synthetic_sigma.json")
     put("e5s_nll_slope", f'{_b5["slope_mean"]:+.4f}', "results/e5_synthetic_sigma.json")
     put("e5s_slope_thr", f'{_t5["slope_threshold"]:.5f}', "results/e5_sigma_dilution.json")
     put("e5s_collapse_thr", _t5["collapse_ratio_threshold"], "results/e5_sigma_dilution.json")
@@ -359,6 +379,9 @@ def main():
     put("m49_n_conditions", len(_m49["conditions"]), "results/m49_capacity_matched.json")
     put("m49_n_conditions_met", sum(1 for v in _m49["conditions"].values() if v),
         "results/m49_capacity_matched.json")
+    put("m49_shrink",
+        f'{J("r2_independent_ensemble.json")["m44"]["mean_ratio_improvement"] - _m49["mean_ratio_improvement"]:.2f}',
+        "results/m49_capacity_matched.json + r2_independent_ensemble.json")
 
     AG = J("appendix_g_rules.json")
     put("appG_n_rules", AG["n_rules"], "results/appendix_g_rules.json")

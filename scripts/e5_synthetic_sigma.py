@@ -59,7 +59,9 @@ N_TEST = 2000
 ITERS = 12000            # see the note in evaluate(): 3,000 leaves the head
                          # under-trained under BOTH objectives and the contrast
                          # unreadable -- sigma is flat everywhere and the
-                         # correlation swings between -0.78 and +0.65 on noise
+                         # correlation swings on noise (measured at |r| up to 0.24 under the
+                         # permutation null; the -0.78/+0.65 an earlier comment gave
+                         # came from the superseded 3,000-iteration run)
 BATCH = 256
 SEEDS = (0, 1, 2)
 NULL_REPEATS = 8           # permutation-null repeats for the dilution study
@@ -139,7 +141,8 @@ def evaluate(head, x, sigma_true):
     #
     # A correlation is scale-free, so a sigma_hat that is essentially CONSTANT
     # still returns a large one off its own numerical noise: the permutation null
-    # produced |r| up to 0.78 from a head whose sigma spanned a factor of 1.00.
+    # produced |r| up to 0.24 from a head whose sigma spanned a factor of 1.0004
+    # (results/e5_sigma_dilution.json; 0.78 was the superseded 3,000-iteration run).
     # The slope of log sigma_hat on log sigma_true is not scale-free. Perfect
     # recovery is 1; a constant sigma_hat is 0, whatever its correlation does.
     slope = float(np.polyfit(np.log(st[ok]), np.log(s[ok]), 1)[0]) if ok.sum() > 3 else np.nan

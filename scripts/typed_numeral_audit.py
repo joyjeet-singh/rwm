@@ -169,7 +169,8 @@ EXCEPTIONS = [
      "the name of a hash algorithm"),
     (r"log\(1 \+ index\)|\blog\(1 ?\+",
      "a functional form named in a control's specification"),
-    (r"\*t\u22121\*|\*t-1\*|from \*t\u2212|stale by one step|k = -1|k = \u22121",
+    (r"\*t\u22121\*|\*t-1\*|from \*t\u2212|stale by one step|k = -1|k = \u22121|"
+     r"_\{t\s*[\u2212-]\s*1\}|\u00b5_\{t|\u03bc_\{t",
      "an index offset in the action convention, which is what §7.2 is about"),
     (r"is \"5,000 iterations|his recollection is 5,000|\"as I always did\"|"
      r"max_iterations: 500` is",

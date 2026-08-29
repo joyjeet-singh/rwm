@@ -169,10 +169,25 @@ def fig3_collapse(rec):
     """The variance collapse is linear, identical across every run."""
     import glob
     fig, ax = plt.subplots(1, 2, figsize=(7.6, 3.2))
-    runs, slopes = [], []
+    # The released architecture width, from the reference config. Panel (a) shows
+    # every run; panel (b) is the family the QUOTED RATE is fitted over, and that
+    # rate is §6.3's claim that the collapse is "nearly identical across runs" --
+    # a claim about one architecture. paper_numbers.py was given this guard when
+    # M-49's five width-124 runs appeared; this file was not, so the published
+    # figure's legend read "sampled-MSE runs (n=22)" beside a text that said 17,
+    # under a sentence asserting that the figure and the statistic describe the
+    # same set. Same source of truth as paper_numbers.py: the width each run
+    # artifact records for itself.
+    _released_w = R.load_reference_config(R.repo_paths()["lite"])[
+        "architecture_config"]["rnn_hidden_size"]
+    runs, slopes, offwidth = [], [], []
     for f in sorted(glob.glob(os.path.join(R.RESULTS, "step5_arm*.json"))):
         tag = os.path.basename(f)[len("step5_"):-len(".json")]
         d = json.load(open(f))
+        _w = d.get("hyperparameters", {}).get("rnn_hidden_size", _released_w)
+        if _w != _released_w:
+            offwidth.append(tag)
+            continue
         col = C["armB"] if tag.startswith("armB") else (
             C["corrected"] if tag.endswith("_nll") else C["faithful"])
         it = [c["iter"] for c in d["collapse"]]
@@ -183,6 +198,7 @@ def fig3_collapse(rec):
             slopes.append((tag, d["collapse_fit"]["slope_per_iter"]))
     ax[0].set(xlabel="iteration", ylabel=r"mean $\log\Delta_{\log\sigma}$",
               title=f"(a) collapse trajectory,\nall {len(runs)} runs superimposed")
+    rec["fig3_offwidth_excluded"] = sorted(offwidth)
     # Panel (b) must plot the same set the quoted rate is fitted on. The six
     # 10,000-iteration runs continue seeds already present at 2,500, so including
     # them here would show n=18 beside a statistic computed on n=12.

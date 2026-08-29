@@ -1,6 +1,6 @@
 {
   "n_artifacts": 52,
-  "n_paper_keys": 1731,
+  "n_paper_keys": 1738,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -153,6 +153,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "e5_synthetic_sigma.json",
+      "n_paper_keys": 19,
+      "writers": [
+        "e5_synthetic_sigma"
+      ],
+      "invoked_writers": [
+        "e5_synthetic_sigma"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task5_analysis.json",
       "n_paper_keys": 19,
       "writers": [
@@ -239,18 +251,6 @@
       "invoked_writers": [
         "check_comparative_claims",
         "task_d2b_robustness"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "e5_synthetic_sigma.json",
-      "n_paper_keys": 13,
-      "writers": [
-        "e5_synthetic_sigma"
-      ],
-      "invoked_writers": [
-        "e5_synthetic_sigma"
       ],
       "covered": true,
       "exempt_reason": null
@@ -421,6 +421,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "m49_capacity_matched.json",
+      "n_paper_keys": 7,
+      "writers": [
+        "r2_independent_ensemble"
+      ],
+      "invoked_writers": [
+        "r2_independent_ensemble"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "appendix_g_rules.json",
       "n_paper_keys": 6,
       "writers": [
@@ -469,18 +481,6 @@
       ],
       "invoked_writers": [
         "e4_sigma_gradients"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "m49_capacity_matched.json",
-      "n_paper_keys": 6,
-      "writers": [
-        "r2_independent_ensemble"
-      ],
-      "invoked_writers": [
-        "r2_independent_ensemble"
       ],
       "covered": true,
       "exempt_reason": null

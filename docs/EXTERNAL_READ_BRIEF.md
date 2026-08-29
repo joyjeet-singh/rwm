@@ -29,7 +29,7 @@ uncertainty outputs report.
    of outcomes inside ±1σ against a calibrated 68.27%. It deteriorates with horizon from there.
    The per-member σ the method computes and discards is worse still, and §6.3 derives why: the
    implemented state loss puts a reparameterised *sample* into a squared error, whose optimum in σ
-   is exactly zero. §6.3 demonstrates that against synthetic data with known noise.
+   is exactly zero. §6.3 demonstrates that against synthetic data whose noise is known and varies 25× across the input range: under the implemented objective σ lands 22× low and tracks the noise not at all, under the authors' own unused branch it recovers to a median ratio of 0.98. That is a pre-registered result (`M-50`, OBJECTIVE-DRIVEN).
 
 3. **As a ranking it is much better.** Disagreement beats the forecast step index — a free counter
    neither paper ran — at every horizon, and still correlates +0.419 with realised error once both
@@ -37,14 +37,23 @@ uncertainty outputs report.
    checkpoint trained on all ten episodes, and a pre-registered replication on models we trained
    returned DOES NOT GENERALISE.
 
-4. **The interval is repairable, and one released defect is worth fixing today.** One multiplier
+4. **A free baseline comes close to the ensemble.** Under a rule committed before either was
+   computed, the magnitude of the model's own predicted state change — no ensemble, no second
+   model — ranks realised error at +0.4697 against disagreement's +0.6053, and the margin is
+   smaller than this sample (n_independent = 20) can resolve. Disagreement keeps +0.543 with it
+   partialled out, so it is carrying information the subtraction is not; what is not established
+   is that it is worth five models. `M-51` returns SURVIVES entry-res ONLY.
+
+5. **The interval is repairable, and one released defect is worth fixing today.** One multiplier
    per horizon, fitted on one held-out episode and scored on the other, restores nominal coverage
    on every held-out cell where a global multiplier does not. Separately, the released evaluation
    pairs each state with the previous step's action; scored causally the released checkpoint is
-   75% better than its own harness reports.
+   75% better than its own harness reports **on nRMSE at h = 368** — the figure is metric- and
+   horizon-specific and the same comparison gives 9.5% on relative-L1, which is why the abstract
+   now names both scopes.
 
-**Scale, so you can calibrate how much to trust each.** Two CPU cores, 46.3 hours of training
-across 26 runs, 0.133% of the reference's world-model data budget. The out-of-sample arena has
+**Scale, so you can calibrate how much to trust each.** Two CPU cores, 48.2 hours of training
+across 31 runs, 0.133% of the reference's world-model data budget. The out-of-sample arena has
 **four** mutually non-overlapping 400-step trajectories, and that bounds every long-horizon claim
 in the paper.
 
@@ -81,7 +90,7 @@ replication on our own ensemble-5 arms returned DOES NOT GENERALISE (because its
 needs the paired difference to exclude zero at a majority of horizons, and at n_independent = 4 it
 does so at one).
 
-**Press on:** given those two facts, is "as a ranking it is far better" a claim the paper is
+**Press on:** given those facts — and the free baseline above — is "as a ranking it is far better" a claim the paper is
 entitled to make at all? We think yes — six controls, including one that holds both the rollout
 and the forecast depth constant — but a reader who discounts everything in-sample is left with a
 failed replication, and we would like to know if that reading is the reasonable one.
@@ -99,8 +108,13 @@ measured.
 
 **Press on:** is that positioning honest, or is it still claiming too much? And is the contrast in
 §6.10 clean? It confounds independence with **capacity** — 3.49× more state-pathway parameters —
-which §11 concedes and which `M-49` is a pre-registered attempt to fix by matching capacity at
-reduced width. Is capacity-matching the right control, or is there a better one?
+which §11 concedes and which `M-49` was pre-registered to fix by matching capacity at reduced
+width. **It has run.** With capacity held fixed the independent ensemble is still better on every
+shared-trunk seed, every interval still excludes zero, and the coverage gain still clears its MDE
+— but the overconfidence improvement falls from 2.03× to 1.79× against an MDE of 2.004×, so the
+rule returns UNDER-POWERED. Capacity accounts for some of the effect and does not explain it away.
+Is capacity-matching the right control, or is there a better one? And is "UNDER-POWERED" the
+honest label for that result, or are we being too kind to ourselves?
 
 ---
 
@@ -112,8 +126,7 @@ In rough order:
 2. Anything in the abstract that you would read as a stronger claim than the body supports.
 3. A section you would cut. The paper is long, roughly a fifth of it is about its own process, and
    we would rather hear "§8 is too long" from you than from a reviewer.
-4. Anything that reads as defensive rather than careful. The paper retracts twelve of its own
-   claims and says so repeatedly; we cannot tell any more whether that reads as rigour or as
+4. Anything that reads as defensive rather than careful. The paper retracts twelve numbered and framing claims of its own and says so repeatedly; we cannot tell any more whether that reads as rigour or as
    anxiety.
 
 **What is not useful:** arithmetic, citation formatting, or anything of the form "this number
