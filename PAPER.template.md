@@ -4,9 +4,9 @@
 
 ## Abstract
 
-We rebuild the proprioceptive dynamics model of Li, Krause and Hutter (*Robotic World
-Model*, arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from
-scratch on CPU, checked against the released reference at gradient level.
+We rebuild the proprioceptive dynamics model of the *Robotic World Model*
+(arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on
+CPU, checked against the released reference at gradient level.
 
 **The base paper's central training claim reproduces, and the advantage grows with
 horizon.** Under a rule committed to git before the runs, autoregressive training beats
@@ -15,24 +15,27 @@ error at h = {{v2_diag_h}}, the horizon the rule names, rising to it from
 {{a1_ratio_h100}}× at h = {{v2_deploy_h}}, where the method deploys.
 
 **Neither uncertainty output is usable as an interval, and that is not accumulated rollout
-error.** One step ahead, where nothing has accumulated, the ensemble disagreement the method
-penalises rewards with is already {{d1n_epi_ratio_h1}}× smaller than realised error:
-{{d1n_epi_cov1_h1}}% of outcomes fall inside ±1σ where {{v3_cov_nominal1}}% is calibrated. It
-deteriorates from there to {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}. The σ the method
-computes and discards is worse at one step by {{d1n_alea_ratio_h1}}×, and we derive why: the
-implemented objective's optimum is σ = 0.
+error.** One step ahead, where nothing has accumulated, the disagreement the method penalises
+rewards with is already {{d1n_epi_ratio_h1}}× smaller than realised error:
+{{d1n_epi_cov1_h1}}% of outcomes fall inside ±1σ where {{v3_cov_nominal1}}% is calibrated,
+deteriorating to {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}. The σ the method computes and
+discards is worse still. We derive why — the implemented objective's optimum is σ = 0 — and
+demonstrate it on data whose noise is known and varies {{e5s_span}}×: σ lands
+{{e5s_mse_under}}× low and tracks it not at all.
 
-**As a ranking it is far better, with two limits.** It beats the forecast step index — a free
-counter neither paper ran — at every horizon, and correlates {{a2_rdd}} with error holding
-rollout and depth constant. But that evidence is in-sample for a checkpoint trained on all ten
-episodes, and a pre-registered replication on models we trained returns {{e5_verdict}}.
+**As a ranking it is far better, with three limits.** Holding rollout and forecast depth
+constant it correlates {{a2_rdd}} with realised error, and beats the forecast step index at
+every horizon. But a free baseline, the model's own predicted step size, comes close enough
+that this sample cannot separate them; the evidence is in-sample for a checkpoint trained on
+all ten episodes; and a pre-registered replication on models we trained returns
+{{e5_verdict}}.
 
-**Two defects are repairable.** One multiplier per horizon, fitted on one held-out episode and
-scored on the other, restores nominal coverage on every held-out cell. And the released
-evaluation pairs each state with the previous step's action, overstating the released
-checkpoint's own error by {{stale_pct}}%.
+**Two defects are repairable.** A per-horizon multiplier, fitted on one held-out episode and
+scored on the other, restores nominal coverage on every held-out cell; and the released
+evaluation pairs each state with the previous step's action, overstating the checkpoint's own
+error by {{stale_pct}}%.
 
-Every quantity here is substituted from a named artifact by a build that fails otherwise, and
+Every quantity here is substituted from a named artifact by a build that fails otherwise;
 {{cc_n}} comparative claims across {{cc_kinds}} kinds are recomputed each build against a
 corrupted expectation, so a check that can no longer fail is caught.
 
@@ -695,6 +698,44 @@ configuration — `sequence_loss` is dead code, guarded by a `prediction_type` t
 produce a gradient of exactly zero, which is a stronger statement than reading the code and
 concluding they do not matter (`results/e4_sigma_gradients.json`).
 
+**The derivation says this would happen on any dataset. That is testable, and until now it was
+only asserted** — which matters, because it is the sentence that answers the follow-up's own
+explanation. The follow-up attributes its low aleatoric term to "small stochasticity in the
+environment", and on the released CSV that reading and ours are observationally identical: the
+data may simply be nearly deterministic. Under a rule committed before the runs (`M-50`) we
+therefore built data where it is not.
+
+Synthetic data whose true noise level is **known** and varies by a factor of {{e5s_span}} across
+the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
+model, unmodified, including the clamp, the learnable floor and the bound loss at its configured
+weight; trained under each objective in turn on {{e5s_n_train}} points for {{e5s_iters}}
+iterations at {{e5s_seeds}} seeds. Nothing else differs between the arms.
+
+| objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
+|---|---|---|---|
+| `mse` — the implemented branch | **{{e5s_mse_ratio}}** | {{e5s_mse_spread}}× | {{e5s_mse_slope}} |
+| `gaussian_nll` — the authors' unused branch | {{e5s_nll_ratio}} | {{e5s_nll_spread}}× | {{e5s_nll_slope}} |
+
+**Under the implemented objective σ sits {{e5s_mse_under}}× below the true noise and does not
+track it at all** — a spread of {{e5s_mse_spread}}× where the truth spans {{e5s_span}}×, and a
+slope below the {{e5s_slope_thr}} the design can detect. Under the authors' own branch, same data
+and same head, σ recovers the true level to a median ratio of {{e5s_nll_ratio}} and its slope is
+well above threshold. **{{e5s_verdict}}**, which is the verdict `M-50` names for that pattern.
+
+*The statistic is the slope and not the correlation, and the reason is worth one sentence: a
+correlation is scale-free, so a σ̂ that is essentially constant still returns a large one off its
+own numerical noise. Under a permutation null — the same data with the input-to-noise pairing
+destroyed — a head whose σ spanned {{e5s_null_spread}}× returned correlations as large as
+±{{e5s_null_r_max}}, while its slope was {{e5s_null_slope_p95}}. The detection threshold is set at
+the slope corresponding to a {{e5s_span_floor}}× spread rather than at that noise floor, and the
+measured false-positive rate at zero signal is {{e5s_fp_rate}}%.*
+
+**What this does that the derivation alone could not.** It removes the competing explanation
+rather than arguing against it. The stochasticity here is large, known, and input-dependent, and
+the collapse happens anyway. The design's limit is stated in `M-50` and holds: the dilution ladder
+detects the signal at full strength and at no dilution below it, so this establishes that σ does
+not track the noise **at all**, not the magnitude of how badly.
+
 We predicted the collapse from this algebra before training, then observed it. Across all
 {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical
 (Figure 3a). Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}}
@@ -937,7 +978,56 @@ numbers and the build keeps them in separate keys for that reason.
 
 *Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}}, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions. It cannot discharge M-43, which is stated over the out-of-sample arena, and we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.
 
-**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result — it would make the trust metric close to vacuous, since a counter is free — and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way. **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and that is the strongest form of support this paper offers any claim of either original work. It coexists with §6.6 without contradiction: the *scalar* the method applies tracks error well, while the *per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
+**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result — it would make the trust metric close to vacuous, since a counter is free — and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way against the counter. It went that way against something else.
+
+**One adversary is one, so we added two more — and the ranking claim survives only one of them.**
+A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
+before either was computed (`M-51`, corrected by `M-52`), we added two further baselines needing
+no ensemble, no second model and nothing the rollout does not already produce: `step-size`, the
+magnitude of the model's own predicted state change ‖µ_t − µ_{t−1}‖; and `entry-res`, its
+one-step error at the step *before* the forecast window opens.
+
+| baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? |
+|---|---|---|---|---|
+| forecast step index *(the existing adversary)* | {{e7_index_r}} | {{e7_index_margin}} | {{e7_index_partial}} | — |
+| `step-size` — ‖µ_t − µ_{t−1}‖ | **{{e7_step_r}}** | {{e7_step_margin}} | {{e7_step_partial}} | **{{e7_step_beaten}}** |
+| `entry-res` — one-step error before the window | {{e7_entry_r}} | {{e7_entry_margin}} | {{e7_entry_partial}} | {{e7_entry_beaten}} |
+
+*r(disagreement, error) = {{e7_r_dis}} on the released checkpoint at n_independent = {{e7_nind}}.
+Minimum detectable effect, estimated before either baseline existed: {{e7_mde_margin}} on a margin,
+{{e7_mde_partial}} on a partial.*
+
+**The verdict is {{e7_verdict}}, and the reason is the row a reader should look at twice.** The
+magnitude of the model's own predicted state change ranks realised error at {{e7_step_r}}, against
+{{e7_r_dis}} for the five-member ensemble disagreement the method is built on. The margin between
+them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve — so at
+n_independent = {{e7_nind}} we cannot say the ensemble ranks better than a subtraction.
+
+**Disagreement does still carry information the subtraction does not.** With `step-size`
+partialled out it retains {{e7_step_partial}}, far above the {{e7_mde_partial}} MDE for that test,
+and holding the forecast step exactly fixed it keeps {{e7_ws_dis}} against `step-size`'s
+{{e7_step_ws}}. It is not re-encoding predicted step size. What is not established is that it adds
+enough to be worth five models.
+
+`M-51` fixed this reading in advance rather than after the fact: the partial is the load-bearing
+test and the margin is corroboration, so a baseline passing the partial while failing the margin
+does not refute the ranking claim. **It does refute a framing.** "Disagreement ranks error well"
+is supported. "You need the ensemble to rank error" is not, and this paper said the second thing
+in an earlier draft.
+
+**On this axis the follow-up's claim survives adversarial testing against a real baseline**, and
+that is the strongest form of support this paper offers any claim of either original work — now
+with the qualification that a free baseline comes closer to it than the counter did. It coexists
+with §6.6 without contradiction: the *scalar* the method applies tracks error well, while the
+*per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials
+test suggested. The quantity is a usable ranking signal and is still not an interval.
+
+*A note on the `undefined` cell.* The within-step control holds the forecast step fixed and
+correlates across trajectories, so it annihilates any quantity that is constant across
+trajectories at a fixed step — which is the forecast index, and its within-step correlation is
+therefore {{e7_index_ws}} rather than zero. It does **not** annihilate a per-trajectory scalar
+like `entry-res`, which varies across exactly the axis the control varies over. `M-51` said the
+opposite and `M-54` records the correction.
 
 ### 6.8 One constant scalar does not fix it, but a per-horizon one does
 

@@ -52,6 +52,8 @@ import rwm_data as R  # noqa: E402
 import rwm_model as MDL  # noqa: E402
 
 SIGMA_SPAN = 25.0        # the factor true sigma spans across x in [-1, 1]
+SPAN_FLOOR = 1.01        # the smallest recovered-sigma spread that counts as
+                         # input dependence at all; sets the detection floor
 N_TRAIN = 4000
 N_TEST = 2000
 ITERS = 12000            # see the note in evaluate(): 3,000 leaves the head
@@ -206,8 +208,7 @@ def dilution_study():
     # input range; the floor is the slope at which that span reaches 1.01x -- a
     # one-percent variation, which is the smallest input dependence anyone would
     # call input dependence at all, and about 150x the null's numerical noise.
-    _span_floor = 1.01
-    s_floor = float(np.log(_span_floor) / np.log(SIGMA_SPAN))
+    s_floor = float(np.log(SPAN_FLOOR) / np.log(SIGMA_SPAN))
     s_thresh = float(max(np.percentile(np.abs(sl_null), 95), s_floor))
     rec["null"] = {
         "r_mean": float(r_null.mean()), "r_sd": float(r_null.std(ddof=1)),
@@ -243,7 +244,7 @@ def dilution_study():
         "slope_threshold": s_thresh,
         "slope_threshold_from": ("the null's 95th percentile" if
                                  np.percentile(np.abs(sl_null), 95) > s_floor
-                                 else f"the {_span_floor}x-span floor; the null's own "
+                                 else f"the {SPAN_FLOOR}x-span floor; the null's own "
                                       f"95th percentile is "
                                       f"{np.percentile(np.abs(sl_null), 95):.2g}, which is "
                                       f"numerical noise and would fire on anything"),
@@ -273,6 +274,93 @@ def dilution_study():
     json.dump(rec, open(os.path.join(R.RESULTS, "e5_sigma_dilution.json"), "w"), indent=2)
     print("  wrote results/e5_sigma_dilution.json")
     return 0
+
+
+def summarise(runs, TH):
+    """Apply M-50's criteria to a set of runs.
+
+    THE STATISTIC IS THE SLOPE. M-50 says so, at length and with the reason: a
+    correlation is scale-free, so a sigma-hat that is essentially constant returns
+    a large one off its own numerical noise. The first version of this function
+    applied the CORRELATION anyway -- the field was there, it was the obvious one,
+    and the rule it was implementing said something else three paragraphs up.
+
+    It produced exactly the failure M-50 predicted. The mse arm's sigma spans a
+    factor of 1.002 and its correlations across three seeds were +0.63, -0.03 and
+    +0.88, so the "indistinguishable from zero" test failed on noise and the
+    verdict came out MIXED when both arms had in fact behaved as the rule
+    describes. A rule and the code that applies it must name the same quantity,
+    and nothing here checked that they did.
+    """
+    sl = np.array([r["slope_log_sigma"] for r in runs])
+    ratio = np.array([r["ratio_median"] for r in runs])
+    r = np.array([r["r_log_sigma"] for r in runs])
+    return {
+        "runs": runs,
+        "slope_mean": float(sl.mean()), "slope_min": float(sl.min()),
+        "slope_max": float(sl.max()),
+        "ratio_mean": float(ratio.mean()),
+        "ratio_min": float(ratio.min()), "ratio_max": float(ratio.max()),
+        "spread_max": float(max(x["sigma_hat_spread_factor"] for x in runs)),
+        # the correlation is REPORTED and not used, so a reader can see why
+        "r_mean_reported_not_used": float(r.mean()),
+        "r_min_reported_not_used": float(r.min()),
+        "r_max_reported_not_used": float(r.max()),
+        "tracking_indistinguishable_from_zero":
+            bool(np.all(np.abs(sl) <= TH["slope_threshold"])),
+        "tracking_above_threshold":
+            bool(np.all(np.abs(sl) > TH["slope_threshold"])),
+        "collapsed": bool(np.all(ratio < TH["collapse_ratio_threshold"])),
+        "recovered": bool(np.all((ratio > 1.0 / TH["recovery_factor_threshold"])
+                                 & (ratio < TH["recovery_factor_threshold"]))),
+    }
+
+
+def verdict_of(arms, TH):
+    A, B = arms["mse"], arms["gaussian_nll"]
+    if A["collapsed"] and A["tracking_indistinguishable_from_zero"] \
+            and B["recovered"] and B["tracking_above_threshold"]:
+        return "OBJECTIVE-DRIVEN"
+    if A["recovered"] and A["tracking_above_threshold"]:
+        return "REFUTED — sigma recovers under the implemented objective"
+    if A["collapsed"] and B["collapsed"]:
+        return "NOT OBJECTIVE-DRIVEN — sigma collapses under both"
+    return "MIXED — reported as returned; see the arms"
+
+
+def reverdict():
+    """Re-apply M-50's criteria to the runs already trained.
+
+    The runs are the data and they are unchanged; only the aggregation was wrong,
+    and it was wrong by using a field the rule does not name. Retraining to fix
+    an aggregation would change the data under a committed rule, which is worse.
+    """
+    path = os.path.join(R.RESULTS, "e5_synthetic_sigma.json")
+    out = json.load(open(path))
+    TH = out["thresholds"]
+    for k in out["arms"]:
+        out["arms"][k] = summarise(out["arms"][k]["runs"], TH)
+    out["verdict"] = verdict_of(out["arms"], TH)
+    json.dump(out, open(path, "w"), indent=2)
+    _report(out, TH)
+    return 0
+
+
+def _report(out, TH):
+    A, B = out["arms"]["mse"], out["arms"]["gaussian_nll"]
+    print("=" * 88)
+    print(f"  tracking threshold (M-50): {TH['slope_threshold']:.5f}   "
+          f"collapse < {TH['collapse_ratio_threshold']}   "
+          f"recovery within {TH['recovery_factor_threshold']}x")
+    print(f"  mse          : collapsed {A['collapsed']}, tracking~0 "
+          f"{A['tracking_indistinguishable_from_zero']}  "
+          f"(slope {A['slope_mean']:+.6f}, ratio {A['ratio_mean']:.4f}, "
+          f"spread {A['spread_max']:.3f}x)")
+    print(f"  gaussian_nll : recovered {B['recovered']}, tracking>thr "
+          f"{B['tracking_above_threshold']}  "
+          f"(slope {B['slope_mean']:+.6f}, ratio {B['ratio_mean']:.4f}, "
+          f"spread {B['spread_max']:.3f}x)")
+    print(f"  M-50 VERDICT : {out['verdict']}")
 
 
 # ---------------------------------------------------------------- experiment
@@ -311,37 +399,11 @@ def experiment():
                   f"(true {e['median_sigma_true']:.5f}, ratio {e['ratio_median']:.4f})  "
                   f"r {e['r_log_sigma']:+.4f}  spread {e['sigma_hat_spread_factor']:.2f}x  "
                   f"mean RMSE {e['rmse_mean']:.4f}")
-        r = np.array([x_["r_log_sigma"] for x_ in runs])
-        ratio = np.array([x_["ratio_median"] for x_ in runs])
-        out["arms"][loss_type] = {
-            "runs": runs,
-            "r_mean": float(r.mean()), "r_min": float(r.min()), "r_max": float(r.max()),
-            "ratio_mean": float(ratio.mean()),
-            "ratio_min": float(ratio.min()), "ratio_max": float(ratio.max()),
-            "r_indistinguishable_from_zero": bool(np.all(np.abs(r) <= TH["r_threshold"])),
-            "r_above_threshold": bool(np.all(np.abs(r) > TH["r_threshold"])),
-            "collapsed": bool(np.all(ratio < TH["collapse_ratio_threshold"])),
-            "recovered": bool(np.all((ratio > 1.0 / TH["recovery_factor_threshold"])
-                                     & (ratio < TH["recovery_factor_threshold"]))),
-        }
+        out["arms"][loss_type] = summarise(runs, TH)
 
-    A, B = out["arms"]["mse"], out["arms"]["gaussian_nll"]
-    if A["collapsed"] and A["r_indistinguishable_from_zero"] \
-            and B["recovered"] and B["r_above_threshold"]:
-        verdict = "OBJECTIVE-DRIVEN"
-    elif A["recovered"] and A["r_above_threshold"]:
-        verdict = "REFUTED — sigma recovers under the implemented objective"
-    elif A["collapsed"] and B["collapsed"]:
-        verdict = "NOT OBJECTIVE-DRIVEN — sigma collapses under both"
-    else:
-        verdict = "MIXED — reported as returned; see the arms"
-    out["verdict"] = verdict
-    print("=" * 88)
-    print(f"  mse          : collapsed {A['collapsed']}, r~0 {A['r_indistinguishable_from_zero']} "
-          f"(r {A['r_mean']:+.4f}, ratio {A['ratio_mean']:.4f})")
-    print(f"  gaussian_nll : recovered {B['recovered']}, r>thr {B['r_above_threshold']} "
-          f"(r {B['r_mean']:+.4f}, ratio {B['ratio_mean']:.4f})")
-    print(f"  M-50 VERDICT : {verdict}")
+    out["verdict"] = verdict_of(out["arms"], TH)
+    verdict = out["verdict"]
+    _report(out, TH)
     json.dump(out, open(os.path.join(R.RESULTS, "e5_synthetic_sigma.json"), "w"), indent=2)
     print("  wrote results/e5_synthetic_sigma.json")
     return 0
@@ -360,18 +422,21 @@ def reaggregate():
     rec = json.load(open(path))
     sl_null = np.array([r["slope_log_sigma"] for r in rec["null"]["runs"]])
     ratio_null = np.array([r["ratio_median"] for r in rec["null"]["runs"]])
-    s_floor = float(np.log(1.01) / np.log(SIGMA_SPAN))
+    s_floor = float(np.log(SPAN_FLOOR) / np.log(SIGMA_SPAN))
     p95 = float(np.percentile(np.abs(sl_null), 95))
     s_thresh = float(max(p95, s_floor))
     for l in rec["ladder"]:
         l["detection_rate"] = float(np.mean([abs(v) > s_thresh for v in l["slope"]]))
     det = [l["dilution"] for l in rec["ladder"] if l["detection_rate"] >= 0.8]
     rec["null"]["slope_abs_p95"] = p95
+    rec["null"]["r_abs_max"] = float(np.abs(
+        [r["r_log_sigma"] for r in rec["null"]["runs"]]).max())
     rec["mde"].update({
         "slope_threshold": s_thresh,
         "slope_floor": s_floor,
+        "span_floor": SPAN_FLOOR,
         "slope_threshold_from": ("the null's 95th percentile" if p95 > s_floor else
-                                 f"the 1.01x-span floor; the null's own 95th percentile "
+                                 f"the {SPAN_FLOOR}x-span floor; the null's own 95th percentile "
                                  f"is {p95:.2g}, which is numerical noise and would fire "
                                  f"on anything"),
         "smallest_dilution_detected_80pct": min(det) if det else None,
@@ -384,7 +449,7 @@ def reaggregate():
     print("=" * 88)
     print(f"  null |slope| 95th percentile : {p95:.3g}  (numerical noise: the null's")
     print(f"                                 sigma spans {max(r['sigma_hat_spread_factor'] for r in rec['null']['runs']):.4f}x)")
-    print(f"  1.01x-span floor             : {s_floor:.5f}")
+    print(f"  {SPAN_FLOOR}x-span floor             : {s_floor:.5f}")
     print(f"  threshold in force           : {s_thresh:.5f}  <- {rec['mde']['slope_threshold_from'][:40]}")
     for l in rec["ladder"]:
         print(f"    dilution {l['dilution']:.2f}: slopes "
@@ -401,4 +466,6 @@ if __name__ == "__main__":
         sys.exit(dilution_study())
     if "--reaggregate" in sys.argv:
         sys.exit(reaggregate())
+    if "--reverdict" in sys.argv:
+        sys.exit(reverdict())
     sys.exit(experiment())

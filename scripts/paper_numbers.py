@@ -271,6 +271,69 @@ def main():
     put("ledger_kb", f'{os.path.getsize("FINDINGS_LEDGER.md") / 1024:.0f}',
         "FINDINGS_LEDGER.md, on disk")
 
+    # E5 / M-50 -- the synthetic sigma demonstration.
+    E5 = J("e5_synthetic_sigma.json")
+    _a5, _b5 = E5["arms"]["mse"], E5["arms"]["gaussian_nll"]
+    _t5 = E5["thresholds"]
+    put("e5s_verdict", E5["verdict"], "results/e5_synthetic_sigma.json")
+    put("e5s_span", f'{E5["config"]["true_sigma_span_factor"]:.0f}',
+        "results/e5_synthetic_sigma.json")
+    put("e5s_seeds", len(E5["config"]["seeds"]), "results/e5_synthetic_sigma.json")
+    put("e5s_iters", f'{E5["config"]["iters"]:,}', "results/e5_synthetic_sigma.json")
+    put("e5s_n_train", f'{E5["config"]["n_train"]:,}', "results/e5_synthetic_sigma.json")
+    put("e5s_mse_ratio", f'{_a5["ratio_mean"]:.4f}', "results/e5_synthetic_sigma.json")
+    put("e5s_mse_under", f'{1 / _a5["ratio_mean"]:.0f}', "results/e5_synthetic_sigma.json")
+    put("e5s_mse_spread", f'{_a5["spread_max"]:.3f}', "results/e5_synthetic_sigma.json")
+    put("e5s_mse_slope", f'{_a5["slope_mean"]:+.6f}', "results/e5_synthetic_sigma.json")
+    put("e5s_nll_ratio", f'{_b5["ratio_mean"]:.4f}', "results/e5_synthetic_sigma.json")
+    put("e5s_nll_pct_off", f'{abs(1 - _b5["ratio_mean"]) * 100:.0f}',
+        "results/e5_synthetic_sigma.json")
+    put("e5s_nll_spread", f'{_b5["spread_max"]:.2f}', "results/e5_synthetic_sigma.json")
+    put("e5s_nll_slope", f'{_b5["slope_mean"]:+.4f}', "results/e5_synthetic_sigma.json")
+    put("e5s_slope_thr", f'{_t5["slope_threshold"]:.5f}', "results/e5_sigma_dilution.json")
+    put("e5s_collapse_thr", _t5["collapse_ratio_threshold"], "results/e5_sigma_dilution.json")
+    put("e5s_recovery_thr", f'{_t5["recovery_factor_threshold"]:.0f}',
+        "results/e5_sigma_dilution.json")
+    _D5 = J("e5_sigma_dilution.json")
+    put("e5s_fp_rate", f'{_D5["mde"]["false_positive_rate_at_dilution_0"] * 100:.0f}',
+        "results/e5_sigma_dilution.json")
+    put("e5s_null_slope_p95", f'{_D5["null"]["slope_abs_p95"]:.1g}',
+        "results/e5_sigma_dilution.json")
+    put("e5s_null_spread", f'{_D5["null"]["spread_max"]:.4f}',
+        "results/e5_sigma_dilution.json")
+    put("e5s_null_ratio_lo", f'{_D5["null"]["ratio_median_min"]:.3f}',
+        "results/e5_sigma_dilution.json")
+    put("e5s_null_r_max", f'{_D5["null"]["r_abs_max"]:.2f}', "results/e5_sigma_dilution.json")
+    put("e5s_span_floor", f'{_D5["mde"]["span_floor"]}', "results/e5_sigma_dilution.json")
+
+    # E7 / M-51 -- three free ranking baselines.
+    E7 = J("e7_free_baselines.json")
+    _bl = {r["baseline"]: r for r in E7["baselines"]}
+    put("e7_verdict", E7["verdict"], "results/e7_free_baselines.json")
+    put("e7_nind", E7["design"]["n_independent"], "results/e7_free_baselines.json")
+    put("e7_r_dis", f'{_bl["step-size"]["r_disagreement_error"]:+.4f}',
+        "results/e7_free_baselines.json")
+    put("e7_mde_margin", f'{E7["thresholds"]["margin"]:.4f}',
+        "results/e7_free_baselines_power.json")
+    put("e7_mde_partial", f'{E7["thresholds"]["partial"]:.4f}',
+        "results/e7_free_baselines_power.json")
+    for _k, _tag in (("step-size", "step"), ("entry-res", "entry"),
+                     ("forecast-index", "index")):
+        _r = _bl[_k]
+        put(f"e7_{_tag}_r", f'{_r["r_baseline_error"]:+.4f}', "results/e7_free_baselines.json")
+        put(f"e7_{_tag}_margin", f'{_r["margin"]:+.4f}', "results/e7_free_baselines.json")
+        put(f"e7_{_tag}_partial", f'{_r["partial_disagreement_given_baseline"]:+.4f}',
+            "results/e7_free_baselines.json")
+        put(f"e7_{_tag}_beaten", "yes" if (_r["margin_beats_mde"] and _r["partial_beats_mde"])
+            else "no", "results/e7_free_baselines.json")
+        _ws = _r["within_step_r_baseline"]
+        put(f"e7_{_tag}_ws", "undefined" if not (_ws == _ws) else f"{_ws:+.4f}",
+            "results/e7_free_baselines.json")
+    put("e7_ws_dis", f'{_bl["step-size"]["within_step_r_disagreement"]:+.4f}',
+        "results/e7_free_baselines.json")
+    put("e7_n_beaten", E7["n_beaten"], "results/e7_free_baselines.json")
+    put("e7_n_new", E7["n_new_baselines"], "results/e7_free_baselines.json")
+
     AG = J("appendix_g_rules.json")
     put("appG_n_rules", AG["n_rules"], "results/appendix_g_rules.json")
     put("appG_n_lead", AG["n_with_lead_time"], "results/appendix_g_rules.json")

@@ -379,9 +379,26 @@ CLAIMS = [
     # this content compresses to; two full passes were spent getting there from
     # 379. The cap is set 2 above it so an ordinary rewording does not fail the
     # build, and not so far above that the next addition goes unnoticed.
+    #
+    # C1(rev3, second pass): 324 to 346 words, 15 to 16 numerals. The abstract grew
+    # because the PAPER grew two results, not because the prose loosened:
+    #
+    #   E5  §6.3's mechanism claim is now demonstrated against ground truth
+    #       rather than derived and inferred. The abstract says so in one clause
+    #       and two numerals, and it is the sentence that removes the follow-up's
+    #       own competing explanation ("small stochasticity in the environment").
+    #   E7  the ranking claim gained a third limit, and it is the one a reviewer
+    #       would otherwise find: a FREE baseline ranks error close enough to the
+    #       five-member ensemble that this sample cannot separate them. Stated
+    #       qualitatively and costing no numeral, because the comparison matters
+    #       and the two figures belong in §6.7.
+    #
+    # Two full trim passes were spent getting from 361 to 344, and the cap is set
+    # two above that rather than at a round number, so the next addition fails the
+    # build and has to be argued for as these were.
     {"id": "C12.1", "kind": "abstract-budget", "where": "abstract",
      "says": "The base paper's central training claim reproduces",
-     "max_words": 324, "max_numerals": 15},
+     "max_words": 346, "max_numerals": 16},
 
     # ---- C13 interval-required -------------------------------------------
     # 6.2's ratios and coverages were bare point estimates in a paper whose

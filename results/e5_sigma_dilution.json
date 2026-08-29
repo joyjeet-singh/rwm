@@ -159,7 +159,8 @@
         "sigma_hat_spread_factor": 1.0003799370678117,
         "rmse_mean": 0.025986551159506113
       }
-    ]
+    ],
+    "r_abs_max": 0.2416075165849007
   },
   "ladder": [
     {
@@ -253,6 +254,7 @@
     "recovery_threshold_justification": "under gaussian_nll on undiluted data the head recovers the median true sigma to within a factor the ladder measures; 3.0 is set wider than the observed spread so the rule is not tuned to one run.",
     "slope_floor": 0.0030912440847498416,
     "slope_threshold_from": "the 1.01x-span floor; the null's own 95th percentile is 2.1e-05, which is numerical noise and would fire on anything",
-    "false_positive_rate_at_dilution_0": 0.0
+    "false_positive_rate_at_dilution_0": 0.0,
+    "span_floor": 1.01
   }
 }

@@ -83,14 +83,18 @@
           "seed": 2
         }
       ],
-      "r_mean": 0.4927099477979214,
-      "r_min": -0.03399004023366951,
-      "r_max": 0.8846337683810745,
+      "slope_mean": 0.0004930362434711481,
+      "slope_min": -2.8212944882025954e-05,
+      "slope_max": 0.0009809183208098857,
       "ratio_mean": 0.04600040355487634,
       "ratio_min": 0.04499064791636464,
       "ratio_max": 0.04702403775984292,
-      "r_indistinguishable_from_zero": false,
-      "r_above_threshold": false,
+      "spread_max": 1.0030144239327636,
+      "r_mean_reported_not_used": 0.4927099477979214,
+      "r_min_reported_not_used": -0.03399004023366951,
+      "r_max_reported_not_used": 0.8846337683810745,
+      "tracking_indistinguishable_from_zero": true,
+      "tracking_above_threshold": false,
       "collapsed": true,
       "recovered": false
     },
@@ -151,17 +155,21 @@
           "seed": 2
         }
       ],
-      "r_mean": 0.8773953739000732,
-      "r_min": 0.8535122292158586,
-      "r_max": 0.9148605881082207,
+      "slope_mean": 0.13298640246726715,
+      "slope_min": 0.007813475793670362,
+      "slope_max": 0.3536779072623561,
       "ratio_mean": 0.9779467577789775,
       "ratio_min": 0.9194608892227858,
       "ratio_max": 1.0736812004942202,
-      "r_indistinguishable_from_zero": false,
-      "r_above_threshold": true,
+      "spread_max": 3.667972965644499,
+      "r_mean_reported_not_used": 0.8773953739000732,
+      "r_min_reported_not_used": 0.8535122292158586,
+      "r_max_reported_not_used": 0.9148605881082207,
+      "tracking_indistinguishable_from_zero": false,
+      "tracking_above_threshold": true,
       "collapsed": false,
       "recovered": true
     }
   },
-  "verdict": "MIXED \u2014 reported as returned; see the arms"
+  "verdict": "OBJECTIVE-DRIVEN"
 }

@@ -2625,15 +2625,70 @@
         "scripts/e7_free_baselines.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-71",
+      "claim": "M-50 returns OBJECTIVE-DRIVEN: sigma collapses on data whose noise is known and large",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/e5_sigma_dilution.json",
+        "results/e5_synthetic_sigma.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-53",
+      "claim": "M-50 named the slope; the code that applied it used the correlation",
+      "relevance": "METHOD",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/e5_synthetic_sigma.json",
+        "scripts/e5_synthetic_sigma.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-72",
+      "claim": "M-51 returns SURVIVES entry-res ONLY: a free baseline ranks error almost as well",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines.json",
+        "results/e7_free_baselines_power.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-54",
+      "claim": "M-51 was wrong about what the within-step control annihilates",
+      "relevance": "METHOD",
+      "status": "ACTIVE",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 19,
-    "M": 52,
+    "M": 54,
     "O": 14,
-    "R": 70,
+    "R": 72,
     "S": 19,
     "X": 17
   }

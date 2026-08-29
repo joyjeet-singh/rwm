@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     775 values substituted from 58 artifacts. -->
+     812 values substituted from 62 artifacts. -->
 
 # Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
 
@@ -10,9 +10,9 @@
 
 ## Abstract
 
-We rebuild the proprioceptive dynamics model of Li, Krause and Hutter (*Robotic World
-Model*, arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from
-scratch on CPU, checked against the released reference at gradient level.
+We rebuild the proprioceptive dynamics model of the *Robotic World Model*
+(arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on
+CPU, checked against the released reference at gradient level.
 
 **The base paper's central training claim reproduces, and the advantage grows with
 horizon.** Under a rule committed to git before the runs, autoregressive training beats
@@ -21,24 +21,27 @@ error at h = 368, the horizon the rule names, rising to it from
 2.58× at h = 100, where the method deploys.
 
 **Neither uncertainty output is usable as an interval, and that is not accumulated rollout
-error.** One step ahead, where nothing has accumulated, the ensemble disagreement the method
-penalises rewards with is already 8.3× smaller than realised error:
-16.22% of outcomes fall inside ±1σ where 68.27% is calibrated. It
-deteriorates from there to 33.4× at h = 100. The σ the method
-computes and discards is worse at one step by 1,827×, and we derive why: the
-implemented objective's optimum is σ = 0.
+error.** One step ahead, where nothing has accumulated, the disagreement the method penalises
+rewards with is already 8.3× smaller than realised error:
+16.22% of outcomes fall inside ±1σ where 68.27% is calibrated,
+deteriorating to 33.4× at h = 100. The σ the method computes and
+discards is worse still. We derive why — the implemented objective's optimum is σ = 0 — and
+demonstrate it on data whose noise is known and varies 25×: σ lands
+22× low and tracks it not at all.
 
-**As a ranking it is far better, with two limits.** It beats the forecast step index — a free
-counter neither paper ran — at every horizon, and correlates +0.419 with error holding
-rollout and depth constant. But that evidence is in-sample for a checkpoint trained on all ten
-episodes, and a pre-registered replication on models we trained returns DOES NOT GENERALISE.
+**As a ranking it is far better, with three limits.** Holding rollout and forecast depth
+constant it correlates +0.419 with realised error, and beats the forecast step index at
+every horizon. But a free baseline, the model's own predicted step size, comes close enough
+that this sample cannot separate them; the evidence is in-sample for a checkpoint trained on
+all ten episodes; and a pre-registered replication on models we trained returns
+DOES NOT GENERALISE.
 
-**Two defects are repairable.** One multiplier per horizon, fitted on one held-out episode and
-scored on the other, restores nominal coverage on every held-out cell. And the released
-evaluation pairs each state with the previous step's action, overstating the released
-checkpoint's own error by 75%.
+**Two defects are repairable.** A per-horizon multiplier, fitted on one held-out episode and
+scored on the other, restores nominal coverage on every held-out cell; and the released
+evaluation pairs each state with the previous step's action, overstating the checkpoint's own
+error by 75%.
 
-Every quantity here is substituted from a named artifact by a build that fails otherwise, and
+Every quantity here is substituted from a named artifact by a build that fails otherwise;
 51 comparative claims across 21 kinds are recomputed each build against a
 corrupted expectation, so a check that can no longer fail is caught.
 
@@ -707,20 +710,58 @@ configuration — `sequence_loss` is dead code, guarded by a `prediction_type` t
 produce a gradient of exactly zero, which is a stronger statement than reading the code and
 concluding they do not matter (`results/e4_sigma_gradients.json`).
 
+**The derivation says this would happen on any dataset. That is testable, and until now it was
+only asserted** — which matters, because it is the sentence that answers the follow-up's own
+explanation. The follow-up attributes its low aleatoric term to "small stochasticity in the
+environment", and on the released CSV that reading and ours are observationally identical: the
+data may simply be nearly deterministic. Under a rule committed before the runs (`M-50`) we
+therefore built data where it is not.
+
+Synthetic data whose true noise level is **known** and varies by a factor of 25 across
+the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
+model, unmodified, including the clamp, the learnable floor and the bound loss at its configured
+weight; trained under each objective in turn on 4,000 points for 12,000
+iterations at 3 seeds. Nothing else differs between the arms.
+
+| objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
+|---|---|---|---|
+| `mse` — the implemented branch | **0.0460** | 1.003× | +0.000493 |
+| `gaussian_nll` — the authors' unused branch | 0.9779 | 3.67× | +0.1330 |
+
+**Under the implemented objective σ sits 22× below the true noise and does not
+track it at all** — a spread of 1.003× where the truth spans 25×, and a
+slope below the 0.00309 the design can detect. Under the authors' own branch, same data
+and same head, σ recovers the true level to a median ratio of 0.9779 and its slope is
+well above threshold. **OBJECTIVE-DRIVEN**, which is the verdict `M-50` names for that pattern.
+
+*The statistic is the slope and not the correlation, and the reason is worth one sentence: a
+correlation is scale-free, so a σ̂ that is essentially constant still returns a large one off its
+own numerical noise. Under a permutation null — the same data with the input-to-noise pairing
+destroyed — a head whose σ spanned 1.0004× returned correlations as large as
+±0.24, while its slope was 2e-05. The detection threshold is set at
+the slope corresponding to a 1.01× spread rather than at that noise floor, and the
+measured false-positive rate at zero signal is 0%.*
+
+**What this does that the derivation alone could not.** It removes the competing explanation
+rather than arguing against it. The stochasticity here is large, known, and input-dependent, and
+the collapse happens anyway. The design's limit is stated in `M-50` and holds: the dilution ladder
+detects the signal at full strength and at no dilution below it, so this establishes that σ does
+not track the noise **at all**, not the magnitude of how badly.
+
 We predicted the collapse from this algebra before training, then observed it. Across all
-27 runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Rates are fitted on 21 of those runs: the 6
+26 runs the collapse is linear in iteration count and its rate is nearly identical
+(Figure 3a). Rates are fitted on 20 of those runs: the 6
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 3(a) shows all 27 runs;
-Figure 3(b) plots only the 21 the rate is fitted on, so the scatter and the quoted
+counted at 2,500 and would double-weight them. Figure 3(a) shows all 26 runs;
+Figure 3(b) plots only the 20 the rate is fitted on, so the scatter and the quoted
 statistic describe the same set.
 
-The 27 runs, so a reader can count them:
+The 26 runs, so a reader can count them:
 
 | arm | iterations | ensemble | objective | dataset | seeds | seed ids |
 |---|---|---|---|---|---|---|
 | Arm A | 2,500 | 1 | gaussian_nll | clean | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 1 | mse | clean | 6 | 0, 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | clean | 5 | 0, 1, 2, 3, 4 |
 | Arm A | 2,500 | 1 | mse | contaminated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 1 | mse | duplicated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 5 | mse | clean | 3 | 0, 1, 2 |
@@ -729,8 +770,8 @@ The 27 runs, so a reader can count them:
 | Arm B | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
-is objective-driven.* It occurs in all 18 sampled-MSE runs at a rate of
--9.3806e-05 per iteration with a standard deviation of 6.2e-07 — **including the
+is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
+-9.3857e-05 per iteration with a standard deviation of 6.0e-07 — **including the
 teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05 in the
 3 runs that change it. *Input-independence is not.* That varies by a factor of
 15.6 between two arms trained under the same objective, so the objective
@@ -956,7 +997,56 @@ numbers and the build keeps them in separate keys for that reason.
 
 *Reported as a companion and not as a discharge:* on all ten episodes (n_independent = 20, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at 4 of 4 horizons and would have satisfied both conditions. It cannot discharge M-43, which is stated over the out-of-sample arena, and we record it only so the comparison with the released checkpoint's 20 is like for like.
 
-**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result — it would make the trust metric close to vacuous, since a counter is free — and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way. **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and that is the strongest form of support this paper offers any claim of either original work. It coexists with §6.6 without contradiction: the *scalar* the method applies tracks error well, while the *per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
+**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result — it would make the trust metric close to vacuous, since a counter is free — and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way against the counter. It went that way against something else.
+
+**One adversary is one, so we added two more — and the ranking claim survives only one of them.**
+A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
+before either was computed (`M-51`, corrected by `M-52`), we added two further baselines needing
+no ensemble, no second model and nothing the rollout does not already produce: `step-size`, the
+magnitude of the model's own predicted state change ‖µ_t − µ_{t−1}‖; and `entry-res`, its
+one-step error at the step *before* the forecast window opens.
+
+| baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? |
+|---|---|---|---|---|
+| forecast step index *(the existing adversary)* | +0.2686 | +0.3368 | +0.5957 | — |
+| `step-size` — ‖µ_t − µ_{t−1}‖ | **+0.4697** | +0.1357 | +0.5430 | **no** |
+| `entry-res` — one-step error before the window | +0.1471 | +0.4582 | +0.5948 | yes |
+
+*r(disagreement, error) = +0.6053 on the released checkpoint at n_independent = 20.
+Minimum detectable effect, estimated before either baseline existed: 0.2891 on a margin,
+0.1131 on a partial.*
+
+**The verdict is SURVIVES entry-res ONLY, and the reason is the row a reader should look at twice.** The
+magnitude of the model's own predicted state change ranks realised error at +0.4697, against
++0.6053 for the five-member ensemble disagreement the method is built on. The margin between
+them, +0.1357, is **below** the 0.2891 this sample size can resolve — so at
+n_independent = 20 we cannot say the ensemble ranks better than a subtraction.
+
+**Disagreement does still carry information the subtraction does not.** With `step-size`
+partialled out it retains +0.5430, far above the 0.1131 MDE for that test,
+and holding the forecast step exactly fixed it keeps +0.7392 against `step-size`'s
++0.5196. It is not re-encoding predicted step size. What is not established is that it adds
+enough to be worth five models.
+
+`M-51` fixed this reading in advance rather than after the fact: the partial is the load-bearing
+test and the margin is corroboration, so a baseline passing the partial while failing the margin
+does not refute the ranking claim. **It does refute a framing.** "Disagreement ranks error well"
+is supported. "You need the ensemble to rank error" is not, and this paper said the second thing
+in an earlier draft.
+
+**On this axis the follow-up's claim survives adversarial testing against a real baseline**, and
+that is the strongest form of support this paper offers any claim of either original work — now
+with the qualification that a free baseline comes closer to it than the counter did. It coexists
+with §6.6 without contradiction: the *scalar* the method applies tracks error well, while the
+*per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials
+test suggested. The quantity is a usable ranking signal and is still not an interval.
+
+*A note on the `undefined` cell.* The within-step control holds the forecast step fixed and
+correlates across trajectories, so it annihilates any quantity that is constant across
+trajectories at a fixed step — which is the forecast index, and its within-step correlation is
+therefore undefined rather than zero. It does **not** annihilate a per-trajectory scalar
+like `entry-res`, which varies across exactly the axis the control varies over. `M-51` said the
+opposite and `M-54` records the correction.
 
 ### 6.8 One constant scalar does not fix it, but a per-horizon one does
 
@@ -1015,7 +1105,7 @@ face.
 
 **The contrast, and why it is affordable.** Training 5 genuinely independent models
 from scratch costs about 4.8 h of wall clock on two cores at the iteration count these
-runs use — 4.8 h against Appendix B's 47.2 h for the whole project. Arm A at
+runs use — 4.8 h against Appendix B's 46.3 h for the whole project. Arm A at
 ensemble size 1 already existed at seeds 0, 1 and 2; we added two more at about
 0.9 h each, 1.7 h in total, and scored the 5 together as an
 ensemble **at evaluation time**. No new training code and no new architecture — and the
@@ -1167,7 +1257,7 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (207 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (215 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all 8 rules; 7 are positive and 1 is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1176,9 +1266,9 @@ it rests on, because it is what let us detect the gap at all.
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
 **Reproducibility, and a build that checks its own prose.**
-`./reproduce.sh --quick --force` regenerates 36 artifact files and 6,821
-numeric values from a clean clone, 6,821 of them bitwise identical (100.00%),
-0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **51 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+`./reproduce.sh --quick --force` regenerates 37 artifact files and 6,825
+numeric values from a clean clone, 6,790 of them bitwise identical (99.49%),
+35 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **51 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1378,7 +1468,7 @@ What every downstream number rests on. Each level was passed before the next was
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 27 runs takes **47.2 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 27.5 for the remaining 21 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 26 runs takes **46.3 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 26.6 for the remaining 20 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
 
 ## Appendix C — figures
 
@@ -1543,7 +1633,7 @@ holding the **current** run's, so they cannot agree: writing a result into the t
 thing the next run measures. There is no fixed point to converge to, and treating it as a
 reproducibility failure would make the reported figure oscillate rather than settle. They are
 dropped by provenance like the others and counted in the output rather than hidden — the same
-discipline §8's own 36-file figure rests on, since a silent exclusion is exactly how an
+discipline §8's own 37-file figure rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
 
 ## Appendix H — the variance-state arithmetic behind §7.5
@@ -1632,7 +1722,7 @@ form 2.
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 334 KB ledger, so here is the table. It is generated from
+or an instruction to open a 354 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1698,11 +1788,11 @@ GPU-parallel simulation, not a data-loading problem.
 | Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
 | Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 47.2 h scale; the model training is the cheap half and the data is not |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 46.3 h scale; the model training is the cheap half and the data is not |
 | Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 47.2 h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 27 runs took 47.2 h on two cores; a modest sweep is a small multiple of that |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 46.3 h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 26 runs took 46.3 h on two cores; a modest sweep is a small multiple of that |
 
 **The two at the bottom are within reach of this setup** — the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison —
 and are the honest next steps for anyone extending this work on CPU. The six above

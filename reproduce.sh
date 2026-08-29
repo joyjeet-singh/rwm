@@ -251,6 +251,28 @@ REPORT=task_c3_multiplicity_report.txt stage 20j5 "C3 — multiplicity correctio
       results/task_c3_multiplicity.json NEEDS_WEIGHTS $PY scripts/task_c3_multiplicity.py
 stage 20j6 "What the original papers report, claim by claim" "10 s" \
       results/original_paper_figures.json $PY scripts/original_paper_figures.py
+# E4/E5/E7. Three measurements the revision added, each governed by a rule
+# committed before its data existed.
+#
+# E4 back-propagates each of the seven loss terms ALONE and records the gradient
+# reaching sigma. §6.3's derivation covers two of them and its completeness rested
+# on the other five being inert, which was asserted and is now measured.
+REPORT=e4_sigma_gradients_report.txt stage 20j7 "E4 — what each loss term does to sigma" "2 min" \
+      results/e4_sigma_gradients.json $PY scripts/e4_sigma_gradients.py
+# E5 (M-50). The dilution study calibrates the thresholds and MUST run first; the
+# experiment reads them. Both are cheap and neither needs trained weights: the
+# head is built from the released architecture config and trained on synthetic
+# data whose true noise is known.
+REPORT=e5_sigma_dilution_report.txt stage 20j8 "E5 — dilution study, the thresholds M-50 quotes" "35 min" \
+      results/e5_sigma_dilution.json $PY scripts/e5_synthetic_sigma.py --dilution
+REPORT=e5_synthetic_sigma_report.txt stage 20j9 "E5 — sigma recovery against known noise (M-50)" "20 min" \
+      results/e5_synthetic_sigma.json $PY scripts/e5_synthetic_sigma.py
+# E7 (M-51/M-52). Same ordering: the power run fixes the MDE from quantities that
+# already exist, before either new baseline is computed.
+REPORT=e7_power_report.txt stage 20ja "E7 — power for M-51, before the baselines exist" "3 min" \
+      results/e7_free_baselines_power.json NEEDS_WEIGHTS $PY scripts/e7_free_baselines.py --power
+REPORT=e7_free_baselines_report.txt stage 20jb "E7 — three free ranking baselines (M-51)" "3 min" \
+      results/e7_free_baselines.json NEEDS_WEIGHTS $PY scripts/e7_free_baselines.py
 REPORT=task_c2_data_budget_report.txt stage 20j "Data budget against the reference (C2)" "10 s" \
       results/task_c2_data_budget.json $PY scripts/task_c2_data_budget.py
 # ---------------------------------------------------------------------------

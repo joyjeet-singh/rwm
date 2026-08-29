@@ -5413,6 +5413,120 @@ by asserting the baseline is non-constant, which the script now does.
 **Evidence** `SRC` `scripts/e7_free_baselines.py`, `results/e7_free_baselines_power.json`
 **Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
 
+### R-71 — M-50 returns OBJECTIVE-DRIVEN: sigma collapses on data whose noise is known and large · **NEW**
+**The verdict `M-50` was written to return, returned as specified.** Both arms behaved as the rule
+describes and neither branch of the rule's "MIXED" outcome was reached.
+
+Synthetic data, true noise varying by a factor of **25**
+across the input range, the same bounded log-sigma head as the released model, unmodified.
+
+| objective | median sigma-hat / sigma-true | sigma-hat spread | slope of log sigma-hat on log sigma-true |
+|---|---|---|---|
+| `mse` (the implemented branch) | **0.0460** | 1.003× | +0.000493 |
+| `gaussian_nll` (the authors' unused branch) | 0.9779 | 3.668× | +0.132986 |
+
+Thresholds from `results/e5_sigma_dilution.json`, fixed before the runs: collapse below
+0.1, tracking above 0.00309, recovery within a
+factor of 3.0.
+
+**What this establishes, and it is the thing §6.3 could not.** Under the implemented objective the
+predicted sigma sits at **22× below the true noise level** and its spread
+across the input range is 1.003× where the truth spans
+25× — it tracks the noise **not at all**, on data
+built to make tracking easy. Under the authors' own unused branch, on the same data with the same
+head, sigma recovers the true median to within 2% and its slope
+is 43× the detection threshold.
+
+**It kills an alternative explanation rather than disputing it.** The follow-up attributes its low
+aleatoric term to "small stochasticity in the environment". On the released CSV that reading and
+ours are observationally identical. Here the stochasticity is large, known, and input-dependent,
+and the collapse happens anyway. The objective is the cause.
+
+**Evidence** `RUN` `results/e5_synthetic_sigma.json`, `results/e5_sigma_dilution.json`
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### M-53 — M-50 named the slope; the code that applied it used the correlation · **NEW**
+**What happened.** `M-50` specifies the **slope** of log sigma-hat on log sigma-true, and says at
+length why: a correlation is scale-free, so a near-constant sigma-hat returns a large one off its
+own numerical noise. The function that applied the rule read the **correlation** field instead.
+
+**It produced exactly the failure the rule predicted.** The `mse` arm's sigma spans a factor of
+1.003, and its correlations across three seeds were
+-0.03, +0.49 and
++0.88 — so the "indistinguishable from zero" test failed on noise
+and the verdict came out **MIXED** when both arms had behaved exactly as the rule describes. The
+correct verdict under the committed criteria is `OBJECTIVE-DRIVEN`.
+
+**Why this is worth an entry.** The defect is not in the rule and not in the data. It is that a
+rule and the code applying it named different quantities, and nothing compared them — the same
+shape as `D-14`'s four defects, one level down: there, a sentence restated a quantity another
+section owned; here, a function restated a statistic the rule owned. The correlation is now
+computed and **reported but not used**, labelled as such in the artifact, so a reader can see
+which statistic was applied and which was merely available.
+
+**Not fixed by retraining.** The runs are the data and they are unchanged; only the aggregation
+was wrong. `--reverdict` re-applies the committed criteria to the stored runs. Retraining to
+repair an aggregation would change the data under a committed rule, which is worse than the bug.
+
+**Evidence** `SRC` `scripts/e5_synthetic_sigma.py`, `results/e5_synthetic_sigma.json`
+**Status** ACTIVE · **Relevance** METHOD
+
+### R-72 — M-51 returns SURVIVES entry-res ONLY: a free baseline ranks error almost as well · **NEW**
+**The verdict, as returned.** Disagreement beats `entry-res` on both tests and beats `step-size`
+on neither the margin nor — the rule requires both — is it recorded as beating it.
+
+| baseline | r(baseline, error) | margin over it | partial r(disagreement \| baseline) | beaten? |
+|---|---|---|---|---|
+| `step-size` — ‖µ_t − µ_{t−1}‖ | **+0.4697** | +0.1357 | +0.5430 | **no** |
+| `entry-res` — one-step error before the window | +0.1471 | +0.4582 | +0.5948 | yes |
+| `forecast-index` (§6.7's existing adversary) | +0.2686 | +0.3368 | +0.5957 | — |
+
+r(disagreement, error) = +0.6053. MDE: margin
+0.2891, partial 0.1131.
+
+**The finding that matters, and it is not the one we expected.** The magnitude of the model's own
+predicted state change — a quantity requiring **no ensemble, no second model and no extra forward
+pass** — ranks realised error at +0.4697, against
++0.6053 for the five-member ensemble disagreement the follow-up's method
+is built on. The margin between them, +0.1357, is **below** the
+0.2891 this sample size can resolve. At n_independent =
+20 we cannot say the ensemble ranks better than a subtraction.
+
+**What disagreement does still carry.** With `step-size` partialled out it retains
++0.5430, far above the 0.1131
+MDE for that test, and the within-step control — which holds the forecast step exactly fixed —
+leaves it at +0.7392 against `step-size`'s
++0.5196. So disagreement is **not** merely re-encoding predicted step
+size. It adds information; what is not established is that it adds enough to be worth five models.
+
+**This does not overturn §6.7 and it does change what §6.7 may claim.** `M-51` anticipated exactly
+this case and fixed the reading in advance: the partial is the load-bearing test, the margin is
+corroboration, and a baseline passing the partial while failing the margin has not refuted the
+ranking claim. It has, however, refuted the *framing* — "disagreement ranks error well" is
+supported, "you need the ensemble to rank error" is not.
+
+**Evidence** `RUN` `results/e7_free_baselines.json`, `results/e7_free_baselines_power.json`
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### M-54 — M-51 was wrong about what the within-step control annihilates · **NEW**
+`M-51` states that a per-trajectory scalar, being constant within a forecast step, "must be
+annihilated by the within-step control". That is wrong, and the run shows it: `entry-res` is one
+scalar per trajectory and its within-step correlation is
++0.2035, not zero.
+
+**Why.** The within-step control holds the **step** fixed and correlates **across trajectories**.
+A per-trajectory constant varies across trajectories, so it survives; what the control annihilates
+is a quantity constant across trajectories at fixed step — which is the **forecast index**, and
+its within-step correlation is undefined for exactly that reason (reported as `NaN`, not as zero).
+
+`M-51`'s sentence confused the two axes. The rule's thresholds, statistics and verdict are
+unaffected — the claim was descriptive and no branch depended on it — but it is a statement about
+a control's behaviour that was wrong, and this project does not edit a committed rule to remove
+an error from it.
+
+**Evidence** `RUN` `results/e7_free_baselines.json`
+**Status** ACTIVE · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

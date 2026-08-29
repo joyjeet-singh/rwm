@@ -98,3 +98,5 @@ One row per CONTRIB ledger entry.
 | `X-13` | h=368 is the upstream's open-loop diagnostic length, not a deployment horizon | `SRC` | CONFIRMED | `results/v2_deployment_horizon.json`, `scripts/v2_deployment_horizon.py` |
 | `R-68` | Trunk-sharing is part of why the epistemic spread is too small | `RUN` | CONFIRMED | `results/p1_power_check.json`, `results/r2_independent_ensemble.json` |
 | `R-69` | The within-rollout signal survives, and the control it replaces was measuring something  | `RUN` | CONFIRMED | `results/a2_trajectory_level_control.json`, `results/p1_power_check.json` |
+| `R-71` | M-50 returns OBJECTIVE-DRIVEN: sigma collapses on data whose noise is known and large | `RUN` | CONFIRMED | `results/e5_sigma_dilution.json`, `results/e5_synthetic_sigma.json` |
+| `R-72` | M-51 returns SURVIVES entry-res ONLY: a free baseline ranks error almost as well | `RUN` | CONFIRMED | `results/e7_free_baselines.json`, `results/e7_free_baselines_power.json` |

@@ -3379,6 +3379,186 @@
     "source": "results/task_d3_ens5.json",
     "value": "DOES NOT GENERALISE"
   },
+  "e5s_collapse_thr": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": 0.1
+  },
+  "e5s_fp_rate": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "0"
+  },
+  "e5s_iters": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "12,000"
+  },
+  "e5s_mse_ratio": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "0.0460"
+  },
+  "e5s_mse_slope": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "+0.000493"
+  },
+  "e5s_mse_spread": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "1.003"
+  },
+  "e5s_mse_under": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "22"
+  },
+  "e5s_n_train": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "4,000"
+  },
+  "e5s_nll_pct_off": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "2"
+  },
+  "e5s_nll_ratio": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "0.9779"
+  },
+  "e5s_nll_slope": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "+0.1330"
+  },
+  "e5s_nll_spread": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "3.67"
+  },
+  "e5s_null_r_max": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "0.24"
+  },
+  "e5s_null_ratio_lo": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "0.940"
+  },
+  "e5s_null_slope_p95": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "2e-05"
+  },
+  "e5s_null_spread": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "1.0004"
+  },
+  "e5s_recovery_thr": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "3"
+  },
+  "e5s_seeds": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": 3
+  },
+  "e5s_slope_thr": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "0.00309"
+  },
+  "e5s_span": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "25"
+  },
+  "e5s_span_floor": {
+    "source": "results/e5_sigma_dilution.json",
+    "value": "1.01"
+  },
+  "e5s_verdict": {
+    "source": "results/e5_synthetic_sigma.json",
+    "value": "OBJECTIVE-DRIVEN"
+  },
+  "e7_entry_beaten": {
+    "source": "results/e7_free_baselines.json",
+    "value": "yes"
+  },
+  "e7_entry_margin": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.4582"
+  },
+  "e7_entry_partial": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.5948"
+  },
+  "e7_entry_r": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.1471"
+  },
+  "e7_entry_ws": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.2035"
+  },
+  "e7_index_beaten": {
+    "source": "results/e7_free_baselines.json",
+    "value": "yes"
+  },
+  "e7_index_margin": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.3368"
+  },
+  "e7_index_partial": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.5957"
+  },
+  "e7_index_r": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.2686"
+  },
+  "e7_index_ws": {
+    "source": "results/e7_free_baselines.json",
+    "value": "undefined"
+  },
+  "e7_mde_margin": {
+    "source": "results/e7_free_baselines_power.json",
+    "value": "0.2891"
+  },
+  "e7_mde_partial": {
+    "source": "results/e7_free_baselines_power.json",
+    "value": "0.1131"
+  },
+  "e7_n_beaten": {
+    "source": "results/e7_free_baselines.json",
+    "value": 1
+  },
+  "e7_n_new": {
+    "source": "results/e7_free_baselines.json",
+    "value": 2
+  },
+  "e7_nind": {
+    "source": "results/e7_free_baselines.json",
+    "value": 20
+  },
+  "e7_r_dis": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.6053"
+  },
+  "e7_step_beaten": {
+    "source": "results/e7_free_baselines.json",
+    "value": "no"
+  },
+  "e7_step_margin": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.1357"
+  },
+  "e7_step_partial": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.5430"
+  },
+  "e7_step_r": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.4697"
+  },
+  "e7_step_ws": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.5196"
+  },
+  "e7_verdict": {
+    "source": "results/e7_free_baselines.json",
+    "value": "SURVIVES entry-res ONLY"
+  },
+  "e7_ws_dis": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.7392"
+  },
   "ep0_rows": {
     "source": "results/step0_regimes.json",
     "value": "999"
@@ -3469,7 +3649,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "336"
+    "value": "354"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3577,7 +3757,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 208
+    "value": 215
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -6569,7 +6749,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 536
+    "value": 545
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

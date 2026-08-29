@@ -1,0 +1,81 @@
+{
+  "design": {
+    "n_independent": 20,
+    "n_trajectories": 20,
+    "n_steps": 368,
+    "n_boot": 4000,
+    "bootstrap_unit": "whole trajectory"
+  },
+  "thresholds": {
+    "margin": 0.2891106593025745,
+    "partial": 0.11309991118030661
+  },
+  "baselines": [
+    {
+      "baseline": "step-size",
+      "free": true,
+      "r_baseline_error": 0.4696825375342438,
+      "r_disagreement_error": 0.6053377907582749,
+      "margin": 0.13565525322403105,
+      "margin_ci": [
+        0.04245631348309835,
+        0.2508828238891048
+      ],
+      "partial_disagreement_given_baseline": 0.5430403794858999,
+      "partial_ci": [
+        0.4842196435780054,
+        0.6243612256821034
+      ],
+      "partial_baseline_given_disagreement": 0.36413408520659957,
+      "within_step_r_disagreement": 0.7391948534413294,
+      "within_step_r_baseline": 0.5195939342369236,
+      "margin_beats_mde": false,
+      "partial_beats_mde": true
+    },
+    {
+      "baseline": "entry-res",
+      "free": true,
+      "r_baseline_error": 0.14709008259241058,
+      "r_disagreement_error": 0.6053377907582749,
+      "margin": 0.4582477081658643,
+      "margin_ci": [
+        0.14788406473215476,
+        0.7315920598974172
+      ],
+      "partial_disagreement_given_baseline": 0.5948092654480059,
+      "partial_ci": [
+        0.4828486923464445,
+        0.6890779287024829
+      ],
+      "partial_baseline_given_disagreement": 0.046077008938105665,
+      "within_step_r_disagreement": 0.7391948534413294,
+      "within_step_r_baseline": 0.20349361199918853,
+      "margin_beats_mde": true,
+      "partial_beats_mde": true
+    },
+    {
+      "baseline": "forecast-index",
+      "free": true,
+      "r_baseline_error": 0.26857293876830163,
+      "r_disagreement_error": 0.6053377907582749,
+      "margin": 0.33676485198997325,
+      "margin_ci": [
+        0.13983953518253275,
+        0.5458278571922349
+      ],
+      "partial_disagreement_given_baseline": 0.5957061697704849,
+      "partial_ci": [
+        0.5244962977275948,
+        0.6888454043810217
+      ],
+      "partial_baseline_given_disagreement": 0.23492528053375422,
+      "within_step_r_disagreement": 0.7391948534413294,
+      "within_step_r_baseline": NaN,
+      "margin_beats_mde": true,
+      "partial_beats_mde": true
+    }
+  ],
+  "n_new_baselines": 2,
+  "n_beaten": 1,
+  "verdict": "SURVIVES entry-res ONLY"
+}
