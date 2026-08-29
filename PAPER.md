@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     768 values substituted from 57 artifacts. -->
+     775 values substituted from 58 artifacts. -->
 
 # What a world model's uncertainty outputs actually report: an independent reproduction of the Robotic World Model
 
@@ -39,7 +39,7 @@ evaluation pairs each state with the previous step's action, overstating the rel
 checkpoint's own error by 75%.
 
 Every quantity here is substituted from a named artifact by a build that fails otherwise, and
-50 comparative claims across 21 kinds are recomputed each build against a
+51 comparative claims across 21 kinds are recomputed each build against a
 corrupted expectation, so a check that can no longer fail is caught.
 
 ---
@@ -471,6 +471,16 @@ unfavourable to Arm B, and the three-seed ratio at h = 368 is 4.61× rather than
 For a single seed the bootstrap over trajectories gives 95% interval
 [0.56, 2.05] on n = 4 independent trajectories. **That interval should not be read as an ordinary one:** four trajectories admit 256 distinct resamples, so any bootstrap tail is quantised to steps of 0.39%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
+**So here are the four numbers the interval is computed from**, which are more informative than
+the interval and cost nothing to print. Three seeds pooled, the per-trajectory gap (Arm B minus
+Arm A) at h = 368: **+2.8705, +0.8949, +0.7445, +0.6562**. All
+4 of 4 are positive, which is the sign test;
+but one trajectory carries +2.8705 against a smallest of
++0.6562, and no interval on four units shows a reader that. At
+h = 100 the four are +1.0925, +0.8170, +0.2800, +0.1549. Wherever this paper reports an interval on
+n_independent = 4, the underlying values are in the artifact the interval came from;
+these two are printed here because §5 is where the reader meets the design.
+
 *Against a baseline, because neither number means anything without one.* The hold-last
 floor — predicting that nothing changes — scores **0.9930** in the same
 h = 368 cell, and autoregressive training beats it by **2.8×** there
@@ -598,6 +608,32 @@ no held-out arena in this dataset.
 | 128 | 14,934× [10,564, 19,700] | 0.03% | 34.2× [30.6, 38.2] | 4.37% [3.96, 4.81] | 8.75% | 45/45 | 0.3762 |
 | 368 | 20,669× [15,666, 25,688] | 0.02% | 34.4× [29.8, 40.3] | 3.59% [3.27, 3.92] | 7.19% | 45/45 | 0.0804 |
 
+**Read the h = 1 row first.** At one step the disagreement the method penalises rewards with is
+already **8.3× [6.1, 9.7]** smaller than realised error, with ±1σ
+coverage of 16.22% [13.44, 18.89] against a calibrated
+68.27%. The discarded per-member σ is 1,827× out at h = 1 as well.
+Everything further down the table is deterioration from a starting point that is already broken.
+
+**Why that row and not the deep ones — the objection this section has to meet.** A reviewer will
+say: a per-step predicted σ is a *conditional* quantity. It answers "given this input, how
+uncertain is the next state?", and in an open-loop rollout the input is the model's own previous
+output, which is wrong by an amount σ never claimed to describe. Comparing a conditional σ against
+*accumulated* rollout error is then comparing two different things, and the 368-step
+figure would be an artifact of that mismatch rather than a finding about the σ head. §6.9 answers
+a different objection — that the model is trained on 8 steps and cannot be expected to
+speak about 368 — and does not answer this one.
+
+**h = 1 answers it, and costs no new computation.** At one step there is no accumulation, no
+compounding and no mismatch: the input *is* the true state, the prediction is one step ahead, and
+σ is being asked exactly the question it was trained to answer. At h = 1 it is out by
+8.3×, and 16.22% of outcomes fall inside an interval that should
+hold 68.27%. Whatever compounding does at depth, it did not do that.
+
+So the horizon curve is not the claim; it is the shape of the deterioration, and the claim is the
+h = 1 row. We keep h = 100 because it is where the method actually deploys, and
+h = 368 because it is the upstream's own diagnostic length — landmarks on a curve, not
+the evidence.
+
 At h = 100, the method's own imagination rollout length, epistemic is
 349× better than aleatoric and still wrong by
 **33.4× [28.7, 39.0]**, with ±1σ coverage of
@@ -673,19 +709,19 @@ produce a gradient of exactly zero, which is a stronger statement than reading t
 concluding they do not matter (`results/e4_sigma_gradients.json`).
 
 We predicted the collapse from this algebra before training, then observed it. Across all
-26 runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Rates are fitted on 20 of those runs: the 6
+27 runs the collapse is linear in iteration count and its rate is nearly identical
+(Figure 3a). Rates are fitted on 21 of those runs: the 6
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 3(a) shows all 26 runs;
-Figure 3(b) plots only the 20 the rate is fitted on, so the scatter and the quoted
+counted at 2,500 and would double-weight them. Figure 3(a) shows all 27 runs;
+Figure 3(b) plots only the 21 the rate is fitted on, so the scatter and the quoted
 statistic describe the same set.
 
-The 26 runs, so a reader can count them:
+The 27 runs, so a reader can count them:
 
 | arm | iterations | ensemble | objective | dataset | seeds | seed ids |
 |---|---|---|---|---|---|---|
 | Arm A | 2,500 | 1 | gaussian_nll | clean | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 1 | mse | clean | 5 | 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | clean | 6 | 0, 0, 1, 2, 3, 4 |
 | Arm A | 2,500 | 1 | mse | contaminated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 1 | mse | duplicated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 5 | mse | clean | 3 | 0, 1, 2 |
@@ -694,8 +730,8 @@ The 26 runs, so a reader can count them:
 | Arm B | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
-is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
--9.3857e-05 per iteration with a standard deviation of 6.0e-07 — **including the
+is objective-driven.* It occurs in all 18 sampled-MSE runs at a rate of
+-9.3806e-05 per iteration with a standard deviation of 6.2e-07 — **including the
 teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05 in the
 3 runs that change it. *Input-independence is not.* That varies by a factor of
 15.6 between two arms trained under the same objective, so the objective
@@ -980,7 +1016,7 @@ face.
 
 **The contrast, and why it is affordable.** Training 5 genuinely independent models
 from scratch costs about 4.8 h of wall clock on two cores at the iteration count these
-runs use — 4.8 h against Appendix B's 46.3 h for the whole project. Arm A at
+runs use — 4.8 h against Appendix B's 47.2 h for the whole project. Arm A at
 ensemble size 1 already existed at seeds 0, 1 and 2; we added two more at about
 0.9 h each, 1.7 h in total, and scored the 5 together as an
 ensemble **at evaluation time**. No new training code and no new architecture — and the
@@ -1177,7 +1213,7 @@ the work.
 **Reproducibility, and a build that checks its own prose.**
 `./reproduce.sh --quick --force` regenerates 36 artifact files and 6,821
 numeric values from a clean clone, 6,821 of them bitwise identical (100.00%),
-0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **50 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 50 of 50 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+0 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **51 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1368,7 +1404,7 @@ What every downstream number rests on. Each level was passed before the next was
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 26 runs takes **46.3 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 26.6 for the remaining 20 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 27 runs takes **47.2 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 27.5 for the remaining 21 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
 
 ## Appendix C — figures
 
@@ -1457,7 +1493,7 @@ unresolved braces: a pipe-led line with no separator row beneath it, a single-br
 that names a real key, and any key resolving to an empty or null value. The converter
 requires the separator row before it will build a table.
 
-**The check kinds.** `scripts/check_comparative_claims.py` verifies 50 claims across
+**The check kinds.** `scripts/check_comparative_claims.py` verifies 51 claims across
 21 kinds: *abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *frequency-consistency* (a frequency stated in words -- "at every horizon", "at exactly one place" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 9 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference).
 
 That list is generated from the checker's own registry rather than written here. It was
@@ -1474,7 +1510,7 @@ guards nothing; a check that only matches text guards nothing either.
 **The self-test.** Every assertion is run against a deliberately corrupted expectation on each
 build and must fail: the interval relation inverted, the extremum replaced by the *runner-up*
 rather than an absent label, the sign flipped, the order of magnitude and the dimension counts
-moved by one. 50 of 50 are caught. An assertion that has quietly stopped
+moved by one. 51 of 51 are caught. An assertion that has quietly stopped
 being able to fail is worth less than no assertion, because it reads as coverage.
 
 **Four defects the self-test has found in the checker itself**, rather
@@ -1492,8 +1528,8 @@ both of which read as protection and are not:
 - A `sign` assertion that was never written. §6.8 said the two largest held-out deviations were "in opposite directions" when both are above target; the kind that would have caught it existed and no claim used it. A kind with no claim attached guards nothing, and the self-test cannot report that because there is nothing to corrupt.
 
 Corruptions now invert relative to each claim's own expectation, every registered kind
-carries at least one claim, and every claim is corrupted on every build: 50 of
-50 caught against 50 claims, with no exemptions. This list is generated from
+carries at least one claim, and every claim is corrupted on every build: 51 of
+51 caught against 51 claims, with no exemptions. This list is generated from
 the checker rather than written here, so a fourth entry cannot be forgotten.
 
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
@@ -1540,7 +1576,7 @@ earlier version of this claim was inflated fiftyfold.
 
 §9's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 330 KB ledger, so here is the table. It is generated from
+or an instruction to open a 334 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1606,11 +1642,11 @@ GPU-parallel simulation, not a data-loading problem.
 | Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
 | Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 46.3 h scale; the model training is the cheap half and the data is not |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 47.2 h scale; the model training is the cheap half and the data is not |
 | Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §12's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 46.3 h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 26 runs took 46.3 h on two cores; a modest sweep is a small multiple of that |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 47.2 h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 27 runs took 47.2 h on two cores; a modest sweep is a small multiple of that |
 
 **The two at the bottom are within reach of this setup** — the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison —
 and are the honest next steps for anyone extending this work on CPU. The six above

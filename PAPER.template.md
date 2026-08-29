@@ -465,6 +465,16 @@ unfavourable to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_rat
 For a single seed the bootstrap over trajectories gives 95% interval
 [{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories. **That interval should not be read as an ordinary one:** four trajectories admit {{c3_resamples}} distinct resamples, so any bootstrap tail is quantised to steps of {{c3_quant}}%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
+**So here are the four numbers the interval is computed from**, which are more informative than
+the interval and cost nothing to print. Three seeds pooled, the per-trajectory gap (Arm B minus
+Arm A) at h = {{v2_diag_h}}: **{{a1_gap_traj_h368}}**. All
+{{a1_gap_traj_n_positive_h368}} of {{a1_gap_traj_n_h368}} are positive, which is the sign test;
+but one trajectory carries {{a1_gap_traj_max_h368}} against a smallest of
+{{a1_gap_traj_min_h368}}, and no interval on four units shows a reader that. At
+h = {{v2_deploy_h}} the four are {{a1_gap_traj_h100}}. Wherever this paper reports an interval on
+n_independent = {{m23_nind}}, the underlying values are in the artifact the interval came from;
+these two are printed here because §5 is where the reader meets the design.
+
 *Against a baseline, because neither number means anything without one.* The hold-last
 floor — predicting that nothing changes — scores **{{a1_floor_h368}}** in the same
 h = {{v2_diag_h}} cell, and autoregressive training beats it by **{{a1_floor_over_A_h368}}×** there
@@ -591,6 +601,32 @@ no held-out arena in this dataset.
 | **{{v2_deploy_h}}** | {{d1n_alea_ratio_h100}}× [{{d1n_alea_ratio_ci_h100}}] | {{d1n_alea_cov1_h100}}% | **{{d1n_epi_ratio_h100}}×** [{{d1n_epi_ratio_ci_h100}}] | {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi_cov2_h100}}% | {{d1n_epi_npos_h100}}/{{d1n_epi_ndim_h100}} | {{perm_all_epi_p_h100}} |
 | 128 | {{d1n_alea_ratio_h128}}× [{{d1n_alea_ratio_ci_h128}}] | {{d1n_alea_cov1_h128}}% | {{d1n_epi_ratio_h128}}× [{{d1n_epi_ratio_ci_h128}}] | {{d1n_epi_cov1_h128}}% [{{d1n_epi_cov1_ci_h128}}] | {{d1n_epi_cov2_h128}}% | {{d1n_epi_npos_h128}}/{{d1n_epi_ndim_h128}} | {{perm_all_epi_p_h128}} |
 | 368 | {{d1n_alea_ratio_h368}}× [{{d1n_alea_ratio_ci_h368}}] | {{d1n_alea_cov1_h368}}% | {{d1n_epi_ratio_h368}}× [{{d1n_epi_ratio_ci_h368}}] | {{d1n_epi_cov1_h368}}% [{{d1n_epi_cov1_ci_h368}}] | {{d1n_epi_cov2_h368}}% | {{d1n_epi_npos_h368}}/{{d1n_epi_ndim_h368}} | {{perm_all_epi_p_h368}} |
+
+**Read the h = 1 row first.** At one step the disagreement the method penalises rewards with is
+already **{{d1n_epi_ratio_h1}}× [{{d1n_epi_ratio_ci_h1}}]** smaller than realised error, with ±1σ
+coverage of {{d1n_epi_cov1_h1}}% [{{d1n_epi_cov1_ci_h1}}] against a calibrated
+{{v3_cov_nominal1}}%. The discarded per-member σ is {{d1n_alea_ratio_h1}}× out at h = 1 as well.
+Everything further down the table is deterioration from a starting point that is already broken.
+
+**Why that row and not the deep ones — the objection this section has to meet.** A reviewer will
+say: a per-step predicted σ is a *conditional* quantity. It answers "given this input, how
+uncertain is the next state?", and in an open-loop rollout the input is the model's own previous
+output, which is wrong by an amount σ never claimed to describe. Comparing a conditional σ against
+*accumulated* rollout error is then comparing two different things, and the {{v2_diag_h}}-step
+figure would be an artifact of that mismatch rather than a finding about the σ head. §6.9 answers
+a different objection — that the model is trained on {{win_fore}} steps and cannot be expected to
+speak about {{v2_diag_h}} — and does not answer this one.
+
+**h = 1 answers it, and costs no new computation.** At one step there is no accumulation, no
+compounding and no mismatch: the input *is* the true state, the prediction is one step ahead, and
+σ is being asked exactly the question it was trained to answer. At h = 1 it is out by
+{{d1n_epi_ratio_h1}}×, and {{d1n_epi_cov1_h1}}% of outcomes fall inside an interval that should
+hold {{v3_cov_nominal1}}%. Whatever compounding does at depth, it did not do that.
+
+So the horizon curve is not the claim; it is the shape of the deterioration, and the claim is the
+h = 1 row. We keep h = {{v2_deploy_h}} because it is where the method actually deploys, and
+h = {{v2_diag_h}} because it is the upstream's own diagnostic length — landmarks on a curve, not
+the evidence.
 
 At h = {{v2_deploy_h}}, the method's own imagination rollout length, epistemic is
 {{d1n_epi_over_alea_h100}}× better than aleatoric and still wrong by

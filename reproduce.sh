@@ -224,6 +224,33 @@ REPORT=task_d3_ens5_report.txt stage 20h "Ensemble-5 replication and M-43's verd
       results/task_d3_ens5.json NEEDS_WEIGHTS $PY scripts/task_d3_ens5.py
 REPORT=task_d3b_ens5_power_report.txt stage 20i "Ensemble-5 companion and power at n=4 (R-67)" "6 min" \
       results/task_d3b_ens5_power.json NEEDS_WEIGHTS $PY scripts/task_d3b_ens5_power.py
+# ------------------------------------------------------------------------
+# Six analyses that the paper's numbers depend on and that this pipeline never
+# ran. Between them they produce about 300 of the paper's ~1,600 substituted
+# values -- §5's whole by-horizon table (a1), the epistemic table §6.2 leads
+# with (b2), §5's three-seed headline (d1), §6.8's recalibration (d2), §6.6's
+# multiplicity correction (c3) and what the originals report (original_paper).
+#
+# A clean clone CARRIED THEM IN and verify_reproduction.py counted them as
+# copied rather than regenerated, which it reports honestly -- but the paper's
+# reproduction claim reads as broader than the test, and the fix is to widen
+# the test rather than narrow the claim. Found by auditing every artifact
+# paper_numbers.py reads against the scripts this file actually invokes; the
+# first two audits of it were themselves wrong, matching declared outputs and
+# then matching mere mentions of a filename.
+# ------------------------------------------------------------------------
+REPORT=task_b2_epistemic_report.txt stage 20j1 "B2 — the epistemic table §6.2 leads with" "4 min" \
+      results/task_b2_epistemic.json NEEDS_WEIGHTS $PY scripts/task_b2_epistemic.py
+REPORT=a1_ab_by_horizon_report.txt stage 20j2 "A1 — the A/B result at every horizon (§5's table)" "10 min" \
+      results/a1_ab_by_horizon.json NEEDS_WEIGHTS $PY scripts/a1_ab_by_horizon.py
+REPORT=task_d1_threeseed_report.txt stage 20j3 "D1 — §5's headline over three seeds" "6 min" \
+      results/task_d1_threeseed.json NEEDS_WEIGHTS $PY scripts/task_d1_threeseed.py
+REPORT=task_d2_recalibration_report.txt stage 20j4 "D2 — the single-multiplier recalibration" "4 min" \
+      results/task_d2_recalibration.json NEEDS_WEIGHTS $PY scripts/task_d2_recalibration.py
+REPORT=task_c3_multiplicity_report.txt stage 20j5 "C3 — multiplicity correction over the A/B cells" "3 min" \
+      results/task_c3_multiplicity.json NEEDS_WEIGHTS $PY scripts/task_c3_multiplicity.py
+stage 20j6 "What the original papers report, claim by claim" "10 s" \
+      results/original_paper_figures.json $PY scripts/original_paper_figures.py
 REPORT=task_c2_data_budget_report.txt stage 20j "Data budget against the reference (C2)" "10 s" \
       results/task_c2_data_budget.json $PY scripts/task_c2_data_budget.py
 # ---------------------------------------------------------------------------

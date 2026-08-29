@@ -146,6 +146,17 @@ def main():
             "gap": float(gap_traj.mean()),
             "gap_ci": [float(lo), float(hi)],
             "gap_excludes_zero": bool(lo > 0 or hi < 0),
+            # E8. The four numbers the interval is computed FROM.
+            #
+            # A cluster bootstrap over four units has 4**4 = 256 distinct
+            # resamples, quantised tails and poor coverage. The paper says so and
+            # prints the interval anyway, which asks a reader to trust a summary
+            # of four numbers rather than showing them the four numbers. They cost
+            # nothing to print, they are more informative than the interval, and
+            # they pre-empt the objection instead of inviting it.
+            "gap_per_trajectory": [float(v) for v in gap_traj],
+            "A_per_trajectory": [float(v) for v in A.mean(0)],
+            "B_per_trajectory": [float(v) for v in B.mean(0)],
             "floor": float(floor[h].mean()),
             "floor_over_A": float(floor[h].mean() / a_mean.mean()),
             "B_over_floor": float(b_mean.mean() / floor[h].mean()),

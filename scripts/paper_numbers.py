@@ -1351,6 +1351,28 @@ def main():
         put(f"a1_sign_n_h{_h}", _sg["n_episodes"], "results/a1_ab_by_horizon.json")
         put(f"a1_sign_p_h{_h}", f'{_sg["exact_two_sided_p"]:.4f}',
             "results/a1_ab_by_horizon.json")
+    # E8. The four trajectory values behind every n_independent = 4 interval.
+    #
+    # A cluster bootstrap over four units has 256 distinct resamples, quantised
+    # tails and poor coverage. The paper says all three and prints the interval
+    # anyway, which asks a reader to accept a summary of four numbers instead of
+    # the four numbers. They are more informative than the interval -- at
+    # h = 368 one trajectory carries most of the gap, which no interval shows --
+    # and printing them pre-empts the objection rather than inviting it.
+    for _h in _a1h:
+        _g = A1["by_horizon"][str(_h)].get("gap_per_trajectory")
+        if _g:
+            put(f"a1_gap_traj_h{_h}",
+                ", ".join(f"{v:+.4f}" for v in sorted(_g, reverse=True)),
+                "results/a1_ab_by_horizon.json")
+            put(f"a1_gap_traj_max_h{_h}", f"{max(_g):+.4f}",
+                "results/a1_ab_by_horizon.json")
+            put(f"a1_gap_traj_min_h{_h}", f"{min(_g):+.4f}",
+                "results/a1_ab_by_horizon.json")
+            put(f"a1_gap_traj_n_positive_h{_h}", sum(1 for v in _g if v > 0),
+                "results/a1_ab_by_horizon.json")
+            put(f"a1_gap_traj_n_h{_h}", len(_g), "results/a1_ab_by_horizon.json")
+
     _t = A1["trend"]
     put("a1_monotone", "does" if _t["monotone_increasing"] else "does not",
         "results/a1_ab_by_horizon.json")
