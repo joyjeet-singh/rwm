@@ -339,9 +339,19 @@ def analyse(rows, values):
         # They go to the C1 review as Tier 0 (see scripts/c2_revision_cohorts.py).
         # The two kinds that DO block -- typed-restatement and ambiguous-numeral
         # -- are precise enough to be right every time, and both stand at zero.
-        blocking = bool(typed and subst) or (len(srcs) > 1 and _sigdigits(v) >= 3)
+        same_quantity_candidate = (bool(typed and subst)
+                                   or (len(srcs) > 1 and _sigdigits(v) >= 3))
         restatements.append({
-            "value": v, "n_locations": len(group), "blocking": blocking,
+            "value": v, "n_locations": len(group),
+            # NOT "blocking". It was called that and nothing blocked on it: the
+            # artifact read n_blocking 37 while main() returned 0. A field named
+            # for an effect it does not have is worse than no field, because a
+            # reader of the artifact -- or of a commit message quoting it --
+            # concludes the build is enforcing something it is not. These are
+            # candidates for a person to adjudicate, and the two kinds that DO
+            # fail the build are typed-restatement and ambiguous-numeral.
+            "same_quantity_candidate": same_quantity_candidate,
+            "fails_build": False,
             "n_typed": len(typed), "n_substituted": len(subst),
             "sources": sorted(srcs),
             "keys": sorted(str(k) for k in keys),
@@ -497,8 +507,8 @@ def main():
           f"  (addresses and declared constants excluded)")
     print(f"  registered coincidences: {len(COINCIDENCES)}")
     print()
-    blocking = [x for x in restatements if x["blocking"]]
-    advisory = [x for x in restatements if not x["blocking"]]
+    blocking = [x for x in restatements if x["same_quantity_candidate"]]
+    advisory = [x for x in restatements if not x["same_quantity_candidate"]]
     if restatements:
         print(f"  {len(restatements)} value(s) appear at more than one location from more "
               f"than one key:")
@@ -536,8 +546,14 @@ def main():
 
     rec = {"scanned": path, "n_substituted": sum(1 for r in rows if r["key"]),
            "n_typed": sum(1 for r in rows if not r["key"]),
-           "n_restatements": len(restatements), "n_blocking": len(blocking),
-           "n_advisory": len(advisory), "restatements": restatements,
+           "n_restatements": len(restatements),
+           "n_same_quantity_candidates": len(blocking),
+           "n_lower_signal": len(advisory), "restatements": restatements,
+           "what_fails_the_build": ["typed-restatement", "ambiguous-numeral"],
+           "what_does_not": ("value collisions between two substituted keys. They "
+                             "are the C1 review's Tier 0 queue, not a build "
+                             "failure: each is the question 'are these two keys "
+                             "the same quantity?', which needs a person."),
            "n_ambiguous": len(ambiguous), "ambiguous": ambiguous,
            "n_typed_restatements": len(typed_rs), "typed_restatements": typed_rs,
            "coincidences": COINCIDENCES}

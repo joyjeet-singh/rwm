@@ -1333,6 +1333,14 @@ def main():
     put("causal_nrmse", f'{_r15["A_off1"]["nrmse"]["368"]:.4f}', "results/step4_0a_results.json")
     put("stale_pct", f'{100*(_r15["A_off0"]["nrmse"]["368"]/_r15["A_off1"]["nrmse"]["368"]-1):.0f}',
         "results/step4_0a_results.json")
+    # The SAME comparison under the metric the abstract's other headline uses.
+    # §7.2's figure is nRMSE at h = 368 and nothing else -- 50.9% at h = 1, 10.9%
+    # at h = 128 -- and the abstract quoted it with neither scope, so a reviewer
+    # computing on relative-L1 would have got a number eight times smaller and
+    # concluded the abstract was wrong. Both are printed now, in the sentence that
+    # claims every abstract headline names its metric.
+    put("stale_pct_rel", f'{100*(_r15["A_off0"]["e"]/_r15["A_off1"]["e"]-1):.1f}',
+        "results/step4_0a_results.json")
 
     # D3: the hold-last floor. Section 3 quoted 0.3509 against 1.5540 with no
     # baseline, so a reader could not judge whether 0.3509 was good.

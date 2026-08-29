@@ -398,7 +398,25 @@ CLAIMS = [
     # build and has to be argued for as these were.
     {"id": "C12.1", "kind": "abstract-budget", "where": "abstract",
      "says": "The base paper's central training claim reproduces",
-     "max_words": 346, "max_numerals": 16},
+     # +4 words, +1 numeral, and this raise is a CORRECTNESS fix rather than added
+     # content. The abstract quoted §7.2's alignment defect as "overstating the
+     # checkpoint's own error by 75%", naming neither the metric nor the horizon.
+     # It is nRMSE at h = 368 and nothing else: the same comparison gives 50.9% at
+     # h = 1, 10.9% at h = 128, and 9.5% on relative-L1 -- the metric the
+     # abstract's OWN first headline uses. A reviewer checking it against
+     # relative-L1 would compute a number eight times smaller and conclude the
+     # abstract was wrong. Naming both scopes costs the numeral 368 and four words.
+     #
+     # A second correctness fix, +19 words and +1 numeral. The provenance sentence
+     # read "Every quantity here is substituted from a named artifact". Still too
+     # strong: the abstract itself types "sigma = 0" and "all ten episodes", and
+     # 167 of the 552 typed numerals sit under declared exceptions. What the build
+     # actually enforces is narrower and is now what the abstract says -- every
+     # MEASUREMENT is substituted, and every numeral that is not one is classified
+     # as an address, a horizon label or a declared constant, with the build
+     # failing on anything left over. B8 replaced a false claim with an
+     # over-strong one; this replaces it with the enforced one.
+     "max_words": 370, "max_numerals": 18},
 
     # ---- C13 interval-required -------------------------------------------
     # 6.2's ratios and coverages were bare point estimates in a paper whose
@@ -961,7 +979,11 @@ def corruption_for(c):
     if k == "cross-artifact-sync":
         return {"keys": c["keys"] + ["d1_ratio"], "file": "requirements.txt"}
     if k == "abstract-budget":
-        return {"max_words": 10}
+        # Corrupt BOTH limbs, not just the word count. This returned
+        # {"max_words": 10} and never touched max_numerals, so the numeral budget
+        # -- which sits at its exact ceiling and is the limb that actually binds --
+        # was never shown to be able to fail.
+        return {"max_words": 10, "max_numerals": 0}
     if k == "interval-required":
         return {"quantities": c["quantities"] + [("planted", "no_such_interval_key")]}
     if k == "horizon-consistency":

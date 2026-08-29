@@ -272,7 +272,7 @@
       "where": "abstract",
       "says": "The base paper's central training claim reproduces",
       "pass": true,
-      "detail": "343 words (max 346), 16 numerals (max 16) ['4.61', '368,', '2.58', '100,', '8.3', '16.22', '68.27', '33.4', '100.', '0', '25', '22', '0.419', '75', '51', '21']"
+      "detail": "366 words (max 370), 18 numerals (max 18) ['4.61', '368,', '2.58', '100,', '8.3', '16.22', '68.27', '33.4', '100.', '0', '25', '22', '0.419', '368', '75', '552', '51', '21']"
     },
     {
       "id": "C13.1",
@@ -336,7 +336,7 @@
       "where": "Appendix B",
       "says": "of recorded wall clock on two CPU cores",
       "pass": true,
-      "detail": "rt_hours=46.8 vs rt_hours_10k=19.7 + rt_hours_short=27.1 = 46.8 (tol 0.05)"
+      "detail": "rt_hours=48.2 vs rt_hours_10k=19.7 + rt_hours_short=28.5 = 48.2 (tol 0.05)"
     },
     {
       "id": "C15.2",
@@ -344,7 +344,7 @@
       "where": "Appendix B",
       "says": "runs at 10,000 iterations and",
       "pass": true,
-      "detail": "rt_runs=27 vs rt_runs_10k=6 + rt_runs_short=21 = 27 (tol 0)"
+      "detail": "rt_runs=31 vs rt_runs_10k=6 + rt_runs_short=25 = 31 (tol 0)"
     },
     {
       "id": "C15.3",

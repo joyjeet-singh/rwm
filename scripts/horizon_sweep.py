@@ -68,13 +68,35 @@ def deploy_diag():
             int(V2["horizons"]["open_loop_diagnostic"]["value"]))
 
 
+# Keys whose value is horizon-specific but whose NAME does not say so.
+#
+# The suffix rules below infer a horizon from `_h<N>` and `_cov<N>`. A key that is
+# just as horizon-dependent and happens to be named otherwise is invisible to
+# them, and this sweep is the one check that exists to stop a horizon-sensitive
+# figure appearing without its horizon.
+#
+# §7.2's action-alignment figures are exactly that. `stale_pct` is nRMSE at
+# h = 368 and nothing else: the same quantity is 50.9% at h = 1, 72.4% at h = 8,
+# 34.3% at h = 32 and 10.9% at h = 128, and 9.5% under relative-L1, the metric
+# the abstract's OTHER headline uses. The abstract quoted it with neither scope
+# and the sweep reported zero findings, because no rule here could see the key.
+EXPLICIT_HORIZON = {
+    "stale_nrmse": 368,
+    "causal_nrmse": 368,
+    "stale_pct": 368,
+}
+
+
 def key_horizon(key, grid):
     """The horizon a placeholder key carries, or None.
 
     Horizon-indexed families suffix `_h<N>`; the calibration tables also use
     `_cov<N>` for coverage at horizon N. A trailing number that is not on the
-    grid is not a horizon suffix.
+    grid is not a horizon suffix. EXPLICIT_HORIZON covers the keys whose horizon
+    is real and is not in their name.
     """
+    if key in EXPLICIT_HORIZON:
+        return EXPLICIT_HORIZON[key]
     m = re.search(r"_h(\d+)$", key)
     if m and int(m.group(1)) in grid:
         return int(m.group(1))

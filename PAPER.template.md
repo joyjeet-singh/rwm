@@ -33,11 +33,12 @@ all ten episodes; and a pre-registered replication on models we trained returns
 **Two defects are repairable.** A per-horizon multiplier, fitted on one held-out episode and
 scored on the other, restores nominal coverage on every held-out cell; and the released
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
-error by {{stale_pct}}%.
+nRMSE at h = {{v2_diag_h}} by {{stale_pct}}%.
 
-Every quantity here is substituted from a named artifact by a build that fails otherwise;
-{{cc_n}} comparative claims across {{cc_kinds}} kinds are recomputed each build against a
-corrupted expectation, so a check that can no longer fail is caught.
+Every **measurement** here is substituted from a named artifact; the {{tn_typed}} numerals that
+are not are addresses, horizon labels or declared constants, classified one by one by a build that
+fails on anything else. {{cc_n}} comparative claims across {{cc_kinds}} kinds are recomputed each
+build against a corrupted expectation, so a check that can no longer fail is caught.
 
 ---
 
@@ -336,7 +337,10 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ
 at all. The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and
 total absolute error, because a ranking claim is about order rather than scale. Every headline
-number in the abstract names its metric.
+number in the abstract names its metric, including §7.2's alignment defect, which is nRMSE and
+is horizon-specific: the same comparison overstates by {{stale_pct}}% at h = {{v2_diag_h}} and by
+{{stale_pct_rel}}% on relative-L1, so quoting it without both scopes invites a reader to check it
+against the wrong number.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,{{v2_deploy_h}},\,128,\,{{v2_diag_h}}\}$.
 Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's

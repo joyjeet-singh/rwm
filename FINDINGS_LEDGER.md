@@ -5567,6 +5567,86 @@ checking what it claims to check.
 `scripts/f5_pdf_channels.py`, `reproduce.sh`
 **Status** ACTIVE · **Relevance** METHOD
 
+### D-20 — The abstract quoted §7.2's defect with neither its metric nor its horizon · **NEW**
+**What it said.** "the released evaluation pairs each state with the previous step's action,
+overstating the checkpoint's own error **by 75%**."
+
+**What that number is.** nRMSE at h = 368, and nothing else. The same comparison, from the same
+artifact (`results/step4_0a_results.json`), gives **50.9%** at h = 1, **72.4%** at h = 8, **34.3%**
+at h = 32, **10.9%** at h = 128 — and **9.5%** under relative-L1, which is the metric the
+abstract's *own first headline* uses for the 4.61× result three paragraphs above.
+
+**Why that matters more than a missing label.** A reviewer who opens the artifact to check the
+abstract will reasonably compute on relative-L1, get a number eight times smaller, and conclude
+the abstract is wrong. §7.2 itself is scrupulous — it names nRMSE and h = 368 and prints
+1.3228 → 0.7572. The abstract stripped both scopes.
+
+**And §3.1 asserted the opposite.** "Every headline number in the abstract names its metric",
+followed by an enumeration covering §5, §6.2 and §6.7 — which does not include §7.2, whose
+headline is in the abstract. The sentence was false about the one figure it did not enumerate.
+
+**Why the horizon sweep did not catch it.** `scripts/horizon_sweep.py` infers a key's horizon from
+a `_h<N>` or `_cov<N>` suffix. `stale_pct`, `stale_nrmse` and `causal_nrmse` carry neither, so the
+one check that exists to stop a horizon-sensitive figure appearing without its horizon **could not
+see the most horizon-sensitive number in the abstract**. It reported 0 findings throughout. An
+`EXPLICIT_HORIZON` registry now covers keys whose horizon is real and is not in their name, and
+the sweep fires on the sentence immediately.
+
+**Evidence** `SRC` `results/horizon_sweep.json`, `results/step4_0a_results.json`
+**Status** ACTIVE
+
+### D-21 — B8's replacement claim was still stronger than what the build enforces · **NEW**
+**What happened.** `B8` withdrew "No number here is typed", which was false, and replaced it with
+"Every quantity here is substituted from a named artifact by a build that fails otherwise". That is
+also stronger than what is enforced, in the same direction.
+
+**The abstract types quantities.** "the implemented objective's optimum is σ = 0" and "trained on
+all ten episodes" are both quantities and neither is substituted. More broadly,
+`results/typed_numerals.json` records **167 of 552** typed numerals covered by declared exceptions
+rather than by an address class, and the audit's own verdict is the honest one: *every typed
+numeral is an address, a horizon label or a declared constant*.
+
+**What the build actually guarantees**, and what the abstract now says: every **measurement** is
+substituted from a named artifact, and every numeral that is not one is classified as an address,
+a horizon label or a declared constant, with the build failing on anything left over. That is
+exactly the audit's contract and it is checkable.
+
+**The pattern is worth naming.** A false claim was replaced under scrutiny by an over-strong one,
+and it took an independent adversarial read to catch the second. Both `S-17` (a count defect whose
+replacement carried another count defect, `B3`) and this are the same shape: the sentence most
+likely to be wrong is the one that was just rewritten to be right.
+
+**Evidence** `SRC` `results/typed_numerals.json`
+**Status** ACTIVE
+
+### D-22 — A field named `blocking` that blocked nothing · **NEW**
+`results/restatement_index.json` reported `n_blocking: 37` while `main()` returned 0 and
+`check_comparative_claims.py`'s `restatement` kind asserted only on typed restatements and
+ambiguous numerals.
+
+The design is deliberate and unchanged: a value collision between two substituted keys is a
+question for a person — *are these two keys the same quantity?* — and 37 of them are the C1
+review's Tier 0 queue, not a build failure. What was wrong is that the artifact said "blocking",
+so a reader of it, or of a commit message quoting it, would conclude the build enforced something
+it did not. The field is `same_quantity_candidate` now, each row carries `fails_build: false`, and
+the artifact names which kinds do fail the build and which do not.
+
+**Evidence** `SRC` `results/restatement_index.json`
+**Status** ACTIVE
+
+### D-23 — The abstract-budget corruption exercised one limb of two · **NEW**
+`corruption_for("abstract-budget")` returned `{"max_words": 10}`. The numeral cap was never
+corrupted, and it is the limb that binds: the abstract has sat at exactly its numeral ceiling
+through three revisions of this pass. The corruption now sets both, so a numeral budget that had
+stopped being able to fail would be caught.
+
+Found by the same audit as `D-20` to `D-22`, and it is the fourth self-test defect this revision
+has recorded — after `M-55`'s three. The self-tests catch defects in the paper; nothing was
+catching defects in the self-tests except a person looking.
+
+**Evidence** `SRC` `scripts/check_comparative_claims.py`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     817 values substituted from 64 artifacts. -->
+     819 values substituted from 65 artifacts. -->
 
 # Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
 
@@ -39,11 +39,12 @@ DOES NOT GENERALISE.
 **Two defects are repairable.** A per-horizon multiplier, fitted on one held-out episode and
 scored on the other, restores nominal coverage on every held-out cell; and the released
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
-error by 75%.
+nRMSE at h = 368 by 75%.
 
-Every quantity here is substituted from a named artifact by a build that fails otherwise;
-51 comparative claims across 21 kinds are recomputed each build against a
-corrupted expectation, so a check that can no longer fail is caught.
+Every **measurement** here is substituted from a named artifact; the 552 numerals that
+are not are addresses, horizon labels or declared constants, classified one by one by a build that
+fails on anything else. 51 comparative claims across 21 kinds are recomputed each
+build against a corrupted expectation, so a check that can no longer fail is caught.
 
 ---
 
@@ -342,7 +343,10 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ
 at all. The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and
 total absolute error, because a ranking claim is about order rather than scale. Every headline
-number in the abstract names its metric.
+number in the abstract names its metric, including §7.2's alignment defect, which is nRMSE and
+is horizon-specific: the same comparison overstates by 75% at h = 368 and by
+9.5% on relative-L1, so quoting it without both scopes invites a reader to check it
+against the wrong number.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,100,\,128,\,368\}$.
 Two of those are load-bearing and the rest are landmarks. **h = 100** is the method's
@@ -752,16 +756,16 @@ We predicted the collapse from this algebra before training, then observed it. A
 26 runs the collapse is linear in iteration count and its rate is nearly identical
 (Figure 3a). Rates are fitted on 20 of those runs: the 6
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 3(a) shows all 27 runs;
+counted at 2,500 and would double-weight them. Figure 3(a) shows all 31 runs;
 Figure 3(b) plots only the 20 the rate is fitted on, so the scatter and the quoted
 statistic describe the same set.
 
-The 27 runs, so a reader can count them:
+The 31 runs, so a reader can count them:
 
 | arm | iterations | ensemble | objective | dataset | seeds | seed ids |
 |---|---|---|---|---|---|---|
 | Arm A | 2,500 | 1 | gaussian_nll | clean | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 1 | mse | clean | 6 | 0, 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | clean | 10 | 0, 0, 1, 1, 2, 2, 3, 3, 4, 4 |
 | Arm A | 2,500 | 1 | mse | contaminated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 1 | mse | duplicated | 3 | 0, 1, 2 |
 | Arm A | 2,500 | 5 | mse | clean | 3 | 0, 1, 2 |
@@ -1105,7 +1109,7 @@ face.
 
 **The contrast, and why it is affordable.** Training 5 genuinely independent models
 from scratch costs about 4.8 h of wall clock on two cores at the iteration count these
-runs use — 4.8 h against Appendix B's 46.8 h for the whole project. Arm A at
+runs use — 4.8 h against Appendix B's 48.2 h for the whole project. Arm A at
 ensemble size 1 already existed at seeds 0, 1 and 2; we added two more at about
 0.9 h each, 1.7 h in total, and scored the 5 together as an
 ensemble **at evaluation time**. No new training code and no new architecture — and the
@@ -1257,7 +1261,7 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (216 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (220 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all 8 rules; 7 are positive and 1 is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1479,7 +1483,7 @@ What every downstream number rests on. Each level was passed before the next was
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 27 runs takes **46.8 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 27.1 for the remaining 21 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 31 runs takes **48.2 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 28.5 for the remaining 25 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
 
 ## Appendix C — figures
 
@@ -1733,7 +1737,7 @@ form 2.
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 357 KB ledger, so here is the table. It is generated from
+or an instruction to open a 362 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1809,11 +1813,11 @@ GPU-parallel simulation, not a data-loading problem.
 | Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
 | Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 46.8 h scale; the model training is the cheap half and the data is not |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 48.2 h scale; the model training is the cheap half and the data is not |
 | Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 46.8 h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 27 runs took 46.8 h on two cores; a modest sweep is a small multiple of that |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 48.2 h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 31 runs took 48.2 h on two cores; a modest sweep is a small multiple of that |
 
 **The two at the bottom are within reach of this setup** — the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison —
 and are the honest next steps for anyone extending this work on CPU. The six above

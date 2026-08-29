@@ -67,7 +67,7 @@ def main():
 
     # Same-quantity candidates from the restatement index: pairs of keys that
     # agree today and would not have to. The reviewer sees them beside the claims.
-    same_q = [x for x in RI["restatements"] if x["blocking"]]
+    same_q = [x for x in RI["restatements"] if x["same_quantity_candidate"]]
 
     L = []
     L.append("# C1 review checklist — 89 claims, one row each\n")

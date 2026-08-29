@@ -1,11 +1,11 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 552,
+  "n_typed": 553,
   "by_class": {
     "arxiv-id": 16,
     "exception": 167,
     "markdown-heading": 24,
-    "section-ref": 160,
+    "section-ref": 161,
     "figure-ref": 20,
     "citation-year": 15,
     "code-location": 38,

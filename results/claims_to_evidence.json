@@ -2696,12 +2696,66 @@
         "scripts/typed_numeral_audit.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-20",
+      "claim": "The abstract quoted \u00a77.2's defect with neither its metric nor its horizon",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/horizon_sweep.json",
+        "results/step4_0a_results.json",
+        "scripts/horizon_sweep.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-21",
+      "claim": "B8's replacement claim was still stronger than what the build enforces",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/typed_numerals.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-22",
+      "claim": "A field named `blocking` that blocked nothing",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/restatement_index.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-23",
+      "claim": "The abstract-budget corruption exercised one limb of two",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "scripts/check_comparative_claims.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 19,
+    "D": 23,
     "M": 55,
     "O": 14,
     "R": 72,
