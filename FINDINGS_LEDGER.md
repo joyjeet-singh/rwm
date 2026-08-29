@@ -5229,6 +5229,83 @@ and let down inside four pages. The finding is real and worth reporting; the fra
 
 **Status** RESOLVED — alternative 1 adopted · **Relevance** METHOD
 
+### M-50 — Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? · **NEW**
+**Committed before either arm is trained.** `results/e5_sigma_dilution.json` — the calibration this
+rule quotes — was written first and is committed in the same commit as this text. No arm of the
+experiment existed when either was written.
+
+**The question, and why a derivation is not enough.** §6.3 derives that under the implemented state
+loss — a reparameterised *sample* enters a squared error, so
+E[(mu + sigma*eps − y)^2] = (mu − y)^2 + sigma^2, minimised at sigma = 0 — the predicted standard
+deviation has no reason to track anything. It then asserts this would hold "on any dataset,
+stochastic or not". That assertion is what refutes the follow-up's own reading, which attributes
+the low aleatoric term to "small stochasticity in the environment", and it is untested. On the
+released CSV the two explanations are observationally identical: the data may simply be nearly
+deterministic.
+
+**The design.** Synthetic data with a known, input-dependent noise level spanning a factor of
+25 across the input range, and a
+non-constant true mean. The **same** bounded log-sigma head as the released model
+(`src/rwm_model.py` `MLPStateHead`, unmodified — the double-softplus clamp, the learnable
+`state_min_logstd` and `state_log_delta_logstd`, and the bound loss at its configured weight),
+trained under each objective in turn: `mse`, the implemented branch, and `gaussian_nll`, the
+authors' own branch that nothing in the repository reaches. Same data, same head, same optimiser,
+same iterations, same seeds. Nothing else differs.
+
+**Statistics, and why the obvious one is wrong.** Two:
+
+- **collapse** — median recovered sigma over median true sigma;
+- **tracking** — the **slope** of log sigma-hat on log sigma-true. Not the correlation. A
+  correlation is scale-free, so a sigma-hat that is essentially constant still returns a large one
+  off its own numerical noise: under the permutation null a head whose sigma spanned a factor of
+  1.0004 returned correlations between −0.78 and +0.65. The slope is not scale-free — perfect
+  recovery is 1, a constant sigma-hat is 0 — and under the same null it is order 1e-5.
+
+**Thresholds, measured before the runs** (`results/e5_sigma_dilution.json`):
+
+- **tracking threshold 0.00309**, which is *not* the null's 95th percentile.
+  That is 2.1e-05 — floating-point noise, and a
+  threshold at that level fired on the pure-null arm a third of the time. A threshold a coin flip
+  can clear is not a threshold. The floor in force is the slope at which recovered sigma would span
+  1.01× across the input range: the smallest input dependence anyone would call input dependence,
+  and about 150× the null's noise. False-positive rate at zero signal, measured:
+  **0%**.
+- **collapse threshold 0.1**. Under the null — a head with nothing to
+  learn about *where* the noise is — the median recovered sigma is still within
+  0.940–1.052 of
+  the truth, because the marginal scale is learnable even when its input dependence is not. A
+  collapse criterion of 0.1 sits an order of magnitude below anything
+  this design produces without a collapse.
+- **recovery threshold, a factor of 3.0** on the median ratio.
+
+**What this design CANNOT do, stated before the runs.** The dilution ladder detects the signal at
+full strength and **not at any dilution below it**: at 0.75, 0.5, 0.25 and 0 the detection rate is
+0%. So the rule answers "does sigma track the noise at all" and **cannot** resolve partial
+tracking. A NOT-DETECTED under this rule is not evidence that sigma tracks nothing; it is evidence
+that it does not track it at full strength. `M-43` was committed without such an estimate and
+returned a verdict it was under-powered to return, and `M-24` before it.
+
+A second bound, from the ladder rather than the null: under `gaussian_nll` at full strength the
+fitted slopes across three seeds were 0.175, 0.031 and 0.010 — a factor of 17 apart. The
+recovering arm is itself seed-variable at this training budget, so the CONTRAST is what this
+experiment establishes, not the magnitude of the recovery.
+
+**Verdict, decided in advance.**
+
+- **OBJECTIVE-DRIVEN** — under `mse` the median ratio is below the collapse threshold and the
+  slope is below the tracking threshold, **and** under `gaussian_nll` the ratio is within the
+  recovery factor and the slope is above the tracking threshold. §6.3's derivation is
+  demonstrated against ground truth and the "small stochasticity" reading is refuted rather than
+  disputed.
+- **REFUTED** — under `mse` sigma recovers the true noise. The derivation is then wrong or
+  incomplete and §6.3 is rewritten.
+- **NOT OBJECTIVE-DRIVEN** — sigma collapses under **both**. The objective is then not the cause,
+  and §6.3's mechanism claim is withdrawn.
+- **MIXED** — anything else, reported as returned with both arms printed.
+
+**Evidence** `RUN` `results/e5_sigma_dilution.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

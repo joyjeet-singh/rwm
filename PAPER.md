@@ -1308,10 +1308,11 @@ The pre-registration argument in §8 rests on commit timestamps, and those are
 author-settable via `git commit --date`. That matters, because §8 is load-bearing. Two
 things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
-ordering in Figure 4 is checkable at review time. And **the repository was archived by Software
-Heritage on 21 August 2026**, before submission, under a permanent identifier whose visit
-timestamp is not author-controllable; the identifier resolves to a named repository and is
-therefore disclosed on acceptance rather than here.
+ordering in Figure 4 is checkable at review time. And **the repository was archived by a
+third-party archive before submission**, under a permanent identifier whose visit timestamp is
+not author-controllable. Neither the identifier nor the date of that visit appears here: both
+resolve to a named repository, and a date is a one-field lookup away from an origin. They are
+disclosed on acceptance.
 
 What that archive establishes should be stated precisely, because it is easy to overclaim. It
 does **not** prove any individual commit date is genuine. It proves that the repository, with the
@@ -1319,6 +1320,14 @@ whole pre-registration history in the form this paper cites, existed no later th
 moment, as recorded by a third party with no interest in the claim — so nothing in the record can
 have been back-dated afterwards. That bounds §8 rather than proving it, and a reviewer should
 read it as such.
+
+**On anonymity, stated rather than implied.** The code and data for this work are public, as they
+are for most reproducibility work, and a reviewer who chooses to look can identify the author.
+The submission is anonymised — the bundle is scrubbed and asserted clean of a deny-list, and the
+files that carry identity are excluded from it — but that is anonymity of the *submission*, not
+unfindability of the work. Making the repository private would remove the identifying link and
+also remove the checkability §8 depends on, which is the worse trade. The decision and its
+reasoning are recorded in `docs/DOUBLE_BLIND_DECISION.md`.
 
 ## References
 

@@ -382,9 +382,39 @@ def main():
     # silently became 0 -- building a paper that said "Across 0 runs the collapse
     # is linear". Same failure as n_defects (M-36): a derived number whose source
     # can vanish without the derivation failing. The assert makes it fail loudly.
-    runs = sorted(glob.glob("results/step5_arm*.json"))
-    assert runs, "no results/step5_arm*.json -- cannot count training runs"
+    runs_all = sorted(glob.glob("results/step5_arm*.json"))
+    assert runs_all, "no results/step5_arm*.json -- cannot count training runs"
+
+    # M-49 added five runs at a REDUCED hidden width, and every consumer of this
+    # glob is a claim about the released architecture: §6.3's "the collapse rate
+    # is nearly identical across runs", the run table a reader is invited to
+    # count, the sigma-collapse rate fits. A different architecture entering any
+    # of those through a glob is silent contamination of a headline statistic,
+    # and nothing could have caught it because the width was recorded nowhere in
+    # the run artifact. It is recorded now (scripts/step5_train.py).
+    #
+    # Runs written before that change carry no width. They are all at the
+    # released width -- --hidden did not exist -- and that is asserted rather
+    # than assumed: a run with no recorded width must also carry no M-49 tag.
+    _released_w = R.load_reference_config(R.repo_paths()["lite"])[
+        "architecture_config"]["rnn_hidden_size"]
+
+    def _width(path):
+        h = json.load(open(path)).get("hyperparameters", {})
+        w = h.get("rnn_hidden_size")
+        if w is None:
+            assert "_m49" not in path, (
+                f"{path} carries an M-49 tag and no recorded width; it cannot be "
+                f"assumed to be the released architecture")
+            return _released_w
+        return int(w)
+
+    runs = [f for f in runs_all if _width(f) == _released_w]
+    runs_offwidth = [f for f in runs_all if _width(f) != _released_w]
+    assert runs, "no runs at the released architecture width"
     put("n_runs", len(runs), "results/step5_arm*.json")
+    put("n_runs_offwidth", len(runs_offwidth), "results/step5_arm*.json")
+    put("released_width", _released_w, "the reference architecture_config")
     put("n_entries", len(subprocess.run(
         ["grep", "-c", "^### [A-Z]-", "FINDINGS_LEDGER.md"],
         capture_output=True, text=True).stdout.strip() or "0") and int(subprocess.run(
@@ -811,10 +841,18 @@ def main():
     # those inflates the total about 15-fold.)
     import glob as _glob
     _runs = []
+    _runs_m49 = []
     for _f in sorted(_glob.glob("results/step5_*.json")):
         _d = json.load(open(_f))
         if _d.get("wall_clock_s"):
-            _runs.append((_d["hyperparameters"]["iterations"], _d["wall_clock_s"]))
+            _rec = (_d["hyperparameters"]["iterations"], _d["wall_clock_s"])
+            _runs.append(_rec)
+            # The CPU budget DOES include these -- they are hours this project
+            # spent -- but appendix B says how many of them are the capacity-
+            # matched arm rather than the main experiment, so the budget and the
+            # experiment are not confused for each other.
+            if _d["hyperparameters"].get("rnn_hidden_size", _released_w) != _released_w:
+                _runs_m49.append(_rec)
     _t = sum(w for _, w in _runs)
     _t10 = sum(w for i, w in _runs if i == 10000)
     put("rt_runs", len(_runs), "results/step5_*.json")
@@ -828,6 +866,8 @@ def main():
     put("rt_hours_10k", f"{_t10/3600:.1f}", "results/step5_*.json")
     put("rt_hours_short", f"{(_t-_t10)/3600:.1f}", "results/step5_*.json")
     put("rt_runs_short", sum(1 for i, _ in _runs if i != 10000), "results/step5_*.json")
+    put("rt_runs_m49", len(_runs_m49), "results/step5_*.json")
+    put("rt_hours_m49", f"{sum(w for _, w in _runs_m49) / 3600:.1f}", "results/step5_*.json")
 
     # B8. Three measured quantities that were TYPED in prose, found by classifying
     # every numeral the template carries rather than by reading (see
@@ -1258,6 +1298,11 @@ def main():
     for _f in sorted(_g.glob("results/step5_arm*.json")):
         if "_10k" in _f:
             continue
+        # Released architecture only. §6.3 reports one collapse rate and calls it
+        # nearly identical across runs; a run at another width is a different
+        # experiment and belongs to §6.10, not here.
+        if _width(_f) != _released_w:
+            continue
         _d = json.load(open(_f))
         _sl = _d.get("collapse_fit", {}).get("slope_per_iter")
         if _sl is None:
@@ -1268,7 +1313,8 @@ def main():
     put("e2_mse_sd", f"{_st.stdev(_mse):.1e}", "results/step5_arm*.json")
     put("e2_nll_runs", len(_nll_s), "results/step5_arm*.json")
     put("e2_fitted_runs", len(_mse) + len(_nll_s), "results/step5_arm*.json")
-    _all = len([f for f in _g.glob("results/step5_arm*.json")])
+    _all = len([f for f in _g.glob("results/step5_arm*.json")
+                if _width(f) == _released_w])
     put("e2_excluded_10k", _all - (len(_mse) + len(_nll_s)), "results/step5_arm*.json")
     put("e2_nll_rate", f"{_st.mean(_nll_s):+.4e}", "results/step5_arm*.json")
 

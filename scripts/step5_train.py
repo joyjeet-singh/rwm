@@ -289,6 +289,21 @@ def main():
     out = {"run": run, "arm": args.arm, "seed": args.seed,
            "teacher_forcing": teacher_forcing,
            "hyperparameters": {"ensemble": args.ensemble, "batch": args.batch,
+                               # M-49. A run artifact that does not record the
+                               # architecture it trained cannot be told apart from
+                               # one at a different width, and paper_numbers.py
+                               # selects the sigma-collapse family and the run
+                               # table by GLOB over results/step5_arm*.json. The
+                               # first five capacity-matched runs walked straight
+                               # into a headline statistic -- §6.3 claims the
+                               # collapse rate is "nearly identical" across runs,
+                               # which is a claim about one architecture -- and
+                               # nothing could have noticed, because the width was
+                               # nowhere in the file.
+                               "rnn_hidden_size":
+                                   cfg["architecture_config"]["rnn_hidden_size"],
+                               "rnn_num_layers":
+                                   cfg["architecture_config"]["rnn_num_layers"],
                                "iterations": args.iters,
                                "learning_rate": cfg["learning_rate"],
                                "weight_decay": cfg["weight_decay"],

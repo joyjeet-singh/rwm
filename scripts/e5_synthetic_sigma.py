@@ -51,6 +51,7 @@ import torch.nn as nn  # noqa: E402
 import rwm_data as R  # noqa: E402
 import rwm_model as MDL  # noqa: E402
 
+SIGMA_SPAN = 25.0        # the factor true sigma spans across x in [-1, 1]
 N_TRAIN = 4000
 N_TEST = 2000
 ITERS = 12000            # see the note in evaluate(): 3,000 leaves the head
@@ -73,7 +74,7 @@ def truth(x):
     magnitude whatever constant it picks.
     """
     mu = np.sin(3.0 * x) + 0.3 * x
-    sigma = 0.02 * np.exp(1.6094379 * (x + 1.0))        # exp(log 5) per unit
+    sigma = 0.02 * SIGMA_SPAN ** ((x + 1.0) / 2.0)
     return mu, sigma
 
 
@@ -190,7 +191,24 @@ def dilution_study():
     sl_null = np.array([n["slope_log_sigma"] for n in nulls])
     ratio_null = np.array([n["ratio_median"] for n in nulls])
     r_thresh = float(np.percentile(np.abs(r_null), 95))
-    s_thresh = float(np.percentile(np.abs(sl_null), 95))
+    # THE THRESHOLD NEEDS A FLOOR, and here is why.
+    #
+    # Under the permutation null the head learns a sigma with NO input dependence
+    # at all: the measured spread is 1.0004x across the input range and the fitted
+    # slopes are order 1e-5, which is floating-point noise rather than sampling
+    # variability. A 95th percentile of that is ~2e-5, and a threshold of 2e-5
+    # "detects" any slope whatsoever -- the dilution-0 arm, which is pure null,
+    # crossed it a third of the time. A threshold a coin flip can clear is not a
+    # threshold.
+    #
+    # So the floor is set by what a slope MEANS rather than by the noise around
+    # zero. A slope s makes the recovered sigma span (true span)^s across the
+    # input range; the floor is the slope at which that span reaches 1.01x -- a
+    # one-percent variation, which is the smallest input dependence anyone would
+    # call input dependence at all, and about 150x the null's numerical noise.
+    _span_floor = 1.01
+    s_floor = float(np.log(_span_floor) / np.log(SIGMA_SPAN))
+    s_thresh = float(max(np.percentile(np.abs(sl_null), 95), s_floor))
     rec["null"] = {
         "r_mean": float(r_null.mean()), "r_sd": float(r_null.std(ddof=1)),
         "r_abs_p95": r_thresh,
@@ -223,6 +241,13 @@ def dilution_study():
     detected = [l["dilution"] for l in ladder if l["detection_rate"] >= 0.8]
     rec["mde"] = {
         "slope_threshold": s_thresh,
+        "slope_threshold_from": ("the null's 95th percentile" if
+                                 np.percentile(np.abs(sl_null), 95) > s_floor
+                                 else f"the {_span_floor}x-span floor; the null's own "
+                                      f"95th percentile is "
+                                      f"{np.percentile(np.abs(sl_null), 95):.2g}, which is "
+                                      f"numerical noise and would fire on anything"),
+        "slope_floor": s_floor,
         "r_threshold": r_thresh,
         "smallest_dilution_detected_80pct": min(detected) if detected else None,
         "collapse_ratio_threshold": 0.1,
@@ -257,8 +282,8 @@ def experiment():
     TH = D["mde"]
     print("E5 — SYNTHETIC SIGMA RECOVERY, AGAINST GROUND TRUTH")
     print("=" * 88)
-    print(f"  true sigma spans {0.02:.3f} to {0.02 * 5 ** 2:.3f} across x in [-1, 1] "
-          f"(a factor of {5 ** 2})")
+    print(f"  true sigma spans {0.02:.3f} to {0.02 * SIGMA_SPAN:.3f} across x in "
+          f"[-1, 1] (a factor of {SIGMA_SPAN:.0f})")
     print(f"  rule M-50, thresholds from results/e5_sigma_dilution.json:")
     print(f"    |r| indistinguishable from zero below {TH['r_threshold']:.4f}")
     print(f"    collapse if median sigma_hat / sigma_true < {TH['collapse_ratio_threshold']}")
@@ -266,7 +291,7 @@ def experiment():
 
     out = {"config": {"n_train": N_TRAIN, "n_test": N_TEST, "iters": ITERS,
                       "seeds": list(SEEDS), "batch": BATCH,
-                      "true_sigma_span_factor": 25.0,
+                      "true_sigma_span_factor": SIGMA_SPAN,
                       "head": "src/rwm_model.py MLPStateHead, unmodified",
                       "bound_loss": "applied at its configured weight, as in the "
                                     "released training path"},
@@ -322,5 +347,58 @@ def experiment():
     return 0
 
 
+def reaggregate():
+    """Recompute the thresholds from the runs already trained.
+
+    Legitimate, and worth saying why. The expensive part is the calibration data
+    -- eight null runs and fifteen ladder runs -- and it is unchanged. What
+    changes is the DECISION RULE derived from it, and a decision rule may be
+    designed on calibration data provided it is fixed before the data it will
+    judge exists. No arm of the experiment has been trained when this runs.
+    """
+    path = os.path.join(R.RESULTS, "e5_sigma_dilution.json")
+    rec = json.load(open(path))
+    sl_null = np.array([r["slope_log_sigma"] for r in rec["null"]["runs"]])
+    ratio_null = np.array([r["ratio_median"] for r in rec["null"]["runs"]])
+    s_floor = float(np.log(1.01) / np.log(SIGMA_SPAN))
+    p95 = float(np.percentile(np.abs(sl_null), 95))
+    s_thresh = float(max(p95, s_floor))
+    for l in rec["ladder"]:
+        l["detection_rate"] = float(np.mean([abs(v) > s_thresh for v in l["slope"]]))
+    det = [l["dilution"] for l in rec["ladder"] if l["detection_rate"] >= 0.8]
+    rec["null"]["slope_abs_p95"] = p95
+    rec["mde"].update({
+        "slope_threshold": s_thresh,
+        "slope_floor": s_floor,
+        "slope_threshold_from": ("the null's 95th percentile" if p95 > s_floor else
+                                 f"the 1.01x-span floor; the null's own 95th percentile "
+                                 f"is {p95:.2g}, which is numerical noise and would fire "
+                                 f"on anything"),
+        "smallest_dilution_detected_80pct": min(det) if det else None,
+        "false_positive_rate_at_dilution_0": next(
+            (1 - 0 if False else l["detection_rate"]) for l in rec["ladder"]
+            if l["dilution"] == 0.0),
+    })
+    json.dump(rec, open(path, "w"), indent=2)
+    print("E5 — DILUTION THRESHOLDS, RE-DERIVED (no retraining)")
+    print("=" * 88)
+    print(f"  null |slope| 95th percentile : {p95:.3g}  (numerical noise: the null's")
+    print(f"                                 sigma spans {max(r['sigma_hat_spread_factor'] for r in rec['null']['runs']):.4f}x)")
+    print(f"  1.01x-span floor             : {s_floor:.5f}")
+    print(f"  threshold in force           : {s_thresh:.5f}  <- {rec['mde']['slope_threshold_from'][:40]}")
+    for l in rec["ladder"]:
+        print(f"    dilution {l['dilution']:.2f}: slopes "
+              f"{[round(v, 5) for v in l['slope']]}  detected {l['detection_rate']:.0%}")
+    print(f"  false positives at dilution 0: {rec['mde']['false_positive_rate_at_dilution_0']:.0%}")
+    print(f"  smallest dilution detected 80%: {rec['mde']['smallest_dilution_detected_80pct']}")
+    print(f"  null median ratio, minimum   : {ratio_null.min():.3f}")
+    print("  wrote results/e5_sigma_dilution.json")
+    return 0
+
+
 if __name__ == "__main__":
-    sys.exit(dilution_study() if "--dilution" in sys.argv else experiment())
+    if "--dilution" in sys.argv:
+        sys.exit(dilution_study())
+    if "--reaggregate" in sys.argv:
+        sys.exit(reaggregate())
+    sys.exit(experiment())

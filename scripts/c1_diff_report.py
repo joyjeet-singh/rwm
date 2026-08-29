@@ -4,10 +4,20 @@ C1 diff report -- make the human review of UNREVIEWED claims tractable.
 WHY THIS AND NOT A BULK APPROVAL. `task_c1_claims_audit.py` drops a claim's
 verdict when its wording changes, so a stale verdict cannot be carried forward
 silently. A revision that rewrites prose therefore returns a pile of claims to
-UNREVIEWED -- correctly. `c1_review_revision.py` exists to record a review a
-person did, and its own docstring says running it after a prose change silently
-approves the new wording. It is not this script's job to run it, and it is not
-this script's job to replace the person.
+UNREVIEWED -- correctly.
+
+`c1_review_revision.py` used to sit beside this one, recording verdicts a person
+had reached. It has been DELETED. Its own docstring said that running it after a
+prose change silently approves the new wording, and the only control against that
+was a promise not to run it -- which is not a control, because the promise lives
+outside the thing it constrains. §8 asserts that a person read every claim; a
+script that can clear that gate makes the assertion unfalsifiable.
+
+What replaces it is docs/C1_REVIEW_CHECKLIST.md: one static file, one claim per
+row, cleared by a person reading and signing. If a machine-readable clearing
+mechanism is wanted later it must require per-claim input a script cannot
+synthesise -- a reviewer-supplied token per claim, timestamped, with the claim
+text hashed into it -- so that forging a verdict costs the same as reading.
 
 WHAT THIS DOES INSTEAD. For every UNREVIEWED claim it prints, side by side:
 
@@ -189,9 +199,9 @@ def main():
     print(f"    wording only           : {len(wording)}   "
           f"(same claim, different sentence — still yours to confirm)")
     print()
-    print("  This script sorts. It does not approve. c1_review_revision.py records")
-    print("  a review a person did, and running it after a prose change approves")
-    print("  the new wording silently — which is why neither is a pipeline stage.")
+    print("  This script sorts. It does not approve. The script that used to record")
+    print("  verdicts has been deleted: it could clear a gate the paper says a person")
+    print("  clears. docs/C1_REVIEW_CHECKLIST.md is what a person reads and signs.")
     print()
 
     for r in (needs if only_needs else needs + wording):

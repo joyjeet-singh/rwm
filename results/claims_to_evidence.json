@@ -2584,13 +2584,27 @@
       "evidence": [],
       "artifacts": [],
       "retracts": []
+    },
+    {
+      "id": "M-50",
+      "claim": "Pre-registered: is the sigma collapse driven by the objective, on data whose noise is kn",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/e5_sigma_dilution.json",
+        "src/rwm_model.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 19,
-    "M": 49,
+    "M": 50,
     "O": 14,
     "R": 70,
     "S": 19,

@@ -3045,19 +3045,19 @@
   },
   "e2_fitted_runs": {
     "source": "results/step5_arm*.json",
-    "value": 21
+    "value": 20
   },
   "e2_mse_rate": {
     "source": "results/step5_arm*.json",
-    "value": "-9.3806e-05"
+    "value": "-9.3857e-05"
   },
   "e2_mse_runs": {
     "source": "results/step5_arm*.json",
-    "value": 18
+    "value": 17
   },
   "e2_mse_sd": {
     "source": "results/step5_arm*.json",
-    "value": "6.2e-07"
+    "value": "6.0e-07"
   },
   "e2_nll_rate": {
     "source": "results/step5_arm*.json",
@@ -3469,7 +3469,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "334"
+    "value": "336"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3577,7 +3577,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 207
+    "value": 208
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -3665,7 +3665,11 @@
   },
   "n_runs": {
     "source": "results/step5_arm*.json",
-    "value": 27
+    "value": 26
+  },
+  "n_runs_offwidth": {
+    "source": "results/step5_arm*.json",
+    "value": 0
   },
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",
@@ -6419,6 +6423,10 @@
     "source": "results/task_b_permutation.json",
     "value": 20
   },
+  "released_width": {
+    "source": "the reference architecture_config",
+    "value": 256
+  },
   "reset_rows_first": {
     "source": "results/step0_regimes.json",
     "value": "999"
@@ -6441,15 +6449,19 @@
   },
   "rt_hours": {
     "source": "results/step5_*.json",
-    "value": "47.2"
+    "value": "46.3"
   },
   "rt_hours_10k": {
     "source": "results/step5_*.json",
     "value": "19.7"
   },
+  "rt_hours_m49": {
+    "source": "results/step5_*.json",
+    "value": "0.0"
+  },
   "rt_hours_short": {
     "source": "results/step5_*.json",
-    "value": "27.5"
+    "value": "26.6"
   },
   "rt_longest": {
     "source": "results/step5_*.json",
@@ -6457,23 +6469,27 @@
   },
   "rt_runs": {
     "source": "results/step5_*.json",
-    "value": 27
+    "value": 26
   },
   "rt_runs_10k": {
     "source": "results/step5_*.json",
     "value": 6
   },
+  "rt_runs_m49": {
+    "source": "results/step5_*.json",
+    "value": 0
+  },
   "rt_runs_short": {
     "source": "results/step5_*.json",
-    "value": 21
+    "value": 20
   },
   "run_table": {
     "source": "results/step5_arm*.json",
-    "value": "| Arm A | 2,500 | 1 | gaussian_nll | clean | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 1 | mse | clean | 6 | 0, 0, 1, 2, 3, 4 |\n| Arm A | 2,500 | 1 | mse | contaminated | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 1 | mse | duplicated | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 5 | mse | clean | 3 | 0, 1, 2 |\n| Arm A | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |\n| Arm B | 2,500 | 1 | mse | clean | 3 | 0, 1, 2 |\n| Arm B | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |"
+    "value": "| Arm A | 2,500 | 1 | gaussian_nll | clean | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 1 | mse | clean | 5 | 0, 1, 2, 3, 4 |\n| Arm A | 2,500 | 1 | mse | contaminated | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 1 | mse | duplicated | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 5 | mse | clean | 3 | 0, 1, 2 |\n| Arm A | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |\n| Arm B | 2,500 | 1 | mse | clean | 3 | 0, 1, 2 |\n| Arm B | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |"
   },
   "run_total": {
     "source": "results/step5_arm*.json",
-    "value": 27
+    "value": 26
   },
   "sig_armB_growth": {
     "source": "results/task2_sigma_profile.json",
@@ -6553,7 +6569,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 520
+    "value": 536
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -6829,11 +6845,11 @@
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 0
+    "value": 35
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 36
+    "value": 37
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
@@ -6841,7 +6857,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "6,821"
+    "value": "6,790"
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
@@ -6849,7 +6865,7 @@
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "100.00"
+    "value": "99.49"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
@@ -6881,7 +6897,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "6,821"
+    "value": "6,825"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",
