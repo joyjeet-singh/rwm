@@ -1,6 +1,6 @@
 {
   "n_rules": 10,
-  "n_with_lead_time": 9,
+  "n_with_lead_time": 10,
   "rules": [
     {
       "id": "M-16",
@@ -80,8 +80,8 @@
       "status": "PRE-REGISTERED, DISCHARGED",
       "verdict": "UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE",
       "rule_text": "- MECHANISM SURVIVES CAPACITY MATCHING \u2014 the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT \u2014 the matched \u2026",
-      "lead_hours": null,
-      "lead_source": null,
+      "lead_hours": 9.356666666666667,
+      "lead_source": "this appendix, from git",
       "tested_by": "results/m49_capacity_matched.json",
       "rule_commit": null,
       "commit_subject": null

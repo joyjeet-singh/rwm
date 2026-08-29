@@ -41,7 +41,7 @@ scored on the other, restores nominal coverage on every held-out cell; and the r
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
 nRMSE at h = 368 by 75%.
 
-Every **measurement** here is substituted from a named artifact; the 553 numerals that
+Every **measurement** here is substituted from a named artifact; the 557 numerals that
 are not are addresses, horizon labels or declared constants, classified one by one by a build that
 fails on anything else. 51 comparative claims across 21 kinds are recomputed each
 build against a corrupted expectation, so a check that can no longer fail is caught.
@@ -1755,13 +1755,13 @@ existed. This is the same computation Figure 4 plots.
 | `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |
 | `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |
 | `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |
-| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | not computed | results/m49_capacity_matched.json | UNDER-POWERED — favours the matched ensemble by less than the MDE |
+| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED — favours the matched ensemble by less than the MDE |
 | `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | — | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |
 | `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | — | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
 | `S-12` | "Task 3's duplication rule was pre-registered" | — | -2.9 h | control runs finished | RETRACTED |
 
-10 rules, 9 with a computed lead time, of which
-8 are positive and 1 negative. **The negative one is
+10 rules, 10 with a computed lead time, of which
+9 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.
