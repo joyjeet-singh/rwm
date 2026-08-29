@@ -109,3 +109,20 @@ STEP 5 MAIN RUN -- armA_seed0_m49h124
     2375    2.45147 8.016e-01   0.01652 5.628e-05    3.26960     7.335    0.801478   1516
     2400    2.09003 7.997e-01   0.01545 5.063e-05    2.90523     7.299    0.799628   1539
     2425    2.82746 7.979e-01   0.01617 5.215e-05    3.64154     6.992    0.797784   1560
+    2450    2.06807 7.960e-01   0.01208 5.002e-05    2.87621     6.179    0.795945   1581
+    2475    1.88284 7.942e-01   0.01241 4.368e-05    2.68947     5.177    0.794110   1604
+    2499    2.23431 7.924e-01   0.01482 4.669e-05    3.04160     7.963    0.792353   1621
+    [checkpoint 2500]  e@8 0.2918  e@368 1.4121  nRMSE@8 0.2417  nRMSE@368 2.0459
+
+----------------------------------------------------------------------------------
+  wall clock 0.45 h (0.650 s/iter)
+  final: state 2.2343e+00  bound 7.9243e-01  contact 1.4819e-02  termination 4.6692e-05
+  grad norm: mean 8.993  median 8.250  p99 23.270  max 56.382
+  spikes (>5x trailing 50-median): 0
+  collapse fit: d(log_delta)/d(iter) = -9.2943e-05 +- 3.03e-08   (lr 0.0001, rate/lr 0.93)
+    exp(log_delta): 0.999900 -> 0.792353
+    iterations implied to reach the checkpoint's -14.4629: 155,611
+  state-loss slope over the final 250 iterations: -1.079e-03 per iter  (still falling)
+
+  wrote results/step5_armA_seed0_m49h124.json
+  weights in runs/armA_seed0_m49h124 (gitignored)

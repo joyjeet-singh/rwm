@@ -141,7 +141,16 @@ def main():
             ("E3 §5.4 restated", "signature of regularisation", tpl, "template"),
             ("E4 author contact recorded", "wrote to the first author", tpl, "template"),
             ("E5 §6 assumptions enumerated", "if violated", tpl, "template"),
-            ("E6 archived before submission", "archived by Software Heritage", tpl, "template"),
+            # The paper no longer names the archive or the date in the body: both
+            # resolve to a named repository, and a date is a one-field lookup away
+            # from an origin (docs/DOUBLE_BLIND_DECISION.md). What E6 needs to
+            # confirm is that the ARCHIVAL FACT is still stated and still bounded
+            # correctly, which it is -- so the criterion tracks the sentence that
+            # makes the claim rather than the one that named the archive.
+            ("E6 archived before submission",
+             # norm() collapses whitespace, so the needle must be single-spaced --
+             # the phrase is line-wrapped in the template.
+             "archived by a third-party archive before submission", tpl, "template"),
             ("E7 excluded artifact named", "step4_5_timing.json", tpl, "template")):
         chk(item, needle in where, f"found in {src}" if needle in where else f"absent from {src}")
 
