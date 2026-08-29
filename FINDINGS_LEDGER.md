@@ -5821,6 +5821,56 @@ sabotage: disabling one stage makes it exit 1 naming the artifact and its key co
 **Evidence** `SRC` `results/pipeline_coverage.json`
 **Status** ACTIVE · **Relevance** METHOD
 
+### D-25 — Every appendix reference in the compiled PDF pointed at the wrong appendix · **NEW**
+**What happened.** Appendices H and I were inserted before G, E and F, so the source ran
+**A, B, C, D, H, I, G, E, F**. LaTeX auto-letters appendices in the order they appear and discards
+the hand-written label, so the PDF lettered them A–I in document order and the body's references
+no longer matched:
+
+| the body says | the PDF's appendix of that letter actually is |
+|---|---|
+| "Appendix H gives the arithmetic" (§7.5) | *What testing the untested claims would require* |
+| "Appendix E prices both" (§4) | *The variance-state arithmetic behind §7.5* |
+| "Appendix F gives the full table" (×3) | *The two nRMSE aggregations* |
+| "Appendix I gives both forms" (§3.1) | *Every claim of the originals* |
+
+**E↔H and F↔I were cleanly swapped pairs**, so nothing dangled, nothing errored, and every gate
+passed. A reader following any of eight references landed in a real, plausible-looking appendix on
+the wrong subject. Only reading the compiled PDF finds this; the Markdown looks correct, because in
+Markdown the letter is just text.
+
+**Fixed** by ordering the source to match the letters, and `part_f_gate` check 5b now asserts that
+the appendix letters run A, B, C… in document order. A separate reference was simply wrong —
+§2 said "Appendix H demonstrates it against known noise" and no appendix does; that material is in
+§6.3's body.
+
+**Evidence** `SRC` `PAPER.pdf`, `scripts/part_f_gate.py`
+**Status** ACTIVE
+
+### D-26 — Six references were cited in §2 and appeared in no reference entry · **NEW**
+The §2 bibliography was a **hand-typed list** in the template. The six entries added in the
+revision-3 pass — Malik 2019, Lee 2015, Fort 2019, Wen 2020, Havasi 2021, Seitzer 2022 — were
+added to the verification artifact, verified against the live arXiv API, cited in §2's prose, and
+never added to the list. Four of the six carried only a venue in prose, so a reader could not
+resolve them at all.
+
+**And the note under the list said so.** It read "16 of 16 entries and 17 of 17 attributed
+fragments verified" beneath a list of ten. The artifact recorded `n_references_after: 18`. Nothing
+compared the artifact's count against the rendered list.
+
+**Fixed** by generating the list from `results/t1_bibliography_verified.json`. A hand-maintained
+list of what a paper cites is the same defect class as a hand-typed count, and it failed the same
+way: silently, in the direction that flatters.
+
+**Two related false statements, also fixed.** §2 claimed "§6.8 says what is new relative to it
+rather than leaving a reader to work it out" — §6.8 contained no citation of any kind. And §2's
+"§6.4's mechanism is known, and we say so" was true only of §2: §6.4 cited one paper and presented
+the mechanism as its own, with the concession five hundred lines earlier. Both sections now carry
+the positioning §2 promised they carried.
+
+**Evidence** `SRC` `results/t1_bibliography_verified.json`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

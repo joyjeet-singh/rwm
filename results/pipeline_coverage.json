@@ -1,6 +1,6 @@
 {
   "n_artifacts": 52,
-  "n_paper_keys": 1728,
+  "n_paper_keys": 1731,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -369,6 +369,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "t1_bibliography_verified.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "t1_bibliography"
+      ],
+      "invoked_writers": [
+        "t1_bibliography"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task_c2_data_budget.json",
       "n_paper_keys": 8,
       "writers": [
@@ -469,18 +481,6 @@
       ],
       "invoked_writers": [
         "r2_independent_ensemble"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "t1_bibliography_verified.json",
-      "n_paper_keys": 6,
-      "writers": [
-        "t1_bibliography"
-      ],
-      "invoked_writers": [
-        "t1_bibliography"
       ],
       "covered": true,
       "exempt_reason": null

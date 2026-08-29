@@ -29,7 +29,7 @@
 
 
 \begin{abstract}
-We rebuild the proprioceptive dynamics model of the \emph{Robotic World Model} (arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU, checked against the released reference at gradient level. \textbf{The base paper's central training claim reproduces, and the advantage grows with horizon.} Under a rule committed to git before the runs, autoregressive training beats teacher forcing on held-out episodes by 4.61$\times$ on the reference's own relative-L1 error at h = 368, the horizon the rule names, rising to it from 2.58$\times$ at h = 100, where the method deploys. \textbf{Neither uncertainty output is usable as an interval, and that is not accumulated rollout error.} One step ahead, where nothing has accumulated, the disagreement the method penalises rewards with is already 8.3$\times$ smaller than realised error: 16.22\% of outcomes fall inside $\pm$1$\sigma$ where 68.27\% is calibrated, deteriorating to 33.4$\times$ at h = 100. The $\sigma$ the method computes and discards is worse still. We derive why --- the implemented objective's optimum is $\sigma$ = 0 --- and demonstrate it on data whose noise is known and varies 25$\times$: $\sigma$ lands 22$\times$ low and tracks it not at all. \textbf{As a ranking it is far better, with three limits.} Holding rollout and forecast depth constant it correlates +0.419 with realised error, and beats the forecast step index at every horizon. But a free baseline, the model's own predicted step size, comes close enough that this sample cannot separate them; the evidence is in-sample for a checkpoint trained on all ten episodes; and a pre-registered replication on models we trained returns DOES NOT GENERALISE. \textbf{Two defects are repairable.} A per-horizon multiplier, fitted on one held-out episode and scored on the other, restores nominal coverage on every held-out cell; and the released evaluation pairs each state with the previous step's action, overstating the checkpoint's own nRMSE at h = 368 by 75\%. Every \textbf{measurement} here is substituted from a named artifact; the 567 numerals that are not are addresses, horizon labels or declared constants, classified one by one by a build that fails on anything else. 51 comparative claims across 21 kinds are recomputed each build against a corrupted expectation, so a check that can no longer fail is caught.
+We rebuild the proprioceptive dynamics model of the \emph{Robotic World Model} (arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU, checked against the released reference at gradient level. \textbf{The base paper's central training claim reproduces, and the advantage grows with horizon.} Under a rule committed to git before the runs, autoregressive training beats teacher forcing on held-out episodes by 4.61$\times$ on the reference's own relative-L1 error at h = 368, the horizon the rule names, rising to it from 2.58$\times$ at h = 100, where the method deploys. \textbf{Neither uncertainty output is usable as an interval, and that is not accumulated rollout error.} One step ahead, where nothing has accumulated, the disagreement the method penalises rewards with is already 8.3$\times$ smaller than realised error: 16.22\% of outcomes fall inside $\pm$1$\sigma$ where 68.27\% is calibrated, deteriorating to 33.4$\times$ at h = 100. The $\sigma$ the method computes and discards is worse still. We derive why --- the implemented objective's optimum is $\sigma$ = 0 --- and demonstrate it on data whose noise is known and varies 25$\times$: $\sigma$ lands 22$\times$ low and tracks it not at all. \textbf{As a ranking it is far better, with three limits.} Holding rollout and forecast depth constant it correlates +0.419 with realised error, and beats the forecast step index at every horizon. But a free baseline, the model's own predicted step size, comes close enough that this sample cannot separate them; the evidence is in-sample for a checkpoint trained on all ten episodes; and a pre-registered replication on models we trained returns DOES NOT GENERALISE. \textbf{Two defects are repairable.} A per-horizon multiplier, fitted on one held-out episode and scored on the other, restores nominal coverage on every held-out cell; and the released evaluation pairs each state with the previous step's action, overstating the checkpoint's own nRMSE at h = 368 by 75\%. Every \textbf{measurement} here is substituted from a named artifact; the 577 numerals that are not are addresses, horizon labels or declared constants, classified one by one by a build that fails on anything else. 51 comparative claims across 21 kinds are recomputed each build against a corrupted expectation, so a check that can no longer fail is caught.
 \end{abstract}
 
 \section{Introduction}
@@ -44,7 +44,7 @@ This is a reproduction paper, and we mean the term in its stronger sense: the co
 
 \textbf{Decision rules were committed before the data.} The verdicts below were fixed in advance, in git, with timestamps a reader can check (\S{}8, Figure 4). One of them returned "cannot be settled" and we report that too.
 
-\textbf{We retract our own findings when they fail.} 12 claims of ours are withdrawn on this project's own evidence and kept in the record; \S{}8 and Appendix D give them in full.
+\textbf{We retract our own findings when they fail}, on this project's own evidence, and keep them in the record rather than deleting them; \S{}8 and Appendix D give them in full. The count is in the contributions below, once.
 
 \textbf{Contributions.}
 
@@ -94,7 +94,7 @@ What is \textbf{not} inherited is the objective. PETS uses "the negative log pre
 
 \textbf{\S{}6.4's mechanism is known, and we say so.} That heads sharing a trunk under-report disagreement relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell, Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be engineered rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what independent initialisation buys is decorrelation that subspace methods do not match; and BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and MIMO (Havasi, Jenatton, Fort, Liu, Snoek, Lakshminarayanan, Dai and Tran, ICLR 2021) share deliberately and state what they trade away. \S{}6.4 is not the discovery of that effect. \textbf{What is ours is finding it in a released robotics checkpoint that its authors deployed on hardware, with the sharing quantified at 89.15\% of each member and the cost measured at 2.03$\times$ (\S{}6.10).} The problem is not sharing; it is sharing and then reading the spread as though the members were independent.
 
-\textbf{And the objective in \S{}6.3 has a neighbour.} Seitzer, Tavakoli, Antic and Martius (ICLR 2022) identify failure modes of heteroscedastic $\sigma$ heads trained by maximising log-likelihood. The released model's state loss is not a log-likelihood at all --- a \emph{sample} enters a squared error --- so the failure \S{}6.3 derives is more basic than the ones they characterise, and it does not depend on the optimiser. \S{}6.3 gives the derivation and Appendix H demonstrates it against known noise.
+\textbf{And the objective in \S{}6.3 has a neighbour.} Seitzer, Tavakoli, Antic and Martius (ICLR 2022) identify failure modes of heteroscedastic $\sigma$ heads trained by maximising log-likelihood. The released model's state loss is not a log-likelihood at all --- a \emph{sample} enters a squared error --- so the failure \S{}6.3 derives is more basic than the ones they characterise, and it does not depend on the optimiser. \S{}6.3 gives the derivation and demonstrates it against known noise.
 
 \emph{Every entry above was checked against the paper itself --- title, full author list, venue and year from the arXiv record, and for any sentence we attribute, the sentence matched verbatim against the paper's own text. 16 of 16 entries verified, 17 of 17 attributed fragments verbatim (\texttt{results/t1\_bibliography\_verified.json}). No entry was added that was not verified.}
 
@@ -403,6 +403,8 @@ Under the corrected objective the sign flips (Figure 3b) --- which is the strong
 
 \S{}6.3 explains the aleatoric column and says of the epistemic one that the mechanism is not established. This subsection supplies a candidate, structurally symmetric to \S{}6.3's, from source and from the checkpoint's own tensors. Nothing here is trained and nothing is inferred from a measurement.
 
+\textbf{The effect is known and we are not claiming it.} That heads sharing a trunk under-report disagreement relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell, Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be engineered rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what independent initialisation buys is decorrelation which subspace methods do not match; and BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and MIMO (Havasi et al., ICLR 2021) share deliberately and state what they trade away for it. \textbf{What is ours is finding it in a released robotics checkpoint that its authors deployed on hardware, with the sharing quantified and the cost measured} --- 89.15\% of each member, and 2.03$\times$ on the overconfidence factor (\S{}6.10). The problem is not sharing. It is sharing and then reading the spread as though the members were independent.
+
 \textbf{The released five-member ensemble is not five models.} \texttt{system\_dynamics.py:34} builds \textbf{one} \texttt{state\_base}. \texttt{system\_dynamics.py:35-41} replicates the \emph{heads} \texttt{ensemble\_size} times, and only the heads. In the forward pass \texttt{system\_dynamics.py:87} evaluates the trunk \textbf{once} and \texttt{:90} hands the identical feature vector to every head; \texttt{system\_dynamics.py:126} then computes the epistemic term as the standard deviation across those heads.
 
 The parameter counts make the scale of the sharing concrete. The state pathway is a 636,672-parameter two-layer GRU trunk plus five heads of 77,492 parameters each. Per member, 636,672 of 714,164 parameters --- \textbf{89.15\%} --- are numerically identical to every other member's. Only 10.85\% differ. Across the whole released object, the two shared trunks are 63.81\% of 1,995,569 parameters.
@@ -580,6 +582,8 @@ forecast step index \emph{(the existing adversary)} & +0.2686 & +0.3368 & +0.595
 
 \subsection{One constant scalar does not fix it, but a per-horizon one does}
 
+\textbf{Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this section is an instance of it rather than a departure from it.} Kuleshov, Fenner and Ermon (ICML 2018) give the post-hoc calibration map; Malik, Kuleshov, Song, Nemer, Seymour and Ermon (ICML 2019) apply that idea to model-based RL specifically and argue there that good uncertainties must be calibrated rather than merely well ranked --- which is the distinction this paper draws throughout \S{}6.2 and \S{}6.7. \textbf{What is new here is the conditioning variable and one negative result.} The variable is the \emph{forecast horizon}, and the negative result is that a single global multiplier \textbf{fails} where a per-horizon one works. That is not a detail: an open-loop rollout's error accumulates with depth while its predicted $\sigma$ does not (\S{}6.9), so a horizon-blind recalibration cannot follow the thing it is trying to correct. This section is the measurement showing it does not.
+
 If $\sigma$ had the right shape and the wrong scale, a single multiplier would repair it, and the finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on \textbf{one} held-out episode and evaluated on the \textbf{other}, in both directions, so it is never fitted on its own test set.
 
 Fitting at one step works at one step and nowhere else. On the epistemic term --- the quantity the method uses --- a scalar of 5.08--5.82 brings h=1 coverage to 63--74\%, essentially calibrated against the 68.27\% target, and leaves h=368 at 17--21\%. On the aleatoric term a scalar of 593--611 gives 64--70\% at h=1 and 11--15\% at h=368. Fitting over the whole rollout instead drives one-step coverage to 100\% --- an interval wide enough to be vacuous where the model is accurate --- while still falling short at the far end.
@@ -692,7 +696,7 @@ In rollout, across 32 cells (two arenas $\times$ two trajectory lengths $\times$
 
 \section{Method}
 
-\textbf{An append-only ledger.} Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (226 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+\textbf{An append-only ledger.} Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (228 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 \textbf{Pre-registration, and one failure of it.} Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for 8 of them and Appendix G for all 11; 7 of Figure 4's are positive and 1 is not. Every positive bar is a difference of two commit timestamps. \textbf{The negative one is not, and the difference matters}: it is the duplication-control rule (\S{}7.4), whose \emph{data} side is the moment the control runs finished, and that is a line in \texttt{results/control\_driver.log} rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line --- which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git \textbf{2.9 hours after they finished}, and we found it only by auditing our own \texttt{git log}. The measurement stands --- the arm was built without reference to its outcome --- but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -700,7 +704,7 @@ In rollout, across 32 cells (two arenas $\times$ two trajectory lengths $\times$
 
 \textbf{A statistic that was resampling the wrong unit.} Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42$\times$ and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
-\textbf{Reproducibility, and a build that checks its own prose.} \texttt{./reproduce.sh --quick --force} regenerates 37 artifact files and 6,825 numeric values from a clean clone, 6,790 of them bitwise identical (99.49\%), 35 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it --- six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies \textbf{51 comparative claims} across 21 kinds, each pinning a fragment of the paper's own text \emph{and} a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. \textbf{Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.}
+\textbf{Reproducibility, and a build that checks its own prose.} \texttt{./reproduce.sh --quick --force} regenerates 37 artifact files and 6,825 numeric values from a clean clone, 6,790 of them bitwise identical (99.49\%), 35 differing. \textbf{What "every numeral" means is itself checked.} A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every \emph{measurement} is substituted, and each of the 577 numerals that is not one is classified as an address, a horizon label or a declared constant --- 18 classes and 23 declared exceptions, with the build failing on anything left over (\texttt{results/typed\_numerals.json}). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it --- six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies \textbf{51 comparative claims} across 21 kinds, each pinning a fragment of the paper's own text \emph{and} a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. \textbf{Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.}
 
 
 \section{Actionable lessons}
@@ -784,19 +788,25 @@ What that archive establishes should be stated precisely, because it is easy to 
 \begin{enumerate}
 \item C. Li, A. Krause, M. Hutter. \emph{Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics.} arXiv:2501.10100\textbf{v1}, 17 January 2025. \emph{Read at v1, whose Roman-numeral sectioning our references follow; v2 (23 April 2025) renumbered to Arabic and moved IV-C into Appendix A.4.1.}
 \item C. Li, A. Krause, M. Hutter. \emph{Uncertainty-Aware Robotic World Model Makes Offline Model-Based Reinforcement Learning Work on Real Robots.} arXiv:2504.16680\textbf{v1}, 23 April 2025. \emph{Read at v1; now at v3, last revised 8 Jan 2026. \S{}5.1 and Eq. 4--5 keep their numbers there; every figure and appendix table has moved, and the model is renamed RWM-O to RWM-U --- the same model, with the letter re-expanded from "Offline Robotic World Model" to "Uncertainty-Aware Robotic World Model". The two names never co-occur: v1 uses RWM-O 39 times and no RWM-U, v3 the reverse. The crosswalk is in \texttt{results/original\_paper\_figures.json}.}
-\item Z. Abbas, S. Sokota, E. J. Talvitie, M. White. \emph{Selective Dyna-style Planning Under Limited Model Capacity.} ICML 2020. arXiv:2007.02418.
-\item K. Chua, R. Calandra, R. McAllister, S. Levine. \emph{Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.} NeurIPS 2018. arXiv:1805.12114.
-\item C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. \emph{On Calibration of Modern Neural Networks.} ICML 2017. arXiv:1706.04599.
-\item M. Janner, J. Fu, M. Zhang, S. Levine. \emph{When to Trust Your Model: Model-Based Policy Optimization.} NeurIPS 2019. arXiv:1906.08253.
-\item R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. \emph{MOReL : Model-Based Offline Reinforcement Learning.} NeurIPS 2020. arXiv:2005.05951.
-\item V. Kuleshov, N. Fenner, S. Ermon. \emph{Accurate Uncertainties for Deep Learning Using Calibrated Regression.} ICML 2018. arXiv:1807.00263.
-\item B. Lakshminarayanan, A. Pritzel, C. Blundell. \emph{Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.} NeurIPS 2017. arXiv:1612.01474.
-\item C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. \emph{Revisiting Design Choices in Offline Model-Based Reinforcement Learning.} ICLR 2022 (Spotlight). arXiv:2110.04135.
-\item Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. \emph{Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.} NeurIPS 2019. arXiv:1906.02530.
-\item T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. \emph{MOPO: Model-based Offline Policy Optimization.} NeurIPS 2020. arXiv:2005.13239.
+\item Z. Abbas, S. Sokota, E. J. Talvitie, M. White. \emph{Selective Dyna-style Planning Under Limited Model Capacity.} ICML 2020. arXiv:2007.02418, 2020.
+\item K. Chua, R. Calandra, R. McAllister, S. Levine. \emph{Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.} NeurIPS 2018. arXiv:1805.12114, 2018.
+\item S. Fort, H. Hu, B. Lakshminarayanan. \emph{Deep Ensembles: A Loss Landscape Perspective.} arXiv:1912.02757, 2019.
+\item C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. \emph{On Calibration of Modern Neural Networks.} ICML 2017. arXiv:1706.04599, 2017.
+\item M. Havasi, R. Jenatton, S. Fort, J. Z. Liu, J. Snoek, B. Lakshminarayanan, A. M. Dai, D. Tran. \emph{Training independent subnetworks for robust prediction.} ICLR 2021. arXiv:2010.06610, 2021.
+\item M. Janner, J. Fu, M. Zhang, S. Levine. \emph{When to Trust Your Model: Model-Based Policy Optimization.} NeurIPS 2019. arXiv:1906.08253, 2019.
+\item R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. \emph{MOReL : Model-Based Offline Reinforcement Learning.} NeurIPS 2020. arXiv:2005.05951, 2020.
+\item V. Kuleshov, N. Fenner, S. Ermon. \emph{Accurate Uncertainties for Deep Learning Using Calibrated Regression.} ICML 2018. arXiv:1807.00263, 2018.
+\item B. Lakshminarayanan, A. Pritzel, C. Blundell. \emph{Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.} NeurIPS 2017. arXiv:1612.01474, 2017.
+\item S. Lee, S. Purushwalkam, M. Cogswell, D. Crandall, D. Batra. \emph{Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks.} arXiv:1511.06314, 2015.
+\item C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. \emph{Revisiting Design Choices in Offline Model-Based Reinforcement Learning.} ICLR 2022 (Spotlight). arXiv:2110.04135, 2022.
+\item A. Malik, V. Kuleshov, J. Song, D. Nemer, H. Seymour, S. Ermon. \emph{Calibrated Model-Based Deep Reinforcement Learning.} ICML 2019 (PMLR 97:4314-4323). arXiv:1906.08312, 2019.
+\item Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. \emph{Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.} NeurIPS 2019. arXiv:1906.02530, 2019.
+\item M. Seitzer, A. Tavakoli, D. Antic, G. Martius. \emph{On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks.} ICLR 2022. arXiv:2203.09168, 2022.
+\item Y. Wen, D. Tran, J. Ba. \emph{BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning.} ICLR 2020. arXiv:2002.06715, 2020.
+\item T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. \emph{MOPO: Model-based Offline Policy Optimization.} NeurIPS 2020. arXiv:2005.13239, 2020.
 \end{enumerate}
 
-\emph{Entries 3--12 are the \S{}2 bibliography. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text --- 16 of 16 entries and 17 of 17 attributed fragments (\texttt{results/t1\_bibliography\_verified.json}).}
+\emph{Entries 3--18 are the \S{}2 bibliography, generated from \texttt{results/t1\_bibliography\_verified.json} rather than listed here --- a hand-maintained list of what a paper cites drifts exactly as a hand-typed count does, and this one had: six entries cited in \S{}2's prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text --- 16 of 16 entries and 17 of 17 attributed fragments (\texttt{results/t1\_bibliography\_verified.json}).}
 
 \appendix
 \section{Verification chain}
@@ -926,102 +936,6 @@ Corruptions now invert relative to each claim's own expectation, every registere
 
 \textbf{One further class, excluded by the same mechanism and worth naming because it sounds like an excuse.} 11 keys in \texttt{paper\_numbers.json} are sourced from \texttt{verify\_reproduction.json} --- that is, they are this paper's statements \emph{about this very comparison}: how many files it regenerated, how many values matched, how many differed. A clean clone necessarily carries in the \textbf{previous} run's figures and is then compared against a tree holding the \textbf{current} run's, so they cannot agree: writing a result into the tree changes the thing the next run measures. There is no fixed point to converge to, and treating it as a reproducibility failure would make the reported figure oscillate rather than settle. They are dropped by provenance like the others and counted in the output rather than hidden --- the same discipline \S{}8's own 37-file figure rests on, since a silent exclusion is exactly how an earlier version of this claim was inflated fiftyfold.
 
-\section{The variance-state arithmetic behind \S{}7.5}
-
-\S{}7.5 states the conclusion. This is the arithmetic, kept out of the body because the numbered claim it once supported is retracted (\texttt{S-19}) and because a forensic case the section then defuses with the author's own reply is not what a reader needs in the body of a reproduction.
-
-The collapse rate is a clock. Fitting it across our runs and extrapolating to the released checkpoint's $\sigma$ state implies \textbf{153,270} optimisation steps at the configured learning rate. The refit from our 10,000-iteration runs gives 158,319 and 158,003, spreading 3.3\% across the three fits --- a linear extrapolation validated over a fourfold extension.
-
-The released configuration says 500 iterations. The paper says 2,500. The checkpoint is tagged 5,000. A second, independent parameter on a slower gradient path implies the same order. And under \texttt{gaussian\_nll} the implied count is \emph{negative}, which identifies the branch the checkpoint was trained with.
-
-\textbf{What this extrapolation assumes, and what would falsify it.} It assumes constant-rate Adam at the configured learning rate from the released initialisation. Five things would break it, and they are not equally plausible:
-
-\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lll}
-\toprule
-assumption & if violated & ruled out by the second parameter? \\
-\midrule
-no learning-rate schedule & a decaying schedule inflates the implied count; a warm-up deflates it & \textbf{partly} --- \texttt{min\_logstd} and \texttt{log\_delta\_logstd} travel at rates differing by about 5.2$\times$, and a uniform schedule scales both, so a schedule alone cannot reconcile them without also changing their ratio \\
-\texttt{log\_delta\_logstd} initialised as released & a different initialisation moves the origin of the fit and rescales the count linearly & \textbf{no} --- this is the weakest point of the argument \\
-no warm start from an earlier checkpoint & a warm start makes the count a lower bound on total optimisation, not an estimate of one run & \textbf{no} \\
-no gradient clipping in this path & clipping would slow the collapse and inflate the implied count & \textbf{partly} --- the reference does not clip in the world-model path (X-08), so this is ruled out by source rather than by measurement \\
-bound-loss weight as configured & a different weight scales the rate directly & \textbf{partly} --- same ratio argument as the schedule \\
-\bottomrule\end{tabular}}\end{center}
-
-So the defensible claim is narrower than "cannot have come from the released recipe": \textbf{no constant-rate run from the released initialisation at the configured learning rate reaches this checkpoint's variance state in 500, 2,500 or 5,000 iterations.} A warm start or a different initialisation would explain the gap without any inconsistency, and we cannot exclude either.
-
-\textbf{What the author says.} We wrote to the first author on 21 August 2026 asking exactly this. He replied the same day; the exchange is reproduced in full, anonymised, in the supplementary material (\texttt{SUPPLEMENTARY\_CORRESPONDENCE.md}): the released \texttt{max\_iterations: 500} is "a typo"; his recollection is 5,000 iterations, "as I always did"; he does not recall how the checkpoint was obtained; and --- the part that matters most --- "the checkpoint was released after a few iterations of the repo than the setup I used for the submission."
-
-That last point reframes this section. The extrapolation above assumes the \emph{released} initialisation and the \emph{released} learning rate. If the repository drifted between the training run and the release, those are not necessarily the values that produced the checkpoint --- and a changed \texttt{log\_delta\_logstd} initialisation is precisely the assumption the table above cannot rule out.
-
-So the finding is not that the release is internally inconsistent. It is that \textbf{the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repository is not the one that trained it.} That is a documentation gap between a release and a run --- common, worth recording, and much less interesting than an inconsistency. We report the arithmetic because it is what let us detect the gap at all, not as a charge against the work.
-
-
-
-\section{The two nRMSE aggregations, and the comparison one of them inverted}
-
-\S{}3.1 states that this paper uses \textbf{form 1}: pool the per-dimension mean squared errors across the 45 state dimensions, then divide by the pooled scale --- a ratio of means. \textbf{Form 2} is the mean of per-dimension ratios.
-
-The two differ because the state dimensions differ in scale by orders of magnitude. Form 2 gives whichever dimension has the smallest denominator unbounded leverage over the aggregate, and a dimension that is nearly constant in the training episodes has a very small denominator. Form 1 has no such lever: a dimension contributes in proportion to its share of the total squared error.
-
-\textbf{Why this appendix exists rather than a sentence.} The choice between the two once inverted a published-model comparison in this project's own history --- a result that favoured us under one aggregation and did not under the other. The claim was withdrawn on our own evidence and is kept in the record (\texttt{FINDINGS\_LEDGER.md}). Form 2 figures appear nowhere in the body; they are retained in \texttt{results/step4\_0a\_results.json} for continuity with figures this project published before the inversion was found, and are reported here so that continuity does not require trusting a deleted number.
-
-The definition in force throughout the paper is the one \S{}3.1 gives. Nothing in \S{}5, \S{}6 or \S{}7 uses form 2.
-
-
-\section{Every pre-registered rule, its lead time and its verdict}
-
-\S{}8's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open a 373 KB ledger, so here is the table. It is generated from \texttt{FINDINGS\_LEDGER.md} and \texttt{results/appendix\_g\_rules.json}; nothing in it is typed.
-
-\textbf{Lead time} is the rule's commit timestamp subtracted from the commit that first held the data it tested, resolved by commit \emph{subject} rather than by hash --- the history was rewritten once and hashes did not survive it, while subjects did. Positive means the rule was in git before the data existed. This is the same computation Figure 4 plots.
-
-\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{llllll}
-\toprule
-rule & what it governs & commit & lead time & tested by & verdict \\
-\midrule
-\texttt{M-16} & The Arm A / Arm B comparison & \texttt{84ff01b} Step 5: pre-register the decision rule before launching any main run & +1.3 h & first main-run data & SETTLED --- rule pre-registered \\
-\texttt{M-22} & Whether episode difficulty biases the A/B comparison & \texttt{0648a32} Pre-register the Task 4b difficulty-bias rule, and the two-arena convention & +5 min & M-16 re-evaluated & RESOLVED --- branch 1, 4c not run \\
-\texttt{M-23} & The 10,000-iteration comparison & \texttt{efc35b8} 5.1: pre-register M-23, the long-horizon decision rule & +2 min & 10k runs launched & RESOLVED --- reproduces at long horizon \\
-\texttt{M-43} & The ensemble-5 replication & \texttt{b17f1b5} PRE-REGISTER the ensemble-5 replication rule, before the runs exist & +13.3 h & ens5 result committed & DOES NOT GENERALISE \\
-\texttt{M-44} & The trunk-sharing mechanism & \texttt{81b49f7} PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without & +6.4 h & R2 result committed & MECHANISM SUPPORTED \\
-\texttt{M-45} & The within-trajectory control & \texttt{81b49f7} PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without & +4.4 h & A2 result committed & SUPPORTED \\
-\texttt{M-49} & Pre-registered: does trunk-sharing survive capacity matching? & --- & +9.4 h & results/m49\_capacity\_matched.json & UNDER-POWERED --- favours the matched ensemble by less than the MDE \\
-\texttt{M-50} & Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? & --- & +5 min & results/e5\_synthetic\_sigma.json & OBJECTIVE-DRIVEN \\
-\texttt{M-51} & Pre-registered: does the ranking claim survive more than one free adversary? & --- & +12 min & results/e7\_free\_baselines.json & SURVIVES entry-res ONLY \\
-\texttt{M-52} & M-51 named a quantity that does not exist, and what replaced it & --- & +9 min & results/e7\_free\_baselines.json & SURVIVES entry-res ONLY \\
-\texttt{S-12} & "Task 3's duplication rule was pre-registered" & \texttt{3ee9d97} Task 3: the duplication control confirms R-47's mechanism and refutes its statistic & -2.9 h & control runs finished 21:37:51 & RETRACTED \\
-\bottomrule\end{tabular}}\end{center}
-
-11 rules, 11 with a computed lead time, of which 10 are positive and 1 negative. \textbf{The negative one is kept deliberately.} \texttt{S-12} withdraws the claim that the Task 3 duplication rule was pre-registered; the control runs had finished before any threshold reached git. A table that dropped it would be asserting exactly what the ledger retracts.
-
-\textbf{\texttt{M-52} is in the table and that is deliberate.} It is the one mid-flight amendment to a pre-registration in this project: \texttt{M-51} named a baseline that does not exist in the artifact it named --- the residual on the last teacher-forced step of the history window, which the rollout helper never computes because it copies the history rather than predicting it --- and \texttt{M-52} names the replacement, committed before the replacement's statistic was computed. A table of pre-registrations that omitted the one amendment would be a highlights reel. It was omitted: the selector matched on entry TITLES, and \texttt{M-52}'s title does not contain the word, so the row a sceptical reader most wants was silently absent. Entries are selected by their \texttt{Status} line as well now, and the count is asserted against the same set \texttt{scripts/ledger\_check.py} reports.
-
-\textbf{What each rule says, in its own committed words.} These are quotations, so their section references are the ones current when each rule was committed and some no longer resolve --- \texttt{M-45} governs "the within-trajectory control on \S{}5.6", which is now \S{}6.7. Renumbering a quotation to keep a cross-reference checker happy would falsify it, so they stand as written and the checker exempts this block by name.
-
-\textbf{\texttt{M-16} --- The Arm A / Arm B comparison.} Entered before any main-run result exists. Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. The claim reproduces, or fails to, and can be reported only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the same at the …
-
-\textbf{\texttt{M-22} --- Whether episode difficulty biases the A/B comparison.} Entered before Task 4b runs. Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097). …
-
-\textbf{\texttt{M-23} --- The 10,000-iteration comparison.} Entered before any 10,000-iteration result exists. Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the \texttt{0fe2bca} annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not to …
-
-\textbf{\texttt{M-43} --- The ensemble-5 replication.} The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed. Entered before any ensemble-5 result exists. No …
-
-\textbf{\texttt{M-44} --- The trunk-sharing mechanism.} Entered before any independent-init ensemble exists. No \texttt{runs/armA\_seed3} or \texttt{runs/armA\_seed4} directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git …
-
-\textbf{\texttt{M-45} --- The within-trajectory control.} Entered before the statistic was computed. No \texttt{results/a2\_trajectory\_level\_control.json} existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from \texttt{git log}.
-
-\textbf{\texttt{M-49} --- Pre-registered: does trunk-sharing survive capacity matching?.} - MECHANISM SURVIVES CAPACITY MATCHING --- the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT --- the matched …
-
-\textbf{\texttt{M-50} --- Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.} - OBJECTIVE-DRIVEN --- under \texttt{mse} the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under \texttt{gaussian\_nll} the ratio is within the recovery factor and the slope is above the tracking threshold. \S{}6.3's derivation is demonstrated against ground truth and …
-
-\textbf{\texttt{M-51} --- Pre-registered: does the ranking claim survive more than one free adversary?.} and the partial exceeds its own.
-
-\textbf{\texttt{M-52} --- M-51 named a quantity that does not exist, and what replaced it.} Committed before the replacement statistic is computed. \texttt{M-51} stands as written; this entry records that one of its two baselines was mis-specified and fixes it. \texttt{M-51}'s other baseline, step-size, is unaffected and its statistic was computed under \texttt{M-51} as committed. What was wrong. \texttt{M-51} …
-
-\textbf{\texttt{S-12} --- "Task 3's duplication rule was pre-registered".} Retracts --- a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else --- a rule committed to git before the data testing it exists (M-16, M-23 …
-
-
 \section{What testing the untested claims would require}
 
 \S{}4's table marks 4 claims tested and the rest not. "Not tested" is an apology unless it comes with a price, so here is what each would cost. We give compute orders where we can estimate them honestly from this project's own measurements and say so where we cannot.
@@ -1072,6 +986,101 @@ Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 \S{}5.1) &
 Offline MBRL on real robots (2504.16680v1) & no & --- & \texttt{[policy, hardware: offline MBRL on real robots]} not tested \\
 Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4--5, \S{}5) --- the follow-up's core method claim & no & Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers & \texttt{[policy: the core claim that penalising rewards by disagreement improves the learned policy]} \textbf{not tested.} We measure the penalty quantity itself --- what it is (\S{}6.1), how well it ranks error (\S{}6.7), whether it is calibrated (\S{}6.2) --- but never train a policy with or without it. Our findings bound what the quantity \emph{reports}, not what it \emph{costs} (\S{}11) \\
 \bottomrule\end{tabular}}\end{center}
+
+\section{Every pre-registered rule, its lead time and its verdict}
+
+\S{}8's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open a 376 KB ledger, so here is the table. It is generated from \texttt{FINDINGS\_LEDGER.md} and \texttt{results/appendix\_g\_rules.json}; nothing in it is typed.
+
+\textbf{Lead time} is the rule's commit timestamp subtracted from the commit that first held the data it tested, resolved by commit \emph{subject} rather than by hash --- the history was rewritten once and hashes did not survive it, while subjects did. Positive means the rule was in git before the data existed. This is the same computation Figure 4 plots.
+
+\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{llllll}
+\toprule
+rule & what it governs & commit & lead time & tested by & verdict \\
+\midrule
+\texttt{M-16} & The Arm A / Arm B comparison & \texttt{84ff01b} Step 5: pre-register the decision rule before launching any main run & +1.3 h & first main-run data & SETTLED --- rule pre-registered \\
+\texttt{M-22} & Whether episode difficulty biases the A/B comparison & \texttt{0648a32} Pre-register the Task 4b difficulty-bias rule, and the two-arena convention & +5 min & M-16 re-evaluated & RESOLVED --- branch 1, 4c not run \\
+\texttt{M-23} & The 10,000-iteration comparison & \texttt{efc35b8} 5.1: pre-register M-23, the long-horizon decision rule & +2 min & 10k runs launched & RESOLVED --- reproduces at long horizon \\
+\texttt{M-43} & The ensemble-5 replication & \texttt{b17f1b5} PRE-REGISTER the ensemble-5 replication rule, before the runs exist & +13.3 h & ens5 result committed & DOES NOT GENERALISE \\
+\texttt{M-44} & The trunk-sharing mechanism & \texttt{81b49f7} PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without & +6.4 h & R2 result committed & MECHANISM SUPPORTED \\
+\texttt{M-45} & The within-trajectory control & \texttt{81b49f7} PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without & +4.4 h & A2 result committed & SUPPORTED \\
+\texttt{M-49} & Pre-registered: does trunk-sharing survive capacity matching? & --- & +9.4 h & results/m49\_capacity\_matched.json & UNDER-POWERED --- favours the matched ensemble by less than the MDE \\
+\texttt{M-50} & Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? & --- & +5 min & results/e5\_synthetic\_sigma.json & OBJECTIVE-DRIVEN \\
+\texttt{M-51} & Pre-registered: does the ranking claim survive more than one free adversary? & --- & +12 min & results/e7\_free\_baselines.json & SURVIVES entry-res ONLY \\
+\texttt{M-52} & M-51 named a quantity that does not exist, and what replaced it & --- & +9 min & results/e7\_free\_baselines.json & SURVIVES entry-res ONLY \\
+\texttt{S-12} & "Task 3's duplication rule was pre-registered" & \texttt{3ee9d97} Task 3: the duplication control confirms R-47's mechanism and refutes its statistic & -2.9 h & control runs finished 21:37:51 & RETRACTED \\
+\bottomrule\end{tabular}}\end{center}
+
+11 rules, 11 with a computed lead time, of which 10 are positive and 1 negative. \textbf{The negative one is kept deliberately.} \texttt{S-12} withdraws the claim that the Task 3 duplication rule was pre-registered; the control runs had finished before any threshold reached git. A table that dropped it would be asserting exactly what the ledger retracts.
+
+\textbf{\texttt{M-52} is in the table and that is deliberate.} It is the one mid-flight amendment to a pre-registration in this project: \texttt{M-51} named a baseline that does not exist in the artifact it named --- the residual on the last teacher-forced step of the history window, which the rollout helper never computes because it copies the history rather than predicting it --- and \texttt{M-52} names the replacement, committed before the replacement's statistic was computed. A table of pre-registrations that omitted the one amendment would be a highlights reel. It was omitted: the selector matched on entry TITLES, and \texttt{M-52}'s title does not contain the word, so the row a sceptical reader most wants was silently absent. Entries are selected by their \texttt{Status} line as well now, and the count is asserted against the same set \texttt{scripts/ledger\_check.py} reports.
+
+\textbf{What each rule says, in its own committed words.} These are quotations, so their section references are the ones current when each rule was committed and some no longer resolve --- \texttt{M-45} governs "the within-trajectory control on \S{}5.6", which is now \S{}6.7. Renumbering a quotation to keep a cross-reference checker happy would falsify it, so they stand as written and the checker exempts this block by name.
+
+\textbf{\texttt{M-16} --- The Arm A / Arm B comparison.} Entered before any main-run result exists. Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. The claim reproduces, or fails to, and can be reported only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the same at the …
+
+\textbf{\texttt{M-22} --- Whether episode difficulty biases the A/B comparison.} Entered before Task 4b runs. Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097). …
+
+\textbf{\texttt{M-23} --- The 10,000-iteration comparison.} Entered before any 10,000-iteration result exists. Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the \texttt{0fe2bca} annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not to …
+
+\textbf{\texttt{M-43} --- The ensemble-5 replication.} The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed. Entered before any ensemble-5 result exists. No …
+
+\textbf{\texttt{M-44} --- The trunk-sharing mechanism.} Entered before any independent-init ensemble exists. No \texttt{runs/armA\_seed3} or \texttt{runs/armA\_seed4} directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git …
+
+\textbf{\texttt{M-45} --- The within-trajectory control.} Entered before the statistic was computed. No \texttt{results/a2\_trajectory\_level\_control.json} existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from \texttt{git log}.
+
+\textbf{\texttt{M-49} --- Pre-registered: does trunk-sharing survive capacity matching?.} - MECHANISM SURVIVES CAPACITY MATCHING --- the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT --- the matched …
+
+\textbf{\texttt{M-50} --- Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.} - OBJECTIVE-DRIVEN --- under \texttt{mse} the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under \texttt{gaussian\_nll} the ratio is within the recovery factor and the slope is above the tracking threshold. \S{}6.3's derivation is demonstrated against ground truth and …
+
+\textbf{\texttt{M-51} --- Pre-registered: does the ranking claim survive more than one free adversary?.} and the partial exceeds its own.
+
+\textbf{\texttt{M-52} --- M-51 named a quantity that does not exist, and what replaced it.} Committed before the replacement statistic is computed. \texttt{M-51} stands as written; this entry records that one of its two baselines was mis-specified and fixes it. \texttt{M-51}'s other baseline, step-size, is unaffected and its statistic was computed under \texttt{M-51} as committed. What was wrong. \texttt{M-51} …
+
+\textbf{\texttt{S-12} --- "Task 3's duplication rule was pre-registered".} Retracts --- a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else --- a rule committed to git before the data testing it exists (M-16, M-23 …
+
+
+\section{The variance-state arithmetic behind \S{}7.5}
+
+\S{}7.5 states the conclusion. This is the arithmetic, kept out of the body because the numbered claim it once supported is retracted (\texttt{S-19}) and because a forensic case the section then defuses with the author's own reply is not what a reader needs in the body of a reproduction.
+
+The collapse rate is a clock. Fitting it across our runs and extrapolating to the released checkpoint's $\sigma$ state implies \textbf{153,270} optimisation steps at the configured learning rate. The refit from our 10,000-iteration runs gives 158,319 and 158,003, spreading 3.3\% across the three fits --- a linear extrapolation validated over a fourfold extension.
+
+The released configuration says 500 iterations. The paper says 2,500. The checkpoint is tagged 5,000. A second, independent parameter on a slower gradient path implies the same order. And under \texttt{gaussian\_nll} the implied count is \emph{negative}, which identifies the branch the checkpoint was trained with.
+
+\textbf{What this extrapolation assumes, and what would falsify it.} It assumes constant-rate Adam at the configured learning rate from the released initialisation. Five things would break it, and they are not equally plausible:
+
+\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{lll}
+\toprule
+assumption & if violated & ruled out by the second parameter? \\
+\midrule
+no learning-rate schedule & a decaying schedule inflates the implied count; a warm-up deflates it & \textbf{partly} --- \texttt{min\_logstd} and \texttt{log\_delta\_logstd} travel at rates differing by about 5.2$\times$, and a uniform schedule scales both, so a schedule alone cannot reconcile them without also changing their ratio \\
+\texttt{log\_delta\_logstd} initialised as released & a different initialisation moves the origin of the fit and rescales the count linearly & \textbf{no} --- this is the weakest point of the argument \\
+no warm start from an earlier checkpoint & a warm start makes the count a lower bound on total optimisation, not an estimate of one run & \textbf{no} \\
+no gradient clipping in this path & clipping would slow the collapse and inflate the implied count & \textbf{partly} --- the reference does not clip in the world-model path (X-08), so this is ruled out by source rather than by measurement \\
+bound-loss weight as configured & a different weight scales the rate directly & \textbf{partly} --- same ratio argument as the schedule \\
+\bottomrule\end{tabular}}\end{center}
+
+So the defensible claim is narrower than "cannot have come from the released recipe": \textbf{no constant-rate run from the released initialisation at the configured learning rate reaches this checkpoint's variance state in 500, 2,500 or 5,000 iterations.} A warm start or a different initialisation would explain the gap without any inconsistency, and we cannot exclude either.
+
+\textbf{What the author says.} We wrote to the first author on 21 August 2026 asking exactly this. He replied the same day; the exchange is reproduced in full, anonymised, in the supplementary material (\texttt{SUPPLEMENTARY\_CORRESPONDENCE.md}): the released \texttt{max\_iterations: 500} is "a typo"; his recollection is 5,000 iterations, "as I always did"; he does not recall how the checkpoint was obtained; and --- the part that matters most --- "the checkpoint was released after a few iterations of the repo than the setup I used for the submission."
+
+That last point reframes this section. The extrapolation above assumes the \emph{released} initialisation and the \emph{released} learning rate. If the repository drifted between the training run and the release, those are not necessarily the values that produced the checkpoint --- and a changed \texttt{log\_delta\_logstd} initialisation is precisely the assumption the table above cannot rule out.
+
+So the finding is not that the release is internally inconsistent. It is that \textbf{the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repository is not the one that trained it.} That is a documentation gap between a release and a run --- common, worth recording, and much less interesting than an inconsistency. We report the arithmetic because it is what let us detect the gap at all, not as a charge against the work.
+
+
+
+\section{The two nRMSE aggregations, and the comparison one of them inverted}
+
+\S{}3.1 states that this paper uses \textbf{form 1}: pool the per-dimension mean squared errors across the 45 state dimensions, then divide by the pooled scale --- a ratio of means. \textbf{Form 2} is the mean of per-dimension ratios.
+
+The two differ because the state dimensions differ in scale by orders of magnitude. Form 2 gives whichever dimension has the smallest denominator unbounded leverage over the aggregate, and a dimension that is nearly constant in the training episodes has a very small denominator. Form 1 has no such lever: a dimension contributes in proportion to its share of the total squared error.
+
+\textbf{Why this appendix exists rather than a sentence.} The choice between the two once inverted a published-model comparison in this project's own history --- a result that favoured us under one aggregation and did not under the other. The claim was withdrawn on our own evidence and is kept in the record (\texttt{FINDINGS\_LEDGER.md}). Form 2 figures appear nowhere in the body; they are retained in \texttt{results/step4\_0a\_results.json} for continuity with figures this project published before the inversion was found, and are reported here so that continuity does not require trusting a deleted number.
+
+The definition in force throughout the paper is the one \S{}3.1 gives. Nothing in \S{}5, \S{}6 or \S{}7 uses form 2.
 
 
 \end{document}

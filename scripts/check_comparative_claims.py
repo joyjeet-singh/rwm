@@ -243,12 +243,14 @@ CLAIMS = [
     # ...and the TOTAL, which is what §1 now states and the contributions list
     # repeats. A count that moved out of two places into two others is exactly
     # where a count-consistency defect gets in.
-    {"id": "C7.5", "kind": "count-consistency", "where": "1",
+    # The count is stated ONCE in §1 now -- in the contributions list. §1's prose
+    # paragraph said it too, which is the duplication D2 was meant to remove and
+    # did not: it compressed the paragraph and left the number in both places.
+    {"id": "C7.5", "kind": "count-consistency", "where": "1 / Appendix D",
      "label": "total retractions",
-     "says": "claims of ours are withdrawn on this project's own evidence",
+     "says": "retractions of our own claims",
      "value": ("paper_numbers.json", "n_retract_total.value"),
-     "sites": ["claims of ours are withdrawn on this project's own evidence",
-               "retractions of our own claims"]},
+     "sites": ["retractions of our own claims"]},
     {"id": "C6.1", "kind": "relvar", "where": "5",
      "says": "Teacher forcing is more than twice as variable across seeds",
      "a": ("task_d1_threeseed.json", "aggregate.A.sd_ddof1", "aggregate.A.mean"),

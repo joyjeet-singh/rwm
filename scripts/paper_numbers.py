@@ -1899,6 +1899,36 @@ def main():
 
     # --- T1: the bibliography ----------------------------------------------
     T1 = J("t1_bibliography_verified.json")
+
+    # The §2 bibliography, GENERATED. It was a hand-typed list in the template and
+    # the six entries added in the revision-3 pass never reached it: §2 cited
+    # Malik, Lee, Fort, Wen, Havasi and Seitzer in prose, the footnote under the
+    # list claimed "16 of 16 entries verified", and the list itself held ten. A
+    # reader could not resolve four of the six at all -- they carried only a venue.
+    # A hand-maintained list of what a paper cites is the same defect class as a
+    # hand-typed count, and it failed the same way: silently, in the direction that
+    # flatters.
+    def _initials(name):
+        parts = [x for x in name.replace(".", " ").split() if x]
+        if len(parts) == 1:
+            return parts[0]
+        return " ".join(p[0] + "." for p in parts[:-1]) + " " + parts[-1]
+
+    _bib = sorted(T1["entries"], key=lambda e: (e["authors"][0].split()[-1].lower(),
+                                                e["year"]))
+    _lines = []
+    for _n, _e in enumerate(_bib, start=3):
+        _au = ", ".join(_initials(a) for a in _e["authors"])
+        # Two entries have no venue but the arXiv id itself (they are preprints
+        # with no recorded journal_ref), and printing both gave
+        # "arXiv:1912.02757. arXiv:1912.02757."
+        _ven = "" if _e["venue"].replace("arXiv:", "") == _e["arxiv"] \
+            else f'{_e["venue"]}. '
+        _lines.append(f'{_n}. {_au}. *{_e["title"]}.* {_ven}'
+                      f'arXiv:{_e["arxiv"]}, {_e["year"]}.')
+    put("t1_reference_list", "\n".join(_lines), "results/t1_bibliography_verified.json")
+    put("t1_first_entry_n", 3, "results/t1_bibliography_verified.json")
+    put("t1_last_entry_n", len(_bib) + 2, "results/t1_bibliography_verified.json")
     put("t1_n_refs", T1["n_entries"], "results/t1_bibliography_verified.json")
     put("t1_refs_before", T1["n_references_before"], "results/t1_bibliography_verified.json")
     put("t1_refs_after", T1["n_references_after"], "results/t1_bibliography_verified.json")

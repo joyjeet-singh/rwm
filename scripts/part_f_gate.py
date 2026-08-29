@@ -227,6 +227,32 @@ def main():
     fig_caps = set(re.findall(r"Figure\s*(\d+)\s*[:.]", txt))
     fig_refs = {m for m in re.findall(r"Figure\s*(\d+)", txt)}
     figmiss = sorted(fig_refs - fig_caps)
+    # ---- 5b appendix letters must match DOCUMENT ORDER ----
+    #
+    # LaTeX auto-letters appendices in the order they appear and discards the
+    # hand-written label. The source ran A, B, C, D, H, I, G, E, F -- because H and
+    # I were inserted before G -- so the PDF lettered them A..I in that order and
+    # EIGHT reference sites landed on a real but wrong appendix. E/H and F/I were
+    # cleanly swapped pairs, so nothing dangled and nothing errored: a reader
+    # following "Appendix H gives the arithmetic" arrived at "What testing the
+    # untested claims would require". Only reading the PDF finds that, which is
+    # why it survived every gate here.
+    _app = re.findall(r"^## Appendix ([A-Z]) — ", md, re.M)
+    _figpos = md.find("## Appendix C — figures")
+    _expect = [chr(ord("A") + i) for i in range(len(_app) + (1 if _figpos >= 0 else 0))]
+    if _figpos >= 0:
+        _got = []
+        for m in re.finditer(r"^## Appendix ([A-Z])[  ]", md, re.M):
+            _got.append(m.group(1))
+    else:
+        _got = _app
+    _order_ok = _got == _expect[:len(_got)]
+    chk("5b", "appendix letters match document order", _order_ok,
+        f"document order {''.join(_got)}; LaTeX letters them "
+        f"{''.join(_expect[:len(_got)])}"
+        + ("" if _order_ok else "  <- every reference to a mismatched letter "
+                                "lands on the wrong appendix in the PDF"))
+
     chk(5, "cross-references resolve (sections and figures)", not bad and not figmiss,
         f"{len(re.findall(chr(167), md))} section refs, unresolved {bad or 'none'}; "
         f"{len(_hist)} historical ref(s) inside quoted rule text exempt {_hist or ''}; "

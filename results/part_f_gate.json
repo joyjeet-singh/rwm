@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "40 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "41 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -25,20 +25,26 @@
       "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 37 files regenerated, 6,825 values, 6,790 identical, 35 differing; carried-in partition present (801,507 copied values held out); artifact post-dates the regeneration marker"
     },
     {
+      "n": "5b",
+      "name": "appendix letters match document order",
+      "pass": true,
+      "detail": "document order ABCDEFGHI; LaTeX letters them ABCDEFGHI"
+    },
+    {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "177 section refs, unresolved none; 1 historical ref(s) inside quoted rule text exempt ['5.6']; figures ['1', '2', '3', '4', '5', '6'], dangling none"
+      "detail": "191 section refs, unresolved none; 1 historical ref(s) inside quoted rule text exempt ['5.6']; figures ['1', '2', '3', '4', '5', '6'], dangling none"
     },
     {
       "n": 6,
       "name": "numeric consistency, abstract vs body",
       "pass": true,
-      "detail": "15 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
+      "detail": "16 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
-  "n_pass": 5,
-  "n_run": 5,
+  "n_pass": 6,
+  "n_run": 6,
   "n_not_run": 1,
-  "n": 6
+  "n": 7
 }

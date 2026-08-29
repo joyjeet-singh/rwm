@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     826 values substituted from 66 artifacts. -->
+     831 values substituted from 66 artifacts. -->
 
 # Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
 
@@ -41,7 +41,7 @@ scored on the other, restores nominal coverage on every held-out cell; and the r
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
 nRMSE at h = 368 by 75%.
 
-Every **measurement** here is substituted from a named artifact; the 567 numerals that
+Every **measurement** here is substituted from a named artifact; the 577 numerals that
 are not are addresses, horizon labels or declared constants, classified one by one by a build that
 fails on anything else. 51 comparative claims across 21 kinds are recomputed each
 build against a corrupted expectation, so a check that can no longer fail is caught.
@@ -76,7 +76,7 @@ gradients match to 0.000e+00 across 7 loss terms and
 git, with timestamps a reader can check (§8, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail.** 12 claims of ours are withdrawn on this project's own evidence and kept in the record; §8 and Appendix D give them in full.
+**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and Appendix D give them in full. The count is in the contributions below, once.
 
 **Contributions.**
 
@@ -228,7 +228,7 @@ reading the spread as though the members were independent.
 identify failure modes of heteroscedastic σ heads trained by maximising log-likelihood. The
 released model's state loss is not a log-likelihood at all — a *sample* enters a squared error —
 so the failure §6.3 derives is more basic than the ones they characterise, and it does not depend
-on the optimiser. §6.3 gives the derivation and Appendix H demonstrates it against known noise.
+on the optimiser. §6.3 gives the derivation and demonstrates it against known noise.
 
 *Every entry above was checked against the paper itself — title, full author list, venue and year
 from the arXiv record, and for any sentence we attribute, the sentence matched verbatim against
@@ -798,6 +798,18 @@ established. This subsection supplies a candidate, structurally symmetric to §6
 and from the checkpoint's own tensors. Nothing here is trained and nothing is inferred from a
 measurement.
 
+**The effect is known and we are not claiming it.** That heads sharing a trunk under-report
+disagreement relative to independently initialised networks is established: Lee, Purushwalkam,
+Cogswell, Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be
+engineered rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what
+independent initialisation buys is decorrelation which subspace methods do not match; and
+BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and MIMO (Havasi et al., ICLR 2021) share deliberately
+and state what they trade away for it. **What is ours is finding it in a released robotics
+checkpoint that its authors deployed on hardware, with the sharing quantified and the cost
+measured** — 89.15% of each member, and 2.03× on the overconfidence
+factor (§6.10). The problem is not sharing. It is sharing and then reading the spread as though
+the members were independent.
+
 **The released five-member ensemble is not five models.** `system_dynamics.py:34` builds **one**
 `state_base`. `system_dynamics.py:35-41` replicates the *heads* `ensemble_size` times, and only
 the heads. In the forward pass `system_dynamics.py:87` evaluates the trunk **once** and `:90`
@@ -1061,6 +1073,18 @@ opposite and `M-54` records the correction.
 
 ### 6.8 One constant scalar does not fix it, but a per-horizon one does
 
+**Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this section
+is an instance of it rather than a departure from it.** Kuleshov, Fenner and Ermon (ICML 2018)
+give the post-hoc calibration map; Malik, Kuleshov, Song, Nemer, Seymour and Ermon (ICML 2019)
+apply that idea to model-based RL specifically and argue there that good uncertainties must be
+calibrated rather than merely well ranked — which is the distinction this paper draws throughout
+§6.2 and §6.7. **What is new here is the conditioning variable and one negative result.** The
+variable is the *forecast horizon*, and the negative result is that a single global multiplier
+**fails** where a per-horizon one works. That is not a detail: an open-loop rollout's error
+accumulates with depth while its predicted σ does not (§6.9), so a horizon-blind recalibration
+cannot follow the thing it is trying to correct. This section is the measurement showing it does
+not.
+
 If σ had the right shape and the wrong scale, a single multiplier would repair it, and the
 finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on
 **one** held-out episode and evaluated on the **other**, in both directions, so it is never
@@ -1268,7 +1292,7 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (226 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (228 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for 8 of them and Appendix G for all 11; 7 of Figure 4's are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1279,7 +1303,7 @@ it rests on, because it is what let us detect the gap at all.
 **Reproducibility, and a build that checks its own prose.**
 `./reproduce.sh --quick --force` regenerates 37 artifact files and 6,825
 numeric values from a clean clone, 6,790 of them bitwise identical (99.49%),
-35 differing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **51 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+35 differing. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 577 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **51 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 51 of 51 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1457,18 +1481,27 @@ renamed RWM-O to RWM-U — the same model, with the letter re-expanded from
 "Offline Robotic World Model" to "Uncertainty-Aware Robotic World Model". The two names never co-occur: v1 uses
 RWM-O 39 times and no RWM-U, v3 the reverse. The crosswalk
 is in `results/original_paper_figures.json`.*
-3. Z. Abbas, S. Sokota, E. J. Talvitie, M. White. *Selective Dyna-style Planning Under Limited Model Capacity.* ICML 2020. arXiv:2007.02418.
-4. K. Chua, R. Calandra, R. McAllister, S. Levine. *Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.* NeurIPS 2018. arXiv:1805.12114.
-5. C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. *On Calibration of Modern Neural Networks.* ICML 2017. arXiv:1706.04599.
-6. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253.
-7. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951.
-8. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263.
-9. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474.
-10. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135.
-11. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530.
-12. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239.
+3. Z. Abbas, S. Sokota, E. J. Talvitie, M. White. *Selective Dyna-style Planning Under Limited Model Capacity.* ICML 2020. arXiv:2007.02418, 2020.
+4. K. Chua, R. Calandra, R. McAllister, S. Levine. *Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.* NeurIPS 2018. arXiv:1805.12114, 2018.
+5. S. Fort, H. Hu, B. Lakshminarayanan. *Deep Ensembles: A Loss Landscape Perspective.* arXiv:1912.02757, 2019.
+6. C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. *On Calibration of Modern Neural Networks.* ICML 2017. arXiv:1706.04599, 2017.
+7. M. Havasi, R. Jenatton, S. Fort, J. Z. Liu, J. Snoek, B. Lakshminarayanan, A. M. Dai, D. Tran. *Training independent subnetworks for robust prediction.* ICLR 2021. arXiv:2010.06610, 2021.
+8. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253, 2019.
+9. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951, 2020.
+10. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263, 2018.
+11. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474, 2017.
+12. S. Lee, S. Purushwalkam, M. Cogswell, D. Crandall, D. Batra. *Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks.* arXiv:1511.06314, 2015.
+13. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135, 2022.
+14. A. Malik, V. Kuleshov, J. Song, D. Nemer, H. Seymour, S. Ermon. *Calibrated Model-Based Deep Reinforcement Learning.* ICML 2019 (PMLR 97:4314-4323). arXiv:1906.08312, 2019.
+15. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530, 2019.
+16. M. Seitzer, A. Tavakoli, D. Antic, G. Martius. *On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks.* ICLR 2022. arXiv:2203.09168, 2022.
+17. Y. Wen, D. Tran, J. Ba. *BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning.* ICLR 2020. arXiv:2002.06715, 2020.
+18. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239, 2020.
 
-*Entries 3–12 are the §2 bibliography. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 16 of 16 entries and 17 of 17 attributed fragments (`results/t1_bibliography_verified.json`).*
+*Entries 3–18 are the §2 bibliography, generated from
+`results/t1_bibliography_verified.json` rather than listed here — a hand-maintained list of what a
+paper cites drifts exactly as a hand-typed count does, and this one had: six entries cited in §2's
+prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 16 of 16 entries and 17 of 17 attributed fragments (`results/t1_bibliography_verified.json`).*
 
 ## Appendix A — verification chain
 
@@ -1669,6 +1702,146 @@ dropped by provenance like the others and counted in the output rather than hidd
 discipline §8's own 37-file figure rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
 
+## Appendix E — what testing the untested claims would require
+
+§4's table marks 4 claims tested and the rest not. "Not tested" is an apology
+unless it comes with a price, so here is what each would cost. We give compute orders where we
+can estimate them honestly from this project's own measurements and say so where we cannot.
+
+**Everything below needs what this reproduction did not have: a simulator.** Our arms train on
+the released CSV, which is a recording. Every untested claim needs *interaction* — a policy acting
+in an environment and the environment responding — and that means Isaac Lab, which needs an
+RTX-class NVIDIA GPU. No amount of CPU substitutes: the reference's data generation is
+GPU-parallel simulation, not a data-loading problem.
+
+| untested claim | what it needs | order |
+|---|---|---|
+| Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
+| MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
+| Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 48.2 h scale; the model training is the cheap half and the data is not |
+| Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
+| Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 48.2 h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 31 runs took 48.2 h on two cores; a modest sweep is a small multiple of that |
+
+**The two at the bottom are within reach of this setup** — the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison —
+and are the honest next steps for anyone extending this work on CPU. The six above
+them are not, and no amount of care with the released CSV changes that. This table has one row per
+untested claim; it listed 2 fewer than that until the assertion that counts its rows
+against Appendix F's was written, and the two it omitted were the two whose cost is hardest to
+state honestly.
+
+**What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
+items, it bears directly on the one limitation §11 states that our measurements cannot bound —
+whether the miscalibration we document costs anything downstream — and it needs no hardware.
+
+---
+
+## Appendix F — every claim of the originals, and what we did with it
+
+The body's §4 summarises this table. It is here in full because the third column — what the
+original actually reports — is the answer to a question a reader of any reproduction should ask,
+and because "no quantitative figure" is itself a finding that deserves to be checkable row by row.
+
+*Section references follow arXiv:2501.10100**v1**, which uses Roman-numeral sectioning. v2
+renumbered to Arabic and moved IV-C's material into Appendix A.4.1. References to
+arXiv:2504.16680 follow **v1**, which is the version we read; it is now at
+v3 (8 Jan 2026), where §5.1 and Eq. 4–5 keep their numbers but every figure
+and appendix table has moved — Figure 2 (right) became Figure 3 (right), and the model was renamed RWM-O to
+RWM-U, which is a re-expansion of the letter ("Offline Robotic World Model" to
+"Uncertainty-Aware Robotic World Model") rather than a second variant: no version of the paper contains both
+names. All locations, and the occurrence counts that establish that, are recorded in
+`results/original_paper_figures.json`.*
+
+| claim, and where | tested | what the original reports | verdict |
+|---|---|---|---|
+| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 4 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
+| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
+| M=32, N=8 is the optimal configuration (§IV-C) | no | — | `[cpu: the M/N configuration sweep]` we use the released configuration and did not sweep it |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[cpu: the MLP/RSSM/transformer baseline comparison]` the lite release ships only the RNN variant |
+| Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |
+| Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **6M against 250M state transitions** at equal real tracking reward (0.90 +- 0.04 against 0.90 +- 0.03), Table I — the only table of numbers in either paper | `[policy, hardware: the sample-efficiency result]` **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
+| MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | `[policy: the comparisons against SHAC and Dreamer]` no policy learning reproduced |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[model: generality across robot morphologies]` one released dataset, ANYmal D flat |
+| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** A "strong correlation" is asserted with no coefficient, interval or sample size; plotted in Fig. 2 (right) | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n_independent = 20, beats the forecast-index counter at every horizon and survives 5 controls on forecast depth — the linear partial that keeps +0.596, and four harder ones — plus a sixth on trajectory difficulty — the last giving +0.419 [+0.318, +0.576] with both the rollout and the depth held constant (§6.7, M-45). **Weaker per-dimension than we first reported**: at h = 368 the 45-of-45 sign count gives a permutation P of 0.0435 (out-of-sample) and 0.0775 (in-sample), and no cell survives multiplicity correction (§6.6). **Not supported as a scale**: 33.4× overconfident at h = 100, the method's own rollout length, and 34.4× at the h = 368 diagnostic horizon; repairable per horizon (§6.8) |
+| Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§6.3) |
+| Offline MBRL on real robots (2504.16680v1) | no | — | `[policy, hardware: offline MBRL on real robots]` not tested |
+| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.7), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
+
+---
+## Appendix G — every pre-registered rule, its lead time and its verdict
+
+§8's argument rests on decision rules committed to git before the data that tested them, and the
+body names those rules by identifier. An identifier with no table behind it is either decoration
+or an instruction to open a 376 KB ledger, so here is the table. It is generated from
+`FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
+
+**Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
+it tested, resolved by commit *subject* rather than by hash — the history was rewritten once and
+hashes did not survive it, while subjects did. Positive means the rule was in git before the data
+existed. This is the same computation Figure 4 plots.
+
+| rule | what it governs | commit | lead time | tested by | verdict |
+|---|---|---|---|---|---|
+| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED — rule pre-registered |
+| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED — branch 1, 4c not run |
+| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED — reproduces at long horizon |
+| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |
+| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |
+| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |
+| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED — favours the matched ensemble by less than the MDE |
+| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | — | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |
+| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | — | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
+| `M-52` | M-51 named a quantity that does not exist, and what replaced it | — | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
+| `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
+
+11 rules, 11 with a computed lead time, of which
+10 are positive and 1 negative. **The negative one is
+kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
+pre-registered; the control runs had finished before any threshold reached git. A table that
+dropped it would be asserting exactly what the ledger retracts.
+
+**`M-52` is in the table and that is deliberate.** It is the one mid-flight amendment to a
+pre-registration in this project: `M-51` named a baseline that does not exist in the artifact it
+named — the residual on the last teacher-forced step of the history window, which the rollout
+helper never computes because it copies the history rather than predicting it — and `M-52` names
+the replacement, committed before the replacement's statistic was computed. A table of
+pre-registrations that omitted the one amendment would be a highlights reel. It was omitted: the
+selector matched on entry TITLES, and `M-52`'s title does not contain the word, so the row a
+sceptical reader most wants was silently absent. Entries are selected by their `Status` line as
+well now, and the count is asserted against the same set `scripts/ledger_check.py` reports.
+
+**What each rule says, in its own committed words.** These are quotations, so their section
+references are the ones current when each rule was committed and some no longer resolve — `M-45`
+governs "the within-trajectory control on §5.6", which is now §6.7. Renumbering a quotation to
+keep a cross-reference checker happy would falsify it, so they stand as written and the checker
+exempts this block by name.
+
+**`M-16` — The Arm A / Arm B comparison.** Entered before any main-run result exists. Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. The claim reproduces, or fails to, and can be reported only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the same at the …
+
+**`M-22` — Whether episode difficulty biases the A/B comparison.** Entered before Task 4b runs. Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097). …
+
+**`M-23` — The 10,000-iteration comparison.** Entered before any 10,000-iteration result exists. Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not to …
+
+**`M-43` — The ensemble-5 replication.** The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed. Entered before any ensemble-5 result exists. No …
+
+**`M-44` — The trunk-sharing mechanism.** Entered before any independent-init ensemble exists. No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git …
+
+**`M-45` — The within-trajectory control.** Entered before the statistic was computed. No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.
+
+**`M-49` — Pre-registered: does trunk-sharing survive capacity matching?.** - MECHANISM SURVIVES CAPACITY MATCHING — the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT — the matched …
+
+**`M-50` — Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.** - OBJECTIVE-DRIVEN — under `mse` the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under `gaussian_nll` the ratio is within the recovery factor and the slope is above the tracking threshold. §6.3's derivation is demonstrated against ground truth and …
+
+**`M-51` — Pre-registered: does the ranking claim survive more than one free adversary?.** and the partial exceeds its own.
+
+**`M-52` — M-51 named a quantity that does not exist, and what replaced it.** Committed before the replacement statistic is computed. `M-51` stands as written; this entry records that one of its two baselines was mis-specified and fixes it. `M-51`'s other baseline, step-size, is unaffected and its statistic was computed under `M-51` as committed. What was wrong. `M-51` …
+
+**`S-12` — "Task 3's duplication rule was pre-registered".** Retracts — a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else — a rule committed to git before the data testing it exists (M-16, M-23 …
+
+---
+
 ## Appendix H — the variance-state arithmetic behind §7.5
 
 §7.5 states the conclusion. This is the arithmetic, kept out of the body because the numbered
@@ -1748,146 +1921,5 @@ deleted number.
 
 The definition in force throughout the paper is the one §3.1 gives. Nothing in §5, §6 or §7 uses
 form 2.
-
----
-
-## Appendix G — every pre-registered rule, its lead time and its verdict
-
-§8's argument rests on decision rules committed to git before the data that tested them, and the
-body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 373 KB ledger, so here is the table. It is generated from
-`FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
-
-**Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
-it tested, resolved by commit *subject* rather than by hash — the history was rewritten once and
-hashes did not survive it, while subjects did. Positive means the rule was in git before the data
-existed. This is the same computation Figure 4 plots.
-
-| rule | what it governs | commit | lead time | tested by | verdict |
-|---|---|---|---|---|---|
-| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED — rule pre-registered |
-| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED — branch 1, 4c not run |
-| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED — reproduces at long horizon |
-| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |
-| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |
-| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |
-| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED — favours the matched ensemble by less than the MDE |
-| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | — | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |
-| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | — | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
-| `M-52` | M-51 named a quantity that does not exist, and what replaced it | — | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
-| `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
-
-11 rules, 11 with a computed lead time, of which
-10 are positive and 1 negative. **The negative one is
-kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
-pre-registered; the control runs had finished before any threshold reached git. A table that
-dropped it would be asserting exactly what the ledger retracts.
-
-**`M-52` is in the table and that is deliberate.** It is the one mid-flight amendment to a
-pre-registration in this project: `M-51` named a baseline that does not exist in the artifact it
-named — the residual on the last teacher-forced step of the history window, which the rollout
-helper never computes because it copies the history rather than predicting it — and `M-52` names
-the replacement, committed before the replacement's statistic was computed. A table of
-pre-registrations that omitted the one amendment would be a highlights reel. It was omitted: the
-selector matched on entry TITLES, and `M-52`'s title does not contain the word, so the row a
-sceptical reader most wants was silently absent. Entries are selected by their `Status` line as
-well now, and the count is asserted against the same set `scripts/ledger_check.py` reports.
-
-**What each rule says, in its own committed words.** These are quotations, so their section
-references are the ones current when each rule was committed and some no longer resolve — `M-45`
-governs "the within-trajectory control on §5.6", which is now §6.7. Renumbering a quotation to
-keep a cross-reference checker happy would falsify it, so they stand as written and the checker
-exempts this block by name.
-
-**`M-16` — The Arm A / Arm B comparison.** Entered before any main-run result exists. Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. The claim reproduces, or fails to, and can be reported only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the same at the …
-
-**`M-22` — Whether episode difficulty biases the A/B comparison.** Entered before Task 4b runs. Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097). …
-
-**`M-23` — The 10,000-iteration comparison.** Entered before any 10,000-iteration result exists. Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not to …
-
-**`M-43` — The ensemble-5 replication.** The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed. Entered before any ensemble-5 result exists. No …
-
-**`M-44` — The trunk-sharing mechanism.** Entered before any independent-init ensemble exists. No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git …
-
-**`M-45` — The within-trajectory control.** Entered before the statistic was computed. No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.
-
-**`M-49` — Pre-registered: does trunk-sharing survive capacity matching?.** - MECHANISM SURVIVES CAPACITY MATCHING — the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT — the matched …
-
-**`M-50` — Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.** - OBJECTIVE-DRIVEN — under `mse` the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under `gaussian_nll` the ratio is within the recovery factor and the slope is above the tracking threshold. §6.3's derivation is demonstrated against ground truth and …
-
-**`M-51` — Pre-registered: does the ranking claim survive more than one free adversary?.** and the partial exceeds its own.
-
-**`M-52` — M-51 named a quantity that does not exist, and what replaced it.** Committed before the replacement statistic is computed. `M-51` stands as written; this entry records that one of its two baselines was mis-specified and fixes it. `M-51`'s other baseline, step-size, is unaffected and its statistic was computed under `M-51` as committed. What was wrong. `M-51` …
-
-**`S-12` — "Task 3's duplication rule was pre-registered".** Retracts — a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else — a rule committed to git before the data testing it exists (M-16, M-23 …
-
----
-
-## Appendix E — what testing the untested claims would require
-
-§4's table marks 4 claims tested and the rest not. "Not tested" is an apology
-unless it comes with a price, so here is what each would cost. We give compute orders where we
-can estimate them honestly from this project's own measurements and say so where we cannot.
-
-**Everything below needs what this reproduction did not have: a simulator.** Our arms train on
-the released CSV, which is a recording. Every untested claim needs *interaction* — a policy acting
-in an environment and the environment responding — and that means Isaac Lab, which needs an
-RTX-class NVIDIA GPU. No amount of CPU substitutes: the reference's data generation is
-GPU-parallel simulation, not a data-loading problem.
-
-| untested claim | what it needs | order |
-|---|---|---|
-| Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
-| MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
-| Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 48.2 h scale; the model training is the cheap half and the data is not |
-| Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
-| Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 48.2 h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 31 runs took 48.2 h on two cores; a modest sweep is a small multiple of that |
-
-**The two at the bottom are within reach of this setup** — the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison —
-and are the honest next steps for anyone extending this work on CPU. The six above
-them are not, and no amount of care with the released CSV changes that. This table has one row per
-untested claim; it listed 2 fewer than that until the assertion that counts its rows
-against Appendix F's was written, and the two it omitted were the two whose cost is hardest to
-state honestly.
-
-**What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
-items, it bears directly on the one limitation §11 states that our measurements cannot bound —
-whether the miscalibration we document costs anything downstream — and it needs no hardware.
-
----
-
-## Appendix F — every claim of the originals, and what we did with it
-
-The body's §4 summarises this table. It is here in full because the third column — what the
-original actually reports — is the answer to a question a reader of any reproduction should ask,
-and because "no quantitative figure" is itself a finding that deserves to be checkable row by row.
-
-*Section references follow arXiv:2501.10100**v1**, which uses Roman-numeral sectioning. v2
-renumbered to Arabic and moved IV-C's material into Appendix A.4.1. References to
-arXiv:2504.16680 follow **v1**, which is the version we read; it is now at
-v3 (8 Jan 2026), where §5.1 and Eq. 4–5 keep their numbers but every figure
-and appendix table has moved — Figure 2 (right) became Figure 3 (right), and the model was renamed RWM-O to
-RWM-U, which is a re-expansion of the letter ("Offline Robotic World Model" to
-"Uncertainty-Aware Robotic World Model") rather than a second variant: no version of the paper contains both
-names. All locations, and the occurrence counts that establish that, are recorded in
-`results/original_paper_figures.json`.*
-
-| claim, and where | tested | what the original reports | verdict |
-|---|---|---|---|
-| RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 4 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
-| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
-| M=32, N=8 is the optimal configuration (§IV-C) | no | — | `[cpu: the M/N configuration sweep]` we use the released configuration and did not sweep it |
-| Beats MLP, RSSM and transformer baselines (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[cpu: the MLP/RSSM/transformer baseline comparison]` the lite release ships only the RNN variant |
-| Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |
-| Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **6M against 250M state transitions** at equal real tracking reward (0.90 +- 0.04 against 0.90 +- 0.03), Table I — the only table of numbers in either paper | `[policy, hardware: the sample-efficiency result]` **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
-| MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | `[policy: the comparisons against SHAC and Dreamer]` no policy learning reproduced |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[model: generality across robot morphologies]` one released dataset, ANYmal D flat |
-| Epistemic "closely follows the trend of the prediction error", justifying "its role as a trust metric" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** A "strong correlation" is asserted with no coefficient, interval or sample size; plotted in Fig. 2 (right) | **supported as a scalar ranking, against a real baseline** — the applied scalar correlates +0.605 [+0.545, +0.694] with realised error at n_independent = 20, beats the forecast-index counter at every horizon and survives 5 controls on forecast depth — the linear partial that keeps +0.596, and four harder ones — plus a sixth on trajectory difficulty — the last giving +0.419 [+0.318, +0.576] with both the rollout and the depth held constant (§6.7, M-45). **Weaker per-dimension than we first reported**: at h = 368 the 45-of-45 sign count gives a permutation P of 0.0435 (out-of-sample) and 0.0775 (in-sample), and no cell survives multiplicity correction (§6.6). **Not supported as a scale**: 33.4× overconfident at h = 100, the method's own rollout length, and 34.4× at the h = 368 diagnostic horizon; repairable per horizon (§6.8) |
-| Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§6.3) |
-| Offline MBRL on real robots (2504.16680v1) | no | — | `[policy, hardware: offline MBRL on real robots]` not tested |
-| Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.7), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
 
 ---

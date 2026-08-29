@@ -29,7 +29,7 @@ uncertainty outputs report.
    of outcomes inside ±1σ against a calibrated 68.27%. It deteriorates with horizon from there.
    The per-member σ the method computes and discards is worse still, and §6.3 derives why: the
    implemented state loss puts a reparameterised *sample* into a squared error, whose optimum in σ
-   is exactly zero. Appendix H demonstrates that against synthetic data with known noise.
+   is exactly zero. §6.3 demonstrates that against synthetic data with known noise.
 
 3. **As a ranking it is much better.** Disagreement beats the forecast step index — a free counter
    neither paper ran — at every horizon, and still correlates +0.419 with realised error once both

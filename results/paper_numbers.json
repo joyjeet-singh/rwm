@@ -3649,7 +3649,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "373"
+    "value": "376"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3801,7 +3801,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 226
+    "value": 228
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -4005,7 +4005,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 40
+    "value": 41
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -6743,6 +6743,14 @@
     "source": "results/step4_0a_results.json",
     "value": "9.5"
   },
+  "t1_first_entry_n": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 3
+  },
+  "t1_last_entry_n": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": 18
+  },
   "t1_n_frag": {
     "source": "results/t1_bibliography_verified.json",
     "value": 17
@@ -6758,6 +6766,10 @@
   "t1_n_verified": {
     "source": "results/t1_bibliography_verified.json",
     "value": 16
+  },
+  "t1_reference_list": {
+    "source": "results/t1_bibliography_verified.json",
+    "value": "3. Z. Abbas, S. Sokota, E. J. Talvitie, M. White. *Selective Dyna-style Planning Under Limited Model Capacity.* ICML 2020. arXiv:2007.02418, 2020.\n4. K. Chua, R. Calandra, R. McAllister, S. Levine. *Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.* NeurIPS 2018. arXiv:1805.12114, 2018.\n5. S. Fort, H. Hu, B. Lakshminarayanan. *Deep Ensembles: A Loss Landscape Perspective.* arXiv:1912.02757, 2019.\n6. C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. *On Calibration of Modern Neural Networks.* ICML 2017. arXiv:1706.04599, 2017.\n7. M. Havasi, R. Jenatton, S. Fort, J. Z. Liu, J. Snoek, B. Lakshminarayanan, A. M. Dai, D. Tran. *Training independent subnetworks for robust prediction.* ICLR 2021. arXiv:2010.06610, 2021.\n8. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253, 2019.\n9. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951, 2020.\n10. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263, 2018.\n11. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474, 2017.\n12. S. Lee, S. Purushwalkam, M. Cogswell, D. Crandall, D. Batra. *Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks.* arXiv:1511.06314, 2015.\n13. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135, 2022.\n14. A. Malik, V. Kuleshov, J. Song, D. Nemer, H. Seymour, S. Ermon. *Calibrated Model-Based Deep Reinforcement Learning.* ICML 2019 (PMLR 97:4314-4323). arXiv:1906.08312, 2019.\n15. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530, 2019.\n16. M. Seitzer, A. Tavakoli, D. Antic, G. Martius. *On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks.* ICLR 2022. arXiv:2203.09168, 2022.\n17. Y. Wen, D. Tran, J. Ba. *BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning.* ICLR 2020. arXiv:2002.06715, 2020.\n18. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239, 2020."
   },
   "t1_refs_after": {
     "source": "results/t1_bibliography_verified.json",
@@ -6797,7 +6809,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 567
+    "value": 577
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
