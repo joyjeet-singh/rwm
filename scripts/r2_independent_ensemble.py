@@ -106,11 +106,21 @@ def rollout_independent(models, state, action, start_step=START, action_offset=1
     return pred, alea, epi, alea_s, epi_s
 
 
-def load_ens1(seed):
-    w = f"runs/armA_seed{seed}/weights_2500.pt"
-    assert os.path.exists(w), f"missing {w} — run ./run_indep_ens.sh"
+def load_ens1(seed, tag="", hidden=256):
+    """One ens1 model.
+
+    `tag` and `hidden` exist so that M-49's capacity-matched arm can be scored by
+    THIS code rather than by a copy of it. The comparison is only interpretable if
+    the rollout protocol, the bootstrap, the horizons and the arena are identical
+    between the two arms, and the surest way to guarantee that is one
+    implementation. Defaults reproduce M-44's discharged run exactly.
+    """
+    w = f"runs/armA_seed{seed}{tag}/weights_2500.pt"
+    assert os.path.exists(w), (
+        f"missing {w} — run "
+        f"{'./run_m49_matched.sh' if tag else './run_indep_ens.sh'}")
     sd = torch.load(w, map_location="cpu")["model_state_dict"]
-    m = S.ReferenceRWM(sd, ensemble=1)
+    m = S.ReferenceRWM(sd, ensemble=1, hidden=hidden)
     m.eval()
     return m
 
@@ -123,7 +133,10 @@ def block(err, sig, sl):
             "mean_sigma": float(np.nanmean(g)), "mean_abs_err": float(np.nanmean(e))}
 
 
-def main():
+def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
+         rule="M-44", mde_ratio=None, mde_cov=None):
+    mde_ratio = MDE_RATIO if mde_ratio is None else mde_ratio
+    mde_cov = MDE_COV_PTS if mde_cov is None else mde_cov
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, ep = R.load_data(paths["csv"], verbose=False)
@@ -139,7 +152,8 @@ def main():
                          dtype=torch.float32)
     ac = torch.as_tensor(raw[:, :, R.ACTION_COLS], dtype=torch.float32)
 
-    print("R2 — THE INDEPENDENT-INITIALISATION ENSEMBLE, AND M-44's VERDICT")
+    print(f"R2 — THE INDEPENDENT-INITIALISATION ENSEMBLE, AND {rule}'s VERDICT"
+          + (f"   [capacity-matched, hidden {hidden}]" if tag else ""))
     print("=" * 104)
     print(f"  out-of-sample, episodes {hold}, {n_traj} trajectories, "
           f"n_independent = {n_ind}\n")
@@ -154,12 +168,18 @@ def main():
                     "hidden state; the ensemble mean is fed back to all members. "
                     "Identical to the shared-trunk protocol except that the trunk is "
                     "replicated rather than shared.",
-        "mde_ratio": MDE_RATIO, "mde_coverage_pts": MDE_COV_PTS,
+        "mde_ratio": mde_ratio, "mde_coverage_pts": mde_cov,
+        # NOT "rule": the m44 block already has that key and it holds a sentence
+        # ("M-44, committed 2026-08-23 before any artifact here existed"). The
+        # first version of this parameterisation overwrote it with a bare
+        # identifier -- a record destroyed to make room for a label.
+        "governing_rule": rule, "arm_tag": tag or "(released width)",
+        "hidden_size": hidden,
         "mde_source": "results/p1_power_check.json, cross-architecture calibration",
     }, "independent": {}, "shared_trunk": {}, "comparison": {}, "m44": {}}
 
     # --------------------------------------------- the independent ensemble
-    models = [load_ens1(s) for s in INDEP_SEEDS]
+    models = [load_ens1(s, tag, hidden) for s in INDEP_SEEDS]
     print(f"  loaded {len(models)} independently-initialised ens1 models: "
           f"seeds {list(INDEP_SEEDS)}")
     pred, alea, epi, alea_s, epi_s = rollout_independent(models, st.clone(), ac)
@@ -323,7 +343,13 @@ def main():
             "coverage_interval_excludes_zero_in_all": cov_excl,
             "coverage_shift_at_least_mde": cov_mde,
         },
-        "mde_ratio": MDE_RATIO, "mde_coverage_pts": MDE_COV_PTS,
+        "mde_ratio": mde_ratio, "mde_coverage_pts": mde_cov,
+        # NOT "rule": the m44 block already has that key and it holds a sentence
+        # ("M-44, committed 2026-08-23 before any artifact here existed"). The
+        # first version of this parameterisation overwrote it with a bare
+        # identifier -- a record destroyed to make room for a label.
+        "governing_rule": rule, "arm_tag": tag or "(released width)",
+        "hidden_size": hidden,
         "supported": supported, "unresolvable": unresolvable, "verdict": verdict,
         "mean_ratio_improvement": float(np.exp(-np.mean([p["log_ratio"] for p in P]))),
         "mean_coverage_gain_pts": float(np.mean([p["coverage_diff_pts"] for p in P])),
@@ -336,19 +362,32 @@ def main():
             "direction of 'architecture is not the explanation'. If it moves a lot, the "
             "design flaw is identified but not cleanly attributed."),
     }
-    print(f"\n  M-44 VERDICT: {verdict}")
+    print(f"\n  {rule} VERDICT: {verdict}")
     for k, v in out["m44"]["conditions"].items():
         print(f"    {'yes' if v else 'NO ':>4}  {k}")
     print(f"    mean overconfidence improvement "
-          f"{out['m44']['mean_ratio_improvement']:.2f}× (MDE {MDE_RATIO}×)")
+          f"{out['m44']['mean_ratio_improvement']:.2f}× (MDE {mde_ratio}×)")
     print(f"    mean coverage gain {out['m44']['mean_coverage_gain_pts']:+.2f} points "
-          f"(MDE {MDE_COV_PTS})")
+          f"(MDE {mde_cov})")
 
-    dst = os.path.join(R.RESULTS, "r2_independent_ensemble.json")
+    dst = os.path.join(R.RESULTS, out_name)
     with open(dst, "w") as f:
         json.dump(out, f, indent=2, sort_keys=True)
     print(f"\n  wrote {R.rel(dst)}")
 
 
 if __name__ == "__main__":
+    # M-49 runs the SAME code on the capacity-matched arm. One implementation,
+    # because the comparison is only interpretable if the rollout protocol, the
+    # bootstrap, the horizons and the arena are identical between the two arms,
+    # and two copies of a script drift.
+    if "--m49" in sys.argv:
+        import json as _j
+        _P2 = _j.load(open(os.path.join(R.RESULTS, "p2_capacity_power.json")))
+        _w = _P2["capacity"]["matched_hidden_size"]
+        _m = _P2["mde_80pct_power"]
+        sys.exit(main(tag=f"_m49h{_w}", hidden=_w,
+                      out_name="m49_capacity_matched.json", rule="M-49",
+                      mde_ratio=round(_m["overconfidence_ratio_multiplicative"], 3),
+                      mde_cov=round(_m["coverage_pts"], 2)))
     main()

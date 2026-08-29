@@ -144,7 +144,10 @@
   "design": {
     "action_offset": 1,
     "arena": "out-of-sample held-out pair",
+    "arm_tag": "(released width)",
     "bootstrap_unit": "whole trajectory (M-27)",
+    "governing_rule": "M-44",
+    "hidden_size": 256,
     "holdout_episodes": [
       1,
       8
@@ -217,6 +220,7 @@
     }
   },
   "m44": {
+    "arm_tag": "(released width)",
     "conditions": {
       "coverage_higher_in_all": true,
       "coverage_interval_excludes_zero_in_all": true,
@@ -227,6 +231,8 @@
     },
     "convention": "a condition holds only if it holds against EVERY shared-trunk seed, the same all-three convention M-43 used",
     "design_limitation": "independently-seeded runs differ in BOTH initialisation and data ordering, whereas the shared-trunk heads differ only in head initialisation. This comparison therefore conflates trunk-sharing with data-order diversity and BOUNDS the effect rather than isolating it. If the overconfidence factor barely moves despite that generous handicap, the finding is strong in the direction of 'architecture is not the explanation'. If it moves a lot, the design flaw is identified but not cleanly attributed.",
+    "governing_rule": "M-44",
+    "hidden_size": 256,
     "horizon": 100,
     "mde_coverage_pts": 2.26,
     "mde_ratio": 1.45,
