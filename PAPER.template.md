@@ -477,9 +477,16 @@ Arm A) at h = {{v2_diag_h}}: **{{a1_gap_traj_h368}}**. All
 {{a1_gap_traj_n_positive_h368}} of {{a1_gap_traj_n_h368}} are positive, which is the sign test;
 but one trajectory carries {{a1_gap_traj_max_h368}} against a smallest of
 {{a1_gap_traj_min_h368}}, and no interval on four units shows a reader that. At
-h = {{v2_deploy_h}} the four are {{a1_gap_traj_h100}}. Wherever this paper reports an interval on
-n_independent = {{m23_nind}}, the underlying values are in the artifact the interval came from;
-these two are printed here because §5 is where the reader meets the design.
+h = {{v2_deploy_h}} the four are {{a1_gap_traj_h100}}.
+
+The same is done for the other comparison this paper makes at n_independent = {{m23_nind}}: §6.10
+and §11's paired contrasts carry their four per-trajectory ratios and coverage differences in
+`results/r2_independent_ensemble.json` and `results/m49_capacity_matched.json`. **It is not done
+everywhere.** §6.2's calibration tables report intervals at n_independent = {{b2_nind}} in every
+cell, and printing four values in each would be sixty-four numbers in one table; those intervals
+are quantised at the resolution §3 states and should be read as coarse. An earlier version of this
+paragraph claimed the underlying values were in the artifact for *every* such interval. They were
+not — only §5's were — and the claim is narrowed to what is true.
 
 *Against a baseline, because neither number means anything without one.* The hold-last
 floor — predicting that nothing changes — scores **{{a1_floor_h368}}** in the same

@@ -2781,12 +2781,27 @@
         "scripts/r2_independent_ensemble.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-24",
+      "claim": "E8's own sentence made a claim about the artifacts that was false",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/m49_capacity_matched.json",
+        "results/r2_independent_ensemble.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 23,
+    "D": 24,
     "M": 56,
     "O": 14,
     "R": 73,

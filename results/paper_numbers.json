@@ -3649,7 +3649,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "366"
+    "value": "368"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3801,7 +3801,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 222
+    "value": 223
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -6797,7 +6797,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 557
+    "value": 561
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

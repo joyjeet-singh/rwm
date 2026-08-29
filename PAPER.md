@@ -41,7 +41,7 @@ scored on the other, restores nominal coverage on every held-out cell; and the r
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
 nRMSE at h = 368 by 75%.
 
-Every **measurement** here is substituted from a named artifact; the 557 numerals that
+Every **measurement** here is substituted from a named artifact; the 561 numerals that
 are not are addresses, horizon labels or declared constants, classified one by one by a build that
 fails on anything else. 51 comparative claims across 21 kinds are recomputed each
 build against a corrupted expectation, so a check that can no longer fail is caught.
@@ -483,9 +483,16 @@ Arm A) at h = 368: **+2.8705, +0.8949, +0.7445, +0.6562**. All
 4 of 4 are positive, which is the sign test;
 but one trajectory carries +2.8705 against a smallest of
 +0.6562, and no interval on four units shows a reader that. At
-h = 100 the four are +1.0925, +0.8170, +0.2800, +0.1549. Wherever this paper reports an interval on
-n_independent = 4, the underlying values are in the artifact the interval came from;
-these two are printed here because §5 is where the reader meets the design.
+h = 100 the four are +1.0925, +0.8170, +0.2800, +0.1549.
+
+The same is done for the other comparison this paper makes at n_independent = 4: §6.10
+and §11's paired contrasts carry their four per-trajectory ratios and coverage differences in
+`results/r2_independent_ensemble.json` and `results/m49_capacity_matched.json`. **It is not done
+everywhere.** §6.2's calibration tables report intervals at n_independent = 4 in every
+cell, and printing four values in each would be sixty-four numbers in one table; those intervals
+are quantised at the resolution §3 states and should be read as coarse. An earlier version of this
+paragraph claimed the underlying values were in the artifact for *every* such interval. They were
+not — only §5's were — and the claim is narrowed to what is true.
 
 *Against a baseline, because neither number means anything without one.* The hold-last
 floor — predicting that nothing changes — scores **0.9930** in the same
@@ -1261,7 +1268,7 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (222 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (223 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all 8 rules; 7 are positive and 1 is not. The negative one is the duplication-control rule (§7.4), which was stated in conversation before the runs but reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1739,7 +1746,7 @@ form 2.
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 366 KB ledger, so here is the table. It is generated from
+or an instruction to open a 368 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data

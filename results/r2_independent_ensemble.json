@@ -9,12 +9,24 @@
           7.544444444444445
         ],
         "coverage_diff_pts": 6.694444444444445,
+        "coverage_diff_pts_per_trajectory": [
+          7.977777777777778,
+          7.11111111111111,
+          5.644444444444444,
+          6.044444444444444
+        ],
         "coverage_excludes_zero": true,
         "coverage_improves": true,
         "log_ratio": -0.6878755438862724,
         "log_ratio_ci": [
           -0.8153950969533326,
           -0.5699808764377179
+        ],
+        "log_ratio_per_trajectory": [
+          -0.8789090883575297,
+          -0.6961431849242061,
+          -0.52306273958342,
+          -0.6116318946096794
         ],
         "ratio": 0.5026427780995469,
         "ratio_beats_mde": true,
@@ -23,7 +35,13 @@
           0.5655362536638961
         ],
         "ratio_excludes_zero": true,
-        "ratio_improves": true
+        "ratio_improves": true,
+        "ratio_per_trajectory": [
+          0.4152356500929346,
+          0.498504239589063,
+          0.5927024719226935,
+          0.5424649008201189
+        ]
       },
       "1": {
         "coverage_beats_mde": true,
@@ -32,12 +50,24 @@
           8.18888888888889
         ],
         "coverage_diff_pts": 7.333333333333333,
+        "coverage_diff_pts_per_trajectory": [
+          7.822222222222222,
+          8.555555555555555,
+          6.866666666666665,
+          6.088888888888889
+        ],
         "coverage_excludes_zero": true,
         "coverage_improves": true,
         "log_ratio": -0.7241682085360451,
         "log_ratio_ci": [
           -0.8648304062014499,
           -0.600257050129828
+        ],
+        "log_ratio_per_trajectory": [
+          -0.9361082592816539,
+          -0.727125634556871,
+          -0.5970316942592979,
+          -0.6186743887006573
         ],
         "ratio": 0.48472759359059187,
         "ratio_beats_mde": true,
@@ -46,7 +76,13 @@
           0.548670582121465
         ],
         "ratio_excludes_zero": true,
-        "ratio_improves": true
+        "ratio_improves": true,
+        "ratio_per_trajectory": [
+          0.3921510196077204,
+          0.4832961653072373,
+          0.5504430969634626,
+          0.5386580156786598
+        ]
       },
       "2": {
         "coverage_beats_mde": true,
@@ -55,12 +91,24 @@
           8.366666666666669
         ],
         "coverage_diff_pts": 7.3277777777777775,
+        "coverage_diff_pts_per_trajectory": [
+          8.71111111111111,
+          8.02222222222222,
+          6.266666666666667,
+          6.31111111111111
+        ],
         "coverage_excludes_zero": true,
         "coverage_improves": true,
         "log_ratio": -0.7067241619956028,
         "log_ratio_ci": [
           -0.832541801368724,
           -0.5877279810378951
+        ],
+        "log_ratio_per_trajectory": [
+          -0.9003052851618193,
+          -0.7480872101118865,
+          -0.6434882710435395,
+          -0.5640942467350646
         ],
         "ratio": 0.49325738503562355,
         "ratio_beats_mde": true,
@@ -69,7 +117,13 @@
           0.5555881586589753
         ],
         "ratio_excludes_zero": true,
-        "ratio_improves": true
+        "ratio_improves": true,
+        "ratio_per_trajectory": [
+          0.40644555900025553,
+          0.47327095539695857,
+          0.5254562894781443,
+          0.5688751740247294
+        ]
       }
     }
   },

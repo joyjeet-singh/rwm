@@ -254,7 +254,23 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
         lo2, hi2, _ = cboot_paired(
             lambda i: 100 * (cov(err_i, epi_i, i) - cov(es, gs, i)), n_traj,
             np.random.default_rng(200 + s))
+        # E8. The FOUR trajectory values each interval is computed from.
+        #
+        # A cluster bootstrap over four units has 4**4 = 256 distinct resamples,
+        # quantised tails and poor coverage. The paper says so and prints the
+        # interval anyway. Printing the underlying values costs nothing, is more
+        # informative, and pre-empts the objection -- and §5 asserts that wherever
+        # this paper reports an interval at n_independent = 4 the underlying
+        # values are in the artifact it came from. That sentence was FALSE when
+        # written: only a1_ab_by_horizon.json carried them.
+        _per_traj_lr = [float(np.log(rho(err_i, epi_i, [t]) / rho(es, gs, [t])))
+                        for t in range(n_traj)]
+        _per_traj_dc = [float(100 * (cov(err_i, epi_i, [t]) - cov(es, gs, [t])))
+                        for t in range(n_traj)]
         per_pair[str(s)] = {
+            "log_ratio_per_trajectory": _per_traj_lr,
+            "ratio_per_trajectory": [float(np.exp(x)) for x in _per_traj_lr],
+            "coverage_diff_pts_per_trajectory": _per_traj_dc,
             "log_ratio": lr, "ratio": float(np.exp(lr)),
             "log_ratio_ci": [lo1, hi1],
             "ratio_ci": [float(np.exp(lo1)), float(np.exp(hi1))],

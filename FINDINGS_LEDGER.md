@@ -5716,6 +5716,36 @@ are identical.
 **Evidence** `SRC` `scripts/r2_independent_ensemble.py`, `results/m49_capacity_matched.json`
 **Status** ACTIVE · **Relevance** METHOD
 
+### D-24 — E8's own sentence made a claim about the artifacts that was false · **NEW**
+**What it said.** §5, in the paragraph added to satisfy the brief's requirement that no
+`n_independent = 4` interval be printed without its four underlying values: *"Wherever this paper
+reports an interval on n_independent = 4, the underlying values are in the artifact the interval
+came from."*
+
+**What was true.** Exactly one artifact carried them — `results/a1_ab_by_horizon.json`, because
+that is the one the paragraph was written about. `task_b2_epistemic.json`,
+`r2_independent_ensemble.json`, `m49_capacity_matched.json`, `task_d3_ens5.json` and
+`task_c3_multiplicity.json` all report intervals at n_independent = 4 and none of them held a
+per-trajectory value.
+
+**How it was found.** By checking the claim rather than the requirement. The requirement was
+satisfied where the paragraph looked; the sentence generalised from there to every artifact in the
+paper, and nothing checked the generalisation — a sentence asserting a property of five other
+files is not something any of this project's kinds can see.
+
+**Both halves fixed.** `r2_independent_ensemble.py` now emits the four per-trajectory ratios and
+coverage differences for every paired comparison, which covers §6.10's contrast and §11's
+capacity-matched one under `M-49`. And the sentence is narrowed to what is true, including the
+place it is deliberately **not** done: §6.2's calibration tables report an interval in every cell
+at n_independent = 4, and printing four values in each would be sixty-four numbers in one table.
+
+**The shape, for the record.** This is `D-21` again within one revision: a sentence written to fix
+an over-claim, itself over-claiming. Twice now the sentence most likely to be wrong has been the
+one just written to make something right.
+
+**Evidence** `SRC` `results/r2_independent_ensemble.json`, `results/m49_capacity_matched.json`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are
