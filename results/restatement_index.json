@@ -64,7 +64,7 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1774,
+          "line": 1778,
           "key": "a2_rdd",
           "ctx": "s \u2014 plus a sixth on trajectory difficulty \u2014 the last giving {{a2_rdd}} {{a2_rdd_ci}} with both the rollout and"
         }
@@ -167,7 +167,7 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1774,
+          "line": 1778,
           "key": "d2b_par_all",
           "ctx": "rols on forecast depth \u2014 the linear partial that keeps {{d2b_par_all}}, and four harder ones \u2014 plus a sixth on"
         }
@@ -246,7 +246,7 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1774,
+          "line": 1778,
           "key": "d4_r",
           "ctx": "ng, against a real baseline** \u2014 the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_inde"
         }
@@ -1011,7 +1011,7 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1738,
+          "line": 1742,
           "key": null,
           "ctx": "ly numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the ho"
         }
@@ -1168,12 +1168,13 @@
     },
     {
       "value": "10",
-      "n_locations": 22,
+      "n_locations": 23,
       "blocking": true,
       "n_typed": 1,
-      "n_substituted": 21,
+      "n_substituted": 22,
       "sources": [
         "results/a1_ab_by_horizon.json",
+        "results/appendix_g_rules.json",
         "results/task_c3_multiplicity.json",
         "results/task_d3_perhorizon.json",
         "results/task_d_nind20.json"
@@ -1191,6 +1192,7 @@
         "a1_sign_pos_h32",
         "a1_sign_pos_h368",
         "a1_sign_pos_h8",
+        "appG_n_rules",
         "c3_sign_n",
         "c3_sign_pos",
         "d1n_eps",
@@ -1322,6 +1324,12 @@
           "line": 1262,
           "key": "d3_tol",
           "ctx": "st horizon, fitted on held-out data, brings coverage within {{d3_tol}} points of nominal on every held-out cel"
+        },
+        {
+          "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1697,
+          "key": "appG_n_rules",
+          "ctx": " | verdict | |---|---|---|---|---|---| {{appG_table}} {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
@@ -2027,7 +2035,7 @@
         },
         {
           "section": "Appendix E \u2014 what testing the untested claims would require",
-          "line": 1738,
+          "line": 1742,
           "key": "appE_n_cpu",
           "ctx": "t. This table has one row per untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion tha"
         },
@@ -2419,7 +2427,7 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1774,
+          "line": 1778,
           "key": "d4_nind",
           "ctx": " {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at ev"
         },
@@ -2665,7 +2673,7 @@
         },
         {
           "section": "Appendix E \u2014 what testing the untested claims would require",
-          "line": 1733,
+          "line": 1737,
           "key": "rt_runs",
           "ctx": "ator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; "
         }
@@ -3322,13 +3330,13 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1774,
+          "line": 1778,
           "key": "v2_diag_h",
           "ctx": " **Weaker per-dimension than we first reported**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1774,
+          "line": 1778,
           "key": "v2_diag_h",
           "ctx": "n rollout length, and {{d1n_epi_ratio_h368}}\u00d7 at the h = {{v2_diag_h}} diagnostic horizon; repairable per hori"
         },
@@ -3801,7 +3809,7 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1774,
+          "line": 1778,
           "key": "d2r_ncontrols",
           "ctx": "forecast-index counter at every horizon and survives {{d2r_ncontrols}} controls on forecast depth \u2014 the linear"
         },
@@ -4331,12 +4339,11 @@
     },
     {
       "value": "8",
-      "n_locations": 20,
+      "n_locations": 19,
       "blocking": true,
       "n_typed": 9,
-      "n_substituted": 11,
+      "n_substituted": 10,
       "sources": [
-        "results/appendix_g_rules.json",
         "results/paper_figures.json",
         "results/r2_independent_ensemble.json",
         "results/step0_regimes.json",
@@ -4348,7 +4355,6 @@
       ],
       "keys": [
         "None",
-        "appG_n_rules",
         "c2_bounds",
         "c3_family",
         "d3_worst_ep",
@@ -4420,12 +4426,6 @@
           "ctx": "e 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive a"
         },
         {
-          "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1697,
-          "key": "appG_n_rules",
-          "ctx": " | verdict | |---|---|---|---|---|---| {{appG_table}} {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
-        },
-        {
           "section": "5. The base paper's central claim reproduces",
           "line": 488,
           "key": null,
@@ -4469,13 +4469,13 @@
         },
         {
           "section": "Appendix E \u2014 what testing the untested claims would require",
-          "line": 1704,
+          "line": 1708,
           "key": null,
           "ctx": "mes three, if run at our data budget | | M=32, N=8 optimal (\u00a7IV-C) | no simulator needed; a sweep over M and N"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1739,
+          "line": 1743,
           "key": null,
           "ctx": " B is worse than the hold-last floor | | M=32, N=8 is the optimal configuration (\u00a7IV-C) | no | \u2014 | `[cpu: the "
         }

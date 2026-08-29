@@ -92,6 +92,12 @@ DETECT = [re.compile(p, re.I) for p in (
 # legitimately cites are not identifying.
 URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
 SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli", "jannerm",
+             # A CITED paper's own code repository. Seitzer et al. (ICLR 2022)
+             # give it in their arXiv comment field, which the bibliography
+             # verification records verbatim as evidence. It identifies THEM, not
+             # us, and removing it would mean recording their metadata inaccurately
+             # in the one file whose purpose is that the metadata is accurate.
+             "martius-lab",
              "anonymised"}
 
 INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex", "figures"]

@@ -1748,11 +1748,13 @@ existed. This is the same computation Figure 4 plots.
 | `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED — reproduces at long horizon |
 | `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |
 | `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |
-| `M-45` | The within-trajectory control on §5.6 | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |
+| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |
 | `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | not computed | — | not yet discharged |
+| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | — | not computed | — | not yet discharged |
+| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | — | not computed | — | not yet discharged |
 | `S-12` | "Task 3's duplication rule was pre-registered" | — | -2.9 h | control runs finished | RETRACTED |
 
-8 rules, 7 with a computed lead time, of which
+10 rules, 7 with a computed lead time, of which
 6 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
@@ -1762,23 +1764,31 @@ dropped it would be asserting exactly what the ledger retracts.
 minimum detectable effect, before the runs it governs. That is what a pre-registration in progress
 looks like, and it is included so the table is a census rather than a highlights reel.
 
-**What each rule says, in its own committed words:**
+**What each rule says, in its own committed words.** These are quotations, so their section
+references are the ones current when each rule was committed and some no longer resolve — `M-45`
+governs "the within-trajectory control on §5.6", which is now §6.7. Renumbering a quotation to
+keep a cross-reference checker happy would falsify it, so they stand as written and the checker
+exempts this block by name.
 
-**`M-16` — The Arm A / Arm B comparison.** **Entered before any main-run result exists.** Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. **The claim reproduces, or fails to, and can be reported** only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the **sam
+**`M-16` — The Arm A / Arm B comparison.** Entered before any main-run result exists. Committed prior to launching Arm A seed 0; the git history is the timestamp. A rule chosen after seeing numbers is not a rule. The claim reproduces, or fails to, and can be reported only if BOTH hold: 1. the A-versus-B ordering at h = 8 is the same at the …
 
-**`M-22` — Whether episode difficulty biases the A/B comparison.** **Entered before Task 4b runs.** Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097).
+**`M-22` — Whether episode difficulty biases the A/B comparison.** Entered before Task 4b runs. Committed prior to computing any per-episode gap; the git history is the timestamp, as it was for M-16. The concern: every A/B number rests on episodes 1 and 8, which are the first and third easiest of ten by D-12 (pair mean 0.694 against a population mean of 1.097). …
 
-**`M-23` — The 10,000-iteration comparison.** **Entered before any 10,000-iteration result exists.** Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not 
+**`M-23` — The 10,000-iteration comparison.** Entered before any 10,000-iteration result exists. Committed on its own, before the runs are launched; the git history is the timestamp, as for M-16 and the `0fe2bca` annotation. Written to correct M-24's design flaw: this rule is anchored to the horizon the paper's claim is actually about, not to …
 
-**`M-43` — The ensemble-5 replication.** *The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed.* **Entered before any ensemble-5 result exists.** No `runs/armA_s
+**`M-43` — The ensemble-5 replication.** The brief commissioning this work labelled it M-24. That identifier was allocated in this ledger on 2026-08-14 to a different finding and claim IDs here are permanent, so it is entered as M-43. Nothing else about the rule is changed. Entered before any ensemble-5 result exists. No …
 
-**`M-44` — The trunk-sharing mechanism.** **Entered before any independent-init ensemble exists.** No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git 
+**`M-44` — The trunk-sharing mechanism.** Entered before any independent-init ensemble exists. No `runs/armA_seed3` or `runs/armA_seed4` directory existed when this was committed, and no scoring of an independently-initialised ensemble had been run. The commit containing this entry precedes both, and the ordering is checkable from `git …
 
-**`M-45` — The within-trajectory control on §5.6.** **Entered before the statistic was computed.** No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.
+**`M-45` — The within-trajectory control.** Entered before the statistic was computed. No `results/a2_trajectory_level_control.json` existed when this was committed, and the double-demeaned correlation had not been evaluated. The ordering is checkable from `git log`.
 
-**`M-49` — Pre-registered: does trunk-sharing survive capacity matching?.** - **MECHANISM SURVIVES CAPACITY MATCHING** — the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - **CAPACITY EXPLAINS IT** — the matched 
+**`M-49` — Pre-registered: does trunk-sharing survive capacity matching?.** - MECHANISM SURVIVES CAPACITY MATCHING — the matched independent ensemble's overconfidence ratio is better than the shared-trunk arm's by at least the MDE, and the paired bootstrap interval on the log ratio excludes zero, against every shared-trunk seed. - CAPACITY EXPLAINS IT — the matched …
 
-**`S-12` — "Task 3's duplication rule was pre-registered".** **Retracts** — a framing, not a numbered claim; the wording was corrected in place **What is retracted:** the description of the Task 3 decision rule as *pre-registered*, in the sense this project has used that word everywhere else — a rule committed to git before the data testing it exists (M-16, M
+**`M-50` — Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known?.** - OBJECTIVE-DRIVEN — under `mse` the median ratio is below the collapse threshold and the slope is below the tracking threshold, and under `gaussian_nll` the ratio is within the recovery factor and the slope is above the tracking threshold. §6.3's derivation is demonstrated against ground truth and …
+
+**`M-51` — Pre-registered: does the ranking claim survive more than one free adversary?.** and the partial exceeds its own.
+
+**`S-12` — "Task 3's duplication rule was pre-registered".** Retracts — a framing, not a numbered claim; the wording was corrected in place What is retracted: the description of the Task 3 decision rule as pre-registered, in the sense this project has used that word everywhere else — a rule committed to git before the data testing it exists (M-16, M-23 …
 
 ---
 

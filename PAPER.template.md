@@ -1704,7 +1704,11 @@ dropped it would be asserting exactly what the ledger retracts.
 minimum detectable effect, before the runs it governs. That is what a pre-registration in progress
 looks like, and it is included so the table is a census rather than a highlights reel.
 
-**What each rule says, in its own committed words:**
+**What each rule says, in its own committed words.** These are quotations, so their section
+references are the ones current when each rule was committed and some no longer resolve — `M-45`
+governs "the within-trajectory control on §5.6", which is now §6.7. Renumbering a quotation to
+keep a cross-reference checker happy would falsify it, so they stand as written and the checker
+exempts this block by name.
 {{appG_rule_texts}}
 
 ---

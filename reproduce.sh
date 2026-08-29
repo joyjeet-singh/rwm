@@ -392,6 +392,13 @@ REPORT=horizon_sweep_report.txt stage 28c "Horizon sweep over the paper's own pr
 # run to prove the scan is still live.
 stage 28b "Anonymised submission bundle, with its self-test" "40 s" \
       results/anon_bundle.json $PY scripts/make_anon_bundle.py
+# F5.4. The submission PDF on three channels, not one. A \href to a personal
+# repository renders as innocuous blue text and lives in a link annotation that
+# no text extraction returns -- and every check here before this one read either
+# the LaTeX source or the extracted text. --self-test plants an identity in the
+# metadata and in a link annotation and requires both caught.
+REPORT=pdf_channels_report.txt stage 28b1 "Submission PDF: text, metadata and link annotations" "10 s" \
+      results/pdf_channels.json $PY scripts/f5_pdf_channels.py
 stage 29a "Part F submission gate, six checks" "30 s" \
       results/part_f_gate.json $PY scripts/part_f_gate.py
 stage 29 "Submission readiness gate" "40 s" \

@@ -200,7 +200,25 @@ def main():
     have = (set(re.findall(r"^## (\d+)\.", md, re.M))
             | set(re.findall(r"^### (\d+\.\d+)", md, re.M))
             | set(re.findall(r"^\*\*(\d+\.\d+) ", md, re.M)))
-    bad = sorted({x for x in re.findall(r"§\s*(\d+(?:\.\d+)?)", md) if x not in have})
+    # Appendix G QUOTES the committed text of each pre-registered rule, verbatim,
+    # and those rules were written against the section numbering current when
+    # each was committed -- M-45 governs "the within-trajectory control on §5.6",
+    # which is now §6.7. That is a quotation of a historical document, not a
+    # cross-reference this paper is making, and altering it to keep a checker
+    # happy would falsify the quotation. The appendix says so in its own text.
+    #
+    # Scoped narrowly: only the block after Appendix G's rule-texts heading is
+    # exempt, and everything before it -- including Appendix G's own prose and
+    # its table -- is checked like the rest of the paper.
+    _g = md.find("**What each rule says, in its own committed words")
+    assert _g >= 0 or "Appendix G" not in md, (
+        "Appendix G is present but its quoted-rule-text block was not found; the "
+        "exemption anchor has drifted and the check is silently scanning it as live")
+    live = md if _g < 0 else md[:_g]
+    quoted = "" if _g < 0 else md[_g:]
+    bad = sorted({x for x in re.findall(r"§\s*(\d+(?:\.\d+)?)", live) if x not in have})
+    _hist = sorted({x for x in re.findall(r"§\s*(\d+(?:\.\d+)?)", quoted)
+                    if x not in have})
     # \s* on both sides: pdf text extraction reproduces the typeset kerning, and a
     # caption can come back as "Figure6: ..." with no space at all. Figure 6's did,
     # and the gate reported it dangling when it is on page 30 with its caption
@@ -211,6 +229,7 @@ def main():
     figmiss = sorted(fig_refs - fig_caps)
     chk(5, "cross-references resolve (sections and figures)", not bad and not figmiss,
         f"{len(re.findall(chr(167), md))} section refs, unresolved {bad or 'none'}; "
+        f"{len(_hist)} historical ref(s) inside quoted rule text exempt {_hist or ''}; "
         f"figures {sorted(fig_caps)}, dangling {figmiss or 'none'}")
 
     # ---- 6 numeric consistency, abstract vs body ----

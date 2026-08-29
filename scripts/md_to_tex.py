@@ -40,6 +40,15 @@ def esc(s):
     s = s.replace("—", "---").replace("–", "--").replace("×", r"$\times$")
     s = s.replace("σ", r"$\sigma$").replace("μ", r"$\mu$").replace("ε", r"$\varepsilon$")
     s = s.replace("λ", r"$\lambda$").replace("φ", r"$\phi$").replace("\u0303", "")
+    # A combining circumflex is a SEPARATE codepoint following the letter it
+    # decorates, so "σ̂" is two characters and the sigma rule above has already
+    # turned the first into $\sigma$ by the time this runs -- leaving a bare
+    # U+0302 that LaTeX cannot set. Rewritten as a hat over the preceding math
+    # rather than dropped: "sigma-hat" and "sigma" are different quantities in
+    # §6.3 and losing the mark would silently merge them.
+    s = re.sub(r"\$\\(sigma|mu)\$\u0302", lambda m: r"$\hat{\%s}$" % m.group(1), s)
+    s = s.replace("\u0302", "")
+    s = s.replace("∂", r"$\partial$")
     # alpha arrived with the Holm-Bonferroni thresholds and was not in this map;
     # pdflatex fails hard on an unmapped Unicode letter rather than warning.
     s = s.replace("α", r"$\alpha$").replace("β", r"$\beta$").replace("π", r"$\pi$")

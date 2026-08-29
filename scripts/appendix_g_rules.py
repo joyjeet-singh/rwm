@@ -42,7 +42,25 @@ def entry(txt, eid):
 
 
 def one_line(s, n=300):
-    return re.sub(r"\s+", " ", s).strip()[:n]
+    """One line of a rule's committed text, safe to drop into a Markdown document.
+
+    Two things the naive version got wrong. It truncated mid-word, and it
+    truncated INSIDE emphasis markers -- `**The claim reproduces` with no closing
+    pair -- which the Markdown-to-LaTeX converter carried through as a literal
+    `**` into the .tex. The compile gate caught it as a stray marker, which is
+    what that gate is for.
+
+    Emphasis is stripped rather than balanced: this is a quotation of a rule's
+    text inside a table row, and the rule's own bolding is noise there.
+    """
+    t = re.sub(r"\s+", " ", s).strip()
+    t = re.sub(r"\*{1,3}([^*]+)\*{1,3}", r"\1", t)      # **bold** / *italic* -> plain
+    t = t.replace("*", "")                                # any survivor
+    if len(t) <= n:
+        return t
+    cut = t[:n]
+    sp = cut.rfind(" ")
+    return (cut[:sp] if sp > n * 0.6 else cut).rstrip(" ,;:") + " …"
 
 
 def main():
@@ -89,6 +107,14 @@ def main():
         # category in every cell is noise.
         title = re.sub(r"^(?:PRE-REGISTERED|Pre-registered)[:,]?\s*"
                        r"(?:decision\s+)?rule\s+(?:for\s+)?", "", title)
+        # Drop the section reference from the TABLE's description column. Ledger
+        # titles carry the numbering current when the entry was written -- M-45
+        # reads "the within-trajectory control on §5.6", which is now §6.7 -- and
+        # this column is a description this appendix generates, not a quotation,
+        # so a stale reference in it is simply wrong rather than historical. The
+        # quoted rule TEXTS below the table keep theirs, because those are
+        # quotations and renumbering them would falsify them.
+        title = re.sub(r"\s*(?:on|in|of)?\s*\u00a7\s*\d+(?:\.\d+)?\s*", " ", title).strip()
         title = title[0].upper() + title[1:] if title else title
         st = re.search(r"^\*\*Status\*\*\s*(.+)$", blk, re.M)
         status = st.group(1).split("·")[0].strip() if st else "—"
