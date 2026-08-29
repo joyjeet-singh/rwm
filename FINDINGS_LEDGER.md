@@ -5367,6 +5367,52 @@ adversaries are more than one and fewer than all, and §11 says so.
 **Evidence** `RUN` `results/e7_free_baselines_power.json`
 **Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
 
+### M-52 — M-51 named a quantity that does not exist, and what replaced it · **NEW**
+**Committed before the replacement statistic is computed.** `M-51` stands as written; this
+entry records that one of its two baselines was mis-specified and fixes it. `M-51`'s other
+baseline, **step-size**, is unaffected and its statistic was computed under `M-51` as committed.
+
+**What was wrong.** `M-51` specified *"the residual on the last teacher-forced step of the history
+window"*. There is no such residual in the artifact the rule names.
+`score_reference.ReferenceRWM.rollout_uncertainty` begins `pred = state.clone()` and writes only
+from `start_step` onward, so every row of the history window is a **copy of the truth** and its
+residual is identically zero — measured at 0.000 for all 20 trajectories, with a standard
+deviation of exactly 0.
+
+**How it was found.** By running the rule. The bootstrap over a baseline with zero variance
+produced no finite replicates and the percentile call raised on an empty array. It failed loudly,
+which is the only reason this is a correction rather than a published number: a baseline of all
+zeros correlates with nothing, and had the code silently returned NaN the row would have read as
+"disagreement beats it" — the flattering answer.
+
+**Why the obvious substitute is wrong too, and is not used.** The error at the *first forecast
+step* is available for free and is not a fair baseline: it is a component of the error it would be
+asked to rank, so its correlation with the total is inflated by construction. Rejecting it is the
+point of writing this down.
+
+**The replacement.** `entry-res`: the model's one-step error at the step **before** the forecast
+window opens — a genuine prediction made from 31 steps of history, one step outside the window
+whose error it ranks. Non-degenerate (sd 5.88 across the 20 trajectories, range 1.32–25.90).
+
+**What it costs, stated precisely because `M-51` claimed "free".** One extra rollout in this
+harness, 1.4 seconds, because `rollout_uncertainty` does not expose its history-window
+predictions. It costs **nothing in deployment**: a deployed model consumes the history to build
+its recurrent state, and this residual is a by-product of doing so. So it is free in the sense
+that matters for the claim — no ensemble, no second model — and not free in the sense of "this
+harness already had it". `M-51`'s wording did not distinguish those and this does.
+
+**Thresholds and verdict are `M-51`'s, unchanged.** Only the definition of the second baseline
+moves, and it moves before its statistic exists.
+
+**The lesson, which is the third of its kind here.** `M-24`: a rule must be anchored to the regime
+the claim is about. `M-26`: a rule must be anchored to an adequately powered statistic. `M-52`: a
+rule must name a quantity that exists in the artifact it names. All three were found by running
+the rule rather than by reading it, and all three are cheap to check before committing — this one
+by asserting the baseline is non-constant, which the script now does.
+
+**Evidence** `SRC` `scripts/e7_free_baselines.py`, `results/e7_free_baselines_power.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

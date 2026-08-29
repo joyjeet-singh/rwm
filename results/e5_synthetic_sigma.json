@@ -1,0 +1,167 @@
+{
+  "config": {
+    "n_train": 4000,
+    "n_test": 2000,
+    "iters": 12000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "batch": 256,
+    "true_sigma_span_factor": 25.0,
+    "head": "src/rwm_model.py MLPStateHead, unmodified",
+    "bound_loss": "applied at its configured weight, as in the released training path"
+  },
+  "thresholds": {
+    "slope_threshold": 0.0030912440847498416,
+    "r_threshold": 0.22671533190318408,
+    "smallest_dilution_detected_80pct": 1.0,
+    "collapse_ratio_threshold": 0.1,
+    "collapse_threshold_justification": "the null -- a model with nothing to learn about WHERE the noise is -- still recovers the marginal scale, with median sigma_hat / sigma_true no lower than 0.940 across 8 repeats. A collapse criterion of 0.1 sits far below anything this design produces without one, so meeting it cannot be an artifact of the sample size or of the head's floor.",
+    "recovery_factor_threshold": 3.0,
+    "recovery_threshold_justification": "under gaussian_nll on undiluted data the head recovers the median true sigma to within a factor the ladder measures; 3.0 is set wider than the observed spread so the rule is not tuned to one run.",
+    "slope_floor": 0.0030912440847498416,
+    "slope_threshold_from": "the 1.01x-span floor; the null's own 95th percentile is 2.1e-05, which is numerical noise and would fire on anything",
+    "false_positive_rate_at_dilution_0": 0.0
+  },
+  "arms": {
+    "mse": {
+      "runs": [
+        {
+          "r_log_sigma": 0.6274861152463591,
+          "slope_log_sigma": 0.0005264033544855844,
+          "median_sigma_hat": 0.00470137526281178,
+          "median_sigma_true": 0.10449672277561775,
+          "ratio_median": 0.04499064791636464,
+          "sigma_hat_range": [
+            0.004694039933383465,
+            0.004705651197582483
+          ],
+          "sigma_true_range": [
+            0.020040015191233947,
+            0.4988221383025582
+          ],
+          "sigma_hat_spread_factor": 1.0024736185383598,
+          "rmse_mean": 0.01532030377371077,
+          "seed": 0
+        },
+        {
+          "r_log_sigma": -0.03399004023366951,
+          "slope_log_sigma": -2.8212944882025954e-05,
+          "median_sigma_hat": 0.004652622854337096,
+          "median_sigma_true": 0.09894137288036742,
+          "ratio_median": 0.04702403775984292,
+          "sigma_hat_range": [
+            0.004647609777748585,
+            0.004658155143260956
+          ],
+          "sigma_true_range": [
+            0.020031898748773595,
+            0.49908855463611135
+          ],
+          "sigma_hat_spread_factor": 1.0022689868591936,
+          "rmse_mean": 0.01922193880186499,
+          "seed": 1
+        },
+        {
+          "r_log_sigma": 0.8846337683810745,
+          "slope_log_sigma": 0.0009809183208098857,
+          "median_sigma_hat": 0.004733087494969368,
+          "median_sigma_true": 0.10292335626927823,
+          "ratio_median": 0.045986524988421464,
+          "sigma_hat_range": [
+            0.004724237136542797,
+            0.004738477990031242
+          ],
+          "sigma_true_range": [
+            0.02000624290293694,
+            0.4999048111459009
+          ],
+          "sigma_hat_spread_factor": 1.0030144239327636,
+          "rmse_mean": 0.014108284879308887,
+          "seed": 2
+        }
+      ],
+      "r_mean": 0.4927099477979214,
+      "r_min": -0.03399004023366951,
+      "r_max": 0.8846337683810745,
+      "ratio_mean": 0.04600040355487634,
+      "ratio_min": 0.04499064791636464,
+      "ratio_max": 0.04702403775984292,
+      "r_indistinguishable_from_zero": false,
+      "r_above_threshold": false,
+      "collapsed": true,
+      "recovered": false
+    },
+    "gaussian_nll": {
+      "runs": [
+        {
+          "r_log_sigma": 0.8535122292158586,
+          "slope_log_sigma": 0.3536779072623561,
+          "median_sigma_hat": 0.09608064964413643,
+          "median_sigma_true": 0.10449672277561775,
+          "ratio_median": 0.9194608892227858,
+          "sigma_hat_range": [
+            0.026859108358621597,
+            0.0985184833407402
+          ],
+          "sigma_true_range": [
+            0.020040015191233947,
+            0.4988221383025582
+          ],
+          "sigma_hat_spread_factor": 3.667972965644499,
+          "rmse_mean": 0.01801984095756744,
+          "seed": 0
+        },
+        {
+          "r_log_sigma": 0.8638133043761405,
+          "slope_log_sigma": 0.037467824345774926,
+          "median_sigma_hat": 0.10623149201273918,
+          "median_sigma_true": 0.09894137288036742,
+          "ratio_median": 1.0736812004942202,
+          "sigma_hat_range": [
+            0.09391617774963379,
+            0.10677187144756317
+          ],
+          "sigma_true_range": [
+            0.020031898748773595,
+            0.49908855463611135
+          ],
+          "sigma_hat_spread_factor": 1.1368847626252498,
+          "rmse_mean": 0.02618330429645589,
+          "seed": 1
+        },
+        {
+          "r_log_sigma": 0.9148605881082207,
+          "slope_log_sigma": 0.007813475793670362,
+          "median_sigma_hat": 0.09681981429457664,
+          "median_sigma_true": 0.10292335626927823,
+          "ratio_median": 0.9406981836199269,
+          "sigma_hat_range": [
+            0.09482759982347488,
+            0.09704101085662842
+          ],
+          "sigma_true_range": [
+            0.02000624290293694,
+            0.4999048111459009
+          ],
+          "sigma_hat_spread_factor": 1.0233414220888633,
+          "rmse_mean": 0.023995306465251293,
+          "seed": 2
+        }
+      ],
+      "r_mean": 0.8773953739000732,
+      "r_min": 0.8535122292158586,
+      "r_max": 0.9148605881082207,
+      "ratio_mean": 0.9779467577789775,
+      "ratio_min": 0.9194608892227858,
+      "ratio_max": 1.0736812004942202,
+      "r_indistinguishable_from_zero": false,
+      "r_above_threshold": true,
+      "collapsed": false,
+      "recovered": true
+    }
+  },
+  "verdict": "MIXED \u2014 reported as returned; see the arms"
+}

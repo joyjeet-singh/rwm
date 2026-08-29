@@ -12,10 +12,11 @@ the rollout does not already produce.
   step-size    ||mu_t - mu_{t-1}||, the magnitude of the model's own predicted
                state change. A model moving fast is a model in a regime where it is
                likely to be wrong, and this is available from the rollout itself.
-  history-res  the residual on the LAST TEACHER-FORCED step of the history window
-               -- the model's one-step error at the moment the rollout starts,
-               before any accumulation. One scalar per trajectory, so it ranks
-               trajectories and not steps; that is a real limit and is reported.
+  entry-res    the model's one-step error at the step BEFORE the forecast
+               window opens -- a genuine prediction from 31 steps of history, and
+               not a component of the error it is asked to rank. One scalar per
+               trajectory, so it ranks trajectories and not steps; that is a real
+               limit and is reported. See M-52 for what it replaced and why.
 
 If disagreement beats these too, §6.7 stops resting on one competitor.
 
@@ -104,23 +105,41 @@ def load_panel():
     dis = epi_s.numpy().astype(np.float64)[:, START:]
     T = err.shape[1]
     fidx = np.broadcast_to(np.arange(T, dtype=np.float64), err.shape).copy()
+    # One extra rollout, opened one step earlier, so that step START-1 is a
+    # genuine one-step prediction rather than a copy of the truth. 1.4 s.
+    p2, _, _, _, _ = model.rollout_uncertainty(st.clone(), ac, START - 1,
+                                               action_offset=1)
+    entry_res = np.abs(p2.numpy().astype(np.float64)[:, START - 1]
+                       - S_[:, START - 1]).sum(-1)
+    assert entry_res.std() > 0, "the entry residual is constant; the rollout is not predicting"
     return {"P": P, "S": S_, "err": err, "dis": dis, "fidx": fidx,
+            "entry_res": entry_res,
             "n_ind": n_ind, "n_traj": n_traj, "T": T}
 
 
 def baselines(D):
-    """The two free baselines. Neither costs a forward pass."""
+    """The two free baselines.
+
+    step-size costs nothing: it is a difference of predictions the rollout has
+    already made.
+
+    entry-res costs ONE EXTRA ROLLOUT here and nothing in deployment, and M-52
+    records why the difference matters. M-51 specified "the residual on the last
+    teacher-forced step of the history window", which does not exist in the
+    artifact it named: rollout_uncertainty sets `pred = state.clone()` and only
+    writes from start_step onward, so the whole history region is a copy of the
+    truth and its residual is identically zero. The substitute is a genuine
+    one-step prediction made from 31 steps of history -- one step BEFORE the
+    forecast window opens, so it is not a component of the error it is asked to
+    rank, which the obvious alternative (the error at the first forecast step)
+    would have been.
+    """
     P, S_ = D["P"], D["S"]
-    # step-size: the model's own predicted state change, over the forecast steps
     step = np.linalg.norm(np.diff(P, axis=1), axis=-1)[:, START - 1:]
     step = step[:, :D["T"]]
-    # history residual: the one-step error at the LAST teacher-forced step, before
-    # any accumulation. One scalar per trajectory, broadcast across steps -- which
-    # makes it constant within a step, so the within-step control must annihilate
-    # it. That is a property of the baseline, not a defect of the control.
-    hres = np.abs(P[:, START - 1] - S_[:, START - 1]).sum(-1)
-    hist = np.broadcast_to(hres[:, None], D["err"].shape).copy()
-    return {"step-size": step, "history-res": hist}
+    res = D["entry_res"]
+    entry = np.broadcast_to(res[:, None], D["err"].shape).copy()
+    return {"step-size": step, "entry-res": entry}
 
 
 def power():

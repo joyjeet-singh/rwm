@@ -1,0 +1,18 @@
+E5 — SYNTHETIC SIGMA RECOVERY, AGAINST GROUND TRUTH
+========================================================================================
+  true sigma spans 0.020 to 0.500 across x in [-1, 1] (a factor of 25)
+  rule M-50, thresholds from results/e5_sigma_dilution.json:
+    |r| indistinguishable from zero below 0.2267
+    collapse if median sigma_hat / sigma_true < 0.1
+    recovery if within a factor of 3.0
+  mse           seed 0: sigma_hat median 0.00470 (true 0.10450, ratio 0.0450)  r +0.6275  spread 1.00x  mean RMSE 0.0153
+  mse           seed 1: sigma_hat median 0.00465 (true 0.09894, ratio 0.0470)  r -0.0340  spread 1.00x  mean RMSE 0.0192
+  mse           seed 2: sigma_hat median 0.00473 (true 0.10292, ratio 0.0460)  r +0.8846  spread 1.00x  mean RMSE 0.0141
+  gaussian_nll  seed 0: sigma_hat median 0.09608 (true 0.10450, ratio 0.9195)  r +0.8535  spread 3.67x  mean RMSE 0.0180
+  gaussian_nll  seed 1: sigma_hat median 0.10623 (true 0.09894, ratio 1.0737)  r +0.8638  spread 1.14x  mean RMSE 0.0262
+  gaussian_nll  seed 2: sigma_hat median 0.09682 (true 0.10292, ratio 0.9407)  r +0.9149  spread 1.02x  mean RMSE 0.0240
+========================================================================================
+  mse          : collapsed True, r~0 False (r +0.4927, ratio 0.0460)
+  gaussian_nll : recovered True, r>thr True (r +0.8774, ratio 0.9779)
+  M-50 VERDICT : MIXED — reported as returned; see the arms
+  wrote results/e5_synthetic_sigma.json

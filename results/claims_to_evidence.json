@@ -2611,13 +2611,27 @@
         "results/e7_free_baselines_power.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-52",
+      "claim": "M-51 named a quantity that does not exist, and what replaced it",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines_power.json",
+        "scripts/e7_free_baselines.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 19,
-    "M": 51,
+    "M": 52,
     "O": 14,
     "R": 70,
     "S": 19,
