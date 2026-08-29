@@ -1,10 +1,10 @@
 {
   "scanned": "PAPER.template.md",
-  "n_substituted": 1043,
+  "n_substituted": 1048,
   "n_typed": 190,
   "n_restatements": 77,
-  "n_same_quantity_candidates": 36,
-  "n_lower_signal": 41,
+  "n_same_quantity_candidates": 37,
+  "n_lower_signal": 40,
   "restatements": [
     {
       "value": "+0.419",
@@ -59,13 +59,13 @@
         },
         {
           "section": "12. Conclusion",
-          "line": 1368,
+          "line": 1370,
           "key": "a2_rdd",
           "ctx": " and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.7"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1784,
           "key": "a2_rdd",
           "ctx": "s \u2014 plus a sixth on trajectory difficulty \u2014 the last giving {{a2_rdd}} {{a2_rdd_ci}} with both the rollout and"
         }
@@ -165,13 +165,13 @@
         },
         {
           "section": "12. Conclusion",
-          "line": 1368,
+          "line": 1370,
           "key": "d2b_par_all",
           "ctx": " ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. **The"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1784,
           "key": "d2b_par_all",
           "ctx": "rols on forecast depth \u2014 the linear partial that keeps {{d2b_par_all}}, and four harder ones \u2014 plus a sixth on"
         }
@@ -245,13 +245,13 @@
         },
         {
           "section": "12. Conclusion",
-          "line": 1368,
+          "line": 1370,
           "key": "a2_r_pooled",
           "ctx": " error (\u00a76.7, M-45). That is a smaller number than the {{a2_r_pooled}} pooled figure and it is the one that me"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1784,
           "key": "d4_r",
           "ctx": "ng, against a real baseline** \u2014 the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_inde"
         }
@@ -429,19 +429,19 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1350,
+          "line": 1352,
           "key": null,
           "ctx": "ses a GPU. And **we did not test whether the \u03c3 = 0 optimum affects other descendants of the PETS parameterisat"
         },
         {
           "section": "12. Conclusion",
-          "line": 1363,
+          "line": 1365,
           "key": null,
           "ctx": "the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of th"
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1488,
+          "line": 1490,
           "key": null,
           "ctx": "count attributed to the wrong evaluation arena** \u2014 0 of 45 over all ten episodes asserted where the table besi"
         }
@@ -548,7 +548,7 @@
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1483,
+          "line": 1485,
           "key": null,
           "ctx": "ange with the wrong sign** \u2014 \"a change of **+**0.010\", where partialling the forecast index out *reduces* the "
         }
@@ -794,7 +794,7 @@
         },
         {
           "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1702,
+          "line": 1704,
           "key": "appG_n_negative",
           "ctx": "ime, of which {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is kept de"
         },
@@ -1016,19 +1016,19 @@
         },
         {
           "section": "Appendix I \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1634,
+          "line": 1636,
           "key": null,
           "ctx": "inverted \u00a73.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the \u2400 "
         },
         {
           "section": "Appendix I \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1640,
+          "line": 1642,
           "key": null,
           "ctx": "ning episodes has a very small denominator. Form 1 has no such lever: a dimension contributes in proportion to"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1746,
+          "line": 1748,
           "key": null,
           "ctx": "ly numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the ho"
         }
@@ -1156,6 +1156,36 @@
           "line": 1095,
           "key": "r2_added_h_total",
           "ctx": "added_word}} more at about {{r2_added_h}} h each, {{r2_added_h_total}} h in total, and scored the {{r2_n_indep"
+        }
+      ]
+    },
+    {
+      "value": "1.79",
+      "n_locations": 2,
+      "same_quantity_candidate": true,
+      "fails_build": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/m49_capacity_matched.json",
+        "results/task2_sigma_profile.json"
+      ],
+      "keys": [
+        "err_rel_growth",
+        "m49_ratio_gain"
+      ],
+      "locations": [
+        {
+          "section": "6.9 The structural excuse does not survive",
+          "line": 1078,
+          "key": "err_rel_growth",
+          "ctx": "h}}\u00d7 | | released checkpoint | {{sig_rel_growth}}\u00d7 | {{err_rel_growth}}\u00d7 | The faithful arm's \u03c3 *declines* ({{"
+        },
+        {
+          "section": "11. Limitations",
+          "line": 1339,
+          "key": "m49_ratio_gain",
+          "ctx": "ement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde"
         }
       ]
     },
@@ -1350,13 +1380,13 @@
         },
         {
           "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1701,
+          "line": 1703,
           "key": "appG_n_rules",
           "ctx": " | verdict | |---|---|---|---|---|---| {{appG_table}} {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1444,
+          "line": 1446,
           "key": null,
           "ctx": "nt as \"clearly informative\" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregati"
         }
@@ -1403,13 +1433,13 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1438,
+          "line": 1440,
           "key": null,
           "ctx": "on two CPU cores: \u2400 hours for the \u2400 runs at 10,000 iterations and \u2400 for the remaining \u2400 at 2,500. (Those were "
         },
         {
           "section": "Appendix H \u2014 the variance-state arithmetic behind \u00a77.5",
-          "line": 1582,
+          "line": 1584,
           "key": null,
           "ctx": "onfigured learning rate. The refit from our 10,000-iteration runs gives \u2400 and \u2400, spreading \u2400% across the three"
         }
@@ -1535,7 +1565,7 @@
         },
         {
           "section": "Appendix A \u2014 verification chain",
-          "line": 1455,
+          "line": 1457,
           "key": "diff_n_params",
           "ctx": "* | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | trainer | can memorise a "
         }
@@ -1565,7 +1595,7 @@
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1592,
+          "line": 1594,
           "key": "ver_selfref",
           "ctx": "m and worth naming because it sounds like an excuse.** {{ver_selfref}} keys in `paper_numbers.json` are source"
         }
@@ -1750,7 +1780,7 @@
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1471,
+          "line": 1473,
           "key": null,
           "ctx": "* \u2014 \"the intervals do not overlap\", where at h=128 they overlap across 0.604\u20130.643. **This one has now been wr"
         }
@@ -1780,7 +1810,7 @@
         },
         {
           "section": "Data and code",
-          "line": 1387,
+          "line": 1389,
           "key": "f4_n_commits",
           "ctx": "y commit from the one that introduced it onward, so **{{f4_n_commits}} of the commits Figure 4 cites keep thei"
         }
@@ -1904,13 +1934,13 @@
         },
         {
           "section": "References",
-          "line": 1443,
+          "line": 1445,
           "key": "t1_n_verified",
           "ctx": "nce matched verbatim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_fra"
         },
         {
           "section": "References",
-          "line": 1443,
+          "line": 1445,
           "key": "t1_n_refs",
           "ctx": "tim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_"
         }
@@ -1961,13 +1991,13 @@
         },
         {
           "section": "References",
-          "line": 1443,
+          "line": 1445,
           "key": "t1_n_frag_ok",
           "ctx": "text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments ("
         },
         {
           "section": "References",
-          "line": 1443,
+          "line": 1445,
           "key": "t1_n_frag",
           "ctx": "ified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments (`results/t1_bibli"
         }
@@ -2066,13 +2096,13 @@
         },
         {
           "section": "12. Conclusion",
-          "line": 1368,
+          "line": 1370,
           "key": "d3_epi_const_ok",
           "ctx": "y held-out cell where a global multiplier restores {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in eac"
         },
         {
           "section": "Appendix E \u2014 what testing the untested claims would require",
-          "line": 1746,
+          "line": 1748,
           "key": "appE_n_cpu",
           "ctx": "t. This table has one row per untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion tha"
         },
@@ -2114,13 +2144,13 @@
         },
         {
           "section": "Appendix I \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1635,
+          "line": 1637,
           "key": null,
           "ctx": "de by the pooled scale \u2014 a ratio of means. **Form 2** is the mean of per-dimension ratios. The two differ beca"
         },
         {
           "section": "Appendix I \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1638,
+          "line": 1640,
           "key": null,
           "ctx": "ons differ in scale by orders of magnitude. Form 2 gives whichever dimension has the smallest denominator unbo"
         }
@@ -2173,9 +2203,9 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1337,
+          "line": 1339,
           "key": "m44_ratio_gain",
-          "ctx": "de_ratio}}\u00d7 against an observed unmatched effect of {{m44_ratio_gain}}\u00d7**, so `M-49` says in its own text what"
+          "ctx": "esolve.** The overconfidence improvement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 mat"
         }
       ]
     },
@@ -2460,7 +2490,7 @@
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1784,
           "key": "d4_nind",
           "ctx": " {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at ev"
         },
@@ -2478,13 +2508,13 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1438,
+          "line": 1440,
           "key": null,
           "ctx": "unded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts th"
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1489,
+          "line": 1491,
           "key": null,
           "ctx": "the table beside it printed the held-out arena's 20 of 45. None is a numeral. None appears in `results/paper_n"
         }
@@ -2548,7 +2578,7 @@
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1533,
+          "line": 1535,
           "key": "cc_kinds",
           "ctx": "eck_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: {{cc_kind_list}}. That list is "
         }
@@ -2583,39 +2613,9 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1438,
+          "line": 1440,
           "key": null,
           "ctx": "hours. An earlier version of this appendix said 22 hours; that figure predated the \u2400 ten-thousand-iteration ru"
-        }
-      ]
-    },
-    {
-      "value": "220",
-      "n_locations": 2,
-      "same_quantity_candidate": false,
-      "fails_build": false,
-      "n_typed": 0,
-      "n_substituted": 2,
-      "sources": [
-        "FINDINGS_LEDGER.md",
-        "results/task_d_nind20.json"
-      ],
-      "keys": [
-        "d1n_epi_over_alea_h1",
-        "n_entries"
-      ],
-      "locations": [
-        {
-          "section": "6.2 The measurement",
-          "line": 642,
-          "key": "d1n_epi_over_alea_h1",
-          "ctx": " step it is **{{d1n_epi_ratio_h1}}\u00d7** out and {{d1n_epi_over_alea_h1}}\u00d7 better than aleatoric; at h = {{v2_dia"
-        },
-        {
-          "section": "8. Method",
-          "line": 1245,
-          "key": "n_entries",
-          "ctx": "ernal, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in pl"
         }
       ]
     },
@@ -2685,7 +2685,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1467,
+          "line": 1469,
           "key": "rt_runs_short",
           "ctx": " iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole "
         }
@@ -2734,7 +2734,7 @@
         },
         {
           "section": "Data and code",
-          "line": 1377,
+          "line": 1379,
           "key": null,
           "ctx": "hes both at pinned commits and verifies two SHA-256 hashes. **The repository's history was rewritten once, and"
         }
@@ -2842,7 +2842,7 @@
         },
         {
           "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1674,
+          "line": 1676,
           "key": null,
           "ctx": "tely.** `S-12` withdraws the claim that the Task 3 duplication rule was pre-registered; the control runs had f"
         }
@@ -2850,11 +2850,11 @@
     },
     {
       "value": "3.49",
-      "n_locations": 3,
+      "n_locations": 4,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 3,
+      "n_substituted": 4,
       "sources": [
         "results/task2_sigma_profile.json",
         "results/v1_ensemble_topology.json"
@@ -2881,6 +2881,12 @@
           "line": 1337,
           "key": "v1_cap_ratio",
           "ctx": "the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own tru"
+        },
+        {
+          "section": "11. Limitations",
+          "line": 1337,
+          "key": "v1_cap_ratio",
+          "ctx": "ched_ratio}}, where \u00a76.10's original contrast carried {{v1_cap_ratio}}. **With capacity held fixed the indepen"
         }
       ]
     },
@@ -2943,13 +2949,13 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1467,
+          "line": 1469,
           "key": "rt_runs",
           "ctx": "which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of re"
         },
         {
           "section": "Appendix E \u2014 what testing the untested claims would require",
-          "line": 1741,
+          "line": 1743,
           "key": "rt_runs",
           "ctx": "ator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; "
         }
@@ -3020,7 +3026,7 @@
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1571,
+          "line": 1573,
           "key": "time_rel_hi",
           "ctx": "iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) \u2014 on "
         },
@@ -3434,31 +3440,31 @@
         },
         {
           "section": "12. Conclusion",
-          "line": 1370,
+          "line": 1372,
           "key": "v2_diag_h",
           "ctx": "ry one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar"
         },
         {
           "section": "12. Conclusion",
-          "line": 1370,
+          "line": 1372,
           "key": "v2_diag_h",
           "ctx": "* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_"
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1516,
+          "line": 1518,
           "key": "v2_diag_h",
           "ctx": "\" in \u00a712, of the same {{d1n_epi_over_alea_h368}}\u00d7 at h = {{v2_diag_h}}; - **a count attributed to the wrong ev"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1784,
           "key": "v2_diag_h",
           "ctx": " **Weaker per-dimension than we first reported**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1784,
           "key": "v2_diag_h",
           "ctx": "n rollout length, and {{d1n_epi_ratio_h368}}\u00d7 at the h = {{v2_diag_h}} diagnostic horizon; repairable per hori"
         },
@@ -3544,7 +3550,7 @@
         },
         {
           "section": "References",
-          "line": 1430,
+          "line": 1432,
           "key": "v4_name_n_v1",
           "ctx": " The two names never co-occur: v1 uses {{v4_name_v1}} {{v4_name_n_v1}} times and no {{v4_name_v3}}, v3 the rev"
         }
@@ -3582,7 +3588,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1467,
+          "line": 1469,
           "key": "rt_longest",
           "ctx": "the sum of its stated parts.) The longest single run is {{rt_longest}} hours. An earlier version of this appen"
         }
@@ -3799,14 +3805,15 @@
     },
     {
       "value": "5",
-      "n_locations": 25,
+      "n_locations": 26,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 6,
-      "n_substituted": 19,
+      "n_substituted": 20,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e4_sigma_gradients.json",
+        "results/m49_capacity_matched.json",
         "results/r2_independent_ensemble.json",
         "results/step4_5_timing.json",
         "results/step5_armA_seed0.json (split)",
@@ -3824,6 +3831,7 @@
         "d2p_n_separating",
         "d2r_ncontrols",
         "e4_n_inert",
+        "m49_n_conditions_met",
         "r2_n_indep",
         "time_rel_lo"
       ],
@@ -3931,14 +3939,20 @@
           "ctx": "ectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size"
         },
         {
+          "section": "11. Limitations",
+          "line": 1339,
+          "key": "m49_n_conditions_met",
+          "ctx": "therefore returns **{{m49_verdict_short}}** \u2014 {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions "
+        },
+        {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1571,
+          "line": 1573,
           "key": "time_rel_lo",
           "ctx": "tion of seconds-per-iteration across repeats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{tim"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1784,
           "key": "d2r_ncontrols",
           "ctx": "forecast-index counter at every horizon and survives {{d2r_ncontrols}} controls on forecast depth \u2014 the linear"
         },
@@ -4040,7 +4054,7 @@
         },
         {
           "section": "Appendix H \u2014 the variance-state arithmetic behind \u00a77.5",
-          "line": 1626,
+          "line": 1628,
           "key": "o12_rate_ratio",
           "ctx": "og_delta_logstd` travel at rates differing by about {{o12_rate_ratio}}\u00d7, and a uniform schedule scales both, s"
         }
@@ -4088,37 +4102,37 @@
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1532,
+          "line": 1534,
           "key": "cc_n",
           "ctx": "check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: {{cc_"
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1549,
+          "line": 1551,
           "key": "cc_st_caught",
           "ctx": "r of magnitude and the dimension counts moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught. An assertion"
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1549,
+          "line": 1551,
           "key": "cc_st_n",
           "ctx": "and the dimension counts moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught. An assertion that has quiet"
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1559,
+          "line": 1561,
           "key": "cc_st_caught",
           "ctx": "e claim, and every claim is corrupted on every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} "
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1560,
+          "line": 1562,
           "key": "cc_st_n",
           "ctx": "ery claim is corrupted on every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} claims, with no"
         },
         {
           "section": "Appendix D \u2014 verifying the paper's own claims",
-          "line": 1560,
+          "line": 1562,
           "key": "cc_n",
           "ctx": "n every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} claims, with no exemptions. This list i"
         }
@@ -4133,7 +4147,7 @@
       "n_substituted": 13,
       "sources": [
         "results/a1_ab_by_horizon.json",
-        "results/appendix_g_rules.json",
+        "results/m49_capacity_matched.json",
         "results/r2_independent_ensemble.json",
         "results/step5_*.json",
         "results/step5_arm*.json",
@@ -4144,11 +4158,11 @@
         "a1_n_horizons",
         "agree_epi",
         "agree_nh",
-        "appG_n_positive",
         "d3_nhoriz",
         "e2_excluded_10k",
         "m44_n_conditions",
         "m44_n_conditions_met",
+        "m49_n_conditions",
         "rt_runs_10k"
       ],
       "locations": [
@@ -4207,28 +4221,28 @@
           "ctx": "d3_epi_const_ok}} of them (\u00a76.8). The held-out cells are {{d3_nhoriz}} horizons \u00d7 two fold directions on the s"
         },
         {
+          "section": "11. Limitations",
+          "line": 1339,
+          "key": "m49_n_conditions",
+          "ctx": "rdict_short}}** \u2014 {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions hold and the ratio threshold"
+        },
+        {
           "section": "12. Conclusion",
-          "line": 1368,
+          "line": 1370,
           "key": "d3_nhoriz",
           "ctx": "global multiplier restores {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in each of two fold directions"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1467,
+          "line": 1469,
           "key": "rt_runs_10k",
           "ctx": "clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hour"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1467,
+          "line": 1469,
           "key": "rt_runs_10k",
           "ctx": " this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for t"
-        },
-        {
-          "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1702,
-          "key": "appG_n_positive",
-          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
         }
       ]
     },
@@ -4294,19 +4308,17 @@
     },
     {
       "value": "7",
-      "n_locations": 10,
+      "n_locations": 9,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 10,
+      "n_substituted": 9,
       "sources": [
-        "results/appendix_g_rules.json",
         "results/e4_sigma_gradients.json",
         "results/paper_figures.json",
         "results/step4_3_differential.json"
       ],
       "keys": [
-        "appG_n_lead",
         "diff_terms",
         "e4_n_terms",
         "f4_n_positive"
@@ -4362,15 +4374,9 @@
         },
         {
           "section": "Appendix A \u2014 verification chain",
-          "line": 1455,
+          "line": 1457,
           "key": "diff_terms",
           "ctx": "sses and gradients match** | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | "
-        },
-        {
-          "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1701,
-          "key": "appG_n_lead",
-          "ctx": "--|---|---|---| {{appG_table}} {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
         }
       ]
     },
@@ -4484,12 +4490,13 @@
     },
     {
       "value": "8",
-      "n_locations": 19,
+      "n_locations": 20,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 9,
-      "n_substituted": 10,
+      "n_substituted": 11,
       "sources": [
+        "results/appendix_g_rules.json",
         "results/paper_figures.json",
         "results/r2_independent_ensemble.json",
         "results/step0_regimes.json",
@@ -4501,6 +4508,7 @@
       ],
       "keys": [
         "None",
+        "appG_n_positive",
         "c2_bounds",
         "c3_family",
         "d3_worst_ep",
@@ -4572,6 +4580,12 @@
           "ctx": "e 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {{f4_n_positive}} are positive a"
         },
         {
+          "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1704,
+          "key": "appG_n_positive",
+          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
+        },
+        {
           "section": "5. The base paper's central claim reproduces",
           "line": 492,
           "key": null,
@@ -4615,13 +4629,13 @@
         },
         {
           "section": "Appendix E \u2014 what testing the untested claims would require",
-          "line": 1712,
+          "line": 1714,
           "key": null,
           "ctx": "mes three, if run at our data budget | | M=32, N=8 optimal (\u00a7IV-C) | no simulator needed; a sweep over M and N"
         },
         {
           "section": "Appendix F \u2014 every claim of the originals, and what we did with it",
-          "line": 1747,
+          "line": 1749,
           "key": null,
           "ctx": " B is worse than the hold-last floor | | M=32, N=8 is the optimal configuration (\u00a7IV-C) | no | \u2014 | `[cpu: the "
         }
@@ -4695,16 +4709,18 @@
     },
     {
       "value": "9",
-      "n_locations": 3,
+      "n_locations": 4,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 3,
+      "n_substituted": 4,
       "sources": [
+        "results/appendix_g_rules.json",
         "results/step5_armA_seed0.json (split)",
         "results/task3_three_way.json"
       ],
       "keys": [
+        "appG_n_lead",
         "bound_total",
         "tw_cc_cluster_helped"
       ],
@@ -4726,6 +4742,12 @@
           "line": 1215,
           "key": "tw_cc_cluster_helped",
           "ctx": "'s {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measure"
+        },
+        {
+          "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1703,
+          "key": "appG_n_lead",
+          "ctx": "--|---|---|---| {{appG_table}} {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
         }
       ]
     },

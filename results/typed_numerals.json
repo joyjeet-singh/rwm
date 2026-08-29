@@ -1,15 +1,15 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 553,
+  "n_typed": 557,
   "by_class": {
     "arxiv-id": 16,
     "exception": 167,
     "markdown-heading": 24,
-    "section-ref": 161,
+    "section-ref": 164,
     "figure-ref": 20,
     "citation-year": 15,
     "code-location": 38,
-    "ledger-id": 39,
+    "ledger-id": 40,
     "math-mode": 10,
     "table-row-label": 32,
     "equation-ref": 8,

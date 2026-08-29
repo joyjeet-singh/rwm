@@ -125,9 +125,25 @@ def main():
         # "no verdict", which is a different and stronger claim than "not recorded
         # in a shape this parser knows".
         verdict = None
+        # The RETURNED verdict, which a discharged rule states explicitly. This
+        # must be tried FIRST: the fallbacks below scan for a bolded all-caps
+        # phrase, and a rule's own text is full of them -- it enumerates its
+        # possible outcomes. M-49 came out as "MECHANISM SURVIVES CAPACITY", which
+        # is the first branch it DEFINES and not the one it RETURNED
+        # (UNDER-POWERED); M-50 as "REFUTED" and M-51 as "SURVIVES BOTH", both
+        # likewise branch definitions. A verdict column showing a rule's most
+        # favourable possible outcome instead of its actual one is the worst
+        # direction for this particular error.
+        # Not line-anchored: the discharge line reads
+        # "**Discharged** by `artifact`. **It returns X.**" on ONE line, so a
+        # ^-anchored pattern matched nothing and fell through to the branch-
+        # definition scan below.
+        m_ret = re.search(r"\*\*It returns\s+(.+?)\.?\*\*", blk)
+        if m_ret:
+            verdict = m_ret.group(1).strip().strip("*").strip()
         m_st = re.search(r"^\*\*Status\*\*\s*([A-Z][A-Za-z ,]*?)\s*—\s*([^·\n]+)",
                          blk, re.M)
-        if m_st:
+        if m_st and not verdict:
             # cut at the first clause: the Status line often continues into the
             # commits that establish the verdict, which the `commit` column
             # already carries and which reads as a truncated sentence here
@@ -149,11 +165,29 @@ def main():
                            r"[^\n]*\n+(.+?)(?=\n\n)", blk, re.S)
         rule_text = one_line(rm.group(1)) if rm else one_line(
             "\n".join(blk.split("\n")[1:6]))
-        if eid in RETURNED and RETURNED[eid] in NUM:
+        if not m_ret and eid in RETURNED and RETURNED[eid] in NUM:
             verdict = str(NUM[RETURNED[eid]]["value"])
         if "NOT YET DISCHARGED" in status.upper():
             verdict = "not yet discharged"
         key = next((k for k in lead if k.startswith(eid + " ")), None)
+        # Figure 4 plots a FIXED list of rules and the newest three are not on it.
+        # Rather than grow that list -- Figure 4 is a figure, and it is legible at
+        # eight bars -- the lead time is computed here the same way: the commit
+        # that introduced the rule's ledger heading against the commit that
+        # introduced the artifact discharging it. Same definition, same source,
+        # and it generalises to every future rule without an edit.
+        _self_lead = None
+        if key is None:
+            _art = re.search(r"^\*\*Discharged\*\* by `([^`]+)`", blk, re.M)
+            if _art:
+                _rc = subprocess.run(
+                    ["git", "log", "--format=%ct", "-S", f"### {eid} ",
+                     "--", LEDGER], capture_output=True, text=True).stdout.split()
+                _dc = subprocess.run(
+                    ["git", "log", "--diff-filter=A", "--format=%ct", "--",
+                     _art.group(1)], capture_output=True, text=True).stdout.split()
+                if _rc and _dc:
+                    _self_lead = (int(_dc[-1]) - int(_rc[-1])) / 3600.0
         if key is None and eid == "S-12":
             # S-12 withdraws the Task 3 rule, which Figure 4 labels by its subject
             # rather than by an identifier -- because at the time it was written it
@@ -162,8 +196,13 @@ def main():
         rows.append({
             "id": eid, "title": title, "status": status, "verdict": verdict,
             "rule_text": rule_text,
-            "lead_hours": lead[key]["lead_hours"] if key else None,
-            "tested_by": lead[key]["tested_by"] if key else None,
+            "lead_hours": lead[key]["lead_hours"] if key else _self_lead,
+            "lead_source": ("Figure 4" if key else
+                            ("this appendix, from git" if _self_lead is not None
+                             else None)),
+            "tested_by": (lead[key]["tested_by"] if key else
+                          (re.search(r"^\*\*Discharged\*\* by `([^`]+)`", blk, re.M).group(1)
+                           if re.search(r"^\*\*Discharged\*\* by `", blk, re.M) else None)),
             "rule_commit": commits.get(key, {}).get("rule_commit"),
             "commit_subject": None,
         })

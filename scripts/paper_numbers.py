@@ -346,6 +346,20 @@ def main():
     put("m49_mde_cov", f'{P2["mde_80pct_power"]["coverage_pts"]:.2f}',
         "results/p2_capacity_power.json")
 
+    # M-49 discharged. The capacity-matched arm.
+    M49 = J("m49_capacity_matched.json")
+    _m49 = M49["m44"]           # the block name is R2's; the rule is M-49's
+    put("m49_verdict", _m49["verdict"], "results/m49_capacity_matched.json")
+    put("m49_verdict_short", _m49["verdict"].split("\u2014")[0].strip(),
+        "results/m49_capacity_matched.json")
+    put("m49_ratio_gain", f'{_m49["mean_ratio_improvement"]:.2f}',
+        "results/m49_capacity_matched.json")
+    put("m49_cov_gain", f'{_m49["mean_coverage_gain_pts"]:+.2f}',
+        "results/m49_capacity_matched.json")
+    put("m49_n_conditions", len(_m49["conditions"]), "results/m49_capacity_matched.json")
+    put("m49_n_conditions_met", sum(1 for v in _m49["conditions"].values() if v),
+        "results/m49_capacity_matched.json")
+
     AG = J("appendix_g_rules.json")
     put("appG_n_rules", AG["n_rules"], "results/appendix_g_rules.json")
     put("appG_n_lead", AG["n_with_lead_time"], "results/appendix_g_rules.json")

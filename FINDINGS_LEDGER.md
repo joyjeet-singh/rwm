@@ -5203,7 +5203,8 @@ state — both members of the matched arm carry their own hidden state, as in §
 whatever axes remain confounded after this, as it named these.
 
 **Evidence** `RUN` `results/p2_capacity_power.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Discharged** by `results/m49_capacity_matched.json`. **It returns UNDER-POWERED — favours the matched ensemble by less than the MDE.**
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### D-19 — The title promised a reveal the paper withdraws two sections later · **NEW**
 **What it was.** *"What a world model's uncertainty outputs actually report: an independent
@@ -5304,7 +5305,8 @@ experiment establishes, not the magnitude of the recovery.
 - **MIXED** — anything else, reported as returned with both arms printed.
 
 **Evidence** `RUN` `results/e5_sigma_dilution.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Discharged** by `results/e5_synthetic_sigma.json`. **It returns OBJECTIVE-DRIVEN.**
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### M-51 — Pre-registered: does the ranking claim survive more than one free adversary? · **NEW**
 **Committed before either new baseline is computed.** `results/e7_free_baselines_power.json` —
@@ -5365,7 +5367,8 @@ margin would be under-powered, and choosing which to require after seeing the an
 adversaries are more than one and fewer than all, and §11 says so.
 
 **Evidence** `RUN` `results/e7_free_baselines_power.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Discharged** by `results/e7_free_baselines.json`. **It returns SURVIVES entry-res ONLY.**
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### M-52 — M-51 named a quantity that does not exist, and what replaced it · **NEW**
 **Committed before the replacement statistic is computed.** `M-51` stands as written; this
@@ -5646,6 +5649,72 @@ catching defects in the self-tests except a person looking.
 
 **Evidence** `SRC` `scripts/check_comparative_claims.py`
 **Status** ACTIVE
+
+### R-73 — M-49 returns UNDER-POWERED: the effect survives capacity matching, by less than the rule can resolve · **NEW**
+**The verdict M-49 named as its third branch, returned as specified.** Five independently
+initialised members at `rnn_hidden_size` 124 against the released
+256, carrying 1,023,880 state-pathway parameters
+against the shared-trunk arm's 1,024,132 — a ratio
+of 0.9998, where §6.10's original contrast carried
+3.49×.
+
+| | capacity UNMATCHED (§6.10) | capacity MATCHED (M-49) |
+|---|---|---|
+| mean overconfidence improvement | 2.03× | **1.79×** |
+| mean ±1σ coverage gain | +7.12 pts | **+6.42 pts** |
+| MDE the rule faced | 1.45× / 2.26 pts | 2.004× / 4.32 pts |
+
+**What passes and what does not.** With capacity held fixed the matched independent ensemble is
+better calibrated **on every shared-trunk seed**, every paired interval **excludes zero**, and the
+coverage gain **clears its own MDE**. The one condition that fails is the overconfidence ratio
+against its threshold: 1.79× where the rule needs
+2.004×.
+
+**So the honest reading is the one M-49 wrote before the runs.** Trunk-sharing is **not** explained
+away by capacity — the effect is in the same direction, on every pair, with intervals excluding
+zero. But it is **smaller** with capacity fixed (2.03× to
+1.79×), and this design cannot resolve how much of the original
+belonged to capacity, because its MDE is almost exactly the size of the effect it re-tested. M-49
+states that limitation in its own committed text and this is the case it named.
+
+**What it does settle.** §6.10's contrast is no longer confounded on capacity in the direction that
+matters: the finding does not vanish when the confound is removed. `X-17` recorded capacity as the
+axis nothing in this project addressed; it is addressed, and the residue is a power limit rather
+than a design flaw.
+
+**Evidence** `RUN` `results/m49_capacity_matched.json`, `results/p2_capacity_power.json`
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### M-56 — M-49's verdict was computed against M-44's thresholds, and in M-44's vocabulary · **NEW**
+Two defects in one function, both found by reading a printed verdict that contradicted the numbers
+printed beneath it.
+
+**One.** `r2_independent_ensemble.py` was parameterised so M-49 could use it rather than a copy.
+The per-pair conditions kept reading the **module constants** `MDE_RATIO` (1.45, M-44's) and
+`MDE_COV_PTS` (2.26, M-44's) instead of the thresholds passed in. M-49's are
+2.004× and 4.32 points, and the observed improvement is
+1.79× — which clears M-44's and not M-49's. The run printed
+`MECHANISM SUPPORTED` with `overconfidence_improvement_at_least_mde: yes` **directly above** a line
+reading "mean overconfidence improvement 1.79× (MDE
+2.004×)". The contradiction was on the same screen.
+
+This is `M-53` again one level up: a rule naming one threshold and the code applying another.
+`M-53` was the slope against the correlation; this is M-49's MDE against M-44's.
+
+**Two, and it cuts the other way.** With the thresholds fixed the script then printed
+`MECHANISM NOT SUPPORTED` — **M-44's** vocabulary. M-49 defines its own three outcomes and names
+this exact case: *UNDER-POWERED — the point estimate favours the matched independent ensemble but
+by less than the MDE*. Publishing "NOT SUPPORTED" for a result in which the matched ensemble wins
+on every pair, every interval excludes zero and coverage clears its MDE would have been **far more
+damning than the truth**. A verdict vocabulary borrowed from another rule is wrong in whichever
+direction it happens to point.
+
+**M-44 is unaffected**, and that is verified rather than assumed: its artifact was compared
+key-by-key before and after both fixes and its verdict, its conditions and every measured value
+are identical.
+
+**Evidence** `SRC` `scripts/r2_independent_ensemble.py`, `results/m49_capacity_matched.json`
+**Status** ACTIVE · **Relevance** METHOD
 
 ## Candidate paper contributions
 

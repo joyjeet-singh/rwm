@@ -260,11 +260,19 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
             "ratio_ci": [float(np.exp(lo1)), float(np.exp(hi1))],
             "ratio_excludes_zero": bool(hi1 < 0 or lo1 > 0),
             "ratio_improves": bool(lr < 0),
-            "ratio_beats_mde": bool(np.exp(-lr) >= MDE_RATIO),
+            # mde_ratio, NOT the module constant. These read MDE_RATIO and
+            # MDE_COV_PTS -- M-44's thresholds -- so when main() was parameterised
+            # for M-49 the verdict was computed against the WRONG RULE's minimum
+            # detectable effect. M-49's is 2.004x and M-44's is 1.45x, and the
+            # observed improvement is 1.79x: it passes one and fails the other,
+            # and the printed conditions said "yes" beside a mean the same block
+            # printed as below threshold. Same shape as M-53 -- a rule naming one
+            # statistic and the code applying another.
+            "ratio_beats_mde": bool(np.exp(-lr) >= mde_ratio),
             "coverage_diff_pts": dc, "coverage_ci_pts": [lo2, hi2],
             "coverage_excludes_zero": bool(lo2 > 0 or hi2 < 0),
             "coverage_improves": bool(dc > 0),
-            "coverage_beats_mde": bool(abs(dc) >= MDE_COV_PTS),
+            "coverage_beats_mde": bool(abs(dc) >= mde_cov),
         }
         print(f"    {s:>9} {np.exp(lr):>22.3f} "
               f"{f'[{np.exp(lo1):.3f}, {np.exp(hi1):.3f}]':>26} {dc:>15.2f} "
@@ -326,6 +334,21 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
     supported = ratio_better and ratio_excl and ratio_mde and cov_better and cov_excl and cov_mde
     # "the two quantities disagree in direction" -> unresolvable
     unresolvable = (ratio_better != cov_better) and not supported
+
+    # M-49 DEFINES ITS OWN THREE OUTCOMES and they are not M-44's.
+    #
+    # M-44 asks whether trunk-sharing is the mechanism and answers SUPPORTED /
+    # NOT SUPPORTED / UNRESOLVABLE. M-49 asks whether that survives capacity
+    # matching and answers MECHANISM SURVIVES CAPACITY MATCHING / CAPACITY
+    # EXPLAINS IT / UNDER-POWERED -- and it defines the third branch explicitly,
+    # because its MDE is almost exactly the size of the effect it re-tests and it
+    # said so before the runs.
+    #
+    # Emitting M-44's vocabulary here would have published "MECHANISM NOT
+    # SUPPORTED" for a result in which the matched ensemble is better on every
+    # pair, every interval excludes zero, and coverage clears its own MDE --
+    # failing only the ratio limb, by 1.79x against 2.004x. That is far more
+    # damning than the truth and it is not the verdict the rule defines.
     verdict = ("MECHANISM SUPPORTED" if supported
                else "UNRESOLVABLE — the two quantities disagree in direction" if unresolvable
                else "MECHANISM NOT SUPPORTED")
@@ -362,6 +385,14 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
             "direction of 'architecture is not the explanation'. If it moves a lot, the "
             "design flaw is identified but not cleanly attributed."),
     }
+    if rule == "M-49":
+        if supported:
+            verdict = "MECHANISM SURVIVES CAPACITY MATCHING"
+        elif ratio_better and cov_better and (ratio_excl or cov_excl):
+            verdict = "UNDER-POWERED — favours the matched ensemble by less than the MDE"
+        else:
+            verdict = "CAPACITY EXPLAINS IT"
+        out["m44"]["verdict"] = verdict
     print(f"\n  {rule} VERDICT: {verdict}")
     for k, v in out["m44"]["conditions"].items():
         print(f"    {'yes' if v else 'NO ':>4}  {k}")
