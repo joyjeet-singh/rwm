@@ -70,7 +70,21 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # because the committed supplementary.zip predated it and the stage
            # that would have said so was not re-run until the revision-2 gate.
            "scripts/e4_reply_draft.py",
-           "docs/ARCHIVAL_IDENTIFIERS.md"}
+           "docs/ARCHIVAL_IDENTIFIERS.md",
+           # The Software Heritage exposure check, and the artifact it writes.
+           # Same category as the two archival documents above: an archival check
+           # has to name the origin it is asking the archive about, so the
+           # repository URL and the author's account name are the INPUT to the
+           # tool, not incidental to it. Excluding it costs review nothing --
+           # nothing in the paper, the ledger or any other artifact cites it, and
+           # its subject is the exposure of a file this bundle does not contain.
+           #
+           # This is the exclusion that made stage 28 fail from the commit that
+           # added the checker. That failure is why results/verify_reproduction.json
+           # was written by a run whose regenerated set silently omitted
+           # supplementary_manifest.json -- the same silent-exclusion shape as M-28,
+           # inside the claim M-28 is about.
+           "scripts/swh_visit_check.py", "results/swh_visit_check.json"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]

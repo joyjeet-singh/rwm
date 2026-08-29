@@ -288,8 +288,15 @@ stage 27 "Claims-versus-evidence audit" "10 s" \
       results/task_c1_claims_audit.json $PY scripts/task_c1_claims_audit.py
 # Refuses to write the ZIP if any file in it carries the author or a repository
 # under their account; third-party upstreams are allowlisted.
+# The declared output is the manifest, not the ZIP. It was "" -- no declared
+# output -- which meant supplementary_manifest.json never entered
+# results/_regenerated.txt even on the runs where this stage passed, so
+# verify_reproduction.py counted it as a file the clone carried in rather than
+# one the pipeline rewrote. Combined with this stage failing outright on the
+# SWH checker's identity hits, the published 100.00% came from a regenerated
+# set that silently omitted it: the M-28 shape, inside the claim M-28 is about.
 stage 28 "Assemble the anonymised supplementary archive" "20 s" \
-      "" $PY scripts/build_supplementary.py
+      results/supplementary_manifest.json $PY scripts/build_supplementary.py
 # The numeral check guarantees every printed number came from an artifact. It
 # cannot see a sentence that takes correct numbers and asserts a wrong relation
 # between them -- six such defects shipped before anyone looked. --self-test runs
