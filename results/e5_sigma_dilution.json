@@ -246,15 +246,15 @@
   ],
   "mde": {
     "slope_threshold": 0.0030912440847498416,
+    "slope_floor": 0.0030912440847498416,
+    "span_floor": 1.01,
+    "slope_threshold_from": "the 1.01x-span floor; the null's own 95th percentile is 2.1e-05, which is numerical noise and would fire on anything",
     "r_threshold": 0.22671533190318408,
     "smallest_dilution_detected_80pct": 1.0,
+    "false_positive_rate_at_dilution_0": 0.0,
     "collapse_ratio_threshold": 0.1,
     "collapse_threshold_justification": "the null -- a model with nothing to learn about WHERE the noise is -- still recovers the marginal scale, with median sigma_hat / sigma_true no lower than 0.940 across 8 repeats. A collapse criterion of 0.1 sits far below anything this design produces without one, so meeting it cannot be an artifact of the sample size or of the head's floor.",
     "recovery_factor_threshold": 3.0,
-    "recovery_threshold_justification": "under gaussian_nll on undiluted data the head recovers the median true sigma to within a factor the ladder measures; 3.0 is set wider than the observed spread so the rule is not tuned to one run.",
-    "slope_floor": 0.0030912440847498416,
-    "slope_threshold_from": "the 1.01x-span floor; the null's own 95th percentile is 2.1e-05, which is numerical noise and would fire on anything",
-    "false_positive_rate_at_dilution_0": 0.0,
-    "span_floor": 1.01
+    "recovery_threshold_justification": "under gaussian_nll on undiluted data the head recovers the median true sigma to within a factor the ladder measures; 3.0 is set wider than the observed spread so the rule is not tuned to one run."
   }
 }

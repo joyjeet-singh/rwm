@@ -166,11 +166,15 @@ def dilution_study():
 
     NULL. The x -> sigma pairing is permuted, so the marginal noise distribution
     and the mean function are unchanged and only the learnable association is
-    gone. Whatever correlation a model reports on that data is what this design
-    produces from nothing, and its upper tail is the threshold.
+    gone. Whatever a model reports on that data is what this design produces from
+    nothing.
 
-    Nothing here uses the `mse` branch. Calibrating a detector on the objective
-    it is meant to test would let the objective set its own threshold.
+    Nothing here uses the `mse` branch. Calibrating a detector on the objective it
+    is meant to test would let the objective set its own threshold.
+
+    Thresholds and detection rates come from derive_mde(), which --reaggregate
+    also calls, so the two paths cannot write different shapes into one artifact.
+    They did, and only the clean-clone gate could find it.
     """
     cfg = R.load_reference_config(R.repo_paths()["lite"])
     rec = {"n_train": N_TRAIN, "n_test": N_TEST, "iters": ITERS,
@@ -192,37 +196,7 @@ def dilution_study():
         nulls.append(e)
         print(f"  null {k:>2}: slope {e['slope_log_sigma']:+.4f}  r {e['r_log_sigma']:+.4f}  "
               f"ratio {e['ratio_median']:.3f}  spread {e['sigma_hat_spread_factor']:.2f}x")
-    r_null = np.array([n["r_log_sigma"] for n in nulls])
-    sl_null = np.array([n["slope_log_sigma"] for n in nulls])
-    ratio_null = np.array([n["ratio_median"] for n in nulls])
-    r_thresh = float(np.percentile(np.abs(r_null), 95))
-    # THE THRESHOLD NEEDS A FLOOR, and here is why.
-    #
-    # Under the permutation null the head learns a sigma with NO input dependence
-    # at all: the measured spread is 1.0004x across the input range and the fitted
-    # slopes are order 1e-5, which is floating-point noise rather than sampling
-    # variability. A 95th percentile of that is ~2e-5, and a threshold of 2e-5
-    # "detects" any slope whatsoever -- the dilution-0 arm, which is pure null,
-    # crossed it a third of the time. A threshold a coin flip can clear is not a
-    # threshold.
-    #
-    # So the floor is set by what a slope MEANS rather than by the noise around
-    # zero. A slope s makes the recovered sigma span (true span)^s across the
-    # input range; the floor is the slope at which that span reaches 1.01x -- a
-    # one-percent variation, which is the smallest input dependence anyone would
-    # call input dependence at all, and about 150x the null's numerical noise.
-    s_floor = float(np.log(SPAN_FLOOR) / np.log(SIGMA_SPAN))
-    s_thresh = float(max(np.percentile(np.abs(sl_null), 95), s_floor))
-    rec["null"] = {
-        "r_mean": float(r_null.mean()), "r_sd": float(r_null.std(ddof=1)),
-        "r_abs_p95": r_thresh,
-        "slope_mean": float(sl_null.mean()), "slope_sd": float(sl_null.std(ddof=1)),
-        "slope_abs_p95": s_thresh,
-        "spread_max": float(max(n["sigma_hat_spread_factor"] for n in nulls)),
-        "ratio_median_mean": float(ratio_null.mean()),
-        "ratio_median_min": float(ratio_null.min()),
-        "runs": nulls,
-    }
+    rec["null"] = {"runs": nulls}
 
     ladder = []
     for d in DILUTIONS:
@@ -234,49 +208,31 @@ def dilution_study():
             h = train(build_head(cfg, sd), cfg, x, y, "gaussian_nll", sd)
             e = evaluate(h, xt, sigt)
             rs.append(e["r_log_sigma"]); sl.append(e["slope_log_sigma"])
-        det = float(np.mean([abs(v) > s_thresh for v in sl]))
         ladder.append({"dilution": d, "r": rs, "slope": sl,
-                       "r_mean": float(np.mean(rs)), "slope_mean": float(np.mean(sl)),
-                       "detection_rate": det})
-        print(f"  dilution {d:.2f}: slope {np.mean(sl):+.4f}  r {np.mean(rs):+.4f}  "
-              f"detected {det:.0%}")
+                       "r_mean": float(np.mean(rs)), "slope_mean": float(np.mean(sl))})
     rec["ladder"] = ladder
 
-    detected = [l["dilution"] for l in ladder if l["detection_rate"] >= 0.8]
-    rec["mde"] = {
-        "slope_threshold": s_thresh,
-        "slope_threshold_from": ("the null's 95th percentile" if
-                                 np.percentile(np.abs(sl_null), 95) > s_floor
-                                 else f"the {SPAN_FLOOR}x-span floor; the null's own "
-                                      f"95th percentile is "
-                                      f"{np.percentile(np.abs(sl_null), 95):.2g}, which is "
-                                      f"numerical noise and would fire on anything"),
-        "slope_floor": s_floor,
-        "r_threshold": r_thresh,
-        "smallest_dilution_detected_80pct": min(detected) if detected else None,
-        "collapse_ratio_threshold": 0.1,
-        "collapse_threshold_justification":
-            f"the null -- a model with nothing to learn about WHERE the noise is -- "
-            f"still recovers the marginal scale, with median sigma_hat / sigma_true "
-            f"no lower than {ratio_null.min():.3f} across {NULL_REPEATS} repeats. "
-            f"A collapse criterion of 0.1 sits far below anything this design "
-            f"produces without one, so meeting it cannot be an artifact of the "
-            f"sample size or of the head's floor.",
-        "recovery_factor_threshold": 3.0,
-        "recovery_threshold_justification":
-            "under gaussian_nll on undiluted data the head recovers the median "
-            "true sigma to within a factor the ladder measures; 3.0 is set wider "
-            "than the observed spread so the rule is not tuned to one run.",
-    }
+    rec = derive_mde(rec)
+    M, NUL = rec["mde"], rec["null"]
+    for l in rec["ladder"]:
+        print(f"  dilution {l['dilution']:.2f}: slope {l['slope_mean']:+.4f}  "
+              f"r {l['r_mean']:+.4f}  detected {l['detection_rate']:.0%}")
     print("=" * 88)
-    print(f"  null |slope| 95th percentile  : {s_thresh:.4f}   <- the threshold")
-    print(f"  null |r| 95th percentile      : {r_thresh:.4f}   (not used: scale-free)")
-    print(f"  null sigma spread, worst      : {rec['null']['spread_max']:.3f}x")
-    print(f"  smallest dilution detected 80%: {rec['mde']['smallest_dilution_detected_80pct']}")
-    print(f"  null median ratio, minimum    : {ratio_null.min():.3f}")
+    print(f"  null |slope| 95th percentile  : {NUL['slope_abs_p95']:.3g}")
+    print(f"  {SPAN_FLOOR}x-span floor             : {M['slope_floor']:.5f}")
+    print(f"  threshold in force            : {M['slope_threshold']:.5f}")
+    print(f"  null |r| 95th percentile      : {NUL['r_abs_p95']:.4f}   (not used: scale-free)")
+    print(f"  null sigma spread, worst      : {NUL['spread_max']:.4f}x")
+    print(f"  false positives at dilution 0 : {M['false_positive_rate_at_dilution_0']:.0%}")
+    print(f"  smallest dilution detected 80%: {M['smallest_dilution_detected_80pct']}")
+    print(f"  null median ratio, minimum    : {NUL['ratio_median_min']:.3f}")
     json.dump(rec, open(os.path.join(R.RESULTS, "e5_sigma_dilution.json"), "w"), indent=2)
     print("  wrote results/e5_sigma_dilution.json")
     return 0
+
+
+
+# ---------------------------------------------------------------- experiment
 
 
 def summarise(runs, TH):
@@ -412,54 +368,92 @@ def experiment():
     return 0
 
 
-def reaggregate():
-    """Recompute the thresholds from the runs already trained.
+def derive_mde(rec):
+    """Thresholds, detection rates and the null summary, from the runs in `rec`.
 
-    Legitimate, and worth saying why. The expensive part is the calibration data
-    -- eight null runs and fifteen ladder runs -- and it is unchanged. What
-    changes is the DECISION RULE derived from it, and a decision rule may be
-    designed on calibration data provided it is fixed before the data it will
-    judge exists. No arm of the experiment has been trained when this runs.
+    ONE implementation, called by both the dilution run and --reaggregate.
+    They had two, and the two wrote DIFFERENT SHAPES into the same artifact:
+    `false_positive_rate_at_dilution_0` and `null.r_abs_max` existed only on the
+    --reaggregate path. This tree had them because --reaggregate had been run
+    here; a clean clone runs --dilution and never does, so stage 23 died on a
+    KeyError that could not occur on the machine the artifact was made on.
+
+    Found by the clean-clone gate, which is the only thing that could have found
+    it: every check here reads the artifact this tree has.
     """
-    path = os.path.join(R.RESULTS, "e5_sigma_dilution.json")
-    rec = json.load(open(path))
     sl_null = np.array([r["slope_log_sigma"] for r in rec["null"]["runs"]])
+    r_null = np.array([r["r_log_sigma"] for r in rec["null"]["runs"]])
     ratio_null = np.array([r["ratio_median"] for r in rec["null"]["runs"]])
-    s_floor = float(np.log(SPAN_FLOOR) / np.log(SIGMA_SPAN))
     p95 = float(np.percentile(np.abs(sl_null), 95))
+    s_floor = float(np.log(SPAN_FLOOR) / np.log(SIGMA_SPAN))
     s_thresh = float(max(p95, s_floor))
     for l in rec["ladder"]:
         l["detection_rate"] = float(np.mean([abs(v) > s_thresh for v in l["slope"]]))
     det = [l["dilution"] for l in rec["ladder"] if l["detection_rate"] >= 0.8]
-    rec["null"]["slope_abs_p95"] = p95
-    rec["null"]["r_abs_max"] = float(np.abs(
-        [r["r_log_sigma"] for r in rec["null"]["runs"]]).max())
-    rec["mde"].update({
+    fp = next((l["detection_rate"] for l in rec["ladder"] if l["dilution"] == 0.0), None)
+    rec["null"].update({
+        "slope_abs_p95": p95,
+        "r_abs_p95": float(np.percentile(np.abs(r_null), 95)),
+        "r_abs_max": float(np.abs(r_null).max()),
+        "spread_max": float(max(r["sigma_hat_spread_factor"] for r in rec["null"]["runs"])),
+        "ratio_median_min": float(ratio_null.min()),
+    })
+    rec["mde"] = {
         "slope_threshold": s_thresh,
         "slope_floor": s_floor,
         "span_floor": SPAN_FLOOR,
         "slope_threshold_from": ("the null's 95th percentile" if p95 > s_floor else
-                                 f"the {SPAN_FLOOR}x-span floor; the null's own 95th percentile "
-                                 f"is {p95:.2g}, which is numerical noise and would fire "
-                                 f"on anything"),
+                                 f"the {SPAN_FLOOR}x-span floor; the null's own 95th "
+                                 f"percentile is {p95:.2g}, which is numerical noise "
+                                 f"and would fire on anything"),
+        "r_threshold": float(np.percentile(np.abs(r_null), 95)),
         "smallest_dilution_detected_80pct": min(det) if det else None,
-        "false_positive_rate_at_dilution_0": next(
-            (1 - 0 if False else l["detection_rate"]) for l in rec["ladder"]
-            if l["dilution"] == 0.0),
-    })
+        "false_positive_rate_at_dilution_0": fp,
+        "collapse_ratio_threshold": 0.1,
+        "collapse_threshold_justification":
+            f"the null -- a model with nothing to learn about WHERE the noise is -- "
+            f"still recovers the marginal scale, with median sigma_hat / sigma_true "
+            f"no lower than {ratio_null.min():.3f} across {len(sl_null)} repeats. "
+            f"A collapse criterion of 0.1 sits far below anything this design "
+            f"produces without one, so meeting it cannot be an artifact of the "
+            f"sample size or of the head's floor.",
+        "recovery_factor_threshold": 3.0,
+        "recovery_threshold_justification":
+            "under gaussian_nll on undiluted data the head recovers the median "
+            "true sigma to within a factor the ladder measures; 3.0 is set wider "
+            "than the observed spread so the rule is not tuned to one run.",
+    }
+    return rec
+
+
+def reaggregate():
+    """Re-derive the thresholds from the runs already trained.
+
+    Legitimate, and worth saying why. The expensive part is the calibration data
+    -- the null runs and the ladder -- and it is unchanged. What changes is the
+    DECISION RULE derived from it, and a decision rule may be designed on
+    calibration data provided it is fixed before the data it will judge exists.
+
+    It calls derive_mde(), which the dilution run also calls, so the two cannot
+    write different shapes into the same artifact. They did: this path added
+    `false_positive_rate_at_dilution_0` and `null.r_abs_max` and the dilution
+    path did not, so a clean clone -- which only ever runs the dilution path --
+    died on a KeyError this machine could not reproduce.
+    """
+    path = os.path.join(R.RESULTS, "e5_sigma_dilution.json")
+    rec = derive_mde(json.load(open(path)))
     json.dump(rec, open(path, "w"), indent=2)
+    M = rec["mde"]
     print("E5 — DILUTION THRESHOLDS, RE-DERIVED (no retraining)")
     print("=" * 88)
-    print(f"  null |slope| 95th percentile : {p95:.3g}  (numerical noise: the null's")
-    print(f"                                 sigma spans {max(r['sigma_hat_spread_factor'] for r in rec['null']['runs']):.4f}x)")
-    print(f"  {SPAN_FLOOR}x-span floor             : {s_floor:.5f}")
-    print(f"  threshold in force           : {s_thresh:.5f}  <- {rec['mde']['slope_threshold_from'][:40]}")
+    print(f"  null |slope| 95th percentile : {rec['null']['slope_abs_p95']:.3g}")
+    print(f"  {SPAN_FLOOR}x-span floor             : {M['slope_floor']:.5f}")
+    print(f"  threshold in force           : {M['slope_threshold']:.5f}")
     for l in rec["ladder"]:
         print(f"    dilution {l['dilution']:.2f}: slopes "
               f"{[round(v, 5) for v in l['slope']]}  detected {l['detection_rate']:.0%}")
-    print(f"  false positives at dilution 0: {rec['mde']['false_positive_rate_at_dilution_0']:.0%}")
-    print(f"  smallest dilution detected 80%: {rec['mde']['smallest_dilution_detected_80pct']}")
-    print(f"  null median ratio, minimum   : {ratio_null.min():.3f}")
+    print(f"  false positives at dilution 0: {M['false_positive_rate_at_dilution_0']:.0%}")
+    print(f"  smallest dilution detected 80%: {M['smallest_dilution_detected_80pct']}")
     print("  wrote results/e5_sigma_dilution.json")
     return 0
 

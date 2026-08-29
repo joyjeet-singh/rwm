@@ -5971,6 +5971,37 @@ the surface it looks at, and none of these looked at the artifact a reviewer act
 `scripts/part_f_gate.py`
 **Status** ACTIVE · **Relevance** METHOD
 
+### M-61 — Two code paths wrote one artifact in two different shapes, and only a clean clone could see it · **NEW**
+**What happened.** `e5_synthetic_sigma.py` writes `results/e5_sigma_dilution.json` from two
+entry points: `--dilution`, which trains the calibration runs, and `--reaggregate`, which
+re-derives the thresholds from runs already trained. The threshold derivation was implemented
+**twice**, and the two implementations produced different key sets:
+`mde.false_positive_rate_at_dilution_0` and `null.r_abs_max` existed only on the `--reaggregate`
+path.
+
+`paper_numbers.py` reads both keys. This tree had them, because `--reaggregate` had been run here
+after the threshold floor was added. **A clean clone runs only `--dilution`**, so stage 23 died on
+`KeyError: 'false_positive_rate_at_dilution_0'` — an error that cannot occur on the machine the
+artifact was made on.
+
+**Why nothing else could have found it.** Every check in this repository reads the artifact this
+tree has. The typed-numeral audit, the comparative-claim checker, the horizon sweep, the pipeline
+coverage check — all of them consume `paper_numbers.json`, which was built from an artifact
+carrying keys no fresh run produces. The clean-clone gate is the only mechanism here that
+regenerates an artifact from nothing and then reads it, and it is the only one that saw this.
+
+**Fixed** by making both paths call one `derive_mde()`. Verified the way it had to be: the dilution
+study was re-run **from scratch**, and its artifact carries every key `paper_numbers.py` reads,
+with values identical to the re-derived ones (`slope_threshold` 0.0030912440847498416 either way).
+
+**The lesson.** `M-28`, `D-16`, `M-59` and this are the same family — a number the paper depends on
+that a clean clone cannot produce — and each was found by a different accident. This one is the
+first found by the gate that exists for it, which is an argument for running that gate more often
+than at the end.
+
+**Evidence** `SRC` `scripts/e5_synthetic_sigma.py`, `results/e5_sigma_dilution.json`
+**Status** ACTIVE · **Relevance** METHOD
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are
