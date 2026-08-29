@@ -3751,6 +3751,26 @@
     "source": "results/a2_trajectory_level_control.json",
     "value": "SUPPORTED"
   },
+  "m49_matched_params": {
+    "source": "results/p2_capacity_power.json",
+    "value": "1,023,880"
+  },
+  "m49_matched_ratio": {
+    "source": "results/p2_capacity_power.json",
+    "value": "0.9998"
+  },
+  "m49_mde_cov": {
+    "source": "results/p2_capacity_power.json",
+    "value": "4.32"
+  },
+  "m49_mde_ratio": {
+    "source": "results/p2_capacity_power.json",
+    "value": "2.00"
+  },
+  "m49_width": {
+    "source": "results/p2_capacity_power.json",
+    "value": 124
+  },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
     "value": "five"

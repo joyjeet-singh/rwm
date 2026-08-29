@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     812 values substituted from 62 artifacts. -->
+     817 values substituted from 64 artifacts. -->
 
 # Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
 
@@ -1334,11 +1334,22 @@ gaits or terrain.
 **Two secondary analyses rest on a single training seed** — the long-horizon trend fit and the per-dimension matched comparison, both computed on seed 1 alone. The headline A/B result is not
 among them: it is a three-seed mean with per-seed values reported (§5). This is recorded in the artifacts themselves.
 
+**The ranking claim is not established as needing an ensemble.** §6.7 shows ensemble
+disagreement ranks realised error well and survives six controls. It does not show that the
+ensemble is necessary for that: under a rule committed before the comparison (`M-51`), the
+magnitude of the model's own predicted state change — a subtraction, requiring no ensemble and no
+second model — ranks error at +0.4697 against disagreement's +0.6053, and the margin
+between them is smaller than this sample can resolve. Disagreement retains +0.5430
+with that baseline partialled out, so it is carrying information the subtraction is not; what is
+open is whether that increment is worth five models. Settling it needs more independent
+trajectories than the released dataset contains, and it is the cheapest open question here for
+anyone with a second dataset.
+
 **We did not measure what the miscalibration costs.** We show that the penalty the follow-up applies is miscalibrated as a scale — 33.4× overconfident at h = 100, the horizon its own imagination rollouts run to — but the only use the method makes of that quantity is to shape policy learning, and we did not train a policy. A miscalibrated scale that enters as a relative penalty across candidate actions may cost little, or may cost a great deal; our measurements cannot distinguish those. **The finding bounds what the quantity reports, not what it costs.** That distinction is easy to lose and we do not want a reader to take the ratio as a measure of harm.
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's 4 independent trajectories admit a smallest attainable P-value of 0.04167 — coarser than the multiplicity-corrected threshold 0.001667, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is 0.0037 against a threshold of 0.001667. Resolving this needs more episodes than the released dataset contains, not a better test. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
 
-**The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. The clean version would be five trunks at one fifth the width each, matched on total capacity; that is a different architecture and a different training run, and it is out of scope here. So the comparison conflates trunk-sharing with data-order diversity and with capacity.
+**The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. The clean version is five trunks at reduced width, matched on total state-pathway capacity — and that is now a pre-registered experiment rather than an acknowledged gap. `M-49`, committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132 — a ratio of 0.9998. **Its MDE is 2.00× against an observed unmatched effect of 2.03×**, so `M-49` says in its own text what it can and cannot resolve: whether the effect survives at close to full size, and *not* a partial attenuation. Until it discharges, the comparison conflates trunk-sharing with data-order diversity and with capacity, and this paragraph says so.
 That asymmetry is deliberate and it is generous to the mechanism: if the overconfidence factor
 barely moves despite the handicap, the finding is strong in the direction of *architecture is not
 the explanation*; if it moves a great deal, the design flaw is identified but not cleanly

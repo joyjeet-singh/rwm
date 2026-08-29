@@ -334,6 +334,18 @@ def main():
     put("e7_n_beaten", E7["n_beaten"], "results/e7_free_baselines.json")
     put("e7_n_new", E7["n_new_baselines"], "results/e7_free_baselines.json")
 
+    # M-49's design, so §11 can name it rather than describe it.
+    P2 = J("p2_capacity_power.json")
+    put("m49_width", P2["capacity"]["matched_hidden_size"], "results/p2_capacity_power.json")
+    put("m49_matched_params", f'{P2["capacity"]["matched_total_params"]:,}',
+        "results/p2_capacity_power.json")
+    put("m49_matched_ratio", f'{P2["capacity"]["matched_ratio"]:.4f}',
+        "results/p2_capacity_power.json")
+    put("m49_mde_ratio", f'{P2["mde_80pct_power"]["overconfidence_ratio_multiplicative"]:.2f}',
+        "results/p2_capacity_power.json")
+    put("m49_mde_cov", f'{P2["mde_80pct_power"]["coverage_pts"]:.2f}',
+        "results/p2_capacity_power.json")
+
     AG = J("appendix_g_rules.json")
     put("appG_n_rules", AG["n_rules"], "results/appendix_g_rules.json")
     put("appG_n_lead", AG["n_with_lead_time"], "results/appendix_g_rules.json")
