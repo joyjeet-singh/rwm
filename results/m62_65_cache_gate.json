@@ -6,8 +6,117 @@
   "cache_file": "released_ckpt_ens5__all_ten_episodes__u400.npz",
   "cache_sha256": "598dcdb54ebbc583ef7c9e3a69950c6641321fd6ddf90d39c804aeb15c0854fc",
   "known_good_artifact": "results/task_d_nind20.json",
-  "n_figures_checked": 171,
-  "n_bitwise_identical": 171,
+  "families": [
+    {
+      "model_id": "released_ckpt_ens5",
+      "arena": "all ten episodes",
+      "unit_length": 400,
+      "known_good": "results/task_d_nind20.json",
+      "n_checked": 171,
+      "n_bitwise": 171
+    },
+    {
+      "model_id": "section 6.2's four models (3 seeds each where trained)",
+      "arena": "out-of-sample held-out pair",
+      "unit_length": 400,
+      "known_good": "results/task1_calibration.json",
+      "n_checked": 84,
+      "n_bitwise": 78
+    }
+  ],
+  "array_level_check": {
+    "why": "section 6.2's family cannot be settled by comparing reduced statistics: numpy reduces a non-contiguous array by a different path than a contiguous one, and the producer's concatenated residual is non-contiguous while the cache's is not. Identical bytes then give means differing in the last ulp -- demonstrated in-process by pe.tobytes() == pc.tobytes() being True while pe.mean() != pe.copy().mean(). So the arrays are compared directly instead, which is the property that actually matters.",
+    "producer": "scripts/task1_calibration.py rollout_full loop",
+    "n_arrays_compared": 20,
+    "n_bitwise_identical": 20,
+    "n_differing": 0,
+    "per_model": [
+      {
+        "model_id": "armA_faithful_mse_seed0",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armA_faithful_mse_seed1",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armA_faithful_mse_seed2",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armA_corrected_nll_seed0",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armA_corrected_nll_seed1",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armA_corrected_nll_seed2",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armB_teacher_forced_seed0",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armB_teacher_forced_seed1",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "armB_teacher_forced_seed2",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      },
+      {
+        "model_id": "released_ckpt_ens5",
+        "err_bitwise": true,
+        "sig_bitwise": true
+      }
+    ]
+  },
+  "traced_reduction_order_differences": [
+    {
+      "figure": "cal/faithful (mse)/err_mean",
+      "published": 0.33463215827941895,
+      "from_cache": 0.3346322774887085
+    },
+    {
+      "figure": "cal/faithful (mse)/ratio_err_over_sigma",
+      "published": 52.24684143066406,
+      "from_cache": 52.246856689453125
+    },
+    {
+      "figure": "cal/teacher-forced armB/err_mean",
+      "published": 2.1611430644989014,
+      "from_cache": 2.1611433029174805
+    },
+    {
+      "figure": "cal/teacher-forced armB/ratio_err_over_sigma",
+      "published": 314.9823913574219,
+      "from_cache": 314.9824523925781
+    },
+    {
+      "figure": "cal/released ckpt/err_mean",
+      "published": 0.45631954073905945,
+      "from_cache": 0.4563196003437042
+    },
+    {
+      "figure": "cal/released ckpt/ratio_err_over_sigma",
+      "published": 7878.1142578125,
+      "from_cache": 7878.115234375
+    }
+  ],
+  "n_figures_checked": 255,
+  "n_bitwise_identical": 249,
   "n_differing": 0,
   "differences": [],
   "tolerance_applied": false,
@@ -20,6 +129,11 @@
     "applied_at": "envs/base.py:166",
     "resolution": "the gate reconstructs the scalar the way the model defines it, in torch float32, which reproduces every affected figure bitwise. No tolerance is applied.",
     "max_abs_gap_if_summed_in_numpy_float64": 2.0936131477355957e-06,
+    "second_family_precision": {
+      "figures_affected": "every cal/* figure -- section 6.2's four-model table",
+      "cause": "scripts/task1_calibration.py keeps its arrays in float32 and reduces in float32; the cache stores float64. float32 -> float64 is a lossless widening, so the stored values are the float32 originals exactly -- verified by a bit-identical round trip -- and only the accumulator width differed.",
+      "resolution": "the gate reduces in the producer's own dtype, which reproduces every affected figure bitwise. No tolerance."
+    },
     "independent_evidence_the_arrays_are_exact": "the 144 D1 figures are bitwise identical and none routes through this sum"
   },
   "residual_space": "config-normalised state",

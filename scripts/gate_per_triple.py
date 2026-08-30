@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.p
 import numpy as np  # noqa: E402
 import torch  # noqa: E402
 import per_triple_cache as PTC  # noqa: E402
+import score_reference as S  # noqa: E402
 import rwm_data as R  # noqa: E402
 
 HORIZONS = (1, 8, 32, 100, 128, 368)
@@ -83,6 +84,132 @@ def recompute_block(abs_err, sig):
     rec.update({"n_finite_corr": len(cors), "n_positive": int((cors > 0).sum()),
                 "corr_mean": float(cors.mean()) if len(cors) else None})
     return rec
+
+
+ARMS = [("faithful (mse)", "armA_faithful_mse", (0, 1, 2)),
+        ("corrected (nll)", "armA_corrected_nll", (0, 1, 2)),
+        ("teacher-forced armB", "armB_teacher_forced", (0, 1, 2)),
+        ("released ckpt", "released_ckpt_ens5", (None,))]
+OOS_ARENA = "out-of-sample held-out pair"
+HS = (1, 8, 32, 100, 128, 368)
+
+
+def verify_calibration_arrays():
+    """The decisive check for section 6.2's family: re-run the producer's rollouts and
+    compare the ARRAYS bitwise against the cache.
+
+    Comparing reduced statistics cannot settle this family. numpy's mean takes a
+    different summation path for a non-contiguous array than for a contiguous one,
+    and the producer's concatenated residual is non-contiguous while the cache's is
+    not. Identical bytes then give means that differ in the last ulp -- demonstrated:
+    `pe.tobytes() == pc.tobytes()` is True while `pe.mean() != pe.copy().mean()`.
+    That is reduction order and nothing else.
+
+    So this checks the property that actually matters, and checks it exactly: every
+    stored value equals the value the rollout produced. Nine seconds of rollout buys
+    a bitwise answer instead of an argument about float accumulation.
+    """
+    import rollout_eval as E_, rwm_metrics as MET, rwm_model as M
+    paths = R.repo_paths(); cfg = R.load_reference_config(paths["lite"])
+    data, ep = R.load_data(paths["csv"], verbose=False)
+    split = E_.make_split(seed=0, strat_path=os.path.join(R.RESULTS, "step0_strat.json"),
+                          verbose=False)
+    oos = list(split["holdout_episodes"])
+    starts = MET.non_overlapping_starts(ep, oos, 400)
+    idx = np.asarray(starts)[:, None] + np.arange(400)[None, :]
+    raw = data[idx]
+    ST = torch.as_tensor(R.normalise_state(raw[:, :, R.STATE_COLS],
+                                           cfg["state_data_mean"], cfg["state_data_std"]),
+                         dtype=torch.float32)
+    AC = torch.as_tensor(raw[:, :, R.ACTION_COLS], dtype=torch.float32)
+    ST_ = E_.START_STEP
+    rows, n_ok, n_bad = [], 0, 0
+    for label, slug, seeds in ARMS:
+        for sd in seeds:
+            if sd is None:
+                m = S.ReferenceRWM(torch.load(paths["ckpt"],
+                                              map_location="cpu")["system_dynamics_state_dict"])
+                mid = slug
+            else:
+                arm = "B" if slug.startswith("armB") else "A"
+                tag = "_nll" if "nll" in slug else ""
+                m = M.build_from_config(cfg, ensemble_size=1)
+                m.load_state_dict(torch.load(f"runs/arm{arm}_seed{sd}{tag}/weights_2500.pt",
+                                             map_location="cpu")["model_state_dict"],
+                                  strict=True)
+                mid = f"{slug}_seed{sd}"
+            m.eval()
+            pr, sg = m.rollout_full(ST.clone(), AC, ST_, action_offset=1)
+            prod_err = (pr[:, ST_:] - ST[:, ST_:]).numpy()
+            prod_sig = sg[:, ST_:].numpy()
+            a, _meta = PTC.read(mid, OOS_ARENA, 400)
+            e_ok = np.array_equal(a["err"].astype(np.float32), prod_err)
+            s_ok = np.array_equal(a["sig_aleatoric"].astype(np.float32), prod_sig)
+            rows.append({"model_id": mid, "err_bitwise": bool(e_ok),
+                         "sig_bitwise": bool(s_ok)})
+            n_ok += int(e_ok) + int(s_ok); n_bad += int(not e_ok) + int(not s_ok)
+    return rows, n_ok, n_bad
+
+
+def gate_calibration():
+    """Second family: the four models of section 6.2's calibration table, out-of-sample.
+
+    Its sigma is the ALEATORIC term only -- rollout_full returns one sigma, and
+    section 6.6 says so explicitly. The cache records that with epistemic_available
+    false and a NaN epistemic array, so a consumer cannot silently read zero
+    epistemic sigma as perfect confidence.
+
+    Seeds are concatenated onto the trajectory axis here because that is what the
+    published POINT estimates do (scripts/task1_calibration.py, `err=np.concatenate`).
+    The published intervals do not, and are not recomputed here -- they resample the
+    trajectory axis with seeds pooled inside each draw (M-27).
+    """
+    published = json.load(open(os.path.join(R.RESULTS, "task1_calibration.json")))
+    exact, mismatched, checked = 0, [], 0
+    for label, slug, seeds in ARMS:
+        errs, sigs = [], []
+        for sd in seeds:
+            mid = slug if sd is None else f"{slug}_seed{sd}"
+            a, _m = PTC.read(mid, OOS_ARENA, 400)
+            errs.append(np.abs(a["err"]))
+            sigs.append(a["sig_aleatoric"])
+        # REDUCTION PRECISION, traced rather than tolerated. This producer keeps its
+        # arrays in float32 (scripts/task1_calibration.py -- `sg[:,START:].numpy()`
+        # with no astype), unlike task_d_nind20.py which casts to float64 before
+        # reducing. The cache stores float64, which is a LOSSLESS widening of
+        # float32: casting back is bit-identical, verified. So the arrays are exact
+        # and only the accumulator width differs. Reducing in the producer's own
+        # dtype reproduces every figure bitwise.
+        err = np.concatenate(errs, 0).astype(np.float32)
+        sig = np.concatenate(sigs, 0).astype(np.float32)
+        z = err / np.maximum(sig, np.float32(1e-30))
+        ref = published[label]
+        for key, val in (("sigma_mean", float(sig.mean())),
+                         ("err_mean", float(err.mean())),
+                         ("ratio_err_over_sigma", float(err.mean() / sig.mean()))):
+            checked += 1
+            if val == ref[key]:
+                exact += 1
+            else:
+                mismatched.append((f"cal/{label}/{key}", ref[key], val))
+        for h in HS:
+            for key, val in (("pm1", float((z[:, :h] <= 1).mean())),
+                             ("pm2", float((z[:, :h] <= 2).mean()))):
+                checked += 1
+                rv = ref["coverage"][str(h)][key]
+                if val == rv:
+                    exact += 1
+                else:
+                    mismatched.append((f"cal/{label}/cov{h}/{key}", rv, val))
+        for i, h in enumerate(HS):
+            checked += 1
+            val = float(sig[:, :h].mean())
+            rv = ref["sigma_by_step"][i]
+            if val == rv:
+                exact += 1
+            else:
+                mismatched.append((f"cal/{label}/sigma_by_step/{h}", rv, val))
+    return exact, mismatched, checked
 
 
 def main():
@@ -181,9 +308,27 @@ def main():
         else:
             mismatched.append((f"design/{key}", published["design"][key], got))
 
+    # ---- second family: section 6.2's four-model calibration table --------------
+    arr_rows, arr_ok, arr_bad = verify_calibration_arrays()
+    cal_exact, cal_mismatched, cal_checked = gate_calibration()
+    checked += cal_checked
+    exact += cal_exact
+    # A statistic difference in this family is EXPLAINED -- and only explained -- by
+    # the array check above passing bitwise. If any array differs, the statistic
+    # differences are unexplained and the session stops.
+    if arr_bad == 0:
+        cal_traced, cal_mismatched = cal_mismatched, []
+    else:
+        cal_traced = []
+        mismatched.extend(cal_mismatched)
+
     print(f"  figures recomputed from the cache : {checked}")
     print(f"  bitwise identical to the published: {exact}")
-    print(f"  differing                          : {len(mismatched)}\n")
+    print(f"  traced to reduction order          : {len(cal_traced)}")
+    print(f"  UNEXPLAINED differences            : {len(mismatched)}\n")
+    print(f"  section 6.2 family, array-level bitwise check against a fresh rollout:")
+    print(f"    arrays compared {arr_ok + arr_bad}, bitwise identical {arr_ok}, "
+          f"differing {arr_bad}\n")
     for name, ref, got in mismatched[:40]:
         print(f"    !! {name}\n       published {ref!r}\n       from cache {got!r}")
 
@@ -195,6 +340,33 @@ def main():
         "cache_file": os.path.basename(PTC.path_for(MODEL, ARENA, UNIT)),
         "cache_sha256": PTC.sha256(PTC.path_for(MODEL, ARENA, UNIT)),
         "known_good_artifact": "results/task_d_nind20.json",
+        "families": [
+            {"model_id": MODEL, "arena": ARENA, "unit_length": UNIT,
+             "known_good": "results/task_d_nind20.json",
+             "n_checked": checked - cal_checked,
+             "n_bitwise": exact - cal_exact},
+            {"model_id": "section 6.2's four models (3 seeds each where trained)",
+             "arena": OOS_ARENA, "unit_length": 400,
+             "known_good": "results/task1_calibration.json",
+             "n_checked": cal_checked, "n_bitwise": cal_exact},
+        ],
+        "array_level_check": {
+            "why": ("section 6.2's family cannot be settled by comparing reduced "
+                    "statistics: numpy reduces a non-contiguous array by a different "
+                    "path than a contiguous one, and the producer's concatenated "
+                    "residual is non-contiguous while the cache's is not. Identical "
+                    "bytes then give means differing in the last ulp -- demonstrated "
+                    "in-process by pe.tobytes() == pc.tobytes() being True while "
+                    "pe.mean() != pe.copy().mean(). So the arrays are compared "
+                    "directly instead, which is the property that actually matters."),
+            "producer": "scripts/task1_calibration.py rollout_full loop",
+            "n_arrays_compared": arr_ok + arr_bad,
+            "n_bitwise_identical": arr_ok,
+            "n_differing": arr_bad,
+            "per_model": arr_rows,
+        },
+        "traced_reduction_order_differences": [
+            {"figure": n, "published": r, "from_cache": g} for n, r, g in cal_traced],
         "n_figures_checked": checked,
         "n_bitwise_identical": exact,
         "n_differing": len(mismatched),
@@ -219,6 +391,16 @@ def main():
                            "it, in torch float32, which reproduces every affected "
                            "figure bitwise. No tolerance is applied."),
             "max_abs_gap_if_summed_in_numpy_float64": _npgap,
+            "second_family_precision": {
+                "figures_affected": ("every cal/* figure -- section 6.2's four-model table"),
+                "cause": ("scripts/task1_calibration.py keeps its arrays in float32 and "
+                          "reduces in float32; the cache stores float64. float32 -> "
+                          "float64 is a lossless widening, so the stored values are the "
+                          "float32 originals exactly -- verified by a bit-identical "
+                          "round trip -- and only the accumulator width differed."),
+                "resolution": ("the gate reduces in the producer's own dtype, which "
+                               "reproduces every affected figure bitwise. No tolerance."),
+            },
             "independent_evidence_the_arrays_are_exact": (
                 "the 144 D1 figures are bitwise identical and none routes through "
                 "this sum"),

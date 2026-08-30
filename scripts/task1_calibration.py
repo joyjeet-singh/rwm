@@ -57,10 +57,14 @@ print("  ZERO and flat in horizon, because its sigma is a learned constant ~6.4e
 print("  typical errors are two orders of magnitude larger.\n")
 out={}
 for name,ms in MODELS.items():
-    E_,SG=[],[]
+    E_,SG,ES_=[],[],[]
     for m in ms:
         pr,sg=m.rollout_full(ST.clone(),AC,START,action_offset=1)
         E_.append((pr[:,START:]-ST[:,START:]).abs().numpy()); SG.append(sg[:,START:].numpy())
+        # Session 2 addendum B: the SIGNED residual, collected only when the cache
+        # is being written. Nothing below reads ES_, so the default path is
+        # unchanged; abs_err above has already discarded the sign.
+        if os.environ.get("STORE_PER_TRIPLE"): ES_.append((pr[:,START:]-ST[:,START:]).numpy())
     # Two views of the same rollouts, deliberately kept apart.
     #
     # `err`/`sig` concatenate seeds onto the trajectory axis. That is fine for a
@@ -74,6 +78,40 @@ for name,ms in MODELS.items():
     # axis and pool seeds inside each draw, so three seeds buy precision on the
     # mean without inflating the apparent sample size.
     errS=np.stack(E_,0); sigS=np.stack(SG,0)                    # (seeds, n, T', 45)
+
+    # --- optional per-triple cache (Session 2 addendum B) -------------------
+    # One object per SEED rather than one per arm. Seeds are not trajectories
+    # (M-27), and a cache that stacked them onto the trajectory axis would invite
+    # exactly the pooling error M-27 records. Keeping them separable lets a
+    # consumer pool them the way this script does, inside each bootstrap draw.
+    if os.environ.get("STORE_PER_TRIPLE"):
+        import per_triple_cache as PTC
+        _slug={"faithful (mse)":"armA_faithful_mse","corrected (nll)":"armA_corrected_nll",
+               "teacher-forced armB":"armB_teacher_forced","released ckpt":"released_ckpt_ens5"}[name]
+        _sd=list(SEEDS) if len(ES_)>1 else [None]
+        for _i,_seed in enumerate(_sd):
+            _mid=_slug if _seed is None else f"{_slug}_seed{_seed}"
+            PTC.write(
+                model_id=_mid, arena="out-of-sample held-out pair", unit_length=400,
+                err_signed=ES_[_i], sig_aleatoric=SG[_i],
+                # ensemble_size=1 arms have no epistemic term, and rollout_full
+                # returns only the aleatoric sigma even for the released ensemble.
+                # NaN rather than zero: a zero here would read as perfect
+                # confidence and be silently consumed; a NaN cannot be.
+                sig_epistemic=np.full_like(SG[_i], np.nan, dtype=np.float64),
+                traj_to_episode=[int(ep[_s]) for _s in starts],
+                traj_start_row=[int(_s) for _s in starts],
+                n_independent=len(starts), start_step=START,
+                residual_space="config-normalised state",
+                residual_space_detail=("R.normalise_state with the reference config's "
+                                       "state_data_mean and state_data_std"),
+                extra={"epistemic_available": False,
+                       "epistemic_absent_reason": ("rollout_full returns the aleatoric "
+                                                   "sigma only; §6.6 states the CoV column "
+                                                   "is the aleatoric sigma in every row"),
+                       "seed": _seed, "arm_label": name, "episodes": OOS,
+                       "produced_by": "scripts/task1_calibration.py STORE_PER_TRIPLE=1"})
+    # -----------------------------------------------------------------------
     err=np.concatenate(E_,0); sig=np.concatenate(SG,0)          # (n*seeds, T', 45)
     z=err/np.maximum(sig,1e-30)
     rec={"sigma_mean":float(sig.mean()),"err_mean":float(err.mean()),
