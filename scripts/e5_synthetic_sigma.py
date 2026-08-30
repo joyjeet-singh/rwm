@@ -344,9 +344,23 @@ def experiment():
                                     "released training path"},
            "thresholds": TH, "arms": {}}
 
+    # 3.2 -- the corroboration seeds, ADDITIVE. M-50 was discharged over SEEDS and its
+    # verdict stands as returned over those three; more seeds do not re-open a discharged
+    # rule (REVISION_BRIEF.md §2 rule 4), exactly as M-43's denominator stayed at four
+    # horizons. So `arms` and `verdict` below are computed from SEEDS alone and are
+    # unchanged, and the 20-seed figures land in their own block beside them.
+    #
+    # Each run depends only on its own seed, so running 0..19 once and slicing the first
+    # three gives the SAME three runs the 3-seed path produces. Nothing is recomputed
+    # differently; the 3-seed keys the paper cites are bit-identical.
+    CORROB_SEEDS = tuple(range(20))
+    assert tuple(SEEDS) == CORROB_SEEDS[:len(SEEDS)], \
+        "the corroboration set must extend SEEDS, not replace it"
+
+    all_runs = {}
     for loss_type in ("mse", "gaussian_nll"):
         runs = []
-        for s in SEEDS:
+        for s in CORROB_SEEDS:
             rng = np.random.default_rng(4200 + s)
             x, y, sig, _ = make_data(N_TRAIN, rng, dilution=1.0)
             xt, _, sigt, _ = make_data(N_TEST, np.random.default_rng(8400 + s), 1.0)
@@ -354,13 +368,75 @@ def experiment():
             e = evaluate(h, xt, sigt)
             e["seed"] = s
             runs.append(e)
-            print(f"  {loss_type:<13} seed {s}: sigma_hat median {e['median_sigma_hat']:.5f} "
-                  f"(true {e['median_sigma_true']:.5f}, ratio {e['ratio_median']:.4f})  "
-                  f"r {e['r_log_sigma']:+.4f}  spread {e['sigma_hat_spread_factor']:.2f}x  "
-                  f"mean RMSE {e['rmse_mean']:.4f}")
-        out["arms"][loss_type] = summarise(runs, TH)
+            if s in SEEDS:
+                print(f"  {loss_type:<13} seed {s}: sigma_hat median {e['median_sigma_hat']:.5f} "
+                      f"(true {e['median_sigma_true']:.5f}, ratio {e['ratio_median']:.4f})  "
+                      f"r {e['r_log_sigma']:+.4f}  spread {e['sigma_hat_spread_factor']:.2f}x  "
+                      f"mean RMSE {e['rmse_mean']:.4f}")
+        all_runs[loss_type] = runs
+        out["arms"][loss_type] = summarise(runs[:len(SEEDS)], TH)
 
     out["verdict"] = verdict_of(out["arms"], TH)
+
+    out["corroboration_20_seeds"] = {
+        "status": "CORROBORATION, NOT A DISCHARGE",
+        "why": ("M-50 is discharged over the three seeds in `config.seeds` and its verdict "
+                "stands as returned there. More seeds do not re-open a discharged rule "
+                "(REVISION_BRIEF.md §2 rule 4); the same logic kept M-43's denominator at "
+                "four horizons. These figures corroborate and are labelled as such."),
+        "seeds": list(CORROB_SEEDS),
+        "n_seeds": len(CORROB_SEEDS),
+        "same_generator_head_iterations_objectives": True,
+        "config_identical_to_3_seed_run_except_seed_count": True,
+        "arms": {lt: summarise(all_runs[lt], TH) for lt in all_runs},
+        "verdict_if_evaluated_at_20_seeds": verdict_of(
+            {lt: summarise(all_runs[lt], TH) for lt in all_runs}, TH),
+        "note_on_that_verdict": (
+            "IT DOES NOT RETURN THE SAME WORD, and that is the finding. At three seeds "
+            "M-50 returns OBJECTIVE-DRIVEN; evaluated over twenty it would return MIXED. "
+            "M-50's verdict is unchanged and stays as returned over its own three seeds "
+            "(REVISION_BRIEF.md §2 rule 4) -- more seeds do not re-open a discharged rule. "
+            "But this is a qualification of the corroboration, not a confirmation of it, "
+            "and reporting it as clean corroboration would be false."),
+        "which_criterion_flips": {
+            "arm": "gaussian_nll",
+            "flag": "tracking_above_threshold",
+            "at_3_seeds": True,
+            "at_20_seeds": False,
+            "why": ("the criterion is ALL-seeds -- np.all(|slope| > slope_threshold) -- "
+                    "and the recovering arm is strongly seed-variable at this training "
+                    "budget. The three seeds M-50 drew all cleared the threshold; over "
+                    "twenty, several do not."),
+            "unaffected_flags": ("mse stays collapsed and indistinguishable-from-zero at "
+                                 "both seed counts, and gaussian_nll stays `recovered` at "
+                                 "both. The CONTRAST between the arms -- which is what "
+                                 "M-50 says the experiment establishes -- is unchanged."),
+        },
+        "reading": (
+            "M-50 wrote, before these runs existed, that 'the recovering arm is itself "
+            "seed-variable at this training budget, so the CONTRAST is what this "
+            "experiment establishes, not the magnitude of the recovery.' Twenty seeds "
+            "confirm that warning more sharply than three could: the magnitude of the "
+            "recovery's input-dependence does not survive an all-seeds threshold, while "
+            "the contrast between the two objectives does. §6.3's mechanism claim rests "
+            "on the contrast."),
+        "slope_distribution": {
+            lt: {"min": float(min(r["slope_log_sigma"] for r in all_runs[lt])),
+                 "median": float(sorted(r["slope_log_sigma"] for r in all_runs[lt])
+                                 [len(all_runs[lt]) // 2]),
+                 "max": float(max(r["slope_log_sigma"] for r in all_runs[lt])),
+                 "n_below_slope_threshold": int(sum(
+                     abs(r["slope_log_sigma"]) <= TH["slope_threshold"]
+                     for r in all_runs[lt])),
+                 "n_seeds": len(all_runs[lt]),
+                 "slope_threshold": TH["slope_threshold"]}
+            for lt in all_runs},
+        "per_seed": {lt: [{"seed": r["seed"], "ratio_median": r["ratio_median"],
+                           "r_log_sigma": r["r_log_sigma"],
+                           "slope_log_sigma": r.get("slope_log_sigma"),
+                           "sigma_hat_spread_factor": r["sigma_hat_spread_factor"]}
+                          for r in all_runs[lt]] for lt in all_runs},
+    }
     verdict = out["verdict"]
     _report(out, TH)
     json.dump(out, open(os.path.join(R.RESULTS, "e5_synthetic_sigma.json"), "w"), indent=2)

@@ -2978,12 +2978,15 @@
       "id": "M-64",
       "claim": "Pre-registered: does the horizon-scoped power increase from shorter evaluation units cha",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [
         "RUN"
       ],
       "artifacts": [
-        "results/m64_short_units.json"
+        "results/a1_ab_by_horizon.json",
+        "results/m64_free_gate.json",
+        "results/m64_short_units.json",
+        "results/task_d_nind20.json"
       ],
       "retracts": []
     },

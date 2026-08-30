@@ -1,0 +1,2013 @@
+{
+  "rule": "M-64",
+  "free_gate": {
+    "artifact": "results/m64_free_gate.json",
+    "verdict": "PASS",
+    "n_pass": 30,
+    "n_fail": 0
+  },
+  "unit_definition": "32 history rows + h forecast rows, non-overlapping within an episode, boundaries per section 3",
+  "horizons": [
+    1,
+    8,
+    32,
+    100,
+    128
+  ],
+  "h368_untouched": "h = 368 needs 400 rows; M-23 keeps its anchor and denominator",
+  "r_dd_excluded": "by design: shorter units give fewer steps to demean against, which worsens section 6.7's short-horizon instability. It stays at the 400-step unit.",
+  "clustering_note": "n_independent is reported at the UNIT level. M-62 returned NO MOVE, so the episode-level interval stored beside each figure is corroboration, not a competing column.",
+  "arena_matching": "each cell is compared arena-matched to the artifact holding its 400-step figure: cell C against a1_ab_by_horizon.json (out-of-sample), cell B against task_d_nind20.json (all ten episodes)",
+  "index": {
+    "out-of-sample held-out pair": {
+      "1": {
+        "unit_length": 33,
+        "n_units": 60,
+        "from_segment_lengths": 60,
+        "from_built_index": 60,
+        "counts_agree": true,
+        "n_episodes": 2,
+        "n_independent_unit_level": 60,
+        "units_per_episode": {
+          "1": 30,
+          "8": 30
+        }
+      },
+      "8": {
+        "unit_length": 40,
+        "n_units": 50,
+        "from_segment_lengths": 50,
+        "from_built_index": 50,
+        "counts_agree": true,
+        "n_episodes": 2,
+        "n_independent_unit_level": 50,
+        "units_per_episode": {
+          "1": 25,
+          "8": 25
+        }
+      },
+      "32": {
+        "unit_length": 64,
+        "n_units": 30,
+        "from_segment_lengths": 30,
+        "from_built_index": 30,
+        "counts_agree": true,
+        "n_episodes": 2,
+        "n_independent_unit_level": 30,
+        "units_per_episode": {
+          "1": 15,
+          "8": 15
+        }
+      },
+      "100": {
+        "unit_length": 132,
+        "n_units": 14,
+        "from_segment_lengths": 14,
+        "from_built_index": 14,
+        "counts_agree": true,
+        "n_episodes": 2,
+        "n_independent_unit_level": 14,
+        "units_per_episode": {
+          "1": 7,
+          "8": 7
+        }
+      },
+      "128": {
+        "unit_length": 160,
+        "n_units": 12,
+        "from_segment_lengths": 12,
+        "from_built_index": 12,
+        "counts_agree": true,
+        "n_episodes": 2,
+        "n_independent_unit_level": 12,
+        "units_per_episode": {
+          "1": 6,
+          "8": 6
+        }
+      }
+    },
+    "in-sample training episodes": {
+      "1": {
+        "unit_length": 33,
+        "n_units": 240,
+        "from_segment_lengths": 240,
+        "from_built_index": 240,
+        "counts_agree": true,
+        "n_episodes": 8,
+        "n_independent_unit_level": 240,
+        "units_per_episode": {
+          "0": 30,
+          "2": 30,
+          "3": 30,
+          "4": 30,
+          "5": 30,
+          "6": 30,
+          "7": 30,
+          "9": 30
+        }
+      },
+      "8": {
+        "unit_length": 40,
+        "n_units": 199,
+        "from_segment_lengths": 199,
+        "from_built_index": 199,
+        "counts_agree": true,
+        "n_episodes": 8,
+        "n_independent_unit_level": 199,
+        "units_per_episode": {
+          "0": 24,
+          "2": 25,
+          "3": 25,
+          "4": 25,
+          "5": 25,
+          "6": 25,
+          "7": 25,
+          "9": 25
+        }
+      },
+      "32": {
+        "unit_length": 64,
+        "n_units": 120,
+        "from_segment_lengths": 120,
+        "from_built_index": 120,
+        "counts_agree": true,
+        "n_episodes": 8,
+        "n_independent_unit_level": 120,
+        "units_per_episode": {
+          "0": 15,
+          "2": 15,
+          "3": 15,
+          "4": 15,
+          "5": 15,
+          "6": 15,
+          "7": 15,
+          "9": 15
+        }
+      },
+      "100": {
+        "unit_length": 132,
+        "n_units": 56,
+        "from_segment_lengths": 56,
+        "from_built_index": 56,
+        "counts_agree": true,
+        "n_episodes": 8,
+        "n_independent_unit_level": 56,
+        "units_per_episode": {
+          "0": 7,
+          "2": 7,
+          "3": 7,
+          "4": 7,
+          "5": 7,
+          "6": 7,
+          "7": 7,
+          "9": 7
+        }
+      },
+      "128": {
+        "unit_length": 160,
+        "n_units": 48,
+        "from_segment_lengths": 48,
+        "from_built_index": 48,
+        "counts_agree": true,
+        "n_episodes": 8,
+        "n_independent_unit_level": 48,
+        "units_per_episode": {
+          "0": 6,
+          "2": 6,
+          "3": 6,
+          "4": 6,
+          "5": 6,
+          "6": 6,
+          "7": 6,
+          "9": 6
+        }
+      }
+    },
+    "all ten episodes": {
+      "1": {
+        "unit_length": 33,
+        "n_units": 300,
+        "from_segment_lengths": 300,
+        "from_built_index": 300,
+        "counts_agree": true,
+        "n_episodes": 10,
+        "n_independent_unit_level": 300,
+        "units_per_episode": {
+          "0": 30,
+          "1": 30,
+          "2": 30,
+          "3": 30,
+          "4": 30,
+          "5": 30,
+          "6": 30,
+          "7": 30,
+          "8": 30,
+          "9": 30
+        }
+      },
+      "8": {
+        "unit_length": 40,
+        "n_units": 249,
+        "from_segment_lengths": 249,
+        "from_built_index": 249,
+        "counts_agree": true,
+        "n_episodes": 10,
+        "n_independent_unit_level": 249,
+        "units_per_episode": {
+          "0": 24,
+          "1": 25,
+          "2": 25,
+          "3": 25,
+          "4": 25,
+          "5": 25,
+          "6": 25,
+          "7": 25,
+          "8": 25,
+          "9": 25
+        }
+      },
+      "32": {
+        "unit_length": 64,
+        "n_units": 150,
+        "from_segment_lengths": 150,
+        "from_built_index": 150,
+        "counts_agree": true,
+        "n_episodes": 10,
+        "n_independent_unit_level": 150,
+        "units_per_episode": {
+          "0": 15,
+          "1": 15,
+          "2": 15,
+          "3": 15,
+          "4": 15,
+          "5": 15,
+          "6": 15,
+          "7": 15,
+          "8": 15,
+          "9": 15
+        }
+      },
+      "100": {
+        "unit_length": 132,
+        "n_units": 70,
+        "from_segment_lengths": 70,
+        "from_built_index": 70,
+        "counts_agree": true,
+        "n_episodes": 10,
+        "n_independent_unit_level": 70,
+        "units_per_episode": {
+          "0": 7,
+          "1": 7,
+          "2": 7,
+          "3": 7,
+          "4": 7,
+          "5": 7,
+          "6": 7,
+          "7": 7,
+          "8": 7,
+          "9": 7
+        }
+      },
+      "128": {
+        "unit_length": 160,
+        "n_units": 60,
+        "from_segment_lengths": 60,
+        "from_built_index": 60,
+        "counts_agree": true,
+        "n_episodes": 10,
+        "n_independent_unit_level": 60,
+        "units_per_episode": {
+          "0": 6,
+          "1": 6,
+          "2": 6,
+          "3": 6,
+          "4": 6,
+          "5": 6,
+          "6": 6,
+          "7": 6,
+          "8": 6,
+          "9": 6
+        }
+      }
+    }
+  },
+  "cells": {
+    "A_section_6_2_calibration": {
+      "faithful (mse)": {
+        "out-of-sample held-out pair": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 60,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 12.307254791259766,
+            "ratio_ci_unit_level": [
+              10.132881185126397,
+              14.660060904864567
+            ],
+            "coverage_pm1": 0.10851851851851854,
+            "coverage_pm1_ci_unit_level": [
+              0.09197530864197528,
+              0.1259259259259259
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                11.59750844316466,
+                12.990615073342248
+              ],
+              "coverage_pm1_ci": [
+                0.10148148148148149,
+                0.11555555555555556
+              ],
+              "n_episodes": 2
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 50,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 20.953693389892578,
+            "ratio_ci_unit_level": [
+              17.97418388847745,
+              24.245534367215797
+            ],
+            "coverage_pm1": 0.055481481481481486,
+            "coverage_pm1_ci_unit_level": [
+              0.04911111111111111,
+              0.0615925925925926
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                17.436857403228885,
+                24.385693065875206
+              ],
+              "coverage_pm1_ci": [
+                0.047407407407407405,
+                0.06355555555555555
+              ],
+              "n_episodes": 2
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 30,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 27.742111206054688,
+            "ratio_ci_unit_level": [
+              22.84373535722425,
+              33.11915228900896
+            ],
+            "coverage_pm1": 0.03814043209876543,
+            "coverage_pm1_ci_unit_level": [
+              0.03286265432098765,
+              0.043302662037037025
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                22.445247396629302,
+                32.97784651980444
+              ],
+              "coverage_pm1_ci": [
+                0.034274691358024696,
+                0.04200617283950616
+              ],
+              "n_episodes": 2
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 14,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 38.397193908691406,
+            "ratio_ci_unit_level": [
+              29.406480298668672,
+              48.10939256700883
+            ],
+            "coverage_pm1": 0.026222222222222227,
+            "coverage_pm1_ci_unit_level": [
+              0.020841269841269848,
+              0.03156613756613756
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                30.982067965234016,
+                45.75363793406427
+              ],
+              "coverage_pm1_ci": [
+                0.022571428571428565,
+                0.029873015873015874
+              ],
+              "n_episodes": 2
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 12,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 40.13652420043945,
+            "ratio_ci_unit_level": [
+              29.574168035703163,
+              52.41511329025121
+            ],
+            "coverage_pm1": 0.025742669753086412,
+            "coverage_pm1_ci_unit_level": [
+              0.019834948881172838,
+              0.03179494598765432
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                31.341171591242155,
+                48.869565817569296
+              ],
+              "coverage_pm1_ci": [
+                0.023804012345679013,
+                0.02768132716049383
+              ],
+              "n_episodes": 2
+            }
+          }
+        },
+        "in-sample training episodes": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 240,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 11.19311809539795,
+            "ratio_ci_unit_level": [
+              9.756077964837871,
+              12.780028862908546
+            ],
+            "coverage_pm1": 0.14317901234567904,
+            "coverage_pm1_ci_unit_level": [
+              0.13234567901234567,
+              0.1540432098765432
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                10.13305917869262,
+                12.348010128462308
+              ],
+              "coverage_pm1_ci": [
+                0.13382716049382717,
+                0.15175925925925926
+              ],
+              "n_episodes": 8
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 199,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 16.1339168548584,
+            "ratio_ci_unit_level": [
+              14.821342708511724,
+              17.722607761442546
+            ],
+            "coverage_pm1": 0.07177089149450958,
+            "coverage_pm1_ci_unit_level": [
+              0.06789037781500093,
+              0.07566071096221849
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                14.55801296300532,
+                18.254101863266246
+              ],
+              "coverage_pm1_ci": [
+                0.06533796296296296,
+                0.07789875302438115
+              ],
+              "n_episodes": 8
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 120,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 19.86549949645996,
+            "ratio_ci_unit_level": [
+              18.001362100402932,
+              21.970915465624742
+            ],
+            "coverage_pm1": 0.052382330246913585,
+            "coverage_pm1_ci_unit_level": [
+              0.04944637345679013,
+              0.055320312499999996
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                18.12836024848118,
+                21.817783889439188
+              ],
+              "coverage_pm1_ci": [
+                0.04864776234567902,
+                0.05632156635802467
+              ],
+              "n_episodes": 8
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 56,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 24.9240665435791,
+            "ratio_ci_unit_level": [
+              22.36599093681489,
+              27.900224494251468
+            ],
+            "coverage_pm1": 0.039297619047619047,
+            "coverage_pm1_ci_unit_level": [
+              0.03651187169312169,
+              0.04202251984126984
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                22.897061565889402,
+                27.562822677539064
+              ],
+              "coverage_pm1_ci": [
+                0.03600661375661375,
+                0.04279636243386242
+              ],
+              "n_episodes": 8
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 48,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 25.17066192626953,
+            "ratio_ci_unit_level": [
+              23.02546667565478,
+              27.575067516415125
+            ],
+            "coverage_pm1": 0.03653669945987654,
+            "coverage_pm1_ci_unit_level": [
+              0.03363594714506173,
+              0.03938928674768518
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                23.404721897883483,
+                27.30974791300727
+              ],
+              "coverage_pm1_ci": [
+                0.033673321759259266,
+                0.03943624614197531
+              ],
+              "n_episodes": 8
+            }
+          }
+        }
+      },
+      "corrected (nll)": {
+        "out-of-sample held-out pair": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 60,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 2.778198719024658,
+            "ratio_ci_unit_level": [
+              2.285718286714682,
+              3.3132049245156896
+            ],
+            "coverage_pm1": 0.41074074074074074,
+            "coverage_pm1_ci_unit_level": [
+              0.3637037037037037,
+              0.4582716049382716
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                2.6060059171040773,
+                2.9504143599525623
+              ],
+              "coverage_pm1_ci": [
+                0.3785185185185186,
+                0.44296296296296295
+              ],
+              "n_episodes": 2
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 50,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 4.637704372406006,
+            "ratio_ci_unit_level": [
+              3.98804180220737,
+              5.35671125639546
+            ],
+            "coverage_pm1": 0.2343148148148148,
+            "coverage_pm1_ci_unit_level": [
+              0.20959259259259264,
+              0.25775925925925924
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                3.860317093194574,
+                5.415158927414333
+              ],
+              "coverage_pm1_ci": [
+                0.20451851851851852,
+                0.26411111111111113
+              ],
+              "n_episodes": 2
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 30,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 5.938328742980957,
+            "ratio_ci_unit_level": [
+              4.925642448826217,
+              7.064472377087683
+            ],
+            "coverage_pm1": 0.16769290123456793,
+            "coverage_pm1_ci_unit_level": [
+              0.1456400462962963,
+              0.18905922067901232
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                4.862872810604276,
+                7.01383857920014
+              ],
+              "coverage_pm1_ci": [
+                0.1496141975308642,
+                0.18577160493827163
+              ],
+              "n_episodes": 2
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 14,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 7.689280033111572,
+            "ratio_ci_unit_level": [
+              6.02199369777735,
+              9.476651193507273
+            ],
+            "coverage_pm1": 0.12384656084656087,
+            "coverage_pm1_ci_unit_level": [
+              0.10174589947089949,
+              0.1453178571428571
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                6.296950368276251,
+                9.08166049874238
+              ],
+              "coverage_pm1_ci": [
+                0.10687830687830689,
+                0.1408148148148148
+              ],
+              "n_episodes": 2
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 12,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 7.890946865081787,
+            "ratio_ci_unit_level": [
+              6.045773632875962,
+              9.995247978361501
+            ],
+            "coverage_pm1": 0.11746720679012346,
+            "coverage_pm1_ci_unit_level": [
+              0.09200894579475308,
+              0.14262659143518516
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                6.221889159301877,
+                9.560060030219054
+              ],
+              "coverage_pm1_ci": [
+                0.1039255401234568,
+                0.13100887345679013
+              ],
+              "n_episodes": 2
+            }
+          }
+        },
+        "in-sample training episodes": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 240,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 2.5270121097564697,
+            "ratio_ci_unit_level": [
+              2.19981915487258,
+              2.8872054764198327
+            ],
+            "coverage_pm1": 0.5038271604938271,
+            "coverage_pm1_ci_unit_level": [
+              0.47462885802469135,
+              0.5328395061728395
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                2.278319710900593,
+                2.7986454577150353
+              ],
+              "coverage_pm1_ci": [
+                0.47944444444444445,
+                0.5260802469135802
+              ],
+              "n_episodes": 8
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 199,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 3.658540725708008,
+            "ratio_ci_unit_level": [
+              3.361357998628868,
+              4.017654130686979
+            ],
+            "coverage_pm1": 0.29147589800856133,
+            "coverage_pm1_ci_unit_level": [
+              0.27786152987158014,
+              0.304876814628699
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                3.2977172969883632,
+                4.135369387667397
+              ],
+              "coverage_pm1_ci": [
+                0.2683649730132142,
+                0.31225
+              ],
+              "n_episodes": 8
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 120,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 4.452795505523682,
+            "ratio_ci_unit_level": [
+              4.029776344337783,
+              4.933082737064922
+            ],
+            "coverage_pm1": 0.22584876543209872,
+            "coverage_pm1_ci_unit_level": [
+              0.21457552083333334,
+              0.2370235339506173
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                4.0540035671399846,
+                4.8940316795365755
+              ],
+              "coverage_pm1_ci": [
+                0.21075038580246913,
+                0.24089911265432093
+              ],
+              "n_episodes": 8
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 56,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 5.434605598449707,
+            "ratio_ci_unit_level": [
+              4.874809035890301,
+              6.078905010633886
+            ],
+            "coverage_pm1": 0.1768862433862434,
+            "coverage_pm1_ci_unit_level": [
+              0.16465469576719574,
+              0.1886826388888889
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                5.025856191469027,
+                5.951503426053387
+              ],
+              "coverage_pm1_ci": [
+                0.16279761904761905,
+                0.19170105820105818
+              ],
+              "n_episodes": 8
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 48,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 5.422758102416992,
+            "ratio_ci_unit_level": [
+              4.962017004149026,
+              5.934962502715696
+            ],
+            "coverage_pm1": 0.16711275077160495,
+            "coverage_pm1_ci_unit_level": [
+              0.1545644350405093,
+              0.1793597788869599
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                5.054116561051014,
+                5.864837135743345
+              ],
+              "coverage_pm1_ci": [
+                0.1561494803722994,
+                0.1777007378472222
+              ],
+              "n_episodes": 8
+            }
+          }
+        }
+      },
+      "teacher-forced armB": {
+        "out-of-sample held-out pair": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 60,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 9.677287101745605,
+            "ratio_ci_unit_level": [
+              8.068210174184314,
+              11.476300187677971
+            ],
+            "coverage_pm1": 0.12209876543209876,
+            "coverage_pm1_ci_unit_level": [
+              0.10604938271604938,
+              0.13839506172839505
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                9.008001339932314,
+                10.32641741465799
+              ],
+              "coverage_pm1_ci": [
+                0.11283950617283951,
+                0.13135802469135802
+              ],
+              "n_episodes": 2
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 50,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 24.032865524291992,
+            "ratio_ci_unit_level": [
+              20.28187264393308,
+              28.246226961084666
+            ],
+            "coverage_pm1": 0.05057407407407407,
+            "coverage_pm1_ci_unit_level": [
+              0.044407407407407395,
+              0.056611111111111105
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                19.161116013533796,
+                28.81050106404814
+              ],
+              "coverage_pm1_ci": [
+                0.04385185185185185,
+                0.0572962962962963
+              ],
+              "n_episodes": 2
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 30,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 46.13481521606445,
+            "ratio_ci_unit_level": [
+              38.90018912765007,
+              53.743247495054
+            ],
+            "coverage_pm1": 0.026203703703703705,
+            "coverage_pm1_ci_unit_level": [
+              0.022469135802469137,
+              0.029930748456790113
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                39.856294054067334,
+                52.34595389314326
+              ],
+              "coverage_pm1_ci": [
+                0.024367283950617286,
+                0.028040123456790123
+              ],
+              "n_episodes": 2
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 14,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 82.29655456542969,
+            "ratio_ci_unit_level": [
+              65.91536316017392,
+              99.19698042131242
+            ],
+            "coverage_pm1": 0.014470899470899471,
+            "coverage_pm1_ci_unit_level": [
+              0.01178835978835979,
+              0.01715873015873016
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                72.47072284390242,
+                92.06126248898772
+              ],
+              "coverage_pm1_ci": [
+                0.012328042328042329,
+                0.016613756613756612
+              ],
+              "n_episodes": 2
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 12,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 96.60882568359375,
+            "ratio_ci_unit_level": [
+              78.35616851804319,
+              115.82838963199266
+            ],
+            "coverage_pm1": 0.012008101851851853,
+            "coverage_pm1_ci_unit_level": [
+              0.009278549382716049,
+              0.014790702160493824
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                88.60201582735951,
+                104.64123855411906
+              ],
+              "coverage_pm1_ci": [
+                0.01091820987654321,
+                0.013097993827160495
+              ],
+              "n_episodes": 2
+            }
+          }
+        },
+        "in-sample training episodes": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 240,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 7.37239933013916,
+            "ratio_ci_unit_level": [
+              6.566414204955003,
+              8.319914469594034
+            ],
+            "coverage_pm1": 0.15509259259259262,
+            "coverage_pm1_ci_unit_level": [
+              0.14444444444444446,
+              0.16580246913580246
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                6.617210068599873,
+                8.261379367984077
+              ],
+              "coverage_pm1_ci": [
+                0.14290123456790121,
+                0.16790123456790124
+              ],
+              "n_episodes": 8
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 199,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 16.82490348815918,
+            "ratio_ci_unit_level": [
+              15.139377826398794,
+              18.7872915444601
+            ],
+            "coverage_pm1": 0.06801600595570445,
+            "coverage_pm1_ci_unit_level": [
+              0.06410745858924251,
+              0.07193839568211427
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                14.660122773062758,
+                19.928220272946593
+              ],
+              "coverage_pm1_ci": [
+                0.059898032407407396,
+                0.07569444444444445
+              ],
+              "n_episodes": 8
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 120,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 31.872608184814453,
+            "ratio_ci_unit_level": [
+              28.793803066693176,
+              35.24714700625933
+            ],
+            "coverage_pm1": 0.03736111111111111,
+            "coverage_pm1_ci_unit_level": [
+              0.03510030864197531,
+              0.03964891975308642
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                28.18539976459277,
+                36.40546799152725
+              ],
+              "coverage_pm1_ci": [
+                0.03382523148148149,
+                0.040457175925925924
+              ],
+              "n_episodes": 8
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 56,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 60.112613677978516,
+            "ratio_ci_unit_level": [
+              53.66472354553433,
+              67.33033507487502
+            ],
+            "coverage_pm1": 0.020494708994708993,
+            "coverage_pm1_ci_unit_level": [
+              0.018792294973544968,
+              0.02219312169312169
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                51.73361276598004,
+                69.94231979421907
+              ],
+              "coverage_pm1_ci": [
+                0.017998611111111108,
+                0.02297222222222222
+              ],
+              "n_episodes": 8
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 48,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 72.31096649169922,
+            "ratio_ci_unit_level": [
+              64.99382870783644,
+              80.2456897694918
+            ],
+            "coverage_pm1": 0.017005449459876542,
+            "coverage_pm1_ci_unit_level": [
+              0.015160831404320988,
+              0.01884645061728395
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                63.57036406560682,
+                82.79237753200614
+              ],
+              "coverage_pm1_ci": [
+                0.014940110194830249,
+                0.01900077160493827
+              ],
+              "n_episodes": 8
+            }
+          }
+        }
+      },
+      "released ckpt": {
+        "out-of-sample held-out pair": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 60,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 1143.7490234375,
+            "ratio_ci_unit_level": [
+              957.4557217905593,
+              1360.849626328809
+            ],
+            "coverage_pm1": 0.0007407407407407408,
+            "coverage_pm1_ci_unit_level": [
+              0.0,
+              0.001851851851851852
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                1143.5565217298706,
+                1143.9396282043099
+              ],
+              "coverage_pm1_ci": [
+                0.0007407407407407408,
+                0.0007407407407407408
+              ],
+              "n_episodes": 2
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 50,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 1370.6126708984375,
+            "ratio_ci_unit_level": [
+              1222.0297055260842,
+              1530.2783262796847
+            ],
+            "coverage_pm1": 0.0007777777777777778,
+            "coverage_pm1_ci_unit_level": [
+              0.0003888888888888889,
+              0.0012222222222222222
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                1343.036281193643,
+                1398.4554787558736
+              ],
+              "coverage_pm1_ci": [
+                0.0006666666666666666,
+                0.0008888888888888888
+              ],
+              "n_episodes": 2
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 30,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 1864.1798095703125,
+            "ratio_ci_unit_level": [
+              1714.3139914181872,
+              2025.0678165673855
+            ],
+            "coverage_pm1": 0.0005555555555555556,
+            "coverage_pm1_ci_unit_level": [
+              0.000324074074074074,
+              0.0008101851851851852
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                1695.864878160814,
+                2033.9638984784347
+              ],
+              "coverage_pm1_ci": [
+                0.00037037037037037035,
+                0.0007407407407407408
+              ],
+              "n_episodes": 2
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 14,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 4591.38720703125,
+            "ratio_ci_unit_level": [
+              3660.150228259595,
+              5496.131991329037
+            ],
+            "coverage_pm1": 0.0003968253968253969,
+            "coverage_pm1_ci_unit_level": [
+              0.00023769841269841304,
+              0.0005873015873015874
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                4446.255554794015,
+                4735.386629354408
+              ],
+              "coverage_pm1_ci": [
+                0.00031746031746031746,
+                0.00047619047619047635
+              ],
+              "n_episodes": 2
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 12,
+            "n_episodes": 2,
+            "ratio_err_over_sigma": 6835.47607421875,
+            "ratio_ci_unit_level": [
+              4618.130313166589,
+              10399.081407395644
+            ],
+            "coverage_pm1": 0.0002604166666666666,
+            "coverage_pm1_ci_unit_level": [
+              0.00017361111111111112,
+              0.0003472222222222223
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                5555.071671869212,
+                8134.953958167489
+              ],
+              "coverage_pm1_ci": [
+                0.0002604166666666666,
+                0.00026041666666666666
+              ],
+              "n_episodes": 2
+            }
+          }
+        },
+        "in-sample training episodes": {
+          "1": {
+            "unit_length": 33,
+            "n_independent_unit_level": 240,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 1372.143310546875,
+            "ratio_ci_unit_level": [
+              1231.687794402396,
+              1530.2353531535377
+            ],
+            "coverage_pm1": 0.0014814814814814816,
+            "coverage_pm1_ci_unit_level": [
+              0.0008333333333333334,
+              0.0022222222222222222
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                1266.6993113429253,
+                1504.443118487723
+              ],
+              "coverage_pm1_ci": [
+                0.0009259259259259259,
+                0.0019444444444444444
+              ],
+              "n_episodes": 8
+            }
+          },
+          "8": {
+            "unit_length": 40,
+            "n_independent_unit_level": 199,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 1716.41796875,
+            "ratio_ci_unit_level": [
+              1551.7185511521402,
+              1931.41880274781
+            ],
+            "coverage_pm1": 0.0008375209380234507,
+            "coverage_pm1_ci_unit_level": [
+              0.0006420993858179787,
+              0.0010469011725293134
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                1498.9570496747378,
+                1946.0243367795586
+              ],
+              "coverage_pm1_ci": [
+                0.0006979341150195422,
+                0.00099106644332775
+              ],
+              "n_episodes": 8
+            }
+          },
+          "32": {
+            "unit_length": 64,
+            "n_independent_unit_level": 120,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 2653.171875,
+            "ratio_ci_unit_level": [
+              2258.775930947548,
+              3171.25069124683
+            ],
+            "coverage_pm1": 0.0005439814814814816,
+            "coverage_pm1_ci_unit_level": [
+              0.0004224537037037037,
+              0.0006712962962962962
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                2264.631665236744,
+                3116.5319700094146
+              ],
+              "coverage_pm1_ci": [
+                0.0004282407407407408,
+                0.0006655092592592592
+              ],
+              "n_episodes": 8
+            }
+          },
+          "100": {
+            "unit_length": 132,
+            "n_independent_unit_level": 56,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 8510.5986328125,
+            "ratio_ci_unit_level": [
+              6709.134342415939,
+              10556.238788773184
+            ],
+            "coverage_pm1": 0.0002936507936507936,
+            "coverage_pm1_ci_unit_level": [
+              0.00023412698412698414,
+              0.00035714285714285714
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                6209.8335988579065,
+                11437.736731660292
+              ],
+              "coverage_pm1_ci": [
+                0.00023412698412698414,
+                0.0003492063492063492
+              ],
+              "n_episodes": 8
+            }
+          },
+          "128": {
+            "unit_length": 160,
+            "n_independent_unit_level": 48,
+            "n_episodes": 8,
+            "ratio_err_over_sigma": 10613.3984375,
+            "ratio_ci_unit_level": [
+              8314.579636281245,
+              13152.628943797674
+            ],
+            "coverage_pm1": 0.0002640335648148148,
+            "coverage_pm1_ci_unit_level": [
+              0.00018807870370370368,
+              0.0003472222222222221
+            ],
+            "coverage_pm1_excludes_calibrated_target": true,
+            "footnote_episode_level": {
+              "ratio_ci": [
+                8929.485124589475,
+                13271.303839701977
+              ],
+              "coverage_pm1_ci": [
+                0.0002025462962962963,
+                0.00031467013888888886
+              ],
+              "n_episodes": 8
+            }
+          }
+        }
+      }
+    },
+    "B_section_6_7_ranking": {
+      "out-of-sample held-out pair": {
+        "1": {
+          "unit_length": 33,
+          "n_independent_unit_level": 60,
+          "n_episodes": 2,
+          "n_forecast_steps": 1,
+          "r_disagreement": 0.7964890573134005,
+          "r_step_index": null,
+          "r_step_size_free_baseline": null,
+          "paired_diff_disagreement_minus_index": null,
+          "paired_diff_ci_unit_level": [
+            null,
+            null
+          ],
+          "paired_diff_excludes_zero": null,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              null,
+              null
+            ],
+            "excludes_zero": null
+          },
+          "note_h1": "at h=1 there is one forecast step per unit, so the index is constant and its correlation is undefined -- the same reason the 400-step table leaves it blank"
+        },
+        "8": {
+          "unit_length": 40,
+          "n_independent_unit_level": 50,
+          "n_episodes": 2,
+          "n_forecast_steps": 8,
+          "r_disagreement": 0.7573679364831974,
+          "r_step_index": 0.14471787276667328,
+          "r_step_size_free_baseline": 0.7606052018181677,
+          "paired_diff_disagreement_minus_index": 0.6126500637165242,
+          "paired_diff_ci_unit_level": [
+            0.398946782102025,
+            0.8278726734842924
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.6126500637165242,
+              0.632070203575425
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "32": {
+          "unit_length": 64,
+          "n_independent_unit_level": 30,
+          "n_episodes": 2,
+          "n_forecast_steps": 32,
+          "r_disagreement": 0.7631835590563009,
+          "r_step_index": 0.37651540557897684,
+          "r_step_size_free_baseline": 0.6870186941766847,
+          "paired_diff_disagreement_minus_index": 0.38666815347732403,
+          "paired_diff_ci_unit_level": [
+            0.21738267704357928,
+            0.5226230838122248
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.22418093363402103,
+              0.5794596024107165
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "100": {
+          "unit_length": 132,
+          "n_independent_unit_level": 14,
+          "n_episodes": 2,
+          "n_forecast_steps": 100,
+          "r_disagreement": 0.50535071055737,
+          "r_step_index": 0.6452489810231106,
+          "r_step_size_free_baseline": 0.44381103935501975,
+          "paired_diff_disagreement_minus_index": -0.13989827046574055,
+          "paired_diff_ci_unit_level": [
+            -0.31871625560227523,
+            0.09006312894268734
+          ],
+          "paired_diff_excludes_zero": false,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              -0.17859642188975777,
+              -0.01775908895474687
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "128": {
+          "unit_length": 160,
+          "n_independent_unit_level": 12,
+          "n_episodes": 2,
+          "n_forecast_steps": 128,
+          "r_disagreement": 0.7853025527457342,
+          "r_step_index": 0.36072057292122905,
+          "r_step_size_free_baseline": 0.4714599131740579,
+          "paired_diff_disagreement_minus_index": 0.4245819798245052,
+          "paired_diff_ci_unit_level": [
+            -0.34888767775398166,
+            0.5214910944531546
+          ],
+          "paired_diff_excludes_zero": false,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              -0.3540614400433527,
+              0.5192745395982558
+            ],
+            "excludes_zero": false
+          },
+          "note_h1": null
+        }
+      },
+      "in-sample training episodes": {
+        "1": {
+          "unit_length": 33,
+          "n_independent_unit_level": 240,
+          "n_episodes": 8,
+          "n_forecast_steps": 1,
+          "r_disagreement": 0.8794694136602802,
+          "r_step_index": null,
+          "r_step_size_free_baseline": null,
+          "paired_diff_disagreement_minus_index": null,
+          "paired_diff_ci_unit_level": [
+            null,
+            null
+          ],
+          "paired_diff_excludes_zero": null,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              null,
+              null
+            ],
+            "excludes_zero": null
+          },
+          "note_h1": "at h=1 there is one forecast step per unit, so the index is constant and its correlation is undefined -- the same reason the 400-step table leaves it blank"
+        },
+        "8": {
+          "unit_length": 40,
+          "n_independent_unit_level": 199,
+          "n_episodes": 8,
+          "n_forecast_steps": 8,
+          "r_disagreement": 0.7752450183606946,
+          "r_step_index": 0.07948938300336149,
+          "r_step_size_free_baseline": 0.5809124410414673,
+          "paired_diff_disagreement_minus_index": 0.6957556353573331,
+          "paired_diff_ci_unit_level": [
+            0.6045051458638815,
+            0.7670657650284102
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.6614704305377804,
+              0.7485018722522303
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "32": {
+          "unit_length": 64,
+          "n_independent_unit_level": 120,
+          "n_episodes": 8,
+          "n_forecast_steps": 32,
+          "r_disagreement": 0.7380982896159803,
+          "r_step_index": 0.2416727467965823,
+          "r_step_size_free_baseline": 0.5006550306617816,
+          "paired_diff_disagreement_minus_index": 0.49642554281939805,
+          "paired_diff_ci_unit_level": [
+            0.3270877393529416,
+            0.6142261562368169
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.33766146066989694,
+              0.5837699779055773
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "100": {
+          "unit_length": 132,
+          "n_independent_unit_level": 56,
+          "n_episodes": 8,
+          "n_forecast_steps": 100,
+          "r_disagreement": 0.6797223193930916,
+          "r_step_index": 0.43398479466500267,
+          "r_step_size_free_baseline": 0.4069487896791142,
+          "paired_diff_disagreement_minus_index": 0.2457375247280889,
+          "paired_diff_ci_unit_level": [
+            0.14126949033459607,
+            0.39018375119528087
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.11431135872138465,
+              0.4163464145616582
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "128": {
+          "unit_length": 160,
+          "n_independent_unit_level": 48,
+          "n_episodes": 8,
+          "n_forecast_steps": 128,
+          "r_disagreement": 0.6808366069448698,
+          "r_step_index": 0.47435092011481117,
+          "r_step_size_free_baseline": 0.4214014680336633,
+          "paired_diff_disagreement_minus_index": 0.20648568683005863,
+          "paired_diff_ci_unit_level": [
+            0.10373366235339543,
+            0.3241481148974848
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.0791190046178183,
+              0.4179963140250427
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        }
+      },
+      "all ten episodes": {
+        "1": {
+          "unit_length": 33,
+          "n_independent_unit_level": 300,
+          "n_episodes": 10,
+          "n_forecast_steps": 1,
+          "r_disagreement": 0.8711715292564448,
+          "r_step_index": null,
+          "r_step_size_free_baseline": null,
+          "paired_diff_disagreement_minus_index": null,
+          "paired_diff_ci_unit_level": [
+            null,
+            null
+          ],
+          "paired_diff_excludes_zero": null,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              null,
+              null
+            ],
+            "excludes_zero": null
+          },
+          "note_h1": "at h=1 there is one forecast step per unit, so the index is constant and its correlation is undefined -- the same reason the 400-step table leaves it blank"
+        },
+        "8": {
+          "unit_length": 40,
+          "n_independent_unit_level": 249,
+          "n_episodes": 10,
+          "n_forecast_steps": 8,
+          "r_disagreement": 0.7760568857013824,
+          "r_step_index": 0.08519457354772662,
+          "r_step_size_free_baseline": 0.597439128582609,
+          "paired_diff_disagreement_minus_index": 0.6908623121536558,
+          "paired_diff_ci_unit_level": [
+            0.5898804541101935,
+            0.7585006797598404
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.6569688215019486,
+              0.7341561695727467
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "32": {
+          "unit_length": 64,
+          "n_independent_unit_level": 150,
+          "n_episodes": 10,
+          "n_forecast_steps": 32,
+          "r_disagreement": 0.7415242073718151,
+          "r_step_index": 0.24064788929291794,
+          "r_step_size_free_baseline": 0.5032733096160252,
+          "paired_diff_disagreement_minus_index": 0.5008763180788972,
+          "paired_diff_ci_unit_level": [
+            0.3426201666930054,
+            0.6154604951368663
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.3508362781591005,
+              0.5878606621533892
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "100": {
+          "unit_length": 132,
+          "n_independent_unit_level": 70,
+          "n_episodes": 10,
+          "n_forecast_steps": 100,
+          "r_disagreement": 0.6808150978861793,
+          "r_step_index": 0.42553117521082134,
+          "r_step_size_free_baseline": 0.4056818098170422,
+          "paired_diff_disagreement_minus_index": 0.255283922675358,
+          "paired_diff_ci_unit_level": [
+            0.15499888719355506,
+            0.3836015231431368
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.12480332985723931,
+              0.3919186219771092
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        },
+        "128": {
+          "unit_length": 160,
+          "n_independent_unit_level": 60,
+          "n_episodes": 10,
+          "n_forecast_steps": 128,
+          "r_disagreement": 0.6910362032644327,
+          "r_step_index": 0.4502713208918024,
+          "r_step_size_free_baseline": 0.4329075114694375,
+          "paired_diff_disagreement_minus_index": 0.24076488237263033,
+          "paired_diff_ci_unit_level": [
+            0.14800230878343076,
+            0.3511642513379439
+          ],
+          "paired_diff_excludes_zero": true,
+          "footnote_episode_level": {
+            "paired_diff_ci": [
+              0.11784621679897624,
+              0.41688564678712375
+            ],
+            "excludes_zero": true
+          },
+          "note_h1": null
+        }
+      }
+    },
+    "C_section_5_ab_gap": {
+      "out-of-sample held-out pair": {
+        "1": {
+          "unit_length": 33,
+          "n_independent_unit_level": 60,
+          "n_episodes": 2,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.13149727880954742,
+          "B_mean": 0.112090565264225,
+          "ratio_B_over_A": 0.8524173498153687,
+          "gap": -0.019406704232096672,
+          "gap_ci_unit_level": [
+            -0.030969975781627,
+            -0.00928576387620221
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.1686760038137436,
+          "footnote_episode_level": {
+            "gap_ci": [
+              -0.03716892556597789,
+              -0.0016444845125079155
+            ],
+            "excludes_zero": true
+          }
+        },
+        "8": {
+          "unit_length": 40,
+          "n_independent_unit_level": 50,
+          "n_episodes": 2,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.21160662174224854,
+          "B_mean": 0.2807495594024658,
+          "ratio_B_over_A": 1.3267521858215332,
+          "gap": 0.06914294511079788,
+          "gap_ci_unit_level": [
+            0.04428746031224728,
+            0.09742979515716434
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.5511041283607483,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.025426863729953765,
+              0.11285903379321098
+            ],
+            "excludes_zero": true
+          }
+        },
+        "32": {
+          "unit_length": 64,
+          "n_independent_unit_level": 30,
+          "n_episodes": 2,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.2552264630794525,
+          "B_mean": 0.5068610906600952,
+          "ratio_B_over_A": 1.985926866531372,
+          "gap": 0.2516346573829651,
+          "gap_ci_unit_level": [
+            0.1471076868536572,
+            0.37202594480166806
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.7246997356414795,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.10496212542057037,
+              0.3983072037498156
+            ],
+            "excludes_zero": true
+          }
+        },
+        "100": {
+          "unit_length": 132,
+          "n_independent_unit_level": 14,
+          "n_episodes": 2,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.29962772130966187,
+          "B_mean": 0.765379011631012,
+          "ratio_B_over_A": 2.5544333457946777,
+          "gap": 0.46575117111206055,
+          "gap_ci_unit_level": [
+            0.2514297183070864,
+            0.7136511488684585
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.8094466924667358,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.22701762829508101,
+              0.7044847745980535
+            ],
+            "excludes_zero": true
+          }
+        },
+        "128": {
+          "unit_length": 160,
+          "n_independent_unit_level": 12,
+          "n_episodes": 2,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.2972073256969452,
+          "B_mean": 0.9465468525886536,
+          "ratio_B_over_A": 3.1848032474517822,
+          "gap": 0.649339497089386,
+          "gap_ci_unit_level": [
+            0.2890771238133311,
+            1.0948747674934565
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.869151771068573,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.29873382300138474,
+              0.9999451438585917
+            ],
+            "excludes_zero": true
+          }
+        }
+      },
+      "in-sample training episodes": {
+        "1": {
+          "unit_length": 33,
+          "n_independent_unit_level": 240,
+          "n_episodes": 8,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.041133422404527664,
+          "B_mean": 0.028755690902471542,
+          "ratio_B_over_A": 0.6990833282470703,
+          "gap": -0.012377736158668995,
+          "gap_ci_unit_level": [
+            -0.014860312189557589,
+            -0.01000203199083141
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.21949240565299988,
+          "footnote_episode_level": {
+            "gap_ci": [
+              -0.013922536415824046,
+              -0.011075395512549827
+            ],
+            "excludes_zero": true
+          }
+        },
+        "8": {
+          "unit_length": 40,
+          "n_independent_unit_level": 199,
+          "n_episodes": 8,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.05564992502331734,
+          "B_mean": 0.06607767939567566,
+          "ratio_B_over_A": 1.1873812675476074,
+          "gap": 0.01042775809764862,
+          "gap_ci_unit_level": [
+            0.007893191456289297,
+            0.01320386489516302
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.7080518007278442,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.00647629008186285,
+              0.014897286932201706
+            ],
+            "excludes_zero": true
+          }
+        },
+        "32": {
+          "unit_length": 64,
+          "n_independent_unit_level": 120,
+          "n_episodes": 8,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.06510595977306366,
+          "B_mean": 0.14279021322727203,
+          "ratio_B_over_A": 2.193197250366211,
+          "gap": 0.07768424600362778,
+          "gap_ci_unit_level": [
+            0.06640094212101151,
+            0.09004881068365649
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.8415859937667847,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.060925342701375486,
+              0.09905956667692707
+            ],
+            "excludes_zero": true
+          }
+        },
+        "100": {
+          "unit_length": 132,
+          "n_independent_unit_level": 56,
+          "n_episodes": 8,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.07722620666027069,
+          "B_mean": 0.31501927971839905,
+          "ratio_B_over_A": 4.07917594909668,
+          "gap": 0.23779307305812836,
+          "gap_ci_unit_level": [
+            0.1953817765793896,
+            0.28409963729791343
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.880058765411377,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.1826893724501133,
+              0.3072440012225083
+            ],
+            "excludes_zero": true
+          }
+        },
+        "128": {
+          "unit_length": 160,
+          "n_independent_unit_level": 48,
+          "n_episodes": 8,
+          "metric": "relative-L1 (the reference's own, model_training.py:203)",
+          "A_mean": 0.0804956704378128,
+          "B_mean": 0.3807038366794586,
+          "ratio_B_over_A": 4.729494571685791,
+          "gap": 0.300208181142807,
+          "gap_ci_unit_level": [
+            0.24982895037780203,
+            0.357186317599068
+          ],
+          "gap_excludes_zero": true,
+          "hold_last_floor": 0.928443193435669,
+          "footnote_episode_level": {
+            "gap_ci": [
+              0.23151135890123745,
+              0.38474950349579257
+            ],
+            "excludes_zero": true
+          }
+        }
+      }
+    }
+  },
+  "verdict": {
+    "discharged_over": [
+      1,
+      8,
+      32,
+      100,
+      128
+    ],
+    "note_on_printing": "the rule is discharged over all five committed horizons. Which cells the PAPER prints is a separate question -- h = 1, 8 and 100 carry the argument, h = 32 and 128 are landmarks that live here in the artifact. The distinction between the set a rule is discharged over and the cells printed is stated once in the body so it does not read as selective reporting.",
+    "n_verdicts_moved": 1,
+    "moved": [
+      {
+        "cell": "C section 5 A/B gap",
+        "arena": "out-of-sample (matched to a1_ab_by_horizon.json)",
+        "h": 1,
+        "excluded_zero_at_400_step": false,
+        "excludes_zero_at_short_unit": true
+      }
+    ],
+    "result": "MOVES",
+    "reading": "MOVES: both units are reported, each naming its unit, arena and n_independent, and the affected claim is narrowed in the body."
+  }
+}

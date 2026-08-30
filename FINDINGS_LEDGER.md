@@ -6265,8 +6265,84 @@ precisely whether that is the operative level. So:
 consequences `M-62` fixes for each — narrowed in the body if a verdict moves, never reverted, and
 both units always reported side by side.
 
-**Evidence** `RUN` `results/m64_short_units.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Evidence** `RUN` `results/m64_short_units.json`, `results/m64_free_gate.json`
+**Discharged** by `results/m64_short_units.json`. **It returns MOVES, at one cell.**
+
+**The counts held, both ways, including the off-by-one the rule predicted.** Every horizon's
+unit count agrees between the two derivations — from the segment lengths alone and from the
+built index — so the measurement did not stop. The predicted per-episode counts of 30, 25,
+15, 7 and 6 are exactly what the index produced, and the one place the two episode lengths
+differ shows up where the rule said it would: the in-sample arena contains ep0 and returns
+**199** units at h = 8 rather than 200, being 24 + 7 × 25. The out-of-sample arena excludes
+ep0 and returns **14** units at h = 100 against the present 4, which is the figure the rule
+wrote down before the index existed.
+
+| arena | h=1 | h=8 | h=32 | h=100 | h=128 |
+|---|---|---|---|---|---|
+| out-of-sample (2 episodes) | 60 | 50 | 30 | **14** | 12 |
+| in-sample (8 episodes) | 240 | **199** | 120 | 56 | 48 |
+| all ten (10 episodes) | 300 | 249 | 150 | 70 | 60 |
+
+**The free gate ran first and passed.** The first short unit of each cached 400-step rollout
+is an exact slice, so 30 comparisons across six model × arena combinations and five horizons
+were checked bitwise against the Session 2 cache before any statistic was computed: 30 of 30
+identical (`results/m64_free_gate.json`). The short-unit machinery is verified against a
+known-good side rather than against itself.
+
+**The one verdict that moves: §5's A/B gap at h = 1, out-of-sample.** At the 400-step unit
+with n = 4 the gap is −0.0128 with an interval of [−0.0329, +0.0013] that **spans zero**. At
+the 32+1 unit with n = 60 it is −0.0194 with [−0.0310, −0.0093], which **excludes zero**. The
+sign is unchanged and it is negative: at one step, teacher forcing beats autoregressive
+training, and with sixty units that is now resolved rather than merely visible. It is robust
+to the clustering question — the episode-level interval stored beside it is
+[−0.0372, −0.0016] and also excludes zero.
+
+**This narrows §5's claim rather than reverting it, and it narrows it against us.** §5
+already reported the direction at h = 1 — a ratio of 0.91×, three of ten episodes favouring
+Arm A, and the hold-last floor beating both arms — and described the advantage as a
+long-horizon phenomenon. The extra power converts "not better at one step" into "worse at
+one step". The 400-step figure is not withdrawn and both appear, each naming its unit, its
+arena and its `n_independent`.
+
+**What did not move, and where the extra units help rather than hurt.** §6.7's paired
+difference between ensemble disagreement and the forecast-step counter excludes zero at every
+horizon at both units, and every short-unit interval is narrower:
+
+| h | 400-step, n=20 | short unit | n |
+|---|---|---|---|
+| 8 | [+0.2409, +0.6794] | [+0.5899, +0.7585] | 249 |
+| 32 | [+0.2983, +0.6740] | [+0.3426, +0.6155] | 150 |
+| 100 | [+0.0339, +0.3621] | [+0.1550, +0.3836] | 70 |
+| 128 | [+0.0107, +0.3242] | [+0.1480, +0.3512] | 60 |
+
+**h = 128 is the cell §6.7 calls its weakest** — "+0.011 is the smallest lower bound in the
+table and we would not rest anything on that horizon alone". At sixty units its lower bound
+moves to +0.148. The horizon that carried the least weight now carries more.
+
+**Every comparison is arena-matched, and an earlier version of this analysis was not.** Each
+cell is compared against the artifact holding its own 400-step figure: cell C against
+`results/a1_ab_by_horizon.json`, which is out-of-sample, and cell B against
+`results/task_d_nind20.json`, which is all ten episodes. A first pass compared the all-ten
+400-step paired difference against the *out-of-sample* short-unit figure and reported two
+further moves at h = 100 and h = 128. Those were an arena change wearing a unit change's
+clothes, and they disappear under matched arenas. It is recorded here because it is exactly
+the confusion this rule's "every figure carries its unit length, its arena and its
+`n_independent`" exists to prevent, and because it was caught by that requirement rather than
+in spite of it.
+
+**The clustering interaction, as the rule required.** `n_independent` is reported at the unit
+level throughout and labelled as such. `M-62` returned NO MOVE, so the episode is not
+established as the operative cluster and the short-unit intervals are not read as lower
+bounds on width. The episode-level interval is nonetheless computed for every figure and
+stored in a `footnote_episode_level` field beside it — corroboration, not a second column.
+
+**`r_dd` is absent by design**, not by oversight: shorter units give fewer forecast steps to
+demean against, and it stays at the 400-step unit.
+
+**Discharged over all five committed horizons.** Which cells the paper *prints* is a separate
+question from the set the rule is discharged over, and the artifact holds all five so the
+distinction can be stated rather than assumed.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### M-65 — Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? · **NEW**
 **Committed before any oracle-rescaled figure exists.** Every coverage figure in this paper is read
