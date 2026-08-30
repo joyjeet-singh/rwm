@@ -16,10 +16,10 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-41 pages, 0 overfull boxes, 0 LaTeX warnings
+42 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 236 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 239 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
 are never edited in place: 19 are marked `SUPERSEDED` and kept.
 Six of those are retractions of our own **numbered claims** on evidence this
@@ -148,10 +148,15 @@ existing 2,500-iteration run exactly at every logged iteration, and `weights_250
 byte-identical between them.
 
 A clean-clone run of `reproduce.sh --quick --force` regenerates **47 artifact files and
-8,186 numeric values, 7,981 of them bitwise identical (97.50%),
-178 differing**, with 25 values present in the committed
-artifacts and absent after regeneration, across 3 files
+8,186 numeric values: 7,981 bitwise identical (97.50%),
+27 equal within floating-point tolerance, and 178 differing** — the three account for
+the total exactly. A further 25 values are in the committed artifacts and absent
+after regeneration, across 3 files
 (`results/verify_reproduction.json`).
+
+**How big the claim is.** 8,186 values is 0.90% of the 905,391 numeric
+values under `results/`. The other 897,205 are carried in by the clone rather than
+regenerated, and are held out of the figure entirely.
 
 **A note on what that number is not.** An earlier version of this section counted every numeric
 value in the committed `results/` directory. Because `results/` is committed, a clean clone

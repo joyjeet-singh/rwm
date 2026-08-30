@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "41 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "42 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -21,8 +21,8 @@
     {
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
-      "pass": false,
-      "detail": "verify_reproduction.json vs the clone run at rwm_gate: 47 files regenerated, 8,186 values, 7,982 identical, 177 differing; carried-in partition present (897,205 copied values held out); artifact post-dates the regeneration marker"
+      "pass": null,
+      "detail": "verify_reproduction.json vs NO CLONE GIVEN [set CLONE_RESULTS]: 47 files regenerated, 8,186 values, 7,981 identical, 178 differing; carried-in partition present (897,205 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": "4b",
@@ -40,7 +40,7 @@
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "191 section refs, unresolved none; 1 historical ref(s) inside quoted rule text exempt ['5.6']; figures ['1', '2', '3', '4', '5', '6'], dangling none"
+      "detail": "192 section refs, unresolved none; 1 historical ref(s) inside quoted rule text exempt ['5.6']; figures ['1', '2', '3', '4', '5', '6'], dangling none"
     },
     {
       "n": 6,
@@ -50,7 +50,7 @@
     }
   ],
   "n_pass": 7,
-  "n_run": 8,
-  "n_not_run": 0,
+  "n_run": 7,
+  "n_not_run": 1,
   "n": 8
 }

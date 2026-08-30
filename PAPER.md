@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     838 values substituted from 67 artifacts. -->
+     844 values substituted from 67 artifacts. -->
 
 # Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
 
@@ -41,7 +41,7 @@ scored on the other, restores nominal coverage on every held-out cell; and the r
 evaluation pairs each state with the previous step's action, overstating the checkpoint's own
 nRMSE at h = 368 by 75%.
 
-Every **measurement** here is substituted from a named artifact; the 581 numerals that
+Every **measurement** here is substituted from a named artifact; the 582 numerals that
 are not are addresses, horizon labels or declared constants, classified one by one by a build that
 fails on anything else. 52 comparative claims across 21 kinds are recomputed each
 build against a corrupted expectation, so a check that can no longer fail is caught.
@@ -1317,7 +1317,7 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (236 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (239 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for 8 of them and Appendix G for all 11; 7 of Figure 4's are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1327,8 +1327,18 @@ it rests on, because it is what let us detect the gap at all.
 
 **Reproducibility, and a build that checks its own prose.**
 `./reproduce.sh --quick --force` regenerates 47 artifact files and 8,186
-numeric values from a clean clone, 7,981 of them bitwise identical (97.50%),
-178 differing. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 581 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **52 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 52 of 52 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+numeric values from a clean clone: 7,981 bitwise identical (97.50%),
+27 equal to within the verifier's floating-point tolerance but not bitwise, and
+178 differing. Those
+three account for the 8,186 exactly. A further 25 values are present in the
+committed artifacts and absent after regeneration, across 3 files; they are
+counted separately because a value that is not produced twice cannot be compared twice.
+**The claim is narrower than the percentage makes it sound, and we would rather state its size than
+have a reader derive it.** A clean clone already contains every committed artifact, so the only
+honest test is the subset the run actually rewrites: 8,186 values, or 0.90%
+of the 905,391 numeric values under `results/`. The other 897,205 are carried in, prove
+nothing about reproduction, and are never folded into the figure — an earlier version of this
+section counted them and overstated the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 582 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **52 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 52 of 52 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1697,7 +1707,11 @@ carries at least one claim, and every claim is corrupted on every build: 52 of
 the checker rather than written here, so a fourth entry cannot be forgotten.
 
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
-measures the machine, not the model.
+measures the machine, not the model. A third category is not an exclusion but a partition, and it
+bounds everything in this appendix: of the 905,391 numeric values under `results/`, a clean
+clone regenerates 8,186 and carries in 897,205. The reproducibility claim covers
+0.90% of the directory and is silent about the rest. We state that fraction because a
+reviewer who computes it and finds we did not will reasonably discount everything around it.
 
 *The CPU budget.* 5,004 timing fields and the 592 values of
 `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
@@ -1705,7 +1719,20 @@ resident memory, and the standard deviation across repeats. It cannot reproduce 
 another machine, or on this one under different load, and it records that about itself: across
 its 4 configurations the standard deviation of seconds-per-iteration across repeats
 runs from 5% to 32% of the mean (ens1_bs256) — on one machine,
-within a single measurement session.
+within a single measurement session. **Those three figures are themselves host measurements and we
+mark them as such**, since a sentence arguing that host-dependent numbers should not be printed as
+results cannot quietly print three of its own as though they were stable. On a second host the same
+run reported a different spread on a different worst configuration. Read them as one machine's
+account of its own variability, not as a property of the code.
+
+**One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
+check in `part_f_gate` requires that *no* regenerated value differ. 178 do, so the
+check fails, and it is published as failing. We did not give it a tolerance. The differences are
+concentrated in two artifacts — a stochastic dilution study whose values move in the tenth
+significant figure, and an index that stores line numbers in this document, which move whenever the
+document is rebuilt — but "concentrated in two artifacts we believe are benign" is a reason to read
+the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
+tells a reader strictly less than one that fails and says where.
 
 *One wall-clock-bounded diagnostic.* `results/step4_4_overfit_ens1.json` stops after 2,700 seconds
 rather than at its 2,000-iteration cap, so it reaches a different iteration count on
@@ -1808,7 +1835,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 390 KB ledger, so here is the table. It is generated from
+or an instruction to open a 396 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data

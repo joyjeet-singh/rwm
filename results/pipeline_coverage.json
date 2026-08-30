@@ -1,6 +1,6 @@
 {
   "n_artifacts": 52,
-  "n_paper_keys": 1738,
+  "n_paper_keys": 1744,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -242,6 +242,21 @@
       "exempt_reason": null
     },
     {
+      "artifact": "verify_reproduction.json",
+      "n_paper_keys": 17,
+      "writers": [
+        "part_f_gate",
+        "pipeline_coverage",
+        "verify_reproduction"
+      ],
+      "invoked_writers": [
+        "part_f_gate",
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
+    },
+    {
       "artifact": "task_d2b_robustness.json",
       "n_paper_keys": 15,
       "writers": [
@@ -278,21 +293,6 @@
       ],
       "covered": true,
       "exempt_reason": null
-    },
-    {
-      "artifact": "verify_reproduction.json",
-      "n_paper_keys": 11,
-      "writers": [
-        "part_f_gate",
-        "pipeline_coverage",
-        "verify_reproduction"
-      ],
-      "invoked_writers": [
-        "part_f_gate",
-        "pipeline_coverage"
-      ],
-      "covered": true,
-      "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
     },
     {
       "artifact": "comparative_claims.json",

@@ -1308,8 +1308,18 @@ it rests on, because it is what let us detect the gap at all.
 
 **Reproducibility, and a build that checks its own prose.**
 `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}}
-numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%),
-{{ver_differing}} differing. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the {{tn_typed}} numerals that is not one is classified as an address, a horizon label or a declared constant — {{tn_classes}} classes and {{tn_exceptions}} declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix D gives the argument, the kinds, the self-test, the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+numeric values from a clean clone: {{ver_identical}} bitwise identical ({{ver_pct}}%),
+{{ver_close}} equal to within the verifier's floating-point tolerance but not bitwise, and
+{{ver_differing}} differing. Those
+three account for the {{ver_values}} exactly. A further {{ver_keys_lost}} values are present in the
+committed artifacts and absent after regeneration, across {{ver_keys_lost_files}} files; they are
+counted separately because a value that is not produced twice cannot be compared twice.
+**The claim is narrower than the percentage makes it sound, and we would rather state its size than
+have a reader derive it.** A clean clone already contains every committed artifact, so the only
+honest test is the subset the run actually rewrites: {{ver_values}} values, or {{ver_claim_pct}}%
+of the {{ver_all}} numeric values under `results/`. The other {{ver_copied}} are carried in, prove
+nothing about reproduction, and are never folded into the figure — an earlier version of this
+section counted them and overstated the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the {{tn_typed}} numerals that is not one is classified as an address, a horizon label or a declared constant — {{tn_classes}} classes and {{tn_exceptions}} declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix D gives the argument, the kinds, the self-test, the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
 
 ---
 
@@ -1631,7 +1641,11 @@ carries at least one claim, and every claim is corrupted on every build: {{cc_st
 the checker rather than written here, so a fourth entry cannot be forgotten.
 
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
-measures the machine, not the model.
+measures the machine, not the model. A third category is not an exclusion but a partition, and it
+bounds everything in this appendix: of the {{ver_all}} numeric values under `results/`, a clean
+clone regenerates {{ver_values}} and carries in {{ver_copied}}. The reproducibility claim covers
+{{ver_claim_pct}}% of the directory and is silent about the rest. We state that fraction because a
+reviewer who computes it and finds we did not will reasonably discount everything around it.
 
 *The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of
 `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
@@ -1639,7 +1653,20 @@ resident memory, and the standard deviation across repeats. It cannot reproduce 
 another machine, or on this one under different load, and it records that about itself: across
 its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats
 runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) — on one machine,
-within a single measurement session.
+within a single measurement session. **Those three figures are themselves host measurements and we
+mark them as such**, since a sentence arguing that host-dependent numbers should not be printed as
+results cannot quietly print three of its own as though they were stable. On a second host the same
+run reported a different spread on a different worst configuration. Read them as one machine's
+account of its own variability, not as a property of the code.
+
+**One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
+check in `part_f_gate` requires that *no* regenerated value differ. {{ver_differing}} do, so the
+check fails, and it is published as failing. We did not give it a tolerance. The differences are
+concentrated in two artifacts — a stochastic dilution study whose values move in the tenth
+significant figure, and an index that stores line numbers in this document, which move whenever the
+document is rebuilt — but "concentrated in two artifacts we believe are benign" is a reason to read
+the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
+tells a reader strictly less than one that fails and says where.
 
 *One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds
 rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on

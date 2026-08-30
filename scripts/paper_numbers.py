@@ -195,6 +195,20 @@ def main():
         "results/verify_reproduction.json")
     put("ver_differing", ver["differing"], "results/verify_reproduction.json")
     put("ver_keys_lost", ver["keys_lost"], "results/verify_reproduction.json")
+    # The three outcome classes account for values_compared exactly, so the paper can
+    # print them as a partition rather than as five numbers a reader must trust. The
+    # near-identical class is the one that was missing: a bitwise-only recount lands on
+    # 205 differing because it folds these 27 in, which is what made the figures look
+    # as though they did not add up.
+    put("ver_close", ver["identical_to_1e-9"], "results/verify_reproduction.json")
+    # The size of the claim. A clean clone already contains every committed artifact, so
+    # the comparison covers only what the run rewrites. Stating the fraction is cheaper
+    # than having a reviewer compute it and conclude we hid it.
+    _all = ver["values_compared"] + ver["copied_file_values"]
+    put("ver_copied", f"{ver['copied_file_values']:,}", "results/verify_reproduction.json")
+    put("ver_all", f"{_all:,}", "results/verify_reproduction.json")
+    put("ver_claim_pct", f"{100*ver['values_compared']/_all:.2f}",
+        "results/verify_reproduction.json")
     put("ver_keys_lost_files", len(ver["keys_lost_files"]),
         "results/verify_reproduction.json")
     put("ver_timing", f'{ver["timing_excluded"]:,}', "results/verify_reproduction.json")

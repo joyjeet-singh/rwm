@@ -3673,7 +3673,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "390"
+    "value": "396"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3829,7 +3829,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 236
+    "value": 239
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -4033,7 +4033,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 41
+    "value": 42
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -6837,7 +6837,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 581
+    "value": 582
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -7110,6 +7110,22 @@
   "v4_read_date": {
     "source": "results/original_paper_figures.json",
     "value": "23 Apr 2025"
+  },
+  "ver_all": {
+    "source": "results/verify_reproduction.json",
+    "value": "905,391"
+  },
+  "ver_claim_pct": {
+    "source": "results/verify_reproduction.json",
+    "value": "0.90"
+  },
+  "ver_close": {
+    "source": "results/verify_reproduction.json",
+    "value": 27
+  },
+  "ver_copied": {
+    "source": "results/verify_reproduction.json",
+    "value": "897,205"
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
