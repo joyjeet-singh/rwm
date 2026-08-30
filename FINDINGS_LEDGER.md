@@ -6084,6 +6084,39 @@ field name, not the value. Redacted rather than superseded because nothing in th
 **Evidence** `SRC` `FINDINGS_LEDGER.md`, `scripts/build_supplementary.py`
 **Status** ACTIVE
 
+### D-33 — Three published numbers do not reproduce from a clean clone · **NEW**
+**The join S1 did not do.** S1 established that 178 values differ and 25 keys are lost. It did not
+establish whether any of them feeds a number the paper prints. Comparing the clean clone's
+`paper_numbers.json` against this tree's, over all **842** placeholders the paper, README and model
+card substitute, **14 differ**. Eleven are expected. Three are not.
+
+| placeholder | clean clone | committed | source |
+|---|---|---|---|
+| `t1_n_verified` | 10 | 16 | `results/t1_bibliography_verified.json` |
+| `t1_n_frag` | 9 | 17 | `results/t1_bibliography_verified.json` |
+| `t1_n_frag_ok` | 9 | 17 | `results/t1_bibliography_verified.json` |
+
+**The paper's bibliography-verification sentence does not reproduce.** It appears in two places and
+states how many reference entries were checked and how many attributed fragments were found
+verbatim. A clean clone produces different counts, so a reader who runs the pipeline gets a paper
+whose own reference-verification claim disagrees with this one.
+
+**The eleven expected differences, for completeness.** Six `ver_*` keys are the verification's own
+output, which a clone carries in rather than regenerates and which the verifier excludes as
+self-referential. Three `time_*` keys come from `step4_5_timing.json`, excluded wholesale as a
+measurement of the host. Two `ver_keys_lost*` keys are absent from the clone because the clone
+predates the commit that added them.
+
+**Why the earlier reading missed it.** The S1 report described `paper_numbers.json`'s differing
+values as "mostly self-referential `ver_*` keys". Three of the five were not, and "mostly" was
+carrying the entire question.
+
+**Not fixed here.** Reported under a brief that forbids attempting the fix in this session's
+budget. It ranks above every other remaining item.
+
+**Evidence** `SRC` `results/paper_numbers.json`, `results/t1_bibliography_verified.json`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are
