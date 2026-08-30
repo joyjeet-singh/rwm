@@ -6009,6 +6009,299 @@ than at the end.
 **Evidence** `SRC` `scripts/e5_synthetic_sigma.py`, `results/e5_sigma_dilution.json`
 **Status** ACTIVE · **Relevance** METHOD
 
+### M-62 — Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? · **NEW**
+**Committed before any episode-clustered figure exists.** No episode-level bootstrap has been run
+in this project. Every figure quoted below is the *existing* trajectory-clustered one, read from an
+artifact already committed. The cells to be re-run are named exhaustively in this entry, before the
+run, and nothing is added to that list afterwards.
+
+**The question.** Every interval in this paper resamples whole 400-step trajectories (`M-27`).
+§6.7 now reports that the between-trajectory correlation is **+0.878 [+0.817, +0.956]** and that
+the between- and within-trajectory components carry **51.7%** and **48.3%** of the pooled
+covariance (`results/a2_trajectory_level_control.json`). Two trajectories drawn from the same
+episode share that episode's difficulty, which spans 0.562 to 1.591 across the dataset (§6.7) and
+is a fixed property of the recording rather than something resampling reshuffles. If the episode is
+the operative cluster, the trajectory bootstrap treats as exchangeable two units that are not, and
+every interval it produces is too narrow.
+
+**The design is fixed by the data and involves no choice.** The dataset is ten episodes and each
+contributes exactly **2** non-overlapping 400-step trajectories (`src/rollout_eval.py:101`
+`sample_trajectories`; the trajectory-to-episode map is already recorded at
+`src/rollout_eval.py:223`). So the clustering level halves n exactly, in every arena:
+
+| arena | episodes | trajectories | n, trajectory level | n, episode level |
+|---|---|---|---|---|
+| out-of-sample | 2 | 4 | 4 | **2** |
+| in-sample | 8 | 16 | 16 | 8 |
+| all ten | 10 | 20 | 20 | 10 |
+
+**Cells re-run, named before the run**, each at both cluster levels:
+
+1. §5's out-of-sample A/B gap at all six horizons h ∈ {1, 8, 32, 100, 128, 368} (`results/a1_ab_by_horizon.json`).
+2. §6.2's four-model calibration table — faithful Arm A, corrected Arm A, teacher-forced Arm B, released checkpoint (`results/task1_calibration.json`).
+3. §6.7's pooled correlation **+0.605 [+0.545, +0.695]** (`results/task_d_nind20.json`, `d4_penalty`) and the double-demeaned **r_dd = +0.419 [+0.318, +0.576]** (`results/a2_trajectory_level_control.json`).
+4. §6.10's paired contrast, the independent-versus-shared-trunk comparison discharging `M-44` (`results/r2_independent_ensemble.json`).
+5. §6.8's per-horizon multiplier (`results/task_d3_perhorizon.json`).
+
+**"Verdict moves" is defined before the run** as: an interval that excluded zero now spans it, or
+an interval that spanned zero now excludes it, or a condition pre-registered in some *other* rule
+that held under trajectory clustering now fails under episode clustering.
+
+**The known limit, stated in advance rather than discovered afterwards — this is the `M-24`
+failure mode and the reason this paragraph exists.** Four of the five cells above live in the
+out-of-sample arena, which has **two** episodes. A bootstrap resampling 2 units with replacement
+draws from 4 equally likely ordered samples that collapse to **3 distinct multisets** — {AA, AB, BB}
+with probabilities 1/4, 1/2, 1/4 — so its entire sampling distribution takes at most three values
+and any percentile interval is a choice among three numbers. **That is uninformative by
+construction, not by bad luck, and no result from it will be reported as though it were a test.**
+Concretely:
+
+- Cells 1, 2 and 4 are out-of-sample. At the episode level they have n = 2 and are reported as
+  **NOT INFORMATIVE AT THIS CLUSTER LEVEL**, with the three-value bootstrap distribution printed in
+  full so a reader can see exactly why, rather than a percentile interval that would imply more.
+- Cell 5 is a special case and the rule says so now. §6.8's folds are *already* episode-level by
+  construction — each multiplier is fitted on one held-out episode and scored on the other — so
+  what changes here is not the fold but any interval attached to the 12 held-out cells. At the
+  episode level each direction has n = 1 and no interval is computable at all. It is reported as
+  **NOT BOOTSTRAPPABLE AT THE EPISODE LEVEL**, and no degenerate interval is printed.
+- **Cell 3 is where this rule has its power**, at n = 20 falling to n = 10, and it is also the cell
+  whose §6.7 evidence motivated the rule. Wherever an in-sample counterpart of cells 1 and 2 exists
+  it is run there too (8 episodes), because that and the all-ten arena are the only arenas in which
+  a moved verdict would be credible.
+
+**Minimum detectable effect: this rule has none, and that is a property of what it is.** It is not
+a test against a null. It is a re-computation of existing intervals under a coarser and more
+conservative clustering, so it can only widen intervals or leave them unchanged. What it has
+instead of an MDE is the resolution limit stated above, which is why the arena-by-arena verdict
+above is fixed in advance.
+
+**Verdict, decided in advance.**
+
+- **NO MOVE** — no verdict moves in any informative cell. One sentence in the body records the
+  check and names the arenas in which it was informative. Nothing else changes.
+- **MOVES** — both units are reported side by side, each naming its unit, its arena and its
+  `n_independent`, and the affected claim is **narrowed in the body**. It is not reverted to the
+  trajectory-level figure and the trajectory-level figure is not withdrawn: per this revision's
+  standing rules, a new measurement at a new unit is a companion, never a replacement.
+- **INCONCLUSIVE** — the informative cells disagree with each other. Reported as returned, with no
+  re-framing.
+
+Under no branch does this rule discharge, re-anchor or re-denominate `M-23`, `M-27`, `M-43`,
+`M-44`, `M-45`, `M-49`, `M-50` or `M-51`/`M-52`. Those keep the arenas, units and denominators they
+were committed over.
+
+**Evidence** `RUN` `results/m62_episode_clustering.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
+### M-63 — Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? · **NEW**
+**Committed before any per-dimension coverage figure exists.** Per-dimension *sign counts* are
+reported in §6.6; per-dimension *coverage* is not, anywhere in this project. The per-triple arrays
+this rule needs are **not stored**: `scripts/task_d_nind20.py:115` builds `err, sig` at shape
+`(n_traj, h, 45)` and reduces them to pooled aggregates before writing. The measurement therefore
+re-rollouts and stores the per-triple `(trajectory, step, dimension)` arrays, which is cheap and
+makes this rule and `M-65` free thereafter.
+
+**The question.** Coverage at ±1σ is an indicator pooled with equal weight over all three axes
+(§3.1). Because every dimension contributes the same number of triples, **pooled coverage is
+exactly the unweighted mean of the 45 per-dimension coverages** — so the pooled figure can be
+decomposed without approximation, and a pooled 16.22% is consistent both with 45 dimensions each
+near 16% and with a handful near zero dragging down a majority near calibrated. Those are different
+findings about the model and the paper currently cannot tell them apart.
+
+**Statistic.** Per-dimension coverage at ±1σ at **h = 1**, all 45 dimensions, on:
+
+- the released checkpoint over all ten episodes, n_independent = 20 — the arena whose pooled figure
+  is **16.22% [13.44, 18.89]** against a calibrated 68.27% (`results/task_d_nind20.json`);
+- the ensemble-5 Arm A arms out-of-sample, 3 seeds, n_independent = 4 — pooled **35.93% [29.63, 42.22]** (`results/task_d3_ens5.json`).
+
+Repeated at **h = 100**. Reported with median, interquartile range, and the five worst dimensions
+**by channel name**. The channel names are `["v_x","v_y","v_z","w_x","w_y","w_z","g_x","g_y","g_z"]`
+followed by `q_`, `qd_` and `tau_` over the twelve joints (`scripts/taskAB_gate_r27.py:14-17`); the
+45-dimension layout is verified against pinned upstream at
+`../robotic_world_model_lite/scripts/envs/anymal_d_flat.py:58-64` — `base_lin_vel` 0:3,
+`base_ang_vel` 3:6, `projected_gravity` 6:9, `joint_pos` 9:21, `joint_vel` 21:33, `joint_torque`
+33:45 — and mirrored at `src/rwm_data.py:20-27`.
+
+**"Share of the shortfall" is defined before the run**, because it is otherwise ambiguous. The
+pooled shortfall is `68.27 − mean_d cov_d`, and since pooling is an unweighted mean over dimensions
+it decomposes exactly as `mean_d (68.27 − cov_d)`. The five worst dimensions' share is
+`sum over those five of (68.27 − cov_d)` divided by `sum over all 45 of (68.27 − cov_d)`.
+
+**Thresholds, committed in advance.**
+
+- **UNIFORM** — the interquartile range of the 45 per-dimension coverages is **under 15 percentage
+  points** *and* the pooled figure lies inside that interquartile range.
+- **CONCENTRATED** — the five worst dimensions carry **more than half** the shortfall from 68.27%.
+- **NEITHER** — anything else, reported as returned with the full 45-value distribution printed.
+
+Both of the first two are reportable results and neither is a bad outcome. CONCENTRATED is the
+sharper finding, because it names which channels fail.
+
+**Minimum detectable effect — the resolution limit, stated in advance because it is severe at
+h = 1 and would otherwise be discovered afterwards.** Per-dimension coverage at horizon h on B
+trajectories is a fraction over `B × h` indicator values, so it is quantised at `1/(B × h)`:
+
+| arena | h | indicators per dimension | quantisation |
+|---|---|---|---|
+| released checkpoint, n = 20 | 1 | 20 | **5.0 points** |
+| released checkpoint, n = 20 | 100 | 2,000 | 0.05 points |
+| ensemble-5 out-of-sample, n = 4, per seed | 1 | 4 | **25 points** |
+| ensemble-5 out-of-sample, 3 seeds pooled | 1 | 12 | **8.3 points** |
+
+So at h = 1 on the released checkpoint the 15-point IQR threshold spans just **three** quantisation
+steps, and on the ensemble-5 arms a per-dimension coverage at h = 1 can take only the five values
+0, 25, 50, 75 and 100%. **The IQR threshold is therefore evaluated only on the released checkpoint
+at n = 20**, where it is coarse but meaningful; on the ensemble-5 arms the 45 values are reported
+descriptively and **no threshold is applied to them**. The shortfall-share threshold is applied in
+both arenas, because a share of a sum is far less sensitive to the quantisation than an IQR is.
+Fixing which threshold applies where *before* the run is the point: choosing it afterwards is what
+`S-12` was withdrawn for.
+
+**Cross-reference, with its limit stated in the same breath.** `R-29` finds the released checkpoint
+loses to the hold-last floor on **7 of 45** dimensions — `v_z`, `w_x`, `w_y`, `g_x`, `g_y`, `g_z`,
+`tau_RF_HAA`. If the worst-covered dimensions here overlap that set, the rule says so and reports
+the size of the intersection. **It is not a like-for-like comparison and no P-value is attached to
+the overlap**: `R-29` is per-dimension nRMSE against a floor, at h = 368, pooled over 3,200
+trajectories from 8 evaluation seeds, whereas this rule is coverage at ±1σ at h = 1 and h = 100 on
+20 trajectories. A different quantity, a different horizon and a different arena. The overlap is
+reported as suggestive and as nothing more.
+
+**Evidence** `RUN` `results/m63_per_dimension_coverage.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
+### M-64 — Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h ≤ 128? · **NEW**
+**Committed before any short-unit figure exists.** Every evaluation in this project uses 400-step
+trajectories, which is what bounds `n_independent` at 4, 16 and 20. No shorter unit has been built
+or scored.
+
+**The question.** A 400-step trajectory is required only by the longest horizon. At h = 100 a unit
+needs 132 rows, not 400, so the same episodes admit several times more non-overlapping units and
+every interval at h ≤ 128 is wider than the data requires.
+
+**Unit definition, fixed in the rule.** **32 history rows + h forecast rows**, non-overlapping
+within an episode, with episode boundaries respected exactly as §3 defines them — the ten segments
+of 999 + 9 × 1,000 rows recovered structurally, never spliced across a reset, and the one orphan
+row discarded (`src/rwm_data.py:44-49`). History length 32 is `START_STEP`
+(`src/rollout_eval.py:39`) and is not varied.
+
+**Applies to h ∈ {1, 8, 32, 100, 128} only. h = 368 needs 400 rows and is untouched**, so `M-23`
+stays anchored at h = 368 over its own unit and denominator, and nothing here discharges or
+re-opens it.
+
+**Predicted unit counts, written down before the index is built**, as `floor(L / (32 + h))` per
+episode:
+
+| h | unit length | per 1,000-row episode | per 999-row episode (ep0) |
+|---|---|---|---|
+| 1 | 33 | 30 | 30 |
+| 8 | 40 | **25** | **24** |
+| 32 | 64 | 15 | 15 |
+| 100 | 132 | 7 | 7 |
+| 128 | 160 | 6 | 6 |
+
+Only h = 8 differs between the two episode lengths, and that is exactly the off-by-one §3 warns a
+reader about. A two-episode out-of-sample arena that excludes ep0 therefore predicts **14** units at
+h = 100 against the present 4. **The realised counts are verified two ways — from the segment
+lengths alone and from the built index — exactly as §3 does for the crossing count. If the two
+disagree, that disagreement is the finding and the measurement stops there.**
+
+**Cells re-run at the short unit:** §6.2's calibration table, §6.7's pooled correlation and the
+free baselines, and §5's A/B gap. Both arenas. Every figure carries its unit length, its arena and
+its `n_independent`.
+
+**Explicitly excluded: `r_dd`, the double-demeaned statistic.** Shorter units give *fewer* forecast
+steps to demean against, which makes §6.7's short-horizon instability worse rather than better. It
+is excluded here by design and not by oversight, and it stays at the 400-step unit.
+
+**"Verdict moves" carries the same definition as `M-62`**: an interval that excluded zero now spans
+it, or vice versa, or a pre-registered condition that held now fails.
+
+**Minimum detectable effect, and the interaction this rule must not be read without.** Shorter
+units strictly increase the unit count, so this rule has no MDE in the null-testing sense — it
+cannot fail to detect something the 400-step unit detected. The honest limit is different and is
+stated here in advance: **more units from the same ten episodes are not more independent in the
+sense that matters if the episode is the operative cluster.** Thirty units at h = 1 drawn from one
+episode share that episode's difficulty exactly as its two 400-step trajectories do. `M-62` asks
+precisely whether that is the operative level. So:
+
+- `n_independent` from this rule is reported at the **unit** level and always labelled as such;
+- wherever `M-62` returns that the episode is the operative cluster, **the short-unit intervals are
+  read as lower bounds on width and not as the narrower intervals they appear to be**, and the
+  body says so at each figure;
+- no short-unit figure replaces a 400-step figure anywhere. Both appear, each naming its unit.
+
+**Verdict, decided in advance.** **NO MOVE**, **MOVES** or **INCONCLUSIVE**, with the same
+consequences `M-62` fixes for each — narrowed in the body if a verdict moves, never reverted, and
+both units always reported side by side.
+
+**Evidence** `RUN` `results/m64_short_units.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
+### M-65 — Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? · **NEW**
+**Committed before any oracle-rescaled figure exists.** Every coverage figure in this paper is read
+against 68.27% at ±1σ and 95.45% at ±2σ, which are the two-sided Gaussian targets §3.1 derives from
+`erf(k/√2)`. **The paper has never checked the marginal normality that nominal assumes.** As with
+`M-63`, the per-triple arrays are not stored (`scripts/task_d_nind20.py:115`) and the same stored
+re-rollout serves both rules.
+
+**The question, and why it matters to every number in §6.2.** A coverage shortfall has two possible
+causes and the paper currently attributes all of it to one. σ may be the wrong *scale* — the
+reading §6.2 gives — or the error distribution may be heavier-tailed than Gaussian, in which case
+part of the shortfall is a property of the distribution and would persist under a perfectly scaled
+σ. These have different consequences: the first is a calibration defect, the second means 68.27% is
+the wrong target and every coverage figure in the paper is being read against a nominal it should
+not be read against.
+
+**The test.** For each model and each horizon, rescale the predicted σ by a **single constant**
+`c` chosen so that `mean|error| / mean(c·σ)` equals **√(2/π) = 0.7979**, the value a calibrated
+Gaussian gives (§3.1). Since ρ is a ratio of means (§3.1), `c = ρ / 0.7979` in closed form. Then
+measure ±1σ and ±2σ coverage under `c·σ`. One pass over the stored errors, no fitting and no search.
+
+**The decomposition is fixed before the run**, because "how much of the shortfall" is otherwise a
+quantity chosen after seeing the answer. Writing `cov_obs` for the observed coverage and `cov_orc`
+for the oracle-rescaled coverage:
+
+- total shortfall = `68.27 − cov_obs`
+- the part attributable to **distributional shape** = `68.27 − cov_orc`
+- the part attributable to **scale** = `cov_orc − cov_obs`
+
+The two parts sum to the total by construction.
+
+**Thresholds, committed in advance.** All three branches are named now so that none is chosen
+afterwards:
+
+- **GAUSSIAN NOMINAL ADEQUATE** — oracle-rescaled ±1σ coverage lands within **5 percentage points**
+  of 68.27%, i.e. in [63.27, 73.27]. The paper defends the nominal in one sentence and every
+  coverage figure stands as read.
+- **HEAVY-TAILED** — oracle-rescaled coverage lands **below 63.27%**. The paper reports how many
+  points of the shortfall the shape accounts for, under the decomposition above, and every coverage
+  figure is read against the **empirical** target rather than 68.27%.
+- **OVER-DISPERSED** — oracle-rescaled coverage lands **above 73.27%**. Reported as returned; the
+  nominal is still wrong, in the opposite direction, and the same decomposition is printed.
+
+The verdict is returned **per model and per horizon**, not pooled, and where models or horizons
+disagree that is reported rather than summarised into one word.
+
+**Minimum detectable effect: this rule has none in the sampling sense, and that is a property of the
+test.** `c` is determined exactly by the data as a ratio of two means, and the resulting coverage is
+a deterministic function of the stored errors — there is no estimator here whose power could be
+computed. The only sampling uncertainty is the cluster bootstrap on the resulting coverage, which
+inherits its arena's `n_independent`: 20 for the released checkpoint, 4 for our own arms, with the
+quantisation `M-63` tabulates applying unchanged.
+
+**What this rule cannot establish, stated before the run.** The oracle constant is fitted and
+evaluated on the *same* data, deliberately. That makes it an **upper bound** on what any constant
+rescale could achieve, which is what gives the negative branch its force: if coverage is still far
+short when σ is scaled as well as any constant could scale it, no constant rescaling — and
+therefore no `λ` — repairs it. **The positive branch is correspondingly weak and must not be
+over-read**: an adequate oracle-rescaled coverage does *not* show that a transferable constant
+exists, and §6.8 already establishes that a constant multiplier fails across horizons while a
+per-horizon one succeeds. A GAUSSIAN NOMINAL ADEQUATE verdict licenses the 68.27% target and
+nothing further.
+
+**Evidence** `RUN` `results/m65_gaussian_nominal.json`
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
 ### D-30 — The review queue had more than doubled and every document still said 89 · **NEW**
 **What happened.** `results/task_c1_claims_audit.json` was committed at 324 claims with **89**
 unreviewed. Against the paper as it now stands it is **412 claims with 191 unreviewed**. The

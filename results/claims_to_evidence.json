@@ -2941,6 +2941,66 @@
       "retracts": []
     },
     {
+      "id": "M-62",
+      "claim": "Pre-registered: does any headline verdict change when the bootstrap resamples episodes r",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/a2_trajectory_level_control.json",
+        "results/m62_episode_clustering.json",
+        "results/r2_independent_ensemble.json",
+        "results/task1_calibration.json",
+        "results/task_d3_perhorizon.json",
+        "results/task_d_nind20.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-63",
+      "claim": "Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or c",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/m63_per_dimension_coverage.json",
+        "results/task_d3_ens5.json",
+        "results/task_d_nind20.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-64",
+      "claim": "Pre-registered: does the horizon-scoped power increase from shorter evaluation units cha",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/m64_short_units.json"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-65",
+      "claim": "Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distributi",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json"
+      ],
+      "retracts": []
+    },
+    {
       "id": "D-30",
       "claim": "The review queue had more than doubled and every document still said 89",
       "relevance": "",
@@ -3028,7 +3088,7 @@
     "B": 5,
     "C": 15,
     "D": 35,
-    "M": 61,
+    "M": 65,
     "O": 14,
     "R": 73,
     "S": 19,
