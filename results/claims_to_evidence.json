@@ -2939,12 +2939,26 @@
         "scripts/e5_synthetic_sigma.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-30",
+      "claim": "The review queue had more than doubled and every document still said 89",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/c1_review_queue.json",
+        "results/task_c1_claims_audit.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 29,
+    "D": 30,
     "M": 61,
     "O": 14,
     "R": 73,

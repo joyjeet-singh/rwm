@@ -22,8 +22,8 @@
       "why": "h = 100 entered the evaluation grid. Every calibration extremum, every \"at the deployment horizon\" figure and every per-horizon cell count moved."
     }
   ],
-  "n_sentences": 360,
-  "n_tier0": 86,
+  "n_sentences": 358,
+  "n_tier0": 85,
   "n_tier0_with_values": 43,
   "tier0": [
     {
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "line": 675,
+      "line": 682,
       "n_lines": 1,
       "text": "The state loss is squared error on a *sample* drawn from the predicted Gaussian, not a likelihood:",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "line": 679,
+      "line": 686,
       "n_lines": 4,
       "text": "which is minimised at \u03c3 = 0 for any \u03bc. There is no log-\u03c3 term to oppose it. The bound term that appears to oppose it does not, because `max_logstd` is not an independent parameter \u2014 it is constructed as `min_logstd + exp",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -131,7 +131,7 @@
       ]
     },
     {
-      "line": 685,
+      "line": 692,
       "n_lines": 2,
       "text": "and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval closes onto therefore freezes while the interval closes: a one-way ratchet.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "line": 1069,
+      "line": 1122,
       "n_lines": 3,
       "text": "One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon, \u03c3 is flat while error gro",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -157,7 +157,7 @@
       ]
     },
     {
-      "line": 1073,
+      "line": 1126,
       "n_lines": 7,
       "text": "| model | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A | {{sig_faithA_growth}}\u00d7 | {{err_faithA_growth}}\u00d7 | | corrected Arm A | {{sig_nll_growth}}\u00d7 | {{err_nll_growth}}\u00d7 | | teacher-for",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -170,7 +170,7 @@
       ]
     },
     {
-      "line": 1080,
+      "line": 1133,
       "n_lines": 3,
       "text": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7. The coverage collapse in Figure 1(b) is therefore driven entirely by growing error against a fixed \u03c3.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -183,7 +183,7 @@
       ]
     },
     {
-      "line": 1313,
+      "line": 1366,
       "n_lines": 3,
       "text": "**One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait is a single trot throughout. \"Generalisation\" here means across velocity commands, not across gaits or terrain.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -196,7 +196,7 @@
       ]
     },
     {
-      "line": 1447,
+      "line": 1496,
       "n_lines": 1,
       "text": "What every downstream number rests on. Each level was passed before the next was attempted.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -222,7 +222,7 @@
       ]
     },
     {
-      "line": 1202,
+      "line": 1255,
       "n_lines": 5,
       "text": "Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost_pct}}%. The bootstrap interval on duplicated \u2212 clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero. So th",
       "sha": "090e87c3441b1afdbbc861036cd2dc78b68df07f",
@@ -235,7 +235,7 @@
       ]
     },
     {
-      "line": 1220,
+      "line": 1273,
       "n_lines": 3,
       "text": "what is now measured is that the physically-impossible-transition component costs nothing detectable at this rate.**",
       "sha": "090e87c3441b1afdbbc861036cd2dc78b68df07f",
@@ -248,7 +248,7 @@
       ]
     },
     {
-      "line": 495,
+      "line": 502,
       "n_lines": 2,
       "text": "**What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.",
       "sha": "2a57bef8fccc21b73c0d2b9c1299eddb3a420b98",
@@ -261,7 +261,7 @@
       ]
     },
     {
-      "line": 501,
+      "line": 508,
       "n_lines": 5,
       "text": "The pattern is consistent across the design. Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells \u2014 both trajectory lengths crossed with",
       "sha": "2a57bef8fccc21b73c0d2b9c1299eddb3a420b98",
@@ -274,7 +274,7 @@
       ]
     },
     {
-      "line": 1449,
+      "line": 1498,
       "n_lines": 9,
       "text": "| level | claim | result | |---|---|---| | shapes | parameter counts match the reference | exact | | wiring | inference outputs match the reference module | **{{wiring_max_diff}}**, bitwise | | indexing | the harness fee",
       "sha": "2a57bef8fccc21b73c0d2b9c1299eddb3a420b98",
@@ -287,7 +287,7 @@
       ]
     },
     {
-      "line": 677,
+      "line": 684,
       "n_lines": 2,
       "text": "$$\\mathcal{L} \\;=\\; \\mathbb{E}\\big[(\\mu + \\sigma\\varepsilon - y)^2\\big] \\;=\\; (\\mu - y)^2 + \\sigma^2$$",
       "sha": "5e6b20dc8ffaf0e201d102a8e338a9fd28c162fe",
@@ -300,7 +300,7 @@
       ]
     },
     {
-      "line": 683,
+      "line": 690,
       "n_lines": 2,
       "text": "$$\\overline{\\log\\sigma_{\\max}} - \\overline{\\log\\sigma_{\\min}} \\;=\\; \\overline{\\exp(\\log\\Delta_{\\log\\sigma})}$$",
       "sha": "5e6b20dc8ffaf0e201d102a8e338a9fd28c162fe",
@@ -313,7 +313,7 @@
       ]
     },
     {
-      "line": 1460,
+      "line": 1509,
       "n_lines": 5,
       "text": "./setup.sh # clone upstreams at pinned commits python3.11 -m venv .venv && . .venv/bin/activate pip install -r requirements.txt ./reproduce.sh --quick --force # everything except training",
       "sha": "5e6b20dc8ffaf0e201d102a8e338a9fd28c162fe",
@@ -326,7 +326,7 @@
       ]
     },
     {
-      "line": 528,
+      "line": 535,
       "n_lines": 2,
       "text": "The released checkpoint emits **two** uncertainty quantities, and the method consumes only one of them. This has to be settled before any calibration number means anything.",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -339,7 +339,7 @@
       ]
     },
     {
-      "line": 531,
+      "line": 538,
       "n_lines": 5,
       "text": "`system_dynamics.py:125` computes an **aleatoric** term, the mean over ensemble members of each member's predicted \u03c3. `system_dynamics.py:126` computes an **epistemic** term, the standard deviation across the members' me",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -352,7 +352,7 @@
       ]
     },
     {
-      "line": 667,
+      "line": 674,
       "n_lines": 2,
       "text": "This subsection explains the aleatoric column and only that column. Ensemble disagreement is not shaped by the mechanism below, and why *it* is miscalibrated is not established here.",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -365,7 +365,7 @@
       ]
     },
     {
-      "line": 865,
+      "line": 903,
       "n_lines": 2,
       "text": "**The failure is specifically magnitude calibration, in both components.**",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -378,7 +378,7 @@
       ]
     },
     {
-      "line": 1364,
+      "line": 1419,
       "n_lines": 2,
       "text": "The Robotic World Model's central training claim reproduces, and the margin is large. Neither uncertainty output of the follow-up that adds them reports what a reader would take it to report.",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -391,7 +391,7 @@
       ]
     },
     {
-      "line": 1376,
+      "line": 1431,
       "n_lines": 5,
       "text": "The full repository \u2014 code, every artifact under `results/`, and `FINDINGS_LEDGER.md` with the complete claim record including the retractions \u2014 accompanies this submission as anonymised supplementary material, and will ",
       "sha": "9919c4cd80dd75ca5001753804d770837787a28c",
@@ -417,7 +417,7 @@
       ]
     },
     {
-      "line": 1194,
+      "line": 1247,
       "n_lines": 7,
       "text": "The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training episodes",
       "sha": "31204e5aa12bc8c02fb524bf46c300a6340fa77c",
@@ -456,7 +456,7 @@
       ]
     },
     {
-      "line": 1038,
+      "line": 1091,
       "n_lines": 4,
       "text": "If \u03c3 had the right shape and the wrong scale, a single multiplier would repair it, and the finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on **one** held-out episode and eval",
       "sha": "1ea95d6600ad425404fb66fe1db31244f87d0d97",
@@ -469,7 +469,7 @@
       ]
     },
     {
-      "line": 1043,
+      "line": 1096,
       "n_lines": 8,
       "text": "Fitting at one step works at one step and nowhere else. On the epistemic term \u2014 the quantity the method uses \u2014 a scalar of {{d2_epi_c_lo}}\u2013{{d2_epi_c_hi}} brings h=1 coverage to {{d2_epi_cov1_lo}}\u2013{{d2_epi_cov1_hi}}%, es",
       "sha": "1ea95d6600ad425404fb66fe1db31244f87d0d97",
@@ -482,7 +482,7 @@
       ]
     },
     {
-      "line": 562,
+      "line": 569,
       "n_lines": 2,
       "text": "Our own arms are ensemble size 1, where the epistemic term is identically zero by construction, so the epistemic measurement is possible only on the released checkpoint.",
       "sha": "6923fe9208026f808deecbc7e3f640b31817d967",
@@ -495,7 +495,7 @@
       ]
     },
     {
-      "line": 844,
+      "line": 882,
       "n_lines": 1,
       "text": "So \u03c3 *collapsing in magnitude* is objective-driven, and \u03c3 *becoming input-independent* is not.",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -508,7 +508,7 @@
       ]
     },
     {
-      "line": 845,
+      "line": 883,
       "n_lines": 5,
       "text": "The teacher-forced arm collapses in magnitude exactly like the autoregressive ones \u2014 same objective, same rate \u2014 while retaining {{cal_armB_over_faithA_cov}}\u00d7 more variation across inputs. Input-independence is a propert",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -521,7 +521,7 @@
       ]
     },
     {
-      "line": 851,
+      "line": 889,
       "n_lines": 3,
       "text": "One candidate mechanism, stated as a hypothesis and not a result: autoregressive feedback narrows the input distribution toward the model's own manifold, leaving a heteroscedastic head less variation to key on. We have n",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -534,7 +534,7 @@
       ]
     },
     {
-      "line": 1208,
+      "line": 1261,
       "n_lines": 4,
       "text": "In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory lengths \u00d7 two checkpoints \u00d7 two horizons \u00d7 two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_h",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -547,7 +547,7 @@
       ]
     },
     {
-      "line": 1213,
+      "line": 1266,
       "n_lines": 7,
       "text": "**\"Costs nothing\" is the wrong summary, and we should not use it.** Splicing raises training loss by {{contam_cost_pct}}% against duplication's {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -560,7 +560,7 @@
       ]
     },
     {
-      "line": 1277,
+      "line": 1330,
       "n_lines": 4,
       "text": "**Anchor a decision rule to the horizon the claim is about.** Our first pre-registered rule was anchored at h = 8, the training forecast horizon, and returned \"cannot be settled\". The claim was about deployment horizons.",
       "sha": "5433deb768f7ff3845326f31c7557d45ae637fc7",
@@ -573,7 +573,7 @@
       ]
     },
     {
-      "line": 1290,
+      "line": 1343,
       "n_lines": 2,
       "text": "This is a reproduction of a dynamics model on public simulation data, and the reproduction itself carries no significant risk of harm: no new capability, no personal data, no deployment.",
       "sha": "5433deb768f7ff3845326f31c7557d45ae637fc7",
@@ -598,7 +598,7 @@
       ]
     },
     {
-      "line": 748,
+      "line": 774,
       "n_lines": 2,
       "text": "Figure 3(b) plots only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted statistic describe the same set.",
       "sha": "92552717063400bb6be6f4bf4b6400a9f622619e",
@@ -610,7 +610,7 @@
       ]
     },
     {
-      "line": 751,
+      "line": 777,
       "n_lines": 1,
       "text": "The {{run_total}} runs, so a reader can count them:",
       "sha": "92552717063400bb6be6f4bf4b6400a9f622619e",
@@ -634,7 +634,7 @@
       ]
     },
     {
-      "line": 663,
+      "line": 670,
       "n_lines": 1,
       "text": "The scalar penalty as actually applied \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 correlates **{{d4_r}}** with total absolute error over the rollout, 95% CI {{d4_ci}} from a bootstrap over whole trajectories, n_ind",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -646,7 +646,7 @@
       ]
     },
     {
-      "line": 743,
+      "line": 769,
       "n_lines": 5,
       "text": "We predicted the collapse from this algebra before training, then observed it. Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a). Rates are fitted on {{e2_f",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -658,7 +658,7 @@
       ]
     },
     {
-      "line": 838,
+      "line": 876,
       "n_lines": 1,
       "text": "Arm B's \u03c3 is {{cal_armB_over_faithA_cov}}\u00d7 more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = {{cal_armB_r}}). It is still {{cal_armB_ratio}}\u00d7 overconfident.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -670,7 +670,7 @@
       ]
     },
     {
-      "line": 840,
+      "line": 878,
       "n_lines": 1,
       "text": "**The P column above is not a binomial one, and an earlier draft of this paper was wrong to make it one.** Converting a count of positive per-dimension correlations to a P-value against a fair-coin null assumes the 45 st",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -682,7 +682,7 @@
       ]
     },
     {
-      "line": 861,
+      "line": 899,
       "n_lines": 1,
       "text": "**Nothing here survives multiplicity correction, in any of the three arenas.** Holm\u2013Bonferroni over each arena's {{perm_oos_holm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_i",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -694,7 +694,7 @@
       ]
     },
     {
-      "line": 863,
+      "line": 901,
       "n_lines": 2,
       "text": "So the honest form of this section's claim is narrower than the one we first wrote. **The magnitude failure is established and large; the ordering is directionally consistent across every model and horizon we measured, a",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -706,7 +706,7 @@
       ]
     },
     {
-      "line": 871,
+      "line": 909,
       "n_lines": 1,
       "text": "Error in an autoregressive rollout grows with depth. So the trivial competitor to any trust metric is the forecast step index \u2014 a counter. It needs no ensemble, no second forward pass and no model. If a counter ranks err",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -718,7 +718,7 @@
       ]
     },
     {
-      "line": 873,
+      "line": 911,
       "n_lines": 1,
       "text": "All three correlations below are on the scalar quantity the method actually applies \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 against total absolute error, over n_independent = {{d1n_nind}} trajectories, with 95% ",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -730,7 +730,7 @@
       ]
     },
     {
-      "line": 1056,
+      "line": 1109,
       "n_lines": 5,
       "text": "| quantity | held-out cells within {{d3_tol}} points of {{d3_target}}%, per-horizon c | same, constant c | range of fitted c | |---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / ",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -742,7 +742,7 @@
       ]
     },
     {
-      "line": 1065,
+      "line": 1118,
       "n_lines": 2,
       "text": "So the accurate form of this section is: **a constant scalar does not repair the interval; a per-horizon one does, and transfers across episodes.**",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -754,7 +754,7 @@
       ]
     },
     {
-      "line": 1262,
+      "line": 1315,
       "n_lines": 1,
       "text": "{{n_lessons_word}} things a practitioner can apply without reading the rest of this paper.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -766,7 +766,7 @@
       ]
     },
     {
-      "line": 1358,
+      "line": 1413,
       "n_lines": 1,
       "text": "**We did not reproduce the policy-learning results** of either paper. This is a dynamics-model reproduction only.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -778,7 +778,7 @@
       ]
     },
     {
-      "line": 1465,
+      "line": 1514,
       "n_lines": 1,
       "text": "`--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -790,7 +790,7 @@
       ]
     },
     {
-      "line": 894,
+      "line": 932,
       "n_lines": 1,
       "text": "**A linear control is not much of a control, so we tested four harder ones.** Error does not grow linearly with rollout depth, and a control that under-fits the index leaves index-driven variance in the residual and flat",
       "sha": "e2d7d091746abe4d2865625f3df4b514de5c421e",
@@ -802,7 +802,7 @@
       ]
     },
     {
-      "line": 1054,
+      "line": 1107,
       "n_lines": 1,
       "text": "**A per-horizon scalar does work, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever ",
       "sha": "7e74cf64913dca652b7ab3b624243c850d11087f",
@@ -814,7 +814,7 @@
       ]
     },
     {
-      "line": 884,
+      "line": 922,
       "n_lines": 2,
       "text": "*(h=1 has a single forecast step, so the index is constant and its correlation \u2014 and therefore the partial and the difference \u2014 undefined. The epistemic correlation is not, and it is the largest anywhere in this work: at",
       "sha": "22122e2bca9a37791591fed8cd900b372171e502",
@@ -826,7 +826,7 @@
       ]
     },
     {
-      "line": 888,
+      "line": 926,
       "n_lines": 1,
       "text": "**The last column answers the first question \u2014 does disagreement beat the counter \u2014 and it is not the test a reader might expect.** Comparing the two marginal intervals for overlap is the wrong comparison here: both corr",
       "sha": "6d4f80bb3602e475e75fc2797da138e6d7be1135",
@@ -838,7 +838,7 @@
       ]
     },
     {
-      "line": 892,
+      "line": 930,
       "n_lines": 1,
       "text": "**The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_",
       "sha": "6d4f80bb3602e475e75fc2797da138e6d7be1135",
@@ -850,7 +850,7 @@
       ]
     },
     {
-      "line": 765,
+      "line": 791,
       "n_lines": 2,
       "text": "Under the corrected objective the sign flips (Figure 3b) \u2014 which is the strongest evidence that the mechanism is the objective and not the optimiser, the data or the architecture.",
       "sha": "7b8696661dcc7215e285366114618c76fb265f13",
@@ -862,7 +862,7 @@
       ]
     },
     {
-      "line": 1245,
+      "line": 1298,
       "n_lines": 1,
       "text": "**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -874,7 +874,7 @@
       ]
     },
     {
-      "line": 1251,
+      "line": 1304,
       "n_lines": 1,
       "text": "**A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appea",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -886,7 +886,7 @@
       ]
     },
     {
-      "line": 1469,
+      "line": 1527,
       "n_lines": 2,
       "text": "{{FIGURES}}",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -898,7 +898,7 @@
       ]
     },
     {
-      "line": 1495,
+      "line": 1553,
       "n_lines": 2,
       "text": "`build_paper.py` asserts that every printed number came from a named artifact. That is a guarantee about *provenance*, and it is silent about *relations between* provenanced numbers.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -910,7 +910,7 @@
       ]
     },
     {
-      "line": 1512,
+      "line": 1570,
       "n_lines": 2,
       "text": "- **a stated change with the wrong sign** \u2014 \"a change of **+**0.010\", where partialling the forecast index out *reduces* the correlation;",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -922,7 +922,7 @@
       ]
     },
     {
-      "line": 1517,
+      "line": 1575,
       "n_lines": 2,
       "text": "- **a count attributed to the wrong evaluation arena** \u2014 0 of 45 over all ten episodes asserted where the table beside it printed the held-out arena's 20 of 45.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -934,7 +934,7 @@
       ]
     },
     {
-      "line": 1520,
+      "line": 1578,
       "n_lines": 1,
       "text": "None is a numeral. None appears in `results/paper_numbers.json`. Each was typed.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -946,7 +946,7 @@
       ]
     },
     {
-      "line": 1541,
+      "line": 1599,
       "n_lines": 4,
       "text": "Each entry pins two things and requires both: a **fragment of the paper's own text**, so that rewording a sentence fails the check rather than silently detaching it from the claim it guards, and a **relation recomputed f",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -958,7 +958,7 @@
       ]
     },
     {
-      "line": 1546,
+      "line": 1604,
       "n_lines": 5,
       "text": "**The self-test.** Every assertion is run against a deliberately corrupted expectation on each build and must fail: the interval relation inverted, the extremum replaced by the *runner-up* rather than an absent label, th",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -970,7 +970,7 @@
       ]
     },
     {
-      "line": 1563,
+      "line": 1621,
       "n_lines": 2,
       "text": "**Two exclusions from the numeric comparison**, on the same principle in both cases: the number measures the machine, not the model.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -982,7 +982,7 @@
       ]
     },
     {
-      "line": 1566,
+      "line": 1624,
       "n_lines": 7,
       "text": "*The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` \u2014 projected runtimes for configurations we did not run, peak resident memory, and the standard deviation acro",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -994,7 +994,7 @@
       ]
     },
     {
-      "line": 1574,
+      "line": 1632,
       "n_lines": 6,
       "text": "*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on every machine \u2014 three different v",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -1006,7 +1006,7 @@
       ]
     },
     {
-      "line": 1580,
+      "line": 1638,
       "n_lines": 3,
       "text": "Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact \u2014 a run that stopped short of its own cap was time-bounded.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -1018,7 +1018,7 @@
       ]
     },
     {
-      "line": 1584,
+      "line": 1642,
       "n_lines": 6,
       "text": "**Excluding a file is not sufficient on its own.** `results/paper_numbers.json` records the *source* of every value it holds, and it had copied that diagnostic's iteration count into a key of its own \u2014 so the host-depend",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -1030,7 +1030,7 @@
       ]
     },
     {
-      "line": 507,
+      "line": 514,
       "n_lines": 4,
       "text": "**Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leaving it to a reader. All {{c3_bonf_excl}} of {{c3_long}} still exclude",
       "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
@@ -1042,7 +1042,7 @@
       ]
     },
     {
-      "line": 514,
+      "line": 521,
       "n_lines": 1,
       "text": "The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). We cannot test it \u2014",
       "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
@@ -1054,7 +1054,7 @@
       ]
     },
     {
-      "line": 520,
+      "line": 527,
       "n_lines": 1,
       "text": "**Three limits, in the same breath.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning and which we do not touch. It says nothing about whether a policy trained inside ou",
       "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
@@ -1066,19 +1066,7 @@
       ]
     },
     {
-      "line": 1726,
-      "n_lines": 5,
-      "text": "**Everything below needs what this reproduction did not have: a simulator.** Our arms train on the released CSV, which is a recording. Every untested claim needs *interaction* \u2014 a policy acting in an environment and the ",
-      "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
-      "ts": 1787436313,
-      "subject": "Part C: scope in the abstract, the data budget computed, and what a follow-up costs",
-      "has_placeholder": false,
-      "stale_for": [
-        "h100-grid"
-      ]
-    },
-    {
-      "line": 753,
+      "line": 779,
       "n_lines": 4,
       "text": "| arm | iterations | ensemble | objective | dataset | seeds | seed ids | |---|---|---|---|---|---|---| {{run_table}}",
       "sha": "cdac035a7237912ff83fa705e164ddc7d070abc0",
@@ -1090,7 +1078,7 @@
       ]
     },
     {
-      "line": 983,
+      "line": 1021,
       "n_lines": 1,
       "text": "*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}}, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}",
       "sha": "cdac035a7237912ff83fa705e164ddc7d070abc0",
@@ -1157,9 +1145,9 @@
       "line": 33,
       "n_lines": 4,
       "text": "**Two defects are repairable.** A per-horizon multiplier, fitted on one held-out episode and scored on the other, restores nominal coverage on every held-out cell; and the released evaluation pairs each state with the pr",
-      "sha": "0000000000000000000000000000000000000000",
-      "ts": 1788021250,
-      "subject": "Version of PAPER.template.md from PAPER.template.md",
+      "sha": "9f3769d5c79cd917921e06b01e75ec1ccf1bafba",
+      "ts": 1788021328,
+      "subject": "D-20 to D-23: four defects an adversarial audit found and the checks did not",
       "has_placeholder": true,
       "stale_for": []
     },
@@ -1167,9 +1155,9 @@
       "line": 38,
       "n_lines": 4,
       "text": "Every **measurement** here is substituted from a named artifact; the {{tn_typed}} numerals that are not are addresses, horizon labels or declared constants, classified one by one by a build that fails on anything else. {",
-      "sha": "0000000000000000000000000000000000000000",
-      "ts": 1788021250,
-      "subject": "Version of PAPER.template.md from PAPER.template.md",
+      "sha": "9f3769d5c79cd917921e06b01e75ec1ccf1bafba",
+      "ts": 1788021328,
+      "subject": "D-20 to D-23: four defects an adversarial audit found and the checks did not",
       "has_placeholder": true,
       "stale_for": []
     },
@@ -1235,11 +1223,11 @@
     {
       "line": 73,
       "n_lines": 1,
-      "text": "**We retract our own findings when they fail.** {{n_retract_total}} claims of ours are withdrawn on this project's own evidence and kept in the record; \u00a78 and Appendix D give them in full.",
-      "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
-      "ts": 1787992110,
-      "subject": "D1, D5, D6: \u00a78 becomes a paragraph, the title stops promising a reveal",
-      "has_placeholder": true,
+      "text": "**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; \u00a78 and Appendix D give them in full. The count is in the contributions below, once.",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
       "stale_for": []
     },
     {
@@ -1516,9 +1504,9 @@
       "line": 221,
       "n_lines": 5,
       "text": "**And the objective in \u00a76.3 has a neighbour.** Seitzer, Tavakoli, Antic and Martius (ICLR 2022) identify failure modes of heteroscedastic \u03c3 heads trained by maximising log-likelihood. The released model's state loss is n",
-      "sha": "e094c3b5b06c67e042b53528368b782961369002",
-      "ts": 1787990891,
-      "subject": "C2, C3, D2-D4, E3, E4: cohorts, the checklist, Appendix G, and what the",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
       "has_placeholder": false,
       "stale_for": []
     },
@@ -1795,9 +1783,9 @@
       "line": 335,
       "n_lines": 9,
       "text": "**Which metric each headline uses.** The A/B training claim (\u00a75) is relative-L1, because the claim is about reproducing the upstream's comparison and that is the upstream's metric. The calibration claims (\u00a76.2) are the o",
-      "sha": "0000000000000000000000000000000000000000",
-      "ts": 1788021250,
-      "subject": "Version of PAPER.template.md from PAPER.template.md",
+      "sha": "9f3769d5c79cd917921e06b01e75ec1ccf1bafba",
+      "ts": 1788021328,
+      "subject": "D-20 to D-23: four defects an adversarial audit found and the checks did not",
       "has_placeholder": true,
       "stale_for": []
     },
@@ -2069,26 +2057,26 @@
     },
     {
       "line": 478,
-      "n_lines": 4,
-      "text": "but one trajectory carries {{a1_gap_traj_max_h368}} against a smallest of {{a1_gap_traj_min_h368}}, and no interval on four units shows a reader that. At h = {{v2_deploy_h}} the four are {{a1_gap_traj_h100}}. Wherever th",
-      "sha": "a100103125eec22577e69941ee853705d28cbb7b",
-      "ts": 1787991788,
-      "subject": "E1, E8, and six analyses the pipeline never ran",
+      "n_lines": 3,
+      "text": "but one trajectory carries {{a1_gap_traj_max_h368}} against a smallest of {{a1_gap_traj_min_h368}}, and no interval on four units shows a reader that. At h = {{v2_deploy_h}} the four are {{a1_gap_traj_h100}}.",
+      "sha": "0b31442996e7040a0713e16fc5786a8573242283",
+      "ts": 1788022140,
+      "subject": "D-24: E8's own sentence claimed something about five artifacts that was false",
       "has_placeholder": true,
       "stale_for": []
     },
     {
       "line": 482,
-      "n_lines": 1,
-      "text": "these two are printed here because \u00a75 is where the reader meets the design.",
-      "sha": "a100103125eec22577e69941ee853705d28cbb7b",
-      "ts": 1787991788,
-      "subject": "E1, E8, and six analyses the pipeline never ran",
-      "has_placeholder": false,
+      "n_lines": 8,
+      "text": "The same is done for the other comparison this paper makes at n_independent = {{m23_nind}}: \u00a76.10 and \u00a711's paired contrasts carry their four per-trajectory ratios and coverage differences in `results/r2_independent_ense",
+      "sha": "0b31442996e7040a0713e16fc5786a8573242283",
+      "ts": 1788022140,
+      "subject": "D-24: E8's own sentence claimed something about five artifacts that was false",
+      "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 484,
+      "line": 491,
       "n_lines": 10,
       "text": "*Against a baseline, because neither number means anything without one.* The hold-last floor \u2014 predicting that nothing changes \u2014 scores **{{a1_floor_h368}}** in the same h = {{v2_diag_h}} cell, and autoregressive trainin",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -2098,7 +2086,7 @@
       "stale_for": []
     },
     {
-      "line": 495,
+      "line": 502,
       "n_lines": 2,
       "text": "**What does not hold, and we say so.** At h = 8 \u2014 the horizon the model is trained on \u2014 the same comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.",
       "sha": "2a57bef8fccc21b73c0d2b9c1299eddb3a420b98",
@@ -2111,7 +2099,7 @@
       ]
     },
     {
-      "line": 497,
+      "line": 504,
       "n_lines": 3,
       "text": "The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored at h = 8, returned \"cannot be settled\"; anchoring a rule to the horizon the claim is actually about was a correction we had to make in advance",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -2121,7 +2109,7 @@
       "stale_for": []
     },
     {
-      "line": 501,
+      "line": 508,
       "n_lines": 5,
       "text": "The pattern is consistent across the design. Under the correct cluster bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells \u2014 both trajectory lengths crossed with",
       "sha": "2a57bef8fccc21b73c0d2b9c1299eddb3a420b98",
@@ -2134,7 +2122,7 @@
       ]
     },
     {
-      "line": 507,
+      "line": 514,
       "n_lines": 4,
       "text": "**Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons, so we state the correction rather than leaving it to a reader. All {{c3_bonf_excl}} of {{c3_long}} still exclude",
       "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
@@ -2146,7 +2134,7 @@
       ]
     },
     {
-      "line": 514,
+      "line": 521,
       "n_lines": 1,
       "text": "The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). We cannot test it \u2014",
       "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
@@ -2158,7 +2146,7 @@
       ]
     },
     {
-      "line": 516,
+      "line": 523,
       "n_lines": 1,
       "text": "**Our arms consume {{c2_trans}} distinct state transitions.** That is the {{c2_rows}} rows of the eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecutive pair of ro",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -2168,7 +2156,7 @@
       "stale_for": []
     },
     {
-      "line": 518,
+      "line": 525,
       "n_lines": 1,
       "text": "A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the autoregressive-versus-teacher-forcing result \u2014 {{d1_ratio}}\u00d7 at h = {{v2_diag_h}} and {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} \u2014 and s",
       "sha": "39ac8a1225135c7210a6cb7a28cffc4f66384722",
@@ -2178,7 +2166,7 @@
       "stale_for": []
     },
     {
-      "line": 520,
+      "line": 527,
       "n_lines": 1,
       "text": "**Three limits, in the same breath.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning and which we do not touch. It says nothing about whether a policy trained inside ou",
       "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
@@ -2190,7 +2178,7 @@
       ]
     },
     {
-      "line": 528,
+      "line": 535,
       "n_lines": 2,
       "text": "The released checkpoint emits **two** uncertainty quantities, and the method consumes only one of them. This has to be settled before any calibration number means anything.",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -2203,7 +2191,7 @@
       ]
     },
     {
-      "line": 531,
+      "line": 538,
       "n_lines": 5,
       "text": "`system_dynamics.py:125` computes an **aleatoric** term, the mean over ensemble members of each member's predicted \u03c3. `system_dynamics.py:126` computes an **epistemic** term, the standard deviation across the members' me",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -2216,7 +2204,7 @@
       ]
     },
     {
-      "line": 537,
+      "line": 544,
       "n_lines": 5,
       "text": "The paper agrees with its code. arXiv:2504.16680**v1** Eq. 4 defines the penalised quantity as \u2014 the numbering is unchanged in the current {{v4_current}} \u2014 $u = \\mathrm{Var}_b[\\mu_b]$, the variance across ensemble member",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2226,7 +2214,7 @@
       "stale_for": []
     },
     {
-      "line": 543,
+      "line": 550,
       "n_lines": 7,
       "text": "Eq. 4 specifies a **variance** while `system_dynamics.py:126` computes a **standard deviation**, which with $\\lambda = 1$ differ by a square. We asked, and the first author confirms the code is operative: the penalty is ",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2236,7 +2224,7 @@
       "stale_for": []
     },
     {
-      "line": 551,
+      "line": 558,
       "n_lines": 8,
       "text": "The same correspondence confirms the discard directly: \"the aleatoric term is not used in downstream training. It is reported in Fig. 3 (right) as an analysis of the model behavior.\" (The figure number is the first autho",
       "sha": "67fb71fa766633551d89e78b3b105759f024baa1",
@@ -2246,7 +2234,7 @@
       "stale_for": []
     },
     {
-      "line": 560,
+      "line": 567,
       "n_lines": 2,
       "text": "So the aleatoric head \u2014 the one the state loss and the bound loss shape, and the one \u00a76.3 explains \u2014 is computed on every imagination step and discarded. We report both quantities below.",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2256,7 +2244,7 @@
       "stale_for": []
     },
     {
-      "line": 562,
+      "line": 569,
       "n_lines": 2,
       "text": "Our own arms are ensemble size 1, where the epistemic term is identically zero by construction, so the epistemic measurement is possible only on the released checkpoint.",
       "sha": "6923fe9208026f808deecbc7e3f640b31817d967",
@@ -2269,7 +2257,7 @@
       ]
     },
     {
-      "line": 565,
+      "line": 572,
       "n_lines": 9,
       "text": "**What the follow-up does and does not claim, stated before we measure anything.** It does not claim its uncertainty is a calibrated interval. The follow-up's \u00a75.1 claims the epistemic term \"closely follows the trend of ",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2279,7 +2267,7 @@
       "stale_for": []
     },
     {
-      "line": 577,
+      "line": 584,
       "n_lines": 2,
       "text": "For each model we compute the mean predicted \u03c3, the mean absolute realised error, and the fraction of realised errors falling inside \u00b11\u03c3. A calibrated Gaussian puts {{v3_cov_nominal1}}% inside \u00b11\u03c3 (\u00a73.1).",
       "sha": "475a08101f3c0711848eb74865a05c556ff0ac96",
@@ -2289,7 +2277,7 @@
       "stale_for": []
     },
     {
-      "line": 580,
+      "line": 587,
       "n_lines": 7,
       "text": "| model | mean \\|error\\| / mean \u03c3, whole {{v2_diag_h}}-step rollout | coverage at \u00b11\u03c3, h=1 | coverage at \u00b11\u03c3, h={{v2_deploy_h}} | |---|---|---|---| | faithful Arm A (sampled MSE) | {{cal_faithA_ratio}}\u00d7 [{{cal_faithA_rat",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2299,7 +2287,7 @@
       "stale_for": []
     },
     {
-      "line": 587,
+      "line": 594,
       "n_lines": 2,
       "text": "*Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = {{b2_nind}}; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are n",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -2309,7 +2297,7 @@
       "stale_for": []
     },
     {
-      "line": 589,
+      "line": 596,
       "n_lines": 1,
       "text": "**All four rows are the held-out arena** \u2014 the two episodes withheld from our own arms, n_independent = {{b2_nind}} \u2014 because that is the only arena on which our arms can be scored fairly. On the aleatoric head every mod",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2319,7 +2307,7 @@
       "stale_for": []
     },
     {
-      "line": 591,
+      "line": 598,
       "n_lines": 8,
       "text": "*A note on the released checkpoint's row, so the next table does not read as a contradiction.* Its {{cal_rel_ratio}}\u00d7 is the whole {{v2_diag_h}}-step rollout on those same {{b2_nind}} trajectories, for comparability with",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -2329,7 +2317,7 @@
       "stale_for": []
     },
     {
-      "line": 600,
+      "line": 607,
       "n_lines": 1,
       "text": "**The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories. We use al",
       "sha": "475a08101f3c0711848eb74865a05c556ff0ac96",
@@ -2339,7 +2327,7 @@
       "stale_for": []
     },
     {
-      "line": 602,
+      "line": 609,
       "n_lines": 9,
       "text": "| h | aleatoric err/\u03c3 [95% CI] | aleatoric \u00b11\u03c3 | epistemic err/\u03c3 [95% CI] | epistemic \u00b11\u03c3 [95% CI] | epistemic \u00b12\u03c3 | dims r>0 | permutation P | |---|---|---|---|---|---|---|---| | 1 | {{d1n_alea_ratio_h1}}\u00d7 [{{d1n_alea_r",
       "sha": "6094253dbfad60658132cb795d1e919399d6c5a5",
@@ -2349,7 +2337,7 @@
       "stale_for": []
     },
     {
-      "line": 611,
+      "line": 618,
       "n_lines": 4,
       "text": "**Read the h = 1 row first.** At one step the disagreement the method penalises rewards with is already **{{d1n_epi_ratio_h1}}\u00d7 [{{d1n_epi_ratio_ci_h1}}]** smaller than realised error, with \u00b11\u03c3 coverage of {{d1n_epi_cov1",
       "sha": "a100103125eec22577e69941ee853705d28cbb7b",
@@ -2359,7 +2347,7 @@
       "stale_for": []
     },
     {
-      "line": 615,
+      "line": 622,
       "n_lines": 1,
       "text": "Everything further down the table is deterioration from a starting point that is already broken.",
       "sha": "a100103125eec22577e69941ee853705d28cbb7b",
@@ -2369,7 +2357,7 @@
       "stale_for": []
     },
     {
-      "line": 617,
+      "line": 624,
       "n_lines": 8,
       "text": "**Why that row and not the deep ones \u2014 the objection this section has to meet.** A reviewer will say: a per-step predicted \u03c3 is a *conditional* quantity. It answers \"given this input, how uncertain is the next state?\", a",
       "sha": "a100103125eec22577e69941ee853705d28cbb7b",
@@ -2379,7 +2367,7 @@
       "stale_for": []
     },
     {
-      "line": 626,
+      "line": 633,
       "n_lines": 5,
       "text": "**h = 1 answers it, and costs no new computation.** At one step there is no accumulation, no compounding and no mismatch: the input *is* the true state, the prediction is one step ahead, and \u03c3 is being asked exactly the ",
       "sha": "a100103125eec22577e69941ee853705d28cbb7b",
@@ -2389,7 +2377,7 @@
       "stale_for": []
     },
     {
-      "line": 632,
+      "line": 639,
       "n_lines": 4,
       "text": "So the horizon curve is not the claim; it is the shape of the deterioration, and the claim is the h = 1 row. We keep h = {{v2_deploy_h}} because it is where the method actually deploys, and h = {{v2_diag_h}} because it i",
       "sha": "a100103125eec22577e69941ee853705d28cbb7b",
@@ -2399,7 +2387,7 @@
       "stale_for": []
     },
     {
-      "line": 637,
+      "line": 644,
       "n_lines": 8,
       "text": "At h = {{v2_deploy_h}}, the method's own imagination rollout length, epistemic is {{d1n_epi_over_alea_h100}}\u00d7 better than aleatoric and still wrong by **{{d1n_epi_ratio_h100}}\u00d7 [{{d1n_epi_ratio_ci_h100}}]**, with \u00b11\u03c3 cov",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -2409,7 +2397,7 @@
       "stale_for": []
     },
     {
-      "line": 646,
+      "line": 653,
       "n_lines": 1,
       "text": "**The larger sample changes one thing materially, and it is a correction to our own earlier reading.** At n_independent = {{b2_nind}} the epistemic ordering looked like chance at short horizon \u2014 {{b2_epi_npos_h1}} of {{b",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2419,7 +2407,7 @@
       "stale_for": []
     },
     {
-      "line": 648,
+      "line": 655,
       "n_lines": 1,
       "text": "**The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (\u00a76.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}}) give, averaged over seeds:",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2429,7 +2417,7 @@
       "stale_for": []
     },
     {
-      "line": 650,
+      "line": 657,
       "n_lines": 9,
       "text": "| h | epistemic err/\u03c3 [95% CI] | \u00b11\u03c3 [95% CI] | \u00b12\u03c3 | dims r>0 | |---|---|---|---|---| | 1 | {{e5_ratio_h1}}\u00d7 [{{e5_ratio_ci_h1}}] | {{e5_cov1_h1}}% [{{e5_cov1_ci_h1}}] | {{e5_cov2_h1}}% | {{e5_npos_h1}}/45 | | 8 | {{e5_",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2439,7 +2427,7 @@
       "stale_for": []
     },
     {
-      "line": 659,
+      "line": 666,
       "n_lines": 1,
       "text": "Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} against its {{d1n_epi_ratio_h100}}\u00d7, with {{e5_cov1_h100}}% coverage where a ",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2449,7 +2437,7 @@
       "stale_for": []
     },
     {
-      "line": 661,
+      "line": 668,
       "n_lines": 1,
       "text": "The last column of the table above gives permutation P-values over whole trajectories, not binomial ones, computed on the same {{perm_all_nind}} trajectories as the counts beside them; \u00a76.6 explains why a binomial null i",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -2459,7 +2447,7 @@
       "stale_for": []
     },
     {
-      "line": 663,
+      "line": 670,
       "n_lines": 1,
       "text": "The scalar penalty as actually applied \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 correlates **{{d4_r}}** with total absolute error over the rollout, 95% CI {{d4_ci}} from a bootstrap over whole trajectories, n_ind",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -2471,7 +2459,7 @@
       ]
     },
     {
-      "line": 667,
+      "line": 674,
       "n_lines": 2,
       "text": "This subsection explains the aleatoric column and only that column. Ensemble disagreement is not shaped by the mechanism below, and why *it* is miscalibrated is not established here.",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -2484,7 +2472,7 @@
       ]
     },
     {
-      "line": 670,
+      "line": 677,
       "n_lines": 4,
       "text": "It also supplies the alternative explanation promised in \u00a76.1. The follow-up reads the low aleatoric value as reflecting \"small stochasticity in the environment\". The observation is correct and the reading is not: \u03c3 is l",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2494,7 +2482,7 @@
       "stale_for": []
     },
     {
-      "line": 675,
+      "line": 682,
       "n_lines": 1,
       "text": "The state loss is squared error on a *sample* drawn from the predicted Gaussian, not a likelihood:",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -2507,7 +2495,7 @@
       ]
     },
     {
-      "line": 677,
+      "line": 684,
       "n_lines": 2,
       "text": "$$\\mathcal{L} \\;=\\; \\mathbb{E}\\big[(\\mu + \\sigma\\varepsilon - y)^2\\big] \\;=\\; (\\mu - y)^2 + \\sigma^2$$",
       "sha": "5e6b20dc8ffaf0e201d102a8e338a9fd28c162fe",
@@ -2520,7 +2508,7 @@
       ]
     },
     {
-      "line": 679,
+      "line": 686,
       "n_lines": 4,
       "text": "which is minimised at \u03c3 = 0 for any \u03bc. There is no log-\u03c3 term to oppose it. The bound term that appears to oppose it does not, because `max_logstd` is not an independent parameter \u2014 it is constructed as `min_logstd + exp",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -2533,7 +2521,7 @@
       ]
     },
     {
-      "line": 683,
+      "line": 690,
       "n_lines": 2,
       "text": "$$\\overline{\\log\\sigma_{\\max}} - \\overline{\\log\\sigma_{\\min}} \\;=\\; \\overline{\\exp(\\log\\Delta_{\\log\\sigma})}$$",
       "sha": "5e6b20dc8ffaf0e201d102a8e338a9fd28c162fe",
@@ -2546,7 +2534,7 @@
       ]
     },
     {
-      "line": 685,
+      "line": 692,
       "n_lines": 2,
       "text": "and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval closes onto therefore freezes while the interval closes: a one-way ratchet.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -2559,7 +2547,7 @@
       ]
     },
     {
-      "line": 688,
+      "line": 695,
       "n_lines": 5,
       "text": "**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Its completeness rests on the other {{e4_n_inert}} being inert with respect to \u03c3, and a reader should not have to take that on trust. Each ",
       "sha": "e094c3b5b06c67e042b53528368b782961369002",
@@ -2569,7 +2557,7 @@
       "stale_for": []
     },
     {
-      "line": 694,
+      "line": 701,
       "n_lines": 4,
       "text": "| loss term | live? | weight | where the reference computes it | \u2202/\u2202 log-\u03c3 tower | \u2202/\u2202 `log_delta_logstd` | \u2202/\u2202 `min_logstd` | |---|---|---|---|---|---|---| {{e4_table}}",
       "sha": "e094c3b5b06c67e042b53528368b782961369002",
@@ -2579,7 +2567,7 @@
       "stale_for": []
     },
     {
-      "line": 698,
+      "line": 705,
       "n_lines": 6,
       "text": "{{e4_n_live}} of the {{e4_n_terms}} configured terms are live at all under the released configuration \u2014 `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to `\"single\"` on both paths, and `kl",
       "sha": "e094c3b5b06c67e042b53528368b782961369002",
@@ -2589,7 +2577,7 @@
       "stale_for": []
     },
     {
-      "line": 705,
+      "line": 712,
       "n_lines": 6,
       "text": "**The derivation says this would happen on any dataset. That is testable, and until now it was only asserted** \u2014 which matters, because it is the sentence that answers the follow-up's own explanation. The follow-up attri",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -2599,37 +2587,57 @@
       "stale_for": []
     },
     {
-      "line": 712,
-      "n_lines": 5,
-      "text": "Synthetic data whose true noise level is **known** and varies by a factor of {{e5s_span}} across the input range, with a non-constant true mean; the **same** bounded log-\u03c3 head as the released model, unmodified, includin",
-      "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
-      "ts": 1788004433,
-      "subject": "E5 returns OBJECTIVE-DRIVEN; E7 finds a free baseline that nearly matches",
+      "line": 719,
+      "n_lines": 6,
+      "text": "Synthetic data whose true noise level is **known** and varies by a factor of {{e5s_span}} across the input range, with a non-constant true mean; the **same** bounded log-\u03c3 head as the released model \u2014 `MLPStateHead` unmo",
+      "sha": "a28948d6f6d5351398a761b007bb5c2cd8d4788d",
+      "ts": 1788040201,
+      "subject": "D-27 to D-29: the figure carried the contamination the numbers were guarded",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 718,
-      "n_lines": 5,
-      "text": "| objective | median \u03c3\u0302 / \u03c3_true | \u03c3\u0302 spread across the input range | slope of log \u03c3\u0302 on log \u03c3_true | |---|---|---|---| | `mse` \u2014 the implemented branch | **{{e5s_mse_ratio}}** | {{e5s_mse_spread}}\u00d7 | {{e5s_mse_slope}} |",
-      "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
-      "ts": 1788004433,
-      "subject": "E5 returns OBJECTIVE-DRIVEN; E7 finds a free baseline that nearly matches",
+      "line": 726,
+      "n_lines": 9,
+      "text": "*Two ways this is not the released setting, stated because \"unmodified\" is a claim about the class and not about the instantiation.* The head is built here over a **one-dimensional** state with no recurrent trunk in fron",
+      "sha": "a28948d6f6d5351398a761b007bb5c2cd8d4788d",
+      "ts": 1788040201,
+      "subject": "D-27 to D-29: the figure carried the contamination the numbers were guarded",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 723,
+      "line": 736,
       "n_lines": 5,
+      "text": "| objective | median \u03c3\u0302 / \u03c3_true | \u03c3\u0302 spread across the input range | slope of log \u03c3\u0302 on log \u03c3_true | |---|---|---|---| | `mse` \u2014 the implemented branch | **{{e5s_mse_ratio}}** | {{e5s_mse_spread_range}}\u00d7 | {{e5s_mse_slo",
+      "sha": "a28948d6f6d5351398a761b007bb5c2cd8d4788d",
+      "ts": 1788040201,
+      "subject": "D-27 to D-29: the figure carried the contamination the numbers were guarded",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 741,
+      "n_lines": 3,
+      "text": "*Ratios and slopes are means over {{e5s_seeds}} seeds; spreads are the range across them, because the mean of a spread hides which seeds recovered.*",
+      "sha": "a28948d6f6d5351398a761b007bb5c2cd8d4788d",
+      "ts": 1788040201,
+      "subject": "D-27 to D-29: the figure carried the contamination the numbers were guarded",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 744,
+      "n_lines": 10,
       "text": "**Under the implemented objective \u03c3 sits {{e5s_mse_under}}\u00d7 below the true noise and does not track it at all** \u2014 a spread of {{e5s_mse_spread}}\u00d7 where the truth spans {{e5s_span}}\u00d7, and a slope below the {{e5s_slope_thr",
-      "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
-      "ts": 1788004433,
-      "subject": "E5 returns OBJECTIVE-DRIVEN; E7 finds a free baseline that nearly matches",
+      "sha": "a28948d6f6d5351398a761b007bb5c2cd8d4788d",
+      "ts": 1788040201,
+      "subject": "D-27 to D-29: the figure carried the contamination the numbers were guarded",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 729,
+      "line": 755,
       "n_lines": 8,
       "text": "*The statistic is the slope and not the correlation, and the reason is worth one sentence: a correlation is scale-free, so a \u03c3\u0302 that is essentially constant still returns a large one off its own numerical noise. Under a ",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -2639,7 +2647,7 @@
       "stale_for": []
     },
     {
-      "line": 737,
+      "line": 763,
       "n_lines": 5,
       "text": "**What this does that the derivation alone could not.** It removes the competing explanation rather than arguing against it. The stochasticity here is large, known, and input-dependent, and the collapse happens anyway. T",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -2649,7 +2657,7 @@
       "stale_for": []
     },
     {
-      "line": 743,
+      "line": 769,
       "n_lines": 5,
       "text": "We predicted the collapse from this algebra before training, then observed it. Across all {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical (Figure 3a). Rates are fitted on {{e2_f",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -2661,7 +2669,7 @@
       ]
     },
     {
-      "line": 748,
+      "line": 774,
       "n_lines": 2,
       "text": "Figure 3(b) plots only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted statistic describe the same set.",
       "sha": "92552717063400bb6be6f4bf4b6400a9f622619e",
@@ -2673,7 +2681,7 @@
       ]
     },
     {
-      "line": 751,
+      "line": 777,
       "n_lines": 1,
       "text": "The {{run_total}} runs, so a reader can count them:",
       "sha": "92552717063400bb6be6f4bf4b6400a9f622619e",
@@ -2685,7 +2693,7 @@
       ]
     },
     {
-      "line": 753,
+      "line": 779,
       "n_lines": 4,
       "text": "| arm | iterations | ensemble | objective | dataset | seeds | seed ids | |---|---|---|---|---|---|---| {{run_table}}",
       "sha": "cdac035a7237912ff83fa705e164ddc7d070abc0",
@@ -2697,7 +2705,7 @@
       ]
     },
     {
-      "line": 757,
+      "line": 783,
       "n_lines": 7,
       "text": "**Two different things are being explained here, and \u00a76.6 separates them.** *Magnitude collapse is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of {{e2_mse_rate}} per iteration with a st",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2707,7 +2715,7 @@
       "stale_for": []
     },
     {
-      "line": 765,
+      "line": 791,
       "n_lines": 2,
       "text": "Under the corrected objective the sign flips (Figure 3b) \u2014 which is the strongest evidence that the mechanism is the objective and not the optimiser, the data or the architecture.",
       "sha": "7b8696661dcc7215e285366114618c76fb265f13",
@@ -2719,7 +2727,7 @@
       ]
     },
     {
-      "line": 770,
+      "line": 796,
       "n_lines": 4,
       "text": "\u00a76.3 explains the aleatoric column and says of the epistemic one that the mechanism is not established. This subsection supplies a candidate, structurally symmetric to \u00a76.3's, from source and from the checkpoint's own te",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2729,7 +2737,17 @@
       "stale_for": []
     },
     {
-      "line": 775,
+      "line": 801,
+      "n_lines": 11,
+      "text": "**The effect is known and we are not claiming it.** That heads sharing a trunk under-report disagreement relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell, Crandall and Batra (arX",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 813,
       "n_lines": 5,
       "text": "**The released five-member ensemble is not five models.** `system_dynamics.py:34` builds **one** `state_base`. `system_dynamics.py:35-41` replicates the *heads* `ensemble_size` times, and only the heads. In the forward p",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2739,7 +2757,7 @@
       "stale_for": []
     },
     {
-      "line": 781,
+      "line": 819,
       "n_lines": 6,
       "text": "The parameter counts make the scale of the sharing concrete. The state pathway is a {{v1_shared_params}}-parameter two-layer GRU trunk plus {{v1_members_word}} heads of {{v1_private_params}} parameters each. Per member, ",
       "sha": "df628f9f0616da4cd849dd8af09abe5427683028",
@@ -2749,7 +2767,7 @@
       "stale_for": []
     },
     {
-      "line": 788,
+      "line": 826,
       "n_lines": 7,
       "text": "**The sharing is stronger than the parameter count suggests, and this is the part that matters.** The trunk owns a *single* recurrent hidden state (`rnn.py:40`), and an autoregressive rollout feeds the ensemble **mean** ",
       "sha": "df628f9f0616da4cd849dd8af09abe5427683028",
@@ -2759,7 +2777,7 @@
       "stale_for": []
     },
     {
-      "line": 796,
+      "line": 834,
       "n_lines": 5,
       "text": "That is the argument. **Members which share a feature extractor have correlated errors by construction, and their spread cannot express uncertainty the shared trunk does not already carry.** Where a deep ensemble in the ",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2769,7 +2787,7 @@
       "stale_for": []
     },
     {
-      "line": 801,
+      "line": 839,
       "n_lines": 1,
       "text": "It is the same shape of finding as \u00a76.3: not a training failure, a structural one.",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2779,7 +2797,7 @@
       "stale_for": []
     },
     {
-      "line": 803,
+      "line": 841,
       "n_lines": 6,
       "text": "**This applies to our own arms identically, which is why \u00a76.2's comparison is fair.** Our ensemble-5 arms build one trunk the same way (`src/rwm_model.py:164-167`), evaluate it once (`:182`), hand the same vector to ever",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -2789,7 +2807,7 @@
       "stale_for": []
     },
     {
-      "line": 809,
+      "line": 847,
       "n_lines": 2,
       "text": "{{v1_n_citations}} source citations support the paragraphs above and each is read back from the pinned upstream and checked on every build (`results/v1_ensemble_topology.json`).",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2799,7 +2817,7 @@
       "stale_for": []
     },
     {
-      "line": 812,
+      "line": 850,
       "n_lines": 6,
       "text": "**What this is and is not.** It is a *candidate* mechanism, established structurally. It is not yet a demonstration that trunk-sharing is *the* explanation for the miscalibration in \u00a76.2 \u2014 architecture could be a minor c",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2809,7 +2827,7 @@
       "stale_for": []
     },
     {
-      "line": 821,
+      "line": 859,
       "n_lines": 2,
       "text": "The reference contains an unused `gaussian_nll` branch. Running it reverses the collapse and improves the magnitude from {{cal_faithA_ratio}}\u00d7 to {{cal_nll_ratio}}\u00d7 overconfident. It does not produce a usable estimate, a",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -2819,7 +2837,7 @@
       "stale_for": []
     },
     {
-      "line": 826,
+      "line": 864,
       "n_lines": 2,
       "text": "Measuring the teacher-forced arm \u2014 which we had trained for \u00a75, and which our own first three calibration tables omitted \u2014 sharpens the finding:",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2829,7 +2847,7 @@
       "stale_for": []
     },
     {
-      "line": 829,
+      "line": 867,
       "n_lines": 7,
       "text": "| model | \u03c3 variation across inputs (CoV) | dims with r(\u03c3, error) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, in-sample | |---|---|---|---|---| | faithful",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -2839,7 +2857,7 @@
       "stale_for": []
     },
     {
-      "line": 836,
+      "line": 874,
       "n_lines": 1,
       "text": "**The CoV column is the aleatoric \u03c3 in every row**, which is the only \u03c3 the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is fa",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -2849,7 +2867,7 @@
       "stale_for": []
     },
     {
-      "line": 838,
+      "line": 876,
       "n_lines": 1,
       "text": "Arm B's \u03c3 is {{cal_armB_over_faithA_cov}}\u00d7 more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = {{cal_armB_r}}). It is still {{cal_armB_ratio}}\u00d7 overconfident.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -2861,7 +2879,7 @@
       ]
     },
     {
-      "line": 840,
+      "line": 878,
       "n_lines": 1,
       "text": "**The P column above is not a binomial one, and an earlier draft of this paper was wrong to make it one.** Converting a count of positive per-dimension correlations to a P-value against a fair-coin null assumes the 45 st",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -2873,7 +2891,7 @@
       ]
     },
     {
-      "line": 842,
+      "line": 880,
       "n_lines": 1,
       "text": "We therefore permute whole trajectories. The null pairs each trajectory's \u03c3 with a different trajectory's realised error, which leaves both marginal distributions and the entire cross-dimension dependence structure intac",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -2883,7 +2901,7 @@
       "stale_for": []
     },
     {
-      "line": 844,
+      "line": 882,
       "n_lines": 1,
       "text": "So \u03c3 *collapsing in magnitude* is objective-driven, and \u03c3 *becoming input-independent* is not.",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -2896,7 +2914,7 @@
       ]
     },
     {
-      "line": 845,
+      "line": 883,
       "n_lines": 5,
       "text": "The teacher-forced arm collapses in magnitude exactly like the autoregressive ones \u2014 same objective, same rate \u2014 while retaining {{cal_armB_over_faithA_cov}}\u00d7 more variation across inputs. Input-independence is a propert",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -2909,7 +2927,7 @@
       ]
     },
     {
-      "line": 851,
+      "line": 889,
       "n_lines": 3,
       "text": "One candidate mechanism, stated as a hypothesis and not a result: autoregressive feedback narrows the input distribution toward the model's own manifold, leaving a heteroscedastic head less variation to key on. We have n",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -2922,7 +2940,7 @@
       ]
     },
     {
-      "line": 855,
+      "line": 893,
       "n_lines": 1,
       "text": "**The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -2932,7 +2950,7 @@
       "stale_for": []
     },
     {
-      "line": 857,
+      "line": 895,
       "n_lines": 1,
       "text": "**The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} out of sample, the epistemic ordering looked strongest at long hor",
       "sha": "b2b1aef0ac54e9a0f12164160a6aa26ff58d2774",
@@ -2942,7 +2960,7 @@
       "stale_for": []
     },
     {
-      "line": 859,
+      "line": 897,
       "n_lines": 1,
       "text": "The null means explain why, and the explanation is the same one that motivates \u00a76.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is clos",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -2952,7 +2970,7 @@
       "stale_for": []
     },
     {
-      "line": 861,
+      "line": 899,
       "n_lines": 1,
       "text": "**Nothing here survives multiplicity correction, in any of the three arenas.** Holm\u2013Bonferroni over each arena's {{perm_oos_holm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_i",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -2964,7 +2982,7 @@
       ]
     },
     {
-      "line": 863,
+      "line": 901,
       "n_lines": 2,
       "text": "So the honest form of this section's claim is narrower than the one we first wrote. **The magnitude failure is established and large; the ordering is directionally consistent across every model and horizon we measured, a",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -2976,7 +2994,7 @@
       ]
     },
     {
-      "line": 865,
+      "line": 903,
       "n_lines": 2,
       "text": "**The failure is specifically magnitude calibration, in both components.**",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -2989,7 +3007,7 @@
       ]
     },
     {
-      "line": 869,
+      "line": 907,
       "n_lines": 2,
       "text": "The follow-up justifies ensemble disagreement as a trust metric on the grounds that it \"closely follows the trend of the prediction error\". Section 6.6 shows the per-dimension version of that claim is weaker than it look",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -2999,7 +3017,7 @@
       "stale_for": []
     },
     {
-      "line": 871,
+      "line": 909,
       "n_lines": 1,
       "text": "Error in an autoregressive rollout grows with depth. So the trivial competitor to any trust metric is the forecast step index \u2014 a counter. It needs no ensemble, no second forward pass and no model. If a counter ranks err",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -3011,7 +3029,7 @@
       ]
     },
     {
-      "line": 873,
+      "line": 911,
       "n_lines": 1,
       "text": "All three correlations below are on the scalar quantity the method actually applies \u2014 `means.std(0).sum(-1)` at `envs/base.py:166` \u2014 against total absolute error, over n_independent = {{d1n_nind}} trajectories, with 95% ",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -3023,7 +3041,7 @@
       ]
     },
     {
-      "line": 875,
+      "line": 913,
       "n_lines": 9,
       "text": "| h | r(step index, \\|error\\|) | r(disagreement, \\|error\\|) | partial r(disagreement, \\|error\\| \u00b7 index) | paired difference, disagreement \u2212 index | |---|---|---|---|---| | **1** | \u2014 | **{{d2_epi_h1}}** {{d2_epi_ci_h1}} ",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3033,7 +3051,7 @@
       "stale_for": []
     },
     {
-      "line": 884,
+      "line": 922,
       "n_lines": 2,
       "text": "*(h=1 has a single forecast step, so the index is constant and its correlation \u2014 and therefore the partial and the difference \u2014 undefined. The epistemic correlation is not, and it is the largest anywhere in this work: at",
       "sha": "22122e2bca9a37791591fed8cd900b372171e502",
@@ -3045,7 +3063,7 @@
       ]
     },
     {
-      "line": 886,
+      "line": 924,
       "n_lines": 1,
       "text": "**Disagreement wins at every horizon tested.** Over the full h = {{v2_diag_h}} rollout the counter reaches {{d2b_idx_h368}} against disagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_wins}} of {{d2b_n_",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3055,7 +3073,7 @@
       "stale_for": []
     },
     {
-      "line": 888,
+      "line": 926,
       "n_lines": 1,
       "text": "**The last column answers the first question \u2014 does disagreement beat the counter \u2014 and it is not the test a reader might expect.** Comparing the two marginal intervals for overlap is the wrong comparison here: both corr",
       "sha": "6d4f80bb3602e475e75fc2797da138e6d7be1135",
@@ -3067,7 +3085,7 @@
       ]
     },
     {
-      "line": 890,
+      "line": 928,
       "n_lines": 1,
       "text": "The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons. At {{d2p_overlap_h}} the marginal intervals *do* overlap, and an earlier draft of this paper wrongly asserted that they never do. {{d2b_idx",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3077,7 +3095,7 @@
       "stale_for": []
     },
     {
-      "line": 892,
+      "line": 930,
       "n_lines": 1,
       "text": "**The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_",
       "sha": "6d4f80bb3602e475e75fc2797da138e6d7be1135",
@@ -3089,7 +3107,7 @@
       ]
     },
     {
-      "line": 894,
+      "line": 932,
       "n_lines": 1,
       "text": "**A linear control is not much of a control, so we tested four harder ones.** Error does not grow linearly with rollout depth, and a control that under-fits the index leaves index-driven variance in the residual and flat",
       "sha": "e2d7d091746abe4d2865625f3df4b514de5c421e",
@@ -3101,7 +3119,7 @@
       ]
     },
     {
-      "line": 896,
+      "line": 934,
       "n_lines": 1,
       "text": "The strongest of the four needs no model of the index-error relationship at all. Computing the correlation **within each forecast step** \u2014 across trajectories, with depth held exactly constant, so the index cannot contri",
       "sha": "67fb71fa766633551d89e78b3b105759f024baa1",
@@ -3111,7 +3129,7 @@
       "stale_for": []
     },
     {
-      "line": 898,
+      "line": 936,
       "n_lines": 1,
       "text": "[^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent \u2014 structurally the same problem \u00a76.6 spends a page correcting for the 45 coupled state dimensions. The count is descriptive",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3121,7 +3139,7 @@
       "stale_for": []
     },
     {
-      "line": 900,
+      "line": 938,
       "n_lines": 3,
       "text": "**All five of those controls remove forecast depth. None removes trajectory difficulty, and the sixth does.** This is the one control in this section that was pre-registered before the statistic was computed (M-45, \u00a78), ",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -3131,7 +3149,7 @@
       "stale_for": []
     },
     {
-      "line": 904,
+      "line": 942,
       "n_lines": 7,
       "text": "Per-episode difficulty in this dataset spans {{d12_lo}} to {{d12_hi}} and is uncorrelated with commanded speed, so the units being correlated differ a great deal in *level*. If harder trajectories simply have both larger",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3141,7 +3159,7 @@
       "stale_for": []
     },
     {
-      "line": 912,
+      "line": 950,
       "n_lines": 1,
       "text": "Splitting the pooled correlation settles which effect carries it:",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3151,7 +3169,7 @@
       "stale_for": []
     },
     {
-      "line": 914,
+      "line": 952,
       "n_lines": 8,
       "text": "| what is removed | correlation | 95% CI | what it answers | |---|---|---|---| | nothing (pooled) | {{a2_r_pooled}} | {{a2_r_pooled_ci}} | \u2014 | | everything within a trajectory \u2014 the {{a2_nind}} trajectory means alone | {",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3161,7 +3179,7 @@
       "stale_for": []
     },
     {
-      "line": 922,
+      "line": 960,
       "n_lines": 8,
       "text": "The between-trajectory correlation is **{{a2_r_between}}**, and the two components contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance. So a large part of what \u00a76.7 has been reporting is a ",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3171,7 +3189,7 @@
       "stale_for": []
     },
     {
-      "line": 931,
+      "line": 969,
       "n_lines": 6,
       "text": "**The decisive statistic is the double-demeaned one, and it survives.** Removing the trajectory mean *and* the step mean from both variables and correlating the residuals gives **{{a2_rdd}} {{a2_rdd_ci}}**, on n_independ",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3181,7 +3199,7 @@
       "stale_for": []
     },
     {
-      "line": 938,
+      "line": 976,
       "n_lines": 2,
       "text": "**Per horizon, on the same {{a2_nind}} trajectories and the same cluster bootstrap:**",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3191,7 +3209,7 @@
       "stale_for": []
     },
     {
-      "line": 940,
+      "line": 978,
       "n_lines": 9,
       "text": "| h | r_dd, double-demeaned | 95% CI | excludes zero | |---|---|---|---| | 1 | \u2014 | \u2014 | \u2014 | | 8 | {{a2_rdd_h8}} | {{a2_rdd_ci_h8}} | no | | 32 | {{a2_rdd_h32}} | {{a2_rdd_ci_h32}} | no | | **{{v2_deploy_h}}** | **{{a2_rdd",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3201,7 +3219,7 @@
       "stale_for": []
     },
     {
-      "line": 949,
+      "line": 987,
       "n_lines": 2,
       "text": "*(h = 1 has one forecast step per trajectory, so there is nothing within a rollout to demean against and r_dd is undefined rather than zero.)*",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3211,7 +3229,7 @@
       "stale_for": []
     },
     {
-      "line": 951,
+      "line": 989,
       "n_lines": 1,
       "text": "Two qualifications a reader should carry away with that. The within-rollout effect is **materially smaller than the pooled figure** \u2014 {{a2_rdd}} against {{a2_r_pooled}} \u2014 so a practitioner should expect disagreement to s",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3221,7 +3239,7 @@
       "stale_for": []
     },
     {
-      "line": 953,
+      "line": 991,
       "n_lines": 9,
       "text": "**The h = 1 figure survives the same test, but it is not what it looked like.** At h = 1 the panel has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}} *trajectory-level* points and nothing within a rol",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -3231,7 +3249,7 @@
       "stale_for": []
     },
     {
-      "line": 964,
+      "line": 1002,
       "n_lines": 1,
       "text": "**Does it hold on a model we trained?** Everything above is measured on the released checkpoint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore trained three Arm A",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -3241,7 +3259,7 @@
       "stale_for": []
     },
     {
-      "line": 966,
+      "line": 1004,
       "n_lines": 5,
       "text": "**It returns {{e5_verdict}}.** The first condition passes completely \u2014 disagreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired estimate positive, {{e5_diff_lo}} to {{e",
       "sha": "b2b1aef0ac54e9a0f12164160a6aa26ff58d2774",
@@ -3251,7 +3269,7 @@
       "stale_for": []
     },
     {
-      "line": 972,
+      "line": 1010,
       "n_lines": 8,
       "text": "**And we do not rewrite its denominator either, which is the less obvious half of the same discipline.** M-43 was committed over {{e5_n_horizons}} horizons, before the data. Adding h = {{v2_deploy_h}} to the evaluation g",
       "sha": "b2b1aef0ac54e9a0f12164160a6aa26ff58d2774",
@@ -3261,7 +3279,7 @@
       "stale_for": []
     },
     {
-      "line": 981,
+      "line": 1019,
       "n_lines": 1,
       "text": "**What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = {{e5_nind}}, where \u00a76.7's own findi",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3271,7 +3289,7 @@
       "stale_for": []
     },
     {
-      "line": 983,
+      "line": 1021,
       "n_lines": 1,
       "text": "*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}}, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}",
       "sha": "cdac035a7237912ff83fa705e164ddc7d070abc0",
@@ -3283,7 +3301,7 @@
       ]
     },
     {
-      "line": 985,
+      "line": 1023,
       "n_lines": 1,
       "text": "**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result \u2014 it would make the trust metric close to vacuous, since a counter is free \u2014 an",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3293,17 +3311,17 @@
       "stale_for": []
     },
     {
-      "line": 987,
-      "n_lines": 6,
+      "line": 1025,
+      "n_lines": 9,
       "text": "**One adversary is one, so we added two more \u2014 and the ranking claim survives only one of them.** A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed before either was compu",
-      "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
-      "ts": 1788004433,
-      "subject": "E5 returns OBJECTIVE-DRIVEN; E7 finds a free baseline that nearly matches",
+      "sha": "a28948d6f6d5351398a761b007bb5c2cd8d4788d",
+      "ts": 1788040201,
+      "subject": "D-27 to D-29: the figure carried the contamination the numbers were guarded",
       "has_placeholder": false,
       "stale_for": []
     },
     {
-      "line": 994,
+      "line": 1035,
       "n_lines": 6,
       "text": "| baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? | |---|---|---|---|---| | forecast step index *(the existing adversary)* | {{e7_index_r}} | {{e7_index_margin}} | {{e7_index_par",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3313,7 +3331,7 @@
       "stale_for": []
     },
     {
-      "line": 1000,
+      "line": 1041,
       "n_lines": 1,
       "text": "*r(disagreement, error) = {{e7_r_dis}} on the released checkpoint at n_independent = {{e7_nind}}.",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3323,7 +3341,7 @@
       "stale_for": []
     },
     {
-      "line": 1001,
+      "line": 1042,
       "n_lines": 3,
       "text": "Minimum detectable effect, estimated before either baseline existed: {{e7_mde_margin}} on a margin, {{e7_mde_partial}} on a partial.*",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3333,7 +3351,7 @@
       "stale_for": []
     },
     {
-      "line": 1004,
+      "line": 1045,
       "n_lines": 5,
       "text": "**The verdict is {{e7_verdict}}, and the reason is the row a reader should look at twice.** The magnitude of the model's own predicted state change ranks realised error at {{e7_step_r}}, against {{e7_r_dis}} for the five",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3343,7 +3361,7 @@
       "stale_for": []
     },
     {
-      "line": 1010,
+      "line": 1051,
       "n_lines": 5,
       "text": "**Disagreement does still carry information the subtraction does not.** With `step-size` partialled out it retains {{e7_step_partial}}, far above the {{e7_mde_partial}} MDE for that test, and holding the forecast step ex",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3353,7 +3371,7 @@
       "stale_for": []
     },
     {
-      "line": 1016,
+      "line": 1057,
       "n_lines": 5,
       "text": "`M-51` fixed this reading in advance rather than after the fact: the partial is the load-bearing test and the margin is corroboration, so a baseline passing the partial while failing the margin does not refute the rankin",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3363,7 +3381,7 @@
       "stale_for": []
     },
     {
-      "line": 1022,
+      "line": 1063,
       "n_lines": 6,
       "text": "**On this axis the follow-up's claim survives adversarial testing against a real baseline**, and that is the strongest form of support this paper offers any claim of either original work \u2014 now with the qualification that",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3373,7 +3391,7 @@
       "stale_for": []
     },
     {
-      "line": 1029,
+      "line": 1070,
       "n_lines": 6,
       "text": "*A note on the `undefined` cell.* The within-step control holds the forecast step fixed and correlates across trajectories, so it annihilates any quantity that is constant across trajectories at a fixed step \u2014 which is t",
       "sha": "f93bd7f3e5f02a24484f23b3ececfcc8a2c9e406",
@@ -3383,7 +3401,17 @@
       "stale_for": []
     },
     {
-      "line": 1038,
+      "line": 1079,
+      "n_lines": 11,
+      "text": "**Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this section is an instance of it rather than a departure from it.** Kuleshov, Fenner and Ermon (ICML 2018) give the post-hoc calibrati",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1091,
       "n_lines": 4,
       "text": "If \u03c3 had the right shape and the wrong scale, a single multiplier would repair it, and the finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on **one** held-out episode and eval",
       "sha": "1ea95d6600ad425404fb66fe1db31244f87d0d97",
@@ -3396,7 +3424,7 @@
       ]
     },
     {
-      "line": 1043,
+      "line": 1096,
       "n_lines": 8,
       "text": "Fitting at one step works at one step and nowhere else. On the epistemic term \u2014 the quantity the method uses \u2014 a scalar of {{d2_epi_c_lo}}\u2013{{d2_epi_c_hi}} brings h=1 coverage to {{d2_epi_cov1_lo}}\u2013{{d2_epi_cov1_hi}}%, es",
       "sha": "1ea95d6600ad425404fb66fe1db31244f87d0d97",
@@ -3409,7 +3437,7 @@
       ]
     },
     {
-      "line": 1052,
+      "line": 1105,
       "n_lines": 1,
       "text": "The reason is \u00a76.9's mechanism: a constant multiplier cannot track an error that grows while \u03c3 does not. So \"right shape, wrong scale\" is the charitable reading of these tables, and for a *constant* scale it does not sur",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3419,7 +3447,7 @@
       "stale_for": []
     },
     {
-      "line": 1054,
+      "line": 1107,
       "n_lines": 1,
       "text": "**A per-horizon scalar does work, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever ",
       "sha": "7e74cf64913dca652b7ab3b624243c850d11087f",
@@ -3431,7 +3459,7 @@
       ]
     },
     {
-      "line": 1056,
+      "line": 1109,
       "n_lines": 5,
       "text": "| quantity | held-out cells within {{d3_tol}} points of {{d3_target}}%, per-horizon c | same, constant c | range of fitted c | |---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / ",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -3443,7 +3471,7 @@
       ]
     },
     {
-      "line": 1061,
+      "line": 1114,
       "n_lines": 1,
       "text": "Every held-out cell lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities. The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episod",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3453,7 +3481,7 @@
       "stale_for": []
     },
     {
-      "line": 1063,
+      "line": 1116,
       "n_lines": 1,
       "text": "Three cautions a reader should apply. The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample \u2014 only the held-out column above is evidence, and that is ",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3463,7 +3491,7 @@
       "stale_for": []
     },
     {
-      "line": 1065,
+      "line": 1118,
       "n_lines": 2,
       "text": "So the accurate form of this section is: **a constant scalar does not repair the interval; a per-horizon one does, and transfers across episodes.**",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -3475,7 +3503,7 @@
       ]
     },
     {
-      "line": 1069,
+      "line": 1122,
       "n_lines": 3,
       "text": "One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon, \u03c3 is flat while error gro",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -3488,7 +3516,7 @@
       ]
     },
     {
-      "line": 1073,
+      "line": 1126,
       "n_lines": 7,
       "text": "| model | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A | {{sig_faithA_growth}}\u00d7 | {{err_faithA_growth}}\u00d7 | | corrected Arm A | {{sig_nll_growth}}\u00d7 | {{err_nll_growth}}\u00d7 | | teacher-for",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -3501,7 +3529,7 @@
       ]
     },
     {
-      "line": 1080,
+      "line": 1133,
       "n_lines": 3,
       "text": "The faithful arm's \u03c3 *declines* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7. The coverage collapse in Figure 1(b) is therefore driven entirely by growing error against a fixed \u03c3.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -3514,7 +3542,7 @@
       ]
     },
     {
-      "line": 1086,
+      "line": 1139,
       "n_lines": 4,
       "text": "\u00a76.4 establishes the topology as a fact and the mechanism as a hypothesis. This subsection tests the hypothesis, under a rule (M-44) committed to git before any of the artifacts below existed, together with a power check",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3524,7 +3552,7 @@
       "stale_for": []
     },
     {
-      "line": 1091,
+      "line": 1144,
       "n_lines": 10,
       "text": "**The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models from scratch costs about {{r2_scratch_h}} h of wall clock on two cores at the iteration count these runs use \u2014 {{r2_scratch",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -3534,7 +3562,7 @@
       "stale_for": []
     },
     {
-      "line": 1102,
+      "line": 1155,
       "n_lines": 9,
       "text": "| h | independent err/\u03c3 | shared-trunk err/\u03c3 | independent \u00b11\u03c3 | shared-trunk \u00b11\u03c3 | |---|---|---|---|---| | 1 | {{r2_indep_ratio_h1}}\u00d7 | {{r2_shared_ratio_h1}}\u00d7 | {{r2_indep_cov1_h1}}% | {{r2_shared_cov1_h1}}% | | 8 | {{",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3544,7 +3572,7 @@
       "stale_for": []
     },
     {
-      "line": 1111,
+      "line": 1164,
       "n_lines": 3,
       "text": "*Same trajectories, same harness, n_independent = {{r2_nind}}. The shared-trunk column is the mean over {{r2_n_shared}} seeds; the comparison below is paired against each of them separately.*",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3554,7 +3582,7 @@
       "stale_for": []
     },
     {
-      "line": 1114,
+      "line": 1167,
       "n_lines": 2,
       "text": "**M-44 returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions hold, against every one of the {{r2_n_shared}} shared-trunk seeds.",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3564,7 +3592,7 @@
       "stale_for": []
     },
     {
-      "line": 1116,
+      "line": 1169,
       "n_lines": 7,
       "text": "At h = {{v2_deploy_h}} the independent ensemble's overconfidence factor is {{r2_ratio_lo}}\u2013{{r2_ratio_hi}}\u00d7 the shared-trunk arms' \u2014 a **{{m44_ratio_gain}}\u00d7** improvement against a pre-registered minimum detectable effec",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3574,7 +3602,7 @@
       "stale_for": []
     },
     {
-      "line": 1123,
+      "line": 1176,
       "n_lines": 5,
       "text": "**Where the improvement comes from, which is not all one thing.** The overconfidence factor is error over \u03c3, so it improves if \u03c3 grows *or* if error shrinks \u2014 and only the first is the trunk-sharing mechanism. Five indep",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3584,7 +3612,7 @@
       "stale_for": []
     },
     {
-      "line": 1129,
+      "line": 1182,
       "n_lines": 9,
       "text": "| h | \u03c3 larger by | error smaller by | total | share from \u03c3 | share from accuracy | |---|---|---|---|---|---| | 1 | {{r2_sigma_x_h1}}\u00d7 | {{r2_acc_x_h1}}\u00d7 | {{r2_total_x_h1}}\u00d7 | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}%",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3594,7 +3622,7 @@
       "stale_for": []
     },
     {
-      "line": 1138,
+      "line": 1191,
       "n_lines": 4,
       "text": "*Shares are of the log improvement, so they add to 100%. A share above 100% at h=1 means the independent ensemble is very slightly the **worse** predictor there and the \u03c3 gain more than covers it.*",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3604,7 +3632,7 @@
       "stale_for": []
     },
     {
-      "line": 1142,
+      "line": 1195,
       "n_lines": 14,
       "text": "**The reading, stated at the horizon the rule is stated over.** \u03c3 is larger at every horizon \u2014 by {{r2_sigma_x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}\u00d7 at its strongest (h = {{r2_sigma_x_hi_h",
       "sha": "6094253dbfad60658132cb795d1e919399d6c5a5",
@@ -3614,7 +3642,7 @@
       "stale_for": []
     },
     {
-      "line": 1156,
+      "line": 1209,
       "n_lines": 6,
       "text": "**What this does and does not license.** It licenses saying that **the released ensemble's disagreement understates epistemic uncertainty partly because its members are not independent models**, with a measured size at t",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -3624,7 +3652,7 @@
       "stale_for": []
     },
     {
-      "line": 1163,
+      "line": 1216,
       "n_lines": 6,
       "text": "**And it does not repair the interval.** The independent ensemble is {{r2_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} with {{r2_indep_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1",
       "sha": "d88a106f84b736e00cc45462b1332743440ec72d",
@@ -3634,7 +3662,7 @@
       "stale_for": []
     },
     {
-      "line": 1175,
+      "line": 1228,
       "n_lines": 2,
       "text": "**7.1 Ten unmarked episode boundaries.** \u00a73. The window builder reads a termination column that is identically zero, so it marks all {{win_naive}} windows valid.",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3644,7 +3672,7 @@
       "stale_for": []
     },
     {
-      "line": 1178,
+      "line": 1231,
       "n_lines": 7,
       "text": "**7.2 Training and evaluation disagree on action alignment, and evaluation is the broken one.** Row *t* holds the action that *produced* state *t*. The training path pairs states and actions index-for-index, which is cau",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3654,7 +3682,7 @@
       "stale_for": []
     },
     {
-      "line": 1186,
+      "line": 1239,
       "n_lines": 2,
       "text": "**7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the released checkpoint, trained on the entire file, no held-out measurement is possible at all.",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3664,7 +3692,7 @@
       "stale_for": []
     },
     {
-      "line": 1189,
+      "line": 1242,
       "n_lines": 4,
       "text": "**7.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on {{arm_contam_windows}} windows \u2014 the clean {{arm_clean_windows}} plus {{arm_splices}} splices \u2014 and, because that confounds *con",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3674,7 +3702,7 @@
       "stale_for": []
     },
     {
-      "line": 1194,
+      "line": 1247,
       "n_lines": 7,
       "text": "The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's {{contam_pct}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are training episodes",
       "sha": "31204e5aa12bc8c02fb524bf46c300a6340fa77c",
@@ -3687,7 +3715,7 @@
       ]
     },
     {
-      "line": 1202,
+      "line": 1255,
       "n_lines": 5,
       "text": "Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs {{contam_cost_pct}}%. The bootstrap interval on duplicated \u2212 clean is [{{dup_ci_lo}}, {{dup_ci_hi}}], including zero. So th",
       "sha": "090e87c3441b1afdbbc861036cd2dc78b68df07f",
@@ -3700,7 +3728,7 @@
       ]
     },
     {
-      "line": 1208,
+      "line": 1261,
       "n_lines": 4,
       "text": "In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory lengths \u00d7 two checkpoints \u00d7 two horizons \u00d7 two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_h",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -3713,7 +3741,7 @@
       ]
     },
     {
-      "line": 1213,
+      "line": 1266,
       "n_lines": 7,
       "text": "**\"Costs nothing\" is the wrong summary, and we should not use it.** Splicing raises training loss by {{contam_cost_pct}}% against duplication's {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_",
       "sha": "c6ba48a1e02f508b33a9d44b54be1ec8e7e191a5",
@@ -3726,7 +3754,7 @@
       ]
     },
     {
-      "line": 1220,
+      "line": 1273,
       "n_lines": 3,
       "text": "what is now measured is that the physically-impossible-transition component costs nothing detectable at this rate.**",
       "sha": "090e87c3441b1afdbbc861036cd2dc78b68df07f",
@@ -3739,7 +3767,7 @@
       ]
     },
     {
-      "line": 1225,
+      "line": 1278,
       "n_lines": 15,
       "text": "**7.5 The released artifacts do not reproduce the released checkpoint's variance state.** The \u03c3 collapse is linear in iteration count and its rate is nearly identical across our runs (\u00a76.3), which makes it a clock. Extra",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -3749,7 +3777,7 @@
       "stale_for": []
     },
     {
-      "line": 1245,
+      "line": 1298,
       "n_lines": 1,
       "text": "**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -3761,17 +3789,17 @@
       ]
     },
     {
-      "line": 1247,
+      "line": 1300,
       "n_lines": 1,
-      "text": "**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives each lead time from commit timestamps for all {{f4_n_rules}} rules; {",
-      "sha": "dda60fdc3ea80fbf750aa9f933eae271c8ecd399",
-      "ts": 1787506867,
-      "subject": "Figure 4 was missing three rules, including the two this revision registered",
+      "text": "**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for {{f4_n_rules}} of them and Appendix G for all {{app",
+      "sha": "07eee9d352b03cc628b0a9a9fb24493f4b6f55b4",
+      "ts": 1788022965,
+      "subject": "M-57 to M-59: the negative bar, the missing amendment, and three more",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 1249,
+      "line": 1302,
       "n_lines": 1,
       "text": "**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix D lists them)",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -3781,7 +3809,7 @@
       "stale_for": []
     },
     {
-      "line": 1251,
+      "line": 1304,
       "n_lines": 1,
       "text": "**A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appea",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -3793,17 +3821,17 @@
       ]
     },
     {
-      "line": 1253,
+      "line": 1306,
       "n_lines": 5,
       "text": "**Reproducibility, and a build that checks its own prose.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwis",
-      "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
-      "ts": 1787900120,
-      "subject": "Revision 2: the h=100 sweep, four check kinds, and four retractions",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 1262,
+      "line": 1315,
       "n_lines": 1,
       "text": "{{n_lessons_word}} things a practitioner can apply without reading the rest of this paper.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -3815,7 +3843,7 @@
       ]
     },
     {
-      "line": 1264,
+      "line": 1317,
       "n_lines": 1,
       "text": "**Use ensemble disagreement as a ranking signal; it earns its cost. Do not read it as a distance. And expect it to degrade with horizon.** At one forecast step it ranks whole rollouts almost perfectly \u2014 {{d2_epi_h1}} {{d",
       "sha": "b2b1aef0ac54e9a0f12164160a6aa26ff58d2774",
@@ -3825,7 +3853,7 @@
       "stale_for": []
     },
     {
-      "line": 1266,
+      "line": 1319,
       "n_lines": 1,
       "text": "**If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within {{d3_tol}} points of nominal on every held-out cell; a single global m",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3835,7 +3863,7 @@
       "stale_for": []
     },
     {
-      "line": 1268,
+      "line": 1321,
       "n_lines": 1,
       "text": "**Do not convert per-dimension sign counts into P-values.** State dimensions in a robot are physically coupled and share a forecast-depth trend, so an independent-trials null is badly wrong \u2014 in our tables by up to {{per",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3845,7 +3873,7 @@
       "stale_for": []
     },
     {
-      "line": 1270,
+      "line": 1323,
       "n_lines": 6,
       "text": "**Count independent trajectories, not trajectories.** Two 400-step windows that overlap at all are one piece of evidence, not two. The held-out arena here contains {{nind_oos_400}} independent 400-step trajectories howev",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -3855,7 +3883,7 @@
       "stale_for": []
     },
     {
-      "line": 1277,
+      "line": 1330,
       "n_lines": 4,
       "text": "**Anchor a decision rule to the horizon the claim is about.** Our first pre-registered rule was anchored at h = 8, the training forecast horizon, and returned \"cannot be settled\". The claim was about deployment horizons.",
       "sha": "5433deb768f7ff3845326f31c7557d45ae637fc7",
@@ -3868,7 +3896,7 @@
       ]
     },
     {
-      "line": 1282,
+      "line": 1335,
       "n_lines": 3,
       "text": "**Check that the implemented loss is the described loss before reproducing any number from it.** The paper describes two loss terms; the implementation has {{diff_terms}}. The predicted variance has an optimum at zero un",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3878,7 +3906,7 @@
       "stale_for": []
     },
     {
-      "line": 1290,
+      "line": 1343,
       "n_lines": 2,
       "text": "This is a reproduction of a dynamics model on public simulation data, and the reproduction itself carries no significant risk of harm: no new capability, no personal data, no deployment.",
       "sha": "5433deb768f7ff3845326f31c7557d45ae637fc7",
@@ -3891,7 +3919,7 @@
       ]
     },
     {
-      "line": 1293,
+      "line": 1346,
       "n_lines": 6,
       "text": "The finding does bear on safety, in one specific way worth stating. The method this paper examines uses its uncertainty estimate as a **trust metric** \u2014 a reward penalty that steers a policy away from states the model is",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3901,7 +3929,7 @@
       "stale_for": []
     },
     {
-      "line": 1300,
+      "line": 1353,
       "n_lines": 2,
       "text": "We think that makes the finding worth publishing rather than the reverse, and it is the reason \u00a76 reports coverage rather than only correlation.",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3911,7 +3939,7 @@
       "stale_for": []
     },
     {
-      "line": 1307,
+      "line": 1360,
       "n_lines": 3,
       "text": "**Effective sample size bounds every long-horizon claim.** The out-of-sample arena has {{m23_nind}} independent 400-step trajectories. That is the binding constraint on \u00a75, and no amount of trajectory oversampling change",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3921,7 +3949,7 @@
       "stale_for": []
     },
     {
-      "line": 1311,
+      "line": 1364,
       "n_lines": 2,
       "text": "**Ensemble size \u2014 no longer an open question, but not a closed one either.** Our main experiment runs at ensemble size 1, where the epistemic term is identically zero by construction, so every epistemic measurement here ",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -3931,7 +3959,7 @@
       "stale_for": []
     },
     {
-      "line": 1313,
+      "line": 1366,
       "n_lines": 3,
       "text": "**One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait is a single trot throughout. \"Generalisation\" here means across velocity commands, not across gaits or terrain.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -3944,7 +3972,7 @@
       ]
     },
     {
-      "line": 1317,
+      "line": 1370,
       "n_lines": 1,
       "text": "**The per-horizon recalibration is fitted and tested on two episodes only.** \u00a76.8's remedy transfers across the two held-out episodes in both directions, which is the strongest test the released split allows, but two epi",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3954,7 +3982,7 @@
       "stale_for": []
     },
     {
-      "line": 1319,
+      "line": 1372,
       "n_lines": 2,
       "text": "**Two secondary analyses rest on a single training seed** \u2014 the long-horizon trend fit and the per-dimension matched comparison, both computed on seed 1 alone. The headline A/B result is not among them: it is a three-see",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3964,7 +3992,7 @@
       "stale_for": []
     },
     {
-      "line": 1322,
+      "line": 1375,
       "n_lines": 10,
       "text": "**The ranking claim is not established as needing an ensemble.** \u00a76.7 shows ensemble disagreement ranks realised error well and survives six controls. It does not show that the ensemble is necessary for that: under a rul",
       "sha": "b5d3d91660f030188f364ddbbe5a3c81bc14ecc8",
@@ -3974,7 +4002,7 @@
       "stale_for": []
     },
     {
-      "line": 1333,
+      "line": 1386,
       "n_lines": 1,
       "text": "**We did not measure what the miscalibration costs.** We show that the penalty the follow-up applies is miscalibrated as a scale \u2014 {{d1n_epi_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}}, the horizon its own imagina",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3984,7 +4012,7 @@
       "stale_for": []
     },
     {
-      "line": 1335,
+      "line": 1388,
       "n_lines": 1,
       "text": "**The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (\u00a76.6), the out-of-sample arena's {{perm_oos_nind}} independent trajectorie",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -3994,17 +4022,27 @@
       "stale_for": []
     },
     {
-      "line": 1337,
+      "line": 1390,
       "n_lines": 1,
       "text": "**The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** \u00a76.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs diffe",
-      "sha": "b5d3d91660f030188f364ddbbe5a3c81bc14ecc8",
-      "ts": 1788004564,
-      "subject": "\u00a711 gains E7's limit and names M-49; D7's descope recorded",
+      "sha": "278a1a21c8aa809d9c084cbf589ce7d1a74571bf",
+      "ts": 1788021783,
+      "subject": "M-49 discharged: UNDER-POWERED. Capacity does not explain the effect away,",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 1338,
+      "line": 1392,
+      "n_lines": 1,
+      "text": "**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde_ratio}}\u00d7. `M-49` there",
+      "sha": "a28948d6f6d5351398a761b007bb5c2cd8d4788d",
+      "ts": 1788040201,
+      "subject": "D-27 to D-29: the figure carried the contamination the numbers were guarded",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1393,
       "n_lines": 6,
       "text": "That asymmetry is deliberate and it is generous to the mechanism: if the overconfidence factor barely moves despite the handicap, the finding is strong in the direction of *architecture is not the explanation*; if it mov",
       "sha": "6931368a46d2199c403aa7753d61da6bda3fc72e",
@@ -4014,7 +4052,7 @@
       "stale_for": []
     },
     {
-      "line": 1345,
+      "line": 1400,
       "n_lines": 4,
       "text": "**\u00a76.4's mechanism is a structural fact plus a hypothesis, and the two are separable.** That the five members share a trunk, a hidden state and {{v1_shared_pct}}% of each member's parameters is measured, from source and ",
       "sha": "6931368a46d2199c403aa7753d61da6bda3fc72e",
@@ -4024,7 +4062,7 @@
       "stale_for": []
     },
     {
-      "line": 1350,
+      "line": 1405,
       "n_lines": 7,
       "text": "**Deliberately out of scope, and stated so a reader does not assume otherwise.** No policy-learning result of either paper is tested \u2014 no simulator, no RL loop, no ANYmal, and no policy is trained anywhere in this work. ",
       "sha": "6931368a46d2199c403aa7753d61da6bda3fc72e",
@@ -4034,7 +4072,7 @@
       "stale_for": []
     },
     {
-      "line": 1358,
+      "line": 1413,
       "n_lines": 1,
       "text": "**We did not reproduce the policy-learning results** of either paper. This is a dynamics-model reproduction only.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -4046,7 +4084,7 @@
       ]
     },
     {
-      "line": 1364,
+      "line": 1419,
       "n_lines": 2,
       "text": "The Robotic World Model's central training claim reproduces, and the margin is large. Neither uncertainty output of the follow-up that adds them reports what a reader would take it to report.",
       "sha": "10017b424d6500e79839e76b2554556a9b34a3e7",
@@ -4059,7 +4097,7 @@
       ]
     },
     {
-      "line": 1366,
+      "line": 1421,
       "n_lines": 1,
       "text": "At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to, the aleatoric \u03c3 is {{d1n_alea_ratio_h100}}\u00d7 smaller than its own error, and the cause is that the objective's optimum is \u03c3 = 0 with the te",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4069,7 +4107,7 @@
       "stale_for": []
     },
     {
-      "line": 1368,
+      "line": 1423,
       "n_lines": 1,
       "text": "The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large \u2014 but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, restores no",
       "sha": "6931368a46d2199c403aa7753d61da6bda3fc72e",
@@ -4079,7 +4117,7 @@
       "stale_for": []
     },
     {
-      "line": 1370,
+      "line": 1425,
       "n_lines": 1,
       "text": "What does not survive is the per-dimension form of the ordering evidence. Three of the five \u03c3 estimates we measured order their own errors better than chance in direction \u2014 the epistemic term on every one of the {{perm_a",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4089,7 +4127,7 @@
       "stale_for": []
     },
     {
-      "line": 1376,
+      "line": 1431,
       "n_lines": 5,
       "text": "The full repository \u2014 code, every artifact under `results/`, and `FINDINGS_LEDGER.md` with the complete claim record including the retractions \u2014 accompanies this submission as anonymised supplementary material, and will ",
       "sha": "9919c4cd80dd75ca5001753804d770837787a28c",
@@ -4102,7 +4140,7 @@
       ]
     },
     {
-      "line": 1382,
+      "line": 1437,
       "n_lines": 10,
       "text": "**The repository's history was rewritten once, and \u00a78 depends on that history, so we say what changed.** A supplementary file quoting private correspondence was committed and briefly published before consent to quote it ",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4112,7 +4150,7 @@
       "stale_for": []
     },
     {
-      "line": 1393,
+      "line": 1448,
       "n_lines": 9,
       "text": "The pre-registration argument in \u00a78 rests on commit timestamps, and those are author-settable via `git commit --date`. That matters, because \u00a78 is load-bearing. Two things address it. The supplementary material includes ",
       "sha": "ef3575faf18ad06d60eed25e6c6ac0d3ba82fbdf",
@@ -4122,7 +4160,7 @@
       "stale_for": []
     },
     {
-      "line": 1403,
+      "line": 1458,
       "n_lines": 6,
       "text": "What that archive establishes should be stated precisely, because it is easy to overclaim. It does **not** prove any individual commit date is genuine. It proves that the repository, with the whole pre-registration histo",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4132,7 +4170,7 @@
       "stale_for": []
     },
     {
-      "line": 1410,
+      "line": 1465,
       "n_lines": 2,
       "text": "**On anonymity, stated rather than implied.** The code and data for this work are public, as they are for most reproducibility work, and a reviewer who chooses to look can identify the author.",
       "sha": "ef3575faf18ad06d60eed25e6c6ac0d3ba82fbdf",
@@ -4142,7 +4180,7 @@
       "stale_for": []
     },
     {
-      "line": 1412,
+      "line": 1467,
       "n_lines": 5,
       "text": "The submission is anonymised \u2014 the bundle is scrubbed and asserted clean of a deny-list, and the files that carry identity are excluded from it \u2014 but that is anonymity of the *submission*, not unfindability of the work. ",
       "sha": "ef3575faf18ad06d60eed25e6c6ac0d3ba82fbdf",
@@ -4152,7 +4190,7 @@
       "stale_for": []
     },
     {
-      "line": 1420,
+      "line": 1475,
       "n_lines": 2,
       "text": "1. C. Li, A. Krause, M. Hutter. *Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics.* arXiv:2501.10100**v1**, 17 January 2025.",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -4162,7 +4200,7 @@
       "stale_for": []
     },
     {
-      "line": 1422,
+      "line": 1477,
       "n_lines": 4,
       "text": "*Read at v1, whose Roman-numeral sectioning our references follow; v2 (23 April 2025) renumbered to Arabic and moved IV-C into Appendix A.4.1.* 2. C. Li, A. Krause, M. Hutter. *Uncertainty-Aware Robotic World Model Makes",
       "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
@@ -4172,117 +4210,27 @@
       "stale_for": []
     },
     {
-      "line": 1426,
-      "n_lines": 7,
+      "line": 1481,
+      "n_lines": 8,
       "text": "*Read at v1; now at {{v4_current}}, last revised {{v4_current_date}}. \u00a75.1 and Eq. 4\u20135 keep their numbers there; every figure and appendix table has moved, and the model is renamed {{v4_name_v1}} to {{v4_name_v3}} \u2014 the ",
-      "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
-      "ts": 1787900120,
-      "subject": "Revision 2: the h=100 sweep, four check kinds, and four retractions",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 1433,
-      "n_lines": 1,
-      "text": "4. K. Chua, R. Calandra, R. McAllister, S. Levine. *Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.* NeurIPS 2018. arXiv:1805.12114.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1434,
-      "n_lines": 1,
-      "text": "5. C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. *On Calibration of Modern Neural Networks.* ICML 2017. arXiv:1706.04599.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1435,
-      "n_lines": 1,
-      "text": "6. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1436,
-      "n_lines": 1,
-      "text": "7. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1437,
-      "n_lines": 1,
-      "text": "8. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1438,
-      "n_lines": 1,
-      "text": "9. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1439,
-      "n_lines": 1,
-      "text": "10. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1440,
-      "n_lines": 1,
-      "text": "11. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 201",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1441,
-      "n_lines": 1,
-      "text": "12. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239.",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1443,
-      "n_lines": 2,
-      "text": "*Entries 3\u201312 are the \u00a72 bibliography. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
+      "line": 1489,
+      "n_lines": 5,
+      "text": "*Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the \u00a72 bibliography, generated from `results/t1_bibliography_verified.json` rather than listed here \u2014 a hand-maintained list of what a paper cites drifts exactly as a",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
       "has_placeholder": true,
       "stale_for": []
     },
     {
-      "line": 1447,
+      "line": 1496,
       "n_lines": 1,
       "text": "What every downstream number rests on. Each level was passed before the next was attempted.",
       "sha": "d6fe07d6c21f101362dd909e738c6fed449cf4bd",
@@ -4295,7 +4243,7 @@
       ]
     },
     {
-      "line": 1449,
+      "line": 1498,
       "n_lines": 9,
       "text": "| level | claim | result | |---|---|---| | shapes | parameter counts match the reference | exact | | wiring | inference outputs match the reference module | **{{wiring_max_diff}}**, bitwise | | indexing | the harness fee",
       "sha": "2a57bef8fccc21b73c0d2b9c1299eddb3a420b98",
@@ -4308,7 +4256,7 @@
       ]
     },
     {
-      "line": 1460,
+      "line": 1509,
       "n_lines": 5,
       "text": "./setup.sh # clone upstreams at pinned commits python3.11 -m venv .venv && . .venv/bin/activate pip install -r requirements.txt ./reproduce.sh --quick --force # everything except training",
       "sha": "5e6b20dc8ffaf0e201d102a8e338a9fd28c162fe",
@@ -4321,7 +4269,7 @@
       ]
     },
     {
-      "line": 1465,
+      "line": 1514,
       "n_lines": 1,
       "text": "`--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.",
       "sha": "988b271ff89aba5fc6e13079e769d89bb3b6b07c",
@@ -4333,7 +4281,7 @@
       ]
     },
     {
-      "line": 1467,
+      "line": 1516,
       "n_lines": 1,
       "text": "**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of recorded wall clock on two CPU cores: {{rt_hours_10k}} h",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4343,7 +4291,17 @@
       "stale_for": []
     },
     {
-      "line": 1469,
+      "line": 1518,
+      "n_lines": 8,
+      "text": "**{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m49}} hours, are `M-49`'s capacity-matched arm at `rnn_hidden_size` {{m49_width}}** rather than the released {{released_width}}. They are part of this project's CPU",
+      "sha": "7132e4182d7675d837221dec121f8c50b836152e",
+      "ts": 1788022189,
+      "subject": "Appendix B names the capacity-matched runs' share of the CPU budget",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1527,
       "n_lines": 2,
       "text": "{{FIGURES}}",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4355,7 +4313,7 @@
       ]
     },
     {
-      "line": 1473,
+      "line": 1531,
       "n_lines": 7,
       "text": "**The {{n_retractions_word_lower}} numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as \"clearly informative\" that r",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -4365,7 +4323,7 @@
       "stale_for": []
     },
     {
-      "line": 1480,
+      "line": 1538,
       "n_lines": 4,
       "text": "nothing compared the typed enumeration against the count beside it, and had the two changes landed in separate commits the paper would have said {{n_retract_framing_word}} and enumerated {{n_framing_before_last_word}}:{{",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -4375,7 +4333,7 @@
       "stale_for": []
     },
     {
-      "line": 1484,
+      "line": 1542,
       "n_lines": 2,
       "text": "The last {{n_framing_last_cohort_word}} were entered by the second pre-submission review, in a single commit \u2014 which is how that count is established rather than recalled.",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -4385,7 +4343,7 @@
       "stale_for": []
     },
     {
-      "line": 1486,
+      "line": 1544,
       "n_lines": 8,
       "text": "{{framing_last_cohort_ids_but_last}} are sentences of the 24 August draft that were false. {{framing_last_cohort_final}} is different in kind and worse in one respect: \u00a77.5 had already narrowed that claim in the paper, a",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4395,7 +4353,7 @@
       "stale_for": []
     },
     {
-      "line": 1495,
+      "line": 1553,
       "n_lines": 2,
       "text": "`build_paper.py` asserts that every printed number came from a named artifact. That is a guarantee about *provenance*, and it is silent about *relations between* provenanced numbers.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4407,7 +4365,7 @@
       ]
     },
     {
-      "line": 1497,
+      "line": 1555,
       "n_lines": 1,
       "text": "Six failure modes survive it, and all six occurred in this paper. Five are relations between provenanced numbers; the sixth is not a relation at all and is set out after the list:",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4417,7 +4375,7 @@
       "stale_for": []
     },
     {
-      "line": 1499,
+      "line": 1557,
       "n_lines": 6,
       "text": "- **an interval relation that is not the one asserted** \u2014 \"the intervals do not overlap\", where at h=128 they overlap across 0.604\u20130.643. **This one has now been wrong twice.** The correction said the distinction mattere",
       "sha": "b2b1aef0ac54e9a0f12164160a6aa26ff58d2774",
@@ -4427,7 +4385,7 @@
       "stale_for": []
     },
     {
-      "line": 1505,
+      "line": 1563,
       "n_lines": 7,
       "text": "- **an extremum that is not the extremum** \u2014 the worst-calibrated held-out cell named as epistemic at h=1, which is third; the largest deviation is {{d3_worst_q}} at h={{d3_worst_h}}. **This one has now been wrong twice ",
       "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
@@ -4437,7 +4395,7 @@
       "stale_for": []
     },
     {
-      "line": 1512,
+      "line": 1570,
       "n_lines": 2,
       "text": "- **a stated change with the wrong sign** \u2014 \"a change of **+**0.010\", where partialling the forecast index out *reduces* the correlation;",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4449,7 +4407,7 @@
       ]
     },
     {
-      "line": 1514,
+      "line": 1572,
       "n_lines": 3,
       "text": "- **two prose descriptions of one ratio that disagree** \u2014 \"nearly three orders of magnitude\" in the abstract against \"two orders\" in \u00a712, of the same {{d1n_epi_over_alea_h368}}\u00d7 at h = {{v2_diag_h}};",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4459,7 +4417,7 @@
       "stale_for": []
     },
     {
-      "line": 1517,
+      "line": 1575,
       "n_lines": 2,
       "text": "- **a count attributed to the wrong evaluation arena** \u2014 0 of 45 over all ten episodes asserted where the table beside it printed the held-out arena's 20 of 45.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4471,7 +4429,7 @@
       ]
     },
     {
-      "line": 1520,
+      "line": 1578,
       "n_lines": 1,
       "text": "None is a numeral. None appears in `results/paper_numbers.json`. Each was typed.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4483,7 +4441,7 @@
       ]
     },
     {
-      "line": 1522,
+      "line": 1580,
       "n_lines": 9,
       "text": "**A sixth failure mode is not a relation at all, and it defeated the gate rather than evading it.** `build_paper.py` asserted that no `{{`-delimited placeholder survived substitution, and none did \u2014 while a sentence of \u00a7",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4493,7 +4451,7 @@
       "stale_for": []
     },
     {
-      "line": 1532,
+      "line": 1590,
       "n_lines": 2,
       "text": "**The check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: {{cc_kind_list}}.",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4503,7 +4461,7 @@
       "stale_for": []
     },
     {
-      "line": 1535,
+      "line": 1593,
       "n_lines": 5,
       "text": "That list is generated from the checker's own registry rather than written here. It was written here, and \u00a78 quoted a generated count beside it; the two had drifted seven kinds apart, inside the appendix whose subject is",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4513,7 +4471,7 @@
       "stale_for": []
     },
     {
-      "line": 1541,
+      "line": 1599,
       "n_lines": 4,
       "text": "Each entry pins two things and requires both: a **fragment of the paper's own text**, so that rewording a sentence fails the check rather than silently detaching it from the claim it guards, and a **relation recomputed f",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4525,7 +4483,7 @@
       ]
     },
     {
-      "line": 1546,
+      "line": 1604,
       "n_lines": 5,
       "text": "**The self-test.** Every assertion is run against a deliberately corrupted expectation on each build and must fail: the interval relation inverted, the extremum replaced by the *runner-up* rather than an absent label, th",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4537,7 +4495,7 @@
       ]
     },
     {
-      "line": 1552,
+      "line": 1610,
       "n_lines": 6,
       "text": "**{{cc_selfdefects_word}} defects the self-test has found in the checker itself**, rather than in the paper. Each surfaced because the checks were run rather than assumed, and the last two are the ones a reader should we",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4547,7 +4505,7 @@
       "stale_for": []
     },
     {
-      "line": 1558,
+      "line": 1616,
       "n_lines": 4,
       "text": "Corruptions now invert relative to each claim's own expectation, every registered kind carries at least one claim, and every claim is corrupted on every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} clai",
       "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
@@ -4557,7 +4515,7 @@
       "stale_for": []
     },
     {
-      "line": 1563,
+      "line": 1621,
       "n_lines": 2,
       "text": "**Two exclusions from the numeric comparison**, on the same principle in both cases: the number measures the machine, not the model.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4569,7 +4527,7 @@
       ]
     },
     {
-      "line": 1566,
+      "line": 1624,
       "n_lines": 7,
       "text": "*The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of `results/step4_5_timing.json` \u2014 projected runtimes for configurations we did not run, peak resident memory, and the standard deviation acro",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4581,7 +4539,7 @@
       ]
     },
     {
-      "line": 1574,
+      "line": 1632,
       "n_lines": 6,
       "text": "*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on every machine \u2014 three different v",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4593,7 +4551,7 @@
       ]
     },
     {
-      "line": 1580,
+      "line": 1638,
       "n_lines": 3,
       "text": "Excluding by filename rather than by stopping rule would have dropped the reproducible one along with it, so the verifier decides from the artifact \u2014 a run that stopped short of its own cap was time-bounded.",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4605,7 +4563,7 @@
       ]
     },
     {
-      "line": 1584,
+      "line": 1642,
       "n_lines": 6,
       "text": "**Excluding a file is not sufficient on its own.** `results/paper_numbers.json` records the *source* of every value it holds, and it had copied that diagnostic's iteration count into a key of its own \u2014 so the host-depend",
       "sha": "55cf70ee4033645e111b4b616b3db065d75b59f9",
@@ -4617,7 +4575,7 @@
       ]
     },
     {
-      "line": 1591,
+      "line": 1649,
       "n_lines": 11,
       "text": "**One further class, excluded by the same mechanism and worth naming because it sounds like an excuse.** {{ver_selfref}} keys in `paper_numbers.json` are sourced from `verify_reproduction.json` \u2014 that is, they are this p",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4627,7 +4585,167 @@
       "stale_for": []
     },
     {
-      "line": 1605,
+      "line": 1663,
+      "n_lines": 3,
+      "text": "\u00a74's table marks {{orig_n_tested}} claims tested and the rest not. \"Not tested\" is an apology unless it comes with a price, so here is what each would cost. We give compute orders where we can estimate them honestly from",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1667,
+      "n_lines": 5,
+      "text": "**Everything below needs what this reproduction did not have: a simulator.** Our arms train on the released CSV, which is a recording. Every untested claim needs *interaction* \u2014 a policy acting in an environment and the ",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1673,
+      "n_lines": 11,
+      "text": "| untested claim | what it needs | order | |---|---|---| | Sample efficiency, {{c2_ref}} against ~250M transitions (\u00a7IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the c",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1684,
+      "n_lines": 6,
+      "text": "**The {{appE_n_cpu_word}} at the bottom are within reach of this setup** \u2014 {{appF_cpu_list}} \u2014 and are the honest next steps for anyone extending this work on CPU. The {{appE_n_sim_word}} above them are not, and no amoun",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1691,
+      "n_lines": 3,
+      "text": "**What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring items, it bears directly on the one limitation \u00a711 states that our measurements cannot bound \u2014 whether the miscalibration we",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1699,
+      "n_lines": 3,
+      "text": "The body's \u00a74 summarises this table. It is here in full because the third column \u2014 what the original actually reports \u2014 is the answer to a question a reader of any reproduction should ask, and because \"no quantitative fi",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1703,
+      "n_lines": 10,
+      "text": "*Section references follow arXiv:2501.10100**v1**, which uses Roman-numeral sectioning. v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1. References to arXiv:2504.16680 follow **v1**, which is the ve",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1713,
+      "n_lines": 15,
+      "text": "| claim, and where | tested | what the original reports | verdict | |---|---|---|---| | RWM-AR consistently outperforms RWM-TF (2501.10100 \u00a7IV-D) | **yes** | **no quantitative figure.** \"significantly outperforms\"; the g",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1728,
+      "n_lines": 3,
+      "text": "--- ## Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1731,
+      "n_lines": 4,
+      "text": "\u00a78's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open ",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1736,
+      "n_lines": 4,
+      "text": "**Lead time** is the rule's commit timestamp subtracted from the commit that first held the data it tested, resolved by commit *subject* rather than by hash \u2014 the history was rewritten once and hashes did not survive it,",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1741,
+      "n_lines": 4,
+      "text": "| rule | what it governs | commit | lead time | tested by | verdict | |---|---|---|---|---|---| {{appG_table}}",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1745,
+      "n_lines": 5,
+      "text": "{{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is kept deliberately.** `S-12` withdraws the claim that th",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1751,
+      "n_lines": 9,
+      "text": "**`M-52` is in the table and that is deliberate.** It is the one mid-flight amendment to a pre-registration in this project: `M-51` named a baseline that does not exist in the artifact it named \u2014 the residual on the last",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1761,
+      "n_lines": 5,
+      "text": "**What each rule says, in its own committed words.** These are quotations, so their section references are the ones current when each rule was committed and some no longer resolve \u2014 `M-45` governs \"the within-trajectory ",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": false,
+      "stale_for": []
+    },
+    {
+      "line": 1766,
+      "n_lines": 2,
+      "text": "{{appG_rule_texts}}",
+      "sha": "9ce216052a711c663f163177e40a2e1229b4fa43",
+      "ts": 1788039342,
+      "subject": "D-25, D-26: every appendix reference in the PDF pointed at the wrong",
+      "has_placeholder": true,
+      "stale_for": []
+    },
+    {
+      "line": 1772,
       "n_lines": 3,
       "text": "\u00a77.5 states the conclusion. This is the arithmetic, kept out of the body because the numbered claim it once supported is retracted (`S-19`) and because a forensic case the section then defuses with the author's own reply",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4637,7 +4755,7 @@
       "stale_for": []
     },
     {
-      "line": 1609,
+      "line": 1776,
       "n_lines": 5,
       "text": "The collapse rate is a clock. Fitting it across our runs and extrapolating to the released checkpoint's \u03c3 state implies **{{implied_iters}}** optimisation steps at the configured learning rate. The refit from our 10,000-",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4647,7 +4765,7 @@
       "stale_for": []
     },
     {
-      "line": 1615,
+      "line": 1782,
       "n_lines": 4,
       "text": "The released configuration says 500 iterations. The paper says 2,500. The checkpoint is tagged 5,000. A second, independent parameter on a slower gradient path implies the same order. And under `gaussian_nll` the implied",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4657,7 +4775,7 @@
       "stale_for": []
     },
     {
-      "line": 1620,
+      "line": 1787,
       "n_lines": 3,
       "text": "**What this extrapolation assumes, and what would falsify it.** It assumes constant-rate Adam at the configured learning rate from the released initialisation. Five things would break it, and they are not equally plausib",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4667,7 +4785,7 @@
       "stale_for": []
     },
     {
-      "line": 1624,
+      "line": 1791,
       "n_lines": 8,
       "text": "| assumption | if violated | ruled out by the second parameter? | |---|---|---| | no learning-rate schedule | a decaying schedule inflates the implied count; a warm-up deflates it | **partly** \u2014 `min_logstd` and `log_del",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4677,7 +4795,7 @@
       "stale_for": []
     },
     {
-      "line": 1632,
+      "line": 1799,
       "n_lines": 4,
       "text": "So the defensible claim is narrower than \"cannot have come from the released recipe\": **no constant-rate run from the released initialisation at the configured learning rate reaches this checkpoint's variance state in 50",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4687,7 +4805,7 @@
       "stale_for": []
     },
     {
-      "line": 1637,
+      "line": 1804,
       "n_lines": 7,
       "text": "**What the author says.** We wrote to the first author on 21 August 2026 asking exactly this. He replied the same day; the exchange is reproduced in full, anonymised, in the supplementary material (`SUPPLEMENTARY_CORRESP",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4697,7 +4815,7 @@
       "stale_for": []
     },
     {
-      "line": 1644,
+      "line": 1811,
       "n_lines": 5,
       "text": "That last point reframes this section. The extrapolation above assumes the *released* initialisation and the *released* learning rate. If the repository drifted between the training run and the release, those are not nec",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4707,7 +4825,7 @@
       "stale_for": []
     },
     {
-      "line": 1650,
+      "line": 1817,
       "n_lines": 4,
       "text": "So the finding is not that the release is internally inconsistent. It is that **the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repository i",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4717,7 +4835,7 @@
       "stale_for": []
     },
     {
-      "line": 1654,
+      "line": 1821,
       "n_lines": 2,
       "text": "We report the arithmetic because it is what let us detect the gap at all, not as a charge against the work.",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4727,7 +4845,7 @@
       "stale_for": []
     },
     {
-      "line": 1663,
+      "line": 1830,
       "n_lines": 3,
       "text": "\u00a73.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the {{cal_rel_ndim}} state dimensions, then divide by the pooled scale \u2014 a ratio of means. **Form 2** is the mean of per-dime",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4737,7 +4855,7 @@
       "stale_for": []
     },
     {
-      "line": 1667,
+      "line": 1834,
       "n_lines": 4,
       "text": "The two differ because the state dimensions differ in scale by orders of magnitude. Form 2 gives whichever dimension has the smallest denominator unbounded leverage over the aggregate, and a dimension that is nearly cons",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4747,7 +4865,7 @@
       "stale_for": []
     },
     {
-      "line": 1672,
+      "line": 1839,
       "n_lines": 7,
       "text": "**Why this appendix exists rather than a sentence.** The choice between the two once inverted a published-model comparison in this project's own history \u2014 a result that favoured us under one aggregation and did not under",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
@@ -4757,165 +4875,13 @@
       "stale_for": []
     },
     {
-      "line": 1680,
+      "line": 1847,
       "n_lines": 2,
       "text": "The definition in force throughout the paper is the one \u00a73.1 gives. Nothing in \u00a75, \u00a76 or \u00a77 uses form 2.",
       "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
       "ts": 1787992110,
       "subject": "D1, D5, D6: \u00a78 becomes a paragraph, the title stops promising a reveal",
       "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1687,
-      "n_lines": 4,
-      "text": "\u00a78's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open ",
-      "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
-      "ts": 1787992110,
-      "subject": "D1, D5, D6: \u00a78 becomes a paragraph, the title stops promising a reveal",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1692,
-      "n_lines": 4,
-      "text": "**Lead time** is the rule's commit timestamp subtracted from the commit that first held the data it tested, resolved by commit *subject* rather than by hash \u2014 the history was rewritten once and hashes did not survive it,",
-      "sha": "e094c3b5b06c67e042b53528368b782961369002",
-      "ts": 1787990891,
-      "subject": "C2, C3, D2-D4, E3, E4: cohorts, the checklist, Appendix G, and what the",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1697,
-      "n_lines": 4,
-      "text": "| rule | what it governs | commit | lead time | tested by | verdict | |---|---|---|---|---|---| {{appG_table}}",
-      "sha": "e094c3b5b06c67e042b53528368b782961369002",
-      "ts": 1787990891,
-      "subject": "C2, C3, D2-D4, E3, E4: cohorts, the checklist, Appendix G, and what the",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1701,
-      "n_lines": 5,
-      "text": "{{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is kept deliberately.** `S-12` withdraws the claim that th",
-      "sha": "e094c3b5b06c67e042b53528368b782961369002",
-      "ts": 1787990891,
-      "subject": "C2, C3, D2-D4, E3, E4: cohorts, the checklist, Appendix G, and what the",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1707,
-      "n_lines": 3,
-      "text": "`M-49` has no lead time because the data it tests does not exist yet: it is committed, with its minimum detectable effect, before the runs it governs. That is what a pre-registration in progress looks like, and it is inc",
-      "sha": "e094c3b5b06c67e042b53528368b782961369002",
-      "ts": 1787990891,
-      "subject": "C2, C3, D2-D4, E3, E4: cohorts, the checklist, Appendix G, and what the",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1711,
-      "n_lines": 5,
-      "text": "**What each rule says, in its own committed words.** These are quotations, so their section references are the ones current when each rule was committed and some no longer resolve \u2014 `M-45` governs \"the within-trajectory ",
-      "sha": "d1aa4d689e81fbfaeaebbdd34b8015b29a5787cf",
-      "ts": 1788005088,
-      "subject": "F5: the LaTeX, the bundle, and the PDF channel nothing was checking",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1716,
-      "n_lines": 2,
-      "text": "{{appG_rule_texts}}",
-      "sha": "e094c3b5b06c67e042b53528368b782961369002",
-      "ts": 1787990891,
-      "subject": "C2, C3, D2-D4, E3, E4: cohorts, the checklist, Appendix G, and what the",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1722,
-      "n_lines": 3,
-      "text": "\u00a74's table marks {{orig_n_tested}} claims tested and the rest not. \"Not tested\" is an apology unless it comes with a price, so here is what each would cost. We give compute orders where we can estimate them honestly from",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1726,
-      "n_lines": 5,
-      "text": "**Everything below needs what this reproduction did not have: a simulator.** Our arms train on the released CSV, which is a recording. Every untested claim needs *interaction* \u2014 a policy acting in an environment and the ",
-      "sha": "f4c1d3bb8a424b5d3ff529eaf51dc0ebea70e3d3",
-      "ts": 1787436313,
-      "subject": "Part C: scope in the abstract, the data budget computed, and what a follow-up costs",
-      "has_placeholder": false,
-      "stale_for": [
-        "h100-grid"
-      ]
-    },
-    {
-      "line": 1732,
-      "n_lines": 11,
-      "text": "| untested claim | what it needs | order | |---|---|---| | Sample efficiency, {{c2_ref}} against ~250M transitions (\u00a7IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the c",
-      "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
-      "ts": 1787992110,
-      "subject": "D1, D5, D6: \u00a78 becomes a paragraph, the title stops promising a reveal",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1743,
-      "n_lines": 6,
-      "text": "**The {{appE_n_cpu_word}} at the bottom are within reach of this setup** \u2014 {{appF_cpu_list}} \u2014 and are the honest next steps for anyone extending this work on CPU. The {{appE_n_sim_word}} above them are not, and no amoun",
-      "sha": "26d2e94a5f4bc33a4a33c2621cba129890fe18a9",
-      "ts": 1787987784,
-      "subject": "Phase B: the nine defects, and Phase C1: the kind that would have caught them",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1750,
-      "n_lines": 3,
-      "text": "**What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring items, it bears directly on the one limitation \u00a711 states that our measurements cannot bound \u2014 whether the miscalibration we",
-      "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
-      "ts": 1787992110,
-      "subject": "D1, D5, D6: \u00a78 becomes a paragraph, the title stops promising a reveal",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1758,
-      "n_lines": 3,
-      "text": "The body's \u00a74 summarises this table. It is here in full because the third column \u2014 what the original actually reports \u2014 is the answer to a question a reader of any reproduction should ask, and because \"no quantitative fi",
-      "sha": "2eccc1f6e1715e0bcb2d0d6816aa66fb5d6d7746",
-      "ts": 1787493824,
-      "subject": "Phases 1, 3 and 4 of the revision: intervals, the missing control, related work",
-      "has_placeholder": false,
-      "stale_for": []
-    },
-    {
-      "line": 1762,
-      "n_lines": 10,
-      "text": "*Section references follow arXiv:2501.10100**v1**, which uses Roman-numeral sectioning. v2 renumbered to Arabic and moved IV-C's material into Appendix A.4.1. References to arXiv:2504.16680 follow **v1**, which is the ve",
-      "sha": "fcd499b6005b57d25ffa5fa6032b1b18b8ce9597",
-      "ts": 1787900120,
-      "subject": "Revision 2: the h=100 sweep, four check kinds, and four retractions",
-      "has_placeholder": true,
-      "stale_for": []
-    },
-    {
-      "line": 1772,
-      "n_lines": 15,
-      "text": "| claim, and where | tested | what the original reports | verdict | |---|---|---|---| | RWM-AR consistently outperforms RWM-TF (2501.10100 \u00a7IV-D) | **yes** | **no quantitative figure.** \"significantly outperforms\"; the g",
-      "sha": "5d1246b3fe148021db2df479e7e6c6f35ad6a338",
-      "ts": 1787992110,
-      "subject": "D1, D5, D6: \u00a78 becomes a paragraph, the title stops promising a reveal",
-      "has_placeholder": true,
       "stale_for": []
     }
   ]

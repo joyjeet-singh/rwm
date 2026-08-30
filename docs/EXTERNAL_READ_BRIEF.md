@@ -1,7 +1,7 @@
 # Brief for an external scientific read
 
 **What is wanted:** two hours from one or two people who know model-based RL, reading for the
-**argument** and not for consistency. Please do not check numbers. Twenty-three automated gates
+**argument** and not for consistency. Please do not check numbers. Twenty-two submission criteria and a dozen build checks
 already check that every sentence agrees with the artifact behind it, and they are good at it.
 None of them can tell whether the artifacts answer the right question, and every issue worth
 finding now is of that kind.

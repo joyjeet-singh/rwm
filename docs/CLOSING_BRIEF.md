@@ -32,9 +32,9 @@ it by accident.
 |---|---|---|
 | **Send the consent letter to the first author** | `docs/LETTER_TO_AUTHOR_CONSENT.md` | Drafted, not sent. It lists all five quoted fragments verbatim, discloses the five-hour exposure with both residual vectors, and offers paraphrase-only as a real option. |
 | **Record the answer**, and if refused, apply the fallback | `docs/FALLBACK_NO_QUOTATION.md` | The rewrite is executable, not descriptive: `python scripts/a1_consent_letter.py --apply-fallback`. Tested end to end and reverted. |
-| **The C1 claim review — 89 claims** | `docs/C1_REVIEW_CHECKLIST.md` | One printable file, Tier 0 first. The script that could have recorded verdicts has been **deleted** (F1); this gate is cleared by a person reading and signing, and by nothing else. |
+| **The C1 claim review — 191 claims** | `docs/C1_REVIEW_CHECKLIST.md` | One printable file, Tier 0 first. The script that could have recorded verdicts has been **deleted** (F1); this gate is cleared by a person reading and signing, and by nothing else. |
 | **Remove the unreachable objects from GitHub** | `docs/F3_GITHUB_UNREACHABLE_OBJECTS.md` | Two routes drafted, with the reasoning for preferring deletion-and-recreation if the repository has no forks: same outcome, immediate, and verifiable by you rather than reported to you. |
-| **One external scientific read** | `docs/EXTERNAL_READ_BRIEF.md` | Three questions to press on, and an explicit request *not* to check numbers — 23 gates already do that, and none of them can tell whether the artifacts answer the right question. |
+| **One external scientific read** | `docs/EXTERNAL_READ_BRIEF.md` | Three questions to press on, and an explicit request *not* to check numbers — 22 criteria already do that, and none of them can tell whether the artifacts answer the right question. |
 | **Declare the conflict to the Action Editor** | — | The authors of both papers under reproduction were contacted on 21 August 2026 and none should be assigned to review. Required regardless of anonymity. |
 | **Send the reply to the first author's technical points** | `docs/E4_REPLY_DRAFT.md` | Generated from the artifacts, ready, separate from the consent letter. |
 

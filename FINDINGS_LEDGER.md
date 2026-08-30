@@ -6002,6 +6002,38 @@ than at the end.
 **Evidence** `SRC` `scripts/e5_synthetic_sigma.py`, `results/e5_sigma_dilution.json`
 **Status** ACTIVE · **Relevance** METHOD
 
+### D-30 — The review queue had more than doubled and every document still said 89 · **NEW**
+**What happened.** `results/task_c1_claims_audit.json` was committed at 324 claims with **89**
+unreviewed. Against the paper as it now stands it is **412 claims with 191 unreviewed**. The
+committed artifact was stale by an entire revision.
+
+**And the number was right to move.** `task_c1_claims_audit.py` drops a claim's verdict when its
+wording changes, which is the behaviour that makes the gate meaningful. The revision-3 pass
+rewrote the abstract, §4, §5, §6.2, §6.3, §6.7, §7.5 and §11 and added three appendices, so a
+doubling is what a working gate should report.
+
+**What said 89.** `docs/C1_REVIEW_CHECKLIST.md`'s own title and budget line — both **typed into the
+generator** when it was written — and `docs/CLOSING_BRIEF.md`'s table of outstanding human
+actions. So the file a reviewer would have worked from told them to budget six hours for 89 claims
+while containing 191, and the closing brief understated the one remaining human task by more than
+half.
+
+**Found by the clean clone**, which regenerates the audit from the current paper and reported 412
+where this tree's committed artifact said 324. Nothing else compares them: every other check reads
+the artifact as committed.
+
+**Fixed.** The count and the budget are derived from the queue, the queue and checklist are
+regenerated, and the checklist states the growth and its cause rather than presenting 191 as
+though it had always been 191. Two further count errors in the same documents, flagged by the same
+audit, are corrected with it: both briefs said "23 gates" where `submission_check` reports 22
+criteria.
+
+**A generator with a typed count is the defect it was written to prevent**, and this is the third
+instance in this pass after `t5`'s `PAPER_QUOTES` and Appendix D's framing-retraction list.
+
+**Evidence** `SRC` `results/task_c1_claims_audit.json`, `results/c1_review_queue.json`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are
