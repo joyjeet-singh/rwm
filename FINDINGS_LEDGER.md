@@ -6153,6 +6153,39 @@ entry in `ENTRIES`, which converts this silent degradation into a loud failure.
 **Evidence** `SRC` `results/t1_bibliography_verified.json`, `scripts/t1_bibliography.py`, `reproduce.sh`
 **Status** ACTIVE
 
+### D-35 — Three of the eight new reference fragments are checks that cannot fail · **NEW**
+**T6, report only.** `n_fragments_checked` went 9 to 17 when Phase E added six references. The
+eight new fragments are the evidence behind "17 of 17 verbatim". Three of them are single common
+words whose presence in the cited paper is guaranteed by that paper's subject:
+
+| entry | fragment | chars | what §2 asserts the source says |
+|---|---|---|---|
+| `lee2015` | `diverse` | 7 | that they treat ensemble diversity as something to be engineered |
+| `fort2019` | `diversity` | 9 | that random initialisation produces it |
+| `seitzer2022` | `log-likelihood` | 14 | that they identify failure modes of σ heads trained by maximising it |
+
+Matching `diversity` inside a deep-ensembles paper, or `log-likelihood` inside a paper about
+heteroscedastic likelihood heads, is the **vacuous-coverage pattern** this project's Appendix D
+already catalogues three times: a check whose corruption cannot make it fail. The brief named
+`log-likelihood` as the test case; two of the three are shorter than it.
+
+**This does not make §2 false.** Each of the three claims about those sources is defensible on the
+sources themselves. What is overstated is the verification: the count 17 treats `diverse` as
+evidence of the same standing as `good uncertainties must be calibrated`, which is `malik2019`'s
+fragment and the only one of the eight that is both specific and quoted in our own text.
+
+**The stored evidence is also truncated at 70 characters.** Three fragments end mid-word — `...
+similar to`, `... induced by mo`, `... rank-one matrix per m`. A reader cannot reconstruct the
+quotation from the artifact that certifies it.
+
+**No quotation limit is breached** because none is stated for references; the paper's quotation
+machinery governs the correspondence transcript only. The longest fragment is 12 words.
+
+**Nothing changed.** T6 is report-only and this entry is the report.
+
+**Evidence** `SRC` `results/t1_bibliography_verified.json`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

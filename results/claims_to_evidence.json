@@ -3009,12 +3009,25 @@
         "scripts/t1_bibliography.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-35",
+      "claim": "Three of the eight new reference fragments are checks that cannot fail",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/t1_bibliography_verified.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 34,
+    "D": 35,
     "M": 61,
     "O": 14,
     "R": 73,
