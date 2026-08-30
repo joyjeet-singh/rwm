@@ -6117,6 +6117,42 @@ budget. It ranks above every other remaining item.
 **Evidence** `SRC` `results/paper_numbers.json`, `results/t1_bibliography_verified.json`
 **Status** ACTIVE
 
+### D-34 — D-33 resolved: the committed numbers are right and the pipeline writes a stale table · **NEW**
+**Resolves the direction of [[D-33]].** D-33 established that three published numbers differ between
+a clean clone and this tree. It did not establish which side was correct. The committed side is.
+
+**The committed verification is real.** `per_entry[10]`–`[15]` are exactly the six references Phase E
+added — Malik 2019, Lee 2015, Fort 2019, Havasi 2021, Wen 2020, Seitzer 2022. Each carries a fetched
+arXiv identifier and version, the full author list with `authors_match: true`, `title_matches: true`,
+a publication date, the venue comment, and the located fragment text with `found: true`. The live
+path also asserts on any metadata mismatch or unfound fragment, so it could not have produced these
+records without the checks passing. **§2's sentence is true and 16/17/17 is the correct number.**
+
+**The clone did not fail on the network. It never used the network.** `scripts/t1_bibliography.py`
+has two paths. `--verify` fetches from arXiv, verifies all sixteen entries and stamps
+`checked_on: "RE-VERIFIED THIS RUN"`. Without the flag it emits `RECORDED`, a hardcoded table
+literal in the script, stamped with a frozen date. **`reproduce.sh` invokes it without the flag**,
+so the pipeline overwrites a live sixteen-entry verification with a frozen ten-entry one and exits
+OK. The twelve lost keys are those six entries' two fragment fields.
+
+**`RECORDED` is stale.** It holds the pre-Phase-E ten. The pipeline's own output therefore
+contradicts the reference list the same pipeline generates, which lists sixteen.
+
+**This is D-31's class, and the class is not closed.** D-31 was `--self-test`; this is `--verify`.
+Both are flag-gated behaviour where the pipeline's invocation writes a different, degraded artifact
+than the committed one. D-31 was caught only because a downstream assert rejected its output. This
+one has no downstream assert, so it degrades in silence — the worse failure, and the reason the
+completed run did not close the class as was assumed.
+
+**Cheapest fix, not implemented here.** Pinning the fetched source into the repository is the
+cheaper of the two routes, and cheaper than it looks: `RECORDED` *is* the pinning mechanism and is
+merely out of date, so regenerating it from a `--verify` run restores offline reproducibility
+without new machinery. It should be paired with an assertion that the pinned table covers every
+entry in `ENTRIES`, which converts this silent degradation into a loud failure.
+
+**Evidence** `SRC` `results/t1_bibliography_verified.json`, `scripts/t1_bibliography.py`, `reproduce.sh`
+**Status** ACTIVE
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are

@@ -2995,12 +2995,26 @@
         "results/t1_bibliography_verified.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-34",
+      "claim": "D-33 resolved: the committed numbers are right and the pipeline writes a stale table",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/t1_bibliography_verified.json",
+        "scripts/t1_bibliography.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 33,
+    "D": 34,
     "M": 61,
     "O": 14,
     "R": 73,
