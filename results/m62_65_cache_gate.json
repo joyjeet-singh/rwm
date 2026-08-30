@@ -1,0 +1,28 @@
+{
+  "gate": "per-triple cache vs published aggregates",
+  "model_id": "released_ckpt_ens5",
+  "arena": "all ten episodes",
+  "unit_length": 400,
+  "cache_file": "released_ckpt_ens5__all_ten_episodes__u400.npz",
+  "cache_sha256": "598dcdb54ebbc583ef7c9e3a69950c6641321fd6ddf90d39c804aeb15c0854fc",
+  "known_good_artifact": "results/task_d_nind20.json",
+  "n_figures_checked": 171,
+  "n_bitwise_identical": 171,
+  "n_differing": 0,
+  "differences": [],
+  "tolerance_applied": false,
+  "tolerance_note": "bitwise equality only. A float tolerance applied because the numbers are close is a workaround, and a workaround does not close the entry (addendum B).",
+  "reduction_order_trace": {
+    "figures_affected": "d2 r_epistemic, d2 r_partial, d4 corr_with_total_abs_error -- every figure routed through the summed epistemic scalar",
+    "cause": "the 45-term sum over state dimensions is performed by torch in float32, not by numpy; re-summing the identical per-dimension values in numpy reduces in a different order and lands a few units in the last place away",
+    "sum_performed_at": "src/score_reference.py:119",
+    "per_dimension_term_cached": "src/score_reference.py:118",
+    "applied_at": "envs/base.py:166",
+    "resolution": "the gate reconstructs the scalar the way the model defines it, in torch float32, which reproduces every affected figure bitwise. No tolerance is applied.",
+    "max_abs_gap_if_summed_in_numpy_float64": 2.0936131477355957e-06,
+    "independent_evidence_the_arrays_are_exact": "the 144 D1 figures are bitwise identical and none routes through this sum"
+  },
+  "residual_space": "config-normalised state",
+  "residual_sign_convention": "prediction minus truth",
+  "verdict": "PASS"
+}

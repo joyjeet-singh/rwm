@@ -57,3 +57,9 @@ checkpoint_manifest.json
 # coming back.
 docs/SUPPLEMENTARY_CORRESPONDENCE.md
 SUPPLEMENTARY_CORRESPONDENCE.md
+
+# per-triple (trajectory, step, dimension) arrays, Session 2 addendum B.
+# Tens of megabytes of intermediates. Deliberately NOT under results/: the paper
+# cites "0.90% of the 905,391 numeric values under results/" in §8 and Appendix D,
+# and writing intermediates there would move a denominator the paper commits to.
+cache/

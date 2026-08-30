@@ -178,6 +178,31 @@ def main():
     epi = epi.numpy().astype(np.float64)
     total = np.sqrt(alea ** 2 + epi ** 2)
 
+    # --- optional per-triple cache (Session 2 addendum B) -------------------
+    # OFF by default. Nothing above or below this block is conditional on it, so
+    # the default path is byte-identical with the flag absent -- which is the
+    # property the differential gate rests on. The SIGNED residual is recomputed
+    # here rather than taken from abs_err, because abs_err has already discarded
+    # the sign and the cache stores signed (see src/per_triple_cache.py).
+    if os.environ.get("STORE_PER_TRIPLE"):
+        import per_triple_cache as PTC
+        sl_all = slice(START, LEN)
+        PTC.write(
+            model_id="released_ckpt_ens5", arena="all ten episodes", unit_length=LEN,
+            err_signed=(pred - st).numpy().astype(np.float64)[:, sl_all],
+            sig_aleatoric=alea[:, sl_all], sig_epistemic=epi[:, sl_all],
+            traj_to_episode=[int(ep[s]) for s in starts],
+            traj_start_row=[int(s) for s in starts],
+            n_independent=n_ind, start_step=START,
+            residual_space="config-normalised state",
+            residual_space_detail=(
+                "R.normalise_state with the reference config's state_data_mean and "
+                "state_data_std; the same space every statistic in this script uses"),
+            extra={"checkpoint": R.rel(paths["ckpt"]), "ensemble_size": model.ensemble,
+                   "episodes": allep, "action_offset": 1,
+                   "produced_by": "scripts/task_d_nind20.py STORE_PER_TRIPLE=1"})
+    # -----------------------------------------------------------------------
+
     out = {"design": {"checkpoint": R.rel(paths["ckpt"]), "ensemble_size": model.ensemble,
                       "arena": "all ten episodes", "episodes": allep,
                       "trajectories": n_traj, "n_independent": n_ind,
