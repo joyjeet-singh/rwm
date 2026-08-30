@@ -6091,7 +6091,21 @@ Under no branch does this rule discharge, re-anchor or re-denominate `M-23`, `M-
 were committed over.
 
 **Evidence** `RUN` `results/m62_episode_clustering.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Discharged** by `results/m62_episode_clustering.json`. **It returns NO MOVE.**
+In the one cell with power -- §6.7 over all ten episodes, n = 20 -> 10 -- neither statistic
+changes verdict. The pooled correlation goes from [+0.5446, +0.6940] at the trajectory level to
+[+0.5254, +0.7157] at the episode level, a width ratio of 1.27, and still
+excludes zero. The double-demeaned r_dd goes from [+0.3155, +0.5749] to
+[+0.3197, +0.5730], a width ratio of 0.98, and also still excludes zero.
+**The episode-level interval on r_dd is marginally NARROWER, not wider**, which is worth
+stating because the rule's motivating worry was that trajectory clustering understates
+width. A coarser cluster level is not guaranteed to widen an interval and here it does not.
+The other four named cells returned exactly what this rule said in advance they would:
+cells 1, 2 and 4 are out-of-sample and NOT INFORMATIVE at n = 2, with their full
+three-value bootstrap distributions printed in the artifact rather than a percentile
+interval; cell 5 is NOT BOOTSTRAPPABLE at n = 1 per direction. One sentence in the body
+records the check and names the arena in which it was informative.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### M-63 — Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? · **NEW**
 **Committed before any per-dimension coverage figure exists.** Per-dimension *sign counts* are
@@ -6167,7 +6181,24 @@ trajectories from 8 evaluation seeds, whereas this rule is coverage at ±1σ at 
 reported as suggestive and as nothing more.
 
 **Evidence** `RUN` `results/m63_per_dimension_coverage.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Discharged** by `results/m63_per_dimension_coverage.json`. **It returns UNIFORM.**
+On the governing arena -- the released checkpoint over all ten episodes at h = 1,
+n_independent = 20 -- the interquartile range of the 45 per-dimension coverages is
+10.00 points, under the 15-point threshold, and the pooled figure of
+16.22% lies inside it. The five worst dimensions --
+`qd_LH_HAA`, `tau_RF_KFE`, `w_y`, `qd_RF_KFE`, `v_z` -- carry
+14.6% of the shortfall from 68.27%, well under the half
+that would have made it CONCENTRATED. **The h = 1 coverage failure is a property of the
+whole state vector rather than of a few channels**, which is the less interesting of the
+two branches and the one the data returned.
+Two things the rule fixed in advance held. The distribution is quantised at
+5.00 points, so the 15-point threshold spans three steps and the
+reading is coarse by construction. And the IQR test was applied only to this arena: on the
+ensemble-5 arms a per-dimension coverage at h = 1 takes one of five values per seed, so
+their distribution is reported descriptively with no threshold, as committed.
+The overlap with `R-29`'s seven floor-losing dimensions is ['v_z', 'w_y'] at h = 1 and is reported as
+suggestive only: a different quantity, at a different horizon, on a different arena.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### M-64 — Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h ≤ 128? · **NEW**
 **Committed before any short-unit figure exists.** Every evaluation in this project uses 400-step
@@ -6300,7 +6331,27 @@ per-horizon one succeeds. A GAUSSIAN NOMINAL ADEQUATE verdict licenses the 68.27
 nothing further.
 
 **Evidence** `RUN` `results/m65_gaussian_nominal.json`
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Discharged** by `results/m65_gaussian_nominal.json`. **It returns NOT HEAVY-TAILED, in
+every one of 48 model x horizon cells.**
+Under an oracle rescale, coverage lands at or above 68.27% everywhere: 15 cells fall
+inside the committed +-5-point band and 33 land above it. **No cell is HEAVY-TAILED.**
+So the Gaussian nominal is defensible, and the paper's attribution of the coverage
+shortfall to scale rather than to distributional shape is not an assumption but a
+measurement. The decomposition the rule fixed in advance makes it explicit: on the
+released checkpoint's epistemic term at h = 1, -0.25 of the shortfall is
+attributable to shape and the remainder to scale.
+**The oracle constant grows with horizon**, and that is the half of this result that bears
+on the lambda objection. On the released checkpoint's epistemic term it runs from about
+10.4 at h = 1 to about 43.2 at h = 368. Because the constant is fitted and scored on the
+same data, that is an UPPER BOUND on what any constant rescale could achieve -- so no
+single lambda repairs a quantity whose required constant moves by a factor of four across
+the rollout. The rule's own scoping guard applies: this is a measurement about the Gaussian
+nominal, and citing it inside the lambda argument is a second use of one measurement, not a
+re-scoping of this verdict.
+The positive branch stays weak, as committed: an adequate oracle-rescaled coverage does not
+show a transferable constant exists, and §6.8 already shows a constant fails across
+horizons where a per-horizon one succeeds.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 ### M-66 — The Appendix B glob defect survived in a second script, and pinning it improves our own number · **NEW**
 **The disclosure first, because it is the part a reader should weigh hardest.** The fix below

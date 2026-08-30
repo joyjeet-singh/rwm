@@ -1,0 +1,79 @@
+{
+  "check": "2.4 -- in-sample framing of the released checkpoint's h=1 calibration row",
+  "computation": "none; every value is read from an existing artifact",
+  "source_artifact": "results/task_d_nind20.json",
+  "arena_string": "all ten episodes",
+  "arena_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "n_arena_episodes": 10,
+  "n_independent": 20,
+  "n_trajectories": 20,
+  "artifact_rationale": "the released checkpoint trained on all ten episodes, so restricting it to the held-out pair buys no independence",
+  "released_checkpoint": "../robotic_world_model_lite/assets/models/pretrain_rnn_ens.pt",
+  "released_ckpt_trained_on_episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "n_trained_on": 10,
+  "our_train_episodes": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9
+  ],
+  "our_holdout_episodes": [
+    1,
+    8
+  ],
+  "note_on_split": "the train/holdout split is OURS, for OUR arms. The released checkpoint predates it and trained on all ten episodes, so it has no held-out arena in this dataset at all",
+  "arena_episodes_the_checkpoint_trained_on": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "n_overlap": 10,
+  "fully_in_sample": true,
+  "h1_ratio_err_over_sigma": 8.30435143196931,
+  "h1_ratio_ci": [
+    6.090629309700047,
+    9.6975805135728
+  ],
+  "h1_coverage_pm1": 0.1622222222222222,
+  "h1_coverage_pm1_ci": [
+    0.13444444444444442,
+    0.18888888888888888
+  ],
+  "calibrated_target_pm1_pct": 68.27,
+  "inference": "the released checkpoint's h=1 calibration row is measured on episodes it trained on. That biases toward better calibration, and it is still 8.3x out.",
+  "direction_of_bias": "toward better calibration, i.e. the measurement flatters the model",
+  "why_this_arena_anyway": "the released checkpoint trained on all ten episodes, so restricting it to the held-out pair buys no independence"
+}

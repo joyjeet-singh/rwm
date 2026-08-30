@@ -2944,7 +2944,7 @@
       "id": "M-62",
       "claim": "Pre-registered: does any headline verdict change when the bootstrap resamples episodes r",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [
         "RUN"
       ],
@@ -2963,7 +2963,7 @@
       "id": "M-63",
       "claim": "Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or c",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [
         "RUN"
       ],
@@ -2991,7 +2991,7 @@
       "id": "M-65",
       "claim": "Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distributi",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [
         "RUN"
       ],

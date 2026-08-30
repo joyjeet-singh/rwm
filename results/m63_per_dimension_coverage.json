@@ -1,0 +1,1017 @@
+{
+  "rule": "M-63",
+  "target_pm1_pct": 68.27,
+  "target_pm2_pct": 95.45,
+  "decomposition": "pooled coverage is the unweighted mean of the 45 per-dimension coverages, because every dimension contributes the same number of triples",
+  "thresholds_committed_in_advance": {
+    "uniform": "IQR of the 45 per-dimension coverages < 15 points AND the pooled figure lies inside that IQR",
+    "concentrated": "the five worst dimensions carry more than half the shortfall from 68.27%",
+    "iqr_test_applies_to": "the released checkpoint at n_independent = 20 only",
+    "why": "per-dimension coverage at h=1 on 4 trajectories takes only five values; the IQR threshold is meaningless there and M-63 restricted it before the run"
+  },
+  "arenas": {
+    "released_ckpt_all_ten_h1": {
+      "arena": "all ten episodes (n_independent = 20)",
+      "n_indicators_per_dimension": 20,
+      "quantisation_points": 5.0,
+      "pooled_coverage_pct": 16.22222222222222,
+      "pooled_equals_unweighted_mean": true,
+      "median_pct": 15.0,
+      "iqr_points": 10.0,
+      "q1_pct": 10.0,
+      "q3_pct": 20.0,
+      "min_pct": 0.0,
+      "max_pct": 45.0,
+      "pooled_inside_iqr": true,
+      "five_worst": [
+        {
+          "dim": "qd_LH_HAA",
+          "index": 22,
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "tau_RF_KFE",
+          "index": 43,
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "w_y",
+          "index": 4,
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "qd_RF_KFE",
+          "index": 31,
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "v_z",
+          "index": 2,
+          "coverage_pct": 0.0
+        }
+      ],
+      "shortfall_total_points": 2342.1499999999996,
+      "five_worst_share_of_shortfall": 0.14574215998121384,
+      "per_dimension": [
+        {
+          "dim": "v_x",
+          "coverage_pct": 30.0
+        },
+        {
+          "dim": "v_y",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "v_z",
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "w_x",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "w_y",
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "w_z",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "g_x",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "g_y",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "g_z",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "q_LF_HAA",
+          "coverage_pct": 45.0
+        },
+        {
+          "dim": "q_LH_HAA",
+          "coverage_pct": 45.0
+        },
+        {
+          "dim": "q_RF_HAA",
+          "coverage_pct": 45.0
+        },
+        {
+          "dim": "q_RH_HAA",
+          "coverage_pct": 45.0
+        },
+        {
+          "dim": "q_LF_HFE",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "q_LH_HFE",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "q_RF_HFE",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "q_RH_HFE",
+          "coverage_pct": 40.0
+        },
+        {
+          "dim": "q_LF_KFE",
+          "coverage_pct": 30.0
+        },
+        {
+          "dim": "q_LH_KFE",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "q_RF_KFE",
+          "coverage_pct": 20.0
+        },
+        {
+          "dim": "q_RH_KFE",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "qd_LF_HAA",
+          "coverage_pct": 5.0
+        },
+        {
+          "dim": "qd_LH_HAA",
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "qd_RF_HAA",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "qd_RH_HAA",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "qd_LF_HFE",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "qd_LH_HFE",
+          "coverage_pct": 30.0
+        },
+        {
+          "dim": "qd_RF_HFE",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "qd_RH_HFE",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "qd_LF_KFE",
+          "coverage_pct": 20.0
+        },
+        {
+          "dim": "qd_LH_KFE",
+          "coverage_pct": 5.0
+        },
+        {
+          "dim": "qd_RF_KFE",
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "qd_RH_KFE",
+          "coverage_pct": 5.0
+        },
+        {
+          "dim": "tau_LF_HAA",
+          "coverage_pct": 5.0
+        },
+        {
+          "dim": "tau_LH_HAA",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "tau_RF_HAA",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "tau_RH_HAA",
+          "coverage_pct": 20.0
+        },
+        {
+          "dim": "tau_LF_HFE",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "tau_LH_HFE",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "tau_RF_HFE",
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "tau_RH_HFE",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "tau_LF_KFE",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "tau_LH_KFE",
+          "coverage_pct": 15.0
+        },
+        {
+          "dim": "tau_RF_KFE",
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "tau_RH_KFE",
+          "coverage_pct": 10.0
+        }
+      ],
+      "overlap_with_R29": {
+        "r29_dims": [
+          "v_z",
+          "w_x",
+          "w_y",
+          "g_x",
+          "g_y",
+          "g_z",
+          "tau_RF_HAA"
+        ],
+        "intersection_with_five_worst": [
+          "v_z",
+          "w_y"
+        ],
+        "n_intersection": 2,
+        "caveat": "R-29 is per-dimension nRMSE against the hold-last floor at h=368 over 3,200 trajectories; this is coverage at +-1 sigma at h=1 and h=100 on 20. A different quantity, horizon and arena. Suggestive only; no P-value attaches."
+      },
+      "threshold_applies": true,
+      "verdict": "UNIFORM"
+    },
+    "released_ckpt_all_ten_h100": {
+      "arena": "all ten episodes (n_independent = 20)",
+      "n_indicators_per_dimension": 2000,
+      "quantisation_points": 0.05,
+      "pooled_coverage_pct": 4.61,
+      "pooled_equals_unweighted_mean": true,
+      "median_pct": 4.2,
+      "iqr_points": 2.25,
+      "q1_pct": 3.25,
+      "q3_pct": 5.5,
+      "min_pct": 0.5499999999999999,
+      "max_pct": 21.55,
+      "pooled_inside_iqr": true,
+      "five_worst": [
+        {
+          "dim": "g_y",
+          "index": 7,
+          "coverage_pct": 0.5499999999999999
+        },
+        {
+          "dim": "g_x",
+          "index": 6,
+          "coverage_pct": 0.95
+        },
+        {
+          "dim": "q_LF_HFE",
+          "index": 13,
+          "coverage_pct": 1.7500000000000002
+        },
+        {
+          "dim": "v_y",
+          "index": 1,
+          "coverage_pct": 2.0500000000000003
+        },
+        {
+          "dim": "w_x",
+          "index": 3,
+          "coverage_pct": 2.15
+        }
+      ],
+      "shortfall_total_points": 2864.6999999999994,
+      "five_worst_share_of_shortfall": 0.11655670750863967,
+      "per_dimension": [
+        {
+          "dim": "v_x",
+          "coverage_pct": 3.25
+        },
+        {
+          "dim": "v_y",
+          "coverage_pct": 2.0500000000000003
+        },
+        {
+          "dim": "v_z",
+          "coverage_pct": 3.25
+        },
+        {
+          "dim": "w_x",
+          "coverage_pct": 2.15
+        },
+        {
+          "dim": "w_y",
+          "coverage_pct": 2.25
+        },
+        {
+          "dim": "w_z",
+          "coverage_pct": 2.45
+        },
+        {
+          "dim": "g_x",
+          "coverage_pct": 0.95
+        },
+        {
+          "dim": "g_y",
+          "coverage_pct": 0.5499999999999999
+        },
+        {
+          "dim": "g_z",
+          "coverage_pct": 21.55
+        },
+        {
+          "dim": "q_LF_HAA",
+          "coverage_pct": 3.85
+        },
+        {
+          "dim": "q_LH_HAA",
+          "coverage_pct": 5.949999999999999
+        },
+        {
+          "dim": "q_RF_HAA",
+          "coverage_pct": 4.05
+        },
+        {
+          "dim": "q_RH_HAA",
+          "coverage_pct": 3.75
+        },
+        {
+          "dim": "q_LF_HFE",
+          "coverage_pct": 1.7500000000000002
+        },
+        {
+          "dim": "q_LH_HFE",
+          "coverage_pct": 2.9000000000000004
+        },
+        {
+          "dim": "q_RF_HFE",
+          "coverage_pct": 3.75
+        },
+        {
+          "dim": "q_RH_HFE",
+          "coverage_pct": 3.0
+        },
+        {
+          "dim": "q_LF_KFE",
+          "coverage_pct": 6.9
+        },
+        {
+          "dim": "q_LH_KFE",
+          "coverage_pct": 2.45
+        },
+        {
+          "dim": "q_RF_KFE",
+          "coverage_pct": 5.5
+        },
+        {
+          "dim": "q_RH_KFE",
+          "coverage_pct": 3.05
+        },
+        {
+          "dim": "qd_LF_HAA",
+          "coverage_pct": 4.3
+        },
+        {
+          "dim": "qd_LH_HAA",
+          "coverage_pct": 3.8
+        },
+        {
+          "dim": "qd_RF_HAA",
+          "coverage_pct": 3.5999999999999996
+        },
+        {
+          "dim": "qd_RH_HAA",
+          "coverage_pct": 4.3
+        },
+        {
+          "dim": "qd_LF_HFE",
+          "coverage_pct": 5.2
+        },
+        {
+          "dim": "qd_LH_HFE",
+          "coverage_pct": 4.2
+        },
+        {
+          "dim": "qd_RF_HFE",
+          "coverage_pct": 4.9
+        },
+        {
+          "dim": "qd_RH_HFE",
+          "coverage_pct": 4.5
+        },
+        {
+          "dim": "qd_LF_KFE",
+          "coverage_pct": 7.35
+        },
+        {
+          "dim": "qd_LH_KFE",
+          "coverage_pct": 4.3
+        },
+        {
+          "dim": "qd_RF_KFE",
+          "coverage_pct": 4.9
+        },
+        {
+          "dim": "qd_RH_KFE",
+          "coverage_pct": 6.45
+        },
+        {
+          "dim": "tau_LF_HAA",
+          "coverage_pct": 6.45
+        },
+        {
+          "dim": "tau_LH_HAA",
+          "coverage_pct": 5.8999999999999995
+        },
+        {
+          "dim": "tau_RF_HAA",
+          "coverage_pct": 3.75
+        },
+        {
+          "dim": "tau_RH_HAA",
+          "coverage_pct": 7.55
+        },
+        {
+          "dim": "tau_LF_HFE",
+          "coverage_pct": 5.0
+        },
+        {
+          "dim": "tau_LH_HFE",
+          "coverage_pct": 5.65
+        },
+        {
+          "dim": "tau_RF_HFE",
+          "coverage_pct": 4.8500000000000005
+        },
+        {
+          "dim": "tau_RH_HFE",
+          "coverage_pct": 8.05
+        },
+        {
+          "dim": "tau_LF_KFE",
+          "coverage_pct": 5.65
+        },
+        {
+          "dim": "tau_LH_KFE",
+          "coverage_pct": 4.55
+        },
+        {
+          "dim": "tau_RF_KFE",
+          "coverage_pct": 3.35
+        },
+        {
+          "dim": "tau_RH_KFE",
+          "coverage_pct": 3.55
+        }
+      ],
+      "overlap_with_R29": {
+        "r29_dims": [
+          "v_z",
+          "w_x",
+          "w_y",
+          "g_x",
+          "g_y",
+          "g_z",
+          "tau_RF_HAA"
+        ],
+        "intersection_with_five_worst": [
+          "g_x",
+          "g_y",
+          "w_x"
+        ],
+        "n_intersection": 3,
+        "caveat": "R-29 is per-dimension nRMSE against the hold-last floor at h=368 over 3,200 trajectories; this is coverage at +-1 sigma at h=1 and h=100 on 20. A different quantity, horizon and arena. Suggestive only; no P-value attaches."
+      },
+      "threshold_applies": true,
+      "verdict": "UNIFORM"
+    },
+    "armA_ens5_oos_h1": {
+      "arena": "out-of-sample held-out pair, ensemble-5, 3 seeds (n_independent = 4)",
+      "n_indicators_per_dimension": 12,
+      "quantisation_points": 8.333333333333334,
+      "pooled_coverage_pct": 35.925925925925924,
+      "pooled_equals_unweighted_mean": true,
+      "median_pct": 33.333333333333336,
+      "iqr_points": 33.33333333333333,
+      "q1_pct": 16.666666666666668,
+      "q3_pct": 50.0,
+      "min_pct": 0.0,
+      "max_pct": 100.0,
+      "pooled_inside_iqr": true,
+      "five_worst": [
+        {
+          "dim": "tau_LH_HAA",
+          "index": 34,
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "w_x",
+          "index": 3,
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "tau_RF_KFE",
+          "index": 43,
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "qd_RF_HFE",
+          "index": 27,
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "qd_LF_KFE",
+          "index": 29,
+          "coverage_pct": 8.333333333333334
+        }
+      ],
+      "shortfall_total_points": 1455.483333333333,
+      "five_worst_share_of_shortfall": 0.21162500429410624,
+      "per_dimension": [
+        {
+          "dim": "v_x",
+          "coverage_pct": 66.66666666666667
+        },
+        {
+          "dim": "v_y",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "v_z",
+          "coverage_pct": 58.333333333333336
+        },
+        {
+          "dim": "w_x",
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "w_y",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "w_z",
+          "coverage_pct": 41.666666666666664
+        },
+        {
+          "dim": "g_x",
+          "coverage_pct": 16.666666666666668
+        },
+        {
+          "dim": "g_y",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "g_z",
+          "coverage_pct": 100.0
+        },
+        {
+          "dim": "q_LF_HAA",
+          "coverage_pct": 58.333333333333336
+        },
+        {
+          "dim": "q_LH_HAA",
+          "coverage_pct": 58.333333333333336
+        },
+        {
+          "dim": "q_RF_HAA",
+          "coverage_pct": 66.66666666666667
+        },
+        {
+          "dim": "q_RH_HAA",
+          "coverage_pct": 41.666666666666664
+        },
+        {
+          "dim": "q_LF_HFE",
+          "coverage_pct": 58.333333333333336
+        },
+        {
+          "dim": "q_LH_HFE",
+          "coverage_pct": 58.333333333333336
+        },
+        {
+          "dim": "q_RF_HFE",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "q_RH_HFE",
+          "coverage_pct": 58.333333333333336
+        },
+        {
+          "dim": "q_LF_KFE",
+          "coverage_pct": 66.66666666666667
+        },
+        {
+          "dim": "q_LH_KFE",
+          "coverage_pct": 41.666666666666664
+        },
+        {
+          "dim": "q_RF_KFE",
+          "coverage_pct": 50.0
+        },
+        {
+          "dim": "q_RH_KFE",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "qd_LF_HAA",
+          "coverage_pct": 41.666666666666664
+        },
+        {
+          "dim": "qd_LH_HAA",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "qd_RF_HAA",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "qd_RH_HAA",
+          "coverage_pct": 16.666666666666668
+        },
+        {
+          "dim": "qd_LF_HFE",
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "qd_LH_HFE",
+          "coverage_pct": 16.666666666666668
+        },
+        {
+          "dim": "qd_RF_HFE",
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "qd_RH_HFE",
+          "coverage_pct": 41.666666666666664
+        },
+        {
+          "dim": "qd_LF_KFE",
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "qd_LH_KFE",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "qd_RF_KFE",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "qd_RH_KFE",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "tau_LF_HAA",
+          "coverage_pct": 25.0
+        },
+        {
+          "dim": "tau_LH_HAA",
+          "coverage_pct": 0.0
+        },
+        {
+          "dim": "tau_RF_HAA",
+          "coverage_pct": 50.0
+        },
+        {
+          "dim": "tau_RH_HAA",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "tau_LF_HFE",
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "tau_LH_HFE",
+          "coverage_pct": 33.333333333333336
+        },
+        {
+          "dim": "tau_RF_HFE",
+          "coverage_pct": 16.666666666666668
+        },
+        {
+          "dim": "tau_RH_HFE",
+          "coverage_pct": 50.0
+        },
+        {
+          "dim": "tau_LF_KFE",
+          "coverage_pct": 16.666666666666668
+        },
+        {
+          "dim": "tau_LH_KFE",
+          "coverage_pct": 41.666666666666664
+        },
+        {
+          "dim": "tau_RF_KFE",
+          "coverage_pct": 8.333333333333334
+        },
+        {
+          "dim": "tau_RH_KFE",
+          "coverage_pct": 41.666666666666664
+        }
+      ],
+      "overlap_with_R29": {
+        "r29_dims": [
+          "v_z",
+          "w_x",
+          "w_y",
+          "g_x",
+          "g_y",
+          "g_z",
+          "tau_RF_HAA"
+        ],
+        "intersection_with_five_worst": [
+          "w_x"
+        ],
+        "n_intersection": 1,
+        "caveat": "R-29 is per-dimension nRMSE against the hold-last floor at h=368 over 3,200 trajectories; this is coverage at +-1 sigma at h=1 and h=100 on 20. A different quantity, horizon and arena. Suggestive only; no P-value attaches."
+      },
+      "threshold_applies": false,
+      "verdict": "NOT ASSESSED \u2014 descriptive only",
+      "why_no_threshold": "M-63 restricted the IQR test to the n=20 arena in advance. Per seed a per-dimension coverage at h=1 takes only the five values 0, 25, 50, 75, 100%; pooling three seeds gives 8.3-point steps. The distribution is reported descriptively and no threshold is applied.",
+      "per_seed_pooled_pct": [
+        35.0,
+        37.77777777777778,
+        35.0
+      ]
+    },
+    "armA_ens5_oos_h100": {
+      "arena": "out-of-sample held-out pair, ensemble-5, 3 seeds (n_independent = 4)",
+      "n_indicators_per_dimension": 1200,
+      "quantisation_points": 0.08333333333333333,
+      "pooled_coverage_pct": 8.192592592592593,
+      "pooled_equals_unweighted_mean": true,
+      "median_pct": 7.75,
+      "iqr_points": 4.083333333333333,
+      "q1_pct": 6.083333333333333,
+      "q3_pct": 10.166666666666666,
+      "min_pct": 1.8333333333333333,
+      "max_pct": 15.5,
+      "pooled_inside_iqr": true,
+      "five_worst": [
+        {
+          "dim": "v_x",
+          "index": 0,
+          "coverage_pct": 1.8333333333333333
+        },
+        {
+          "dim": "g_x",
+          "index": 6,
+          "coverage_pct": 3.1666666666666665
+        },
+        {
+          "dim": "g_y",
+          "index": 7,
+          "coverage_pct": 4.0
+        },
+        {
+          "dim": "q_RH_HAA",
+          "index": 12,
+          "coverage_pct": 4.25
+        },
+        {
+          "dim": "q_LH_HAA",
+          "index": 10,
+          "coverage_pct": 4.833333333333333
+        }
+      ],
+      "shortfall_total_points": 2703.4833333333336,
+      "five_worst_share_of_shortfall": 0.119574129672213,
+      "per_dimension": [
+        {
+          "dim": "v_x",
+          "coverage_pct": 1.8333333333333333
+        },
+        {
+          "dim": "v_y",
+          "coverage_pct": 5.75
+        },
+        {
+          "dim": "v_z",
+          "coverage_pct": 11.25
+        },
+        {
+          "dim": "w_x",
+          "coverage_pct": 8.916666666666666
+        },
+        {
+          "dim": "w_y",
+          "coverage_pct": 11.583333333333334
+        },
+        {
+          "dim": "w_z",
+          "coverage_pct": 7.416666666666667
+        },
+        {
+          "dim": "g_x",
+          "coverage_pct": 3.1666666666666665
+        },
+        {
+          "dim": "g_y",
+          "coverage_pct": 4.0
+        },
+        {
+          "dim": "g_z",
+          "coverage_pct": 15.5
+        },
+        {
+          "dim": "q_LF_HAA",
+          "coverage_pct": 12.083333333333334
+        },
+        {
+          "dim": "q_LH_HAA",
+          "coverage_pct": 4.833333333333333
+        },
+        {
+          "dim": "q_RF_HAA",
+          "coverage_pct": 5.583333333333333
+        },
+        {
+          "dim": "q_RH_HAA",
+          "coverage_pct": 4.25
+        },
+        {
+          "dim": "q_LF_HFE",
+          "coverage_pct": 5.416666666666667
+        },
+        {
+          "dim": "q_LH_HFE",
+          "coverage_pct": 7.583333333333333
+        },
+        {
+          "dim": "q_RF_HFE",
+          "coverage_pct": 7.75
+        },
+        {
+          "dim": "q_RH_HFE",
+          "coverage_pct": 7.333333333333333
+        },
+        {
+          "dim": "q_LF_KFE",
+          "coverage_pct": 10.0
+        },
+        {
+          "dim": "q_LH_KFE",
+          "coverage_pct": 9.083333333333334
+        },
+        {
+          "dim": "q_RF_KFE",
+          "coverage_pct": 5.583333333333333
+        },
+        {
+          "dim": "q_RH_KFE",
+          "coverage_pct": 7.166666666666667
+        },
+        {
+          "dim": "qd_LF_HAA",
+          "coverage_pct": 9.666666666666666
+        },
+        {
+          "dim": "qd_LH_HAA",
+          "coverage_pct": 13.083333333333334
+        },
+        {
+          "dim": "qd_RF_HAA",
+          "coverage_pct": 8.083333333333334
+        },
+        {
+          "dim": "qd_RH_HAA",
+          "coverage_pct": 10.583333333333334
+        },
+        {
+          "dim": "qd_LF_HFE",
+          "coverage_pct": 8.666666666666666
+        },
+        {
+          "dim": "qd_LH_HFE",
+          "coverage_pct": 10.5
+        },
+        {
+          "dim": "qd_RF_HFE",
+          "coverage_pct": 8.416666666666666
+        },
+        {
+          "dim": "qd_RH_HFE",
+          "coverage_pct": 8.0
+        },
+        {
+          "dim": "qd_LF_KFE",
+          "coverage_pct": 11.75
+        },
+        {
+          "dim": "qd_LH_KFE",
+          "coverage_pct": 14.75
+        },
+        {
+          "dim": "qd_RF_KFE",
+          "coverage_pct": 9.166666666666666
+        },
+        {
+          "dim": "qd_RH_KFE",
+          "coverage_pct": 10.166666666666666
+        },
+        {
+          "dim": "tau_LF_HAA",
+          "coverage_pct": 7.0
+        },
+        {
+          "dim": "tau_LH_HAA",
+          "coverage_pct": 7.5
+        },
+        {
+          "dim": "tau_RF_HAA",
+          "coverage_pct": 6.5
+        },
+        {
+          "dim": "tau_RH_HAA",
+          "coverage_pct": 6.0
+        },
+        {
+          "dim": "tau_LF_HFE",
+          "coverage_pct": 5.0
+        },
+        {
+          "dim": "tau_LH_HFE",
+          "coverage_pct": 6.833333333333333
+        },
+        {
+          "dim": "tau_RF_HFE",
+          "coverage_pct": 6.083333333333333
+        },
+        {
+          "dim": "tau_RH_HFE",
+          "coverage_pct": 7.666666666666667
+        },
+        {
+          "dim": "tau_LF_KFE",
+          "coverage_pct": 11.75
+        },
+        {
+          "dim": "tau_LH_KFE",
+          "coverage_pct": 10.666666666666666
+        },
+        {
+          "dim": "tau_RF_KFE",
+          "coverage_pct": 7.75
+        },
+        {
+          "dim": "tau_RH_KFE",
+          "coverage_pct": 7.0
+        }
+      ],
+      "overlap_with_R29": {
+        "r29_dims": [
+          "v_z",
+          "w_x",
+          "w_y",
+          "g_x",
+          "g_y",
+          "g_z",
+          "tau_RF_HAA"
+        ],
+        "intersection_with_five_worst": [
+          "g_x",
+          "g_y"
+        ],
+        "n_intersection": 2,
+        "caveat": "R-29 is per-dimension nRMSE against the hold-last floor at h=368 over 3,200 trajectories; this is coverage at +-1 sigma at h=1 and h=100 on 20. A different quantity, horizon and arena. Suggestive only; no P-value attaches."
+      },
+      "threshold_applies": false,
+      "verdict": "NOT ASSESSED \u2014 descriptive only",
+      "why_no_threshold": "M-63 restricted the IQR test to the n=20 arena in advance. Per seed a per-dimension coverage at h=1 takes only the five values 0, 25, 50, 75, 100%; pooling three seeds gives 8.3-point steps. The distribution is reported descriptively and no threshold is applied.",
+      "per_seed_pooled_pct": [
+        8.616666666666667,
+        7.977777777777778,
+        7.983333333333334
+      ]
+    }
+  },
+  "verdict": {
+    "governing_arena": "released checkpoint, all ten episodes, h=1, n_independent=20",
+    "result": "UNIFORM",
+    "iqr_points": 10.0,
+    "pooled_inside_iqr": true,
+    "five_worst_share_of_shortfall": 0.14574215998121384,
+    "five_worst": [
+      "qd_LH_HAA",
+      "tau_RF_KFE",
+      "w_y",
+      "qd_RF_KFE",
+      "v_z"
+    ],
+    "reading": "CONCENTRATED is the sharper finding and names which channels fail; UNIFORM says the failure is a property of the whole state vector. Both were reportable in advance and neither is a bad outcome."
+  }
+}

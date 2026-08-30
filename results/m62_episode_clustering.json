@@ -1,0 +1,636 @@
+{
+  "rule": "M-62",
+  "committed": "before any episode-clustered figure existed",
+  "verdict_moves_definition": "an interval that excluded zero now spans it, or the reverse, or a pre-registered condition that held now fails",
+  "design": {
+    "out-of-sample": {
+      "episodes": [
+        1,
+        8
+      ],
+      "n_episodes": 2,
+      "n_trajectories": 4,
+      "n_trajectory_level": 4,
+      "n_episode_level": 2,
+      "trajectories_per_episode": 2
+    },
+    "in-sample": {
+      "episodes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ],
+      "n_episodes": 8,
+      "n_trajectories": 16,
+      "n_trajectory_level": 16,
+      "n_episode_level": 8,
+      "trajectories_per_episode": 2
+    },
+    "all ten": {
+      "episodes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "n_episodes": 10,
+      "n_trajectories": 20,
+      "n_trajectory_level": 20,
+      "n_episode_level": 10,
+      "trajectories_per_episode": 2
+    }
+  },
+  "cells": {
+    "3_section_6_7_pooled_and_rdd": {
+      "arena": "all ten episodes",
+      "artifact": "results/task_d_nind20.json + results/a2_trajectory_level_control.json",
+      "informative_at_episode_level": true,
+      "why": "n = 20 -> 10; the only named cell with real power at this level",
+      "statistics": {
+        "pooled_r": {
+          "point_estimate": 0.6053377910794817,
+          "trajectory_level": {
+            "ci": [
+              0.5445687821115579,
+              0.6939553485105802
+            ],
+            "n": 20,
+            "n_boot_finite": 20000,
+            "excludes_zero": true
+          },
+          "episode_level": {
+            "ci": [
+              0.5254273555679954,
+              0.7157404559497538
+            ],
+            "n": 10,
+            "n_boot_finite": 20000,
+            "excludes_zero": true
+          },
+          "width_ratio_episode_over_trajectory": 1.2739639511722791,
+          "verdict_moved": false,
+          "informative": true
+        },
+        "r_dd": {
+          "point_estimate": 0.4190723154149937,
+          "trajectory_level": {
+            "ci": [
+              0.3155148523496268,
+              0.5748920029153963
+            ],
+            "n": 20,
+            "n_boot_finite": 20000,
+            "excludes_zero": true
+          },
+          "episode_level": {
+            "ci": [
+              0.31974725636744544,
+              0.5730280154702152
+            ],
+            "n": 10,
+            "n_boot_finite": 20000,
+            "excludes_zero": true
+          },
+          "width_ratio_episode_over_trajectory": 0.9764960350219672,
+          "verdict_moved": false,
+          "informative": true
+        }
+      }
+    },
+    "1_section_5_ab_gap": {
+      "arena": "out-of-sample held-out pair",
+      "artifact": "results/a1_ab_by_horizon.json",
+      "informative_at_episode_level": false,
+      "why": "n = 2 episodes; three distinct multisets; uninformative by construction",
+      "by_horizon": {
+        "1": {
+          "point_estimate": -0.012796513270586729,
+          "trajectory_level": {
+            "ci": [
+              -0.032894500996917486,
+              0.0012711146846413612
+            ],
+            "n": 4,
+            "excludes_zero": false,
+            "published_ci": [
+              -0.032894499599933624,
+              0.0012711146846413612
+            ]
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": -0.02686414122581482
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": -0.012796513270586729
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 0.0012711146846413612
+              }
+            ]
+          }
+        },
+        "8": {
+          "point_estimate": 0.04852911829948425,
+          "trajectory_level": {
+            "ci": [
+              0.027129456400871277,
+              0.08435484021902084
+            ],
+            "n": 4,
+            "excludes_zero": true,
+            "published_ci": [
+              0.027129456400871277,
+              0.08435484021902084
+            ]
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 0.0671081393957138
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 0.04852911829948425
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 0.0299500972032547
+              }
+            ]
+          }
+        },
+        "32": {
+          "point_estimate": 0.3140115439891815,
+          "trajectory_level": {
+            "ci": [
+              0.12328436970710754,
+              0.5047387182712555
+            ],
+            "n": 4,
+            "excludes_zero": true,
+            "published_ci": [
+              0.12328436970710754,
+              0.5047386884689331
+            ]
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 0.5047387182712555
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 0.3140115439891815
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 0.12328436970710754
+              }
+            ]
+          }
+        },
+        "100": {
+          "point_estimate": 0.5860815346240997,
+          "trajectory_level": {
+            "ci": [
+              0.21744051575660706,
+              0.9547225534915924
+            ],
+            "n": 4,
+            "excludes_zero": true,
+            "published_ci": [
+              0.21744051575660706,
+              0.9547225832939148
+            ]
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 0.9547225534915924
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 0.5860815346240997
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 0.21744051575660706
+              }
+            ]
+          }
+        },
+        "128": {
+          "point_estimate": 0.6323587745428085,
+          "trajectory_level": {
+            "ci": [
+              0.2716388702392578,
+              0.9930786788463593
+            ],
+            "n": 4,
+            "excludes_zero": true,
+            "published_ci": [
+              0.2716388702392578,
+              0.9930787086486816
+            ]
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 0.9930786788463593
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 0.6323587745428085
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 0.2716388702392578
+              }
+            ]
+          }
+        },
+        "368": {
+          "point_estimate": 1.2915324866771698,
+          "trajectory_level": {
+            "ci": [
+              0.7003540992736816,
+              2.3390229493379593
+            ],
+            "n": 4,
+            "excludes_zero": true,
+            "published_ci": [
+              0.7003540992736816,
+              2.3390228748321533
+            ]
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 1.882710874080658
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 1.2915324866771698
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 0.7003540992736816
+              }
+            ]
+          }
+        }
+      }
+    },
+    "2_section_6_2_calibration": {
+      "arena": "out-of-sample held-out pair",
+      "artifact": "results/task1_calibration.json",
+      "informative_at_episode_level": false,
+      "why": "n = 2 episodes; three distinct multisets; uninformative by construction",
+      "by_model": {
+        "faithful (mse)": {
+          "statistic": "ratio_err_over_sigma (aleatoric)",
+          "point_estimate": 52.246850814614795,
+          "trajectory_level": {
+            "ci": [
+              39.59247147009349,
+              69.72808828076666
+            ],
+            "n": 4
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 64.12261223262198
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 52.246850814614795
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 40.302888921992924
+              }
+            ]
+          }
+        },
+        "corrected (nll)": {
+          "statistic": "ratio_err_over_sigma (aleatoric)",
+          "point_estimate": 10.936321983727606,
+          "trajectory_level": {
+            "ci": [
+              7.7969699349672545,
+              14.68444192648305
+            ],
+            "n": 4
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 14.075799231517511
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 10.936321983727606
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 7.7969699349672545
+              }
+            ]
+          }
+        },
+        "teacher-forced armB": {
+          "statistic": "ratio_err_over_sigma (aleatoric)",
+          "point_estimate": 314.98238385196277,
+          "trajectory_level": {
+            "ci": [
+              177.03784062818215,
+              508.7468414591529
+            ],
+            "n": 4
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 438.93721498516555
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 314.98238385196277
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 177.03784062818215
+              }
+            ]
+          }
+        },
+        "released ckpt": {
+          "statistic": "ratio_err_over_sigma (aleatoric)",
+          "point_estimate": 7878.115203167701,
+          "trajectory_level": {
+            "ci": [
+              5409.544477428065,
+              9933.958719916356
+            ],
+            "n": 4
+          },
+          "episode_level": {
+            "n": 2,
+            "interval_reported": false,
+            "reason": "n=2: the sampling distribution has three values",
+            "full_distribution": [
+              {
+                "episodes_drawn": [
+                  1,
+                  1
+                ],
+                "probability": 0.25,
+                "value": 7392.49144563897
+              },
+              {
+                "episodes_drawn": [
+                  1,
+                  8
+                ],
+                "probability": 0.5,
+                "value": 7878.115203167701
+              },
+              {
+                "episodes_drawn": [
+                  8,
+                  8
+                ],
+                "probability": 0.25,
+                "value": 8354.63721545568
+              }
+            ]
+          }
+        }
+      }
+    },
+    "4_section_6_10_paired_contrast": {
+      "artifact": "results/r2_independent_ensemble.json",
+      "informative_at_episode_level": false,
+      "why": "n = 2 episodes; three distinct multisets; uninformative by construction",
+      "note": "M-44 is DISCHARGED over this cell at the trajectory level and its verdict stands as returned. Nothing here re-opens it.",
+      "point_estimate": 6.694444444444445,
+      "trajectory_level": {
+        "ci": [
+          5.844444444444444,
+          7.544444444444444
+        ],
+        "n": 4
+      },
+      "episode_level": {
+        "n": 2,
+        "interval_reported": false,
+        "full_distribution": [
+          {
+            "episodes_drawn": [
+              1,
+              1
+            ],
+            "probability": 0.25,
+            "value": 7.544444444444444
+          },
+          {
+            "episodes_drawn": [
+              1,
+              8
+            ],
+            "probability": 0.5,
+            "value": 6.694444444444445
+          },
+          {
+            "episodes_drawn": [
+              8,
+              8
+            ],
+            "probability": 0.25,
+            "value": 5.844444444444444
+          }
+        ]
+      }
+    },
+    "5_section_6_8_per_horizon_multiplier": {
+      "arena": "out-of-sample held-out pair",
+      "artifact": "results/task_d3_perhorizon.json",
+      "informative_at_episode_level": false,
+      "not_bootstrappable": true,
+      "why": "\u00a76.8's folds are ALREADY episode-level by construction: each multiplier is fitted on one held-out episode and scored on the other. What episode clustering would change is not the fold but an interval on the 12 held-out cells, and at the episode level each direction has n = 1, so no interval is computable at all. Declared in M-62 before the run; no degenerate interval is printed.",
+      "n_episode_level_per_direction": 1
+    }
+  },
+  "verdict": {
+    "informative_cells": [
+      "3/pooled_r",
+      "3/r_dd"
+    ],
+    "n_informative": 2,
+    "n_uninformative_by_construction": 4,
+    "any_verdict_moved": false,
+    "result": "NO MOVE",
+    "reading": "NO MOVE: no verdict changes in any cell this rule can speak to. One sentence records the check and names the arenas in which it was informative.",
+    "scope": "Four of the five named cells are out-of-sample, where an episode bootstrap has n=2 and is uninformative by construction. This was stated in M-62 before the run, not discovered here."
+  }
+}
