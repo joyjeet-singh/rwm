@@ -28,7 +28,6 @@ The five measurements:
 
 Writes results/task_d3_ens5.json.
 """
-import glob
 import json
 import os
 import statistics
@@ -46,6 +45,10 @@ import score_reference as S  # noqa: E402
 HORIZONS = (1, 8, 32, 100, 128, 368)
 INDEX_DEFINED = (8, 32, 128, 368)      # h=1 has a single forecast step
 START, LEN, SEEDS, N_BOOT = E.START_STEP, 400, (0, 1, 2), 20000
+# The released architecture width, read from the reference config rather than typed.
+# A-01's pinned ens1 members are asserted against it.
+RELEASED_W = R.load_reference_config(R.repo_paths()["lite"])[
+    "architecture_config"]["rnn_hidden_size"]
 
 
 def pooled_corr(x, y):
@@ -130,6 +133,31 @@ def main():
                  "max_diff_vs_trainer": d}
         print(f"  seed {s}: rolled out, harness vs trainer max |diff| = {d:.3e}")
         out["per_seed"][str(s)] = {"weights": w, "max_diff_vs_trainer": d}
+
+        # --- optional per-triple cache (Session 2 addendum B) ---------------
+        # These arms DO have both terms: rollout_uncertainty returns the
+        # per-dimension aleatoric and epistemic sigma separately, so unlike the
+        # ensemble-size-1 arms in task1_calibration.py nothing here is NaN.
+        # M-63 names this arena as its second one, at n_independent = 4.
+        if os.environ.get("STORE_PER_TRIPLE"):
+            import per_triple_cache as PTC
+            _sl = slice(START, LEN)
+            PTC.write(
+                model_id=f"armA_ens5_seed{s}", arena="out-of-sample held-out pair",
+                unit_length=LEN,
+                err_signed=(pred - st).numpy().astype(np.float64)[:, _sl],
+                sig_aleatoric=alea.numpy().astype(np.float64)[:, _sl],
+                sig_epistemic=epi.numpy().astype(np.float64)[:, _sl],
+                traj_to_episode=[int(ep[_s]) for _s in starts],
+                traj_start_row=[int(_s) for _s in starts],
+                n_independent=n_ind, start_step=START,
+                residual_space="config-normalised state",
+                residual_space_detail=("R.normalise_state with the reference config's "
+                                       "state_data_mean and state_data_std"),
+                extra={"epistemic_available": True, "seed": s, "ensemble_size": 5,
+                       "weights": w, "episodes": list(hold),
+                       "produced_by": "scripts/task_d3_ens5.py STORE_PER_TRIPLE=1"})
+        # -------------------------------------------------------------------
 
     # ---- 1. M-43's governing measurement -----------------------------------
     print(f"\n  [1] M-43's governing table, per seed and pooled")
@@ -295,12 +323,47 @@ def main():
     # ---- 3. the aleatoric collapse rate ------------------------------------
     e5 = [json.load(open(f"results/step5_armA_seed{s}_ens5.json"))["collapse_fit"]["slope_per_iter"]
           for s in SEEDS]
-    e1 = [json.load(open(f))["collapse_fit"]["slope_per_iter"]
-          for f in sorted(glob.glob("results/step5_armA_seed?.json"))]
+    # A-01. This was a glob over results/step5_armA_seed?.json, and the set it matched
+    # grew from three files to five when section 6.10's independent-ensemble work added
+    # ens1 seeds 3 and 4 (commit d88a106). Nothing recomputed the artifact, so it
+    # recorded a three-seed comparison while five members of the population existed.
+    #
+    # This is not a new defect. Appendix B records it: the collapse family is selected
+    # by the recorded width field "rather than by filename -- it did neither until the
+    # first capacity-matched run walked into the family through a glob". That fix went
+    # into paper_numbers.py (the _width predicate) and paper_figures.py. It never
+    # reached here. results/input_set_audit.json is the sweep for anywhere else it
+    # did not reach; this was the only frozen hit.
+    #
+    # The set is now an explicit list, and the artifact records the exact files it was
+    # computed over so a future change shows up in a reproduce.sh diff rather than
+    # needing a gate to catch it.
+    ENS1_SEEDS = (0, 1, 2, 3, 4)
+    e1_files = [f"results/step5_armA_seed{s}.json" for s in ENS1_SEEDS]
+    for _f in e1_files:
+        assert os.path.exists(_f), f"pinned ens1 member missing: {_f}"
+        _h = json.load(open(_f)).get("hyperparameters", {})
+        # Released architecture only, by the same predicate paper_numbers.py uses: a run
+        # with no recorded width predates --hidden and is at the released width, and that
+        # is asserted rather than assumed by requiring it to carry no M-49 tag.
+        assert "_m49" not in _f, f"{_f} is an M-49 capacity-matched run"
+        _w = _h.get("rnn_hidden_size")
+        assert _w is None or int(_w) == RELEASED_W, \
+            f"{_f} trained at width {_w}, not the released {RELEASED_W}"
+        assert int(_h.get("iterations", 0)) == 2500, f"{_f} is not a 2,500-iteration run"
+    e1 = [json.load(open(f))["collapse_fit"]["slope_per_iter"] for f in e1_files]
     out["collapse"] = {"ens5_slopes": e5, "ens1_slopes": e1,
                        "ens5_mean": statistics.mean(e5), "ens1_mean": statistics.mean(e1),
                        "relative_difference": (statistics.mean(e5) - statistics.mean(e1))
-                                              / abs(statistics.mean(e1))}
+                                              / abs(statistics.mean(e1)),
+                       # A.4: the input set as data, in the artifact.
+                       "ens1_seeds": list(ENS1_SEEDS),
+                       "ens1_input_files": e1_files,
+                       "ens5_input_files": [f"results/step5_armA_seed{s}_ens5.json"
+                                            for s in SEEDS],
+                       "ens1_selection": ("explicit five-seed list, pinned in A-01; "
+                                          "previously a glob that grew from three to five"),
+                       "released_width": RELEASED_W}
     print(f"\n  [3] aleatoric collapse rate")
     print(f"    ens1 mean {out['collapse']['ens1_mean']:.6e}   "
           f"ens5 mean {out['collapse']['ens5_mean']:.6e}   "

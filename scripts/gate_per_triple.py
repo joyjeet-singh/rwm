@@ -212,6 +212,42 @@ def gate_calibration():
     return exact, mismatched, checked
 
 
+def gate_ens5():
+    """Third family: the ensemble-5 Arm A arms out-of-sample, M-63's second arena.
+
+    These arms have a real epistemic term -- rollout_uncertainty returns both sigmas
+    per dimension -- so unlike section 6.2's four models nothing here is NaN. The producer
+    casts to float64 before reducing, as task_d_nind20.py does, so the reductions are
+    mirrored in float64 and no dtype question arises.
+    """
+    published = json.load(open(os.path.join(R.RESULTS, "task_d3_ens5.json")))
+    exact, mismatched, checked = 0, [], 0
+    for sd in (0, 1, 2):
+        a, _m = PTC.read(f"armA_ens5_seed{sd}", OOS_ARENA, 400)
+        abs_e, epi_ = np.abs(a["err"]), a["sig_epistemic"]
+        for h in HS:
+            e = abs_e[:, :h].reshape(-1, 45)
+            g = epi_[:, :h].reshape(-1, 45)
+            npos = 0
+            for d in range(45):
+                x, y = g[:, d], e[:, d]
+                if x.std() > 0 and y.std() > 0 and np.corrcoef(x, y)[0, 1] > 0:
+                    npos += 1
+            got = {"ratio_err_over_sigma": float(np.nanmean(e) / np.nanmean(g)),
+                   "coverage_pm1": float(np.nanmean(e <= g)),
+                   "coverage_pm2": float(np.nanmean(e <= 2 * g)),
+                   "n_positive": npos}
+            ref = next(r for r in published["calibration"][str(h)]["per_seed"]
+                       if r["seed"] == sd)
+            for k, v in got.items():
+                checked += 1
+                if v == ref[k]:
+                    exact += 1
+                else:
+                    mismatched.append((f"ens5/seed{sd}/h{h}/{k}", ref[k], v))
+    return exact, mismatched, checked
+
+
 def main():
     arrays, meta = PTC.read(MODEL, ARENA, UNIT)
     published = json.load(open(os.path.join(R.RESULTS, "task_d_nind20.json")))
@@ -308,6 +344,12 @@ def main():
         else:
             mismatched.append((f"design/{key}", published["design"][key], got))
 
+    # ---- third family: the ensemble-5 arms out-of-sample, M-63's second arena ---
+    e5_exact, e5_mismatched, e5_checked = gate_ens5()
+    checked += e5_checked
+    exact += e5_exact
+    mismatched.extend(e5_mismatched)
+
     # ---- second family: section 6.2's four-model calibration table --------------
     arr_rows, arr_ok, arr_bad = verify_calibration_arrays()
     cal_exact, cal_mismatched, cal_checked = gate_calibration()
@@ -343,8 +385,11 @@ def main():
         "families": [
             {"model_id": MODEL, "arena": ARENA, "unit_length": UNIT,
              "known_good": "results/task_d_nind20.json",
-             "n_checked": checked - cal_checked,
-             "n_bitwise": exact - cal_exact},
+             "n_checked": checked - cal_checked - e5_checked,
+             "n_bitwise": exact - cal_exact - e5_exact},
+            {"model_id": "armA_ens5 (3 seeds)", "arena": OOS_ARENA, "unit_length": 400,
+             "known_good": "results/task_d3_ens5.json",
+             "n_checked": e5_checked, "n_bitwise": e5_exact},
             {"model_id": "section 6.2's four models (3 seeds each where trained)",
              "arena": OOS_ARENA, "unit_length": 400,
              "known_good": "results/task1_calibration.json",

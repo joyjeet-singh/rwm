@@ -540,11 +540,34 @@
     "ens1_slopes": [
       -9.364081815446295e-05,
       -9.358861927817003e-05,
-      -9.362131944310674e-05
+      -9.362131944310674e-05,
+      -9.355791391774014e-05,
+      -9.360334654082798e-05
     ],
     "ens5_mean": -9.352639108948033e-05,
-    "ens1_mean": -9.36169189585799e-05,
-    "relative_difference": 0.0009670032949881033
+    "ens1_mean": -9.360240346686157e-05,
+    "relative_difference": 0.0008120771963740544,
+    "ens1_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "ens1_input_files": [
+      "results/step5_armA_seed0.json",
+      "results/step5_armA_seed1.json",
+      "results/step5_armA_seed2.json",
+      "results/step5_armA_seed3.json",
+      "results/step5_armA_seed4.json"
+    ],
+    "ens5_input_files": [
+      "results/step5_armA_seed0_ens5.json",
+      "results/step5_armA_seed1_ens5.json",
+      "results/step5_armA_seed2_ens5.json"
+    ],
+    "ens1_selection": "explicit five-seed list, pinned in A-01; previously a glob that grew from three to five",
+    "released_width": 256
   },
   "input_dependence": {
     "0": {

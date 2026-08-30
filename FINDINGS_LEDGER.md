@@ -6302,6 +6302,83 @@ nothing further.
 **Evidence** `RUN` `results/m65_gaussian_nominal.json`
 **Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
 
+### M-66 — The Appendix B glob defect survived in a second script, and pinning it improves our own number · **NEW**
+**The disclosure first, because it is the part a reader should weigh hardest.** The fix below
+follows the paper's own stated principle, and it also **improves the number**. The
+ensemble-5 versus ensemble-1 collapse-rate difference moves from
++0.10% to +0.08%, which makes the two rates look *more*
+nearly identical — which is what §6.3 claims. A reader who finds that independently is
+entitled to ask whether the principle was chosen for the outcome. It was not, and the
+defence is that the reasoning, the confirmation and the direction of benefit are all
+recorded here before the fact rather than discovered afterwards. Silence would be the
+`S-12` failure mode.
+
+**This is not a new finding.** Appendix B already records this defect class: the σ-collapse
+family is selected by the recorded width field "rather than by filename — it did neither
+until the first capacity-matched run walked into the family through a glob". That fix
+landed in `scripts/paper_numbers.py` — the `_width` predicate — and in
+`scripts/paper_figures.py`. **It never reached `scripts/task_d3_ens5.py:299`**, which
+selected the ensemble-size-1 collapse comparison by an unguarded glob over
+`results/step5_armA_seed?.json`. The entry is that the fix did not reach a second script,
+not that a glob matched more files than expected.
+
+**What happened.** That glob matched three files when `results/task_d3_ens5.json` was
+written and matches five now. Ens1 seeds 3 and 4 arrived in commit `d88a106` — §6.10's
+independent-ensemble work, which says in the paper's own words that Arm A at ensemble size
+1 "already existed at seeds 0, 1 and 2; we added two more". Nothing recomputed the
+artifact, so it recorded a three-seed comparison while five members of the population
+existed. The artifact was not wrong about what it measured; its input set grew underneath
+it. Found in Session 2 when adding a per-triple cache path to that script changed its
+committed output **with the cache flag off**, which a guarded additive edit cannot do.
+
+**The confirmation, run before anything was changed.** Every key that moves sits under
+`collapse/`: `ens1_mean`, `relative_difference`, and two new entries in `ens1_slopes`.
+**All 187 of `M-43`'s keys are frozen**, verified key by key against the committed
+artifact. So no discharged rule is re-scoped by this, and the ban in the brief's §1 is not
+engaged. Had any `M-43` key moved, the correct action was to stop, and that was the
+condition set in advance.
+
+**The decision: the ens1 set is an explicit list of five seeds — 0, 1, 2, 3, 4 — not a
+glob.** The reasoning:
+
+- §6.3 and Appendix B define the collapse family by architecture and by no double-weighting
+  of continued seeds. Ens1 seeds 3 and 4 are 2,500-iteration, released-width, `mse`, clean
+  runs — asserted in the script by the same predicate `paper_numbers.py` uses, that a run
+  with no recorded width predates `--hidden` and must therefore carry no M-49 tag. They are
+  members of the population the comparison is against.
+- Holding at three needs a principled reason, and the only available one is that three is
+  what existed when the file was written. That is an accident of timing, not a principle.
+- `M-43`'s keys are unaffected, so nothing discharged is touched.
+
+**The class, not just the instance.** `scripts/input_set_audit.py` sweeps `scripts/` and
+`src/` for input discovery by pattern — `glob.glob`, `Path.glob`, `iglob`, `os.listdir`,
+`os.walk`, `os.scandir` — and classifies every hit as *open population* or *frozen at write
+time*, with a `file:line` and a reason. **21 hits, 20 open, 1 frozen, 0 unclassified**, the
+frozen one being this. The run-artifact globs in `paper_numbers.py` and `paper_figures.py`
+are open because they are *guarded* to the released width: their population is "all
+released-width runs", which is the population the claim is about. One observation is logged
+without a fix: `paper_numbers.py:1592`'s run-inventory table does not carry width in its row
+key, so M-49's width-124 runs share a row with released-width runs of the same shape. No
+number it produces is wrong — `run_total` is 31 and matches Appendix B — so it is recorded
+rather than changed.
+
+**The durable guard is data, not a check.** Every artifact that discovers its inputs now
+records the explicit file list it was computed over: `task_d3_ens5.json` carries
+`collapse/ens1_input_files`, `ens1_seeds`, `ens1_selection` and `released_width`. A stale
+set then shows up in a `reproduce.sh` diff on its own. **No check kind was added**, and that
+is deliberate: Session 5 is removing build machinery, and per-key provenance is already what
+`paper_numbers.py` does.
+
+**Two published values move**, and Session 4 must say so in the body rather than letting a
+rebuild change them silently: `paper_numbers.py:715` `e5_collapse_ens1` and `:716`
+`e5_collapse_pct`. This is a third source of paper drift and, unlike `{{n_entries}}` and
+`{{appG_n_rules}}` which are placeholders that resolve correctly at build time, a stale
+input set does not self-heal.
+
+**Evidence** `SRC` `scripts/input_set_audit.py`, `results/input_set_audit.json`, `scripts/task_d3_ens5.py`, `results/task_d3_ens5.json`
+**Status** ACTIVE · **Relevance** METHOD
+
+
 ### D-30 — The review queue had more than doubled and every document still said 89 · **NEW**
 **What happened.** `results/task_c1_claims_audit.json` was committed at 324 claims with **89**
 unreviewed. Against the paper as it now stands it is **412 claims with 191 unreviewed**. The

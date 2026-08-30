@@ -16,6 +16,14 @@
       "n_bitwise": 171
     },
     {
+      "model_id": "armA_ens5 (3 seeds)",
+      "arena": "out-of-sample held-out pair",
+      "unit_length": 400,
+      "known_good": "results/task_d3_ens5.json",
+      "n_checked": 72,
+      "n_bitwise": 72
+    },
+    {
       "model_id": "section 6.2's four models (3 seeds each where trained)",
       "arena": "out-of-sample held-out pair",
       "unit_length": 400,
@@ -115,8 +123,8 @@
       "from_cache": 7878.115234375
     }
   ],
-  "n_figures_checked": 255,
-  "n_bitwise_identical": 249,
+  "n_figures_checked": 327,
+  "n_bitwise_identical": 321,
   "n_differing": 0,
   "differences": [],
   "tolerance_applied": false,

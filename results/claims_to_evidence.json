@@ -3001,6 +3001,24 @@
       "retracts": []
     },
     {
+      "id": "M-66",
+      "claim": "The Appendix B glob defect survived in a second script, and pinning it improves our own ",
+      "relevance": "METHOD",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/input_set_audit.json",
+        "results/task_d3_ens5.json",
+        "scripts/input_set_audit.py",
+        "scripts/paper_figures.py",
+        "scripts/paper_numbers.py",
+        "scripts/task_d3_ens5.py"
+      ],
+      "retracts": []
+    },
+    {
       "id": "D-30",
       "claim": "The review queue had more than doubled and every document still said 89",
       "relevance": "",
@@ -3088,7 +3106,7 @@
     "B": 5,
     "C": 15,
     "D": 35,
-    "M": 65,
+    "M": 66,
     "O": 14,
     "R": 73,
     "S": 19,

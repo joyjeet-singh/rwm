@@ -1,0 +1,188 @@
+{
+  "audit": "input discovery by pattern, scripts/ and src/",
+  "defect_class": "Appendix B: the collapse family is selected by the recorded width field 'rather than by filename -- it did neither until the first capacity-matched run walked into the family through a glob'. A-01 is that same defect in a script the fix never reached, not a new finding.",
+  "classes": [
+    "open population",
+    "frozen at write time"
+  ],
+  "n_hits": 21,
+  "n_open": 20,
+  "n_frozen": 1,
+  "n_unclassified": 0,
+  "unclassified": [],
+  "hits": [
+    {
+      "file": "scripts/build_paper.py",
+      "line": 110,
+      "citation": "scripts/build_paper.py:110",
+      "text": "figs = sorted(f for f in os.listdir(R.FIGURES) if f.startswith(\"paper_fig\"))",
+      "classification": "open population",
+      "reason": "bundles the paper figures that exist; a build step, not a comparison set"
+    },
+    {
+      "file": "scripts/build_supplementary.py",
+      "line": 136,
+      "citation": "scripts/build_supplementary.py:136",
+      "text": "for root, _, names in os.walk(d):",
+      "classification": "open population",
+      "reason": "walks the tree to bundle whatever is present"
+    },
+    {
+      "file": "scripts/compile_paper.py",
+      "line": 51,
+      "citation": "scripts/compile_paper.py:51",
+      "text": "for f in os.listdir(\"tex\"):",
+      "classification": "open population",
+      "reason": "tex sources for compilation"
+    },
+    {
+      "file": "scripts/compile_paper.py",
+      "line": 55,
+      "citation": "scripts/compile_paper.py:55",
+      "text": "for f in os.listdir(R.FIGURES):",
+      "classification": "open population",
+      "reason": "figures for compilation"
+    },
+    {
+      "file": "scripts/make_anon_bundle.py",
+      "line": 213,
+      "citation": "scripts/make_anon_bundle.py:213",
+      "text": "for root, dirs, names in os.walk(d):",
+      "classification": "open population",
+      "reason": "walks staging to anonymise"
+    },
+    {
+      "file": "scripts/make_anon_bundle.py",
+      "line": 280,
+      "citation": "scripts/make_anon_bundle.py:280",
+      "text": "for root, dirs, names in os.walk(staging):",
+      "classification": "open population",
+      "reason": "walks staging to anonymise"
+    },
+    {
+      "file": "scripts/make_anon_bundle.py",
+      "line": 391,
+      "citation": "scripts/make_anon_bundle.py:391",
+      "text": "for root, _, names in os.walk(staging):",
+      "classification": "open population",
+      "reason": "walks staging to verify"
+    },
+    {
+      "file": "scripts/paper_figures.py",
+      "line": 184,
+      "citation": "scripts/paper_figures.py:184",
+      "text": "for f in sorted(glob.glob(os.path.join(R.RESULTS, \"step5_arm*.json\"))):",
+      "classification": "open population",
+      "reason": "GUARDED: filters to the released width at :187-190, the Appendix B fix"
+    },
+    {
+      "file": "scripts/paper_numbers.py",
+      "line": 514,
+      "citation": "scripts/paper_numbers.py:514",
+      "text": "runs_all = sorted(glob.glob(\"results/step5_arm*.json\"))",
+      "classification": "open population",
+      "reason": "GUARDED: the _width predicate at :531, the Appendix B fix itself"
+    },
+    {
+      "file": "scripts/paper_numbers.py",
+      "line": 974,
+      "citation": "scripts/paper_numbers.py:974",
+      "text": "for _f in sorted(_glob.glob(\"results/step5_*.json\")):",
+      "classification": "open population",
+      "reason": "the CPU budget deliberately includes every run, M-49's arm included, and Appendix B states how many of them are that arm"
+    },
+    {
+      "file": "scripts/paper_numbers.py",
+      "line": 1435,
+      "citation": "scripts/paper_numbers.py:1435",
+      "text": "for _f in sorted(_g.glob(\"results/step5_arm*.json\")):",
+      "classification": "open population",
+      "reason": "GUARDED: _width(_f) != _released_w continues at :1442"
+    },
+    {
+      "file": "scripts/paper_numbers.py",
+      "line": 1453,
+      "citation": "scripts/paper_numbers.py:1453",
+      "text": "_all = len([f for f in _g.glob(\"results/step5_arm*.json\")",
+      "classification": "open population",
+      "reason": "GUARDED: _width(f) == _released_w in the comprehension"
+    },
+    {
+      "file": "scripts/paper_numbers.py",
+      "line": 1592,
+      "citation": "scripts/paper_numbers.py:1592",
+      "text": "for f in sorted(_g2.glob(\"results/step5_arm*.json\")):",
+      "classification": "open population",
+      "reason": "the run inventory is deliberately every run; run_total is 31 and matches Appendix B. NOTE: width is not part of the row key, so M-49's width-124 runs share a row with released-width runs of the same shape. That is a presentation gap, not a stale set -- no number it produces is wrong -- and it is logged rather than changed, per A.3's 'fix only what affects a published number'"
+    },
+    {
+      "file": "scripts/part_f_gate.py",
+      "line": 75,
+      "citation": "scripts/part_f_gate.py:75",
+      "text": "for f in sorted(os.listdir(R.FIGURES)):",
+      "classification": "open population",
+      "reason": "figures present, for the gate"
+    },
+    {
+      "file": "scripts/part_f_gate.py",
+      "line": 86,
+      "citation": "scripts/part_f_gate.py:86",
+      "text": "f\"{len(os.listdir(R.FIGURES))} figures {figbad or 'clean'}\")",
+      "classification": "open population",
+      "reason": "figures present, for the gate"
+    },
+    {
+      "file": "scripts/pipeline_coverage.py",
+      "line": 73,
+      "citation": "scripts/pipeline_coverage.py:73",
+      "text": "for f in sorted(glob.glob(\"scripts/*.py\")) + sorted(glob.glob(\"src/*.py\")):",
+      "classification": "open population",
+      "reason": "coverage over whatever source files exist is the point of the measure"
+    },
+    {
+      "file": "scripts/submission_check.py",
+      "line": 37,
+      "citation": "scripts/submission_check.py:37",
+      "text": "for f in os.listdir(\"tex\"):",
+      "classification": "open population",
+      "reason": "tex sources present"
+    },
+    {
+      "file": "scripts/submission_check.py",
+      "line": 41,
+      "citation": "scripts/submission_check.py:41",
+      "text": "for f in os.listdir(R.FIGURES):",
+      "classification": "open population",
+      "reason": "figures present"
+    },
+    {
+      "file": "scripts/task_d3_ens5.py",
+      "line": 299,
+      "citation": "scripts/task_d3_ens5.py:299",
+      "text": "for f in sorted(glob.glob(\"results/step5_armA_seed?.json\"))]",
+      "classification": "frozen at write time",
+      "reason": "A-01. Unguarded glob over results/step5_armA_seed?.json for the ensemble-size-1 collapse comparison. Matched three files when the artifact was written and five now; seeds 3 and 4 arrived in d88a106, section 6.10's independent-ensemble work. The same defect Appendix B records, in a script the fix never reached. Two published values move: paper_numbers.py:715-716"
+    },
+    {
+      "file": "scripts/verify_reproduction.py",
+      "line": 68,
+      "citation": "scripts/verify_reproduction.py:68",
+      "text": "for _fn in sorted(os.listdir(B)):",
+      "classification": "open population",
+      "reason": "compares whatever a clean clone regenerated; open by definition"
+    },
+    {
+      "file": "scripts/verify_reproduction.py",
+      "line": 78,
+      "citation": "scripts/verify_reproduction.py:78",
+      "text": "for fn in sorted(os.listdir(B)):",
+      "classification": "open population",
+      "reason": "compares whatever a clean clone regenerated; open by definition"
+    }
+  ],
+  "frozen_citations": [
+    "scripts/task_d3_ens5.py:299"
+  ],
+  "self_exclusion": "scripts/input_set_audit.py is excluded from its own scan. It is the instrument rather than the subject: it discovers whatever source files exist, which is an open population by definition, and it writes no published number. Recorded here rather than left silent.",
+  "no_new_check_kind": "Deliberate, per A.4. Session 5 is removing build machinery. The durable guard is that artifacts record the input file list they were computed over, so a stale set shows up in a reproduce.sh diff on its own."
+}
