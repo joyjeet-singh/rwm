@@ -8,8 +8,14 @@ these are logged and **not acted on**.
 ## A-01 — `results/task_d3_ens5.json` no longer reproduces from its own script, and two published numbers move
 
 **Found** Session 2, half one, 2026-08-30, while adding the per-triple cache path to
-`scripts/task_d3_ens5.py`. **Status** OPEN. **Not fixed** — the Session 2 addendum §B
-requires the session to stop here rather than repair it.
+`scripts/task_d3_ens5.py`. **Status** RESOLVED in Session 2B, 2026-08-31 — see `M-66` in
+`FINDINGS_LEDGER.md`, which reframes it as an instance of the Appendix B defect class
+rather than as a novel finding, pins the ens1 comparison to an explicit five-seed list, and
+discloses that the principled choice also improves our own number. The class was swept:
+`results/input_set_audit.json`, 21 hits, 20 open population, 1 frozen (this one).
+
+The write-up below is left exactly as it was found, per this file's purpose. What changed
+after it was written is recorded in `M-66`, not here.
 
 ### What happens
 
