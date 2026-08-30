@@ -3673,7 +3673,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "385"
+    "value": "390"
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3829,7 +3829,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 233
+    "value": 236
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -7113,11 +7113,11 @@
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 35
+    "value": 178
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 37
+    "value": 47
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
@@ -7125,7 +7125,15 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "6,790"
+    "value": "7,981"
+  },
+  "ver_keys_lost": {
+    "source": "results/verify_reproduction.json",
+    "value": 25
+  },
+  "ver_keys_lost_files": {
+    "source": "results/verify_reproduction.json",
+    "value": 3
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
@@ -7133,7 +7141,7 @@
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "99.49"
+    "value": "97.50"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
@@ -7161,11 +7169,11 @@
   },
   "ver_timing": {
     "source": "results/verify_reproduction.json",
-    "value": "4,488"
+    "value": "5,004"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "6,825"
+    "value": "8,186"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

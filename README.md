@@ -19,7 +19,7 @@ way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean 
 41 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 233 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 236 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
 are never edited in place: 19 are marked `SUPERSEDED` and kept.
 Six of those are retractions of our own **numbered claims** on evidence this
@@ -147,9 +147,11 @@ Training is bitwise reproducible under a fixed seed: the 10,000-iteration run re
 existing 2,500-iteration run exactly at every logged iteration, and `weights_2500.pt` is
 byte-identical between them.
 
-A clean-clone run of `reproduce.sh --quick --force` regenerates **37 artifact files and
-6,825 numeric values, 6,790 of them bitwise identical (99.49%),
-35 differing**, with 0 keys lost (`results/verify_reproduction.json`).
+A clean-clone run of `reproduce.sh --quick --force` regenerates **47 artifact files and
+8,186 numeric values, 7,981 of them bitwise identical (97.50%),
+178 differing**, with 25 values present in the committed
+artifacts and absent after regeneration, across 3 files
+(`results/verify_reproduction.json`).
 
 **A note on what that number is not.** An earlier version of this section counted every numeric
 value in the committed `results/` directory. Because `results/` is committed, a clean clone

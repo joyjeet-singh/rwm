@@ -199,7 +199,13 @@ json.dump({"regenerated_files": sorted(regen), "values_compared": tot,
            "copied_file_values": c_tot, "copied_identical": c_exact,
            "copied_differing": c_diff,
            "machine_file_values_excluded": machine,
-           "machine_files": list(MACHINE_FILES),
+           # Recorded, not merely printed. The README asserted "0 keys lost" as a typed
+    # literal for as long as this went unstored, and by the time a clean clone
+    # actually completed the true figure was 25 across 3 files. A number the
+    # artifact does not carry is a number the paper cannot cite.
+    "keys_lost": sum(n for _, n, _ in dropped),
+    "keys_lost_files": [fn for fn, _, _ in dropped],
+    "machine_files": list(MACHINE_FILES),
            "time_bounded_files_excluded": time_bounded_files,
            "self_referential_keys_excluded": self_referential_keys,
            "host_sourced_keys_excluded": host_sourced_keys},

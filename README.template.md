@@ -149,7 +149,9 @@ byte-identical between them.
 
 A clean-clone run of `reproduce.sh --quick --force` regenerates **{{ver_files}} artifact files and
 {{ver_values}} numeric values, {{ver_identical}} of them bitwise identical ({{ver_pct}}%),
-{{ver_differing}} differing**, with 0 keys lost (`results/verify_reproduction.json`).
+{{ver_differing}} differing**, with {{ver_keys_lost}} values present in the committed
+artifacts and absent after regeneration, across {{ver_keys_lost_files}} files
+(`results/verify_reproduction.json`).
 
 **A note on what that number is not.** An earlier version of this section counted every numeric
 value in the committed `results/` directory. Because `results/` is committed, a clean clone

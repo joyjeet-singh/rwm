@@ -194,6 +194,9 @@ def main():
     put("ver_pct", f"{100*ver['bitwise_identical']/ver['values_compared']:.2f}",
         "results/verify_reproduction.json")
     put("ver_differing", ver["differing"], "results/verify_reproduction.json")
+    put("ver_keys_lost", ver["keys_lost"], "results/verify_reproduction.json")
+    put("ver_keys_lost_files", len(ver["keys_lost_files"]),
+        "results/verify_reproduction.json")
     put("ver_timing", f'{ver["timing_excluded"]:,}', "results/verify_reproduction.json")
     put("ver_machine", ver["machine_file_values_excluded"], "results/verify_reproduction.json")
     _tb = ver.get("time_bounded_files_excluded", [])
