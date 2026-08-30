@@ -2953,12 +2953,40 @@
         "results/task_c1_claims_audit.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-31",
+      "claim": "A clean clone could not build the paper at all",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/comparative_claims.json",
+        "scripts/check_comparative_claims.py",
+        "scripts/paper_numbers.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "D-32",
+      "claim": "The entry recording a de-anonymisation leak was itself the leak",
+      "relevance": "",
+      "status": "ACTIVE",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "scripts/build_supplementary.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
-    "D": 30,
+    "D": 32,
     "M": 61,
     "O": 14,
     "R": 73,

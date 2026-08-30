@@ -1064,7 +1064,13 @@ def main():
            "checker_defects": CHECKER_DEFECTS,
            "kinds": sorted({c["kind"] for c in CLAIMS})}
 
-    if "--self-test" in sys.argv:
+    # The self-test runs on EVERY invocation, not behind a flag. It costs five
+    # seconds and it writes the `self_test` block that paper_numbers.py asserts on.
+    # While it was optional, a bare run silently rewrote this artifact WITHOUT the
+    # block, and a stripped copy reached git: a clean clone then died at the stage
+    # that collects the paper's numbers, so the paper could not be built at all
+    # from a fresh checkout. `--self-test` is still accepted and now means nothing.
+    if True:
         print("\n  SELF-TEST — every check must FAIL when its expectation is corrupted")
         print("  " + "-" * 100)
         st, st_bad = [], 0

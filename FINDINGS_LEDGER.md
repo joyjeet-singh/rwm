@@ -5933,9 +5933,16 @@ The anonymised bundle passed its own scan throughout. The scan was looking for t
 pattern matched `given-names` and none matched `family-names`, so the file reviewers receive read:
 
 ```
-- family-names: Singh
+- family-names: [SURNAME REDACTED IN THIS LEDGER]
   given-names: ANONYMISED
 ```
+
+The surname is redacted in the quotation above and nowhere else. Quoting the leaked
+literal here reproduced it inside `FINDINGS_LEDGER.md`, which both submission archives
+ship, so the entry recording the leak WAS a leak: `build_supplementary.py` refused to
+write `supplementary.zip` while it stood. The finding needs the field name, not the
+value. Redacted rather than superseded because nothing here is wrong — the record is
+unchanged apart from one string that must not travel.
 
 A one-field de-anonymisation sitting beside the evidence that the file had been scrubbed.
 **Structured metadata defeats a scrubber written for prose.** The surname is in `SUBS` and `DETECT`
@@ -6032,6 +6039,49 @@ criteria.
 instance in this pass after `t5`'s `PAPER_QUOTES` and Appendix D's framing-retraction list.
 
 **Evidence** `SRC` `results/task_c1_claims_audit.json`, `results/c1_review_queue.json`
+**Status** ACTIVE
+
+### D-31 — A clean clone could not build the paper at all · **NEW**
+**What happened.** `scripts/paper_numbers.py` asserts that `results/comparative_claims.json`
+carries a `self_test` block. The committed copy of that artifact did not have one, so
+`./reproduce.sh --quick --force` from a fresh clone died at the stage that collects the paper's
+numbers, and every stage after it — build, LaTeX, PDF, bundle, gates — never ran.
+
+**Why the committed copy was stripped.** The self-test was behind `--self-test`.
+`reproduce.sh` passes the flag; a bare `python scripts/check_comparative_claims.py` does not, and a
+bare run rewrites the same artifact WITHOUT the block. Running the seven gates in a loop to confirm
+they pass is exactly such a bare run. The gate-checking habit destroyed the evidence the gate
+produces, and the stripped file was committed.
+
+**Not visible from this tree.** In a working tree the block is usually present from the last full
+pipeline run, so `paper_numbers.py` passes. Only a clone starts from what git actually holds. The
+in-tree checks cannot see this class of defect at all.
+
+**Fixed** by running the self-test on every invocation rather than behind a flag. It costs five
+seconds and catches 52 of 52 corruptions; `--self-test` is still accepted and now means nothing.
+
+**Evidence** `SRC` `results/comparative_claims.json`, `scripts/check_comparative_claims.py`
+**Status** ACTIVE
+
+### D-32 — The entry recording a de-anonymisation leak was itself the leak · **NEW**
+**What happened.** M-60 records that `CITATION.cff` shipped a bare surname where every deny pattern
+matched `given-names` and none matched `family-names`. To show the defect the entry quoted the two
+YAML lines verbatim, surname included. Both submission archives ship `FINDINGS_LEDGER.md`, so the
+quotation put the surname back into the bundle reviewers receive.
+
+**`build_supplementary.py` caught it and refused to write `supplementary.zip`** — the detector
+worked. `make_anon_bundle.py` did not report it because that script SUBSTITUTES the deny list
+rather than refusing on it, so its archive was clean while the other could not be built.
+
+**A stale archive hid it.** An earlier `supplementary_anon.zip` was on disk from before M-60, and a
+scan of that file was reported here as evidence the bundle was clean. It was evidence about an
+archive that predated the entry. A scan of a build artifact proves nothing unless the artifact
+post-dates the change.
+
+**Fixed** by redacting the surname inside the quotation and nowhere else. The finding needs the
+field name, not the value. Redacted rather than superseded because nothing in the entry is wrong.
+
+**Evidence** `SRC` `FINDINGS_LEDGER.md`, `scripts/build_supplementary.py`
 **Status** ACTIVE
 
 ## Candidate paper contributions
