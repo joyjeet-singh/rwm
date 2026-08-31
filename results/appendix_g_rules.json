@@ -1,7 +1,7 @@
 {
-  "n_rules": 11,
-  "n_with_lead_time": 11,
-  "n_status_prereg": 8,
+  "n_rules": 15,
+  "n_with_lead_time": 15,
+  "n_status_prereg": 12,
   "rules": [
     {
       "id": "M-16",
@@ -120,6 +120,54 @@
       "lead_hours": 0.15222222222222223,
       "lead_source": "this appendix, from git",
       "tested_by": "results/e7_free_baselines.json",
+      "rule_commit": null,
+      "commit_subject": null
+    },
+    {
+      "id": "M-62",
+      "title": "Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories?",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "NO MOVE",
+      "rule_text": "- NO MOVE \u2014 no verdict moves in any informative cell. One sentence in the body records the check and names the arenas in which it was informative. Nothing else changes. - MOVES \u2014 both units are reported side by side, each naming its unit, its arena and its `n_independent`, and the affected claim is \u2026",
+      "lead_hours": 5.117222222222222,
+      "lead_source": "this appendix, from git",
+      "tested_by": "results/m62_episode_clustering.json",
+      "rule_commit": null,
+      "commit_subject": null
+    },
+    {
+      "id": "M-63",
+      "title": "Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few?",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "UNIFORM",
+      "rule_text": "Committed before any per-dimension coverage figure exists. Per-dimension sign counts are reported in \u00a76.6; per-dimension coverage is not, anywhere in this project. The per-triple arrays this rule needs are not stored: `scripts/task_d_nind20.py:115` builds `err, sig` at shape `(n_traj, h, 45)` and \u2026",
+      "lead_hours": 5.117222222222222,
+      "lead_source": "this appendix, from git",
+      "tested_by": "results/m63_per_dimension_coverage.json",
+      "rule_commit": null,
+      "commit_subject": null
+    },
+    {
+      "id": "M-64",
+      "title": "Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128?",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "MOVES, at one cell",
+      "rule_text": "consequences `M-62` fixes for each \u2014 narrowed in the body if a verdict moves, never reverted, and both units always reported side by side.",
+      "lead_hours": 5.9816666666666665,
+      "lead_source": "this appendix, from git",
+      "tested_by": "results/m64_short_units.json",
+      "rule_commit": null,
+      "commit_subject": null
+    },
+    {
+      "id": "M-65",
+      "title": "Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed?",
+      "status": "PRE-REGISTERED, DISCHARGED",
+      "verdict": "GAUSSIAN NOMINAL ADEQUATE",
+      "rule_text": "Committed before any oracle-rescaled figure exists. Every coverage figure in this paper is read against 68.27% at \u00b11\u03c3 and 95.45% at \u00b12\u03c3, which are the two-sided Gaussian targets \u00a73.1 derives from `erf(k/\u221a2)`. The paper has never checked the marginal normality that nominal assumes. As with `M-63` \u2026",
+      "lead_hours": 5.117222222222222,
+      "lead_source": "this appendix, from git",
+      "tested_by": "results/m65_gaussian_nominal.json",
       "rule_commit": null,
       "commit_subject": null
     },

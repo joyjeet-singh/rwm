@@ -1,4 +1,4 @@
-# Measuring the uncertainty outputs of a released robotic world model: an independent reproduction
+# Ensemble disagreement is miscalibrated as a scale, by a factor that grows with rollout depth: an independent reproduction of a released robotic world model
 
 ---
 
@@ -6,39 +6,36 @@
 
 We rebuild the proprioceptive dynamics model of the *Robotic World Model*
 (arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on
-CPU, checked against the released reference at gradient level.
+CPU, checked against the released reference at gradient level. Three findings.
 
-**The base paper's central training claim reproduces, and the advantage grows with
-horizon.** Under a rule committed to git before the runs, autoregressive training beats
-teacher forcing on held-out episodes by {{d1_ratio}}× on the reference's own relative-L1
-error at h = {{v2_diag_h}}, the horizon the rule names, rising to it from
-{{a1_ratio_h100}}× at h = {{v2_deploy_h}}, where the method deploys.
+**The quantity the method penalises with is miscalibrated as a scale, by a factor that grows
+with depth.** Ensemble disagreement is the trust metric the follow-up applies, and it is
+smaller than realised error by {{d1n_epi_ratio_h1}}× at h = 1 and {{d1n_epi_ratio_h100}}× at
+h = {{v2_deploy_h}}, where its imagination rollouts run. **That is not
+accumulated rollout error**: at one step nothing has accumulated and the input is the true
+state, yet the figure is already an order of magnitude out. **Nor is it a units problem a tuned
+coefficient absorbs.** The penalty enters through a scalar weight, so a uniformly wrong scale
+would be a rescaling of that weight — but the best constant rescale, fitted and scored on the
+same data and so an upper bound on what any constant achieves, grows by a factor of
+{{m65_c_growth}} across the rollout. The σ the method computes and then discards is worse still,
+and we derive why: the implemented objective's optimum is σ = 0.
 
-**Neither uncertainty output is usable as an interval, and that is not accumulated rollout
-error.** One step ahead, where nothing has accumulated, the disagreement the method penalises
-rewards with is already {{d1n_epi_ratio_h1}}× smaller than realised error:
-{{d1n_epi_cov1_h1}}% of outcomes fall inside ±1σ where {{v3_cov_nominal1}}% is calibrated,
-deteriorating to {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}. The σ the method computes and
-discards is worse still. We derive why — the implemented objective's optimum is σ = 0 — and
-demonstrate it on data whose noise is known and varies {{e5s_span}}×: σ lands
-{{e5s_mse_under}}× low and tracks it not at all.
+**The base paper's central training claim reproduces, and the advantage grows with horizon** —
+{{d1_ratio}}× on the reference's own relative-L1 error at h = {{v2_diag_h}}, under a rule
+committed to git before the runs. **At one step it reverses**: under a second rule, a shorter
+evaluation unit resolves a gap the 400-step unit left spanning zero, and teacher forcing wins.
 
-**As a ranking it is far better, with three limits.** Holding rollout and forecast depth
-constant it correlates {{a2_rdd}} with realised error, and beats the forecast step index at
-every horizon. But a free baseline, the model's own predicted step size, comes close enough
-that this sample cannot separate them; the evidence is in-sample for a checkpoint trained on
-all ten episodes; and a pre-registered replication on models we trained returns
-{{e5_verdict}}.
+**The released evaluation understates its own checkpoint**, pairing each state with the previous
+step's action and overstating that checkpoint's nRMSE at h = {{v2_diag_h}} by {{stale_pct}}%.
 
-**Two defects are repairable.** A per-horizon multiplier, fitted on one held-out episode and
-scored on the other, restores nominal coverage on every held-out cell; and the released
-evaluation pairs each state with the previous step's action, overstating the checkpoint's own
-nRMSE at h = {{v2_diag_h}} by {{stale_pct}}%.
+As a *ranking* it is far better, with limits: holding rollout and depth constant it
+still tracks error and beats the forecast step index at every horizon, but the model's own
+predicted step size comes close enough that this sample cannot separate them. One repair works: a
+per-horizon multiplier, fitted on one held-out episode and scored on the other, restores nominal
+coverage on every held-out cell.
 
-Every **measurement** here is substituted from a named artifact; the {{tn_typed}} numerals that
-are not are addresses, horizon labels or declared constants, classified one by one by a build that
-fails on anything else. {{cc_n}} comparative claims across {{cc_kinds}} kinds are recomputed each
-build against a corrupted expectation, so a check that can no longer fail is caught.
+Every **measurement** here is substituted from a named artifact; the rest are classified by a
+build that fails on anything left over.
 
 ---
 
@@ -80,8 +77,12 @@ and we report that too.
 - **The base paper's central training claim reproduces, and the advantage grows with
   forecast horizon**: a factor of {{d1_ratio}}× on relative-L1 at h = {{v2_diag_h}} over
   {{d1_seeds}} seeds, under a rule committed to git before the runs existed, rising
-  monotonically to that from {{d1_ratio_h100}}× at h = {{v2_deploy_h}} and a gap that spans
-  zero at {{a1_spans_zero_at}} (§5).
+  monotonically to that from {{d1_ratio_h100}}× at h = {{v2_deploy_h}} (§5).
+- **At one step the comparison reverses, and we report it against our own arm.** A second
+  pre-registered rule rebuilds the evaluation at a {{m64_h1_unit}}-row unit, giving
+  {{m64_h1_n}} independent units where the 400-step unit gives {{a1_nind}}. The gap becomes
+  {{m64_h1_gap}} {{m64_h1_ci}} — it excludes zero in favour of **teacher forcing**. What the
+  400-step unit could only report as spanning zero is a real reversal (§5).
 - **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon; and the aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.2, §6.3).
 - **A candidate mechanism for the epistemic failure, from source.** The five members share one
   trunk, one recurrent state and {{v1_shared_pct}}% of each member's parameters, so their spread
@@ -654,7 +655,7 @@ compounding and no mismatch: the input *is* the true state, the prediction is on
 {{d1n_epi_ratio_h1}}×, and {{d1n_epi_cov1_h1}}% of outcomes fall inside an interval that should
 hold {{v3_cov_nominal1}}%. Whatever compounding does at depth, it did not do that.
 
-**And that row is measured on data the checkpoint trained on.** The released checkpoint trained on all ten episodes, and this arena is all ten — {{insample_n_overlap}} of {{insample_n_arena}} of them (`results/insample_framing.json`). In-sample measurement biases *toward* better calibration, so the {{d1n_epi_ratio_h1}}× is if anything flattering. We stated the arena before and declined the inference; the inference is that the one-step figure is an upper bound on how well this checkpoint is calibrated.
+**And that row is measured on data the checkpoint trained on.** The released checkpoint trained on all ten episodes, and this arena is all ten — {{insample_n_overlap}} of {{insample_n_arena}} of them (`results/insample_framing.json`). In-sample measurement biases *toward* better calibration, so the {{d1n_epi_ratio_h1}}× at h = 1 is if anything flattering. We stated the arena before and declined the inference; the inference is that the one-step figure is an upper bound on how well this checkpoint is calibrated.
 
 So the horizon curve is not the claim; it is the shape of the deterioration, and the claim is the
 h = 1 row. We keep h = {{v2_deploy_h}} because it is where the method actually deploys, and
@@ -676,7 +677,7 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 **Two pre-registered checks on how these numbers are read, both committed before they were computed.** `M-62` asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **{{m62_verdict}}**: in the one arena with power at that level — all ten episodes, n = {{m62_n_traj}} falling to {{m62_n_ep}} — the pooled correlation's interval widens by {{m62_width_pct}}% and the double-demeaned one by a factor of {{m62_rdd_width_ratio}}, and neither crosses zero. The other {{m62_n_uninformative}} cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance rather than discovering it, and they are reported as uninformative rather than as intervals.
 
-**`M-63` asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **{{m63_verdict}}**: the interquartile range across dimensions is {{m63_iqr}} points against a threshold of {{m63_iqr_thr}} committed in advance, the median dimension sits at {{m63_median}}%, and the five worst carry {{m63_worst_share}}% of the shortfall rather than the majority that would have made it concentrated. **No channel is exempt**, which is what §6.3's mechanism predicts: an objective whose optimum is σ = 0 has no reason to spare any dimension. The reading is coarse by construction — at h = 1 on {{d1n_nind}} trajectories a per-dimension coverage moves in {{m63_quant}}-point steps, and the rule fixed that limit before the run.
+**`M-63` asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **{{m63_verdict}}**: the interquartile range across dimensions is {{m63_iqr}} points against a {{m63_iqr_thr}}-point threshold committed in advance, and the five worst dimensions carry well under the half of the shortfall that would have made it concentrated. **No channel is exempt**, which is what §6.3's mechanism predicts: an objective whose optimum is σ = 0 has no reason to spare any dimension. The reading is coarse by construction — at h = 1 on {{d1n_nind}} trajectories a per-dimension coverage moves in {{m63_quant}}-point steps, and the rule fixed that limit before the run.
 
 **The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (§6.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}}) give, averaged over seeds:
 
