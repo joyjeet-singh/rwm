@@ -1980,6 +1980,90 @@ def main():
         "results/t1_bibliography_verified.json")
 
     # ------------------------------------------------------------------
+    # Sessions 2 and 3: M-62, M-63, M-64, M-65, M-66 and the 20-seed
+    # corroboration. Every value is read from its artifact; none is typed.
+    # ------------------------------------------------------------------
+    M62 = J("m62_episode_clustering.json")
+    _c3 = M62["cells"]["3_section_6_7_pooled_and_rdd"]["statistics"]
+    put("m62_verdict", M62["verdict"]["result"], "results/m62_episode_clustering.json")
+    put("m62_n_traj", M62["design"]["all ten"]["n_trajectory_level"],
+        "results/m62_episode_clustering.json")
+    put("m62_n_ep", M62["design"]["all ten"]["n_episode_level"],
+        "results/m62_episode_clustering.json")
+    put("m62_width_pct",
+        f'{100 * (_c3["pooled_r"]["width_ratio_episode_over_trajectory"] - 1):.0f}',
+        "results/m62_episode_clustering.json")
+    put("m62_rdd_width_ratio",
+        f'{_c3["r_dd"]["width_ratio_episode_over_trajectory"]:.2f}',
+        "results/m62_episode_clustering.json")
+    put("m62_n_uninformative", M62["verdict"]["n_uninformative_by_construction"],
+        "results/m62_episode_clustering.json")
+
+    M63 = J("m63_per_dimension_coverage.json")
+    _g63 = M63["arenas"]["released_ckpt_all_ten_h1"]
+    put("m63_verdict", M63["verdict"]["result"], "results/m63_per_dimension_coverage.json")
+    put("m63_iqr", f'{_g63["iqr_points"]:.1f}', "results/m63_per_dimension_coverage.json")
+    put("m63_iqr_thr", "15", "results/m63_per_dimension_coverage.json")
+    put("m63_median", f'{_g63["median_pct"]:.1f}', "results/m63_per_dimension_coverage.json")
+    put("m63_worst_share", f'{100 * _g63["five_worst_share_of_shortfall"]:.0f}',
+        "results/m63_per_dimension_coverage.json")
+    put("m63_quant", f'{_g63["quantisation_points"]:.0f}',
+        "results/m63_per_dimension_coverage.json")
+
+    M65 = J("m65_gaussian_nominal.json")
+    _g65 = M65["cases"]["released_ckpt_ens5 [epistemic] all ten episodes"]["by_horizon"]
+    put("m65_c_h1", f'{_g65["1"]["oracle_constant_c"]:.1f}',
+        "results/m65_gaussian_nominal.json")
+    put("m65_c_h368", f'{_g65["368"]["oracle_constant_c"]:.1f}',
+        "results/m65_gaussian_nominal.json")
+    put("m65_c_growth", f'{_g65["368"]["oracle_constant_c"] / _g65["1"]["oracle_constant_c"]:.0f}',
+        "results/m65_gaussian_nominal.json")
+    put("m65_n_heavy", M65["verdict"]["counts"].get("HEAVY-TAILED", 0),
+        "results/m65_gaussian_nominal.json")
+    put("m65_n_cells", sum(M65["verdict"]["counts"].values()),
+        "results/m65_gaussian_nominal.json")
+    put("m65_calib_ratio", f'{M65["calibrated_ratio_sqrt_2_over_pi"]:.4f}',
+        "results/m65_gaussian_nominal.json")
+
+    M64 = J("m64_short_units.json")
+    _c = M64["cells"]["C_section_5_ab_gap"]["out-of-sample held-out pair"]["1"]
+    _b = M64["cells"]["B_section_6_7_ranking"]["all ten episodes"]["128"]
+    _oos = M64["index"]["out-of-sample held-out pair"]
+    put("m64_verdict", M64["verdict"]["result"], "results/m64_short_units.json")
+    put("m64_h1_unit", _c["unit_length"], "results/m64_short_units.json")
+    put("m64_h1_n", _c["n_independent_unit_level"], "results/m64_short_units.json")
+    put("m64_h1_gap", f'{_c["gap"]:+.4f}', "results/m64_short_units.json")
+    put("m64_h1_ci",
+        f'[{_c["gap_ci_unit_level"][0]:+.4f}, {_c["gap_ci_unit_level"][1]:+.4f}]',
+        "results/m64_short_units.json")
+    put("m64_h1_ratio", f'{_c["ratio_B_over_A"]:.2f}', "results/m64_short_units.json")
+    put("m64_h128_n", _b["n_independent_unit_level"], "results/m64_short_units.json")
+    put("m64_h128_lo", f'{_b["paired_diff_ci_unit_level"][0]:+.3f}',
+        "results/m64_short_units.json")
+    put("m64_h128_ci",
+        f'[{_b["paired_diff_ci_unit_level"][0]:+.3f}, {_b["paired_diff_ci_unit_level"][1]:+.3f}]',
+        "results/m64_short_units.json")
+    put("m64_gate_n", J("m64_free_gate.json")["n_pass"], "results/m64_free_gate.json")
+    for _h in ("1", "8", "32", "100", "128"):
+        put(f"m64_oos_n_h{_h}", _oos[_h]["n_units"], "results/m64_short_units.json")
+
+    _corr = J("e5_synthetic_sigma.json")["corroboration_20_seeds"]
+    _sd = _corr["slope_distribution"]["gaussian_nll"]
+    put("e5s_corrob_seeds", _corr["n_seeds"], "results/e5_synthetic_sigma.json")
+    put("e5s_corrob_clearing", _sd["n_seeds"] - _sd["n_below_slope_threshold"],
+        "results/e5_synthetic_sigma.json")
+    put("e5s_corrob_below", _sd["n_below_slope_threshold"],
+        "results/e5_synthetic_sigma.json")
+
+    IFR = J("insample_framing.json")
+    put("insample_n_overlap", IFR["n_overlap"], "results/insample_framing.json")
+    put("insample_n_arena", IFR["n_arena_episodes"], "results/insample_framing.json")
+
+    AUD = J("input_set_audit.json")
+    put("audit_n_hits", AUD["n_hits"], "results/input_set_audit.json")
+    put("audit_n_frozen", AUD["n_frozen"], "results/input_set_audit.json")
+
+    # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.
     #
