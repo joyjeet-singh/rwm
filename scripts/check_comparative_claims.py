@@ -333,6 +333,18 @@ CLAIMS = [
      "retracted": "without exception",
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
+    # C10.5 extends the C10 group from "is a retracted claim still asserted" to
+    # "is a retraction filed under the class the ledger gives it". S-15 was filed
+    # under both: appendix C lists it among the framing retractions, which is
+    # what the ledger's `**Retracts**` line makes it, and section 8 called it
+    # "the most consequential of those" in a paragraph that had just named both
+    # classes, so the antecedent resolved either way. The paper reads as PAPER.md
+    # rather than the template here, because appendix C's enumeration is
+    # generated from the ledger and does not exist in the source.
+    {"id": "C10.5", "kind": "retraction_class_consistency", "where": "8 / Appendix C",
+     "says": "The most consequential of the framing retractions",
+     "files": ["PAPER.md", "docs/BUILD_CHECKS.template.md",
+               "README.md", "MODEL_CARD.md", "RESULTS.md"]},
 
     # ---- C11 cross-artifact-sync -----------------------------------------
     # README and MODEL_CARD are reader-facing and were materially behind the
@@ -883,6 +895,60 @@ def evaluate(c, paper, override=None):
         return not hits, (f'retracted assertion "{exp["retracted"][:44]}" '
                           + (f'STILL ASSERTED in {hits}' if hits
                              else f'absent from all {len(exp["files"])} files'))
+    if k == "retraction_class_consistency":
+        # The ledger decides an S-* entry's class, from its own `**Retracts**`
+        # line: a numbered claim retracted on our evidence, a framing withdrawn
+        # as a stated claim, or an early hypothesis. Every naming of an entry in
+        # a reader-facing file must resolve to exactly one of those, and to the
+        # one the ledger gives.
+        _led = open("FINDINGS_LEDGER.md").read()
+        cls = {}
+        for sid in re.findall(r"^### (S-\d+) ", _led, re.M):
+            blk = _led[_led.index("### " + sid + " "):]
+            blk = blk[:blk.find("\n### ", 5)] if "\n### " in blk[5:] else blk
+            m = re.search(r"^\*\*Retracts\*\* (.+)$", blk, re.M)
+            if not m:
+                continue
+            tail = m.group(1).lstrip()
+            cls[sid] = ("evidence" if not tail.startswith("—")
+                        else "hypothesis" if "early hypothesis" in tail
+                        else "framing")
+        cls.update(exp.get("_forced_ledger", {}))
+        MARK = {"framing": r"framings?\b",
+                "evidence": r"numbered retractions?|own evidence"
+                            r"|our own \*\*numbered claims\*\*"}
+        bad, seen = [], 0
+        for f in exp["files"]:
+            if not os.path.exists(f):
+                continue
+            for para in re.split(r"\n\s*\n", open(f).read()):
+                if "S-" not in para:
+                    continue
+                # The paragraph is scanned as well as the sentence: a sentence
+                # that names no class is fine on its own, and is exactly the
+                # section 8 defect when the paragraph around it names two.
+                pc = {x for x, p in MARK.items() if re.search(p, para, re.I)}
+                for sent in re.split(r"(?<=[.:;])\s+", para.replace("\n", " ")):
+                    ids = sorted({x for x in re.findall(r"S-\d+", sent) if x in cls})
+                    if not ids:
+                        continue
+                    sc = {x for x, p in MARK.items() if re.search(p, sent, re.I)}
+                    for sid in ids:
+                        seen += 1
+                        if len(sc) > 1:
+                            bad.append(f"{f}: {sid} named as {sorted(sc)} in one sentence")
+                        elif sc and cls[sid] not in sc:
+                            bad.append(f"{f}: {sid} called {sorted(sc)[0]}, "
+                                       f"ledger says {cls[sid]}")
+                        elif not sc and len(pc) > 1:
+                            bad.append(f"{f}: {sid}'s class is left to an antecedent "
+                                       f"in a paragraph naming {sorted(pc)}")
+                        elif not sc and pc and cls[sid] not in pc:
+                            bad.append(f"{f}: {sid} in a paragraph about "
+                                       f"{sorted(pc)[0]}, ledger says {cls[sid]}")
+        return not bad, (f'{seen} namings of {len(cls)} ledger retractions, each '
+                         f'resolving to the ledger\'s class' if not bad
+                         else "; ".join(bad[:4]))
     if k == "cross-artifact-sync":
         if not os.path.exists(exp["file"]):
             return False, f'{exp["file"]} does not exist'
@@ -1197,6 +1263,13 @@ def corruption_for(c):
     if k == "retraction-consistency":
         # a string that IS present, standing in for a retracted claim never removed
         return {"retracted": "reproduction"}
+    if k == "retraction_class_consistency":
+        # Move one entry to the other class. That is the tightest corruption
+        # available and it is the shape of the real defect: an identifier the
+        # paper files under a class the ledger does not give it. Corrupting the
+        # expectation -- the ledger side -- rather than the paper keeps the
+        # self-test read-only, as every other kind here does.
+        return {"_forced_ledger": {"S-15": "evidence"}}
     if k == "unit-consistency":
         # Remove the markers, so every n_independent in the paper reads as unit-less and
         # the check must fail. Corrupting the EXPECTATION rather than the paper keeps the

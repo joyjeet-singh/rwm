@@ -463,6 +463,9 @@ def main():
         "count-dependence": "a clean k-of-k count carries an interval or a not-independent note",
         "retraction-consistency": "a claim the ledger marks superseded is asserted nowhere "
                                   "reader-facing",
+        "retraction_class_consistency": "every retraction identifier a reader-facing file names "
+                                        "resolves to exactly one class, and to the class the "
+                                        "ledger gives it",
         "cross-artifact-sync": "the README and model card carry the paper's headline values",
         "abstract-budget": "the abstract stays inside its word and numeral budget",
         "interval-required": "a quoted ratio or coverage is accompanied by its interval",
