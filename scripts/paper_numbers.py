@@ -480,6 +480,8 @@ def main():
         "frequency-consistency": "a frequency stated in words -- \"at every horizon\", \"at "
                                  "exactly one place\" -- matches a count recomputed from the "
                                  "artifacts",
+        "table_renders": "every table in the source reaches the LaTeX as a table, with at "
+                         "least one row separator per source row",
         "restatement": "no sentence restates a quantity another section owns -- no numeral is "
                        "typed into the slot a substituted one fills elsewhere, and no section "
                        "prints two different quantities as the same numeral",

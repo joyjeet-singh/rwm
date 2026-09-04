@@ -86,6 +86,66 @@ def esc(s):
     return s
 
 
+# ------------------------------------------------------------- wide tables
+# An `l` column never wraps, so a table whose cells are paragraphs rather than
+# labels sets to several times the text block and the \resizebox around it then
+# shrinks the whole table to fit. Appendices D, E and F reached the PDF at
+# 2.48pt, 0.78pt and 2.80pt against 9.96pt body text: present in the text layer,
+# which is why an extraction reads them as run-together prose, and unreadable on
+# the page. Over a width budget the table is emitted as a longtable of wrapping
+# p{} columns instead -- same \small as before, no scaling, and it breaks across
+# pages rather than overflowing one.
+_CHARS_PER_LINE = 100          # characters of \small text across \linewidth
+_WIDE_TABLE_CHARS = 2 * _CHARS_PER_LINE   # i.e. \resizebox would halve the font
+# Floors are computed in points, not in characters, because a column that is one
+# character short of its widest unbreakable token is an overfull box and the
+# compile gate fails on any overfull box at all. \small typewriter is the widest
+# face these tables use, at 4.73pt per character; 5.0 leaves a little slack.
+_LINEWIDTH_PT = 469.75         # tmlr.sty: \textwidth 6.5 true in
+_FLOOR_CHAR_PT = 5.0           # conservative width of one \small character
+_TABCOLSEP_PT = 12.0           # the 2\tabcolsep each column spec subtracts
+
+
+def _cell_width(s):
+    """Rendered length of a Markdown cell, ignoring emphasis and code markers."""
+    return len(re.sub(r"[*`]", "", s.strip()))
+
+
+def _longest_token(s):
+    """Longest run in the cell with no break opportunity inside it.
+
+    "/" and "_" count as break opportunities because _wrap_cell puts an
+    \\allowbreak after each; without that, results/m63_per_dimension_coverage.json
+    is 39 unbreakable characters and its column would take 40% of the line.
+    """
+    return max((len(t) for t in re.split(r"[\s/_]+", re.sub(r"[*`]", "", s.strip()))),
+               default=0)
+
+
+def _column_fractions(widths, floors):
+    """Fractions of \\linewidth: proportional to content, never below a floor."""
+    n = len(widths)
+    lo = [min((f * _FLOOR_CHAR_PT + _TABCOLSEP_PT) / _LINEWIDTH_PT, 1.0) for f in floors]
+    if sum(lo) >= 1.0:                       # floors alone fill the line
+        return [x / sum(lo) for x in lo]
+    pinned = [False] * n
+    while True:
+        budget = 1.0 - sum(lo[k] for k in range(n) if pinned[k])
+        tot = sum(widths[k] for k in range(n) if not pinned[k]) or 1
+        frac = [lo[k] if pinned[k] else budget * widths[k] / tot for k in range(n)]
+        short = [k for k in range(n) if not pinned[k] and frac[k] < lo[k]]
+        if not short:
+            return frac
+        pinned[short[0]] = True              # one more column fixed at its floor
+
+
+def _wrap_cell(s):
+    """Let file paths and underscored identifiers break inside a p{} column."""
+    if "\\url{" in s or "http" in s:
+        return s
+    return s.replace("/", "/\\allowbreak{}").replace("\\_", "\\_\\allowbreak{}")
+
+
 def _is_table(lines, i):
     """True when the pipe-line at `i` opens a real Markdown table.
 
@@ -160,6 +220,10 @@ def convert(md, title, author):
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+% array for the \raggedright p-columns wide tables use, longtable so a table
+% taller than a page breaks instead of overflowing it. Both are LaTeX tools.
+\usepackage{array}
+\usepackage{longtable}
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
 \usepackage{textcomp}
@@ -258,11 +322,30 @@ def convert(md, title, author):
             cells = [re.split(r"(?<!\\)\|", r)[1:-1] for r in tbl]
             cells = [c for c in cells if not all(set(x.strip()) <= set("-: ") for x in c)]
             n = max(len(c) for c in cells)
+            body = [[esc(x.strip().replace(r"\|", "|")) for x in row] + [""] * (n - len(row))
+                    for row in cells]
+            colw = [max(_cell_width(c[k]) if k < len(c) else 0 for c in cells)
+                    for k in range(n)]
+            if sum(colw) > _WIDE_TABLE_CHARS:
+                floors = [max(_longest_token(c[k]) if k < len(c) else 0 for c in cells)
+                          for k in range(n)]
+                spec = "".join(
+                    r">{\raggedright\arraybackslash}p{\dimexpr %.4f\linewidth-2\tabcolsep\relax}"
+                    % f for f in _column_fractions(colw, floors))
+                hdr = " & ".join(_wrap_cell(x) for x in body[0]) + r" \\"
+                out.append(r"\begingroup\small")
+                out.append(r"\begin{longtable}{" + spec + "}")
+                out.append(r"\toprule " + hdr + r" \midrule\endfirsthead")
+                out.append(r"\toprule " + hdr + r" \midrule\endhead")
+                out.append(r"\bottomrule\endlastfoot")
+                for row in body[1:]:
+                    out.append(" & ".join(_wrap_cell(x) for x in row) + r" \\")
+                out.append(r"\end{longtable}\endgroup")
+                continue
             out.append(r"\begin{center}\small\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%")
             out.append(r"\begin{tabular}{" + "l" * n + "}")
             out.append(r"\toprule")
-            for j, row in enumerate(cells):
-                row = [esc(x.strip().replace(r"\|", "|")) for x in row] + [""] * (n - len(row))
+            for j, row in enumerate(body):
                 out.append(" & ".join(row) + r" \\")
                 if j == 0:
                     out.append(r"\midrule")
@@ -351,8 +434,8 @@ def convert(md, title, author):
     # legitimate, not stray specials
     body_wo_verb = re.sub(r"^\s*%.*$", "", body_wo_verb, flags=re.M)
     body_wo_verb = re.sub(r"%$", "", body_wo_verb, flags=re.M)
-    for env in ("verbatim", "tabular", "itemize", "enumerate", "figure", "abstract", "center",
-                "document"):
+    for env in ("verbatim", "tabular", "longtable", "itemize", "enumerate", "figure",
+                "abstract", "center", "document"):
         b = len(re.findall(r"\\begin\{" + env + r"\}", tex))
         e = len(re.findall(r"\\end\{" + env + r"\}", tex))
         if b != e:

@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "40 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "44 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,

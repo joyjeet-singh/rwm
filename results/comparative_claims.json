@@ -1,6 +1,6 @@
 {
-  "n_claims": 57,
-  "n_pass": 57,
+  "n_claims": 58,
+  "n_pass": 58,
   "claims": [
     {
       "id": "C1.1",
@@ -392,7 +392,7 @@
       "where": "8 / Appendix C",
       "says": "verifies",
       "pass": true,
-      "detail": "registered 24, section 8 claims 24, docs/BUILD_CHECKS.md enumerates 24"
+      "detail": "registered 25, section 8 claims 25, docs/BUILD_CHECKS.md enumerates 25"
     },
     {
       "id": "C20.1",
@@ -457,6 +457,14 @@
       "says": "so a reader can count them",
       "pass": true,
       "detail": "n_runs=26 + n_runs_offwidth=5 = 31 vs run_total=31; e2_fitted_runs=20 + e2_excluded_10k=6 = 26 vs 26; table 9 rows sum 31, widths ['124', '256'], seed-id lengths match; figure plots 26"
+    },
+    {
+      "id": "C23.1",
+      "kind": "table_renders",
+      "where": "Appendix D / E / F",
+      "says": "checkable row by row",
+      "pass": true,
+      "detail": "21 source tables, 21 rendered; source rows [7, 5, 7, 7, 8, 3, 10, 5, 7, 11, 7, 4, 3, 5, 7, 7, 7, 9, 13, 16, 6] vs row separators [7, 5, 7, 7, 8, 3, 10, 5, 7, 11, 7, 4, 3, 5, 7, 7, 7, 10, 14, 17, 7]"
     }
   ],
   "checker_defects": [
@@ -489,11 +497,12 @@
     "retraction-consistency",
     "scope-consistency",
     "sign",
+    "table_renders",
     "unit-consistency"
   ],
   "self_test": {
-    "n": 57,
-    "caught": 57,
+    "n": 58,
+    "caught": 58,
     "detail": [
       {
         "id": "C1.1",
@@ -737,7 +746,7 @@
       },
       {
         "id": "C16.1",
-        "corruption": "{'_forced': 25}",
+        "corruption": "{'_forced': 26}",
         "caught": true
       },
       {
@@ -778,6 +787,11 @@
       {
         "id": "C22.1",
         "corruption": "{'_forced_total': 32}",
+        "caught": true
+      },
+      {
+        "id": "C23.1",
+        "corruption": "{'_forced_extra_rows': 1}",
         "caught": true
       }
     ]

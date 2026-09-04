@@ -646,6 +646,20 @@ CLAIMS = [
      "total": "run_total", "family": "n_runs", "excluded": "n_runs_offwidth",
      "fitted": "e2_fitted_runs", "fitted_excluded": "e2_excluded_10k",
      "table": "run_table", "figure_family": ("paper_figures.json", "fig3", "n_runs")},
+
+    # ---- C23 table_renders -------------------------------------------------
+    # Appendices D, E and F reached the PDF at 2.48pt, 0.78pt and 2.80pt against
+    # 9.96pt body text. `l` columns never wrap, so a table whose cells are
+    # paragraphs set to eleven times the text block and the \resizebox around the
+    # tabular shrank the whole thing to fit. Every cell was in the text layer --
+    # which is why an extraction of the PDF reads those appendices as
+    # run-together prose, and why no check that reads text could see it. This one
+    # compares the tables the converter WROTE against the tables the source HAS:
+    # the same number of them, each carrying at least one row separator per
+    # source row. It does not measure type size; it catches a table that lost
+    # rows on the way to LaTeX, which is the failure a reader cannot recover from.
+    {"id": "C23.1", "kind": "table_renders", "where": "Appendix D / E / F",
+     "says": "checkable row by row"},
 ]
 
 
@@ -1094,6 +1108,32 @@ def evaluate(c, paper, override=None):
         ok = bool(cited) and not dangling and len(cited) <= n_figs
         return ok, (f'{n_figs} figures, {len(cited)} distinct numbers cited {cited}'
                     + (f'; dangling {dangling}' if dangling else ''))
+    if k == "table_renders":
+        # The source side is parsed with the CONVERTER's own table detector, so
+        # the two cannot disagree about what counts as a table.
+        import md_to_tex
+        lines_ = paper.split("\n")
+        src, j = [], 0
+        while j < len(lines_):
+            if lines_[j].startswith("|") and md_to_tex._is_table(lines_, j):
+                rows = 0
+                while j < len(lines_) and lines_[j].startswith("|"):
+                    cs = re.split(r"(?<!\\)\|", lines_[j])[1:-1]
+                    if not all(set(x.strip()) <= set("-: ") for x in cs):
+                        rows += 1
+                    j += 1
+                src.append(rows)
+            else:
+                j += 1
+        tex = open("PAPER.tex").read()
+        ren = [len(re.findall(r"\\\\", m.group(2))) for m in re.finditer(
+            r"\\begin\{(tabular|longtable)\}(.*?)\\end\{\1\}", tex, re.S)]
+        bump = int(exp.get("_forced_extra_rows", 0))
+        short = [(t, s, r) for t, (s, r) in enumerate(zip(src, ren)) if r < s + bump]
+        ok = bool(src) and len(src) == len(ren) and not short
+        return ok, (f'{len(src)} source tables, {len(ren)} rendered; source rows '
+                    f'{src} vs row separators {ren}'
+                    + (f'; short {short}' if short else ''))
     raise ValueError(k)
 
 
@@ -1219,6 +1259,12 @@ def corruption_for(c):
         # keeps the self-test read-only, as every other kind here does.
         return {"_forced_n_figures":
                 len(re.findall(r"\]\(figures/paper_fig", open(PAPER).read())) - 1}
+    if k == "table_renders":
+        # One more row than the source has. A converter that renders every row
+        # still cannot produce a separator for a row that is not there, so the
+        # check has to reject an expectation that is off by one, not only an
+        # absurd one. Corrupting the expectation keeps the self-test read-only.
+        return {"_forced_extra_rows": 1}
     if k == "extremum":
         fam = _family(c["family"])
         ranked = sorted(fam, key=fam.get, reverse=(c["expect"] == "max"))
