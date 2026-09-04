@@ -467,6 +467,11 @@ def main():
         "abstract-budget": "the abstract stays inside its word and numeral budget",
         "interval-required": "a quoted ratio or coverage is accompanied by its interval",
         "arithmetic": "a stated total equals the sum of its stated parts",
+        "population_partition": "the run populations the paper quotes against one another "
+                                "partition -- the run table's row counts sum to the stated "
+                                "total, every row states the width it trained at, and the "
+                                "collapse family plus the runs excluded from it equal the "
+                                "total",
         "unit-consistency": "every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\"",
         "kind-count": "the number of kinds section 8 claims, appendix D enumerates and the "
                       "checker registers are one number",
@@ -999,6 +1004,14 @@ def main():
     put("rt_runs_short", sum(1 for i, _ in _runs if i != 10000), "results/step5_*.json")
     put("rt_runs_m49", len(_runs_m49), "results/step5_*.json")
     put("rt_hours_m49", f"{sum(w for _, w in _runs_m49) / 3600:.1f}", "results/step5_*.json")
+    # The capacity-matched hours are a SUBSET of the total, not a further part of
+    # it, so the only arithmetic that can pin them is total = matched + released.
+    # Appendix B stated the total, its iteration-length split and the matched
+    # hours as three independent figures, and nothing asserted that the third sat
+    # inside the first. The remainder is put here so the `arithmetic` check has
+    # both parts of that partition to add up.
+    put("rt_hours_released",
+        f"{(_t - sum(w for _, w in _runs_m49)) / 3600:.1f}", "results/step5_*.json")
 
     # B8. Three measured quantities that were TYPED in prose, found by classifying
     # every numeral the template carries rather than by reading (see
@@ -1604,13 +1617,19 @@ def main():
         # collapsed into one row reading "6 | 0, 0, 1, 1, 2, 2" -- three seeds
         # listed twice, which reads as a duplication bug rather than as two
         # configurations.
+        # rnn_hidden_size is part of the key too, for the same reason ensemble is.
+        # Without it M-49's five capacity-matched runs at width 124 sat inside the
+        # released-width Arm A row, which then read "10 | 0, 0, 1, 1, 2, 2, 3, 3,
+        # 4, 4" -- five seeds listed twice, in a table headed "so a reader can
+        # count them". Two architectures were presented as one population, in the
+        # one place the paper invites a reader to audit the population by hand.
         key = (arm, h["iterations"], h.get("ensemble", 1), h.get("loss_type", "mse"),
                "contaminated" if h.get("contaminated") else
-               ("duplicated" if h.get("duplicated") else "clean"))
+               ("duplicated" if h.get("duplicated") else "clean"), _width(f))
         inv.setdefault(key, []).append(d["seed"])
     rows = []
-    for (arm, it, ens, loss, ds), seeds in sorted(inv.items()):
-        rows.append(f"| Arm {arm} | {it:,} | {ens} | {loss} | {ds} | {len(seeds)} | "
+    for (arm, it, ens, loss, ds, w), seeds in sorted(inv.items()):
+        rows.append(f"| Arm {arm} | {it:,} | {ens} | {loss} | {ds} | {w} | {len(seeds)} | "
                     f"{', '.join(str(x) for x in sorted(seeds))} |")
     put("run_table", "\n".join(rows), "results/step5_arm*.json")
     put("run_total", sum(len(v) for v in inv.values()), "results/step5_arm*.json")

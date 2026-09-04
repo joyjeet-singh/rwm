@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     869 values substituted from 73 artifacts. -->
+     871 values substituted from 73 artifacts. -->
 
 # Ensemble disagreement is miscalibrated as a scale, by a factor that grows with rollout depth: an independent reproduction of a released robotic world model
 
@@ -810,28 +810,34 @@ the collapse happens anyway. The design's limit is stated in `M-50` and holds: t
 detects the signal at full strength and at no dilution below it, so this establishes that σ does
 not track the noise **at all**, not the magnitude of how badly.
 
-We predicted the collapse from this algebra before training, then observed it. Across all
-26 runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 4a). Rates are fitted on 20 of those runs: the 6
-10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 4(a) shows all 31 runs;
-Figure 4(b) plots only the 20 the rate is fitted on, so the scatter and the quoted
-statistic describe the same set.
+We predicted the collapse from this algebra before training, then observed it. Three run counts
+appear below and they are not the same set. This project trained 31 runs in all, of
+which 26 are at the released `rnn_hidden_size` of 256 and form the collapse
+family; the remaining 5 are `M-49`'s capacity-matched arm at width
+124, a different architecture, and are excluded from every rate quoted here
+(Appendix B). Across all 26 runs of that family the collapse is linear in iteration count
+and its rate is nearly identical (Figure 4a). Rates are fitted on 20 of those
+26: the 6 10,000-iteration runs are excluded from the rate statistics
+because they continue seeds already counted at 2,500 and would double-weight them. Figure 4(a)
+shows all 26 runs of the collapse family; Figure 4(b) plots only the 20 the
+rate is fitted on, so the scatter and the quoted statistic describe the same set.
 
-![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for every run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
+![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 26 runs of the collapse family, which is every run at the released width. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
 
-The 31 runs, so a reader can count them:
+The 31 runs, so a reader can count them; the width column is what separates the
+collapse family from the capacity-matched arm:
 
-| arm | iterations | ensemble | objective | dataset | seeds | seed ids |
-|---|---|---|---|---|---|---|
-| Arm A | 2,500 | 1 | gaussian_nll | clean | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 1 | mse | clean | 10 | 0, 0, 1, 1, 2, 2, 3, 3, 4, 4 |
-| Arm A | 2,500 | 1 | mse | contaminated | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 1 | mse | duplicated | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 5 | mse | clean | 3 | 0, 1, 2 |
-| Arm A | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |
-| Arm B | 2,500 | 1 | mse | clean | 3 | 0, 1, 2 |
-| Arm B | 10,000 | 1 | mse | clean | 3 | 0, 1, 2 |
+| arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
+|---|---|---|---|---|---|---|---|
+| Arm A | 2,500 | 1 | gaussian_nll | clean | 256 | 3 | 0, 1, 2 |
+| Arm A | 2,500 | 1 | mse | clean | 124 | 5 | 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | clean | 256 | 5 | 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | contaminated | 256 | 3 | 0, 1, 2 |
+| Arm A | 2,500 | 1 | mse | duplicated | 256 | 3 | 0, 1, 2 |
+| Arm A | 2,500 | 5 | mse | clean | 256 | 3 | 0, 1, 2 |
+| Arm A | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
+| Arm B | 2,500 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
+| Arm B | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
@@ -1368,7 +1374,7 @@ counted separately because a value that is not produced twice cannot be compared
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,090 values, or 1.00%
 of the 908,630 numeric values under `results/`. The other 899,540 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 616 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **55 comparative claims** across 23 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 55 of 55 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 617 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **57 comparative claims** across 24 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 57 of 57 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1605,7 +1611,9 @@ What every downstream number rests on. Each level was passed before the next was
 
 **5 of those 31 runs, 1.9 hours, are `M-49`'s capacity-matched
 arm at `rnn_hidden_size` 124** rather than the released 256. They are part
-of this project's CPU spend and are counted in the total above; they are **not** part of the
+of this project's CPU spend and are counted in the total above — the other 46.3
+hours are the 26 runs at the released width, and the two parts are asserted to make the
+total rather than stated beside it. They are **not** part of the
 26 runs §6.3 fits the σ-collapse rate over, because that rate is a property of one
 architecture and mixing widths into it would make "nearly identical across runs" a claim about two
 different models. Every run artifact records the width it trained at, and `paper_numbers.py`
@@ -1692,7 +1700,7 @@ that names a real key, and any key resolving to an empty or null value. The conv
 requires the separator row before it will build a table.
 
 **The machinery, and the two lines that matter about it.** `scripts/check_comparative_claims.py`
-verifies 55 claims across 23 kinds, each pinning a fragment of this paper's text
+verifies 57 claims across 24 kinds, each pinning a fragment of this paper's text
 and a relation recomputed from the artifacts, and each run against a deliberately corrupted
 expectation on every build so that a check which can no longer fail is caught. The registry, the
 self-test's mechanics and the four defects it has found in the checker itself

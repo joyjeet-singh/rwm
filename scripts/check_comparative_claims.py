@@ -544,6 +544,15 @@ CLAIMS = [
     {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix D",
      "says": "are claims about policy learning or hardware",
      "total": "n_untested", "parts": ["appE_n_sim", "appE_n_cpu"], "tol": 0},
+    # Appendix B's CPU budget carried a third figure -- the capacity-matched arm's
+    # hours -- that C15.1 could not see, because those hours are a subset of the
+    # total rather than a further part of the iteration-length split. Stated
+    # beside a total it does not visibly sum with, it is free to drift. The
+    # partition that does hold is total = matched + released, and it is asserted.
+    {"id": "C15.5", "kind": "arithmetic", "where": "Appendix B",
+     "says": "runs at the released width, and the two parts are asserted to make the total",
+     "total": "rt_hours",
+     "parts": ["rt_hours_m49", "rt_hours_released"], "tol": 0.05},
 
     # ---- C16 kind-count ---------------------------------------------------
     # Section 9 said "N kinds" from a generated key while appendix D enumerated
@@ -621,6 +630,22 @@ CLAIMS = [
     # it because no kind knew how many figures the document has.
     {"id": "C21.1", "kind": "figure_reference", "where": "whole paper",
      "says": "This is the same computation Figure 1 plots"},
+
+    # ---- C22 population_partition -----------------------------------------
+    # Section 6.3 opened "across all 26 runs the collapse is linear", said four
+    # sentences later that Figure 4(a) "shows all 31 runs", and then headed a
+    # table "The 31 runs, so a reader can count them" -- and the figure plots 26.
+    # The table had no width column, so M-49's five capacity-matched runs sat
+    # inside the released-width Arm A row as a ten-seed entry reading
+    # 0, 0, 1, 1, 2, 2, 3, 3, 4, 4. Every numeral came from an artifact and every
+    # one was right about its own population; nothing asserted that the three
+    # populations partition, so the paper could and did quote them against each
+    # other. The table a reader is invited to count is checked by counting it.
+    {"id": "C22.1", "kind": "population_partition", "where": "6.3 / Appendix B",
+     "says": "so a reader can count them",
+     "total": "run_total", "family": "n_runs", "excluded": "n_runs_offwidth",
+     "fitted": "e2_fitted_runs", "fitted_excluded": "e2_excluded_10k",
+     "table": "run_table", "figure_family": ("paper_figures.json", "fig3", "n_runs")},
 ]
 
 
@@ -898,6 +923,49 @@ def evaluate(c, paper, override=None):
         return ok, (f'{exp["total"]}={tot:g} vs '
                     + " + ".join(f"{p}={v:g}" for p, v in zip(exp["parts"], parts))
                     + f" = {sum(parts):g} (tol {exp['tol']:g})")
+    if k == "population_partition":
+        # Three run populations the paper quotes against one another -- every run
+        # trained, the collapse family at the released architecture width, and the
+        # subset the collapse rate is fitted over -- plus the table a reader is
+        # invited to count. Each population is a substituted key, so no numeral
+        # here can be typed; what was unasserted is that they PARTITION. Four
+        # relations, all of which must hold:
+        #   family + excluded          == total
+        #   fitted + fitted_excluded   == family
+        #   sum of the table's row counts == total, and each row's seed-id list
+        #                                 is as long as its own seed count
+        #   the figure's own recorded run count == family
+        # The last one is why the caption and the prose cannot disagree again:
+        # scripts/paper_figures.py writes the population it actually plotted.
+        N = art("paper_numbers.json")
+        def _i(key):
+            return int(str(N[key]["value"]).replace(",", ""))
+        tot = int(exp.get("_forced_total", _i(exp["total"])))
+        fam, exc = _i(exp["family"]), _i(exp["excluded"])
+        fit, fexc = _i(exp["fitted"]), _i(exp["fitted_excluded"])
+        rows = [r for r in str(N[exp["table"]]["value"]).splitlines() if r.strip()]
+        cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
+        # Column order is fixed by paper_numbers.py: ... | width | seeds | seed ids.
+        widths = [c[-3] for c in cells]
+        counts = [int(c[-2]) for c in cells]
+        ids = [len([x for x in c[-1].split(",") if x.strip()]) for c in cells]
+        ok_widths = bool(cells) and all(w.isdigit() for w in widths)
+        ok_rows = counts == ids
+        ok = (fam + exc == tot and fit + fexc == fam
+              and sum(counts) == tot and ok_widths and ok_rows)
+        _figf, _figk, _figv = exp["figure_family"]
+        if os.path.exists(os.path.join(R.RESULTS, _figf)):
+            _plotted = art(_figf)[_figk][_figv]
+            ok = ok and _plotted == fam
+            _fig = f"; figure plots {_plotted}"
+        else:
+            _fig = "; figure artifact absent"
+        return ok, (f'{exp["family"]}={fam} + {exp["excluded"]}={exc} = {fam + exc} '
+                    f'vs {exp["total"]}={tot}; {exp["fitted"]}={fit} + '
+                    f'{exp["fitted_excluded"]}={fexc} = {fit + fexc} vs {fam}; '
+                    f'table {len(cells)} rows sum {sum(counts)}, widths '
+                    f'{sorted(set(widths))}, seed-id lengths '
+                    f'{"match" if ok_rows else "differ"}' + _fig)
     if k == "kind-count":
         # Three counts that must be one: what section 9 claims, what appendix D
         # enumerates, and what this file actually registers at runtime.
@@ -1114,6 +1182,14 @@ def corruption_for(c):
     if k == "arithmetic":
         # Widen one part by more than the tolerance by swapping it for the total.
         return {"parts": c["parts"][:-1] + [c["total"]]}
+    if k == "population_partition":
+        # Move the stated total by one. That is the tightest corruption available
+        # and it is the shape of the real defect: a total that no longer equals
+        # the family plus the runs excluded from it, and no longer equals what
+        # the table sums to. Corrupting the expectation rather than the paper
+        # keeps the self-test read-only, as every other kind here does.
+        N = art("paper_numbers.json")
+        return {"_forced_total": int(str(N[c["total"]]["value"]).replace(",", "")) + 1}
     if k == "kind-count":
         return {"_forced": len({x["kind"] for x in CLAIMS}) + 1}
     if k == "frequency-consistency":

@@ -242,6 +242,11 @@ def main():
     # so the figure's own caption disagreed with the section that defines the
     # constant. It comes from the same key the prose uses.
     NOMINAL1 = str(N["v3_cov_nominal1"]["value"])
+    # Same reason, Session 3. Figure 4's own panel title reads "all N runs
+    # superimposed" while §6.3 said the panel showed the project's full run count,
+    # which is a larger number: the panel plots the collapse family only. The
+    # caption states which population it is, from the key §6.3 states it with.
+    N_COLLAPSE = str(N["n_runs"]["value"])
     CAPS = {
         "paper_fig1_calibration.png":
             "Calibration of all four models on the held-out arena. "
@@ -256,7 +261,9 @@ def main():
             "The gap between the panels is the collapse.",
         "paper_fig3_collapse.png":
             "The variance collapse is objective-driven. (a) mean "
-            "$\\log\\Delta_{\\log\\sigma}$ against training iteration for every run. "
+            "$\\log\\Delta_{\\log\\sigma}$ against training iteration for each of the "
+            + N_COLLAPSE + " runs of the collapse family, which is every run at the released "
+            "width. "
             "(b) the fitted per-iteration slope for each run, grouped by objective: negative and "
             "tightly clustered under sampled MSE, positive under \\texttt{gaussian\\_nll}. The "
             "sign flip is the evidence that the objective, not the optimiser or the data, "

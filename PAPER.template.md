@@ -792,18 +792,23 @@ the collapse happens anyway. The design's limit is stated in `M-50` and holds: t
 detects the signal at full strength and at no dilution below it, so this establishes that σ does
 not track the noise **at all**, not the magnitude of how badly.
 
-We predicted the collapse from this algebra before training, then observed it. Across all
-{{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 4a). Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}}
-10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 4(a) shows all {{run_total}} runs;
-Figure 4(b) plots only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted
-statistic describe the same set.
+We predicted the collapse from this algebra before training, then observed it. Three run counts
+appear below and they are not the same set. This project trained {{run_total}} runs in all, of
+which {{n_runs}} are at the released `rnn_hidden_size` of {{released_width}} and form the collapse
+family; the remaining {{n_runs_offwidth}} are `M-49`'s capacity-matched arm at width
+{{m49_width}}, a different architecture, and are excluded from every rate quoted here
+(Appendix B). Across all {{n_runs}} runs of that family the collapse is linear in iteration count
+and its rate is nearly identical (Figure 4a). Rates are fitted on {{e2_fitted_runs}} of those
+{{n_runs}}: the {{e2_excluded_10k}} 10,000-iteration runs are excluded from the rate statistics
+because they continue seeds already counted at 2,500 and would double-weight them. Figure 4(a)
+shows all {{n_runs}} runs of the collapse family; Figure 4(b) plots only the {{e2_fitted_runs}} the
+rate is fitted on, so the scatter and the quoted statistic describe the same set.
 
-The {{run_total}} runs, so a reader can count them:
+The {{run_total}} runs, so a reader can count them; the width column is what separates the
+collapse family from the capacity-matched arm:
 
-| arm | iterations | ensemble | objective | dataset | seeds | seed ids |
-|---|---|---|---|---|---|---|
+| arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
+|---|---|---|---|---|---|---|---|
 {{run_table}}
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
@@ -1559,7 +1564,9 @@ What every downstream number rests on. Each level was passed before the next was
 
 **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m49}} hours, are `M-49`'s capacity-matched
 arm at `rnn_hidden_size` {{m49_width}}** rather than the released {{released_width}}. They are part
-of this project's CPU spend and are counted in the total above; they are **not** part of the
+of this project's CPU spend and are counted in the total above — the other {{rt_hours_released}}
+hours are the {{n_runs}} runs at the released width, and the two parts are asserted to make the
+total rather than stated beside it. They are **not** part of the
 {{n_runs}} runs §6.3 fits the σ-collapse rate over, because that rate is a property of one
 architecture and mixing widths into it would make "nearly identical across runs" a claim about two
 different models. Every run artifact records the width it trained at, and `paper_numbers.py`

@@ -3,7 +3,7 @@
   "one_time": "not registered as a check kind. It exists because text moved through a transformation layer in Sessions 5a and 6; the moves are done.",
   "pdf": "PAPER.pdf",
   "pages": 40,
-  "chars_extracted": 168487,
+  "chars_extracted": 169220,
   "cannot_detect": "extracted PDF text loses layout. This sees that a table's header cells are present and that references resolve; it cannot see a column rendered too narrow or a float landing pages from its reference. Those need a reader, which \u00a7F.2 asks for.",
   "n_checks": 5,
   "n_pass": 5,
@@ -26,7 +26,7 @@
     {
       "check": "4. every numeral the source states survives into the PDF",
       "pass": true,
-      "detail": "764 distinct numerals in the source, 755 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
+      "detail": "765 distinct numerals in the source, 758 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
     },
     {
       "check": "5. section cross-references resolve in the PDF",
