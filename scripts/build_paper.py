@@ -174,22 +174,37 @@ def main():
     #
     # Each figure is now inserted immediately after the paragraph that first
     # refers to it by number, so the float has somewhere near its reference to
-    # land. The numbering comes from the filename: paper_fig3_* is Figure 3, which
-    # is the same mapping the captions and the prose already assume.
+    # land. The number a figure carries in the rendered document is its order of
+    # appearance, which is not the digit in its filename: paper_fig4_* is the
+    # first figure the prose refers to and so renders as Figure 1. The prose
+    # cites rendered numbers, so placement resolves through INTEXT rather than
+    # through the filename (Session 1). Filename order and rendered order are
+    # different orders and conflating them is what made every in-text reference
+    # point at the wrong figure.
     #
     # A figure whose number is never referenced in the prose has nowhere to be
     # placed, and that is a defect in the prose rather than something to paper
     # over -- it is asserted rather than silently appended.
+    INTEXT = {
+        "paper_fig4_prereg_timeline.png": "1",
+        "paper_fig6_ab_by_horizon.png": "2",
+        "paper_fig1_calibration.png": "3",
+        "paper_fig3_collapse.png": "4",
+        "paper_fig2_sigma_profile.png": "5",
+        "paper_fig5_three_way.png": "6",
+    }
+    assert sorted(INTEXT) == sorted(figs), (
+        f"INTEXT does not cover the figures on disk: {sorted(INTEXT)} vs {sorted(figs)}")
     body = out
     unplaced = []
     for f in figs:
-        _n = re.match(r"paper_fig(\d+)", f)
+        _n = INTEXT.get(f)
         assert _n, f"cannot read a figure number from {f}"
         _img = f"![{CAPS[f]}](figures/{f})"
         # "(?!\\d)" rather than "\\b": the prose refers to sub-panels as "Figure 5a",
         # where \\b fails between the digit and the letter, and a bare \\d+ would let
         # a search for Figure 1 match Figure 15.
-        _m = re.search(r"Figure~?\s*" + _n.group(1) + r"(?!\d)", body)
+        _m = re.search(r"Figure~?\s*" + _n + r"(?!\d)", body)
         if not _m:
             unplaced.append(f)
             continue

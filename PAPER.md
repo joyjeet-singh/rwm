@@ -70,7 +70,7 @@ gradients match to 0.000e+00 across 7 loss terms and
 (Appendix A). A discrepancy found later is therefore a property of the method, not of our wiring.
 
 **Decision rules were committed before the data.** The verdicts below were fixed in advance, in
-git, with timestamps a reader can check (§8, Figure 4). One of them returned "cannot be settled"
+git, with timestamps a reader can check (§8, Figure 1). One of them returned "cannot be settled"
 and we report that too.
 
 ![Pre-registration lead time for each decision rule, from git commit timestamps. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. The one negative bar is the Task 3 duplication rule, retracted as a pre-registration in this paper.](figures/paper_fig4_prereg_timeline.png)
@@ -438,7 +438,7 @@ own imagination rollout length and the horizon everything in §6 is anchored to,
 three seeds give **2.58×**.
 
 **Quoting one of those and not the other would be a choice, so we report the curve**
-(Figure 6). Same rollouts, same 3 seeds, same held-out arena, n_independent =
+(Figure 2). Same rollouts, same 3 seeds, same held-out arena, n_independent =
 4, with a cluster bootstrap over whole trajectories:
 
 ![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Only the h = 368 figure is pre-registered (M-23); the rest were computed after the data existed.](figures/paper_fig6_ab_by_horizon.png)
@@ -616,7 +616,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.27% insid
 
 *Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = 4; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = 4 the bootstrap has 256 distinct resamples and the intervals are quantised at that resolution.*
 
-**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1); that is the quantity §6.1 shows the method discards.
+**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards.
 
 ![Calibration of all four models on the held-out arena. (a) reliability: observed against predicted coverage, with the calibrated diagonal. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. Every curve sits far below the diagonal and falls further with horizon.](figures/paper_fig1_calibration.png)
 
@@ -812,10 +812,10 @@ not track the noise **at all**, not the magnitude of how badly.
 
 We predicted the collapse from this algebra before training, then observed it. Across all
 26 runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Rates are fitted on 20 of those runs: the 6
+(Figure 4a). Rates are fitted on 20 of those runs: the 6
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 3(a) shows all 31 runs;
-Figure 3(b) plots only the 20 the rate is fitted on, so the scatter and the quoted
+counted at 2,500 and would double-weight them. Figure 4(a) shows all 31 runs;
+Figure 4(b) plots only the 20 the rate is fitted on, so the scatter and the quoted
 statistic describe the same set.
 
 ![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for every run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
@@ -841,7 +841,7 @@ teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05
 15.6 between two arms trained under the same objective, so the objective
 cannot be what produces it.
 
-Under the corrected objective the sign flips (Figure 3b) — which is the strongest evidence
+Under the corrected objective the sign flips (Figure 4b) — which is the strongest evidence
 that the mechanism is the objective and not the optimiser, the data or the architecture.
 
 ### 6.4 Why the epistemic term may be miscalibrated: the members are not independent models
@@ -1170,7 +1170,7 @@ So the accurate form of this section is: **a constant scalar does not repair the
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 2):
+σ is flat while error grows (Figure 5):
 
 ![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1. (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows by an order of magnitude over the same steps. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
 
@@ -1182,7 +1182,7 @@ uncertainty about step 368. It cannot report it about step 8 either. Inside the 
 | released checkpoint | 1.0007× | 1.79× |
 
 The faithful arm's σ *declines* (0.9241×) while its error grows
-3.49×. The coverage collapse in Figure 1(b) is therefore driven entirely by
+3.49×. The coverage collapse in Figure 3(b) is therefore driven entirely by
 growing error against a fixed σ.
 
 ### 6.10 Testing the mechanism: an ensemble that shares nothing
@@ -1311,7 +1311,7 @@ mechanism without it.
 
 In rollout, across 32 cells (two arenas × two trajectory lengths × two checkpoints × two
 horizons × two metrics), contamination hurts in **0** of 32 and
-helps in 9 (Figure 5a). The control is inert, differing from clean in
+helps in 9 (Figure 6a). The control is inert, differing from clean in
 2 cells.
 
 ![The contamination control. (a) outcome across 32 cells for each arm pair, naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling trajectory-step pairs rather than whole trajectories narrows every interval.](figures/paper_fig5_three_way.png)
@@ -1350,7 +1350,7 @@ it rests on, because it is what let us detect the gap at all.
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (245 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for 8 of them and Appendix F for all 15, every one of which now carries one; 7 of Figure 4's are positive and 1 is not. Figure 4 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix F for all 15, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
 **Six retractions on our own evidence**, out of 19 superseded claims kept in the record, plus six that withdraw framings rather than numbers (Appendix C lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
@@ -1368,7 +1368,7 @@ counted separately because a value that is not produced twice cannot be compared
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,090 values, or 1.00%
 of the 908,630 numeric values under `results/`. The other 899,540 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 616 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **54 comparative claims** across 22 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 54 of 54 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 616 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **55 comparative claims** across 23 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 55 of 55 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1512,9 +1512,9 @@ what changed.** A supplementary file quoting private correspondence was committe
 briefly published before consent to quote it had been given; it was purged from the history
 rather than merely deleted, because a deletion commit leaves the content recoverable from a
 public repository indefinitely. Purging a path rewrites every commit from the one that
-introduced it onward, so **14 of the commits Figure 4 cites keep their
+introduced it onward, so **14 of the commits Figure 1 cites keep their
 identifiers and two do not** — the two whose data post-dates that file. Timestamps, content
-and ordering are unchanged; only the hashes moved, and Figure 4 resolves each rule by its
+and ordering are unchanged; only the hashes moved, and Figure 1 resolves each rule by its
 commit subject for that reason. The transcript itself reaches reviewers in the anonymised
 supplementary archive, which is not published.
 
@@ -1522,7 +1522,7 @@ The pre-registration argument in §8 rests on commit timestamps, and those are
 author-settable via `git commit --date`. That matters, because §8 is load-bearing. Two
 things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
-ordering in Figure 4 is checkable at review time. And **the repository was archived by a
+ordering in Figure 1 is checkable at review time. And **the repository was archived by a
 third-party archive before submission**, under a permanent identifier whose visit timestamp is
 not author-controllable. Neither the identifier nor the date of that visit appears here: both
 resolve to a named repository, and a date is a one-field lookup away from an origin. They are
@@ -1692,7 +1692,7 @@ that names a real key, and any key resolving to an empty or null value. The conv
 requires the separator row before it will build a table.
 
 **The machinery, and the two lines that matter about it.** `scripts/check_comparative_claims.py`
-verifies 54 claims across 22 kinds, each pinning a fragment of this paper's text
+verifies 55 claims across 23 kinds, each pinning a fragment of this paper's text
 and a relation recomputed from the artifacts, and each run against a deliberately corrupted
 expectation on every build so that a check which can no longer fail is caught. The registry, the
 self-test's mechanics and the Four defects it has found in the checker itself
@@ -1817,7 +1817,7 @@ or an instruction to open a 433 KB ledger, so here is the table. It is generated
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
 it tested, resolved by commit *subject* rather than by hash — the history was rewritten once and
 hashes did not survive it, while subjects did. Positive means the rule was in git before the data
-existed. This is the same computation Figure 4 plots.
+existed. This is the same computation Figure 1 plots.
 
 | rule | what it governs | commit | lead time | tested by | verdict |
 |---|---|---|---|---|---|

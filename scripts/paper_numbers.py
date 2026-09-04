@@ -444,6 +444,9 @@ def main():
     _blurb = {
         "overlap": "two intervals do or do not overlap",
         "extremum": "a named cell is the max or min of its family",
+        "figure_reference": "every in-text figure number names a figure that exists, and no "
+                            "more distinct figure numbers are cited than the document has "
+                            "figures",
         "sign": "a stated rise or fall matches the direction of the difference",
         "orders": "a stated count of orders of magnitude matches `round(log10(ratio))`, "
                   "or a ratio quoted directly appears in the sentence that quotes it",

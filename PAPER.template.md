@@ -64,7 +64,7 @@ gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
 (Appendix A). A discrepancy found later is therefore a property of the method, not of our wiring.
 
 **Decision rules were committed before the data.** The verdicts below were fixed in advance, in
-git, with timestamps a reader can check (§8, Figure 4). One of them returned "cannot be settled"
+git, with timestamps a reader can check (§8, Figure 1). One of them returned "cannot be settled"
 and we report that too.
 
 **We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and Appendix C give them in full. The count is in the contributions below, once.
@@ -430,7 +430,7 @@ own imagination rollout length and the horizon everything in §6 is anchored to,
 three seeds give **{{d1_ratio_h100}}×**.
 
 **Quoting one of those and not the other would be a choice, so we report the curve**
-(Figure 6). Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independent =
+(Figure 2). Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independent =
 {{a1_nind}}, with a cluster bootstrap over whole trajectories:
 
 | h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |
@@ -606,7 +606,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts {{v3_cov_nom
 
 *Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = {{b2_nind}}; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = {{b2_nind}} the bootstrap has {{c3_resamples}} distinct resamples and the intervals are quantised at that resolution.*
 
-**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = {{b2_nind}} 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1); that is the quantity §6.1 shows the method discards.
+**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = {{b2_nind}} 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards.
 
 *A note on the released checkpoint's row, so the next table does not read as a
 contradiction.* Its {{cal_rel_ratio}}× is the whole {{v2_diag_h}}-step rollout on those same
@@ -794,10 +794,10 @@ not track the noise **at all**, not the magnitude of how badly.
 
 We predicted the collapse from this algebra before training, then observed it. Across all
 {{n_runs}} runs the collapse is linear in iteration count and its rate is nearly identical
-(Figure 3a). Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}}
+(Figure 4a). Rates are fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}}
 10,000-iteration runs are excluded from the rate statistics because they continue seeds already
-counted at 2,500 and would double-weight them. Figure 3(a) shows all {{run_total}} runs;
-Figure 3(b) plots only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted
+counted at 2,500 and would double-weight them. Figure 4(a) shows all {{run_total}} runs;
+Figure 4(b) plots only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted
 statistic describe the same set.
 
 The {{run_total}} runs, so a reader can count them:
@@ -814,7 +814,7 @@ teacher-forced arm**, which shares the objective — and reverses to {{e2_nll_ra
 {{cal_armB_over_faithA_cov}} between two arms trained under the same objective, so the objective
 cannot be what produces it.
 
-Under the corrected objective the sign flips (Figure 3b) — which is the strongest evidence
+Under the corrected objective the sign flips (Figure 4b) — which is the strongest evidence
 that the mechanism is the objective and not the optimiser, the data or the architecture.
 
 ### 6.4 Why the epistemic term may be miscalibrated: the members are not independent models
@@ -1143,7 +1143,7 @@ So the accurate form of this section is: **a constant scalar does not repair the
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 2):
+σ is flat while error grows (Figure 5):
 
 | model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
 |---|---|---|
@@ -1153,7 +1153,7 @@ uncertainty about step 368. It cannot report it about step 8 either. Inside the 
 | released checkpoint | {{sig_rel_growth}}× | {{err_rel_growth}}× |
 
 The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows
-{{err_faithA_growth}}×. The coverage collapse in Figure 1(b) is therefore driven entirely by
+{{err_faithA_growth}}×. The coverage collapse in Figure 3(b) is therefore driven entirely by
 growing error against a fixed σ.
 
 ### 6.10 Testing the mechanism: an ensemble that shares nothing
@@ -1282,7 +1282,7 @@ mechanism without it.
 
 In rollout, across {{tw_cells}} cells (two arenas × two trajectory lengths × two checkpoints × two
 horizons × two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and
-helps in {{tw_cc_cluster_helped}} (Figure 5a). The control is inert, differing from clean in
+helps in {{tw_cc_cluster_helped}} (Figure 6a). The control is inert, differing from clean in
 {{tw_dc_cluster_helped}} cells.
 
 **"Costs nothing" is the wrong summary, and we should not use it.** Splicing raises training loss
@@ -1319,7 +1319,7 @@ it rests on, because it is what let us detect the gap at all.
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for {{f4_n_rules}} of them and Appendix F for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 4's are positive and {{f4_n_negative}} is not. Figure 4 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix F for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not. Figure 1 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
 **{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix C lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
@@ -1481,9 +1481,9 @@ what changed.** A supplementary file quoting private correspondence was committe
 briefly published before consent to quote it had been given; it was purged from the history
 rather than merely deleted, because a deletion commit leaves the content recoverable from a
 public repository indefinitely. Purging a path rewrites every commit from the one that
-introduced it onward, so **{{f4_n_commits}} of the commits Figure 4 cites keep their
+introduced it onward, so **{{f4_n_commits}} of the commits Figure 1 cites keep their
 identifiers and two do not** — the two whose data post-dates that file. Timestamps, content
-and ordering are unchanged; only the hashes moved, and Figure 4 resolves each rule by its
+and ordering are unchanged; only the hashes moved, and Figure 1 resolves each rule by its
 commit subject for that reason. The transcript itself reaches reviewers in the anonymised
 supplementary archive, which is not published.
 
@@ -1491,7 +1491,7 @@ The pre-registration argument in §8 rests on commit timestamps, and those are
 author-settable via `git commit --date`. That matters, because §8 is load-bearing. Two
 things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
-ordering in Figure 4 is checkable at review time. And **the repository was archived by a
+ordering in Figure 1 is checkable at review time. And **the repository was archived by a
 third-party archive before submission**, under a permanent identifier whose visit timestamp is
 not author-controllable. Neither the identifier nor the date of that visit appears here: both
 resolve to a named repository, and a date is a one-field lookup away from an origin. They are
@@ -1759,7 +1759,7 @@ or an instruction to open a {{ledger_kb}} KB ledger, so here is the table. It is
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
 it tested, resolved by commit *subject* rather than by hash — the history was rewritten once and
 hashes did not survive it, while subjects did. Positive means the rule was in git before the data
-existed. This is the same computation Figure 4 plots.
+existed. This is the same computation Figure 1 plots.
 
 | rule | what it governs | commit | lead time | tested by | verdict |
 |---|---|---|---|---|---|

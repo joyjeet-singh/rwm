@@ -611,6 +611,16 @@ CLAIMS = [
      "section": "4. What the original papers claim, and which claims we test",
      "forbid": ["without exception", "in all cases", "in every case",
                 "all eight", "none of the eight", "each of the eight"]},
+
+    # ---- C21 figure_reference ---------------------------------------------
+    # Every in-text figure reference in the shipped paper pointed at the wrong
+    # figure. The prose cited the digit in the figure's FILENAME while LaTeX
+    # numbers by order of appearance, and the two orders differ: paper_fig4_* is
+    # the first figure the prose refers to and renders as Figure 1. Twelve sites,
+    # every one of them wrong, and none of the twenty-two kinds above could see
+    # it because no kind knew how many figures the document has.
+    {"id": "C21.1", "kind": "figure_reference", "where": "whole paper",
+     "says": "This is the same computation Figure 1 plots"},
 ]
 
 
@@ -903,7 +913,9 @@ def evaluate(c, paper, override=None):
         _bc = open(_bc_path).read() if os.path.exists(_bc_path) else ""
         i = _bc.find("**The check kinds.**")
         seg = _bc[i:_bc.find("\n\n", i)] if i >= 0 else ""
-        enumerated = len(set(re.findall(r"\*([a-z][a-z-]+)\*", seg)))
+        # "_" is in the class because one kind is spelled figure_reference; without
+        # it that kind is enumerated in the paragraph and counted by nobody.
+        enumerated = len(set(re.findall(r"\*([a-z][a-z_-]+)\*", seg)))
         ok = registered == claimed == enumerated and i >= 0
         return ok, (f'registered {registered}, section 8 claims {claimed}, '
                     f'docs/BUILD_CHECKS.md enumerates {enumerated}')
@@ -999,6 +1011,21 @@ def evaluate(c, paper, override=None):
         return not bad, (f'{len(exp["quantities"]) - len(bad)}/{len(exp["quantities"])} '
                          f'quoted quantities carry their interval'
                          + (f'; {bad}' if bad else ''))
+    if k == "figure_reference":
+        # Two assertions, both about numbers this document owns. Every figure
+        # number the prose cites must name a figure that exists, and the count of
+        # distinct numbers cited must not exceed the number of figures -- the
+        # second catches the case where each reference is individually in range
+        # and the set as a whole cannot be satisfied.
+        # "Fig." is deliberately NOT matched: those references are the original
+        # papers' figure numbers, which this document does not number.
+        n_figs = exp.get("_forced_n_figures",
+                         len(re.findall(r"\]\(figures/paper_fig", paper)))
+        cited = sorted({int(m) for m in re.findall(r"Figure~?\s*(\d+)", paper)})
+        dangling = [n for n in cited if not 1 <= n <= n_figs]
+        ok = bool(cited) and not dangling and len(cited) <= n_figs
+        return ok, (f'{n_figs} figures, {len(cited)} distinct numbers cited {cited}'
+                    + (f'; dangling {dangling}' if dangling else ''))
     raise ValueError(k)
 
 
@@ -1108,6 +1135,14 @@ def corruption_for(c):
         # A phrase that IS in the section, standing in for a quantifier never
         # removed.
         return {"forbid": c["forbid"] + ["we did not test"]}
+    if k == "figure_reference":
+        # One fewer figure than the document has, so the highest number the prose
+        # cites no longer names anything. That is the tightest corruption
+        # available -- the check has to reject a count that is off by one, not
+        # only an absurd one. Corrupting the expectation rather than the paper
+        # keeps the self-test read-only, as every other kind here does.
+        return {"_forced_n_figures":
+                len(re.findall(r"\]\(figures/paper_fig", open(PAPER).read())) - 1}
     if k == "extremum":
         fam = _family(c["family"])
         ranked = sorted(fam, key=fam.get, reverse=(c["expect"] == "max"))
