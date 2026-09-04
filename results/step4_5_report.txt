@@ -36,23 +36,23 @@ STEP 4 / 5 -- CPU TIMING
   timing 20 iterations after 3 warm-up, per configuration
 ----------------------------------------------------------------------------------
    ens  batch    s/iter      std    500 iters   2500 iters  peak RSS MB
-     1   1024     4.623    0.523     38.5 min        3.2 h         1700
-     1    256     1.659    0.527     13.8 min        1.2 h         1700
-     5   1024    37.179    5.316        5.2 h     1.1 days         4769
-     5    256     5.926    0.318     49.4 min        4.1 h         4769
+     1   1024     5.265    0.143     43.9 min        3.7 h         1804
+     1    256     1.295    0.041     10.8 min     54.0 min         1804
+     5   1024    37.923    1.285        5.3 h     1.1 days         4954
+     5    256     6.427    0.191     53.6 min        4.5 h         4954
 
 ----------------------------------------------------------------------------------
   PROJECTIONS (single seed, one training run)
 ----------------------------------------------------------------------------------
   Reference configuration is ensemble 5, batch 1024:
-    config's 500 iterations -> 5.2 h
+    config's 500 iterations -> 5.3 h
     paper's 2500 iterations           -> 1.1 days
   Cheapest configuration (ensemble 1, batch 256):
-    500 iterations  -> 13.8 min
-    2500 iterations -> 1.2 h
+    500 iterations  -> 10.8 min
+    2500 iterations -> 54.0 min
 
   Step 6 five-fold cross-validation (M-05) at the reference config,
   500 iterations per fold: 1.1 days
-  ... and at 2500 iterations per fold: 5.4 days
+  ... and at 2500 iterations per fold: 5.5 days
 
-  RECOMMENDATION: single runs locally (5.2 h each); rent only if Step 6 needs the full five-fold sweep at 2500 iterations
+  RECOMMENDATION: single runs locally (5.3 h each); rent only if Step 6 needs the full five-fold sweep at 2500 iterations

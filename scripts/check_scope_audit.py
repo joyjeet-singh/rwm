@@ -81,6 +81,11 @@ SCOPE = {
         "finds '**The check kinds.**' and counts the italicised names in that paragraph. "
         "RE-POINTED in 5a from PAPER.md to docs/BUILD_CHECKS.md when the enumeration "
         "moved. A missing region fails the check"),
+    "unit-consistency": ("whole-file",
+        "added in Session 6. Scans PAPER.md end to end for every n_independent figure and "
+        "requires the enclosing paragraph to name the unit it counts. It names no file "
+        "list, so its coverage is PAPER.md and nothing else -- text moved out of the paper "
+        "leaves it, which is the property this audit exists to record"),
     "restatement": ("whole-file",
         "scans PAPER.template.md end to end for a numeral typed where a key exists, and "
         "for a numeral ambiguous between two units"),

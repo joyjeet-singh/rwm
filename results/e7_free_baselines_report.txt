@@ -1,0 +1,13 @@
+E7 — DISAGREEMENT AGAINST THREE FREE BASELINES
+========================================================================================================
+  released checkpoint, n_independent = 20, 368 forecast steps
+  r(disagreement, error) = +0.6053
+  MDE (M-51): margin 0.2891, partial 0.1131
+
+  baseline          r(base,err)    margin   partial  within-step base  verdict
+  step-size             +0.4697   +0.1357   +0.5430           +0.5196  NOT beaten
+  entry-res             +0.1471   +0.4582   +0.5948           +0.2035  beaten
+  forecast-index        +0.2686   +0.3368   +0.5957              +nan  —
+========================================================================================================
+  M-51 VERDICT: SURVIVES entry-res ONLY
+  wrote results/e7_free_baselines.json

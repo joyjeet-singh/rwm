@@ -1,0 +1,31 @@
+D1 — THREE-SEED RECOMPUTATION
+====================================================================================
+  1. cross-check: 10k run vs the 2,500 run at the same seed
+
+     run           status      compared  differing       worst
+     armA_seed0    MATCH          15000          0   0.000e+00
+     armA_seed1    MATCH          15000          0   0.000e+00
+     armA_seed2    MATCH          15000          0   0.000e+00
+     armB_seed0    MATCH          15000          0   0.000e+00
+     armB_seed1    MATCH          15000          0   0.000e+00
+     armB_seed2    MATCH          15000          0   0.000e+00
+
+  2. h=100 out-of-sample, n_independent = 4   [the deployment horizon]
+
+     Arm A: seed0 0.3954  seed1 0.3763  seed2 0.3384
+             mean 0.3700 ± 0.0290  (n=3, ddof=1)
+     Arm B: seed0 0.9803  seed1 0.9416  seed2 0.9465
+             mean 0.9561 ± 0.0211  (n=3, ddof=1)
+
+     ratio B/A over 3 seeds: 2.58×
+
+  2. h=368 out-of-sample, n_independent = 4   [M-23's horizon]
+
+     Arm A: seed0 0.3894  seed1 0.3509  seed2 0.3341
+             mean 0.3582 ± 0.0283  (n=3, ddof=1)
+     Arm B: seed0 1.9710  seed1 1.5540  seed2 1.4241
+             mean 1.6497 ± 0.2858  (n=3, ddof=1)
+
+     ratio B/A over 3 seeds: 4.61×
+
+  wrote results/task_d1_threeseed.json

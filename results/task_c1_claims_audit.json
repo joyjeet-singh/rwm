@@ -1,57 +1,49 @@
 {
-  "n_claims": 412,
+  "n_claims": 431,
   "by_verdict": {
-    "UNREVIEWED": 191,
-    "SUPPORTED": 221
+    "UNREVIEWED": 235,
+    "SUPPORTED": 196
   },
   "claims": [
     {
-      "id": "15080de35d95",
+      "id": "610000051cb3",
       "section": "Abstract",
-      "claim": "The base paper's central training claim reproduces, and the advantage grows with horizon.** Under a rule committed to git before the runs, autoregressive training beats teacher forcing on held-out episodes by {{d1_ratio}}\u00d7 on the reference's own relative-L1 error at h = {{v2_diag_h}}, the horizon the rule names, rising to it from {{a1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, where the method deploys.",
-      "keys": [
-        "d1_ratio",
-        "v2_diag_h",
-        "a1_ratio_h100",
-        "v2_deploy_h"
-      ],
-      "artifacts": [
-        "results/a1_ab_by_horizon.json",
-        "results/task_d1_threeseed.json",
-        "results/v2_deployment_horizon.json"
-      ],
-      "n_keys": 4,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "f91bcebd6e12",
-      "section": "Abstract",
-      "claim": "Neither uncertainty output is usable as an interval, and that is not accumulated rollout error.** One step ahead, where nothing has accumulated, the disagreement the method penalises rewards with is already {{d1n_epi_ratio_h1}}\u00d7 smaller than realised error: {{d1n_epi_cov1_h1}}% of outcomes fall inside \u00b11\u03c3 where {{v3_cov_nominal1}}% is calibrated, deteriorating to {{d1n_epi_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}.",
+      "claim": "The trust metric the method penalises with is miscalibrated as a scale, by a factor that grows with depth.** Ensemble disagreement is smaller than realised error by {{d1n_epi_ratio_h1}}\u00d7 at h = 1 and {{d1n_epi_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, where its imagination rollouts run.",
       "keys": [
         "d1n_epi_ratio_h1",
-        "d1n_epi_cov1_h1",
-        "v3_cov_nominal1",
         "d1n_epi_ratio_h100",
         "v2_deploy_h"
       ],
       "artifacts": [
         "results/task_d_nind20.json",
-        "results/v2_deployment_horizon.json",
-        "results/v3_metric_definitions.json"
+        "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 5,
+      "n_keys": 3,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "b128aa9f3b35",
+      "id": "ba3e21b2ad2d",
       "section": "Abstract",
-      "claim": "The \u03c3 the method computes and discards is worse still.",
+      "claim": "Nor is it a units problem a tuned coefficient absorbs.** The penalty enters through a scalar weight, so a uniformly wrong scale would simply rescale it \u2014 but the best constant rescale, an upper bound because it is fitted and scored on the same data, grows by a factor of {{m65_c_growth}} across the rollout.",
+      "keys": [
+        "m65_c_growth"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "5667f909d7be",
+      "section": "Abstract",
+      "claim": "The \u03c3 the method computes and discards is worse still, and we derive why: the implemented objective's optimum is \u03c3 = 0.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -61,15 +53,16 @@
       "note": ""
     },
     {
-      "id": "80c678c87ea5",
+      "id": "6328ef59128b",
       "section": "Abstract",
-      "claim": "We derive why \u2014 the implemented objective's optimum is \u03c3 = 0 \u2014 and demonstrate it on data whose noise is known and varies {{e5s_span}}\u00d7: \u03c3 lands {{e5s_mse_under}}\u00d7 low and tracks it not at all.",
+      "claim": "The base paper's central training claim reproduces, and the advantage grows with horizon** \u2014 {{d1_ratio}}\u00d7 on the reference's own relative-L1 error at h = {{v2_diag_h}}, under a rule committed to git before the runs.",
       "keys": [
-        "e5s_span",
-        "e5s_mse_under"
+        "d1_ratio",
+        "v2_diag_h"
       ],
       "artifacts": [
-        "results/e5_synthetic_sigma.json"
+        "results/task_d1_threeseed.json",
+        "results/v2_deployment_horizon.json"
       ],
       "n_keys": 2,
       "generated": true,
@@ -78,41 +71,9 @@
       "note": ""
     },
     {
-      "id": "eb3c869bec8a",
+      "id": "c04d5ca75b9b",
       "section": "Abstract",
-      "claim": "As a ranking it is far better, with three limits.** Holding rollout and forecast depth constant it correlates {{a2_rdd}} with realised error, and beats the forecast step index at every horizon.",
-      "keys": [
-        "a2_rdd"
-      ],
-      "artifacts": [
-        "results/a2_trajectory_level_control.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "760670ce674e",
-      "section": "Abstract",
-      "claim": "But a free baseline, the model's own predicted step size, comes close enough that this sample cannot separate them; the evidence is in-sample for a checkpoint trained on all ten episodes; and a pre-registered replication on models we trained returns {{e5_verdict}}.",
-      "keys": [
-        "e5_verdict"
-      ],
-      "artifacts": [
-        "results/task_d3_ens5.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "e463c1af0a5b",
-      "section": "Abstract",
-      "claim": "Two defects are repairable.** A per-horizon multiplier, fitted on one held-out episode and scored on the other, restores nominal coverage on every held-out cell; and the released evaluation pairs each state with the previous step's action, overstating the checkpoint's own nRMSE at h = {{v2_diag_h}} by {{stale_pct}}%.",
+      "claim": "The released evaluation understates its own checkpoint**: it pairs each state with the previous step's action, overstating that checkpoint's nRMSE at h = {{v2_diag_h}} by {{stale_pct}}%.",
       "keys": [
         "v2_diag_h",
         "stale_pct"
@@ -128,20 +89,13 @@
       "note": ""
     },
     {
-      "id": "043630bd43f1",
+      "id": "ce476e203b6e",
       "section": "Abstract",
-      "claim": "Every **measurement** here is substituted from a named artifact; the {{tn_typed}} numerals that are not are addresses, horizon labels or declared constants, classified one by one by a build that fails on anything else. {{cc_n}} comparative claims across {{cc_kinds}} kinds are recomputed each build against a corrupted expectation, so a check that can no longer fail is caught.",
-      "keys": [
-        "tn_typed",
-        "cc_n",
-        "cc_kinds"
-      ],
-      "artifacts": [
-        "results/comparative_claims.json",
-        "results/typed_numerals.json"
-      ],
-      "n_keys": 3,
-      "generated": true,
+      "claim": "As a *ranking* it is far better, with limits: holding rollout and depth constant it still tracks error and beats the forecast step index everywhere, but the model's own predicted step size comes close enough that this sample cannot separate them.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
@@ -201,9 +155,9 @@
       "note": ""
     },
     {
-      "id": "63d34c425a82",
+      "id": "075b2c642e1a",
       "section": "1. Introduction",
-      "claim": "A from-scratch reimplementation verified at the gradient level.** Outputs match the released module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training (Appendix A). - **The base paper's central training claim reproduces, and the advantage grows with forecast horizon**: a factor of {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds, under a rule committed to git before the runs existed, rising monotonically to that from {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} and a gap that spans zero at {{a1_spans_zero_at}} (\u00a75). - **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (\u00a72); we measure coverage against a nominal, on a checkpoint its authors deployed.",
+      "claim": "A from-scratch reimplementation verified at the gradient level.** Outputs match the released module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training (Appendix A). - **The base paper's central training claim reproduces, and the advantage grows with forecast horizon**: a factor of {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds, under a rule committed to git before the runs existed, rising monotonically to that from {{d1_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} (\u00a75). - **At one step the comparison reverses, and we report it against our own arm.** A second pre-registered rule rebuilds the evaluation at a {{m64_h1_unit}}-row unit, giving {{m64_h1_n}} independent units where the 400-step unit gives {{a1_nind}}.",
       "keys": [
         "diff_grad_max",
         "diff_terms",
@@ -213,35 +167,74 @@
         "d1_seeds",
         "d1_ratio_h100",
         "v2_deploy_h",
-        "a1_spans_zero_at"
+        "m64_h1_unit",
+        "m64_h1_n",
+        "a1_nind"
       ],
       "artifacts": [
         "results/a1_ab_by_horizon.json",
+        "results/m64_short_units.json",
         "results/step4_3_differential.json",
         "results/task_d1_threeseed.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 9,
+      "n_keys": 11,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "9094387127c7",
+      "id": "39bf53723b25",
       "section": "1. Introduction",
-      "claim": "Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon; and the aleatoric collapse is derived analytically from the implemented objective rather than observed (\u00a76.2, \u00a76.3). - **A candidate mechanism for the epistemic failure, from source.** The five members share one trunk, one recurrent state and {{v1_shared_pct}}% of each member's parameters, so their spread cannot express uncertainty the trunk does not already carry (\u00a76.4). - **The ranking claim tested against a free baseline neither original ran**, and against six controls, the last of which removes trajectory difficulty rather than forecast depth and is the only one that isolates within-rollout information (\u00a76.7). - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of {{r2_n_indep}} independently-initialised full models, sharing nothing, is {{m44_ratio_gain}}\u00d7 better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of {{m44_mde_ratio}}\u00d7.",
+      "claim": "The gap becomes {{m64_h1_gap}} {{m64_h1_ci}} \u2014 it excludes zero in favour of **teacher forcing**.",
       "keys": [
-        "v1_shared_pct",
+        "m64_h1_gap",
+        "m64_h1_ci"
+      ],
+      "artifacts": [
+        "results/m64_short_units.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "48e7216dfc2a",
+      "section": "1. Introduction",
+      "claim": "Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon; and the aleatoric collapse is derived analytically from the implemented objective rather than observed (\u00a76.2, \u00a76.3). - **A candidate mechanism for the epistemic failure, from source.** The five members share one trunk, one recurrent state and {{v1_shared_pct}}% of each member's parameters, so their spread cannot express uncertainty the trunk does not already carry (\u00a76.4). - **The ranking claim tested against free baselines neither original ran**, and against six controls, the last of which removes trajectory difficulty rather than forecast depth and is the only one that isolates within-rollout information.",
+      "keys": [
+        "v1_shared_pct"
+      ],
+      "artifacts": [
+        "results/v1_ensemble_topology.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "dfcae993a1fa",
+      "section": "1. Introduction",
+      "claim": "Of the {{e7_n_new}} baselines added here, disagreement beats {{e7_n_beaten}}: the model's own predicted step size ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, and the margin between them is below what this sample can resolve (\u00a76.7). - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of {{r2_n_indep}} independently-initialised full models, sharing nothing, is {{m44_ratio_gain}}\u00d7 better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of {{m44_mde_ratio}}\u00d7.",
+      "keys": [
+        "e7_n_new",
+        "e7_n_beaten",
+        "e7_step_r",
+        "e7_r_dis",
         "r2_n_indep",
         "m44_ratio_gain",
         "m44_mde_ratio"
       ],
       "artifacts": [
-        "results/r2_independent_ensemble.json",
-        "results/v1_ensemble_topology.json"
+        "results/e7_free_baselines.json",
+        "results/r2_independent_ensemble.json"
       ],
-      "n_keys": 4,
+      "n_keys": 7,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -668,6 +661,26 @@
       "verdict": "SUPPORTED",
       "sample_size": "n/a \u2014 a definition read from the implementation",
       "note": "revision review (V3/X-14): formula and pooling axes checked against the implementation, whose file:line is read back on every build"
+    },
+    {
+      "id": "8f2ca27f5ccc",
+      "section": "3.1 Metrics",
+      "claim": "That nominal is checked rather than assumed.** Rescaling each model's \u03c3 by the single constant that makes mean  / mean \u03c3 equal a calibrated Gaussian's {{m65_calib_ratio}} lands coverage at or above {{v3_cov_nominal1}}% in every one of {{m65_n_cells}} model \u00d7 horizon cells, with {{m65_n_heavy}} below it (`M-65`).",
+      "keys": [
+        "m65_calib_ratio",
+        "v3_cov_nominal1",
+        "m65_n_cells",
+        "m65_n_heavy"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json",
+        "results/v3_metric_definitions.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "887b7b64cf09",
@@ -1158,9 +1171,9 @@
       "note": ""
     },
     {
-      "id": "2417e78f3e7f",
+      "id": "069a70141d11",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "The advantage {{a1_monotone}} grow monotonically with forecast depth.** The gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}.",
+      "claim": "The advantage {{a1_monotone}} grow monotonically with forecast depth.** Over 400-step trajectories the gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}.",
       "keys": [
         "a1_monotone",
         "a1_n_excl",
@@ -1189,6 +1202,69 @@
       ],
       "n_keys": 2,
       "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "8cc08f4b3469",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "At h = 1 that is weaker than the data now supports, and the correction runs against us.** The row above rests on {{a1_nind}} independent 400-step trajectories.",
+      "keys": [
+        "a1_nind"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "21152c68afde",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "A 400-step unit is required only by the longest horizon, so under a rule committed before the index was built (`M-64`) we rebuilt it at {{m64_h1_unit}} rows \u2014 32 of history and one forecast step, non-overlapping within an episode \u2014 which yields {{m64_h1_n}} units on the same two episodes.",
+      "keys": [
+        "m64_h1_unit",
+        "m64_h1_n"
+      ],
+      "artifacts": [
+        "results/m64_short_units.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "3c511f011f11",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "The gap is {{m64_h1_gap}} {{m64_h1_ci}}: it **excludes zero, in favour of teacher forcing** ({{m64_h1_ratio}}\u00d7).",
+      "keys": [
+        "m64_h1_gap",
+        "m64_h1_ci",
+        "m64_h1_ratio"
+      ],
+      "artifacts": [
+        "results/m64_short_units.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "133dc2c580c1",
+      "section": "5. The base paper's central claim reproduces",
+      "claim": "So the h = 1 result is not \"no difference\" but **autoregressive training is worse at one step**, which is the direction the sign test and the hold-last floor already pointed.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
@@ -1306,28 +1382,6 @@
       "verdict": "SUPPORTED",
       "sample_size": "3 seeds, n_ind=4",
       "note": "Three-seed aggregate from task_d1_threeseed.json; every run cross-checked against its 2,500-iteration counterpart at 0 differing values before aggregation."
-    },
-    {
-      "id": "f66c95ffb76e",
-      "section": "5. The base paper's central claim reproduces",
-      "claim": "An earlier draft of this paper quoted the single-seed figures {{m23_A}} and {{m23_B}}; those came from the seed that happened to be favourable to Arm A and unfavourable to Arm B, and the three-seed ratio at h = {{v2_diag_h}} is {{d1_ratio}}\u00d7 rather than {{m23_ratio}}\u00d7.",
-      "keys": [
-        "m23_A",
-        "m23_B",
-        "v2_diag_h",
-        "d1_ratio",
-        "m23_ratio"
-      ],
-      "artifacts": [
-        "results/task5_analysis.json",
-        "results/task_d1_threeseed.json",
-        "results/v2_deployment_horizon.json"
-      ],
-      "n_keys": 5,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
     },
     {
       "id": "e6a63050db47",
@@ -1843,9 +1897,9 @@
       "note": "revision review: assertion re-checked against the held-out arena, including the seeds-are-not-trajectories resampling unit"
     },
     {
-      "id": "155563e54f91",
+      "id": "7c7a90868283",
       "section": "6.2 The measurement",
-      "claim": "All four rows are the held-out arena** \u2014 the two episodes withheld from our own arms, n_independent = {{b2_nind}} \u2014 because that is the only arena on which our arms can be scored fairly.",
+      "claim": "All four rows are the held-out arena** \u2014 the two episodes withheld from our own arms, n_independent = {{b2_nind}} 400-step trajectories \u2014 because that is the only arena on which our arms can be scored fairly.",
       "keys": [
         "b2_nind"
       ],
@@ -1854,9 +1908,9 @@
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Part F: arena labelling restored on the four-model table; every arena-sensitive key verified labelled at each use"
+      "note": ""
     },
     {
       "id": "0f98115d6056",
@@ -2052,6 +2106,39 @@
       "note": ""
     },
     {
+      "id": "42de6ddda282",
+      "section": "6.2 The measurement",
+      "claim": "And that row is measured on data the checkpoint trained on.** The released checkpoint trained on all ten episodes, and this arena is all ten \u2014 {{insample_n_overlap}} of {{insample_n_arena}} of them (`results/insample_framing.json`).",
+      "keys": [
+        "insample_n_overlap",
+        "insample_n_arena"
+      ],
+      "artifacts": [
+        "results/insample_framing.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "6853711889cf",
+      "section": "6.2 The measurement",
+      "claim": "In-sample measurement biases *toward* better calibration, so the {{d1n_epi_ratio_h1}}\u00d7 at h = 1 is if anything flattering.",
+      "keys": [
+        "d1n_epi_ratio_h1"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "a9f27cd7554e",
       "section": "6.2 The measurement",
       "claim": "We keep h = {{v2_deploy_h}} because it is where the method actually deploys, and h = {{v2_diag_h}} because it is the upstream's own diagnostic length \u2014 landmarks on a curve, not the evidence.",
@@ -2133,9 +2220,66 @@
       "note": ""
     },
     {
-      "id": "a88c086ee32a",
+      "id": "40778962220e",
       "section": "6.2 The measurement",
-      "claim": "The larger sample changes one thing materially, and it is a correction to our own earlier reading.** At n_independent = {{b2_nind}} the epistemic ordering looked like chance at short horizon \u2014 {{b2_epi_npos_h1}} of {{b2_epi_ndim_h1}} dimensions at h=1 \u2014 and we had described it as a long-horizon effect.",
+      "claim": "Rescaling \u03c3 by the single constant that best calibrates it \u2014 fitted and scored on the same data, so it is an upper bound on what *any* constant achieves \u2014 needs {{m65_c_h1}} at h = 1 and {{m65_c_h368}} at h = {{v2_diag_h}}, a factor of {{m65_c_growth}} across the rollout (`M-65`).",
+      "keys": [
+        "m65_c_h1",
+        "m65_c_h368",
+        "v2_diag_h",
+        "m65_c_growth"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "661055a485e8",
+      "section": "6.2 The measurement",
+      "claim": "The mechanism is \u00a76.9's: \u03c3 is nearly flat while error grows by an order of magnitude, so the ratio runs {{d1n_epi_ratio_h1}}\u00d7 at h = 1, {{d1n_epi_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} and {{d1n_epi_ratio_h368}}\u00d7 at h = {{v2_diag_h}}.",
+      "keys": [
+        "d1n_epi_ratio_h1",
+        "d1n_epi_ratio_h100",
+        "v2_deploy_h",
+        "d1n_epi_ratio_h368",
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/task_d_nind20.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "30b0d3fd2378",
+      "section": "6.2 The measurement",
+      "claim": "The penalty is applied at every step of a {{v2_deploy_h}}-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk.",
+      "keys": [
+        "v2_deploy_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "0c7a5e45af00",
+      "section": "6.2 The measurement",
+      "claim": "The larger sample changes one thing materially.** At n_independent = {{b2_nind}} the epistemic ordering looked like chance at short horizon \u2014 {{b2_epi_npos_h1}} of {{b2_epi_ndim_h1}} dimensions at h=1.",
       "keys": [
         "b2_nind",
         "b2_epi_npos_h1",
@@ -2146,9 +2290,9 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 held-out trajectories",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "100fc86c7410",
@@ -2182,9 +2326,93 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "e18ea2528287",
+      "id": "54e8e63429cf",
       "section": "6.2 The measurement",
-      "claim": "The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (\u00a76.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}}) give, averaged over seeds:",
+      "claim": "Two pre-registered checks on how these numbers are read, both committed before they were computed.** `M-62` asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "e84ffc9bffee",
+      "section": "6.2 The measurement",
+      "claim": "It returns **{{m62_verdict}}**: in the one arena with power at that level \u2014 all ten episodes, n = {{m62_n_traj}} falling to {{m62_n_ep}} \u2014 the pooled correlation's interval widens by {{m62_width_pct}}% and the double-demeaned one by a factor of {{m62_rdd_width_ratio}}, and neither crosses zero.",
+      "keys": [
+        "m62_verdict",
+        "m62_n_traj",
+        "m62_n_ep",
+        "m62_width_pct",
+        "m62_rdd_width_ratio"
+      ],
+      "artifacts": [
+        "results/m62_episode_clustering.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "1182b3a3e025",
+      "section": "6.2 The measurement",
+      "claim": "The other {{m62_n_uninformative}} cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance rather than discovering it, and they are reported as uninformative rather than as intervals.",
+      "keys": [
+        "m62_n_uninformative"
+      ],
+      "artifacts": [
+        "results/m62_episode_clustering.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "80fbdb1b93bc",
+      "section": "6.2 The measurement",
+      "claim": "It returns **{{m63_verdict}}**: the interquartile range across dimensions is {{m63_iqr}} points against a {{m63_iqr_thr}}-point threshold committed in advance, and the five worst dimensions carry well under the half of the shortfall that would have made it concentrated.",
+      "keys": [
+        "m63_verdict",
+        "m63_iqr",
+        "m63_iqr_thr"
+      ],
+      "artifacts": [
+        "results/m63_per_dimension_coverage.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "7d4f826a6923",
+      "section": "6.2 The measurement",
+      "claim": "The reading is coarse by construction \u2014 at h = 1 on {{d1n_nind}} trajectories a per-dimension coverage moves in {{m63_quant}}-point steps, and the rule fixed that limit before the run.",
+      "keys": [
+        "d1n_nind",
+        "m63_quant"
+      ],
+      "artifacts": [
+        "results/m63_per_dimension_coverage.json",
+        "results/task_d_nind20.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "d5fb70363480",
+      "section": "6.2 The measurement",
+      "claim": "The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (\u00a76.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}} 400-step trajectories) give, averaged over seeds:",
       "keys": [
         "e5_seeds",
         "e5_nind"
@@ -2194,9 +2422,9 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 out-of-sample trajectories, 3 seeds at ensemble size 5",
-      "note": "revision review: assertion re-checked at h=100 with the intervals A1 added; M-43's own horizon set is unchanged and its verdict is not affected"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "a1224d96b46e",
@@ -2238,9 +2466,9 @@
       "note": "revision review: assertion re-checked against the named arena, which differs between the two and is stated"
     },
     {
-      "id": "28dcd5441668",
+      "id": "c27af0a86ea3",
       "section": "6.2 The measurement",
-      "claim": "h = {{v2_deploy_h}} carries the abstract, so it is tested rather than left blank**: an earlier draft ran the permutation test on the pre-revision five-horizon grid and printed \"\u2014\" in the one row the headline rests on.",
+      "claim": "h = {{v2_deploy_h}} carries the abstract, so it is tested rather than left blank**.",
       "keys": [
         "v2_deploy_h"
       ],
@@ -2476,11 +2704,45 @@
       "note": ""
     },
     {
-      "id": "e199060cb163",
+      "id": "1a53fa34af4a",
       "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
-      "claim": "Under the authors' own branch, same data and same head, \u03c3 recovers the true level to a median ratio of {{e5s_nll_ratio}} and every seed's slope clears the threshold.",
+      "claim": "Under the authors' own branch, same data and same head, \u03c3 recovers the true level to a median ratio of {{e5s_nll_ratio}} and every one of the {{e5s_seeds}} seeds `M-50` was discharged over clears the slope threshold.",
       "keys": [
-        "e5s_nll_ratio"
+        "e5s_nll_ratio",
+        "e5s_seeds"
+      ],
+      "artifacts": [
+        "results/e5_synthetic_sigma.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "298f6b8d9810",
+      "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "Twenty seeds show that clearance is not general**: {{e5s_corrob_clearing}} of {{e5s_corrob_seeds}} clear it, so the all-seeds criterion would not have held at that sample.",
+      "keys": [
+        "e5s_corrob_clearing",
+        "e5s_corrob_seeds"
+      ],
+      "artifacts": [
+        "results/e5_synthetic_sigma.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "ae1d017fa386",
+      "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
+      "claim": "`M-50`'s verdict stands as returned over its own {{e5s_seeds}} and is not re-opened by more seeds (\u00a78); what twenty establish is that the hedge below was necessary rather than cautious.",
+      "keys": [
+        "e5s_seeds"
       ],
       "artifacts": [
         "results/e5_synthetic_sigma.json"
@@ -2677,21 +2939,9 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "9e1bc1ccfe4d",
+      "id": "53e002e8b0be",
       "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-      "claim": "The effect is known and we are not claiming it.** That heads sharing a trunk under-report disagreement relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell, Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be engineered rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what independent initialisation buys is decorrelation which subspace methods do not match; and BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and MIMO (Havasi et al., ICLR 2021) share deliberately and state what they trade away for it.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "ce452dfc42b3",
-      "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-      "claim": "What is ours is finding it in a released robotics checkpoint that its authors deployed on hardware, with the sharing quantified and the cost measured** \u2014 {{v1_shared_pct}}% of each member, and {{m44_ratio_gain}}\u00d7 on the overconfidence factor (\u00a76.10).",
+      "claim": "What is ours is finding it in a released robotics checkpoint that its authors deployed on hardware, with the sharing quantified and the cost measured**: {{v1_shared_pct}}% of each member, and {{m44_ratio_gain}}\u00d7 on the overconfidence factor (\u00a76.10).",
       "keys": [
         "v1_shared_pct",
         "m44_ratio_gain"
@@ -3236,9 +3486,9 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
-      "id": "0555d64775cb",
+      "id": "8a61754de593",
       "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-      "claim": "The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} out of sample, the epistemic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1).",
+      "claim": "The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} 400-step trajectories out of sample, the epistemic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1).",
       "keys": [
         "perm_oos_nind",
         "perm_oos_epi_p_h128",
@@ -3250,9 +3500,9 @@
       ],
       "n_keys": 4,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "44e4fd4a6efd",
@@ -3315,9 +3565,9 @@
       "note": ""
     },
     {
-      "id": "d6432e2e35b7",
+      "id": "bba36522f489",
       "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-      "claim": "The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so it cannot distinguish a strong effect from a marginal one at any horizon.",
+      "claim": "The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so at this unit it cannot distinguish a strong effect from a marginal one at any horizon.",
       "keys": [
         "perm_oos_nind",
         "perm_oos_floor"
@@ -3327,9 +3577,45 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 4 / 16 / 20 by arena; exact enumeration at n=4, 20,000 samples above",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "14d7296f30d6",
+      "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+      "claim": "That blindness is a property of the 400-step unit, not of the arena**, and the distinction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (`M-64`).",
+      "keys": [
+        "m64_h1_unit",
+        "m64_oos_n_h1",
+        "m64_oos_n_h100",
+        "v2_deploy_h"
+      ],
+      "artifacts": [
+        "results/m64_short_units.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "5bcf03e38837",
+      "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
+      "claim": "We did not recompute this permutation family at the shorter unit**, so what the short units change here is the scope of the design claim rather than any verdict in it: the arena is demonstrably underpowered at h = {{v2_diag_h}}, which needs the full 400 rows, and is no longer demonstrably underpowered at h = 128 and below.",
+      "keys": [
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "f057e1c0b366",
@@ -3518,9 +3804,9 @@
       "note": ""
     },
     {
-      "id": "a61eceeb0905",
+      "id": "57097d50a945",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "At {{d2p_overlap_h}} the marginal intervals *do* overlap, and an earlier draft of this paper wrongly asserted that they never do. {{d2b_idx_strongest_h}} is where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest: the paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero, but only just \u2014 {{d2p_narrowest_lo}} is the smallest lower bound in the table and we would not rest anything on that horizon alone.",
+      "claim": "At {{d2p_overlap_h}} the marginal intervals *do* overlap. {{d2b_idx_strongest_h}} is where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest: the paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero, but only just \u2014 {{d2p_narrowest_lo}} is the smallest lower bound in the table and we would not rest anything on that horizon alone \u2014 at the 400-step unit.",
       "keys": [
         "d2p_overlap_h",
         "d2b_idx_strongest_h",
@@ -3533,6 +3819,23 @@
         "results/task_d_nind20.json"
       ],
       "n_keys": 6,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "b6a63b9c3c7f",
+      "section": "6.7 Ensemble disagreement beats the trivial baseline",
+      "claim": "At the shorter unit `M-64` builds, {{m64_h128_n}} non-overlapping units over the same ten episodes give {{m64_h128_ci}} for the same paired difference, so the horizon that carried the least weight carries more than it did.",
+      "keys": [
+        "m64_h128_n",
+        "m64_h128_ci"
+      ],
+      "artifacts": [
+        "results/m64_short_units.json"
+      ],
+      "n_keys": 2,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -3576,49 +3879,6 @@
       "note": "results/task_d2b_robustness.json raw 0.60534 -> controls.linear 0.59571, a FALL of 0.00963; guarded permanently by comparative check C3.1"
     },
     {
-      "id": "cb446a46b86b",
-      "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "Partialling out log(1 + index) gives {{d2r_log}} {{d2r_log_ci}}; a cubic in the index gives {{d2r_cub}} {{d2r_cub_ci}}; a rank partial correlation, which removes *any* monotone dependence on depth rather than an assumed functional form, gives {{d2r_spr}} {{d2r_spr_ci}}.",
-      "keys": [
-        "d2r_log",
-        "d2r_log_ci",
-        "d2r_cub",
-        "d2r_cub_ci",
-        "d2r_spr",
-        "d2r_spr_ci"
-      ],
-      "artifacts": [
-        "results/task_d2b_robustness.json"
-      ],
-      "n_keys": 6,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, 368 forecast steps; 2,000-resample cluster bootstrap over whole trajectories",
-      "note": "checked against results/task_d2b_robustness.json controls block"
-    },
-    {
-      "id": "4b046f7c489a",
-      "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "Computing the correlation **within each forecast step** \u2014 across trajectories, with depth held exactly constant, so the index cannot contribute by construction \u2014 and averaging over steps gives **{{d2r_win}} {{d2r_win_ci}}**, positive at {{d2r_win_pos}} of {{d2r_win_n}} forecast steps with a median of {{d2r_win_med}}.[^stepcount] The weakest figure across all {{d2r_ncontrols}} controls is {{d2r_weakest}}.",
-      "keys": [
-        "d2r_win",
-        "d2r_win_ci",
-        "d2r_win_pos",
-        "d2r_win_n",
-        "d2r_win_med",
-        "d2r_ncontrols",
-        "d2r_weakest"
-      ],
-      "artifacts": [
-        "results/task_d2b_robustness.json"
-      ],
-      "n_keys": 7,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes",
-      "note": "revision review: assertion re-checked, and the description of the within-step control corrected -- A2 shows it is itself a between-trajectory statistic"
-    },
-    {
       "id": "73fa0f0cd9ae",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
       "claim": "[^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent \u2014 structurally the same problem \u00a76.6 spends a page correcting for the 45 coupled state dimensions.",
@@ -3653,9 +3913,26 @@
       "note": "revision review: assertion re-checked, and the description of the within-step control corrected -- A2 shows it is itself a between-trajectory statistic"
     },
     {
-      "id": "6fb65d777941",
+      "id": "3b64944c3417",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "Per-episode difficulty in this dataset spans {{d12_lo}} to {{d12_hi}} and is uncorrelated with commanded speed, so the units being correlated differ a great deal in *level*.",
+      "claim": "The weakest figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so disagreement is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong.",
+      "keys": [
+        "d2r_ncontrols",
+        "d2r_weakest"
+      ],
+      "artifacts": [
+        "results/task_d2b_robustness.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "870cd271c0c0",
+      "section": "6.7 Ensemble disagreement beats the trivial baseline",
+      "claim": "Per-episode difficulty spans {{d12_lo}} to {{d12_hi}} and is uncorrelated with commanded speed, so if harder trajectories simply have both larger error and larger disagreement, the pooled correlation would look exactly as it does with disagreement carrying no within-rollout information whatever.",
       "keys": [
         "d12_lo",
         "d12_hi"
@@ -3665,26 +3942,14 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
-      "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
-      "id": "5863bb1daa4c",
+      "id": "92310bb0a94c",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "If harder trajectories simply have both larger error and larger disagreement, the pooled correlation would look exactly as it does with disagreement carrying no within-rollout information whatever.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "n/a \u2014 not a quantitative claim",
-      "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
-    },
-    {
-      "id": "7533153c41e1",
-      "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "Two things suggested that was worth checking: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine per-step signal, and the within-step control coming out *above* the pooled figure, which is the signature of a between-unit effect.",
+      "claim": "Two things suggested checking: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine per-step signal, and the within-step control coming out *above* the pooled figure, which is the signature of a between-unit effect.",
       "keys": [
         "a2_h1_npoints",
         "a2_h1_r"
@@ -3694,14 +3959,14 @@
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
-      "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
-      "id": "4ee38fd130d1",
+      "id": "bffda96e4216",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "The between-trajectory correlation is **{{a2_r_between}}**, and the two components contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance.",
+      "claim": "The verdict.** The between-trajectory correlation is {{a2_r_between}} and the two components contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance, so a large part of what this section has been reporting is a between-rollout effect.",
       "keys": [
         "a2_r_between",
         "a2_share_between",
@@ -3712,26 +3977,14 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
-      "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
-      "id": "733874293d76",
+      "id": "fb3cef40a1ea",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "That reinterprets the fifth control rather than merely adding to it.** The within-step statistic correlates *across trajectories* at each fixed step and averages \u2014 which removes depth completely and removes trajectory difficulty not at all.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "n/a \u2014 not a quantitative claim",
-      "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
-    },
-    {
-      "id": "697192f1bec4",
-      "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "It is a mean of {{d2r_win_n}} between-trajectory correlations, which is why it reads {{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it.",
+      "claim": "That reinterprets the within-step control rather than merely adding to it**: it is a mean of {{d2r_win_n}} between-trajectory correlations, which is why it reads {{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it.",
       "keys": [
         "d2r_win_n",
         "d2r_win",
@@ -3743,50 +3996,36 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
-      "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
-      "id": "bde62a847e4e",
+      "id": "5caebf8c8110",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "The decisive statistic is the double-demeaned one, and it survives.** Removing the trajectory mean *and* the step mean from both variables and correlating the residuals gives **{{a2_rdd}} {{a2_rdd_ci}}**, on n_independent = {{a2_nind}} with a cluster bootstrap over whole trajectories.",
+      "claim": "The decisive statistic is the double-demeaned one and it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}}, against M-45's pre-committed threshold that the interval exclude zero and a minimum detectable effect of {{p1_m45_mde}}, estimated by a dilution study placing detection between {{p1_m45_undetected}} (not detected) and {{p1_m45_detected}} (detected).",
       "keys": [
         "a2_rdd",
         "a2_rdd_ci",
-        "a2_nind"
-      ],
-      "artifacts": [
-        "results/a2_trajectory_level_control.json"
-      ],
-      "n_keys": 3,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
-      "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not"
-    },
-    {
-      "id": "f776ebbf02b5",
-      "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "The rule's minimum detectable effect at this sample size is an absolute r_dd of {{p1_m45_mde}} or more, estimated by a dilution study which put the detection threshold between a true effect of {{p1_m45_undetected}} (not detected) and {{p1_m45_detected}} (detected).",
-      "keys": [
+        "a2_nind",
         "p1_m45_mde",
         "p1_m45_undetected",
         "p1_m45_detected"
       ],
       "artifacts": [
+        "results/a2_trajectory_level_control.json",
         "results/p1_power_check.json"
       ],
-      "n_keys": 3,
+      "n_keys": 6,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "514f48c553ed",
+      "id": "02434e081f8d",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "M-45 returns {{m45_verdict}}**: with both the rollout and the depth held constant, disagreement still tracks error.",
+      "claim": "M-45 returns {{m45_verdict}}**: with both the rollout and the depth held constant, disagreement still tracks error rather than merely reporting which episode is hard.",
       "keys": [
         "m45_verdict"
       ],
@@ -3795,9 +4034,9 @@
       ],
       "n_keys": 1,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n_independent = 20 trajectories, all ten episodes; cluster bootstrap over whole trajectories",
-      "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "beb6142593c3",
@@ -4070,9 +4309,9 @@
       "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
     },
     {
-      "id": "90a1e31e31bd",
+      "id": "3664eca68388",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}}, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions.",
+      "claim": "Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions.",
       "keys": [
         "e5_comp_nind",
         "e5_comp_excl",
@@ -4083,9 +4322,9 @@
       ],
       "n_keys": 3,
       "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "3 ens5 seeds, n_independent = 4 out-of-sample",
-      "note": "Part D/E: results/task_d3_ens5.json and task_d3b_ens5_power.json; M-43's verdict is computed by code from the rule as committed, not asserted"
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "ee17fd0ab6cb",
@@ -4128,9 +4367,9 @@
       "note": ""
     },
     {
-      "id": "73c04313467a",
+      "id": "fde5ce4c4b39",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "r(disagreement, error) = {{e7_r_dis}} on the released checkpoint at n_independent = {{e7_nind}}.",
+      "claim": "r(disagreement, error) = {{e7_r_dis}} on the released checkpoint at n_independent = {{e7_nind}} 400-step trajectories.",
       "keys": [
         "e7_r_dis",
         "e7_nind"
@@ -4180,9 +4419,9 @@
       "note": ""
     },
     {
-      "id": "185b38788cf4",
+      "id": "33d92d680663",
       "section": "6.7 Ensemble disagreement beats the trivial baseline",
-      "claim": "The margin between them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve \u2014 so at n_independent = {{e7_nind}} we cannot say the ensemble ranks better than a subtraction.",
+      "claim": "The margin between them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve \u2014 so at n_independent = {{e7_nind}} 400-step trajectories we cannot say the ensemble ranks better than a subtraction.",
       "keys": [
         "e7_step_margin",
         "e7_mde_margin",
@@ -4259,9 +4498,9 @@
       "note": ""
     },
     {
-      "id": "97150b6ce5e5",
+      "id": "cccb2bb0f588",
       "section": "6.8 One constant scalar does not fix it, but a per-horizon one does",
-      "claim": "Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this section is an instance of it rather than a departure from it.** Kuleshov, Fenner and Ermon (ICML 2018) give the post-hoc calibration map; Malik, Kuleshov, Song, Nemer, Seymour and Ermon (ICML 2019) apply that idea to model-based RL specifically and argue there that good uncertainties must be calibrated rather than merely well ranked \u2014 which is the distinction this paper draws throughout \u00a76.2 and \u00a76.7.",
+      "claim": "Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this section is an instance of it rather than a departure from it** \u2014 \u00a72 gives the prior work and the calibrated-versus-well-ranked distinction it turns on.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -4994,9 +5233,9 @@
       "note": ""
     },
     {
-      "id": "afbd7777cfc0",
+      "id": "141372b6389b",
       "section": "7. Defects in the released pipeline",
-      "claim": "The defensible claim is narrower than it first looks, and narrower than an earlier draft of this paper made it: **no constant-rate run from the released initialisation at the configured learning rate reaches that variance state at any of the three stated counts.** A warm start or a different `log_delta_logstd` initialisation would explain it with no inconsistency at all, and we can exclude neither.",
+      "claim": "The defensible claim is narrower than it first looks: **no constant-rate run from the released initialisation at the configured learning rate reaches that variance state at any of the three stated counts.** A warm start or a different `log_delta_logstd` initialisation would explain it with no inconsistency at all, and we can exclude neither.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -5034,9 +5273,9 @@
       "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "7aebc0b4c509",
+      "id": "cf690741e84e",
       "section": "8. Method",
-      "claim": "Figure 4 gives the lead time for {{f4_n_rules}} of them and Appendix G for all {{appG_n_rules}}; {{f4_n_positive}} of Figure 4's are positive and {{f4_n_negative}} is not.",
+      "claim": "Figure 4 gives the lead time for {{f4_n_rules}} of them and Appendix G for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 4's are positive and {{f4_n_negative}} is not.",
       "keys": [
         "f4_n_rules",
         "appG_n_rules",
@@ -5134,24 +5373,92 @@
       "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "0a51978739b8",
+      "id": "2f1f05281a9b",
       "section": "8. Method",
-      "claim": "Reproducibility, and a build that checks its own prose.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone, {{ver_identical}} of them bitwise identical ({{ver_pct}}%), {{ver_differing}} differing.",
+      "claim": "Reproducibility, and a build that checks its own prose.** `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}} numeric values from a clean clone: {{ver_identical}} bitwise identical ({{ver_pct}}%), {{ver_close}} equal to within the verifier's floating-point tolerance but not bitwise, and {{ver_differing}} differing.",
       "keys": [
         "ver_files",
         "ver_values",
         "ver_identical",
         "ver_pct",
+        "ver_close",
         "ver_differing"
       ],
       "artifacts": [
         "results/verify_reproduction.json"
       ],
-      "n_keys": 5,
+      "n_keys": 6,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+      "note": ""
+    },
+    {
+      "id": "f18feaba09ff",
+      "section": "8. Method",
+      "claim": "Those three account for the {{ver_values}} exactly.",
+      "keys": [
+        "ver_values"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "9f84e2bf5efb",
+      "section": "8. Method",
+      "claim": "A further {{ver_keys_lost}} values are present in the committed artifacts and absent after regeneration, across {{ver_keys_lost_files}} files; they are counted separately because a value that is not produced twice cannot be compared twice.",
+      "keys": [
+        "ver_keys_lost",
+        "ver_keys_lost_files"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "0ea69af8fdf7",
+      "section": "8. Method",
+      "claim": "The claim is narrower than the percentage makes it sound, and we would rather state its size than have a reader derive it.** A clean clone already contains every committed artifact, so the only honest test is the subset the run actually rewrites: {{ver_values}} values, or {{ver_claim_pct}}% of the {{ver_all}} numeric values under `results/`.",
+      "keys": [
+        "ver_values",
+        "ver_claim_pct",
+        "ver_all"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "ba6c0cb1cb37",
+      "section": "8. Method",
+      "claim": "The other {{ver_copied}} are carried in, prove nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold.",
+      "keys": [
+        "ver_copied"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "39c0b8fe0ada",
@@ -5172,9 +5479,9 @@
       "note": ""
     },
     {
-      "id": "30d68f335081",
+      "id": "131e01b36a8e",
       "section": "8. Method",
-      "claim": "The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught.",
+      "claim": "The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught.",
       "keys": [
         "cc_n",
         "cc_kinds",
@@ -5186,14 +5493,14 @@
       ],
       "n_keys": 4,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+      "note": ""
     },
     {
-      "id": "009558c7fa5c",
+      "id": "000a4a0e0b66",
       "section": "8. Method",
-      "claim": "Appendix D gives the argument, the kinds, the self-test, the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.",
+      "claim": "Appendix D gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself.",
       "keys": [
         "cc_selfdefects_lower"
       ],
@@ -5271,6 +5578,42 @@
         "results/task_d_nind20.json"
       ],
       "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "16b7e4a8ca4a",
+      "section": "9. Actionable lessons",
+      "claim": "What it does not clearly beat is the model's own predicted step size**, which costs nothing and needs no ensemble at all: that quantity ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, and the margin between them, {{e7_step_margin}}, is below the {{e7_mde_margin}} this sample can resolve.",
+      "keys": [
+        "e7_step_r",
+        "e7_r_dis",
+        "e7_step_margin",
+        "e7_mde_margin"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines.json",
+        "results/e7_free_baselines_power.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "d1932ea7ff32",
+      "section": "9. Actionable lessons",
+      "claim": "Disagreement does carry information the subtraction does not \u2014 it retains {{e7_step_partial}} once step size is partialled out \u2014 but a practitioner about to pay for five members should price the subtraction first.",
+      "keys": [
+        "e7_step_partial"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines.json"
+      ],
+      "n_keys": 1,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -5444,6 +5787,41 @@
         "results/v2_deployment_horizon.json"
       ],
       "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "53e650efb74d",
+      "section": "10. Broader impact",
+      "claim": "The distortion is not a units problem a tuned coefficient absorbs: the constant that would best rescale this \u03c3 grows by a factor of {{m65_c_growth}} between one step and {{v2_diag_h}} (\u00a76.2), so a penalty weight chosen for one rollout depth is wrong at another.",
+      "keys": [
+        "m65_c_growth",
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "372693d2dd87",
+      "section": "10. Broader impact",
+      "claim": "That use is supported by our measurements, with one qualification a deployer should weigh: a free signal \u2014 the model's own predicted step size \u2014 ranks error nearly as well, {{e7_step_r}} against {{e7_r_dis}}, so the ranking evidence alone does not establish that the ensemble is worth its cost (\u00a76.7).",
+      "keys": [
+        "e7_step_r",
+        "e7_r_dis"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines.json"
+      ],
+      "n_keys": 2,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -5654,6 +6032,42 @@
       "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
     },
     {
+      "id": "a5dc1dbc3d49",
+      "section": "11. Limitations",
+      "claim": "Resolving it at h = {{v2_diag_h}} needs more episodes than the released dataset contains, rather than a better test.",
+      "keys": [
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "6d5fe5efcdf0",
+      "section": "11. Limitations",
+      "claim": "At h = 128 and below that is no longer true and we say so**: a shorter evaluation unit gives {{m64_oos_n_h100}} independent units at h = {{v2_deploy_h}} where the 400-step unit gives {{perm_oos_nind}} (`M-64`), and we did not rerun this permutation family there.",
+      "keys": [
+        "m64_oos_n_h100",
+        "v2_deploy_h",
+        "perm_oos_nind"
+      ],
+      "artifacts": [
+        "results/m64_short_units.json",
+        "results/task_b_permutation.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "54056016c6d8",
       "section": "11. Limitations",
       "claim": "The aggregate scalar the method applies is separately and more strongly supported (\u00a76.7), on the same trajectories, because it is one test rather than forty-five coupled ones.",
@@ -5664,6 +6078,22 @@
       "verdict": "SUPPORTED",
       "sample_size": "n/a \u2014 not a quantitative claim",
       "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
+    },
+    {
+      "id": "78746ef43d62",
+      "section": "11. Limitations",
+      "claim": "No family-wide correction is applied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendix G) and we report each against the thresholds it was committed with, not against a corrected family threshold.",
+      "keys": [
+        "appG_n_rules"
+      ],
+      "artifacts": [
+        "results/appendix_g_rules.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
     },
     {
       "id": "ef9a3ac73359",
@@ -5797,18 +6227,6 @@
       "note": ""
     },
     {
-      "id": "731b57cdddd9",
-      "section": "11. Limitations",
-      "claim": "An earlier draft of this sentence said capacity accounts for some of the effect; that is more than `R-73` supports and it is withdrawn.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
       "id": "a2f1a2feeb57",
       "section": "11. Limitations",
       "claim": "\u00a76.4's mechanism is a structural fact plus a hypothesis, and the two are separable.** That the five members share a trunk, a hidden state and {{v1_shared_pct}}% of each member's parameters is measured, from source and from the checkpoint's tensors.",
@@ -5909,6 +6327,24 @@
       "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it"
     },
     {
+      "id": "00276caf0bee",
+      "section": "12. Conclusion",
+      "claim": "Against a second free baseline it does less well: the model's own predicted step size ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, a margin this sample cannot resolve, so the verdict is {{e7_verdict}}.",
+      "keys": [
+        "e7_step_r",
+        "e7_r_dis",
+        "e7_verdict"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "76f24c295113",
       "section": "12. Conclusion",
       "claim": "The control this rests on is the one that removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.7, M-45).",
@@ -5942,16 +6378,16 @@
       "note": "revision review (A2/M-45): assertion checked against the double-demeaning, variance-decomposition and h=1 diagnostic blocks, including which effect the statistic isolates and which it does not"
     },
     {
-      "id": "53bfdf70e4c5",
+      "id": "30ff57378de7",
       "section": "12. Conclusion",
-      "claim": "That is the one claim of either original work that this reproduction strengthens rather than qualifies.",
+      "claim": "That is the closest either original work comes to a claim this reproduction strengthens rather than qualifies \u2014 and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
       "generated": false,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "reviewed in the submission-hardening pass: assertion checked against the named artifact, not merely the numbers substituted"
+      "note": ""
     },
     {
       "id": "694b267cef95",
@@ -6249,6 +6685,23 @@
       "note": ""
     },
     {
+      "id": "a4c445d7a8a2",
+      "section": "Appendix B \u2014 reproducing",
+      "claim": "A sweep of all {{audit_n_hits}} pattern-based input discoveries in `scripts/` and `src/` now classifies each as an open population or frozen at write time; {{audit_n_frozen}} was frozen, and artifacts that discover their inputs now record the file list they were computed over.",
+      "keys": [
+        "audit_n_hits",
+        "audit_n_frozen"
+      ],
+      "artifacts": [
+        "results/input_set_audit.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "1808dac3dffa",
       "section": "Appendix D \u2014 verifying the paper's own claims",
       "claim": "The {{n_retractions_word_lower}} numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as \"clearly informative\" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that \u03c3 is input-independent \"in all four models\", made against a table holding three; and the phrase \"the released checkpoint's uncertainty output\", singular, when the checkpoint emits two and we had measured the one the method discards.",
@@ -6407,80 +6860,26 @@
       "note": ""
     },
     {
-      "id": "eb9e3ecf046c",
+      "id": "8b5607eacb06",
       "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "The check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds: {{cc_kind_list}}.",
+      "claim": "The machinery, and the two lines that matter about it.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across {{cc_kinds}} kinds, each pinning a fragment of this paper's text and a relation recomputed from the artifacts, and each run against a deliberately corrupted expectation on every build so that a check which can no longer fail is caught.",
       "keys": [
         "cc_n",
-        "cc_kinds",
-        "cc_kind_list"
-      ],
-      "artifacts": [
-        "results/comparative_claims.json"
-      ],
-      "n_keys": 3,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "720a3087c70b",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "That list is generated from the checker's own registry rather than written here.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "75c11305e547",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "Each entry pins two things and requires both: a **fragment of the paper's own text**, so that rewording a sentence fails the check rather than silently detaching it from the claim it guards, and a **relation recomputed from the artifacts**.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
-    },
-    {
-      "id": "b80ece631b68",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "The self-test.** Every assertion is run against a deliberately corrupted expectation on each build and must fail: the interval relation inverted, the extremum replaced by the *runner-up* rather than an absent label, the sign flipped, the order of magnitude and the dimension counts moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught.",
-      "keys": [
-        "cc_st_caught",
-        "cc_st_n"
+        "cc_kinds"
       ],
       "artifacts": [
         "results/comparative_claims.json"
       ],
       "n_keys": 2,
       "generated": true,
-      "verdict": "SUPPORTED",
+      "verdict": "UNREVIEWED",
       "sample_size": "",
-      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
+      "note": ""
     },
     {
-      "id": "61674645f9f5",
+      "id": "5b417b8d82e6",
       "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "An assertion that has quietly stopped being able to fail is worth less than no assertion, because it reads as coverage.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "",
-      "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
-    },
-    {
-      "id": "c37e5a212974",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "{{cc_selfdefects_word}} defects the self-test has found in the checker itself**, rather than in the paper.",
+      "claim": "The registry, the self-test's mechanics and the {{cc_selfdefects_word}} defects it has found in the checker itself are in `docs/BUILD_CHECKS.md`, shipped as supplementary.",
       "keys": [
         "cc_selfdefects_word"
       ],
@@ -6494,32 +6893,16 @@
       "note": ""
     },
     {
-      "id": "de1973bcc2c7",
+      "id": "070787684161",
       "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "Each surfaced because the checks were run rather than assumed, and the last two are the ones a reader should weigh, because both are failures of *coverage* rather than of arithmetic \u2014 an assertion that cannot fail, and a kind with no assertion attached, both of which read as protection and are not:{{cc_selfdefect_list}}",
+      "claim": "A third category is not an exclusion but a partition, and it bounds everything in this appendix: of the {{ver_all}} numeric values under `results/`, a clean clone regenerates {{ver_values}} and carries in {{ver_copied}}.",
       "keys": [
-        "cc_selfdefect_list"
+        "ver_all",
+        "ver_values",
+        "ver_copied"
       ],
       "artifacts": [
-        "results/comparative_claims.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "e330d3252c41",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "Corruptions now invert relative to each claim's own expectation, every registered kind carries at least one claim, and every claim is corrupted on every build: {{cc_st_caught}} of {{cc_st_n}} caught against {{cc_n}} claims, with no exemptions.",
-      "keys": [
-        "cc_st_caught",
-        "cc_st_n",
-        "cc_n"
-      ],
-      "artifacts": [
-        "results/comparative_claims.json"
+        "results/verify_reproduction.json"
       ],
       "n_keys": 3,
       "generated": true,
@@ -6528,13 +6911,17 @@
       "note": ""
     },
     {
-      "id": "c2b8f4462293",
+      "id": "68a9299f97e6",
       "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "This list is generated from the checker rather than written here, so a fourth entry cannot be forgotten.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
+      "claim": "The reproducibility claim covers {{ver_claim_pct}}% of the directory and is silent about the rest.",
+      "keys": [
+        "ver_claim_pct"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
@@ -6576,6 +6963,34 @@
       "note": "results/step4_5_timing.json: std/s_per_iter per config spans 5.4% (ens5_bs256) to 31.8% (ens1_bs256)"
     },
     {
+      "id": "9fe3dcfd4ebb",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "One of the build's own gates fails, and we report it rather than retire it.** The clean-clone check in `part_f_gate` requires that *no* regenerated value differ. {{ver_differing}} do, so the check fails, and it is published as failing.",
+      "keys": [
+        "ver_differing"
+      ],
+      "artifacts": [
+        "results/verify_reproduction.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "04b6778f2638",
+      "section": "Appendix D \u2014 verifying the paper's own claims",
+      "claim": "A gate that passes because its criterion was relaxed tells a reader strictly less than one that fails and says where.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "eb4453c77a88",
       "section": "Appendix D \u2014 verifying the paper's own claims",
       "claim": "One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on every machine \u2014 three different values across the three hosts we have run it on.",
@@ -6605,66 +7020,6 @@
       "verdict": "SUPPORTED",
       "sample_size": "clean-clone comparison, 27 regenerated files",
       "note": "scripts/verify_reproduction.py time_bounded(): excludes when iterations_run < config.iters; step4_4_overfit_b32lr1e3.json (2001 of a 2000 cap) is NOT excluded and reproduces bitwise"
-    },
-    {
-      "id": "0c8fde7f2259",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "The verifier now drops any key whose recorded source is an excluded artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather than requiring anyone to remember.",
-      "keys": [
-        "ver_hostkeys"
-      ],
-      "artifacts": [
-        "results/verify_reproduction.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "clean-clone comparison, 28 regenerated files",
-      "note": "results/verify_reproduction.json from clone3 vs commit d9c49d9; host_sourced_keys_excluded lists the 7 paper_numbers keys dropped by provenance"
-    },
-    {
-      "id": "296dae121b63",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "One further class, excluded by the same mechanism and worth naming because it sounds like an excuse.** {{ver_selfref}} keys in `paper_numbers.json` are sourced from `verify_reproduction.json` \u2014 that is, they are this paper's statements *about this very comparison*: how many files it regenerated, how many values matched, how many differed.",
-      "keys": [
-        "ver_selfref"
-      ],
-      "artifacts": [
-        "results/verify_reproduction.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "SUPPORTED",
-      "sample_size": "n/a \u2014 a property of the clean-clone comparison, not a sample",
-      "note": "revision review: exclusion counts and the reproduction figure checked against the verifier's own emitted output from the clean-clone run that produced them"
-    },
-    {
-      "id": "7104448521aa",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "There is no fixed point to converge to, and treating it as a reproducibility failure would make the reported figure oscillate rather than settle.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "n/a \u2014 not a quantitative claim",
-      "note": "revision review: carries no substituted number. It is argument, a source citation whose file:line is read back and fingerprinted on every build, or a pointer to another section. Checked for consistency with the section it summarises; it asserts no measurement of its own."
-    },
-    {
-      "id": "57e0f234985f",
-      "section": "Appendix D \u2014 verifying the paper's own claims",
-      "claim": "They are dropped by provenance like the others and counted in the output rather than hidden \u2014 the same discipline \u00a78's own {{ver_files}}-file figure rests on, since a silent exclusion is exactly how an earlier version of this claim was inflated fiftyfold.",
-      "keys": [
-        "ver_files"
-      ],
-      "artifacts": [
-        "results/verify_reproduction.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
     },
     {
       "id": "fa8cd3746239",
@@ -6816,11 +7171,11 @@
       "note": ""
     },
     {
-      "id": "9418548b10c0",
+      "id": "272c498f6fdf",
       "section": "Appendix G \u2014 every pre-registered rule, its lead time and its verdict",
-      "claim": "Renumbering a quotation to keep a cross-reference checker happy would falsify it, so they stand as written and the checker exempts this block by name. {{appG_rule_texts}}",
+      "claim": "Quoting all {{appG_n_rules}} in full here would add pages to an appendix whose job is to be checkable at a glance, and quoting them in part would ship quotations ending mid-sentence.",
       "keys": [
-        "appG_rule_texts"
+        "appG_n_rules"
       ],
       "artifacts": [
         "results/appendix_g_rules.json"

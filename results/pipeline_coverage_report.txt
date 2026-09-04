@@ -1,0 +1,18 @@
+PIPELINE COVERAGE — every artifact the paper reads has a stage that writes it
+================================================================================================
+  artifacts feeding paper_numbers.json : 59
+  paper keys they supply               : 1783
+  exempt, with a stated reason         : 2
+
+  7 NOT WRITTEN BY ANY SCRIPT reproduce.sh RUNS:
+    !! m64_short_units.json                     14 keys  writers ['m64_short_units']
+    !! m62_episode_clustering.json               6 keys  writers ['m62_episode_clustering']
+    !! m63_per_dimension_coverage.json           6 keys  writers ['m63_per_dimension_coverage']
+    !! m65_gaussian_nominal.json                 6 keys  writers ['m65_gaussian_nominal']
+    !! input_set_audit.json                      2 keys  writers ['input_set_audit']
+    !! insample_framing.json                     2 keys  writers ['insample_framing']
+    !! m64_free_gate.json                        1 keys  writers ['m64_free_gate']
+
+  A clean clone carries these in and every check passes. The
+  reproduction figure reports them as copied, not regenerated.
+  wrote results/pipeline_coverage.json

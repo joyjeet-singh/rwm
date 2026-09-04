@@ -1,0 +1,29 @@
+B8 — TYPED NUMERAL AUDIT
+============================================================================================
+  self-test          : passed — planted measurement 12.7 caught
+  numerals typed in PAPER.template.md: 619
+    exception               198
+    section-ref             174
+    ledger-id                58
+    code-location            37
+    table-row-label          32
+    markdown-heading         24
+    figure-ref               22
+    arxiv-id                 16
+    citation-year            15
+    math-mode                10
+    equation-ref              8
+    table-denominator         6
+    withdrawn-figure          6
+    date                      5
+    subsection-heading        5
+    UNCLASSIFIED              2
+    originals-figure          1
+
+  2 NOT COVERED by any class or declared exception.
+  Each is a measurement until shown otherwise, and a measurement in prose
+  must be substituted from an artifact:
+    L669            2   ...ut-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance r
+    L914          400   ...ly underpowered at h = ␀, which needs the full 400 rows, and is no longer demonstrably underpowered at h = 128
+
+  wrote results/typed_numerals.json

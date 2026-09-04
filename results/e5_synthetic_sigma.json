@@ -18,7 +18,7 @@
     "slope_floor": 0.0030912440847498416,
     "span_floor": 1.01,
     "slope_threshold_from": "the 1.01x-span floor; the null's own 95th percentile is 2.1e-05, which is numerical noise and would fire on anything",
-    "r_threshold": 0.22671533190318408,
+    "r_threshold": 0.2267153319031841,
     "smallest_dilution_detected_80pct": 1.0,
     "false_positive_rate_at_dilution_0": 0.0,
     "collapse_ratio_threshold": 0.1,

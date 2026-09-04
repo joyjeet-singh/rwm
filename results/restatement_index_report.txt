@@ -1,0 +1,505 @@
+C1 — ACCEPTANCE: the check must fire on the defects it was written for
+================================================================================================
+  FIRES   B2   typed-restatement  24 August draft      (dd63abf)
+          appendix D types h=128 where §6.8 derives d3_worst_h=100
+  FIRES   B1   restatement        the revision-2 head  (adc6d88)
+          §5's B_over_floor=1.56 collides with §6.10's r2_sigma_x_h1
+  FIRES   B9   ambiguous-numeral  the revision-2 head  (adc6d88)
+          the abstract prints 4.61 as both x and %
+  CLEAN   —    current tree: 0 typed restatements, 0 ambiguous numerals
+================================================================================================
+  acceptance passed
+
+C1 — RESTATEMENT INDEX
+================================================================================================
+  scanned            : PAPER.template.md
+  substituted numerals: 1136
+  typed numerals kept : 223  (addresses and declared constants excluded)
+  registered coincidences: 8
+
+  85 value(s) appear at more than one location from more than one key:
+    40 same-quantity candidates — a distinctive value shared across artifacts, or a typed copy of a derived one
+    45 lower-signal — a short value, or two cells of one table
+    none of these fails the build; they are the C1 review's Tier 0 queue
+
+        +0.589  keys ['a2_step_only', 'd2r_log']
+                §6.7 Ensemble disagreement beats th L962   d2r_log                    ...| log(1 + index) | {{d2r_log}} | {{d2r_log_ci}} | a non-linear model o
+                §6.7 Ensemble disagreement beats th L966   a2_step_only               ... means only | {{a2_step_only}} | — | the within-step control, pooled |
+        +0.605  keys ['a2_r_pooled', 'd2b_epi_all', 'd2b_epi_h368', 'd4_r']
+                §6.2 The measurement                L691   d4_r                       ...y:166` — correlates **{{d4_r}}** with total absolute error over the ro
+                §6.7 Ensemble disagreement beats th L940   d2b_epi_h368               ...ci_h368}} | **{{d2b_epi_h368}}** {{d2b_epi_ci_h368}} | {{d2b_par_h368}
+                §6.7 Ensemble disagreement beats th L944   d2b_epi_h368               ...isagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_w
+                §6.7 Ensemble disagreement beats th L950   d2b_epi_all                ...ll_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what
+                §6.7 Ensemble disagreement beats th L960   a2_r_pooled                ...ing (pooled) | {{a2_r_pooled}} | {{a2_r_pooled_ci}} | — | | the step i
+                §6.7 Ensemble disagreement beats th L961   d2b_epi_all                ...}} of it, from {{d2b_epi_all}} | | log(1 + index) | {{d2r_log}} | {{d2
+                §6.7 Ensemble disagreement beats th L988   a2_r_pooled                ...nst the pooled {{a2_r_pooled}} rather than below it. It was described 
+                §6.7 Ensemble disagreement beats th L1009  a2_r_pooled                ..._rdd}} against {{a2_r_pooled}} — so a practitioner should expect disag
+                §9. Actionable lessons              L1344  d4_r                       ...l rollout it falls to {{d4_r}} {{d4_ci}}. That decay is the useful par
+                §12. Conclusion                     L1461  a2_r_pooled                ...umber than the {{a2_r_pooled}} pooled figure and it is the one that me
+                §Appendix F — every claim of the or L1742  d4_r                       ...ied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_inde
+        +0.994  keys ['a2_h1_r', 'd2_epi_h1']
+                §6.7 Ensemble disagreement beats th L935   d2_epi_h1                  ... | **1** | — | **{{d2_epi_h1}}** {{d2_epi_ci_h1}} | — | — | | 8 | {{d2
+                §6.7 Ensemble disagreement beats th L979   a2_h1_r                    ...nt h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine pe
+                §6.7 Ensemble disagreement beats th L1012  a2_h1_r                    ...has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}}
+                §9. Actionable lessons              L1344  d2_epi_h1                  ...most perfectly — {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npo
+             0  keys ['None', 'ab_short_excl', 'd2b_n_index_wins', 'e5s_fp_rate', 'm65_n_heavy', 'perm_all_holm_rej', 'perm_ins_holm_rej', 'perm_oos_holm_rej', 'relale_all_pos_h368', 'tw_cc_cluster_hurt']
+                §3.1 Metrics                        L327   m65_n_heavy                ...on cells, with {{m65_n_heavy}} below it (`M-65`). The shortfalls repor
+                §5. The base paper's central claim  L522   ab_short_excl              ...s — and in **{{ab_short_excl}} of {{ab_short_cells}}** at h = 8. These
+                §6.3 Why the aleatoric head collaps L787   e5s_fp_rate                ... zero signal is {{e5s_fp_rate}}%.* **What this does that the derivatio
+                §6.6 The failure is one of magnitud L894   relale_all_pos_h368        ...ead is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}} — negativ
+                §6.6 The failure is one of magnitud L919   perm_oos_holm_rej          ... rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in
+                §6.6 The failure is one of magnitud L919   perm_ins_holm_rej          ... sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} ove
+                §6.6 The failure is one of magnitud L919   perm_all_holm_rej          ...mple and {{perm_all_holm_rej}} over all ten episodes. Out of sample th
+                §6.7 Ensemble disagreement beats th L944   d2b_n_index_wins           ... leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons. 
+                §7. Defects in the released pipelin L1280  tw_cc_cluster_hurt         ...ts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_
+                §2. Related work                    L147   TYPED                      ...m at σ = 0 is not this codebase's invention. It is inherited, line for
+                §5. The base paper's central claim  L433   TYPED                      ...excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A le
+                §6.2 The measurement                L619   TYPED                      ...| dims r>0 | permutation P | |---|---|---|---|---|---|---|---| | 1 | ␀
+                §6.2 The measurement                L671   TYPED                      ...m is σ = 0 has no reason to spare any dimension. The reading is coarse
+                §6.2 The measurement                L675   TYPED                      ...| dims r>0 | |---|---|---|---|---| | 1 | ␀× [␀] | ␀% [␀] | ␀% | ␀/45 |
+                §6.3 Why the aleatoric head collaps L690   TYPED                      ...um is σ = 0 This subsection explains the aleatoric column and only tha
+                §6.3 Why the aleatoric head collaps L697   TYPED                      ...ause σ = 0 is the optimum of the loss that trains it, and it would be 
+                §6.3 Why the aleatoric head collaps L704   TYPED                      ...d at σ = 0 for any μ. There is no log-σ term to oppose it. The bound t
+                §6.6 The failure is one of magnitud L884   TYPED                      ...error) > 0 at h=␀, out-of-sample | perm P at h=␀, out-of-sample | perm
+                §11. Limitations                    L1443  TYPED                      ... the σ = 0 optimum affects other descendants of the PETS parameterisat
+                §12. Conclusion                     L1456  TYPED                      ...m is σ = 0 with the term that should prevent this cancelling out of th
+                §Appendix D — verifying the paper's L1594  TYPED                      ... arena** — 0 of 45 over all ten episodes asserted where the table besi
+        0.0020  keys ['a1_sign_p_h100', 'c3_sign_p']
+                §5. The base paper's central claim  L416   c3_sign_p                  ...mial test, p = **{{c3_sign_p}}**. At h = {{v2_deploy_h}} it is **{{a1_
+                §5. The base paper's central claim  L416   a1_sign_p_h100             ...}}**, p = **{{a1_sign_p_h100}}**, so the count the abstract leans on i
+         0.010  keys ['None', 'd2b_shrink_all_abs']
+                §6.7 Ensemble disagreement beats th L950   d2b_shrink_all_abs         ...tion by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}
+                §6.7 Ensemble disagreement beats th L961   d2b_shrink_all_abs         ...xplains {{d2b_shrink_all_abs}} of it, from {{d2b_epi_all}} | | log(1 +
+                §Appendix D — verifying the paper's L1589  TYPED                      ...f **+**0.010", where partialling the forecast index out *reduces* the 
+        0.0283  keys ['a1_A_sd_h368', 'd1_A_sd']
+                §5. The base paper's central claim  L427   d1_A_sd                    ... **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's **{{d1_B_me
+                §5. The base paper's central claim  L443   a1_A_sd_h368               ...a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}*
+        0.2858  keys ['a1_B_sd_h368', 'd1_B_sd']
+                §5. The base paper's central claim  L427   d1_B_sd                    ... **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation over seeds, `ddof
+                §5. The base paper's central claim  L443   a1_B_sd_h368               ...a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap
+        0.3582  keys ['a1_A_h368', 'd1_A_mean']
+                §5. The base paper's central claim  L426   d1_A_mean                  ...aining reaches **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing
+                §5. The base paper's central claim  L443   a1_A_h368                  ...}** *(M-23)* | **{{a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} 
+        0.7979  keys ['m65_calib_ratio', 'v3_rho_calibrated']
+                §3.1 Metrics                        L327   m65_calib_ratio            ...Gaussian's {{m65_calib_ratio}} lands coverage at or above {{v3_cov_nom
+                §3.1 Metrics                        L337   v3_rho_calibrated          .../\pi}$ = {{v3_rho_calibrated}}. $\rho$ is reported as a magnitude of m
+             1  keys ['None', 'appG_n_negative', 'audit_n_frozen', 'bu_changes', 'e5_n_excl', 'e7_n_beaten', 'f4_n_negative', 'orphan_rows']
+                §1. Introduction                    L93    e7_n_beaten                ...greement beats {{e7_n_beaten}}: the model's own predicted step size ra
+                §3. Setup                           L248   orphan_rows                ...ows_last}} and {{orphan_rows}} orphan row at the end of the file that 
+                §6.7 Ensemble disagreement beats th L1027  e5_n_excl                  ...excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a ma
+                §8. Method                          L1318  f4_n_negative              ...positive and {{f4_n_negative}} is not. Figure 4 plots the set it was d
+                §8. Method                          L1322  bu_changes                 ...}}× and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 c
+                §11. Limitations                    L1400  e5_n_excl                  ...nd it does so at {{e5_n_excl}} of {{e5_n_horizons}}. The binding const
+                §Appendix B — reproducing           L1568  audit_n_frozen             ...write time; {{audit_n_frozen}} was frozen, and artifacts that discover
+                §Appendix G — every pre-registered  L1765  appG_n_negative            ...sitive and {{appG_n_negative}} negative. **The negative one is kept de
+                §Abstract                           L13    TYPED                      ...× at h = 1 and ␀× at h = ␀, where its imagination rollouts run. **That
+                §1. Introduction                    L101   TYPED                      ...on from *t−1*. Scored causally, nRMSE at h = ␀ falls from ␀ to ␀ — the
+                §3.1 Metrics                        L308   TYPED                      ... is form 1**: pool the per-dimension mean squared errors, then divide 
+                §3.1 Metrics                        L333   TYPED                      ... $\rho = 1$ is *not* calibration. A calibrated Gaussian has mean|error
+                §5. The base paper's central claim  L413   TYPED                      ...; at h = 1 it is ␀ of ␀, which is the same story the interval tells. T
+                §5. The base paper's central claim  L449   TYPED                      ...**At h = 1 that is weaker than the data now supports, and the correcti
+                §5. The base paper's central claim  L457   TYPED                      ... the h = 1 result is not "no difference" but **autoregressive training
+                §5. The base paper's central claim  L472   TYPED                      ...**at h = 1 the floor beats *both* arms**: it scores ␀ against autoregr
+                §6.1 Which quantity the method actu L560   TYPED                      ...lambda = 1$ differ by a square. We asked, and the first author confirm
+                §6.2 The measurement                L597   TYPED                      ...t ±1σ, h=1 | coverage at ±1σ, h=␀ | |---|---|---|---| | faithful Arm A
+                §6.2 The measurement                L628   TYPED                      ... the h = 1 row first.** At one step the disagreement the method penali
+                §6.2 The measurement                L631   TYPED                      ...t at h = 1 as well. Everything further down the table is deterioration
+                §6.2 The measurement                L643   TYPED                      ...e. **h = 1 answers it, and costs no new computation.** At one step the
+                §6.2 The measurement                L645   TYPED                      .... At h = 1 it is out by ␀×, and ␀% of outcomes fall inside an interval
+                §6.2 The measurement                L649   TYPED                      ...× at h = 1 is if anything flattering. We stated the arena before and d
+                §6.2 The measurement                L652   TYPED                      ... the h = 1 row. We keep h = ␀ because it is where the method actually 
+                §6.2 The measurement                L665   TYPED                      ...␀ at h = 1 and ␀ at h = ␀, a factor of ␀ across the rollout (`M-65`). 
+                §6.2 The measurement                L671   TYPED                      ...— at h = 1 on ␀ trajectories a per-dimension coverage moves in ␀-point
+                §6.6 The failure is one of magnitud L891   TYPED                      ...ble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric C
+                §6.6 The failure is one of magnitud L910   TYPED                      ...␀× from h=1 to h=368 while error grows ␀×. **The horizon story we firs
+                §6.6 The failure is one of magnitud L912   TYPED                      ... (␀ at h=1). Both larger arenas invert that. In sample (n_independent 
+                §6.6 The failure is one of magnitud L914   TYPED                      ...; at h = 1 the null sits near ␀ and the same count is genuinely surpri
+                §6.7 Ensemble disagreement beats th L939   TYPED                      ... ␀ | *(h=1 has a single forecast step, so the index is constant and it
+                §6.7 Ensemble disagreement beats th L959   TYPED                      ... | | log(1 + index) | ␀ | ␀ | a non-linear model of depth | | a cubic 
+                §6.7 Ensemble disagreement beats th L976   TYPED                      ...oint h = 1 figure of ␀, which is not the shape of a genuine per-step s
+                §6.7 Ensemble disagreement beats th L1004  TYPED                      ... | *(h = 1 has one forecast step per trajectory, so there is nothing w
+                §6.7 Ensemble disagreement beats th L1008  TYPED                      ...*The h = 1 figure survives the same test, but it is not what it looked
+                §6.7 Ensemble disagreement beats th L1008  TYPED                      ...* At h = 1 the panel has one column, so ␀ is a correlation over ␀ *tra
+                §6.7 Ensemble disagreement beats th L1019  TYPED                      ...ble size 1 where the epistemic term is identically zero. We therefore 
+                §6.7 Ensemble disagreement beats th L1046  TYPED                      ...t − µ_{t−1}‖, which costs nothing because the rollout has already made
+                §6.8 One constant scalar does not f L1112  TYPED                      ...brings h=1 coverage to ␀–␀%, essentially calibrated against the ␀% tar
+                §6.8 One constant scalar does not f L1115  TYPED                      ...–␀% at h=1 and ␀–␀% at h=368. Fitting over the whole rollout instead d
+                §6.8 One constant scalar does not f L1129  TYPED                      ...are the h=1 cells it was fitted at. Three cautions a reader should app
+                §6.9 The structural excuse does not L1141  TYPED                      ...th, step 1 → 8 | error growth, step 1 → 8 | |---|---|---| | faithful A
+                §6.9 The structural excuse does not L1141  TYPED                      ...th, step 1 → 8 | |---|---|---| | faithful Arm A | ␀× | ␀× | | correcte
+                §6.10 Testing the mechanism: an ens L1162  TYPED                      ...ble size 1 already existed at seeds 0, 1 and 2; we added ␀ more at abo
+                §6.10 Testing the mechanism: an ens L1162  TYPED                      ...seeds 0, 1 and 2; we added ␀ more at about ␀ h each, ␀ h in total, and
+                §6.10 Testing the mechanism: an ens L1206  TYPED                      ...00% at h=1 means the independent ensemble is very slightly the **worse
+                §6.10 Testing the mechanism: an ens L1219  TYPED                      ... the h = 1 and h = 8 values, which do not span it — h = ␀'s ␀× falls b
+                §7. Defects in the released pipelin L1248  TYPED                      ... from *t−1* to predict state *t* — stale by one step. Scored correctly
+                §9. Actionable lessons              L1341  TYPED                      ...use at h=1 there is only one moment. Over the full rollout it falls to
+                §11. Limitations                    L1405  TYPED                      ... on seed 1 alone. The headline A/B result is not among them: it is a t
+                §Appendix F — every claim of the or L1712  TYPED                      ...ration N=1 | reproduces, and more strongly: Arm B is worse than the ho
+                §Appendix I — the two nRMSE aggrega L1825  TYPED                      ...s **form 1**: pool the per-dimension mean squared errors across the ␀ 
+                §Appendix I — the two nRMSE aggrega L1831  TYPED                      ...or. Form 1 has no such lever: a dimension contributes in proportion to
+          1.02  keys ['e5s_nll_spread_lo', 'r2_acc_x_h8']
+                §6.3 Why the aleatoric head collaps L777   e5s_nll_spread_lo          ... of only {{e5s_nll_spread_lo}}× against the truth's {{e5s_span}}×. So 
+                §6.10 Testing the mechanism: an ens L1203  r2_acc_x_h8                ...igma_x_h8}}× | {{r2_acc_x_h8}}× | {{r2_total_x_h8}}× | {{r2_from_sigma
+          1.08  keys ['a1_B_over_floor_h8', 'r2_acc_x_h32']
+                §5. The base paper's central claim  L439   a1_B_over_floor_h8         ...h8}}× | {{a1_B_over_floor_h8}}× | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} 
+                §6.10 Testing the mechanism: an ens L1204  r2_acc_x_h32               ...ma_x_h32}}× | {{r2_acc_x_h32}}× | {{r2_total_x_h32}}× | {{r2_from_sigm
+        1.6497  keys ['a1_B_h368', 'd1_B_mean']
+                §5. The base paper's central claim  L427   d1_B_mean                  ...cher forcing's **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation ove
+                §5. The base paper's central claim  L443   a1_B_h368                  ..._sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h36
+          1.79  keys ['err_rel_growth', 'm49_ratio_gain']
+                §6.9 The structural excuse does not L1149  err_rel_growth             ..._growth}}× | {{err_rel_growth}}× | The faithful arm's σ *declines* ({{
+                §11. Limitations                    L1430  m49_ratio_gain             ...atched to **{{m49_ratio_gain}}× matched**, against an MDE of {{m49_mde
+                §11. Limitations                    L1430  m49_ratio_gain             ..._gain}}× to {{m49_ratio_gain}}×, a difference of about {{m49_shrink}},
+            10  keys ['None', 'a1_sign_n_h1', 'a1_sign_n_h100', 'a1_sign_n_h128', 'a1_sign_n_h32', 'a1_sign_n_h368', 'a1_sign_n_h8', 'a1_sign_pos_h100', 'a1_sign_pos_h128', 'a1_sign_pos_h32', 'a1_sign_pos_h368', 'a1_sign_pos_h8', 'c3_sign_n', 'c3_sign_pos', 'd1n_eps', 'd3_tol', 'insample_n_arena', 'insample_n_overlap', 'm62_n_ep', 't1_n_verified']
+                §2. Related work                    L233   t1_n_verified              ...'s own text. {{t1_n_verified}} of {{t1_n_refs}} entries verified, {{t1
+                §5. The base paper's central claim  L416   c3_sign_pos                ... training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact 
+                §5. The base paper's central claim  L416   c3_sign_n                  ...c3_sign_pos}} of {{c3_sign_n}}** episodes — an exact two-sided binomia
+                §5. The base paper's central claim  L416   a1_sign_pos_h100           ...} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sig
+                §5. The base paper's central claim  L416   a1_sign_n_h100             ...s_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, so the c
+                §5. The base paper's central claim  L416   a1_sign_n_h1               ...n_pos_h1}} of {{a1_sign_n_h1}}, which is the same story the interval t
+                §5. The base paper's central claim  L418   c3_sign_n                  ...ain_eps}} of the {{c3_sign_n}} episodes are training data for *both* a
+                §5. The base paper's central claim  L438   a1_sign_n_h1               ...sign_pos_h1}}/{{a1_sign_n_h1}} | | 8 | {{a1_A_h8}} ± {{a1_A_sd_h8}} | 
+                §5. The base paper's central claim  L439   a1_sign_pos_h8             ...oor_h8}}× | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} | | 32 | {{a1_A_h32}} 
+                §5. The base paper's central claim  L439   a1_sign_n_h8               ...sign_pos_h8}}/{{a1_sign_n_h8}} | | 32 | {{a1_A_h32}} ± {{a1_A_sd_h32}}
+                §5. The base paper's central claim  L440   a1_sign_pos_h32            ...r_h32}}× | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} | | **{{v2_deploy_h}}
+                §5. The base paper's central claim  L440   a1_sign_n_h32              ...gn_pos_h32}}/{{a1_sign_n_h32}} | | **{{v2_deploy_h}}** | **{{a1_A_h100
+                §5. The base paper's central claim  L441   a1_sign_pos_h100           ...}}×** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** | | 128 | {{a1_A_h
+                §5. The base paper's central claim  L441   a1_sign_n_h100             ..._pos_h100}}/{{a1_sign_n_h100}}** | | 128 | {{a1_A_h128}} ± {{a1_A_sd_h
+                §5. The base paper's central claim  L442   a1_sign_pos_h128           ...h128}}× | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} | | **{{v2_diag_h}}*
+                §5. The base paper's central claim  L442   a1_sign_n_h128             ..._pos_h128}}/{{a1_sign_n_h128}} | | **{{v2_diag_h}}** *(M-23)* | **{{a1
+                §5. The base paper's central claim  L443   a1_sign_pos_h368           ...8}}×** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** | **The advantage
+                §5. The base paper's central claim  L443   a1_sign_n_h368             ...n_pos_h368}}/{{a1_sign_n_h368}}** | **The advantage {{a1_monotone}} gr
+                §6.2 The measurement                L620   d1n_eps                    ...heckpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}
+                §6.2 The measurement                L652   insample_n_overlap         ...l ten — {{insample_n_overlap}} of {{insample_n_arena}} of them (`resul
+                §6.2 The measurement                L652   insample_n_arena           ...rlap}} of {{insample_n_arena}} of them (`results/insample_framing.json
+                §6.2 The measurement                L672   m62_n_ep                   ...traj}} falling to {{m62_n_ep}} — the pooled correlation's interval wid
+                §6.8 One constant scalar does not f L1127  d3_tol                     ...ld-out cells within {{d3_tol}} points of {{d3_target}}%, per-horizon c
+                §6.8 One constant scalar does not f L1132  d3_tol                     ...t cell lands within {{d3_tol}} points of the {{d3_target}}% target for
+                §9. Actionable lessons              L1352  d3_tol                     ...ngs coverage within {{d3_tol}} points of nominal on every held-out cel
+                §References                         L1530  t1_n_verified              ...s own text — {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_fra
+                §Appendix D — verifying the paper's L1550  TYPED                      ...on an n=10 estimate we ourselves showed to be biased low; an aggregati
+        10,000  keys ['None', 'rows']
+                §3. Setup                           L241   rows                       ...e released dataset is {{rows}} rows of ANYmal D proprioceptive state a
+                §3. Setup                           L260   rows                       ...t is {{win_usable}} — {{rows}} rows, less {{win_tail}} that cannot sta
+                §5. The base paper's central claim  L408   TYPED                      ...s at 10,000 iterations rather than only at the paper's 2,500. **Result
+                §6.3 Why the aleatoric head collaps L795   TYPED                      ...e ␀ 10,000-iteration runs are excluded from the rate statistics becaus
+                §Appendix B — reproducing           L1531  TYPED                      ... at 10,000 iterations and ␀ for the remaining ␀ at 2,500. (Those were 
+                §Appendix H — the variance-state ar L1773  TYPED                      ...our 10,000-iteration runs gives ␀ and ␀, spreading ␀% across the three
+          10.5  keys ['e5_ratio_h100', 'r2_shared_ratio_h100']
+                §6.2 The measurement                L683   e5_ratio_h100              ... | | 100 | **{{e5_ratio_h100}}×** [{{e5_ratio_ci_h100}}] | {{e5_cov1_h
+                §6.2 The measurement                L687   e5_ratio_h100              ... same way**: {{e5_ratio_h100}}× overconfident at h = {{v2_deploy_h}} a
+                §6.4 Why the epistemic term may be  L866   e5_ratio_h100              ... same way at {{e5_ratio_h100}}× at h = {{v2_deploy_h}}" compares two i
+                §6.10 Testing the mechanism: an ens L1178  r2_shared_ratio_h100       ...* | **{{r2_shared_ratio_h100}}×** | **{{r2_indep_cov1_h100}}%** | **{{
+                §9. Actionable lessons              L1350  e5_ratio_h100              ...eckpoint and {{e5_ratio_h100}}× [{{e5_ratio_ci_h100}}] on the ensemble
+                §11. Limitations                    L1400  e5_ratio_h100              ...* failure at {{e5_ratio_h100}}× at h = {{v2_deploy_h}} ({{e5_ratio_h36
+         10.79  keys ['e5_cov1_h32', 'r2_shared_cov1_h32']
+                §6.2 The measurement                L682   e5_cov1_h32                ...io_ci_h32}}] | {{e5_cov1_h32}}% [{{e5_cov1_ci_h32}}] | {{e5_cov2_h32}}
+                §6.10 Testing the mechanism: an ens L1177  r2_shared_cov1_h32         ...32}}% | {{r2_shared_cov1_h32}}% | | **{{v2_deploy_h}}** | **{{r2_indep
+           106  keys ['diff_n_params', 'r2_from_sigma_h1']
+                §1. Introduction                    L63    diff_n_params              ...ss terms and {{diff_n_params}} parameter tensors before any training b
+                §1. Introduction                    L76    diff_n_params              ...ss terms and {{diff_n_params}} parameter tensors, before any training 
+                §6.10 Testing the mechanism: an ens L1202  r2_from_sigma_h1           ...x_h1}}× | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sig
+                §Appendix A — verification chain    L1542  diff_n_params              ...rms}} terms, {{diff_n_params}} tensors** | | trainer | can memorise a 
+           128  keys ['None', 'd3_second_h']
+                §6.8 One constant scalar does not f L1132  d3_second_h                ...nd_cov}}% at h={{d3_second_h}} — so the fitted multiplier is mildly **
+                §6.6 The failure is one of magnitud L910   TYPED                      ...* At h=128 and h=368 the epistemic term correlates positively with rea
+                §6.6 The failure is one of magnitud L912   TYPED                      ... and h=128's ␀ — the horizon added by this revision falls where the ex
+                §6.6 The failure is one of magnitud L914   TYPED                      ...at h = 128 and below. Running it there is one pass over stored rollout
+                §11. Limitations                    L1421  TYPED                      ...At h = 128 and below that is no longer true and we say so**: a shorter
+                §Appendix D — verifying the paper's L1577  TYPED                      ...e at h=128 they overlap across 0.604–0.643. **This one has now been wr
+         14.10  keys ['e5_cov1_h8', 'r2_shared_cov1_h8']
+                §6.2 The measurement                L681   e5_cov1_h8                 ...atio_ci_h8}}] | {{e5_cov1_h8}}% [{{e5_cov1_ci_h8}}] | {{e5_cov2_h8}}% 
+                §6.10 Testing the mechanism: an ens L1176  r2_shared_cov1_h8          ..._h8}}% | {{r2_shared_cov1_h8}}% | | 32 | {{r2_indep_ratio_h32}}× | {{r
+             2  keys ['None', 'appE_n_cpu', 'd2p_n_overlap', 'd3_ale_const_ok', 'd3_epi_const_ok', 'd3_nind_fit', 'e4_n_touch', 'e7_n_new', 'tw_dc_cluster_helped']
+                §1. Introduction                    L92    e7_n_new                   ...information. Of the {{e7_n_new}} baselines added here, disagreement be
+                §6.3 Why the aleatoric head collaps L729   e4_n_touch                 ...erms}}, exactly {{e4_n_touch}} reach σ: {{e4_touching}}. The remaining
+                §6.7 Ensemble disagreement beats th L948   d2p_n_overlap              ...n matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons. At 
+                §6.8 One constant scalar does not f L1125  d3_nind_fit                ..._independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fi
+                §6.8 One constant scalar does not f L1125  d3_nind_fit                ...ed on the other {{d3_nind_fit}}: | quantity | held-out cells within {{
+                §6.8 One constant scalar does not f L1129  d3_ale_const_ok            ...ells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3_ale_c_lo}} – 
+                §6.8 One constant scalar does not f L1130  d3_epi_const_ok            ...ells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3_epi_c_lo}} – 
+                §6.8 One constant scalar does not f L1132  d3_epi_const_ok            ...ar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the 
+                §6.8 One constant scalar does not f L1134  d3_nind_fit                ..._independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}
+                §6.8 One constant scalar does not f L1134  d3_nind_fit                ...d on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independ
+                §7. Defects in the released pipelin L1282  tw_dc_cluster_helped       ...ean in {{tw_dc_cluster_helped}} cells. **"Costs nothing" is the wrong 
+                §9. Actionable lessons              L1352  d3_epi_const_ok            ...er manages {{d3_epi_const_ok}} of them (§6.8). The held-out cells are 
+                §12. Conclusion                     L1461  d3_epi_const_ok            ...r restores {{d3_epi_const_ok}} of them — {{d3_nhoriz}} horizons in eac
+                §Appendix E — what testing the unte L1706  appE_n_cpu                 ...laim; it listed {{appE_n_cpu}} fewer than that until the assertion tha
+                §3.1 Metrics                        L323   TYPED                      ...(k/\sqrt{2})$: **␀%** at ±1σ and **␀%** at ±2σ. **That nominal is chec
+                §3.1 Metrics                        L333   TYPED                      ...= $\sqrt{2/\pi}$ = ␀. $\rho$ is reported as a magnitude of miscalibrat
+                §6.2 The measurement                L669   TYPED                      ... has n = 2 and three distinct resamples; the rule said so in advance r
+                §6.3 Why the aleatoric head collaps L702   TYPED                      ...ilon - y)^2\big] \;=\; (\mu - y)^2 + \sigma^2$$ which is minimised at 
+                §6.3 Why the aleatoric head collaps L702   TYPED                      ...(\mu - y)^2 + \sigma^2$$ which is minimised at σ = 0 for any μ. There 
+                §6.3 Why the aleatoric head collaps L702   TYPED                      ... + \sigma^2$$ which is minimised at σ = 0 for any μ. There is no log-σ
+                §6.10 Testing the mechanism: an ens L1162  TYPED                      ...0, 1 and 2; we added ␀ more at about ␀ h each, ␀ h in total, and score
+                §Appendix I — the two nRMSE aggrega L1826  TYPED                      ...s. **Form 2** is the mean of per-dimension ratios. The two differ beca
+                §Appendix I — the two nRMSE aggrega L1829  TYPED                      ...de. Form 2 gives whichever dimension has the smallest denominator unbo
+          2.58  keys ['a1_ratio_h100', 'd1_ratio_h100']
+                §1. Introduction                    L80    d1_ratio_h100              ...to that from {{d1_ratio_h100}}× at h = {{v2_deploy_h}} (§5). - **At on
+                §5. The base paper's central claim  L430   d1_ratio_h100              ... seeds give **{{d1_ratio_h100}}×**. **Quoting one of those and not the
+                §5. The base paper's central claim  L441   a1_ratio_h100              ...h100}}** | **{{a1_ratio_h100}}×** | **{{a1_gap_h100}} {{a1_gap_ci_h100
+                §5.1 The data budget, which is the  L537   d1_ratio_h100              ...diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}} — and still bea
+            20  keys ['None', 'a2_h1_npoints', 'a2_nind', 'cal_rel_npos', 'd1n_nind', 'd4_nind', 'e2_fitted_runs', 'e5_comp_nind', 'e5s_corrob_seeds', 'e7_nind', 'm62_n_traj', 'perm_all_nind', 'relale_all_nind', 'relale_oos_pos_h368', 'v3_n_citations']
+                §3.1 Metrics                        L281   v3_n_citations             ...very build ({{v3_n_citations}} of them). This section exists because t
+                §6.2 The measurement                L616   d1n_nind                   ...t n_independent = {{d1n_nind}}. **Both are correct and they differ in 
+                §6.2 The measurement                L620   d1n_nind                   ...n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories
+                §6.2 The measurement                L670   d1n_nind                   ...t n_independent = {{d1n_nind}} it is {{d1n_epi_npos_h1}} of {{d1n_epi_
+                §6.2 The measurement                L672   m62_n_traj                 ...n episodes, n = {{m62_n_traj}} falling to {{m62_n_ep}} — the pooled co
+                §6.2 The measurement                L674   d1n_nind                   ...ion — at h = 1 on {{d1n_nind}} trajectories a per-dimension coverage m
+                §6.2 The measurement                L689   perm_all_nind              ... on the same {{perm_all_nind}} trajectories as the counts beside them;
+                §6.2 The measurement                L691   d4_nind                    ...s, n_independent = {{d4_nind}} ({{d4_npoints}} pooled trajectory-step 
+                §6.3 Why the aleatoric head collaps L771   e5s_corrob_seeds           ...ring}} of {{e5s_corrob_seeds}} clear it, so the all-seeds criterion wo
+                §6.3 Why the aleatoric head collaps L797   e2_fitted_runs             ...e fitted on {{e2_fitted_runs}} of those runs: the {{e2_excluded_10k}} 
+                §6.3 Why the aleatoric head collaps L800   e2_fitted_runs             ...ts only the {{e2_fitted_runs}} the rate is fitted on, so the scatter a
+                §6.6 The failure is one of magnitud L892   cal_rel_npos               ...l_rel_cov}} | {{cal_rel_npos}}/{{cal_rel_ndim}} | {{perm_oos_relale_p_
+                §6.6 The failure is one of magnitud L894   relale_all_nind            ...ependent = {{relale_all_nind}} over all ten episodes that head is {{re
+                §6.6 The failure is one of magnitud L894   relale_oos_pos_h368        ...gainst {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here. §12
+                §6.6 The failure is one of magnitud L913   d1n_nind                   ...d n_independent = {{d1n_nind}}. The figure the abstract and §12 use is
+                §6.6 The failure is one of magnitud L913   d1n_nind                   ..._h}}, on the same {{d1n_nind}} trajectories. It does not beat Arm B's 
+                §6.6 The failure is one of magnitud L915   perm_all_nind              ...ndependent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi
+                §6.7 Ensemble disagreement beats th L931   d1n_nind                   ...r n_independent = {{d1n_nind}} trajectories, with 95% intervals from a
+                §6.7 Ensemble disagreement beats th L968   a2_nind                    ...a trajectory — the {{a2_nind}} trajectory means alone | {{a2_r_between
+                §6.7 Ensemble disagreement beats th L971   a2_nind                    ... steps on the same {{a2_nind}} trajectories are heavily dependent — st
+                §6.7 Ensemble disagreement beats th L979   a2_h1_npoints              ...hecking: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, whic
+                §6.7 Ensemble disagreement beats th L990   a2_nind                    ...at n_independent = {{a2_nind}}, against M-45's pre-committed threshold
+                §6.7 Ensemble disagreement beats th L996   a2_nind                    ...rizon, on the same {{a2_nind}} trajectories and the same cluster boots
+                §6.7 Ensemble disagreement beats th L1012  a2_h1_npoints              ...elation over {{a2_h1_npoints}} *trajectory-level* points and nothing w
+                §6.7 Ensemble disagreement beats th L1018  a2_h1_npoints              ... ahead**, on {{a2_h1_npoints}} points, and §9 now says that rather tha
+                §6.7 Ensemble disagreement beats th L1039  d1n_nind                   ... own finding used {{d1n_nind}}. Subsampling four trajectories at a tim
+                §6.7 Ensemble disagreement beats th L1041  e5_comp_nind               ...independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** fo
+                §6.7 Ensemble disagreement beats th L1041  d1n_nind                   ...eased checkpoint's {{d1n_nind}} is like for like. **We ran the baselin
+                §6.7 Ensemble disagreement beats th L1061  e7_nind                    ...at n_independent = {{e7_nind}} 400-step trajectories. Minimum detectab
+                §6.7 Ensemble disagreement beats th L1069  e7_nind                    ...at n_independent = {{e7_nind}} 400-step trajectories we cannot say the
+                §9. Actionable lessons              L1344  a2_h1_npoints              ...} across the {{a2_h1_npoints}} trajectories, and that is a ranking of 
+                §Appendix F — every claim of the or L1742  d4_nind                    ...at n_independent = {{d4_nind}}, beats the forecast-index counter at ev
+                §3. Setup                           L239   TYPED                      ...tenated 20-second episodes, and its termination column is identically 
+                §5. The base paper's central claim  L474   TYPED                      ...step is 20 ms and the state barely moves, so that is what one should e
+                §Appendix B — reproducing           L1531  TYPED                      ..., where 20 + 27 did not make 46; the `arithmetic` check now asserts th
+                §Appendix D — verifying the paper's L1595  TYPED                      ... arena's 20 of 45. None is a numeral. None appears in `results/paper_n
+            22  keys ['None', 'cc_kinds', 'e5s_mse_under']
+                §6.3 Why the aleatoric head collaps L765   e5s_mse_under              ...ctive σ sits {{e5s_mse_under}}× below the true noise and does not trac
+                §8. Method                          L1336  cc_kinds                   ...e claims** across {{cc_kinds}} kinds; all pass, and each is run agains
+                §Appendix D — verifying the paper's L1633  cc_kinds                   ...n}} claims across {{cc_kinds}} kinds, each pinning a fragment of this 
+                §Appendix B — reproducing           L1531  TYPED                      ...ix said 22 hours; that figure predated the ␀ ten-thousand-iteration ru
+           256  keys ['None', 'c3_resamples', 'released_width']
+                §5. The base paper's central claim  L486   c3_resamples               ...ctories admit {{c3_resamples}} distinct resamples, so any bootstrap ta
+                §6.2 The measurement                L607   c3_resamples               ...bootstrap has {{c3_resamples}} distinct resamples and the intervals ar
+                §11. Limitations                    L1428  released_width             ...he released {{released_width}}, giving {{m49_matched_params}} state-pa
+                §Appendix B — reproducing           L1557  released_width             ...he released {{released_width}}. They are part of this project's CPU sp
+                §6.4 Why the epistemic term may be  L848   TYPED                      ...single 256-dimensional vector, at whatever point that one trajectory h
+                §Data and code                      L1470  TYPED                      ...two SHA-256 hashes. **The repository's history was rewritten once, and
+            27  keys ['None', 'm62_width_pct', 'ver_close']
+                §6.2 The measurement                L672   m62_width_pct              ...al widens by {{m62_width_pct}}% and the double-demeaned one by a facto
+                §8. Method                          L1327  ver_close                  ... ({{ver_pct}}%), {{ver_close}} equal to within the verifier's floating
+                §Appendix B — reproducing           L1531  TYPED                      ...re 20 + 27 did not make 46; the `arithmetic` check now asserts that a 
+             3  keys ['None', 'a1_sign_pos_h1', 'd1_seeds', 'e2_nll_runs', 'e5_seeds', 'e5s_seeds', 'r2_from_acc_h8', 'r2_n_shared', 't1_first_entry_n', 'time_rel_hi', 'time_rel_lo', 'v1_n_arms_checked', 'ver_keys_lost_files']
+                §1. Introduction                    L79    d1_seeds                   ...{v2_diag_h}} over {{d1_seeds}} seeds, under a rule committed to git be
+                §5. The base paper's central claim  L416   a1_sign_pos_h1             ...h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, which is the same 
+                §5. The base paper's central claim  L433   d1_seeds                   ...me rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independe
+                §5. The base paper's central claim  L438   a1_sign_pos_h1             ...oor_h1}}× | {{a1_sign_pos_h1}}/{{a1_sign_n_h1}} | | 8 | {{a1_A_h8}} ± 
+                §6.2 The measurement                L676   e5_seeds                   ...ble size 5 (§6.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {
+                §6.3 Why the aleatoric head collaps L745   e5s_seeds                  ...}} iterations at {{e5s_seeds}} seeds. Nothing else differs between the
+                §6.3 Why the aleatoric head collaps L762   e5s_seeds                  ...s are means over {{e5s_seeds}} seeds; spreads are the range across the
+                §6.3 Why the aleatoric head collaps L769   e5s_seeds                  ...every one of the {{e5s_seeds}} seeds `M-50` was discharged over clears
+                §6.3 Why the aleatoric head collaps L772   e5s_seeds                  ...ned over its own {{e5s_seeds}} and is not re-opened by more seeds (§8)
+                §6.3 Why the aleatoric head collaps L776   e5s_seeds                  ...or}}, and two of {{e5s_seeds}} seeds recover a σ spread of only {{e5s_
+                §6.3 Why the aleatoric head collaps L813   e2_nll_runs                ..._rate}} in the {{e2_nll_runs}} runs that change it. *Input-independenc
+                §6.4 Why the epistemic term may be  L866   v1_n_arms_checked          ..., on all {{v1_n_arms_checked}} arms checked. So §6.2's "our arms fail 
+                §6.10 Testing the mechanism: an ens L1183  r2_n_shared                ... the mean over {{r2_n_shared}} seeds; the comparison below is paired a
+                §6.10 Testing the mechanism: an ens L1186  r2_n_shared                ...ery one of the {{r2_n_shared}} shared-trunk seeds. At h = {{v2_deploy_
+                §6.10 Testing the mechanism: an ens L1203  r2_from_acc_h8             ...gma_h8}}% | {{r2_from_acc_h8}}% | | 32 | {{r2_sigma_x_h32}}× | {{r2_ac
+                §8. Method                          L1330  ver_keys_lost_files        ...across {{ver_keys_lost_files}} files; they are counted separately beca
+                §11. Limitations                    L1400  e5_seeds                   ... We since trained {{e5_seeds}} Arm A arms at ensemble size 5 (§6.7). T
+                §References                         L1527  t1_first_entry_n           ... *Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are the §2 bibliogr
+                §Appendix D — verifying the paper's L1653  time_rel_lo                ...eats runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{tim
+                §Appendix D — verifying the paper's L1653  time_rel_hi                ...e_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) — on 
+                §Appendix G — every pre-registered  L1743  TYPED                      ...the Task 3 duplication rule was pre-registered; the control runs had f
+          3.49  keys ['err_faithA_growth', 'v1_cap_ratio']
+                §6.9 The structural excuse does not L1146  err_faithA_growth          ...wth}}× | {{err_faithA_growth}}× | | corrected Arm A | {{sig_nll_growth
+                §6.9 The structural excuse does not L1152  err_faithA_growth          ...or grows {{err_faithA_growth}}×. The coverage collapse in Figure 1(b) 
+                §11. Limitations                    L1428  v1_cap_ratio               ..., a factor of {{v1_cap_ratio}}, because each member brings its own tru
+                §11. Limitations                    L1428  v1_cap_ratio               ...trast carried {{v1_cap_ratio}}. **With capacity held fixed the indepen
+            32  keys ['None', 'tw_cells', 'v2_history', 'win_hist']
+                §3. Setup                           L257   win_hist                   ...{win_len}} rows — {{win_hist}} of history and {{win_fore}} of forecast
+                §3.1 Metrics                        L296   v2_history                 ...tory_horizon` = {{v2_history}}: the first {{v2_history}} steps are tea
+                §3.1 Metrics                        L296   v2_history                 ...ry}}: the first {{v2_history}} steps are teacher-forced and excluded. 
+                §3.1 Metrics                        L355   v2_history                 ...val}} minus the {{v2_history}}-step teacher-forced prefix, which is th
+                §7. Defects in the released pipelin L1279  tw_cells                   ...n rollout, across {{tw_cells}} cells (two arenas × two trajectory leng
+                §7. Defects in the released pipelin L1280  tw_cells                   ...uster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} (
+                §7. Defects in the released pipelin L1286  tw_cells                   ...uster_helped}} of {{tw_cells}} cells. Both are measured effects in opp
+                §5. The base paper's central claim  L452   TYPED                      ... rows — 32 of history and one forecast step, non-overlapping within an
+                §6.6 The failure is one of magnitud L912   TYPED                      ...tween h=32's ␀ and h=128's ␀ — the horizon added by this revision fall
+         35.93  keys ['e5_cov1_h1', 'r2_shared_cov1_h1']
+                §6.2 The measurement                L680   e5_cov1_h1                 ...atio_ci_h1}}] | {{e5_cov1_h1}}% [{{e5_cov1_ci_h1}}] | {{e5_cov2_h1}}% 
+                §6.10 Testing the mechanism: an ens L1175  r2_shared_cov1_h1          ..._h1}}% | {{r2_shared_cov1_h1}}% | | 8 | {{r2_indep_ratio_h8}}× | {{r2_
+           368  keys ['None', 'd2r_win_n', 'd2r_win_pos', 'perm_worst_h', 'r2_sigma_x_lo_h', 'v2_diag_h']
+                §Abstract                           L23    v2_diag_h                  ...-L1 error at h = {{v2_diag_h}}, under a rule committed to git before t
+                §Abstract                           L28    v2_diag_h                  ...nt's nRMSE at h = {{v2_diag_h}} by {{stale_pct}}%. As a *ranking* it i
+                §1. Introduction                    L78    v2_diag_h                  ...relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds, under a rule
+                §1. Introduction                    L96    v2_diag_h                  ... accuracy at h = {{v2_diag_h}} (§6.10). - **A working repair**: one mu
+                §1. Introduction                    L101   v2_diag_h                  ...ally, nRMSE at h = {{v2_diag_h}} falls from {{stale_nrmse}} to {{causa
+                §3.1 Metrics                        L346   v2_diag_h                  ...le_pct}}% at h = {{v2_diag_h}} and by {{stale_pct_rel}}% on relative-L
+                §3.1 Metrics                        L350   v2_diag_h                  ...ploy_h}},\,128,\,{{v2_diag_h}}\}$. Two of those are load-bearing and t
+                §3.1 Metrics                        L354   v2_diag_h                  ... as well). **h = {{v2_diag_h}}** is the upstream's open-loop diagnosti
+                §3.1 Metrics                        L359   v2_diag_h                  ...ble, because h = {{v2_diag_h}} is what makes our numbers comparable to
+                §4. What the original papers claim, L391   v2_diag_h                  ..._ratio}}× at h = {{v2_diag_h}} is neither a confirmation of a publishe
+                §5. The base paper's central claim  L406   v2_diag_h                  ... anchored at h = {{v2_diag_h}}, which §3.1 identifies as the upstream'
+                §5. The base paper's central claim  L416   v2_diag_h                  ...nd on n.* At h = {{v2_diag_h}} the per-episode gap favours autoregress
+                §5. The base paper's central claim  L425   v2_diag_h                  ...han one.* At h = {{v2_diag_h}}, the horizon M-23 is stated over, autor
+                §5. The base paper's central claim  L443   v2_diag_h                  ...n_n_h128}} | | **{{v2_diag_h}}** *(M-23)* | **{{a1_A_h368}} ± {{a1_A_s
+                §5. The base paper's central claim  L448   v2_diag_h                  ...cannot give: h = {{v2_diag_h}} is the end of a trend rather than a poi
+                §5. The base paper's central claim  L464   v2_diag_h                  .... **Only the h = {{v2_diag_h}} row is pre-registered.** M-23 was commi
+                §5. The base paper's central claim  L471   v2_diag_h                  ...visible from h = {{v2_diag_h}} alone, and one of them cuts against us.
+                §5. The base paper's central claim  L478   v2_diag_h                  ...5 quoted the h = {{v2_diag_h}} margin over the floor with no indicatio
+                §5. The base paper's central claim  L490   v2_diag_h                  ...us Arm A) at h = {{v2_diag_h}}: **{{a1_gap_traj_h368}}**. All {{a1_gap
+                §5. The base paper's central claim  L505   v2_diag_h                  ... in the same h = {{v2_diag_h}} cell, and autoregressive training beats
+                §5. The base paper's central claim  L507   v2_diag_h                  ... at all** at h = {{v2_diag_h}}, and {{a1_B_over_floor_h100}}× worse at
+                §5.1 The data budget, which is the  L537   v2_diag_h                  ..._ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_depl
+                §6.2 The measurement                L600   v2_diag_h                  ... / mean σ, whole {{v2_diag_h}}-step rollout | coverage at ±1σ, h=1 | c
+                §6.2 The measurement                L612   v2_diag_h                  ...}}× is the whole {{v2_diag_h}}-step rollout on those same {{b2_nind}} 
+                §6.2 The measurement                L641   v2_diag_h                  ... things, and the {{v2_diag_h}}-step figure would be an artifact of tha
+                §6.2 The measurement                L644   v2_diag_h                  ...ed to speak about {{v2_diag_h}} — and does not answer this one. **h = 
+                §6.2 The measurement                L656   v2_diag_h                  ...deploys, and h = {{v2_diag_h}} because it is the upstream's own diagno
+                §6.2 The measurement                L664   v2_diag_h                  ...leatoric; at h = {{v2_diag_h}} the two-term ratio is {{d1n_epi_over_al
+                §6.2 The measurement                L666   v2_diag_h                  ...c horizon of h = {{v2_diag_h}} it is {{d1n_epi_ratio_h368}}× [{{d1n_ep
+                §6.2 The measurement                L668   v2_diag_h                  ..._c_h368}} at h = {{v2_diag_h}}, a factor of {{m65_c_growth}} across th
+                §6.2 The measurement                L668   v2_diag_h                  ...o_h368}}× at h = {{v2_diag_h}}. The penalty is applied at every step o
+                §6.5 The correction fails different L880   v2_diag_h                  ... of §6.6, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faith
+                §6.6 The failure is one of magnitud L887   v2_diag_h                  ... error) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_
+                §6.6 The failure is one of magnitud L887   v2_diag_h                  ...le | perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_
+                §6.6 The failure is one of magnitud L887   v2_diag_h                  ...le | perm P at h={{v2_diag_h}}, in-sample | |---|---|---|---|---| | fa
+                §6.6 The failure is one of magnitud L894   v2_diag_h                  ...tive one: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}}
+                §6.6 The failure is one of magnitud L900   perm_worst_h               ..._model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At 
+                §6.6 The failure is one of magnitud L900   v2_diag_h                  ...}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h36
+                §6.6 The failure is one of magnitud L913   v2_diag_h                  ...confident at h = {{v2_diag_h}}. **All figures in this paragraph are th
+                §6.6 The failure is one of magnitud L913   v2_diag_h                  ...ame ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}. The f
+                §6.6 The failure is one of magnitud L917   v2_diag_h                  ...erpowered at h = {{v2_diag_h}}, which needs the full 400 rows, and is 
+                §6.7 Ensemble disagreement beats th L944   v2_diag_h                  ...ver the full h = {{v2_diag_h}} rollout the counter reaches {{d2b_idx_h
+                §6.7 Ensemble disagreement beats th L965   d2r_win_pos                ... | positive at {{d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_wi
+                §6.7 Ensemble disagreement beats th L965   d2r_win_n                  ...d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_win_med}}[^stepcoun
+                §6.7 Ensemble disagreement beats th L971   d2r_win_pos                ...lue attaches to {{d2r_win_pos}}/{{d2r_win_n}}. The weakest figure acro
+                §6.7 Ensemble disagreement beats th L971   d2r_win_n                  ...o {{d2r_win_pos}}/{{d2r_win_n}}. The weakest figure across the {{d2r_n
+                §6.7 Ensemble disagreement beats th L986   d2r_win_n                  ... it is a mean of {{d2r_win_n}} between-trajectory correlations, which 
+                §6.7 Ensemble disagreement beats th L1005  v2_diag_h                  ...h128}} | yes | | {{v2_diag_h}} | {{a2_rdd_h368}} | {{a2_rdd_ci_h368}} 
+                §6.10 Testing the mechanism: an ens L1180  v2_diag_h                  ...cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h368}}× | {{r2_share
+                §6.10 Testing the mechanism: an ens L1207  v2_diag_h                  ..._acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}}× | {{r2_acc_x_h36
+                §6.10 Testing the mechanism: an ens L1214  r2_sigma_x_lo_h            ...akest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its stronges
+                §6.10 Testing the mechanism: an ens L1219  v2_diag_h                  ...c horizon of h = {{v2_diag_h}} the split reverses — {{r2_from_acc_h368
+                §6.10 Testing the mechanism: an ens L1223  r2_sigma_x_lo_h            ...n it — h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}× falls below the st
+                §9. Actionable lessons              L1369  v2_diag_h                  ...o_h368}}× at h = {{v2_diag_h}}. Reading the loss took an afternoon and
+                §10. Broader impact                 L1379  v2_diag_h                  ...een one step and {{v2_diag_h}} (§6.2), so a penalty weight chosen for 
+                §11. Limitations                    L1400  v2_diag_h                  ...o_h368}}× at h = {{v2_diag_h}}) — but the pre-registered rule governin
+                §11. Limitations                    L1424  v2_diag_h                  ...olving it at h = {{v2_diag_h}} needs more episodes than the released d
+                §12. Conclusion                     L1463  v2_diag_h                  ... dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar
+                §12. Conclusion                     L1463  v2_diag_h                  ...inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_
+                §Appendix D — verifying the paper's L1616  v2_diag_h                  ...a_h368}}× at h = {{v2_diag_h}}; - **a count attributed to the wrong ev
+                §Appendix F — every claim of the or L1742  v2_diag_h                  ...ported**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_
+                §Appendix F — every claim of the or L1742  v2_diag_h                  ...68}}× at the h = {{v2_diag_h}} diagnostic horizon; repairable per hori
+                §5. The base paper's central claim  L406   TYPED                      ...at h = 368 excludes zero under a bootstrap over independent trajectori
+                §6.6 The failure is one of magnitud L910   TYPED                      ... and h=368 the epistemic term correlates positively with realised erro
+                §6.6 The failure is one of magnitud L910   TYPED                      ...n at h=368 is ␀ against ␀. The two quantities rank comparably; neither
+                §6.6 The failure is one of magnitud L910   TYPED                      ...=1 to h=368 while error grows ␀×. **The horizon story we first told wa
+                §6.6 The failure is one of magnitud L912   TYPED                      ...␀ at h=368) and unremarkable at short (␀ at h=1). Both larger arenas i
+                §6.8 One constant scalar does not f L1114  TYPED                      ...aves h=368 at ␀–␀%. On the aleatoric term a scalar of ␀–␀ gives ␀–␀% a
+                §7. Defects in the released pipelin L1250  TYPED                      ...at h = 368 falls from ␀ under the released pairing to ␀ under the caus
+          4.61  keys ['a1_ratio_h368', 'd1_ratio', 'd1n_epi_cov1_h100']
+                §Abstract                           L23    d1_ratio                   ... with horizon** — {{d1_ratio}}× on the reference's own relative-L1 err
+                §1. Introduction                    L78    d1_ratio                   ...on**: a factor of {{d1_ratio}}× on relative-L1 at h = {{v2_diag_h}} ov
+                §4. What the original papers claim, L391   d1_ratio                   ... or table. So our {{d1_ratio}}× at h = {{v2_diag_h}} is neither a conf
+                §5. The base paper's central claim  L428   d1_ratio                   ...) — a factor of **{{d1_ratio}}×**. At h = {{v2_deploy_h}}, the method'
+                §5. The base paper's central claim  L443   a1_ratio_h368              ...h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap_h368}} {{a1_gap_ci_h368
+                §5.1 The data budget, which is the  L537   d1_ratio                   ...-forcing result — {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h1
+                §6.2 The measurement                L627   d1n_epi_cov1_h100          ...100}}] | {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi
+                §6.2 The measurement                L662   d1n_epi_cov1_h100          ...erage of {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] where a cal
+                §10. Broader impact                 L1386  d1n_epi_cov1_h100          ..., giving {{d1n_epi_cov1_h100}}% coverage where {{v3_cov_nominal1}}% is
+           400  keys ['None', 'v2_len_eval']
+                §3.1 Metrics                        L355   v2_len_eval                ..._trajectory` = {{v2_len_eval}} minus the {{v2_history}}-step teacher-f
+                §Abstract                           L25    TYPED                      ...gap the 400-step unit left spanning zero, and teacher forcing wins. **
+                §1. Introduction                    L83    TYPED                      ...here the 400-step unit gives ␀. The gap becomes ␀ ␀ — it excludes zero
+                §1. Introduction                    L85    TYPED                      ...at the 400-step unit could only report as spanning zero is a real reve
+                §3. Setup                           L269   TYPED                      ...e. Two 400-step trajectories whose spans overlap are not independent e
+                §3. Setup                           L271   TYPED                      ...apping 400-step trajectories. Every interval in this paper is a bootst
+                §5. The base paper's central claim  L418   TYPED                      ...endent 400-step trajectories against the held-out arena's ␀ — ␀× more 
+                §5. The base paper's central claim  L442   TYPED                      ...* Over 400-step trajectories the gap excludes zero at ␀ of ␀ horizons 
+                §5. The base paper's central claim  L450   TYPED                      ...endent 400-step trajectories. A 400-step unit is required only by the 
+                §5. The base paper's central claim  L450   TYPED                      ...ies. A 400-step unit is required only by the longest horizon, so under
+                §5. The base paper's central claim  L456   TYPED                      ... — the 400-step row is what `M-23` was discharged over and stays as th
+                §6.2 The measurement                L606   TYPED                      ...nt = ␀ 400-step trajectories — because that is the only arena on which
+                §6.2 The measurement                L617   TYPED                      ...apping 400-step trajectories. We use all ten rather than the held-out 
+                §6.2 The measurement                L669   TYPED                      ...mpling 400-step trajectories rather than whole episodes, which two tra
+                §6.2 The measurement                L673   TYPED                      ...ent = ␀ 400-step trajectories) give, averaged over seeds: | h | episte
+                §6.6 The failure is one of magnitud L912   TYPED                      ...nt = ␀ 400-step trajectories out of sample, the epistemic ordering loo
+                §6.6 The failure is one of magnitud L914   TYPED                      ...of the 400-step unit, not of the arena**, and the distinction now matt
+                §6.6 The failure is one of magnitud L914   TYPED                      ...e full 400 rows, and is no longer demonstrably underpowered at h = 128
+                §6.7 Ensemble disagreement beats th L945   TYPED                      ...at the 400-step unit. At the shorter unit `M-64` builds, ␀ non-overlap
+                §6.7 Ensemble disagreement beats th L1038  TYPED                      ...nt = ␀ 400-step trajectories, **in-sample** for these arms, which trai
+                §6.7 Ensemble disagreement beats th L1058  TYPED                      ...nt = ␀ 400-step trajectories. Minimum detectable effect, estimated bef
+                §6.7 Ensemble disagreement beats th L1066  TYPED                      ...nt = ␀ 400-step trajectories we cannot say the ensemble ranks better t
+                §6.8 One constant scalar does not f L1122  TYPED                      ...apping 400-step trajectories between them, so each direction fits on n
+                §9. Actionable lessons              L1353  TYPED                      ...** Two 400-step windows that overlap at all are one piece of evidence,
+                §9. Actionable lessons              L1355  TYPED                      ...endent 400-step trajectories however many windows are drawn from it, a
+                §11. Limitations                    L1394  TYPED                      ...endent 400-step trajectories. That is the binding constraint on §5, an
+                §11. Limitations                    L1421  TYPED                      ...re the 400-step unit gives ␀ (`M-64`), and we did not rerun this permu
+             5  keys ['None', 'a1_n_excl', 'b2_members', 'bound_both_train', 'd2b_n_horizons_tested', 'd2p_n_horizons', 'd2p_n_separating', 'd2r_ncontrols', 'e4_n_inert', 'm49_n_conditions_met', 'm63_quant', 'r2_n_indep', 'rt_runs_m49']
+                §1. Introduction                    L96    r2_n_indep                 ... An ensemble of {{r2_n_indep}} independently-initialised full models, 
+                §5. The base paper's central claim  L446   a1_n_excl                  ...excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans
+                §6.2 The measurement                L620   b2_members                 ...On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} 
+                §6.2 The measurement                L674   m63_quant                  ...overage moves in {{m63_quant}}-point steps, and the rule fixed that li
+                §6.3 Why the aleatoric head collaps L717   e4_n_inert                 ...ts on the other {{e4_n_inert}} being inert with respect to σ, and a re
+                §6.3 Why the aleatoric head collaps L729   e4_n_inert                 .... The remaining {{e4_n_inert}} produce a gradient of exactly zero, whi
+                §6.7 Ensemble disagreement beats th L944   d2b_n_horizons_tested      ...}} of {{d2b_n_horizons_tested}} horizons. **The last column answers th
+                §6.7 Ensemble disagreement beats th L946   d2p_n_separating           ... zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The 
+                §6.7 Ensemble disagreement beats th L946   d2p_n_horizons             ...arating}} of {{d2p_n_horizons}}** horizons. The distinction matters at
+                §6.7 Ensemble disagreement beats th L948   d2p_n_horizons             ...ap}} of the {{d2p_n_horizons}} horizons. At {{d2p_overlap_h}} the marg
+                §6.7 Ensemble disagreement beats th L973   d2r_ncontrols              ...e across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so d
+                §6.10 Testing the mechanism: an ens L1162  r2_n_indep                 ...ble.** Training {{r2_n_indep}} genuinely independent models from scrat
+                §6.10 Testing the mechanism: an ens L1166  r2_n_indep                 ... and scored the {{r2_n_indep}} together as an ensemble **at evaluation
+                §6.10 Testing the mechanism: an ens L1168  r2_n_indep                 ...greement across {{r2_n_indep}} independently-initialised *full models*
+                §7. Defects in the released pipelin L1266  bound_both_train           ... only the {{bound_both_train}} boundaries whose *both* sides are train
+                §9. Actionable lessons              L1344  d2p_n_separating           ...s zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons wher
+                §9. Actionable lessons              L1344  d2p_n_horizons             ...ng}} of the {{d2p_n_horizons}} horizons where the index is defined — e
+                §11. Limitations                    L1428  r2_n_indep                 ...existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size
+                §11. Limitations                    L1430  m49_n_conditions_met       ...}** — {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions 
+                §Appendix B — reproducing           L1556  rt_runs_m49                ...e-estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m
+                §Appendix F — every claim of the or L1742  d2r_ncontrols              ...and survives {{d2r_ncontrols}} controls on forecast depth — the linear
+                §6.2 The measurement                L673   TYPED                      ...ble size 5 (§6.7, ␀ seeds, out-of-sample, n_independent = ␀ 400-step t
+                §6.4 Why the epistemic term may be  L859   TYPED                      ...ensemble-5 arms build one trunk the same way (`src/rwm_model.py:164-16
+                §6.6 The failure is one of magnitud L891   TYPED                      ...ensemble-5 arms have both: their aleatoric CoV is comparable to the ot
+                §6.7 Ensemble disagreement beats th L1019  TYPED                      ...ble size 5**, identical in every other setting, under a rule committed
+                §9. Actionable lessons              L1347  TYPED                      ...ensemble-5 arms we trained — and a risk gate or safety margin that rea
+                §11. Limitations                    L1397  TYPED                      ...ble size 5 (§6.7). They reproduce the *direction* of §6.7's finding in
+                §Appendix B — reproducing           L1542  TYPED                      ...ensemble-5 comparison until this revision found it, moving two publish
+         7,687  keys ['arm_clean_windows', 'c2_windows']
+                §5.1 The data budget, which is the  L535   c2_windows                 ...erately not the {{c2_windows}} training windows, which overlap almost 
+                §7. Defects in the released pipelin L1261  arm_clean_windows          ...he clean {{arm_clean_windows}} plus {{arm_splices}} splices — and, bec
+          7.79  keys ['e5_cov1_h128', 'r2_shared_cov1_h128']
+                §6.2 The measurement                L684   e5_cov1_h128               ..._ci_h128}}] | {{e5_cov1_h128}}% [{{e5_cov1_ci_h128}}] | {{e5_cov2_h128
+                §6.10 Testing the mechanism: an ens L1179  r2_shared_cov1_h128        ...8}}% | {{r2_shared_cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h
+             8  keys ['None', 'c2_bounds', 'c3_family', 'd3_worst_ep', 'e5_power_worst_h', 'f4_n_rules', 'n_train_eps', 'r2_sigma_x_hi_h', 'win_fore']
+                §3. Setup                           L257   win_fore                   ...}} of history and {{win_fore}} of forecast — so the reference window b
+                §5. The base paper's central claim  L418   n_train_eps                ...it supports.** {{n_train_eps}} of the {{c3_sign_n}} episodes are train
+                §5. The base paper's central claim  L526   c3_family                  ...t in a family of {{c3_family}} out-of-sample comparisons, so we state 
+                §5. The base paper's central claim  L528   c3_family                  ...ni level of 0.05/{{c3_family}}, and Holm–Bonferroni rejects **{{c3_hol
+                §5.1 The data budget, which is the  L535   c2_bounds                  ...pisode boundary ({{c2_bounds}} of them), a transition being a consecut
+                §6.2 The measurement                L643   win_fore                   ...del is trained on {{win_fore}} steps and cannot be expected to speak a
+                §6.7 Ensemble disagreement beats th L1039  e5_power_worst_h           ...t}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, b
+                §6.8 One constant scalar does not f L1132  d3_worst_ep                ...ted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_
+                §6.10 Testing the mechanism: an ens L1215  r2_sigma_x_hi_h            ...ngest (h = {{r2_sigma_x_hi_h}}) — which is the direction trunk-sharing
+                §8. Method                          L1318  f4_n_rules                 ...e lead time for {{f4_n_rules}} of them and Appendix G for all {{appG_n
+                §5. The base paper's central claim  L511   TYPED                      ...* At h = 8 — the horizon the model is trained on — the same comparison
+                §6.9 The structural excuse does not L1137  TYPED                      ...ed on an 8-step horizon cannot be expected to report calibrated uncert
+                §6.9 The structural excuse does not L1138  TYPED                      ...out step 8 either. Inside the trained horizon, σ is flat while error g
+                §6.9 The structural excuse does not L1141  TYPED                      ...step 1 → 8 | error growth, step 1 → 8 | |---|---|---| | faithful Arm A
+                §6.9 The structural excuse does not L1141  TYPED                      ...step 1 → 8 | |---|---|---| | faithful Arm A | ␀× | ␀× | | corrected Ar
+                §6.10 Testing the mechanism: an ens L1219  TYPED                      ... and h = 8 values, which do not span it — h = ␀'s ␀× falls below the s
+                §8. Method                          L1319  TYPED                      ...n an h = 8 cell already recorded as unresolvable. Every long-horizon v
+                §Appendix E — what testing the unte L1678  TYPED                      ... M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N
+                §Appendix F — every claim of the or L1713  TYPED                      ... M=32, N=8 is the optimal configuration (§IV-C) | no | — | `[cpu: the 
+          8.19  keys ['e5_cov1_h100', 'r2_shared_cov1_h100']
+                §6.2 The measurement                L683   e5_cov1_h100               ..._ci_h100}}] | {{e5_cov1_h100}}% [{{e5_cov1_ci_h100}}] | {{e5_cov2_h100
+                §6.2 The measurement                L687   e5_cov1_h100               ...h100}}×, with {{e5_cov1_h100}}% coverage where a calibrated Gaussian g
+                §6.10 Testing the mechanism: an ens L1178  r2_shared_cov1_h100        ...** | **{{r2_shared_cov1_h100}}%** | | 128 | {{r2_indep_ratio_h128}}× |
+  no typed restatements: no literal sits in a slot a placeholder fills
+  no ambiguous numerals: no section prints two quantities as the same numeral
+
+  wrote results/restatement_index.json

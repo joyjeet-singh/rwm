@@ -187,7 +187,7 @@ REPORT=task2_3_report.txt stage 15 "Matched per-dimension comparison and the tre
 REPORT=step6_analysis_report.txt stage 16 "Six-run A/B analysis and the pooled collapse fit" "2 min" \
       results/step6_analysis.json NEEDS_WEIGHTS $PY scripts/step6_analyse.py
 REPORT=task1_calibration_report.txt stage 17 "Calibration of all four models" "10 min" \
-      results/task1_calibration.json NEEDS_WEIGHTS $PY scripts/task1_calibration.py
+      results/task1_calibration.json NEEDS_WEIGHTS env STORE_PER_TRIPLE=1 $PY scripts/task1_calibration.py
 REPORT=task2_sigma_profile_report.txt stage 18 "Sigma profile across forecast steps" "6 min" \
       results/task2_sigma_profile.json NEEDS_WEIGHTS $PY scripts/task2_sigma_profile.py
 REPORT=task3_control_arm_report.txt stage 19 "Duplication control: the training-loss discriminator" "5 s" \
@@ -215,13 +215,13 @@ REPORT=review_bootstrap_unit_report.txt stage 20c "Bootstrap resampling unit (M-
 REPORT=task_b_permutation_report.txt stage 20d "Permutation test over trajectories (R-61)" "12 min" \
       results/task_b_permutation.json NEEDS_WEIGHTS $PY scripts/task_b_permutation.py
 REPORT=task_d_nind20_report.txt stage 20e "Epistemic table at n=20, forecast-index baseline, penalty CI (R-62, R-63, R-65)" "6 min" \
-      results/task_d_nind20.json $PY scripts/task_d_nind20.py
+      results/task_d_nind20.json env STORE_PER_TRIPLE=1 $PY scripts/task_d_nind20.py
 REPORT=task_d2b_robustness_report.txt stage 20f "Forecast-index control, four stronger forms (R-66)" "5 min" \
       results/task_d2b_robustness.json $PY scripts/task_d2b_robustness.py
 REPORT=task_d3_perhorizon_report.txt stage 20g "Per-horizon recalibration (R-64)" "3 min" \
       results/task_d3_perhorizon.json $PY scripts/task_d3_perhorizon.py
 REPORT=task_d3_ens5_report.txt stage 20h "Ensemble-5 replication and M-43's verdict (R-67)" "8 min" \
-      results/task_d3_ens5.json NEEDS_WEIGHTS $PY scripts/task_d3_ens5.py
+      results/task_d3_ens5.json NEEDS_WEIGHTS env STORE_PER_TRIPLE=1 $PY scripts/task_d3_ens5.py
 REPORT=task_d3b_ens5_power_report.txt stage 20i "Ensemble-5 companion and power at n=4 (R-67)" "6 min" \
       results/task_d3b_ens5_power.json NEEDS_WEIGHTS $PY scripts/task_d3b_ens5_power.py
 # ------------------------------------------------------------------------
@@ -340,6 +340,36 @@ stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
 # paper turned out to have no stage behind it -- the first two audits for it were
 # themselves wrong, matching declared outputs and then bare filenames.
 # After ledger_check, because it reads the ledger the check has just validated.
+# Sessions 2, 3 and 6 added seven artifacts that feed paper_numbers.json, and
+# pipeline_coverage.py found every one of them with a writer and no stage -- the same
+# M-28 shape the note above describes, for the fourth time. They run here, in dependency
+# order: the three producers above now write the per-triple cache as a by-product
+# (STORE_PER_TRIPLE stays off by default everywhere else), the gate checks that cache
+# against the published aggregates, and the four rule analyses read it.
+REPORT=m62_65_cache_gate_report.txt stage 20n1 "Per-triple cache gate (M-62/63/65 evidence)" "40 s" \
+      results/m62_65_cache_gate.json NEEDS_WEIGHTS $PY scripts/gate_per_triple.py
+
+REPORT=m62_episode_clustering_report.txt stage 20n2 "M-62 — episode-level clustering" "1 min" \
+      results/m62_episode_clustering.json $PY scripts/m62_episode_clustering.py
+
+REPORT=m63_per_dimension_coverage_report.txt stage 20n3 "M-63 — per-dimension coverage at h=1" "10 s" \
+      results/m63_per_dimension_coverage.json NEEDS_WEIGHTS $PY scripts/m63_per_dimension_coverage.py
+
+REPORT=m65_gaussian_nominal_report.txt stage 20n4 "M-65 — the oracle rescale and the Gaussian nominal" "10 s" \
+      results/m65_gaussian_nominal.json NEEDS_WEIGHTS $PY scripts/m65_gaussian_nominal.py
+
+REPORT=m64_free_gate_report.txt stage 20n5 "M-64 free gate — first short unit is an exact slice" "20 s" \
+      results/m64_free_gate.json NEEDS_WEIGHTS $PY scripts/m64_free_gate.py
+
+REPORT=m64_short_units_report.txt stage 20n6 "M-64 — shorter evaluation units at h <= 128" "3 min" \
+      results/m64_short_units.json NEEDS_WEIGHTS $PY scripts/m64_short_units.py
+
+REPORT=insample_framing_report.txt stage 20n7 "2.4 — in-sample framing of the h=1 row (no computation)" "5 s" \
+      results/insample_framing.json $PY scripts/insample_framing.py
+
+REPORT=input_set_audit_report.txt stage 20n8 "M-66 — input discovery by pattern, classified" "5 s" \
+      results/input_set_audit.json $PY scripts/input_set_audit.py
+
 REPORT=appendix_g_rules_report.txt stage 21a "Appendix G — every pre-registered rule, from the ledger" "10 s" \
       results/appendix_g_rules.json $PY scripts/appendix_g_rules.py
 

@@ -3022,6 +3022,20 @@
       "retracts": []
     },
     {
+      "id": "M-67",
+      "claim": "The sixth reader-facing surface, which no check reads and this session did not update",
+      "relevance": "METHOD",
+      "status": "OPEN \u2014 the upload is outstanding",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/paper_numbers.json",
+        "scripts/build_model_card.py"
+      ],
+      "retracts": []
+    },
+    {
       "id": "D-30",
       "claim": "The review queue had more than doubled and every document still said 89",
       "relevance": "",
@@ -3109,7 +3123,7 @@
     "B": 5,
     "C": 15,
     "D": 35,
-    "M": 66,
+    "M": 67,
     "O": 14,
     "R": 73,
     "S": 19,

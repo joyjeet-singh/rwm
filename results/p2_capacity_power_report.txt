@@ -1,0 +1,20 @@
+P2 — CAPACITY-MATCHED POWER, BEFORE THE RUNS
+========================================================================================
+  shared-trunk arm, state pathway   : 1,024,132 params (1 trunk @ 256 + 5 heads)
+  independent arm as run (§6.10)    : 3,570,820 (3.49x — X-17's confound)
+  capacity-matched width            : 124 hidden units
+  five members at that width        : 1,023,880 (0.9998x the shared-trunk arm)
+  pool all ten episodes (in-sample; UPPER bound): episodes [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 20 trajectories, n_independent = 20
+  pool held-out pair (the real arena): episodes [1, 8], 4 trajectories, n_independent = 4
+  subsample ens5_seed0 vs released: ratio MDE 1.946x, coverage MDE 3.40 pts
+  subsample ens5_seed1 vs released: ratio MDE 2.004x, coverage MDE 4.32 pts
+  subsample ens5_seed2 vs released: ratio MDE 1.956x, coverage MDE 4.03 pts
+========================================================================================
+  MDE at n_independent = 4, cross-architecture, by subsampling:
+    overconfidence ratio : 2.004x
+    +-1 sigma coverage   : 4.32 percentage points
+  §6.10 observed, capacity UNMATCHED: 2.03x
+  the rule is powered to see an effect the size of the one it re-tests
+  CAUTION: the pool is in-sample for our arms; this is an UPPER bound on power, so the MDE is a LOWER bound.
+
+  wrote results/p2_capacity_power.json

@@ -1,3 +1,36 @@
+  out-of-sample|400|500|h8|l1
+  out-of-sample|400|500|h8|nrmse
+  out-of-sample|400|500|h368|l1
+  out-of-sample|400|500|h368|nrmse
+  out-of-sample|400|2500|h8|l1
+  out-of-sample|400|2500|h8|nrmse
+  out-of-sample|400|2500|h368|l1
+  out-of-sample|400|2500|h368|nrmse
+  out-of-sample|200|500|h8|l1
+  out-of-sample|200|500|h8|nrmse
+  out-of-sample|200|500|h168|l1
+  out-of-sample|200|500|h168|nrmse
+  out-of-sample|200|2500|h8|l1
+  out-of-sample|200|2500|h8|nrmse
+  out-of-sample|200|2500|h168|l1
+  out-of-sample|200|2500|h168|nrmse
+  in-sample|400|500|h8|l1
+  in-sample|400|500|h8|nrmse
+  in-sample|400|500|h368|l1
+  in-sample|400|500|h368|nrmse
+  in-sample|400|2500|h8|l1
+  in-sample|400|2500|h8|nrmse
+  in-sample|400|2500|h368|l1
+  in-sample|400|2500|h368|nrmse
+  in-sample|200|500|h8|l1
+  in-sample|200|500|h8|nrmse
+  in-sample|200|500|h168|l1
+  in-sample|200|500|h168|nrmse
+  in-sample|200|2500|h8|l1
+  in-sample|200|2500|h8|nrmse
+  in-sample|200|2500|h168|l1
+  in-sample|200|2500|h168|nrmse
+
 TASK 3 -- THREE-WAY ROLLOUT COMPARISON: CLEAN / DUPLICATED / CONTAMINATED
 ========================================================================================
 

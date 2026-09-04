@@ -7,33 +7,55 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C3.1   sign      §6.7                0.60534 -> 0.59571 is a fall of 0.00963, text says fall
   PASS  C3.2   sign      §6.7                0.60534 -> 0.59571 is a fall of 0.00963, text says fall
   PASS  C3.3   sign      §6.7                0.60534 -> 0.73919 is a rise of 0.13386, text says rise
-  PASS  C4.1   orders    §6.2 / 13           ratio 600.0x quoted directly, not as orders (log10=2.78)
-  PASS  C4.2   orders    §6.6                ratio 9.95e+12, round(log10)=13, text says 13
-  PASS  C5.1   cell      §13                 arenas.all-episodes.models.released aleatoric.368 -> 0/45, text cites 0/45
+  PASS  C4.1   orders    §6.2                ratio 349.5x quoted directly; expected "349" within 160 chars of "× better than aleatoric and still wr"; found
+  PASS  C4.3   orders    §12                 ratio 349.5x quoted directly; expected "349" within 160 chars of "penalises with is better by a factor"; found
+  PASS  C4.2   orders    §6.6                ratio 9.79e+12, round(log10)=13, text says 13
+  PASS  C5.1   cell      §12                 arenas.all-episodes.models.released aleatoric.368 -> 0/45, text cites 0/45
   PASS  C5.2   cell      §6.6                arenas.out-of-sample.models.released aleatoric.368 -> 20/45, text cites 20/45
   PASS  C5.3   cell      §6.2                arenas.all-episodes.models.released EPISTEMIC.1 -> 44/45, text cites 44/45
   PASS  C2.3   extremum  §6.6                max of 4 is teacher-forced armB (0.25686); paper names teacher-forced armB (0.25686)
   PASS  C2.4   extremum  §6.7                max of 5 is h=1 (0.99391); paper names h=1 (0.99391)
-  PASS  C2.5   extremum  §6.2                min of 25 is faithful (mse) h=368 (0.0042); paper names faithful (mse) h=368 (0.0042)
+  PASS  C2.5   extremum  §6.2                min of 30 is faithful (mse) h=368 (0.0037); paper names faithful (mse) h=368 (0.0037)
   PASS  C3.4   compare   §6.6                0.150935 vs 0.256859 -> lt, text says lt
-  PASS  C3.5   compare   §6.6                0.0416667 vs 0.002 -> gt, text says gt
-  PASS  C3.6   compare   §10                 0.993913 vs 0.605338 -> gt, text says gt
-  PASS  C7.1   count-consistency §1 / abstract / 9   numbered retractions = 6 (6/Six/six); 3/3 sites agree
-  PASS  C7.2   count-consistency §1 / abstract / 9   framing retractions = 2 (2/Two/two); 2/2 sites agree
+  PASS  C3.5   compare   §6.6                0.0416667 vs 0.00166667 -> gt, text says gt
+  PASS  C3.6   compare   §9                  0.993913 vs 0.605338 -> gt, text says gt
+  PASS  C7.1   count-consistency §8 / Appendix D     numbered retractions = 6 (6/Six/six); 2/2 sites agree
+  PASS  C7.2   count-consistency §8 / Appendix D     framing retractions = 6 (6/Six/six); 2/2 sites agree
+  PASS  C7.5   count-consistency §1 / Appendix D     total retractions = 12 (12); 1/1 sites agree
   PASS  C6.1   relvar    §5                  relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 2.0x
-  PASS  C8.1   horizon-label §6.2                horizon 100; expected "33.4" within 100 chars of "at h = 100, the method's own imagination"; found
+  PASS  C8.1   horizon-label §6.2                horizon 100; expected "33.4" within 120 chars after "the method's own imagination rollout len"; found
   PASS  C8.2   horizon-label §3.1                horizon 100; expected "100" within 420 chars of "is the method's own imagination rollout "; found
   PASS  C8.3   horizon-forbidden §whole paper        3 forbidden horizon labels checked; none present
-  PASS  C9.1   count-dependence §abstract / 10 / 13 every clean k-of-k count carries an interval or a not-independent footnote
-  PASS  C10.1  retraction-consistency §8 / README         retracted assertion "The released checkpoint cannot have come fro" absent from all 3 files
-  PASS  C10.2  retraction-consistency §6.6 / README       retracted assertion "sign test on 45 dimensions" absent from all 3 files
-  PASS  C11.1  cross-artifact-sync §README             3/3 headline values present in README.md
-  PASS  C11.2  cross-artifact-sync §MODEL_CARD         2/2 headline values present in MODEL_CARD.md
-  PASS  C12.1  abstract-budget §abstract           248 words (max 250), 6 numerals (max 6) ['4.61', '33.4', '4.61', '0.', '0.419', '2']
+  PASS  C9.1   count-dependence §abstract / 9 / 12  every clean k-of-k count carries an interval or a not-independent footnote
+  PASS  C10.1  retraction-consistency §7.5 / README / RESULTS retracted assertion "cannot have come from the released recipe" absent from all 6 files
+  PASS  C10.2  retraction-consistency §6.6 / README       retracted assertion "sign test on 45 dimensions" absent from all 5 files
+  PASS  C10.3  retraction-consistency §6.8                retracted assertion "deviations are both at h=100 on the aleatori" absent from all 5 files
+  PASS  C10.4  retraction-consistency §4                  retracted assertion "without exception" absent from all 5 files
+  PASS  C11.1  cross-artifact-sync §README             6/6 headline values present in README.md
+  PASS  C11.3  cross-artifact-sync §EXTERNAL_READ_BRIEF 15/15 headline values present in docs/EXTERNAL_READ_BRIEF.md
+  PASS  C11.2  cross-artifact-sync §MODEL_CARD         4/4 headline values present in MODEL_CARD.md
+  PASS  C11.4  cross-artifact-sync §BUILD_CHECKS       4/4 headline values present in docs/BUILD_CHECKS.md
+  PASS  C12.1  abstract-budget §abstract           346 words (max 370), 11 numerals (max 18) ['8.3', '1', '33.4', '100,', '4', '0.', '4.61', '368,', '400', '368', '75']
   PASS  C13.1  interval-required §6.2                4/4 quoted quantities carry their interval
   PASS  C13.2  interval-required §6.2                3/3 quoted quantities carry their interval
+  PASS  C7.3   count-consistency §3.1 / 6.8 / Figure 1 nominal coverage at ±1σ: canonical 68.27; 3 near-miss spellings checked across 5 files; none present
+  PASS  C7.4   count-consistency §6.7 / 10           the h=1 disagreement interval: canonical [+0.918, +0.999]; 1 near-miss spellings checked across 4 files; none present
+  PASS  C3.7   sign      §6.8                0.68270 -> 0.77480 is a rise of 0.09210, text says rise
+  PASS  C3.8   sign      §6.8                0.68270 -> 0.76550 is a rise of 0.08280, text says rise
+  PASS  C14.1  horizon-consistency §whole paper        0 horizon-unscoped figures (0 calibration, 0 other)
+  PASS  C15.1  arithmetic §Appendix B         rt_hours=48.2 vs rt_hours_10k=19.7 + rt_hours_short=28.5 = 48.2 (tol 0.05)
+  PASS  C15.2  arithmetic §Appendix B         rt_runs=31 vs rt_runs_10k=6 + rt_runs_short=25 = 31 (tol 0)
+  PASS  C15.3  arithmetic §4 / Appendix F     appF_n_claims=12 vs orig_n_tested=4 + n_untested=8 = 12 (tol 0)
+  PASS  C15.4  arithmetic §4 / Appendix E     n_untested=8 vs appE_n_sim=6 + appE_n_cpu=2 = 8 (tol 0)
+  PASS  C16.1  kind-count §8 / Appendix D     registered 22, section 8 claims 22, docs/BUILD_CHECKS.md enumerates 22
+  PASS  C20.1  unit-consistency §whole paper        0 n_independent figure(s) naming no unit
+  PASS  C18.1  frequency-consistency §9                  5 of 5 -> "all", text claims "all"; wording ['every', 'every one of them']
+  PASS  C18.2  frequency-consistency §6.7                0 of 5 -> "none", text claims "none"; wording ['in 0 of', '0 of']
+  PASS  C18.3  frequency-consistency §6.10               6 of 6 -> "all", text claims "all"; wording ['every', 'all ']
+  PASS  C19.1  restatement §whole paper        0 typed restatement(s), 0 ambiguous numeral(s)
+  PASS  C17.1  scope-consistency §4 / Appendix E     6 universal quantifiers checked against the enumerated set; none present
 ========================================================================================================
-  32/32 comparative claims verified
+  54/54 comparative claims verified
 
   SELF-TEST — every check must FAIL when its expectation is corrupted
   ----------------------------------------------------------------------------------------------------
@@ -44,30 +66,52 @@ PART C — COMPARATIVE CLAIM CHECK
   caught C3.1   0.60534 -> 0.59571 is a fall of 0.00963, text says rise
   caught C3.2   0.60534 -> 0.59571 is a fall of 0.00963, text says rise
   caught C3.3   0.60534 -> 0.73919 is a rise of 0.13386, text says fall
-  n/a   C4.1   quotes the ratio directly — nothing to corrupt
-  caught C4.2   ratio 9.95e+12, round(log10)=13, text says 14
+  caught C4.1   ratio 349.5x quoted directly; expected "3,495" within 160 chars of "× better than aleatoric and still wr"; ABSENT
+  caught C4.3   ratio 349.5x quoted directly; expected "3,495" within 160 chars of "penalises with is better by a factor"; ABSENT
+  caught C4.2   ratio 9.79e+12, round(log10)=13, text says 14
   caught C5.1   arenas.all-episodes.models.released aleatoric.368 -> 0/45, text cites 1/45
   caught C5.2   arenas.out-of-sample.models.released aleatoric.368 -> 20/45, text cites 21/45
   caught C5.3   arenas.all-episodes.models.released EPISTEMIC.1 -> 44/45, text cites 45/45
   caught C2.3   max of 4 is teacher-forced armB (0.25686); paper names faithful (mse) (0.033773)
   caught C2.4   max of 5 is h=1 (0.99391); paper names h=8 (0.73757)
-  caught C2.5   min of 25 is faithful (mse) h=368 (0.0042); paper names released EPISTEMIC h=1 (0.00605)
+  caught C2.5   min of 30 is faithful (mse) h=368 (0.0037); paper names released EPISTEMIC h=1 (0.00565)
   caught C3.4   0.150935 vs 0.256859 -> lt, text says gt
-  caught C3.5   0.0416667 vs 0.002 -> gt, text says lt
+  caught C3.5   0.0416667 vs 0.00166667 -> gt, text says lt
   caught C3.6   0.993913 vs 0.605338 -> gt, text says lt
-  caught C7.1   numbered retractions = 7 (7/Seven/seven); 0/3 sites agree; disagreeing: ['numbered claims in this work are withdrawn', 'retractions of our own numbered claims', 'retractions on our own evidence']
-  caught C7.2   framing retractions = 3 (3/Three/three); 0/2 sites agree; disagreeing: ['further retractions withdraw framings rather than numbers', 'that withdraw framings rather than numbers']
+  caught C7.1   numbered retractions = 7 (7/Seven/seven); 0/2 sites agree; disagreeing: ['retractions on our own evidence', 'numbered retractions, in order']
+  caught C7.2   framing retractions = 7 (7/Seven/seven); 0/2 sites agree; disagreeing: ['that withdraw framings rather than numbers', 'framing retractions**, withdrawn as stated claims']
+  caught C7.5   total retractions = 13 (13); 0/1 sites agree; disagreeing: ['retractions of our own claims']
   caught C6.1   relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 200.0x
-  caught C8.1   horizon 100; expected "34.4" within 100 chars of "at h = 100, the method's own imagination"; ABSENT
+  caught C8.1   horizon 100; expected "34.4" within 120 chars after "the method's own imagination rollout len"; ABSENT
   caught C8.2   horizon 100; expected "100.0000" within 420 chars of "is the method's own imagination rollout "; ABSENT
   caught C8.3   4 forbidden horizon labels checked; PRESENT: ['open-loop diagnostic']
   caught C9.1   section 'Nonexistent section' not found
-  caught C10.1  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'README.md', 'MODEL_CARD.md']
-  caught C10.2  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'README.md', 'MODEL_CARD.md']
-  caught C11.1  1/4 headline values present in requirements.txt; missing ['ver_values', 'ver_files', 'd1_ratio']
-  caught C11.2  0/3 headline values present in requirements.txt; missing ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'd1_ratio']
-  caught C12.1  248 words (max 10), 6 numerals (max 6) ['4.61', '33.4', '4.61', '0.', '0.419', '2']
+  caught C10.1  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'docs/BUILD_CHECKS.template.md', 'README.md', 'MODEL_CARD.md', 'RESULTS.md']
+  caught C10.2  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'docs/BUILD_CHECKS.template.md', 'README.md', 'MODEL_CARD.md', 'RESULTS.md']
+  caught C10.3  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'docs/BUILD_CHECKS.template.md', 'README.md', 'MODEL_CARD.md', 'RESULTS.md']
+  caught C10.4  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'docs/BUILD_CHECKS.template.md', 'README.md', 'MODEL_CARD.md', 'RESULTS.md']
+  caught C11.1  1/7 headline values present in requirements.txt; missing ['ver_values', 'ver_files', 'pdf_pages', 'n_retractions_word', 'n_retract_framing_word', 'd1_ratio']
+  caught C11.3  0/16 headline values present in requirements.txt; missing ['rt_hours', 'rt_runs', 'd1_ratio', 'd1n_epi_ratio_h1', 'd1n_epi_cov1_h1', 'v3_cov_nominal1', 'a2_rdd', 'stale_pct', 'v1_shared_pct', 'm44_ratio_gain', 'm49_ratio_gain', 'e7_step_r', 'e7_r_dis', 'e5s_span', 'e5s_mse_under', 'd1_ratio']
+  caught C11.2  0/5 headline values present in requirements.txt; missing ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'm44_ratio_gain', 'r2_indep_ratio_h100', 'd1_ratio']
+  caught C11.4  0/5 headline values present in requirements.txt; missing ['cc_n', 'cc_kinds', 'cc_st_caught', 'cc_selfdefects_word', 'd1_ratio']
+  caught C12.1  346 words (max 10), 11 numerals (max 0) ['8.3', '1', '33.4', '100,', '4', '0.', '4.61', '368,', '400', '368', '75']
   caught C13.1  4/5 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
   caught C13.2  3/4 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
+  caught C7.3   nominal coverage at ±1σ: canonical 68.27; 4 near-miss spellings checked across 5 files; PRESENT: ["'68.27' in PAPER.md", "'68.27' in PAPER.tex", "'68.27' in README.md", "'68.27' in MODEL_CARD.md"]
+  caught C7.4   the h=1 disagreement interval: canonical [+0.918, +0.999]; 2 near-miss spellings checked across 4 files; PRESENT: ["'[+0.918, +0.999]' in PAPER.md"]
+  caught C3.7   0.68270 -> 0.77480 is a rise of 0.09210, text says fall
+  caught C3.8   0.68270 -> 0.76550 is a rise of 0.08280, text says fall
+  caught C14.1  1 horizon-unscoped figures (1 calibration, 0 other); first: L1872 ['d1n_alea_ratio_h368'] The released checkpoint is {{d1n_alea_ratio_h368}} times overconfident
+  caught C15.1  rt_hours=48.2 vs rt_hours_10k=19.7 + rt_hours=48.2 = 67.9 (tol 0.05)
+  caught C15.2  rt_runs=31 vs rt_runs_10k=6 + rt_runs=31 = 37 (tol 0)
+  caught C15.3  appF_n_claims=12 vs orig_n_tested=4 + appF_n_claims=12 = 16 (tol 0)
+  caught C15.4  n_untested=8 vs appE_n_sim=6 + n_untested=8 = 14 (tol 0)
+  caught C16.1  registered 22, section 8 claims 23, docs/BUILD_CHECKS.md enumerates 22
+  caught C20.1  30 n_independent figure(s) naming no unit; first: "n_independent = 4, with a cluster bootstrap over whole trajectories:  "
+  caught C18.1  1 of 5 -> "one", text claims "all"; wording ['every', 'every one of them']
+  caught C18.2  1 of 5 -> "one", text claims "none"; wording ['in 0 of', '0 of']
+  caught C18.3  1 of 6 -> "one", text claims "all"; wording ['every', 'all ']
+  caught C19.1  1 typed restatement(s), 0 ambiguous numeral(s); first: 128. in §11. Limitations against d3_worst_h=100
+  caught C17.1  7 universal quantifiers checked against the enumerated set; PRESENT: ['we did not test']
   ----------------------------------------------------------------------------------------------------
-  31/31 corruptions caught
+  54/54 corruptions caught

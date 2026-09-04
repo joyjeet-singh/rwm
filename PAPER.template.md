@@ -67,7 +67,7 @@ gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
 git, with timestamps a reader can check (§8, Figure 4). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and Appendix D give them in full. The count is in the contributions below, once.
+**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and Appendix C give them in full. The count is in the contributions below, once.
 
 **Contributions.**
 
@@ -103,7 +103,7 @@ and we report that too.
   {{stale_pct}}% (§7.2). This is the finding most immediately useful to anyone using that
   repository, and it costs one line to fix.
 - **{{n_retract_total}} retractions of our own claims**, kept in the record with the evidence
-  that withdrew them, and Appendix G's table of every pre-registered rule with its lead time and
+  that withdrew them, and Appendix F's table of every pre-registered rule with its lead time and
   its verdict (§8).
 
 ---
@@ -311,7 +311,7 @@ derived from held-out data. A value of 1.0 means no better than predicting the t
 **The aggregation matters and is form 1**: pool the per-dimension mean squared errors, then
 divide — a ratio of means. The alternative, a mean of per-dimension ratios, gives whichever
 dimension has the smallest scale unbounded leverage, and the choice between the two once inverted
-a published-model comparison in this project. Appendix I gives both forms and the inversion.
+a published-model comparison in this project. Appendix H gives both forms and the inversion.
 
 **Coverage at ±kσ** is the fraction of scalar (trajectory, forecast step, state dimension) triples
 whose absolute realised error falls within k times the σ predicted for that same triple:
@@ -375,16 +375,16 @@ recorded data from other robots but is a claim about the model rather than about
 does not belong in that bucket however convenient it is to put it there. This work trains no
 policy at all and runs on two CPU cores. **The remaining {{appE_n_cpu_word}} need none of that
 and we still did not run them**: {{appF_cpu_list}} are within reach of the CPU budget this
-project already spent, and Appendix E prices both. They are unrun for want of time, not for want
+project already spent, and Appendix D prices both. They are unrun for want of time, not for want
 of hardware.
 
-Both counts and both lists above are generated from a classification tag carried in Appendix F's
+Both counts and both lists above are generated from a classification tag carried in Appendix E's
 verdict column, so the enumeration cannot disagree with the count beside it. It did: an earlier
 draft of *this* sentence — itself the replacement for retracted claim `S-17`, which was a count
 defect in this same place — said {{appE_n_sim_word}} and then named {{appF_n_polhw_word}}, and
 called all of them claims about policy learning or hardware when one of them is not. `S-17`
 withdrew a universal quantifier here; its replacement got the arithmetic wrong instead, which is
-the worse failure of the two because the sentence had just been rewritten under scrutiny. §11 states what that bounds, and Appendix E sets out what testing them would take.
+the worse failure of the two because the sentence had just been rewritten under scrutiny. §11 states what that bounds, and Appendix D sets out what testing them would take.
 
 **For all {{orig_n_tested}} of the claims we did test, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
@@ -394,7 +394,7 @@ follow-up's "strong correlation" between disagreement and error, for which §6.7
 coefficient. Where a magnitude is legible only from a plotted curve we say so rather than
 estimating it from the axis.
 
-**Appendix F gives the full table**, claim by claim, with what the original states, where it
+**Appendix E gives the full table**, claim by claim, with what the original states, where it
 states it, and our verdict.
 
 ---
@@ -587,7 +587,7 @@ the trend of the prediction error" and that this "justifies its role as a trust 
 the aleatoric term it observes only that it "remains low, reflecting small stochasticity in the
 environment". Our measurement **supports the first claim** — the epistemic ordering is real and
 strong. What follows is therefore not a refutation of a calibration claim nobody made. The correspondence quoted in this section is quoted with the first author's permission,
-given on the record (§13). It is
+given on the record (see Data and code). It is
 three things the papers do not address: that the aleatoric head is discarded before use, that
 neither quantity is usable as a scale, and that the low aleatoric value has a different cause
 than the one offered.
@@ -606,7 +606,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts {{v3_cov_nom
 
 *Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = {{b2_nind}}; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = {{b2_nind}} the bootstrap has {{c3_resamples}} distinct resamples and the intervals are quantised at that resolution.*
 
-**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = {{b2_nind}} — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1); that is the quantity §6.1 shows the method discards.
+**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = {{b2_nind}} 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 1); that is the quantity §6.1 shows the method discards.
 
 *A note on the released checkpoint's row, so the next table does not read as a
 contradiction.* Its {{cal_rel_ratio}}× is the whole {{v2_diag_h}}-step rollout on those same
@@ -669,11 +669,11 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 **The larger sample changes one thing materially.** At n_independent = {{b2_nind}} the epistemic ordering looked like chance at short horizon — {{b2_epi_npos_h1}} of {{b2_epi_ndim_h1}} dimensions at h=1. At n_independent = {{d1n_nind}} it is {{d1n_epi_npos_h1}} of {{d1n_epi_ndim_h1}} at h=1, with mean r = {{d1n_epi_r_h1}}, the *strongest* mean correlation of any horizon. The in-sample permutation test says the same (§6.6). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model, and we record it as such rather than keeping the more interesting-sounding horizon story.
 
-**Two pre-registered checks on how these numbers are read, both committed before they were computed.** `M-62` asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **{{m62_verdict}}**: in the one arena with power at that level — all ten episodes, n = {{m62_n_traj}} falling to {{m62_n_ep}} — the pooled correlation's interval widens by {{m62_width_pct}}% and the double-demeaned one by a factor of {{m62_rdd_width_ratio}}, and neither crosses zero. The other {{m62_n_uninformative}} cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance rather than discovering it, and they are reported as uninformative rather than as intervals.
+**Two pre-registered checks on how these numbers are read, both committed before they were computed.** `M-62` asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **{{m62_verdict}}**: in the one arena with power at that level — all ten episodes, n = {{m62_n_traj}} falling to {{m62_n_ep}} — the pooled correlation's interval widens by {{m62_width_pct}}% and the double-demeaned one by a factor of {{m62_rdd_width_ratio}}, and neither crosses zero. The other {{m62_n_uninformative}} cells it names are out-of-sample, where an episode bootstrap has n = {{m62_n_ep_oos}} and three distinct resamples; the rule said so in advance rather than discovering it, and they are reported as uninformative rather than as intervals.
 
 **`M-63` asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **{{m63_verdict}}**: the interquartile range across dimensions is {{m63_iqr}} points against a {{m63_iqr_thr}}-point threshold committed in advance, and the five worst dimensions carry well under the half of the shortfall that would have made it concentrated. **No channel is exempt**, which is what §6.3's mechanism predicts: an objective whose optimum is σ = 0 has no reason to spare any dimension. The reading is coarse by construction — at h = 1 on {{d1n_nind}} trajectories a per-dimension coverage moves in {{m63_quant}}-point steps, and the rule fixed that limit before the run.
 
-**The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (§6.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}}) give, averaged over seeds:
+**The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (§6.7, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}} 400-step trajectories) give, averaged over seeds:
 
 | h | epistemic err/σ [95% CI] | ±1σ [95% CI] | ±2σ | dims r>0 |
 |---|---|---|---|---|
@@ -912,9 +912,9 @@ variation to key on. We have not tested it.
 
 **The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, matching the best aleatoric head here on the sign count, while being {{b2_epi_ratio_h368}}× overconfident at h = {{v2_diag_h}}. **All figures in this paragraph are the held-out arena (n_independent = {{b2_nind}})**, so that the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes {{d1n_epi_ratio_h368}}× for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}. The figure the abstract and §12 use is neither of those: it is {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}, on the same {{d1n_nind}} trajectories. It does not beat Arm B's head on strength either: its mean correlation at h=368 is {{b2_epi_r_h368}} against {{cal_armB_r}}. The two quantities rank comparably; neither is close to an interval. Under the permutation null that count gives P = {{perm_oos_epi_p_h368}} out of sample and {{perm_ins_epi_p_h368}} in sample, against {{perm_oos_epi_binom_h368}} from the independent-trials test we should not have used. It still fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while error grows {{b2_epi_err_growth}}×.
 
-**The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} out of sample, the epistemic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1). Both larger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_ins_epi_p_h8}} at h=8, against {{perm_ins_epi_p_h128}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at {{perm_all_epi_p_h100}} sitting between h=32's {{perm_all_epi_p_h32}} and h=128's {{perm_all_epi_p_h128}} — the horizon added by this revision falls where the existing reading says it should, which is worth stating because it was not free to. Two independent arenas at four and five times the sample say the effect is strongest at *short* horizon.
+**The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} 400-step trajectories out of sample, the epistemic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1). Both larger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_ins_epi_p_h8}} at h=8, against {{perm_ins_epi_p_h128}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at {{perm_all_epi_p_h100}} sitting between h=32's {{perm_all_epi_p_h32}} and h=128's {{perm_all_epi_p_h128}} — the horizon added by this revision falls where the existing reading says it should, which is worth stating because it was not free to. Two independent arenas at four and five times the sample say the effect is strongest at *short* horizon.
 
-The null means explain why, and the explanation is the same one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so at this unit it cannot distinguish a strong effect from a marginal one at any horizon. **That blindness is a property of the 400-step unit, not of the arena**, and the distinction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (`M-64`). **We did not recompute this permutation family at the shorter unit**, so what the short units change here is the scope of the design claim rather than any verdict in it: the arena is demonstrably underpowered at h = {{v2_diag_h}}, which needs the full 400 rows, and is no longer demonstrably underpowered at h = 128 and below. Running it there is one pass over stored rollouts and we did not do it. We report the small arena's numbers alongside because it is the only arena that is out-of-sample for our own arms, not because it is the better measurement.
+The null means explain why, and the explanation is the same one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so at this unit it cannot distinguish a strong effect from a marginal one at any horizon. **That blindness is a property of the 400-step unit, not of the arena**, and the distinction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (`M-64`). **We did not recompute this permutation family at the shorter unit**, so what the short units change here is the scope of the design claim rather than any verdict in it: the arena is demonstrably underpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}} rows, and is no longer demonstrably underpowered at h = 128 and below. Running it there is one pass over stored rollouts and we did not do it. We report the small arena's numbers alongside because it is the only arena that is out-of-sample for our own arms, not because it is the better measurement.
 
 **Nothing here survives multiplicity correction, in any of the three arenas.** Holm–Bonferroni over each arena's {{perm_oos_holm_n}} model × horizon cells at α = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample that is a property of the design rather than of the models: with {{perm_oos_nind}} independent trajectories the smallest attainable P-value is {{perm_oos_floor}}, which already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have been rejected there. In sample the miss is real — the smallest P in the family is {{perm_ins_holm_min_cell}} at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}.
 
@@ -1038,7 +1038,7 @@ numbers and the build keeps them in separate keys for that reason.
 
 **What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = {{e5_nind}}, where §6.7's own finding used {{d1n_nind}}. Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, because the pool it subsamples is in-sample for these arms, where the effect is {{e5_eff_ins}} against {{e5_eff_oos}} on the held-out pair. So the rule was under-powered at the sample size it faced, decisively at one horizon — and we do not claim it could not have passed, only that it was committed without anyone checking what it could detect. That is a failure of ours, and it is the same one the ledger already records as M-24: a rule anchored without regard to the regime it would be applied in.
 
-*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}}, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions. It cannot discharge M-43, which is stated over the out-of-sample arena, and we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.
+*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions. It cannot discharge M-43, which is stated over the out-of-sample arena, and we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.
 
 **We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result — it would make the trust metric close to vacuous, since a counter is free — and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way against the counter. It went that way against something else.
 
@@ -1058,7 +1058,7 @@ distinguishing those, and `M-52` records the correction.
 | `step-size` — ‖µ_t − µ_{t−1}‖ | **{{e7_step_r}}** | {{e7_step_margin}} | {{e7_step_partial}} | **{{e7_step_beaten}}** |
 | `entry-res` — one-step error before the window | {{e7_entry_r}} | {{e7_entry_margin}} | {{e7_entry_partial}} | {{e7_entry_beaten}} |
 
-*r(disagreement, error) = {{e7_r_dis}} on the released checkpoint at n_independent = {{e7_nind}}.
+*r(disagreement, error) = {{e7_r_dis}} on the released checkpoint at n_independent = {{e7_nind}} 400-step trajectories.
 Minimum detectable effect, estimated before either baseline existed: {{e7_mde_margin}} on a margin,
 {{e7_mde_partial}} on a partial.*
 
@@ -1066,7 +1066,8 @@ Minimum detectable effect, estimated before either baseline existed: {{e7_mde_ma
 magnitude of the model's own predicted state change ranks realised error at {{e7_step_r}}, against
 {{e7_r_dis}} for the five-member ensemble disagreement the method is built on. The margin between
 them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve — so at
-n_independent = {{e7_nind}} we cannot say the ensemble ranks better than a subtraction.
+n_independent = {{e7_nind}} 400-step trajectories we cannot say the ensemble ranks better than a
+subtraction.
 
 **Disagreement does still carry information the subtraction does not.** With `step-size`
 partialled out it retains {{e7_step_partial}}, far above the {{e7_mde_partial}} MDE for that test,
@@ -1305,7 +1306,7 @@ variance state at any of the three stated counts.** A warm start or a different
 exclude neither. The first author's account is that the released repository is several revisions
 removed from the setup that trained the checkpoint, which supplies exactly such a mechanism. So
 this is a **documentation gap between a release and a run** — common, worth recording, and much
-less interesting than an inconsistency. Appendix H gives the arithmetic and the five assumptions
+less interesting than an inconsistency. Appendix G gives the arithmetic and the five assumptions
 it rests on, because it is what let us detect the gap at all.
 
 ---
@@ -1314,9 +1315,9 @@ it rests on, because it is what let us detect the gap at all.
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for {{f4_n_rules}} of them and Appendix G for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 4's are positive and {{f4_n_negative}} is not. Figure 4 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 4 gives the lead time for {{f4_n_rules}} of them and Appendix F for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 4's are positive and {{f4_n_negative}} is not. Figure 4 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
-**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix D lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
+**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix C lists them). The most consequential of those is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean {{bu_mean_ratio}}× and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
@@ -1332,7 +1333,7 @@ counted separately because a value that is not produced twice cannot be compared
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: {{ver_values}} values, or {{ver_claim_pct}}%
 of the {{ver_all}} numeric values under `results/`. The other {{ver_copied}} are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the {{tn_typed}} numerals that is not one is classified as an address, a horizon label or a declared constant — {{tn_classes}} classes and {{tn_exceptions}} declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix D gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the {{tn_typed}} numerals that is not one is classified as an address, a horizon label or a declared constant — {{tn_classes}} classes and {{tn_exceptions}} declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1422,7 +1423,7 @@ anyone with a second dataset.
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's {{perm_oos_nind}} independent trajectories admit a smallest attainable P-value of {{perm_oos_floor}} — coarser than the multiplicity-corrected threshold {{perm_oos_holm_thr}}, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released dataset contains, rather than a better test. **At h = 128 and below that is no longer true and we say so**: a shorter evaluation unit gives {{m64_oos_n_h100}} independent units at h = {{v2_deploy_h}} where the 400-step unit gives {{perm_oos_nind}} (`M-64`), and we did not rerun this permutation family there. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
 
-**No family-wide correction is applied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendix G) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
+**No family-wide correction is applied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendix F) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries {{v1_cap_indep}} state-pathway parameters against the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. **Capacity is no longer one of them.** `M-49`, committed with its minimum detectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size` {{m49_width}} against the released {{released_width}}, giving {{m49_matched_params}} state-pathway parameters against the shared-trunk arm's {{v1_cap_shared}} — a ratio of {{m49_matched_ratio}}, where §6.10's original contrast carried {{v1_cap_ratio}}. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of {{m49_cov_gain}} points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
@@ -1567,7 +1568,7 @@ values (`M-66`). A sweep of all {{audit_n_hits}} pattern-based input discoveries
 {{audit_n_frozen}} was frozen, and artifacts that discover their inputs now record the
 file list they were computed over.
 
-## Appendix D — verifying the paper's own claims
+## Appendix C — verifying the paper's own claims
 
 **The {{n_retractions_word_lower}} numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The {{n_retract_framing_word}} framing retractions**, withdrawn as stated claims rather
 than as numbers, and generated from the ledger rather than listed here — a typed
@@ -1676,7 +1677,7 @@ with it, so the verifier decides from the artifact — a run that stopped short 
 time-bounded.
 
 
-## Appendix E — what testing the untested claims would require
+## Appendix D — what testing the untested claims would require
 
 §4's table marks {{orig_n_tested}} claims tested and the rest not. "Not tested" is an apology
 unless it comes with a price, so here is what each would cost. We give compute orders where we
@@ -1703,7 +1704,7 @@ GPU-parallel simulation, not a data-loading problem.
 and are the honest next steps for anyone extending this work on CPU. The {{appE_n_sim_word}} above
 them are not, and no amount of care with the released CSV changes that. This table has one row per
 untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion that counts its rows
-against Appendix F's was written, and the two it omitted were the two whose cost is hardest to
+against Appendix E's was written, and the two it omitted were the two whose cost is hardest to
 state honestly.
 
 **What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
@@ -1712,7 +1713,7 @@ whether the miscalibration we document costs anything downstream — and it need
 
 ---
 
-## Appendix F — every claim of the originals, and what we did with it
+## Appendix E — every claim of the originals, and what we did with it
 
 The body's §4 summarises this table. It is here in full because the third column — what the
 original actually reports — is the answer to a question a reader of any reproduction should ask,
@@ -1744,7 +1745,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 | Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.7), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
 
 ---
-## Appendix G — every pre-registered rule, its lead time and its verdict
+## Appendix F — every pre-registered rule, its lead time and its verdict
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
@@ -1784,7 +1785,7 @@ quotations ending mid-sentence. The table is the claim; the supplementary is the
 
 ---
 
-## Appendix H — the variance-state arithmetic behind §7.5
+## Appendix G — the variance-state arithmetic behind §7.5
 
 §7.5 states the conclusion. This is the arithmetic, kept out of the body because the numbered
 claim it once supported is retracted (`S-19`) and because a forensic case the section then defuses
@@ -1842,7 +1843,7 @@ the work.
 
 ---
 
-## Appendix I — the two nRMSE aggregations, and the comparison one of them inverted
+## Appendix H — the two nRMSE aggregations, and the comparison one of them inverted
 
 §3.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the
 {{cal_rel_ndim}} state dimensions, then divide by the pooled scale — a ratio of means. **Form 2**

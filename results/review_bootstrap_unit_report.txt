@@ -1,3 +1,20 @@
+  out-of-sample|400|500|h8           naive span  cluster span  width x1.49
+  out-of-sample|400|500|h368         naive EXCL  cluster EXCL  width x1.23
+  out-of-sample|400|2500|h8          naive span  cluster span  width x1.13
+  out-of-sample|400|2500|h368        naive EXCL  cluster EXCL  width x1.32
+  out-of-sample|200|500|h8           naive span  cluster span  width x1.69
+  out-of-sample|200|500|h168         naive EXCL  cluster EXCL  width x1.49
+  out-of-sample|200|2500|h8          naive EXCL  cluster span  width x1.37   <-- VERDICT CHANGES
+  out-of-sample|200|2500|h168        naive EXCL  cluster EXCL  width x1.47
+  in-sample|400|500|h8               naive EXCL  cluster EXCL  width x1.66
+  in-sample|400|500|h368             naive EXCL  cluster EXCL  width x0.96
+  in-sample|400|2500|h8              naive EXCL  cluster EXCL  width x1.60
+  in-sample|400|2500|h368            naive EXCL  cluster EXCL  width x1.14
+  in-sample|200|500|h8               naive EXCL  cluster EXCL  width x1.52
+  in-sample|200|500|h168             naive EXCL  cluster EXCL  width x1.50
+  in-sample|200|2500|h8              naive EXCL  cluster EXCL  width x1.59
+  in-sample|200|2500|h168            naive EXCL  cluster EXCL  width x1.49
+
 REVIEW -- IS THE BOOTSTRAP RESAMPLING THE RIGHT UNIT?
 ======================================================================================
 

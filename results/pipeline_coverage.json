@@ -1,6 +1,6 @@
 {
-  "n_artifacts": 52,
-  "n_paper_keys": 1744,
+  "n_artifacts": 59,
+  "n_paper_keys": 1785,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -24,7 +24,7 @@
     },
     {
       "artifact": "task_d_nind20.json",
-      "n_paper_keys": 242,
+      "n_paper_keys": 243,
       "writers": [
         "check_comparative_claims",
         "task_d_nind20"
@@ -127,6 +127,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "e5_synthetic_sigma.json",
+      "n_paper_keys": 22,
+      "writers": [
+        "e5_synthetic_sigma"
+      ],
+      "invoked_writers": [
+        "e5_synthetic_sigma"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task_d1_threeseed.json",
       "n_paper_keys": 21,
       "writers": [
@@ -148,18 +160,6 @@
       ],
       "invoked_writers": [
         "e7_free_baselines"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "e5_synthetic_sigma.json",
-      "n_paper_keys": 19,
-      "writers": [
-        "e5_synthetic_sigma"
-      ],
-      "invoked_writers": [
-        "e5_synthetic_sigma"
       ],
       "covered": true,
       "exempt_reason": null
@@ -266,6 +266,18 @@
       "invoked_writers": [
         "check_comparative_claims",
         "task_d2b_robustness"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "m64_short_units.json",
+      "n_paper_keys": 14,
+      "writers": [
+        "m64_short_units"
+      ],
+      "invoked_writers": [
+        "m64_short_units"
       ],
       "covered": true,
       "exempt_reason": null
@@ -433,15 +445,13 @@
       "exempt_reason": null
     },
     {
-      "artifact": "appendix_g_rules.json",
-      "n_paper_keys": 6,
+      "artifact": "m62_episode_clustering.json",
+      "n_paper_keys": 7,
       "writers": [
-        "appendix_g_rules",
-        "pipeline_coverage"
+        "m62_episode_clustering"
       ],
       "invoked_writers": [
-        "appendix_g_rules",
-        "pipeline_coverage"
+        "m62_episode_clustering"
       ],
       "covered": true,
       "exempt_reason": null
@@ -481,6 +491,44 @@
       ],
       "invoked_writers": [
         "e4_sigma_gradients"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "m63_per_dimension_coverage.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "m63_per_dimension_coverage"
+      ],
+      "invoked_writers": [
+        "m63_per_dimension_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "m65_gaussian_nominal.json",
+      "n_paper_keys": 6,
+      "writers": [
+        "m65_gaussian_nominal"
+      ],
+      "invoked_writers": [
+        "m65_gaussian_nominal"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "appendix_g_rules.json",
+      "n_paper_keys": 5,
+      "writers": [
+        "appendix_g_rules",
+        "pipeline_coverage"
+      ],
+      "invoked_writers": [
+        "appendix_g_rules",
+        "pipeline_coverage"
       ],
       "covered": true,
       "exempt_reason": null
@@ -640,6 +688,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "input_set_audit.json",
+      "n_paper_keys": 2,
+      "writers": [
+        "input_set_audit"
+      ],
+      "invoked_writers": [
+        "input_set_audit"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "e7_free_baselines_power.json",
       "n_paper_keys": 2,
       "writers": [
@@ -647,6 +707,30 @@
       ],
       "invoked_writers": [
         "e7_free_baselines"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "insample_framing.json",
+      "n_paper_keys": 2,
+      "writers": [
+        "insample_framing"
+      ],
+      "invoked_writers": [
+        "insample_framing"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "m64_free_gate.json",
+      "n_paper_keys": 1,
+      "writers": [
+        "m64_free_gate"
+      ],
+      "invoked_writers": [
+        "m64_free_gate"
       ],
       "covered": true,
       "exempt_reason": null

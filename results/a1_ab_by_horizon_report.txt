@@ -1,0 +1,17 @@
+A1 — THE A/B RESULT ACROSS THE HORIZON GRID
+========================================================================================================
+  out-of-sample, 3 seeds, n_independent = 4, 20,000 cluster-bootstrap draws over whole trajectories
+
+      h            Arm A            Arm B     B/A       gap               95% CI  excl 0    floor  A/floor  B/floor    sign
+      1   0.1447±0.0023    0.1319±0.0172    0.91x   -0.0128 [ -0.0329, +0.0013]      NO   0.0796     0.5x    1.66x   3/10 
+      8   0.3087±0.0318    0.3572±0.0088    1.16x   +0.0485 [ +0.0271, +0.0844]     yes   0.3298     1.1x    1.08x  10/10 
+     32   0.3415±0.0491    0.6555±0.0699    1.92x   +0.3140 [ +0.1233, +0.5047]     yes   0.5950     1.7x    1.10x  10/10 
+    100   0.3700±0.0290    0.9561±0.0211    2.58x   +0.5861 [ +0.2174, +0.9547]     yes   0.7558     2.0x    1.27x  10/10 
+    128   0.3558±0.0231    0.9881±0.0376    2.78x   +0.6324 [ +0.2716, +0.9931]     yes   0.7999     2.2x    1.24x  10/10 
+    368   0.3582±0.0283    1.6497±0.2858    4.61x   +1.2915 [ +0.7004, +2.3390]     yes   0.9930     2.8x    1.66x  10/10 
+
+  ratio is monotone increasing in horizon: True
+  gap excludes zero at 5 of 6 horizons (spans zero at [1])
+  teacher forcing is worse than the hold-last floor at: [1, 8, 32, 100, 128, 368]
+
+  M-23 is stated over h=368 only. results/a1_ab_by_horizon.json

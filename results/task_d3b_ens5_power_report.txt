@@ -1,0 +1,41 @@
+D3b — n=20 COMPANION, AND THE POWER M-43's RULE HAD AT n=4
+========================================================================================================
+  all 10 episodes, n_independent = 20
+  IN-SAMPLE for our arms: they trained on 8 of 10 episodes ([0, 2, 3, 4, 5, 6, 7, 9]).
+  Companion only. M-43's verdict stands on the out-of-sample arena.
+
+  seed 0: rolled out on 20 trajectories
+  seed 1: rolled out on 20 trajectories
+  seed 2: rolled out on 20 trajectories
+
+  COMPANION — the same table at n_independent = 20 (in-sample)
+     seed     h    r(index)   r(disagr)        paired diff [95% CI]
+    ---------------------------------------------------------------
+        0     8      +0.190      +0.758     +0.568 [+0.193, +0.829]
+        1     8      +0.180      +0.745     +0.565 [+0.084, +0.832]
+        2     8      +0.181      +0.789     +0.608 [+0.236, +0.847]
+        0    32      -0.024      +0.766     +0.790 [+0.593, +0.927]
+        1    32      -0.031      +0.744     +0.774 [+0.524, +0.935]
+        2    32      -0.025      +0.764     +0.790 [+0.535, +0.932]
+        0   128      +0.280      +0.704     +0.425 [+0.264, +0.622]
+        1   128      +0.291      +0.663     +0.373 [+0.201, +0.578]
+        2   128      +0.257      +0.704     +0.447 [+0.265, +0.660]
+        0   368      +0.172      +0.619     +0.448 [+0.329, +0.557]
+        1   368      +0.116      +0.566     +0.449 [+0.298, +0.627]
+        2   368      +0.154      +0.599     +0.445 [+0.317, +0.580]
+
+    would this arena have satisfied M-43's two conditions? True (leads everywhere True, excludes zero at 4 of 4)
+    -- recorded as a companion. It is in-sample and does not discharge M-43.
+
+  POWER — how often M-43's criterion fires at n=4, drawn from this pool
+         h   effect (n=20)    fires at n=4   of draws
+         8          +0.568           24.0%        400
+        32          +0.790           93.8%        400
+       128          +0.425           96.2%        400
+       368          +0.448           84.8%        400
+
+  mean power at n=4: 74.7%   worst h=8 at 24.0%
+  in-sample effect +0.425..+0.790  vs  out-of-sample +0.204..+0.545
+  -> this power estimate is an UPPER BOUND (larger effect than the rule faces)
+
+  wrote results/task_d3b_ens5_power.json

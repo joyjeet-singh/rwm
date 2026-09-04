@@ -1,0 +1,29 @@
+  self-test first, because a scan that cannot fail proves nothing:
+F5.4 — PDF CHANNEL SCAN, SELF-TEST
+============================================================================
+  probe string      : 'joyjeet'
+  channels that fired: ['annotations', 'metadata']
+    metadata     CAUGHT
+    annotations  CAUGHT
+============================================================================
+  self-test passed — the scan is live on the channels it can plant into
+
+F5.4 — SUBMISSION PDF, THREE CHANNELS
+====================================================================================
+  pdf               : PAPER.pdf (40 pages)
+  1 text layer      : 168,138 characters extracted
+  2 metadata        : 10 keys ['/Author', '/CreationDate', '/Creator', '/Keywords', '/ModDate', '/PTEX.Fullbanner', '/Producer', '/Subject', '/Title', '/Trapped'], XMP absent
+      /Author                ''
+      /CreationDate          "D:20260904142059+05'30'"
+      /Creator               'LaTeX with hyperref'
+      /Keywords              ''
+      /ModDate               "D:20260904142059+05'30'"
+      /PTEX.Fullbanner       'This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) kpaths'
+      /Producer              'pdfTeX-1.40.29'
+      /Subject               ''
+      /Title                 ''
+      /Trapped               '/False'
+  3 annotations     : 0 on the page, 0 with a URI or file target
+====================================================================================
+  no identifying strings on any of the three channels (9 patterns checked)
+  wrote results/pdf_channels.json

@@ -257,7 +257,7 @@ def main():
         "claim its numerals are all addresses or declared constants until they are")
     put("tn_typed", TN["n_typed"], "results/typed_numerals.json")
 
-    # D3. Appendix G, generated from the ledger. Ledger identifiers ran through the
+    # D3. Appendix F, generated from the ledger. Ledger identifiers ran through the
     # body with no table behind them, so an identifier was either decoration or an
     # instruction to open a 330 KB file. With the table, the identifier can stay
     # only where a pre-registered verdict is reported and come out elsewhere.
@@ -283,7 +283,7 @@ def main():
         for r in E4["terms"]).rstrip(),
         "results/e4_sigma_gradients.json")
 
-    # Appendix G's reason for existing quotes the ledger's size, so it is read
+    # Appendix F's reason for existing quotes the ledger's size, so it is read
     # from the file rather than typed -- the ledger grows every revision.
     put("ledger_kb", f'{os.path.getsize("FINDINGS_LEDGER.md") / 1024:.0f}',
         "FINDINGS_LEDGER.md, on disk")
@@ -430,7 +430,7 @@ def main():
     # enumeration is generated from the same set the count comes from, so the
     # `kind-count` check has something to compare and the two cannot disagree.
     # The defects the self-test found in the checker rather than in the paper.
-    # Appendix D said "Two" and listed two; there are more, and a typed count in
+    # Appendix C said "Two" and listed two; there are more, and a typed count in
     # the appendix about count consistency is not defensible.
     _cd = CC.get("checker_defects", [])
     put("cc_selfdefects", len(_cd), "results/comparative_claims.json")
@@ -464,6 +464,7 @@ def main():
         "abstract-budget": "the abstract stays inside its word and numeral budget",
         "interval-required": "a quoted ratio or coverage is accompanied by its interval",
         "arithmetic": "a stated total equals the sum of its stated parts",
+        "unit-consistency": "every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\"",
         "kind-count": "the number of kinds section 8 claims, appendix D enumerates and the "
                       "checker registers are one number",
         "scope-consistency": "a universal quantifier is checked against the set it quantifies "
@@ -1214,19 +1215,19 @@ def main():
         # drop the header and the |---| separator
         return [r for r in rows[2:] if set(r.replace("|", "").strip()) - set("-: ")]
 
-    _appF = _table_rows("Appendix F")
-    _appE = _table_rows("Appendix E")
+    _appF = _table_rows("Appendix E")
+    _appE = _table_rows("Appendix D")
     _f_tested = [r for r in _appF if re.split(r"(?<!\\)\|", r.strip("|"))[1].strip()
                  .lower().strip("* ") == "yes"]
     _f_untested = [r for r in _appF if r not in _f_tested]
-    put("appF_n_claims", len(_appF), "PAPER.template.md, Appendix F table")
-    put("n_untested", len(_f_untested), "PAPER.template.md, Appendix F table")
+    put("appF_n_claims", len(_appF), "PAPER.template.md, Appendix E table")
+    put("n_untested", len(_f_untested), "PAPER.template.md, Appendix E table")
     put("n_untested_word", WORDS.get(len(_f_untested), str(len(_f_untested))).lower(),
-        "PAPER.template.md, Appendix F table")
-    _e_cpu = [r for r in _appE if "no simulator needed" in r]
-    put("appE_n_cpu", len(_e_cpu), "PAPER.template.md, Appendix E table")
-    put("appE_n_cpu_word", WORDS.get(len(_e_cpu), str(len(_e_cpu))).lower(),
         "PAPER.template.md, Appendix E table")
+    _e_cpu = [r for r in _appE if "no simulator needed" in r]
+    put("appE_n_cpu", len(_e_cpu), "PAPER.template.md, Appendix D table")
+    put("appE_n_cpu_word", WORDS.get(len(_e_cpu), str(len(_e_cpu))).lower(),
+        "PAPER.template.md, Appendix D table")
 
     # B3. §4 stated a count of six and then ENUMERATED five. The count came from
     # here; the list was typed. That sentence is the replacement for retracted
@@ -1234,7 +1235,7 @@ def main():
     # count defect in the replacement is worse than the first.
     #
     # Both now come from a `[tag]` at the head of each untested row's verdict cell
-    # in Appendix F. The tags also settle a question the enumeration was hiding:
+    # in Appendix E. The tags also settle a question the enumeration was hiding:
     # "generality across quadruped, humanoid, manipulation" is tagged `model`, not
     # `policy` or `hardware`. It needs a simulator and datasets from other robots,
     # but it is a claim about the MODEL, so the sentence saying all six are about
@@ -1267,28 +1268,28 @@ def main():
 
     _untagged = [_label(r) for r in _f_untested if not _tags(r)]
     assert not _untagged, (
-        "untested Appendix F rows with no `[tag]` in their verdict cell, so §4's "
+        "untested Appendix E rows with no `[tag]` in their verdict cell, so §4's "
         f"count and enumeration cannot be derived from them: {_untagged}")
     _f_cpu = [r for r in _f_untested if "cpu" in _tags(r)]
     _f_sim = [r for r in _f_untested if "cpu" not in _tags(r)]
     assert len(_f_cpu) == len(_e_cpu), (
-        f"Appendix F tags {len(_f_cpu)} untested claims `cpu` while Appendix E "
+        f"Appendix E tags {len(_f_cpu)} untested claims `cpu` while Appendix D "
         f"prices {len(_e_cpu)} as needing no simulator")
-    # Appendix E promises a price for EACH untested claim. It listed six of eight.
+    # Appendix D promises a price for EACH untested claim. It listed six of eight.
     assert len(_appE) == len(_f_untested), (
-        f"Appendix E prices {len(_appE)} claims; Appendix F marks {len(_f_untested)} "
-        "untested, and Appendix E's own opening says it prices each of them")
+        f"Appendix D prices {len(_appE)} claims; Appendix E marks {len(_f_untested)} "
+        "untested, and Appendix D's own opening says it prices each of them")
     _f_polhw = [r for r in _f_sim if {"policy", "hardware"} & set(_tags(r))]
     _f_model = [r for r in _f_sim if not ({"policy", "hardware"} & set(_tags(r)))]
     _n_sim = len(_f_sim)
     assert _n_sim == len(_f_untested) - len(_e_cpu)
-    put("appE_n_sim", _n_sim, "PAPER.template.md, Appendix E + F tables")
+    put("appE_n_sim", _n_sim, "PAPER.template.md, Appendix D + F tables")
     put("appE_n_sim_word", WORDS.get(_n_sim, str(_n_sim)).lower(),
-        "PAPER.template.md, Appendix E + F tables")
-    put("appF_n_polhw", len(_f_polhw), "PAPER.template.md, Appendix F verdict tags")
+        "PAPER.template.md, Appendix D + F tables")
+    put("appF_n_polhw", len(_f_polhw), "PAPER.template.md, Appendix E verdict tags")
     put("appF_n_polhw_word", WORDS.get(len(_f_polhw), str(len(_f_polhw))),
-        "PAPER.template.md, Appendix F verdict tags")
-    put("appF_n_model", len(_f_model), "PAPER.template.md, Appendix F verdict tags")
+        "PAPER.template.md, Appendix E verdict tags")
+    put("appF_n_model", len(_f_model), "PAPER.template.md, Appendix E verdict tags")
 
     def _english(items):
         items = list(items)
@@ -1297,19 +1298,19 @@ def main():
         return ", ".join(items[:-1]) + " and " + items[-1]
 
     put("appF_sim_list", _english(_label(r) for r in _f_sim),
-        "PAPER.template.md, Appendix F verdict tags")
+        "PAPER.template.md, Appendix E verdict tags")
     put("appF_polhw_list", _english(_label(r) for r in _f_polhw),
-        "PAPER.template.md, Appendix F verdict tags")
+        "PAPER.template.md, Appendix E verdict tags")
     put("appF_model_list", _english(_label(r) for r in _f_model),
-        "PAPER.template.md, Appendix F verdict tags")
+        "PAPER.template.md, Appendix E verdict tags")
     put("appF_cpu_list", _english(_label(r) for r in _f_cpu),
-        "PAPER.template.md, Appendix F verdict tags")
+        "PAPER.template.md, Appendix E verdict tags")
 
     # A6 -- what the originals report for each claim we tested
     OP = J("original_paper_figures.json")
     put("orig_n_tested", OP["n_tested_claims"], "results/original_paper_figures.json")
     assert len(_f_tested) == OP["n_tested_claims"], (
-        f"Appendix F marks {len(_f_tested)} claims tested; "
+        f"Appendix E marks {len(_f_tested)} claims tested; "
         f"original_paper_figures.json says {OP['n_tested_claims']}")
     put("orig_n_without", OP["n_without"], "results/original_paper_figures.json")
     put("orig_n_with", OP["n_with_quantitative_figure"], "results/original_paper_figures.json")
@@ -1996,6 +1997,13 @@ def main():
         "results/m62_episode_clustering.json")
     put("m62_n_uninformative", M62["verdict"]["n_uninformative_by_construction"],
         "results/m62_episode_clustering.json")
+    # Two numerals §6.2 and §6.6 were typing by hand, caught by the typed-numeral audit:
+    # the out-of-sample episode count and the 400-step unit's row count. Both are design
+    # facts an artifact already records, so they are read rather than typed (rule 4).
+    put("m62_n_ep_oos", M62["design"]["out-of-sample"]["n_episode_level"],
+        "results/m62_episode_clustering.json")
+    put("long_unit_rows", J("task_d_nind20.json")["design"]["traj_len"],
+        "results/task_d_nind20.json")
 
     M63 = J("m63_per_dimension_coverage.json")
     _g63 = M63["arenas"]["released_ckpt_all_ten_h1"]

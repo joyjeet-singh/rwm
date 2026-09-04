@@ -1,0 +1,44 @@
+R2 — THE INDEPENDENT-INITIALISATION ENSEMBLE, AND M-49's VERDICT   [capacity-matched, hidden 124]
+========================================================================================================
+  out-of-sample, episodes [1, 8], 4 trajectories, n_independent = 4
+
+  loaded 5 independently-initialised ens1 models: seeds [0, 1, 2, 3, 4]
+  loaded 3 shared-trunk ens5 arms: seeds [0, 1, 2]
+
+  Independent-init ensemble against the shared-trunk arms, same trajectories
+        h      independent err/σ     shared-trunk err/σ    ratio   indep ±1σ  shared ±1σ
+    --------------------------------------------------------------------------------------------
+        1                    1.1                    2.1    0.521      53.89%      35.93%
+        8                    3.0                    6.3    0.481      25.35%      14.10%
+       32                    4.7                    8.0    0.584      17.76%      10.79%
+      100                    5.9                   10.5    0.559      14.61%       8.19%
+      128                    6.1                   11.0    0.550      14.14%       7.79%
+      368                    5.6                   13.0    0.431      14.54%       6.30%
+
+  M-44's governing comparison at h = 100, paired over the same trajectories
+      vs seed   ratio (indep/shared)                     95% CI   Δcoverage pts                     95% CI
+    ------------------------------------------------------------------------------------------------------
+            0                  0.569             [0.507, 0.606]            5.99               [5.10, 6.89]
+            1                  0.549             [0.485, 0.591]            6.63               [5.22, 8.03]
+            2                  0.559             [0.496, 0.612]            6.63               [5.54, 7.71]
+
+  Where the improvement comes from — rho is error over sigma, so both can move
+        h    sigma x   accuracy x    total x   from sigma   from accuracy
+        1      1.467        1.304      1.913        59.1%           40.9%
+        8      1.624        1.282      2.083        66.1%           33.9%
+       32      1.547        1.105      1.710        81.3%           18.7%
+      100      1.573        1.137      1.789        77.9%           22.1%
+      128      1.587        1.146      1.819        77.2%           22.8%
+      368      1.716        1.352      2.320        64.2%           35.8%
+
+  M-49 VERDICT: UNDER-POWERED — favours the matched ensemble by less than the MDE
+     yes  overconfidence_lower_in_all
+     yes  overconfidence_interval_excludes_zero_in_all
+     NO   overconfidence_improvement_at_least_mde
+     yes  coverage_higher_in_all
+     yes  coverage_interval_excludes_zero_in_all
+     yes  coverage_shift_at_least_mde
+    mean overconfidence improvement 1.79× (MDE 2.004×)
+    mean coverage gain +6.42 points (MDE 4.32)
+
+  wrote results/m49_capacity_matched.json

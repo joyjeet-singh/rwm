@@ -94,7 +94,14 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # Same reason as make_anon_bundle.py and t5_anon_transcript.py above:
            # a scanner that plants a deny-list string to prove it can still
            # detect one necessarily contains that string, and trips its own scan.
-           "scripts/f5_pdf_channels.py"}
+           "scripts/f5_pdf_channels.py",
+           # ...and the REPORT that scanner writes, which prints the probe string it
+           # planted ("probe string : '...'") for exactly the same reason the script
+           # contains it. Excluding the script and not its output left this stage
+           # failing the moment the pipeline regenerated the report -- the same
+           # exclude-the-source-not-the-output shape as scripts/swh_visit_check.py
+           # and its artifact two entries above.
+           "results/pdf_channels_report.txt"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]

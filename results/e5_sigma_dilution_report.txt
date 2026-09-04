@@ -1,0 +1,25 @@
+E5 — DILUTION STUDY (run before the rule is committed)
+========================================================================================
+  null  0: slope +0.0000  r +0.2416  ratio 0.964  spread 1.00x
+  null  1: slope -0.0000  r -0.1643  ratio 1.036  spread 1.00x
+  null  2: slope +0.0000  r +0.0499  ratio 0.965  spread 1.00x
+  null  3: slope -0.0000  r -0.1991  ratio 0.969  spread 1.00x
+  null  4: slope -0.0000  r -0.0641  ratio 1.001  spread 1.00x
+  null  5: slope -0.0000  r -0.1985  ratio 0.946  spread 1.00x
+  null  6: slope +0.0000  r +0.0545  ratio 1.052  spread 1.00x
+  null  7: slope -0.0000  r -0.0711  ratio 0.940  spread 1.00x
+  dilution 0.00: slope +0.0000  r +0.0796  detected 0%
+  dilution 0.25: slope +0.0000  r +0.4596  detected 0%
+  dilution 0.50: slope +0.0002  r +0.7512  detected 0%
+  dilution 0.75: slope +0.0015  r +0.9305  detected 0%
+  dilution 1.00: slope +0.0723  r +0.8676  detected 100%
+========================================================================================
+  null |slope| 95th percentile  : 2.09e-05
+  1.01x-span floor             : 0.00309
+  threshold in force            : 0.00309
+  null |r| 95th percentile      : 0.2267   (not used: scale-free)
+  null sigma spread, worst      : 1.0004x
+  false positives at dilution 0 : 0%
+  smallest dilution detected 80%: 1.0
+  null median ratio, minimum    : 0.940
+  wrote results/e5_sigma_dilution.json

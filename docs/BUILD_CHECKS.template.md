@@ -3,7 +3,7 @@
 
 # Build checks — the registry, the self-test, and what it caught in itself
 
-Supplementary to the paper's Appendix D, which keeps the part that generalises: the failure
+Supplementary to the paper's Appendix C, which keeps the part that generalises: the failure
 modes the checks were built for, and the exclusions from the numeric comparison. This carries
 the machinery.
 
@@ -87,5 +87,5 @@ Three defects, in text written during the revision itself and caught before it s
 - **one `restatement` failure** — a new paragraph quoted a 15-point threshold, a 15.0% median
   and a 15% share in a single sentence, leaving the bare numeral ambiguous.
 
-They are recorded as a count in Appendix D rather than enumerated there, because the count is
+They are recorded as a count in Appendix C rather than enumerated there, because the count is
 the argument and the enumeration is this page.

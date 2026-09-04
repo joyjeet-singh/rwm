@@ -692,51 +692,51 @@
     "value": 6
   },
   "appE_n_cpu": {
-    "source": "PAPER.template.md, Appendix E table",
+    "source": "PAPER.template.md, Appendix D table",
     "value": 2
   },
   "appE_n_cpu_word": {
-    "source": "PAPER.template.md, Appendix E table",
+    "source": "PAPER.template.md, Appendix D table",
     "value": "two"
   },
   "appE_n_sim": {
-    "source": "PAPER.template.md, Appendix E + F tables",
+    "source": "PAPER.template.md, Appendix D + F tables",
     "value": 6
   },
   "appE_n_sim_word": {
-    "source": "PAPER.template.md, Appendix E + F tables",
+    "source": "PAPER.template.md, Appendix D + F tables",
     "value": "six"
   },
   "appF_cpu_list": {
-    "source": "PAPER.template.md, Appendix F verdict tags",
+    "source": "PAPER.template.md, Appendix E verdict tags",
     "value": "the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison"
   },
   "appF_model_list": {
-    "source": "PAPER.template.md, Appendix F verdict tags",
+    "source": "PAPER.template.md, Appendix E verdict tags",
     "value": "generality across robot morphologies"
   },
   "appF_n_claims": {
-    "source": "PAPER.template.md, Appendix F table",
+    "source": "PAPER.template.md, Appendix E table",
     "value": 12
   },
   "appF_n_model": {
-    "source": "PAPER.template.md, Appendix F verdict tags",
+    "source": "PAPER.template.md, Appendix E verdict tags",
     "value": 1
   },
   "appF_n_polhw": {
-    "source": "PAPER.template.md, Appendix F verdict tags",
+    "source": "PAPER.template.md, Appendix E verdict tags",
     "value": 5
   },
   "appF_n_polhw_word": {
-    "source": "PAPER.template.md, Appendix F verdict tags",
+    "source": "PAPER.template.md, Appendix E verdict tags",
     "value": "Five"
   },
   "appF_polhw_list": {
-    "source": "PAPER.template.md, Appendix F verdict tags",
+    "source": "PAPER.template.md, Appendix E verdict tags",
     "value": "zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy"
   },
   "appF_sim_list": {
-    "source": "PAPER.template.md, Appendix F verdict tags",
+    "source": "PAPER.template.md, Appendix E verdict tags",
     "value": "zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, generality across robot morphologies, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy"
   },
   "appG_n_lead": {
@@ -1633,19 +1633,19 @@
   },
   "cc_kind_list": {
     "source": "results/comparative_claims.json",
-    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 8 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), and *sign* (a stated rise or fall matches the direction of the difference)"
+    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 8 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
   },
   "cc_kinds": {
     "source": "results/comparative_claims.json",
-    "value": 21
+    "value": 22
   },
   "cc_n": {
     "source": "results/comparative_claims.json",
-    "value": 52
+    "value": 54
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 49
+    "value": 54
   },
   "cc_selfdefect_list": {
     "source": "results/comparative_claims.json",
@@ -1665,11 +1665,11 @@
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 52
+    "value": 54
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 52
+    "value": 54
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -3697,7 +3697,11 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "430"
+    "value": "432"
+  },
+  "long_unit_rows": {
+    "source": "results/task_d_nind20.json",
+    "value": 400
   },
   "m23_A": {
     "source": "results/task5_analysis.json",
@@ -3851,6 +3855,10 @@
     "source": "results/m62_episode_clustering.json",
     "value": 10
   },
+  "m62_n_ep_oos": {
+    "source": "results/m62_episode_clustering.json",
+    "value": 2
+  },
   "m62_n_traj": {
     "source": "results/m62_episode_clustering.json",
     "value": 20
@@ -3985,7 +3993,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 244
+    "value": 245
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -4088,11 +4096,11 @@
     "value": 8
   },
   "n_untested": {
-    "source": "PAPER.template.md, Appendix F table",
+    "source": "PAPER.template.md, Appendix E table",
     "value": 8
   },
   "n_untested_word": {
-    "source": "PAPER.template.md, Appendix F table",
+    "source": "PAPER.template.md, Appendix E table",
     "value": "eight"
   },
   "nind_ins_400": {
@@ -4189,7 +4197,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 41
+    "value": 40
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -6937,11 +6945,11 @@
   },
   "t1_n_frag": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 17
+    "value": 9
   },
   "t1_n_frag_ok": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 17
+    "value": 9
   },
   "t1_n_refs": {
     "source": "results/t1_bibliography_verified.json",
@@ -6949,7 +6957,7 @@
   },
   "t1_n_verified": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 16
+    "value": 10
   },
   "t1_reference_list": {
     "source": "results/t1_bibliography_verified.json",
@@ -6973,15 +6981,15 @@
   },
   "time_rel_hi": {
     "source": "results/step4_5_timing.json",
-    "value": "32"
+    "value": "3"
   },
   "time_rel_lo": {
     "source": "results/step4_5_timing.json",
-    "value": "5"
+    "value": "3"
   },
   "time_worst_cfg": {
     "source": "results/step4_5_timing.json",
-    "value": "ens1_bs256"
+    "value": "ens5_bs1024"
   },
   "tn_classes": {
     "source": "results/typed_numerals.json",
@@ -6993,7 +7001,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 582
+    "value": 616
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -7329,7 +7337,7 @@
   },
   "ver_tb_ran": {
     "source": "results/step4_4_overfit_ens1.json",
-    "value": 451
+    "value": 537
   },
   "ver_timebound": {
     "source": "results/verify_reproduction.json",

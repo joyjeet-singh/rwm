@@ -53,22 +53,22 @@
     "caution_seeds_are_not_trajectories": "in task1_calibration.py the per-seed error and sigma arrays are concatenated along axis 0 before pooling, so seeds enter the coverage average as if they were extra trajectories. That is fine for a point estimate -- it is a mean of means over a balanced design -- but it is NOT a valid resampling unit. Every interval in this paper resamples whole trajectories; pooling seed x trajectory and resampling the pooled vector narrows intervals by about sqrt(3) (M-27).",
     "citations": [
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:78",
+        "cite": "rwm_repro/scripts/task1_calibration.py:116",
         "note": "the z statistic",
         "text": "z=err/np.maximum(sig,1e-30)"
       },
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:102",
+        "cite": "rwm_repro/scripts/task1_calibration.py:140",
         "note": "the coverage itself: cumulative over steps 1..h, flat mean over all axes",
         "text": "c1=float((z[:,:h]<=1).mean()); c2=float((z[:,:h]<=2).mean())"
       },
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:77",
+        "cite": "rwm_repro/scripts/task1_calibration.py:115",
         "note": "where seeds join the trajectory axis",
         "text": "err=np.concatenate(E_,0); sig=np.concatenate(SG,0)          # (n*seeds, T', 45)"
       },
       {
-        "cite": "rwm_repro/scripts/task1_calibration.py:103",
+        "cite": "rwm_repro/scripts/task1_calibration.py:141",
         "note": "the nominal it is judged against",
         "text": "rec[\"coverage\"][h]={\"pm1\":c1,\"pm2\":c2,\"dev1\":c1-0.683,\"dev2\":c2-0.954,"
       }
@@ -136,7 +136,7 @@
       "calibrated_value_of_rho": 0.7978845608028654,
       "citations": [
         {
-          "cite": "rwm_repro/scripts/task1_calibration.py:80",
+          "cite": "rwm_repro/scripts/task1_calibration.py:118",
           "note": "ratio of means, computed once",
           "text": "\"ratio_err_over_sigma\":float(err.mean()/sig.mean()),\"coverage\":{},\"groups\":{},"
         }

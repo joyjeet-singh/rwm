@@ -1,0 +1,10 @@
+E7 — POWER, BEFORE THE NEW BASELINES EXIST
+========================================================================================
+  n_independent = 20, 20 trajectories, 368 steps
+  observed r(disagreement, error) = +0.6053
+  observed r(forecast index, error) = +0.2686
+  margin over the index            = +0.3368
+  partial r given the index        = +0.5957
+  MDE on a margin                  = 0.2891
+  MDE on a partial correlation     = 0.1131
+  wrote results/e7_free_baselines_power.json

@@ -1,0 +1,18 @@
+C3 — MULTIPLE COMPARISONS
+======================================================================================
+  A/B family: 8 out-of-sample cells, 4 of them long-horizon
+
+  uncorrected 0.05         long-horizon cells excluding zero: 4 of 4
+  Bonferroni 0.05/8        long-horizon cells excluding zero: 4 of 4
+  Bonferroni 0.05/4        long-horizon cells excluding zero: 4 of 4
+
+  Holm-Bonferroni: 4 of 4 rejected
+    out-of-sample|400|500|h368         p=0.0001  thr=0.0125  reject
+    out-of-sample|400|2500|h368        p=0.0001  thr=0.0167  reject
+    out-of-sample|200|500|h168         p=0.0001  thr=0.0250  reject
+    out-of-sample|200|2500|h168        p=0.0001  thr=0.0500  reject
+
+  sign test at h=368: 10/10 episodes positive, exact two-sided p = 0.0020
+    unaffected by either correction: one test, not a family
+
+  wrote results/task_c3_multiplicity.json

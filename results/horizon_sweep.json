@@ -1,6 +1,6 @@
 {
-  "n_flagged": 2,
-  "n_strict": 2,
+  "n_flagged": 0,
+  "n_strict": 0,
   "grid": [
     1,
     8,
@@ -11,30 +11,5 @@
   ],
   "deployment_horizon": 100,
   "diagnostic_horizon": 368,
-  "findings": [
-    {
-      "line": 11,
-      "scope": "sentence",
-      "kind": "mismatch",
-      "horizon": 100,
-      "keys": [
-        "d1n_epi_ratio_h100"
-      ],
-      "named": [
-        1
-      ],
-      "sentence": "**The quantity the method penalises with is miscalibrated as a scale, by a factor that grows with depth.** Ensemble disagreement is the trust metric the follow-up applies, and it is smaller than realised error by {{d1n_epi_ratio_h1}}\u00d7 one step ahead, rising to {{d1n_epi_ratio_h100}}\u00d7 at the horizon its imagination rollouts run to."
-    },
-    {
-      "line": 658,
-      "scope": "sentence",
-      "kind": "unnamed",
-      "horizon": 1,
-      "keys": [
-        "d1n_epi_ratio_h1"
-      ],
-      "named": [],
-      "sentence": "In-sample measurement biases *toward* better calibration, so the {{d1n_epi_ratio_h1}}\u00d7 is if anything flattering."
-    }
-  ]
+  "findings": []
 }

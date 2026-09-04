@@ -15,8 +15,8 @@
     "RESULTS.md",
     "docs/EXTERNAL_READ_BRIEF.md"
   ],
-  "n_kinds": 21,
-  "n_whole_file": 14,
+  "n_kinds": 22,
+  "n_whole_file": 15,
   "n_named_region": 3,
   "n_artifact_only": 4,
   "n_unclassified": 0,
@@ -164,6 +164,12 @@
       "kind": "sign",
       "input_selection": "whole-file",
       "reason": "searches PAPER.md for the sentence stating a direction",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "unit-consistency",
+      "input_selection": "whole-file",
+      "reason": "added in Session 6. Scans PAPER.md end to end for every n_independent figure and requires the enclosing paragraph to name the unit it counts. It names no file list, so its coverage is PAPER.md and nothing else -- text moved out of the paper leaves it, which is the property this audit exists to record",
       "files_named_by_claims": []
     }
   ],

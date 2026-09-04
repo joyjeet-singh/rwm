@@ -228,13 +228,13 @@ CLAIMS = [
     # kind is unchanged and so is what it asserts; only the list of places the
     # count must agree in has moved, and it has to move with the prose or it
     # guards nothing.
-    {"id": "C7.1", "kind": "count-consistency", "where": "8 / Appendix D",
+    {"id": "C7.1", "kind": "count-consistency", "where": "8 / Appendix C",
      "label": "numbered retractions",
      "says": "retractions on our own evidence",
      "value": ("paper_numbers.json", "n_retractions.value"),
      "sites": ["retractions on our own evidence",
                "numbered retractions, in order"]},
-    {"id": "C7.2", "kind": "count-consistency", "where": "8 / Appendix D",
+    {"id": "C7.2", "kind": "count-consistency", "where": "8 / Appendix C",
      "label": "framing retractions",
      "says": "that withdraw framings rather than numbers",
      "value": ("paper_numbers.json", "n_retract_framing.value"),
@@ -246,7 +246,7 @@ CLAIMS = [
     # The count is stated ONCE in §1 now -- in the contributions list. §1's prose
     # paragraph said it too, which is the duplication D2 was meant to remove and
     # did not: it compressed the paragraph and left the number in both places.
-    {"id": "C7.5", "kind": "count-consistency", "where": "1 / Appendix D",
+    {"id": "C7.5", "kind": "count-consistency", "where": "1 / Appendix C",
      "label": "total retractions",
      "says": "retractions of our own claims",
      "value": ("paper_numbers.json", "n_retract_total.value"),
@@ -297,7 +297,7 @@ CLAIMS = [
 
     # ---- C10 retraction-consistency --------------------------------------
     # docs/BUILD_CHECKS.template.md joined this list in Session 5a. It did not
-    # need to be here before: the text it holds was inside Appendix D, and
+    # need to be here before: the text it holds was inside Appendix C, and
     # PAPER.template.md was scanned whole. Moving that text out of the paper moved
     # it out of the scan, which would have left a reader-facing surface where a
     # retracted claim could survive unnoticed -- S-19's own lesson, and the same
@@ -339,7 +339,7 @@ CLAIMS = [
     # paper: 17 training runs against 24, 4,804 regenerated values against
     # 6,073, a headline the paper had reframed.
     {"id": "C11.1", "kind": "cross-artifact-sync", "where": "README",
-     "says": "recomputed each build against a",
+     "says": "deliberately corrupted expectation",
      # C3(rev2): the page count is here because the README quoted "9 pages" for a
      # 30-page PDF for two revisions, and nothing compared them. It moves every
      # time the paper grows, which is exactly the property that made it drift.
@@ -353,17 +353,31 @@ CLAIMS = [
     # the paper is worse than none, because the reader it is written for takes it
     # as the paper's own account of itself.
     {"id": "C11.3", "kind": "cross-artifact-sync", "where": "EXTERNAL_READ_BRIEF",
-     "says": "recomputed each build against a",
+     "says": "deliberately corrupted expectation",
      "keys": ["rt_hours", "rt_runs", "d1_ratio", "d1n_epi_ratio_h1",
               "d1n_epi_cov1_h1", "v3_cov_nominal1", "a2_rdd", "stale_pct",
               "v1_shared_pct", "m44_ratio_gain", "m49_ratio_gain",
               "e7_step_r", "e7_r_dis", "e5s_span", "e5s_mse_under"],
      "file": "docs/EXTERNAL_READ_BRIEF.md"},
     {"id": "C11.2", "kind": "cross-artifact-sync", "where": "MODEL_CARD",
-     "says": "recomputed each build against a",
+     "says": "deliberately corrupted expectation",
      "keys": ["d1n_epi_ratio_h100", "e5_ratio_h100", "m44_ratio_gain",
               "r2_indep_ratio_h100"],
      "file": "MODEL_CARD.md"},
+
+    # docs/BUILD_CHECKS.md became a reader-facing surface in 5a when Appendix C's
+    # machinery moved there. It is generated from the same results/paper_numbers.json the
+    # paper is, so a count quoted there cannot drift from the one §8 prints -- but that is
+    # a property of the build, and this asserts it rather than trusting it.
+    #
+    # docs/APPENDIX_G_RULES.md is deliberately NOT here. It carries no substituted values:
+    # appendix_g_rules.py writes it straight from FINDINGS_LEDGER.md in the same pass that
+    # writes the body table, so the two cannot disagree by construction. A sync claim over
+    # it would match on incidental substrings and assert nothing.
+    {"id": "C11.4", "kind": "cross-artifact-sync", "where": "BUILD_CHECKS",
+     "says": "deliberately corrupted expectation",
+     "keys": ["cc_n", "cc_kinds", "cc_st_caught", "cc_selfdefects_word"],
+     "file": "docs/BUILD_CHECKS.md"},
 
     # ---- C12 abstract-budget ---------------------------------------------
     # The abstract was ~650 words and ~25 numerals: unreadable as an abstract,
@@ -524,10 +538,10 @@ CLAIMS = [
     {"id": "C15.2", "kind": "arithmetic", "where": "Appendix B",
      "says": "runs at 10,000 iterations and",
      "total": "rt_runs", "parts": ["rt_runs_10k", "rt_runs_short"], "tol": 0},
-    {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix F",
+    {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix E",
      "says": "of the claims we did test, the original reports no quantitative",
      "total": "appF_n_claims", "parts": ["orig_n_tested", "n_untested"], "tol": 0},
-    {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix E",
+    {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix D",
      "says": "are claims about policy learning or hardware",
      "total": "n_untested", "parts": ["appE_n_sim", "appE_n_cpu"], "tol": 0},
 
@@ -535,12 +549,25 @@ CLAIMS = [
     # Section 9 said "N kinds" from a generated key while appendix D enumerated
     # eight by hand. They had drifted seven apart, inside the appendix whose
     # subject is count consistency.
-    {"id": "C16.1", "kind": "kind-count", "where": "8 / Appendix D",
+    {"id": "C16.1", "kind": "kind-count", "where": "8 / Appendix C",
      "says": "verifies", "key": "cc_kinds"},
+
+    # ---- C20 unit-consistency ---------------------------------------------
+    # NEW in Session 6. This revision introduced a SECOND evaluation unit: M-64 rebuilds
+    # §5 and §6.7 at 32+h rows against the 400-step trajectories everything else uses, and
+    # §5's h=1 now has two readings that are both true at their own n. An "n_independent =
+    # 60" that does not say what one of those sixty IS cannot be checked by a reader, and
+    # the two readings cannot be told apart. Every n_independent figure in the prose must
+    # name its unit within the sentence that states it.
+    {"id": "C20.1", "kind": "unit-consistency", "where": "whole paper",
+     "says": "n_independent",
+     # A sentence naming an n_independent satisfies this by containing any of these.
+     "unit_markers": ["400-step", "400 rows", "32+h", "-row unit", "short unit",
+                      "trajector", "unit level", "unit-level", "non-overlapping"]},
 
     # ---- C17 scope-consistency -------------------------------------------
     # Section 4 said the eight untested claims were "without exception" about
-    # policy learning or hardware. Appendix E says of two of them "no simulator
+    # policy learning or hardware. Appendix D says of two of them "no simulator
     # needed" and puts both within CPU reach. A universal quantifier in the body
     # has to be checked against the set it quantifies over.
     # ---- C18 frequency-consistency ---------------------------------------
@@ -579,7 +606,7 @@ CLAIMS = [
     {"id": "C19.1", "kind": "restatement", "where": "whole paper",
      "says": "Curves are reported at"},
 
-    {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix E",
+    {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix D",
      "says": "within reach of the CPU budget this project already spent",
      "section": "4. What the original papers claim, and which claims we test",
      "forbid": ["without exception", "in all cases", "in every case",
@@ -793,7 +820,7 @@ def evaluate(c, paper, override=None):
         # when nothing near it marks it as withdrawn.
         WITHDRAWN = ("narrower than", "an earlier draft", "earlier version",
                      "we withdraw", "is retracted", "we retract", "withdrawn",
-                     "no longer", "used to", "which Appendix E contradicts")
+                     "no longer", "used to", "which Appendix D contradicts")
         hits = []
         for f in exp["files"]:
             body = _body(f)
@@ -933,6 +960,33 @@ def evaluate(c, paper, override=None):
         return not hits, (f'{len(exp["forbid"])} universal quantifiers checked against '
                           f'the enumerated set'
                           + (f'; PRESENT: {hits}' if hits else '; none present'))
+    if k == "unit-consistency":
+        # Every "n_independent = N" in the prose must name its unit in the same sentence.
+        # The unit is what a reader needs to compare two figures at all: 60 units of 33
+        # rows and 4 units of 400 rows are both "n_independent", and the paper now carries
+        # both.
+        markers = exp["unit_markers"]
+        bad = []
+        for m in re.finditer(r"n_independent[^.]{0,200}", paper):
+            seg = m.group(0)
+            if not re.search(r"n_independent\s*=?\s*\*{0,2}\d", seg):
+                continue
+            # THE ENCLOSING PARAGRAPH, not the sentence. This follows the granularity
+            # horizon-consistency already uses in this file: a calibration figure must
+            # name its horizon in its own sentence, and everything else horizon-indexed
+            # must name it in the enclosing paragraph. A unit is the second kind. A
+            # paragraph that has said "400-step trajectories" once does not have to
+            # repeat it in every cell, and requiring that would push the paper toward
+            # noise rather than clarity. What the check forbids is an n_independent
+            # whose unit is nowhere in the passage that states it.
+            pstart = paper.rfind("\n\n", 0, m.start())
+            pend = paper.find("\n\n", m.start())
+            para = paper[(pstart + 2) if pstart >= 0 else 0:
+                         pend if pend >= 0 else len(paper)]
+            if not any(w in para for w in markers):
+                bad.append(seg[:70].replace("\n", " "))
+        return not bad, (f'{len(bad)} n_independent figure(s) naming no unit'
+                         + (f'; first: "{bad[0]}"' if bad else ''))
     if k == "interval-required":
         N = art("paper_numbers.json")
         bad = []
@@ -1008,6 +1062,11 @@ def corruption_for(c):
     if k == "retraction-consistency":
         # a string that IS present, standing in for a retracted claim never removed
         return {"retracted": "reproduction"}
+    if k == "unit-consistency":
+        # Remove the markers, so every n_independent in the paper reads as unit-less and
+        # the check must fail. Corrupting the EXPECTATION rather than the paper keeps the
+        # self-test read-only, as every other kind here does.
+        return {"unit_markers": ["\x00no-such-unit-marker\x00"]}
     if k == "cross-artifact-sync":
         return {"keys": c["keys"] + ["d1_ratio"], "file": "requirements.txt"}
     if k == "abstract-budget":

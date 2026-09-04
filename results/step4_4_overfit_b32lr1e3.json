@@ -8,8 +8,8 @@
     "tag": "_b32lr1e3"
   },
   "iterations_run": 2001,
-  "elapsed_s": 457.17473826000014,
-  "s_per_iter": 0.2284731325637182,
+  "elapsed_s": 450.5453887200001,
+  "s_per_iter": 0.22516011430284863,
   "reached_threshold_at": null,
   "threshold": 0.0001,
   "first": {

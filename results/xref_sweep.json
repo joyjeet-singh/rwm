@@ -1,0 +1,419 @@
+{
+  "sweep": "every pointer in the paper against what it now points at",
+  "why": "part_f_gate check 5 confirms a section cross-reference RESOLVES. \u00a78's pointer resolved and was still wrong, because what it claimed the target contains had moved. This sweeps the claim, not the link.",
+  "not_a_check_kind": "deliberate. Session 5 removed machinery, and this is a one-time consequence of moving text rather than a recurring risk once the moves are done.",
+  "classes": [
+    "semantic",
+    "artifact",
+    "repo",
+    "upstream",
+    "new-docs"
+  ],
+  "n_pointers": 60,
+  "n_ok": 58,
+  "n_reviewed_correct": 2,
+  "reviewed": [
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.3 explains \u2014 is computed on every imagination step and discarded",
+      "ok": "reviewed-correct",
+      "detail": "target 6.3; nouns ['computed', 'imagination', 'step', 'discarded']; absent ['imagination', 'step', 'discarded']",
+      "context": "\u00a76.3\nexplains \u2014 is computed on every imagination step and discarded",
+      "reviewed": "CORRECT \u2014 appositive. The sentence is 'the aleatoric head ... the one \u00a76.3 explains'; \u00a76.3 is titled 'Why the aleatoric head collapses'. The text the matcher scored is the clause after the em-dash, not the claim."
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinc",
+      "ok": "reviewed-correct",
+      "detail": "target 2; nouns ['prior', 'work', 'calibrated-versus-well-ranked', 'distinction', 'turns']; absent ['prior', 'calibrated-versus-well-ranked', 'turns']",
+      "context": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinction it turns on",
+      "reviewed": "CORRECT \u2014 \u00a72 contains Malik, Kuleshov, 'calibrated' and 'well ranked', verified directly. The absent tokens are 'prior' and the hyphenated compound this sentence coins, neither of which the target needs to contain."
+    }
+  ],
+  "n_unverified": 0,
+  "n_bad": 0,
+  "bad": [],
+  "pointers": [
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.4 sets out what follows",
+      "ok": true,
+      "detail": "target 6.4; nouns ['follows']; absent ['follows']",
+      "context": "\u00a76.4 sets out what follows"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.8 says what is new relative\nto it rather than leaving a reader to w",
+      "ok": true,
+      "detail": "target 6.8; nouns ['relative', 'rather', 'leaving', 'reader', 'work', 'conditioning', 'variable', 'forecast', 'horizon', 'single', 'global', 'multipl']; absent ['relative', 'leaving']",
+      "context": "\u00a76.8 says what is new relative\nto it rather than leaving a reader to work it out: the conditioning variable is the forecast\nhorizon, and a single global multipl"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.3 gives the derivation and demonstrates it against known noise",
+      "ok": true,
+      "detail": "target 6.3; nouns ['derivation', 'demonstrates', 'against', 'known', 'noise']; absent ['demonstrates']",
+      "context": "\u00a76.3 gives the derivation and demonstrates it against known noise"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix H gives both forms and the inversion",
+      "ok": true,
+      "detail": "target Appendix H; nouns ['forms', 'inversion']; absent []",
+      "context": "Appendix H gives both forms and the inversion"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix D sets out what testing them would take",
+      "ok": true,
+      "detail": "target Appendix D; nouns ['testing', 'them', 'would', 'take']; absent ['take']",
+      "context": "Appendix D sets out what testing them would take"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix E gives the full table**, claim by claim, with what the original sta",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['full', 'table', 'claim', 'claim', 'original', 'states', 'where', 'states', 'verdict']; absent []",
+      "context": "Appendix E gives the full table**, claim by claim, with what the original states, where it\nstates it, and our verdict"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.7 gives the expectation we held about\nthe counter-baseline",
+      "ok": true,
+      "detail": "target 6.7; nouns ['expectation', 'held', 'about', 'counter-baseline']; absent ['counter-baseline']",
+      "context": "\u00a76.7 gives the expectation we held about\nthe counter-baseline"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.3 explains \u2014 is computed on every imagination step and discarded",
+      "ok": "reviewed-correct",
+      "detail": "target 6.3; nouns ['computed', 'imagination', 'step', 'discarded']; absent ['imagination', 'step', 'discarded']",
+      "context": "\u00a76.3\nexplains \u2014 is computed on every imagination step and discarded",
+      "reviewed": "CORRECT \u2014 appositive. The sentence is 'the aleatoric head ... the one \u00a76.3 explains'; \u00a76.3 is titled 'Why the aleatoric head collapses'. The text the matcher scored is the clause after the em-dash, not the claim."
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.6 explains why a binomial null is inadmissible here and how far it was ",
+      "ok": true,
+      "detail": "target 6.6; nouns ['binomial', 'null', 'inadmissible', 'here', 'wrong']; absent ['inadmissible']",
+      "context": "\u00a76.6 explains why a binomial null is inadmissible here and how far it was wrong"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.3 explains the aleatoric column and says of the epistemic one that the ",
+      "ok": true,
+      "detail": "target 6.3; nouns ['aleatoric', 'column', 'says', 'epistemic', 'mechanism', 'established']; absent ['epistemic']",
+      "context": "\u00a76.3 explains the aleatoric column and says of the epistemic one that the mechanism is not\nestablished"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a72 gives the four papers that establish\nit",
+      "ok": true,
+      "detail": "target 2; nouns ['papers', 'establish']; absent []",
+      "context": "\u00a72 gives the four papers that establish\nit"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a712 quotes the larger arena and says so",
+      "ok": true,
+      "detail": "target 12; nouns ['larger', 'arena', 'says']; absent ['larger']",
+      "context": "\u00a712 quotes the larger arena and says so"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.2 quotes 34",
+      "ok": true,
+      "detail": "target 6.2; nouns []; absent []",
+      "context": "\u00a76.2 quotes 34"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.6 spends a page correcting for the 45 coupled state dimensions",
+      "ok": true,
+      "detail": "target 6.6; nouns ['page', 'correcting', 'coupled', 'state', 'dimensions']; absent ['page', 'correcting']",
+      "context": "\u00a76.6 spends a page correcting for the 45 coupled state dimensions"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinc",
+      "ok": "reviewed-correct",
+      "detail": "target 2; nouns ['prior', 'work', 'calibrated-versus-well-ranked', 'distinction', 'turns']; absent ['prior', 'calibrated-versus-well-ranked', 'turns']",
+      "context": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinction it turns on",
+      "reviewed": "CORRECT \u2014 \u00a72 contains Malik, Kuleshov, 'calibrated' and 'well ranked', verified directly. The absent tokens are 'prior' and the hyphenated compound this sentence coins, neither of which the target needs to contain."
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a711 sets out that independently-seeded runs differ in *both*\ninitialisati",
+      "ok": true,
+      "detail": "target 11; nouns ['independently-seeded', 'runs', 'differ', 'initialisation', 'data', 'ordering', 'comparison', 'bounds', 'architectural', 'effect', 'rather']; absent ['architectural']",
+      "context": "\u00a711 sets out that independently-seeded runs differ in *both*\ninitialisation and data ordering, so this comparison **bounds** the architectural effect rather\nthan i"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix G gives the arithmetic and the five assumptions\nit rests on, because",
+      "ok": true,
+      "detail": "target Appendix G; nouns ['arithmetic', 'assumptions', 'rests', 'because', 'detect']; absent []",
+      "context": "Appendix G gives the arithmetic and the five assumptions\nit rests on, because it is what let us detect the gap at all"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix C lists them)",
+      "ok": true,
+      "detail": "target Appendix C; nouns ['them']; absent []",
+      "context": "Appendix C lists them)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix C gives the failure modes those checks exist for and the two exclusi",
+      "ok": true,
+      "detail": "target Appendix C; nouns ['failure', 'modes', 'checks', 'exist', 'exclusions', 'numeric', 'comparison']; absent []",
+      "context": "Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/appendix_g_rules.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/e4_sigma_gradients.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/e5_synthetic_sigma.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/e7_free_baselines.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/insample_framing.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/m49_capacity_matched.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/m62_episode_clustering.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/m63_per_dimension_coverage.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/m64_short_units.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/m65_gaussian_nominal.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/original_paper_figures.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/paper_numbers.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/r2_independent_ensemble.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/step0_regimes.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/step4_0a_results.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/step4_4_overfit_ens1.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/step4_5_timing.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/t1_bibliography_verified.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/task_b2_epistemic.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/typed_numerals.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/v1_ensemble_topology.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "repo",
+      "pointer": "src/rwm_model.py:164-167",
+      "ok": true,
+      "detail": "resolves"
+    },
+    {
+      "class": "repo",
+      "pointer": "src/rwm_model.py:223",
+      "ok": true,
+      "detail": "resolves"
+    },
+    {
+      "class": "upstream",
+      "pointer": "base.py:142",
+      "ok": true,
+      "detail": "../robotic_world_model_lite/scripts/envs/base.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "base.py:166",
+      "ok": true,
+      "detail": "../robotic_world_model_lite/scripts/envs/base.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "model_training.py:203",
+      "ok": true,
+      "detail": "../robotic_world_model_lite/scripts/model_training.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:115",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:125",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:126",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:223",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:233",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:270",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:274",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:283",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:301",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:302",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:34",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:35",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:87",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "new-docs",
+      "pointer": "docs/APPENDIX_G_RULES.md",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "new-docs",
+      "pointer": "docs/BUILD_CHECKS.md",
+      "ok": true,
+      "detail": "exists"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+D2 — POST-HOC RECALIBRATION
+====================================================================================================
+  one scalar per model, fitted on one held-out episode, evaluated on the other
+  target +-1 sigma coverage 68.3%
+
+  faithful (mse)
+    fit ep1 -> test ep8  c@h1   c=     14.75   h1: 91.9%  h8: 66.3%  h32: 49.6%  h128: 34.1%  h368: 29.6%
+    fit ep1 -> test ep8  c@all  c=     69.28   h1:100.0%  h8: 99.4%  h32: 95.1%  h128: 85.0%  h368: 83.5%
+    fit ep8 -> test ep1  c@h1   c=     6.197   h1: 41.9%  h8: 16.6%  h32: 10.8%  h128:  8.8%  h368:  8.5%
+    fit ep8 -> test ep1  c@all  c=     44.35   h1: 94.1%  h8: 66.4%  h32: 58.3%  h128: 52.0%  h368: 51.2%
+    before (c=1)                          h1: 14.1%  h8:  6.2%  h32:  4.2%  h128:  2.5%  h368:  2.1%
+
+  corrected (nll)
+    fit ep1 -> test ep8  c@h1   c=     3.715   h1: 92.2%  h8: 69.8%  h32: 53.3%  h128: 40.2%  h368: 37.9%
+    fit ep1 -> test ep8  c@all  c=     15.02   h1:100.0%  h8: 99.4%  h32: 95.0%  h128: 85.3%  h368: 86.5%
+    fit ep8 -> test ep1  c@h1   c=     1.448   h1: 39.3%  h8: 16.8%  h32: 11.4%  h128:  9.3%  h368:  8.7%
+    fit ep8 -> test ep1  c@all  c=     8.484   h1: 90.7%  h8: 60.7%  h32: 54.7%  h128: 49.0%  h368: 46.1%
+    before (c=1)                          h1: 55.2%  h8: 27.7%  h32: 17.6%  h128: 12.1%  h368: 11.1%
+
+  teacher-forced armB
+    fit ep1 -> test ep8  c@h1   c=     11.67   h1: 88.5%  h8: 52.5%  h32: 28.0%  h128: 14.7%  h368:  8.1%
+    fit ep1 -> test ep8  c@all  c=     366.1   h1:100.0%  h8:100.0%  h32: 99.9%  h128: 97.2%  h368: 86.7%
+    fit ep8 -> test ep1  c@h1   c=     5.653   h1: 40.7%  h8: 15.5%  h32:  7.5%  h128:  3.7%  h368:  2.0%
+    fit ep8 -> test ep1  c@all  c=     194.5   h1:100.0%  h8: 98.8%  h32: 93.9%  h128: 74.4%  h368: 48.8%
+    before (c=1)                          h1: 16.7%  h8:  6.8%  h32:  2.8%  h128:  1.4%  h368:  0.8%
+
+  released aleatoric
+    fit ep1 -> test ep8  c@h1   c=     592.6   h1: 64.4%  h8: 50.7%  h32: 34.0%  h128: 18.1%  h368: 11.2%
+    fit ep1 -> test ep8  c@all  c=      7523   h1:100.0%  h8:100.0%  h32: 97.2%  h128: 77.5%  h368: 67.3%
+    fit ep8 -> test ep1  c@h1   c=     611.1   h1: 70.0%  h8: 51.7%  h32: 35.2%  h128: 22.3%  h368: 15.5%
+    fit ep8 -> test ep1  c@all  c=      7782   h1:100.0%  h8:100.0%  h32: 98.9%  h128: 84.3%  h368: 68.9%
+    before (c=1)                          h1:  0.0%  h8:  0.1%  h32:  0.2%  h128:  0.1%  h368:  0.0%
+
+  released EPISTEMIC (used by the method)
+    fit ep1 -> test ep8  c@h1   c=     5.082   h1: 63.3%  h8: 52.4%  h32: 37.4%  h128: 23.1%  h368: 16.8%
+    fit ep1 -> test ep8  c@all  c=     47.33   h1:100.0%  h8: 99.0%  h32: 96.1%  h128: 79.8%  h368: 71.8%
+    fit ep8 -> test ep1  c@h1   c=     5.817   h1: 74.4%  h8: 58.1%  h32: 40.9%  h128: 27.5%  h368: 20.7%
+    fit ep8 -> test ep1  c@all  c=     41.31   h1:100.0%  h8: 99.6%  h32: 93.4%  h128: 79.4%  h368: 65.2%
+    before (c=1)                          h1: 11.1%  h8: 11.0%  h32:  8.9%  h128:  5.3%  h368:  3.5%
+
+  does one scalar generalise across horizon?
+    faithful (mse)                             h=1 NO   h=368 NO
+    corrected (nll)                            h=1 NO   h=368 NO
+    teacher-forced armB                        h=1 NO   h=368 NO
+    released aleatoric                         h=1 yes  h=368 NO
+    released EPISTEMIC (used by the method)    h=1 yes  h=368 NO
+
+  wrote results/task_d2_recalibration.json

@@ -10,8 +10,14 @@ T1 — BIBLIOGRAPHY VERIFICATION
   [ok] ovadia2019             NeurIPS 2019           arXiv:1906.02530
   [ok] abbas2020              ICML 2020              arXiv:2007.02418
   [ok] janner2019             NeurIPS 2019           arXiv:1906.08253
+  [!!] malik2019              ICML 2019 (PMLR 97:4314-4323) arXiv:1906.08312
+  [!!] lee2015                arXiv:1511.06314       arXiv:1511.06314
+  [!!] fort2019               arXiv:1912.02757       arXiv:1912.02757
+  [!!] havasi2021             ICLR 2021              arXiv:2010.06610
+  [!!] wen2020                ICLR 2020              arXiv:2002.06715
+  [!!] seitzer2022            ICLR 2022              arXiv:2203.09168
 
-  10 of 10 entries metadata-verified; 9 of 9 asserted fragments verbatim
-  references: 2 -> 12
+  10 of 16 entries metadata-verified; 9 of 9 asserted fragments verbatim
+  references: 2 -> 18
 
   wrote results/t1_bibliography_verified.json

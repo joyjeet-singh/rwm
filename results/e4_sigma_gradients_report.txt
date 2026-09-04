@@ -1,0 +1,15 @@
+E4 — WHAT EACH LOSS TERM DOES TO SIGMA
+========================================================================================================
+  term          weight        value    dL/dsigma    dL/ddelta    dL/dmin  touches sigma
+  state           1.00       44.378    0.0003251      0.05088     0.0703  YES
+  sequence        1.00            0            0            0          0  no
+  bound           1.00            1            0          0.2          0  YES
+  kl              0.10            0            0            0          0  no
+  extension       1.00            0            0            0          0  no
+  contact         1.00      0.69098            0            0          0  no
+  termination     1.00      0.71595            0            0          0  no
+========================================================================================================
+  4 of 7 terms are live under the released configuration
+  2 of 7 carry any gradient to sigma: state, bound
+  the other 5 are inert with respect to sigma, measured rather than argued
+  wrote results/e4_sigma_gradients.json

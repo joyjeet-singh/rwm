@@ -52,7 +52,7 @@ D3 — ENSEMBLE-5 REPLICATION
     -> measured per arm; the model card no longer inherits the ens1 figure
 
   [3] aleatoric collapse rate
-    ens1 mean -9.361692e-05   ens5 mean -9.352639e-05   +0.10%
+    ens1 mean -9.360240e-05   ens5 mean -9.352639e-05   +0.08%
 
   [4] input-dependence and horizon-flatness of the epistemic term
     seed 0: CoV 0.3948   sigma growth 0.8755x   error growth 3.70x
