@@ -6536,8 +6536,24 @@ durable guard is that the card has a single generated source and that the push i
 against a commit, so a reader can tell which version is on the hub. Session 8 verifies the push
 as part of submission mechanics.
 
+**CLOSED in Session 8. The upload happened and was verified.** `MODEL_CARD.md` as of repo
+commit `a82a6938707d` was uploaded to the published checkpoint repository as its `README.md`,
+under hub commit `de96946b7fe4`. The pushed file was downloaded again and compared: **byte
+identical to the source**, sha256 `a0f6ffe68314cda6c7b23491c172fff3`.
+
+**What the remote copy had been asserting**, which is why this entry existed. It quoted the
+calibrated target as 68.3% where §3.1 derives 68.27%; it described "six of the nine checkpoints"
+where thirteen are now released; it said the per-horizon multiplier holds on 10 of 10 held-out
+cells where the current figure is 12 of 12; and it pasted **seed 0's** σ calibration onto all
+three seeds, which is the same mis-attribution this card was corrected for elsewhere. Each of
+those is a sentence this revision changed and the sixth surface had not.
+
+**The push was made by the author, authenticated as themselves.** It is a credentialed
+outward-facing action, and this entry records that it was performed deliberately and with the
+commit it was synced against, rather than that it happened.
+
 **Evidence** `SRC` `MODEL_CARD.md`, `scripts/build_model_card.py`, `docs/CLOSING_BRIEF.md`
-**Status** OPEN — the upload is outstanding · **Relevance** METHOD
+**Status** CLOSED — synced at repo `a82a6938707d`, hub commit `de96946b7fe4` · **Relevance** METHOD
 
 
 ### D-30 — The review queue had more than doubled and every document still said 89 · **NEW**

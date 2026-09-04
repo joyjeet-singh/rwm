@@ -1811,7 +1811,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 432 KB ledger, so here is the table. It is generated from
+or an instruction to open a 433 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data

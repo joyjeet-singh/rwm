@@ -3025,7 +3025,7 @@
       "id": "M-67",
       "claim": "The sixth reader-facing surface, which no check reads and this session did not update",
       "relevance": "METHOD",
-      "status": "OPEN \u2014 the upload is outstanding",
+      "status": "CLOSED \u2014 synced at repo `a82a6938707d`, hub commit `de96946b7fe4`",
       "evidence": [
         "SRC"
       ],

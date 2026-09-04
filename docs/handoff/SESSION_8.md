@@ -149,7 +149,7 @@ Every figure in it was checked against `results/paper_numbers.json` rather than 
 | 4 | Clean-clone check with `CLONE_RESULTS`; number reported; not toleranced | met — 178 → **68** |
 | 5 | TMLR style confirmed unmodified; bundle assembled and verified | met, with the upstream caveat stated |
 | 6 | Cover statement drafted | met |
-| 7 | `M-67` still OPEN — Claude Code does not close it | met — untouched |
+| 7 | `M-67` still OPEN at the end of the session | met as written; **subsequently closed** on the author's authenticated push, recorded above |
 | 8 | `SESSION_8.md` listing what remains manual | met — this file |
 
 ---
@@ -158,12 +158,12 @@ Every figure in it was checked against `results/paper_numbers.json` rather than 
 
 Everything below needs a person. Nothing below is blocked on further analysis.
 
-1. **Push the Hugging Face model card.** `M-67` is OPEN and names the commit to sync against.
-   `MODEL_CARD.md` — its generated source — is current and passes every check. The remote copy
-   is publicly visible, linked from a repository §13 admits is findable, and still asserts a
-   sentence the rewritten abstract dropped. **Do this before submission, not after**: the
-   paper's own discipline is that a retraction holding in one document and not another is not a
-   retraction. Close `M-67` with the commit it was synced against.
+1. ~~**Push the Hugging Face model card.**~~ **DONE.** The author authenticated and the card
+   was uploaded: repo commit `a82a6938707d` → hub commit `de96946b7fe4`, verified byte-identical
+   on re-download (sha256 `a0f6ffe68314cda6c7b23491c172fff3`). `M-67` is **CLOSED** with both
+   commits recorded. The remote copy had been asserting 68.3% against §3.1's 68.27%, "six of the
+   nine checkpoints" against thirteen, 10 of 10 held-out cells against 12 of 12, and seed 0's σ
+   calibration pasted onto all three seeds. All four are corrected on the hub now.
 
 2. **Read the compiled PDF end to end.** §F.2 read the abstract, the λ paragraph and §6.7, and
    found a real defect in the third. The rest has not been read as a reader. Layout in
