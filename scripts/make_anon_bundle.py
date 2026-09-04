@@ -130,6 +130,11 @@ INCLUDE_FILES = [
 ]
 # This file and its sibling carry the very patterns they search for.
 EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
+           # The cover statement is addressed to the action editor, not to a
+           # reviewer, and build_supplementary.py already excludes it. The two
+           # bundles must agree about what ships: they disagreed once, and the
+           # reviewer's copy carried a file the supplementary archive did not.
+           "docs/COVER_STATEMENT.md",
            # Transient: written by ONE reproduce.sh run and describing that run,
            # not the repository -- which is why .gitignore excludes it and why
            # reproduce.sh deletes it at the start of every full run. It has no

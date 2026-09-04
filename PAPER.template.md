@@ -949,11 +949,15 @@ The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons.
 
 **The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what disagreement knows is explained by knowing how deep into the rollout you are. It is carrying real information about *this* rollout, not a re-encoding of the clock.
 
-**Six controls, five removing forecast depth and one removing trajectory difficulty.** A
-linear partial is not much of a control — error does not grow linearly with depth, and a
-control that under-fits the index leaves index-driven variance in the residual and flatters
-disagreement. Each row below removes something different; the last was pre-registered before
-it was computed (M-45, §8), and adding it changed how we read the five above it.
+**What survives removing each confound.** A linear partial is not much of a control — error
+does not grow linearly with depth, and a control that under-fits the index leaves index-driven
+variance in the residual and flatters disagreement. The table has two halves. The first five
+rows after the pooled baseline are **depth controls**: each partials out a different model of
+how far into the rollout you are. The last four **decompose** the pooled figure into its
+between-trajectory and within-trajectory parts, and the last of those was pre-registered before
+it was computed (M-45, §8). **One row is not comparable to the others**: the rank partial is a
+correlation of ranks rather than of values, so it is a different statistic and its being larger
+than the pooled figure says nothing about how much depth explains.
 
 | what is removed | correlation | 95% CI | what survives it |
 |---|---|---|---|

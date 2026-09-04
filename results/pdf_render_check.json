@@ -1,0 +1,38 @@
+{
+  "check": "rendered-PDF pass (Session 8 addendum A)",
+  "one_time": "not registered as a check kind. It exists because text moved through a transformation layer in Sessions 5a and 6; the moves are done.",
+  "pdf": "PAPER.pdf",
+  "pages": 40,
+  "chars_extracted": 168509,
+  "cannot_detect": "extracted PDF text loses layout. This sees that a table's header cells are present and that references resolve; it cannot see a column rendered too narrow or a float landing pages from its reference. Those need a reader, which \u00a7F.2 asks for.",
+  "n_checks": 5,
+  "n_pass": 5,
+  "findings": [
+    {
+      "check": "1. appendix letters resolve",
+      "pass": true,
+      "detail": "source headings ABCDEFGH; contiguous from A: True; in-text references ABCDEFGH; dangling none"
+    },
+    {
+      "check": "2. figure numbers match their references",
+      "pass": true,
+      "detail": "source figure numbers ['1', '2', '3', '4', '5', '6']; PDF ['1', '2', '3', '4', '5', '6']; in source but not rendered none; rendered but not in source none"
+    },
+    {
+      "check": "3. table headers survive rendering",
+      "pass": true,
+      "detail": "21 tables checked cell by cell; every header cell present, in the PDF text"
+    },
+    {
+      "check": "4. every numeral the source states survives into the PDF",
+      "pass": true,
+      "detail": "763 distinct numerals in the source, 755 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
+    },
+    {
+      "check": "5. section cross-references resolve in the PDF",
+      "pass": true,
+      "detail": "24 distinct section references in the PDF against 24 headings; unresolved none"
+    }
+  ],
+  "verdict": "PASS"
+}

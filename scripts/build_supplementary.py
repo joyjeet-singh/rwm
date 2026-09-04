@@ -101,7 +101,14 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # failing the moment the pipeline regenerated the report -- the same
            # exclude-the-source-not-the-output shape as scripts/swh_visit_check.py
            # and its artifact two entries above.
-           "results/pdf_channels_report.txt"}
+           "results/pdf_channels_report.txt",
+           # The cover statement is addressed to the action editor and states which
+           # acceptance criterion the submission claims. It is submission
+           # correspondence rather than evidence, and shipping it inside the
+           # evidence bundle would put an argument where a reviewer expects
+           # artifacts. Excluded deliberately, and named here so the exclusion is
+           # a decision rather than an oversight.
+           "docs/COVER_STATEMENT.md"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]

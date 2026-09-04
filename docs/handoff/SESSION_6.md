@@ -59,10 +59,16 @@ performs on the author's behalf. `M-67` names the commit to upload and stays **O
 `./reproduce.sh --quick --force`, **83 stages**. It found seven things. Three were mine from this
 session or the last two; four were older.
 
-**The first invocation did nothing and exited 0.** It resolved `python3.11` to the system
-interpreter, found no torch or numpy, printed `ENVIRONMENT MISMATCH` and returned success. A run
-that does nothing and reports success is the failure mode this project keeps finding in its own
-machinery. Re-run with `PY=…/.venv-rwm311/bin/python`.
+**The first invocation did nothing.** It resolved `python3.11` to the system interpreter,
+found no torch or numpy, and printed `ENVIRONMENT MISMATCH`. Re-run with
+`PY=…/.venv-rwm311/bin/python`.
+
+> **Corrected in Session 8.** This paragraph originally said the run "exited 0" and "returned
+> success", and that is wrong. `reproduce.sh:80` exits **2** on an environment mismatch —
+> verified by running it against the system interpreter and reading the status. The exit 0 came
+> from the background wrapper reporting its own status, not the script's. The environment gate
+> works; the report of it did not. Nothing downstream depended on the claim, but it asserted a
+> defect in the build machinery that does not exist.
 
 | finding | origin | state |
 |---|---|---|

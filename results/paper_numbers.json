@@ -7277,55 +7277,55 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "905,391"
+    "value": "908,630"
   },
   "ver_claim_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "0.90"
+    "value": "1.00"
   },
   "ver_close": {
     "source": "results/verify_reproduction.json",
-    "value": 27
+    "value": 0
   },
   "ver_copied": {
     "source": "results/verify_reproduction.json",
-    "value": "897,205"
+    "value": "899,540"
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 178
+    "value": 68
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 47
+    "value": 46
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
-    "value": 18
+    "value": 24
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "7,981"
+    "value": "9,022"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
-    "value": 25
+    "value": 3
   },
   "ver_keys_lost_files": {
     "source": "results/verify_reproduction.json",
-    "value": 3
+    "value": 1
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
-    "value": 592
+    "value": 701
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "97.50"
+    "value": "99.25"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
-    "value": 11
+    "value": 17
   },
   "ver_tb_budget": {
     "source": "results/step4_4_overfit_ens1.json",
@@ -7353,7 +7353,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "8,186"
+    "value": "9,090"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

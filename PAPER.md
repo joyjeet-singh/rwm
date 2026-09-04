@@ -976,11 +976,15 @@ The distinction matters at 2 of the 5 horizons. At h=100 and h=128 the marginal 
 
 **The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lowers* disagreement's correlation by 0.010, from +0.605 to +0.596. Almost none of what disagreement knows is explained by knowing how deep into the rollout you are. It is carrying real information about *this* rollout, not a re-encoding of the clock.
 
-**Six controls, five removing forecast depth and one removing trajectory difficulty.** A
-linear partial is not much of a control — error does not grow linearly with depth, and a
-control that under-fits the index leaves index-driven variance in the residual and flatters
-disagreement. Each row below removes something different; the last was pre-registered before
-it was computed (M-45, §8), and adding it changed how we read the five above it.
+**What survives removing each confound.** A linear partial is not much of a control — error
+does not grow linearly with depth, and a control that under-fits the index leaves index-driven
+variance in the residual and flatters disagreement. The table has two halves. The first five
+rows after the pooled baseline are **depth controls**: each partials out a different model of
+how far into the rollout you are. The last four **decompose** the pooled figure into its
+between-trajectory and within-trajectory parts, and the last of those was pre-registered before
+it was computed (M-45, §8). **One row is not comparable to the others**: the rank partial is a
+correlation of ranks rather than of values, so it is a different statistic and its being larger
+than the pooled figure says nothing about how much depth explains.
 
 | what is removed | correlation | 95% CI | what survives it |
 |---|---|---|---|
@@ -1353,17 +1357,17 @@ it rests on, because it is what let us detect the gap at all.
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
 **Reproducibility, and a build that checks its own prose.**
-`./reproduce.sh --quick --force` regenerates 47 artifact files and 8,186
-numeric values from a clean clone: 7,981 bitwise identical (97.50%),
-27 equal to within the verifier's floating-point tolerance but not bitwise, and
-178 differing. Those
-three account for the 8,186 exactly. A further 25 values are present in the
-committed artifacts and absent after regeneration, across 3 files; they are
+`./reproduce.sh --quick --force` regenerates 46 artifact files and 9,090
+numeric values from a clean clone: 9,022 bitwise identical (99.25%),
+0 equal to within the verifier's floating-point tolerance but not bitwise, and
+68 differing. Those
+three account for the 9,090 exactly. A further 3 values are present in the
+committed artifacts and absent after regeneration, across 1 files; they are
 counted separately because a value that is not produced twice cannot be compared twice.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: 8,186 values, or 0.90%
-of the 905,391 numeric values under `results/`. The other 897,205 are carried in, prove
+honest test is the subset the run actually rewrites: 9,090 values, or 1.00%
+of the 908,630 numeric values under `results/`. The other 899,540 are carried in, prove
 nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 616 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **54 comparative claims** across 22 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 54 of 54 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
@@ -1698,12 +1702,12 @@ during this revision — two calibration figures that named no horizon, and one 
 three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this appendix: of the 905,391 numeric values under `results/`, a clean
-clone regenerates 8,186 and carries in 897,205. The reproducibility claim covers
-0.90% of the directory and is silent about the rest. We state that fraction because a
+bounds everything in this appendix: of the 908,630 numeric values under `results/`, a clean
+clone regenerates 9,090 and carries in 899,540. The reproducibility claim covers
+1.00% of the directory and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
-*The CPU budget.* 5,004 timing fields and the 592 values of
+*The CPU budget.* 5,004 timing fields and the 701 values of
 `results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
 resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on
 another machine, or on this one under different load, and it records that about itself: across
@@ -1716,7 +1720,7 @@ run reported a different spread on a different worst configuration. Read them as
 account of its own variability, not as a property of the code.
 
 **One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
-check in `part_f_gate` requires that *no* regenerated value differ. 178 do, so the
+check in `part_f_gate` requires that *no* regenerated value differ. 68 do, so the
 check fails, and it is published as failing. We did not give it a tolerance. The differences are
 concentrated in two artifacts — a stochastic dilution study whose values move in the tenth
 significant figure, and an index that stores line numbers in this document, which move whenever the

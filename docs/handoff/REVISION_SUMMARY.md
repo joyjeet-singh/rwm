@@ -1,11 +1,11 @@
 # Revision summary
 
-What the TMLR revision changed, from `REVISION_BRIEF.md` through Sessions 1–6. Session 7 is
-deferred until after submission; Session 8 is submission mechanics.
+What the TMLR revision changed, from `REVISION_BRIEF.md` through Session 8. Session 7 is
+deferred until after submission.
 
 **Build status: compile PASSES, 40 pages, 0 errors, 0 overfull boxes. 54/54 comparative claims,
-54/54 self-test corruptions caught. Submission gate 7/7 with one check NOT RUN.
-`ledger_check` PASS.**
+54/54 self-test corruptions caught. Rendered-PDF pass 5/5. Submission gate 7 of 8 — the eighth
+is the clean-clone gate, which runs and fails by design. `ledger_check` PASS.**
 
 ---
 
@@ -91,15 +91,20 @@ objectives is intact, so the abstract's claim does not move.
 ## The failing gate
 
 **It still fails and still says where.** `part_f_gate` check 4 requires that *no* regenerated
-value differ. **178 do**, out of 8,186 compared across 47 regenerated files, with 7,981 bitwise
-identical (97.50%) and 27 equal to tolerance. That is 0.90% of the 905,391 numeric values under
-`results/` — the rest are carried in by a clean clone and prove nothing about reproduction.
+value differ. **68 do**, out of 9,090 compared across 46 regenerated files, with 9,022 bitwise
+identical (99.25%). That is 1.00% of the 908,630 numeric values under `results/` — the rest are
+carried in by a clean clone and prove nothing about reproduction.
 
-**The 178 is unchanged by this revision.** No tolerance was applied and none is proposed.
+**The number changed in Session 8, and the change is an improvement rather than a repair.** The
+paper had published **178 differing out of 8,186**, carried from an earlier comparison. Session 8
+ran the check properly for the first time — a real clean clone, `reproduce.sh --quick --force`
+inside it, and `CLONE_RESULTS` pointed at its results — and the fresh comparison gives 68 out of
+9,090. More values are compared because Session 6 gave seven previously stage-less artifacts a
+stage. **No tolerance was applied**: the gate fails, and it fails on a current measurement rather
+than a carried one.
 
-The gate's clean-clone check reads **NOT RUN** rather than FAIL, because it needs a clone
-(`CLONE_RESULTS`) and none was supplied. That is the honest state: the check is armed, its
-published figure stands, and running it against a fresh clone is Session 8's.
+The check no longer reads NOT RUN. It **runs, and it fails**, which is the state the paper
+describes.
 
 ## What the machinery caught, in text written during the revision
 
