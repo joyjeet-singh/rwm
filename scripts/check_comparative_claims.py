@@ -479,13 +479,14 @@ CLAIMS = [
      "says": "the calibrated targets are",
      "value": ("paper_numbers.json", "v3_cov_nominal1.value"),
      "sites": [], "forbid_variants": ["68.3%", "68.3\\%", "68.3 %"],
-     "files": ["PAPER.md", "PAPER.tex", "README.md", "MODEL_CARD.md"]},
+     "files": ["PAPER.md", "PAPER.tex", "docs/BUILD_CHECKS.md",
+               "README.md", "MODEL_CARD.md"]},
     {"id": "C7.4", "kind": "count-consistency", "where": "6.7 / 10",
      "label": "the h=1 disagreement interval",
      "says": "it is the largest anywhere in this work",
      "value": ("paper_numbers.json", "d2_epi_ci_h1.value"),
      "sites": [], "forbid_variants": ["+0.917"],
-     "files": ["PAPER.md", "README.md", "MODEL_CARD.md"]},
+     "files": ["PAPER.md", "docs/BUILD_CHECKS.md", "README.md", "MODEL_CARD.md"]},
 
     # ---- C3.7: the sign check that should have caught 3.1 -----------------
     # 6.8 said the two largest held-out deviations were "in opposite

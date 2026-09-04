@@ -1,0 +1,171 @@
+{
+  "audit": "how each comparative check selects its input, and what moving text costs",
+  "why": "retraction-consistency scanned PAPER.template.md whole; moving Appendix D's machinery to docs/BUILD_CHECKS.md took that text out of its scan without any check failing. 5b moves more text than any other session, so the scopes are enumerated before the moves rather than after.",
+  "classes": {
+    "whole-file": "scans a file end to end; coverage follows the file, so moved text leaves the check unless its file list is extended",
+    "named-region": "addresses a region by name; text moving within the file is fine, and the region disappearing fails loudly",
+    "artifact-only": "reads results/*.json only; prose moves cannot affect it"
+  },
+  "prose_surfaces_after_5a": [
+    "PAPER.template.md",
+    "docs/BUILD_CHECKS.template.md",
+    "docs/APPENDIX_G_RULES.md",
+    "README.md",
+    "MODEL_CARD.md",
+    "RESULTS.md",
+    "docs/EXTERNAL_READ_BRIEF.md"
+  ],
+  "n_kinds": 21,
+  "n_whole_file": 14,
+  "n_named_region": 3,
+  "n_artifact_only": 4,
+  "n_unclassified": 0,
+  "unclassified": [],
+  "coverage_gaps": [],
+  "checks": [
+    {
+      "kind": "abstract-budget",
+      "input_selection": "named-region",
+      "reason": "splits PAPER.md on '## Abstract' and the next section heading. Breaks loudly if the heading is renamed; unaffected by text moving elsewhere",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "arithmetic",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for the sentence stating the sum",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "cell",
+      "input_selection": "artifact-only",
+      "reason": "one named artifact cell against another",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "compare",
+      "input_selection": "artifact-only",
+      "reason": "compares two artifact values",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "count-consistency",
+      "input_selection": "whole-file",
+      "reason": "scans each file in the claim's own `files` list for near-miss spellings of a canonical value",
+      "files_named_by_claims": [
+        "MODEL_CARD.md",
+        "PAPER.md",
+        "README.md",
+        "docs/BUILD_CHECKS.md"
+      ],
+      "tier": "built",
+      "requires": "docs/BUILD_CHECKS.md",
+      "covers_moved_text": true
+    },
+    {
+      "kind": "count-dependence",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for the dependent count",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "cross-artifact-sync",
+      "input_selection": "whole-file",
+      "reason": "reads the named reader-facing file and requires the paper to contain the sentence it asserts",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "extremum",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for the sentence naming an extremum",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "frequency-consistency",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for the frequency wording -- 'every', 'none', 'all'",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "horizon-consistency",
+      "input_selection": "named-region",
+      "reason": "delegated to scripts/horizon_sweep.py, which walks PAPER.template.md and resolves each numeral to the artifact cell it came from. Region = the sentence and paragraph around each substituted value, so it follows the text wherever it sits IN THAT FILE. Text moved OUT of PAPER.template.md leaves its coverage.",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "horizon-forbidden",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for a horizon that must not appear",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "horizon-label",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for a figure's horizon label",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "interval-required",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for quoted quantities and requires each to carry its interval",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "kind-count",
+      "input_selection": "named-region",
+      "reason": "finds '**The check kinds.**' and counts the italicised names in that paragraph. RE-POINTED in 5a from PAPER.md to docs/BUILD_CHECKS.md when the enumeration moved. A missing region fails the check",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "orders",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for the order-of-magnitude phrasing",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "overlap",
+      "input_selection": "artifact-only",
+      "reason": "compares two intervals from results/*.json",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "relvar",
+      "input_selection": "artifact-only",
+      "reason": "relative variation between artifact values",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "restatement",
+      "input_selection": "whole-file",
+      "reason": "scans PAPER.template.md end to end for a numeral typed where a key exists, and for a numeral ambiguous between two units",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "retraction-consistency",
+      "input_selection": "whole-file",
+      "reason": "scans each file in the claim's own `files` list for a retracted assertion. THIS IS THE ONE THAT SHRANK in 5a: docs/BUILD_CHECKS.template.md was added to all four of its file lists when Appendix D's machinery moved there",
+      "files_named_by_claims": [
+        "MODEL_CARD.md",
+        "PAPER.template.md",
+        "README.md",
+        "RESULTS.md",
+        "docs/BUILD_CHECKS.template.md"
+      ],
+      "tier": "template",
+      "requires": "docs/BUILD_CHECKS.template.md",
+      "covers_moved_text": true
+    },
+    {
+      "kind": "scope-consistency",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for universal quantifiers against an enumerated set",
+      "files_named_by_claims": []
+    },
+    {
+      "kind": "sign",
+      "input_selection": "whole-file",
+      "reason": "searches PAPER.md for the sentence stating a direction",
+      "files_named_by_claims": []
+    }
+  ],
+  "note_on_paper_md_scanners": "The whole-file scanners that search PAPER.md rather than a named file list are unaffected by 5b's moves in one direction and exposed in the other: text moved WITHIN PAPER.md keeps its coverage, text moved OUT of the paper loses it. 5b moves text out only to Appendix D's generated list, which is inside PAPER.md, so their coverage is unchanged by this session."
+}

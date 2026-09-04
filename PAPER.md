@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     870 values substituted from 73 artifacts. -->
+     867 values substituted from 73 artifacts. -->
 
 # Ensemble disagreement is miscalibrated as a scale, by a factor that grows with rollout depth: an independent reproduction of a released robotic world model
 
@@ -492,11 +492,7 @@ Seed spread is not symmetric between the arms and that is worth stating: Arm A r
 0.3341–0.3894 across seeds (7.9% relative), Arm B 1.4241–1.9710
 (17.3%). Teacher forcing is more than twice as variable across seeds as autoregressive
 training at this horizon, so a single-seed comparison of these two arms is unreliable in a way a
-reader should know about. An earlier draft of this paper quoted the single-seed figures
-0.3509 and 1.5540; those came from the seed that happened to be favourable to Arm A and
-unfavourable to Arm B, and the three-seed ratio at h = 368 is 4.61× rather than 4.4×.
-
-For a single seed the bootstrap over trajectories gives 95% interval
+reader should know about. For a single seed the bootstrap over trajectories gives 95% interval
 [0.56, 2.05] on n = 4 independent trajectories. **That interval should not be read as an ordinary one:** four trajectories admit 256 distinct resamples, so any bootstrap tail is quantised to steps of 0.39%, and the interval is coarse by construction. It is offered as corroboration of the sign test, not as the primary evidence.
 
 **So here are the four numbers the interval is computed from**, which are more informative than
@@ -512,9 +508,7 @@ and §11's paired contrasts carry their four per-trajectory ratios and coverage 
 `results/r2_independent_ensemble.json` and `results/m49_capacity_matched.json`. **It is not done
 everywhere.** §6.2's calibration tables report intervals at n_independent = 4 in every
 cell, and printing four values in each would be sixty-four numbers in one table; those intervals
-are quantised at the resolution §3 states and should be read as coarse. An earlier version of this
-paragraph claimed the underlying values were in the artifact for *every* such interval. They were
-not — only §5's were — and the claim is narrowed to what is true.
+are quantised at the resolution §3 states and should be read as coarse.
 
 *Against a baseline, because neither number means anything without one.* The hold-last
 floor — predicting that nothing changes — scores **0.9930** in the same
@@ -685,7 +679,7 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 **A constant scale error would not matter, and this one is not constant.** The penalty enters as `r̃ = r − λu`, so a `u` uniformly `c` times too small is arithmetically identical to running with `λ/c`, and λ is tuned. The measurement answers this directly. Rescaling σ by the single constant that best calibrates it — fitted and scored on the same data, so it is an upper bound on what *any* constant achieves — needs 10.4 at h = 1 and 43.2 at h = 368, a factor of 4 across the rollout (`M-65`). No single λ is both of those. The mechanism is §6.9's: σ is nearly flat while error grows by an order of magnitude, so the ratio runs 8.3× at h = 1, 33.4× at h = 100 and 34.4× at h = 368. The penalty is applied at every step of a 100-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk. **The limit, in the same breath**: this bounds what the quantity reports across depth, not what the distortion costs a trained policy, and no policy is trained here (§11).
 
-**The larger sample changes one thing materially, and it is a correction to our own earlier reading.** At n_independent = 4 the epistemic ordering looked like chance at short horizon — 23 of 45 dimensions at h=1 — and we had described it as a long-horizon effect. At n_independent = 20 it is 44 of 45 at h=1, with mean r = +0.662, the *strongest* mean correlation of any horizon. The in-sample permutation test says the same (§6.6). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model, and we record it as such rather than keeping the more interesting-sounding horizon story.
+**The larger sample changes one thing materially.** At n_independent = 4 the epistemic ordering looked like chance at short horizon — 23 of 45 dimensions at h=1. At n_independent = 20 it is 44 of 45 at h=1, with mean r = +0.662, the *strongest* mean correlation of any horizon. The in-sample permutation test says the same (§6.6). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model, and we record it as such rather than keeping the more interesting-sounding horizon story.
 
 **Two pre-registered checks on how these numbers are read, both committed before they were computed.** `M-62` asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **NO MOVE**: in the one arena with power at that level — all ten episodes, n = 20 falling to 10 — the pooled correlation's interval widens by 27% and the double-demeaned one by a factor of 0.98, and neither crosses zero. The other 4 cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance rather than discovering it, and they are reported as uninformative rather than as intervals.
 
@@ -704,9 +698,9 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 Our arms are **better calibrated than the released checkpoint and fail the same way**: 10.5× overconfident at h = 100 against its 33.4×, with 8.19% coverage where a calibrated Gaussian gives 68.27%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being an order of magnitude closer to calibrated is not being calibrated.
 
-The last column of the table above gives permutation P-values over whole trajectories, not binomial ones, computed on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here and how far it was wrong. **h = 100 carries the abstract, so it is tested rather than left blank**: an earlier draft ran the permutation test on the pre-revision five-horizon grid and printed "—" in the one row the headline rests on. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells — the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
+The last column of the table above gives permutation P-values over whole trajectories, not binomial ones, computed on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here and how far it was wrong. **h = 100 carries the abstract, so it is tested rather than left blank**. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells — the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
 
-The scalar penalty as actually applied — `means.std(0).sum(-1)` at `envs/base.py:166` — correlates **+0.605** with total absolute error over the rollout, 95% CI [+0.545, +0.694] from a bootstrap over whole trajectories, n_independent = 20 (7,360 pooled trajectory-step points). An earlier draft quoted this correlation with neither an interval nor an n. The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
+The scalar penalty as actually applied — `means.std(0).sum(-1)` at `envs/base.py:166` — correlates **+0.605** with total absolute error over the rollout, 95% CI [+0.545, +0.694] from a bootstrap over whole trajectories, n_independent = 20 (7,360 pooled trajectory-step points). The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
 
 ### 6.3 Why the aleatoric head collapses: the optimum is σ = 0
 
@@ -857,17 +851,11 @@ established. This subsection supplies a candidate, structurally symmetric to §6
 and from the checkpoint's own tensors. Nothing here is trained and nothing is inferred from a
 measurement.
 
-**The effect is known and we are not claiming it.** That heads sharing a trunk under-report
-disagreement relative to independently initialised networks is established: Lee, Purushwalkam,
-Cogswell, Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be
-engineered rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what
-independent initialisation buys is decorrelation which subspace methods do not match; and
-BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and MIMO (Havasi et al., ICLR 2021) share deliberately
-and state what they trade away for it. **What is ours is finding it in a released robotics
-checkpoint that its authors deployed on hardware, with the sharing quantified and the cost
-measured** — 89.15% of each member, and 2.03× on the overconfidence
-factor (§6.10). The problem is not sharing. It is sharing and then reading the spread as though
-the members were independent.
+**The effect is known and we are not claiming it** — §2 gives the four papers that establish
+it. **What is ours is finding it in a released robotics checkpoint that its authors deployed on
+hardware, with the sharing quantified and the cost measured**: 89.15% of each member,
+and 2.03× on the overconfidence factor (§6.10). The problem is not sharing. It is
+sharing and then reading the spread as though the members were independent.
 
 **The released five-member ensemble is not five models.** `system_dynamics.py:34` builds **one**
 `state_base`. `system_dynamics.py:35-41` replicates the *heads* `ensemble_size` times, and only
@@ -984,54 +972,54 @@ All three correlations below are on the scalar quantity the method actually appl
 
 **The last column answers the first question — does disagreement beat the counter — and it is not the test a reader might expect.** Comparing the two marginal intervals for overlap is the wrong comparison here: both correlations are measured on the *same* trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference — resampling whole trajectories and recomputing *both* correlations inside each draw — is the appropriate test and the more powerful one. It excludes zero at **5 of 5** horizons.
 
-The distinction matters at 2 of the 5 horizons. At h=100 and h=128 the marginal intervals *do* overlap, and an earlier draft of this paper wrongly asserted that they never do. h=128 is where the counter is strongest (+0.526) and the margin narrowest: the paired difference there is +0.145 [+0.011, +0.324], which excludes zero, but only just — +0.011 is the smallest lower bound in the table and we would not rest anything on that horizon alone — at the 400-step unit. At the shorter unit `M-64` builds, 60 non-overlapping units over the same ten episodes give [+0.148, +0.351] for the same paired difference, so the horizon that carried the least weight carries more than it did. At h = 100 the paired difference is +0.138 [+0.034, +0.362], which also excludes zero.
+The distinction matters at 2 of the 5 horizons. At h=100 and h=128 the marginal intervals *do* overlap. h=128 is where the counter is strongest (+0.526) and the margin narrowest: the paired difference there is +0.145 [+0.011, +0.324], which excludes zero, but only just — +0.011 is the smallest lower bound in the table and we would not rest anything on that horizon alone — at the 400-step unit. At the shorter unit `M-64` builds, 60 non-overlapping units over the same ten episodes give [+0.148, +0.351] for the same paired difference, so the horizon that carried the least weight carries more than it did. At h = 100 the paired difference is +0.138 [+0.034, +0.362], which also excludes zero.
 
 **The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lowers* disagreement's correlation by 0.010, from +0.605 to +0.596. Almost none of what disagreement knows is explained by knowing how deep into the rollout you are. It is carrying real information about *this* rollout, not a re-encoding of the clock.
 
-**A linear control is not much of a control, so we tested four harder ones.** Error does not grow linearly with rollout depth, and a control that under-fits the index leaves index-driven variance in the residual and flatters disagreement. Partialling out log(1 + index) gives +0.589 [+0.512, +0.688]; a cubic in the index gives +0.582 [+0.495, +0.676]; a rank partial correlation, which removes *any* monotone dependence on depth rather than an assumed functional form, gives +0.906 [+0.856, +0.921].
+**Six controls, five removing forecast depth and one removing trajectory difficulty.** A
+linear partial is not much of a control — error does not grow linearly with depth, and a
+control that under-fits the index leaves index-driven variance in the residual and flatters
+disagreement. Each row below removes something different; the last was pre-registered before
+it was computed (M-45, §8), and adding it changed how we read the five above it.
 
-The strongest of the four needs no model of the index-error relationship at all. Computing the correlation **within each forecast step** — across trajectories, with depth held exactly constant, so the index cannot contribute by construction — and averaging over steps gives **+0.739 [+0.711, +0.852]**, positive at 368 of 368 forecast steps with a median of +0.737.[^stepcount] The weakest figure across all 5 controls is +0.582. Disagreement is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong.
+| what is removed | correlation | 95% CI | what survives it |
+|---|---|---|---|
+| nothing (pooled) | +0.605 | [+0.545, +0.695] | — |
+| the step index, linearly | +0.596 | — | depth explains 0.010 of it, from +0.605 |
+| log(1 + index) | +0.589 | [+0.512, +0.688] | a non-linear model of depth |
+| a cubic in the index | +0.582 | [+0.495, +0.676] | any polynomial trend in depth |
+| any monotone function of depth (rank partial) | +0.906 | [+0.856, +0.921] | depth in any monotone form |
+| depth exactly, within each forecast step | **+0.739** | [+0.711, +0.852] | positive at 368 of 368 steps, median +0.737[^stepcount] |
+| forecast-step means only | +0.589 | — | the within-step control, pooled |
+| trajectory means only | +0.470 | [+0.389, +0.604] | — |
+| everything within a trajectory — the 20 trajectory means alone | +0.878 | [+0.817, +0.956] | do harder rollouts disagree more? |
+| **both, additively (r_dd)** | **+0.419** | **[+0.318, +0.576]** | **at a given depth, in a given rollout, does disagreement know?** |
 
 [^stepcount]: Adjacent forecast steps on the same 20 trajectories are heavily dependent — structurally the same problem §6.6 spends a page correcting for the 45 coupled state dimensions. The count is descriptive; the interval [+0.711, +0.852] is the statistic, and no P-value attaches to 368/368.
 
-**All five of those controls remove forecast depth. None removes trajectory difficulty, and the
-sixth does.** This is the one control in this section that was pre-registered before the statistic
-was computed (M-45, §8), and adding it changed how we read the five above.
+The weakest figure across the 5 depth controls is +0.582, so disagreement
+is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong. But
+depth was never the only confound. Per-episode difficulty spans 0.562 to 1.591 and is
+uncorrelated with commanded speed, so if harder trajectories simply have both larger error and
+larger disagreement, the pooled correlation would look exactly as it does with disagreement
+carrying no within-rollout information whatever. Two things suggested checking: the
+20-point h = 1 figure of +0.994, which is not the shape of a genuine per-step
+signal, and the within-step control coming out *above* the pooled figure, which is the signature
+of a between-unit effect.
 
-Per-episode difficulty in this dataset spans 0.562 to 1.591 and is uncorrelated with
-commanded speed, so the units being correlated differ a great deal in *level*. If harder
-trajectories simply have both larger error and larger disagreement, the pooled correlation would
-look exactly as it does with disagreement carrying no within-rollout information whatever. Two
-things suggested that was worth checking: the 20-point h = 1 figure of
-+0.994, which is not the shape of a genuine per-step signal, and the within-step control
-coming out *above* the pooled figure, which is the signature of a between-unit effect.
-
-Splitting the pooled correlation settles which effect carries it:
-
-| what is removed | correlation | 95% CI | what it answers |
-|---|---|---|---|
-| nothing (pooled) | +0.605 | [+0.545, +0.695] | — |
-| everything within a trajectory — the 20 trajectory means alone | +0.878 | [+0.817, +0.956] | do harder rollouts disagree more? |
-| forecast-step means only | +0.589 | — | the existing within-step control, pooled |
-| trajectory means only | +0.470 | [+0.389, +0.604] | — |
-| **both, additively (r_dd)** | **+0.419** | **[+0.318, +0.576]** | **at a given depth, in a given rollout, does disagreement know?** |
-
-The between-trajectory correlation is **+0.878**, and the two components contribute
-51.7% and 48.3% of the pooled covariance. So a large part of what
-§6.7 has been reporting is a between-rollout effect. **That reinterprets the fifth control rather
-than merely adding to it.** The within-step statistic correlates *across trajectories* at each
-fixed step and averages — which removes depth completely and removes trajectory difficulty not at
-all. It is a mean of 368 between-trajectory correlations, which is why it reads
-+0.739 against the pooled +0.605 rather than below it. It was described in an earlier
-draft as "the decisive one"; it is not, and we withdraw that description.
-
-**The decisive statistic is the double-demeaned one, and it survives.** Removing the trajectory
-mean *and* the step mean from both variables and correlating the residuals gives
-**+0.419 [+0.318, +0.576]**, on n_independent = 20 with a cluster bootstrap over whole
-trajectories. M-45's threshold, fixed before the statistic was computed, was that this interval exclude zero. The rule's minimum detectable effect at this sample size is an absolute r_dd of 0.183 or more, estimated by a dilution study which put the detection threshold between a true effect of 0.086 (not detected) and 0.172 (detected). The observed effect is comfortably above it. **M-45 returns SUPPORTED**: with both the rollout
-and the depth held constant, disagreement still tracks error. It is not merely reporting which
-episode is hard.
-
+**The verdict.** The between-trajectory correlation is +0.878 and the two components
+contribute 51.7% and 48.3% of the pooled covariance, so a large
+part of what this section has been reporting is a between-rollout effect. **That reinterprets the
+within-step control rather than merely adding to it**: it is a mean of 368
+between-trajectory correlations, which is why it reads +0.739 against the pooled
++0.605 rather than below it. It was described in an earlier draft as "the decisive one";
+it is not, and we withdraw that description. The decisive statistic is the double-demeaned one and
+it survives: +0.419 [+0.318, +0.576] at n_independent = 20, against M-45's
+pre-committed threshold that the interval exclude zero and a minimum detectable effect of
+0.183, estimated by a dilution study placing detection between 0.086
+(not detected) and 0.172 (detected). **M-45 returns SUPPORTED**: with both the
+rollout and the depth held constant, disagreement still tracks error rather than merely reporting
+which episode is hard.
 **Per horizon, on the same 20 trajectories and the same cluster bootstrap:**
 
 | h | r_dd, double-demeaned | 95% CI | excludes zero |
@@ -1116,8 +1104,7 @@ enough to be worth five models.
 `M-51` fixed this reading in advance rather than after the fact: the partial is the load-bearing
 test and the margin is corroboration, so a baseline passing the partial while failing the margin
 does not refute the ranking claim. **It does refute a framing.** "Disagreement ranks error well"
-is supported. "You need the ensemble to rank error" is not, and this paper said the second thing
-in an earlier draft.
+is supported. "You need the ensemble to rank error" is not,.
 
 **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and
 that is the strongest form of support this paper offers any claim of either original work — now
@@ -1135,12 +1122,10 @@ opposite and `M-54` records the correction.
 
 ### 6.8 One constant scalar does not fix it, but a per-horizon one does
 
-**Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this section
-is an instance of it rather than a departure from it.** Kuleshov, Fenner and Ermon (ICML 2018)
-give the post-hoc calibration map; Malik, Kuleshov, Song, Nemer, Seymour and Ermon (ICML 2019)
-apply that idea to model-based RL specifically and argue there that good uncertainties must be
-calibrated rather than merely well ranked — which is the distinction this paper draws throughout
-§6.2 and §6.7. **What is new here is the conditioning variable and one negative result.** The
+**Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this
+section is an instance of it rather than a departure from it** — §2 gives the prior work and the
+calibrated-versus-well-ranked distinction it turns on. **What is new here is the conditioning
+variable and one negative result.** The
 variable is the *forecast horizon*, and the negative result is that a single global multiplier
 **fails** where a per-horizon one works. That is not a detail: an open-loop rollout's error
 accumulates with depth while its predicted σ does not (§6.9), so a horizon-blind recalibration
@@ -1170,7 +1155,7 @@ The reason is §6.9's mechanism: a constant multiplier cannot track an error tha
 | aleatoric | **12 / 12** | 2 / 12 | 592.6 – 7782 (13.1×) |
 | epistemic | **12 / 12** | 2 / 12 | 5.082 – 47.33 (9.31×) |
 
-Every held-out cell lands within 10 points of the 68.27% target for both quantities. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48% — 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. An earlier draft described them as opposite; they are not, and the `sign` family of checks now covers this sentence. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at.
+Every held-out cell lands within 10 points of the 68.27% target for both quantities. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48% — 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at.
 
 Three cautions a reader should apply. The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample — only the held-out column above is evidence, and that is the column reported. **And the held-out column is thinner than its count suggests:** the 12 cells are 6 horizons × two fold directions on the same 4 trajectories, and each multiplier is fitted on n_independent = 2 and scored on the other 2. They are not 12 independent successes and no P-value attaches to the count; it is reported so a reader can see how thin the evidence is, alongside a result we believe. And the correction is a calibration patch, not a fix: it leaves the model's σ carrying no more information than before and simply rescales it by how far ahead you are looking. It is nevertheless enough to make the interval mean what it says, which is what a downstream user needs, and it costs one lookup table.
 
@@ -1344,7 +1329,7 @@ The σ collapse is linear in iteration count and its rate is nearly identical ac
 **153,270** optimisation steps at the configured learning rate — against a released
 configuration that says 500, a paper that says 2,500 and a checkpoint tagged 5,000. A second
 parameter on a slower gradient path implies the same order independently. The defensible claim is
-narrower than it first looks, and narrower than an earlier draft of this paper made it: **no
+narrower than it first looks: **no
 constant-rate run from the released initialisation at the configured learning rate reaches that
 variance state at any of the three stated counts.** A warm start or a different
 `log_delta_logstd` initialisation would explain it with no inconsistency at all, and we can
@@ -1378,8 +1363,7 @@ counted separately because a value that is not produced twice cannot be compared
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 8,186 values, or 0.90%
 of the 905,391 numeric values under `results/`. The other 897,205 are carried in, prove
-nothing about reproduction, and are never folded into the figure — an earlier version of this
-section counted them and overstated the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 582 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it — six defects in an earlier draft were of exactly that kind, all downstream of correct numerals. The build therefore also verifies **52 comparative claims** across 21 kinds, each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 52 of 52 caught. **Appendix D gives the argument, the kinds, the self-test, the four defects the self-test has found in the checker itself, and the two exclusions from the numeric comparison.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 582 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **52 comparative claims** across 21 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 52 of 52 caught. **Appendix D gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1473,7 +1457,7 @@ anyone with a second dataset.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. **Capacity is no longer one of them.** `M-49`, committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132 — a ratio of 0.9998, where §6.10's original contrast carried 3.49. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
-**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from 2.03× unmatched to **1.79× matched**, against an MDE of 2.00×. `M-49` therefore returns **UNDER-POWERED** — 5 of its 6 conditions hold and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested; §6.10's own text said so before the runs rather than after them. So: trunk-sharing is **not** explained away by capacity — the effect is in the same direction on every pair with every interval excluding zero. Whether capacity accounts for *any* of it is a different question and this design does not answer it: the point estimates fall from 2.03× to 1.79×, a difference of about 0.24, which is untested — no artifact here pairs the two independent arms against each other — and far below the 2.00× this comparison can resolve. An earlier draft of this sentence said capacity accounts for some of the effect; that is more than `R-73` supports and it is withdrawn. Closing it needs more independent trajectories than the released dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which `M-49` does not address and this paragraph does not claim it does.
+**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from 2.03× unmatched to **1.79× matched**, against an MDE of 2.00×. `M-49` therefore returns **UNDER-POWERED** — 5 of its 6 conditions hold and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested; §6.10's own text said so before the runs rather than after them. So: trunk-sharing is **not** explained away by capacity — the effect is in the same direction on every pair with every interval excluding zero. Whether capacity accounts for *any* of it is a different question and this design does not answer it: the point estimates fall from 2.03× to 1.79×, a difference of about 0.24, which is untested — no artifact here pairs the two independent arms against each other — and far below the 2.00× this comparison can resolve. Closing it needs more independent trajectories than the released dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which `M-49` does not address and this paragraph does not claim it does.
 That asymmetry is deliberate and it is generous to the mechanism: if the overconfidence factor
 barely moves despite the handicap, the finding is strong in the direction of *architecture is not
 the explanation*; if it moves a great deal, the design flaw is identified but not cleanly
