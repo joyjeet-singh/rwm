@@ -6,36 +6,36 @@
 
 We rebuild the proprioceptive dynamics model of the *Robotic World Model*
 (arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on
-CPU, checked against the released reference at gradient level. Three findings.
+CPU, checked against the released reference at gradient level.
 
-**The quantity the method penalises with is miscalibrated as a scale, by a factor that grows
-with depth.** Ensemble disagreement is the trust metric the follow-up applies, and it is
-smaller than realised error by {{d1n_epi_ratio_h1}}× at h = 1 and {{d1n_epi_ratio_h100}}× at
-h = {{v2_deploy_h}}, where its imagination rollouts run. **That is not
+**The trust metric the method penalises with is miscalibrated as a scale, by a factor that
+grows with depth.** Ensemble disagreement is smaller than realised error by
+{{d1n_epi_ratio_h1}}× at h = 1 and {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}, where its
+imagination rollouts run. **That is not
 accumulated rollout error**: at one step nothing has accumulated and the input is the true
-state, yet the figure is already an order of magnitude out. **Nor is it a units problem a tuned
+state, yet it is already an order of magnitude out. **Nor is it a units problem a tuned
 coefficient absorbs.** The penalty enters through a scalar weight, so a uniformly wrong scale
-would be a rescaling of that weight — but the best constant rescale, fitted and scored on the
-same data and so an upper bound on what any constant achieves, grows by a factor of
-{{m65_c_growth}} across the rollout. The σ the method computes and then discards is worse still,
-and we derive why: the implemented objective's optimum is σ = 0.
+would simply rescale it — but the best constant rescale, an upper bound because it is fitted and
+scored on the same data, grows by a factor of {{m65_c_growth}} across the rollout. The σ the method computes and discards is worse still, and
+we derive why: the implemented objective's optimum is σ = 0.
 
 **The base paper's central training claim reproduces, and the advantage grows with horizon** —
 {{d1_ratio}}× on the reference's own relative-L1 error at h = {{v2_diag_h}}, under a rule
 committed to git before the runs. **At one step it reverses**: under a second rule, a shorter
 evaluation unit resolves a gap the 400-step unit left spanning zero, and teacher forcing wins.
 
-**The released evaluation understates its own checkpoint**, pairing each state with the previous
-step's action and overstating that checkpoint's nRMSE at h = {{v2_diag_h}} by {{stale_pct}}%.
+**The released evaluation understates its own checkpoint**: it pairs each state with the
+previous step's action, overstating that checkpoint's nRMSE at h = {{v2_diag_h}} by
+{{stale_pct}}%.
 
-As a *ranking* it is far better, with limits: holding rollout and depth constant it
-still tracks error and beats the forecast step index at every horizon, but the model's own
-predicted step size comes close enough that this sample cannot separate them. One repair works: a
+As a *ranking* it is far better, with limits: holding rollout and depth constant it still
+tracks error and beats the forecast step index everywhere, but the model's own predicted step
+size comes close enough that this sample cannot separate them. One repair works: a
 per-horizon multiplier, fitted on one held-out episode and scored on the other, restores nominal
 coverage on every held-out cell.
 
-Every **measurement** here is substituted from a named artifact; the rest are classified by a
-build that fails on anything left over.
+Every **measurement** here is substituted from a named artifact, by a build that fails on any
+numeral it cannot classify.
 
 ---
 
@@ -926,7 +926,7 @@ variation to key on. We have not tested it.
 
 **The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} out of sample, the epistemic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1). Both larger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_ins_epi_p_h8}} at h=8, against {{perm_ins_epi_p_h128}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at {{perm_all_epi_p_h100}} sitting between h=32's {{perm_all_epi_p_h32}} and h=128's {{perm_all_epi_p_h128}} — the horizon added by this revision falls where the existing reading says it should, which is worth stating because it was not free to. Two independent arenas at four and five times the sample say the effect is strongest at *short* horizon.
 
-The null means explain why, and the explanation is the same one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so at this unit it cannot distinguish a strong effect from a marginal one at any horizon. **That blindness is a property of the 400-step unit, not of the arena**, and the distinction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (`M-64`). **We did not recompute this permutation family at the shorter unit**, so what the short units change here is the scope of the design claim rather than any verdict in it: the arena is demonstrably underpowered at h = {{v2_diag_h}}, which needs the full 400 rows, and is no longer demonstrably underpowered at h ≤ 128. Running it there is one pass over stored rollouts and we did not do it. We report the small arena's numbers alongside because it is the only arena that is out-of-sample for our own arms, not because it is the better measurement.
+The null means explain why, and the explanation is the same one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so at this unit it cannot distinguish a strong effect from a marginal one at any horizon. **That blindness is a property of the 400-step unit, not of the arena**, and the distinction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (`M-64`). **We did not recompute this permutation family at the shorter unit**, so what the short units change here is the scope of the design claim rather than any verdict in it: the arena is demonstrably underpowered at h = {{v2_diag_h}}, which needs the full 400 rows, and is no longer demonstrably underpowered at h = 128 and below. Running it there is one pass over stored rollouts and we did not do it. We report the small arena's numbers alongside because it is the only arena that is out-of-sample for our own arms, not because it is the better measurement.
 
 **Nothing here survives multiplicity correction, in any of the three arenas.** Holm–Bonferroni over each arena's {{perm_oos_holm_n}} model × horizon cells at α = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample that is a property of the design rather than of the models: with {{perm_oos_nind}} independent trajectories the smallest attainable P-value is {{perm_oos_floor}}, which already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have been rejected there. In sample the miss is real — the smallest P in the family is {{perm_ins_holm_min_cell}} at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}.
 
@@ -1436,7 +1436,7 @@ anyone with a second dataset.
 
 **We did not measure what the miscalibration costs.** We show that the penalty the follow-up applies is miscalibrated as a scale — {{d1n_epi_ratio_h100}}× overconfident at h = {{v2_deploy_h}}, the horizon its own imagination rollouts run to — but the only use the method makes of that quantity is to shape policy learning, and we did not train a policy. A miscalibrated scale that enters as a relative penalty across candidate actions may cost little, or may cost a great deal; our measurements cannot distinguish those. **The finding bounds what the quantity reports, not what it costs.** That distinction is easy to lose and we do not want a reader to take the ratio as a measure of harm.
 
-**The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's {{perm_oos_nind}} independent trajectories admit a smallest attainable P-value of {{perm_oos_floor}} — coarser than the multiplicity-corrected threshold {{perm_oos_holm_thr}}, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released dataset contains, rather than a better test. **At h ≤ 128 that is no longer true and we say so**: a shorter evaluation unit gives {{m64_oos_n_h100}} independent units at h = {{v2_deploy_h}} where the 400-step unit gives {{perm_oos_nind}} (`M-64`), and we did not rerun this permutation family there. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
+**The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's {{perm_oos_nind}} independent trajectories admit a smallest attainable P-value of {{perm_oos_floor}} — coarser than the multiplicity-corrected threshold {{perm_oos_holm_thr}}, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released dataset contains, rather than a better test. **At h = 128 and below that is no longer true and we say so**: a shorter evaluation unit gives {{m64_oos_n_h100}} independent units at h = {{v2_deploy_h}} where the 400-step unit gives {{perm_oos_nind}} (`M-64`), and we did not rerun this permutation family there. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
 
 **No family-wide correction is applied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendix G) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
 
@@ -1583,8 +1583,6 @@ values (`M-66`). A sweep of all {{audit_n_hits}} pattern-based input discoveries
 {{audit_n_frozen}} was frozen, and artifacts that discover their inputs now record the
 file list they were computed over.
 
-{{FIGURES}}
-
 ## Appendix D — verifying the paper's own claims
 
 **The {{n_retractions_word_lower}} numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The {{n_retract_framing_word}} framing retractions**, withdrawn as stated claims rather
@@ -1646,37 +1644,15 @@ unresolved braces: a pipe-led line with no separator row beneath it, a single-br
 that names a real key, and any key resolving to an empty or null value. The converter
 requires the separator row before it will build a table.
 
-**The check kinds.** `scripts/check_comparative_claims.py` verifies {{cc_n}} claims across
-{{cc_kinds}} kinds: {{cc_kind_list}}.
-
-That list is generated from the checker's own registry rather than written here. It was
-written here, and §8 quoted a generated count beside it; the two had drifted seven kinds
-apart, inside the appendix whose subject is count consistency. The `kind-count` check now
-asserts that the number §8 claims, the number this list enumerates and the number the
-checker registers at run time are one number.
-
-Each entry pins two things and requires both: a **fragment of the paper's own text**, so that
-rewording a sentence fails the check rather than silently detaching it from the claim it guards,
-and a **relation recomputed from the artifacts**. A check that only re-asserts an artifact fact
-guards nothing; a check that only matches text guards nothing either.
-
-**The self-test.** Every assertion is run against a deliberately corrupted expectation on each
-build and must fail: the interval relation inverted, the extremum replaced by the *runner-up*
-rather than an absent label, the sign flipped, the order of magnitude and the dimension counts
-moved by one. {{cc_st_caught}} of {{cc_st_n}} are caught. An assertion that has quietly stopped
-being able to fail is worth less than no assertion, because it reads as coverage.
-
-**{{cc_selfdefects_word}} defects the self-test has found in the checker itself**, rather
-than in the paper. Each surfaced because the checks were run rather than assumed, and the
-last two are the ones a reader should weigh, because both are failures of *coverage* rather
-than of arithmetic — an assertion that cannot fail, and a kind with no assertion attached,
-both of which read as protection and are not:{{cc_selfdefect_list}}
-
-Corruptions now invert relative to each claim's own expectation, every registered kind
-carries at least one claim, and every claim is corrupted on every build: {{cc_st_caught}} of
-{{cc_st_n}} caught against {{cc_n}} claims, with no exemptions. This list is generated from
-the checker rather than written here, so a fourth entry cannot be forgotten.
-
+**The machinery, and the two lines that matter about it.** `scripts/check_comparative_claims.py`
+verifies {{cc_n}} claims across {{cc_kinds}} kinds, each pinning a fragment of this paper's text
+and a relation recomputed from the artifacts, and each run against a deliberately corrupted
+expectation on every build so that a check which can no longer fail is caught. The registry, the
+self-test's mechanics and the {{cc_selfdefects_word}} defects it has found in the checker itself
+are in `docs/BUILD_CHECKS.md`, shipped as supplementary. **The evidence that any of it is
+load-bearing is one sentence**: the comparative checks caught three defects in text written
+during this revision — two calibration figures that named no horizon, and one numeral quoted
+three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
 bounds everything in this appendix: of the {{ver_all}} numeric values under `results/`, a clean
@@ -1715,24 +1691,6 @@ Excluding by filename rather than by stopping rule would have dropped the reprod
 with it, so the verifier decides from the artifact — a run that stopped short of its own cap was
 time-bounded.
 
-**Excluding a file is not sufficient on its own.** `results/paper_numbers.json` records the
-*source* of every value it holds, and it had copied that diagnostic's iteration count into a key
-of its own — so the host-dependence leaked through a file that was not excluded, and the clean
-clone duly differed on it. The verifier now drops any key whose recorded source is an excluded
-artifact ({{ver_hostkeys}} of them), which follows the provenance the file already carries rather
-than requiring anyone to remember.
-
-**One further class, excluded by the same mechanism and worth naming because it sounds like an
-excuse.** {{ver_selfref}} keys in `paper_numbers.json` are sourced from
-`verify_reproduction.json` — that is, they are this paper's statements *about this very
-comparison*: how many files it regenerated, how many values matched, how many differed. A clean
-clone necessarily carries in the **previous** run's figures and is then compared against a tree
-holding the **current** run's, so they cannot agree: writing a result into the tree changes the
-thing the next run measures. There is no fixed point to converge to, and treating it as a
-reproducibility failure would make the reported figure oscillate rather than settle. They are
-dropped by provenance like the others and counted in the output rather than hidden — the same
-discipline §8's own {{ver_files}}-file figure rests on, since a silent exclusion is exactly how an
-earlier version of this claim was inflated fiftyfold.
 
 ## Appendix E — what testing the untested claims would require
 
@@ -1834,12 +1792,11 @@ selector matched on entry TITLES, and `M-52`'s title does not contain the word, 
 sceptical reader most wants was silently absent. Entries are selected by their `Status` line as
 well now, and the count is asserted against the same set `scripts/ledger_check.py` reports.
 
-**What each rule says, in its own committed words.** These are quotations, so their section
-references are the ones current when each rule was committed and some no longer resolve — `M-45`
-governs "the within-trajectory control on §5.6", which is now §6.7. Renumbering a quotation to
-keep a cross-reference checker happy would falsify it, so they stand as written and the checker
-exempts this block by name.
-{{appG_rule_texts}}
+**What each rule says, in its own committed words** is in the supplementary material, as
+`docs/APPENDIX_G_RULES.md` — every rule's text unabridged, generated from the ledger by the same
+script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an
+appendix whose job is to be checkable at a glance, and quoting them in part would ship
+quotations ending mid-sentence. The table is the claim; the supplementary is the evidence.
 
 ---
 

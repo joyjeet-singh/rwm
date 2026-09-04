@@ -40,6 +40,11 @@ def esc(s):
     s = s.replace("—", "---").replace("–", "--").replace("×", r"$\times$")
     s = s.replace("σ", r"$\sigma$").replace("μ", r"$\mu$").replace("ε", r"$\varepsilon$")
     s = s.replace("λ", r"$\lambda$").replace("φ", r"$\phi$").replace("\u0303", "")
+    # Relational operators reach the .tex from the LEDGER, not from the template:
+    # M-64's committed title contains "h <= 128" as U+2264, and Appendix G quotes
+    # rule titles verbatim. The ledger is append-only, so a rule's title cannot be
+    # rewritten to suit the converter -- the converter has to set what the ledger says.
+    s = s.replace("≤", r"$\le$").replace("≥", r"$\ge$").replace("≠", r"$\ne$")
     # A combining circumflex is a SEPARATE codepoint following the letter it
     # decorates, so "σ̂" is two characters and the sigma rule above has already
     # turned the first into $\sigma$ by the time this runs -- leaving a bare
@@ -222,7 +227,11 @@ def convert(md, title, author):
             # for prose, but this string never passes through esc(), so the few
             # LaTeX-active characters a caption can contain are handled here.
             cap = cap.replace("%", r"\%") if "\\%" not in cap else cap
-            out.append(r"\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]"
+            # [!ht] rather than [htbp]: the figures are now emitted next to the
+            # paragraph that first refers to them (build_paper.py), so "here" is
+            # the right answer and "p" -- a float page of its own at the end -- is
+            # what used to carry them past section 14.
+            out.append(r"\begin{figure}[!ht]\centering\includegraphics[width=\linewidth]"
                        r"{\detokenize{" + src + r"}}"
                        + (r"\caption{" + cap + r"}" if cap else "")
                        + r"\end{figure}")

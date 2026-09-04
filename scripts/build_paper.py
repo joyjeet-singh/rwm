@@ -164,17 +164,73 @@ def main():
     }
     missing = [f for f in figs if f not in CAPS]
     assert not missing, f"figures with no caption: {missing}"
-    block = "## Appendix C — figures\n\n"
+    # PLACEMENT AT FIRST REFERENCE (Session 5 addendum B.3).
+    #
+    # The figures used to be emitted as one block under an "Appendix C — figures"
+    # heading at the {{FIGURES}} marker. LaTeX floats them, so with every figure
+    # declared in one place at the end of the document they drifted past section 14 and
+    # left the Appendix C heading standing over nothing -- a heading with no
+    # content under it, and eleven figures a reader had to hunt for.
+    #
+    # Each figure is now inserted immediately after the paragraph that first
+    # refers to it by number, so the float has somewhere near its reference to
+    # land. The numbering comes from the filename: paper_fig3_* is Figure 3, which
+    # is the same mapping the captions and the prose already assume.
+    #
+    # A figure whose number is never referenced in the prose has nowhere to be
+    # placed, and that is a defect in the prose rather than something to paper
+    # over -- it is asserted rather than silently appended.
+    body = out
+    unplaced = []
     for f in figs:
-        block += f"![{CAPS[f]}](figures/{f})\n\n"
-    # The figures used to be appended last unconditionally, which fixed them as
-    # the final appendix. A template that wants an appendix AFTER them places
-    # {{FIGURES}} where they belong; otherwise they still go at the end.
-    if "{{FIGURES}}" in out:
-        body = out.replace("{{FIGURES}}", block.rstrip()) .rstrip() + "\n"
-    else:
-        body = out.rstrip() + "\n\n" + block
+        _n = re.match(r"paper_fig(\d+)", f)
+        assert _n, f"cannot read a figure number from {f}"
+        _img = f"![{CAPS[f]}](figures/{f})"
+        # "(?!\\d)" rather than "\\b": the prose refers to sub-panels as "Figure 5a",
+        # where \\b fails between the digit and the letter, and a bare \\d+ would let
+        # a search for Figure 1 match Figure 15.
+        _m = re.search(r"Figure~?\s*" + _n.group(1) + r"(?!\d)", body)
+        if not _m:
+            unplaced.append(f)
+            continue
+        # after the end of the paragraph holding the first reference
+        _end = body.find("\n\n", _m.end())
+        _end = len(body) if _end == -1 else _end + 2
+        body = body[:_end] + _img + "\n\n" + body[_end:]
+    assert not unplaced, (
+        f"figures never referenced by number in the prose, so they have no home: "
+        f"{unplaced}. Reference them or remove them.")
+    # Appendix C was the container for the block and is retired with it. The
+    # marker is removed rather than left to render an empty heading.
+    body = body.replace("{{FIGURES}}\n\n", "").replace("{{FIGURES}}", "")
+    body = body.rstrip() + "\n"
     open(OUT, "w").write(header + body)
+
+    # docs/BUILD_CHECKS.md — supplementary, generated from the same values.
+    # Appendix D kept the failure modes and the exclusions; the registry, the
+    # self-test and the checker's own defects moved here (Session 5a, B.2). It is
+    # substituted rather than hand-maintained so a count quoted here cannot drift
+    # from the one section 8 prints, which is the drift kind-count exists to catch.
+    _bct = os.path.join("docs", "BUILD_CHECKS.template.md")
+    if os.path.exists(_bct):
+        _bc_missing, _bc_used = [], set()
+
+        def _bcsub(m):
+            k = m.group(1)
+            if k not in N:
+                _bc_missing.append(k)
+                return m.group(0)
+            _bc_used.add(k)
+            return str(N[k]["value"])
+
+        _bc_out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", _bcsub, open(_bct).read())
+        assert not _bc_missing, (
+            f"docs/BUILD_CHECKS.template.md has placeholders with no value: "
+            f"{sorted(set(_bc_missing))}")
+        _bc_left = re.findall(r"\{\{[^}]*\}\}", _bc_out)
+        assert not _bc_left, f"BUILD_CHECKS unresolved: {sorted(set(_bc_left))}"
+        open(os.path.join("docs", "BUILD_CHECKS.md"), "w").write(_bc_out)
+        print(f"  wrote docs/BUILD_CHECKS.md ({len(_bc_used)} values substituted)")
 
     # LaTeX for submission, from the same resolved text -- one source, two outputs.
     import md_to_tex

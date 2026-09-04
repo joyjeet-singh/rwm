@@ -421,10 +421,8 @@ def main():
             verdict=r["verdict"].replace("|", "/"))
         for r in AG["rules"])
     put("appG_table", _rows.rstrip(), "results/appendix_g_rules.json")
-    _texts = "".join(
-        f"\n**`{r['id']}` — {r['title']}.** {r['rule_text']}\n"
-        for r in AG["rules"])
-    put("appG_rule_texts", _texts.rstrip(), "results/appendix_g_rules.json")
+    # B.1: the body no longer carries rule texts. They ship in full in
+    # docs/APPENDIX_G_RULES.md, written by scripts/appendix_g_rules.py.
     put("tn_classes", TN["n_classes"], "results/typed_numerals.json")
     put("tn_exceptions", TN["n_exceptions"], "results/typed_numerals.json")
     # C5(rev2), 3.5. Section 8 said "N kinds" from this key while appendix D

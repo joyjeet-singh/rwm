@@ -296,6 +296,12 @@ CLAIMS = [
      "sections": ["Abstract", "9. Actionable lessons", "12. Conclusion"]},
 
     # ---- C10 retraction-consistency --------------------------------------
+    # docs/BUILD_CHECKS.template.md joined this list in Session 5a. It did not
+    # need to be here before: the text it holds was inside Appendix D, and
+    # PAPER.template.md was scanned whole. Moving that text out of the paper moved
+    # it out of the scan, which would have left a reader-facing surface where a
+    # retracted claim could survive unnoticed -- S-19's own lesson, and the same
+    # shape as the Hugging Face model card that no check reads.
     # A claim the ledger marks SUPERSEDED must not still be asserted anywhere
     # reader-facing. The README carried one for weeks after 8 narrowed it.
     #
@@ -309,20 +315,24 @@ CLAIMS = [
     {"id": "C10.1", "kind": "retraction-consistency", "where": "7.5 / README / RESULTS",
      "says": "the released artifacts do not reproduce the released",
      "retracted": "cannot have come from the released recipe",
-     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md",
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+               "README.md", "MODEL_CARD.md", "RESULTS.md",
                "FINDINGS_LEDGER.md#summary"]},
     {"id": "C10.2", "kind": "retraction-consistency", "where": "6.6 / README",
      "says": "no per-dimension count in this paper reaches significance",
      "retracted": "sign test on 45 dimensions",
-     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md"]},
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+               "README.md", "MODEL_CARD.md", "RESULTS.md"]},
     {"id": "C10.3", "kind": "retraction-consistency", "where": "6.8",
      "says": "The two largest deviations are both on the",
      "retracted": "deviations are both at h=100 on the aleatoric term, in opposite directions",
-     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md"]},
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+               "README.md", "MODEL_CARD.md", "RESULTS.md"]},
     {"id": "C10.4", "kind": "retraction-consistency", "where": "4",
      "says": "are claims about policy learning or hardware",
      "retracted": "without exception",
-     "files": ["PAPER.template.md", "README.md", "MODEL_CARD.md", "RESULTS.md"]},
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+               "README.md", "MODEL_CARD.md", "RESULTS.md"]},
 
     # ---- C11 cross-artifact-sync -----------------------------------------
     # README and MODEL_CARD are reader-facing and were materially behind the
@@ -856,13 +866,19 @@ def evaluate(c, paper, override=None):
         N = art("paper_numbers.json")
         registered = len({c["kind"] for c in CLAIMS})
         claimed = int(exp.get("_forced", N[exp["key"]]["value"]))
-        # appendix D enumerates the kinds as *italicised* names in one sentence
-        i = paper.find("**The check kinds.**")
-        seg = paper[i:paper.find("\n\n", i)] if i >= 0 else ""
+        # The enumeration used to sit in appendix D. It moved to docs/BUILD_CHECKS.md
+        # when appendix D was cut to a page (Session 5a). The check is RE-POINTED
+        # rather than deleted or relaxed -- it still asserts that section 8's stated
+        # count, the enumeration and this file's runtime registry are one number,
+        # which is the whole reason it exists. A missing file fails the check.
+        _bc_path = os.path.join("docs", "BUILD_CHECKS.md")
+        _bc = open(_bc_path).read() if os.path.exists(_bc_path) else ""
+        i = _bc.find("**The check kinds.**")
+        seg = _bc[i:_bc.find("\n\n", i)] if i >= 0 else ""
         enumerated = len(set(re.findall(r"\*([a-z][a-z-]+)\*", seg)))
         ok = registered == claimed == enumerated and i >= 0
         return ok, (f'registered {registered}, section 8 claims {claimed}, '
-                    f'appendix D enumerates {enumerated}')
+                    f'docs/BUILD_CHECKS.md enumerates {enumerated}')
     if k == "frequency-consistency":
         # A stated frequency IS a claim about a count. "at exactly one place",
         # "in all four", "the only", "at every horizon" -- each asserts a
