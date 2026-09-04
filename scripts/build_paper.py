@@ -17,6 +17,111 @@ import rwm_data as R  # noqa: E402
 TEMPLATE = "PAPER.template.md"
 OUT = "PAPER.md"
 
+# ---------------------------------------------------------------------------
+# Session 2 gate rules. Three classes of Markdown-to-LaTeX damage reached the
+# compiled PDF while every {{key}} resolved, so the brace gate saw nothing. Each
+# rule below is a separate function so a deliberately corrupted input can be fed
+# to it directly, the way check_comparative_claims.py corrupts its own
+# expectations.
+# ---------------------------------------------------------------------------
+
+# The capitalised renderings scripts/paper_numbers.py substitutes from WORDS.
+_NUMBER_WORDS = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+                 "Nine", "Ten", "Eleven", "Twelve", "Thirteen"}
+
+
+def check_orphan_ordinal_after_equals(lines):
+    """A bare "N." line right after a line ending in "=" or "~=".
+
+    S6.2 wrapped as "... at n_independent =" / "20. **Both are correct", the
+    converter read "20." as an ordered-list marker, and the 20 was eaten. The
+    equals sign is the tell: nothing legitimate in this paper opens a list under
+    a line that ends mid-equation.
+    """
+    bad = []
+    for n, ln in enumerate(lines):
+        if n == 0 or not re.match(r"^\d+\.(\s|$)", ln):
+            continue
+        prev = lines[n - 1].rstrip()
+        if prev.endswith("=") or prev.endswith("≈"):
+            bad.append(f"line {n + 1}: {prev[-48:]!r} then {ln[:48]!r}")
+    return bad
+
+
+def check_ordinal_interrupting_paragraph(lines):
+    """A numbered marker that opens mid-paragraph rather than at a block boundary.
+
+    The same damage as above with no equals sign to spot it: S6.7's "M-43's own"
+    / "4. The released checkpoint's table" ate the 4. A marker is a list only if
+    a blank line precedes it, or a numbered item is already open in the same
+    blank-line-delimited block (a wrapped reference entry).
+    """
+    bad = []
+    open_here = False
+    for n, ln in enumerate(lines):
+        if not ln.strip():
+            open_here = False
+            continue
+        if not re.match(r"^\d+\.\s", ln):
+            continue
+        if n > 0 and lines[n - 1].strip() and not open_here:
+            bad.append(f"line {n + 1}: {lines[n - 1][-48:]!r} then {ln[:48]!r}")
+        open_here = True
+    return bad
+
+
+def check_footnote_tokens(tex):
+    """A Markdown footnote token surviving into the LaTeX.
+
+    "[^stepcount]" set as literal text in a table cell of S6.7, and its
+    definition as a literal paragraph, because the converter had no footnote
+    rule. esc() turns the caret into \\textasciicircum{}, so both spellings are
+    checked.
+    """
+    pat = r"\[(?:\^|\\textasciicircum\{\})([A-Za-z0-9_-]+)\]"
+    return sorted(set(re.findall(pat, tex)))
+
+
+def check_number_word_case(template, values):
+    """A capitalised number-word substituted mid-sentence.
+
+    paper_numbers.py renders counts through WORDS, which is capitalised for
+    sentence-initial use. Dropped into running prose it produced "then named
+    Five" in S4 and "the Four defects it has found" in Appendix C, which read as
+    proper nouns. The fix belongs at the substitution site -- a `_lower` key --
+    so the next build cannot reintroduce it.
+    """
+    bad = []
+    for m in re.finditer(r"\{\{([A-Za-z0-9_]+)\}\}", template):
+        k = m.group(1)
+        if k not in values or str(values[k]["value"]) not in _NUMBER_WORDS:
+            continue
+        pre = template[:m.start()].rstrip(" \t*_`>")
+        if pre == "" or pre[-1] in "\n.!?:":
+            continue
+        line = template[:m.start()].count("\n") + 1
+        bad.append(f"line {line}: {{{{{k}}}}} = {values[k]['value']!r} after {pre[-40:]!r}")
+    return bad
+
+
+def selftest_gates():
+    """Run each gate rule against a deliberately corrupted input; each must fire.
+
+    Same discipline as check_comparative_claims.py's corrupted expectations: a
+    refusal that has quietly stopped being able to refuse reads as coverage and
+    is not. Returns the number of rules that caught their corruption.
+    """
+    caught = 0
+    caught += bool(check_orphan_ordinal_after_equals(
+        ["cumulative to h = 100, at n_independent =", "20. **Both are correct**"]))
+    caught += bool(check_ordinal_interrupting_paragraph(
+        ["The verdict above is over M-43's own", "4. The released checkpoint's table"]))
+    caught += bool(check_footnote_tokens(
+        r"median +0.737[\textasciicircum{}stepcount] and [^stepcount]: adjacent steps"))
+    caught += bool(check_number_word_case(
+        "and then named {{n_word_probe}}, and", {"n_word_probe": {"value": "Five"}}))
+    return caught
+
 
 def main():
     N = json.load(open(os.path.join(R.RESULTS, "paper_numbers.json")))
@@ -88,6 +193,22 @@ def main():
 
     empties = sorted(k for k in used if str(N[k]["value"]).strip() in ("", "None", "nan", "[]"))
     assert not empties, f"placeholders that resolved to an empty or null value: {empties}"
+
+    # Session 2. Three more failure shapes that reached the compiled PDF with
+    # every placeholder resolved, plus the generalisation of the first that
+    # catches the instance the equals-sign form misses.
+    _orphan = check_orphan_ordinal_after_equals(lines)
+    assert not _orphan, ("a bare numeral opens a list under an unfinished equation -- the "
+                         "converter eats it as an \\item marker:\n  " + "\n  ".join(_orphan[:5]))
+    _interrupt = check_ordinal_interrupting_paragraph(lines)
+    assert not _interrupt, ("an ordered-list marker interrupts a paragraph -- the numeral is "
+                            "eaten and the sentence loses it:\n  " + "\n  ".join(_interrupt[:5]))
+    _wordcase = check_number_word_case(text, N)
+    assert not _wordcase, ("a capitalised number-word substituted mid-sentence -- use the "
+                           "matching _lower key:\n  " + "\n  ".join(_wordcase[:5]))
+    _gate_caught = selftest_gates()
+    assert _gate_caught == 4, (
+        f"converter gate self-test: only {_gate_caught} of 4 rules caught their corruption")
 
     unused = sorted(set(N) - used)
 
@@ -254,6 +375,9 @@ def main():
     # "Anonymous authors" in submission mode. Keeping the name out of the source
     # keeps it out of the supplementary archive too (A3).
     tex, unhandled = md_to_tex.convert(header + body, title, "")
+    _fn = check_footnote_tokens(tex)
+    assert not _fn, ("Markdown footnote tokens survived into the LaTeX and set as literal "
+                     f"text: {_fn[:5]}")
     open("PAPER.tex", "w").write(tex)
     assert not unhandled, f"converter did not handle: {unhandled[:5]}"
 
@@ -263,6 +387,7 @@ def main():
     print(f"  placeholders filled : {len(used)}")
     print(f"  distinct artifacts  : {len(set(N[k]['source'] for k in used))}")
     print(f"  figures attached    : {len(figs)}")
+    print(f"  converter gate self-test: {_gate_caught} of 4 rules caught their corruption")
     print(f"  numerals typed in prose : {len(typed_nums)}  "
           f"(section numbers, arXiv ids and constants expected)")
     print(f"  number-words in prose   : {len(typed_words)}  {', '.join(typed_words)}")

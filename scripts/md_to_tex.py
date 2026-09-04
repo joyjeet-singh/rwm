@@ -98,9 +98,57 @@ def _is_table(lines, i):
             and lines[i + 1].strip() != "")
 
 
+def _is_olist(lines, i):
+    """True when the numbered line at `i` really opens an ordered list.
+
+    A marker only opens a list at a block boundary. Without that condition a
+    wrapped prose line whose first token was a substituted numeral was read as a
+    list item and the numeral was eaten by \\item: S6.2 reached the PDF as
+    "... at n_independent =" followed by a list beginning "1. Both are correct",
+    and S6.7 the same way with M-43's four horizons. Markdown itself only lets a
+    list interrupt a paragraph in the one case this converter never needs.
+    """
+    return (re.match(r"^\d+\.\s", lines[i]) is not None
+            and (i == 0 or not lines[i - 1].strip()))
+
+
+def _footnotes(md):
+    """Rewrite Markdown footnotes to numbered superscripts.
+
+    Markdown footnote syntax is not LaTeX and this converter had no rule for it,
+    so "[^stepcount]" reached the PDF as literal text inside a table cell and its
+    definition reached it as a literal paragraph. \\footnote is not usable at that
+    site -- the reference sits in a tabular inside a \\resizebox, where LaTeX drops
+    the note -- so the reference becomes a superscript number and the definition
+    keeps its place under the table with its wording untouched.
+
+    Markers are \\x01N\\x01 so they survive esc() unescaped; convert() turns them
+    into \\textsuperscript{N} once the LaTeX is assembled.
+    """
+    defs = set(re.findall(r"^\[\^([A-Za-z0-9_-]+)\]:", md, flags=re.M))
+    order, undefined = {}, []
+
+    def _ref(m):
+        tok = m.group(1)
+        if tok not in defs:
+            undefined.append(tok)
+            return m.group(0)
+        if tok not in order:
+            order[tok] = len(order) + 1
+        return "\x01%d\x01" % order[tok]
+
+    md = re.sub(r"\[\^([A-Za-z0-9_-]+)\]", _ref, md)
+    md = re.sub(r"^(\x01\d+\x01):[ \t]*", r"\1 ", md, flags=re.M)
+    return md, undefined
+
+
 def convert(md, title, author):
+    md, fn_undefined = _footnotes(md)
     lines = md.split("\n")
     out, unhandled = [], []
+    if fn_undefined:
+        unhandled.append("footnote reference with no definition: "
+                         + ", ".join(sorted(set(fn_undefined))))
     i, in_code = 0, False
     out.append(r"""\documentclass[10pt]{article}
 % TMLR requires its official style file; non-compliance is grounds for desk
@@ -252,7 +300,7 @@ def convert(md, title, author):
                 out.append(r"\item " + esc(" ".join(x.strip() for x in item)))
             out.append(r"\end{itemize}")
             continue
-        if re.match(r"^\d+\.\s", ln):
+        if _is_olist(lines, i):
             out.append(r"\begin{enumerate}")
             while i < len(lines) and re.match(r"^\d+\.\s", lines[i]):
                 item = [re.sub(r"^\d+\.\s", "", lines[i])]
@@ -280,13 +328,14 @@ def convert(md, title, author):
             if (not nxt.strip() or nxt.startswith("|") or nxt.startswith("- ")
                     or nxt.startswith("    ") or nxt.lstrip().startswith("$$")
                     or nxt.startswith("#") or nxt.startswith("!") or nxt.strip() == "---"
-                    or nxt.strip().startswith("```") or re.match(r"^\d+\.\s", nxt)):
+                    or nxt.strip().startswith("```") or _is_olist(lines, i)):
                 break
             para.append(nxt)
             i += 1
         out.append(esc(" ".join(x.strip() for x in para)))
     out.append(r"\end{document}")
     tex = "\n".join(out)
+    tex = re.sub("\x01(\\d+)\x01", r"\\textsuperscript{\1}", tex)
 
     # Structural check. There is no LaTeX toolchain here, so verify what can be
     # verified without one: environments balance, and no unescaped specials survive

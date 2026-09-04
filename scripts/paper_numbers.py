@@ -1292,6 +1292,11 @@ def main():
     put("appF_n_polhw", len(_f_polhw), "PAPER.template.md, Appendix E verdict tags")
     put("appF_n_polhw_word", WORDS.get(len(_f_polhw), str(len(_f_polhw))),
         "PAPER.template.md, Appendix E verdict tags")
+    # Same count, lower-cased, for the mid-sentence use in S4. WORDS is capitalised
+    # for sentence-initial substitution; dropping it into "then named {{...}}" put
+    # "named Five" in the PDF, which reads as a proper noun rather than a count.
+    put("appF_n_polhw_lower", WORDS.get(len(_f_polhw), str(len(_f_polhw))).lower(),
+        "PAPER.template.md, Appendix E verdict tags")
     put("appF_n_model", len(_f_model), "PAPER.template.md, Appendix E verdict tags")
 
     def _english(items):

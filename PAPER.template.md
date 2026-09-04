@@ -381,7 +381,7 @@ of hardware.
 Both counts and both lists above are generated from a classification tag carried in Appendix E's
 verdict column, so the enumeration cannot disagree with the count beside it. It did: an earlier
 draft of *this* sentence — itself the replacement for retracted claim `S-17`, which was a count
-defect in this same place — said {{appE_n_sim_word}} and then named {{appF_n_polhw_word}}, and
+defect in this same place — said {{appE_n_sim_word}} and then named {{appF_n_polhw_lower}}, and
 called all of them claims about policy learning or hardware when one of them is not. `S-17`
 withdrew a universal quantifier here; its replacement got the arithmetic wrong instead, which is
 the worse failure of the two because the sentence had just been rewritten under scrutiny. §11 states what that bounds, and Appendix D sets out what testing them would take.
@@ -612,8 +612,8 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts {{v3_cov_nom
 contradiction.* Its {{cal_rel_ratio}}× is the whole {{v2_diag_h}}-step rollout on those same
 {{b2_nind}} trajectories, for comparability with the three arms beside it. The released
 checkpoint trained on all ten episodes, so its own best-sampled figure is the
-{{d1n_alea_ratio_h100}}× below — cumulative to h = {{v2_deploy_h}}, at n_independent =
-{{d1n_nind}}. **Both are correct and they differ in two ways at once: a different arena and a
+{{d1n_alea_ratio_h100}}× below — cumulative to h = {{v2_deploy_h}}, at n_independent = {{d1n_nind}}.
+**Both are correct and they differ in two ways at once: a different arena and a
 different horizon.** Neither is a held-out measurement *of the released checkpoint*, which has
 no held-out arena in this dataset.
 
@@ -1035,8 +1035,8 @@ verdict the rule returns and do not rewrite the rule.
 discipline.** M-43 was committed over {{e5_n_horizons}} horizons, before the data. Adding
 h = {{v2_deploy_h}} to the evaluation grid after the fact would change what "a majority of
 horizons" means in a rule already discharged — a way of moving a threshold that looks like
-reporting rather than like moving a threshold. The verdict above is over M-43's own
-{{e5_n_horizons}}. The released checkpoint's table in §6.7 does follow the six-horizon grid,
+reporting rather than like moving a threshold. The verdict above is over M-43's own {{e5_n_horizons}}.
+The released checkpoint's table in §6.7 does follow the six-horizon grid,
 because no pre-registration is stated over it; the two counts are deliberately different
 numbers and the build keeps them in separate keys for that reason.
 
@@ -1637,7 +1637,7 @@ requires the separator row before it will build a table.
 verifies {{cc_n}} claims across {{cc_kinds}} kinds, each pinning a fragment of this paper's text
 and a relation recomputed from the artifacts, and each run against a deliberately corrupted
 expectation on every build so that a check which can no longer fail is caught. The registry, the
-self-test's mechanics and the {{cc_selfdefects_word}} defects it has found in the checker itself
+self-test's mechanics and the {{cc_selfdefects_lower}} defects it has found in the checker itself
 are in `docs/BUILD_CHECKS.md`, shipped as supplementary. **The evidence that any of it is
 load-bearing is one sentence**: the comparative checks caught three defects in text written
 during this revision — two calibration figures that named no horizon, and one numeral quoted

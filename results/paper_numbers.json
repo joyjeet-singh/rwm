@@ -727,6 +727,10 @@
     "source": "PAPER.template.md, Appendix E verdict tags",
     "value": 5
   },
+  "appF_n_polhw_lower": {
+    "source": "PAPER.template.md, Appendix E verdict tags",
+    "value": "five"
+  },
   "appF_n_polhw_word": {
     "source": "PAPER.template.md, Appendix E verdict tags",
     "value": "Five"

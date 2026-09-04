@@ -61,6 +61,39 @@ the checker rather than written here, so a fourth entry cannot be forgotten.
 
 ---
 
+## The build gate: four refusals added for converter damage
+
+`scripts/build_paper.py` already refused four shapes — an unresolved `{{`-delimited
+placeholder, a pipe-led line with no separator row beneath it, a single-braced token naming a
+real key, and a key resolving to an empty or null value. All four look at the resolved text or
+at the brace syntax, and a further three classes of damage reached the compiled PDF past them,
+with every placeholder resolved. Four more refusals were added, each with the instance that
+motivated it:
+
+- **a bare numeral opening a list under an unfinished equation** — section 6.2 wrapped as
+  "at n_independent =" then "20." on its own line; the converter read the numeral as an
+  ordered-list marker and ate it, so the PDF gave the sentence no sample size at all.
+- **an ordered-list marker interrupting a paragraph** — the same damage in section 6.7, where
+  "M-43's own" then "4." lost the horizon count. There is no equals sign to spot it by, so the
+  rule is the general one: a marker opens a list only after a blank line, or where a numbered
+  item is already open in the same block.
+- **a Markdown footnote token surviving into the LaTeX** — `[^stepcount]` set as literal text
+  in a table cell of section 6.7 and its definition as a literal paragraph, because the
+  converter had no footnote rule. It now renders the reference as a superscript number and
+  leaves the definition's wording untouched; `\footnote` is not usable at that site, which is
+  inside a `tabular` inside a `\resizebox`.
+- **a capitalised number-word substituted mid-sentence** — counts render through a capitalised
+  word map for sentence-initial use, and dropping one into running prose produced "then named
+  Five" in section 4 and "the Four defects it has found" in Appendix C. The rule reads the
+  substitution site rather than the output, so the fix has to be a lower-cased key and cannot
+  be undone by the next build.
+
+Each of the four is run against a deliberately corrupted input on every build and must fire,
+on the same grounds as the self-test above: a refusal that has quietly stopped being able to
+refuse reads as coverage and is not.
+
+---
+
 ## Exclusions from the numeric comparison: the mechanism
 
 **Excluding a file is not sufficient on its own.** `results/paper_numbers.json` records the
