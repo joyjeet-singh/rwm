@@ -745,7 +745,7 @@
   },
   "appG_n_lead": {
     "source": "results/appendix_g_rules.json",
-    "value": 15
+    "value": 16
   },
   "appG_n_negative": {
     "source": "results/appendix_g_rules.json",
@@ -753,15 +753,15 @@
   },
   "appG_n_positive": {
     "source": "results/appendix_g_rules.json",
-    "value": 14
+    "value": 15
   },
   "appG_n_rules": {
     "source": "results/appendix_g_rules.json",
-    "value": 15
+    "value": 16
   },
   "appG_table": {
     "source": "results/appendix_g_rules.json",
-    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED \u2014 rule pre-registered |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | \u2014 | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | \u2014 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | \u2014 | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | \u2014 | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | \u2014 | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | \u2014 | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | \u2014 | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | \u2014 | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
+    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED \u2014 rule pre-registered |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | \u2014 | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | \u2014 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | \u2014 | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | \u2014 | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | \u2014 | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | \u2014 | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | \u2014 | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | \u2014 | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `M-68` | The combined arm: independence and the corrected objective together | \u2014 | +2.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
   },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
@@ -3053,7 +3053,7 @@
   },
   "e2_fitted_runs": {
     "source": "results/step5_arm*.json",
-    "value": 20
+    "value": 22
   },
   "e2_mse_rate": {
     "source": "results/step5_arm*.json",
@@ -3069,11 +3069,11 @@
   },
   "e2_nll_rate": {
     "source": "results/step5_arm*.json",
-    "value": "+3.2332e-05"
+    "value": "+3.2296e-05"
   },
   "e2_nll_runs": {
     "source": "results/step5_arm*.json",
-    "value": 3
+    "value": 5
   },
   "e4_n_inert": {
     "source": "results/e4_sigma_gradients.json",
@@ -3429,7 +3429,7 @@
   },
   "e5s_mse_under": {
     "source": "results/e5_synthetic_sigma.json",
-    "value": "22"
+    "value": "21.7"
   },
   "e5s_n_train": {
     "source": "results/e5_synthetic_sigma.json",
@@ -3629,7 +3629,7 @@
   },
   "evidence_table": {
     "source": "results/evidence_summary.json",
-    "value": "| Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier restores nominal coverage where a constant one does not | 6.8 | out-of-sample | 4 | yes | restores nominal coverage on every held-out cell | not applicable |\n| An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity | 6.10 | out-of-sample | 4 | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
+    "value": "| Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier restores nominal coverage where a constant one does not | 6.8 | out-of-sample | 4 | yes | restores nominal coverage on every held-out cell | not applicable |\n| An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity | 6.10 | out-of-sample | 4 | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology | 6.11 | out-of-sample | 4 | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
   },
   "f4_n_commits": {
     "source": "results/paper_figures.json",
@@ -3909,7 +3909,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "433"
+    "value": "450"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -4199,13 +4199,377 @@
     "source": "results/m65_gaussian_nominal.json",
     "value": 0
   },
+  "m68_acc_x_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.00"
+  },
+  "m68_acc_x_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.25"
+  },
+  "m68_acc_x_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.32"
+  },
+  "m68_acc_x_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.11"
+  },
+  "m68_acc_x_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.77"
+  },
+  "m68_acc_x_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.05"
+  },
+  "m68_branch": {
+    "source": "results/r2_combined_arm.json",
+    "value": 2
+  },
+  "m68_cov_gain": {
+    "source": "results/r2_combined_arm.json",
+    "value": "+7.34"
+  },
+  "m68_cov_hi": {
+    "source": "results/r2_combined_arm.json",
+    "value": "7.56"
+  },
+  "m68_cov_lo": {
+    "source": "results/r2_combined_arm.json",
+    "value": "6.92"
+  },
+  "m68_from_acc_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "-1"
+  },
+  "m68_from_acc_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "34"
+  },
+  "m68_from_acc_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "40"
+  },
+  "m68_from_acc_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "18"
+  },
+  "m68_from_acc_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "66"
+  },
+  "m68_from_acc_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "7"
+  },
+  "m68_from_sigma_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "101"
+  },
+  "m68_from_sigma_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "66"
+  },
+  "m68_from_sigma_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "60"
+  },
+  "m68_from_sigma_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "82"
+  },
+  "m68_from_sigma_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "34"
+  },
+  "m68_from_sigma_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "93"
+  },
+  "m68_h": {
+    "source": "results/r2_combined_arm.json",
+    "value": 100
+  },
+  "m68_indep_cov1_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "51.11"
+  },
+  "m68_indep_cov1_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "15.53"
+  },
+  "m68_indep_cov1_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "15.39"
+  },
+  "m68_indep_cov1_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "17.97"
+  },
+  "m68_indep_cov1_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "14.44"
+  },
+  "m68_indep_cov1_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "20.62"
+  },
+  "m68_indep_cov2_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "78.89"
+  },
+  "m68_indep_cov2_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "28.27"
+  },
+  "m68_indep_cov2_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "27.97"
+  },
+  "m68_indep_cov2_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "32.66"
+  },
+  "m68_indep_cov2_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "27.63"
+  },
+  "m68_indep_cov2_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "39.72"
+  },
+  "m68_indep_ratio_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.4"
+  },
+  "m68_indep_ratio_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "5.4"
+  },
+  "m68_indep_ratio_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "5.5"
+  },
+  "m68_indep_ratio_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "4.4"
+  },
+  "m68_indep_ratio_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "5.4"
+  },
+  "m68_indep_ratio_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "3.5"
+  },
+  "m68_mde_cov": {
+    "source": "results/r2_combined_arm.json",
+    "value": "2.50"
+  },
+  "m68_mde_ratio": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.218"
+  },
+  "m68_mde_source": {
+    "source": "results/r2_combined_arm.json",
+    "value": "results/p3_combined_arm_power.json, binding_mde at h = 100 (largest of the four calibrations)"
+  },
+  "m68_n_conditions": {
+    "source": "results/r2_combined_arm.json",
+    "value": 5
+  },
+  "m68_n_conditions_met": {
+    "source": "results/r2_combined_arm.json",
+    "value": 5
+  },
+  "m68_n_dir": {
+    "source": "results/r2_combined_arm.json",
+    "value": 6
+  },
+  "m68_n_horizons": {
+    "source": "results/r2_combined_arm.json",
+    "value": 6
+  },
+  "m68_n_indep": {
+    "source": "results/r2_combined_arm.json",
+    "value": 5
+  },
+  "m68_n_shared": {
+    "source": "results/r2_combined_arm.json",
+    "value": 3
+  },
+  "m68_nind": {
+    "source": "results/r2_combined_arm.json",
+    "value": 4
+  },
+  "m68_ratio_gain": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.94"
+  },
+  "m68_ratio_hi": {
+    "source": "results/r2_combined_arm.json",
+    "value": "0.525"
+  },
+  "m68_ratio_lo": {
+    "source": "results/r2_combined_arm.json",
+    "value": "0.506"
+  },
+  "m68_shared_cov1_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "35.93"
+  },
+  "m68_shared_cov1_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "8.19"
+  },
+  "m68_shared_cov1_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "7.79"
+  },
+  "m68_shared_cov1_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "10.79"
+  },
+  "m68_shared_cov1_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "6.30"
+  },
+  "m68_shared_cov1_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "14.10"
+  },
+  "m68_shared_cov2_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "60.37"
+  },
+  "m68_shared_cov2_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "16.11"
+  },
+  "m68_shared_cov2_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "15.34"
+  },
+  "m68_shared_cov2_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "20.50"
+  },
+  "m68_shared_cov2_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "12.51"
+  },
+  "m68_shared_cov2_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "26.62"
+  },
+  "m68_shared_ratio_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "2.1"
+  },
+  "m68_shared_ratio_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "10.5"
+  },
+  "m68_shared_ratio_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "11.0"
+  },
+  "m68_shared_ratio_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "8.0"
+  },
+  "m68_shared_ratio_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "13.0"
+  },
+  "m68_shared_ratio_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "6.3"
+  },
+  "m68_sigma_used": {
+    "source": "results/r2_combined_arm.json",
+    "value": "the standard deviation across the five members' mean predictions, taken per state dimension, rather than the aleatoric head's output"
+  },
+  "m68_sigma_x_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.51"
+  },
+  "m68_sigma_x_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.55"
+  },
+  "m68_sigma_x_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.51"
+  },
+  "m68_sigma_x_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.63"
+  },
+  "m68_sigma_x_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.35"
+  },
+  "m68_sigma_x_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.75"
+  },
+  "m68_total_x_h1": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.51"
+  },
+  "m68_total_x_h100": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.94"
+  },
+  "m68_total_x_h128": {
+    "source": "results/r2_combined_arm.json",
+    "value": "2.00"
+  },
+  "m68_total_x_h32": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.81"
+  },
+  "m68_total_x_h368": {
+    "source": "results/r2_combined_arm.json",
+    "value": "2.39"
+  },
+  "m68_total_x_h8": {
+    "source": "results/r2_combined_arm.json",
+    "value": "1.83"
+  },
+  "m68_verdict": {
+    "source": "results/r2_combined_arm.json",
+    "value": "THE COMBINATION IMPROVES CALIBRATION"
+  },
+  "m68_vs_mse_cov_ci": {
+    "source": "results/r2_combined_arm.json",
+    "value": "[-0.31, +1.09]"
+  },
+  "m68_vs_mse_cov_pts": {
+    "source": "results/r2_combined_arm.json + results/r2_independent_ensemble.json",
+    "value": "+0.22"
+  },
+  "m68_vs_mse_ratio": {
+    "source": "results/r2_combined_arm.json + results/r2_independent_ensemble.json",
+    "value": "1.044"
+  },
+  "m68_vs_mse_ratio_ci": {
+    "source": "results/r2_combined_arm.json",
+    "value": "[1.029, 1.054]"
+  },
+  "m68_vs_mse_sigma_x": {
+    "source": "results/r2_combined_arm.json + results/r2_independent_ensemble.json",
+    "value": "0.940"
+  },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
     "value": "five"
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 245
+    "value": 246
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -4293,7 +4657,7 @@
   },
   "n_runs": {
     "source": "results/step5_arm*.json",
-    "value": 26
+    "value": 28
   },
   "n_runs_offwidth": {
     "source": "results/step5_arm*.json",
@@ -4409,7 +4773,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 47
+    "value": 48
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -7077,7 +7441,7 @@
   },
   "rt_hours": {
     "source": "results/step5_*.json",
-    "value": "48.2"
+    "value": "49.8"
   },
   "rt_hours_10k": {
     "source": "results/step5_*.json",
@@ -7089,11 +7453,11 @@
   },
   "rt_hours_released": {
     "source": "results/step5_*.json",
-    "value": "46.3"
+    "value": "47.9"
   },
   "rt_hours_short": {
     "source": "results/step5_*.json",
-    "value": "28.5"
+    "value": "30.1"
   },
   "rt_longest": {
     "source": "results/step5_*.json",
@@ -7101,7 +7465,7 @@
   },
   "rt_runs": {
     "source": "results/step5_*.json",
-    "value": 31
+    "value": 33
   },
   "rt_runs_10k": {
     "source": "results/step5_*.json",
@@ -7113,15 +7477,15 @@
   },
   "rt_runs_short": {
     "source": "results/step5_*.json",
-    "value": 25
+    "value": 27
   },
   "run_table": {
     "source": "results/step5_arm*.json",
-    "value": "| Arm A | 2,500 | 1 | gaussian_nll | clean | 256 | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 1 | mse | clean | 124 | 5 | 0, 1, 2, 3, 4 |\n| Arm A | 2,500 | 1 | mse | clean | 256 | 5 | 0, 1, 2, 3, 4 |\n| Arm A | 2,500 | 1 | mse | contaminated | 256 | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 1 | mse | duplicated | 256 | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 5 | mse | clean | 256 | 3 | 0, 1, 2 |\n| Arm A | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |\n| Arm B | 2,500 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |\n| Arm B | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |"
+    "value": "| Arm A | 2,500 | 1 | gaussian_nll | clean | 256 | 5 | 0, 1, 2, 3, 4 |\n| Arm A | 2,500 | 1 | mse | clean | 124 | 5 | 0, 1, 2, 3, 4 |\n| Arm A | 2,500 | 1 | mse | clean | 256 | 5 | 0, 1, 2, 3, 4 |\n| Arm A | 2,500 | 1 | mse | contaminated | 256 | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 1 | mse | duplicated | 256 | 3 | 0, 1, 2 |\n| Arm A | 2,500 | 5 | mse | clean | 256 | 3 | 0, 1, 2 |\n| Arm A | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |\n| Arm B | 2,500 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |\n| Arm B | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |"
   },
   "run_total": {
     "source": "results/step5_arm*.json",
-    "value": 31
+    "value": 33
   },
   "sig_armB_growth": {
     "source": "results/task2_sigma_profile.json",
@@ -7217,7 +7581,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 627
+    "value": 652
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

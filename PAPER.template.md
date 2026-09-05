@@ -1287,6 +1287,108 @@ doing and it is not sufficient; §6.8's per-horizon multiplier remains the only 
 that restores nominal coverage.
 
 
+### 6.11 Both fixes on the same models: the combined arm
+
+§6.10 changes the **topology** and holds the objective at `mse`. §6.5's arms change the
+**objective** and hold the topology at ensemble size 1, where the disagreement across members is
+zero by construction. Neither answers the question a practitioner has, which is what the two
+together give. A reader is otherwise invited to add two effects that were never measured on the
+same model — the arithmetic this paper criticises elsewhere. This subsection runs the combination,
+under a rule (M-68) committed to git before either of the two new members existed, with a minimum
+detectable effect estimated before them as well.
+
+**The arm.** {{m68_n_indep}} independently-initialised full models, sharing no trunk and no hidden
+state, trained under `gaussian_nll` — every setting identical to §6.10's arm except the loss type.
+Three of the five — seeds 0, 1 and 2 — already existed under that objective; two more
+were trained, and the
+{{m68_n_indep}} are scored together as an ensemble at evaluation time under §6.10's rollout
+protocol, on the same held-out arena of non-overlapping 400-step trajectories at
+n_independent = {{m68_nind}}, over the same six horizons.
+
+**Which σ the coverage is against.** The combined arm is the first arm in this paper carrying
+**both** an aleatoric head that has not collapsed to zero and an across-member epistemic spread.
+The figures below are the **epistemic** one: {{m68_sigma_used}}. That is the quantity M-68 names and
+the quantity §6.10's table reports, so the two tables are comparable line for line. The aleatoric
+head is reported separately in §6.5 and does not enter here.
+
+| h | combined err/σ | shared-trunk err/σ | combined ±1σ | shared ±1σ | combined ±2σ | shared ±2σ |
+|---|---|---|---|---|---|---|
+| 1 | {{m68_indep_ratio_h1}}× | {{m68_shared_ratio_h1}}× | {{m68_indep_cov1_h1}}% | {{m68_shared_cov1_h1}}% | {{m68_indep_cov2_h1}}% | {{m68_shared_cov2_h1}}% |
+| 8 | {{m68_indep_ratio_h8}}× | {{m68_shared_ratio_h8}}× | {{m68_indep_cov1_h8}}% | {{m68_shared_cov1_h8}}% | {{m68_indep_cov2_h8}}% | {{m68_shared_cov2_h8}}% |
+| 32 | {{m68_indep_ratio_h32}}× | {{m68_shared_ratio_h32}}× | {{m68_indep_cov1_h32}}% | {{m68_shared_cov1_h32}}% | {{m68_indep_cov2_h32}}% | {{m68_shared_cov2_h32}}% |
+| **{{v2_deploy_h}}** | **{{m68_indep_ratio_h100}}×** | **{{m68_shared_ratio_h100}}×** | **{{m68_indep_cov1_h100}}%** | **{{m68_shared_cov1_h100}}%** | {{m68_indep_cov2_h100}}% | {{m68_shared_cov2_h100}}% |
+| 128 | {{m68_indep_ratio_h128}}× | {{m68_shared_ratio_h128}}× | {{m68_indep_cov1_h128}}% | {{m68_shared_cov1_h128}}% | {{m68_indep_cov2_h128}}% | {{m68_shared_cov2_h128}}% |
+| {{v2_diag_h}} | {{m68_indep_ratio_h368}}× | {{m68_shared_ratio_h368}}× | {{m68_indep_cov1_h368}}% | {{m68_shared_cov1_h368}}% | {{m68_indep_cov2_h368}}% | {{m68_shared_cov2_h368}}% |
+
+*Same trajectories, same harness, same bootstrap unit as §6.10. The shared-trunk columns are the
+mean over {{m68_n_shared}} seeds; the comparison below is paired against each of them separately.*
+
+**M-68 returns {{m68_verdict}}** — branch {{m68_branch}} of the four the rule names. All
+{{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, against every one of the
+{{m68_n_shared}} shared-trunk seeds. At h = {{v2_deploy_h}} the combined arm's overconfidence
+factor is {{m68_ratio_lo}}–{{m68_ratio_hi}}× the shared-trunk arms', a **{{m68_ratio_gain}}×**
+improvement against a minimum detectable effect of {{m68_mde_ratio}}× fixed in advance
+({{m68_mde_source}}); its ±1σ coverage is {{m68_cov_lo}} to {{m68_cov_hi}} points higher, a mean of
+{{m68_cov_gain}} against an MDE of {{m68_mde_cov}} points; and every paired interval excludes zero.
+
+**Condition (e), and how we read it.** The rule's fifth condition asks that both statistics move in
+the improving direction at at least four of the six horizons. Its text says "against every
+shared-trunk seed" and the rule states globally that a condition holds only if it holds against all
+three, so we applied the strict reading: a horizon counts only when **both** statistics improve
+there against **all three** seeds. It holds at {{m68_n_dir}} of {{m68_n_horizons}} horizons, so the
+looser per-seed reading would not have changed the verdict. We record which we applied because the
+two readings can differ and the rule does not spell the difference out.
+
+| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
+|---|---|---|---|---|---|
+| 1 | {{m68_sigma_x_h1}}× | {{m68_acc_x_h1}}× | {{m68_total_x_h1}}× | {{m68_from_sigma_h1}}% | {{m68_from_acc_h1}}% |
+| 8 | {{m68_sigma_x_h8}}× | {{m68_acc_x_h8}}× | {{m68_total_x_h8}}× | {{m68_from_sigma_h8}}% | {{m68_from_acc_h8}}% |
+| 32 | {{m68_sigma_x_h32}}× | {{m68_acc_x_h32}}× | {{m68_total_x_h32}}× | {{m68_from_sigma_h32}}% | {{m68_from_acc_h32}}% |
+| **{{v2_deploy_h}}** | **{{m68_sigma_x_h100}}×** | {{m68_acc_x_h100}}× | {{m68_total_x_h100}}× | **{{m68_from_sigma_h100}}%** | {{m68_from_acc_h100}}% |
+| 128 | {{m68_sigma_x_h128}}× | {{m68_acc_x_h128}}× | {{m68_total_x_h128}}× | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% |
+| {{v2_diag_h}} | {{m68_sigma_x_h368}}× | {{m68_acc_x_h368}}× | {{m68_total_x_h368}}× | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% |
+
+*The same σ-versus-accuracy split §6.10 uses, so the two arms' improvements can be compared part by
+part. Shares are of the log improvement, so the two columns add to one.*
+
+**The objective's own contribution is below what this design can resolve.** M-68 scores the combined
+arm against the **shared-trunk** arms, so what its verdict measures is the two fixes together. The
+comparison that isolates the objective is against §6.10's independent arm, which differs from this
+one in the loss type and in nothing else, and both come from the same script on the same
+trajectories. At h = {{v2_deploy_h}} switching `mse` for `gaussian_nll` multiplies the overconfidence
+factor by **{{m68_vs_mse_ratio}}×** (a 95% interval from the same cluster bootstrap over whole
+trajectories, {{m68_vs_mse_ratio_ci}}) — the wrong direction, slightly — moves ±1σ coverage by
+{{m68_vs_mse_cov_pts}} points ({{m68_vs_mse_cov_ci}}, which spans zero), and multiplies the
+epistemic σ by {{m68_vs_mse_sigma_x}}×. Both effects sit under the minimum detectable effect this
+design fixed in advance — {{m68_mde_ratio}}× on the factor and {{m68_mde_cov}} points on coverage
+({{m68_mde_source}}) — so although the factor's interval lies wholly on the worse side of no
+change, the objective's separate effect is **below the size this design was built to resolve at
+n_independent = {{m68_nind}}**, and the
+point estimate points away from an improvement rather than towards one. It does not establish that
+the objective contributes nothing: reading a null out of an effect smaller than its own floor is the error M-24
+and M-43 record, and M-68's fourth branch exists to say underpowered rather than null. What the arm
+does settle is the combination, which is better calibrated than the shared-trunk arms by essentially
+the amount §6.10 already measured for independence alone ({{m44_ratio_gain}}× there,
+{{m68_ratio_gain}}× here). **The two fixes do not add. A reader who added them would have been
+wrong, which is why the arm was run.** That the objective's separate effect is at most small here is
+not a surprise once stated: the objective governs the **aleatoric** head, and the epistemic term is
+a spread across members that the loss never sees.
+
+**And it still does not repair the interval.** The combined arm is {{m68_indep_ratio_h100}}×
+overconfident at h = {{v2_deploy_h}} with {{m68_indep_cov1_h100}}% coverage where a calibrated
+Gaussian gives {{v3_cov_nominal1}}%. Better than the shared-trunk arms, no better than independence
+alone, and still not an interval. §6.8's per-horizon multiplier remains the only thing in this
+paper that restores nominal coverage.
+
+**What the arm does not separate.** It differs from the shared-trunk arms on three axes at once —
+trunk sharing, the objective, and capacity (a factor of {{v1_cap_ratio}} in state-pathway
+parameters, as §6.10's contrast carries) — and independently-seeded runs also differ in data ordering. M-68 said so in advance:
+it bounds the combination and attributes nothing. The one further comparison this subsection makes —
+the `mse`/`gaussian_nll` pair above, which holds every other axis fixed — sits outside the rule's
+governing statistics and lands under the design's own minimum detectable effect, so it bounds the
+objective's separate contribution rather than measuring it.
+
+
 ---
 
 ## 7. Defects in the released pipeline

@@ -299,7 +299,13 @@ def main():
     put("e5s_iters", f'{E5["config"]["iters"]:,}', "results/e5_synthetic_sigma.json")
     put("e5s_n_train", f'{E5["config"]["n_train"]:,}', "results/e5_synthetic_sigma.json")
     put("e5s_mse_ratio", f'{_a5["ratio_mean"]:.4f}', "results/e5_synthetic_sigma.json")
-    put("e5s_mse_under", f'{1 / _a5["ratio_mean"]:.0f}', "results/e5_synthetic_sigma.json")
+    # ONE DECIMAL, not zero. At zero it printed 22, and once the combined arm's
+    # two runs joined the collapse family e2_fitted_runs printed 22 as well --
+    # the same numeral twice in §6.3, once as a factor and once as a count of
+    # runs, which is the `restatement` check's ambiguous-numeral kind and the
+    # defect it exists to catch (the abstract's 4.61× beside 4.61%). The
+    # disambiguation is more precision on the measurement, not a note beside it.
+    put("e5s_mse_under", f'{1 / _a5["ratio_mean"]:.1f}', "results/e5_synthetic_sigma.json")
     put("e5s_mse_spread", f'{_a5["spread_max"]:.3f}', "results/e5_synthetic_sigma.json")
     put("e5s_mse_slope", f'{_a5["slope_mean"]:+.6f}', "results/e5_synthetic_sigma.json")
     put("e5s_nll_ratio", f'{_b5["ratio_mean"]:.4f}', "results/e5_synthetic_sigma.json")
@@ -1017,8 +1023,16 @@ def main():
     # hours as three independent figures, and nothing asserted that the third sat
     # inside the first. The remainder is put here so the `arithmetic` check has
     # both parts of that partition to add up.
+    # THE REMAINDER OF THE DISPLAYED TOTAL, not the rounded true remainder. The
+    # paper's sentence says the two parts make the total; rounding each of the
+    # three independently does not guarantee that, and once the combined arm's
+    # two runs were added it stopped being true -- 1.9 + 48.0 = 49.9 against a
+    # stated 49.8, an `arithmetic` failure produced by nothing but rounding. The
+    # subtraction is done at the precision the paper prints, so the partition it
+    # asserts holds by construction rather than by luck.
     put("rt_hours_released",
-        f"{(_t - sum(w for _, w in _runs_m49)) / 3600:.1f}", "results/step5_*.json")
+        f'{float(N["rt_hours"]["value"]) - float(N["rt_hours_m49"]["value"]):.1f}',
+        "results/step5_*.json")
 
     # B8. Three measured quantities that were TYPED in prose, found by classifying
     # every numeral the template carries rather than by reading (see
@@ -1995,6 +2009,80 @@ def main():
         "results/r2_independent_ensemble.json")
     put("r2_sigma_x_hi_h", max(_R2H, key=lambda h: _sx[_R2H.index(h)]),
         "results/r2_independent_ensemble.json")
+
+    # --- M-68: the combined arm ---------------------------------------------
+    # Five independently-initialised full models trained under gaussian_nll:
+    # 6.10's topology AND the corrected objective on the same models. Same
+    # harness, same arena, same bootstrap, same horizon grid as R2 above, so the
+    # keys mirror R2's exactly and the two artifacts can be read side by side.
+    C = J("r2_combined_arm.json")
+    _m68, _cdec = C["m68"], C["decomposition"]
+    _CSRC = "results/r2_combined_arm.json"
+    put("m68_nind", C["design"]["n_independent"], _CSRC)
+    put("m68_n_indep", len(C["design"]["independent_seeds"]), _CSRC)
+    put("m68_n_shared", len(C["design"]["shared_trunk_seeds"]), _CSRC)
+    put("m68_verdict", _m68["verdict"], _CSRC)
+    put("m68_branch", _m68["branch"], _CSRC)
+    put("m68_h", _m68["horizon"], _CSRC)
+    put("m68_mde_ratio", f'{_m68["mde_ratio"]:.3f}', _CSRC)
+    put("m68_mde_cov", f'{_m68["mde_coverage_pts"]:.2f}', _CSRC)
+    put("m68_mde_source", _m68["mde_source"], _CSRC)
+    put("m68_sigma_used", _m68["sigma_used_for_coverage"], _CSRC)
+    put("m68_n_conditions", len(_m68["conditions"]), _CSRC)
+    put("m68_n_conditions_met", sum(1 for v in _m68["conditions"].values() if v), _CSRC)
+    put("m68_n_dir", _m68["n_horizons_both_improve_vs_all_three"], _CSRC)
+    put("m68_n_horizons", len(_m68["direction_by_horizon"]), _CSRC)
+    put("m68_ratio_gain", f'{C["m44"]["mean_ratio_improvement"]:.2f}', _CSRC)
+    put("m68_cov_gain", f'{C["m44"]["mean_coverage_gain_pts"]:+.2f}', _CSRC)
+    _cpp = list(C["comparison"]["per_shared_seed"].values())
+    put("m68_ratio_lo", f'{min(p["ratio"] for p in _cpp):.3f}', _CSRC)
+    put("m68_ratio_hi", f'{max(p["ratio"] for p in _cpp):.3f}', _CSRC)
+    put("m68_cov_lo", f'{min(p["coverage_diff_pts"] for p in _cpp):.2f}', _CSRC)
+    put("m68_cov_hi", f'{max(p["coverage_diff_pts"] for p in _cpp):.2f}', _CSRC)
+    _C68H = sorted(int(h) for h in C["independent"])
+    for h in _C68H:
+        i, sh, d_ = C["independent"][str(h)], C["shared_trunk"][str(h)], _cdec[str(h)]
+        put(f"m68_indep_ratio_h{h}", f'{i["ratio_err_over_sigma"]:.1f}', _CSRC)
+        put(f"m68_indep_cov1_h{h}", f'{100 * i["coverage_pm1"]:.2f}', _CSRC)
+        put(f"m68_indep_cov2_h{h}", f'{100 * i["coverage_pm2"]:.2f}', _CSRC)
+        put(f"m68_shared_ratio_h{h}", f'{sh["mean_ratio"]:.1f}', _CSRC)
+        put(f"m68_shared_cov1_h{h}", f'{100 * sh["mean_cov1"]:.2f}', _CSRC)
+        put(f"m68_shared_cov2_h{h}", f'{100 * sh["mean_cov2"]:.2f}', _CSRC)
+        put(f"m68_sigma_x_h{h}", f'{d_["sigma_ratio_indep_over_shared"]:.2f}', _CSRC)
+        put(f"m68_acc_x_h{h}", f'{d_["error_ratio_shared_over_indep"]:.2f}', _CSRC)
+        put(f"m68_total_x_h{h}", f'{d_["total_rho_improvement"]:.2f}', _CSRC)
+        if d_["share_from_sigma"] is not None:
+            put(f"m68_from_sigma_h{h}", f'{100 * d_["share_from_sigma"]:.0f}', _CSRC)
+            put(f"m68_from_acc_h{h}", f'{100 * d_["share_from_accuracy"]:.0f}', _CSRC)
+    # THE OBJECTIVE'S OWN CONTRIBUTION, reported alongside and unable to move the
+    # verdict. M-68 scores the combined arm against the SHARED-TRUNK arms, so its
+    # verdict measures the pair of fixes together. The isolating comparison is
+    # against 6.10's independent arm, which differs from this one only in the
+    # objective, and both come from the same script on the same trajectories.
+    # It is computed here rather than typed.
+    _mse_h = R2["independent"][str(_m68["horizon"])]
+    _nll_h = C["independent"][str(_m68["horizon"])]
+    _both = _CSRC + " + results/r2_independent_ensemble.json"
+    put("m68_vs_mse_ratio",
+        f'{_nll_h["ratio_err_over_sigma"] / _mse_h["ratio_err_over_sigma"]:.3f}', _both)
+    put("m68_vs_mse_cov_pts",
+        f'{100 * (_nll_h["coverage_pm1"] - _mse_h["coverage_pm1"]):+.2f}', _both)
+    put("m68_vs_mse_sigma_x",
+        f'{_nll_h["mean_sigma"] / _mse_h["mean_sigma"]:.3f}', _both)
+    # AND ITS INTERVAL, and whether the design can resolve it. The point estimates
+    # above were published bare, and read as "the objective contributes nothing" --
+    # a null asserted from an effect SMALLER than the minimum detectable effect the
+    # same subsection quotes. That is the M-24 / M-43 failure this paper exists to
+    # record, so the isolating comparison now carries the same 95% cluster bootstrap
+    # over whole trajectories every governing comparison in 6.11 carries, and the
+    # artifact says whether the effect clears the MDE.
+    _oi = _m68["objective_isolated"]
+    assert abs(_oi["ratio_multiplicative"]
+               - _nll_h["ratio_err_over_sigma"] / _mse_h["ratio_err_over_sigma"]) < 1e-9
+    put("m68_vs_mse_ratio_ci",
+        f'[{_oi["ratio_ci"][0]:.3f}, {_oi["ratio_ci"][1]:.3f}]', _CSRC)
+    put("m68_vs_mse_cov_ci",
+        f'[{_oi["coverage_ci_pts"][0]:+.2f}, {_oi["coverage_ci_pts"][1]:+.2f}]', _CSRC)
 
     # --- T1: the bibliography ----------------------------------------------
     T1 = J("t1_bibliography_verified.json")

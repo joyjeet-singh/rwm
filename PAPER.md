@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     914 values substituted from 70 artifacts. -->
+     1004 values substituted from 72 artifacts. -->
 
 # A one-step evaluation misalignment and a σ = 0 optimum: an independent reproduction of a released robotic world model
 
@@ -387,6 +387,7 @@ from, so no arena label and no sample size in it is typed by hand.
 | A per-horizon multiplier restores nominal coverage where a constant one does not | 6.8 | out-of-sample | 4 | yes | restores nominal coverage on every held-out cell | not applicable |
 | An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |
 | The same contrast at matched capacity | 6.10 | out-of-sample | 4 | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
+| Independence and the corrected objective together improve on the released topology | 6.11 | out-of-sample | 4 | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
 | The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |
 
 ---
@@ -830,7 +831,7 @@ is the other term §6.3's derivation is about. That makes this arm's conditions 
 *Ratios and slopes are means over 3 seeds; spreads are the range across them, because
 the mean of a spread hides which seeds recovered.*
 
-**Under the implemented objective σ sits 22× below the true noise and does not
+**Under the implemented objective σ sits 21.7× below the true noise and does not
 track it at all** — a spread of 1.003× where the truth spans 25×, and a
 slope below the 0.00309 the design can detect. Under the authors' own branch, same data
 and same head, σ recovers the true level to a median ratio of 0.9779 and every
@@ -861,25 +862,25 @@ detects the signal at full strength and at no dilution below it, so this establi
 not track the noise **at all**, not the magnitude of how badly.
 
 We predicted the collapse from this algebra before training, then observed it. Three run counts
-appear below and they are not the same set. This project trained 31 runs in all, of
-which 26 are at the released `rnn_hidden_size` of 256 and form the collapse
+appear below and they are not the same set. This project trained 33 runs in all, of
+which 28 are at the released `rnn_hidden_size` of 256 and form the collapse
 family; the remaining 5 are `M-49`'s capacity-matched arm at width
 124, a different architecture, and are excluded from every rate quoted here
-(Appendix B). Across all 26 runs of that family the collapse is linear in iteration count
-and its rate is nearly identical (Figure 4a). Rates are fitted on 20 of those
-26: the 6 10,000-iteration runs are excluded from the rate statistics
+(Appendix B). Across all 28 runs of that family the collapse is linear in iteration count
+and its rate is nearly identical (Figure 4a). Rates are fitted on 22 of those
+28: the 6 10,000-iteration runs are excluded from the rate statistics
 because they continue seeds already counted at 2,500 and would double-weight them. Figure 4(a)
-shows all 26 runs of the collapse family; Figure 4(b) plots only the 20 the
+shows all 28 runs of the collapse family; Figure 4(b) plots only the 22 the
 rate is fitted on, so the scatter and the quoted statistic describe the same set.
 
-![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 26 runs of the collapse family, which is every run at the released width. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
+![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 28 runs of the collapse family, which is every run at the released width. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
 
-The 31 runs, so a reader can count them; the width column is what separates the
+The 33 runs, so a reader can count them; the width column is what separates the
 collapse family from the capacity-matched arm:
 
 | arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
 |---|---|---|---|---|---|---|---|
-| Arm A | 2,500 | 1 | gaussian_nll | clean | 256 | 3 | 0, 1, 2 |
+| Arm A | 2,500 | 1 | gaussian_nll | clean | 256 | 5 | 0, 1, 2, 3, 4 |
 | Arm A | 2,500 | 1 | mse | clean | 124 | 5 | 0, 1, 2, 3, 4 |
 | Arm A | 2,500 | 1 | mse | clean | 256 | 5 | 0, 1, 2, 3, 4 |
 | Arm A | 2,500 | 1 | mse | contaminated | 256 | 3 | 0, 1, 2 |
@@ -892,8 +893,8 @@ collapse family from the capacity-matched arm:
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
 -9.3857e-05 per iteration with a standard deviation of 6.0e-07 — **including the
-teacher-forced arm**, which shares the objective — and reverses to +3.2332e-05 in the
-3 runs that change it. *Input-independence is not.* That varies by a factor of
+teacher-forced arm**, which shares the objective — and reverses to +3.2296e-05 in the
+5 runs that change it. *Input-independence is not.* That varies by a factor of
 15.6 between two arms trained under the same objective, so the objective
 cannot be what produces it.
 
@@ -1250,7 +1251,7 @@ face.
 
 **The contrast, and why it is affordable.** Training 5 genuinely independent models
 from scratch costs about 4.8 h of wall clock on two cores at the iteration count these
-runs use — 4.8 h against Appendix B's 48.2 h for the whole project. Arm A at
+runs use — 4.8 h against Appendix B's 49.8 h for the whole project. Arm A at
 ensemble size 1 already existed at seeds 0, 1 and 2; we added two more at about
 0.9 h each, 1.7 h in total, and scored the 5 together as an
 ensemble **at evaluation time**. No new training code and no new architecture — and the
@@ -1328,6 +1329,108 @@ doing and it is not sufficient; §6.8's per-horizon multiplier remains the only 
 that restores nominal coverage.
 
 
+### 6.11 Both fixes on the same models: the combined arm
+
+§6.10 changes the **topology** and holds the objective at `mse`. §6.5's arms change the
+**objective** and hold the topology at ensemble size 1, where the disagreement across members is
+zero by construction. Neither answers the question a practitioner has, which is what the two
+together give. A reader is otherwise invited to add two effects that were never measured on the
+same model — the arithmetic this paper criticises elsewhere. This subsection runs the combination,
+under a rule (M-68) committed to git before either of the two new members existed, with a minimum
+detectable effect estimated before them as well.
+
+**The arm.** 5 independently-initialised full models, sharing no trunk and no hidden
+state, trained under `gaussian_nll` — every setting identical to §6.10's arm except the loss type.
+Three of the five — seeds 0, 1 and 2 — already existed under that objective; two more
+were trained, and the
+5 are scored together as an ensemble at evaluation time under §6.10's rollout
+protocol, on the same held-out arena of non-overlapping 400-step trajectories at
+n_independent = 4, over the same six horizons.
+
+**Which σ the coverage is against.** The combined arm is the first arm in this paper carrying
+**both** an aleatoric head that has not collapsed to zero and an across-member epistemic spread.
+The figures below are the **epistemic** one: the standard deviation across the five members' mean predictions, taken per state dimension, rather than the aleatoric head's output. That is the quantity M-68 names and
+the quantity §6.10's table reports, so the two tables are comparable line for line. The aleatoric
+head is reported separately in §6.5 and does not enter here.
+
+| h | combined err/σ | shared-trunk err/σ | combined ±1σ | shared ±1σ | combined ±2σ | shared ±2σ |
+|---|---|---|---|---|---|---|
+| 1 | 1.4× | 2.1× | 51.11% | 35.93% | 78.89% | 60.37% |
+| 8 | 3.5× | 6.3× | 20.62% | 14.10% | 39.72% | 26.62% |
+| 32 | 4.4× | 8.0× | 17.97% | 10.79% | 32.66% | 20.50% |
+| **100** | **5.4×** | **10.5×** | **15.53%** | **8.19%** | 28.27% | 16.11% |
+| 128 | 5.5× | 11.0× | 15.39% | 7.79% | 27.97% | 15.34% |
+| 368 | 5.4× | 13.0× | 14.44% | 6.30% | 27.63% | 12.51% |
+
+*Same trajectories, same harness, same bootstrap unit as §6.10. The shared-trunk columns are the
+mean over 3 seeds; the comparison below is paired against each of them separately.*
+
+**M-68 returns THE COMBINATION IMPROVES CALIBRATION** — branch 2 of the four the rule names. All
+5 of its 5 conditions hold, against every one of the
+3 shared-trunk seeds. At h = 100 the combined arm's overconfidence
+factor is 0.506–0.525× the shared-trunk arms', a **1.94×**
+improvement against a minimum detectable effect of 1.218× fixed in advance
+(results/p3_combined_arm_power.json, binding_mde at h = 100 (largest of the four calibrations)); its ±1σ coverage is 6.92 to 7.56 points higher, a mean of
++7.34 against an MDE of 2.50 points; and every paired interval excludes zero.
+
+**Condition (e), and how we read it.** The rule's fifth condition asks that both statistics move in
+the improving direction at at least four of the six horizons. Its text says "against every
+shared-trunk seed" and the rule states globally that a condition holds only if it holds against all
+three, so we applied the strict reading: a horizon counts only when **both** statistics improve
+there against **all three** seeds. It holds at 6 of 6 horizons, so the
+looser per-seed reading would not have changed the verdict. We record which we applied because the
+two readings can differ and the rule does not spell the difference out.
+
+| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
+|---|---|---|---|---|---|
+| 1 | 1.51× | 1.00× | 1.51× | 101% | -1% |
+| 8 | 1.75× | 1.05× | 1.83× | 93% | 7% |
+| 32 | 1.63× | 1.11× | 1.81× | 82% | 18% |
+| **100** | **1.55×** | 1.25× | 1.94× | **66%** | 34% |
+| 128 | 1.51× | 1.32× | 2.00× | 60% | 40% |
+| 368 | 1.35× | 1.77× | 2.39× | 34% | 66% |
+
+*The same σ-versus-accuracy split §6.10 uses, so the two arms' improvements can be compared part by
+part. Shares are of the log improvement, so the two columns add to one.*
+
+**The objective's own contribution is below what this design can resolve.** M-68 scores the combined
+arm against the **shared-trunk** arms, so what its verdict measures is the two fixes together. The
+comparison that isolates the objective is against §6.10's independent arm, which differs from this
+one in the loss type and in nothing else, and both come from the same script on the same
+trajectories. At h = 100 switching `mse` for `gaussian_nll` multiplies the overconfidence
+factor by **1.044×** (a 95% interval from the same cluster bootstrap over whole
+trajectories, [1.029, 1.054]) — the wrong direction, slightly — moves ±1σ coverage by
++0.22 points ([-0.31, +1.09], which spans zero), and multiplies the
+epistemic σ by 0.940×. Both effects sit under the minimum detectable effect this
+design fixed in advance — 1.218× on the factor and 2.50 points on coverage
+(results/p3_combined_arm_power.json, binding_mde at h = 100 (largest of the four calibrations)) — so although the factor's interval lies wholly on the worse side of no
+change, the objective's separate effect is **below the size this design was built to resolve at
+n_independent = 4**, and the
+point estimate points away from an improvement rather than towards one. It does not establish that
+the objective contributes nothing: reading a null out of an effect smaller than its own floor is the error M-24
+and M-43 record, and M-68's fourth branch exists to say underpowered rather than null. What the arm
+does settle is the combination, which is better calibrated than the shared-trunk arms by essentially
+the amount §6.10 already measured for independence alone (2.03× there,
+1.94× here). **The two fixes do not add. A reader who added them would have been
+wrong, which is why the arm was run.** That the objective's separate effect is at most small here is
+not a surprise once stated: the objective governs the **aleatoric** head, and the epistemic term is
+a spread across members that the loss never sees.
+
+**And it still does not repair the interval.** The combined arm is 5.4×
+overconfident at h = 100 with 15.53% coverage where a calibrated
+Gaussian gives 68.27%. Better than the shared-trunk arms, no better than independence
+alone, and still not an interval. §6.8's per-horizon multiplier remains the only thing in this
+paper that restores nominal coverage.
+
+**What the arm does not separate.** It differs from the shared-trunk arms on three axes at once —
+trunk sharing, the objective, and capacity (a factor of 3.49 in state-pathway
+parameters, as §6.10's contrast carries) — and independently-seeded runs also differ in data ordering. M-68 said so in advance:
+it bounds the combination and attributes nothing. The one further comparison this subsection makes —
+the `mse`/`gaussian_nll` pair above, which holds every other axis fixed — sits outside the rule's
+governing statistics and lands under the design's own minimum detectable effect, so it bounds the
+objective's separate contribution rather than measuring it.
+
+
 ---
 
 ## 7. Defects in the released pipeline
@@ -1401,9 +1504,9 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (245 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (246 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix F for all 15, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix F for all 16, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
 **Six retractions on our own evidence**, out of 19 superseded claims kept in the record, plus six that withdraw framings rather than numbers (Appendix C lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
@@ -1421,7 +1524,7 @@ counted separately because a value that is not produced twice cannot be compared
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,090 values, or 1.00%
 of the 908,630 numeric values under `results/`. The other 899,540 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 627 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 652 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1514,7 +1617,7 @@ anyone with a second dataset.
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's 4 independent trajectories admit a smallest attainable P-value of 0.04167 — coarser than the multiplicity-corrected threshold 0.001667, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is 0.0037 against a threshold of 0.001667. Resolving it at h = 368 needs more episodes than the released dataset contains, rather than a better test. **At h = 128 and below that is no longer true and we say so**: a shorter evaluation unit gives 14 independent units at h = 100 where the 400-step unit gives 4 (`M-64`), and we did not rerun this permutation family there. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
 
-**No family-wide correction is applied across our own pre-registered rules.** There are 15 of them with per-rule verdicts (Appendix F) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
+**No family-wide correction is applied across our own pre-registered rules.** There are 16 of them with per-rule verdicts (Appendix F) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. **Capacity is no longer one of them.** `M-49`, committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132 — a ratio of 0.9998, where §6.10's original contrast carried 3.49. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
@@ -1657,14 +1760,14 @@ What every downstream number rests on. Each level was passed before the next was
 
 `--force` matters: a clean clone already contains each stage's declared output, so without it every stage skips.
 
-**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 31 runs takes **48.2 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 28.5 for the remaining 25 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
+**Runtime.** Training stages are excluded by `--quick`, which is what makes the quick path practical. Training all 33 runs takes **49.8 hours** of recorded wall clock on two CPU cores: 19.7 hours for the 6 runs at 10,000 iterations and 30.1 for the remaining 27 at 2,500. (Those were rounded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a stated total equals the sum of its stated parts.) The longest single run is 4.4 hours. An earlier version of this appendix said 22 hours; that figure predated the 6 ten-thousand-iteration runs added for the three-seed headline, and is corrected here from the `wall_clock_s` field of every run artifact rather than re-estimated.
 
-**5 of those 31 runs, 1.9 hours, are `M-49`'s capacity-matched
+**5 of those 33 runs, 1.9 hours, are `M-49`'s capacity-matched
 arm at `rnn_hidden_size` 124** rather than the released 256. They are part
-of this project's CPU spend and are counted in the total above — the other 46.3
-hours are the 26 runs at the released width, and the two parts are asserted to make the
+of this project's CPU spend and are counted in the total above — the other 47.9
+hours are the 28 runs at the released width, and the two parts are asserted to make the
 total rather than stated beside it. They are **not** part of the
-26 runs §6.3 fits the σ-collapse rate over, because that rate is a property of one
+28 runs §6.3 fits the σ-collapse rate over, because that rate is a property of one
 architecture and mixing widths into it would make "nearly identical across runs" a claim about two
 different models. Every run artifact records the width it trained at, and `paper_numbers.py`
 selects the collapse family by that field rather than by filename — it did neither until the first
@@ -1805,11 +1908,11 @@ GPU-parallel simulation, not a data-loading problem.
 | Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
 | Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 48.2 h scale; the model training is the cheap half and the data is not |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 49.8 h scale; the model training is the cheap half and the data is not |
 | Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 48.2 h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 31 runs took 48.2 h on two cores; a modest sweep is a small multiple of that |
+| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 49.8 h of CPU training per architecture, times three, if run at our data budget |
+| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 33 runs took 49.8 h on two cores; a modest sweep is a small multiple of that |
 
 **The two at the bottom are within reach of this setup** — the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison —
 and are the honest next steps for anyone extending this work on CPU. The six above
@@ -1860,7 +1963,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 433 KB ledger, so here is the table. It is generated from
+or an instruction to open a 450 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1884,10 +1987,11 @@ existed. This is the same computation Figure 1 plots.
 | `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | — | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |
 | `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h ≤ 128? | — | +6.0 h | results/m64_short_units.json | MOVES, at one cell |
 | `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | — | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |
+| `M-68` | The combined arm: independence and the corrected objective together | — | +2.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |
 | `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
 
-15 rules, 15 with a computed lead time, of which
-14 are positive and 1 negative. **The negative one is
+16 rules, 16 with a computed lead time, of which
+15 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.
@@ -1904,7 +2008,7 @@ well now, and the count is asserted against the same set `scripts/ledger_check.p
 
 **What each rule says, in its own committed words** is in the supplementary material, as
 `docs/APPENDIX_G_RULES.md` — every rule's text unabridged, generated from the ledger by the same
-script that generates this table. Quoting all 15 in full here would add pages to an
+script that generates this table. Quoting all 16 in full here would add pages to an
 appendix whose job is to be checkable at a glance, and quoting them in part would ship
 quotations ending mid-sentence. The table is the claim; the supplementary is the evidence.
 

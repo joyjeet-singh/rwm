@@ -49,6 +49,7 @@ SHARED_SEEDS = (0, 1, 2)               # the shared-trunk ens5 arms
 # (conservative) calibration is the binding one, as the rule states.
 MDE_RATIO = 1.45       # results/p1_power_check.json
 MDE_COV_PTS = 2.26
+MDE_SOURCE = "results/p1_power_check.json, cross-architecture calibration"
 
 
 def cboot_paired(fn, n, rng, n_boot=N_BOOT):
@@ -134,9 +135,14 @@ def block(err, sig, sl):
 
 
 def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
-         rule="M-44", mde_ratio=None, mde_cov=None):
+         rule="M-44", mde_ratio=None, mde_cov=None, mde_source=None):
+    # mde_source travels WITH the thresholds. It was hardcoded to M-44's power
+    # file while mde_ratio and mde_cov were already parameters, so an arm scored
+    # against another rule's MDE recorded the wrong provenance for it -- the same
+    # shape of defect the mde_ratio comment above records.
     mde_ratio = MDE_RATIO if mde_ratio is None else mde_ratio
     mde_cov = MDE_COV_PTS if mde_cov is None else mde_cov
+    mde_source = MDE_SOURCE if mde_source is None else mde_source
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, ep = R.load_data(paths["csv"], verbose=False)
@@ -153,7 +159,8 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
     ac = torch.as_tensor(raw[:, :, R.ACTION_COLS], dtype=torch.float32)
 
     print(f"R2 — THE INDEPENDENT-INITIALISATION ENSEMBLE, AND {rule}'s VERDICT"
-          + (f"   [capacity-matched, hidden {hidden}]" if tag else ""))
+          + (f"   [capacity-matched, hidden {hidden}]" if hidden != 256 else "")
+          + ("   [combined arm: gaussian_nll members]" if rule == "M-68" else ""))
     print("=" * 104)
     print(f"  out-of-sample, episodes {hold}, {n_traj} trajectories, "
           f"n_independent = {n_ind}\n")
@@ -175,7 +182,7 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
         # identifier -- a record destroyed to make room for a label.
         "governing_rule": rule, "arm_tag": tag or "(released width)",
         "hidden_size": hidden,
-        "mde_source": "results/p1_power_check.json, cross-architecture calibration",
+        "mde_source": mde_source,
     }, "independent": {}, "shared_trunk": {}, "comparison": {}, "m44": {}}
 
     # --------------------------------------------- the independent ensemble
@@ -383,6 +390,7 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
             "coverage_shift_at_least_mde": cov_mde,
         },
         "mde_ratio": mde_ratio, "mde_coverage_pts": mde_cov,
+        "mde_source": mde_source,
         # NOT "rule": the m44 block already has that key and it holds a sentence
         # ("M-44, committed 2026-08-23 before any artifact here existed"). The
         # first version of this parameterisation overwrote it with a bare
@@ -409,6 +417,182 @@ def main(tag="", hidden=256, out_name="r2_independent_ensemble.json",
         else:
             verdict = "CAPACITY EXPLAINS IT"
         out["m44"]["verdict"] = verdict
+
+    # M-68 DEFINES FOUR BRANCHES, APPLIED IN ORDER, FIRST MATCH WINS.
+    #
+    # They are not M-44's and not M-49's, so they are computed here rather than
+    # squeezed into the vocabulary above. Everything below reads the rule as
+    # committed at 68bb683 and nothing here was added or loosened after the data
+    # existed.
+    #
+    # WHICH SIGMA. `epi` is the standard deviation ACROSS the five members' mean
+    # predictions -- the epistemic term -- not the aleatoric head's output. That
+    # is what block() divides the error by and what coverage_pm1 counts against,
+    # and it is what M-68 names ("rho = mean |error| / mean sigma_epistemic").
+    # The combined arm is the first arm here that carries both, so the artifact
+    # says so rather than leaving it to be inferred.
+    #
+    # CONDITION (e). The rule's Governing statistics block states globally that
+    # "a condition holds only if it holds against every one of the three
+    # shared-trunk seeds". (e) is a condition, so a horizon counts only when BOTH
+    # statistics improve there against ALL THREE seeds. The looser per-seed
+    # reading -- four horizons for seed 0, a different four for seed 1 -- is not
+    # applied.
+    if rule == "M-68":
+        dir_h = {}
+        for h in HORIZONS:
+            bi_ = out["independent"][str(h)]
+            ps_ = out["shared_trunk"][str(h)]["per_seed"]
+            r_all = all(bi_["ratio_err_over_sigma"] < ps_[str(s)]["ratio_err_over_sigma"]
+                        for s in SHARED_SEEDS)
+            c_all = all(bi_["coverage_pm1"] > ps_[str(s)]["coverage_pm1"]
+                        for s in SHARED_SEEDS)
+            dir_h[str(h)] = {
+                "overconfidence_lower_vs_all_three": bool(r_all),
+                "coverage_higher_vs_all_three": bool(c_all),
+                "both_improve_vs_all_three": bool(r_all and c_all),
+            }
+        n_dir = sum(1 for v in dir_h.values() if v["both_improve_vs_all_three"])
+        cond_e = bool(n_dir >= 4)
+
+        # (a)-(d) at the governing horizon, against every shared-trunk seed.
+        cond_a = ratio_mde                       # improvement factor >= mde_ratio
+        cond_b = ratio_excl
+        cond_c = all(p["coverage_diff_pts"] >= mde_cov for p in P)
+        cond_d = cov_excl
+
+        # Branch 3: the whole interval sits BELOW the horizon's MDE. The interval
+        # on the improvement factor is [exp(-hi), exp(-lo)] because log_ratio is
+        # indep-over-shared and improvement is its reciprocal.
+        ratio_ci_below = any(float(np.exp(-p["log_ratio_ci"][0])) < mde_ratio for p in P)
+        cov_ci_below = any(p["coverage_ci_pts"][1] < mde_cov for p in P)
+
+        if not (ratio_better and cov_better):
+            branch, verdict = 1, "THE COMBINATION DOES NOT IMPROVE CALIBRATION"
+        elif cond_a and cond_b and cond_c and cond_d and cond_e:
+            branch, verdict = 2, "THE COMBINATION IMPROVES CALIBRATION"
+        elif ratio_ci_below or cov_ci_below:
+            branch, verdict = 3, "THE COMBINATION DOES NOT IMPROVE CALIBRATION"
+        else:
+            branch, verdict = 4, "UNDERPOWERED"
+        out["m68"] = {
+            "rule": "M-68, committed 68bb683 2026-09-05T21:49:41+05:30, before "
+                    "runs/armA_seed3_nll and runs/armA_seed4_nll existed",
+            "horizon": DEPLOY,
+            "sigma_used_for_coverage":
+                "the standard deviation across the five members' mean predictions, "
+                "taken per state dimension, rather than the aleatoric head's output",
+            "condition_e_reading":
+                "global all-three convention: a horizon counts only when BOTH "
+                "statistics improve there against ALL THREE shared-trunk seeds",
+            "conditions": {
+                "a_overconfidence_improvement_at_least_mde": bool(cond_a),
+                "b_overconfidence_interval_excludes_zero": bool(cond_b),
+                "c_coverage_gain_at_least_mde": bool(cond_c),
+                "d_coverage_interval_excludes_zero": bool(cond_d),
+                "e_both_improve_at_four_of_six_horizons": cond_e,
+            },
+            "direction_by_horizon": dir_h,
+            "n_horizons_both_improve_vs_all_three": n_dir,
+            "branch1_wrong_direction_at_governing_horizon":
+                bool(not (ratio_better and cov_better)),
+            "branch3_interval_wholly_below_mde": {
+                "overconfidence": bool(ratio_ci_below), "coverage": bool(cov_ci_below)},
+            "branch": branch, "verdict": verdict,
+            "mde_ratio": mde_ratio, "mde_coverage_pts": mde_cov,
+            "mde_source": mde_source,
+        }
+
+        # THE OBJECTIVE ISOLATED — WITH AN INTERVAL, AND AGAINST THIS DESIGN'S MDE.
+        #
+        # M-68 scores this arm against the SHARED-TRUNK arms, so its verdict
+        # measures the two fixes TOGETHER. The comparison that isolates the
+        # objective is against 6.10's independent-`mse` arm, which differs from
+        # this one in the loss type and in nothing else: the same five seeds, the
+        # same rollout protocol, the same trajectories, this same function. It is
+        # reported alongside and cannot move the verdict.
+        #
+        # It was first published as a bare point estimate, and two readers flagged
+        # the same overclaim: 1.044x and +0.22 points were being read as "the
+        # objective contributes nothing" when both sit far BELOW the minimum
+        # detectable effect this design fixed in advance (1.218x, 2.50 points).
+        # A sub-MDE point estimate licenses "not detectable at n_independent = 4",
+        # never "absent" -- M-24 and M-43 are this project's own records of that
+        # error, and M-68 branch 4 exists to say UNDERPOWERED rather than NULL. So
+        # the comparison now carries the SAME 95% cluster bootstrap over WHOLE
+        # TRAJECTORIES (M-27; never trajectory x step) that every governing
+        # comparison above uses, and the artifact states whether it can resolve
+        # the effect rather than leaving the reader to assume it did.
+        mse_models = [load_ens1(s, "", 256) for s in INDEP_SEEDS]
+        pm, _, epm, _, _ = rollout_independent(mse_models, st.clone(), ac)
+        err_m = (pm - st).abs().numpy().astype(np.float64)
+        epi_m = epm.numpy().astype(np.float64)
+        assert np.isfinite(err_m[:, START:]).all(), "non-finite error in the mse rollout"
+        allt = np.arange(n_traj)
+        o_lr = float(np.log(rho(err_i, epi_i, allt) / rho(err_m, epi_m, allt)))
+        o_dc = float(100 * (cov(err_i, epi_i, allt) - cov(err_m, epi_m, allt)))
+        o_lo1, o_hi1, _ = cboot_paired(
+            lambda i: np.log(rho(err_i, epi_i, i) / rho(err_m, epi_m, i)), n_traj,
+            np.random.default_rng(300))
+        o_lo2, o_hi2, _ = cboot_paired(
+            lambda i: 100 * (cov(err_i, epi_i, i) - cov(err_m, epi_m, i)), n_traj,
+            np.random.default_rng(400))
+        # E8 again: the four trajectory values each interval is built from, in the
+        # artifact, because 5 asserts that of every interval this paper prints at
+        # n_independent = 4.
+        o_ratio_mag = float(max(np.exp(o_lr), np.exp(-o_lr)))
+        out["m68"]["objective_isolated"] = {
+            "against": "results/r2_independent_ensemble.json — the same five seeds "
+                       "under mse, same protocol, same trajectories, same script",
+            "horizon": DEPLOY,
+            "governing": False,
+            "ratio_multiplicative": float(np.exp(o_lr)),
+            "ratio_ci": [float(np.exp(o_lo1)), float(np.exp(o_hi1))],
+            "ratio_ci_excludes_one": bool(o_hi1 < 0 or o_lo1 > 0),
+            "ratio_improves": bool(o_lr < 0),
+            "ratio_magnitude_vs_mde": o_ratio_mag,
+            "ratio_below_mde": bool(o_ratio_mag < mde_ratio),
+            "coverage_diff_pts": o_dc,
+            "coverage_ci_pts": [o_lo2, o_hi2],
+            "coverage_ci_excludes_zero": bool(o_lo2 > 0 or o_hi2 < 0),
+            "coverage_below_mde": bool(abs(o_dc) < mde_cov),
+            "log_ratio_per_trajectory":
+                [float(np.log(rho(err_i, epi_i, [t]) / rho(err_m, epi_m, [t])))
+                 for t in range(n_traj)],
+            "coverage_diff_pts_per_trajectory":
+                [float(100 * (cov(err_i, epi_i, [t]) - cov(err_m, epi_m, [t])))
+                 for t in range(n_traj)],
+            "mde_ratio": mde_ratio, "mde_coverage_pts": mde_cov,
+            "mde_source": mde_source,
+            "resolvable": bool(o_ratio_mag >= mde_ratio or abs(o_dc) >= mde_cov),
+            "reading": (
+                "BOTH EFFECTS BELOW THE MDE — the objective's own contribution is "
+                "not resolvable at this n_independent; the point estimate is in the "
+                "direction of worse calibration, not better"
+                if o_ratio_mag < mde_ratio and abs(o_dc) < mde_cov else
+                "at least one effect reaches the MDE"),
+        }
+        print(f"\n  The objective isolated — the same five seeds under mse, h = {DEPLOY}")
+        print(f"    overconfidence factor x {np.exp(o_lr):.3f} "
+              f"[{np.exp(o_lo1):.3f}, {np.exp(o_hi1):.3f}]  (MDE {mde_ratio}×, "
+              f"{'BELOW' if o_ratio_mag < mde_ratio else 'clears'})")
+        print(f"    coverage {o_dc:+.2f} points "
+              f"[{o_lo2:.2f}, {o_hi2:.2f}]  (MDE {mde_cov} points, "
+              f"{'BELOW' if abs(o_dc) < mde_cov else 'clears'})")
+        print(f"    {out['m68']['objective_isolated']['reading']}")
+
+        out["m44"]["verdict"] = verdict
+        print(f"\n  M-68 direction condition (e), both statistics against all three seeds")
+        for h in HORIZONS:
+            d_ = dir_h[str(h)]
+            print(f"    h={h:>3}  rho lower {'yes' if d_['overconfidence_lower_vs_all_three'] else 'NO '}"
+                  f"   coverage higher {'yes' if d_['coverage_higher_vs_all_three'] else 'NO '}"
+                  f"   both {'yes' if d_['both_improve_vs_all_three'] else 'NO '}")
+        print(f"    {n_dir} of {len(HORIZONS)} horizons -> (e) "
+              f"{'holds' if cond_e else 'FAILS'}")
+        print(f"\n  M-68 BRANCH {branch}: {verdict}")
+        for k, v in out["m68"]["conditions"].items():
+            print(f"    {'yes' if v else 'NO ':>4}  {k}")
     print(f"\n  {rule} VERDICT: {verdict}")
     for k, v in out["m44"]["conditions"].items():
         print(f"    {'yes' if v else 'NO ':>4}  {k}")
@@ -436,5 +620,19 @@ if __name__ == "__main__":
         sys.exit(main(tag=f"_m49h{_w}", hidden=_w,
                       out_name="m49_capacity_matched.json", rule="M-49",
                       mde_ratio=round(_m["overconfidence_ratio_multiplicative"], 3),
-                      mde_cov=round(_m["coverage_pts"], 2)))
+                      mde_cov=round(_m["coverage_pts"], 2),
+                      mde_source="results/p2_capacity_power.json"))
+    # M-68 runs the SAME code again on the combined arm -- five independently
+    # initialised full models trained under gaussian_nll. Same protocol, same
+    # bootstrap, same horizons, same arena; only the weights and the rule differ.
+    if "--m68" in sys.argv:
+        import json as _j
+        _P3 = _j.load(open(os.path.join(R.RESULTS, "p3_combined_arm_power.json")))
+        _b = _P3["binding_mde"]["100"]          # h = 100 is M-68's governing horizon
+        sys.exit(main(tag="_nll", hidden=256,
+                      out_name="r2_combined_arm.json", rule="M-68",
+                      mde_ratio=round(_b["ratio_multiplicative"], 3),
+                      mde_cov=round(_b["coverage_pts"], 2),
+                      mde_source="results/p3_combined_arm_power.json, binding_mde at "
+                                 "h = 100 (largest of the four calibrations)"))
     main()

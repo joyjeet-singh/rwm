@@ -331,6 +331,14 @@ REPORT=p2_capacity_power_report.txt stage 20r1 "P2 — power for M-49, before th
       results/p2_capacity_power.json NEEDS_WEIGHTS $PY scripts/p2_capacity_power.py
 REPORT=m49_capacity_matched_report.txt stage 20r2 "M-49 — the capacity-matched ensemble, and its verdict" "10 min" \
       results/m49_capacity_matched.json NEEDS_WEIGHTS $PY scripts/r2_independent_ensemble.py --m49
+# M-68. The combined arm: the independent-initialisation topology AND the
+# corrected objective on the same models. Same script as 20r with --m68, so the
+# rollout protocol, bootstrap, horizons and arena are identical to 6.10's arm by
+# construction. The two extra members come from ./run_nll_indep_ens.sh; the MDE
+# it is scored against is results/p3_combined_arm_power.json, whose own writer
+# has no stage here (docs/DEFERRED.md, 2026-09-05).
+REPORT=r2_combined_arm_report.txt stage 20r3 "M-68 — the combined arm, and its verdict" "10 min" \
+      results/r2_combined_arm.json NEEDS_WEIGHTS $PY scripts/r2_independent_ensemble.py --m68
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 # Appendix G, generated from the ledger. It feeds six paper keys and its writer

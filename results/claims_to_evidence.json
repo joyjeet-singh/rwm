@@ -3122,7 +3122,7 @@
       "id": "M-68",
       "claim": "PRE-REGISTERED decision rule for the combined arm: independence and the corrected object",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [],
       "artifacts": [
         "results/p3_combined_arm_power.json",

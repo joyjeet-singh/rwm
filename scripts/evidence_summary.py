@@ -332,6 +332,28 @@ def build_rows():
             "artifacts": [f"results/{name}.json"],
         })
 
+    # --- 11a: the combined arm. Its own rule, its own conditions, its own
+    # section. It is not folded into the loop above because M-68's condition set
+    # is not M-44's and reading it out of the m44 block would report the wrong
+    # rule's conditions beside the right rule's verdict.
+    C68 = J("r2_combined_arm.json")
+    _c68 = C68["m68"]
+    _c68arena = arena_of_text(C68["design"]["arena"])
+    _c68cond = _c68["conditions"]
+    _c68mde = [k for k in _c68cond if k.endswith("_mde")]
+    rows.append({
+        "claim": "Independence and the corrected objective together improve on the "
+                 "released topology",
+        "section": "6.11",
+        "arena": _c68arena,
+        "n_independent": C68["design"]["n_independent"],
+        "in_sample": in_sample(measured_model(T("r2_combined_arm_report.txt")), _c68arena),
+        "verdict": _c68["verdict"],
+        "multiplicity": multiplicity(mde_met=all(_c68cond[k] for k in _c68mde)),
+        "model": measured_model(T("r2_combined_arm_report.txt")),
+        "artifacts": ["results/r2_combined_arm.json"],
+    })
+
     # --- 12: the action-alignment defect -------------------------------------
     s4_arena = arena_of_episodes(S4["split"]["holdout_episodes"])
     s4_model = measured_model(T("step3_report.txt"))

@@ -29,7 +29,7 @@ uncertainty outputs report.
    of outcomes inside ±1σ against a calibrated 68.27%. It deteriorates with horizon from there.
    The per-member σ the method computes and discards is worse still, and §6.3 derives why: the
    implemented state loss puts a reparameterised *sample* into a squared error, whose optimum in σ
-   is exactly zero. §6.3 demonstrates that against synthetic data whose noise is known and varies 25× across the input range: under the implemented objective σ lands 22× low and tracks the noise not at all, under the authors' own unused branch it recovers to a median ratio of 0.98. That is a pre-registered result (`M-50`, OBJECTIVE-DRIVEN).
+   is exactly zero. §6.3 demonstrates that against synthetic data whose noise is known and varies 25× across the input range: under the implemented objective σ lands 21.7× low and tracks the noise not at all, under the authors' own unused branch it recovers to a median ratio of 0.98. That is a pre-registered result (`M-50`, OBJECTIVE-DRIVEN).
 
 3. **As a ranking it is much better.** Disagreement beats the forecast step index — a free counter
    neither paper ran — at every horizon, and still correlates +0.419 with realised error once both
@@ -52,8 +52,8 @@ uncertainty outputs report.
    horizon-specific and the same comparison gives 9.5% on relative-L1, which is why the abstract
    now names both scopes.
 
-**Scale, so you can calibrate how much to trust each.** Two CPU cores, 48.2 hours of training
-across 31 runs, 0.133% of the reference's world-model data budget. The out-of-sample arena has
+**Scale, so you can calibrate how much to trust each.** Two CPU cores, 49.8 hours of training
+across 33 runs, 0.133% of the reference's world-model data budget. The out-of-sample arena has
 **four** mutually non-overlapping 400-step trajectories, and that bounds every long-horizon claim
 in the paper.
 

@@ -1,0 +1,65 @@
+R2 — THE INDEPENDENT-INITIALISATION ENSEMBLE, AND M-68's VERDICT   [combined arm: gaussian_nll members]
+========================================================================================================
+  out-of-sample, episodes [1, 8], 4 trajectories, n_independent = 4
+
+  loaded 5 independently-initialised ens1 models: seeds [0, 1, 2, 3, 4]
+  loaded 3 shared-trunk ens5 arms: seeds [0, 1, 2]
+
+  Independent-init ensemble against the shared-trunk arms, same trajectories
+        h      independent err/σ     shared-trunk err/σ    ratio   indep ±1σ  shared ±1σ
+    --------------------------------------------------------------------------------------------
+        1                    1.4                    2.1    0.661      51.11%      35.93%
+        8                    3.5                    6.3    0.546      20.62%      14.10%
+       32                    4.4                    8.0    0.552      17.97%      10.79%
+      100                    5.4                   10.5    0.515      15.53%       8.19%
+      128                    5.5                   11.0    0.500      15.39%       7.79%
+      368                    5.4                   13.0    0.418      14.44%       6.30%
+
+  M-44's governing comparison at h = 100, paired over the same trajectories
+      vs seed   ratio (indep/shared)                     95% CI   Δcoverage pts                     95% CI
+    ------------------------------------------------------------------------------------------------------
+            0                  0.525             [0.462, 0.590]            6.92               [5.66, 8.18]
+            1                  0.506             [0.437, 0.571]            7.56               [6.20, 9.29]
+            2                  0.515             [0.452, 0.579]            7.55               [6.10, 9.00]
+
+  Where the improvement comes from — rho is error over sigma, so both can move
+        h    sigma x   accuracy x    total x   from sigma   from accuracy
+        1      1.514        0.996      1.508       100.9%           -0.9%
+        8      1.753        1.046      1.835        92.5%            7.5%
+       32      1.626        1.113      1.809        82.0%           18.0%
+      100      1.550        1.252      1.940        66.1%           33.9%
+      128      1.513        1.322      2.001        59.7%           40.3%
+      368      1.350        1.771      2.391        34.4%           65.6%
+
+  The objective isolated — the same five seeds under mse, h = 100
+    overconfidence factor x 1.044 [1.029, 1.054]  (MDE 1.218×, BELOW)
+    coverage +0.22 points [-0.31, 1.09]  (MDE 2.5 points, BELOW)
+    BOTH EFFECTS BELOW THE MDE — the objective's own contribution is not resolvable at this n_independent; the point estimate is in the direction of worse calibration, not better
+
+  M-68 direction condition (e), both statistics against all three seeds
+    h=  1  rho lower yes   coverage higher yes   both yes
+    h=  8  rho lower yes   coverage higher yes   both yes
+    h= 32  rho lower yes   coverage higher yes   both yes
+    h=100  rho lower yes   coverage higher yes   both yes
+    h=128  rho lower yes   coverage higher yes   both yes
+    h=368  rho lower yes   coverage higher yes   both yes
+    6 of 6 horizons -> (e) holds
+
+  M-68 BRANCH 2: THE COMBINATION IMPROVES CALIBRATION
+     yes  a_overconfidence_improvement_at_least_mde
+     yes  b_overconfidence_interval_excludes_zero
+     yes  c_coverage_gain_at_least_mde
+     yes  d_coverage_interval_excludes_zero
+     yes  e_both_improve_at_four_of_six_horizons
+
+  M-68 VERDICT: THE COMBINATION IMPROVES CALIBRATION
+     yes  overconfidence_lower_in_all
+     yes  overconfidence_interval_excludes_zero_in_all
+     yes  overconfidence_improvement_at_least_mde
+     yes  coverage_higher_in_all
+     yes  coverage_interval_excludes_zero_in_all
+     yes  coverage_shift_at_least_mde
+    mean overconfidence improvement 1.94× (MDE 1.218×)
+    mean coverage gain +7.34 points (MDE 2.5)
+
+  wrote results/r2_combined_arm.json

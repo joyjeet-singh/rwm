@@ -6897,7 +6897,71 @@ advance — the same distinction S-12 exists to enforce.
 `scripts/r2_independent_ensemble.py` over the same rollout protocol, bootstrap, arena and horizon
 grid §6.10 used. Power: `results/p3_combined_arm_power.json`, from
 `scripts/p3_combined_arm_power.py`. Driver: `run_nll_indep_ens.sh`.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**DISCHARGE NOTE, appended 2026-09-05. Not one word of the rule above is altered; only the
+Status token moves, as every discharged rule in this ledger has moved it.** The rule was committed
+at `68bb683`, 2026-09-05T21:49:41+05:30. The first combined-arm training run started at 21:57:08
+and the last finished at 23:36:14, so the rule precedes the data by about seven and a half minutes
+and the ordering is checkable from `git log` and the artifacts' own timestamps.
+
+**Branch 2 of the four fires.** At h = 100, against every one of the three
+shared-trunk seeds: the overconfidence factor is 0.506–0.525× the shared-trunk arms'
+(a 1.94× improvement, MDE 1.218×); ±1σ coverage is
++6.92 to +7.56 points higher (mean +7.34, MDE
+2.5 points); and every paired 95% cluster-bootstrap interval excludes zero. All
+5 of branch 2's conditions hold.
+
+**Which σ the coverage is against, which the rule did not name.** The rule says "coverage at
+±1σ" without saying which σ, and the combined arm is the first arm here carrying both an aleatoric
+head and an across-member epistemic spread. It is pinned by the harness the rule names:
+`scripts/r2_independent_ensemble.py` divides the error by, and counts coverage against, the
+**epistemic** term — the standard deviation across the five members' mean predictions,
+taken per state dimension, rather than the aleatoric head's output. That is also the quantity
+the rule's own ρ definition names. The aleatoric head does not enter any figure above.
+
+**How condition (e) was read.** Condition (e) says "against every shared-trunk seed", and the rule's
+Governing statistics block states globally that a condition holds only if it holds against every one
+of the three. The strict global reading was applied: global all-three convention: a horizon counts only when BOTH statistics improve there against ALL THREE shared-trunk seeds. It holds at
+6 of 6 horizons, so the
+looser per-seed reading would not have changed the verdict either.
+
+**Branch 4's label describes its cases imperfectly, and the data did not land there.** Branch 4 is
+the catch-all, headed UNDERPOWERED, but one case it catches — (a)–(d) holding at h = 100 while (e)
+fails — is not underpowered in any ordinary sense. Recorded here because it was noticed while the
+rule was being applied and because relabelling a frozen branch is not available. Nothing here turns
+on it: the data fired branch 2.
+
+**What the verdict does and does not say, reported alongside and unable to move it.** M-68 scores
+the combined arm against the SHARED-TRUNK arms, so branch 2 says the two fixes together beat the
+released topology. It does not say the objective contributed. The isolating comparison — against
+§6.10's independent-`mse` arm, which differs only in the loss type and comes from the same script on
+the same trajectories — gives at h = 100 an overconfidence factor of 5.429
+against 5.197, a factor of
+1.044 in the WRONG direction, and ±1σ
+coverage of 15.53% against 15.31%. Essentially all
+of the measured improvement is independence. The two fixes do not add, which is what the arm was run
+to find out, and §6.11 says so. The arm is still 5.4× overconfident and
+still not an interval.
+
+**APPENDED 2026-09-05, after review. Nothing above is edited; this paragraph only adds.** Two
+readers of the note above flagged the same two silences in it. First, the rule's recorded
+expectation was NOT borne out. M-68 said in advance that we expected the combined arm to be
+better calibrated than **either fix alone**; against the shared-trunk arms it is, and against
+independence alone it is not. At h = 100 the combined arm's overconfidence factor is 1.044×
+§6.10's independent-`mse` arm's — marginally worse, not better — and its ±1σ coverage differs by
++0.22 points on an interval that spans zero. Second, that isolating comparison falls BELOW this
+rule's own minimum detectable effect: 1.044× against an MDE of 1.218×, and +0.22 points against
+an MDE of 2.5 points, with 95% cluster-bootstrap intervals over whole trajectories of [1.029,
+1.054] and [-0.31, +1.09] (`results/r2_combined_arm.json`, `m68.objective_isolated`; the interval
+and the MDE comparison were added by this review, the point estimates were not). A point estimate
+under the MDE licenses "below what this design can resolve at n_independent = 4" and not "no
+effect" — the distinction M-24 and M-43 record and branch 4 exists to name — so the sentence
+above reading "Essentially all of the measured improvement is independence" claims more than the
+pair can carry. §6.11 now states the effect, its interval and the detection floor instead.
+Neither point touches the verdict: branch 2 fired on the governing comparison against the
+shared-trunk arms and still fires.
+
+**Discharged** by `results/r2_combined_arm.json`. **It returns THE COMBINATION IMPROVES CALIBRATION.**
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 
 ## Candidate paper contributions
