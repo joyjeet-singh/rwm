@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     872 values substituted from 74 artifacts. -->
+     923 values substituted from 75 artifacts. -->
 
 # Ensemble disagreement is miscalibrated as a scale, by a factor that grows with rollout depth: an independent reproduction of a released robotic world model
 
@@ -559,6 +559,34 @@ separately and does not change the direction.
 comparisons, so we state the correction rather than leaving it to a reader. All
 4 of 4 still exclude zero at a Bonferroni level of 0.05/8,
 and Holm–Bonferroni rejects **4 of 4**. The sign test above is unaffected either way.
+
+**How good the reimplementation is as a model, next to the artifact it reimplements.**
+Neither table above answers that. The one above compares two training rules with each other
+and §6.2's compares calibration, so the released checkpoint and the from-scratch arms are
+never put side by side on absolute accuracy. Both aggregations, one arena, five rows:
+
+| model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = 100 | rel-L1 h = 100 | nRMSE h = 368 | rel-L1 h = 368 |
+|---|---|---|---|---|---|---|---|---|
+| released checkpoint | 0.0544 | 0.0563 | 0.0697 | 0.0808 | 0.5028 | 0.3304 | 0.9051 | 0.6041 |
+| Arm A — autoregressive, faithful MSE | 0.1262 | 0.1232 | 0.3029 | 0.3289 | 0.4913 | 0.4798 | 0.5425 | 0.5856 |
+| Arm A — autoregressive, `gaussian_nll` | 0.1204 | 0.1195 | 0.2867 | 0.3154 | 0.4603 | 0.4413 | 0.5245 | 0.5608 |
+| Arm B — teacher-forced | 0.0879 | 0.0929 | 0.3064 | 0.3392 | 1.0363 | 1.0849 | 3.7927 | 4.5684 |
+| hold-last floor | 0.0989 | 0.0796 | 0.4117 | 0.3298 | 0.9537 | 0.7558 | 1.0897 | 0.9930 |
+
+**Arena, stated once for the whole table: out-of-sample held-out pair, episodes 1 and 8,
+4 non-overlapping 400-step trajectories, n_independent = 4.**
+Arm rows are the mean over 3 seeds at the `weights_2500.pt` checkpoint and the
+per-seed values are in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1) and both
+metrics are cumulative over forecast steps 1..h. Every model row is read from the stored
+rollouts §6.2's calibration tables are computed from, so no model is run to build this table.
+
+Both metrics put the released checkpoint first at h = 1 and h = 8, they name
+different leaders at h = 100, and at h = 368 both put an Arm A variant
+ahead of it — the reimplementation is behind the artifact it reimplements at short horizons and
+ahead of it at the longest horizon we measure. That reading flatters the released checkpoint
+rather than us, because the arena is out-of-sample for our arms and in-sample for it: the
+split is ours, and the released checkpoint trained on all ten episodes, so
+it has no held-out arena in this dataset at all.
 
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
 
@@ -1396,7 +1424,7 @@ counted separately because a value that is not produced twice cannot be compared
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,090 values, or 1.00%
 of the 908,630 numeric values under `results/`. The other 899,540 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 618 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 627 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 

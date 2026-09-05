@@ -539,6 +539,34 @@ comparisons, so we state the correction rather than leaving it to a reader. All
 {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}},
 and Holm–Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**. The sign test above is unaffected either way.
 
+**How good the reimplementation is as a model, next to the artifact it reimplements.**
+Neither table above answers that. The one above compares two training rules with each other
+and §6.2's compares calibration, so the released checkpoint and the from-scratch arms are
+never put side by side on absolute accuracy. Both aggregations, one arena, five rows:
+
+| model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = {{v2_deploy_h}} | rel-L1 h = {{v2_deploy_h}} | nRMSE h = {{v2_diag_h}} | rel-L1 h = {{v2_diag_h}} |
+|---|---|---|---|---|---|---|---|---|
+| released checkpoint | {{h2h_released_nrmse_h1}} | {{h2h_released_l1_h1}} | {{h2h_released_nrmse_h8}} | {{h2h_released_l1_h8}} | {{h2h_released_nrmse_h100}} | {{h2h_released_l1_h100}} | {{h2h_released_nrmse_h368}} | {{h2h_released_l1_h368}} |
+| Arm A — autoregressive, faithful MSE | {{h2h_armA_nrmse_h1}} | {{h2h_armA_l1_h1}} | {{h2h_armA_nrmse_h8}} | {{h2h_armA_l1_h8}} | {{h2h_armA_nrmse_h100}} | {{h2h_armA_l1_h100}} | {{h2h_armA_nrmse_h368}} | {{h2h_armA_l1_h368}} |
+| Arm A — autoregressive, `gaussian_nll` | {{h2h_armAnll_nrmse_h1}} | {{h2h_armAnll_l1_h1}} | {{h2h_armAnll_nrmse_h8}} | {{h2h_armAnll_l1_h8}} | {{h2h_armAnll_nrmse_h100}} | {{h2h_armAnll_l1_h100}} | {{h2h_armAnll_nrmse_h368}} | {{h2h_armAnll_l1_h368}} |
+| Arm B — teacher-forced | {{h2h_armB_nrmse_h1}} | {{h2h_armB_l1_h1}} | {{h2h_armB_nrmse_h8}} | {{h2h_armB_l1_h8}} | {{h2h_armB_nrmse_h100}} | {{h2h_armB_l1_h100}} | {{h2h_armB_nrmse_h368}} | {{h2h_armB_l1_h368}} |
+| hold-last floor | {{h2h_floor_nrmse_h1}} | {{h2h_floor_l1_h1}} | {{h2h_floor_nrmse_h8}} | {{h2h_floor_l1_h8}} | {{h2h_floor_nrmse_h100}} | {{h2h_floor_l1_h100}} | {{h2h_floor_nrmse_h368}} | {{h2h_floor_l1_h368}} |
+
+**Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}},
+{{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2h_nind}}.**
+Arm rows are the mean over {{h2h_nseeds}} seeds at the `{{h2h_arm_ckpt}}` checkpoint and the
+per-seed values are in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1) and both
+metrics are cumulative over forecast steps 1..h. Every model row is read from the stored
+rollouts §6.2's calibration tables are computed from, so no model is run to build this table.
+
+Both metrics put the released checkpoint first at {{h2h_released_sweeps_at}}, they name
+different leaders at {{h2h_split_at}}, and at {{h2h_armA_sweeps_at}} both put an Arm A variant
+ahead of it — the reimplementation is behind the artifact it reimplements at short horizons and
+ahead of it at the longest horizon we measure. That reading flatters the released checkpoint
+rather than us, because the arena is out-of-sample for our arms and in-sample for it: the
+split is ours, and the released checkpoint trained on all {{h2h_ckpt_neps_word}} episodes, so
+it has no held-out arena in this dataset at all.
+
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
 
 The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). We cannot test it — it is a claim about policy learning and hardware. But its *world-model* half is a claim about a quantity we can count exactly, and ours is directly comparable.

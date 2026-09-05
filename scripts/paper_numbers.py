@@ -1606,6 +1606,32 @@ def main():
         "results/a1_ab_by_horizon.json")
     put("a1_n_A_worse_than_floor", len(_awf), "results/a1_ab_by_horizon.json")
 
+    # Head-to-head absolute accuracy: the released checkpoint against the from-scratch
+    # arms, one arena, both aggregations. Every cell of the table is a key here; the
+    # verdict keys name horizons rather than restate a comparison, because the two
+    # aggregations have inverted a released-checkpoint comparison before (Appendix H).
+    H2 = J("head_to_head_accuracy.json")
+    _h2src = "results/head_to_head_accuracy.json"
+    for _row in H2["rows"]:
+        for _h in H2["horizons"]:
+            _c = H2["rows"][_row]["cells"][str(_h)]
+            put(f"h2h_{_row}_nrmse_h{_h}", f'{_c["nrmse"]:.4f}', _h2src)
+            put(f"h2h_{_row}_l1_h{_h}", f'{_c["l1"]:.4f}', _h2src)
+    put("h2h_arena", H2["arena"], _h2src)
+    put("h2h_episodes", " and ".join(str(e) for e in H2["arena_episodes"]), _h2src)
+    put("h2h_ntraj", H2["n_trajectories"], _h2src)
+    put("h2h_nind", H2["n_independent"], _h2src)
+    put("h2h_unit", H2["unit_length"], _h2src)
+    put("h2h_nseeds", len(H2["arm_seeds"]), _h2src)
+    put("h2h_arm_ckpt", H2["arm_checkpoint"], _h2src)
+
+    def _hs(hs):
+        return " and ".join(f"h = {h}" for h in hs) or "no horizon"
+    put("h2h_released_sweeps_at", _hs(H2["released_leads_both_metrics_at"]), _h2src)
+    put("h2h_armA_sweeps_at", _hs(H2["armA_leads_both_metrics_at"]), _h2src)
+    put("h2h_split_at", _hs(H2["metrics_disagree_at"]), _h2src)
+    put("h2h_ckpt_neps_word", WORDS[H2["released_ckpt_trained_on_n_episodes"]].lower(), _h2src)
+
     _xc = _d1["cross_check"]
     put("d1_xc_runs", len(_xc), "results/task_d1_threeseed.json")
     put("d1_xc_values", f'{sum(r.get("values_compared", 0) for r in _xc):,}',

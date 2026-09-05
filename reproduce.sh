@@ -370,6 +370,9 @@ REPORT=insample_framing_report.txt stage 20n7 "2.4 — in-sample framing of the 
 REPORT=input_set_audit_report.txt stage 20n8 "M-66 — input discovery by pattern, classified" "5 s" \
       results/input_set_audit.json $PY scripts/input_set_audit.py
 
+stage 20n9 "5 — head-to-head absolute accuracy, from stored rollouts only" "20 s" \
+      results/head_to_head_accuracy.json NEEDS_WEIGHTS $PY scripts/head_to_head_accuracy.py
+
 REPORT=appendix_g_rules_report.txt stage 21a "Appendix G — every pre-registered rule, from the ledger" "10 s" \
       results/appendix_g_rules.json $PY scripts/appendix_g_rules.py
 

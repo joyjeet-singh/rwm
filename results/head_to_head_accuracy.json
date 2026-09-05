@@ -1,0 +1,537 @@
+{
+  "table": "head-to-head absolute accuracy, released checkpoint vs from-scratch arms",
+  "computation": "read from stored rollouts; no model is evaluated here",
+  "arena": "out-of-sample held-out pair",
+  "arena_episodes": [
+    1,
+    8
+  ],
+  "n_trajectories": 4,
+  "n_independent": 4,
+  "traj_start_row": [
+    999,
+    1399,
+    7999,
+    8399
+  ],
+  "unit_length": 400,
+  "start_step": 32,
+  "n_forecast_steps": 368,
+  "horizons": [
+    1,
+    8,
+    100,
+    368
+  ],
+  "arm_checkpoint": "weights_2500.pt",
+  "arm_seeds": [
+    0,
+    1,
+    2
+  ],
+  "seed_aggregation": "mean over seeds of the per-seed value; the per-seed values are in per_model and the ddof=1 spread beside each cell",
+  "metrics": {
+    "nrmse": "form 1, pooled (src/rwm_metrics.py:nrmse_pooled); cumulative mean over forecast steps 1..h",
+    "l1": "relative-L1 (src/rollout_eval.py:143); cumulative mean over forecast steps 1..h"
+  },
+  "released_checkpoint": "../robotic_world_model_lite/assets/models/pretrain_rnn_ens.pt",
+  "released_ckpt_arena_is_in_sample": true,
+  "released_ckpt_in_sample_reason": "the train/holdout split is OURS, for OUR arms. The released checkpoint predates it and trained on all ten episodes, so it has no held-out arena in this dataset at all",
+  "released_ckpt_trained_on_n_episodes": 10,
+  "released_ckpt_bias_direction": "toward better calibration, i.e. the measurement flatters the model",
+  "rows": {
+    "released": {
+      "label": "released checkpoint (as released, ensemble of 5)",
+      "n_models": 1,
+      "per_model": {
+        "released_ckpt_ens5": {
+          "1": {
+            "l1": 0.056282943513692056,
+            "nrmse": 0.05441511548055115
+          },
+          "8": {
+            "l1": 0.08081347385109669,
+            "nrmse": 0.06967247889254911
+          },
+          "100": {
+            "l1": 0.3304368319554542,
+            "nrmse": 0.5027556107569404
+          },
+          "368": {
+            "l1": 0.6040936703129757,
+            "nrmse": 0.9050655834287182
+          }
+        }
+      },
+      "cells": {
+        "1": {
+          "l1": 0.056282943513692056,
+          "l1_sd_ddof1": null,
+          "nrmse": 0.05441511548055115,
+          "nrmse_sd_ddof1": null
+        },
+        "8": {
+          "l1": 0.08081347385109669,
+          "l1_sd_ddof1": null,
+          "nrmse": 0.06967247889254911,
+          "nrmse_sd_ddof1": null
+        },
+        "100": {
+          "l1": 0.3304368319554542,
+          "l1_sd_ddof1": null,
+          "nrmse": 0.5027556107569404,
+          "nrmse_sd_ddof1": null
+        },
+        "368": {
+          "l1": 0.6040936703129757,
+          "l1_sd_ddof1": null,
+          "nrmse": 0.9050655834287182,
+          "nrmse_sd_ddof1": null
+        }
+      }
+    },
+    "armA": {
+      "label": "Arm A \u2014 autoregressive, faithful MSE",
+      "n_models": 3,
+      "per_model": {
+        "armA_faithful_mse_seed0": {
+          "1": {
+            "l1": 0.11936181421343847,
+            "nrmse": 0.1179379202912282
+          },
+          "8": {
+            "l1": 0.33122443427878673,
+            "nrmse": 0.31094613978603547
+          },
+          "100": {
+            "l1": 0.44232611823137574,
+            "nrmse": 0.4655204124123766
+          },
+          "368": {
+            "l1": 0.5294020071353616,
+            "nrmse": 0.48774034730488625
+          }
+        },
+        "armA_faithful_mse_seed1": {
+          "1": {
+            "l1": 0.1276259229862851,
+            "nrmse": 0.1350700735233521
+          },
+          "8": {
+            "l1": 0.32915327001971073,
+            "nrmse": 0.2993104692786705
+          },
+          "100": {
+            "l1": 0.518361515371629,
+            "nrmse": 0.5155597539504445
+          },
+          "368": {
+            "l1": 0.5921952681018638,
+            "nrmse": 0.5458018818722137
+          }
+        },
+        "armA_faithful_mse_seed2": {
+          "1": {
+            "l1": 0.12247056005364709,
+            "nrmse": 0.12560570781927788
+          },
+          "8": {
+            "l1": 0.3262467202733711,
+            "nrmse": 0.2984567452844987
+          },
+          "100": {
+            "l1": 0.47864983392970517,
+            "nrmse": 0.4927402495847858
+          },
+          "368": {
+            "l1": 0.6352060787439109,
+            "nrmse": 0.5940465218860622
+          }
+        }
+      },
+      "cells": {
+        "1": {
+          "l1": 0.12315276575112355,
+          "l1_sd_ddof1": 0.004174077971553983,
+          "nrmse": 0.12620456721128606,
+          "nrmse_sd_ddof1": 0.008581762232827863
+        },
+        "8": {
+          "l1": 0.32887480819062287,
+          "l1_sd_ddof1": 0.0025005129319045655,
+          "nrmse": 0.3029044514497349,
+          "nrmse_sd_ddof1": 0.006977375913493599
+        },
+        "100": {
+          "l1": 0.47977915584423664,
+          "l1_sd_ddof1": 0.03803027649858714,
+          "nrmse": 0.4912734719825356,
+          "nrmse_sd_ddof1": 0.025051896191540045
+        },
+        "368": {
+          "l1": 0.5856011179937121,
+          "l1_sd_ddof1": 0.0532093742114431,
+          "nrmse": 0.5425295836877208,
+          "nrmse_sd_ddof1": 0.05322857916643129
+        }
+      }
+    },
+    "armAnll": {
+      "label": "Arm A \u2014 autoregressive, gaussian_nll",
+      "n_models": 3,
+      "per_model": {
+        "armA_corrected_nll_seed0": {
+          "1": {
+            "l1": 0.11356021980395531,
+            "nrmse": 0.11395490407463535
+          },
+          "8": {
+            "l1": 0.31896062106574885,
+            "nrmse": 0.2940651335058892
+          },
+          "100": {
+            "l1": 0.4079395656630615,
+            "nrmse": 0.4347848487411842
+          },
+          "368": {
+            "l1": 0.4721284646396258,
+            "nrmse": 0.4421337159680958
+          }
+        },
+        "armA_corrected_nll_seed1": {
+          "1": {
+            "l1": 0.12206454446137167,
+            "nrmse": 0.12547134646048239
+          },
+          "8": {
+            "l1": 0.3150463143109138,
+            "nrmse": 0.2827823476668697
+          },
+          "100": {
+            "l1": 0.4568827622363578,
+            "nrmse": 0.46664261209480257
+          },
+          "368": {
+            "l1": 0.612070271478665,
+            "nrmse": 0.5646345191002645
+          }
+        },
+        "armA_corrected_nll_seed2": {
+          "1": {
+            "l1": 0.12285214138230674,
+            "nrmse": 0.12166958481800233
+          },
+          "8": {
+            "l1": 0.31211783995022707,
+            "nrmse": 0.2833166110174821
+          },
+          "100": {
+            "l1": 0.45904599285834324,
+            "nrmse": 0.47958034911605907
+          },
+          "368": {
+            "l1": 0.5981578658651622,
+            "nrmse": 0.5667483499681049
+          }
+        }
+      },
+      "cells": {
+        "1": {
+          "l1": 0.11949230188254456,
+          "l1_sd_ddof1": 0.005152404833454622,
+          "nrmse": 0.12036527845104002,
+          "nrmse_sd_ddof1": 0.005867965800071381
+        },
+        "8": {
+          "l1": 0.31537492510896326,
+          "l1_sd_ddof1": 0.003433205811072414,
+          "nrmse": 0.28672136406341364,
+          "nrmse_sd_ddof1": 0.006365498531154476
+        },
+        "100": {
+          "l1": 0.44128944025258754,
+          "l1_sd_ddof1": 0.028902084579383005,
+          "nrmse": 0.4603359366506819,
+          "nrmse_sd_ddof1": 0.023054063195605205
+        },
+        "368": {
+          "l1": 0.5607855339944843,
+          "l1_sd_ddof1": 0.07709374629263259,
+          "nrmse": 0.5245055283454884,
+          "nrmse_sd_ddof1": 0.07134391127480139
+        }
+      }
+    },
+    "armB": {
+      "label": "Arm B \u2014 teacher-forced",
+      "n_models": 3,
+      "per_model": {
+        "armB_teacher_forced_seed0": {
+          "1": {
+            "l1": 0.09548755270600819,
+            "nrmse": 0.08124137472630863
+          },
+          "8": {
+            "l1": 0.3065616820427091,
+            "nrmse": 0.2786429320367773
+          },
+          "100": {
+            "l1": 0.9277628423559316,
+            "nrmse": 0.9332557565460969
+          },
+          "368": {
+            "l1": 3.3680141830488752,
+            "nrmse": 2.8129888040890445
+          }
+        },
+        "armB_teacher_forced_seed1": {
+          "1": {
+            "l1": 0.09926838356591138,
+            "nrmse": 0.10566125400681682
+          },
+          "8": {
+            "l1": 0.3676719279339292,
+            "nrmse": 0.3361517935266286
+          },
+          "100": {
+            "l1": 1.0607094738515404,
+            "nrmse": 0.9918687534039696
+          },
+          "368": {
+            "l1": 7.332515885990447,
+            "nrmse": 6.02204912698684
+          }
+        },
+        "armB_teacher_forced_seed2": {
+          "1": {
+            "l1": 0.08406158309131742,
+            "nrmse": 0.07688348872501026
+          },
+          "8": {
+            "l1": 0.34342787325993535,
+            "nrmse": 0.3045282836951906
+          },
+          "100": {
+            "l1": 1.2661225547217851,
+            "nrmse": 1.183729531647681
+          },
+          "368": {
+            "l1": 3.004581176209159,
+            "nrmse": 2.5431053259551644
+          }
+        }
+      },
+      "cells": {
+        "1": {
+          "l1": 0.09293917312107898,
+          "l1_sd_ddof1": 0.007917220096106375,
+          "nrmse": 0.08792870581937857,
+          "nrmse_sd_ddof1": 0.015510649293789825
+        },
+        "8": {
+          "l1": 0.33922049441219126,
+          "l1_sd_ddof1": 0.030771611361735337,
+          "nrmse": 0.3064410030861988,
+          "nrmse_sd_ddof1": 0.0288021033792027
+        },
+        "100": {
+          "l1": 1.084864956976419,
+          "l1_sd_ddof1": 0.17046829400748692,
+          "nrmse": 1.0362846805325825,
+          "nrmse_sd_ddof1": 0.13101091153194233
+        },
+        "368": {
+          "l1": 4.5683704150828275,
+          "l1_sd_ddof1": 2.400707401136063,
+          "nrmse": 3.7927144190103497,
+          "nrmse_sd_ddof1": 1.9353705596303457
+        }
+      }
+    },
+    "floor": {
+      "label": "hold-last floor (no model)",
+      "n_models": 0,
+      "per_model": {},
+      "cells": {
+        "1": {
+          "l1": 0.0795978307723999,
+          "nrmse": 0.09890930952747375
+        },
+        "8": {
+          "l1": 0.3298218250274658,
+          "nrmse": 0.41174621372582115
+        },
+        "100": {
+          "l1": 0.755784273147583,
+          "nrmse": 0.9536524814317479
+        },
+        "368": {
+          "l1": 0.9929651021957397,
+          "nrmse": 1.089706675666376
+        }
+      }
+    }
+  },
+  "leaders": {
+    "nrmse_h1": {
+      "leader": "released",
+      "value": 0.05441511548055115,
+      "released": 0.05441511548055115,
+      "order": [
+        "released",
+        "armB",
+        "floor",
+        "armAnll",
+        "armA"
+      ]
+    },
+    "l1_h1": {
+      "leader": "released",
+      "value": 0.056282943513692056,
+      "released": 0.056282943513692056,
+      "order": [
+        "released",
+        "floor",
+        "armB",
+        "armAnll",
+        "armA"
+      ]
+    },
+    "nrmse_h8": {
+      "leader": "released",
+      "value": 0.06967247889254911,
+      "released": 0.06967247889254911,
+      "order": [
+        "released",
+        "armAnll",
+        "armA",
+        "armB",
+        "floor"
+      ]
+    },
+    "l1_h8": {
+      "leader": "released",
+      "value": 0.08081347385109669,
+      "released": 0.08081347385109669,
+      "order": [
+        "released",
+        "armAnll",
+        "armA",
+        "floor",
+        "armB"
+      ]
+    },
+    "nrmse_h100": {
+      "leader": "armAnll",
+      "value": 0.4603359366506819,
+      "released": 0.5027556107569404,
+      "order": [
+        "armAnll",
+        "armA",
+        "released",
+        "floor",
+        "armB"
+      ]
+    },
+    "l1_h100": {
+      "leader": "released",
+      "value": 0.3304368319554542,
+      "released": 0.3304368319554542,
+      "order": [
+        "released",
+        "armAnll",
+        "armA",
+        "floor",
+        "armB"
+      ]
+    },
+    "nrmse_h368": {
+      "leader": "armAnll",
+      "value": 0.5245055283454884,
+      "released": 0.9050655834287182,
+      "order": [
+        "armAnll",
+        "armA",
+        "released",
+        "floor",
+        "armB"
+      ]
+    },
+    "l1_h368": {
+      "leader": "armAnll",
+      "value": 0.5607855339944843,
+      "released": 0.6040936703129757,
+      "order": [
+        "armAnll",
+        "armA",
+        "released",
+        "floor",
+        "armB"
+      ]
+    }
+  },
+  "released_leads_both_metrics_at": [
+    1,
+    8
+  ],
+  "armA_leads_both_metrics_at": [
+    368
+  ],
+  "metrics_disagree_at": [
+    100
+  ],
+  "input_files": [
+    {
+      "path": "cache/released_ckpt_ens5__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "c418aa444d650efdc9c9c79149f1f5112465b0520495fecda5c5ccc5c57d4147",
+      "bytes": 534351
+    },
+    {
+      "path": "cache/armA_faithful_mse_seed0__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "a087a9144584c28b6c74abdd468d4ae8fb75dc7e5ca450f74497aeab7fcdb812",
+      "bytes": 502124
+    },
+    {
+      "path": "cache/armA_faithful_mse_seed1__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "ac7ecb5b2806be0ba681ce91f89f54340243f6d80a1057391ce73ca0ee6175ff",
+      "bytes": 501024
+    },
+    {
+      "path": "cache/armA_faithful_mse_seed2__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "e6e270feadef5c9012cfe5d3b166306c542ce02fb5128c361adc4fe0e72d7908",
+      "bytes": 503702
+    },
+    {
+      "path": "cache/armA_corrected_nll_seed0__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "8fad787624de26ccedbd2ee15e0c64c35849b790687081c8f9671333d4bd5581",
+      "bytes": 434272
+    },
+    {
+      "path": "cache/armA_corrected_nll_seed1__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "64735e300249d6ea0c23567285077f3b429d6d89d021ce8f36765fb8d7b44ad7",
+      "bytes": 430019
+    },
+    {
+      "path": "cache/armA_corrected_nll_seed2__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "202ce5b1854eb0e29d0f873872fc7eac11a36d51ec3d93c0ae83dbc5123b27a7",
+      "bytes": 416156
+    },
+    {
+      "path": "cache/armB_teacher_forced_seed0__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "63c92c9beb136bd1087d80734362e28fe2fbf1a5f2657a5fc825fd6794d2951f",
+      "bytes": 505243
+    },
+    {
+      "path": "cache/armB_teacher_forced_seed1__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "f55f3834852be7144213c9e44272b778aa0024489c17b02570451dd94ac7b2b5",
+      "bytes": 515308
+    },
+    {
+      "path": "cache/armB_teacher_forced_seed2__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "efa290124864821252faa2b6630730210d867cb9d8c8c57f4bfdd9b1e1cbc4f4",
+      "bytes": 500340
+    }
+  ],
+  "input_selection": "explicit frozen list; no pattern-based discovery",
+  "no_new_rollout": "every model row is a stored per-triple cache object written by scripts/task1_calibration.py STORE_PER_TRIPLE=1 and verified bitwise by scripts/gate_per_triple.py; nothing is rolled out here"
+}
