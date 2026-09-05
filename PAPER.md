@@ -4,7 +4,7 @@
      then run: python scripts/build_paper.py
      923 values substituted from 75 artifacts. -->
 
-# Ensemble disagreement is miscalibrated as a scale, by a factor that grows with rollout depth: an independent reproduction of a released robotic world model
+# A one-step evaluation misalignment and a σ = 0 optimum: an independent reproduction of a released robotic world model
 
 ---
 
@@ -14,34 +14,26 @@ We rebuild the proprioceptive dynamics model of the *Robotic World Model*
 (arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on
 CPU, checked against the released reference at gradient level.
 
-**The trust metric the method penalises with is miscalibrated as a scale, by a factor that
-grows with depth.** Ensemble disagreement is smaller than realised error by
-8.3× at h = 1 and 33.4× at h = 100, where its
-imagination rollouts run. **That is not
-accumulated rollout error**: at one step nothing has accumulated and the input is the true
-state, yet it is already an order of magnitude out. **Nor is it a units problem a tuned
-coefficient absorbs.** The penalty enters through a scalar weight, so a uniformly wrong scale
-would simply rescale it — but the best constant rescale, an upper bound because it is fitted and
-scored on the same data, grows by a factor of 4 across the rollout. The σ the method computes and discards is worse still, and
-we derive why: the implemented objective's optimum is σ = 0.
+**The released evaluation is misaligned by one step.** Training pairs states and actions
+index-for-index; evaluation feeds the action from *t−1*. Scored causally, nRMSE at
+h = 368 falls from 1.3228 to 0.7572, a 75% overstatement
+of its own checkpoint's error, and one line fixes it.
 
-**The base paper's central training claim reproduces, and the advantage grows with horizon** —
-4.61× on the reference's own relative-L1 error at h = 368, under a rule
-committed to git before the runs. **At one step it reverses**: under a second rule, a shorter
-evaluation unit resolves a gap the 400-step unit left spanning zero, and teacher forcing wins.
+**The σ the method discards is optimised away.** The implemented state loss is minimised at
+σ = 0 for any μ, with no log-σ term to oppose it: the collapse is derived, not observed.
 
-**The released evaluation understates its own checkpoint**: it pairs each state with the
-previous step's action, overstating that checkpoint's nRMSE at h = 368 by
-75%.
+**The disagreement the method penalises with is miscalibrated as a scale.** Ensemble
+disagreement is smaller than realised error by 8.3× at h = 1, on data this
+checkpoint trained on, and by 33.4× at h = 100, where its
+imagination rollouts run.
 
-As a *ranking* it is far better, with limits: holding rollout and depth constant it still
-tracks error and beats the forecast step index everywhere, but the model's own predicted step
-size comes close enough that this sample cannot separate them. One repair works: a
-per-horizon multiplier, fitted on one held-out episode and scored on the other, restores nominal
-coverage on every held-out cell.
+**The base paper's central training claim reproduces**: 4.61× on relative-L1 at
+h = 368, under a rule committed to git before the runs, but on 7,991 transitions
+against the reference's 6,000,000, 0.133% of its world-model budget, on one robot, one
+gait, one terrain.
 
-Every **measurement** here is substituted from a named artifact, by a build that fails on any
-numeral it cannot classify.
+One repair works: a per-horizon multiplier, fitted on one held-out episode and scored on the
+other, restores nominal coverage on every held-out cell.
 
 ---
 
@@ -75,13 +67,21 @@ and we report that too.
 
 ![Pre-registration lead time for each decision rule, from git commit timestamps. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. The one negative bar is the Task 3 duplication rule, retracted as a pre-registration in this paper.](figures/paper_fig4_prereg_timeline.png)
 
-**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and Appendix C give them in full. The count is in the contributions below, once.
+**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and Appendix C give them in full. There are 12 retractions of our own claims, kept with the evidence that withdrew them, and Appendix F's table of every pre-registered rule with its lead time and its verdict.
 
 **Contributions.**
 
+- **The released evaluation is misaligned by one step, and the checkpoint is materially better
+  than its own evaluation reports.** Training pairs states and actions index-for-index; evaluation
+  feeds the action from *t−1*. Scored causally, nRMSE at h = 368 falls from
+  1.3228 to 0.7572 — the released harness overstates its own model's error by
+  75% (§7.2). This is the finding most immediately useful to anyone using that
+  repository, and it costs one line to fix.
+- **The σ = 0 optimum of the implemented objective.** The aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.3).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise; losses and gradients match to 0.000e+00 across 7 loss terms
   and 106 parameter tensors, before any training (Appendix A).
+- **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon (§6.2).
 - **The base paper's central training claim reproduces, and the advantage grows with
   forecast horizon**: a factor of 4.61× on relative-L1 at h = 368 over
   3 seeds, under a rule committed to git before the runs existed, rising
@@ -91,7 +91,6 @@ and we report that too.
   60 independent units where the 400-step unit gives 4. The gap becomes
   -0.0194 [-0.0310, -0.0093] — it excludes zero in favour of **teacher forcing**. What the
   400-step unit could only report as spanning zero is a real reversal (§5).
-- **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon; and the aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.2, §6.3).
 - **A candidate mechanism for the epistemic failure, from source.** The five members share one
   trunk, one recurrent state and 89.15% of each member's parameters, so their spread
   cannot express uncertainty the trunk does not already carry (§6.4).
@@ -104,15 +103,6 @@ and we report that too.
 - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of 5 independently-initialised full models, sharing nothing, is 2.03× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of 1.45×. The decomposition says what that is made of: σ larger by 1.65×, 71% of the improvement at h = 100, reversing to 57% from accuracy at h = 368 (§6.10).
 - **A working repair**: one multiplier per horizon, fitted on one held-out episode and
   scored on the other, restores nominal coverage where a global multiplier does not (§6.8).
-- **The released evaluation is misaligned by one step, and the checkpoint is materially better
-  than its own evaluation reports.** Training pairs states and actions index-for-index; evaluation
-  feeds the action from *t−1*. Scored causally, nRMSE at h = 368 falls from
-  1.3228 to 0.7572 — the released harness overstates its own model's error by
-  75% (§7.2). This is the finding most immediately useful to anyone using that
-  repository, and it costs one line to fix.
-- **12 retractions of our own claims**, kept in the record with the evidence
-  that withdrew them, and Appendix F's table of every pre-registered rule with its lead time and
-  its verdict (§8).
 
 ---
 
