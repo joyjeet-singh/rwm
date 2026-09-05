@@ -3117,13 +3117,30 @@
         "results/t1_bibliography_verified.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-68",
+      "claim": "PRE-REGISTERED decision rule for the combined arm: independence and the corrected object",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [],
+      "artifacts": [
+        "results/p3_combined_arm_power.json",
+        "results/r2_combined_arm.json",
+        "results/r2_independent_ensemble.json",
+        "results/step5_armA_seed0_nll.json",
+        "results/v2_deployment_horizon.json",
+        "scripts/p3_combined_arm_power.py",
+        "scripts/r2_independent_ensemble.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 35,
-    "M": 67,
+    "M": 68,
     "O": 14,
     "R": 73,
     "S": 19,

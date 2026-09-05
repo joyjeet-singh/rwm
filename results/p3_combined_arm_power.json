@@ -1,0 +1,330 @@
+{
+  "arena": "out-of-sample held-out pair",
+  "binding_mde": {
+    "1": {
+      "coverage_pts": 13.843590415514061,
+      "ratio_multiplicative": 1.3789330240468893
+    },
+    "100": {
+      "coverage_pts": 2.495460520442123,
+      "ratio_multiplicative": 1.218066557373714
+    },
+    "128": {
+      "coverage_pts": 2.285545388487136,
+      "ratio_multiplicative": 1.220976513218614
+    },
+    "32": {
+      "coverage_pts": 4.51583204612481,
+      "ratio_multiplicative": 1.3659989626565254
+    },
+    "368": {
+      "coverage_pts": 2.669744050142284,
+      "ratio_multiplicative": 1.3409999090232951
+    },
+    "8": {
+      "coverage_pts": 5.520156393212055,
+      "ratio_multiplicative": 1.3011597215575823
+    }
+  },
+  "calibrations": {
+    "cross_objective": "indep3_nll",
+    "same_objective": "indep5_mse"
+  },
+  "caveats": [
+    "The 20-trajectory subsampling pool is IN-SAMPLE for our own arms, which trained on eight of the ten episodes. In-sample trajectories are easier and more alike, so the across-draw spread understates the held-out spread and the MDE built on it is an optimistic floor. The cluster-bootstrap cross-check on the four held-out trajectories is recorded beside every figure for that reason.",
+    "Nothing here estimates the combined arm's EFFECT. The arm does not exist. What is estimated is the sampling variability of the comparison statistic, which is a property of four trajectories and of how much the pairing cancels.",
+    "The cross-objective calibration carries three members, not five, because only three gaussian_nll models exist before the runs M-68 governs. A three-member spread is noisier than a five-member one, which is why it is the conservative of the two and not a substitute for the arm itself.",
+    "At n_independent = 4 the cluster bootstrap has 256 distinct resamples, so every M-68 interval is quantised at that resolution. Section 4 states the same for the A/B interval and no interpolation is applied.",
+    "MDE is computed from an SE and a normal approximation. At n = 4 the sampling distribution is not normal, so the MDE is indicative rather than exact \u2014 the honest form of the statement a pre-registered rule needs."
+  ],
+  "committed_before": "runs/armA_seed3_nll and runs/armA_seed4_nll, and any scoring of the combined arm",
+  "distinct_bootstrap_resamples": 256,
+  "governing_rule": "M-68",
+  "holdout_episodes": [
+    1,
+    8
+  ],
+  "horizons": [
+    1,
+    8,
+    32,
+    100,
+    128,
+    368
+  ],
+  "method": {
+    "binding": "at each horizon the LARGEST of the four estimates \u2014 two calibrations x (subsampling, bootstrap cross-check)",
+    "bootstrap_unit": "whole trajectory (M-27); never trajectory x step",
+    "cross_check": "cluster bootstrap, 20000 resamples, on the four held-out trajectories themselves",
+    "finite_population_correction": "the raw SD is divided by sqrt((20 - 4) / (20 - 1)) so it describes an arena of four rather than a pool of twenty",
+    "mde": "(z_.975 + z_.80) x SE; two-sided alpha = .05, power = .80",
+    "primary": "M-43 subsampling \u2014 every C(20, 4) = 4,845 draw of four trajectories from the all-ten pool, exhaustively enumerated; the across-draw SD is the sampling SE at n = 4"
+  },
+  "n_independent_faced": 4,
+  "n_trajectories_faced": 4,
+  "per_horizon": {
+    "1": {
+      "binding": {
+        "coverage_bound_by": "same_objective_subsampling",
+        "mde_coverage_pts": 13.843590415514061,
+        "mde_ratio_multiplicative": 1.3789330240468893,
+        "ratio_bound_by": "cross_objective_subsampling"
+      },
+      "cross_objective": {
+        "arm": "indep3_nll",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 4.898026358567677,
+          "log_ratio_se": 0.06044724880861208,
+          "mde_coverage_pts": 13.722238246476385,
+          "mde_ratio_multiplicative": 1.1845324251251188
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 4.308844463780928,
+          "log_ratio_se": 0.11468865091254483,
+          "mde_coverage_pts": 12.071594958975089,
+          "mde_ratio_multiplicative": 1.3789330240468893
+        }
+      },
+      "same_objective": {
+        "arm": "indep5_mse",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 4.440542501541413,
+          "log_ratio_se": 0.05676711215462025,
+          "mde_coverage_pts": 12.440558234883488,
+          "mde_ratio_multiplicative": 1.1723823818449428
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 4.94134189586849,
+          "log_ratio_se": 0.08782827352733669,
+          "mde_coverage_pts": 13.843590415514061,
+          "mde_ratio_multiplicative": 1.2789742543634115
+        }
+      }
+    },
+    "100": {
+      "binding": {
+        "coverage_bound_by": "cross_objective_bootstrap",
+        "mde_coverage_pts": 2.495460520442123,
+        "mde_ratio_multiplicative": 1.218066557373714,
+        "ratio_bound_by": "cross_objective_subsampling"
+      },
+      "cross_objective": {
+        "arm": "indep3_nll",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 0.8907316129006234,
+          "log_ratio_se": 0.07003338026312335,
+          "mde_coverage_pts": 2.495460520442123,
+          "mde_ratio_multiplicative": 1.2167756897844695
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 0.8247915381448919,
+          "log_ratio_se": 0.07041185514939065,
+          "mde_coverage_pts": 2.310723781693087,
+          "mde_ratio_multiplicative": 1.218066557373714
+        }
+      },
+      "same_objective": {
+        "arm": "indep5_mse",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 0.4848462535872951,
+          "log_ratio_se": 0.06581472140451973,
+          "mde_coverage_pts": 1.358338097343753,
+          "mde_ratio_multiplicative": 1.20247935043292
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 0.77510561840019,
+          "log_ratio_se": 0.06404726207080418,
+          "mde_coverage_pts": 2.171524443363784,
+          "mde_ratio_multiplicative": 1.1965397655522758
+        }
+      }
+    },
+    "128": {
+      "binding": {
+        "coverage_bound_by": "cross_objective_bootstrap",
+        "mde_coverage_pts": 2.285545388487136,
+        "mde_ratio_multiplicative": 1.220976513218614,
+        "ratio_bound_by": "cross_objective_subsampling"
+      },
+      "cross_objective": {
+        "arm": "indep3_nll",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 0.8158043429531165,
+          "log_ratio_se": 0.06004741146941012,
+          "mde_coverage_pts": 2.285545388487136,
+          "mde_ratio_multiplicative": 1.1832062804108405
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 0.8090390309086545,
+          "log_ratio_se": 0.07126356818449286,
+          "mde_coverage_pts": 2.2665917902641546,
+          "mde_ratio_multiplicative": 1.220976513218614
+        }
+      },
+      "same_objective": {
+        "arm": "indep5_mse",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 0.5913680984163411,
+          "log_ratio_se": 0.057580165538241,
+          "mde_coverage_pts": 1.656768123274811,
+          "mde_ratio_multiplicative": 1.175055923176684
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 0.7332487943089755,
+          "log_ratio_se": 0.06471725104066646,
+          "mde_coverage_pts": 2.0542589836922973,
+          "mde_ratio_multiplicative": 1.1987878171892747
+        }
+      }
+    },
+    "32": {
+      "binding": {
+        "coverage_bound_by": "cross_objective_bootstrap",
+        "mde_coverage_pts": 4.51583204612481,
+        "mde_ratio_multiplicative": 1.3659989626565254,
+        "ratio_bound_by": "cross_objective_bootstrap"
+      },
+      "cross_objective": {
+        "arm": "indep3_nll",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 1.6118845916746551,
+          "log_ratio_se": 0.11132483126888926,
+          "mde_coverage_pts": 4.51583204612481,
+          "mde_ratio_multiplicative": 1.3659989626565254
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 1.1679477864671053,
+          "log_ratio_se": 0.0858905769348459,
+          "mde_coverage_pts": 3.272105254662831,
+          "mde_ratio_multiplicative": 1.2720499980107751
+        }
+      },
+      "same_objective": {
+        "arm": "indep5_mse",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 1.1786405001343523,
+          "log_ratio_se": 0.10111569946010451,
+          "mde_coverage_pts": 3.302061803219712,
+          "mde_ratio_multiplicative": 1.3274824437186776
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 1.2384229915220377,
+          "log_ratio_se": 0.07804864095841653,
+          "mde_coverage_pts": 3.4695475474225335,
+          "mde_ratio_multiplicative": 1.2444080050015363
+        }
+      }
+    },
+    "368": {
+      "binding": {
+        "coverage_bound_by": "cross_objective_subsampling",
+        "mde_coverage_pts": 2.669744050142284,
+        "mde_ratio_multiplicative": 1.3409999090232951,
+        "ratio_bound_by": "cross_objective_subsampling"
+      },
+      "cross_objective": {
+        "arm": "indep3_nll",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 0.8172762290343624,
+          "log_ratio_se": 0.05019219318310131,
+          "mde_coverage_pts": 2.2896690027758173,
+          "mde_ratio_multiplicative": 1.1509845499672848
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 0.9529405111140618,
+          "log_ratio_se": 0.10473196906847237,
+          "mde_coverage_pts": 2.669744050142284,
+          "mde_ratio_multiplicative": 1.3409999090232951
+        }
+      },
+      "same_objective": {
+        "arm": "indep5_mse",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 0.8675511394078299,
+          "log_ratio_se": 0.05127824721121749,
+          "mde_coverage_pts": 2.430518448544564,
+          "mde_ratio_multiplicative": 1.1544919527130806
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 0.9152105008911807,
+          "log_ratio_se": 0.09863467142875043,
+          "mde_coverage_pts": 2.5640402112042335,
+          "mde_ratio_multiplicative": 1.3182873572135727
+        }
+      }
+    },
+    "8": {
+      "binding": {
+        "coverage_bound_by": "same_objective_subsampling",
+        "mde_coverage_pts": 5.520156393212055,
+        "mde_ratio_multiplicative": 1.3011597215575823,
+        "ratio_bound_by": "same_objective_bootstrap"
+      },
+      "cross_objective": {
+        "arm": "indep3_nll",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 0.9354195705639544,
+          "log_ratio_se": 0.08956646258294704,
+          "mde_coverage_pts": 2.620657642081134,
+          "mde_ratio_multiplicative": 1.285217645139721
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 1.5157983563925825,
+          "log_ratio_se": 0.09280196423323889,
+          "mde_coverage_pts": 4.246638269647634,
+          "mde_ratio_multiplicative": 1.2969205040127414
+        }
+      },
+      "same_objective": {
+        "arm": "indep5_mse",
+        "cluster_bootstrap_cross_check": {
+          "coverage_diff_se_pts": 1.3228455016845344,
+          "log_ratio_se": 0.09396678657019729,
+          "mde_coverage_pts": 3.7060644040108923,
+          "mde_ratio_multiplicative": 1.3011597215575823
+        },
+        "n_draws": 4845,
+        "n_pairs": 3,
+        "subsampling": {
+          "coverage_diff_se_pts": 1.9703689027780396,
+          "log_ratio_se": 0.08814764366433582,
+          "mde_coverage_pts": 5.520156393212055,
+          "mde_ratio_multiplicative": 1.2801191192869008
+        }
+      }
+    }
+  },
+  "purpose": "estimate what M-68 can detect at the n_independent and horizons it will face, BEFORE the combined arm is trained",
+  "reading": "at n_independent = 4 M-68 resolves an overconfidence ratio of 1.38x or better and a +-1 sigma coverage shift of 13.84 percentage points or more at every horizon in its grid. Smaller effects are not distinguishable from zero by this rule and the rule says so in advance.",
+  "statistics": [
+    "log ratio of overconfidence factors (mean |error| / mean sigma_epistemic), two ensembles scored on the SAME trajectories",
+    "difference in +-1 sigma coverage, in percentage points"
+  ],
+  "worst_horizon": {
+    "coverage_pts": 13.843590415514061,
+    "note": "the loosest horizon in the grid; a rule that must hold at EVERY horizon is bounded by this one",
+    "ratio_multiplicative": 1.3789330240468893
+  }
+}

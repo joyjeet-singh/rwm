@@ -6733,6 +6733,173 @@ machinery governs the correspondence transcript only. The longest fragment is 12
 **Evidence** `SRC` `results/t1_bibliography_verified.json`
 **Status** ACTIVE
 
+### M-68 — PRE-REGISTERED decision rule for the combined arm: independence and the corrected objective together · **NEW**
+
+**Entered before the combined arm exists.** No `runs/armA_seed3_nll` or `runs/armA_seed4_nll`
+directory exists as this is committed, no five-member `gaussian_nll` ensemble has been scored, and
+`results/r2_combined_arm.json` does not exist. The commit containing this entry precedes all three
+and the ordering is checkable from `git log`, exactly as M-16's, M-23's, M-43's and M-44's are.
+
+**Why the rule is needed.** This paper measures two candidate fixes and never measures them
+together. §6.10 changes the **topology** — five independently-initialised full models instead of
+five heads on one shared GRU trunk — and holds the objective at `mse`. The `gaussian_nll` arms
+change the **objective** — the term that makes σ = 0 the optimum — and hold the topology at
+ensemble size 1, where the epistemic spread is identically zero by construction. Neither arm
+answers the question a practitioner actually has, which is whether the two together produce an
+uncertainty output that is usable. As it stands a reader is invited to add two effects that were
+never measured on the same model, which is the arithmetic this project criticises elsewhere.
+
+**The arm.** Five independently-initialised full models, sharing no trunk and no hidden state,
+trained under `gaussian_nll`. Arm A, ensemble size 1, 2,500 iterations, `--loss-type gaussian_nll
+--tag _nll`, clean dataset, batch 256, learning rate 1e-4, weight decay 1e-5, no gradient
+clipping, `rnn_hidden_size` 256, causal action offset 1 — **every setting identical to §6.10's
+independent-ensemble arm except the loss type**. The five are scored together as an ensemble at
+evaluation time, the epistemic term being the standard deviation across the five models' mean
+predictions, under §6.10's rollout protocol: every member sees the same input state and keeps its
+own recurrent hidden state, and the ensemble mean is fed back to all five. The iteration count,
+the learning rate and the batch size are not to be changed.
+
+**Seeds 0, 1 and 2 are reused; only seeds 3 and 4 are trained. Fixed here, before the data
+exists.** `results/step5_armA_seed0_nll.json` and its seed-1 and seed-2 counterparts already
+exist, with weights, trained by `run_nll.sh` through the same entry point and the same arguments
+the two new runs will use. The trainer is deterministic under a fixed seed, so retraining those
+three would reproduce the checkpoints already on disk at about 42 minutes each and change nothing
+any measurement here could see. §6.10 set exactly this precedent — `run_indep_ens.sh` reused Arm A
+seeds 0–2 and trained only 3 and 4 rather than paying ~17 CPU-hours for a fresh five — and this
+rule follows it deliberately rather than by drift, and says so in advance rather than being found
+to have done it. The driver is `run_nll_indep_ens.sh`, idempotent: a seed whose result json exists
+is skipped. It is a new file rather than an edit to `run_nll.sh` because M-30 records a driver
+destroyed mid-run when an edit shifted the bytes bash was reading by offset.
+
+**Arena.** The out-of-sample held-out pair, episodes 1 and 8: four non-overlapping 400-step
+trajectories from start step 32. **n_independent = 4.** That is the only genuine out-of-sample
+arena our own arms have, no amount of window oversampling changes it, and it is the same arena
+§6.10 was scored on.
+
+**Horizons.** h ∈ {1, 8, 32, 100, 128, 368}, the six-horizon grid §6.10 reports over. **The
+governing horizon is h = 100**, the method's own imagination rollout length
+(`results/v2_deployment_horizon.json`). Fixing the governing horizon in advance is M-24's lesson:
+a rule anchored away from the regime the claim is about settles nothing about that regime. The
+other five horizons enter this rule only through the direction condition below, and no threshold
+verdict rests on any of them.
+
+**Governing statistics**, each computed against each of the three shared-trunk `_ens5` arms at
+seeds 0, 1 and 2 separately, paired on the same four trajectories and put through the same harness:
+
+- the **overconfidence factor** ρ = mean |error| / mean σ_epistemic;
+- **coverage at ±1σ**.
+
+Intervals are 95% cluster bootstrap over **whole trajectories** (M-27), never over
+trajectory × step, at 20,000 resamples. **A condition holds only if it holds against every one of
+the three shared-trunk seeds** — the all-three convention M-43 and M-44 used, which is stricter
+than pooling and cannot be carried by one favourable pairing.
+
+**Minimum detectable effect, estimated before the runs, by M-43's own subsampling method.**
+`scripts/p3_combined_arm_power.py` was run before either missing seed was trained and wrote
+`results/p3_combined_arm_power.json`. Method: subsample four trajectories at a time from the
+twenty-trajectory all-ten-episode pool — M-43's method, the one R-67 had to apply retrospectively —
+**exhaustively over all C(20, 4) = 4,845 draws**, so the subsampling step carries no Monte-Carlo
+error of its own; correct the across-draw SD for the finite pool by √((20 − 4)/(20 − 1)) so that it
+describes an arena of four rather than a pool of twenty; then MDE = (z₀.₉₇₅ + z₀.₈₀) × SE,
+two-sided α = .05, power = .80 — the same formula P1 used for M-44 and M-45. Two calibrations are
+computed, the §6.10 independent-`mse` ensemble against the shared-trunk arms (same objective, five
+members) and the three existing `gaussian_nll` models scored as an independent ensemble against the
+same arms (cross-objective, three members, and noisier for it); each is cross-checked with the
+cluster bootstrap on the four held-out trajectories themselves. **The binding MDE at each horizon
+is the largest of those four estimates**, which makes this rule strictly harder to satisfy than any
+single calibration would make it:
+
+| h | overconfidence ratio | ±1σ coverage |
+|---|---|---|
+| 1 | 1.379× | 13.84 points |
+| 8 | 1.301× | 5.52 points |
+| 32 | 1.366× | 4.52 points |
+| **100 — governing** | **1.218×** | **2.50 points** |
+| 128 | 1.221× | 2.29 points |
+| 368 | 1.341× | 2.67 points |
+
+So at the governing horizon an improvement of **1.218× or more** in the overconfidence factor is
+detectable here and so is a coverage shift of **2.50 percentage points or more**; anything smaller
+is not, and this rule cannot settle it either way. Two things this estimate is not. It is **not a
+prediction of the arm's effect** — the arm does not exist and nothing here forecasts it; what is
+estimated is the sampling variability of the comparison statistic, which is a property of four
+trajectories and of how much the pairing cancels, not of which arm is under test. And the
+twenty-trajectory pool is **in-sample** for our own arms, which trained on eight of the ten
+episodes, so the spread it gives understates the held-out spread and the table above is an
+optimistic floor rather than a ceiling — which is why the held-out cluster bootstrap is computed
+beside every figure and enters the maximum. This is the check M-43 was committed without, and M-24
+before it, and it is recorded here so that a result near a threshold is read as near the threshold
+rather than as a finding.
+
+**The rule, decided in advance. Four tests, applied in this order; the first that matches is the
+verdict; they are exhaustive and mutually exclusive.** Every condition below names a quantity that
+has not been measured and none of them names an outcome: the governing horizon is h = 100, the
+governing statistics are the overconfidence factor and ±1σ coverage, and a condition holds only if
+it holds against all three shared-trunk seeds.
+
+1. **THE COMBINATION DOES NOT IMPROVE CALIBRATION** if, at h = 100, a governing statistic's point
+   estimate moves in the wrong direction against any one of the three shared-trunk seeds — the
+   combined arm's overconfidence factor is not lower, or its ±1σ coverage is not higher. This
+   branch also catches the two statistics disagreeing with each other. Unlike M-44, which called
+   that case unresolvable, this rule calls it a failure: an arm built to fix both quantities and
+   worsening one of them has not fixed it, and that is decidable from a point estimate without any
+   appeal to power.
+
+2. **THE COMBINATION IMPROVES CALIBRATION** if, at h = 100 and against every one of the three
+   shared-trunk seeds, all four of the following hold — (a) the overconfidence factor is lower by
+   a factor of at least **1.218**, (b) the 95% paired interval on the log ratio excludes zero,
+   (c) ±1σ coverage is higher by at least **2.50 percentage points**, (d) the paired interval on
+   that difference excludes zero — **and** (e) both point estimates move in the improving direction
+   at **at least four of the six horizons**, again against every shared-trunk seed. Condition (e)
+   is a direction condition only, with no threshold and no interval attached, because at h = 1 and
+   h = 8 the minimum detectable effect above is far too loose for a threshold to mean anything
+   there; a rule must not demand at a horizon what it cannot see at that horizon.
+
+3. **THE COMBINATION DOES NOT IMPROVE CALIBRATION** if the point estimates are in the improving
+   direction but, against at least one shared-trunk seed, the 95% paired interval on a governing
+   statistic lies entirely **below** that statistic's h = 100 minimum detectable effect — an
+   improvement factor whose whole interval is under 1.218×, or a coverage gain whose whole interval
+   is under 2.50 points. The data then positively rule out an improvement of the size this design
+   was built to see, which is a finding and not a failure to find one.
+
+4. **UNDERPOWERED** in every remaining case: the point estimates improve, but at least one of them
+   is smaller than its minimum detectable effect or at least one paired interval spans zero, and no
+   interval excludes the minimum detectable effect. The arm is then consistent with both no
+   improvement and a material one at n_independent = 4. The paper reports the point estimates, the
+   intervals and the minimum detectable effect they are measured against, and **claims neither
+   improvement nor its absence.** At n_independent = 4 the cluster bootstrap has 4⁴ = 256 distinct
+   resamples, so every interval here is quantised at that resolution, exactly as §4 already states
+   for the A/B interval. This branch is written now, before the data, because it is a real
+   possibility at this sample size and not a hedge to be added afterwards.
+
+**Reported alongside, not governing, and unable to move the verdict:** ±2σ coverage at all six
+horizons; the σ-versus-accuracy decomposition §6.10 uses, so a reader can see which part of any
+movement is the objective enlarging σ and which is five independent models simply predicting
+better; the comparison against §6.10's independent-`mse` arm
+(`results/r2_independent_ensemble.json`) and against the ensemble-size-1 `gaussian_nll` arms, which
+is what "the two fixes separately" means and is precisely the arithmetic the paper currently leaves
+a reader to do unaided; and the aleatoric collapse rate.
+
+**Limitations of the design, stated in advance.** The combined arm differs from the shared-trunk
+arms on **three** axes at once and not one: trunk sharing, the training objective, and capacity —
+five trunks carry 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a
+factor of 3.49 (X-17, and the addendum below M-44). Independently-seeded runs also differ in data
+ordering as well as in initialisation. This rule therefore **bounds** the combination and does not
+isolate any one axis: it measures what a practitioner adopting both fixes would get, and it is not
+an attribution. Whichever way the data come out is what the subsection will say.
+
+**Our expectation, recorded as an expectation only.** We expect the combined arm to be better
+calibrated than either fix alone and still not calibrated. That is a belief, it carries none of the
+weight a pre-registration does, and it is recorded only so that a reader can see it was held in
+advance — the same distinction S-12 exists to enforce.
+
+**Will be discharged by** `results/r2_combined_arm.json`, produced by
+`scripts/r2_independent_ensemble.py` over the same rollout protocol, bootstrap, arena and horizon
+grid §6.10 used. Power: `results/p3_combined_arm_power.json`, from
+`scripts/p3_combined_arm_power.py`. Driver: `run_nll_indep_ens.sh`.
+**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+
+
 ## Candidate paper contributions
 
 Ordered by how completely evidenced each is, with the paper it bears on tagged. Two papers are
