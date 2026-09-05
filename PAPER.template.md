@@ -96,6 +96,9 @@ and we report that too.
 - **A working repair**: one multiplier per horizon, fitted on one held-out episode and
   scored on the other, restores nominal coverage where a global multiplier does not (§6.8).
 
+A reader who wants only what to do differently should read §9, *Actionable lessons*; the rest of
+the paper is the evidence behind it.
+
 ---
 
 ## 2. Related work
@@ -132,6 +135,13 @@ do it with a from-scratch reimplementation verified against the reference at the
 so that a discrepancy is a property of the method rather than of our wiring. The contribution is
 not the idea of checking. It is the object checked, the quantity measured, and the standard of
 verification.
+
+**Stated positively, the delta is four things.** The object measured is a released checkpoint from
+a pipeline its authors deployed on hardware. The statistic measured is coverage against a nominal,
+not correlation with error. The standard of verification is gradient-level agreement with the
+reference implementation before any training begins (Appendix A). And the σ = 0 optimum of §6.3 is
+derived for the objective the released code *substitutes* — squared error on a reparameterised
+sample — rather than for the likelihood the parameterisation was built around.
 
 **Where the parameterisation comes from, and why it matters more than one repository.** The
 bounded log-σ head that §6.3 shows has its optimum at σ = 0 is not this codebase's invention. It
@@ -591,7 +601,8 @@ downstream.
 Eq. 4 specifies a **variance** while `system_dynamics.py:126` computes a **standard deviation**,
 which with $\lambda = 1$ differ by a square. We asked, and the first author confirms the code is
 operative: the penalty is applied to the standard deviation as intended, and Eq. 4 is "more of a
-high-level explanation" (personal communication, 21 August 2026; the exchange is reproduced in
+high-level explanation" (personal communication, 21 August 2026; quoted here and below with the
+first author's permission, given on the record — see Data and code; the exchange is reproduced in
 full, anonymised, in the supplementary material as `SUPPLEMENTARY_CORRESPONDENCE.md`, so these
 quotations are checkable rather than asserted). We measure the code's quantity
 throughout, which is now known to be the intended one.
@@ -615,8 +626,7 @@ claim its uncertainty is a calibrated interval. The follow-up's §5.1 claims the
 the trend of the prediction error" and that this "justifies its role as a trust metric", and of
 the aleatoric term it observes only that it "remains low, reflecting small stochasticity in the
 environment". Our measurement **supports the first claim** — the epistemic ordering is real and
-strong. What follows is therefore not a refutation of a calibration claim nobody made. The correspondence quoted in this section is quoted with the first author's permission,
-given on the record (see Data and code). It is
+strong. What follows is therefore not a refutation of a calibration claim nobody made. It is
 three things the papers do not address: that the aleatoric head is discarded before use, that
 neither quantity is usable as a scale, and that the low aleatoric value has a different cause
 than the one offered.
@@ -1419,7 +1429,10 @@ error nearly as well, {{e7_step_r}} against {{e7_r_dis}}, so the ranking evidenc
 establish that the ensemble is worth its cost (§6.7). But a downstream
 user who reads the same quantity as a *calibrated interval* — a safety margin, a confidence bound,
 a gate on when to hand control to a fallback controller — would be materially misled: at the horizon the method itself rolls out over — h = {{v2_deploy_h}} — the released checkpoint's ensemble disagreement is {{d1n_epi_ratio_h100}}× smaller than the realised error, giving {{d1n_epi_cov1_h100}}% coverage where {{v3_cov_nominal1}}% is expected. On hardware, a margin that is wrong by that factor is the difference
-between a conservative controller and one that believes it is safe when it is not.
+between a conservative controller and one that believes it is safe when it is not. The limit on
+that sentence belongs beside it rather than only in §11: no policy is trained anywhere in this
+work, so the finding bounds what the quantity reports rather than what the distortion costs a
+policy that consumes it (§11).
 
 We think that makes the finding worth publishing rather than the reverse, and it is the reason
 §6 reports coverage rather than only correlation.
