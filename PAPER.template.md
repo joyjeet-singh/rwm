@@ -1333,18 +1333,15 @@ detectable at this rate.**
 
 **7.5 The released artifacts do not reproduce the released checkpoint's variance state.**
 The σ collapse is linear in iteration count and its rate is nearly identical across our runs
-(§6.3), which makes it a clock. Extrapolating it to the released checkpoint's σ state implies
-**{{implied_iters}}** optimisation steps at the configured learning rate — against a released
-configuration that says 500, a paper that says 2,500 and a checkpoint tagged 5,000. A second
-parameter on a slower gradient path implies the same order independently. The defensible claim is
-narrower than it first looks: **no
-constant-rate run from the released initialisation at the configured learning rate reaches that
-variance state at any of the three stated counts.** A warm start or a different
-`log_delta_logstd` initialisation would explain it with no inconsistency at all, and we can
-exclude neither. The first author's account is that the released repository is several revisions
-removed from the setup that trained the checkpoint, which supplies exactly such a mechanism. So
+(§6.3), which makes it a clock, and read as a clock it puts the checkpoint's variance state out
+of reach of a constant-rate run from the released initialisation at the configured learning rate,
+at every iteration count the release, the paper and the checkpoint tag state. The first author's
+account is that the released repository is several revisions removed from the setup that trained
+the checkpoint, which supplies a mechanism — a warm start, or a different `log_delta_logstd`
+initialisation — that would explain it with no inconsistency at all. So
 this is a **documentation gap between a release and a run** — common, worth recording, and much
-less interesting than an inconsistency. Appendix G gives the arithmetic and the five assumptions
+less interesting than an inconsistency. `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`, shipped as
+supplementary, gives the arithmetic and the five assumptions
 it rests on, because it is what let us detect the gap at all.
 
 ---
@@ -1353,7 +1350,7 @@ it rests on, because it is what let us detect the gap at all.
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix F for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not. Figure 1 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix F for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not. Figure 1 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
 **{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (Appendix C lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
@@ -1600,13 +1597,9 @@ total rather than stated beside it. They are **not** part of the
 architecture and mixing widths into it would make "nearly identical across runs" a claim about two
 different models. Every run artifact records the width it trained at, and `paper_numbers.py`
 selects the collapse family by that field rather than by filename — it did neither until the first
-capacity-matched run walked into the family through a glob. **That fix reached
-`paper_numbers.py` and `paper_figures.py` and not every script**: a second unguarded glob
-survived in the ensemble-5 comparison until this revision found it, moving two published
-values (`M-66`). A sweep of all {{audit_n_hits}} pattern-based input discoveries in
-`scripts/` and `src/` now classifies each as an open population or frozen at write time;
-{{audit_n_frozen}} was frozen, and artifacts that discover their inputs now record the
-file list they were computed over.
+capacity-matched run walked into the family through a glob; that collision, the second
+unguarded glob the fix did not reach (`M-66`), and the sweep of every pattern-based input
+discovery in `scripts/` and `src/` are in `docs/BUILD_CHECKS.md`, shipped as supplementary.
 
 ## Appendix C — verifying the paper's own claims
 
@@ -1706,15 +1699,10 @@ document is rebuilt — but "concentrated in two artifacts we believe are benign
 the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
 tells a reader strictly less than one that fails and says where.
 
-*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds
-rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on
-every machine — three different values across the three hosts we have run it on. Its iteration
-count and terminal losses are therefore a property of the host, and we do not quote any of them
-here: a number the build declares host-dependent has no business being printed as a result. **Its
-sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise.
-Excluding by filename rather than by stopping rule would have dropped the reproducible one along
-with it, so the verifier decides from the artifact — a run that stopped short of its own cap was
-time-bounded.
+*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops on a time budget rather than at its
+iteration cap, so its iteration count and terminal losses are a property of the host and none of
+them is quoted here; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the mechanism and why
+its sibling from the same script is not excluded.
 
 
 ## Appendix D — what testing the untested claims would require
@@ -1827,50 +1815,10 @@ quotations ending mid-sentence. The table is the claim; the supplementary is the
 
 ## Appendix G — the variance-state arithmetic behind §7.5
 
-§7.5 states the conclusion. This is the arithmetic, kept out of the body because the numbered
+§7.5 states the conclusion. The arithmetic and the five assumptions it rests on are in
+`docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`, shipped as supplementary, kept out of the body because the numbered
 claim it once supported is retracted (`S-19`) and because a forensic case the section then defuses
 with the author's own reply is not what a reader needs in the body of a reproduction.
-
-The collapse rate is a clock. Fitting it across our runs and extrapolating to the released
-checkpoint's σ state implies **{{implied_iters}}** optimisation steps at the configured learning
-rate. The refit from our 10,000-iteration runs gives {{q4_implied_A}} and {{q4_implied_B}},
-spreading {{implied_spread_pct}}% across the three fits — a linear extrapolation
-validated over a fourfold extension.
-
-The released configuration says 500 iterations. The paper says 2,500. The checkpoint is tagged
-5,000. A second, independent parameter on a slower gradient path implies the same order. And under
-`gaussian_nll` the implied count is *negative*, which identifies the branch the checkpoint was
-trained with.
-
-**What this extrapolation assumes, and what would falsify it.** It assumes constant-rate Adam at
-the configured learning rate from the released initialisation. Five things would break it, and
-they are not equally plausible:
-
-| assumption | if violated | ruled out by the second parameter? |
-|---|---|---|
-| no learning-rate schedule | a decaying schedule inflates the implied count; a warm-up deflates it | **partly** — `min_logstd` and `log_delta_logstd` travel at rates differing by about {{o12_rate_ratio}}×, and a uniform schedule scales both, so a schedule alone cannot reconcile them without also changing their ratio |
-| `log_delta_logstd` initialised as released | a different initialisation moves the origin of the fit and rescales the count linearly | **no** — this is the weakest point of the argument |
-| no warm start from an earlier checkpoint | a warm start makes the count a lower bound on total optimisation, not an estimate of one run | **no** |
-| no gradient clipping in this path | clipping would slow the collapse and inflate the implied count | **partly** — the reference does not clip in the world-model path (X-08), so this is ruled out by source rather than by measurement |
-| bound-loss weight as configured | a different weight scales the rate directly | **partly** — same ratio argument as the schedule |
-
-So the defensible claim is narrower than "cannot have come from the released recipe": **no
-constant-rate run from the released initialisation at the configured learning rate reaches this
-checkpoint's variance state in 500, 2,500 or 5,000 iterations.** A warm start or a different
-initialisation would explain the gap without any inconsistency, and we cannot exclude either.
-
-**What the author says.** We wrote to the first author on 21 August 2026 asking exactly this. He
-replied the same day; the exchange is reproduced in full, anonymised, in the supplementary
-material (`SUPPLEMENTARY_CORRESPONDENCE.md`): the released `max_iterations: 500` is "a typo"; his recollection is 5,000
-iterations, "as I always did"; he does not recall how the checkpoint was obtained; and — the part
-that matters most — "the checkpoint was released after a few iterations of the repo than the setup
-I used for the submission."
-
-That last point reframes this section. The extrapolation above assumes the *released*
-initialisation and the *released* learning rate. If the repository drifted between the training
-run and the release, those are not necessarily the values that produced the checkpoint — and a
-changed `log_delta_logstd` initialisation is precisely the assumption the table above cannot rule
-out.
 
 So the finding is not that the release is internally inconsistent. It is that **the released
 artifacts do not reproduce the released checkpoint's variance state, and the author's account is

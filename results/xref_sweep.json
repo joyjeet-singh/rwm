@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 61,
-  "n_ok": 59,
+  "n_pointers": 60,
+  "n_ok": 58,
   "n_reviewed_correct": 2,
   "reviewed": [
     {
@@ -147,13 +147,6 @@
       "ok": true,
       "detail": "target 11; nouns ['independently-seeded', 'runs', 'differ', 'initialisation', 'data', 'ordering', 'comparison', 'bounds', 'architectural', 'effect', 'rather']; absent ['architectural']",
       "context": "\u00a711 sets out that independently-seeded runs differ in *both*\ninitialisation and data ordering, so this comparison **bounds** the architectural effect rather\nthan i"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix G gives the arithmetic and the five assumptions\nit rests on, because",
-      "ok": true,
-      "detail": "target Appendix G; nouns ['arithmetic', 'assumptions', 'rests', 'because', 'detect']; absent []",
-      "context": "Appendix G gives the arithmetic and the five assumptions\nit rests on, because it is what let us detect the gap at all"
     },
     {
       "class": "semantic",

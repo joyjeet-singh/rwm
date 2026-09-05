@@ -2,8 +2,8 @@
   "check": "rendered-PDF pass (Session 8 addendum A)",
   "one_time": "not registered as a check kind. It exists because text moved through a transformation layer in Sessions 5a and 6; the moves are done.",
   "pdf": "PAPER.pdf",
-  "pages": 46,
-  "chars_extracted": 173594,
+  "pages": 45,
+  "chars_extracted": 169495,
   "cannot_detect": "extracted PDF text loses layout. This sees that a table's header cells are present and that references resolve; it cannot see a column rendered too narrow or a float landing pages from its reference. Those need a reader, which \u00a7F.2 asks for.",
   "n_checks": 5,
   "n_pass": 5,
@@ -11,7 +11,7 @@
     {
       "check": "1. appendix letters resolve",
       "pass": true,
-      "detail": "source headings ABCDEFGH; contiguous from A: True; in-text references ABCDEFGH; dangling none"
+      "detail": "source headings ABCDEFGH; contiguous from A: True; in-text references ABCDEFH; dangling none"
     },
     {
       "check": "2. figure numbers match their references",
@@ -21,12 +21,12 @@
     {
       "check": "3. table headers survive rendering",
       "pass": true,
-      "detail": "23 tables checked cell by cell; every header cell present, in the PDF text"
+      "detail": "22 tables checked cell by cell; every header cell present, in the PDF text"
     },
     {
       "check": "4. every numeral the source states survives into the PDF",
       "pass": true,
-      "detail": "802 distinct numerals in the source, 793 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
+      "detail": "791 distinct numerals in the source, 783 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
     },
     {
       "check": "5. section cross-references resolve in the PDF",

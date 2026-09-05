@@ -354,8 +354,12 @@ def main():
     # self-test and the checker's own defects moved here (Session 5a, B.2). It is
     # substituted rather than hand-maintained so a count quoted here cannot drift
     # from the one section 8 prints, which is the drift kind-count exists to catch.
-    _bct = os.path.join("docs", "BUILD_CHECKS.template.md")
-    if os.path.exists(_bct):
+    # docs/APPENDIX_G_VARIANCE_ARITHMETIC.md joined it in Session 9, when 7.5's
+    # extrapolation and Appendix G's five-assumption table moved out of the body.
+    for _stem in ("BUILD_CHECKS", "APPENDIX_G_VARIANCE_ARITHMETIC"):
+        _bct = os.path.join("docs", _stem + ".template.md")
+        if not os.path.exists(_bct):
+            continue
         _bc_missing, _bc_used = [], set()
 
         def _bcsub(m):
@@ -368,12 +372,12 @@ def main():
 
         _bc_out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", _bcsub, open(_bct).read())
         assert not _bc_missing, (
-            f"docs/BUILD_CHECKS.template.md has placeholders with no value: "
+            f"{_bct} has placeholders with no value: "
             f"{sorted(set(_bc_missing))}")
         _bc_left = re.findall(r"\{\{[^}]*\}\}", _bc_out)
-        assert not _bc_left, f"BUILD_CHECKS unresolved: {sorted(set(_bc_left))}"
-        open(os.path.join("docs", "BUILD_CHECKS.md"), "w").write(_bc_out)
-        print(f"  wrote docs/BUILD_CHECKS.md ({len(_bc_used)} values substituted)")
+        assert not _bc_left, f"{_stem} unresolved: {sorted(set(_bc_left))}"
+        open(os.path.join("docs", _stem + ".md"), "w").write(_bc_out)
+        print(f"  wrote docs/{_stem}.md ({len(_bc_used)} values substituted)")
 
     # LaTeX for submission, from the same resolved text -- one source, two outputs.
     import md_to_tex

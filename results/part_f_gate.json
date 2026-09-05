@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "46 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "45 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -16,7 +16,7 @@
       "n": 3,
       "name": "no hand-typed numbers",
       "pass": true,
-      "detail": "55 distinct numerals typed, 55 section numbers derived from the headings; unexplained: none"
+      "detail": "53 distinct numerals typed, 55 section numbers derived from the headings; unexplained: none"
     },
     {
       "n": 4,

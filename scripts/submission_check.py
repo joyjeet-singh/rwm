@@ -59,6 +59,12 @@ def built_pdf_text():
 
 def main():
     tpl = norm("PAPER.template.md")
+    # Session 9 moved 7.5's extrapolation and Appendix G's five-assumption table
+    # out of the body into a supplementary page. E4 and E5 pin sentences inside
+    # those blocks, so their surface follows the text -- the same repair 5a made to
+    # retraction-consistency when Appendix D's machinery moved. The criterion is
+    # unchanged: the sentence must still exist in a reader-facing surface.
+    sup = tpl + norm("docs/APPENDIX_G_VARIANCE_ARITHMETIC.template.md")
     tex = open("PAPER.tex").read()
     led = norm("FINDINGS_LEDGER.md")
     rows = []
@@ -139,8 +145,10 @@ def main():
             ("E1 originals' claims table", "### O-14", led, "ledger"),
             ("E2 §4.3/§4.5 reconciled", "objective-driven", tpl, "template"),
             ("E3 §5.4 restated", "signature of regularisation", tpl, "template"),
-            ("E4 author contact recorded", "wrote to the first author", tpl, "template"),
-            ("E5 §6 assumptions enumerated", "if violated", tpl, "template"),
+            ("E4 author contact recorded", "wrote to the first author", sup,
+             "template or its variance-arithmetic supplementary"),
+            ("E5 §6 assumptions enumerated", "if violated", sup,
+             "template or its variance-arithmetic supplementary"),
             # The paper no longer names the archive or the date in the body: both
             # resolve to a named repository, and a date is a one-field lookup away
             # from an origin (docs/DOUBLE_BLIND_DECISION.md). What E6 needs to

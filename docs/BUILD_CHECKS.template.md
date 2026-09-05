@@ -88,6 +88,16 @@ refuse reads as coverage and is not.
 
 ## Exclusions from the numeric comparison: the mechanism
 
+*One wall-clock-bounded diagnostic.* {{ver_timebound}} stops after {{ver_tb_budget}} seconds
+rather than at its {{ver_tb_cap}}-iteration cap, so it reaches a different iteration count on
+every machine — three different values across the three hosts we have run it on. Its iteration
+count and terminal losses are therefore a property of the host, and we do not quote any of them
+here: a number the build declares host-dependent has no business being printed as a result. **Its
+sibling from the same script is not excluded**: that run reaches its cap, and reproduces bitwise.
+Excluding by filename rather than by stopping rule would have dropped the reproducible one along
+with it, so the verifier decides from the artifact — a run that stopped short of its own cap was
+time-bounded.
+
 **Excluding a file is not sufficient on its own.** `results/paper_numbers.json` records the
 *source* of every value it holds, and it had copied that diagnostic's iteration count into a key
 of its own — so the host-dependence leaked through a file that was not excluded, and the clean
@@ -122,3 +132,26 @@ Three defects, in text written during the revision itself and caught before it s
 
 They are recorded as a count in Appendix C rather than enumerated there, because the count is
 the argument and the enumeration is this page.
+
+---
+
+## The negative lead-time bar, and the timezone it used to depend on
+
+Moved verbatim from section 8, which keeps one sentence and this pointer.
+
+The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line — which makes the figure reproducible outside this machine's timezone, and it was not: the same arithmetic gave a different answer in every timezone until the offset stopped coming from the reader's clock.
+
+---
+
+## The glob collision, and the sweep of every pattern-based input discovery
+
+Moved verbatim from Appendix B, which keeps one sentence and this pointer.
+
+it did neither until the first
+capacity-matched run walked into the family through a glob. **That fix reached
+`paper_numbers.py` and `paper_figures.py` and not every script**: a second unguarded glob
+survived in the ensemble-5 comparison until this revision found it, moving two published
+values (`M-66`). A sweep of all {{audit_n_hits}} pattern-based input discoveries in
+`scripts/` and `src/` now classifies each as an open population or frozen at write time;
+{{audit_n_frozen}} was frozen, and artifacts that discover their inputs now record the
+file list they were computed over.
