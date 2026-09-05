@@ -1,0 +1,218 @@
+{
+  "what": "one row per headline claim, for section 3.2",
+  "computation": "none; every cell is read from an artifact or derived from one",
+  "arena_registry": {
+    "out-of-sample": {
+      "episodes": [
+        1,
+        8
+      ],
+      "n_independent": 4
+    },
+    "in-sample": {
+      "episodes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ],
+      "n_independent": 16
+    },
+    "all ten episodes": {
+      "episodes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "n_independent": 20
+    }
+  },
+  "arena_surface_forms": {
+    "out-of-sample": [
+      "out-of-sample",
+      "held-out",
+      "held out",
+      "holdout"
+    ],
+    "in-sample": [
+      "in-sample"
+    ],
+    "all ten episodes": [
+      "all ten",
+      "all 10 episodes",
+      "ten episodes"
+    ]
+  },
+  "n_rows": 12,
+  "rows": [
+    {
+      "claim": "Autoregressive training beats teacher forcing at h = 368",
+      "section": "5",
+      "arena": "out-of-sample",
+      "n_independent": 4,
+      "in_sample": "no",
+      "verdict": "gap excludes zero, favouring autoregressive training",
+      "multiplicity": "yes",
+      "model": "our arms",
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/task_c3_multiplicity.json"
+      ]
+    },
+    {
+      "claim": "The same comparison reverses at h = 1, at the short unit M-64 built",
+      "section": "5",
+      "arena": "out-of-sample",
+      "n_independent": 60,
+      "in_sample": "no",
+      "verdict": "gap excludes zero, favouring teacher forcing",
+      "multiplicity": "not applicable",
+      "model": "our arms",
+      "artifacts": [
+        "results/m64_short_units.json"
+      ]
+    },
+    {
+      "claim": "Ensemble disagreement is smaller than realised error, at h = 1",
+      "section": "6.2",
+      "arena": "all ten episodes",
+      "n_independent": 20,
+      "in_sample": "yes",
+      "verdict": "overconfident; the ratio interval excludes 1",
+      "multiplicity": "not applicable",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ]
+    },
+    {
+      "claim": "Ensemble disagreement is smaller than realised error, at h = 100",
+      "section": "6.2",
+      "arena": "all ten episodes",
+      "n_independent": 20,
+      "in_sample": "yes",
+      "verdict": "overconfident; the ratio interval excludes 1",
+      "multiplicity": "not applicable",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ]
+    },
+    {
+      "claim": "The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1",
+      "section": "6.2",
+      "arena": "all ten episodes",
+      "n_independent": 20,
+      "in_sample": "yes",
+      "verdict": "overconfident; the ratio interval excludes 1",
+      "multiplicity": "not applicable",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ]
+    },
+    {
+      "claim": "Disagreement ranks realised error better than the forecast step index, at h = 100",
+      "section": "6.7",
+      "arena": "all ten episodes",
+      "n_independent": 20,
+      "in_sample": "yes",
+      "verdict": "paired difference excludes zero",
+      "multiplicity": "not applicable",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/task_d_nind20.json"
+      ]
+    },
+    {
+      "claim": "Disagreement ranks realised error better than the model's own predicted step size",
+      "section": "6.7",
+      "arena": "all ten episodes",
+      "n_independent": 20,
+      "in_sample": "yes",
+      "verdict": "the partial survives; the margin is below the minimum detectable effect",
+      "multiplicity": "could not at this n",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/e7_free_baselines.json"
+      ]
+    },
+    {
+      "claim": "With both the rollout and the depth held constant, disagreement still tracks error",
+      "section": "6.7",
+      "arena": "all ten episodes",
+      "n_independent": 20,
+      "in_sample": "yes",
+      "verdict": "interval excludes zero and clears the minimum detectable effect",
+      "multiplicity": "not applicable",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/a2_trajectory_level_control.json"
+      ]
+    },
+    {
+      "claim": "A per-horizon multiplier restores nominal coverage where a constant one does not",
+      "section": "6.8",
+      "arena": "out-of-sample",
+      "n_independent": 4,
+      "in_sample": "yes",
+      "verdict": "restores nominal coverage on every held-out cell",
+      "multiplicity": "not applicable",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/task_d3_perhorizon.json"
+      ]
+    },
+    {
+      "claim": "An ensemble that shares no trunk is better calibrated than the released topology",
+      "section": "6.10",
+      "arena": "out-of-sample",
+      "n_independent": 4,
+      "in_sample": "no",
+      "verdict": "MECHANISM SUPPORTED",
+      "multiplicity": "not applicable",
+      "model": "our arms",
+      "artifacts": [
+        "results/r2_independent_ensemble.json"
+      ]
+    },
+    {
+      "claim": "The same contrast at matched capacity",
+      "section": "6.10",
+      "arena": "out-of-sample",
+      "n_independent": 4,
+      "in_sample": "no",
+      "verdict": "UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE",
+      "multiplicity": "could not at this n",
+      "model": "our arms",
+      "artifacts": [
+        "results/m49_capacity_matched.json"
+      ]
+    },
+    {
+      "claim": "The released evaluation pairs states and actions one step stale and overstates its own model's error",
+      "section": "7.2",
+      "arena": "out-of-sample",
+      "n_independent": 4,
+      "in_sample": "yes",
+      "verdict": "confirmed; the released pairing scores worse than the causal one",
+      "multiplicity": "not applicable",
+      "model": "released checkpoint",
+      "artifacts": [
+        "results/step4_0a_results.json"
+      ]
+    }
+  ],
+  "table_markdown": "| Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier restores nominal coverage where a constant one does not | 6.8 | out-of-sample | 4 | yes | restores nominal coverage on every held-out cell | not applicable |\n| An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity | 6.10 | out-of-sample | 4 | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
+}

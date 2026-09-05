@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "44 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "46 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -16,7 +16,7 @@
       "n": 3,
       "name": "no hand-typed numbers",
       "pass": true,
-      "detail": "54 distinct numerals typed, 53 section numbers derived from the headings; unexplained: none"
+      "detail": "55 distinct numerals typed, 55 section numbers derived from the headings; unexplained: none"
     },
     {
       "n": 4,
@@ -40,7 +40,7 @@
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "189 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6'], dangling none"
+      "detail": "190 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6'], dangling none"
     },
     {
       "n": 6,

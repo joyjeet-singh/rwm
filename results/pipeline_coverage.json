@@ -1,6 +1,6 @@
 {
-  "n_artifacts": 59,
-  "n_paper_keys": 1785,
+  "n_artifacts": 60,
+  "n_paper_keys": 1786,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -358,10 +358,12 @@
       "artifact": "paper_figures.json",
       "n_paper_keys": 9,
       "writers": [
+        "check_comparative_claims",
         "paper_figures",
         "paper_numbers"
       ],
       "invoked_writers": [
+        "check_comparative_claims",
         "paper_figures",
         "paper_numbers"
       ],
@@ -719,6 +721,18 @@
       ],
       "invoked_writers": [
         "insample_framing"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "evidence_summary.json",
+      "n_paper_keys": 1,
+      "writers": [
+        "evidence_summary"
+      ],
+      "invoked_writers": [
+        "evidence_summary"
       ],
       "covered": true,
       "exempt_reason": null

@@ -373,6 +373,9 @@ REPORT=input_set_audit_report.txt stage 20n8 "M-66 — input discovery by patter
 REPORT=appendix_g_rules_report.txt stage 21a "Appendix G — every pre-registered rule, from the ledger" "10 s" \
       results/appendix_g_rules.json $PY scripts/appendix_g_rules.py
 
+REPORT=evidence_summary_report.txt stage 21b "3.2 — the evidence summary table (no new measurement)" "5 s" \
+      results/evidence_summary.json $PY scripts/evidence_summary.py
+
 # The paper is generated, not written by hand: paper_numbers.py collects every value
 # it quotes from the artifacts, build_paper.py substitutes them into PAPER.template.md
 # and fails if any placeholder is unresolved.

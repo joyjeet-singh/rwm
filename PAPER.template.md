@@ -359,6 +359,17 @@ of this paper called it one, and that label is withdrawn. Both are kept in every
 h = {{v2_diag_h}} is what makes our numbers comparable to the original's *figure* while
 h = {{v2_deploy_h}} makes them comparable to the original's *method*.
 
+### 3.2 What each claim rests on
+
+Every headline claim in this paper is measured on one of the three arenas above, at a stated
+number of independent trajectories, and a reader should be able to see all of them at once
+before meeting any of them. The table is generated from the artifacts each claim is computed
+from, so no arena label and no sample size in it is typed by hand.
+
+| claim | § | arena | n_independent | in-sample for the model measured? | verdict | survives multiplicity correction? |
+|---|---|---|---|---|---|---|
+{{evidence_table}}
+
 ---
 
 ## 4. What the original papers claim, and which claims we test

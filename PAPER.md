@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     871 values substituted from 73 artifacts. -->
+     872 values substituted from 74 artifacts. -->
 
 # Ensemble disagreement is miscalibrated as a scale, by a factor that grows with rollout depth: an independent reproduction of a released robotic world model
 
@@ -366,6 +366,28 @@ teacher-forced prefix, which is the curve the follow-up plots as its uncertainty
 of this paper called it one, and that label is withdrawn. Both are kept in every table, because
 h = 368 is what makes our numbers comparable to the original's *figure* while
 h = 100 makes them comparable to the original's *method*.
+
+### 3.2 What each claim rests on
+
+Every headline claim in this paper is measured on one of the three arenas above, at a stated
+number of independent trajectories, and a reader should be able to see all of them at once
+before meeting any of them. The table is generated from the artifacts each claim is computed
+from, so no arena label and no sample size in it is typed by hand.
+
+| claim | § | arena | n_independent | in-sample for the model measured? | verdict | survives multiplicity correction? |
+|---|---|---|---|---|---|---|
+| Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |
+| The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |
+| Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |
+| Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |
+| With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |
+| A per-horizon multiplier restores nominal coverage where a constant one does not | 6.8 | out-of-sample | 4 | yes | restores nominal coverage on every held-out cell | not applicable |
+| An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |
+| The same contrast at matched capacity | 6.10 | out-of-sample | 4 | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
+| The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |
 
 ---
 
@@ -1374,7 +1396,7 @@ counted separately because a value that is not produced twice cannot be compared
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,090 values, or 1.00%
 of the 908,630 numeric values under `results/`. The other 899,540 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 617 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **59 comparative claims** across 26 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 59 of 59 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 618 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1700,7 +1722,7 @@ that names a real key, and any key resolving to an empty or null value. The conv
 requires the separator row before it will build a table.
 
 **The machinery, and the two lines that matter about it.** `scripts/check_comparative_claims.py`
-verifies 59 claims across 26 kinds, each pinning a fragment of this paper's text
+verifies 60 claims across 27 kinds, each pinning a fragment of this paper's text
 and a relation recomputed from the artifacts, and each run against a deliberately corrupted
 expectation on every build so that a check which can no longer fail is caught. The registry, the
 self-test's mechanics and the four defects it has found in the checker itself

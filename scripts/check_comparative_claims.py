@@ -84,6 +84,40 @@ def art(name):
     return _cache[name]
 
 
+_NIND = re.compile(r"n_independent\s*=\s*\**\s*(\d+)"
+                   r"|\b(\d+)\s+(?:\*\*)?(?:non-overlapping|independent|400-step"
+                   r"|units\b|trajectories\b)")
+
+
+def _section_text(paper, sid):
+    """The body of the section that owns a claim, as PAPER.md writes it.
+
+    Two shapes, because the paper has two. Most sections are markdown headings
+    and end at the next heading of any level. 7.1-7.5 are bold paragraph leads
+    inside section 7 rather than headings, so a heading scan alone returns
+    nothing for them; those end at the next such lead.
+    """
+    m = re.search(r"^#{2,3} " + re.escape(sid) + r"(?=[.\s])", paper, re.M)
+    if m is not None:
+        nxt = re.search(r"^#{2,3} ", paper[m.end():], re.M)
+    else:
+        m = re.search(r"^\*\*" + re.escape(sid) + r"(?=[.\s])", paper, re.M)
+        if m is None:
+            return None
+        nxt = re.search(r"^(?:\*\*\d+\.\d+(?=[.\s])|#{2,3} )", paper[m.end():], re.M)
+    return paper[m.start():m.end() + nxt.start()] if nxt else paper[m.start():]
+
+
+def _stated_nind(section):
+    """Every independent-unit count the section itself states."""
+    return {int(a or b) for a, b in _NIND.findall(section)}
+
+
+def _stated_arenas(section, forms):
+    low = section.lower()
+    return [lab for lab, fs in forms.items() if any(f in low for f in fs)]
+
+
 def dig(name, path):
     """dig('task_d_nind20.json', 'd2_forecast_index.128.ci.index.lo')"""
     o = art(name)
@@ -672,6 +706,21 @@ CLAIMS = [
     # rows on the way to LaTeX, which is the failure a reader cannot recover from.
     {"id": "C23.1", "kind": "table_renders", "where": "Appendix D / E / F",
      "says": "checkable row by row"},
+
+    # ---- C24 arena_consistency ---------------------------------------------
+    # 3.2's evidence table states an arena and an n_independent for every
+    # headline claim, in one place, ahead of the sections that make them. That
+    # is a second statement of a fact each section already states, and a second
+    # statement of a fact is the shape every restatement defect in this project
+    # has had. Nothing above can see it: the numerals are all substituted, so
+    # the typed-numeral audit passes, and no kind compares a summary row against
+    # the section it summarises. This one does -- for each row, the arena the
+    # table gives must be an arena its own section names, and the n_independent
+    # must be one the section states. Sections that name neither (6.10 and 7.2
+    # state no arena at all) are reported as unconfirmed rather than silently
+    # counted as passing.
+    {"id": "C24.1", "kind": "arena_consistency", "where": "3.2",
+     "says": "so no arena label and no sample size in it is typed by hand"},
 ]
 
 
@@ -1200,6 +1249,39 @@ def evaluate(c, paper, override=None):
         return ok, (f'{len(src)} source tables, {len(ren)} rendered; source rows '
                     f'{src} vs row separators {ren}'
                     + (f'; short {short}' if short else ''))
+    if k == "arena_consistency":
+        E = art("evidence_summary.json")
+        forms = {lab: tuple(fs) for lab, fs in E["arena_surface_forms"].items()}
+        swap = bool(exp.get("_forced_arena_swap"))
+        bad, conf_a, conf_n = [], 0, 0
+        for r in E["rows"]:
+            sec = _section_text(paper, r["section"])
+            if sec is None:
+                bad.append(f'{r["section"]}: no such section in the paper')
+                continue
+            stated_a = _stated_arenas(sec, forms)
+            stated_n = _stated_nind(sec)
+            arena = r["arena"]
+            if swap:
+                # The tightest corruption available: an arena the section does
+                # not name, so an off-by-one-arena table is rejected rather than
+                # only an absurd one. Corrupting the expectation and not the
+                # paper keeps the self-test read-only, as every other kind does.
+                other = [a for a in forms if a != arena and a not in stated_a]
+                arena = (other or [a for a in forms if a != arena])[0]
+            if stated_a and arena not in stated_a:
+                bad.append(f'{r["section"]}: table says {arena}, section names {stated_a}')
+            elif stated_a:
+                conf_a += 1
+            if stated_n and r["n_independent"] not in stated_n:
+                bad.append(f'{r["section"]}: table says n_independent = '
+                           f'{r["n_independent"]}, section states {sorted(stated_n)}')
+            elif stated_n:
+                conf_n += 1
+        ok = bool(E["rows"]) and not bad and conf_a > 0 and conf_n > 0
+        return ok, (f'{len(E["rows"])} claims; arena confirmed against its own section '
+                    f'in {conf_a}, n_independent in {conf_n}'
+                    + (f'; {len(bad)} mismatch(es), first: {bad[0]}' if bad else ''))
     raise ValueError(k)
 
 
@@ -1338,6 +1420,11 @@ def corruption_for(c):
         # check has to reject an expectation that is off by one, not only an
         # absurd one. Corrupting the expectation keeps the self-test read-only.
         return {"_forced_extra_rows": 1}
+    if k == "arena_consistency":
+        # Every row's arena moved to one its own section does not name, which is
+        # the defect the table would introduce if a row were copied from the
+        # wrong artifact.
+        return {"_forced_arena_swap": True}
     if k == "extremum":
         fam = _family(c["family"])
         ranked = sorted(fam, key=fam.get, reverse=(c["expect"] == "max"))
