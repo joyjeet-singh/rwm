@@ -965,6 +965,58 @@ def main():
     _d3h = sorted({f["h"] for f in D3["quantities"]["epistemic"]["fits"]})
     put("d3_nhoriz", len(_d3h), "results/task_d3_perhorizon.json")
 
+    # --- D3 cross-model: does 6.8's lookup table transfer between MODELS? ----
+    # M-69, pre-registered in fad7db7 before any of this existed. Section 6.8's
+    # own values are read from its own artifact above and are untouched here;
+    # everything below comes from the new one.
+    DX = J("task_d3_cross_model.json")
+    P4 = J("p4_transfer_power.json")
+    _vb = DX["verdict"]["both_directions"]
+    put("d3x_verdict", _vb["verdict"], "results/task_d3_cross_model.json")
+    put("d3x_branch", _vb["branch"], "results/task_d3_cross_model.json")
+    put("d3x_ncells", _vb["n_cells"], "results/task_d3_cross_model.json")
+    put("d3x_n_out", _vb["n_intervals_outside_band"], "results/task_d3_cross_model.json")
+    put("d3x_n_in", _vb["n_intervals_inside_band"], "results/task_d3_cross_model.json")
+    put("d3x_n_strad", _vb["n_intervals_straddling_edge"],
+        "results/task_d3_cross_model.json")
+    put("d3x_worst_delta", f'{_vb["largest_abs_delta_pts"]:.1f}',
+        "results/task_d3_cross_model.json")
+    for _d, _tg in (("armA_to_released", "a2r"), ("released_to_armA", "r2a")):
+        put(f"d3x_verdict_{_tg}", DX["verdict"][_d]["verdict"],
+            "results/task_d3_cross_model.json")
+        put(f"d3x_n_out_{_tg}", DX["verdict"][_d]["n_intervals_outside_band"],
+            "results/task_d3_cross_model.json")
+        put(f"d3x_ncells_{_tg}", DX["verdict"][_d]["n_cells"],
+            "results/task_d3_cross_model.json")
+    for q, tg in (("aleatoric", "ale"), ("epistemic", "epi")):
+        put(f"d3x_{tg}_ok", DX["absolute_column"][q]["cells_within_tolerance"],
+            "results/task_d3_cross_model.json")
+        put(f"d3x_{tg}_cells", DX["absolute_column"][q]["n_cells"],
+            "results/task_d3_cross_model.json")
+        put(f"d3x_own_{tg}_ok", DX["armA_own_model"][q]["cells_within_tolerance"],
+            "results/task_d3_cross_model.json")
+        put(f"d3x_own_{tg}_cells", DX["armA_own_model"][q]["n_cells"],
+            "results/task_d3_cross_model.json")
+    put("d3x_nseeds", len(DX["seeds"]), "results/task_d3_cross_model.json")
+    put("d3x_ens", DX["design"]["ensemble"], "results/task_d3_cross_model.json")
+    put("d3x_nind", DX["design"]["n_independent"], "results/task_d3_cross_model.json")
+    put("d3x_band", f'{DX["band_pts"]:.0f}', "results/task_d3_cross_model.json")
+    put("d3x_ratio_lo", f'{DX["multipliers"]["ratio_min"]:.3g}',
+        "results/task_d3_cross_model.json")
+    put("d3x_ratio_hi", f'{DX["multipliers"]["ratio_max"]:.3g}',
+        "results/task_d3_cross_model.json")
+    # The MDE the two columns are read against. The paired one governs; the
+    # absolute one does not, and its own figures are why.
+    _pm = [v for q in P4["paired_binding_mde_pts"].values() for v in q.values()]
+    _um = [v for q in P4["binding_mde_pts"].values() for v in q.values()]
+    put("d3x_pmde_hi", f"{max(_pm):.2f}", "results/p4_transfer_power.json")
+    put("d3x_umde_lo", f"{min(_um):.2f}", "results/p4_transfer_power.json")
+    put("d3x_umde_hi", f"{max(_um):.2f}", "results/p4_transfer_power.json")
+    put("d3x_tol_res", P4["summary"]["quantity_horizon_pairs_where_tolerance_resolvable"],
+        "results/p4_transfer_power.json")
+    put("d3x_tol_pairs", P4["summary"]["quantity_horizon_pairs"],
+        "results/p4_transfer_power.json")
+
     # The lessons section opens by counting its own lessons. It said "Four" while
     # carrying a different number after Part D added two; count the bold leads
     # instead.

@@ -745,7 +745,7 @@
   },
   "appG_n_lead": {
     "source": "results/appendix_g_rules.json",
-    "value": 16
+    "value": 17
   },
   "appG_n_negative": {
     "source": "results/appendix_g_rules.json",
@@ -753,15 +753,15 @@
   },
   "appG_n_positive": {
     "source": "results/appendix_g_rules.json",
-    "value": 15
+    "value": 16
   },
   "appG_n_rules": {
     "source": "results/appendix_g_rules.json",
-    "value": 16
+    "value": 17
   },
   "appG_table": {
     "source": "results/appendix_g_rules.json",
-    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED \u2014 rule pre-registered |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | \u2014 | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | \u2014 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | \u2014 | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | \u2014 | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | \u2014 | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | \u2014 | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | \u2014 | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | \u2014 | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `M-68` | The combined arm: independence and the corrected objective together | \u2014 | +2.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
+    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | SETTLED \u2014 rule pre-registered |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | \u2014 | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | \u2014 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | \u2014 | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | \u2014 | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | \u2014 | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | \u2014 | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | \u2014 | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | \u2014 | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `M-68` | The combined arm: independence and the corrected objective together | \u2014 | +5.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |\n| `M-69` | The cross-model transfer of the per-horizon multiplier table | \u2014 | +21 min | results/task_d3_cross_model.json | DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
   },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
@@ -3007,6 +3007,134 @@
     "source": "results/task_d3_perhorizon.json",
     "value": "above"
   },
+  "d3x_ale_cells": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 72
+  },
+  "d3x_ale_ok": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 0
+  },
+  "d3x_band": {
+    "source": "results/task_d3_cross_model.json",
+    "value": "10"
+  },
+  "d3x_branch": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 1
+  },
+  "d3x_ens": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 5
+  },
+  "d3x_epi_cells": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 72
+  },
+  "d3x_epi_ok": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 12
+  },
+  "d3x_n_in": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 3
+  },
+  "d3x_n_out": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 52
+  },
+  "d3x_n_out_a2r": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 29
+  },
+  "d3x_n_out_r2a": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 23
+  },
+  "d3x_n_strad": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 17
+  },
+  "d3x_ncells": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 72
+  },
+  "d3x_ncells_a2r": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 36
+  },
+  "d3x_ncells_r2a": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 36
+  },
+  "d3x_nind": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 4
+  },
+  "d3x_nseeds": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 3
+  },
+  "d3x_own_ale_cells": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 36
+  },
+  "d3x_own_ale_ok": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 10
+  },
+  "d3x_own_epi_cells": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 36
+  },
+  "d3x_own_epi_ok": {
+    "source": "results/task_d3_cross_model.json",
+    "value": 17
+  },
+  "d3x_pmde_hi": {
+    "source": "results/p4_transfer_power.json",
+    "value": "5.73"
+  },
+  "d3x_ratio_hi": {
+    "source": "results/task_d3_cross_model.json",
+    "value": "1.36"
+  },
+  "d3x_ratio_lo": {
+    "source": "results/task_d3_cross_model.json",
+    "value": "0.0069"
+  },
+  "d3x_tol_pairs": {
+    "source": "results/p4_transfer_power.json",
+    "value": 12
+  },
+  "d3x_tol_res": {
+    "source": "results/p4_transfer_power.json",
+    "value": 0
+  },
+  "d3x_umde_hi": {
+    "source": "results/p4_transfer_power.json",
+    "value": "40.62"
+  },
+  "d3x_umde_lo": {
+    "source": "results/p4_transfer_power.json",
+    "value": "12.55"
+  },
+  "d3x_verdict": {
+    "source": "results/task_d3_cross_model.json",
+    "value": "DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL"
+  },
+  "d3x_verdict_a2r": {
+    "source": "results/task_d3_cross_model.json",
+    "value": "DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL"
+  },
+  "d3x_verdict_r2a": {
+    "source": "results/task_d3_cross_model.json",
+    "value": "DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL"
+  },
+  "d3x_worst_delta": {
+    "source": "results/task_d3_cross_model.json",
+    "value": "67.5"
+  },
   "d4_ci": {
     "source": "results/task_d_nind20.json",
     "value": "[+0.545, +0.694]"
@@ -3909,7 +4037,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "450"
+    "value": "471"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -4569,7 +4697,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 246
+    "value": 247
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -7581,7 +7709,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 652
+    "value": 656
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

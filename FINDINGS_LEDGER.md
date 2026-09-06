@@ -7170,7 +7170,93 @@ pre-registration does, and it is recorded only so that a reader can see it was h
 `scripts/task_d3_cross_model.py` over §6.8's arena, horizon grid, coverage definition and fit
 procedure. Power: `results/p4_transfer_power.json`, from `scripts/p4_transfer_power.py`,
 committed with this rule.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**DISCHARGE NOTE, appended 2026-09-06. Not one word of the rule above is altered; only the
+Status token moves, as every discharged rule in this ledger has moved it.** The rule was committed
+at `fad7db7`, 2026-09-06T10:53:01+05:30, together with `scripts/p4_transfer_power.py` and
+`results/p4_transfer_power.json`. `results/task_d3_cross_model.json` was written at
+2026-09-06T11:03:14+05:30, about ten minutes later, and no per-horizon multiplier had been fitted on
+any model we trained before it. The ordering is checkable from `git log` and the artifact's own
+timestamp.
+
+**Branch 1 of the three fires: DOES NOT TRANSFER — A PROPERTY OF THE MODEL.** Of the 72 governing cells,
+**52** have a 95% paired cluster-bootstrap interval on Δ lying
+**entirely outside** the ±10-point band, 3 lie entirely inside
+and 17 straddle an edge. Branch 1 needs one such cell and has
+52, so it fires and the two branches below it are not reached. The
+largest paired change is -67.45 points (aleatoric, h = 100, seed
+2, multipliers fitted on Arm A and scored on the released checkpoint, 95% CI [-78.87,
+-58.93]). The outside-band cell that comes **closest** to the band edge is
++18.45 points (epistemic, h = 128, seed 2,
+fitted on the released checkpoint and scored on Arm A, 95% CI [+10.63, +26.28]), so even
+the least decisive of the 52 clears the band by 0.63 points
+at its near end rather than by rounding.
+
+**Both per-direction verdicts agree with the headline, which the rule required to be reported
+separately in case they did not.** Fitting on Arm A and scoring the released checkpoint: branch
+1, 29 of 36 cells outside the band.
+Fitting on the released checkpoint and scoring Arm A: branch 1,
+23 of 36. There is no direction in which the table
+transfers.
+
+**The absolute column the specification asked for, produced and reported and NOT governing.**
+Held-out cells within 10 points of the 68.27% nominal under a multiplier fitted on the other
+model, counted per fold over 6 horizons × 2 fold directions × 3 seeds × 2
+transfer directions: **0 of 72** on the
+aleatoric term and **12 of 72** on the epistemic.
+**These counts are UNPOWERED and the rule labelled them so before they existed.**
+`results/p4_transfer_power.json` puts the binding minimum detectable effect on that unpaired
+quantity at 12.55–40.62 points against a 10-point band, with
+`tolerance_resolvable` false at
+0 of
+12 (quantity, horizon) pairs. The
+12 epistemic hits are therefore **not**
+12 transfers, and the 0 aleatoric
+hits would not have been evidence of failure on their own either — this arena cannot resolve that
+test in either direction. The verdict rests on the paired change, whose largest MDE is
+5.73 points against the same band, and it was written that way before the table was seen.
+
+**Arm A's own-model baseline, reported because the rule required it.** Scored under multipliers
+fitted on Arm A's own σ on the other held-out episode, Arm A lands within 10 points of nominal on
+17 of 36 epistemic and
+10 of 36 aleatoric held-out cells. So §6.8's
+remedy is not uniformly available on a model we trained in the first place, and "cross-model
+calibration achieved" is not claimable at the cells where it is not. Δ at those cells still measures
+what it measures — the effect of swapping the multiplier — which is why the verdict is unaffected.
+
+**The plainest statement of the gap is the multipliers themselves.** Arm A's fitted c is
+0.0069× to 1.36× the released
+checkpoint's at the same quantity, horizon and fit episode. On the aleatoric term the released
+checkpoint's published c runs into the thousands where Arm A's is in the tens, and swapping one for
+the other drives held-out coverage to about 1% in one direction and to 100% in the other. That is a
+difference in σ scale between two models, not a subtlety of the band.
+
+**Our recorded expectation was borne out, and it carries no evidential weight.** The rule recorded
+in advance that we expected branch 1, and branch 1 fired. That is stated here for the same reason
+the expectation was recorded: so a reader can see it was held before the data, and so that it is on
+record that it licensed nothing. The verdict was computed by `scripts/task_d3_cross_model.py` from
+the rule's own conditions rather than read off by eye.
+
+**What §6.8 keeps, and what it loses.** Nothing in §6.8's existing table changed and nothing was
+refitted. `results/task_d3_perhorizon.json` was opened read-only and is byte-identical to its state
+before this session (sha256 `0d0b76d079ae4db5460e696574e2772561921b72e31128c346037f0e196ea210`); the discharging script asserts that scoring the released
+checkpoint under §6.8's published scalars reproduces §6.8's published held-out coverages to within
+1e-12, which is what makes the same-model arm of Δ §6.8's own number rather than a re-derivation of
+it. What §6.8 loses is an implication it never tested: the lookup table is a recipe to refit per
+model, not a set of constants to copy.
+
+**What this does not establish, carried over from the rule unchanged.** This is 6 horizons × two
+directions on the same 4 trajectories and is **not 12 independent successes**; nor are the
+72 governing cells 72 independent tests. No P-value attaches to any count
+here and none was computed. The 3 Arm A seeds share their training data and differ
+only in initialisation and data ordering, so they are not 3 independent models. The
+two models differ on several axes at once — training data, training recipe, iteration count, and a
+released-checkpoint provenance S-19 records as not fully reconstructible — so this **bounds**
+transfer between these two models and attributes it to no one difference. A model closer to the
+released checkpoint than Arm A is might well share its table; nothing here rules that out, and
+nothing here tests it.
+
+**Discharged** by `results/task_d3_cross_model.json`. **It returns DOES NOT TRANSFER — A PROPERTY OF THE MODEL.** Written by `scripts/task_d3_cross_model.py`, `reproduce.sh` stage 20r4, marked `NEEDS_WEIGHTS`: the Arm A ensemble-5 weights live under `runs/`, which is gitignored, so a clean clone skips the stage and says so rather than appearing to have run it.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
 
 ## Candidate paper contributions

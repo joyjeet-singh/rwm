@@ -339,6 +339,14 @@ REPORT=m49_capacity_matched_report.txt stage 20r2 "M-49 — the capacity-matched
 # has no stage here (docs/DEFERRED.md, 2026-09-05).
 REPORT=r2_combined_arm_report.txt stage 20r3 "M-68 — the combined arm, and its verdict" "10 min" \
       results/r2_combined_arm.json NEEDS_WEIGHTS $PY scripts/r2_independent_ensemble.py --m68
+# M-69. Is §6.8's per-horizon multiplier table a property of the HORIZON or of the
+# MODEL? Reads §6.8's published scalars from results/task_d3_perhorizon.json and
+# never refits them; NEEDS_WEIGHTS because it also scores the Arm A ensemble-5 arms,
+# whose weights live under runs/. The MDE it is scored against is
+# results/p4_transfer_power.json, whose own writer has no stage here
+# (docs/DEFERRED.md, 2026-09-05), for the same reason p3's does not.
+REPORT=task_d3_cross_model_report.txt stage 20r4 "M-69 — cross-model transfer of the per-horizon multiplier" "12 min" \
+      results/task_d3_cross_model.json NEEDS_WEIGHTS $PY scripts/task_d3_cross_model.py
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
       "" $PY scripts/ledger_check.py
 # Appendix G, generated from the ledger. It feeds six paper keys and its writer

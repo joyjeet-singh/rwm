@@ -16,7 +16,7 @@
       "n": 3,
       "name": "no hand-typed numbers",
       "pass": true,
-      "detail": "55 distinct numerals typed, 57 section numbers derived from the headings; unexplained: none"
+      "detail": "56 distinct numerals typed, 57 section numbers derived from the headings; unexplained: none"
     },
     {
       "n": 4,
@@ -40,7 +40,7 @@
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "208 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6'], dangling none"
+      "detail": "210 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6'], dangling none"
     },
     {
       "n": 6,

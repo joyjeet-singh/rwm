@@ -3139,7 +3139,7 @@
       "id": "M-69",
       "claim": "PRE-REGISTERED decision rule for the cross-model transfer of the per-horizon multiplier ",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED",
       "evidence": [],
       "artifacts": [
         "results/p4_transfer_power.json",

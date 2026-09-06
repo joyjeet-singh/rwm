@@ -1267,6 +1267,301 @@ shared-trunk arms and still fires.
 **Discharged** by `results/r2_combined_arm.json`. **It returns THE COMBINATION IMPROVES CALIBRATION.**
 **Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
 
+## M-69 — The cross-model transfer of the per-horizon multiplier table
+
+**Entered before the cross-model measurement exists.** No per-horizon multiplier has been
+fitted on any model we trained, no multiplier fitted on one model has been applied to another,
+and `results/task_d3_cross_model.json` does not exist as this is committed. The commit
+containing this entry precedes all three and the ordering is checkable from `git log`, exactly
+as M-16's, M-23's, M-43's, M-44's and M-68's are.
+
+**Why the rule is needed.** §6.8 is the one concrete remedy in this paper: a single global
+multiplier on σ fails, and a **per-horizon** one restores ±1σ coverage on every held-out cell.
+That result is established across **episodes** — each multiplier is fitted on one held-out
+episode and scored on the other, in both directions. It says nothing about whether the same
+lookup table works on a **different model**. Those are different claims and they carry
+different consequences. If the table transfers, the numbers in it are a property of the
+forecast horizon and a practitioner can ship them; if it does not, they are a property of the
+released checkpoint and every user has to refit. §6.8 currently invites the first reading
+without having tested it, which is the kind of unmeasured extrapolation this paper criticises
+elsewhere.
+
+**The two models.** The **released checkpoint**, §6.8's own model, unchanged; and **Arm A at
+ensemble size 5**, seeds 0, 1, 2 — `runs/armA_seed0_ens5/weights_2500.pt` and its seed-1 and
+seed-2 counterparts, §6.7's arms, scored through the same entry point
+(`score_reference.ReferenceRWM.rollout_uncertainty`, action offset 1, start step 32) that §6.8
+uses. **Why the ensemble-size-5 arms and not our main arms:** at ensemble size 1 the epistemic
+term is identically zero by construction (X-07), so no epistemic multiplier can be fitted on
+those models at all and half of §6.8's table would have no counterpart. The `_ens5` arms are
+the only models we trained that carry both an aleatoric head and a non-degenerate epistemic
+spread, and they are the arms §6.7's finding was replicated on. Their weights live under
+`runs/`, which is gitignored, so the discharging script is `NEEDS_WEIGHTS` in a clean clone and
+says so rather than appearing to have run.
+
+**Arena.** The out-of-sample held-out pair, episodes 1 and 8: 4 non-overlapping 400-step
+trajectories from start step 32. **n_independent = 4.** That is the only genuine out-of-sample
+arena our own arms have, it is §6.8's arena unchanged, and no amount of window oversampling
+changes it. Every multiplier is fitted on one episode (2 trajectories) and scored on the other
+(2), never on the episode that produced it — §6.8's own discipline, carried over rather than
+relaxed.
+
+**Horizons.** h ∈ {1, 8, 32, 100, 128, 368}, §6.8's own six-horizon grid, **not extended**.
+**All six govern**, and none is privileged: the claim under test is about the lookup table as a
+whole and §6.8's own verdict is an all-cells verdict, so singling out one horizon would answer
+a different question. Adding a horizon to this grid after this commit is not available.
+
+**Both directions, and what a governing cell is.**
+
+- **Direction 1** — multipliers fitted on Arm A, applied to and scored on the **released
+  checkpoint**.
+- **Direction 2** — multipliers fitted on the **released checkpoint**, applied to and scored on
+  Arm A.
+
+A **governing cell** is one (quantity, horizon, Arm A seed, direction): 2 × 6 × 3 × 2 = **72
+cells**. A condition holds only if it holds against **every one of the three Arm A seeds** —
+the all-three convention M-43, M-44 and M-68 used, which is stricter than pooling and cannot be
+carried by one favourable seed.
+
+**The governing statistic is PAIRED, and it is paired because this arena cannot resolve the
+unpaired one.** For each governing cell,
+
+  Δ = 100 × ( coverage under the multiplier fitted on the **other** model
+              − coverage under the multiplier fitted on the **same** model ),
+
+in percentage points, on the **same trajectories, the same horizon, the same quantity and the
+same scored model**, so everything the two scalars share cancels. The same-model multiplier for
+Direction 1's released checkpoint is §6.8's **published** c, read from
+`results/task_d3_perhorizon.json` and **not refitted**; for Direction 2's Arm A it is a
+multiplier fitted on that Arm A model's own σ on the fit episode, which is a new value in a new
+artifact and touches nothing in §6.8. Coverage is the ±1σ figure `task_d3_perhorizon.cover()`
+computes — every finite, positive-σ cell over (forecast step ≤ h) × 45 state dimensions, pooled
+— and both fold directions enter one statistic: each of the 4 held-out trajectories is scored
+under the multiplier fitted on the episode it does **not** belong to, and the counts are pooled
+over all 4. That puts the governing statistic at n_independent = 4 rather than 2, without any
+multiplier ever being scored on the episode that produced it.
+
+**Intervals** are 95% **cluster bootstrap over whole trajectories** (M-27), never over
+trajectory × step, at 20,000 resamples. At n_independent = 4 there are 4⁴ = 256 distinct
+resamples, so every interval here is quantised at that resolution, exactly as §4 already states
+for the A/B interval.
+
+**The transfer band is ±10 points** — §6.8's own tolerance, applied to the **paired change**
+rather than to the distance from nominal.
+
+**Minimum detectable effect, estimated before any multiplier is fitted across models.**
+`scripts/p4_transfer_power.py` was run before any cross-model fit and wrote
+`results/p4_transfer_power.json`. Method, M-43's own: subsample **two** trajectories at a time
+— the number one §6.8 cell is scored on — from the twenty-trajectory all-ten-episode pool,
+**exhaustively over all C(20, 2) = 190 draws**, so the subsampling step carries no Monte-Carlo
+error of its own; correct the across-draw SD for the finite pool by √((20 − 2) / (20 − 1));
+then MDE = (z₀.₉₇₅ + z₀.₈₀) × SE, two-sided α = .05, power = .80 — the formula P1 used for M-44
+and M-45 and P3 for M-68. Each figure is cross-checked with the cluster bootstrap on the 4
+held-out trajectories themselves, and **the binding MDE is the largest of the four estimates**
+at that (quantity, horizon): two published scalars × (subsampling, bootstrap). The scalars are
+§6.8's published ones, read and not refitted, because a coverage SE depends on where coverage
+sits and estimating it at c = 1 would measure a regime the criterion does not live in. Only the
+released checkpoint is scored there, deliberately: a power artifact that let a reader
+approximate the answer would not be a pre-registration.
+
+| h | paired Δ, MDE — aleatoric | paired Δ, MDE — epistemic | unpaired absolute, MDE — aleatoric | unpaired absolute, MDE — epistemic |
+|---|---|---|---|---|
+| 1 | 5.37 | 5.73 | 38.03 | 19.55 |
+| 8 | 0.28 | 1.27 | 36.36 | 26.39 |
+| 32 | 1.99 | 1.22 | 40.62 | 27.79 |
+| 100 | 2.74 | 0.60 | 35.88 | 15.97 |
+| 128 | 2.57 | 0.74 | 33.87 | 12.55 |
+| 368 | 0.39 | 0.90 | 33.25 | 15.21 |
+
+All figures in percentage points. **The paired statistic is resolvable against the ±10-point
+band at every one of the 12 (quantity, horizon) pairs — the largest paired MDE is 5.73 points.
+The unpaired one is resolvable at NONE of them:** the binding unpaired MDE runs 12.55 to 40.62
+points against the same 10-point band, and `tolerance_resolvable` is false at 0 of 12 pairs.
+That is the whole reason the governing statistic below is the paired change and not the
+distance from nominal, and it is decided here, before the table exists, rather than after it is
+seen.
+
+**What the MDE is not, and where it is a floor.** It is **not a prediction of the transfer
+result** — no cross-model multiplier exists and nothing in that artifact forecasts one; what is
+estimated is the sampling variability of a coverage figure, which is a property of the arena,
+the horizon and the statistic rather than of which model produced the multiplier. The
+twenty-trajectory pool is **in-sample** for our own arms, which trained on eight of the ten
+episodes, so its spread understates the held-out spread and the subsampling figures are an
+optimistic floor — which is why the held-out cluster bootstrap is computed beside every one and
+enters the maximum. And the paired column is estimated from a **proxy**: two scalars §6.8
+fitted on different episodes of the *same* model, differing by at most 1.41× at any horizon. A
+scalar fitted on a *different* model may differ by more, and a larger scalar change moves
+coverage further, so **the paired MDE is a floor on what the paired statistic can resolve, not
+a measurement of the comparison itself.** The rule does not lean on the floor: branch 3 below
+is decided on the interval actually computed at scoring time, not on the table above.
+
+**The rule, decided in advance. Three tests, applied in this order; the first that matches is
+the verdict; they are exhaustive and mutually exclusive.** Every condition names a quantity
+that has not been measured and none of them names an outcome. For each governing cell the 95%
+paired interval on Δ is either wholly inside the band, wholly outside it, or straddles one of
+its edges, so the three branches partition every possible table.
+
+1. **THE TABLE IS A PROPERTY OF THE MODEL — IT DOES NOT TRANSFER** if at **any** governing
+   cell, in either direction and against any one of the three Arm A seeds, the 95% paired
+   interval on Δ lies **entirely outside** the ±10-point band. Swapping in a multiplier fitted
+   on a different model then moves held-out coverage by more than §6.8's own tolerance, by more
+   than this arena's resolution, and the lookup table cannot be shipped without refitting.
+
+2. **THE TABLE IS A PROPERTY OF THE HORIZON — IT TRANSFERS** if at **every one** of the 72
+   governing cells, in **both** directions and against **every one** of the three Arm A seeds,
+   the 95% paired interval on Δ lies **entirely inside** the ±10-point band. This is an
+   equivalence condition and not a failure to reject: the interval, not the point estimate,
+   must fit inside the band.
+
+3. **UNDERPOWERED** in every remaining case: at least one governing interval straddles a band
+   edge, so that cell is consistent with both transfer and a material failure to transfer at
+   n_independent = 4. The paper reports the point estimates, the intervals and the minimum
+   detectable effect they are measured against, and **claims neither transfer nor its
+   absence.** This branch is written now, before the data, because at this sample size it is a
+   real possibility and not a hedge to be added afterwards — which is exactly what M-24 and
+   M-43 record going wrong.
+
+**The verdict is stated twice: once over both directions taken together, which is the headline
+and the stricter reading, and once per direction.** Both are reported. A table that transfers
+in one direction and not the other is a real and interesting outcome and the per-direction
+verdicts exist so that it is visible rather than averaged away.
+
+**Reported alongside, not governing, and unable to move the verdict.**
+
+- **The absolute column, which is what §6.8's table gains.** Held-out cells whose coverage
+  under a multiplier fitted on a *different model* lands within 10 points of the 68.27%
+  nominal, counted per fold as §6.8 counts: 6 horizons × 2 fold directions × 3 seeds × 2
+  directions = **72 per quantity**. Its denominator differs from §6.8's 12 because it spans
+  three Arm A seeds and two transfer directions; §6.8's own columns are untouched. **This
+  column is UNPOWERED and is labelled so wherever it appears.** A cell landing inside the
+  10-point band is **not** evidence that the multiplier transferred: at this arena the binding
+  MDE on that quantity is 12.55–40.62 points against a 10-point band, so such a cell is
+  compatible with a true coverage well outside the band. It is reported because §6.8's own
+  column has that shape and a reader will want the comparison, and because dropping a column a
+  specification asked for would hide the fact that this arena cannot resolve it.
+- **Arm A's own-model per-horizon held-out coverage** — Direction 2's same-model baseline — so
+  a reader can see whether §6.8's remedy works on a model we trained at all. If an Arm A
+  own-model cell is itself outside the band, Δ at that cell still measures what it measures,
+  the effect of swapping the multiplier, but "cross-model calibration achieved" is not
+  claimable there. That is the second reason the absolute column is reported.
+- The fitted multipliers themselves and the ratio between the two models' multipliers at each
+  horizon, which is the plainest statement of how far apart the two tables are.
+
+**This is an ADDITIONAL COLUMN, not a restatement.** No value in §6.8's existing table changes
+and none is refitted. The released checkpoint's per-horizon multipliers, its held-out
+coverages, its constant-scalar comparison and its fitted-c ranges are read from
+`results/task_d3_perhorizon.json` as published. The discharging script writes a new artifact
+and does not touch that one.
+
+**What the design cannot do, stated in advance.** §6.8 already cautions that its held-out
+column is thinner than its count suggests, and the same caution applies here unchanged and
+harder: this is **6 horizons × two directions on the same 4 trajectories and is not 12
+independent successes**, nor are the 72 governing cells 72 independent tests. No P-value
+attaches to any count in this work and none is computed. The three Arm A seeds share their
+training data and differ only in initialisation and data ordering, so they are not three
+independent models either. And the two models differ on **several** axes at once — training
+data, training recipe, iteration count, and a provenance for the released checkpoint that S-19
+records as not fully reconstructible — so this rule **bounds** transfer between these two
+models and is not an attribution to any one difference.
+
+**Our expectation, recorded as an expectation only.** We expect the table to be a property of
+the model rather than of the horizon, and therefore expect branch 1, because the two models' σ
+differ in scale by a wide margin (§6.2, §6.9) and §6.8's own fitted c already spans an order of
+magnitude across horizons within one model. That is a belief, it carries none of the weight a
+pre-registration does, and it is recorded only so that a reader can see it was held in advance
+— the same distinction S-12 exists to enforce.
+
+**Will be discharged by** `results/task_d3_cross_model.json`, produced by
+`scripts/task_d3_cross_model.py` over §6.8's arena, horizon grid, coverage definition and fit
+procedure. Power: `results/p4_transfer_power.json`, from `scripts/p4_transfer_power.py`,
+committed with this rule.
+**DISCHARGE NOTE, appended 2026-09-06. Not one word of the rule above is altered; only the
+Status token moves, as every discharged rule in this ledger has moved it.** The rule was committed
+at `fad7db7`, 2026-09-06T10:53:01+05:30, together with `scripts/p4_transfer_power.py` and
+`results/p4_transfer_power.json`. `results/task_d3_cross_model.json` was written at
+2026-09-06T11:03:14+05:30, about ten minutes later, and no per-horizon multiplier had been fitted on
+any model we trained before it. The ordering is checkable from `git log` and the artifact's own
+timestamp.
+
+**Branch 1 of the three fires: DOES NOT TRANSFER — A PROPERTY OF THE MODEL.** Of the 72 governing cells,
+**52** have a 95% paired cluster-bootstrap interval on Δ lying
+**entirely outside** the ±10-point band, 3 lie entirely inside
+and 17 straddle an edge. Branch 1 needs one such cell and has
+52, so it fires and the two branches below it are not reached. The
+largest paired change is -67.45 points (aleatoric, h = 100, seed
+2, multipliers fitted on Arm A and scored on the released checkpoint, 95% CI [-78.87,
+-58.93]). The outside-band cell that comes **closest** to the band edge is
++18.45 points (epistemic, h = 128, seed 2,
+fitted on the released checkpoint and scored on Arm A, 95% CI [+10.63, +26.28]), so even
+the least decisive of the 52 clears the band by 0.63 points
+at its near end rather than by rounding.
+
+**Both per-direction verdicts agree with the headline, which the rule required to be reported
+separately in case they did not.** Fitting on Arm A and scoring the released checkpoint: branch
+1, 29 of 36 cells outside the band.
+Fitting on the released checkpoint and scoring Arm A: branch 1,
+23 of 36. There is no direction in which the table
+transfers.
+
+**The absolute column the specification asked for, produced and reported and NOT governing.**
+Held-out cells within 10 points of the 68.27% nominal under a multiplier fitted on the other
+model, counted per fold over 6 horizons × 2 fold directions × 3 seeds × 2
+transfer directions: **0 of 72** on the
+aleatoric term and **12 of 72** on the epistemic.
+**These counts are UNPOWERED and the rule labelled them so before they existed.**
+`results/p4_transfer_power.json` puts the binding minimum detectable effect on that unpaired
+quantity at 12.55–40.62 points against a 10-point band, with
+`tolerance_resolvable` false at
+0 of
+12 (quantity, horizon) pairs. The
+12 epistemic hits are therefore **not**
+12 transfers, and the 0 aleatoric
+hits would not have been evidence of failure on their own either — this arena cannot resolve that
+test in either direction. The verdict rests on the paired change, whose largest MDE is
+5.73 points against the same band, and it was written that way before the table was seen.
+
+**Arm A's own-model baseline, reported because the rule required it.** Scored under multipliers
+fitted on Arm A's own σ on the other held-out episode, Arm A lands within 10 points of nominal on
+17 of 36 epistemic and
+10 of 36 aleatoric held-out cells. So §6.8's
+remedy is not uniformly available on a model we trained in the first place, and "cross-model
+calibration achieved" is not claimable at the cells where it is not. Δ at those cells still measures
+what it measures — the effect of swapping the multiplier — which is why the verdict is unaffected.
+
+**The plainest statement of the gap is the multipliers themselves.** Arm A's fitted c is
+0.0069× to 1.36× the released
+checkpoint's at the same quantity, horizon and fit episode. On the aleatoric term the released
+checkpoint's published c runs into the thousands where Arm A's is in the tens, and swapping one for
+the other drives held-out coverage to about 1% in one direction and to 100% in the other. That is a
+difference in σ scale between two models, not a subtlety of the band.
+
+**Our recorded expectation was borne out, and it carries no evidential weight.** The rule recorded
+in advance that we expected branch 1, and branch 1 fired. That is stated here for the same reason
+the expectation was recorded: so a reader can see it was held before the data, and so that it is on
+record that it licensed nothing. The verdict was computed by `scripts/task_d3_cross_model.py` from
+the rule's own conditions rather than read off by eye.
+
+**What §6.8 keeps, and what it loses.** Nothing in §6.8's existing table changed and nothing was
+refitted. `results/task_d3_perhorizon.json` was opened read-only and is byte-identical to its state
+before this session (sha256 `0d0b76d079ae4db5460e696574e2772561921b72e31128c346037f0e196ea210`); the discharging script asserts that scoring the released
+checkpoint under §6.8's published scalars reproduces §6.8's published held-out coverages to within
+1e-12, which is what makes the same-model arm of Δ §6.8's own number rather than a re-derivation of
+it. What §6.8 loses is an implication it never tested: the lookup table is a recipe to refit per
+model, not a set of constants to copy.
+
+**What this does not establish, carried over from the rule unchanged.** This is 6 horizons × two
+directions on the same 4 trajectories and is **not 12 independent successes**; nor are the
+72 governing cells 72 independent tests. No P-value attaches to any count
+here and none was computed. The 3 Arm A seeds share their training data and differ
+only in initialisation and data ordering, so they are not 3 independent models. The
+two models differ on several axes at once — training data, training recipe, iteration count, and a
+released-checkpoint provenance S-19 records as not fully reconstructible — so this **bounds**
+transfer between these two models and attributes it to no one difference. A model closer to the
+released checkpoint than Arm A is might well share its table; nothing here rules that out, and
+nothing here tests it.
+
+**Discharged** by `results/task_d3_cross_model.json`. **It returns DOES NOT TRANSFER — A PROPERTY OF THE MODEL.** Written by `scripts/task_d3_cross_model.py`, `reproduce.sh` stage 20r4, marked `NEEDS_WEIGHTS`: the Arm A ensemble-5 weights live under `runs/`, which is gitignored, so a clean clone skips the stage and says so rather than appearing to have run it.
+**Status** PRE-REGISTERED, DISCHARGED · **Relevance** METHOD
+
 
 ## Candidate paper contributions
 
