@@ -3134,13 +3134,28 @@
         "scripts/r2_independent_ensemble.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-69",
+      "claim": "PRE-REGISTERED decision rule for the cross-model transfer of the per-horizon multiplier ",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [],
+      "artifacts": [
+        "results/p4_transfer_power.json",
+        "results/task_d3_cross_model.json",
+        "results/task_d3_perhorizon.json",
+        "scripts/p4_transfer_power.py",
+        "scripts/task_d3_cross_model.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 35,
-    "M": 68,
+    "M": 69,
     "O": 14,
     "R": 73,
     "S": 19,

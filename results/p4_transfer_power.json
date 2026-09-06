@@ -1,0 +1,792 @@
+{
+  "purpose": "estimate what M-69 can detect at the arena and horizons it will face, BEFORE any cross-model multiplier is fitted",
+  "governing_rule": "M-69",
+  "committed_before": "any fit of a per-horizon multiplier on Arm A, any cross-model application, and results/task_d3_cross_model.json",
+  "arena": "out-of-sample held-out pair",
+  "n_independent_arena": 4,
+  "n_independent_per_cell": 2,
+  "holdout_episodes": [
+    1,
+    8
+  ],
+  "horizons": [
+    1,
+    8,
+    32,
+    100,
+    128,
+    368
+  ],
+  "target_coverage_pts": 68.27,
+  "tolerance_pts": 10.0,
+  "statistic": "+-1 sigma coverage of one held-out cell, pooled over (forecast step <= h) x 45 state dimensions x the trajectories of one held-out episode, exactly as task_d3_perhorizon.cover() computes it",
+  "scalars_used": "the multipliers section 6.8 already published in results/task_d3_perhorizon.json; NOTHING is refitted here",
+  "model_scored": "released checkpoint only \u2014 see the module docstring",
+  "method": {
+    "primary": "M-43 subsampling \u2014 every C(20, 2) = 190 draw of two trajectories from the all-ten pool, exhaustively enumerated; the across-draw SD is the sampling SE at n = 2",
+    "finite_population_correction": "the raw SD is divided by sqrt((20 - 2) / (20 - 1)) so it describes a scoring set of two rather than a pool of twenty",
+    "mde": "(z_.975 + z_.80) x SE; two-sided alpha = .05, power = .80",
+    "bootstrap_unit": "whole trajectory (M-27); never trajectory x step",
+    "cross_check": "cluster bootstrap, 20000 resamples of two of the four held-out trajectories",
+    "binding": "at each (quantity, horizon) the LARGEST of the four estimates \u2014 two published scalars x (subsampling, bootstrap cross-check)"
+  },
+  "per_quantity": {
+    "aleatoric": {
+      "1": {
+        "fit_ep1": {
+          "scalar_c": 592.5602452517332,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 13.105639608030097,
+            "coverage_se_pts": 13.46476471960093,
+            "coverage_mean_pts": 52.0
+          },
+          "bootstrap": {
+            "coverage_se_pts": 4.686264844170884,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 37.72268581036074,
+          "mde_pts_bootstrap": 13.128970317873979
+        },
+        "fit_ep8": {
+          "scalar_c": 611.1163286413264,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 13.211747217921806,
+            "coverage_se_pts": 13.5737799256406,
+            "coverage_mean_pts": 52.99999999999999
+          },
+          "bootstrap": {
+            "coverage_se_pts": 2.9542401965823006,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 38.02810120020411,
+          "mde_pts_bootstrap": 8.27655566693893
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 1.2339504628857538,
+            "diff_se_pts": 1.2677635853971654,
+            "diff_mean_pts": -1.0
+          },
+          "bootstrap": {
+            "diff_se_pts": 1.9185320748469976,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.031315100090304,
+          "mde_pts_subsampling": 3.551747721528037,
+          "mde_pts_bootstrap": 5.374931102301336
+        },
+        "paired_binding_mde_pts": 5.374931102301336,
+        "binding_mde_pts": 38.02810120020411,
+        "bound_by": "subsampling/fit_ep8",
+        "tolerance_resolvable": false
+      },
+      "8": {
+        "fit_ep1": {
+          "scalar_c": 924.2471222012347,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 12.631277142771255,
+            "coverage_se_pts": 12.977403615713516,
+            "coverage_mean_pts": 48.86111111111112
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.832726731232875,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 36.35730214558918,
+          "mde_pts_bootstrap": 10.737710557155117
+        },
+        "fit_ep8": {
+          "scalar_c": 920.7167392708288,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 12.595063998456714,
+            "coverage_se_pts": 12.9401981467295,
+            "coverage_mean_pts": 48.79166666666667
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.7265195962343696,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 36.25306785363248,
+          "mde_pts_bootstrap": 10.440162217633448
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.08300198675933287,
+            "diff_se_pts": 0.08527643490891286,
+            "diff_mean_pts": 0.06944444444444452
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.0985496787426374,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.0038343855170937,
+          "mde_pts_subsampling": 0.23890919953571527,
+          "mde_pts_bootstrap": 0.27609532326315156
+        },
+        "paired_binding_mde_pts": 0.27609532326315156,
+        "binding_mde_pts": 36.35730214558918,
+        "bound_by": "subsampling/fit_ep1",
+        "tolerance_resolvable": false
+      },
+      "32": {
+        "fit_ep1": {
+          "scalar_c": 1734.2233906869983,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 14.111329465916205,
+            "coverage_se_pts": 14.498012826700432,
+            "coverage_mean_pts": 54.07986111111112
+          },
+          "bootstrap": {
+            "coverage_se_pts": 2.719413270800507,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 40.61741843435713,
+          "mde_pts_bootstrap": 7.618668022739379
+        },
+        "fit_ep8": {
+          "scalar_c": 1595.9156648519288,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 13.57857201421881,
+            "coverage_se_pts": 13.950656577462183,
+            "coverage_mean_pts": 51.43055555555555
+          },
+          "bootstrap": {
+            "coverage_se_pts": 2.5878578916716597,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 39.08395325718291,
+          "mde_pts_bootstrap": 7.250104417144681
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.691175341047632,
+            "diff_se_pts": 0.7101151584768135,
+            "diff_mean_pts": 2.649305555555555
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.18891500958482374,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.0866635555255997,
+          "mde_pts_subsampling": 1.989448131492437,
+          "mde_pts_bootstrap": 0.5292614984245194
+        },
+        "paired_binding_mde_pts": 1.989448131492437,
+        "binding_mde_pts": 40.61741843435713,
+        "bound_by": "subsampling/fit_ep1",
+        "tolerance_resolvable": false
+      },
+      "100": {
+        "fit_ep1": {
+          "scalar_c": 2988.3960680601504,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 11.863588170525619,
+            "coverage_se_pts": 12.188678173974205,
+            "coverage_mean_pts": 46.919999999999995
+          },
+          "bootstrap": {
+            "coverage_se_pts": 5.522414796116723,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 34.14762060647857,
+          "mde_pts_bootstrap": 15.471515663778542
+        },
+        "fit_ep8": {
+          "scalar_c": 4169.979142109762,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 12.466900468433582,
+            "coverage_se_pts": 12.808522636872079,
+            "coverage_mean_pts": 54.79777777777779
+          },
+          "bootstrap": {
+            "coverage_se_pts": 5.899311868709482,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 35.88416769156431,
+          "mde_pts_bootstrap": 16.527424931288028
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.9520113921430432,
+            "diff_se_pts": 0.9780987261187609,
+            "diff_mean_pts": -7.8777777777777755
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.7098027314844119,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.3953903857250787,
+          "mde_pts_subsampling": 2.74022693342581,
+          "mde_pts_bootstrap": 1.988572840648633
+        },
+        "paired_binding_mde_pts": 2.74022693342581,
+        "binding_mde_pts": 35.88416769156431,
+        "bound_by": "subsampling/fit_ep8",
+        "tolerance_resolvable": false
+      },
+      "128": {
+        "fit_ep1": {
+          "scalar_c": 3631.1587288078886,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 11.284181025891106,
+            "coverage_se_pts": 11.593393921339995,
+            "coverage_mean_pts": 45.90277777777778
+          },
+          "bootstrap": {
+            "coverage_se_pts": 6.6807817787018955,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 32.47988104343322,
+          "mde_pts_bootstrap": 18.716779479903444
+        },
+        "fit_ep8": {
+          "scalar_c": 5112.633214444101,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 11.767413778079888,
+            "coverage_se_pts": 12.089868378720956,
+            "coverage_mean_pts": 53.69791666666667
+          },
+          "bootstrap": {
+            "coverage_se_pts": 6.694745196721159,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 33.87079654464417,
+          "mde_pts_bootstrap": 18.755899185427346
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.8919174030181187,
+            "diff_se_pts": 0.9163580214427692,
+            "diff_mean_pts": -7.795138888888889
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.31730449510062186,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.4079894590899862,
+          "mde_pts_subsampling": 2.567255087819604,
+          "mde_pts_bootstrap": 0.8889555832692382
+        },
+        "paired_binding_mde_pts": 2.567255087819604,
+        "binding_mde_pts": 33.87079654464417,
+        "bound_by": "subsampling/fit_ep8",
+        "tolerance_resolvable": false
+      },
+      "368": {
+        "fit_ep1": {
+          "scalar_c": 7523.446607381588,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 11.545378899806805,
+            "coverage_se_pts": 11.861749226591938,
+            "coverage_mean_pts": 50.34359903381642
+          },
+          "bootstrap": {
+            "coverage_se_pts": 7.69068699988541,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 33.23170129995995,
+          "mde_pts_bootstrap": 21.546115019758144
+        },
+        "fit_ep8": {
+          "scalar_c": 7782.278210757911,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 11.550044308823722,
+            "coverage_se_pts": 11.866542478704181,
+            "coverage_mean_pts": 51.19112318840579
+          },
+          "bootstrap": {
+            "coverage_se_pts": 7.5298159955993755,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 33.24513000422664,
+          "mde_pts_bootstrap": 21.095421192049052
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.1005054974682629,
+            "diff_se_pts": 0.10325958266145381,
+            "diff_mean_pts": -0.8475241545893725
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.13845728852252087,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.034403328272759,
+          "mde_pts_subsampling": 0.2892905204631338,
+          "mde_pts_bootstrap": 0.38789989293212984
+        },
+        "paired_binding_mde_pts": 0.38789989293212984,
+        "binding_mde_pts": 33.24513000422664,
+        "bound_by": "subsampling/fit_ep8",
+        "tolerance_resolvable": false
+      }
+    },
+    "epistemic": {
+      "1": {
+        "fit_ep1": {
+          "scalar_c": 5.0817340086935285,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 6.403996400690649,
+            "coverage_se_pts": 6.579480847896727,
+            "coverage_mean_pts": 59.111111111111114
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.9328569714272676,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 18.432976289529265,
+          "mde_pts_bootstrap": 11.018233958018595
+        },
+        "fit_ep8": {
+          "scalar_c": 5.8172019694958585,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 6.793762052196815,
+            "coverage_se_pts": 6.979926987900217,
+            "coverage_mean_pts": 64.1111111111111
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.664261774636649,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 19.554860276208466,
+          "mde_pts_bootstrap": 10.265741624903038
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 1.99204768222399,
+            "diff_se_pts": 2.04663443781391,
+            "diff_mean_pts": -5.000000000000001
+          },
+          "bootstrap": {
+            "diff_se_pts": 1.2925989445076567,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.1447277562233944,
+          "mde_pts_subsampling": 5.73382078885717,
+          "mde_pts_bootstrap": 3.621326096510612
+        },
+        "paired_binding_mde_pts": 5.73382078885717,
+        "binding_mde_pts": 19.554860276208466,
+        "bound_by": "subsampling/fit_ep8",
+        "tolerance_resolvable": false
+      },
+      "8": {
+        "fit_ep1": {
+          "scalar_c": 8.053819112178806,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 9.167388138996042,
+            "coverage_se_pts": 9.418595969113152,
+            "coverage_mean_pts": 57.0
+          },
+          "bootstrap": {
+            "coverage_se_pts": 1.6936338502350798,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 26.386999247032946,
+          "mde_pts_bootstrap": 4.744859560539205
+        },
+        "fit_ep8": {
+          "scalar_c": 7.652213233442365,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 9.059311025411592,
+            "coverage_se_pts": 9.307557290383077,
+            "coverage_mean_pts": 55.29166666666667
+          },
+          "bootstrap": {
+            "coverage_se_pts": 1.7995207172713354,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 26.075914926009894,
+          "mde_pts_bootstrap": 5.0415106420718425
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.44243510735592223,
+            "diff_se_pts": 0.4545588618649883,
+            "diff_mean_pts": 1.708333333333333
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.3708573277877226,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.0524823167474358,
+          "mde_pts_subsampling": 1.2734853883845902,
+          "mde_pts_bootstrap": 1.0389884077395786
+        },
+        "paired_binding_mde_pts": 1.2734853883845902,
+        "binding_mde_pts": 26.386999247032946,
+        "bound_by": "subsampling/fit_ep1",
+        "tolerance_resolvable": false
+      },
+      "32": {
+        "fit_ep1": {
+          "scalar_c": 13.80463151386988,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 9.65549278317145,
+            "coverage_se_pts": 9.92007581969133,
+            "coverage_mean_pts": 59.74652777777778
+          },
+          "bootstrap": {
+            "coverage_se_pts": 1.6453767443567313,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 27.791937783838506,
+          "mde_pts_bootstrap": 4.6096631660180085
+        },
+        "fit_ep8": {
+          "scalar_c": 12.665868745551535,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 9.479917952377981,
+            "coverage_se_pts": 9.739689828772637,
+            "coverage_mean_pts": 56.82986111111112
+          },
+          "bootstrap": {
+            "coverage_se_pts": 1.8099285676472503,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 27.28657105803818,
+          "mde_pts_bootstrap": 5.070669121842406
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.42431256434776315,
+            "diff_se_pts": 0.43593971888350436,
+            "diff_mean_pts": 2.916666666666666
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.3829051999675634,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.0899079874578914,
+          "mde_pts_subsampling": 1.2213222726246649,
+          "mde_pts_bootstrap": 1.0727415483542027
+        },
+        "paired_binding_mde_pts": 1.2213222726246649,
+        "binding_mde_pts": 27.791937783838506,
+        "bound_by": "subsampling/fit_ep1",
+        "tolerance_resolvable": false
+      },
+      "100": {
+        "fit_ep1": {
+          "scalar_c": 22.034394273813465,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 5.548087255336541,
+            "coverage_se_pts": 5.700117794415049,
+            "coverage_mean_pts": 59.09333333333333
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.1362954394503597,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 15.969365757112033,
+          "mde_pts_bootstrap": 8.786598944326718
+        },
+        "fit_ep8": {
+          "scalar_c": 24.416620331486193,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 5.5233832469466915,
+            "coverage_se_pts": 5.674736838540406,
+            "coverage_mean_pts": 61.973333333333336
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.170668530554314,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 15.898258846299695,
+          "mde_pts_bootstrap": 8.882898088281147
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.20769443480288352,
+            "diff_se_pts": 0.21338574703960372,
+            "diff_mean_pts": -2.8800000000000003
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.16836462765667842,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.1081139798112742,
+          "mde_pts_subsampling": 0.5978183547660725,
+          "mde_pts_bootstrap": 0.471687852178043
+        },
+        "paired_binding_mde_pts": 0.5978183547660725,
+        "binding_mde_pts": 15.969365757112033,
+        "bound_by": "subsampling/fit_ep1",
+        "tolerance_resolvable": false
+      },
+      "128": {
+        "fit_ep1": {
+          "scalar_c": 25.639584788802928,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 4.3597928914903745,
+            "coverage_se_pts": 4.479261391724645,
+            "coverage_mean_pts": 61.17447916666667
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.8291452096499388,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 12.549032505301428,
+          "mde_pts_bootstrap": 10.727676619228266
+        },
+        "fit_ep8": {
+          "scalar_c": 29.09813386768436,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 4.329171098313654,
+            "coverage_se_pts": 4.447800489948879,
+            "coverage_mean_pts": 64.7248263888889
+          },
+          "bootstrap": {
+            "coverage_se_pts": 3.8629216611834867,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 12.460892107922614,
+          "mde_pts_bootstrap": 10.822304226581412
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.25542223471292363,
+            "diff_se_pts": 0.2624214000556625,
+            "diff_mean_pts": -3.5503472222222228
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.23232696391166993,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.1348909940379306,
+          "mde_pts_subsampling": 0.7351959154402612,
+          "mde_pts_bootstrap": 0.6508837879771501
+        },
+        "paired_binding_mde_pts": 0.7351959154402612,
+        "binding_mde_pts": 12.549032505301428,
+        "bound_by": "subsampling/fit_ep1",
+        "tolerance_resolvable": false
+      },
+      "368": {
+        "fit_ep1": {
+          "scalar_c": 47.33297855376413,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 4.246107616223808,
+            "coverage_se_pts": 4.362460874593878,
+            "coverage_mean_pts": 71.43085748792271
+          },
+          "bootstrap": {
+            "coverage_se_pts": 5.21261230492632,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 12.221805902983034,
+          "mde_pts_bootstrap": 14.603577583774051
+        },
+        "fit_ep8": {
+          "scalar_c": 41.30909529313515,
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "coverage_se_pts_raw": 4.438582512534231,
+            "coverage_se_pts": 4.56021003226654,
+            "coverage_mean_pts": 68.02898550724638
+          },
+          "bootstrap": {
+            "coverage_se_pts": 5.429764027624043,
+            "n_valid": 20000,
+            "distinct_resamples": 16
+          },
+          "mde_pts_subsampling": 12.775817020109367,
+          "mde_pts_bootstrap": 15.21194664027752
+        },
+        "paired_proxy": {
+          "pairing": "scalar fitted on episode 1 against scalar fitted on episode 8, same trajectories, same horizon",
+          "subsampling": {
+            "n_draws": 190,
+            "fpc_variance_factor": 0.9473684210526315,
+            "diff_se_pts_raw": 0.24980584259133012,
+            "diff_se_pts": 0.25665110568224325,
+            "diff_mean_pts": 3.401871980676328
+          },
+          "bootstrap": {
+            "diff_se_pts": 0.3194851927192495,
+            "n_valid": 20000
+          },
+          "proxy_scalar_ratio": 1.1458246233155835,
+          "mde_pts_subsampling": 0.719029944016719,
+          "mde_pts_bootstrap": 0.8950649934838217
+        },
+        "paired_binding_mde_pts": 0.8950649934838217,
+        "binding_mde_pts": 15.21194664027752,
+        "bound_by": "bootstrap/fit_ep8",
+        "tolerance_resolvable": false
+      }
+    }
+  },
+  "binding_mde_pts": {
+    "aleatoric": {
+      "1": 38.02810120020411,
+      "8": 36.35730214558918,
+      "32": 40.61741843435713,
+      "100": 35.88416769156431,
+      "128": 33.87079654464417,
+      "368": 33.24513000422664
+    },
+    "epistemic": {
+      "1": 19.554860276208466,
+      "8": 26.386999247032946,
+      "32": 27.791937783838506,
+      "100": 15.969365757112033,
+      "128": 12.549032505301428,
+      "368": 15.21194664027752
+    }
+  },
+  "paired_binding_mde_pts": {
+    "aleatoric": {
+      "1": 5.374931102301336,
+      "8": 0.27609532326315156,
+      "32": 1.989448131492437,
+      "100": 2.74022693342581,
+      "128": 2.567255087819604,
+      "368": 0.38789989293212984
+    },
+    "epistemic": {
+      "1": 5.73382078885717,
+      "8": 1.2734853883845902,
+      "32": 1.2213222726246649,
+      "100": 0.5978183547660725,
+      "128": 0.7351959154402612,
+      "368": 0.8950649934838217
+    }
+  },
+  "tolerance_resolvable": {
+    "aleatoric": {
+      "1": false,
+      "8": false,
+      "32": false,
+      "100": false,
+      "128": false,
+      "368": false
+    },
+    "epistemic": {
+      "1": false,
+      "8": false,
+      "32": false,
+      "100": false,
+      "128": false,
+      "368": false
+    }
+  },
+  "caveats": [
+    "This is NOT a prediction of the transfer result. No cross-model multiplier exists and nothing here forecasts one; what is estimated is the sampling variability of a coverage figure, which is a property of the arena, the horizon and the statistic.",
+    "The twenty-trajectory pool is IN-SAMPLE for our own arms, which trained on eight of the ten episodes, so its spread understates the held-out spread and the subsampling figures are an optimistic floor. The held-out cluster bootstrap is computed beside every figure and enters the maximum.",
+    "Only the released checkpoint is scored. An Arm A model under a released-fitted scalar is one arena away from the quantity M-69 governs, and computing it here would let a reader approximate the answer from the pre-registration's own power artifact.",
+    "The MDE is built from an SE and a normal approximation. At n = 2 the sampling distribution of a coverage figure is not normal, so the MDE is indicative rather than exact \u2014 it is a scale for reading a result, not a test.",
+    "The paired proxy swaps two scalars that section 6.8 fitted on different episodes of the SAME model, and those two differ by at most the ratio recorded per horizon. A scalar fitted on a different model may differ by more, and a larger scalar change moves coverage further, so the paired MDE is a floor on what the paired statistic can resolve rather than a measurement of the transfer comparison itself.",
+    "A coverage SE depends on where coverage sits. The scalars used put it near the nominal, which is the regime M-69's tolerance test lives in; a cell whose cross-model coverage lands far from the nominal carries a different SE than the figure tabulated here."
+  ],
+  "summary": {
+    "largest_binding_mde_pts": 40.61741843435713,
+    "quantity_horizon_pairs_where_tolerance_resolvable": 0,
+    "quantity_horizon_pairs": 12,
+    "largest_paired_binding_mde_pts": 5.73382078885717,
+    "largest_proxy_scalar_ratio": 1.4079894590899862
+  }
+}
