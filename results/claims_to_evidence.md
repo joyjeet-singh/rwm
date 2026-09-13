@@ -90,7 +90,7 @@ One row per CONTRIB ledger entry.
 | `R-61` | The dimension-count P-values assumed independence the data does not have | `RUN` | CONFIRMED | `results/task1_calibration.json`, `results/task_b2_epistemic.json` |
 | `R-62` | The epistemic table at n_independent = 20, and a short-horizon result that reverses our  | `RUN` | CONFIRMED | `results/task_d_nind20.json`, `scripts/task_d_nind20.py` |
 | `R-63` | Ensemble disagreement beats the free baseline, and that is the one claim we strengthen | `RUN`, `SRC` | CONFIRMED | `results/task_d_nind20.json` |
-| `R-64` | A per-horizon scalar restores calibration where a constant one cannot | `RUN` | CONFIRMED | `results/task_d3_perhorizon.json`, `scripts/task_d3_perhorizon.py` |
+| `R-64` | A per-horizon scalar restores calibration where a constant one cannot | `RUN` | CONFIRMED | `results/p4_transfer_power.json`, `results/task_d3_perhorizon.json` |
 | `R-65` | The penalty correlation, with the interval and the n it never had | `RUN` | CONFIRMED | `results/task_d_nind20.json` |
 | `R-66` | The forecast-index control was too weak to be believed, so we strengthened it four ways | `RUN` | CONFIRMED | `results/task_d2b_robustness.json`, `scripts/task_d2b_robustness.py` |
 | `R-67` | The ensemble-5 replication: the direction holds, the pre-registered rule does not | `RUN` | CONFIRMED | `results/task_d3_ens5.json`, `results/task_d3b_ens5_power.json` |

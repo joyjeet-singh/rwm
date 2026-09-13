@@ -2023,6 +2023,7 @@
         "RUN"
       ],
       "artifacts": [
+        "results/p4_transfer_power.json",
         "results/task_d3_perhorizon.json",
         "scripts/task_d3_perhorizon.py"
       ],

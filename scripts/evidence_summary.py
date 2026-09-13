@@ -297,18 +297,23 @@ def build_rows():
     d3_arena = arena_of_episodes(D3["holdout_episodes"])
     d3_model = measured_model(T("task_d3_perhorizon_report.txt"))
     d3v = D3["quantities"]["epistemic"]["verdict"]
+    # p4 scored this model under these same multipliers: is the tolerance band
+    # resolvable at any quantity x horizon pair of this arena?
+    d3_res = [v for q in J("p4_transfer_power.json")["tolerance_resolvable"].values()
+              for v in q.values()]
     rows.append({
-        "claim": "A per-horizon multiplier restores nominal coverage where a constant one does not",
+        "claim": "A per-horizon multiplier brings held-out coverage near nominal where a constant one does not",
         "section": "6.8",
         "arena": d3_arena,
         "n_independent": sum(D3["design"]["trajectories_per_episode"].values()),
         "in_sample": in_sample(d3_model, d3_arena),
-        "verdict": ("restores nominal coverage on every held-out cell"
-                    if d3v["per_horizon_restores_calibration"]
-                    else "does not restore nominal coverage on every held-out cell"),
-        "multiplicity": multiplicity(),
+        "verdict": (("every held-out point estimate within tolerance"
+                     if d3v["per_horizon_restores_calibration"]
+                     else "not every held-out point estimate within tolerance")
+                    + ("" if all(d3_res) else "; tolerance not resolvable at this arena")),
+        "multiplicity": multiplicity(mde_met=all(d3_res)),
         "model": d3_model,
-        "artifacts": ["results/task_d3_perhorizon.json"],
+        "artifacts": ["results/task_d3_perhorizon.json", "results/p4_transfer_power.json"],
     })
 
     # --- 10, 11: the two ensemble-topology contrasts --------------------------

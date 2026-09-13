@@ -3803,6 +3803,8 @@ shipped, and repairable without retraining.
 **Evidence** `RUN` `results/task_d3_perhorizon.json`; `scripts/task_d3_perhorizon.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
 
+**Qualification (2026-09-13).** Every held-out point estimate above lies within the tolerance, but `results/p4_transfer_power.json`, which scores the released checkpoint under these same published multipliers, finds that tolerance resolvable at none of the quantity-by-horizon pairs (`summary.quantity_horizon_pairs_where_tolerance_resolvable`). The absolute test is therefore unpowered cell by cell: no held-out cell is shown to be calibrated, and none is shown not to be. Status and text above unchanged; §6.8 now states the claim at this level.
+
 
 ### R-65 — The penalty correlation, with the interval and the n it never had · `[RWM-U]` · **NEW**
 R-58 reported the correlation between the applied scalar penalty and total absolute error as a bare

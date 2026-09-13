@@ -326,7 +326,7 @@ CLAIMS = [
     # count in the abstract, the lessons or the conclusion must carry an
     # interval beside it or a footnote saying the units are not independent.
     {"id": "C9.1", "kind": "count-dependence", "where": "abstract / 9 / 12",
-     "says": "restores nominal coverage on every held-out cell",
+     "says": "held-out coverage estimate near nominal, though no cell is individually resolvable",
      "sections": ["Abstract", "9. Actionable lessons", "12. Conclusion"]},
 
     # ---- C10 retraction-consistency --------------------------------------

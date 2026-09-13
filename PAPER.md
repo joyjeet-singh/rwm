@@ -32,8 +32,8 @@ h = 368, under a rule committed to git before the runs, but on 7,991 transitions
 against the reference's 6,000,000, 0.133% of its world-model budget, on one robot, one
 gait, one terrain.
 
-One repair works: a per-horizon multiplier, fitted on one held-out episode and scored on the
-other, restores nominal coverage on every held-out cell.
+A per-horizon multiplier, fitted on one held-out episode and scored on the other, brings every
+held-out coverage estimate near nominal, though no cell is individually resolvable.
 
 ---
 
@@ -101,8 +101,9 @@ and we report that too.
   +0.4697 against disagreement's +0.6053, and the margin between them is below what this
   sample can resolve (§6.7).
 - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of 5 independently-initialised full models, sharing nothing, is 2.03× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of 1.45×. The decomposition says what that is made of: σ larger by 1.65×, 71% of the improvement at h = 100, reversing to 57% from accuracy at h = 368 (§6.10).
-- **A working repair**: one multiplier per horizon, fitted on one held-out episode and
-  scored on the other, restores nominal coverage where a global multiplier does not (§6.8).
+- **A candidate repair**: one multiplier per horizon, fitted on one held-out episode and
+  scored on the other, brings every held-out coverage estimate near nominal where a global
+  multiplier does not, though this arena cannot resolve any single cell to that band (§6.8).
 
 A reader who wants only what to do differently should read §9, *Actionable lessons*; the rest of
 the paper is the evidence behind it.
@@ -214,7 +215,7 @@ and argue that "good uncertainties must be calibrated" rather than merely well r
 the distinction §6.7 and §6.2 draw between what the released checkpoint's disagreement does and
 does not do. §6.8 is a horizon-indexed instance of that idea, and §6.8 says what is new relative
 to it rather than leaving a reader to work it out: the conditioning variable is the forecast
-horizon, and a single global multiplier **fails** where a per-horizon one works. That distinction
+horizon, and a single global multiplier **fails**, its fitted value varying across horizons, where a per-horizon one puts every held-out estimate within its tolerance band, though no single cell is resolvable at this arena. That distinction
 is not decoration — an open-loop rollout's error accumulates with depth, so a horizon-blind
 recalibration cannot follow it, and ours is the measurement showing it does not.
 
@@ -384,7 +385,7 @@ from, so no arena label and no sample size in it is typed by hand.
 | Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |
 | Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |
 | With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |
-| A per-horizon multiplier restores nominal coverage where a constant one does not | 6.8 | out-of-sample | 4 | yes | restores nominal coverage on every held-out cell | not applicable |
+| A per-horizon multiplier brings held-out coverage near nominal where a constant one does not | 6.8 | out-of-sample | 4 | yes | every held-out point estimate within tolerance; tolerance not resolvable at this arena | could not at this n |
 | An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |
 | The same contrast at matched capacity | 6.10 | out-of-sample | 4 | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
 | Independence and the corrected objective together improve on the released topology | 6.11 | out-of-sample | 4 | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
@@ -1182,14 +1183,14 @@ therefore undefined rather than zero. It does **not** annihilate a per-trajector
 like `entry-res`, which varies across exactly the axis the control varies over. `M-51` said the
 opposite and `M-54` records the correction.
 
-### 6.8 One constant scalar does not fix it, but a per-horizon one does
+### 6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena
 
 **Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this
 section is an instance of it rather than a departure from it** — §2 gives the prior work and the
 calibrated-versus-well-ranked distinction it turns on. **What is new here is the conditioning
 variable and one negative result.** The
 variable is the *forecast horizon*, and the negative result is that a single global multiplier
-**fails** where a per-horizon one works. That is not a detail: an open-loop rollout's error
+**fails** where a per-horizon one shows no sign of failing. That is not a detail: an open-loop rollout's error
 accumulates with depth while its predicted σ does not (§6.9), so a horizon-blind recalibration
 cannot follow the thing it is trying to correct. This section is the measurement showing it does
 not.
@@ -1210,22 +1211,22 @@ accurate — while still falling short at the far end.
 
 The reason is §6.9's mechanism: a constant multiplier cannot track an error that grows while σ does not. So "right shape, wrong scale" is the charitable reading of these tables, and for a *constant* scale it does not survive.
 
-**A per-horizon scalar does work, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute 4 non-overlapping 400-step trajectories between them, so each direction fits on n_independent = 2 and is scored on the other 2:
+**A per-horizon scalar lands near target, and this is the one concrete remedy in this paper.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute 4 non-overlapping 400-step trajectories between them, so each direction fits on n_independent = 2 and is scored on the other 2:
 
-| quantity | held-out cells within 10 points of 68.27%, per-horizon c | same, constant c | same, per-horizon c fitted on a *different model* (unpowered) | range of fitted c |
+| quantity | held-out cells within 10 points of 68.27%, per-horizon c (unpowered) | same, constant c | same, per-horizon c fitted on a *different model* (unpowered) | range of fitted c |
 |---|---|---|---|---|
 | aleatoric | **12 / 12** | 2 / 12 | 0 / 72 | 592.6 – 7782 (13.1×) |
 | epistemic | **12 / 12** | 2 / 12 | 12 / 72 | 5.082 – 47.33 (9.31×) |
 
-Every held-out cell lands within 10 points of the 68.27% target for both quantities. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48% — 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at.
+Every held-out point estimate lands within 10 points of the 68.27% target for both quantities. **That is the same absolute test the new column below applies, and it is just as UNPOWERED here:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the 10-point band resolvable at 0 of 12 quantity-by-horizon pairs, with a binding minimum detectable effect of 12.55–40.62 points. So a cell inside the band is compatible with a true coverage well outside it — and nothing here shows any cell is outside it either. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48% — 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at.
 
-Three cautions a reader should apply. The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample — only the held-out column above is evidence, and that is the column reported. **And the held-out column is thinner than its count suggests:** the 12 cells are 6 horizons × two fold directions on the same 4 trajectories, and each multiplier is fitted on n_independent = 2 and scored on the other 2. They are not 12 independent successes and no P-value attaches to the count; it is reported so a reader can see how thin the evidence is, alongside a result we believe. And the correction is a calibration patch, not a fix: it leaves the model's σ carrying no more information than before and simply rescales it by how far ahead you are looking. It is nevertheless enough to make the interval mean what it says, which is what a downstream user needs, and it costs one lookup table.
+Three cautions a reader should apply. The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample — only the held-out column above is evidence, and that is the column reported. **And the held-out column is thinner than its count suggests:** the 12 cells are 6 horizons × two fold directions on the same 4 trajectories, and each multiplier is fitted on n_independent = 2 and scored on the other 2. They are not 12 independent successes and no P-value attaches to the count; it is reported so a reader can see how thin the evidence is, alongside a result we believe. And the correction is a calibration patch, not a fix: it leaves the model's σ carrying no more information than before and simply rescales it by how far ahead you are looking. It nevertheless brings every held-out estimate near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
 
 **The fourth column, and what it does not say. The table is a property of the model, not of the horizon.** Everything above is established across *episodes*, on one model. Whether the same lookup table works on a *different* model is a separate claim, and M-69 fixed what an answer would look like — criterion, arena, horizons and minimum detectable effect — before any cross-model multiplier was computed. Multipliers were fitted on Arm A at ensemble size 5 (3 seeds) and scored on the released checkpoint, then the reverse, over the same 4 held-out trajectories and the same 6 horizons. The statistic the rule governs on is the **paired** change in held-out coverage — coverage under the other model's multiplier minus coverage under the same model's, on the same trajectories — because this arena can resolve that (largest minimum detectable effect 5.73 points against the ±10-point band) and cannot resolve the absolute one (12.55–40.62 points, resolvable at 0 of 12 quantity-by-horizon pairs). The verdict is **DOES NOT TRANSFER — A PROPERTY OF THE MODEL**: of 72 governing cells, 52 have a 95% interval on the paired change lying entirely outside the band, 3 entirely inside and 17 straddling an edge, and the largest paired change has magnitude 67.5 points. That is branch 1 of the rule's three. Per direction the verdict is the same: fitting on Arm A, **DOES NOT TRANSFER — A PROPERTY OF THE MODEL** (29 of 36 cells outside the band); fitting on the released checkpoint, **DOES NOT TRANSFER — A PROPERTY OF THE MODEL** (23 of 36). The plainest statement of the gap is the multipliers themselves: Arm A's are 0.0069× to 1.36× the released checkpoint's at the same horizon. And §6.8's remedy is not uniformly available on a model we trained in the first place: Arm A's *own* multipliers land within 10 points of target on 17 of 36 epistemic and 10 of 36 aleatoric held-out cells.
 
 **The new column is the absolute test — held-out coverage within 10 points of 68.27% under a multiplier fitted on a different model — and it is UNPOWERED.** A cell inside that band is not evidence the multiplier transferred; at this arena the binding minimum detectable effect on that quantity is 12.55–40.62 points against a 10-point band, so such a cell is compatible with a true coverage well outside it. It is reported because the column §6.8 already has that shape, and because dropping it would hide the fact that this arena cannot resolve it. It is not the verdict and cannot move it. **And the same caution the held-out column above carries applies here unchanged and harder:** this is 6 horizons × two directions on the same 4 trajectories and is **not 12 independent successes**, the 72 governing cells are not 72 independent tests, the 3 Arm A seeds share their training data and differ only in initialisation and ordering, and no P-value attaches to any count here. The two models also differ on several axes at once, so this bounds transfer between these two models rather than attributing it to any one difference.
 
-So the accurate form of this section is: **a constant scalar does not repair the interval; a per-horizon one does, and transfers across episodes but not across models.**
+So the accurate form of this section is: **a constant scalar does not repair the interval; a per-horizon one brings every held-out estimate within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models.**
 
 ### 6.9 The structural excuse does not survive
 
@@ -1329,8 +1330,7 @@ than isolating it, and the bound is generous to the mechanism by construction.
 5.2× overconfident at h = 100 with
 15.31% coverage where a calibrated Gaussian gives 68.27%. Better by
 a factor of 2.03, and still not an interval. Building the ensemble properly is worth
-doing and it is not sufficient; §6.8's per-horizon multiplier remains the only thing in this paper
-that restores nominal coverage.
+doing and it is not sufficient; §6.8's per-horizon multiplier remains the only correction in this paper whose held-out estimates all land within the band, though no single cell is resolvable at this arena.
 
 
 ### 6.11 Both fixes on the same models: the combined arm
@@ -1423,8 +1423,7 @@ a spread across members that the loss never sees.
 **And it still does not repair the interval.** The combined arm is 5.4×
 overconfident at h = 100 with 15.53% coverage where a calibrated
 Gaussian gives 68.27%. Better than the shared-trunk arms, no better than independence
-alone, and still not an interval. §6.8's per-horizon multiplier remains the only thing in this
-paper that restores nominal coverage.
+alone, and still not an interval. §6.8's per-horizon multiplier remains the only correction in this paper whose held-out estimates all land within the band, though no single cell is resolvable at this arena.
 
 **What the arm does not separate.** It differs from the shared-trunk arms on three axes at once —
 trunk sharing, the objective, and capacity (a factor of 3.49 in state-pathway
@@ -1544,7 +1543,7 @@ Disagreement does carry information the subtraction does not — it retains +0.5
 step size is partialled out — but a practitioner about to pay for five members should price the
 subtraction first. That is a real signal, not a re-encoding of how far ahead you are looking — and not merely a report of which episode is hard: with both the forecast depth and the rollout held constant it still correlates +0.419 [+0.318, +0.576] with error (§6.7). But it is too small to be an interval by a wide margin — at h = 100, the horizon the method itself rolls out over, 33.4× [28.7, 39.0] on the released checkpoint and 10.5× [9.0, 11.5] on the ensemble-5 arms we trained — and a risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
 
-**If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings coverage within 10 points of nominal on every held-out cell; a single global multiplier manages 2 of them (§6.8). The held-out cells are 6 horizons × two fold directions on the same 4 trajectories, not independent trials, so read the sweep as consistency and the per-cell deviations as the evidence. The fitted multipliers span 9.31× across horizons, which is precisely why one number cannot serve.
+**If you need the interval, rescale per horizon, not globally.** One multiplier per forecast horizon, fitted on held-out data, brings every held-out coverage estimate within 10 points of nominal, though this arena cannot resolve any single cell to that band; a single global multiplier manages 2 of them (§6.8). The held-out cells are 6 horizons × two fold directions on the same 4 trajectories, not independent trials, so read the sweep as consistency and the per-cell deviations as the evidence. The fitted multipliers span 9.31× across horizons, which is precisely why one number cannot serve.
 
 **Do not convert per-dimension sign counts into P-values.** State dimensions in a robot are physically coupled and share a forecast-depth trend, so an independent-trials null is badly wrong — in our tables by up to 10^13× (§6.6). Permute whole trajectories instead. We shipped the binomial version in an earlier draft and it made our weakest evidence look like our strongest.
 
@@ -1601,7 +1600,7 @@ amount of trajectory oversampling changes it.
 is a single trot throughout. "Generalisation" here means across velocity commands, not across
 gaits or terrain.
 
-**The per-horizon recalibration is fitted and tested on two episodes only.** §6.8's remedy transfers across the two held-out episodes in both directions, which is the strongest test the released split allows, but two episodes is not a demonstration that the multipliers transfer to a new robot, gait or terrain. Treat the lookup table as a recipe to refit, not as constants to copy.
+**The per-horizon recalibration is fitted and tested on two episodes only.** §6.8's remedy puts every held-out estimate within the band across the two held-out episodes in both directions, though at this n no single cell is resolvable; that is the strongest test the released split allows, but two episodes is not a demonstration that the multipliers transfer to a new robot, gait or terrain. Treat the lookup table as a recipe to refit, not as constants to copy.
 
 **Two secondary analyses rest on a single training seed** — the long-horizon trend fit and the per-dimension matched comparison, both computed on seed 1 alone. The headline A/B result is not
 among them: it is a three-seed mean with per-seed values reported (§5). This is recorded in the artifacts themselves.
@@ -1656,7 +1655,7 @@ The Robotic World Model's central training claim reproduces, and the margin is l
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
 At h = 100, the horizon the method's own imagination rollouts run to, the aleatoric σ is 11,683× smaller than its own error, and the cause is that the objective's optimum is σ = 0 with the term that should prevent this cancelling out of the gradient. The epistemic term the method actually penalises with is better by a factor of 349 and still 33.4× [28.7, 39.0] overconfident where it is used — both figures at h = 100.
 
-The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large — but it is repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, restores nominal coverage on every held-out cell where a global multiplier restores 2 of them — 6 horizons in each of two fold directions, on the same 4 trajectories, so not independent trials. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps +0.596 once the index is partialled out. Against a second free baseline it does less well: the model's own predicted step size ranks error at +0.4697 against disagreement's +0.6053, a margin this sample cannot resolve, so the verdict is SURVIVES entry-res ONLY. **The control this rests on is the one that removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates +0.419 [+0.318, +0.576] with realised error (§6.7, M-45). That is a smaller number than the +0.605 pooled figure and it is the one that means what a practitioner needs it to mean — so it is not a re-encoding of the clock, and not merely a report of which episode is hard. That is the closest either original work comes to a claim this reproduction strengthens rather than qualifies — and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well.
+The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large — but it looks repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, brings every held-out coverage estimate within 10 points of nominal, though no single cell is resolvable at this arena, where a global multiplier manages 2 of them — 6 horizons in each of two fold directions, on the same 4 trajectories, so not independent trials. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps +0.596 once the index is partialled out. Against a second free baseline it does less well: the model's own predicted step size ranks error at +0.4697 against disagreement's +0.6053, a margin this sample cannot resolve, so the verdict is SURVIVES entry-res ONLY. **The control this rests on is the one that removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates +0.419 [+0.318, +0.576] with realised error (§6.7, M-45). That is a smaller number than the +0.605 pooled figure and it is the one that means what a practitioner needs it to mean — so it is not a re-encoding of the clock, and not merely a report of which episode is hard. That is the closest either original work comes to a claim this reproduction strengthens rather than qualifies — and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well.
 
 What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on every one of the 45 dimensions at h=368, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials — the dimensions are physically coupled, and the permutation test over whole trajectories is the statistic (§6.6). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = 368 on every one of 45 dimensions over all ten episodes and at chance on the held-out pair alone — a dependence on arena that §6.6 sets out. The corrected arm sits at chance in both. And once the physical coupling between state dimensions is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction. We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about 10^13 on the cells we had cited as evidence. Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
 
@@ -1969,7 +1968,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 471 KB ledger, so here is the table. It is generated from
+or an instruction to open a 472 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
