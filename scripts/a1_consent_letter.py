@@ -62,8 +62,9 @@ OUT_JSON = "a1_consent_letter.json"
 # sentence rather than by section number, so a renumbering does not silently empty
 # the extraction. Each is (section, start marker, end marker).
 PASSAGES = [
-    ("6.1", "Eq. 4 specifies a", "So the aleatoric head"),
-    ("8", "**What the author says.**", "That last point reframes this section."),
+    ("6.1", "Eq. 4 specifies a", "So the aleatoric head", TEMPLATE),
+    ("8", "**What the author says.**", "That last point reframes this section.",
+     os.path.join("docs", "APPENDIX_G_VARIANCE_ARITHMETIC.template.md")),
 ]
 
 
@@ -74,11 +75,12 @@ def _unwrap(s):
 def extract_fragments(tpl):
     """Every double-quoted span inside the passages that cite the correspondence."""
     out = []
-    for sec, a, b in PASSAGES:
-        i, j = tpl.find(a), tpl.find(b)
-        assert i >= 0, f"§{sec}: opening marker {a!r} not found in {TEMPLATE}"
+    for sec, a, b, src in PASSAGES:
+        text = tpl if src == TEMPLATE else open(src).read()
+        i, j = text.find(a), text.find(b)
+        assert i >= 0, f"§{sec}: opening marker {a!r} not found in {src}"
         assert j > i, f"§{sec}: closing marker {b!r} not found after the opening"
-        seg = tpl[i:j]
+        seg = text[i:j]
         for m in re.finditer(r'"([^"]+)"', seg):
             out.append({"section": sec, "text": _unwrap(m.group(1))})
     return out

@@ -108,7 +108,9 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # evidence bundle would put an argument where a reviewer expects
            # artifacts. Excluded deliberately, and named here so the exclusion is
            # a decision rather than an oversight.
-           "docs/COVER_STATEMENT.md"}
+           "docs/COVER_STATEMENT.md",
+           # Internal working documents; never ship in any bundle.
+           "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md"}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]

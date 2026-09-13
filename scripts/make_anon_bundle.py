@@ -164,7 +164,9 @@ EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            # Contains the deny-list probe it plants to prove its own scan is
            # live, so it trips that scan -- the same reason this file and
            # t5_anon_transcript.py are excluded above.
-           "scripts/f5_pdf_channels.py"}
+           "scripts/f5_pdf_channels.py",
+           # Internal working documents; never ship in any bundle.
+           "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md"}
 SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".prebak", ".t2bak", ".t3bak", ".t4bak",
                ".tmpbak", ".zip", ".pdf")
 BINARY_SUFFIX = (".png", ".jpg", ".gz")
