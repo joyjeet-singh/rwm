@@ -47,6 +47,98 @@ from t5_anon_transcript import BUNDLE_PATH as TRANSCRIPT_DST  # noqa: E402
 
 OUT_ZIP = "supplementary_anon.zip"
 
+# D1 -- commit identifiers are anonymised in SUBMITTED output only. The record
+# (PAPER.md, the ledger, results/) keeps real hashes; the submission PDF and both
+# bundles carry stable labels C001, C002, ... assigned in commit-date order. The
+# map lives in MAP_FILE, which is excluded from every bundle.
+MAP_FILE = "docs/COMMIT_LABEL_MAP.json"
+
+
+def commit_label_map():
+    """{full hash: label}, every commit reachable from HEAD, in commit-date order
+    (ties kept in git's reverse log order). Empty when there is no git history,
+    as in an unpacked bundle, whose content already carries labels."""
+    out = subprocess.run(["git", "log", "--reverse", "--format=%H%x09%ct"],
+                         capture_output=True, text=True).stdout
+    rows = [l.split("\t") for l in out.splitlines() if l.strip()]
+    rows = sorted(enumerate(rows), key=lambda r: (int(r[1][1]), r[0]))
+    return {h: f"C{i:03d}" for i, (_, (h, _ct)) in enumerate(rows, 1)}
+
+
+def hub_commit_label_map(repo):
+    """{identifier: label} for commits of the author's Hugging Face model repository,
+    labelled H001, H002, ... by first mention. The Hub is not queried: the identifiers
+    are the ones this history records ("hub ... commit <hex>"), as known -- often
+    abbreviated. A token that is a prefix of a repository commit is not taken."""
+    out = subprocess.run(["git", "log", "--reverse", "--format=%B"],
+                         capture_output=True, text=True).stdout
+    found = []
+    for t in re.findall(r"\bhub\b[^\n]{0,40}?\bcommit\s+`?([0-9a-f]{7,40})\b", out, re.I):
+        t = t.lower()
+        if t not in found and not any(h.startswith(t) for h in repo):
+            found.append(t)
+    return {t: f"H{i:03d}" for i, t in enumerate(found, 1)}
+
+
+def write_commit_label_map(cmap):
+    with open(MAP_FILE, "w") as f:
+        json.dump({"order": "commit date; H labels are Hugging Face model repository "
+                            "commits, by first mention in this history",
+                   "labels": cmap}, f, indent=2)
+        f.write("\n")
+
+
+# A hash as written in text: 7 to 40 hex characters standing alone. Not preceded
+# by a letter, digit or '.', and not followed by a letter, digit or '.digit', so
+# the fractional part of a decimal is never a candidate.
+_HASH_TOKEN = re.compile(r"(?<![0-9A-Za-z.])[0-9A-Fa-f]{7,40}(?![0-9A-Za-z]|\.\d)")
+
+
+def apply_commit_labels(text, cmap):
+    """Replace every full or abbreviated (7+) commit hash in `cmap` by its label.
+    Tokens that are not a prefix of a known commit -- upstream pins, SHA-256
+    checksums, claim IDs -- are left untouched."""
+    if not cmap:
+        return text
+    by7 = {}
+    for h in cmap:
+        by7.setdefault(h[:7], []).append(h)
+
+    def rep(m):
+        t = m.group(0).lower()
+        hits = [h for h in by7.get(t[:7], []) if h.startswith(t) or t.startswith(h)]
+        assert len(hits) <= 1, f"ambiguous commit prefix {t}: {hits}"
+        return cmap[hits[0]] if hits else m.group(0)
+    return _HASH_TOKEN.sub(rep, text)
+
+
+def commit_sweep_pattern(cmap):
+    """One detection regex for author commit identifiers, full or abbreviated.
+
+    Branch 1: a maximal hex run (letters around it may be non-hex, because PDF
+    text extraction runs table cells together) that CONTAINS a commit's stem --
+    its shortest prefix of 7+ characters holding a letter a-f. A run made only of
+    digits and one exponent 'e' is refused, so no decimal or float can match.
+    Branch 2: the few commits whose first seven characters are all digits, as a
+    standalone integer exactly equal to such a prefix; a neighbouring '.', ','
+    or digit refuses it, so the parts of a decimal cannot match."""
+    assert cmap, "no commit history: an anonymity sweep for commit hashes would be empty"
+    stems, digits = set(), set()
+    for h in cmap:
+        k = next(i for i in range(7, 41) if not h[:i].isdigit())
+        stems.add(h[:k])
+        digits.update(h[:i] for i in range(7, k))
+    alt = lambda s: "|".join(sorted(s, key=lambda x: (-len(x), x)))
+    pat = (r"(?<![0-9a-f])(?![0-9]*e[0-9]*(?![0-9a-f]))[0-9a-f]*?(?:" + alt(stems) +
+           r")[0-9a-f]*")
+    if digits:
+        pat += r"|(?<![0-9a-z.,])(?:" + alt(digits) + r")(?![0-9a-z]|[.,]\d)"
+    return pat
+
+
+COMMIT_LABELS = commit_label_map()
+COMMIT_LABELS.update(hub_commit_label_map(COMMIT_LABELS))
+
 # The deny list. Every entry is a literal string or a regex, and every one is
 # replaced rather than merely detected. Shared with t5_anon_transcript.py so the
 # transcript and the bundle cannot disagree about what counts as identifying.
@@ -97,6 +189,7 @@ DETECT = [re.compile(p, re.I) for p in (
     r"/Users/joyjeetsingh", r"chenhli", r"breadli428",
     r"swh:1:(?:snp|rev|rel|dir|cnt):[0-9a-f]{40}",
     r"\b\d{4}-\d{4}-\d{4}-\d{3}[\dX]\b",
+    commit_sweep_pattern(COMMIT_LABELS),
 )]
 # A repository URL under the author's account. Third-party repos the work
 # legitimately cites are not identifying.
@@ -166,7 +259,9 @@ EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            # t5_anon_transcript.py are excluded above.
            "scripts/f5_pdf_channels.py",
            # Internal working documents; never ship in any bundle.
-           "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md"}
+           "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md",
+           # The real-hash map behind the submission's commit labels (D1).
+           MAP_FILE}
 SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".prebak", ".t2bak", ".t3bak", ".t4bak",
                ".tmpbak", ".zip", ".pdf")
 BINARY_SUFFIX = (".png", ".jpg", ".gz")
@@ -199,17 +294,23 @@ def anon_git_log():
     see the repository, so the hashes Figure 4 cites must resolve to something.
     Timestamps are author-settable with `git commit --date`; the paper says so.
     """
-    fmt = "%H%x09%ad%x09%s"
+    fmt = "%H%x09%ad%x09%P%x09%s"
     out = subprocess.run(["git", "log", "--reverse", f"--format={fmt}",
                           "--date=format:%Y-%m-%d %H:%M:%S"],
                          capture_output=True, text=True).stdout
+    rows = []
+    for line in out.splitlines():
+        h, date, parents, subject = line.split("\t", 3)
+        rows.append("\t".join([COMMIT_LABELS[h], date,
+                               " ".join(COMMIT_LABELS[p] for p in parents.split()),
+                               subject]))
     head = ("# Anonymised commit log\n#\n"
-            "# Author name and email removed; hashes and timestamps intact, because the\n"
-            "# paper's pre-registration argument depends on the ordering of the latter.\n"
-            "# Commit timestamps are settable with `git commit --date`; the paper says so\n"
-            "# and bounds the argument accordingly.\n#\n"
-            "# hash\tdate\tsubject\n")
-    return head + scrub_text(out)
+            "# Author name and email removed; hashes replaced by stable labels (commit-date\n"
+            "# order); author-date timestamps, subjects and parent links intact, because the\n"
+            "# paper's pre-registration argument depends on ordering. Timestamps are settable\n"
+            "# with `git commit --date`; the paper says so and bounds the argument accordingly.\n"
+            "# label\tauthor date\tparent labels\tsubject\n")
+    return head + apply_commit_labels(scrub_text("\n".join(rows) + "\n"), COMMIT_LABELS)
 
 
 def collect():
@@ -271,7 +372,7 @@ def stage(files, staging):
             shutil.copy2(src, dst)
         else:
             raw = open(src, encoding="utf-8", errors="replace").read()
-            new = scrub_text(raw)
+            new = apply_commit_labels(scrub_text(raw), COMMIT_LABELS)
             content_fixes += new != raw
             open(dst, "w", encoding="utf-8").write(new)
         written.append(dst_rel)
@@ -302,6 +403,7 @@ def main():
     args = ap.parse_args()
 
     files = collect()
+    write_commit_label_map(COMMIT_LABELS)
     staging = tempfile.mkdtemp(prefix="anon_bundle_")
     try:
         written, path_fixes, content_fixes = stage(files, staging)
@@ -316,11 +418,14 @@ def main():
         open(probe, "w").write(
             "planted by make_anon_bundle.py: joyjeet-singh, "
             "https://github.com/joyjeet-singh/rwm, "
-            "swh:1:rev:0123456789abcdef0123456789abcdef01234567\n")
+            "swh:1:rev:0123456789abcdef0123456789abcdef01234567, "
+            f"commit {max((h for h in COMMIT_LABELS if COMMIT_LABELS[h][0] == 'C'), key=COMMIT_LABELS.get)[:7]}\n")
         planted = scan_tree(staging)
         caught = [b for b in planted if "_selftest" in b[0]]
         assert caught, ("SELF-TEST FAILED: the scan did not detect a planted "
                         "deny-list string. The scrubber cannot be trusted.")
+        assert any(p == DETECT[-1].pattern for _, hits in caught for p, _ in hits), (
+            "SELF-TEST FAILED: a planted commit hash was not detected.")
         n_probe_hits = sum(n for _, hits in caught for _, n in hits)
         shutil.rmtree(probe_dir)
 

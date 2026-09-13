@@ -9,8 +9,8 @@
     "CITATION.cff",
     "NOTICE"
   ],
-  "n_detection_patterns": 10,
-  "n_files_content_scrubbed": 9,
+  "n_detection_patterns": 11,
+  "n_files_content_scrubbed": 44,
   "n_files_staged": 415,
   "n_paths_scrubbed": 1,
   "n_residual_hits": 0,
@@ -23,9 +23,9 @@
   "residual_hits": [],
   "self_test": {
     "detected": true,
-    "n_hits_on_probe": 8,
+    "n_hits_on_probe": 9,
     "planted": "a file whose NAME and CONTENTS both carry deny-list strings"
   },
-  "zip_bytes": 12425543,
+  "zip_bytes": 12418145,
   "zip_written": "supplementary_anon.zip"
 }

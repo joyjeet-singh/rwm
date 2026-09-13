@@ -385,7 +385,19 @@ def main():
     # No author string: the submission is double-blind and tmlr.sty renders
     # "Anonymous authors" in submission mode. Keeping the name out of the source
     # keeps it out of the supplementary archive too (A3).
-    tex, unhandled = md_to_tex.convert(header + body, title, "")
+    # D1: the LaTeX is the submission (tmlr.sty with no option is its anonymous
+    # submission mode), so commit hashes render as their anonymous labels here and
+    # only here; PAPER.md keeps the real ones. Without git history -- an unpacked
+    # bundle, whose copies already carry labels -- the map is empty and nothing moves.
+    # The map file is written by the bundle builder, not here: a map that included
+    # the latest commit could never be committed current, so a rebuild would dirty it.
+    try:
+        import make_anon_bundle as AB
+        _cmap = AB.COMMIT_LABELS
+    except ImportError:
+        AB, _cmap = None, {}
+    _sub_text = AB.apply_commit_labels(header + body, _cmap) if AB else header + body
+    tex, unhandled = md_to_tex.convert(_sub_text, title, "")
     _fn = check_footnote_tokens(tex)
     assert not _fn, ("Markdown footnote tokens survived into the LaTeX and set as literal "
                      f"text: {_fn[:5]}")

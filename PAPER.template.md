@@ -1641,7 +1641,9 @@ The pre-registration argument in §8 rests on commit timestamps, and those are
 author-settable via `git commit --date`. That matters, because §8 is load-bearing. Two
 things address it. The
 supplementary material includes an anonymised `git log` covering every commit cited here, so the
-ordering in Figure 1 is checkable at review time. And **the repository was archived by a
+ordering in Figure 1 is checkable at review time. In the submitted paper and bundle, commit identifiers are replaced by stable
+anonymous labels, with ordering, timestamps and subjects unchanged, and the map from label to
+identifier is disclosed on acceptance. And **the repository was archived by a
 third-party archive before submission**, under a permanent identifier whose visit timestamp is
 not author-controllable. Neither the identifier nor the date of that visit appears here: both
 resolve to a named repository, and a date is a one-field lookup away from an origin. They are

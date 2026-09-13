@@ -21,6 +21,7 @@ import zipfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 import rwm_data as R  # noqa: E402
+import make_anon_bundle as AB  # noqa: E402  -- the commit-label map and its sweep (D1)
 
 OUT = "supplementary.zip"
 IDENT = [re.compile(p, re.I) for p in (
@@ -30,6 +31,7 @@ IDENT = [re.compile(p, re.I) for p in (
     # URL for it, which carries the author's name. It de-anonymises exactly as a link
     # does, and the first version of this check did not catch it.
     r"swh:1:(?:snp|rev|rel|dir|cnt):[0-9a-f]{40}",
+    AB.commit_sweep_pattern(AB.COMMIT_LABELS),
 )]
 # Repository URL in any form. The paper must not link to a named repo.
 URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
@@ -110,7 +112,9 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # a decision rather than an oversight.
            "docs/COVER_STATEMENT.md",
            # Internal working documents; never ship in any bundle.
-           "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md"}
+           "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md",
+           # The real-hash map behind the submission's commit labels (D1).
+           AB.MAP_FILE}
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]
@@ -118,17 +122,22 @@ SKIP_SUFFIX = (".pt", ".pyc", ".bak")
 
 
 def anon_git_log():
-    fmt = "%H%x09%ad%x09%s"
+    fmt = "%H%x09%ad%x09%P%x09%s"
     out = subprocess.run(["git", "log", "--reverse", f"--format={fmt}",
                           "--date=format:%Y-%m-%d %H:%M:%S"],
                          capture_output=True, text=True).stdout
+    L = AB.COMMIT_LABELS
+    rows = []
+    for line in out.splitlines():
+        h, date, parents, subject = line.split("\t", 3)
+        rows.append("\t".join([L[h], date, " ".join(L[p] for p in parents.split()), subject]))
     head = ("# Anonymised commit log\n#\n"
-            "# Author name and email are removed; hashes and timestamps are intact, because\n"
-            "# section 7's pre-registration argument depends on the ordering of the latter.\n"
+            "# Author name and email are removed; hashes are replaced by stable labels in\n"
+            "# commit-date order; author-date timestamps, subjects and parent links are intact.\n"
             "# Commit timestamps are settable with `git commit --date`; see the paper's\n"
             "# discussion of that limitation.\n#\n"
-            "# hash\tdate\tsubject\n")
-    return head + out
+            "# label\tauthor date\tparent labels\tsubject\n")
+    return head + AB.apply_commit_labels("\n".join(rows) + "\n", L)
 
 
 def scrub(text):
@@ -179,7 +188,8 @@ def main():
     problems, total = [], 0
     for f in files:
         try:
-            txt = open(f, encoding="utf-8", errors="replace").read()
+            txt = AB.apply_commit_labels(open(f, encoding="utf-8", errors="replace").read(),
+                                         AB.COMMIT_LABELS)
         except Exception:
             continue
         total += 1
@@ -207,7 +217,16 @@ def main():
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
         for f in files:
-            z.write(f, arcname=os.path.join("supplementary", f))
+            # D1: commit hashes become their labels in the submitted copy only.
+            try:
+                raw = open(f, encoding="utf-8").read()
+            except UnicodeDecodeError:
+                raw = None
+            new = None if raw is None else AB.apply_commit_labels(raw, AB.COMMIT_LABELS)
+            if new is not None and new != raw:
+                z.writestr(os.path.join("supplementary", f), new)
+            else:
+                z.write(f, arcname=os.path.join("supplementary", f))
             size += os.path.getsize(f)
         # The correspondence transcript, from OUTSIDE the tree. 6.1 and 8 cite it
         # and it must not be in the repository: it is private, consent to quote it
