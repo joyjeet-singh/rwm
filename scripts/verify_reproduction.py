@@ -75,6 +75,10 @@ for _fn in sorted(os.listdir(B)):
     if _fn not in MACHINE_FILES and time_bounded(_d):
         time_bounded_files.append(_fn)
 c_tot=c_exact=c_diff=0     # files present in the clone but never rewritten
+# Per-file breakdown, recorded in full so a partition of the differing values can be
+# read from this artifact rather than recomputed from a clone that no longer exists.
+# Purely additive: nothing below reads it, so every total is computed exactly as before.
+per_file={}
 for fn in sorted(os.listdir(B)):
     if not fn.endswith(".json"): continue
     pa, pb = os.path.join(A, fn), os.path.join(B, fn)
@@ -130,12 +134,18 @@ for fn in sorted(os.listdir(B)):
         machine += sum(1 for k in mb if k in ma)
         continue
     is_regen = (not regen) or (fn in regen)
+    pf = per_file.setdefault(fn, {"regenerated": is_regen, "differing": 0,
+                                  "differing_keys": []})
     # A key in the committed file with no counterpart in the regenerated one is a
     # DELETION, not a match. Silently skipping these once hid three hand-added
     # convention blocks in manifest.json that the pipeline destroys on regeneration.
     if is_regen:
         gone = [k for k in mb if k not in ma]
         if gone: dropped.append((fn, len(gone), gone[:6]))
+    # recorded for copied files too, so this record has the same shape whichever
+    # files a run happens to regenerate; only regenerated files count toward keys_lost
+    _gone = [k for k in mb if k not in ma]
+    pf["keys_lost"] = len(_gone); pf["keys_lost_paths"] = _gone
     for k in mb:
         if k not in ma: continue
         if any(t in k for t in TIMING): timing += 1; continue
@@ -143,7 +153,9 @@ for fn in sorted(os.listdir(B)):
         if not is_regen:
             c_tot += 1
             if x == y or (math.isnan(x) and math.isnan(y)): c_exact += 1
-            else: c_diff += 1
+            else:
+                c_diff += 1
+                pf["differing"] += 1; pf["differing_keys"].append(k)
             continue
         tot += 1
         if math.isnan(x) and math.isnan(y): nans += 1; exact += 1
@@ -151,6 +163,7 @@ for fn in sorted(os.listdir(B)):
         elif math.isclose(x, y, rel_tol=1e-9, abs_tol=1e-12): close += 1
         else:
             diff += 1
+            pf["differing"] += 1; pf["differing_keys"].append(k)
             if len(report) < 15:
                 r = abs(x-y)/max(abs(x), abs(y), 1e-30)
                 report.append((fn, k, y, x, r))
@@ -208,7 +221,8 @@ json.dump({"regenerated_files": sorted(regen), "values_compared": tot,
     "machine_files": list(MACHINE_FILES),
            "time_bounded_files_excluded": time_bounded_files,
            "self_referential_keys_excluded": self_referential_keys,
-           "host_sourced_keys_excluded": host_sourced_keys},
+           "host_sourced_keys_excluded": host_sourced_keys,
+           "per_file": per_file},
           open(os.path.join(B, "verify_reproduction.json"), "w"), indent=2)
 print(f"\n  wrote {os.path.join(B, 'verify_reproduction.json')}")
 ok = (diff == 0) and not dropped

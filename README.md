@@ -16,10 +16,10 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-48 pages, 0 overfull boxes, 0 LaTeX warnings
+49 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 246 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 247 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
 are never edited in place: 19 are marked `SUPERSEDED` and kept.
 Six of those are retractions of our own **numbered claims** on evidence this
@@ -147,15 +147,15 @@ Training is bitwise reproducible under a fixed seed: the 10,000-iteration run re
 existing 2,500-iteration run exactly at every logged iteration, and `weights_2500.pt` is
 byte-identical between them.
 
-A clean-clone run of `reproduce.sh --quick --force` regenerates **46 artifact files and
-9,090 numeric values: 9,022 bitwise identical (99.25%),
-0 equal within floating-point tolerance, and 68 differing** — the three account for
-the total exactly. A further 3 values are in the committed artifacts and absent
-after regeneration, across 1 files
+A clean-clone run of `reproduce.sh --quick --force` regenerates **45 artifact files and
+8,776 numeric values: 8,029 bitwise identical (91.49%),
+0 equal within floating-point tolerance, and 747 differing** — the three account for
+the total exactly. A further 356 values are in the committed artifacts and absent
+after regeneration, across 2 files
 (`results/verify_reproduction.json`).
 
-**How big the claim is.** 9,090 values is 1.00% of the 908,630 numeric
-values under `results/`. The other 899,540 are carried in by the clone rather than
+**How big the claim is.** 8,776 values is 0.92% of the 949,676 numeric
+values under `results/`. The other 940,900 are carried in by the clone rather than
 regenerated, and are held out of the figure entirely.
 
 **A note on what that number is not.** An earlier version of this section counted every numeric

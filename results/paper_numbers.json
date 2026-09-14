@@ -4691,6 +4691,18 @@
     "source": "results/r2_combined_arm.json + results/r2_independent_ensemble.json",
     "value": "0.940"
   },
+  "m69_amend_min": {
+    "source": "results/appendix_g_rules.json + git log",
+    "value": 2
+  },
+  "m69_lead_pub": {
+    "source": "results/appendix_g_rules.json + git log",
+    "value": "+21 min"
+  },
+  "m69_lead_regen": {
+    "source": "results/appendix_g_rules.json + git log",
+    "value": "+23 min"
+  },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
     "value": "five"
@@ -4901,7 +4913,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 48
+    "value": 49
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -7709,7 +7721,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 656
+    "value": 658
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -7985,11 +7997,15 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "908,630"
+    "value": "949,676"
+  },
+  "ver_book_named": {
+    "source": "results/verify_reproduction.json",
+    "value": "301 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 278 in `results/restatement_index.json` (line numbers in this document); 152 in `results/restatement_index.json` (counts of where each repeated numeral appears in this document); 5 in `results/restatement_index.json` (the index's totals over this document); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `cited_files_checked`); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/pdf_channels.json` (the amount of PDF text the anonymity scan read); 1 in `results/pdf_channels.json` (the page count of this document's PDF); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses)"
   },
   "ver_claim_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "1.00"
+    "value": "0.92"
   },
   "ver_close": {
     "source": "results/verify_reproduction.json",
@@ -7997,43 +8013,71 @@
   },
   "ver_copied": {
     "source": "results/verify_reproduction.json",
-    "value": "899,540"
+    "value": "940,900"
+  },
+  "ver_diff_by_file": {
+    "source": "results/verify_reproduction.json",
+    "value": "`results/restatement_index.json` (435), `results/task_c1_claims_audit.json` (304), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/pdf_channels.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1)"
+  },
+  "ver_diff_nfiles": {
+    "source": "results/verify_reproduction.json",
+    "value": 7
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 68
+    "value": 747
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 46
+    "value": 45
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
-    "value": 24
+    "value": 32
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "9,022"
+    "value": "8,029"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
-    "value": 3
+    "value": 356
   },
   "ver_keys_lost_files": {
     "source": "results/verify_reproduction.json",
-    "value": 1
+    "value": 2
   },
   "ver_machine": {
     "source": "results/verify_reproduction.json",
-    "value": 701
+    "value": 584
+  },
+  "ver_overstate": {
+    "source": "results/verify_reproduction.json",
+    "value": "108"
+  },
+  "ver_part_dilution": {
+    "source": "results/verify_reproduction.json",
+    "value": 0
+  },
+  "ver_part_else": {
+    "source": "results/verify_reproduction.json",
+    "value": 312
+  },
+  "ver_part_index": {
+    "source": "results/verify_reproduction.json",
+    "value": 435
+  },
+  "ver_part_sci": {
+    "source": "results/verify_reproduction.json",
+    "value": 0
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "99.25"
+    "value": "91.49"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
-    "value": 17
+    "value": 25
   },
   "ver_tb_budget": {
     "source": "results/step4_4_overfit_ens1.json",
@@ -8057,11 +8101,11 @@
   },
   "ver_timing": {
     "source": "results/verify_reproduction.json",
-    "value": "5,004"
+    "value": "5,210"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "9,090"
+    "value": "8,776"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

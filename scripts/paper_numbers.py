@@ -209,6 +209,7 @@ def main():
     put("ver_all", f"{_all:,}", "results/verify_reproduction.json")
     put("ver_claim_pct", f"{100*ver['values_compared']/_all:.2f}",
         "results/verify_reproduction.json")
+    put("ver_overstate", f"{_all/ver['values_compared']:.0f}", "results/verify_reproduction.json")
     put("ver_keys_lost_files", len(ver["keys_lost_files"]),
         "results/verify_reproduction.json")
     put("ver_timing", f'{ver["timing_excluded"]:,}', "results/verify_reproduction.json")
@@ -228,6 +229,71 @@ def main():
         put("ver_tb_ran", _ov["iterations_run"], f"results/{_tb[0]}")
         put("ver_tb_cap", f'{_ov["config"]["iters"]:,}', f"results/{_tb[0]}")
         put("ver_tb_budget", f'{_ov["config"]["max_seconds"]:,.0f}', f"results/{_tb[0]}")
+
+    # Section 8's partition of the differing values, by cause, read from the per-file
+    # record in verify_reproduction.json rather than asserted. The rule for what counts
+    # as scientific classifies each VALUE, not the file holding it: a differing value
+    # carries a scientific result only if it is itself a measurement, a statistic or
+    # the verdict of a test. The table below names every kind of value placed outside
+    # that class, and why. Anything it does not match is counted as scientific, so an
+    # unanticipated difference raises the count rather than disappearing.
+    _INDEX, _DILUTION = "restatement_index.json", "e5_sigma_dilution.json"
+    _BOOK = [
+        (_INDEX, r"\.restatements\[\d+\]\.locations\[\d+\]\.line",
+         "line numbers in this document"),
+        (_INDEX, r"\.restatements\[\d+\]\.(n_locations|n_substituted|n_typed)",
+         "counts of where each repeated numeral appears in this document"),
+        (_INDEX, r"\.(n_substituted|n_typed|n_restatements|n_same_quantity_candidates"
+                 r"|n_lower_signal)",
+         "the index's totals over this document"),
+        ("task_c1_claims_audit.json", r"\.claims\[\d+\]\.n_keys",
+         "how many substituted numbers each audited sentence of this document holds"),
+        ("task_c1_claims_audit.json", r"\.(n_claims|by_verdict\.[A-Z_]+)",
+         "how many of this document's sentences the claims audit found, by review status"),
+        ("anon_bundle.json", r"\.(n_files_staged|cited_files_checked)",
+         "the anonymised bundle's file count `{key}`"),
+        ("appendix_g_rules.json", r"\.rules\[(\d+)\]\.lead_hours",
+         "the lead time of rule {rule}, a gap between two git commit timestamps"),
+        ("paper_numbers.json", r"\.(audit_n_hits|audit_n_frozen)\.value",
+         "the build's input-audit count `{key}`"),
+        ("pdf_channels.json", r"\.scanned\.text",
+         "the amount of PDF text the anonymity scan read"),
+        ("pdf_channels.json", r"\.pages",
+         "the page count of this document's PDF"),
+        ("t5_anon_transcript.json", r"\.n_quotations_used_in_paper",
+         "how many correspondence quotations this document uses"),
+    ]
+    _AGR = J("appendix_g_rules.json")["rules"]
+    _pf = {f: v for f, v in ver["per_file"].items() if v["regenerated"]}
+    assert sum(v["differing"] for v in _pf.values()) == ver["differing"], \
+        "per-file record does not account for every differing value"
+    _named, _sci = {}, 0
+    for _f in sorted(_pf):
+        for _k in _pf[_f]["differing_keys"]:
+            for _bf, _rx, _what in _BOOK:
+                _m = re.fullmatch(_rx, _k) if _bf == _f else None
+                if _m:
+                    _what = _what.format(rule=f'`{_AGR[int(_m.group(1))]["id"]}`') \
+                        if "{rule}" in _what else _what.format(key=_m.group(1)) \
+                        if "{key}" in _what else _what
+                    _named[(_f, _what)] = _named.get((_f, _what), 0) + 1
+                    break
+            else:
+                _sci += 1
+    _vsrc = "results/verify_reproduction.json"
+    _pi = _pf.get(_INDEX, {}).get("differing", 0)
+    _pd = _pf.get(_DILUTION, {}).get("differing", 0)
+    put("ver_part_index", _pi, _vsrc)
+    put("ver_part_dilution", _pd, _vsrc)
+    put("ver_part_else", ver["differing"] - _pi - _pd, _vsrc)
+    put("ver_part_sci", _sci, _vsrc)
+    put("ver_book_named", "; ".join(
+        f"{n} in `results/{f}` ({w})"
+        for (f, w), n in sorted(_named.items(), key=lambda x: (-x[1], x[0]))), _vsrc)
+    _byf = sorted(((v["differing"], f) for f, v in _pf.items() if v["differing"]),
+                  key=lambda x: (-x[0], x[1]))
+    put("ver_diff_nfiles", len(_byf), _vsrc)
+    put("ver_diff_by_file", ", ".join(f"`results/{f}` ({n})" for n, f in _byf), _vsrc)
 
     # Part C: the count of COMPARATIVE claims verified, reported in section 8
     # beside the numeral count. A build that verifies its own interpretive claims
@@ -427,6 +493,23 @@ def main():
             verdict=r["verdict"].replace("|", "/"))
         for r in AG["rules"])
     put("appG_table", _rows.rstrip(), "results/appendix_g_rules.json")
+    # M-69's lead time, recomputed from git. The commit that first held the data it
+    # tested was amended after it was created, so its committer timestamp is later
+    # than its author timestamp. The published lead is the author-time one, which
+    # does not benefit from the amend; recomputing from the committer time gives the
+    # longer one. The published figure is read from the same stored value the table
+    # cell above renders; the recomputed one and the amend gap come from git.
+    _r69 = next(r for r in AG["rules"] if r["id"] == "M-69")
+    _g = lambda *a: subprocess.run(["git", "log", *a], capture_output=True,
+                                   text=True).stdout.strip().split("\n")[-1].split("\t")
+    _, _d_at, _d_ct = _g("--diff-filter=A", "--format=%H\t%at\t%ct", "--",
+                         _r69["tested_by"])
+    _, _r_ct = _g("--format=%H\t%ct", "-S", "### M-69 —", "--", "FINDINGS_LEDGER.md")
+    _d_at, _d_ct, _r_ct = int(_d_at), int(_d_ct), int(_r_ct)
+    _gsrc = "results/appendix_g_rules.json + git log"
+    put("m69_lead_pub", _lead(_r69), _gsrc)
+    put("m69_lead_regen", _lead({"lead_hours": (_d_ct - _r_ct) / 3600}), _gsrc)
+    put("m69_amend_min", round((_d_ct - _d_at) / 60), _gsrc)
     # B.1: the body no longer carries rule texts. They ship in full in
     # docs/APPENDIX_G_RULES.md, written by scripts/appendix_g_rules.py.
     put("tn_classes", TN["n_classes"], "results/typed_numerals.json")

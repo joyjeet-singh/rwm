@@ -1472,6 +1472,8 @@ it rests on, because it is what let us detect the gap at all.
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean {{bu_mean_ratio}}× and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
 **Reproducibility, and a build that checks its own prose.**
+**The number of regenerated values that differ and are themselves a measurement, a statistic or
+the verdict of a test is {{ver_part_sci}}.**
 `./reproduce.sh --quick --force` regenerates {{ver_files}} artifact files and {{ver_values}}
 numeric values from a clean clone: {{ver_identical}} bitwise identical ({{ver_pct}}%),
 {{ver_close}} equal to within the verifier's floating-point tolerance but not bitwise, and
@@ -1479,11 +1481,24 @@ numeric values from a clean clone: {{ver_identical}} bitwise identical ({{ver_pc
 three account for the {{ver_values}} exactly. A further {{ver_keys_lost}} values are present in the
 committed artifacts and absent after regeneration, across {{ver_keys_lost_files}} files; they are
 counted separately because a value that is not produced twice cannot be compared twice.
+The {{ver_differing}} differing values are partitioned by cause from the per-file record in
+`results/verify_reproduction.json`: {{ver_part_index}} are in the document-line index
+(`results/restatement_index.json`), {{ver_part_dilution}} in the stochastic dilution study
+(`results/e5_sigma_dilution.json`), and {{ver_part_else}} elsewhere. The document-line index records
+where numerals sit in this document, so its line numbers and counts change whenever the document is
+edited; that is a property of that artifact, not of the science. Whether a differing value carries
+a scientific result is decided value by value, not file by file: it does only if the value is
+itself a measurement, a statistic or the verdict of a test, and a value does not qualify merely
+because the file holding it also holds results. `scripts/paper_numbers.py` applies that rule in
+code, counts any differing value it does not recognise as scientific, and places these outside the
+scientific class: {{ver_book_named}}. **`part_f_gate` still fails.** Its clean-clone check requires
+that no regenerated value differ; {{ver_differing}} do, and it is published as failing, with no
+tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: {{ver_values}} values, or {{ver_claim_pct}}%
 of the {{ver_all}} numeric values under `results/`. The other {{ver_copied}} are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about fiftyfold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the {{tn_typed}} numerals that is not one is classified as an address, a horizon label or a declared constant — {{tn_classes}} classes and {{tn_exceptions}} declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about {{ver_overstate}}-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the {{tn_typed}} numerals that is not one is classified as an address, a horizon label or a declared constant — {{tn_classes}} classes and {{tn_exceptions}} declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1812,11 +1827,11 @@ account of its own variability, not as a property of the code.
 
 **One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
 check in `part_f_gate` requires that *no* regenerated value differ. {{ver_differing}} do, so the
-check fails, and it is published as failing. We did not give it a tolerance. The differences are
-concentrated in two artifacts — a stochastic dilution study whose values move in the tenth
-significant figure, and an index that stores line numbers in this document, which move whenever the
-document is rebuilt — but "concentrated in two artifacts we believe are benign" is a reason to read
-the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
+check fails, and it is published as failing. We did not give it a tolerance. The differences sit in {{ver_diff_nfiles}} artifacts, counted from the per-file record in
+`results/verify_reproduction.json`: {{ver_diff_by_file}}. The stochastic dilution study differs in
+{{ver_part_dilution}}, and the number of differing values that are a measurement, a statistic or a
+test verdict, under the rule §8 states, is {{ver_part_sci}} — but a partition we believe is benign
+is a reason to read the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
 tells a reader strictly less than one that fails and says where.
 
 *One wall-clock-bounded diagnostic.* {{ver_timebound}} stops on a time budget rather than at its
@@ -1908,6 +1923,10 @@ existed. This is the same computation Figure 1 plots.
 | rule | what it governs | commit | lead time | tested by | verdict |
 |---|---|---|---|---|---|
 {{appG_table}}
+
+`M-69`'s lead time is printed as {{m69_lead_pub}}. Recomputing it from git today returns
+{{m69_lead_regen}}, because the commit that discharged the rule was amended {{m69_amend_min}}
+minutes after it was created; the published figure is the one that does not benefit from the amend.
 
 {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which
 {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is
