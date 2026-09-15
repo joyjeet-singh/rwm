@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1047 values substituted from 75 artifacts. -->
+     1041 values substituted from 74 artifacts. -->
 
 # A one-step evaluation misalignment and a σ = 0 optimum: an independent reproduction of a released robotic world model
 
@@ -1884,17 +1884,20 @@ clone regenerates 8,776 and carries in 940,900. The reproducibility claim covers
 0.92% of the directory and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
-*The CPU budget.* 5,210 timing fields and the 584 values of
-`results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
-resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on
-another machine, or on this one under different load, and it records that about itself: across
-its 4 configurations the standard deviation of seconds-per-iteration across repeats
-runs from 3% to 3% of the mean (ens5_bs1024) — on one machine,
-within a single measurement session. **Those three figures are themselves host measurements and we
-mark them as such**, since a sentence arguing that host-dependent numbers should not be printed as
-results cannot quietly print three of its own as though they were stable. On a second host the same
-run reported a different spread on a different worst configuration. Read them as one machine's
-account of its own variability, not as a property of the code.
+*The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected
+runtimes for configurations we did not run, peak resident memory, and the standard deviation of
+seconds-per-iteration across repeats. None of it can reproduce bitwise on another machine, or on
+this one under different load, so the numeric comparison leaves the whole file out, together with
+every field elsewhere whose name marks it as a wall-clock timing. The file also records its own
+variability, and **we quote none of it**: a sentence arguing that host-dependent numbers should not
+be printed as results cannot quietly print its own as though they were stable, and on a second host
+the same run reported a different spread on a different worst configuration. For the same reason we
+do not print how many values this exclusion sets aside. That count is not a property of the timing
+file alone: it also takes in the values of the wall-clock-bounded diagnostic described below, and
+the entries of `results/paper_numbers.json` that are read from either of those files or from the
+comparison's own record, so it changes from one clean-clone run to the next with that diagnostic's
+iteration count. Read `results/step4_5_timing.json` as one machine's account of itself, not as a
+property of the code.
 
 **One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
 check in `part_f_gate` requires that *no* regenerated value differ. 747 do, so the

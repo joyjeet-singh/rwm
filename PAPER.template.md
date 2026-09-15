@@ -1813,17 +1813,20 @@ clone regenerates {{ver_values}} and carries in {{ver_copied}}. The reproducibil
 {{ver_claim_pct}}% of the directory and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
-*The CPU budget.* {{ver_timing}} timing fields and the {{ver_machine}} values of
-`results/step4_5_timing.json` — projected runtimes for configurations we did not run, peak
-resident memory, and the standard deviation across repeats. It cannot reproduce bitwise on
-another machine, or on this one under different load, and it records that about itself: across
-its {{time_cfgs}} configurations the standard deviation of seconds-per-iteration across repeats
-runs from {{time_rel_lo}}% to {{time_rel_hi}}% of the mean ({{time_worst_cfg}}) — on one machine,
-within a single measurement session. **Those three figures are themselves host measurements and we
-mark them as such**, since a sentence arguing that host-dependent numbers should not be printed as
-results cannot quietly print three of its own as though they were stable. On a second host the same
-run reported a different spread on a different worst configuration. Read them as one machine's
-account of its own variability, not as a property of the code.
+*The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected
+runtimes for configurations we did not run, peak resident memory, and the standard deviation of
+seconds-per-iteration across repeats. None of it can reproduce bitwise on another machine, or on
+this one under different load, so the numeric comparison leaves the whole file out, together with
+every field elsewhere whose name marks it as a wall-clock timing. The file also records its own
+variability, and **we quote none of it**: a sentence arguing that host-dependent numbers should not
+be printed as results cannot quietly print its own as though they were stable, and on a second host
+the same run reported a different spread on a different worst configuration. For the same reason we
+do not print how many values this exclusion sets aside. That count is not a property of the timing
+file alone: it also takes in the values of the wall-clock-bounded diagnostic described below, and
+the entries of `results/paper_numbers.json` that are read from either of those files or from the
+comparison's own record, so it changes from one clean-clone run to the next with that diagnostic's
+iteration count. Read `results/step4_5_timing.json` as one machine's account of itself, not as a
+property of the code.
 
 **One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
 check in `part_f_gate` requires that *no* regenerated value differ. {{ver_differing}} do, so the
