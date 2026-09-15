@@ -80,10 +80,55 @@ def hub_commit_label_map(repo):
     return {t: f"H{i:03d}" for i, t in enumerate(found, 1)}
 
 
+# Author-controlled commit identifiers that neither map above can see, because they
+# are not in this repository's history. D1 anonymises them like any other commit hash.
+#
+# PREPURGE_COMMITS: the commits of the pre-purge backup (rwm_repro_prepurge_backup,
+# whose origin is the author's GitHub repository) that the history rewrite removed --
+# `git rev-list --all` there minus this repository's history -- in commit-date order.
+# Listed here rather than read from the backup, because a reviewer's machine does not
+# have it. The ledger's M-48 cites one of them, as pushed.
+# UNRESOLVED_COMMITS: identifiers this history records that resolve in no local store.
+PREPURGE_COMMITS = (
+    "7859309f146ce1b84bdb853caf8a8b333d30a809",
+    "66a25565930f47e6bff86efcc44ae3140ad3e257",
+    "395ef35bec9924a211dcf01f76fa39d470263838",
+    "da635be2833c1e024dc954ee0563947553654e2e",
+    "925456ae42c16b5c1d66c0232345fb89f60c5e3d",
+    "1979f01cddc7ec85b4398f75f6c5c0fc269ab675",
+    "20955e254dbb4b6698cd39f89c6c7077ea2c50c1",
+    "0288b47c5e02334b03a8dd1da74fc0961d41309f",
+    "29bba9219be2a8be08b7c9b66922c231a4cc92de",
+    "b84807453e01cd64065501e4435c575cba49b4d5",
+    "6b5d84d0f5cf3f45e6bbe01e6b20b8c269ae976c",
+    "4c2fd6aad050357ed5d9c82d23506ec952add620",
+    "2fa6d1e6cfec1d1947fc14d5f9e09e953e81ff71",
+    "c4c9954ae27a6060092ca34f794284138b4d1081",
+    "f113319a1948f8fb5c950194c4dd5ad901b5b37f",
+    "1ef8e21f56f33e271cead6b63ce279a435ceb862",
+    "2642cdacb00abaedd69b5986a02e83d69be189c5",
+    "45214f932d8705b97f915dd414d0d9fac182e571",
+)
+UNRESOLVED_COMMITS = ("edbfee88",)
+
+
+def extra_commit_label_map(repo):
+    """{identifier: label}: P001, P002, ... for PREPURGE_COMMITS and U001, ... for
+    UNRESOLVED_COMMITS, in listed order. Empty without git history, like the maps
+    above, so an unpacked bundle's map and sweep are not reduced to these alone."""
+    if not repo:
+        return {}
+    out = {h: f"P{i:03d}" for i, h in enumerate(PREPURGE_COMMITS, 1)}
+    out.update({t: f"U{i:03d}" for i, t in enumerate(UNRESOLVED_COMMITS, 1)})
+    return out
+
+
 def write_commit_label_map(cmap):
     with open(MAP_FILE, "w") as f:
         json.dump({"order": "commit date; H labels are Hugging Face model repository "
-                            "commits, by first mention in this history",
+                            "commits, by first mention in this history; P labels are "
+                            "commits of the pre-purge history, by commit date; U labels "
+                            "are identifiers that resolve in no local store",
                    "labels": cmap}, f, indent=2)
         f.write("\n")
 
@@ -138,6 +183,7 @@ def commit_sweep_pattern(cmap):
 
 COMMIT_LABELS = commit_label_map()
 COMMIT_LABELS.update(hub_commit_label_map(COMMIT_LABELS))
+COMMIT_LABELS.update(extra_commit_label_map(COMMIT_LABELS))
 
 # The deny list. Every entry is a literal string or a regex, and every one is
 # replaced rather than merely detected. Shared with t5_anon_transcript.py so the
