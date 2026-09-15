@@ -1351,6 +1351,10 @@
     "source": "results/review_bootstrap_unit.json",
     "value": 0.96
   },
+  "bu_n_narrowed": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": 15
+  },
   "c2_bounds": {
     "source": "results/task_c2_data_budget.json",
     "value": 8

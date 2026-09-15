@@ -175,6 +175,11 @@ def main():
     put("bu_min_ratio", round(bu["_summary"]["width_ratio_min"], 2), "results/review_bootstrap_unit.json")
     put("bu_max_ratio", round(bu["_summary"]["width_ratio_max"], 2), "results/review_bootstrap_unit.json")
     put("bu_cells", bu["_summary"]["n_cells"], "results/review_bootstrap_unit.json")
+    # Figure 6's caption said the wrong unit "narrows every interval"; one cell's
+    # cluster-to-naive width ratio is below 1. Counted as the figure's title counts it.
+    put("bu_n_narrowed", sum(1 for k, v in bu.items() if k != "_summary"
+                             and v["width_ratio_cluster_over_naive"] > 1),
+        "results/review_bootstrap_unit.json")
     oos = {k: v for k, v in bu.items()
            if k != "_summary" and k.startswith("out-of-sample")}
     longh = [v for k, v in oos.items() if "h368" in k or "h168" in k]

@@ -670,7 +670,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.27% insid
 
 **All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards.
 
-![Calibration of all four models on the held-out arena. (a) reliability: observed against predicted coverage, with the calibrated diagonal. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. Every curve sits far below the diagonal and falls further with horizon.](figures/paper_fig1_calibration.png)
+![Calibration of all four models on the held-out arena. (a) reliability: observed against predicted coverage, with the calibrated diagonal. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. (c) the overconfidence factor for each model: mean absolute error divided by mean predicted $\sigma$, log scale, with the dashed line where error equals $\sigma$. Every curve sits far below the diagonal and falls further with horizon.](figures/paper_fig1_calibration.png)
 
 *A note on the released checkpoint's row, so the next table does not read as a
 contradiction.* Its 7,878× is the whole 368-step rollout on those same
@@ -1218,7 +1218,7 @@ The reason is §6.9's mechanism: a constant multiplier cannot track an error tha
 | aleatoric | **12 / 12** | 2 / 12 | 0 / 72 | 592.6 – 7782 (13.1×) |
 | epistemic | **12 / 12** | 2 / 12 | 12 / 72 | 5.082 – 47.33 (9.31×) |
 
-Every held-out point estimate lands within 10 points of the 68.27% target for both quantities. **That is the same absolute test the new column below applies, and it is just as UNPOWERED here:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the 10-point band resolvable at 0 of 12 quantity-by-horizon pairs, with a binding minimum detectable effect of 12.55–40.62 points. So a cell inside the band is compatible with a true coverage well outside it — and nothing here shows any cell is outside it either. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48% — 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at.
+Every held-out point estimate lands within 10 points of the 68.27% target for both quantities. **That is the same absolute test this section's table applies in its *different model* column, and it is just as UNPOWERED here:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the 10-point band resolvable at 0 of 12 quantity-by-horizon pairs, with a binding minimum detectable effect of 12.55–40.62 points. So a cell inside the band is compatible with a true coverage well outside it — and nothing here shows any cell is outside it either. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48% — 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at.
 
 Three cautions a reader should apply. The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample — only the held-out column above is evidence, and that is the column reported. **And the held-out column is thinner than its count suggests:** the 12 cells are 6 horizons × two fold directions on the same 4 trajectories, and each multiplier is fitted on n_independent = 2 and scored on the other 2. They are not 12 independent successes and no P-value attaches to the count; it is reported so a reader can see how thin the evidence is, alongside a result we believe. And the correction is a calibration patch, not a fix: it leaves the model's σ carrying no more information than before and simply rescales it by how far ahead you are looking. It nevertheless brings every held-out estimate near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
 
@@ -1476,7 +1476,7 @@ horizons × two metrics), contamination hurts in **0** of 32 and
 helps in 9 (Figure 6a). The control is inert, differing from clean in
 2 cells.
 
-![The contamination control. (a) outcome across 32 cells for each arm pair, naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling trajectory-step pairs rather than whole trajectories narrows every interval.](figures/paper_fig5_three_way.png)
+![The contamination control. (a) outcome across 32 cells for each arm pair, naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling trajectory-step pairs rather than whole trajectories narrows 15 of the 16 intervals.](figures/paper_fig5_three_way.png)
 
 **"Costs nothing" is the wrong summary, and we should not use it.** Splicing raises training loss
 by 21.57% against duplication's 0.90%, and improves rollout in
@@ -2076,8 +2076,7 @@ published-model comparison in this project's own history — a result that favou
 aggregation and did not under the other. The claim was withdrawn on our own evidence and is kept
 in the record (`FINDINGS_LEDGER.md`). Form 2 figures appear nowhere in the body; they are retained
 in `results/step4_0a_results.json` for continuity with figures this project published before the
-inversion was found, and are reported here so that continuity does not require trusting a
-deleted number.
+inversion was found. This appendix gives the two definitions and the inversion rather than those figures, so continuity rests on that committed file and not on a deleted number.
 
 The definition in force throughout the paper is the one §3.1 gives. Nothing in §5, §6 or §7 uses
 form 2.

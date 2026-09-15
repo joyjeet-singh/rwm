@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 60,
-  "n_ok": 58,
+  "n_pointers": 71,
+  "n_ok": 69,
   "n_reviewed_correct": 2,
   "reviewed": [
     {
@@ -164,6 +164,12 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/anon_bundle.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/appendix_g_rules.json",
       "ok": true,
       "detail": "exists"
@@ -171,6 +177,12 @@
     {
       "class": "artifact",
       "pointer": "results/e4_sigma_gradients.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/e5_sigma_dilution.json",
       "ok": true,
       "detail": "exists"
     },
@@ -236,13 +248,43 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/p3_combined_arm_power.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/p4_transfer_power.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/paper_numbers.json",
       "ok": true,
       "detail": "exists"
     },
     {
       "class": "artifact",
+      "pointer": "results/pdf_channels.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/r2_combined_arm.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/r2_independent_ensemble.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/restatement_index.json",
       "ok": true,
       "detail": "exists"
     },
@@ -278,7 +320,25 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/t5_anon_transcript.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/task_b2_epistemic.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/task_c1_claims_audit.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/task_d3_cross_model.json",
       "ok": true,
       "detail": "exists"
     },
@@ -291,6 +351,12 @@
     {
       "class": "artifact",
       "pointer": "results/v1_ensemble_topology.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/verify_reproduction.json",
       "ok": true,
       "detail": "exists"
     },
