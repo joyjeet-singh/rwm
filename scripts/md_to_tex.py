@@ -33,10 +33,14 @@ def esc(s):
     s = re.sub(r"`[^`]*`", stash, s)
     # inline math must survive escaping intact, exactly as code spans do
     s = re.sub(r"\$[^$\n]+\$", stash, s)
+    # A caret exponent in prose ("10^13") is a power, not a circumflex; the escape
+    # below would set it as a literal caret. Marked here, raised after escaping.
+    s = re.sub(r"(?<=\d)\^(\d+)", lambda m: "\x02" + m.group(1) + "\x03", s)
     for a, b in (("\\", r"\textbackslash{}"), ("&", r"\&"), ("%", r"\%"), ("$", r"\$"),
                  ("#", r"\#"), ("_", r"\_"), ("{", r"\{"), ("}", r"\}"), ("~", r"\textasciitilde{}"),
                  ("^", r"\textasciicircum{}")):
         s = s.replace(a, b)
+    s = re.sub("\x02(\\d+)\x03", r"\\textsuperscript{\1}", s)
     s = s.replace("—", "---").replace("–", "--").replace("×", r"$\times$")
     s = s.replace("σ", r"$\sigma$").replace("μ", r"$\mu$").replace("ε", r"$\varepsilon$")
     s = s.replace("λ", r"$\lambda$").replace("φ", r"$\phi$").replace("\u0303", "")
@@ -71,12 +75,23 @@ def esc(s):
             return raw                      # inline math: emit verbatim
         # Inline code is protected from escaping, which means Unicode inside it would
         # reach \texttt{} raw and kill pdflatex. Transliterate rather than trust the author.
-        t = _ascii(raw.strip("`"))
+        # The few characters the paper's code spans carry are set as their glyphs
+        # rather than transliterated: "?" for lambda and a dropped tilde changed
+        # what the formula says. Marked before _ascii, set after escaping.
+        t = re.sub(r"([A-Za-z])̃", "\x02t\\1\x03", raw.strip("`"))
+        t = t.replace("λ", "\x02l\x03").replace("−", "\x02m\x03").replace("²", "\x02s\x03")
+        t = _ascii(t)
         for a, b in (("\\", r"\textbackslash{}"), ("_", r"\_"), ("&", r"\&"),
                      ("%", r"\%"), ("#", r"\#"), ("{", r"\{"), ("}", r"\}"),
                      ("^", r"\textasciicircum{}"), ("~", r"\textasciitilde{}"),
                      ("$", r"\$")):
             t = t.replace(a, b)
+        t = re.sub("\x02t([A-Za-z])\x03", r"$\\tilde{\\texttt{\1}}$", t)
+        t = t.replace("\x02l\x03", r"$\lambda$").replace("\x02m\x03", "$-$")
+        t = t.replace("\x02s\x03", r"\textsuperscript{2}")
+        # "--" inside \texttt is a ligature and sets as one dash; a copied flag
+        # would then be invalid. An empty group between the hyphens breaks it.
+        t = re.sub(r"-(?=-)", "-{}", t)
         return r"\texttt{" + t + "}"
 
     s = re.sub(r"\x00(\d+)\x00", unstash, s)
