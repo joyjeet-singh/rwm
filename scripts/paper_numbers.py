@@ -258,6 +258,18 @@ def main():
          "how many of this document's sentences the claims audit found, by review status"),
         ("anon_bundle.json", r"\.(n_files_staged|cited_files_checked)",
          "the anonymised bundle's file count `{key}`"),
+        # Named when stage 28 began passing again: a clone reached from a path that
+        # carries no account name builds the archives, so the two bundle records moved
+        # from the carried-in set into the compared one. Every value here is a property
+        # of an archive -- how many files it holds, how many bytes it occupies, how many
+        # of them the scrubber rewrote, how many commits its anonymised log carries --
+        # and none is a measurement, a statistic or the verdict of a test.
+        ("anon_bundle.json", r"\.n_files_content_scrubbed",
+         "how many of the anonymised bundle's files the scrubber rewrote"),
+        ("supplementary_manifest.json", r"\.(files|bytes|uncompressed)",
+         "the supplementary archive's own size and file count `{key}`"),
+        ("supplementary_manifest.json", r"\.commits_in_log",
+         "how many commits the archive's anonymised git log carries"),
         ("appendix_g_rules.json", r"\.rules\[(\d+)\]\.lead_hours",
          "the lead time of rule {rule}, a gap between two git commit timestamps"),
         ("paper_numbers.json", r"\.(audit_n_hits|audit_n_frozen)\.value",
@@ -499,12 +511,15 @@ def main():
             verdict=r["verdict"].replace("|", "/"))
         for r in AG["rules"])
     put("appG_table", _rows.rstrip(), "results/appendix_g_rules.json")
-    # M-69's lead time, recomputed from git. The commit that first held the data it
-    # tested was amended after it was created, so its committer timestamp is later
-    # than its author timestamp. The published lead is the author-time one, which
-    # does not benefit from the amend; recomputing from the committer time gives the
-    # longer one. The published figure is read from the same stored value the table
-    # cell above renders; the recomputed one and the amend gap come from git.
+    # M-69's lead time, from git. The commit that first held the data it tested was
+    # amended after it was created, so its committer timestamp is later than its
+    # author timestamp and the lead differs by which one is read. Both readings are
+    # derived here from git, so they are the same in any clone with full history.
+    # m69_lead_pub reads the STORED value that the table cell above renders, which a
+    # clean rebuild rewrites from git: it equals the author-time reading in a tree
+    # whose artifact predates the amend and the committer-time reading in one that
+    # regenerated it afterwards. The sentence beneath the table is written so that
+    # nothing in it depends on which of the two the stored value happens to be.
     _r69 = next(r for r in AG["rules"] if r["id"] == "M-69")
     _g = lambda *a: subprocess.run(["git", "log", *a], capture_output=True,
                                    text=True).stdout.strip().split("\n")[-1].split("\t")
@@ -514,6 +529,7 @@ def main():
     _d_at, _d_ct, _r_ct = int(_d_at), int(_d_ct), int(_r_ct)
     _gsrc = "results/appendix_g_rules.json + git log"
     put("m69_lead_pub", _lead(_r69), _gsrc)
+    put("m69_lead_author", _lead({"lead_hours": (_d_at - _r_ct) / 3600}), _gsrc)
     put("m69_lead_regen", _lead({"lead_hours": (_d_ct - _r_ct) / 3600}), _gsrc)
     put("m69_amend_min", round((_d_ct - _d_at) / 60), _gsrc)
     # B.1: the body no longer carries rule texts. They ship in full in

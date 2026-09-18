@@ -24,6 +24,7 @@
     "step4_4_overfit_ens1.json",
     "step4_5_timing.json",
     "step5_6_overfit_floor.json",
+    "supplementary_manifest.json",
     "t1_bibliography_verified.json",
     "t5_anon_transcript.json",
     "task1_action_convention.json",
@@ -46,16 +47,16 @@
     "v2_deployment_horizon.json",
     "v3_metric_definitions.json"
   ],
-  "values_compared": 8776,
-  "bitwise_identical": 8029,
+  "values_compared": 8782,
+  "bitwise_identical": 8033,
   "identical_to_1e-9": 0,
-  "differing": 747,
+  "differing": 749,
   "timing_excluded": 5210,
   "nan_in_both": 4,
-  "copied_file_values": 940900,
-  "copied_identical": 940838,
-  "copied_differing": 62,
-  "machine_file_values_excluded": 584,
+  "copied_file_values": 940893,
+  "copied_identical": 940833,
+  "copied_differing": 60,
+  "machine_file_values_excluded": 698,
   "keys_lost": 356,
   "keys_lost_files": [
     "anon_bundle.json",
@@ -154,7 +155,7 @@
       "regenerated": true,
       "differing": 2,
       "differing_keys": [
-        ".cited_files_checked",
+        ".n_files_content_scrubbed",
         ".n_files_staged"
       ],
       "keys_lost": 1,
@@ -287,7 +288,7 @@
     },
     "input_set_audit.json": {
       "regenerated": false,
-      "differing": 13,
+      "differing": 11,
       "differing_keys": [
         ".n_hits",
         ".n_open",
@@ -299,12 +300,12 @@
         ".hits[3].line",
         ".hits[4].line",
         ".hits[5].line",
-        ".hits[6].line",
-        ".hits[7].line",
-        ".hits[8].line"
+        ".hits[6].line"
       ],
-      "keys_lost": 12,
+      "keys_lost": 14,
       "keys_lost_paths": [
+        ".hits[7].line",
+        ".hits[8].line",
         ".hits[9].line",
         ".hits[10].line",
         ".hits[11].line",
@@ -445,11 +446,8 @@
     },
     "pdf_channels.json": {
       "regenerated": true,
-      "differing": 2,
-      "differing_keys": [
-        ".pages",
-        ".scanned.text"
-      ],
+      "differing": 0,
+      "differing_keys": [],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
@@ -1637,9 +1635,14 @@
       "keys_lost_paths": []
     },
     "supplementary_manifest.json": {
-      "regenerated": false,
-      "differing": 0,
-      "differing_keys": [],
+      "regenerated": true,
+      "differing": 4,
+      "differing_keys": [
+        ".files",
+        ".bytes",
+        ".uncompressed",
+        ".commits_in_log"
+      ],
       "keys_lost": 0,
       "keys_lost_paths": []
     },

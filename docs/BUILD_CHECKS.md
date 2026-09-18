@@ -122,7 +122,7 @@ holding the **current** run's, so they cannot agree: writing a result into the t
 thing the next run measures. There is no fixed point to converge to, and treating it as a
 reproducibility failure would make the reported figure oscillate rather than settle. They are
 dropped by provenance like the others and counted in the output rather than hidden — the same
-discipline §8's own 45-file figure rests on, since a silent exclusion is exactly how an
+discipline §8's own 46-file figure rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
 
 ---

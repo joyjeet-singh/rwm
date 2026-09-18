@@ -266,12 +266,6 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/pdf_channels.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/r2_combined_arm.json",
       "ok": true,
       "detail": "exists"
@@ -309,6 +303,12 @@
     {
       "class": "artifact",
       "pointer": "results/step4_5_timing.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/supplementary_manifest.json",
       "ok": true,
       "detail": "exists"
     },
