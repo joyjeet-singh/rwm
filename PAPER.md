@@ -280,8 +280,9 @@ original.
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
-4 mutually non-overlapping 400-step trajectories. Every interval in this paper is a
-bootstrap over independent trajectories, and every table reports that count.
+4 mutually non-overlapping 400-step trajectories. Every long-horizon verdict in this
+paper survives a bootstrap over independent trajectories, and every table reports that count;
+§8 reports both resampling units where they differ.
 
 ### 3.1 Metrics
 
@@ -670,7 +671,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.27% insid
 
 **All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards.
 
-![Calibration of all four models on the held-out arena. (a) reliability: observed against predicted coverage, with the calibrated diagonal. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. (c) the overconfidence factor for each model: mean absolute error divided by mean predicted $\sigma$, log scale, with the dashed line where error equals $\sigma$. Every curve sits far below the diagonal and falls further with horizon.](figures/paper_fig1_calibration.png)
+![Calibration of all four models on the held-out arena. (a) reliability: observed against predicted coverage, with the calibrated diagonal. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. Every curve sits far below the diagonal and falls further with horizon. (c) the overconfidence factor for each model: mean absolute error divided by mean predicted $\sigma$, log scale, with the dashed line where error equals $\sigma$.](figures/paper_fig1_calibration.png)
 
 *A note on the released checkpoint's row, so the next table does not read as a
 contradiction.* Its 7,878× is the whole 368-step rollout on those same
@@ -1476,7 +1477,7 @@ horizons × two metrics), contamination hurts in **0** of 32 and
 helps in 9 (Figure 6a). The control is inert, differing from clean in
 2 cells.
 
-![The contamination control. (a) outcome across 32 cells for each arm pair, naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling trajectory-step pairs rather than whole trajectories narrows 15 of the 16 intervals.](figures/paper_fig5_three_way.png)
+![The contamination control. (a) outcome across 32 cells for each arm pair, naive bootstrap on the left of each position and cluster bootstrap on the right; the duplication control is inert. (b) distribution of the ratio of cluster to naive confidence-interval width, with the mean marked. Resampling pooled seed × trajectory values rather than whole trajectories narrows 15 of the 16 intervals.](figures/paper_fig5_three_way.png)
 
 **"Costs nothing" is the wrong summary, and we should not use it.** Splicing raises training loss
 by 21.57% against duplication's 0.90%, and improves rollout in
@@ -1542,7 +1543,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 8,776 values, or 0.92%
 of the 949,676 numeric values under `results/`. The other 940,900 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 108-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 658 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 108-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 659 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 

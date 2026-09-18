@@ -252,11 +252,10 @@ def main():
             "Calibration of all four models on the held-out arena. "
             "(a) reliability: observed against predicted coverage, with the calibrated diagonal. "
             "(b) coverage at $\\pm1\\sigma$ against forecast horizon, log scale, against the "
-            + NOMINAL1 + "\\% a calibrated Gaussian gives. "
+            + NOMINAL1 + "\\% a calibrated Gaussian gives. Every curve sits far below the "
+            "diagonal and falls further with horizon. "
             "(c) the overconfidence factor for each model: mean absolute error divided by mean "
-            "predicted $\\sigma$, log scale, with the dashed line where error equals $\\sigma$. "
-            "Every curve sits far below the "
-            "diagonal and falls further with horizon.",
+            "predicted $\\sigma$, log scale, with the dashed line where error equals $\\sigma$.",
         "paper_fig2_sigma_profile.png":
             "Why the coverage collapse is a horizon effect. Both panels are normalised to "
             "forecast step 1. (a) predicted $\\sigma$ barely moves, and for the faithful arm it "
@@ -290,8 +289,8 @@ def main():
             "The contamination control. (a) outcome across 32 cells for each arm pair, naive "
             "bootstrap on the left of each position and cluster bootstrap on the right; the "
             "duplication control is inert. (b) distribution of the ratio of cluster to naive "
-            "confidence-interval width, with the mean marked. Resampling trajectory-step pairs "
-            "rather than whole trajectories narrows " + str(N["bu_n_narrowed"]["value"])
+            "confidence-interval width, with the mean marked. Resampling pooled seed × trajectory "
+            "values rather than whole trajectories narrows " + str(N["bu_n_narrowed"]["value"])
             + " of the " + str(N["bu_cells"]["value"]) + " intervals.",
     }
     missing = [f for f in figs if f not in CAPS]

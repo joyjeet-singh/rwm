@@ -272,8 +272,9 @@ original.
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
-{{m23_nind}} mutually non-overlapping 400-step trajectories. Every interval in this paper is a
-bootstrap over independent trajectories, and every table reports that count.
+{{m23_nind}} mutually non-overlapping 400-step trajectories. Every long-horizon verdict in this
+paper survives a bootstrap over independent trajectories, and every table reports that count;
+§8 reports both resampling units where they differ.
 
 ### 3.1 Metrics
 
