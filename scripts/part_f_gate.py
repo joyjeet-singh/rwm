@@ -23,17 +23,24 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
 import rwm_data as R  # noqa: E402
 
-# Assembled from fragments rather than written out, because THIS FILE ships in
-# the supplementary archive: a literal author name or repository URL here would
-# be the very string the check exists to find, and the archive builder duly
-# rejected an earlier version of this script for exactly that. A checker for
-# identifying strings must not itself contain one.
-_A = "joy" + "jeet"
-_S = "s" + "ingh"
-IDENT = [_A, _A.capitalize(), _S.capitalize(), "swh:1:", "gm" + "ail", "/Users/" + _A + _S]
-# The author's own repository de-anonymises; the upstreams and the TMLR style
-# file are required for reproduction and identify nobody.
-REPO = "github.com/" + _A + "-" + _S
+# The strings this gate scans for come from the ENVIRONMENT, never from this
+# file, because THIS FILE ships in the supplementary archive. An earlier version
+# assembled them from adjacent string fragments so that the archive builder's
+# own scan would accept it. That satisfied every pattern sweep and still handed
+# a reviewer the author's name, account and home-directory path in four adjacent
+# lines (found in review, S20 F1). A checker for identifying strings must not
+# contain one, in any form a reader can reassemble.
+#
+#   RWM_IDENT       comma-separated strings that must not appear in the paper
+#   RWM_IDENT_REPO  the author's own repository, which de-anonymises by itself
+#
+# Unset or empty, check 2 FAILS. It is never reported as NOT RUN: a check for
+# identifying strings that cannot see the strings would certify a PDF it never
+# scanned, and NOT RUN is reserved for a check whose absence is honest (check 4
+# without a clone), not for one whose input was forgotten. Every later check
+# still runs: the PDF is read before the guard, not inside it.
+IDENT = [t.strip() for t in os.environ.get("RWM_IDENT", "").split(",") if t.strip()]
+REPO = os.environ.get("RWM_IDENT_REPO", "").strip()
 PY = sys.executable
 rows = []
 
@@ -68,22 +75,28 @@ def main():
     r = PdfReader("PAPER.pdf")
     txt = "\n".join((p.extract_text() or "") for p in r.pages)
     raw = open("PAPER.pdf", "rb").read()
-    hit_t = {k: txt.count(k) for k in IDENT + [REPO] if txt.count(k)}
-    hit_b = {k: raw.count(k.encode()) for k in IDENT + [REPO] if raw.count(k.encode())}
-    author = (r.metadata.get("/Author") or "").strip() if r.metadata else ""
-    figbad = {}
-    for f in sorted(os.listdir(R.FIGURES)):
-        p = os.path.join(R.FIGURES, f)
-        if not os.path.isfile(p):
-            continue
-        b = open(p, "rb").read()
-        h = {k: b.count(k.encode()) for k in IDENT + [REPO] if b.count(k.encode())}
-        if h:
-            figbad[f] = h
-    chk(2, "anonymisation (PDF text, raw bytes, metadata, figures)",
-        not hit_t and not hit_b and not author and not figbad,
-        f"text {hit_t or 'clean'}, bytes {hit_b or 'clean'}, /Author {author!r}, "
-        f"{len(os.listdir(R.FIGURES))} figures {figbad or 'clean'}")
+    if not IDENT or not REPO:
+        chk(2, "anonymisation (PDF text, raw bytes, metadata, figures)", False,
+            "NOT CONFIGURED: set RWM_IDENT (comma-separated identifying strings) "
+            "and RWM_IDENT_REPO (the author's repository). This check FAILS rather "
+            "than reporting NOT RUN: it cannot certify a PDF it has not scanned.")
+    else:
+        hit_t = {k: txt.count(k) for k in IDENT + [REPO] if txt.count(k)}
+        hit_b = {k: raw.count(k.encode()) for k in IDENT + [REPO] if raw.count(k.encode())}
+        author = (r.metadata.get("/Author") or "").strip() if r.metadata else ""
+        figbad = {}
+        for f in sorted(os.listdir(R.FIGURES)):
+            p = os.path.join(R.FIGURES, f)
+            if not os.path.isfile(p):
+                continue
+            b = open(p, "rb").read()
+            h = {k: b.count(k.encode()) for k in IDENT + [REPO] if b.count(k.encode())}
+            if h:
+                figbad[f] = h
+        chk(2, "anonymisation (PDF text, raw bytes, metadata, figures)",
+            not hit_t and not hit_b and not author and not figbad,
+            f"text {hit_t or 'clean'}, bytes {hit_b or 'clean'}, /Author {author!r}, "
+            f"{len(os.listdir(R.FIGURES))} figures {figbad or 'clean'}")
 
     # ---- 3 no hand-typed numbers ----
     tpl = re.sub(r"\{\{\w+\}\}", " ", open("PAPER.template.md").read())

@@ -1,5 +1,5 @@
 {
-  "order": "commit date; H labels are Hugging Face model repository commits, by first mention in this history",
+  "order": "commit date; H labels are Hugging Face model repository commits, by first mention in this history; P labels are commits of the pre-purge history, by commit date; U labels are identifiers that resolve in no local store",
   "labels": {
     "84b789261da7201eaeb2d1e687c6779af662a284": "C001",
     "f1eb6a5b279769f7fec7420005bab14164c268bf": "C002",
@@ -186,6 +186,34 @@
     "05e95637e62a3f3d230a2584c0d4c38155117a0c": "C183",
     "c9724df95085435fa7bfcee924389baf3b545355": "C184",
     "23fad9a142842c6f4a68d448bcfd4bab3bc0cc2f": "C185",
-    "de96946b7fe4": "H001"
+    "10d26e33e720c8ebee2b3f9c2cb98ff413f23a4d": "C186",
+    "37da0e64c4f1821126428291e2aba545c2390b30": "C187",
+    "677f3e000eb650a528b3f8534e56425cb5cf192c": "C188",
+    "2424af8702cafe3e1a93ebe92e0dff17defc843a": "C189",
+    "b1c140ab05f34f7578c7981876bbe11fc6e65b73": "C190",
+    "fc0341ec64995f83a256b7ad9cc2c8eea08cfd09": "C191",
+    "3a6f0a4e5fb272056e09fd36025959a9e301311e": "C192",
+    "d52ee880f78d5c6764f4698c5820618877afde58": "C193",
+    "b2031bef821db38b744c76a60c56c2aa6036b13d": "C194",
+    "de96946b7fe4": "H001",
+    "7859309f146ce1b84bdb853caf8a8b333d30a809": "P001",
+    "66a25565930f47e6bff86efcc44ae3140ad3e257": "P002",
+    "395ef35bec9924a211dcf01f76fa39d470263838": "P003",
+    "da635be2833c1e024dc954ee0563947553654e2e": "P004",
+    "925456ae42c16b5c1d66c0232345fb89f60c5e3d": "P005",
+    "1979f01cddc7ec85b4398f75f6c5c0fc269ab675": "P006",
+    "20955e254dbb4b6698cd39f89c6c7077ea2c50c1": "P007",
+    "0288b47c5e02334b03a8dd1da74fc0961d41309f": "P008",
+    "29bba9219be2a8be08b7c9b66922c231a4cc92de": "P009",
+    "b84807453e01cd64065501e4435c575cba49b4d5": "P010",
+    "6b5d84d0f5cf3f45e6bbe01e6b20b8c269ae976c": "P011",
+    "4c2fd6aad050357ed5d9c82d23506ec952add620": "P012",
+    "2fa6d1e6cfec1d1947fc14d5f9e09e953e81ff71": "P013",
+    "c4c9954ae27a6060092ca34f794284138b4d1081": "P014",
+    "f113319a1948f8fb5c950194c4dd5ad901b5b37f": "P015",
+    "1ef8e21f56f33e271cead6b63ce279a435ceb862": "P016",
+    "2642cdacb00abaedd69b5986a02e83d69be189c5": "P017",
+    "45214f932d8705b97f915dd414d0d9fac182e571": "P018",
+    "edbfee88": "U001"
   }
 }

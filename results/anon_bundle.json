@@ -1,6 +1,6 @@
 {
   "cited_files_absent": [],
-  "cited_files_checked": 24,
+  "cited_files_checked": 33,
   "excluded_as_identifying": [
     "docs/ARCHIVAL_IDENTIFIERS.md"
   ],
@@ -10,8 +10,8 @@
     "NOTICE"
   ],
   "n_detection_patterns": 11,
-  "n_files_content_scrubbed": 44,
-  "n_files_staged": 415,
+  "n_files_content_scrubbed": 41,
+  "n_files_staged": 411,
   "n_paths_scrubbed": 1,
   "n_residual_hits": 0,
   "n_substitution_rules": 17,
@@ -26,6 +26,6 @@
     "n_hits_on_probe": 9,
     "planted": "a file whose NAME and CONTENTS both carry deny-list strings"
   },
-  "zip_bytes": 12418145,
+  "zip_bytes": 12416462,
   "zip_written": "supplementary_anon.zip"
 }

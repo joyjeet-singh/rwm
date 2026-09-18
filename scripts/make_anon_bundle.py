@@ -306,6 +306,21 @@ EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            "scripts/f5_pdf_channels.py",
            # Internal working documents; never ship in any bundle.
            "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md",
+           # The author-contact working documents. They pass every text sweep once
+           # scrubbed, which is why they were deliberately re-included here while
+           # build_supplementary.py excluded them. No string sweep catches the
+           # remaining exposure: an author who reads their own correspondence
+           # recognises it, and the reviewers of a double-blind submission may be
+           # the authors this work corresponded with. Nothing in the paper cites
+           # any of them, and no shipped script imports the generator.
+           #
+           # MODEL_CARD.md and scripts/build_model_card.py deliberately STAY. The
+           # reproduce.sh that ships inside this bundle runs the builder at stage
+           # 25 with no NEEDS_WEIGHTS marker and no output guard, and check C11.2
+           # reads the model card, so excluding either turned the shipped pipeline
+           # non-zero for a reviewer who unzipped the bundle and ran it.
+           "docs/E4_AUTHOR_CONTACT.md", "docs/E4_REPLY_DRAFT.md",
+           "docs/E6_ARCHIVAL.md", "scripts/e4_reply_draft.py",
            # The real-hash map behind the submission's commit labels (D1).
            MAP_FILE}
 SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".prebak", ".t2bak", ".t3bak", ".t4bak",
