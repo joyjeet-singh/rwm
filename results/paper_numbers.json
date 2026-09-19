@@ -8005,11 +8005,11 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "950,191"
+    "value": "950,201"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
-    "value": "301 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses)"
+    "value": "295 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses)"
   },
   "ver_claim_pct": {
     "source": "results/verify_reproduction.json",
@@ -8025,7 +8025,7 @@
   },
   "ver_diff_by_file": {
     "source": "results/verify_reproduction.json",
-    "value": "`results/task_c1_claims_audit.json` (304), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1)"
+    "value": "`results/task_c1_claims_audit.json` (298), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1)"
   },
   "ver_diff_nfiles": {
     "source": "results/verify_reproduction.json",
@@ -8033,7 +8033,7 @@
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 314
+    "value": 308
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
@@ -8045,7 +8045,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "8,984"
+    "value": "9,000"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
@@ -8069,7 +8069,7 @@
   },
   "ver_part_else": {
     "source": "results/verify_reproduction.json",
-    "value": 314
+    "value": 308
   },
   "ver_part_index": {
     "source": "results/verify_reproduction.json",
@@ -8081,7 +8081,7 @@
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "96.62"
+    "value": "96.69"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
@@ -8113,7 +8113,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "9,298"
+    "value": "9,308"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

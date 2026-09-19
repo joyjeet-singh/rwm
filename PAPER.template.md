@@ -1479,16 +1479,16 @@ the verdict of a test is {{ver_part_sci}}.**
 numeric values from a clean clone: {{ver_identical}} bitwise identical ({{ver_pct}}%),
 {{ver_close}} equal to within the verifier's floating-point tolerance but not bitwise, and
 {{ver_differing}} differing. Those
-three account for the {{ver_values}} exactly. Regeneration does not reproduce {{ver_keys_lost}} of the committed values, spread across
-{{ver_keys_lost_files}} of the files; they are counted separately, because a value that is not
+three account for the {{ver_values}} exactly. Regeneration does not reproduce {{ver_keys_lost}} of the committed values, in
+{{ver_keys_lost_files}} of the files; that count is kept separate, because a value that is not
 produced twice cannot be compared twice.
 The {{ver_differing}} differing values are partitioned by cause from the per-file record in
 `results/verify_reproduction.json`: {{ver_part_index}} are in the document-line index
 (`results/restatement_index.json`), {{ver_part_dilution}} in the stochastic dilution study
-(`results/e5_sigma_dilution.json`), and {{ver_part_else}} elsewhere. The document-line index records where numerals
-sit in this paper's source, which a clone checks out unchanged, so it reproduces exactly whenever
-the committed copy was generated from that source; when it was not, it measures how far the two
-have drifted apart rather than anything about the science. Whether a differing value carries
+(`results/e5_sigma_dilution.json`), and {{ver_part_else}} elsewhere. The document-line index records where each
+numeral sits in this paper's source and what it renders to. A clone checks out the same source, so
+every position reproduces; the only values it can disagree on are this paper's own statements about
+this comparison, which is why the committed index is regenerated whenever those figures are restated. Whether a differing value carries
 a scientific result is decided value by value, not file by file: it does only if the value is
 itself a measurement, a statistic or the verdict of a test, and a value does not qualify merely
 because the file holding it also holds results. `scripts/paper_numbers.py` applies that rule in

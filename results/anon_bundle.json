@@ -26,6 +26,6 @@
     "n_hits_on_probe": 9,
     "planted": "a file whose NAME and CONTENTS both carry deny-list strings"
   },
-  "zip_bytes": 12420124,
+  "zip_bytes": 12420132,
   "zip_written": "supplementary_anon.zip"
 }

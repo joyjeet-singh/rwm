@@ -1180,13 +1180,13 @@
           "section": "8. Method",
           "line": 1482,
           "key": "ver_keys_lost",
-          "ctx": "er_values}} exactly. Regeneration does not reproduce {{ver_keys_lost}} of the committed values, spread across "
+          "ctx": "er_values}} exactly. Regeneration does not reproduce {{ver_keys_lost}} of the committed values, in {{ver_keys_"
         },
         {
           "section": "8. Method",
           "line": 1483,
           "key": "ver_keys_lost_files",
-          "ctx": "_lost}} of the committed values, spread across {{ver_keys_lost_files}} of the files; they are counted separate"
+          "ctx": " {{ver_keys_lost}} of the committed values, in {{ver_keys_lost_files}} of the files; that count is kept separa"
         },
         {
           "section": "11. Limitations",
@@ -4183,7 +4183,7 @@
       ]
     },
     {
-      "value": "314",
+      "value": "308",
       "n_locations": 5,
       "same_quantity_candidate": false,
       "fails_build": false,
