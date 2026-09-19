@@ -1520,16 +1520,16 @@ it rests on, because it is what let us detect the gap at all.
 **The number of regenerated values that differ and are themselves a measurement, a statistic or
 the verdict of a test is 0.**
 `./reproduce.sh --quick --force` regenerates 46 artifact files and 9,308
-numeric values from a clean clone: 9,000 bitwise identical (96.69%),
+numeric values from a clean clone: 8,994 bitwise identical (96.63%),
 0 equal to within the verifier's floating-point tolerance but not bitwise, and
-308 differing. Those
+314 differing. Those
 three account for the 9,308 exactly. Regeneration does not reproduce 1 of the committed values, in
 1 of the files; that count is kept separate, because a value that is not
 produced twice cannot be compared twice.
-The 308 differing values are partitioned by cause from the per-file record in
+The 314 differing values are partitioned by cause from the per-file record in
 `results/verify_reproduction.json`: 0 are in the document-line index
 (`results/restatement_index.json`), 0 in the stochastic dilution study
-(`results/e5_sigma_dilution.json`), and 308 elsewhere. The document-line index records where each
+(`results/e5_sigma_dilution.json`), and 314 elsewhere. The document-line index records where each
 numeral sits in this paper's source and what it renders to. A clone checks out the same source, so
 every position reproduces; the only values it can disagree on are this paper's own statements about
 this comparison, which is why the committed index is regenerated whenever those figures are restated. Whether a differing value carries
@@ -1537,8 +1537,8 @@ a scientific result is decided value by value, not file by file: it does only if
 itself a measurement, a statistic or the verdict of a test, and a value does not qualify merely
 because the file holding it also holds results. `scripts/paper_numbers.py` applies that rule in
 code, counts any differing value it does not recognise as scientific, and places these outside the
-scientific class: 295 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses). **`part_f_gate` still fails.** Its clean-clone check requires
-that no regenerated value differ; 308 do, and it is published as failing, with no
+scientific class: 301 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses). **`part_f_gate` still fails.** Its clean-clone check requires
+that no regenerated value differ; 314 do, and it is published as failing, with no
 tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
@@ -1902,9 +1902,9 @@ iteration count. Read `results/step4_5_timing.json` as one machine's account of 
 property of the code.
 
 **One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
-check in `part_f_gate` requires that *no* regenerated value differ. 308 do, so the
+check in `part_f_gate` requires that *no* regenerated value differ. 314 do, so the
 check fails, and it is published as failing. We did not give it a tolerance. The differences sit in 6 artifacts, counted from the per-file record in
-`results/verify_reproduction.json`: `results/task_c1_claims_audit.json` (298), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1). The stochastic dilution study differs in
+`results/verify_reproduction.json`: `results/task_c1_claims_audit.json` (304), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1). The stochastic dilution study differs in
 0, and the number of differing values that are a measurement, a statistic or a
 test verdict, under the rule §8 states, is 0 — but a partition we believe is benign
 is a reason to read the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
