@@ -1519,15 +1519,15 @@ it rests on, because it is what let us detect the gap at all.
 **Reproducibility, and a build that checks its own prose.**
 **The number of regenerated values that differ and are themselves a measurement, a statistic or
 the verdict of a test is 0.**
-`./reproduce.sh --quick --force` regenerates 46 artifact files and 8,782
-numeric values from a clean clone: 8,033 bitwise identical (91.47%),
+`./reproduce.sh --quick --force` regenerates 46 artifact files and 8,786
+numeric values from a clean clone: 8,034 bitwise identical (91.44%),
 0 equal to within the verifier's floating-point tolerance but not bitwise, and
-749 differing. Those
-three account for the 8,782 exactly. A further 356 values are present in the
+752 differing. Those
+three account for the 8,786 exactly. A further 352 values are present in the
 committed artifacts and absent after regeneration, across 2 files; they are
 counted separately because a value that is not produced twice cannot be compared twice.
-The 749 differing values are partitioned by cause from the per-file record in
-`results/verify_reproduction.json`: 435 are in the document-line index
+The 752 differing values are partitioned by cause from the per-file record in
+`results/verify_reproduction.json`: 438 are in the document-line index
 (`results/restatement_index.json`), 0 in the stochastic dilution study
 (`results/e5_sigma_dilution.json`), and 314 elsewhere. The document-line index records
 where numerals sit in this document, so its line numbers and counts change whenever the document is
@@ -1536,13 +1536,13 @@ a scientific result is decided value by value, not file by file: it does only if
 itself a measurement, a statistic or the verdict of a test, and a value does not qualify merely
 because the file holding it also holds results. `scripts/paper_numbers.py` applies that rule in
 code, counts any differing value it does not recognise as scientific, and places these outside the
-scientific class: 301 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 278 in `results/restatement_index.json` (line numbers in this document); 152 in `results/restatement_index.json` (counts of where each repeated numeral appears in this document); 5 in `results/restatement_index.json` (the index's totals over this document); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses). **`part_f_gate` still fails.** Its clean-clone check requires
-that no regenerated value differ; 749 do, and it is published as failing, with no
+scientific class: 301 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 282 in `results/restatement_index.json` (line numbers in this document); 151 in `results/restatement_index.json` (counts of where each repeated numeral appears in this document); 5 in `results/restatement_index.json` (the index's totals over this document); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses). **`part_f_gate` still fails.** Its clean-clone check requires
+that no regenerated value differ; 752 do, and it is published as failing, with no
 tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: 8,782 values, or 0.92%
-of the 949,675 numeric values under `results/`. The other 940,893 are carried in, prove
+honest test is the subset the run actually rewrites: 8,786 values, or 0.93%
+of the 949,679 numeric values under `results/`. The other 940,893 are carried in, prove
 nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 108-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 659 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
@@ -1880,9 +1880,9 @@ during this revision — two calibration figures that named no horizon, and one 
 three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this appendix: of the 949,675 numeric values under `results/`, a clean
-clone regenerates 8,782 and carries in 940,893. The reproducibility claim covers
-0.92% of the directory and is silent about the rest. We state that fraction because a
+bounds everything in this appendix: of the 949,679 numeric values under `results/`, a clean
+clone regenerates 8,786 and carries in 940,893. The reproducibility claim covers
+0.93% of the directory and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
 *The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected
@@ -1901,9 +1901,9 @@ iteration count. Read `results/step4_5_timing.json` as one machine's account of 
 property of the code.
 
 **One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
-check in `part_f_gate` requires that *no* regenerated value differ. 749 do, so the
+check in `part_f_gate` requires that *no* regenerated value differ. 752 do, so the
 check fails, and it is published as failing. We did not give it a tolerance. The differences sit in 7 artifacts, counted from the per-file record in
-`results/verify_reproduction.json`: `results/restatement_index.json` (435), `results/task_c1_claims_audit.json` (304), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1). The stochastic dilution study differs in
+`results/verify_reproduction.json`: `results/restatement_index.json` (438), `results/task_c1_claims_audit.json` (304), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1). The stochastic dilution study differs in
 0, and the number of differing values that are a measurement, a statistic or a
 test verdict, under the rule §8 states, is 0 — but a partition we believe is benign
 is a reason to read the check's output, not to move its threshold. A gate that passes because its criterion was relaxed

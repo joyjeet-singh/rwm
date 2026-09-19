@@ -47,17 +47,17 @@
     "v2_deployment_horizon.json",
     "v3_metric_definitions.json"
   ],
-  "values_compared": 8782,
-  "bitwise_identical": 8033,
+  "values_compared": 8786,
+  "bitwise_identical": 8034,
   "identical_to_1e-9": 0,
-  "differing": 749,
+  "differing": 752,
   "timing_excluded": 5210,
   "nan_in_both": 4,
   "copied_file_values": 940893,
-  "copied_identical": 940833,
-  "copied_differing": 60,
-  "machine_file_values_excluded": 698,
-  "keys_lost": 356,
+  "copied_identical": 940831,
+  "copied_differing": 62,
+  "machine_file_values_excluded": 706,
+  "keys_lost": 352,
   "keys_lost_files": [
     "anon_bundle.json",
     "restatement_index.json"
@@ -223,10 +223,8 @@
     },
     "compile_paper.json": {
       "regenerated": false,
-      "differing": 1,
-      "differing_keys": [
-        ".bytes"
-      ],
+      "differing": 0,
+      "differing_keys": [],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
@@ -437,9 +435,11 @@
     },
     "part_f_gate.json": {
       "regenerated": false,
-      "differing": 1,
+      "differing": 3,
       "differing_keys": [
-        ".n_pass"
+        ".n_pass",
+        ".n_run",
+        ".n_not_run"
       ],
       "keys_lost": 0,
       "keys_lost_paths": []
@@ -460,7 +460,7 @@
     },
     "pipeline_coverage.json": {
       "regenerated": false,
-      "differing": 47,
+      "differing": 48,
       "differing_keys": [
         ".n_artifacts",
         ".n_paper_keys",
@@ -490,6 +490,7 @@
         ".artifacts[26].n_paper_keys",
         ".artifacts[31].n_paper_keys",
         ".artifacts[32].n_paper_keys",
+        ".artifacts[33].n_paper_keys",
         ".artifacts[34].n_paper_keys",
         ".artifacts[35].n_paper_keys",
         ".artifacts[36].n_paper_keys",
@@ -529,7 +530,7 @@
     },
     "restatement_index.json": {
       "regenerated": true,
-      "differing": 435,
+      "differing": 438,
       "differing_keys": [
         ".n_substituted",
         ".n_typed",
@@ -957,17 +958,20 @@
         ".restatements[85].n_substituted",
         ".restatements[85].locations[0].line",
         ".restatements[85].locations[1].line",
-        ".restatements[85].locations[2].line",
         ".restatements[86].n_locations",
+        ".restatements[86].n_typed",
         ".restatements[86].n_substituted",
         ".restatements[86].locations[0].line",
         ".restatements[86].locations[1].line",
-        ".restatements[87].n_locations",
-        ".restatements[87].n_substituted",
+        ".restatements[86].locations[2].line",
+        ".restatements[86].locations[3].line",
+        ".restatements[86].locations[4].line",
+        ".restatements[86].locations[5].line",
+        ".restatements[86].locations[6].line",
         ".restatements[87].locations[0].line",
         ".restatements[87].locations[1].line"
       ],
-      "keys_lost": 355,
+      "keys_lost": 351,
       "keys_lost_paths": [
         ".restatements[11].locations[2].line",
         ".restatements[21].locations[2].line",
@@ -1319,11 +1323,7 @@
         ".restatements[83].locations[18].line",
         ".restatements[83].locations[19].line",
         ".restatements[83].locations[20].line",
-        ".restatements[86].locations[2].line",
-        ".restatements[86].locations[3].line",
-        ".restatements[86].locations[4].line",
-        ".restatements[86].locations[5].line",
-        ".restatements[86].locations[6].line"
+        ".restatements[85].locations[2].line"
       ]
     },
     "review_bootstrap_unit.json": {
