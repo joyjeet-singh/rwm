@@ -1,7 +1,8 @@
 # Cover statement — TMLR submission
 
 *Draft. Every figure is substituted from a named artifact by the paper's own build; the
-numbers below are quoted from `results/paper_numbers.json` and are current at 40 pages.*
+numbers below are quoted from `results/paper_numbers.json` and are current at 49 pages, the
+length of the compiled submission.*
 
 ---
 
@@ -20,10 +21,12 @@ file on disk. Concretely:
   106 tensors — before any training run is scored. Shapes, wiring, action indexing and the
   hold-last residual are each verified separately, and every later step inherits all five.
 
-- **Fifteen pre-registered decision rules, with git lead times.** Each names its conditions and
-  thresholds before its data existed, and Appendix F gives all fifteen with the lead time
-  computed as a difference of commit timestamps. The full committed text of every rule ships in
-  the supplementary material, unabridged.
+- **Seventeen pre-registered decision rules, with git lead times.** Each names its conditions and
+  thresholds before its data existed, and Appendix F gives all seventeen with the lead time
+  computed from git. Sixteen have a positive lead and are a difference of two commit timestamps;
+  the seventeenth is negative and is not, because its data side is a line in a run log rather than
+  a commit — it is the rule this paper withdraws as a pre-registration, and §8 says so. The full
+  committed text of every rule ships in the supplementary material, unabridged.
 
 - **Verdicts reported as returned.** Including the ones that are inconvenient: `M-43` returns
   `DOES NOT GENERALISE`, `M-49` returns `UNDER-POWERED`, and `M-51`/`M-52` return
@@ -32,20 +35,24 @@ file on disk. Concretely:
 
 - **Two results that run against the paper's own arms**, reported at full strength rather than
   buried. At one forecast step, teacher forcing *beats* the autoregressive training this paper
-  reproduces — a gap the 400-step unit could only report as spanning zero, resolved as real
-  under a second pre-registered rule at 60 units. And the synthetic corroboration returns MIXED
-  at twenty seeds where it returned OBJECTIVE-DRIVEN at three, exactly as the rule warned before
-  the runs existed.
+  reproduces — a gap the 400-step unit could only report as spanning zero, resolved as real under
+  a second pre-registered rule at 60 units. And the synthetic experiment that corroborates the
+  collapse clears its own slope threshold on only 11 of 20 seeds. `M-50`'s verdict of
+  OBJECTIVE-DRIVEN stands as returned over the 3 seeds it was discharged on and is not re-opened
+  by a larger sample; what the wider sweep establishes is that the all-seeds criterion would not
+  have held across all 20, so the hedge the rule carried was necessary rather than cautious.
 
 - **Twelve retractions kept in the record** — six that withdraw numbers and six that withdraw
   framings — with the evidence that withdrew each, including one wrong by about a factor of
   10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
 
 - **A build gate published as failing.** The clean-clone check requires that no regenerated value
-  differ; 178 of 8,186 do, so it fails, it says where, and it is reported as failing. It was not
-  given a tolerance. The reproducibility figure is stated as 0.90% of the values under
-  `results/` rather than as the 97.50% a less careful partition would license — an earlier
-  version of that claim counted carried-in files and overstated it about fiftyfold.
+  differ; 314 of 9,308 do, so it fails, it says where, and it is reported as failing. It was not
+  given a tolerance, and none of the 314 is a measurement, a statistic or the verdict of a test.
+  The reproducibility figure is stated over the 0.98% of the values under `results/` that a clean
+  clone actually rewrites, rather than over the whole directory: counting the values a clone merely
+  carries in would multiply the denominator about 102-fold, and an earlier version of this claim
+  did exactly that.
 
 ### 2. Would some individuals in TMLR's audience be interested in the findings?
 
@@ -57,13 +64,14 @@ The finding a practitioner can act on is that the uncertainty a deployed robotic
 penalises with is miscalibrated **as a scale, by a factor that grows with rollout depth** — so it
 is not a units problem a tuned coefficient absorbs. The best constant rescale, fitted and scored
 on the same data and therefore an upper bound on what any constant achieves, grows by a factor of
-4 across the rollout. One repair works and is given: a per-horizon multiplier, fitted on one
-held-out episode and scored on the other, restores nominal coverage on every held-out cell.
+4 across the rollout. One repair is given, with its limit stated: a per-horizon
+multiplier, fitted on one held-out episode and scored on the other, brings every held-out coverage
+estimate within 10 points of nominal, though no single cell is resolvable at this arena.
 
 The lessons in §9 generalise past this checkpoint: do not convert per-dimension sign counts into
-P-values when the dimensions are physically coupled; do not resample trajectory-step pairs when
-the trajectory is the unit; and price a trust metric against the free alternatives before paying
-for an ensemble.
+P-values when the dimensions are physically coupled; count independent trajectories rather than
+trajectories, and do not resample pooled seed x trajectory values when the trajectory is the unit;
+and price a trust metric against the free alternatives before paying for an ensemble.
 
 ---
 
