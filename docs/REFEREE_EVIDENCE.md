@@ -205,3 +205,108 @@ are read from `results/q2_free_baseline_power.json`.
 correlation clear their thresholds. For step-size the partial already clears at n = 20 —
 +0.5430 against 0.1131 — and only the margin does not. So the quantity a larger
 sample would have to settle is the raw margin, and that is the one inverted here.
+
+---
+
+## Q1 — How many public repositories carry the construction *and* train it against a sampled squared error?
+
+**The referee's stake in it.** §6.3 derives the σ = 0 optimum from an objective rather than a bug,
+and §2 states as an **untested hypothesis** that any descendant of the PETS parameterisation which
+replaced the likelihood with a sampled squared error inherits the same optimum. The referee asked
+for a count, noting it would widen the result's reach at almost no cost.
+
+**It does not widen it. It narrows it, and that is the finding.**
+
+> Of **10** repositories examined on 2026-09-20 under the protocol in
+> `/Users/Shared/rwm_verify/evidence/A2/protocol.md`, **10** carry the
+> construction and **1** of those trains it against a sampled squared error.
+
+The protocol was written and frozen **before the search**, precisely so that this number could
+not be improved by widening the criteria once the answer was visible. Its sha256 is recorded
+beside it in `evidence/A2/protocol.sha256`, in the block's `STATE.json`, and in
+`results/q1_pets_descendants.json` itself; if the file and that hash disagree, the survey is
+void.
+
+### What was examined, and what each does with the head
+
+| repository | commit read | construction | loss | verdict |
+|---|---|---|---|---|
+| `kchua/handful-of-trials` | `77fd8802cc` | `dmbrl/modeling/models/BNN.py:414` | `dmbrl/modeling/models/BNN.py:440` | **DOES NOT INHERIT** |
+| `quanvuong/handful-of-trials-pytorch` | `672d32f9fa` | `config/halfcheetah.py:86` | `MPC.py:237` | **DOES NOT INHERIT** |
+| `Xingyu-Lin/mbpo_pytorch` | `fe3c78c474` | `model.py:142` | `model.py:168` | **DOES NOT INHERIT** |
+| `facebookresearch/mbrl-lib` | `3f93cccfc8` | `mbrl/models/gaussian_mlp.py:152` | `mbrl/models/gaussian_mlp.py:300` | **DOES NOT INHERIT** |
+| `nirbhayjm/va_mbpo` | `203ea3e5bd` | `mbrl/models/gaussian_mlp.py:158` | `mbrl/models/gaussian_mlp.py:340` | **INHERITS** |
+| `Shylock-H/COMBO_Offline_RL` | `239cce768b` | `dynamic/ensemble_dynamics.py:139` | `dynamic/transition_model.py:103` | **DOES NOT INHERIT** |
+| `yihaosun1124/pytorch-mopo` | `33a81aae8b` | `models/tf_dynamics_models/bnn.py:647` | `models/tf_dynamics_models/bnn.py:688` | **DOES NOT INHERIT** |
+| `junming-yang/mopo` | `2c9431e44b` | `models/ensemble_dynamics.py:138` | `models/transition_model.py:123` | **DOES NOT INHERIT** |
+| `yihaosun1124/OfflineRL-Kit` | `3962aa8709` | `offlinerlkit/modules/dynamics_module.py:25` | `offlinerlkit/dynamics/ensemble_dynamics.py:192` | **DOES NOT INHERIT** |
+| `polixir/OfflineRL` | `ea1a446b21` | `offlinerl/outside_utils/modules/dynamics_module.py:25` | `offlinerl/algo/modelbase/model_base.py:325` | **DOES NOT INHERIT** |
+
+Nine of the ten keep PETS's Gaussian negative log-likelihood, whose log-σ term is exactly what
+opposes σ → 0. `COULD NOT DETERMINE` was available as a verdict and was not needed: every loss
+was locatable in source.
+
+### The one that inherits, and the qualification it carries
+
+`nirbhayjm/va_mbpo` at `203ea3e5bd` is a fork of `mbrl-lib` adding a value-aware loss.
+With `deterministic=False` — the branch in which the bounded construction *is* applied — and
+`model_loss_type='va'`, `_va_loss` builds `Normal(mean, exp(0.5*logvar))` from the bounded head,
+draws a **reparameterised** sample with `rsample()`, and scores it with `F.mse_loss` on the reward
+dimension and a squared model-advantage through the critic on the state dimensions. **There is no
+log-σ term anywhere in that objective** — the construction §6.3 shows has its optimum at σ = 0.
+
+**The qualification, which the count must carry:** it inherits *in its value-aware mode*, which is
+an option and not the default. `model_loss_type` defaults to `'mle'` throughout and is threaded
+from `cfg.overrides.model_loss_type` in `mbrl/algorithms/mbpo.py`; under `'mle'` the same file
+uses the Gaussian NLL and does not inherit.
+
+### The trap this survey had to avoid, because it would have inverted the answer
+
+Several of these repositories offer an `inc_var_loss=False` or `deterministic=True` path that
+scores MSE **against the predicted mean**. That does *not* satisfy the inclusion test, and the
+distinction is the whole content of §6.3: squaring the *mean's* error gives σ no gradient at all,
+so σ is merely untrained, whereas squaring a *draw's* error makes σ = 0 the optimum. In
+`mbrl-lib`'s deterministic branch `forward()` returns before the construction is even applied. A
+survey matching on "MSE" alone would have counted most of this list as inheriting.
+
+### Looked at and excluded because the construction is absent
+
+| repository | commit read | why |
+|---|---|---|
+| `johannesnauta/pytorch-pne` | `c3eacc0b01` | Uses softplus to make a variance positive (models/pnn.py), not the double-softplus clamp between two LEARNABLE bounds. Different construction. |
+| `leggedrobotics/robotic_world_model` | `14dbfe9da3` | The Isaac Lab extension of the paper under reproduction. No softplus appears in any of its 44 Python files: the dynamics head lives in its rsl_rl dependency, not in this repository. Relevant to referee Q4 as well, and consistent with what block A1 found there. |
+| `leggedrobotics/rsl_rl` | `857de6165c` | Mainline rsl_rl. Its only softplus use is a Beta policy distribution in rsl_rl/modules/distribution.py. The bounded log-sigma dynamics head exists in the rwm FORK this paper pins, not in the mainline library -- which narrows the construction's reach rather than widening it. |
+
+The third is worth a sentence in its own right: **the bounded log-σ dynamics head is not in
+mainline `rsl_rl`.** It exists in the RWM fork this paper pins. Mainline's only `softplus` is a
+Beta policy distribution. That narrows the construction's reach rather than widening it. The
+second is the Isaac Lab extension block A1 identified for Q4, and it carries no `softplus` in any
+of its 44 Python files.
+
+The subject of this reproduction — the pinned `rsl_rl_rwm` fork — inherits by construction and is
+recorded in the artifact **separately and not counted**: counting the thing §6.3 measured as
+evidence that the result travels would be circular.
+
+### What this licenses the paper to say, and what it does not
+
+**It does not touch §2's hypothesis as a statement of mechanism.** §2 asserts a conditional — that
+a descendant *which made the substitution* inherits the optimum — and this survey tested no
+mechanism in any repository. What it bears on is **reach**: how often the antecedent holds. The
+honest reading is that the substitution is **rare** in this lineage rather than common, so a
+reader of §2 who infers broad reach is inferring more than the evidence supports, and §2 should
+say so.
+
+**And it must be stated as a count over what was examined, never over a population.** No claim is
+made about how many such repositories exist or what fraction of the field they are. GitHub code
+search and web search rank and truncate; this is a sample of convenience, capped at 25 by the
+protocol and stopped at 10.
+
+### Re-running it
+
+`scripts/q1_pets_descendants.py --verify` re-fetches every cited file **at its cited commit** and
+confirms the recorded line still contains the recorded text. All 20 citations
+verified on 2026-09-20; the artifact records the run under `verification`, with `citations_checked`
+and `citations_still_valid`, so a reader can see whether the copy they hold was produced by a
+verifying run or not. The verdicts themselves are readings of source and no script can
+re-derive them; what a script can check is that the citations have not drifted, and that is what
+it checks.

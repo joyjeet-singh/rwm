@@ -3179,6 +3179,21 @@
         "scripts/q2_free_baseline_power.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-75",
+      "claim": "The substitution behind the sigma = 0 optimum is rare among public descendants, not comm",
+      "relevance": "CONTRIB",
+      "status": "ACTIVE",
+      "evidence": [
+        "EXT",
+        "RUN"
+      ],
+      "artifacts": [
+        "results/q1_pets_descendants.json",
+        "scripts/q1_pets_descendants.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -3187,7 +3202,7 @@
     "D": 36,
     "M": 69,
     "O": 14,
-    "R": 74,
+    "R": 75,
     "S": 19,
     "X": 17
   }

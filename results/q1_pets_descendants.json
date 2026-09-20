@@ -1,0 +1,236 @@
+{
+  "question": "Referee Q1 \u2014 how many public repositories carry the PETS bounded log-sigma construction AND train it against a sampled squared error?",
+  "search_date": "2026-09-20",
+  "protocol": {
+    "path": "/Users/Shared/rwm_verify/evidence/A2/protocol.md",
+    "sha256": "44c654ff2ef16acc6e91a83f6b9b898ff5ca48dd114d3f87e6a9a2367459975c",
+    "fixed": "before the search, and unchanged afterwards"
+  },
+  "finding": "Of 10 repositories examined on 2026-09-20 under the protocol in /Users/Shared/rwm_verify/evidence/A2/protocol.md, 10 carry the construction and 1 of those train it against a sampled squared error.",
+  "counts": {
+    "examined": 10,
+    "carry_the_construction": 10,
+    "inherits": 1,
+    "does_not_inherit": 9,
+    "could_not_determine": 0,
+    "construction_absent_and_so_out_of_scope": 3,
+    "cap": 25
+  },
+  "what_this_count_is_not": "It is a count over what was EXAMINED, never over a population. No claim is made about how many such repositories exist, what fraction of the field they are, or what the field does in general. GitHub code search and web search rank and truncate; this is a sample of convenience.",
+  "reading": "The substitution \u00a76.3 identifies is RARE among the descendants examined, not common. Nine of ten kept PETS's likelihood, which is what opposes sigma -> 0, and the single repository that made the substitution does so only in a non-default mode. \u00a72's hypothesis \u2014 that any descendant replacing the likelihood with a sampled squared error inherits the optimum \u2014 is untouched as a statement of mechanism: it is a claim about what follows from the substitution, and this survey did not test the mechanism in any of them. What the survey bears on is REACH, and the honest reading is that the reach is narrower than a reader of \u00a72 would assume: the substitution is not a common pattern in this lineage. \u00a72 should say so.",
+  "examined": [
+    {
+      "repo": "kchua/handful-of-trials",
+      "url": "https://github.com/kchua/handful-of-trials",
+      "commit": "77fd8802cc30b7683f0227c90527b5414c0df34c",
+      "what": "PETS, the original. TensorFlow.",
+      "construction": {
+        "path": "dmbrl/modeling/models/BNN.py",
+        "line": 414,
+        "expect": "max_logvar - tf.nn.softplus"
+      },
+      "loss": {
+        "path": "dmbrl/modeling/models/BNN.py",
+        "line": 440,
+        "expect": "tf.square(mean - targets) * inv_var"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "_compile_losses with inc_var_loss=True (its default) is the Gaussian NLL: squared error weighted by inv_var plus a var_losses term. The log-sigma term is present and opposes sigma -> 0. The inc_var_loss=False branch is MSE on the MEAN and is compiled as the held-out metric, not the training objective."
+    },
+    {
+      "repo": "quanvuong/handful-of-trials-pytorch",
+      "url": "https://github.com/quanvuong/handful-of-trials-pytorch",
+      "commit": "672d32f9fadf52862e7c6ee73a45f31e89d7d5ba",
+      "what": "Unofficial PyTorch port of PETS.",
+      "construction": {
+        "path": "config/halfcheetah.py",
+        "line": 86,
+        "expect": "max_logvar - F.softplus"
+      },
+      "loss": {
+        "path": "MPC.py",
+        "line": 237,
+        "expect": "inv_var + logvar"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "train_losses = ((mean - targ) ** 2) * inv_var + logvar, the Gaussian NLL written out. The sampling at MPC.py:380 is rollout prediction, not the training loss."
+    },
+    {
+      "repo": "Xingyu-Lin/mbpo_pytorch",
+      "url": "https://github.com/Xingyu-Lin/mbpo_pytorch",
+      "commit": "fe3c78c474d188c16a026051b92f8a2e84fa9387",
+      "what": "PyTorch replication of MBPO.",
+      "construction": {
+        "path": "model.py",
+        "line": 142,
+        "expect": "max_logvar - F.softplus"
+      },
+      "loss": {
+        "path": "model.py",
+        "line": 168,
+        "expect": "torch.pow(mean - labels, 2) * inv_var"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "loss(..., inc_var_loss=True) by default: inverse-variance-weighted squared error plus a var_loss term, the Gaussian NLL. The inc_var_loss=False branch is MSE on the mean and is used for the holdout score."
+    },
+    {
+      "repo": "facebookresearch/mbrl-lib",
+      "url": "https://github.com/facebookresearch/mbrl-lib",
+      "commit": "3f93cccfc8d635f74e335a2f07aab6e9a48fc021",
+      "what": "Facebook Research's model-based RL library; ships PETS, MBPO, PlaNet.",
+      "construction": {
+        "path": "mbrl/models/gaussian_mlp.py",
+        "line": 152,
+        "expect": "max_logvar - F.softplus"
+      },
+      "loss": {
+        "path": "mbrl/models/gaussian_mlp.py",
+        "line": 300,
+        "expect": "gaussian_nll"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "loss() dispatches to _nll_loss, which calls mbrl.util.math.gaussian_nll and adds the PETS bound regulariser. The alternative _mse_loss branch runs only when deterministic=True, and in that mode forward() returns before the construction is applied and predicts no logvar at all -- so the bounded head is never trained against a squared error here, on either branch."
+    },
+    {
+      "repo": "nirbhayjm/va_mbpo",
+      "url": "https://github.com/nirbhayjm/va_mbpo",
+      "commit": "203ea3e5bdbcc153bd38f0ec18b2085d36089fed",
+      "what": "Value-aware model learning with MBPO; a fork of mbrl-lib that adds a value-aware loss.",
+      "construction": {
+        "path": "mbrl/models/gaussian_mlp.py",
+        "line": 158,
+        "expect": "max_logvar - F.softplus"
+      },
+      "loss": {
+        "path": "mbrl/models/gaussian_mlp.py",
+        "line": 340,
+        "expect": "rsample()"
+      },
+      "verdict": "INHERITS",
+      "why": "The one in this survey that makes the substitution. With deterministic=False -- the branch in which the bounded construction IS applied -- and model_loss_type='va', _va_loss builds Normal(mean, exp(0.5*logvar)) from the bounded head, draws a REPARAMETERISED sample with rsample(), and scores it with F.mse_loss on the reward dimension and a squared model-advantage through the critic on the state dimensions. There is no log-sigma term anywhere in that objective. That is the construction \u00a76.3 shows has its optimum at sigma = 0.",
+      "qualification": "It inherits IN ITS VALUE-AWARE MODE, which is an option and not the default: model_loss_type defaults to 'mle' throughout, and the value is threaded from cfg.overrides.model_loss_type in mbrl/algorithms/mbpo.py. Under 'mle' the same file uses the Gaussian NLL and does not inherit. The count below states this rather than rounding it to a plain yes."
+    },
+    {
+      "repo": "Shylock-H/COMBO_Offline_RL",
+      "url": "https://github.com/Shylock-H/COMBO_Offline_RL",
+      "commit": "239cce768bbc2ffd1c978e91efc3cbb4abb7c149",
+      "what": "PyTorch implementation of COMBO.",
+      "construction": {
+        "path": "dynamic/ensemble_dynamics.py",
+        "line": 139,
+        "expect": "max_logvar - F.softplus"
+      },
+      "loss": {
+        "path": "dynamic/transition_model.py",
+        "line": 103,
+        "expect": "train_mse_loss + train_var_loss"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "train_transition_loss = train_mse_loss + train_var_loss, with inc_var_loss defaulting to True: the Gaussian NLL. Its vendored TensorFlow BNN is PETS's and behaves the same way."
+    },
+    {
+      "repo": "yihaosun1124/pytorch-mopo",
+      "url": "https://github.com/yihaosun1124/pytorch-mopo",
+      "commit": "33a81aae8b221de01007e7b27a8a02ee19c27eb3",
+      "what": "PyTorch re-implementation of MOPO.",
+      "construction": {
+        "path": "models/tf_dynamics_models/bnn.py",
+        "line": 647,
+        "expect": "max_logvar - tf.nn.softplus"
+      },
+      "loss": {
+        "path": "models/tf_dynamics_models/bnn.py",
+        "line": 688,
+        "expect": "tf.square(mean - targets) * inv_var"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "The probabilistic branch compiles _compile_losses with inc_var_loss=True \u2014 the Gaussian NLL, plus the PETS bound regulariser. The inc_var_loss=False compilation four lines later is the training loss of the DETERMINISTIC branch and scores MSE against the predicted MEAN, which does not satisfy part (b); the held-out mse_loss is compiled separately two lines after that."
+    },
+    {
+      "repo": "junming-yang/mopo",
+      "url": "https://github.com/junming-yang/mopo",
+      "commit": "2c9431e44b84472006319aa12951f17f837c4fd9",
+      "what": "MOPO re-implemented in PyTorch.",
+      "construction": {
+        "path": "models/ensemble_dynamics.py",
+        "line": 138,
+        "expect": "max_logvar - F.softplus"
+      },
+      "loss": {
+        "path": "models/transition_model.py",
+        "line": 123,
+        "expect": "torch.pow(pred_means - groundtruths, 2) * inv_var"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "inv_var-weighted squared error plus var_losses over pred_logvars: the Gaussian NLL."
+    },
+    {
+      "repo": "yihaosun1124/OfflineRL-Kit",
+      "url": "https://github.com/yihaosun1124/OfflineRL-Kit",
+      "commit": "3962aa8709887695a136349a3a86ab7242740668",
+      "what": "Offline RL library; ships MOPO, COMBO, RAMBO and others.",
+      "construction": {
+        "path": "offlinerlkit/modules/dynamics_module.py",
+        "line": 25,
+        "expect": "softplus"
+      },
+      "loss": {
+        "path": "offlinerlkit/dynamics/ensemble_dynamics.py",
+        "line": 192,
+        "expect": "torch.pow(mean - targets_batch, 2) * inv_var"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "loss = mse_loss_inv.sum() + var_loss.sum(), with mse_loss_inv weighted by inv_var: the Gaussian NLL."
+    },
+    {
+      "repo": "polixir/OfflineRL",
+      "url": "https://github.com/polixir/OfflineRL",
+      "commit": "ea1a446b210d3782e61e559b68306b15b349e9ef",
+      "what": "A collection of offline RL algorithms: MOPO, COMBO, BREMEN, MAPLE, RAMBO.",
+      "construction": {
+        "path": "offlinerl/outside_utils/modules/dynamics_module.py",
+        "line": 25,
+        "expect": "softplus"
+      },
+      "loss": {
+        "path": "offlinerl/algo/modelbase/model_base.py",
+        "line": 325,
+        "expect": "torch.pow(mean - targets_batch, 2) * inv_var"
+      },
+      "verdict": "DOES NOT INHERIT",
+      "why": "dynamics_learn takes a logvar_loss_coef and forms mse_loss_inv.sum() + var_loss.sum(): the Gaussian NLL. Its other model-based algorithms train the dynamics with -dist.log_prob(...), also a likelihood."
+    }
+  ],
+  "construction_absent": [
+    {
+      "repo": "johannesnauta/pytorch-pne",
+      "commit": "c3eacc0b017846e092bc75325041ff1b541bb142",
+      "why": "Uses softplus to make a variance positive (models/pnn.py), not the double-softplus clamp between two LEARNABLE bounds. Different construction."
+    },
+    {
+      "repo": "leggedrobotics/robotic_world_model",
+      "commit": "14dbfe9da3f2246448cccee2873b9817603d5ae5",
+      "why": "The Isaac Lab extension of the paper under reproduction. No softplus appears in any of its 44 Python files: the dynamics head lives in its rsl_rl dependency, not in this repository. Relevant to referee Q4 as well, and consistent with what block A1 found there."
+    },
+    {
+      "repo": "leggedrobotics/rsl_rl",
+      "commit": "857de6165c5fd479726ec8ac5c9303a497766f30",
+      "why": "Mainline rsl_rl. Its only softplus use is a Beta policy distribution in rsl_rl/modules/distribution.py. The bounded log-sigma dynamics head exists in the rwm FORK this paper pins, not in the mainline library -- which narrows the construction's reach rather than widening it."
+    }
+  ],
+  "subject_not_counted": {
+    "repo": "leggedrobotics/rsl_rl_rwm (the fork this paper pins)",
+    "commit": "18eebcdd7145284c8d5eed5d8ed1a4b96c649693",
+    "construction": "rsl_rl/modules/architectures/mlp.py:92-93",
+    "loss": "rsl_rl/modules/system_dynamics.py:283",
+    "verdict": "INHERITS",
+    "note": "The subject of this reproduction, not a survey result. Listed so the reader can see the reference case the inclusion test was written against."
+  },
+  "verification": {
+    "mode": "--verify",
+    "citations_still_valid": true,
+    "citations_checked": 20,
+    "how": "each cited file is re-fetched AT ITS CITED COMMIT from raw.githubusercontent.com and the recorded line, or one of its immediate neighbours, must still contain the recorded text"
+  },
+  "generated_with": "scripts/q1_pets_descendants.py --verify"
+}

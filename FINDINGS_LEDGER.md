@@ -7464,3 +7464,64 @@ already clears at n = 20 — +0.5430 against 0.1131 — and only the margin does
 inverting `scripts/e7_free_baselines.py` and `results/e7_free_baselines_power.json` against
 `results/e7_free_baselines.json`.
 **Status** ACTIVE · **Relevance** CONTRIB
+
+
+### R-75 — The substitution behind the sigma = 0 optimum is rare among public descendants, not common · **NEW**
+**The referee's first question, and the answer narrows the paper's reach rather than widening
+it.** §6.3 derives the aleatoric collapse from an objective: the bounded log-sigma head is
+inherited line-for-line from PETS, and what this codebase changed is the LOSS — squared error on
+a reparameterised sample where PETS used a likelihood. §2 states, explicitly as an untested
+hypothesis, that any descendant which made the same substitution inherits the same optimum. The
+referee asked for a count, expecting it to widen the result's reach at almost no cost.
+
+**Of 10 repositories examined on 2026-09-20 under a protocol fixed before the search,
+10 carry the construction and 1 of those trains it against a sampled squared error.**
+
+The protocol was written first and frozen, its sha256 recorded before any repository was opened,
+so that the criteria could not move once the answer was visible. Every citation below was
+re-fetched at its cited commit and still says what it is recorded as saying.
+
+**The nine that do not inherit keep PETS's likelihood**, whose log-sigma term is precisely what
+opposes sigma -> 0: `kchua/handful-of-trials` (PETS itself), `quanvuong/handful-of-trials-pytorch`,
+`Xingyu-Lin/mbpo_pytorch`, `facebookresearch/mbrl-lib`, `Shylock-H/COMBO_Offline_RL`,
+`yihaosun1124/pytorch-mopo`, `junming-yang/mopo`, `yihaosun1124/OfflineRL-Kit` and
+`polixir/OfflineRL`. COULD NOT DETERMINE was available as a verdict and was not needed.
+
+**The one that inherits is `nirbhayjm/va_mbpo`** at `203ea3e5bd`, a fork of `mbrl-lib` adding a
+value-aware loss. With `deterministic=False` — the branch in which the bounded construction is
+applied — and `model_loss_type='va'`, it builds a Normal from the bounded head, draws a
+reparameterised sample, and scores it with squared error on the reward dimension and a squared
+model-advantage through the critic on the states, with no log-sigma term anywhere. **It inherits
+in its value-aware mode, which is an option and not the default**; under `'mle'` the same file
+uses the Gaussian NLL. The count states that rather than rounding it to a plain yes.
+
+**The trap that would have inverted this answer.** Several of these repositories offer an
+`inc_var_loss=False` or `deterministic=True` path scoring MSE against the predicted MEAN. That is
+not the substitution and the difference is the whole content of §6.3: squaring the mean's error
+gives sigma no gradient at all, so sigma is untrained, whereas squaring a DRAW's error makes
+sigma = 0 the optimum. In `mbrl-lib`'s deterministic branch `forward()` returns before the
+construction is applied. A survey matching on "MSE" alone would have counted most of the list as
+inheriting.
+
+**Two exclusions worth their own sentence.** The bounded log-sigma dynamics head is **not in
+mainline `rsl_rl`** — it exists in the RWM fork this paper pins, and mainline's only softplus is
+a Beta policy distribution. And `leggedrobotics/robotic_world_model`, the Isaac Lab extension
+`D-36` identifies for referee Q4, carries no softplus in any of its 44 Python files. Both narrow
+the construction's reach rather than widening it. The subject of this reproduction is recorded in
+the artifact separately and is **not counted**: counting the thing §6.3 measured as evidence that
+the result travels would be circular.
+
+**What this licenses, stated against the paper's convenience.** It does not touch §2's hypothesis
+as a statement of MECHANISM: §2 asserts a conditional, and this survey tested no mechanism in any
+repository. What it bears on is REACH — how often the antecedent holds — and the honest reading
+is that the substitution is rare in this lineage rather than common. A reader of §2 who infers
+broad reach is inferring more than the evidence supports, and §2 should say so. The count is over
+what was EXAMINED and never over a population: search engines rank and truncate, the protocol
+capped the survey at 25, and it stopped at 10.
+
+**Evidence** `RUN` `EXT` `scripts/q1_pets_descendants.py`, `results/q1_pets_descendants.json` —
+10 repositories with URL, commit, a file-and-line citation for the construction and one for
+the loss, and a verdict each; 3 further repositories recorded as construction-absent with the
+reason. Protocol and survey log at `/Users/Shared/rwm_verify/evidence/A2/`. Recorded in prose in
+`docs/REFEREE_EVIDENCE.md`.
+**Status** ACTIVE · **Relevance** CONTRIB

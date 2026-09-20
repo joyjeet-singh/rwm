@@ -102,3 +102,4 @@ One row per CONTRIB ledger entry.
 | `R-72` | M-51 returns SURVIVES entry-res ONLY: a free baseline ranks error almost as well | `RUN` | CONFIRMED | `results/e7_free_baselines.json`, `results/e7_free_baselines_power.json` |
 | `R-73` | M-49 returns UNDER-POWERED: the effect survives capacity matching, by less than the rule | `RUN` | CONFIRMED | `results/m49_capacity_matched.json`, `results/p2_capacity_power.json` |
 | `R-74` | 25 independent trajectories would resolve the step-size margin, and M-51's threshold is  | `RUN` | ACTIVE | `results/e7_free_baselines.json`, `results/e7_free_baselines_power.json` |
+| `R-75` | The substitution behind the sigma = 0 optimum is rare among public descendants, not comm | `EXT`, `RUN` | ACTIVE | `results/q1_pets_descendants.json`, `scripts/q1_pets_descendants.py` |
