@@ -1,0 +1,323 @@
+{
+  "question": "Referee Q2 \u2014 how many independent 400-step trajectories would settle the step-size comparison?",
+  "answer_to_the_referee": {
+    "n_independent_required": 25,
+    "n_exact_unrounded": 24.11649441556935,
+    "factor_over_current": 1.25,
+    "se_used": 0.05317100518201779,
+    "se_source": "the step-size baseline's own margin_ci in results/e7_free_baselines.json, a 2.5/97.5 percentile interval from the same bootstrap (whole trajectories, same n_boot); halved and divided by Z95 under approximate normality of the bootstrap distribution",
+    "mde_at_n0": 0.14896310217604503,
+    "resolvable_at_n0": false,
+    "curve": [
+      {
+        "n_independent": 20,
+        "mde": 0.14896310217604503,
+        "resolvable": false,
+        "shortfall": 0.013307848952013979
+      },
+      {
+        "n_independent": 24,
+        "mde": 0.13598408549627794,
+        "resolvable": false,
+        "shortfall": 0.0003288322722468928
+      },
+      {
+        "n_independent": 25,
+        "mde": 0.1332366490419534,
+        "resolvable": true,
+        "shortfall": -0.0024186041820776494
+      },
+      {
+        "n_independent": 30,
+        "mde": 0.12162786361112828,
+        "resolvable": true,
+        "shortfall": -0.014027389612902771
+      },
+      {
+        "n_independent": 40,
+        "mde": 0.10533281969526599,
+        "resolvable": true,
+        "shortfall": -0.030322433528765055
+      },
+      {
+        "n_independent": 50,
+        "mde": 0.09421253804013738,
+        "resolvable": true,
+        "shortfall": -0.04144271518389367
+      },
+      {
+        "n_independent": 60,
+        "mde": 0.08600388714066132,
+        "resolvable": true,
+        "shortfall": -0.04965136608336973
+      },
+      {
+        "n_independent": 70,
+        "mde": 0.07962412737339433,
+        "resolvable": true,
+        "shortfall": -0.056031125850636715
+      },
+      {
+        "n_independent": 80,
+        "mde": 0.07448155108802251,
+        "resolvable": true,
+        "shortfall": -0.061173702136008534
+      },
+      {
+        "n_independent": 90,
+        "mde": 0.070221879796844,
+        "resolvable": true,
+        "shortfall": -0.06543337342718705
+      },
+      {
+        "n_independent": 100,
+        "mde": 0.0666183245209767,
+        "resolvable": true,
+        "shortfall": -0.06903692870305435
+      },
+      {
+        "n_independent": 120,
+        "mde": 0.06081393180556414,
+        "resolvable": true,
+        "shortfall": -0.07484132141846692
+      },
+      {
+        "n_independent": 150,
+        "mde": 0.05439363419851117,
+        "resolvable": true,
+        "shortfall": -0.08126161902551987
+      },
+      {
+        "n_independent": 200,
+        "mde": 0.04710626902006869,
+        "resolvable": true,
+        "shortfall": -0.08854898420396236
+      },
+      {
+        "n_independent": 300,
+        "mde": 0.038462107595147746,
+        "resolvable": true,
+        "shortfall": -0.0971931456288833
+      },
+      {
+        "n_independent": 400,
+        "mde": 0.03330916226048835,
+        "resolvable": true,
+        "shortfall": -0.10234609096354269
+      }
+    ]
+  },
+  "answer_under_m51_as_pre_registered": {
+    "n_independent_required": 91,
+    "n_exact_unrounded": 90.8416410352681,
+    "factor_over_current": 4.55,
+    "se_used": 0.10319538287935717,
+    "se_source": "results/e7_free_baselines_power.json bootstrap_se_margin \u2014 the FORECAST-INDEX margin's standard error, which is what M-51 could estimate before either new baseline existed",
+    "mde_at_n0": 0.2891106593025745,
+    "what_this_answers": "at what n a re-run of M-51's protocol would fire on a margin of this size. It is NOT the referee's question, because the threshold is calibrated on a different and more variable statistic than the one it is applied to.",
+    "curve": [
+      {
+        "n_independent": 20,
+        "mde": 0.2891106593025745,
+        "resolvable": false,
+        "shortfall": 0.15345540607854347
+      },
+      {
+        "n_independent": 25,
+        "mde": 0.25858843488813543,
+        "resolvable": false,
+        "shortfall": 0.12293318166410439
+      },
+      {
+        "n_independent": 30,
+        "mde": 0.23605786483031277,
+        "resolvable": false,
+        "shortfall": 0.10040261160628172
+      },
+      {
+        "n_independent": 40,
+        "mde": 0.20443210770616407,
+        "resolvable": false,
+        "shortfall": 0.06877685448213303
+      },
+      {
+        "n_independent": 50,
+        "mde": 0.18284963584581657,
+        "resolvable": false,
+        "shortfall": 0.04719438262178552
+      },
+      {
+        "n_independent": 60,
+        "mde": 0.16691811697393158,
+        "resolvable": false,
+        "shortfall": 0.03126286374990053
+      },
+      {
+        "n_independent": 70,
+        "mde": 0.15453614771065174,
+        "resolvable": false,
+        "shortfall": 0.018880894486620697
+      },
+      {
+        "n_independent": 80,
+        "mde": 0.14455532965128726,
+        "resolvable": false,
+        "shortfall": 0.00890007642725621
+      },
+      {
+        "n_independent": 90,
+        "mde": 0.13628807180410937,
+        "resolvable": false,
+        "shortfall": 0.0006328185800783259
+      },
+      {
+        "n_independent": 91,
+        "mde": 0.13553716762244272,
+        "resolvable": true,
+        "shortfall": -0.0001180856015883247
+      },
+      {
+        "n_independent": 100,
+        "mde": 0.12929421744406772,
+        "resolvable": true,
+        "shortfall": -0.006361035779963331
+      },
+      {
+        "n_independent": 120,
+        "mde": 0.11802893241515638,
+        "resolvable": true,
+        "shortfall": -0.017626320808874663
+      },
+      {
+        "n_independent": 150,
+        "mde": 0.10556828647680723,
+        "resolvable": true,
+        "shortfall": -0.030086966747223817
+      },
+      {
+        "n_independent": 200,
+        "mde": 0.09142481792290828,
+        "resolvable": true,
+        "shortfall": -0.044230435301122764
+      },
+      {
+        "n_independent": 300,
+        "mde": 0.0746480512459945,
+        "resolvable": true,
+        "shortfall": -0.06100720197803655
+      },
+      {
+        "n_independent": 400,
+        "mde": 0.06464710872203386,
+        "resolvable": true,
+        "shortfall": -0.07100814450199719
+      }
+    ]
+  },
+  "why_the_two_differ": {
+    "se_ratio_prereg_over_own": 1.940820613153603,
+    "n_ratio": 3.64,
+    "reason": "M-51 had to fix one threshold before either new baseline existed, so it necessarily used the forecast-index margin's variability. That is correct pre-registration, and it is conservative when applied to this baseline. For WHY the two differ, see variance_decomposition under empirical_check: it is measured there rather than asserted here, because the obvious explanation \u2014 that disagreement is correlated with step-size and not with the forecast index \u2014 is false. The index is correlated with disagreement too, just less."
+  },
+  "the_published_verdict_does_not_move": {
+    "observed_margin": 0.13565525322403105,
+    "threshold_m51_pre_registered": 0.2891106593025745,
+    "threshold_own_statistic": 0.14896310217604503,
+    "resolvable_under_either": false,
+    "pct_of_m51_threshold": 46.921567524100986,
+    "pct_of_own_threshold": 91.06634545225386,
+    "note": "\u00a76.7's verdict SURVIVES entry-res ONLY stands on both readings: +0.1357 is below 0.2891 and also below 0.1490. What changes is the distance \u2014 the margin is 47% of M-51's threshold and 91% of its own statistic's, so the comparison is much closer to resolving than the published threshold implies."
+  },
+  "construction": {
+    "inverts": "scripts/e7_free_baselines.py",
+    "formula": "MDE(n) = (Z95 + Z80) * se(n), se(n) = se(n0) * sqrt(n0 / n)",
+    "z95_two_sided_alpha_0.05": 1.959963985,
+    "z80_power": 0.8416212336,
+    "statistic": "r(disagreement, error) - r(baseline, error), a difference of two correlations",
+    "bootstrap_unit": "whole 400-step trajectory",
+    "n_boot_of_source_estimate": 4000,
+    "construction_checked": "the stored thresholds on both the margin and the partial are reproduced from the stored standard errors to within 1e-12. This pins the two constants and the multiplication only; it cannot see which baseline a standard error belongs to."
+  },
+  "observed": {
+    "baseline": "step-size",
+    "r_baseline_error": 0.4696825375342438,
+    "r_disagreement_error": 0.6053377907582749,
+    "margin": 0.13565525322403105,
+    "margin_ci": [
+      0.04245631348309835,
+      0.2508828238891048
+    ],
+    "partial_disagreement_given_baseline": 0.5430403794858999,
+    "n_independent": 20,
+    "n_steps": 368,
+    "margin_beats_mde_at_n0": false,
+    "partial_beats_mde_at_n0": true
+  },
+  "binding_test": "the margin. e7_free_baselines.py records a baseline as beaten only if BOTH its margin and its partial clear their thresholds; for step-size the partial already clears at n = 20 (+0.5430 against 0.1131) and the margin does not, so the margin is what a larger sample would settle.",
+  "assumption": "Both figures are required-sample-size estimates UNDER AN ASSUMED EFFECT. They assume the margin's true value is the observed one and that further 400-step trajectories would resemble these twenty in variability. Neither is a guarantee: if the true margin is smaller than observed, the requirement rises as its inverse square, which is why a curve and a sensitivity table are stored rather than a single number.",
+  "sensitivity_to_assumed_margin": [
+    {
+      "assumed_margin": 0.13565525322403105,
+      "n_required_own_statistic": 25,
+      "n_required_m51_threshold": 91,
+      "note": "observed"
+    },
+    {
+      "assumed_margin": 0.12,
+      "n_required_own_statistic": 31,
+      "n_required_m51_threshold": 117,
+      "note": "smaller than observed"
+    },
+    {
+      "assumed_margin": 0.1,
+      "n_required_own_statistic": 45,
+      "n_required_m51_threshold": 168,
+      "note": "smaller than observed"
+    },
+    {
+      "assumed_margin": 0.08,
+      "n_required_own_statistic": 70,
+      "n_required_m51_threshold": 262,
+      "note": "smaller than observed"
+    },
+    {
+      "assumed_margin": 0.07,
+      "n_required_own_statistic": 91,
+      "n_required_m51_threshold": 342,
+      "note": "smaller than observed"
+    },
+    {
+      "assumed_margin": 0.05,
+      "n_required_own_statistic": 178,
+      "n_required_m51_threshold": 669,
+      "note": "smaller than observed"
+    }
+  ],
+  "generated_with": "scripts/q2_free_baseline_power.py --empirical",
+  "empirical_check": {
+    "what": "E7's own panel and statistic, bootstrapped directly at n = 20 with E7's own seed and n_boot. Two numbers: the step-size margin's standard error, which the default path infers from margin_ci, and the index margin's, which acts as a control because e7_free_baselines.py stores it and it must reproduce.",
+    "se_step_size_margin_direct": 0.05359090163682389,
+    "se_step_size_margin_from_ci": 0.05317100518201779,
+    "relative_gap": 0.007897094541821935,
+    "se_index_margin_direct": 0.10319538287935717,
+    "se_index_margin_stored": 0.10319538287935717,
+    "control_reproduces": true,
+    "variance_decomposition": {
+      "what": "var(margin) = var(r_dis) + var(r_baseline) - 2 cov, over one shared set of bootstrap draws. Answers why M-51's threshold is conservative here.",
+      "pooled_r_disagreement_step_size": 0.32271328370174357,
+      "pooled_r_disagreement_forecast_index": 0.13771045473344487,
+      "sd_r_disagreement_error": 0.03673783891766381,
+      "sd_r_step_size_error": 0.04759328702129773,
+      "sd_r_forecast_index_error": 0.08360934106704637,
+      "sd_ratio_index_over_step_size": 1.7567465140542122,
+      "cov_disagreement_step_size": 0.0003714025197920536,
+      "cov_disagreement_forecast_index": -0.0011545481628056121,
+      "corr_across_draws_step_size": 0.21241517517761166,
+      "corr_across_draws_forecast_index": -0.3758751792420266,
+      "se_ratio_with_covariances": 1.925613858462284,
+      "se_ratio_if_covariances_were_zero": 1.5189604579459923,
+      "reading": "The dominant driver is that the forecast index's OWN correlation with error is far more variable across resampled trajectories than step-size's is; that alone accounts for most of the ratio. The covariance terms, which have opposite signs across draws, widen it the rest of the way. The premise that the forecast index is uncorrelated with disagreement is false and is not what drives this."
+    },
+    "seed": 20260829
+  }
+}

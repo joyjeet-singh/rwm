@@ -101,3 +101,4 @@ One row per CONTRIB ledger entry.
 | `R-71` | M-50 returns OBJECTIVE-DRIVEN: sigma collapses on data whose noise is known and large | `RUN` | CONFIRMED | `results/e5_sigma_dilution.json`, `results/e5_synthetic_sigma.json` |
 | `R-72` | M-51 returns SURVIVES entry-res ONLY: a free baseline ranks error almost as well | `RUN` | CONFIRMED | `results/e7_free_baselines.json`, `results/e7_free_baselines_power.json` |
 | `R-73` | M-49 returns UNDER-POWERED: the effect survives capacity matching, by less than the rule | `RUN` | CONFIRMED | `results/m49_capacity_matched.json`, `results/p2_capacity_power.json` |
+| `R-74` | 25 independent trajectories would resolve the step-size margin, and M-51's threshold is  | `RUN` | ACTIVE | `results/e7_free_baselines.json`, `results/e7_free_baselines_power.json` |

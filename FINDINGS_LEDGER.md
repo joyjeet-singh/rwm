@@ -7339,3 +7339,128 @@ What any downstream number rests on, in order:
 | **Objective** | **losses and gradients match** | **R-14, 0.000e+00 across 7 terms, 106 tensors** |
 
 Step 5 onward inherits all five.
+
+### D-36 — The generator that produced the released CSV is in neither released repository · **NEW**
+**The referee's fourth question, answered from source.** A reviewer asked whether the ten
+episodes are genuinely all the data there is, or whether the upstream pipeline generates more on
+demand — because if it is the latter, the paper's largest scope caveat, that the released
+checkpoint has no held-out arena in this dataset at all, is a choice rather than a constraint.
+
+**The answer is that the generator is not in either pinned repository.** Neither contains a
+dataset write path at all: a search of both for `to_csv`, `savetxt`, `np.save`, `to_parquet`,
+`csv.writer`, `DictWriter` and `open(..., 'w')` returns nothing. The file writes that do exist are
+four `torch.save` checkpoints — two in the lite repository and two in `rsl_rl_rwm`'s runners — one
+git-diff text dump and tensorboard event files, and none of them is a dataset. The only code touching `state_action_data_*.csv` is `train.py`'s `_load_data`, which
+reads one with `pd.read_csv` and, when the file is absent or short, prints `Waiting for new data`,
+sleeps a second and tries again inside a `while True` — the shape of a loop that expects a
+*separate producer* to be appending files while it runs.
+
+**The configuration says the same thing twice.** `base_cfg.py`'s defaults point the loader at
+`logs/online/train` and demand 50,000 rows — the online-collection path. `anymal_d_flat_cfg.py`
+overrides both, to `assets/data` and 10,000 rows, which is exactly the row count of the single
+shipped file. The shipped task is the online loop re-pointed at one recording and asked for no
+more than that recording holds.
+
+**And the upstream says it in prose.** The lite repository describes itself as being for training
+"from offline data ... without the need to set up a full robotics simulator like Isaac Lab", and
+directs anyone wanting "online simulator-based data collection" to a *third* repository, the Isaac
+Lab RWM Extension at `github.com/leggedrobotics/robotic_world_model`. That repository is not one
+of the two this reproduction pins, and is not present in this workspace. The shipped environment
+cannot substitute for it: `anymal_d_flat.py` and `base.py` roll the *learned* dynamics —
+every method is an imagination method and there is no physics step — so the released environment
+produces model predictions, not ground truth.
+
+**What this means for the paper, stated against our own convenience.** It does not license
+softening the scope caveat: more data is not obtainable here, so the caveat is a constraint rather
+than a choice. It does put two things to Appendix D. First, Appendix D is **incomplete** about
+where the constraint lives: it prices the untested claims at Isaac Lab and an RTX-class GPU and
+nowhere says the collection code is absent from both pinned repositories, so a reproducer holding
+the GPU and the simulator would still need a repository outside the pinned set. Second, and found
+while checking the first, Appendix D's **lead sentence contradicts its own table**: it opens
+"Everything below needs what this reproduction did not have: a simulator" and says "Every untested
+claim needs *interaction*", while two of its eight rows are priced "no simulator needed" and its
+own closing paragraph says those two "are within reach of this setup". The table is right; the
+sentence introducing it is not. Neither point is this block's to fix — Phase A does not touch the
+paper — and both are carried to the block that writes Q4 into it.
+
+**Evidence** `SRC` `EXT` — upstream at the pinned commits, read-only: `train.py` `_load_data`
+(the read, the wait loop) and its `__main__` block (`--device` defaults to `cuda`);
+`base_cfg.py` and `anymal_d_flat_cfg.py` (the two data configurations); `anymal_d_flat.py` and
+the `BaseEnv` it extends (imagination only); the lite `readme.md` (the offline/online split and
+the pointer to the Isaac Lab extension). Recorded with file and line in
+`docs/REFEREE_EVIDENCE.md`. The dataset itself: 10,000 rows × 66 columns, ten episodes plus a
+one-row stub, sha256 as in the reference table above.
+**Status** ACTIVE · **Relevance** CONTEXT
+
+
+### R-74 — 25 independent trajectories would resolve the step-size margin, and M-51's threshold is conservative for it · **NEW**
+**The referee's second question, answered by inverting the power construction that produced the
+threshold in the first place — and a correction to how that inversion must be done.** §6.7 reports
+that the model's own predicted step size ranks realised error at +0.4697 against five-member
+ensemble disagreement's +0.6053. The margin, +0.1357, is below the 0.2891 threshold
+`M-51` fixed before either new baseline existed, so `M-51` returns SURVIVES entry-res ONLY and the
+comparison is recorded as unresolved. §11 calls settling it "the cheapest open question here for
+anyone with a second dataset".
+
+**Two numbers, because there are two questions.** `M-51` fixed ONE threshold before either new
+baseline existed, and it necessarily estimated it from the FORECAST-INDEX margin, since step-size
+and entry-res did not yet exist to be bootstrapped. That is correct pre-registration. But the two
+margins are different statistics with different sampling variability — the index margin's
+bootstrap standard error is 1.94× the step-size margin's. **The obvious reason is not the
+reason**, and an earlier draft of this entry gave it: disagreement is *not* uncorrelated with the
+forecast index (+0.1377 pooled, against +0.3227 with step-size). What drives the
+ratio is that the forecast index's own correlation with error is far more variable across
+resampled trajectories than step-size's is, sd 0.0836 against 0.0476; zeroing both
+covariance terms still leaves 1.52, and the covariances, opposite in sign across draws
+(+0.21 against -0.38), widen it to 1.93. Measured and stored under
+`empirical_check.variance_decomposition`, not asserted. Applying the first's standard error to the second's effect inflates the requirement
+3.64-fold. The first draft of this entry did exactly that and reported 91; a reviewer caught
+it before it was committed, and the correction is recorded here rather than left as a silent edit.
+
+  - **Against its own sampling variability — the referee's question — 25 independent 400-step
+    trajectories**, 1.25× the 20 this arena has. Standard error 0.053171, threshold
+    0.1490.
+  - **Under `M-51`'s protocol re-run as pre-registered, 91.** Standard error 0.103195,
+    threshold 0.2891. This answers a different question: at what n the pre-registered rule
+    would fire on a margin of this size, with its threshold calibrated on a more variable statistic
+    than the one it is applied to.
+
+**THE PUBLISHED VERDICT DOES NOT MOVE.** +0.1357 is below both thresholds, so §6.7's
+SURVIVES entry-res ONLY stands exactly as published and no paper claim is affected. What changes
+is the distance: the margin is 47% of `M-51`'s threshold and 91% of its own statistic's.
+**`M-51`'s threshold is conservative when applied to this baseline**, which means the step-size
+comparison is much closer to resolving than the published figures imply, and that is a property of
+the pre-registered design worth stating rather than hiding.
+
+**The construction is `M-51`'s, unchanged.** `MDE = (Z95 + Z80) · se`, two-sided at α = 0.05 with
+80% power, `se` a bootstrap standard error over whole 400-step trajectories at 4,000 replicates,
+the statistic a difference of two correlations with realised error. Only `n` moves. The step-size
+margin's own standard error needs no rollout: `e7_free_baselines.py` already bootstraps each
+baseline's margin with the same unit and replicate count and stores a 2.5/97.5 percentile interval,
+and halving its width and dividing by Z95 gives 0.053171.
+
+**Checked rather than asserted, and the check has a control.** Bootstrapping the step-size margin
+directly from the same panel gives 0.053591, agreeing with the interval-implied value to
+0.79%; and the forecast-index margin bootstrapped the same way reproduces
+`e7_free_baselines.py`'s stored standard error exactly, which is what establishes that the same
+panel, unit, seed and replicate count are in play. The script asserts that control and refuses to
+report if it fails. **What it does not do** is verify which baseline a standard error belongs to —
+the reconstruction check pins the two constants and the multiplication only, and would not have
+caught the first draft's defect. The guard against that is structural: the primary answer takes
+its effect and its standard error from the same baseline row.
+
+**The bound this carries.** Both figures are required-sample-size estimates *under an assumed
+effect*: they assume the margin's true value is the observed +0.1357 and that further
+trajectories would resemble these twenty in variability. Neither is a guarantee. If the true margin
+is smaller, the requirement rises as its inverse square — at +0.10 it is 45, at +0.07 it is
+91 — which is why the artifact stores curves and a sensitivity table, and why the paper
+must quote the assumption alongside the figure.
+
+**The binding test is the margin, not the partial.** `e7_free_baselines.py` records a baseline as
+beaten only if *both* its margin and its partial clear their thresholds. For step-size the partial
+already clears at n = 20 — +0.5430 against 0.1131 — and only the margin does not.
+
+**Evidence** `RUN` `scripts/q2_free_baseline_power.py`, `results/q2_free_baseline_power.json`,
+inverting `scripts/e7_free_baselines.py` and `results/e7_free_baselines_power.json` against
+`results/e7_free_baselines.json`.
+**Status** ACTIVE · **Relevance** CONTRIB
