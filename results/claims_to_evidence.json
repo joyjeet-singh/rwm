@@ -3194,13 +3194,27 @@
         "scripts/q1_pets_descendants.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-70",
+      "claim": "PRE-REGISTERED decision rule for whether the per-horizon correction reorders cumulative ",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "results/q3_penalty_reordering.json",
+        "results/task_d3_perhorizon.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 69,
+    "M": 70,
     "O": 14,
     "R": 75,
     "S": 19,
