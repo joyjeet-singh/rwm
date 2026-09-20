@@ -4,8 +4,9 @@ Everything needed to upload this submission, and nothing else. **Written for a p
 browser.** Every figure here was read from the file it describes, at commit `e38a10e`, and the
 checksums were computed for this document rather than copied from an earlier session.
 
-**The upload is blocked on one ruling.** See "Open items" below: the bare `swh:1:` occurrences
-have not been ruled on. Nothing else stands in the way.
+**Nothing blocks the upload.** The one item that did — whether the bare `swh:1:` occurrences count
+as archival identifiers — was ruled on 2026-09-20 and is closed; see "Open items" below. The three
+items that remain there are recorded, not blocking.
 
 ---
 
@@ -116,13 +117,14 @@ The cover statement requests it explicitly. TMLR's certifications and the mechan
 them must be read off OpenReview at submission time rather than taken from this file: the names and
 the request flow change between cycles, and nothing here has been checked against the live site.
 
-## 8. Open items — the upload is blocked on the first
+## 8. Open items — the first is ruled and closed, the rest are not blocking
 
-1. **The bare `swh:1:` prefix has not been ruled on.** It occurs twice in each bundle, in
-   `FINDINGS_LEDGER.md` and in `scripts/part_f_gate.py`, with no 40-character object name after
-   either, so no occurrence resolves to an archival identifier. The reading proposed — that these
-   are therefore not archival identifiers — is **unconfirmed**. Nothing was scrubbed and no deny
-   list was changed. **Decide this before uploading.**
+1. **The bare `swh:1:` prefix — RULED 2026-09-20, closed.** It occurs twice in each bundle: in
+   `FINDINGS_LEDGER.md`, where the prose explains what a SWHID pattern needs in order to match,
+   and in a comment in `scripts/part_f_gate.py`. Neither is followed by a 40-character object
+   name, so neither resolves to anything on Software Heritage. The user ruled that a bare prefix
+   with no object name is **not** an archival identifier. Nothing is scrubbed, no deny list
+   changes, and the bundles and the §1 checksums stand exactly as committed.
 2. `results/supplementary_manifest.json` records 386 files where the archive holds 387, and 200 log
    commits where its log holds 199. It ships inside both bundles. No number the paper prints comes
    from it. Fixing it would rewrite a compared artifact and require another clean-clone measurement.

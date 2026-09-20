@@ -70,21 +70,23 @@ been fixed or is carried in `docs/DEFERRED.md`.
    from the anonymised bundle, and `MODEL_CARD.md`, `CITATION.cff`, `NOTICE` and
    `scripts/build_model_card.py`, which that ruling kept, are present.
 5. [2026-09-19] Anonymity sweep on exactly the committed bundles — PASS, 0 hits, from two
-   independent passes. The builders' own scans: the anonymiser's planted probe is detected (9 hits,
-   so the scan is live), 0 residual identifying hits across 385 scanned files, the anonymised git
-   log CLEAN over 201 commits, and `f5_pdf_channels` reports no identifying strings on any of the
-   PDF's three channels against 10 patterns. An independent sweep written for this programme, over
-   member paths, member text in three encodings, archive and member comments, extra fields, nested
-   archives, PNG text chunks, PDF text, the Info dictionary, XMP, link annotations and inflated
-   streams, against the author's name and its variants, the handle, the git-log email, both
-   repository URLs, the Hugging Face URL, full archival identifiers and any 7- to 40-character hex
-   token resolving to a commit of this repository, of the pre-purge backup or of the Hugging Face
-   repository: **0 hits in `supplementary_anon.zip`, 0 in `supplementary.zip`, 0 in `PAPER.pdf`**.
-   OPEN ITEM, deliberately not resolved here: the bare prefix `swh:1:` occurs twice per bundle, in
-   `FINDINGS_LEDGER.md` and `scripts/part_f_gate.py`, with no 40-character object name after
-   either, so no occurrence resolves to an archival identifier. Whether that counts as an
-   identifier has not been ruled on; the occurrences are left exactly as they are and no deny list
-   was changed.
+   independent passes. The builders' own scans: the anonymiser's planted probe is detected (9
+   hits, so the scan is live), 0 residual identifying hits across 385 scanned files, the
+   anonymised git log CLEAN over 201 commits, and `f5_pdf_channels` reports no identifying strings
+   on any of the PDF's three channels against 10 patterns. An independent sweep written for this
+   programme, over member paths, member text in three encodings, archive and member comments,
+   extra fields, nested archives, PNG text chunks, PDF text, the Info dictionary, XMP, link
+   annotations and inflated streams, against the author's name and its variants, the handle, the
+   git-log email, both repository URLs, the Hugging Face URL, full archival identifiers and any 7-
+   to 40-character hex token resolving to a commit of this repository, of the pre-purge backup or
+   of the Hugging Face repository: **0 hits in `supplementary_anon.zip`, 0 in `supplementary.zip`,
+   0 in `PAPER.pdf`**. OPEN ITEM, deliberately not resolved here: the bare prefix `swh:1:` occurs
+   twice per bundle, in `FINDINGS_LEDGER.md` and `scripts/part_f_gate.py`, with no 40-character
+   object name after either, so no occurrence resolves to an archival identifier. Whether that
+   counts as an identifier has not been ruled on; the occurrences are left exactly as they are and
+   no deny list was changed. **Ruled on 2026-09-20, after this pass**: a bare prefix with no
+   object name is not an archival identifier. The occurrences stay as they are and no deny list
+   changed; this record stands as the dated account of what the pass found.
 6. [2026-09-19] The PDF read by eye, all 49 pages — PASS: every page rendered and inspected.
    No `??`, no literal footnote token, no unconverted `**`, no stray `Figure ?` or `Table ?`
    anywhere in the document. Figures land on pages 2, 11, 15, 19, 28 and 32, and every figure,
@@ -156,13 +158,15 @@ been fixed or is carried in `docs/DEFERRED.md`.
 
 ## Open items
 
-These are known, recorded, and not fixed. Each is either ruled out of scope by the instruction
-files or needs a decision that a verification pass is the wrong place to take.
+These are known and recorded. The first has since been ruled and is closed, and is kept here with
+its resolution rather than deleted; the rest are not fixed, each either ruled out of scope by the
+instruction files or needing a decision that a verification pass is the wrong place to take.
 
-- **The bare `swh:1:` prefix, awaiting a ruling.** It occurs twice in each bundle, in
-  `FINDINGS_LEDGER.md` and in `scripts/part_f_gate.py`, with no 40-character object name after
-  either, so no occurrence resolves to an archival identifier. Whether that counts as one has not
-  been ruled on. The occurrences are left exactly as they are and no deny list was changed.
+- **The bare `swh:1:` prefix — RULED 2026-09-20, no longer open.** It occurs twice in each bundle,
+  in `FINDINGS_LEDGER.md` and in a comment in `scripts/part_f_gate.py`, with no 40-character
+  object name after either, so no occurrence resolves to an archival identifier. The user ruled
+  that a bare prefix with no object name is not one. The occurrences stay exactly as they are, no
+  deny list was changed, and no artifact or checksum moved.
 - **`submission_check` reports 20 of 22.** A3 is pending because the gitignored `supplementary.zip`
   is absent from a pristine clone; C1 is pending because 235 of 431 claims in the review checklist
   remain unreviewed. Auditing those claims is ruled out of scope by the instruction file, and the
