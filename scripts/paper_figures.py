@@ -45,7 +45,26 @@ def fig1_calibration(rec):
     ax[0].plot([0, 1], [0, 1], "k--", lw=1, label="calibrated")
     ax[0].set(xlabel="predicted coverage", ylabel="observed coverage",
               title="(a) reliability", xlim=(0, 1), ylim=(0, 1))
-    ax[0].legend(fontsize=6.5, loc="upper left")
+    # The main panel is unchanged: all four curves hugging the axis far below the diagonal
+    # IS the finding. At this scale, though, the four are indistinguishable, so the SAME
+    # points are drawn again in an inset with observed coverage on a log scale. The inset
+    # sits in the upper-left triangle, above the diagonal, where this data does not fall; the
+    # legend moves to the lower right, below the diagonal and above every curve. Nothing
+    # plotted changes -- the inset reads the very `rel` lists the main panel reads, and no
+    # observed value is zero, so a log axis drops no point.
+    ins = ax[0].inset_axes([0.13, 0.59, 0.33, 0.35])
+    for k, lab, col in order:
+        rel = d[k]["reliability"]
+        obs = [r["observed"] for r in rel]
+        assert min(obs) > 0, f"{k}: a zero observed coverage cannot be drawn on a log axis"
+        ins.plot([r["predicted"] for r in rel], obs, "o-", ms=2, lw=1.0, color=col)
+    ins.set_yscale("log")
+    ins.set_xlim(0.1, 1.06)            # a little past 1 so no marker is clipped
+    ins.set_title("same data, log scale", fontsize=5.5, fontweight="normal", pad=2)
+    ins.tick_params(labelsize=5, length=2, pad=1)
+    ins.set_xticks([0.2, 0.6, 1.0])
+    ax[0].legend(fontsize=6, loc="lower right", bbox_to_anchor=(0.995, 0.28),
+                 handlelength=1.4, labelspacing=0.3, borderpad=0.3, markerscale=0.8)
 
     # (b) coverage at +-1 sigma against horizon
     hs = sorted(int(h) for h in d[order[0][0]]["coverage"])
@@ -149,9 +168,14 @@ def fig6_ab_by_horizon(rec):
     ax[1].set(xscale="log", xlabel="forecast horizon (steps)",
               ylabel="Arm B $-$ Arm A (relative-L1)",
               title="(b) gap, 95% cluster bootstrap")
-    ax[1].text(0.99, 0.04, f"n_independent = {d['design']['n_independent']}; "
+    # Top-left of the panel, which the data leave empty (the large gaps are all at long
+    # horizons, on the right). It used to sit at axes y = 0.04, which is where the dashed
+    # zero line falls, so the line struck through the annotation it was explaining.
+    # Two lines, so it also stops short of the dotted h = 100 reference line.
+    ax[1].text(0.02, 0.97, f"n_independent = {d['design']['n_independent']};\n"
                            f"the interval spans zero only at h=1",
-               transform=ax[1].transAxes, ha="right", fontsize=6.5, color="#555555")
+               transform=ax[1].transAxes, ha="left", va="top", fontsize=6.5,
+               color="#555555")
 
     for h in (100, 368):
         for a in ax:
@@ -390,8 +414,13 @@ def fig4_timeline(rec):
         # sub-hour leads are real and must not render as "+0.0 h"
         return f"{v*60:+.0f} min" if abs(v) < 1 else f"{v:+.1f} h"
     for i, (lab, v, dlab) in enumerate(rows):
-        ax.text(v + (0.25 if v > 0 else 0.25), i, f"{fmt(v)}  ({dlab})",
-                va="center", ha="left", fontsize=7)
+        # A positive bar's label sits just past its tip. A negative bar's tip is on the
+        # LEFT, and its label used to be placed at v + 0.25 like the others -- which put
+        # the text inside its own bar and across the zero line (both branches of the old
+        # offset were +0.25). It now sits just outside the bar on the zero side, the same
+        # 0.25 clear of the bar that every other label keeps, so no label touches a bar.
+        x = v + 0.25 if v > 0 else 0.25
+        ax.text(x, i, f"{fmt(v)}  ({dlab})", va="center", ha="left", fontsize=7)
     ax.set(xlabel="hours the rule preceded the data it tested  (negative = written afterwards)",
            title="Pre-registration lead time, from git commit timestamps")
     ax.set_xlim(min(vals) * 1.25, max(vals) * 1.85)

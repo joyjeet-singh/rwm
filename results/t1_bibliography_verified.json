@@ -307,18 +307,19 @@
     "status": "NOT TESTED outside this repository. Flagged in 2 and 11 as a hypothesis and deliberately out of scope."
   },
   "verification": {
-    "checked_on": "2026-08-23",
+    "checked_on": "2026-09-25",
     "method": "arXiv API metadata for title, author list and venue comment; for any entry whose 'why_we_engage' asserts what the paper SAYS, the asserted fragments were additionally matched as substrings of that paper's own arXiv HTML rendering after tag-stripping and whitespace collapse",
     "n_entries": 16,
-    "n_fragments_checked": 9,
-    "n_fragments_verbatim": 9,
-    "n_metadata_verified": 10,
-    "n_with_fragment_checks": 2,
+    "n_fragments_checked": 17,
+    "n_fragments_verbatim": 17,
+    "n_metadata_verified": 16,
+    "n_with_fragment_checks": 8,
     "per_entry": [
       {
         "arxiv_version": "2110.04135v2",
         "authors_match": true,
         "comment": "Spotlight @ ICLR 2022; Spotlight @ RL4RealLife Workshop ICML2021",
+        "entry_fingerprint": "71d53f453a8cd738",
         "key": "lu2022",
         "n_fragments": 5,
         "n_fragments_found": 5,
@@ -328,7 +329,8 @@
       {
         "arxiv_version": "1805.12114v2",
         "authors_match": true,
-        "comment": "NIPS 2018, video and code available",
+        "comment": "NIPS 2018, video and code available at https://sites.google.com/view/drl-in-a-handful-of-trials/",
+        "entry_fingerprint": "c513c53268c0fc55",
         "key": "chua2018",
         "n_fragments": 4,
         "n_fragments_found": 4,
@@ -338,7 +340,8 @@
       {
         "arxiv_version": "2005.13239v6",
         "authors_match": true,
-        "comment": "NeurIPS 2020. First two authors contributed equally.",
+        "comment": "NeurIPS 2020. First two authors contributed equally. Last two authors advised equally",
+        "entry_fingerprint": "e1a456805d672d42",
         "key": "yu2020",
         "published": "2020-05-27",
         "title_matches": true
@@ -346,7 +349,8 @@
       {
         "arxiv_version": "2005.05951v3",
         "authors_match": true,
-        "comment": "Published at NeurIPS 2020.",
+        "comment": "First two authors contributed equally. Published at NeurIPS 2020. After publication at NeurIPS 2020, (1) D4RL benchmark results have been added; (2) hyper-parameter ablation studies have been added; (3) scope of Lemma 3 has been extended",
+        "entry_fingerprint": "cb405cccdb6dbd31",
         "key": "kidambi2020",
         "published": "2020-05-12",
         "title_matches": true
@@ -355,6 +359,7 @@
         "arxiv_version": "1612.01474v3",
         "authors_match": true,
         "comment": "NIPS 2017",
+        "entry_fingerprint": "47153a7632831a5f",
         "key": "lakshminarayanan2017",
         "note": "arXiv preprint dated 2016; the venue year is 2017 and the entry cites the venue year, as the brief's table does",
         "published": "2016-12-05",
@@ -364,6 +369,7 @@
         "arxiv_version": "1807.00263v1",
         "authors_match": true,
         "comment": "ICML 2018",
+        "entry_fingerprint": "4cb4086bceabf08e",
         "key": "kuleshov2018",
         "published": "2018-07-01",
         "title_matches": true
@@ -372,6 +378,7 @@
         "arxiv_version": "1706.04599v2",
         "authors_match": true,
         "comment": "ICML 2017",
+        "entry_fingerprint": "d013013181084591",
         "key": "guo2017",
         "published": "2017-06-14",
         "title_matches": true
@@ -380,6 +387,7 @@
         "arxiv_version": "1906.02530v2",
         "authors_match": true,
         "comment": "Advances in Neural Information Processing Systems, 2019",
+        "entry_fingerprint": "9f744486d24c5a48",
         "key": "ovadia2019",
         "published": "2019-06-06",
         "title_matches": true
@@ -388,6 +396,7 @@
         "arxiv_version": "2007.02418v3",
         "authors_match": true,
         "comment": "Accepted at ICML 2020",
+        "entry_fingerprint": "e506d479e3b78a66",
         "key": "abbas2020",
         "published": "2020-07-05",
         "title_matches": true
@@ -395,9 +404,76 @@
       {
         "arxiv_version": "1906.08253v3",
         "authors_match": true,
-        "comment": "NeurIPS 2019.",
+        "comment": "NeurIPS 2019. Code at https://github.com/JannerM/mbpo, project page at: https://jannerm.github.io/mbpo-www/",
+        "entry_fingerprint": "a5ad4d5d93ccb442",
         "key": "janner2019",
         "published": "2019-06-19",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1906.08312v1",
+        "authors_match": true,
+        "comment": null,
+        "entry_fingerprint": "9ada00301936d275",
+        "key": "malik2019",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2019-06-19",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1511.06314v1",
+        "authors_match": true,
+        "comment": null,
+        "entry_fingerprint": "620593a8a25ee296",
+        "key": "lee2015",
+        "n_fragments": 2,
+        "n_fragments_found": 2,
+        "published": "2015-11-19",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "1912.02757v2",
+        "authors_match": true,
+        "comment": null,
+        "entry_fingerprint": "7da81b41d6d6b845",
+        "key": "fort2019",
+        "n_fragments": 2,
+        "n_fragments_found": 2,
+        "published": "2019-12-05",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "2010.06610v2",
+        "authors_match": true,
+        "comment": "Updated to the ICLR camera ready version, added reference to Soflaei et al. 2020",
+        "entry_fingerprint": "e4dbdda6e2fa94ac",
+        "key": "havasi2021",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2020-10-13",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "2002.06715v2",
+        "authors_match": true,
+        "comment": null,
+        "entry_fingerprint": "d56ba4009279e36a",
+        "key": "wen2020",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2020-02-17",
+        "title_matches": true
+      },
+      {
+        "arxiv_version": "2203.09168v2",
+        "authors_match": true,
+        "comment": "ICLR 2022 camera-ready version. Code available at http://github.com/martius-lab/beta-nll",
+        "entry_fingerprint": "08920163622e7d19",
+        "key": "seitzer2022",
+        "n_fragments": 1,
+        "n_fragments_found": 1,
+        "published": "2022-03-17",
         "title_matches": true
       }
     ]

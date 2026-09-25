@@ -4041,7 +4041,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "472"
+    "value": "504"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -4717,7 +4717,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 247
+    "value": 252
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -7673,11 +7673,11 @@
   },
   "t1_n_frag": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 9
+    "value": 17
   },
   "t1_n_frag_ok": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 9
+    "value": 17
   },
   "t1_n_refs": {
     "source": "results/t1_bibliography_verified.json",
@@ -7685,7 +7685,7 @@
   },
   "t1_n_verified": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 10
+    "value": 16
   },
   "t1_reference_list": {
     "source": "results/t1_bibliography_verified.json",

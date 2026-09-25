@@ -21,6 +21,7 @@ build reads, and --verify is how it gets refreshed.
 Writes results/t1_bibliography_verified.json.
 """
 import argparse
+import hashlib
 import html
 import json
 import os
@@ -439,53 +440,212 @@ def verify():
     return per
 
 
-# The result of running --verify on CHECKED_ON. Kept in the file so the build is
-# network-free and the record is reviewable in a diff.
-RECORDED = {
-    "checked_on": CHECKED_ON,
-    "method": "arXiv API metadata for title, author list and venue comment; for any "
-              "entry whose 'why_we_engage' asserts what the paper SAYS, the asserted "
-              "fragments were additionally matched as substrings of that paper's own "
-              "arXiv HTML rendering after tag-stripping and whitespace collapse",
-    "n_entries": len(ENTRIES),
-    "n_metadata_verified": 10,
-    "n_with_fragment_checks": 2,
-    "n_fragments_checked": 9,
-    "n_fragments_verbatim": 9,
-    "per_entry": [
-        {"key": "lu2022", "title_matches": True, "authors_match": True,
-         "published": "2021-10-08", "arxiv_version": "2110.04135v2",
-         "comment": "Spotlight @ ICLR 2022; Spotlight @ RL4RealLife Workshop ICML2021",
-         "n_fragments": 5, "n_fragments_found": 5},
-        {"key": "chua2018", "title_matches": True, "authors_match": True,
-         "published": "2018-05-30", "arxiv_version": "1805.12114v2",
-         "comment": "NIPS 2018, video and code available",
-         "n_fragments": 4, "n_fragments_found": 4},
-        {"key": "yu2020", "title_matches": True, "authors_match": True,
-         "published": "2020-05-27", "arxiv_version": "2005.13239v6",
-         "comment": "NeurIPS 2020. First two authors contributed equally."},
-        {"key": "kidambi2020", "title_matches": True, "authors_match": True,
-         "published": "2020-05-12", "arxiv_version": "2005.05951v3",
-         "comment": "Published at NeurIPS 2020."},
-        {"key": "lakshminarayanan2017", "title_matches": True, "authors_match": True,
-         "published": "2016-12-05", "arxiv_version": "1612.01474v3", "comment": "NIPS 2017",
-         "note": "arXiv preprint dated 2016; the venue year is 2017 and the entry "
-                 "cites the venue year, as the brief's table does"},
-        {"key": "kuleshov2018", "title_matches": True, "authors_match": True,
-         "published": "2018-07-01", "arxiv_version": "1807.00263v1", "comment": "ICML 2018"},
-        {"key": "guo2017", "title_matches": True, "authors_match": True,
-         "published": "2017-06-14", "arxiv_version": "1706.04599v2", "comment": "ICML 2017"},
-        {"key": "ovadia2019", "title_matches": True, "authors_match": True,
-         "published": "2019-06-06", "arxiv_version": "1906.02530v2",
-         "comment": "Advances in Neural Information Processing Systems, 2019"},
-        {"key": "abbas2020", "title_matches": True, "authors_match": True,
-         "published": "2020-07-05", "arxiv_version": "2007.02418v3",
-         "comment": "Accepted at ICML 2020"},
-        {"key": "janner2019", "title_matches": True, "authors_match": True,
-         "published": "2019-06-19", "arxiv_version": "1906.08253v3",
-         "comment": "NeurIPS 2019."},
-    ],
-}
+# The result of running --verify on CHECKED_ON_FULL. Kept in the file so the build is
+# network-free and the record is reviewable in a diff. Refresh it by running --verify and
+# pasting the per-entry results here; EVERY COUNT BELOW IS COMPUTED from _PER_ENTRY, never
+# typed, so a stale count cannot survive a refreshed list.
+CHECKED_ON_FULL = "2026-09-25"   # all sixteen entries re-verified against arXiv. They had been
+# verified once before, in commit e094c3b on CHECKED_ON_REV3, which committed a --verify
+# artifact reading 16 / 17 / 17; commit 614dddf then overwrote it with this script's plain
+# output, 10 / 9 / 9, because RECORDED had not been refreshed and reproduce.sh runs the plain
+# path. That silent loss is ledger entries D-33 and D-34, and it is what put "10 of 16" in
+# the paper. The fix is the one D-34 prescribed: refresh RECORDED, and pair it with an
+# assertion that the pinned table covers ENTRIES -- see check_pinned_covers_entries().
+_PER_ENTRY = [   {   'key': 'lu2022',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2021-10-08',
+        'arxiv_version': '2110.04135v2',
+        'comment': 'Spotlight @ ICLR 2022; Spotlight @ RL4RealLife Workshop ICML2021',
+        'n_fragments': 5,
+        'n_fragments_found': 5,
+        'entry_fingerprint': '71d53f453a8cd738'},
+    {   'key': 'chua2018',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2018-05-30',
+        'arxiv_version': '1805.12114v2',
+        'comment': 'NIPS 2018, video and code available at '
+                   'https://sites.google.com/view/drl-in-a-handful-of-trials/',
+        'n_fragments': 4,
+        'n_fragments_found': 4,
+        'entry_fingerprint': 'c513c53268c0fc55'},
+    {   'key': 'yu2020',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2020-05-27',
+        'arxiv_version': '2005.13239v6',
+        'comment': 'NeurIPS 2020. First two authors contributed equally. Last two authors '
+                   'advised equally',
+        'entry_fingerprint': 'e1a456805d672d42'},
+    {   'key': 'kidambi2020',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2020-05-12',
+        'arxiv_version': '2005.05951v3',
+        'comment': 'First two authors contributed equally. Published at NeurIPS 2020. After '
+                   'publication at NeurIPS 2020, (1) D4RL benchmark results have been added; '
+                   '(2) hyper-parameter ablation studies have been added; (3) scope of Lemma 3 '
+                   'has been extended',
+        'entry_fingerprint': 'cb405cccdb6dbd31'},
+    {   'key': 'lakshminarayanan2017',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2016-12-05',
+        'arxiv_version': '1612.01474v3',
+        'comment': 'NIPS 2017',
+        'note': 'arXiv preprint dated 2016; the venue year is 2017 and the entry cites the '
+                "venue year, as the brief's table does",
+        'entry_fingerprint': '47153a7632831a5f'},
+    {   'key': 'kuleshov2018',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2018-07-01',
+        'arxiv_version': '1807.00263v1',
+        'comment': 'ICML 2018',
+        'entry_fingerprint': '4cb4086bceabf08e'},
+    {   'key': 'guo2017',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2017-06-14',
+        'arxiv_version': '1706.04599v2',
+        'comment': 'ICML 2017',
+        'entry_fingerprint': 'd013013181084591'},
+    {   'key': 'ovadia2019',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2019-06-06',
+        'arxiv_version': '1906.02530v2',
+        'comment': 'Advances in Neural Information Processing Systems, 2019',
+        'entry_fingerprint': '9f744486d24c5a48'},
+    {   'key': 'abbas2020',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2020-07-05',
+        'arxiv_version': '2007.02418v3',
+        'comment': 'Accepted at ICML 2020',
+        'entry_fingerprint': 'e506d479e3b78a66'},
+    {   'key': 'janner2019',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2019-06-19',
+        'arxiv_version': '1906.08253v3',
+        'comment': 'NeurIPS 2019. Code at https://github.com/JannerM/mbpo, project page at: '
+                   'https://jannerm.github.io/mbpo-www/',
+        'entry_fingerprint': 'a5ad4d5d93ccb442'},
+    {   'key': 'malik2019',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2019-06-19',
+        'arxiv_version': '1906.08312v1',
+        'comment': None,
+        'n_fragments': 1,
+        'n_fragments_found': 1,
+        'entry_fingerprint': '9ada00301936d275'},
+    {   'key': 'lee2015',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2015-11-19',
+        'arxiv_version': '1511.06314v1',
+        'comment': None,
+        'n_fragments': 2,
+        'n_fragments_found': 2,
+        'entry_fingerprint': '620593a8a25ee296'},
+    {   'key': 'fort2019',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2019-12-05',
+        'arxiv_version': '1912.02757v2',
+        'comment': None,
+        'n_fragments': 2,
+        'n_fragments_found': 2,
+        'entry_fingerprint': '7da81b41d6d6b845'},
+    {   'key': 'havasi2021',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2020-10-13',
+        'arxiv_version': '2010.06610v2',
+        'comment': 'Updated to the ICLR camera ready version, added reference to Soflaei et '
+                   'al. 2020',
+        'n_fragments': 1,
+        'n_fragments_found': 1,
+        'entry_fingerprint': 'e4dbdda6e2fa94ac'},
+    {   'key': 'wen2020',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2020-02-17',
+        'arxiv_version': '2002.06715v2',
+        'comment': None,
+        'n_fragments': 1,
+        'n_fragments_found': 1,
+        'entry_fingerprint': 'd56ba4009279e36a'},
+    {   'key': 'seitzer2022',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2022-03-17',
+        'arxiv_version': '2203.09168v2',
+        'comment': 'ICLR 2022 camera-ready version. Code available at '
+                   'http://github.com/martius-lab/beta-nll',
+        'n_fragments': 1,
+        'n_fragments_found': 1,
+        'entry_fingerprint': '08920163622e7d19'}]
+
+
+def fingerprint(ent):
+    """A short hash of everything in an entry that verification checks against arXiv.
+
+    Pinned into each RECORDED record at verification time, so that an entry edited AFTER it was
+    verified -- a changed title, author list, identifier or fragment -- is caught rather than
+    silently reported as verified. D-34 asked for coverage of every key; a key check alone would
+    still pass an edited title, so the fingerprint covers the verified CONTENT, not just the key.
+    """
+    blob = json.dumps({"arxiv": ent["arxiv"], "title": ent["title"], "authors": ent["authors"],
+                       "fragments": ent["fragments"]}, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:16]
+
+
+def check_pinned_covers_entries(per):
+    """D-34's assertion: the pinned table must cover exactly ENTRIES, as they now stand.
+
+    Turns the silent degradation D-33 and D-34 describe into a loud failure. It fails if an entry
+    was added to ENTRIES without being verified, if a pinned record has no entry, or if any entry
+    was edited after it was verified. The remedy in every case is to run --verify and refresh
+    _PER_ENTRY, not to edit this check.
+    """
+    pinned = {q["key"]: q for q in per}
+    keys = [e["key"] for e in ENTRIES]
+    unverified = [k for k in keys if k not in pinned]
+    orphaned = [k for k in pinned if k not in set(keys)]
+    edited = [e["key"] for e in ENTRIES
+              if e["key"] in pinned and pinned[e["key"]].get("entry_fingerprint") != fingerprint(e)]
+    assert not (unverified or orphaned or edited), (
+        f"RECORDED does not cover ENTRIES as they stand -- unverified {unverified}, "
+        f"orphaned {orphaned}, edited since verification {edited}. Run --verify and refresh "
+        "_PER_ENTRY; do not weaken this check.")
+
+
+def record_from(per, checked_on):
+    """The verification record, with every count derived from the per-entry results.
+
+    Used by BOTH paths -- the recorded one the build reads and a live --verify -- so the two
+    cannot disagree about how a count is formed.
+    """
+    return {"checked_on": checked_on,
+            "method": METHOD,
+            "n_entries": len(ENTRIES),
+            "per_entry": per,
+            "n_metadata_verified": sum(1 for q in per
+                                       if q.get("title_matches") and q.get("authors_match")),
+            "n_with_fragment_checks": sum(1 for q in per if "n_fragments" in q),
+            "n_fragments_checked": sum(q.get("n_fragments", 0) for q in per),
+            "n_fragments_verbatim": sum(q.get("n_fragments_found", 0) for q in per)}
+
+
+METHOD = ("arXiv API metadata for title, author list and venue comment; for any "
+          "entry whose 'why_we_engage' asserts what the paper SAYS, the asserted "
+          "fragments were additionally matched as substrings of that paper's own "
+          "arXiv HTML rendering after tag-stripping and whitespace collapse")
+RECORDED = record_from(_PER_ENTRY, CHECKED_ON_FULL)
 
 
 def main():
@@ -495,17 +655,17 @@ def main():
     args = ap.parse_args()
 
     record = RECORDED
+    if not args.verify:
+        check_pinned_covers_entries(RECORDED["per_entry"])
     if args.verify:
         per = verify()
         bad = [p for p in per if not p.get("title_matches") or not p.get("authors_match")]
         frag_bad = [(p["key"], f["fragment"]) for p in per
                     for f in p.get("fragments", []) if not f["found"]]
-        record = {"checked_on": "RE-VERIFIED THIS RUN", "method": RECORDED["method"],
-                  "n_entries": len(ENTRIES), "per_entry": per,
-                  "n_metadata_verified": sum(1 for p in per if p.get("title_matches")
-                                             and p.get("authors_match")),
-                  "n_fragments_checked": sum(p.get("n_fragments", 0) for p in per),
-                  "n_fragments_verbatim": sum(p.get("n_fragments_found", 0) for p in per)}
+        by_key = {e["key"]: e for e in ENTRIES}
+        for q in per:
+            q["entry_fingerprint"] = fingerprint(by_key[q["key"]])
+        record = record_from(per, "RE-VERIFIED THIS RUN")
         assert not bad, f"metadata mismatch: {[b['key'] for b in bad]}"
         assert not frag_bad, f"fragments not found verbatim: {frag_bad}"
 

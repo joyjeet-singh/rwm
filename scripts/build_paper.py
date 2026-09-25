@@ -250,7 +250,9 @@ def main():
     CAPS = {
         "paper_fig1_calibration.png":
             "Calibration of all four models on the held-out arena. "
-            "(a) reliability: observed against predicted coverage, with the calibrated diagonal. "
+            "(a) reliability: observed against predicted coverage, with the calibrated diagonal; "
+            "the inset repeats the same points with observed coverage on a log scale, where the "
+            "four models separate. "
             "(b) coverage at $\\pm1\\sigma$ against forecast horizon, log scale, against the "
             + NOMINAL1 + "\\% a calibrated Gaussian gives. Every curve sits far below the "
             "diagonal and falls further with horizon. "
@@ -265,7 +267,9 @@ def main():
             "The variance collapse is objective-driven. (a) mean "
             "$\\log\\Delta_{\\log\\sigma}$ against training iteration for each of the "
             + N_COLLAPSE + " runs of the collapse family, which is every run at the released "
-            "width. "
+            "width. The runs are drawn individually but are visually coincident within each "
+            "objective, so the " + N_COLLAPSE + " read as two lines, one falling and one rising "
+            "-- which is the point: the trajectory does not vary visibly from run to run. "
             "(b) the fitted per-iteration slope for each run, grouped by objective: negative and "
             "tightly clustered under sampled MSE, positive under \\texttt{gaussian\\_nll}. The "
             "sign flip is the evidence that the objective, not the optimiser or the data, "
