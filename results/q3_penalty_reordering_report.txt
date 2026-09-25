@@ -1,0 +1,29 @@
+Q3 / M-70 — DOES THE PER-HORIZON CORRECTION REORDER CUMULATIVE PENALTIES?
+========================================================================================
+  rule pre-registered in 6b87e325d6f24640925d6d69447755a8341b2fa7
+  arena: held-out episodes [1, 8], n_independent = 4 whole 400-step trajectories,
+         368 forecast steps each, horizons [1, 8, 32, 100, 128, 368]
+
+   episode             P_raw            P_corr
+         1        138.908531       4933.859358
+         1        193.199107       6837.899915
+         8        223.278462       8626.913036
+         8        205.981096       8188.676593
+
+  pairs: 6 defined, 0 undefined, 0 reordering
+  f = 0.0
+  95% cluster bootstrap over whole trajectories: [0.0000, 0.0000]   (4000 resamples, 72 discarded for <2 distinct, 0 for all-undefined)
+
+  VERDICT: DOES NOT REORDER
+  NOTE: that interval is DEGENERATE BY CONSTRUCTION and is not corroboration. Every
+  resampled pair is one of the original pairs, so the interval can only take values
+  in [0.0]: exhaustively, all 252 admissible resamples of 256 (4 discarded)
+  return f in that set. Consequently:
+    - branch 2's interval condition (entirely below 1/2) can never fail
+  A defect in M-70, whose text is frozen; recorded as ledger entry M-71.
+  spread of the correction, c_ratio_max_over_min = 9.3143
+
+  THE BOUND, binding this verdict as it binds every branch: this is the ordering of the
+  penalty component alone, not of the penalised return. No reward function and no tuned
+  lambda exist in this work, so the verdict bounds what the correction could do
+  downstream and never measures what it costs. It licenses no statement about policy.

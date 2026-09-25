@@ -3199,7 +3199,7 @@
       "id": "M-70",
       "claim": "PRE-REGISTERED decision rule for whether the per-horizon correction reorders cumulative ",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/q3_penalty_reordering.json` \u2014 returns **DOES NOT REORDER**",
       "evidence": [
         "SRC"
       ],
@@ -3208,13 +3208,27 @@
         "results/task_d3_perhorizon.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-71",
+      "claim": "M-70's bootstrap interval is degenerate by construction, and its branch conditions are v",
+      "relevance": "METHOD",
+      "status": "ACTIVE",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/q3_penalty_reordering.json",
+        "scripts/q3_penalty_reordering.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 70,
+    "M": 71,
     "O": 14,
     "R": 75,
     "S": 19,

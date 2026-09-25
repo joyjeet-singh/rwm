@@ -310,3 +310,117 @@ and `citations_still_valid`, so a reader can see whether the copy they hold was 
 verifying run or not. The verdicts themselves are readings of source and no script can
 re-derive them; what a script can check is that the citations have not drifted, and that is what
 it checks.
+
+---
+
+## Q3 — Is there a cheaper proxy for the downstream cost, one that needs no policy?
+
+**The referee's stake in it.** §11 says this work cannot state what the miscalibration costs
+downstream, because no policy is trained and Appendix D prices the penalty ablation as needing a
+simulator. The referee asked whether a proxy exists that needs no policy at all — for instance
+the fraction of candidate actions whose ranking changes under the corrected penalty.
+
+**One does, it was pre-registered before it was computed, and it returns
+`DOES NOT REORDER` — worth exactly what its bound says it is worth and not a point more.** The
+rule is `M-70`, committed in `6b87e325d6` before any
+part of the statistic existed; the block that computed it set that entry's `Status` line and
+changed nothing else.
+
+### The trap the rule was written against
+
+Within a single horizon the correction is `u → c·u` with `c > 0`, a monotone transform, which
+cannot change any ranking. **A proxy comparing states at the same rollout depth is therefore
+guaranteed to find nothing**, and finding nothing there would mean the measurement was ill-posed
+rather than that the correction is harmless. What the correction changes is the relative weight
+*across* depths, so the statistic is the penalty accumulated *along* a rollout:
+
+    P_raw(i)  = Σ_{t=1..368} u_i(t)
+    P_corr(i) = Σ_{t=1..368} c_out(i)(band(t)) · u_i(t)
+
+with `u` the scalar epistemic term the penalty actually consumes, and `c_out(i)` the multipliers
+fitted on the fold **not** containing trajectory `i`. A pair reorders when the two orderings
+disagree, and `f` is the fraction of the `C(4,2) = 6` pairs that do.
+
+### What was returned
+
+Every figure in this section is read from `results/q3_penalty_reordering.json`, written by
+`scripts/q3_penalty_reordering.py`, with a plain-text copy in
+`results/q3_penalty_reordering_report.txt`.
+
+| episode | P_raw | P_corr |
+|---|---|---|
+| 1 | 138.9085 | 4933.8594 |
+| 1 | 193.1991 | 6837.8999 |
+| 8 | 223.2785 | 8626.9130 |
+| 8 | 205.9811 | 8188.6766 |
+
+**6 pairs defined, 0 undefined,
+0 reordering. f = 0.0**, with a 95% cluster-bootstrap interval
+over whole trajectories of [0.0000,
+0.0000] at n_independent =
+4. That is branch 2 of the rule's three, returned as the rule words it.
+
+**That interval is degenerate by construction and is not corroboration.** Resampling
+trajectories creates no new pairs — every pair from a resample is one of the original six,
+with its reorder flag already fixed — so with none reordering, no resample can return a
+non-zero `f`. Exhaustively: of all 256 resamples 4 are discarded and **all 252 admissible
+ones return `f = 0`**. The interval condition in the rule's two directional branches can
+therefore never fail, and branch 2 reduces to `f = 0` alone. It is also *narrower* than
+`M-70`'s own design table predicted — `[0.0000, 0.4593]` for 0 of 6, which the rule said
+would itself understate the true width. The verdict is unaffected; the interval simply
+carries no information. It is not a further way the null could have been forced — `f = 0` was
+already fixed by the six pairs before any resampling — but a condition that could not have
+failed, reported as though it could. The defect is recorded at ledger entry `M-71`.
+
+### The correction is not flat, so that route to a hollow null is closed
+
+`M-70` requires the spread of the multipliers beside the verdict, because if the six barely
+differed across bands then this branch would be close to forced and its licence would read as a
+finding. They differ by **9.31×** across
+horizons. The design could have produced reordering and did not.
+
+### But the null is partly structural, and a reader must be told so
+
+*The diagnostic in this subsection was **not** required by `M-70`. It was computed after the
+verdict, changes no branch and no figure, and is reported because it cuts against the finding
+rather than for it.*
+
+The `c` spread is not the only way a null here could be hollow. The six horizons partition the
+rollout very unevenly, and the accumulated penalty is dominated by the longest band:
+
+| band | steps | share of the raw penalty | share of the corrected penalty |
+|---|---|---|---|
+| 1 | 1 | 0.17% | 0.02% |
+| 8 | 7 | 1.21% | 0.25% |
+| 32 | 24 | 4.59% | 1.62% |
+| 100 | 68 | 16.85% | 10.35% |
+| 128 | 28 | 8.88% | 6.40% |
+| 368 | 240 | 68.31% | 81.35% |
+
+**81.35% of the corrected penalty sits in the single band
+h = 368**, which holds
+240 of the
+368 steps — and the overall ordering of `P_corr` is **exactly** that
+band's ordering. So both orderings are largely that band's ordering, and the per-horizon
+variation acts mostly on bands carrying less than a fifth of the mass. The verdict is what the
+rule returned and it stands exactly as stated; what is narrower than
+it first reads is what the result licenses about the correction's **power** to reorder — this
+arena gave the per-horizon weights little room to act, so the null is weaker evidence of
+harmlessness than the bare verdict suggests. The paper must say so.
+
+### The bound, which binds this verdict as `M-70` binds every branch
+
+**No reward function is available in this work.** `Σ_t u(t)` is the **penalty component alone**,
+not the penalised return `r̃ = r − λu`. Whether a changed ordering of the penalty component
+changes the ordering of the return depends on the scale of `r` relative to `λu`, and this project
+has neither `r` nor a tuned `λ`. **This verdict is therefore a bound on what the correction could
+do downstream, never a measurement of what it costs**, and it licenses no statement about policy
+performance, about learned behaviour, or about the size of any downstream effect.
+
+### What was recomputed, and under what permission
+
+`u` is stored nowhere: §6.8's own script computes it and discards it. `M-70` carries a permission,
+ruled on 2026-09-20 before the rule was committed, for **one deterministic re-derivation** —
+one `rollout_uncertainty` call per held-out episode on the released checkpoint at
+`start_step = 32`, `action_offset = 1`, batched exactly as §6.8 batches it. Nothing was trained or
+fitted; the multipliers were read from `results/task_d3_perhorizon.json`.

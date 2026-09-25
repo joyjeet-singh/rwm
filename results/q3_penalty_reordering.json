@@ -1,0 +1,139 @@
+{
+  "rule": "M-70",
+  "pre_registered_in": "6b87e325d6f24640925d6d69447755a8341b2fa7",
+  "verdict": "DOES NOT REORDER",
+  "statistic": {
+    "f": 0.0,
+    "n_reordering_pairs": 0,
+    "n_defined_pairs": 6,
+    "n_undefined_pairs": 0,
+    "n_undefined_exact_tie": 0,
+    "n_undefined_non_finite": 0,
+    "n_pairs_total": 6,
+    "ci95_cluster_bootstrap_over_trajectories": [
+      0.0,
+      0.0
+    ]
+  },
+  "arena": {
+    "held_out_episodes": [
+      1,
+      8
+    ],
+    "n_independent": 4,
+    "trajectories_per_episode": {
+      "1": 2,
+      "8": 2
+    },
+    "horizons": [
+      1,
+      8,
+      32,
+      100,
+      128,
+      368
+    ],
+    "steps_per_trajectory": 368,
+    "start_step": 32,
+    "traj_len": 400,
+    "bootstrap_unit": "whole trajectory",
+    "n_boot": 4000,
+    "seed": 20260920,
+    "resamples_discarded_fewer_than_two_distinct": 72,
+    "resamples_discarded_all_pairs_undefined": 0
+  },
+  "per_trajectory": [
+    {
+      "episode": 1,
+      "P_raw": 138.90853062272072,
+      "P_corr": 4933.859357613677,
+      "c_out_from_fold": "fitted on the other held-out episode"
+    },
+    {
+      "episode": 1,
+      "P_raw": 193.19910684227943,
+      "P_corr": 6837.899914852794,
+      "c_out_from_fold": "fitted on the other held-out episode"
+    },
+    {
+      "episode": 8,
+      "P_raw": 223.2784616947174,
+      "P_corr": 8626.913036053284,
+      "c_out_from_fold": "fitted on the other held-out episode"
+    },
+    {
+      "episode": 8,
+      "P_raw": 205.98109579086304,
+      "P_corr": 8188.676592887292,
+      "c_out_from_fold": "fitted on the other held-out episode"
+    }
+  ],
+  "is_the_null_structural": {
+    "what": "Diagnostic only. Changes no branch and no verdict. It asks whether one horizon band so dominates the accumulated penalty that both orderings are just that band's ordering, in which case no reordering could have occurred for a reason having nothing to do with the correction.",
+    "steps_per_band": {
+      "1": 1,
+      "8": 7,
+      "32": 24,
+      "100": 68,
+      "128": 28,
+      "368": 240
+    },
+    "share_of_raw_penalty_by_band": {
+      "1": 0.0017073936191590972,
+      "8": 0.012127837929970166,
+      "32": 0.04585104489336463,
+      "100": 0.1684688316965944,
+      "128": 0.08879202008726125,
+      "368": 0.6830528717736505
+    },
+    "share_of_corrected_penalty_by_band": {
+      "1": 0.00024765358177823477,
+      "8": 0.0025368608192223984,
+      "32": 0.016188882962494214,
+      "100": 0.10352400335662951,
+      "128": 0.06404584350618066,
+      "368": 0.8134567557736949
+    },
+    "dominant_band_after_correction": 368,
+    "dominant_band_share": 0.8134567557736949,
+    "ordering_equals_dominant_band_ordering": true
+  },
+  "spread_of_the_correction": {
+    "c_ratio_max_over_min": 9.314336105114846,
+    "why_reported": "M-70 requires it beside the verdict. If the six multipliers barely differed across bands the DOES NOT REORDER branch would be close to forced and its licence would read as a finding when it was really a property of the correction being nearly flat. This figure says whether the design could have produced anything else."
+  },
+  "the_interval_is_degenerate_by_construction": {
+    "what": "A defect in M-70, not in this discharge, recorded because the rule's text is frozen and cannot be corrected in place. Every pair formed from a resample is one of the original six pairs, so if none of the six reorders then no resample can yield a non-zero f. The attainable set of f under this bootstrap is reported in attainable_set_of_f below, enumerated by this script over the bootstrap's ENTIRE sample space rather than asserted: the counts in exhaustive_check and the vacuous conditions in branch_conditions_that_cannot_fail are all computed from that enumeration.",
+    "consequence": "The interval condition in branches 1 and 2 CANNOT FAIL when f is 0 or 1, which is the only time it is consulted, so it is vacuous: branch 2 reduces to 'f = 0' alone and branch 1 to 'f = 1' alone. The verdict returned, DOES NOT REORDER, is unaffected, but the interval must not be read as independent corroboration of it.",
+    "comparison_with_the_rule_prediction": {
+      "m70_table_row_quoted": {
+        "pairs_reordering": 0,
+        "of": 6,
+        "interval": [
+          0.0,
+          0.4593
+        ]
+      },
+      "bootstrap_interval_returned": [
+        0.0,
+        0.0
+      ],
+      "narrower_than_predicted": true,
+      "note": "M-70 says the true interval would be WIDER than its binomial table, because the six pairs rest on four units. narrower_than_predicted records whether the bootstrap it mandates came back narrower instead; a narrower interval shown to a referee without a note reads as a precision this design cannot deliver."
+    },
+    "attainable_set_of_f": [
+      0.0
+    ],
+    "exhaustive_check": {
+      "resamples": 256,
+      "discarded": 4,
+      "admissible": 252
+    },
+    "branch_conditions_that_cannot_fail": [
+      "branch 2's interval condition (entirely below 1/2) can never fail"
+    ],
+    "recorded_as": "ledger entry M-71"
+  },
+  "the_bound": "M-70's bound, binding every branch equally. No reward function is available in this work. sum_t u(t) is the PENALTY COMPONENT ALONE, not the penalised return r~ = r - lambda*u. Whether a changed ordering of the penalty component changes the ordering of the return depends on the scale of r relative to lambda*u, and this project has neither r nor a tuned lambda. This verdict is therefore a BOUND on what the correction could do downstream, never a measurement of what it costs, and it licenses no statement about policy performance, learned behaviour, or the size of any downstream effect.",
+  "what_was_recomputed": "u only, under M-70's permission: one call to score_reference.ReferenceRWM.rollout_uncertainty per held-out episode, released checkpoint, start_step 32, action_offset 1 -- the same entry point, checkpoint and CSV as scripts/task_d3_perhorizon.py, batched as it batches. Nothing was trained or fitted; the multipliers were read from results/task_d3_perhorizon.json."
+}

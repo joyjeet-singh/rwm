@@ -7721,4 +7721,61 @@ choosing.
 **Evidence** `SRC` — the rule only. It names `results/task_d3_perhorizon.json`, which exists, as
 the source of `c(h)`, and `results/q3_penalty_reordering.json`, which does not exist yet and is
 the artifact that will discharge it.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/q3_penalty_reordering.json` — returns **DOES NOT REORDER** · **Relevance** METHOD
+
+
+### M-71 — M-70's bootstrap interval is degenerate by construction, and its branch conditions are vacuous · **NEW**
+**Found by a reviewer at the discharge, against the block's own interest.** `M-70` requires a 95%
+cluster bootstrap over whole trajectories and makes each of its two directional branches
+conditional on where that interval lies: branch 1 on it lying entirely above 1/2, branch 2 on it
+lying entirely below. **Neither condition can ever fail**, so neither does any work.
+
+**Why.** The statistic is a fraction over the `C(4, 2) = 6` unordered pairs of the held-out
+trajectories. Resampling trajectories does not create new pairs: every pair formed from a resample
+is one of those same six, with its reorder flag already fixed. So if none of the six reorders, no
+resample can return a non-zero `f`; if all six reorder, none can return anything below 1. The
+interval is a single point whenever `f` is 0 or 1 — which is exactly when a branch consults it.
+Verified exhaustively on this result: over all `4**4 = 256` resamples, 4 are discarded
+for holding fewer than two distinct trajectories and **all 252 admissible resamples return `f = 0.0`**, an
+attainable set of one point. The `f = 1` half is not exercised by this data and rests on the argument
+above.
+
+**So `M-70`'s branch 2 reduces to `f = 0` alone and its branch 1 to `f = 1` alone.** The verdict
+`M-70` returned is unaffected — branch 2 fires on `f = 0` on either reading — and the discharging
+block computed and reported exactly what the rule specified. What is wrong is the rule, and the
+consequence is a reporting one: **the interval must not be read as independent corroboration of
+the verdict**, because it could not have contradicted it.
+
+**It is also narrower than `M-70` predicted, in the direction that flatters.** `M-70`'s own design
+table gives `[0.0000, 0.4593]` for 0 of 6 and states that the true interval would be **wider**
+than that binomial, because the six pairs rest on only four independent units. The bootstrap it
+mandates returns `[0.0000, 0.0000]`, narrower than both. A referee shown `[0.0000, 0.0000]` as a
+95% cluster-bootstrap interval, with no note, would read a precision this design cannot deliver.
+
+**This is not another route to a forced null, and saying so would overclaim.** A route to a
+forced null drives `f` to 0 whatever the correction really does; `M-70` already has two of those
+on its record — a nearly flat correction, which it guards with `c_ratio_max_over_min` and which
+passed at 9.31, and the band-size imbalance the discharging block found and recorded. This is a
+different failure. Here `f = 0` was already fixed by the six pairs before any resampling began,
+and the degeneracy is downstream of that: it forces the **corroboration**, not the null. The
+interval could never have contradicted the verdict, whatever the verdict had been.
+
+**What it establishes is narrower and sharper than the null-routes it sits beside: a
+pre-registered rule can contain a condition that cannot fail, and a condition that cannot fail
+must be identified as such before it is reported as evidence.** `M-70`'s interval was not a weak
+check that happened to agree; it was incapable of disagreeing, and nothing in the rule said so.
+The rule's one quantitative prediction about it — that the true interval would be wider than the
+binomial's `[0.0000, 0.4593]` — was wrong in the direction that flatters. That is a class of
+defect worth looking for in any pre-registered rule whose branches are conditional on an interval
+computed from the same resampled units as the statistic itself.
+
+**What this does not do.** It does not re-open `M-70`, whose text is permanently frozen and whose
+verdict stands as returned. It does not change the statistic, the arena or any figure. A rule that
+turns out to have a vacuous clause is superseded by the record of that fact, not by an edit.
+
+**Evidence** `RUN` `scripts/q3_penalty_reordering.py`, `results/q3_penalty_reordering.json` — the
+script enumerates the bootstrap's entire sample space and writes what it finds:
+`attainable_set_of_f`, the resample counts in `exhaustive_check`, and the list of branch
+conditions incapable of failing in `branch_conditions_that_cannot_fail`, all under
+`the_interval_is_degenerate_by_construction`. None of those figures is typed.
+**Status** ACTIVE · **Relevance** METHOD
