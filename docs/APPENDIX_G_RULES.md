@@ -1642,6 +1642,202 @@ What any downstream number rests on, in order:
 
 Step 5 onward inherits all five.
 
+## M-70 — Whether the per-horizon correction reorders cumulative penalties
+
+**Entered before the measurement exists.** No cumulative penalty has been summed along any
+rollout, no ordering of rollouts by penalty has been formed, raw or corrected, and
+`results/q3_penalty_reordering.json` does not exist as this is committed. The commit containing
+this entry precedes all of them and the ordering is checkable from `git log`, exactly as M-16's,
+M-23's, M-43's, M-44's, M-68's and M-69's are. Nothing in this entry was chosen after seeing a
+number it governs, because no such number has been computed.
+
+**Why the rule is needed.** §11 states that this work cannot say what the miscalibration costs
+downstream, because no policy is trained and Appendix D prices the penalty ablation as needing a
+simulator. A referee asked whether a cheaper proxy exists that needs no policy at all. One does,
+and it is worth exactly what its bound says it is worth and not a point more, which is why the
+bound is written into the rule rather than left to the block that discharges it.
+
+**The trap this rule exists to avoid, stated before the data so that a null result cannot be
+mistaken for a finding.** The penalty enters as `r̃ = r − λu`, where `u` is ensemble
+disagreement, and §6.8's repair is one positive scalar `c(h)` per forecast horizon. **Within a
+single horizon, multiplying every `u` by a positive constant cannot change any ranking** — it is
+a monotone transform of a scalar. So a proxy that compares states at the same rollout depth is
+guaranteed to find nothing, and finding nothing there would mean the measurement was ill-posed,
+not that the correction is harmless. What the correction does change is the **relative weight
+across depths**, and therefore the penalty accumulated along a rollout. The statistic below is
+chosen for that reason and no other.
+
+**The quantity `u`, pinned so that no later session chooses it.** `u_i(t)` is the **scalar
+epistemic disagreement of the released checkpoint at step `t` of trajectory `i`** — the value
+`means.std(0).sum(-1)` that `score_reference.ReferenceRWM.rollout_uncertainty` returns as its
+scalar epistemic output, which is the term the released code actually consumes as the penalty in
+`r̃ = r − λu`. Not the per-dimension array, not the aleatoric term, and not a per-horizon
+aggregate of either.
+
+**The horizon bands, pinned likewise.** §6.8's six horizons are nested windows, not a partition,
+so "the multiplier at horizon `h`" has to be turned into a weight on each step before anything can
+be summed along a rollout. The six horizons induce exactly one partition of the rollout's steps
+and this rule uses it:
+
+    band(1) = {1}          band(32)  = {9 … 32}     band(128) = {101 … 128}
+    band(8) = {2 … 8}      band(100) = {33 … 100}   band(368) = {129 … 368}
+
+Every step from 1 to 368 falls in exactly one band, and `band(t)` denotes the horizon labelling
+the band containing step `t`. Steps are counted from the first forecast step, `start_step = 32`
+in the stored design, so step `t` is absolute index `start_step + t − 1`.
+
+**The statistic, stated exactly.** For each held-out trajectory `i`, the penalty accumulated over
+its rollout, step by step, under each weighting:
+
+    P_raw(i)  = Σ_{t=1..368} u_i(t)
+    P_corr(i) = Σ_{t=1..368} c_out(i)(band(t)) · u_i(t)
+
+so every step contributes exactly once and the only difference between the two is the weight the
+correction puts on the depth at which each step sits — which is the whole of what the correction
+changes, as the paragraph above explains. `c_out(i)` is the multiplier table fitted on the fold
+that does **not** contain trajectory `i`, so no trajectory is scored under a multiplier fitted on
+itself; concretely, the six cells of `quantities.epistemic.fits` in
+`results/task_d3_perhorizon.json` whose `test_episode` is the episode trajectory `i` belongs to,
+one per horizon, read by their `c` field. Over the `C(4, 2) = 6` unordered pairs `{i, j}` of the
+held-out trajectories, a pair **reorders** when
+
+    sign(P_raw(i) − P_raw(j)) ≠ sign(P_corr(i) − P_corr(j))
+
+and the statistic is
+
+    f = (number of reordering pairs) / (number of defined pairs).
+
+**Ties, specified in advance so that no later session chooses.** A pair in which
+`P_raw(i) = P_raw(j)` exactly, or `P_corr(i) = P_corr(j)` exactly, has no ordering to change; it
+is **undefined**, is excluded from both numerator and denominator, and its count is reported.
+**If more than two of the six pairs are undefined the verdict is UNDERPOWERED by construction**,
+whatever the remaining pairs show. A non-finite `P_raw(i)` or `P_corr(i)` makes every pair
+containing `i` undefined by the same convention, and its occurrence is reported rather than
+silently absorbed.
+
+**The arena.** §6.8's own held-out arena, unchanged: the **4 mutually non-overlapping 400-step
+trajectories** of the held-out pair, `n_independent = 4`; the **six horizons h = 1, 8, 32, 100,
+128, 368**; the released checkpoint, through the same entry point §6.8 uses. The two fold
+directions are §6.8's, each multiplier fitted on 2 trajectories and scored on the other 2, which
+is what makes `c_out` well defined for every trajectory.
+
+**The correction.** The **epistemic** per-horizon multiplier table already stored in
+`results/task_d3_perhorizon.json` at `quantities.epistemic.fits`, selected by `test_episode` as
+described above and read from the `c` field. The aleatoric table in the same file is a different
+quantity and is not used: `u` is ensemble disagreement, which is the epistemic term. This rule
+fits nothing. If that artifact does not hold a multiplier for every one of the six horizons in
+both fold directions, the rule cannot be discharged as written and the discharging block must
+stop and say so rather than fitting one.
+
+**Intervals** are 95% **cluster bootstrap over whole trajectories** (M-27), never over pooled
+seed × trajectory values: the four held-out trajectories are resampled with replacement and `f`
+is recomputed over the pairs of the resampled set. A resampled pair of one trajectory with itself
+is degenerate and is excluded; a resample yielding fewer than two distinct trajectories is
+discarded and redrawn, and the number discarded is reported. **A resample in which every
+surviving pair is undefined has no statistic**: it too is discarded and redrawn, and counted
+separately from the first kind, so that neither discard can quietly become a zero.
+
+**Minimum detectable effect, estimated before the data and from the design alone.** It needs no
+measurement because it follows from the arena's combinatorics. Four independent trajectories give
+six pairs, so `f` can take only the seven values `0, 1/6, …, 1` and is **quantised to 16.67
+percentage points** — that quantum is the floor on any difference this design can resolve. Taking
+the six pairs as independent Bernoulli trials, which is the most generous assumption available,
+the exact binomial 95% interval on `f` is:
+
+| pairs reordering | f | exact binomial 95% interval | against 1/2 |
+|---|---|---|---|
+| 0 of 6 | 0.0000 | [0.0000, 0.4593] | **entirely below** |
+| 1 of 6 | 0.1667 | [0.0042, 0.6412] | straddles |
+| 2 of 6 | 0.3333 | [0.0433, 0.7772] | straddles |
+| 3 of 6 | 0.5000 | [0.1181, 0.8819] | straddles |
+| 4 of 6 | 0.6667 | [0.2228, 0.9567] | straddles |
+| 5 of 6 | 0.8333 | [0.3588, 0.9958] | straddles |
+| 6 of 6 | 1.0000 | [0.5407, 1.0000] | **entirely above** |
+
+**So the design can separate only two outcomes from a half: no pair reordering, and every pair
+reordering.** Everything between is unresolvable at this arena, and that is known now rather than
+discovered afterwards. **And the table above is optimistic**, because the six pairs are not six
+independent observations: each trajectory appears in three of them, so the true intervals are
+wider and both decidable branches are harder to reach than the table suggests. The cluster
+bootstrap the rule requires admits `4**4 = 256` distinct resamples, so the interval it returns is
+itself quantised. The rule does not lean on the table: branches 1 and 2 are decided on the
+interval actually computed at scoring time.
+
+**The rule, decided in advance. Three branches, applied in this order; the first that matches is
+the verdict; they are exhaustive and mutually exclusive.** Every condition names a quantity that
+has not been measured and none of them names an outcome.
+
+1. **REORDERS.** Every defined pair reorders — `f = 1` — and the 95% cluster-bootstrap interval
+   on `f` lies entirely above 1/2. **Licenses the paper to say:** on this arena the §6.8
+   correction changes the ordering of cumulative penalty on every held-out pair, so the
+   correction is not merely a rescaling of a quantity whose ordering is already fixed. Subject
+   without exception to the bound below.
+2. **DOES NOT REORDER.** No defined pair reorders — `f = 0` — and the 95% cluster-bootstrap
+   interval on `f` lies entirely below 1/2. **Licenses the paper to say:** on this arena the
+   correction leaves every pairwise ordering of cumulative penalty unchanged, so whatever it
+   changes downstream must act through the magnitude of the penalty rather than through which
+   rollout is penalised more. Subject without exception to the bound below.
+3. **UNDERPOWERED.** Anything else: any `0 < f < 1`; or `f = 0` or `f = 1` with an interval that
+   does not satisfy its branch; or more than two undefined pairs. **Licenses the paper to say
+   only** that the statistic was computed, what it returned, and that this arena cannot separate
+   it from a half — and nothing about the correction's downstream effect in either direction. An
+   unpowered measurement reported as unpowered is the outcome this branch exists to make
+   reportable, and on the design table above it is the likeliest of the three. Subject without
+   exception to the bound below, like the other two.
+
+**The bound, in the rule's own words, and it binds every branch equally.** No reward function is
+available in this work. `Σ_t u(t)` is the **penalty component alone**, not the penalised return
+`r̃ = r − λu`. Whether a changed ordering of the penalty component changes the ordering of the
+return depends on the scale of `r` relative to `λu`, and this project has neither `r` nor a
+tuned `λ`. **Every verdict this rule can return is therefore a bound on what the correction could
+do downstream, never a measurement of what it costs.** No branch licenses any statement about
+policy performance, about learned behaviour, or about the size of a downstream effect. A block
+discharging this rule that states the verdict without this bound has mis-stated it.
+
+**On what discharging this rule actually requires, established before committing it and not
+assumed.** The multipliers are stored; `u` is not. `results/task_d3_perhorizon.json` holds only
+`{fit_episode, test_episode, h, c, coverage_before, coverage_after}` per cell, and no artifact
+under `results/` holds per-trajectory per-step disagreement for the held-out arena — §6.8's own
+script recomputes it, calling `rollout_uncertainty` at `scripts/task_d3_perhorizon.py:54` every
+time it runs. The instruction this block runs under assumed the quantity was stored and it is
+not, so the question was put to the user before this entry was committed rather than resolved by
+the session.
+
+**The permission, ruled by the user on 2026-09-20, and its exact extent.** The discharging block
+may make **one deterministic re-derivation of `u`**: a call to
+`score_reference.ReferenceRWM.rollout_uncertainty` on the **released checkpoint**, over the four
+held-out trajectories, at `start_step = 32` with `action_offset = 1` — the same entry point, the
+same stored checkpoint and the same CSV that `scripts/task_d3_perhorizon.py:54` already uses, and
+the same quantity §6.8 itself computes. It is to be **batched exactly as §6.8 batches it**, one
+call per held-out episode as at `scripts/task_d3_perhorizon.py:78`, rather than in one call over
+all four trajectories: the two are the same construction but need not be bit-identical, and this
+rule adjudicates ties by exact equality, so the batching is pinned rather than left to chance. **That is the whole of the permission.** It trains
+nothing, fits nothing, introduces no data, no seed, no arena and no model that this paper does
+not already have, and it is deterministic, so a second run returns the same numbers. Anything
+beyond it — training, fitting a multiplier, a different checkpoint, a different arena, a
+different entry point, or a rollout whose settings differ from §6.8's in any respect — is outside
+the permission, means the design is wrong, and the block stops and reports rather than
+proceeding.
+
+**One figure the discharging block must report beside the verdict, decided now and not at
+scoring time.** The trap paragraph above warns that a same-depth proxy finds nothing by
+construction; the same hazard exists one level up, because if the six multipliers barely differ
+across bands then branch 2 is close to forced and its licence would read as a finding when it is
+really a property of the correction being nearly flat. So the block reports
+`quantities.epistemic.verdict.c_ratio_max_over_min` from `results/task_d3_perhorizon.json`
+alongside whichever branch fires. It changes no branch condition and no licence; it is there so a
+reader can tell a null that means something from a null that could not have meant anything.
+
+**What the discharging block may and may not do.** It may set the `Status` line of this entry. It
+may not edit one character of the rule text above, whatever the outcome. If the result falls
+between branches, that is a defect in this rule and is reported as one rather than resolved by
+choosing.
+
+**Evidence** `SRC` — the rule only. It names `results/task_d3_perhorizon.json`, which exists, as
+the source of `c(h)`, and `results/q3_penalty_reordering.json`, which does not exist yet and is
+the artifact that will discharge it.
+**Status** PRE-REGISTERED, DISCHARGED by `results/q3_penalty_reordering.json` — returns **DOES NOT REORDER** · **Relevance** METHOD
+
 ## S-12 — "Task 3's duplication rule was pre-registered"
 
 **Retracts** — a framing, not a numbered claim; the wording was corrected in place

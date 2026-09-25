@@ -3222,13 +3222,27 @@
         "scripts/q3_penalty_reordering.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-72",
+      "claim": "\u00a72's hypothesis needs a floor nothing pushes back up, not the substitution alone",
+      "relevance": "METHOD",
+      "status": "ACTIVE",
+      "evidence": [
+        "EXT",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/q1_pets_descendants.json"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 71,
+    "M": 72,
     "O": 14,
     "R": 75,
     "S": 19,

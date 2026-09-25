@@ -7779,3 +7779,59 @@ script enumerates the bootstrap's entire sample space and writes what it finds:
 conditions incapable of failing in `branch_conditions_that_cannot_fail`, all under
 `the_interval_is_degenerate_by_construction`. None of those figures is typed.
 **Status** ACTIVE · **Relevance** METHOD
+
+### M-72 — §2's hypothesis needs a floor nothing pushes back up, not the substitution alone · **NEW**
+**Found by a reviewer in block B3, and it runs against the paper.** §2 stated, as an untested
+hypothesis, that the σ = 0 collapse "follows from the *substitution*, not from the
+parameterisation", so that "any descendant of this lineage that replaced the likelihood with a
+sampled squared error inherits the same optimum". §6.3's own derivation does not support "not
+from the parameterisation". It needs two things, and only one of them is the substitution:
+
+1. **The substitution** removes the likelihood's log-σ term: `system_dynamics.py:283` scores a
+   reparameterised sample by squared error, whose expectation `(μ − y)² + σ²` is minimised at
+   σ = 0.
+2. **The tie** stops the bound regulariser from taking that term's place.
+   `system_dynamics.py:302` is `mean(max_logstd) − mean(min_logstd)`, and `mlp.py:91` builds
+   `max_logstd = min_logstd + exp(log_delta_logstd)`, so the floor cancels out of the regulariser
+   and takes no gradient from it (§6.3). That line is **this codebase's**, not PETS's.
+
+**PETS keeps the bounds independent.** At the commit block A2 surveyed (`kchua/handful-of-trials`
+`77fd8802cc`), `max_logvar` and `min_logvar` are separate `tf.Variable`s
+(`dmbrl/modeling/models/BNN.py:159`, `:161`), both trained (`:168`), and the loss adds
+`0.01 * reduce_sum(max_logvar) - 0.01 * reduce_sum(min_logvar)` (`:182`). Under that regulariser
+the floor's gradient is a constant that pushes it up. A descendant that made the substitution but
+kept PETS's bounds and regulariser is therefore not the situation §6.3 derives: the objective
+pulls σ down onto a floor the regulariser pushes up, and where that settles is untested here.
+
+**The one repository `R-75` counts as inheriting is consistent with the narrowed hypothesis, as far
+as its source shows.** `nirbhayjm/va_mbpo` at `203ea3e5bd` also keeps independent bounds
+(`mbrl/models/gaussian_mlp.py:119`, `:122`), but they are fixed unless a caller asks otherwise
+(`learn_logvar_bounds: bool = False`, `:78`), and its only bound regulariser is in the likelihood
+branch (`_nll_loss`, `:310`), which the value-aware loss neither calls nor reproduces
+(`_va_loss`, `:313-404`; dispatch at `:436-465`). So in the mode `R-75` counts, nothing pushes its
+floor up either. Whether its σ reaches that floor in training is untested. Its bounds train only
+when a caller sets `learn_logvar_bounds=True`; whether bounds a caller must opt in to training
+meet the A2 protocol's "learnable parameters" clause is a question for `R-75`'s classification,
+which this entry does not re-open (recorded in `docs/DEFERRED.md`).
+
+**What changes, and what does not.** §2 is narrowed in block B3: the hypothesis now requires the
+substitution *and* a floor nothing pushes back up, and says the PETS-bounds case is untested.
+§11's out-of-scope sentence and §12's paragraph on what travels follow it. `R-75`'s count stands
+as recorded — it tested the substitution, which is what §2 then asked — and the paper now reads it
+as an upper bound on how often both conditions hold, because the survey did not record how each
+repository handles its floor. §6.3 is unchanged: its derivation was right about this codebase, and
+it is the source of this correction. No ledger claim is superseded; §2's sentence was a hypothesis
+in the paper, not an entry here. `R-75`'s own framing, that what this codebase changed is the
+loss, is incomplete in the same way; `R-75` stands, because its count is of the substitution, and
+this entry is the pointer from it.
+
+**Why it matters beyond one sentence.** The paper had framed §6.3 as "a statement about an
+objective rather than about one repository". It is a statement about an objective *and* about how
+the bounds are parameterised, and one line of that parameterisation is this codebase's own. The
+user ruled on 2026-09-25 that §2 and §12 be narrowed and the correction recorded here.
+
+**Evidence** `SRC` `mlp.py:91`, `system_dynamics.py:283`, `system_dynamics.py:302`, at the pinned
+commit. `EXT` the two files above at the commits `results/q1_pets_descendants.json` records,
+fetched read-only in block B3; copies and their sha256 at `/Users/Shared/rwm_verify/evidence/B3/ext/`.
+Recorded in `docs/DEFERRED.md` (block B3).
+**Status** ACTIVE · **Relevance** METHOD

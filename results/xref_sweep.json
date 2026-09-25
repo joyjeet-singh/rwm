@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 71,
-  "n_ok": 69,
+  "n_pointers": 75,
+  "n_ok": 73,
   "n_reviewed_correct": 2,
   "reviewed": [
     {
@@ -150,6 +150,13 @@
     },
     {
       "class": "semantic",
+      "pointer": "Appendix F gives the lead time of every rule added since",
+      "ok": true,
+      "detail": "target Appendix F; nouns ['lead', 'time', 'rule', 'added', 'since']; absent ['added', 'since']",
+      "context": "Appendix F gives the lead time of every rule added since"
+    },
+    {
+      "class": "semantic",
       "pointer": "Appendix C lists them)",
       "ok": true,
       "detail": "target Appendix C; nouns ['them']; absent []",
@@ -261,6 +268,24 @@
     {
       "class": "artifact",
       "pointer": "results/paper_numbers.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/q1_pets_descendants.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/q2_free_baseline_power.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/q3_penalty_reordering.json",
       "ok": true,
       "detail": "exists"
     },

@@ -202,8 +202,15 @@ def main():
         # introduced the artifact discharging it. Same definition, same source,
         # and it generalises to every future rule without an edit.
         _self_lead = None
+        _art = None
         if key is None:
-            _art = re.search(r"^\*\*Discharged\*\* by `([^`]+)`", blk, re.M)
+            # Two forms name the discharging artifact. The older rules carry their
+            # own `**Discharged** by` line; M-70 was discharged by setting only its
+            # Status line, which is all its rule permitted, so the artifact is named
+            # there. Reading only the first form left M-70's lead time "not
+            # computed" in the one appendix that exists to state it.
+            _art = (re.search(r"^\*\*Discharged\*\* by `([^`]+)`", blk, re.M)
+                    or re.search(r"^\*\*Status\*\*[^\n]*?DISCHARGED by `([^`]+)`", blk, re.M))
             if _art:
                 _rc = subprocess.run(
                     ["git", "log", "--format=%ct", "-S", f"### {eid} ",
@@ -227,8 +234,7 @@ def main():
                             ("this appendix, from git" if _self_lead is not None
                              else None)),
             "tested_by": (lead[key]["tested_by"] if key else
-                          (re.search(r"^\*\*Discharged\*\* by `([^`]+)`", blk, re.M).group(1)
-                           if re.search(r"^\*\*Discharged\*\* by `", blk, re.M) else None)),
+                          (_art.group(1) if _art else None)),
             "rule_commit": commits.get(key, {}).get("rule_commit"),
             "commit_subject": None,
         })
@@ -293,8 +299,37 @@ def main():
                  "happy would falsify it, so they stand as written.\n\n")
         for _r in rows:
             _f.write(f"## {_r['id']} — {_r['title']}\n\n{_r['rule_text_full']}\n\n")
-    assert "…" not in open(_sup).read(), "supplementary must carry no ellipsis"
-    print(f"  wrote {_sup} ({len(rows)} rules, full text, no ellipsis)")
+    # UNABRIDGED, checked directly. This asserted that the file carried no "…",
+    # as a proxy for "no quotation was cut". The proxy failed on the first rule
+    # whose committed text USES an ellipsis -- M-70 writes its horizon bands as
+    # {9 … 32} -- and it would have passed a quotation cut without one. The
+    # property itself is checkable: every quoted text is the ledger block
+    # verbatim, and the file is exactly the header plus those quotations.
+    _body = open(_sup).read()
+    # The first comparison below re-uses entry(), the function that cut the block,
+    # so on its own it cannot see a wrong cut. The ledger is also split here a
+    # second, independent way -- at each identifier heading -- and each quotation
+    # must equal that block too.
+    _by_id = {}
+    for _b in re.split(r"\n(?=### [A-Z]+-\d+[a-z]? )", txt):
+        _mm = re.match(r"### ([A-Z]+-\d+[a-z]?) ", _b)
+        if _mm:
+            _by_id.setdefault(_mm.group(1), _b)
+    for _r in rows:
+        _ind = _by_id.get(_r["id"])
+        assert _ind is not None and \
+            "\n".join(_ind.split("\n")[1:]).strip() == _r["rule_text_full"], \
+            f"{_r['id']}: quotation differs from its block cut at identifier headings"
+        _blk = entry(txt, _r["id"])
+        assert _blk is not None and _r["rule_text_full"] == "\n".join(_blk.split("\n")[1:]).strip(), \
+            f"{_r['id']}: supplementary quotation is not its ledger block verbatim"
+        assert _r["rule_text_full"] in txt, f"{_r['id']}: quotation absent from the ledger"
+        assert f"## {_r['id']} — {_r['title']}\n\n{_r['rule_text_full']}\n\n" in _body, \
+            f"{_r['id']}: supplementary does not carry the full quotation"
+    # An ellipsis the ledger does not contain is still an abridgement marker.
+    assert _body.count("…") == sum(_r["rule_text_full"].count("…") for _r in rows), \
+        "supplementary carries an ellipsis its ledger quotations do not"
+    print(f"  wrote {_sup} ({len(rows)} rules, each its ledger block verbatim)")
     return 0
 
 

@@ -461,6 +461,105 @@ def main():
     put("e7_n_beaten", E7["n_beaten"], "results/e7_free_baselines.json")
     put("e7_n_new", E7["n_new_baselines"], "results/e7_free_baselines.json")
 
+    # Referee Q2 (R-74) -- how many trajectories would settle the step-size margin.
+    # §11 prints these beside e7_* values, so the two artifacts must describe the
+    # same comparison or the paragraph would join two different samples.
+    Q2 = J("q2_free_baseline_power.json")
+    _own, _m51 = Q2["answer_to_the_referee"], Q2["answer_under_m51_as_pre_registered"]
+    _pub = Q2["the_published_verdict_does_not_move"]
+    assert Q2["observed"]["baseline"] == "step-size", Q2["observed"]["baseline"]
+    assert Q2["observed"]["n_independent"] == E7["design"]["n_independent"], "Q2 and E7 arenas differ"
+    assert f'{Q2["observed"]["margin"]:+.4f}' == N["e7_step_margin"]["value"], "Q2 margin != E7's"
+    assert f'{_pub["threshold_m51_pre_registered"]:.4f}' == N["e7_mde_margin"]["value"], \
+        "Q2's M-51 threshold != E7's"
+    assert Q2["observed"]["partial_beats_mde_at_n0"] and not Q2["observed"]["margin_beats_mde_at_n0"], \
+        "§11 says the margin is the binding test; the artifact no longer says so"
+    assert not _pub["resolvable_under_either"], "§11 says the verdict stands on both readings"
+    assert Q2["empirical_check"]["control_reproduces"], "Q2's control did not reproduce E7"
+    put("q2_n_req", _own["n_independent_required"], "results/q2_free_baseline_power.json")
+    put("q2_factor", f'{_own["factor_over_current"]:.2f}', "results/q2_free_baseline_power.json")
+    put("q2_n_req_m51", _m51["n_independent_required"], "results/q2_free_baseline_power.json")
+    put("q2_se_ratio", f'{Q2["why_the_two_differ"]["se_ratio_prereg_over_own"]:.2f}',
+        "results/q2_free_baseline_power.json")
+    # One decimal, not none: at none the first prints "91", which is also
+    # q2_n_req_m51, and §11 prints both -- the restatement check (C19.1) refused a
+    # section printing two different quantities as one numeral.
+    put("q2_pct_own", f'{_pub["pct_of_own_threshold"]:.1f}', "results/q2_free_baseline_power.json")
+    put("q2_pct_m51", f'{_pub["pct_of_m51_threshold"]:.1f}', "results/q2_free_baseline_power.json")
+    # One row of the sensitivity table, chosen by its label, so the paper can show
+    # the inverse-square rise rather than only assert it.
+    _sens = [r for r in Q2["sensitivity_to_assumed_margin"] if abs(r["assumed_margin"] - 0.10) < 1e-12]
+    assert len(_sens) == 1, "Q2's sensitivity table has no +0.10 row"
+    assert _sens[0]["assumed_margin"] < Q2["observed"]["margin"] and \
+        _sens[0]["n_required_own_statistic"] > _own["n_independent_required"], \
+        "§11 says the requirement RISES to this row's n at a smaller margin"
+    put("q2_sens_margin", f'{_sens[0]["assumed_margin"]:+.4f}', "results/q2_free_baseline_power.json")
+    put("q2_sens_n", _sens[0]["n_required_own_statistic"], "results/q2_free_baseline_power.json")
+
+    # Referee Q1 (R-75) -- how often the substitution behind sigma = 0 is made.
+    Q1 = J("q1_pets_descendants.json")
+    _c = Q1["counts"]
+    assert Q1["verification"]["citations_still_valid"] and "--verify" in Q1["generated_with"], \
+        "Q1's artifact was not produced by a verifying run"
+    assert _c["inherits"] + _c["does_not_inherit"] + _c["could_not_determine"] == _c["carry_the_construction"]
+    assert _c["could_not_determine"] == 0, "§2 says every loss was located; the artifact disagrees"
+    # §2 names results/q1_search_protocol.md as the protocol the survey ran under.
+    # That is true only if it is byte-for-byte the file whose hash the survey recorded.
+    import hashlib as _hl
+    assert _hl.sha256(open(os.path.join(R.RESULTS, "q1_search_protocol.md"), "rb").read()
+                      ).hexdigest() == Q1["protocol"]["sha256"], \
+        "results/q1_search_protocol.md is not the protocol the survey recorded"
+    # §2 and R2 say "that one only ... trains it" and "only in a non-default mode":
+    # singular, and qualified. Both hold only while there is exactly one INHERITS
+    # entry and it carries the non-default-mode qualification.
+    _inh = [r for r in Q1["examined"] if r["verdict"] == "INHERITS"]
+    assert _c["inherits"] == 1 == len(_inh), "§2's singular 'that one' needs exactly one"
+    assert "not the default" in _inh[0].get("qualification", ""), \
+        "§2 and R2 say the one inheriting repository does so only in a non-default mode"
+    assert _c["construction_absent_and_so_out_of_scope"] == len(Q1["construction_absent"])
+    assert "leggedrobotics/rsl_rl" in [r["repo"] for r in Q1["construction_absent"]], \
+        "§2 names mainline rsl_rl among the repositories set aside"
+    put("q1_n_examined", _c["examined"], "results/q1_pets_descendants.json")
+    put("q1_n_absent", _c["construction_absent_and_so_out_of_scope"],
+        "results/q1_pets_descendants.json")
+    put("q1_cap", _c["cap"], "results/q1_pets_descendants.json")
+    put("q1_n_carry", _c["carry_the_construction"], "results/q1_pets_descendants.json")
+    put("q1_n_inherit", _c["inherits"], "results/q1_pets_descendants.json")
+    put("q1_n_keep", _c["does_not_inherit"], "results/q1_pets_descendants.json")
+    import datetime as _dt
+    _d = _dt.date.fromisoformat(Q1["search_date"])
+    put("q1_date", f"{_d.day} {_d:%B %Y}", "results/q1_pets_descendants.json")
+
+    # Referee Q3 (M-70, M-71) -- whether the per-horizon correction reorders the
+    # penalty accumulated along a rollout.
+    Q3 = J("q3_penalty_reordering.json")
+    _s, _st = Q3["statistic"], Q3["is_the_null_structural"]
+    assert _s["n_undefined_pairs"] == 0 and _s["n_defined_pairs"] == _s["n_pairs_total"]
+    assert _st["ordering_equals_dominant_band_ordering"], \
+        "§11 says the overall ordering is exactly the dominant band's"
+    _dom = str(_st["dominant_band_after_correction"])
+    assert _st["share_of_corrected_penalty_by_band"][_dom] == max(
+        _st["share_of_corrected_penalty_by_band"].values())
+    assert sum(_st["steps_per_band"].values()) == Q3["arena"]["steps_per_trajectory"]
+    assert int(_dom) == max(Q3["arena"]["horizons"]), "§11 calls the dominant band the last"
+    assert _st["dominant_band_share"] == _st["share_of_corrected_penalty_by_band"][_dom], \
+        "§11 prints the dominant band's share of the CORRECTED penalty"
+    # §11's M-71 sentence ("with none reordering, no resample can return anything
+    # else") is true only at f = 0; at f = 1 it would need rewording, and between
+    # them it is false.
+    assert _s["n_reordering_pairs"] == 0, "§11's degenerate-interval sentence assumes f = 0"
+    put("q3_verdict", Q3["verdict"], "results/q3_penalty_reordering.json")
+    put("q3_n_pairs", _s["n_pairs_total"], "results/q3_penalty_reordering.json")
+    put("q3_n_reorder", _s["n_reordering_pairs"], "results/q3_penalty_reordering.json")
+    put("q3_nind", Q3["arena"]["n_independent"], "results/q3_penalty_reordering.json")
+    put("q3_c_ratio", f'{Q3["spread_of_the_correction"]["c_ratio_max_over_min"]:.2f}',
+        "results/q3_penalty_reordering.json")
+    put("q3_dom_h", int(_dom), "results/q3_penalty_reordering.json")
+    put("q3_dom_steps", _st["steps_per_band"][_dom], "results/q3_penalty_reordering.json")
+    put("q3_steps", Q3["arena"]["steps_per_trajectory"], "results/q3_penalty_reordering.json")
+    put("q3_dom_share", f'{100 * _st["dominant_band_share"]:.2f}',
+        "results/q3_penalty_reordering.json")
+
     # M-49's design, so §11 can name it rather than describe it.
     P2 = J("p2_capacity_power.json")
     put("m49_width", P2["capacity"]["matched_hidden_size"], "results/p2_capacity_power.json")
@@ -2281,6 +2380,14 @@ def main():
     put("t1_n_frag", T1["verification"]["n_fragments_checked"],
         "results/t1_bibliography_verified.json")
     put("t1_n_frag_ok", T1["verification"]["n_fragments_verbatim"],
+        "results/t1_bibliography_verified.json")
+    # D-35: a one-word fragment matched inside a paper about that word is a check
+    # that cannot fail. §2's note says how many of the count are of that kind.
+    _frags = [f for e in T1["entries"] for f in (e.get("fragments") or [])]
+    assert len(_frags) == T1["verification"]["n_fragments_checked"], "fragment count drifted"
+    assert T1["verification"]["n_fragments_verbatim"] == len(_frags), \
+        "§2 says 'of them' of the verbatim fragments; that needs every fragment verbatim"
+    put("t1_n_frag_oneword", sum(1 for f in _frags if len(f.split()) == 1),
         "results/t1_bibliography_verified.json")
 
     # ------------------------------------------------------------------

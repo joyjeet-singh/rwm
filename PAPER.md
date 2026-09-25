@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1042 values substituted from 74 artifacts. -->
+     1067 values substituted from 77 artifacts. -->
 
 # A one-step evaluation misalignment and a σ = 0 optimum: an independent reproduction of a released robotic world model
 
@@ -96,7 +96,7 @@ and we report that too.
 - **The ranking claim tested against free baselines neither original ran**, and against six
   controls, the last of which removes trajectory difficulty rather than forecast depth and is the
   only one that isolates within-rollout information. Of the 2 baselines added here, disagreement beats 1 (§6.7).
-- **A free baseline ranks error nearly as well as the ensemble.** The baseline disagreement does not beat is the model's own predicted step size (the size of the change between consecutive predictions), which needs no ensemble and no second model: it ranks error at +0.4697 against five-member disagreement's +0.6053, and the margin between them is below what this sample can resolve, so we cannot say the ensemble ranks better than a subtraction (§6.7).
+- **A free baseline ranks error nearly as well as the ensemble.** The baseline disagreement does not beat is the model's own predicted step size (the size of the change between consecutive predictions), which needs no ensemble and no second model: it ranks error at +0.4697 against five-member disagreement's +0.6053, and the margin between them is below what this sample can resolve, so we cannot say the ensemble ranks better than a subtraction (§6.7). Disagreement does carry information the subtraction lacks — a partial correlation of +0.5430 with step size removed — and the margin is nearer to resolving than §6.7's pre-registered threshold implies: if the observed margin is the true one, 25 independent trajectories would resolve it against the 20 here, or 91 under the protocol §6.7 pre-registered (§11).
 - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of 5 independently-initialised full models, sharing nothing, is 2.03× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of 1.45×. The decomposition says what that is made of: σ larger by 1.65×, 71% of the improvement at h = 100, reversing to 57% from accuracy at h = 368 (§6.10).
 - **A candidate repair**: one multiplier per horizon, fitted on one held-out episode and
   scored on the other, brings every held-out coverage estimate near nominal where a global
@@ -149,9 +149,8 @@ reference implementation before any training begins (Appendix A). And the σ = 0
 derived for the objective the released code *substitutes* — squared error on a reparameterised
 sample — rather than for the likelihood the parameterisation was built around.
 
-**Where the parameterisation comes from, and why it matters more than one repository.** The
-bounded log-σ head that §6.3 shows has its optimum at σ = 0 is not this codebase's invention. It
-is inherited, line for line, from the probabilistic ensembles of Chua, Calandra, McAllister and
+**Where the parameterisation comes from, and how far the result reaches.** The
+bounded log-σ head that §6.3 shows has its optimum at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the probabilistic ensembles of Chua, Calandra, McAllister and
 Levine (PETS, NeurIPS 2018). PETS's Appendix A.1 gives
 
 ```
@@ -162,14 +161,41 @@ logvar = min_logvar + softplus(logvar - min_logvar)
 and `architectures/mlp.py:92-93` is those two lines in log-standard-deviation rather than
 log-variance, with `system_dynamics.py:302` supplying PETS's regulariser on the bounds.
 
-What is **not** inherited is the objective. PETS uses "the negative log prediction probability as
-our loss function", and it is that likelihood's log-σ term which opposes σ → 0.
-`system_dynamics.py:283` substitutes squared error on a reparameterised sample, which has no such
-term. So the collapse §6.3 derives follows from the *substitution*, not from the parameterisation —
-and that makes §6.3 larger than one repository: **any descendant of this lineage that replaced the
-likelihood with a sampled squared error inherits the same optimum.** We state that as a hypothesis
-and mark it clearly: we have not tested any other descendant, and testing one is out of scope here
-(§11).
+What is **not** inherited is the objective, and one line of the bounds' parameterisation. PETS uses "the
+negative log prediction probability as our loss function", and it is that likelihood's log-σ term
+which opposes σ → 0. `system_dynamics.py:283` substitutes squared error on a reparameterised
+sample, which has no such term. And `architectures/mlp.py:91` builds the upper bound from the
+lower one, as the floor plus a learned positive gap, where PETS keeps the two as independent
+parameters. §6.3 needs both changes. The substitution removes the log-σ term, and the tie is why
+the bound regulariser does not take its place: the floor cancels out of it and takes no gradient
+from it. In a descendant that made the substitution but kept PETS's independent bounds, the same
+regulariser pushes the floor up instead, so the objective pulls σ down onto a floor the
+regulariser pushes up. That is not the situation §6.3
+derives, and where it settles we have not tested (ledger `M-72`). So the collapse follows from the substitution *together with* a floor that nothing pushes
+back up, not from the substitution alone: **a descendant of this lineage that replaced the
+likelihood with a sampled squared error, and left nothing pushing its variance floor back up,
+would inherit the same optimum.** We state that as a hypothesis about mechanism and mark it
+clearly: we have not tested it in any other descendant (§11).
+
+**How far it reaches is a separate question, and the answer narrows it.** We counted how often
+the substitution is made. Of 10 public repositories examined on 20 September 2026 under the protocol in `results/q1_search_protocol.md`, 10 carry the construction and 1 of those
+trains it against a sampled squared error — and that one only in an optional value-aware mode,
+not by default; the other 9 keep PETS's likelihood
+(`results/q1_pets_descendants.json`, ledger `R-75`). The protocol's inclusion test needs both the
+bounded head and a loss that squares the error of a *sampled* prediction. Squaring the error of
+the predicted *mean*, which several of these repositories offer as an option, leaves σ untrained rather than driving it to zero, and does not count. The survey tested the
+substitution and not how each repository handles its variance floor, so 1 of
+10 is an upper bound on how often both of the conditions above hold. A further 3 repositories were
+set aside because the construction is absent from them. One is mainline `rsl_rl`, whose only
+softplus is a policy distribution: the bounded head exists in the fork this paper pins, not in
+the library it forks. That fork is not counted, since counting the thing §6.3 measured as
+evidence that the result travels would be circular. The protocol capped the survey at 25 repositories, and it stopped at
+10; the survey's notes record no reason for stopping there. We wrote the protocol before the search, and the sha256 the survey recorded is that file's;
+but neither the protocol nor its hash reached git before the results did, so the claim that it came first rests on our own record rather than on a commit. It is a search
+protocol rather than a decision rule, and is not among Appendix F's pre-registered rules. This is a count over what we examined, not over the field
+— search engines rank and truncate, so it is a sample of convenience — but on that sample the
+substitution is rare rather than common, and a reader who takes the hypothesis to reach widely is
+inferring more than the evidence supports.
 
 **The method being reproduced sits in a well-populated family.** MOPO (Yu, Thomas, Yu, Ermon, Zou,
 Levine, Finn and Ma, NeurIPS 2020) penalises the reward by an ensemble uncertainty estimate to
@@ -237,8 +263,9 @@ on the optimiser. §6.3 gives the derivation and demonstrates it against known n
 *Every entry above was checked against the paper itself — title, full author list, venue and year
 from the arXiv record, and for any sentence we attribute, the sentence matched verbatim against
 the paper's own text. 16 of 16 entries verified,
-17 of 17 attributed fragments verbatim
-(`results/t1_bibliography_verified.json`). No entry was added that was not verified.*
+17 of 17 attributed fragments verbatim, though 3 of
+them are single common words whose presence the cited paper's subject guarantees, so their match could not have failed and
+verifies nothing about the attribution (`results/t1_bibliography_verified.json`, ledger `D-35`). No entry was added that was not verified.*
 
 ---
 
@@ -273,7 +300,15 @@ terms; the implementation has 7.
 **Evaluation.** Two arenas, held separate throughout: *out-of-sample*, the two episodes withheld
 from training, and *in-sample*, the eight used for it. We report both, because the released
 evaluation draws its trajectories from training data and the distinction is invisible in the
-original.
+original. The released checkpoint trained on all ten episodes, so it has no held-out arena in
+this dataset at all — and that is a constraint, not a choice we made: more data cannot be
+generated from either repository this reproduction pins, nor on this hardware. Neither contains
+code that writes a dataset. The only code that touches the file reads it (`train.py:44` in the
+lite release), and the environment the lite release ships rolls the learned model forward
+rather than physics, so it cannot stand in for a generator. Its readme sends anyone wanting
+simulator-based collection to a third repository, the authors' Isaac Lab extension, which this
+reproduction does not pin (`readme.md:13`). Generating more would need that repository, Isaac Lab and an RTX-class GPU
+(Appendix D; ledger `D-36`).
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
@@ -585,8 +620,7 @@ different leaders at h = 100, and at h = 368 both put an Arm A variant
 ahead of it — the reimplementation is behind the artifact it reimplements at short horizons and
 ahead of it at the longest horizon we measure. That reading flatters the released checkpoint
 rather than us, because the arena is out-of-sample for our arms and in-sample for it: the
-split is ours, and the released checkpoint trained on all ten episodes, so
-it has no held-out arena in this dataset at all.
+split is ours, and the released checkpoint trained on all ten episodes, so it has no held-out arena in this dataset at all (§3).
 
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
 
@@ -678,8 +712,7 @@ contradiction.* Its 7,878× is the whole 368-step rollout on those same
 checkpoint trained on all ten episodes, so its own best-sampled figure is the
 11,683× below — cumulative to h = 100, at n_independent = 20.
 **Both are correct and they differ in two ways at once: a different arena and a
-different horizon.** Neither is a held-out measurement *of the released checkpoint*, which has
-no held-out arena in this dataset.
+different horizon.** Neither is a held-out measurement *of the released checkpoint*, which has no held-out arena in this dataset (§3).
 
 **The quantity the method does use is also uncalibrated.** On the released 5-member checkpoint over all 10 episodes, n_independent = **20** non-overlapping 400-step trajectories. We use all ten rather than the held-out pair here because the released checkpoint trained on all ten, so restricting it to two buys no independence and costs four fifths of the sample — the same argument this paper makes about that checkpoint elsewhere. The held-out-only version at n_independent = 4 is in the supplementary material (`results/task_b2_epistemic.json`). The epistemic column agrees in direction with this one at all 6 of 6 horizons; the aleatoric column agrees at 4 of 6 — it flips sign at h=8 and h=100, where both readings sit close enough to chance that the sign is not meaningful in either, and where the aleatoric σ is in any case three to four orders of magnitude too small for its ordering to be the interesting quantity. Where the two tables differ materially we say so.
 
@@ -1448,7 +1481,7 @@ under the released pairing to 0.7572 under the causal one, so the released evalu
 overstates its own model's error by 75%.
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
-released checkpoint, trained on the entire file, no held-out measurement is possible at all.
+released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
 
 **7.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on
 7,882 windows — the clean 7,687 plus 195 splices — and,
@@ -1505,9 +1538,9 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (252 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (253 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix F for all 17, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn: the rules this revision adds have lead times of minutes to hours and would render as slivers. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix F for all 18, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn; Appendix F gives the lead time of every rule added since. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
 **Six retractions on our own evidence**, out of 19 superseded claims kept in the record, plus six that withdraw framings rather than numbers (Appendix C lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
@@ -1541,7 +1574,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,308 values, or 0.98%
 of the 950,201 numeric values under `results/`. The other 940,893 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 102-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 668 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 102-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 706 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -1605,8 +1638,10 @@ We think that makes the finding worth publishing rather than the reverse, and it
 ## 11. Limitations
 
 **Effective sample size bounds every long-horizon claim.** The out-of-sample arena has
-4 independent 400-step trajectories. That is the binding constraint on §5, and no
-amount of trajectory oversampling changes it.
+4 independent 400-step trajectories. That is the binding constraint on §5, and no amount of trajectory oversampling changes it. Nor can a larger dataset be generated here: the data generator is in neither pinned
+repository, and the repository the lite release points to for collection runs in a simulator this
+work did not have (§3). The released checkpoint's lack of a held-out arena is therefore a constraint,
+not a choice.
 
 **Ensemble size — no longer an open question, but not a closed one either.** Our main experiment runs at ensemble size 1, where the epistemic term is identically zero by construction, so every epistemic measurement here was originally made on the released checkpoint alone. We since trained 3 Arm A arms at ensemble size 5 (§6.7). They reproduce the *direction* of §6.7's finding in 12 of 12 seed-horizon cells and the *calibration* failure at 10.5× at h = 100 (13.0× at h = 368) — but the pre-registered rule governing the replication returns **DOES NOT GENERALISE**, because its second condition needs the paired difference to exclude zero at a majority of horizons and it does so at 1 of 4. The binding constraint is the same one this section opens with: our arms have a genuine held-out arena of only 4 independent trajectories, and the rule was written without checking what it could detect there. **So §6.7's finding is established on the released checkpoint and supported but not established on a model we trained.**
 
@@ -1626,15 +1661,52 @@ magnitude of the model's own predicted state change — a subtraction, requiring
 second model — ranks error at +0.4697 against disagreement's +0.6053, and the margin
 between them is smaller than this sample can resolve. Disagreement retains +0.5430
 with that baseline partialled out, so it is carrying information the subtraction is not; what is
-open is whether that increment is worth five models. Settling it needs more independent
-trajectories than the released dataset contains, and it is the cheapest open question here for
-anyone with a second dataset.
+open is whether that increment is worth five models. **If the observed margin is the true one, settling it needs 25 independent 400-step
+trajectories, where all ten episodes provide 20** — 1.25× the present sample, by
+the construction `M-51` used, applied to the step-size margin's own standard error
+(`results/q2_free_baseline_power.json`). That is a required-sample-size estimate under an assumed
+effect, not a guarantee: it takes the true margin to be the observed +0.1357 and new
+trajectories to vary as these do, and if the true margin is smaller the requirement rises as its
+inverse square — to 45 at +0.1000. The margin is
+the only test left to pass, since the partial already clears its threshold, +0.5430
+against 0.1131. And the comparison is closer to resolving than §6.7's threshold of
+0.2891 suggests. `M-51` had to fix that threshold before this baseline existed, from
+the forecast-index margin, whose standard error is 1.94× the step-size margin's; the
+observed margin is 91.1% of what its own statistic resolves at this sample and
+46.9% of what `M-51`'s threshold demands, and re-run exactly as pre-registered that
+protocol would need 91 trajectories. The pre-registered threshold is conservative
+for this baseline, and §6.7's verdict stands on either reading, because the margin is below both.
 
 **We did not measure what the miscalibration costs.** We show that the penalty the follow-up applies is miscalibrated as a scale — 33.4× overconfident at h = 100, the horizon its own imagination rollouts run to — but the only use the method makes of that quantity is to shape policy learning, and we did not train a policy. A miscalibrated scale that enters as a relative penalty across candidate actions may cost little, or may cost a great deal; our measurements cannot distinguish those. **The finding bounds what the quantity reports, not what it costs.** That distinction is easy to lose and we do not want a reader to take the ratio as a measure of harm.
 
+**A proxy that needs no policy finds no reordering, and is worth only what its bound allows.**
+Within one horizon the per-horizon correction multiplies the penalty by a positive constant,
+which cannot change any ranking, so a rule committed before the statistic was computed, `M-70`,
+compares instead the penalty accumulated along each whole rollout, before and after correction.
+The penalty is the released checkpoint's own ensemble disagreement, scored on the 4
+independent trajectories of the held-out pair — held out from our arms and, trajectory by
+trajectory, from the multipliers applied to it, which are fitted on the other episode, but not
+from the checkpoint, which trained on all ten. Of the 6 pairs, 0
+change order and the rule returns **DOES NOT REORDER**: on this arena the
+correction leaves every pairwise ordering of accumulated penalty unchanged, so whatever it changes
+downstream must act through the penalty's magnitude rather than through which rollout is
+penalised more. The multipliers differ by 9.31× across horizons, so the design could
+have produced reordering (`results/q3_penalty_reordering.json`). Three things limit what that shows. **It is
+the ordering of the penalty component alone, not of the penalised return**: this work has no
+reward function and no tuned penalty weight, so the result is a bound on what the correction
+could do downstream, never a measurement of what it costs, and it licenses no statement about a policy, about
+learned behaviour, or about the size of any downstream effect. **The null is partly structural**, by a diagnostic the rule did not require and which was
+computed after the verdict: the last horizon band, h = 368, holds
+240 of the 368 steps and 81.35% of the corrected penalty, and the
+overall ordering is exactly that band's, so the per-horizon weights had little room to act here
+and the null says less about the correction's power to reorder than the verdict alone suggests. **And the rule's
+bootstrap interval corroborates nothing**: resampling trajectories creates no new pairs, so with
+none reordering no resample can return anything else, and the interval is degenerate by
+construction (`M-71`).
+
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's 4 independent trajectories admit a smallest attainable P-value of 0.04167 — coarser than the multiplicity-corrected threshold 0.001667, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is 0.0037 against a threshold of 0.001667. Resolving it at h = 368 needs more episodes than the released dataset contains, rather than a better test. **At h = 128 and below that is no longer true and we say so**: a shorter evaluation unit gives 14 independent units at h = 100 where the 400-step unit gives 4 (`M-64`), and we did not rerun this permutation family there. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
 
-**No family-wide correction is applied across our own pre-registered rules.** There are 17 of them with per-rule verdicts (Appendix F) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
+**No family-wide correction is applied across our own pre-registered rules.** There are 18 of them with per-rule verdicts (Appendix F) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. **Capacity is no longer one of them.** `M-49`, committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132 — a ratio of 0.9998, where §6.10's original contrast carried 3.49. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
@@ -1655,9 +1727,11 @@ miscalibration is the hypothesis, and only §6.10 bears on it.
 result of either paper is tested — no simulator, no RL loop, no ANYmal, and no policy is trained
 anywhere in this work. The sample-efficiency comparison (roughly 6M against 250M transitions) is
 not tested for the same reason. Nothing here uses a GPU. And **we did not test whether the σ = 0
-optimum affects other descendants of the PETS parameterisation** (§2): the parameterisation is
-inherited line for line and the objective is not, which makes the hypothesis well-founded and
-untested. Testing it needs other repositories, and we make no claim about them.
+optimum affects other descendants of the PETS parameterisation** (§2): the clamp is inherited line for line, while the objective and the tie between the bounds
+are this codebase's own, so the hypothesis is well-founded only for a descendant that makes the
+substitution and leaves nothing pushing its floor back up, and it is untested for any. Testing it needs other repositories. We counted how often the substitution is made among the
+10 we examined (§2), which bears on how far the hypothesis reaches, but we tested
+the mechanism in none of them.
 
 **We did not reproduce the policy-learning results** of either paper. This is a dynamics-model reproduction only.
 
@@ -1672,6 +1746,23 @@ At h = 100, the horizon the method's own imagination rollouts run to, the aleato
 The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large — but it looks repairable: a per-horizon multiplier, fitted on one held-out episode and scored on another, brings every held-out coverage estimate within 10 points of nominal, though no single cell is resolvable at this arena, where a global multiplier manages 2 of them — 6 horizons in each of two fold directions, on the same 4 trajectories, so not independent trials. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps +0.596 once the index is partialled out. Against a second free baseline it does less well: the model's own predicted step size ranks error at +0.4697 against disagreement's +0.6053, a margin this sample cannot resolve, so the verdict is SURVIVES entry-res ONLY. **The control this rests on is the one that removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates +0.419 [+0.318, +0.576] with realised error (§6.7, M-45). That is a smaller number than the +0.605 pooled figure and it is the one that means what a practitioner needs it to mean — so it is not a re-encoding of the clock, and not merely a report of which episode is hard. That is the closest either original work comes to a claim this reproduction strengthens rather than qualifies — and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well.
 
 What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction — the epistemic term on every one of the 45 dimensions at h=368, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials — the dimensions are physically coupled, and the permutation test over whole trajectories is the statistic (§6.6). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = 368 on every one of 45 dimensions over all ten episodes and at chance on the held-out pair alone — a dependence on arena that §6.6 sets out. The corrected arm sits at chance in both. And once the physical coupling between state dimensions is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction. We report that rather than the independent-trials P-values an earlier draft carried, which were wrong by up to a factor of about 10^13 on the cells we had cited as evidence. Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
+
+**What should travel from this paper, and what should not.** The findings above are of three
+kinds, and a reader applying them elsewhere should treat each differently. *Properties of the objective and of how its bounds are built* are the ones to expect elsewhere,
+and only where both are present together: §6.3 derives the σ = 0 optimum from squared
+error on a sampled prediction through a bounded head whose floor nothing pushes back up, so it
+should hold wherever both are present — the hypothesis §2 states and leaves untested outside this
+codebase. On §2's count the substitution is present in 1 of the 10
+descendants examined, and there only in a non-default mode; the survey did not examine the floor,
+so that is an upper bound on how often both are. *Properties of this released artifact* should be checked
+rather than assumed in any other: the one-step misalignment in its evaluation harness (§7.2), the
+trunk its five members share (§6.4), and its specific overconfidence factors —
+11,683× for the aleatoric σ and 33.4× for the epistemic term
+at h = 100 (§6.2) — are measurements of one checkpoint. *Properties of this dataset
+and its arenas* are limits on what could be resolved, not findings in either direction, and neither pinned repository can lift them (§3): our arms' held-out arena holds 4 independent 400-step
+trajectories and all ten episodes hold 20, which is why §11 leaves the replication at
+ensemble size 5, the free-baseline margin and capacity's share of the trunk-sharing effect open
+rather than settled.
 
 ---
 
@@ -1919,11 +2010,15 @@ its sibling from the same script is not excluded.
 unless it comes with a price, so here is what each would cost. We give compute orders where we
 can estimate them honestly from this project's own measurements and say so where we cannot.
 
-**Everything below needs what this reproduction did not have: a simulator.** Our arms train on
-the released CSV, which is a recording. Every untested claim needs *interaction* — a policy acting
-in an environment and the environment responding — and that means Isaac Lab, which needs an
-RTX-class NVIDIA GPU. No amount of CPU substitutes: the reference's data generation is
-GPU-parallel simulation, not a data-loading problem.
+**All but the last two rows need what this reproduction did not have:
+interaction.** Our arms train on the released CSV, which is a recording. Those claims need a
+policy acting in an environment, simulated or real, and the environment responding. In
+simulation that means Isaac Lab, which needs an RTX-class NVIDIA GPU, and no amount of CPU
+substitutes: the reference's data generation is GPU-parallel simulation, not a data-loading
+problem. For the hardware-transfer and real-robot rows the binding constraint is a robot rather
+than compute. **A GPU would not be enough on its own.** The code that generates data is in
+neither repository this reproduction pins: the lite release only reads its dataset, and its
+readme places collection in a third repository, the authors' Isaac Lab extension, which this reproduction does not pin (§3, ledger `D-36`).
 
 | untested claim | what it needs | order |
 |---|---|---|
@@ -1944,8 +2039,10 @@ against Appendix E's was written, and the two it omitted were the two whose cost
 state honestly.
 
 **What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
-items, it bears directly on the one limitation §11 states that our measurements cannot bound —
-whether the miscalibration we document costs anything downstream — and it needs no hardware.
+items, it bears directly on a limitation §11 states our measurements cannot settle — whether the
+miscalibration we document costs anything downstream, where §11's policy-free proxy tests only
+whether the per-horizon correction reorders the penalty component and measures no cost — and it
+needs no robot.
 
 ---
 
@@ -1985,7 +2082,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 504 KB ledger, so here is the table. It is generated from
+or an instruction to open a 508 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -2010,19 +2107,20 @@ existed. This is the same computation Figure 1 plots.
 | `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h ≤ 128? | — | +6.0 h | results/m64_short_units.json | MOVES, at one cell |
 | `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | — | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |
 | `M-68` | The combined arm: independence and the corrected objective together | — | +5.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |
-| `M-69` | The cross-model transfer of the per-horizon multiplier table | — | +21 min | results/task_d3_cross_model.json | DOES NOT TRANSFER — A PROPERTY OF THE MODEL |
+| `M-69` | The cross-model transfer of the per-horizon multiplier table | — | +23 min | results/task_d3_cross_model.json | DOES NOT TRANSFER — A PROPERTY OF THE MODEL |
+| `M-70` | Whether the per-horizon correction reorders cumulative penalties | — | +115.2 h | results/q3_penalty_reordering.json | DOES NOT REORDER |
 | `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
 
 `M-69`'s discharge commit was amended 2 minutes after it was created, so the
 rule's lead time depends on which timestamp is read: +21 min by that commit's author
-time, +23 min by its committer time. The table above renders +21 min, the value
+time, +23 min by its committer time. The table above renders +23 min, the value
 `results/appendix_g_rules.json` holds; a clean rebuild regenerates that file from git and may
 store either reading. Both readings are
 positive, so the rule reached git before the data that tested it existed on either one, which is
 what a lead time is here to establish.
 
-17 rules, 17 with a computed lead time, of which
-16 are positive and 1 negative. **The negative one is
+18 rules, 18 with a computed lead time, of which
+17 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.
@@ -2039,7 +2137,7 @@ well now, and the count is asserted against the same set `scripts/ledger_check.p
 
 **What each rule says, in its own committed words** is in the supplementary material, as
 `docs/APPENDIX_G_RULES.md` — every rule's text unabridged, generated from the ledger by the same
-script that generates this table. Quoting all 17 in full here would add pages to an
+script that generates this table. Quoting all 18 in full here would add pages to an
 appendix whose job is to be checkable at a glance, and quoting them in part would ship
 quotations ending mid-sentence. The table is the claim; the supplementary is the evidence.
 
