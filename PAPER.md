@@ -27,8 +27,7 @@ disagreement is smaller than realised error by 8.3× at h = 1, on data this
 checkpoint trained on, and by 33.4× at h = 100, where its
 imagination rollouts run.
 
-**The base paper's central training claim reproduces**: 4.61× on relative-L1 at
-h = 368, under a rule committed to git before the runs, but on 7,991 transitions
+**The base paper's central training claim reproduces**: 4.61× on relative-L1 at h = 368, on held-out data over only 4 independent trajectories, under a rule committed to git before the runs, but on 7,991 transitions
 against the reference's 6,000,000, 0.133% of its world-model budget, on one robot, one
 gait, one terrain.
 
@@ -81,7 +80,7 @@ and we report that too.
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise; losses and gradients match to 0.000e+00 across 7 loss terms
   and 106 parameter tensors, before any training (Appendix A).
-- **The first calibration measurement of either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon (§6.2).
+- **The first calibration measurement we are aware of for either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon (§6.2).
 - **The base paper's central training claim reproduces, and the advantage grows with
   forecast horizon**: a factor of 4.61× on relative-L1 at h = 368 over
   3 seeds, under a rule committed to git before the runs existed, rising
@@ -96,10 +95,8 @@ and we report that too.
   cannot express uncertainty the trunk does not already carry (§6.4).
 - **The ranking claim tested against free baselines neither original ran**, and against six
   controls, the last of which removes trajectory difficulty rather than forecast depth and is the
-  only one that isolates within-rollout information. Of the 2 baselines added here,
-  disagreement beats 1: the model's own predicted step size ranks error at
-  +0.4697 against disagreement's +0.6053, and the margin between them is below what this
-  sample can resolve (§6.7).
+  only one that isolates within-rollout information. Of the 2 baselines added here, disagreement beats 1 (§6.7).
+- **A free baseline ranks error nearly as well as the ensemble.** The baseline disagreement does not beat is the model's own predicted step size (the size of the change between consecutive predictions), which needs no ensemble and no second model: it ranks error at +0.4697 against five-member disagreement's +0.6053, and the margin between them is below what this sample can resolve, so we cannot say the ensemble ranks better than a subtraction (§6.7).
 - **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of 5 independently-initialised full models, sharing nothing, is 2.03× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of 1.45×. The decomposition says what that is made of: σ larger by 1.65×, 71% of the improvement at h = 100, reversing to 57% from accuracy at h = 368 (§6.10).
 - **A candidate repair**: one multiplier per horizon, fitted on one held-out episode and
   scored on the other, brings every held-out coverage estimate near nominal where a global
@@ -605,6 +602,8 @@ A dynamics model trained on 0.133% of the reference's data still reproduces the 
 
 ## 6. Neither of the checkpoint's uncertainty outputs is usable as an interval
 
+*How this section runs.* §6.1–§6.2 settle which quantity the method uses and measure it; §6.3–§6.5 examine why each output fails; §6.6–§6.7 separate the magnitude of the failure from its ordering, and test the ordering against free baselines; §6.8–§6.11 ask what would fix it — a rescale, whether the structural excuse holds, an ensemble that shares nothing, and the combined arm.
+
 ### 6.1 Which quantity the method actually uses
 
 The released checkpoint emits **two** uncertainty quantities, and the method consumes only one of
@@ -1010,6 +1009,8 @@ So the honest form of this section's claim is narrower than the one we first wro
 
 ### 6.7 Ensemble disagreement beats the trivial baseline
 
+What this section finds coexists with §6.6 without contradiction: the *scalar* the method applies tracks error well, while the *per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
+
 The follow-up justifies ensemble disagreement as a trust metric on the grounds that it "closely follows the trend of the prediction error". Section 6.6 shows the per-dimension version of that claim is weaker than it looks. This section asks a different and, for a practitioner, more important question: **does disagreement beat something free?**
 
 Error in an autoregressive rollout grows with depth. So the trivial competitor to any trust metric is the forecast step index — a counter. It needs no ensemble, no second forward pass and no model. If a counter ranks error as well as disagreement does, the ensemble is not earning its cost. Neither paper runs this comparison, so we do.
@@ -1171,11 +1172,7 @@ does not refute the ranking claim. **It does refute a framing.** "Disagreement r
 is supported. "You need the ensemble to rank error" is not.
 
 **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and
-that is the strongest form of support this paper offers any claim of either original work — now
-with the qualification that a free baseline comes closer to it than the counter did. It coexists
-with §6.6 without contradiction: the *scalar* the method applies tracks error well, while the
-*per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials
-test suggested. The quantity is a usable ranking signal and is still not an interval.
+that is the strongest form of support this paper offers any claim of either original work — now with the qualification that a free baseline comes closer to it than the counter did.
 
 *A note on the `undefined` cell.* The within-step control holds the forecast step fixed and
 correlates across trajectories, so it annihilates any quantity that is constant across
@@ -1544,7 +1541,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,308 values, or 0.98%
 of the 950,201 numeric values under `results/`. The other 940,893 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 102-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 659 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 102-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 668 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
