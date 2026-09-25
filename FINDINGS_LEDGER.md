@@ -7835,3 +7835,29 @@ commit. `EXT` the two files above at the commits `results/q1_pets_descendants.js
 fetched read-only in block B3; copies and their sha256 at `/Users/Shared/rwm_verify/evidence/B3/ext/`.
 Recorded in `docs/DEFERRED.md` (block B3).
 **Status** ACTIVE · **Relevance** METHOD
+
+### M-73 — The A2 protocol's "learnable" bounds are read as trainable, by the user's ruling · **NEW**
+**A classification question raised in block B3 and ruled on 2026-09-25, after the survey's results
+were known.** The A2 protocol (`results/q1_search_protocol.md` §1) requires the double-softplus
+clamp "with the bounds being learnable parameters". In `facebookresearch/mbrl-lib` at `3f93cccfc8`
+and its fork `nirbhayjm/va_mbpo` at `203ea3e5bd`, the bounds are `nn.Parameter`s created with
+`requires_grad=learn_logvar_bounds`, and `learn_logvar_bounds` defaults to `False`
+(`mbrl/models/gaussian_mlp.py:79` and `:117-121` in mbrl-lib; `:78` and `:119-124` in va_mbpo). Read
+as "learned by default", part (a) would fail for both at their defaults, and `R-75`'s count would
+change. A2's reviewer passed all ten as carrying "the double-softplus clamp between learnable
+bounds" without distinguishing training a caller must opt in to.
+
+**The ruling.** The user ruled "Learn the bounds": bounds the code can train count as learnable
+parameters, whether or not they train by default. `R-75`'s count stands unchanged, and so does §2's
+statement of it.
+
+**What this is and is not.** It is a reading of a frozen protocol, settled after the results were
+known, and §2 says so rather than presenting the reading as part of the protocol. It changes no
+verdict and no count. Two repositories are known to have opt-in bounds, the two above, both read
+from source in block B3; the other eight were not re-examined for this distinction, and under this
+reading they need not be. It settles the question `M-72` names and leaves open.
+
+**Evidence** `EXT` the two files at the commits `results/q1_pets_descendants.json` records, fetched
+read-only in block B3; copies and sha256 at `/Users/Shared/rwm_verify/evidence/B3/ext/`. The
+ruling is recorded in `docs/DEFERRED.md`.
+**Status** ACTIVE · **Relevance** METHOD

@@ -3236,13 +3236,27 @@
         "results/q1_pets_descendants.json"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-73",
+      "claim": "The A2 protocol's \"learnable\" bounds are read as trainable, by the user's ruling",
+      "relevance": "METHOD",
+      "status": "ACTIVE",
+      "evidence": [
+        "EXT"
+      ],
+      "artifacts": [
+        "results/q1_pets_descendants.json",
+        "results/q1_search_protocol.md"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 72,
+    "M": 73,
     "O": 14,
     "R": 75,
     "S": 19,

@@ -1,6 +1,6 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 706,
+  "n_typed": 707,
   "by_class": {
     "exception": 206,
     "arxiv-id": 16,
@@ -9,7 +9,7 @@
     "figure-ref": 22,
     "citation-year": 15,
     "code-location": 39,
-    "ledger-id": 78,
+    "ledger-id": 79,
     "math-mode": 10,
     "table-row-label": 40,
     "equation-ref": 8,

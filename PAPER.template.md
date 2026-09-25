@@ -173,8 +173,11 @@ clearly: we have not tested it in any other descendant (§11).
 the substitution is made. Of {{q1_n_examined}} public repositories examined on {{q1_date}} under the protocol in `results/q1_search_protocol.md`, {{q1_n_carry}} carry the construction and {{q1_n_inherit}} of those
 trains it against a sampled squared error — and that one only in an optional value-aware mode,
 not by default; the other {{q1_n_keep}} keep PETS's likelihood
-(`results/q1_pets_descendants.json`, ledger `R-75`). The protocol's inclusion test needs both the
-bounded head and a loss that squares the error of a *sampled* prediction. Squaring the error of
+(`results/q1_pets_descendants.json`, ledger `R-75`). The protocol's inclusion test needs both the bounded head and a loss that squares the error of a
+*sampled* prediction. It also requires the bounds to be learnable parameters, which we read as
+parameters the code can train, whether or not it trains them by default. That reading was settled after the survey, because in `mbrl-lib` and in `va_mbpo`, the one
+repository that inherits, the bounds train only when a caller switches that on; the reading keeps
+both among the {{q1_n_carry}} that carry the construction (ledger `M-73`). Squaring the error of
 the predicted *mean*, which several of these repositories offer as an option, leaves σ untrained rather than driving it to zero, and does not count. The survey tested the
 substitution and not how each repository handles its variance floor, so {{q1_n_inherit}} of
 {{q1_n_examined}} is an upper bound on how often both of the conditions above hold. A further {{q1_n_absent}} repositories were
