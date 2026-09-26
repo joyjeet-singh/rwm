@@ -50,7 +50,8 @@ SCOPE = {
         "delegated to scripts/horizon_sweep.py, which walks PAPER.template.md and "
         "resolves each numeral to the artifact cell it came from. Region = the sentence "
         "and paragraph around each substituted value, so it follows the text wherever it "
-        "sits IN THAT FILE. Text moved OUT of PAPER.template.md leaves its coverage."),
+        "sits IN THAT FILE. Text moved OUT of PAPER.template.md leaves its coverage -- so "
+        "since B4 the checker appends docs/BUILD_CHECKS.template.md to what it sweeps."),
     "extremum": ("whole-file", "searches PAPER.md for the sentence naming an extremum"),
     "sign": ("whole-file", "searches PAPER.md for the sentence stating a direction"),
     "orders": ("whole-file", "searches PAPER.md for the order-of-magnitude phrasing"),
@@ -88,30 +89,62 @@ SCOPE = {
         "leaves it, which is the property this audit exists to record"),
     "restatement": ("whole-file",
         "scans PAPER.template.md end to end for a numeral typed where a key exists, and "
-        "for a numeral ambiguous between two units"),
+        "for a numeral ambiguous between two units. Since B4 it scans "
+        "docs/BUILD_CHECKS.template.md appended, because section 8's block and Appendix C "
+        "moved there"),
+    # B4: five kinds the audit could not see until its regex admitted underscores.
+    "figure_reference": ("whole-file",
+        "counts the figures embedded in PAPER.md and the figure numbers its prose cites; "
+        "the supplementary files carry no figures"),
+    "population_partition": ("artifact-only",
+        "sums the run table's row counts and the collapse family against totals read from "
+        "results/*.json and paper_numbers.json; the prose sentence is only its anchor"),
+    "retraction_class_consistency": ("whole-file",
+        "scans each file in the claim's own `files` list, paragraph by paragraph, for a "
+        "retraction identifier and the class the sentence gives it. B4 added "
+        "docs/BUILD_CHECKS.md: with only the template listed, the generated enumeration "
+        "that moved there fell out of scope and the claim passed on 9 namings of 19"),
+    "table_renders": ("whole-file",
+        "compares every table in the built PAPER.md, found with the converter's own "
+        "table detector, with PAPER.tex; the supplementary files are not typeset"),
+    "arena_consistency": ("named-region",
+        "reads section 3.2's evidence table and each section it names; a missing section "
+        "fails the check"),
 }
 
 
 def main():
     src = open(CHECKER).read()
-    kinds = sorted(set(re.findall(r'"kind": "([a-z-]+)"', src)))
+    # B4: the class was [a-z-]+, so the five kinds spelled with an underscore --
+    # figure_reference, population_partition, retraction_class_consistency,
+    # table_renders, arena_consistency -- were invisible here, and "0
+    # unclassified" held over 22 kinds of 27.
+    kinds = sorted(set(re.findall(r'"kind": "([a-z_-]+)"', src)))
     unclassified = [k for k in kinds if k not in SCOPE]
 
     # Which files does each whole-file scanner actually name?
     files_by_kind = {}
-    for m in re.finditer(r'"kind":\s*"([a-z-]+)"(.*?)(?=\{"id"|\Z)', src, re.S):
+    surface_by_kind = {}
+    for m in re.finditer(r'"kind":\s*"([a-z_-]+)"(.*?)(?=\{"id"|\Z)', src, re.S):
         k, blk = m.group(1), m.group(2)
         fm = re.search(r'"files":\s*\[(.*?)\]', blk, re.S)
         if fm:
             files_by_kind.setdefault(k, set()).update(
                 re.findall(r'"([^"]+\.md)"', fm.group(1)))
+        # B4 added `surface`: a claim evaluated against the paper followed by the
+        # supplementary file its text moved to. Recorded so the audit shows it.
+        sm = re.search(r'"surface":\s*\[(.*?)\]', blk, re.S)
+        if sm:
+            surface_by_kind.setdefault(k, set()).update(
+                re.findall(r'"([^"]+\.md)"', sm.group(1)))
 
     rows, gaps = [], []
     for k in kinds:
         scope, why = SCOPE.get(k, ("UNCLASSIFIED", ""))
         named = sorted(files_by_kind.get(k, []))
         row = {"kind": k, "input_selection": scope, "reason": why,
-               "files_named_by_claims": named}
+               "files_named_by_claims": named,
+               "surface_named_by_claims": sorted(surface_by_kind.get(k, []))}
         if scope == "whole-file" and named:
             # A whole-file scanner covers what it names and nothing else. Which NAME it
             # needs depends on the tier it works at: a check that scans PAPER.template.md
@@ -158,8 +191,14 @@ def main():
             "The whole-file scanners that search PAPER.md rather than a named file list "
             "are unaffected by 5b's moves in one direction and exposed in the other: text "
             "moved WITHIN PAPER.md keeps its coverage, text moved OUT of the paper loses "
-            "it. 5b moves text out only to Appendix D's generated list, which is inside "
-            "PAPER.md, so their coverage is unchanged by this session."),
+            "it. 5b moved text out only to Appendix D's generated list, which is inside "
+            "PAPER.md, so 5b left their coverage unchanged. B4 did move text OUT: section "
+            "8's reproducibility block and all of Appendix C went to docs/BUILD_CHECKS.md. "
+            "Every claim that pinned moved text now declares that file as a `surface` and "
+            "is evaluated against the paper followed by it (surface_named_by_claims above); "
+            "the whole-paper sweeps -- horizon-forbidden, horizon-consistency, restatement -- "
+            "take the supplementary as well; unit-consistency needs nothing, because the "
+            "moved text states no n_independent figure."),
     }
     op = os.path.join(R.RESULTS, "check_scope_audit.json")
     json.dump(out, open(op, "w"), indent=2)

@@ -41,6 +41,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.p
 import rwm_data as R  # noqa: E402
 
 PAPER = "PAPER.md"
+_BC_TEMPLATE = "docs/BUILD_CHECKS.template.md"
 _cache = {}
 WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
          8: "Eight", 9: "Nine", 10: "Ten"}
@@ -262,13 +263,15 @@ CLAIMS = [
     # kind is unchanged and so is what it asserts; only the list of places the
     # count must agree in has moved, and it has to move with the prose or it
     # guards nothing.
-    {"id": "C7.1", "kind": "count-consistency", "where": "8 / Appendix C",
+    {"id": "C7.1", "kind": "count-consistency", "where": "8 / BUILD_CHECKS",
+     "surface": ["docs/BUILD_CHECKS.md"],
      "label": "numbered retractions",
      "says": "retractions on our own evidence",
      "value": ("paper_numbers.json", "n_retractions.value"),
      "sites": ["retractions on our own evidence",
                "numbered retractions, in order"]},
-    {"id": "C7.2", "kind": "count-consistency", "where": "8 / Appendix C",
+    {"id": "C7.2", "kind": "count-consistency", "where": "8 / BUILD_CHECKS",
+     "surface": ["docs/BUILD_CHECKS.md"],
      "label": "framing retractions",
      "says": "that withdraw framings rather than numbers",
      "value": ("paper_numbers.json", "n_retract_framing.value"),
@@ -280,7 +283,7 @@ CLAIMS = [
     # The count is stated ONCE in §1 now -- in the contributions list. §1's prose
     # paragraph said it too, which is the duplication D2 was meant to remove and
     # did not: it compressed the paragraph and left the number in both places.
-    {"id": "C7.5", "kind": "count-consistency", "where": "1 / Appendix C",
+    {"id": "C7.5", "kind": "count-consistency", "where": "1",
      "label": "total retractions",
      "says": "retractions of our own claims",
      "value": ("paper_numbers.json", "n_retract_total.value"),
@@ -316,6 +319,7 @@ CLAIMS = [
      "must_quote": ("v2_deployment_horizon.json", "verdict.deployment_horizon_is"),
      "fmt": "{:.0f}"},
     {"id": "C8.3", "kind": "horizon-forbidden", "where": "whole paper",
+     "surface": ["docs/BUILD_CHECKS.md"],
      "says": "open-loop diagnostic",
      "forbid": ["deployment horizon of h = 368", "368-step deployment horizon",
                 "at the 368-step deployment horizon"]},
@@ -375,9 +379,11 @@ CLAIMS = [
     # classes, so the antecedent resolved either way. The paper reads as PAPER.md
     # rather than the template here, because appendix C's enumeration is
     # generated from the ledger and does not exist in the source.
-    {"id": "C10.5", "kind": "retraction_class_consistency", "where": "8 / Appendix C",
+    # B4: the generated enumeration left PAPER.md for docs/BUILD_CHECKS.md, and with
+    # only the template listed this claim fell from 19 namings to 9 while passing.
+    {"id": "C10.5", "kind": "retraction_class_consistency", "where": "8 / BUILD_CHECKS",
      "says": "The most consequential of the framing retractions",
-     "files": ["PAPER.md", "docs/BUILD_CHECKS.template.md",
+     "files": ["PAPER.md", "docs/BUILD_CHECKS.template.md", "docs/BUILD_CHECKS.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
 
     # ---- C11 cross-artifact-sync -----------------------------------------
@@ -385,6 +391,7 @@ CLAIMS = [
     # paper: 17 training runs against 24, 4,804 regenerated values against
     # 6,073, a headline the paper had reframed.
     {"id": "C11.1", "kind": "cross-artifact-sync", "where": "README",
+     "surface": ["docs/BUILD_CHECKS.md"],
      "says": "deliberately corrupted expectation",
      # C3(rev2): the page count is here because the README quoted "9 pages" for a
      # 30-page PDF for two revisions, and nothing compared them. It moves every
@@ -399,6 +406,7 @@ CLAIMS = [
     # the paper is worse than none, because the reader it is written for takes it
     # as the paper's own account of itself.
     {"id": "C11.3", "kind": "cross-artifact-sync", "where": "EXTERNAL_READ_BRIEF",
+     "surface": ["docs/BUILD_CHECKS.md"],
      "says": "deliberately corrupted expectation",
      "keys": ["rt_hours", "rt_runs", "d1_ratio", "d1n_epi_ratio_h1",
               "d1n_epi_cov1_h1", "v3_cov_nominal1", "a2_rdd", "stale_pct",
@@ -406,6 +414,7 @@ CLAIMS = [
               "e7_step_r", "e7_r_dis", "e5s_span", "e5s_mse_under"],
      "file": "docs/EXTERNAL_READ_BRIEF.md"},
     {"id": "C11.2", "kind": "cross-artifact-sync", "where": "MODEL_CARD",
+     "surface": ["docs/BUILD_CHECKS.md"],
      "says": "deliberately corrupted expectation",
      "keys": ["d1n_epi_ratio_h100", "e5_ratio_h100", "m44_ratio_gain",
               "r2_indep_ratio_h100"],
@@ -421,6 +430,7 @@ CLAIMS = [
     # writes the body table, so the two cannot disagree by construction. A sync claim over
     # it would match on incidental substrings and assert nothing.
     {"id": "C11.4", "kind": "cross-artifact-sync", "where": "BUILD_CHECKS",
+     "surface": ["docs/BUILD_CHECKS.md"],
      "says": "deliberately corrupted expectation",
      "keys": ["cc_n", "cc_kinds", "cc_st_caught", "cc_selfdefects_word"],
      "file": "docs/BUILD_CHECKS.md"},
@@ -584,10 +594,10 @@ CLAIMS = [
     {"id": "C15.2", "kind": "arithmetic", "where": "Appendix B",
      "says": "runs at 10,000 iterations and",
      "total": "rt_runs", "parts": ["rt_runs_10k", "rt_runs_short"], "tol": 0},
-    {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix E",
+    {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix D",
      "says": "of the claims we did test, the original reports no quantitative",
      "total": "appF_n_claims", "parts": ["orig_n_tested", "n_untested"], "tol": 0},
-    {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix D",
+    {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix C",
      "says": "are claims about policy learning or hardware",
      "total": "n_untested", "parts": ["appE_n_sim", "appE_n_cpu"], "tol": 0},
     # Appendix B's CPU budget carried a third figure -- the capacity-matched arm's
@@ -604,8 +614,12 @@ CLAIMS = [
     # Section 9 said "N kinds" from a generated key while appendix D enumerated
     # eight by hand. They had drifted seven apart, inside the appendix whose
     # subject is count consistency.
-    {"id": "C16.1", "kind": "kind-count", "where": "8 / Appendix C",
-     "says": "verifies", "key": "cc_kinds"},
+    # B4: the anchor was "verifies", which first matches a sentence of section 2
+    # that has nothing to do with the kind count, so it pinned nothing. It is now
+    # the moved sentence that states the count.
+    {"id": "C16.1", "kind": "kind-count", "where": "BUILD_CHECKS",
+     "surface": ["docs/BUILD_CHECKS.md"],
+     "says": "comparative claims** across", "key": "cc_kinds"},
 
     # ---- C20 unit-consistency ---------------------------------------------
     # NEW in Session 6. This revision introduced a SECOND evaluation unit: M-64 rebuilds
@@ -661,7 +675,7 @@ CLAIMS = [
     {"id": "C19.1", "kind": "restatement", "where": "whole paper",
      "says": "Curves are reported at"},
 
-    {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix D",
+    {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix C",
      "says": "within reach of the CPU budget this project already spent",
      "section": "4. What the original papers claim, and which claims we test",
      "forbid": ["without exception", "in all cases", "in every case",
@@ -704,7 +718,7 @@ CLAIMS = [
     # the same number of them, each carrying at least one row separator per
     # source row. It does not measure type size; it catches a table that lost
     # rows on the way to LaTeX, which is the failure a reader cannot recover from.
-    {"id": "C23.1", "kind": "table_renders", "where": "Appendix D / E / F",
+    {"id": "C23.1", "kind": "table_renders", "where": "Appendix C / D / E",
      "says": "checkable row by row"},
 
     # ---- C24 arena_consistency ---------------------------------------------
@@ -1028,7 +1042,12 @@ def evaluate(c, paper, override=None):
         # own sentence; everything else horizon-indexed must name it in the
         # enclosing paragraph. Silence fails either way.
         import horizon_sweep
-        findings = horizon_sweep.scan(exp.get("_template"))
+        # B4: section 8's block and Appendix C moved to the supplementary, and a
+        # whole-paper sweep over PAPER.template.md alone would have let them leave
+        # its coverage. The supplementary template is appended, clean and
+        # corrupted alike, so the moved sentences are swept where they now sit.
+        _base = exp.get("_template") or open("PAPER.template.md").read()
+        findings = horizon_sweep.scan(_base + "\n\n" + open(_BC_TEMPLATE).read())
         n_s = sum(1 for f in findings if f["scope"] == "sentence")
         return not findings, (
             f'{len(findings)} horizon-unscoped figures ({n_s} calibration, '
@@ -1114,7 +1133,7 @@ def evaluate(c, paper, override=None):
         # it that kind is enumerated in the paragraph and counted by nobody.
         enumerated = len(set(re.findall(r"\*([a-z][a-z_-]+)\*", seg)))
         ok = registered == claimed == enumerated and i >= 0
-        return ok, (f'registered {registered}, section 8 claims {claimed}, '
+        return ok, (f'registered {registered}, the accounting claims {claimed}, '
                     f'docs/BUILD_CHECKS.md enumerates {enumerated}')
     if k == "frequency-consistency":
         # A stated frequency IS a claim about a count. "at exactly one place",
@@ -1144,6 +1163,8 @@ def evaluate(c, paper, override=None):
         import restatement_index
         text = (exp["_template_text"] if exp.get("_template_text")
                 else open("PAPER.template.md").read())
+        # B4: the moved text is scanned where it now sits (see horizon-consistency).
+        text = text + "\n\n" + open(_BC_TEMPLATE).read()
         vals = art("paper_numbers.json")
         tr = restatement_index.typed_restatements(text, vals)
         _, amb = restatement_index.analyse(restatement_index.scan(text, vals), vals)
@@ -1395,12 +1416,20 @@ def corruption_for(c):
         # Plant appendix D's actual defect back into the template: a typed
         # horizon in the slot §6.8's derived extremum fills. The corruption is
         # the sentence the 24 August draft really carried, not an invented one.
+        #
+        # B4 moved the sentence it used to be planted in (Appendix C's list of
+        # failure modes) out to docs/BUILD_CHECKS.md, which this kind does not
+        # scan. The plant is re-anchored to §6.8's own statement of the same
+        # extremum -- same keys, same typed replacement -- so what the self-test
+        # corrupts is still a real sentence of the paper and still the real
+        # defect. Tested before the change: planted there, it is caught as one
+        # typed restatement of d3_worst_h.
         t = open("PAPER.template.md").read()
         planted = t.replace(
-            "the largest deviation is {{d3_worst_q}} at\n  h={{d3_worst_h}}.",
-            "the largest deviation is aleatoric at h=128.", 1)
+            "is {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode",
+            "is aleatoric at h=128, fitted on episode", 1)
         assert planted != t, ("the restatement corruption found nothing to replace; "
-                              "the appendix D sentence has been reworded")
+                              "section 6.8's worst-cell sentence has been reworded")
         return {"_template_text": planted, "_template_is_path": False}
     if k == "scope-consistency":
         # A phrase that IS in the section, standing in for a quantifier never
@@ -1438,11 +1467,30 @@ def corruption_for(c):
     raise ValueError(k)
 
 
+def _surface(c, paper):
+    """The text a claim is evaluated against.
+
+    B4 moved section 8's reproducibility block and all of Appendix C into
+    docs/BUILD_CHECKS.md. A claim whose pinned text went with it declares
+    `surface`, and is evaluated against the paper followed by that file, so the
+    claim follows its text rather than being retired or silently passing on a
+    stray duplicate of its anchor elsewhere. The BUILT file is named, not the
+    template: these kinds compare rendered numerals ("6/Six/six") and generated
+    identifiers, which exist only after substitution. Session 5a's precedent
+    (C10.x) added the template, which is right for the text-level retraction
+    check and would make a numeric window vacuous.
+    """
+    extra = [open(f).read() for f in c.get("surface", ()) if os.path.exists(f)]
+    assert len(extra) == len(c.get("surface", ())), (
+        f'{c["id"]}: a declared surface is missing: {c.get("surface")}')
+    return "\n\n".join([paper] + extra)
+
+
 def main():
     paper = open(PAPER).read()
     rows, bad = [], 0
     for c in CLAIMS:
-        ok, detail = evaluate(c, paper)
+        ok, detail = evaluate(c, _surface(c, paper))
         rows.append({"id": c["id"], "kind": c["kind"], "where": c["where"],
                      "says": c["says"], "pass": ok, "detail": detail})
         bad += not ok
@@ -1476,7 +1524,7 @@ def main():
                                                      "no orders claim to corrupt"})
                 print(f"  n/a   {c['id']:<6} quotes the ratio directly — nothing to corrupt")
                 continue
-            ok, detail = evaluate(c, paper, override=corrupt)
+            ok, detail = evaluate(c, _surface(c, paper), override=corrupt)
             caught = not ok
             st.append({"id": c["id"], "corruption": str(corrupt), "caught": caught})
             st_bad += not caught

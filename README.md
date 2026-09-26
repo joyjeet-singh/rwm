@@ -16,7 +16,7 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-51 pages, 0 overfull boxes, 0 LaTeX warnings
+48 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 254 entries, each
@@ -85,7 +85,7 @@ README made.
 This reproduces the **dynamics model** only. The hardware-transfer, sample-efficiency and
 policy-learning results of both papers are **not tested**: they need a simulator, an RL loop and
 an ANYmal, none of which this reproduction has. No policy is trained anywhere in this work. The
-paper's §4 and Appendix F give the claim-by-claim breakdown.
+paper's §4 and Appendix D give the claim-by-claim breakdown.
 
 ## Verification chain
 

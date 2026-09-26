@@ -1,11 +1,11 @@
 {
   "template": "PAPER.template.md",
-  "n_typed": 707,
+  "n_typed": 686,
   "by_class": {
-    "exception": 206,
     "arxiv-id": 16,
+    "exception": 194,
     "markdown-heading": 26,
-    "section-ref": 225,
+    "section-ref": 219,
     "figure-ref": 22,
     "citation-year": 15,
     "code-location": 39,
@@ -13,10 +13,10 @@
     "math-mode": 10,
     "table-row-label": 40,
     "equation-ref": 8,
-    "date": 3,
+    "date": 2,
     "table-denominator": 6,
     "subsection-heading": 5,
-    "withdrawn-figure": 6,
+    "withdrawn-figure": 4,
     "originals-figure": 1
   },
   "n_unclassified": 0,

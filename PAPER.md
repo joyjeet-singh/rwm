@@ -2,9 +2,9 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1067 values substituted from 77 artifacts. -->
+     1037 values substituted from 75 artifacts. -->
 
-# A one-step evaluation misalignment and a σ = 0 optimum: an independent reproduction of a released robotic world model
+# What a released robotic world model's uncertainty is worth: a one-step evaluation defect and a collapsed σ
 
 ---
 
@@ -66,7 +66,7 @@ and we report that too.
 
 ![Pre-registration lead time for each decision rule, from git commit timestamps. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. The one negative bar is the Task 3 duplication rule, retracted as a pre-registration in this paper.](figures/paper_fig4_prereg_timeline.png)
 
-**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and Appendix C give them in full. There are 12 retractions of our own claims, kept with the evidence that withdrew them, and Appendix F's table of every pre-registered rule with its lead time and its verdict.
+**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and the supplementary `docs/BUILD_CHECKS.md` give them in full. There are 12 retractions of our own claims, kept with the evidence that withdrew them, and Appendix E's table of every pre-registered rule with its lead time and its verdict.
 
 **Contributions.**
 
@@ -195,7 +195,7 @@ the library it forks. That fork is not counted, since counting the thing §6.3 m
 evidence that the result travels would be circular. The protocol capped the survey at 25 repositories, and it stopped at
 10; the survey's notes record no reason for stopping there. We wrote the protocol before the search, and the sha256 the survey recorded is that file's;
 but neither the protocol nor its hash reached git before the results did, so the claim that it came first rests on our own record rather than on a commit. It is a search
-protocol rather than a decision rule, and is not among Appendix F's pre-registered rules. This is a count over what we examined, not over the field
+protocol rather than a decision rule, and is not among Appendix E's pre-registered rules. This is a count over what we examined, not over the field
 — search engines rank and truncate, so it is a sample of convenience — but on that sample the
 substitution is rare rather than common, and a reader who takes the hypothesis to reach widely is
 inferring more than the evidence supports.
@@ -311,7 +311,7 @@ lite release), and the environment the lite release ships rolls the learned mode
 rather than physics, so it cannot stand in for a generator. Its readme sends anyone wanting
 simulator-based collection to a third repository, the authors' Isaac Lab extension, which this
 reproduction does not pin (`readme.md:13`). Generating more would need that repository, Isaac Lab and an RTX-class GPU
-(Appendix D; ledger `D-36`).
+(Appendix C; ledger `D-36`).
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
@@ -356,7 +356,7 @@ derived from held-out data. A value of 1.0 means no better than predicting the t
 **The aggregation matters and is form 1**: pool the per-dimension mean squared errors, then
 divide — a ratio of means. The alternative, a mean of per-dimension ratios, gives whichever
 dimension has the smallest scale unbounded leverage, and the choice between the two once inverted
-a published-model comparison in this project. Appendix H gives both forms and the inversion.
+a published-model comparison in this project. Appendix G gives both forms and the inversion.
 
 **Coverage at ±kσ** is the fraction of scalar (trajectory, forecast step, state dimension) triples
 whose absolute realised error falls within k times the σ predicted for that same triple:
@@ -443,16 +443,16 @@ recorded data from other robots but is a claim about the model rather than about
 does not belong in that bucket however convenient it is to put it there. This work trains no
 policy at all and runs on two CPU cores. **The remaining two need none of that
 and we still did not run them**: the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison are within reach of the CPU budget this
-project already spent, and Appendix D prices both. They are unrun for want of time, not for want
+project already spent, and Appendix C prices both. They are unrun for want of time, not for want
 of hardware.
 
-Both counts and both lists above are generated from a classification tag carried in Appendix E's
+Both counts and both lists above are generated from a classification tag carried in Appendix D's
 verdict column, so the enumeration cannot disagree with the count beside it. It did: an earlier
 draft of *this* sentence — itself the replacement for retracted claim `S-17`, which was a count
 defect in this same place — said six and then named five, and
 called all of them claims about policy learning or hardware when one of them is not. `S-17`
 withdrew a universal quantifier here; its replacement got the arithmetic wrong instead, which is
-the worse failure of the two because the sentence had just been rewritten under scrutiny. §11 states what that bounds, and Appendix D sets out what testing them would take.
+the worse failure of the two because the sentence had just been rewritten under scrutiny. §11 states what that bounds, and Appendix C sets out what testing them would take.
 
 **For all 4 of the claims we did test, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
@@ -462,7 +462,7 @@ follow-up's "strong correlation" between disagreement and error, for which §6.7
 coefficient. Where a magnitude is legible only from a plotted curve we say so rather than
 estimating it from the axis.
 
-**Appendix E gives the full table**, claim by claim, with what the original states, where it
+**Appendix D gives the full table**, claim by claim, with what the original states, where it
 states it, and our verdict.
 
 ---
@@ -1543,41 +1543,22 @@ it rests on, because it is what let us detect the gap at all.
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (254 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix F for all 18, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn; Appendix F gives the lead time of every rule added since. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix E for all 18, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn; Appendix E gives the lead time of every rule added since. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
-**Six retractions on our own evidence**, out of 19 superseded claims kept in the record, plus six that withdraw framings rather than numbers (Appendix C lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
+**Six retractions on our own evidence**, out of 19 superseded claims kept in the record, plus six that withdraw framings rather than numbers (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
-**Reproducibility, and a build that checks its own prose.**
-**The number of regenerated values that differ and are themselves a measurement, a statistic or
-the verdict of a test is 0.**
-`./reproduce.sh --quick --force` regenerates 46 artifact files and 9,308
-numeric values from a clean clone: 8,994 bitwise identical (96.63%),
-0 equal to within the verifier's floating-point tolerance but not bitwise, and
-314 differing. Those
-three account for the 9,308 exactly. Regeneration does not reproduce 1 of the committed values, in
-1 of the files; that count is kept separate, because a value that is not
-produced twice cannot be compared twice.
-The 314 differing values are partitioned by cause from the per-file record in
-`results/verify_reproduction.json`: 0 are in the document-line index
-(`results/restatement_index.json`), 0 in the stochastic dilution study
-(`results/e5_sigma_dilution.json`), and 314 elsewhere. The document-line index records where each
-numeral sits in this paper's source and what it renders to. A clone checks out the same source, so
-every position reproduces; the only values it can disagree on are this paper's own statements about
-this comparison, which is why the committed index is regenerated whenever those figures are restated. Whether a differing value carries
-a scientific result is decided value by value, not file by file: it does only if the value is
-itself a measurement, a statistic or the verdict of a test, and a value does not qualify merely
-because the file holding it also holds results. `scripts/paper_numbers.py` applies that rule in
-code, counts any differing value it does not recognise as scientific, and places these outside the
-scientific class: 301 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/appendix_g_rules.json` (the lead time of rule `M-69`, a gap between two git commit timestamps); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses). **`part_f_gate` still fails.** Its clean-clone check requires
-that no regenerated value differ; 314 do, and it is published as failing, with no
-tolerance added.
-**The claim is narrower than the percentage makes it sound, and we would rather state its size than
-have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: 9,308 values, or 0.98%
-of the 950,201 numeric values under `results/`. The other 940,893 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 102-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 707 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the registry, the self-test and the four defects the self-test has found in the checker itself.**
+**Reproducibility, and a build that checks its own prose.** Every measured number in this paper is
+substituted from an artifact on each build, and a quick run on a clean clone (`./reproduce.sh --quick --force`, which skips
+training) rewrites 0.98% of the numeric values under `results/`; the rest are carried in
+and prove nothing about reproduction. **The number of regenerated values that differ and are
+themselves a measurement, a statistic or the verdict of a test is 0.** One of the
+build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ
+at all; 314 do, so it fails, and it is published as failing rather than given a
+tolerance. The accounting behind these figures, the registry of checks the build runs on this
+paper's own prose, and the paper's record of verifying its own claims are in `docs/BUILD_CHECKS.md`,
+shipped as supplementary.
 
 ---
 
@@ -1709,7 +1690,7 @@ construction (`M-71`).
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's 4 independent trajectories admit a smallest attainable P-value of 0.04167 — coarser than the multiplicity-corrected threshold 0.001667, so that arena cannot reject at any effect size whatever. The larger arenas can reject and do not: over all ten episodes the smallest P in the family is 0.0037 against a threshold of 0.001667. Resolving it at h = 368 needs more episodes than the released dataset contains, rather than a better test. **At h = 128 and below that is no longer true and we say so**: a shorter evaluation unit gives 14 independent units at h = 100 where the 400-step unit gives 4 (`M-64`), and we did not rerun this permutation family there. Note the scope: this limits the *per-dimension* evidence. The aggregate scalar the method applies is separately and more strongly supported (§6.7), on the same trajectories, because it is one test rather than forty-five coupled ones.
 
-**No family-wide correction is applied across our own pre-registered rules.** There are 18 of them with per-rule verdicts (Appendix F) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
+**No family-wide correction is applied across our own pre-registered rules.** There are 18 of them with per-rule verdicts (Appendix E) and we report each against the thresholds it was committed with, not against a corrected family threshold. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers the corrected reading should apply it; we state the count so that is possible.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it, on three axes.** §6.10's contrast trains five models at five seeds and scores them together. Independently-seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk. Greater capacity can inflate σ as well as shrink error, and σ is the column the mechanism claim rests on — §6.10's decomposition separates the σ gain from the accuracy gain, but it does not separate capacity from independence. **Capacity is no longer one of them.** `M-49`, committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132 — a ratio of 0.9998, where §6.10's original contrast carried 3.49. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
@@ -1849,7 +1830,10 @@ is in `results/original_paper_figures.json`.*
 *Entries 3–18 are the §2 bibliography, generated from
 `results/t1_bibliography_verified.json` rather than listed here — a hand-maintained list of what a
 paper cites drifts exactly as a hand-typed count does, and this one had: six entries cited in §2's
-prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 16 of 16 entries and 17 of 17 attributed fragments (`results/t1_bibliography_verified.json`).*
+prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 16 of 16 entries and 17 of 17 attributed fragments,
+3 of them single common words whose presence the cited paper's subject guarantees,
+so their match could not have failed and verifies nothing about the attribution
+(`results/t1_bibliography_verified.json`, ledger `D-35`).*
 
 ## Appendix A — verification chain
 
@@ -1888,126 +1872,7 @@ capacity-matched run walked into the family through a glob; that collision, the 
 unguarded glob the fix did not reach (`M-66`), and the sweep of every pattern-based input
 discovery in `scripts/` and `src/` are in `docs/BUILD_CHECKS.md`, shipped as supplementary.
 
-## Appendix C — verifying the paper's own claims
-
-**The six numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The six framing retractions**, withdrawn as stated claims rather
-than as numbers, and generated from the ledger rather than listed here — a typed
-enumeration beside a generated count is the same defect as a typed count. This one was typed
-with two entries at a time when the ledger held
-two, and the revision that added four more
-replaced it with a generated list in the same commit, so it never actually stood wrong. It
-appears here as a note rather than above as an entry for that reason, and the reason is luck:
-nothing compared the typed enumeration against the count beside it, and had the two changes
-landed in separate commits the paper would have said six and enumerated
-two:
-
-- **Task 3's duplication rule was pre-registered** (`S-12`).
-
-- **The binomial P-values attached to every dimension count** (`S-15`).
-
-- **The two largest held-out deviations are in opposite directions** (`S-16`).
-
-- **The eight untested claims are, without exception, about policy learning or hardware** (`S-17`).
-
-- **The per-member σ is worse by three orders of magnitude** (`S-18`).
-
-- **The released checkpoint cannot have come from the released recipe** (`S-19`).
-
-The last four were entered by the second pre-submission review, in a
-single commit — which is how that count is established rather than recalled.
-`S-16`, `S-17` and `S-18`
-are sentences of the 24 August draft that were false. `S-19` is different in kind and worse
-in one respect: §7.5 had already narrowed that claim in the paper, and the narrowing was never
-entered in the ledger, so the withdrawn version went on standing in the ledger's own
-contributions summary and in the public README after the paper had withdrawn it. A
-retraction that holds in one document and not in the repository is not a retraction, and
-the `retraction-consistency` check now reads all five reader-facing files rather than
-three. Each is an entry in `FINDINGS_LEDGER.md` with its evidence and its successor.
-
-`build_paper.py` asserts that every printed number came from a named artifact. That is a
-guarantee about *provenance*, and it is silent about *relations between* provenanced numbers.
-Six failure modes survive it, and all six occurred in this paper. Five are relations between provenanced numbers; the sixth is not a relation at all and is set out after the list:
-
-- **an interval relation that is not the one asserted** — "the intervals do not overlap",
-  where at h=128 they overlap across 0.604–0.643. **This one has now been wrong twice.**
-  The correction said the distinction mattered "at exactly one place"; adding h = 100 to
-  the grid made it two, and the sentence recording the first error carried the second. A
-  stated *frequency* — "at exactly one place", "in all four", "the only" — is a claim
-  about a count, and no kind bound one to a recomputed count until `frequency-consistency`;
-- **an extremum that is not the extremum** — the worst-calibrated held-out cell named as
-  epistemic at h=1, which is third; the largest deviation is aleatoric at
-  h=100. **This one has now been wrong twice as well**, and the second time was
-  here rather than in §6.8. This sentence named h=128, which was the extremum before h = 100
-  entered the evaluation grid; §6.8 was re-derived when the grid changed and the sentence
-  describing the *correction* was not. Both now read the same key, and the `extremum` kind
-  covers this appendix and not only the section that computes it;
-- **a stated change with the wrong sign** — "a change of **+**0.010", where partialling the
-  forecast index out *reduces* the correlation;
-- **two prose descriptions of one ratio that disagree** — "nearly three orders of magnitude" in
-  the abstract against "two orders" in §12, of the same 600× at
-  h = 368;
-- **a count attributed to the wrong evaluation arena** — 0 of 45 over all ten episodes asserted
-  where the table beside it printed the held-out arena's 20 of 45.
-
-None is a numeral. None appears in `results/paper_numbers.json`. Each was typed.
-
-**A sixth failure mode is not a relation at all, and it defeated the gate rather than
-evading it.** `build_paper.py` asserted that no `{{`-delimited placeholder survived
-substitution, and none did — while a sentence of §6.7 reached the PDF as an empty
-one-column table. The sentence contained `|r_dd|`, the line wrapped so that the pipe began a
-line, and the Markdown-to-LaTeX converter read a leading pipe as a table row. Every numeral
-in it was correct and provenanced. The gate now refuses three further shapes as well as
-unresolved braces: a pipe-led line with no separator row beneath it, a single-braced token
-that names a real key, and any key resolving to an empty or null value. The converter
-requires the separator row before it will build a table.
-
-**The machinery, and the two lines that matter about it.** `scripts/check_comparative_claims.py`
-verifies 60 claims across 27 kinds, each pinning a fragment of this paper's text
-and a relation recomputed from the artifacts, and each run against a deliberately corrupted
-expectation on every build so that a check which can no longer fail is caught. The registry, the
-self-test's mechanics and the four defects it has found in the checker itself
-are in `docs/BUILD_CHECKS.md`, shipped as supplementary. **The evidence that any of it is
-load-bearing is one sentence**: the comparative checks caught three defects in text written
-during this revision — two calibration figures that named no horizon, and one numeral quoted
-three ways in a single sentence — none of which a human reader had noticed.
-**Two exclusions from the numeric comparison**, on the same principle in both cases: the number
-measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this appendix: of the 950,201 numeric values under `results/`, a clean
-clone regenerates 9,308 and carries in 940,893. The reproducibility claim covers
-0.98% of the directory and is silent about the rest. We state that fraction because a
-reviewer who computes it and finds we did not will reasonably discount everything around it.
-
-*The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected
-runtimes for configurations we did not run, peak resident memory, and the standard deviation of
-seconds-per-iteration across repeats. None of it can reproduce bitwise on another machine, or on
-this one under different load, so the numeric comparison leaves the whole file out, together with
-every field elsewhere whose name marks it as a wall-clock timing. The file also records its own
-variability, and **we quote none of it**: a sentence arguing that host-dependent numbers should not
-be printed as results cannot quietly print its own as though they were stable, and on a second host
-the same run reported a different spread on a different worst configuration. For the same reason we
-do not print how many values this exclusion sets aside. That count is not a property of the timing
-file alone: it also takes in the values of the wall-clock-bounded diagnostic described below, and
-the entries of `results/paper_numbers.json` that are read from either of those files or from the
-comparison's own record, so it changes from one clean-clone run to the next with that diagnostic's
-iteration count. Read `results/step4_5_timing.json` as one machine's account of itself, not as a
-property of the code.
-
-**One of the build's own gates fails, and we report it rather than retire it.** The clean-clone
-check in `part_f_gate` requires that *no* regenerated value differ. 314 do, so the
-check fails, and it is published as failing. We did not give it a tolerance. The differences sit in 6 artifacts, counted from the per-file record in
-`results/verify_reproduction.json`: `results/task_c1_claims_audit.json` (304), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/appendix_g_rules.json` (1), `results/t5_anon_transcript.json` (1). The stochastic dilution study differs in
-0, and the number of differing values that are a measurement, a statistic or a
-test verdict, under the rule §8 states, is 0 — but a partition we believe is benign
-is a reason to read the check's output, not to move its threshold. A gate that passes because its criterion was relaxed
-tells a reader strictly less than one that fails and says where.
-
-*One wall-clock-bounded diagnostic.* `results/step4_4_overfit_ens1.json` stops on a time budget rather than at its
-iteration cap, so its iteration count and terminal losses are a property of the host and none of
-them is quoted here; `docs/BUILD_CHECKS.md`, shipped as supplementary, gives the mechanism and why
-its sibling from the same script is not excluded.
-
-
-## Appendix D — what testing the untested claims would require
+## Appendix C — what testing the untested claims would require
 
 §4's table marks 4 claims tested and the rest not. "Not tested" is an apology
 unless it comes with a price, so here is what each would cost. We give compute orders where we
@@ -2038,7 +1903,7 @@ readme places collection in a third repository, the authors' Isaac Lab extension
 and are the honest next steps for anyone extending this work on CPU. The six above
 them are not, and no amount of care with the released CSV changes that. This table has one row per
 untested claim; it listed 2 fewer than that until the assertion that counts its rows
-against Appendix E's was written, and the two it omitted were the two whose cost is hardest to
+against Appendix D's was written, and the two it omitted were the two whose cost is hardest to
 state honestly.
 
 **What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
@@ -2049,7 +1914,7 @@ needs no robot.
 
 ---
 
-## Appendix E — every claim of the originals, and what we did with it
+## Appendix D — every claim of the originals, and what we did with it
 
 The body's §4 summarises this table. It is here in full because the third column — what the
 original actually reports — is the answer to a question a reader of any reproduction should ask,
@@ -2081,7 +1946,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 | Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.7), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
 
 ---
-## Appendix F — every pre-registered rule, its lead time and its verdict
+## Appendix E — every pre-registered rule, its lead time and its verdict
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
@@ -2146,7 +2011,7 @@ quotations ending mid-sentence. The table is the claim; the supplementary is the
 
 ---
 
-## Appendix G — the variance-state arithmetic behind §7.5
+## Appendix F — the variance-state arithmetic behind §7.5
 
 §7.5 states the conclusion. The arithmetic and the five assumptions it rests on are in
 `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`, shipped as supplementary, kept out of the body because the numbered
@@ -2164,7 +2029,7 @@ the work.
 
 ---
 
-## Appendix H — the two nRMSE aggregations, and the comparison one of them inverted
+## Appendix G — the two nRMSE aggregations, and the comparison one of them inverted
 
 §3.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the
 45 state dimensions, then divide by the pooled scale — a ratio of means. **Form 2**

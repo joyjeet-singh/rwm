@@ -686,8 +686,8 @@ def main():
                                 "collapse family plus the runs excluded from it equal the "
                                 "total",
         "unit-consistency": "every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\"",
-        "kind-count": "the number of kinds section 8 claims, appendix D enumerates and the "
-                      "checker registers are one number",
+        "kind-count": "the number of kinds the build accounting claims, this file enumerates "
+                      "and the checker registers are one number",
         "scope-consistency": "a universal quantifier is checked against the set it quantifies "
                              "over",
         "frequency-consistency": "a frequency stated in words -- \"at every horizon\", \"at "
@@ -1508,19 +1508,22 @@ def main():
         # drop the header and the |---| separator
         return [r for r in rows[2:] if set(r.replace("|", "").strip()) - set("-: ")]
 
-    _appF = _table_rows("Appendix E")
-    _appE = _table_rows("Appendix D")
+    # B4 renumbered the appendices (D->C ... H->G). The keys keep their old letters
+    # (appE_*, appF_*) because they are identifiers, not labels; the headings they
+    # are read from are the claims table (now D) and the pricing table (now C).
+    _appF = _table_rows("Appendix D")
+    _appE = _table_rows("Appendix C")
     _f_tested = [r for r in _appF if re.split(r"(?<!\\)\|", r.strip("|"))[1].strip()
                  .lower().strip("* ") == "yes"]
     _f_untested = [r for r in _appF if r not in _f_tested]
-    put("appF_n_claims", len(_appF), "PAPER.template.md, Appendix E table")
-    put("n_untested", len(_f_untested), "PAPER.template.md, Appendix E table")
+    put("appF_n_claims", len(_appF), "PAPER.template.md, Appendix D table")
+    put("n_untested", len(_f_untested), "PAPER.template.md, Appendix D table")
     put("n_untested_word", WORDS.get(len(_f_untested), str(len(_f_untested))).lower(),
-        "PAPER.template.md, Appendix E table")
-    _e_cpu = [r for r in _appE if "no simulator needed" in r]
-    put("appE_n_cpu", len(_e_cpu), "PAPER.template.md, Appendix D table")
-    put("appE_n_cpu_word", WORDS.get(len(_e_cpu), str(len(_e_cpu))).lower(),
         "PAPER.template.md, Appendix D table")
+    _e_cpu = [r for r in _appE if "no simulator needed" in r]
+    put("appE_n_cpu", len(_e_cpu), "PAPER.template.md, Appendix C table")
+    put("appE_n_cpu_word", WORDS.get(len(_e_cpu), str(len(_e_cpu))).lower(),
+        "PAPER.template.md, Appendix C table")
 
     # B3. §4 stated a count of six and then ENUMERATED five. The count came from
     # here; the list was typed. That sentence is the replacement for retracted
@@ -1561,33 +1564,33 @@ def main():
 
     _untagged = [_label(r) for r in _f_untested if not _tags(r)]
     assert not _untagged, (
-        "untested Appendix E rows with no `[tag]` in their verdict cell, so §4's "
+        "untested Appendix D rows with no `[tag]` in their verdict cell, so §4's "
         f"count and enumeration cannot be derived from them: {_untagged}")
     _f_cpu = [r for r in _f_untested if "cpu" in _tags(r)]
     _f_sim = [r for r in _f_untested if "cpu" not in _tags(r)]
     assert len(_f_cpu) == len(_e_cpu), (
-        f"Appendix E tags {len(_f_cpu)} untested claims `cpu` while Appendix D "
+        f"Appendix D tags {len(_f_cpu)} untested claims `cpu` while Appendix C "
         f"prices {len(_e_cpu)} as needing no simulator")
     # Appendix D promises a price for EACH untested claim. It listed six of eight.
     assert len(_appE) == len(_f_untested), (
-        f"Appendix D prices {len(_appE)} claims; Appendix E marks {len(_f_untested)} "
-        "untested, and Appendix D's own opening says it prices each of them")
+        f"Appendix C prices {len(_appE)} claims; Appendix D marks {len(_f_untested)} "
+        "untested, and Appendix C's own opening says it prices each of them")
     _f_polhw = [r for r in _f_sim if {"policy", "hardware"} & set(_tags(r))]
     _f_model = [r for r in _f_sim if not ({"policy", "hardware"} & set(_tags(r)))]
     _n_sim = len(_f_sim)
     assert _n_sim == len(_f_untested) - len(_e_cpu)
-    put("appE_n_sim", _n_sim, "PAPER.template.md, Appendix D + F tables")
+    put("appE_n_sim", _n_sim, "PAPER.template.md, Appendix C + D tables")
     put("appE_n_sim_word", WORDS.get(_n_sim, str(_n_sim)).lower(),
-        "PAPER.template.md, Appendix D + F tables")
-    put("appF_n_polhw", len(_f_polhw), "PAPER.template.md, Appendix E verdict tags")
+        "PAPER.template.md, Appendix C + D tables")
+    put("appF_n_polhw", len(_f_polhw), "PAPER.template.md, Appendix D verdict tags")
     put("appF_n_polhw_word", WORDS.get(len(_f_polhw), str(len(_f_polhw))),
-        "PAPER.template.md, Appendix E verdict tags")
+        "PAPER.template.md, Appendix D verdict tags")
     # Same count, lower-cased, for the mid-sentence use in S4. WORDS is capitalised
     # for sentence-initial substitution; dropping it into "then named {{...}}" put
     # "named Five" in the PDF, which reads as a proper noun rather than a count.
     put("appF_n_polhw_lower", WORDS.get(len(_f_polhw), str(len(_f_polhw))).lower(),
-        "PAPER.template.md, Appendix E verdict tags")
-    put("appF_n_model", len(_f_model), "PAPER.template.md, Appendix E verdict tags")
+        "PAPER.template.md, Appendix D verdict tags")
+    put("appF_n_model", len(_f_model), "PAPER.template.md, Appendix D verdict tags")
 
     def _english(items):
         items = list(items)
@@ -1596,19 +1599,19 @@ def main():
         return ", ".join(items[:-1]) + " and " + items[-1]
 
     put("appF_sim_list", _english(_label(r) for r in _f_sim),
-        "PAPER.template.md, Appendix E verdict tags")
+        "PAPER.template.md, Appendix D verdict tags")
     put("appF_polhw_list", _english(_label(r) for r in _f_polhw),
-        "PAPER.template.md, Appendix E verdict tags")
+        "PAPER.template.md, Appendix D verdict tags")
     put("appF_model_list", _english(_label(r) for r in _f_model),
-        "PAPER.template.md, Appendix E verdict tags")
+        "PAPER.template.md, Appendix D verdict tags")
     put("appF_cpu_list", _english(_label(r) for r in _f_cpu),
-        "PAPER.template.md, Appendix E verdict tags")
+        "PAPER.template.md, Appendix D verdict tags")
 
     # A6 -- what the originals report for each claim we tested
     OP = J("original_paper_figures.json")
     put("orig_n_tested", OP["n_tested_claims"], "results/original_paper_figures.json")
     assert len(_f_tested) == OP["n_tested_claims"], (
-        f"Appendix E marks {len(_f_tested)} claims tested; "
+        f"Appendix D marks {len(_f_tested)} claims tested; "
         f"original_paper_figures.json says {OP['n_tested_claims']}")
     put("orig_n_without", OP["n_without"], "results/original_paper_figures.json")
     put("orig_n_with", OP["n_with_quantitative_figure"], "results/original_paper_figures.json")

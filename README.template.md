@@ -85,7 +85,7 @@ README made.
 This reproduces the **dynamics model** only. The hardware-transfer, sample-efficiency and
 policy-learning results of both papers are **not tested**: they need a simulator, an RL loop and
 an ANYmal, none of which this reproduction has. No policy is trained anywhere in this work. The
-paper's §4 and Appendix F give the claim-by-claim breakdown.
+paper's §4 and Appendix D give the claim-by-claim breakdown.
 
 ## Verification chain
 

@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 75,
-  "n_ok": 73,
+  "n_pointers": 63,
+  "n_ok": 61,
   "n_reviewed_correct": 2,
   "reviewed": [
     {
@@ -57,24 +57,24 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix H gives both forms and the inversion",
+      "pointer": "Appendix G gives both forms and the inversion",
       "ok": true,
-      "detail": "target Appendix H; nouns ['forms', 'inversion']; absent []",
-      "context": "Appendix H gives both forms and the inversion"
+      "detail": "target Appendix G; nouns ['forms', 'inversion']; absent []",
+      "context": "Appendix G gives both forms and the inversion"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix D sets out what testing them would take",
+      "pointer": "Appendix C sets out what testing them would take",
       "ok": true,
-      "detail": "target Appendix D; nouns ['testing', 'them', 'would', 'take']; absent ['take']",
-      "context": "Appendix D sets out what testing them would take"
+      "detail": "target Appendix C; nouns ['testing', 'them', 'would', 'take']; absent ['take']",
+      "context": "Appendix C sets out what testing them would take"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix E gives the full table**, claim by claim, with what the original sta",
+      "pointer": "Appendix D gives the full table**, claim by claim, with what the original sta",
       "ok": true,
-      "detail": "target Appendix E; nouns ['full', 'table', 'claim', 'claim', 'original', 'states', 'where', 'states', 'verdict']; absent []",
-      "context": "Appendix E gives the full table**, claim by claim, with what the original states, where it\nstates it, and our verdict"
+      "detail": "target Appendix D; nouns ['full', 'table', 'claim', 'claim', 'original', 'states', 'where', 'states', 'verdict']; absent []",
+      "context": "Appendix D gives the full table**, claim by claim, with what the original states, where it\nstates it, and our verdict"
     },
     {
       "class": "semantic",
@@ -150,30 +150,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix F gives the lead time of every rule added since",
+      "pointer": "Appendix E gives the lead time of every rule added since",
       "ok": true,
-      "detail": "target Appendix F; nouns ['lead', 'time', 'rule', 'added', 'since']; absent ['added', 'since']",
-      "context": "Appendix F gives the lead time of every rule added since"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix C lists them)",
-      "ok": true,
-      "detail": "target Appendix C; nouns ['them']; absent []",
-      "context": "Appendix C lists them)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix C gives the failure modes those checks exist for and the two exclusi",
-      "ok": true,
-      "detail": "target Appendix C; nouns ['failure', 'modes', 'checks', 'exist', 'exclusions', 'numeric', 'comparison']; absent []",
-      "context": "Appendix C gives the failure modes those checks exist for and the two exclusions from the numeric comparison"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/anon_bundle.json",
-      "ok": true,
-      "detail": "exists"
+      "detail": "target Appendix E; nouns ['lead', 'time', 'rule', 'added', 'since']; absent ['added', 'since']",
+      "context": "Appendix E gives the lead time of every rule added since"
     },
     {
       "class": "artifact",
@@ -184,12 +164,6 @@
     {
       "class": "artifact",
       "pointer": "results/e4_sigma_gradients.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/e5_sigma_dilution.json",
       "ok": true,
       "detail": "exists"
     },
@@ -303,12 +277,6 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/restatement_index.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/step0_regimes.json",
       "ok": true,
       "detail": "exists"
@@ -321,31 +289,7 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/step4_4_overfit_ens1.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/step4_5_timing.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/supplementary_manifest.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/t1_bibliography_verified.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/t5_anon_transcript.json",
       "ok": true,
       "detail": "exists"
     },
@@ -357,31 +301,13 @@
     },
     {
       "class": "artifact",
-      "pointer": "results/task_c1_claims_audit.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/task_d3_cross_model.json",
       "ok": true,
       "detail": "exists"
     },
     {
       "class": "artifact",
-      "pointer": "results/typed_numerals.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
       "pointer": "results/v1_ensemble_topology.json",
-      "ok": true,
-      "detail": "exists"
-    },
-    {
-      "class": "artifact",
-      "pointer": "results/verify_reproduction.json",
       "ok": true,
       "detail": "exists"
     },

@@ -3,11 +3,12 @@
 
 # The variance-state arithmetic behind §7.5
 
-Supplementary to the paper's §7.5 and Appendix G, which keep the conclusion: the released
+Supplementary to the paper's §7.5 and Appendix F, which keep the conclusion: the released
 artifacts do not reproduce the released checkpoint's variance state, and the author's account is
 that the released repository is not the one that trained it. This carries the arithmetic and the
 five assumptions it rests on, moved out of the body because the numbered claim it once supported
-is retracted (`S-19`). Nothing was deleted: both blocks below left the paper verbatim.
+is retracted (`S-19`). Nothing was deleted: both blocks below left the paper verbatim, and
+they keep the appendix letters current when they moved; the paper's Appendix G is now Appendix F.
 
 This file is GENERATED from `docs/APPENDIX_G_VARIANCE_ARITHMETIC.template.md` by
 `scripts/build_paper.py`, from the same `results/paper_numbers.json` the paper is built from, so
@@ -35,7 +36,7 @@ it rests on, because it is what let us detect the gap at all.
 
 ---
 
-## Moved verbatim from Appendix G
+## Moved verbatim from Appendix G (now Appendix F)
 
 The collapse rate is a clock. Fitting it across our runs and extrapolating to the released
 checkpoint's σ state implies **{{implied_iters}}** optimisation steps at the configured learning

@@ -692,55 +692,55 @@
     "value": 6
   },
   "appE_n_cpu": {
-    "source": "PAPER.template.md, Appendix D table",
+    "source": "PAPER.template.md, Appendix C table",
     "value": 2
   },
   "appE_n_cpu_word": {
-    "source": "PAPER.template.md, Appendix D table",
+    "source": "PAPER.template.md, Appendix C table",
     "value": "two"
   },
   "appE_n_sim": {
-    "source": "PAPER.template.md, Appendix D + F tables",
+    "source": "PAPER.template.md, Appendix C + D tables",
     "value": 6
   },
   "appE_n_sim_word": {
-    "source": "PAPER.template.md, Appendix D + F tables",
+    "source": "PAPER.template.md, Appendix C + D tables",
     "value": "six"
   },
   "appF_cpu_list": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": "the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison"
   },
   "appF_model_list": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": "generality across robot morphologies"
   },
   "appF_n_claims": {
-    "source": "PAPER.template.md, Appendix E table",
+    "source": "PAPER.template.md, Appendix D table",
     "value": 12
   },
   "appF_n_model": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": 1
   },
   "appF_n_polhw": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": 5
   },
   "appF_n_polhw_lower": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": "five"
   },
   "appF_n_polhw_word": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": "Five"
   },
   "appF_polhw_list": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": "zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy"
   },
   "appF_sim_list": {
-    "source": "PAPER.template.md, Appendix E verdict tags",
+    "source": "PAPER.template.md, Appendix D verdict tags",
     "value": "zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, generality across robot morphologies, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy"
   },
   "appG_n_lead": {
@@ -1641,7 +1641,7 @@
   },
   "cc_kind_list": {
     "source": "results/comparative_claims.json",
-    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arena_consistency* (every row of section 3.2's evidence table names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds section 8 claims, appendix D enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
+    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arena_consistency* (every row of section 3.2's evidence table names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds the build accounting claims, this file enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
   },
   "cc_kinds": {
     "source": "results/comparative_claims.json",
@@ -4820,11 +4820,11 @@
     "value": 8
   },
   "n_untested": {
-    "source": "PAPER.template.md, Appendix E table",
+    "source": "PAPER.template.md, Appendix D table",
     "value": 8
   },
   "n_untested_word": {
-    "source": "PAPER.template.md, Appendix E table",
+    "source": "PAPER.template.md, Appendix D table",
     "value": "eight"
   },
   "nind_ins_400": {
@@ -4921,7 +4921,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 51
+    "value": 48
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -7829,7 +7829,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 707
+    "value": 686
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
