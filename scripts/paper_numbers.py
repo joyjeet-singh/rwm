@@ -631,6 +631,10 @@ def main():
     put("m69_lead_author", _lead({"lead_hours": (_d_at - _r_ct) / 3600}), _gsrc)
     put("m69_lead_regen", _lead({"lead_hours": (_d_ct - _r_ct) / 3600}), _gsrc)
     put("m69_amend_min", round((_d_ct - _d_at) / 60), _gsrc)
+    # Appendix E's M-69 sentence rests its disclosure on "both readings are positive":
+    # the rule reached git before the data on either timestamp. Asserted, not assumed.
+    assert _d_at - _r_ct > 0 and _d_ct - _r_ct > 0, (
+        "an M-69 lead-time reading is not positive; Appendix E's sentence says both are")
     # B.1: the body no longer carries rule texts. They ship in full in
     # docs/APPENDIX_G_RULES.md, written by scripts/appendix_g_rules.py.
     put("tn_classes", TN["n_classes"], "results/typed_numerals.json")
