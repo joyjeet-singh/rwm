@@ -1,8 +1,19 @@
 {
-  "n_artifacts": 61,
-  "n_paper_keys": 1837,
-  "n_uncovered": 0,
-  "uncovered": [],
+  "n_artifacts": 67,
+  "n_paper_keys": 2001,
+  "n_uncovered": 1,
+  "uncovered": [
+    {
+      "artifact": "p4_transfer_power.json",
+      "n_paper_keys": 5,
+      "writers": [
+        "p4_transfer_power"
+      ],
+      "invoked_writers": [],
+      "covered": false,
+      "exempt_reason": null
+    }
+  ],
   "exempt": {
     "verify_reproduction.json": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself.",
     "compile_paper.json": "written by the LaTeX compile, which is stage 26; its declared output is the PDF rather than this artifact."
@@ -63,8 +74,20 @@
       "exempt_reason": null
     },
     {
+      "artifact": "r2_combined_arm.json",
+      "n_paper_keys": 91,
+      "writers": [
+        "r2_independent_ensemble"
+      ],
+      "invoked_writers": [
+        "r2_independent_ensemble"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "r2_independent_ensemble.json",
-      "n_paper_keys": 82,
+      "n_paper_keys": 85,
       "writers": [
         "r2_independent_ensemble"
       ],
@@ -137,6 +160,33 @@
       ],
       "covered": true,
       "exempt_reason": null
+    },
+    {
+      "artifact": "task_d3_cross_model.json",
+      "n_paper_keys": 27,
+      "writers": [
+        "task_d3_cross_model"
+      ],
+      "invoked_writers": [
+        "task_d3_cross_model"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "verify_reproduction.json",
+      "n_paper_keys": 25,
+      "writers": [
+        "part_f_gate",
+        "pipeline_coverage",
+        "verify_reproduction"
+      ],
+      "invoked_writers": [
+        "part_f_gate",
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
     },
     {
       "artifact": "e5_synthetic_sigma.json",
@@ -254,21 +304,6 @@
       "exempt_reason": null
     },
     {
-      "artifact": "verify_reproduction.json",
-      "n_paper_keys": 17,
-      "writers": [
-        "part_f_gate",
-        "pipeline_coverage",
-        "verify_reproduction"
-      ],
-      "invoked_writers": [
-        "part_f_gate",
-        "pipeline_coverage"
-      ],
-      "covered": true,
-      "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
-    },
-    {
       "artifact": "task_d2b_robustness.json",
       "n_paper_keys": 15,
       "writers": [
@@ -296,7 +331,7 @@
     },
     {
       "artifact": "review_bootstrap_unit.json",
-      "n_paper_keys": 12,
+      "n_paper_keys": 13,
       "writers": [
         "review_bootstrap_unit"
       ],
@@ -331,6 +366,34 @@
       "exempt_reason": null
     },
     {
+      "artifact": "t1_bibliography_verified.json",
+      "n_paper_keys": 10,
+      "writers": [
+        "t1_bibliography"
+      ],
+      "invoked_writers": [
+        "t1_bibliography"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "appendix_g_rules.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "appendix_g_rules",
+        "paper_numbers",
+        "pipeline_coverage"
+      ],
+      "invoked_writers": [
+        "appendix_g_rules",
+        "paper_numbers",
+        "pipeline_coverage"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task_c3_multiplicity.json",
       "n_paper_keys": 9,
       "writers": [
@@ -358,10 +421,12 @@
       "artifact": "e5_sigma_dilution.json",
       "n_paper_keys": 9,
       "writers": [
-        "e5_synthetic_sigma"
+        "e5_synthetic_sigma",
+        "paper_numbers"
       ],
       "invoked_writers": [
-        "e5_synthetic_sigma"
+        "e5_synthetic_sigma",
+        "paper_numbers"
       ],
       "covered": true,
       "exempt_reason": null
@@ -395,13 +460,13 @@
       "exempt_reason": null
     },
     {
-      "artifact": "t1_bibliography_verified.json",
+      "artifact": "q3_penalty_reordering.json",
       "n_paper_keys": 9,
       "writers": [
-        "t1_bibliography"
+        "q3_penalty_reordering"
       ],
       "invoked_writers": [
-        "t1_bibliography"
+        "q3_penalty_reordering"
       ],
       "covered": true,
       "exempt_reason": null
@@ -426,6 +491,18 @@
       ],
       "invoked_writers": [
         "task2_sigma_profile"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "q2_free_baseline_power.json",
+      "n_paper_keys": 8,
+      "writers": [
+        "q2_free_baseline_power"
+      ],
+      "invoked_writers": [
+        "q2_free_baseline_power"
       ],
       "covered": true,
       "exempt_reason": null
@@ -466,6 +543,18 @@
       ],
       "invoked_writers": [
         "m62_episode_clustering"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "q1_pets_descendants.json",
+      "n_paper_keys": 7,
+      "writers": [
+        "q1_pets_descendants"
+      ],
+      "invoked_writers": [
+        "q1_pets_descendants"
       ],
       "covered": true,
       "exempt_reason": null
@@ -534,17 +623,13 @@
       "exempt_reason": null
     },
     {
-      "artifact": "appendix_g_rules.json",
+      "artifact": "p4_transfer_power.json",
       "n_paper_keys": 5,
       "writers": [
-        "appendix_g_rules",
-        "pipeline_coverage"
+        "p4_transfer_power"
       ],
-      "invoked_writers": [
-        "appendix_g_rules",
-        "pipeline_coverage"
-      ],
-      "covered": true,
+      "invoked_writers": [],
+      "covered": false,
       "exempt_reason": null
     },
     {

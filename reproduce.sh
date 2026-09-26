@@ -389,6 +389,22 @@ REPORT=input_set_audit_report.txt stage 20n8 "M-66 — input discovery by patter
 stage 20n9 "5 — head-to-head absolute accuracy, from stored rollouts only" "20 s" \
       results/head_to_head_accuracy.json NEEDS_WEIGHTS $PY scripts/head_to_head_accuracy.py
 
+# The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
+# three artifacts, and until these stages existed a clean clone only ever carried them
+# in -- added before the S21 clone by the user's ruling of 2026-09-26. None needs runs/:
+# q2 and q3 load the released checkpoint alone, which setup.sh fetches, so they are NOT
+# NEEDS_WEIGHTS; marking them would skip stages that work (the note above stage 20d).
+# q1's --verify needs the network and a clean clone must not, so the plain path carries
+# the recorded verification, and only while the citations match the ones it covered --
+# the arrangement T1 uses at stage 20p. q3 writes its own report beside its JSON. Each
+# was checked to reproduce its committed output byte for byte before it was added.
+stage 20s1 "Q1 — public descendants of the bounded log-sigma construction" "5 s" \
+      results/q1_pets_descendants.json $PY scripts/q1_pets_descendants.py
+stage 20s2 "Q2 — trajectories needed to settle the step-size margin" "30 s" \
+      results/q2_free_baseline_power.json $PY scripts/q2_free_baseline_power.py --empirical
+stage 20s3 "Q3 — whether the per-horizon correction reorders penalties (M-70)" "10 s" \
+      results/q3_penalty_reordering.json $PY scripts/q3_penalty_reordering.py
+
 REPORT=appendix_g_rules_report.txt stage 21a "Appendix G — every pre-registered rule, from the ledger" "10 s" \
       results/appendix_g_rules.json $PY scripts/appendix_g_rules.py
 

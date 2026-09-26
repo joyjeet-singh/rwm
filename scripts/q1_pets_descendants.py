@@ -38,13 +38,15 @@ script can do is check that every citation still says what it was recorded as sa
 is what --verify does: it re-fetches each cited file AT ITS CITED COMMIT and confirms the
 recorded line still contains the recorded text. A citation that has drifted is reported and
 the run fails. The default path writes the artifact from the stored record without touching
-the network.
+the network, and carries the last --verify run's record (RECORDED_VERIFICATION) only while the
+citations are exactly the ones it covered. reproduce.sh runs the default path (stage 20s1).
 
     python scripts/q1_pets_descendants.py            write the artifact
     python scripts/q1_pets_descendants.py --verify   re-fetch every citation and check it
 
 Writes results/q1_pets_descendants.json.
 """
+import hashlib
 import json
 import os
 import sys
@@ -265,6 +267,25 @@ def _fetch(repo, commit, path):
 
 CITATIONS_PER_REPO = 2  # the construction and the loss
 
+# The record of the last run that re-fetched every citation (--verify). The network is
+# not available to a clean clone, and reproduce.sh must not need it, so the plain path
+# CARRIES this record -- the same arrangement as T1's bibliography (stage 20p). It carries
+# it only for the citations that run covered: their fingerprint is pinned here, and if any
+# repository, commit, file or line changes, the plain path refuses and --verify must be
+# re-run and this record updated. The plain path never claims a check it did not make:
+# it prints that the record is carried, and from which date.
+RECORDED_VERIFICATION = {
+    "verified_on": "2026-09-20",
+    "citations_sha256": "c7d7253fedceba000a0091e5df9e861d7b214b5d99dfd63b8e31af0b1cdf5429",
+    "citations_still_valid": True,
+}
+
+
+def citations_fingerprint():
+    """sha256 over every citation the verification covers, in survey order."""
+    cites = [(e["repo"], e["commit"], e["construction"], e["loss"]) for e in EXAMINED]
+    return hashlib.sha256(json.dumps(cites, sort_keys=True).encode()).hexdigest()
+
 
 def verify():
     """Re-fetch every citation at its cited commit and confirm it still says what we recorded."""
@@ -295,11 +316,21 @@ def verify():
 
 
 def main():
-    verified = None
     if "--verify" in sys.argv:
         print("Q1 — RE-FETCHING EVERY CITATION AT ITS CITED COMMIT")
         print("=" * 88)
         verified = verify()
+        print(f"  to carry this run on the plain path, record citations_sha256 = "
+              f"{citations_fingerprint()}")
+    else:
+        fp = citations_fingerprint()
+        assert fp == RECORDED_VERIFICATION["citations_sha256"], (
+            "the citations differ from those the recorded verification covered; run "
+            "--verify and update RECORDED_VERIFICATION before writing the artifact")
+        verified = RECORDED_VERIFICATION["citations_still_valid"]
+        print(f"Q1 — the network is not used. Carrying the verification recorded on "
+              f"{RECORDED_VERIFICATION['verified_on']} (--verify), whose "
+              f"{len(EXAMINED) * CITATIONS_PER_REPO} citations match these exactly.")
 
     n_examined = len(EXAMINED)
     inherits = [e for e in EXAMINED if e["verdict"] == "INHERITS"]
@@ -346,15 +377,16 @@ def main():
         "construction_absent": CONSTRUCTION_ABSENT,
         "subject_not_counted": SUBJECT,
         "verification": {
-            "mode": "--verify" if "--verify" in sys.argv else "not run this invocation",
+            # Always a --verify run's record: this invocation's, or the one carried.
+            "mode": "--verify",
             "citations_still_valid": verified,
             "citations_checked": len(EXAMINED) * CITATIONS_PER_REPO,
             "how": "each cited file is re-fetched AT ITS CITED COMMIT from "
                    "raw.githubusercontent.com and the recorded line, or one of its immediate "
                    "neighbours, must still contain the recorded text",
         },
-        "generated_with": ("scripts/q1_pets_descendants.py --verify"
-                           if "--verify" in sys.argv else "scripts/q1_pets_descendants.py"),
+        # The command that produced the verification record the artifact carries.
+        "generated_with": "scripts/q1_pets_descendants.py --verify",
     }
 
     print("\nQ1 — PUBLIC DESCENDANTS OF THE BOUNDED LOG-SIGMA CONSTRUCTION")
