@@ -43,7 +43,14 @@ URL = re.compile(r"github\.com/([A-Za-z0-9_.-]+)/[A-Za-z0-9_.-]+", re.I)
 # verbatim as evidence. They identify the CITED authors, not us, and removing
 # them would make the one file whose purpose is accurate metadata inaccurate.
 SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli",
-             "jannerm", "martius-lab"}
+             "jannerm", "martius-lab",
+             # The subjects of the Q1 survey (results/q1_pets_descendants.json, cited
+             # by section 2): public repositories examined for the PETS bounded-head
+             # construction, each recorded with its URL so the survey's --verify path
+             # can re-fetch the cited line at the cited commit. They identify the
+             # surveyed authors, not us. Added by the user's ruling of 2026-09-26.
+             "kchua", "quanvuong", "xingyu-lin", "facebookresearch", "nirbhayjm",
+             "shylock-h", "yihaosun1124", "junming-yang", "polixir"}
 
 INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex"]
 # Excluded on purpose. MODEL_CARD.md and its builder are release artifacts for the
@@ -112,6 +119,10 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            # a decision rather than an oversight.
            "docs/COVER_STATEMENT.md",
            # Internal working documents; never ship in any bundle.
+           # The submission package (S28): upload instructions and the bundles' own
+           # sizes and hashes, which a file inside a bundle can never state
+           # correctly. Internal, like the checklist. User ruling 2026-09-26.
+           "docs/SUBMISSION_PACKAGE.md",
            "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md",
            # The real-hash map behind the submission's commit labels (D1).
            AB.MAP_FILE}

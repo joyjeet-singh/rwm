@@ -249,6 +249,13 @@ SAFE_ORGS = {"leggedrobotics", "jmlrorg", "isaac-sim", "goodfeli", "jannerm",
              # us, and removing it would mean recording their metadata inaccurately
              # in the one file whose purpose is that the metadata is accurate.
              "martius-lab",
+             # The subjects of the Q1 survey (results/q1_pets_descendants.json, cited
+             # by section 2): public repositories examined for the PETS bounded-head
+             # construction, each recorded with its URL so the survey's --verify path
+             # can re-fetch the cited line at the cited commit. They identify the
+             # surveyed authors, not us. Added by the user's ruling of 2026-09-26.
+             "kchua", "quanvuong", "xingyu-lin", "facebookresearch", "nirbhayjm",
+             "shylock-h", "yihaosun1124", "junming-yang", "polixir",
              "anonymised"}
 
 INCLUDE_DIRS = ["src", "scripts", "results", "docs", "tex", "figures"]
@@ -305,6 +312,10 @@ EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            # t5_anon_transcript.py are excluded above.
            "scripts/f5_pdf_channels.py",
            # Internal working documents; never ship in any bundle.
+           # The submission package (S28): upload instructions and the bundles' own
+           # sizes and hashes, which a file inside a bundle can never state
+           # correctly. Internal, like the checklist. User ruling 2026-09-26.
+           "docs/SUBMISSION_PACKAGE.md",
            "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md",
            # The author-contact working documents. They pass every text sweep once
            # scrubbed, which is why they were deliberately re-included here while
