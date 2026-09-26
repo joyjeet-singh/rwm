@@ -14,8 +14,11 @@ APPENDIX G — PRE-REGISTERED RULES
   M-63          +5.12 h  UNIFORM                      Pre-registered: is the h=1 coverage failure 
   M-64          +5.98 h  MOVES, at one cell           Pre-registered: does the horizon-scoped powe
   M-65          +5.12 h  GAUSSIAN NOMINAL ADEQUATE    Pre-registered: is the Gaussian nominal of 6
+  M-68          +5.15 h  THE COMBINATION IMPROVES CAL The combined arm: independence and the corre
+  M-69          +0.39 h  DOES NOT TRANSFER — A PROPER The cross-model transfer of the per-horizon 
+  M-70        +115.19 h  DOES NOT REORDER             Whether the per-horizon correction reorders 
   S-12          -2.94 h  RETRACTED                    "Task 3's duplication rule was pre-registere
 ====================================================================================================
-  15 rules, 15 with a computed lead time
+  18 rules, 18 with a computed lead time
   wrote results/appendix_g_rules.json
-  wrote docs/APPENDIX_G_RULES.md (15 rules, full text, no ellipsis)
+  wrote docs/APPENDIX_G_RULES.md (18 rules, each its ledger block verbatim)

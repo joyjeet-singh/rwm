@@ -26,11 +26,11 @@ and cross-references that now point the other way were changed.*
 
 **The number of regenerated values that differ and are themselves a measurement, a statistic or
 the verdict of a test is 0.**
-`./reproduce.sh --quick --force` regenerates 49 artifact files and 9,593
-numeric values from a clean clone: 9,228 bitwise identical (96.20%),
+`./reproduce.sh --quick --force` regenerates 49 artifact files and 9,598
+numeric values from a clean clone: 9,233 bitwise identical (96.20%),
 0 equal to within the verifier's floating-point tolerance but not bitwise, and
 365 differing. Those
-three account for the 9,593 exactly. Regeneration does not reproduce 1 of the committed values, in
+three account for the 9,598 exactly. Regeneration does not reproduce 1 of the committed values, in
 1 of the files; that count is kept separate, because a value that is not
 produced twice cannot be compared twice.
 The 365 differing values are partitioned by cause from the per-file record in
@@ -49,8 +49,8 @@ that no regenerated value differ; 365 do, and it is published as failing, with n
 tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: 9,593 values, or 1.01%
-of the 950,498 numeric values under `results/`. The other 940,905 are carried in, prove
+honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
+of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
 nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 686 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
@@ -142,8 +142,8 @@ during this revision — two calibration figures that named no horizon, and one 
 three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this record: of the 950,498 numeric values under `results/`, a clean
-clone regenerates 9,593 and carries in 940,905. The reproducibility claim covers
+bounds everything in this record: of the 950,503 numeric values under `results/`, a clean
+clone regenerates 9,598 and carries in 940,905. The reproducibility claim covers
 1.01% of the directory and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 

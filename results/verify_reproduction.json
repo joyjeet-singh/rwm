@@ -50,8 +50,8 @@
     "v2_deployment_horizon.json",
     "v3_metric_definitions.json"
   ],
-  "values_compared": 9593,
-  "bitwise_identical": 9228,
+  "values_compared": 9598,
+  "bitwise_identical": 9233,
   "identical_to_1e-9": 0,
   "differing": 365,
   "timing_excluded": 5210,
