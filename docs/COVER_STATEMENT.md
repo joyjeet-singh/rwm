@@ -1,7 +1,7 @@
 # Cover statement — TMLR submission
 
 *Draft. Every figure is substituted from a named artifact by the paper's own build; the
-numbers below are quoted from `results/paper_numbers.json` and are current at 49 pages, the
+numbers below are quoted from `results/paper_numbers.json` and are current at 48 pages, the
 length of the compiled submission.*
 
 ---
@@ -21,12 +21,12 @@ file on disk. Concretely:
   106 tensors — before any training run is scored. Shapes, wiring, action indexing and the
   hold-last residual are each verified separately, and every later step inherits all five.
 
-- **Seventeen pre-registered decision rules, with git lead times.** Each names its conditions and
-  thresholds before its data existed, and Appendix F gives all seventeen with the lead time
-  computed from git. Sixteen have a positive lead and are a difference of two commit timestamps;
-  the seventeenth is negative and is not, because its data side is a line in a run log rather than
-  a commit — it is the rule this paper withdraws as a pre-registration, and §8 says so. The full
-  committed text of every rule ships in the supplementary material, unabridged.
+- **Eighteen pre-registered decision rules, with git lead times.** Each names its conditions and
+  thresholds before its data existed, and Appendix E gives all eighteen with the lead time computed
+  from git. Seventeen have a positive lead and are a difference of two commit timestamps; the
+  eighteenth is negative and is not, because its data side is a line in a run log rather than a
+  commit — it is the rule this paper withdraws as a pre-registration, and Appendix E says so. The
+  full committed text of every rule ships in the supplementary material, unabridged.
 
 - **Verdicts reported as returned.** Including the ones that are inconvenient: `M-43` returns
   `DOES NOT GENERALISE`, `M-49` returns `UNDER-POWERED`, and `M-51`/`M-52` return
@@ -47,12 +47,12 @@ file on disk. Concretely:
   10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
 
 - **A build gate published as failing.** The clean-clone check requires that no regenerated value
-  differ; 314 of 9,308 do, so it fails, it says where, and it is reported as failing. It was not
-  given a tolerance, and none of the 314 is a measurement, a statistic or the verdict of a test.
-  The reproducibility figure is stated over the 0.98% of the values under `results/` that a clean
-  clone actually rewrites, rather than over the whole directory: counting the values a clone merely
-  carries in would multiply the denominator about 102-fold, and an earlier version of this claim
-  did exactly that.
+  differ; 365 of 9,598 do, so it fails, it says where, and it is reported as failing. It was not
+  given a tolerance, and none of the 365 is a measurement, a statistic or the verdict of a test. The
+  reproducibility figure is stated over the 1.01% of the numeric values under `results/` that a
+  clean clone regenerates and the comparison counts, rather than over the whole directory: counting
+  the values a clone merely carries in would overstate it about 99-fold, and an earlier version of
+  this claim did exactly that.
 
 ### 2. Would some individuals in TMLR's audience be interested in the findings?
 
