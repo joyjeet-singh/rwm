@@ -17,18 +17,15 @@ realised error, and {{a2_rdd}} with rollout and depth both held fixed. Yet on da
 checkpoint trained on, it is {{d1n_epi_ratio_h1}}× smaller than that error at one step and
 {{d1n_epi_ratio_h100}}× at the method's {{v2_deploy_h}}-step horizon. Because the shortfall grows
 with depth, no single penalty weight absorbs it. A free signal, the model's predicted step size,
-ranks error nearly as well ({{e7_step_r3}}); the margin is unresolved. The five members share
-{{v1_shared_pct0}}% of their parameters; at {{v2_deploy_h}} steps, five independent models are
+ranks error nearly as well ({{e7_step_r3}}); the margin is unresolved. The members share {{v1_shared_pct0}}% of their parameters; at {{v2_deploy_h}} steps, five independent models are
 {{r2_total_x_h100}}× better calibrated and still {{r2_indep_ratio_h100}}× overconfident. The
-per-member σ, which the method discards, is driven to zero by the implemented loss, as we derive
-and confirm on data with known noise. A per-horizon rescaling brings the released checkpoint's
+per-member σ, which the method discards, is driven to zero by the implemented loss, as derived and confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
 coverage within {{d3_tol}} points of nominal on episodes it trained on, though no cell is
-resolvable. On episodes our own ensembles never saw, it does so in only {{d3x_own_epi_ok}} of
+resolvable. On episodes our ensembles never saw, it does so in only {{d3x_own_epi_ok}} of
 {{d3x_own_epi_cells}} disagreement cells: a recipe to refit, not a demonstrated fix. Separately,
-the released evaluation pairs each prediction with the previous step's action, which on the same
+the released evaluation pairs each prediction with the previous action, which on the same
 trajectories overstates the checkpoint's error at {{v2_diag_h}} steps by {{ad_nrmse}}%
-{{ad_nrmse_ci}} in nRMSE and {{ad_rel}}% {{ad_rel_ci}} in relative-L1; across all ten episodes the
-sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
+{{ad_nrmse_ci}} in nRMSE and {{ad_rel}}% {{ad_rel_ci}} in relative-L1; across all ten episodes, which it trained on, the sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---

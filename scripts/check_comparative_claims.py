@@ -516,7 +516,8 @@ CLAIMS = [
      # failing on anything left over. B8 replaced a false claim with an
      # over-strong one; this replaces it with the enforced one.
      #
-     # Pre-submission S4 (2026-09-28): 17 to 26 numerals and 237 to 330 words.
+     # Pre-submission S4 (2026-09-28): the abstract went from 17 numerals and 237 words to
+     # 26 and 330, and the cap from 18 to 26.
      # This fourth raise is the first argued outside the check, and the reason is a
      # ruling rather than a trim. The plan asked for its Appendix A abstract with
      # every listed number bound, and for the alignment sentence on S3's independent
