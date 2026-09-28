@@ -582,7 +582,7 @@ A dynamics model trained on 0.133% of the reference's data still reproduces the 
 
 ## 6. Neither of the checkpoint's uncertainty outputs is usable as an interval
 
-*How this section runs.* §6.1–§6.2 settle which quantity the method uses and measure it; §6.3–§6.5 examine why each output fails; §6.6–§6.7 separate the magnitude of the failure from its ordering, and test the ordering against free baselines; §6.8–§6.11 ask what would fix it — a rescale, whether the structural excuse holds, an ensemble that shares nothing, and the combined arm.
+*How this section runs.* §6.1–§6.2 settle which quantity the method uses and measure it; §6.3–§6.5 examine why each output fails; §6.6–§6.7 separate the magnitude of the failure from its ordering, and test the ordering against free baselines; §6.8–§6.11 ask what would fix it.
 
 ### 6.1 Which quantity the method actually uses
 
@@ -596,43 +596,36 @@ to a local variable that is never read again; the epistemic term is stored, retu
 loop at `:158`, and applied at `:166` as a reward penalty with weight −1.0.
 
 The paper agrees with its code. arXiv:2504.16680**v1** Eq. 4 defines the penalised quantity as
-— the numbering is unchanged in the current v3 —
-$u = \mathrm{Var}_b[\mu_b]$, the variance across ensemble members, and Eq. 5 applies it
-as $\tilde{r} = r - \lambda u$. The per-member predicted variance enters the training objective and nothing
-downstream.
+$u = \mathrm{Var}_b[\mu_b]$, the variance across ensemble members (the numbering is unchanged in
+the current v3), and Eq. 5 applies it as $\tilde{r} = r - \lambda u$. The per-member
+predicted variance enters the training objective and nothing downstream.
 
 Eq. 4 specifies a **variance** while `system_dynamics.py:126` computes a **standard deviation**,
 which with $\lambda = 1$ differ by a square. We asked, and the first author confirms the code is
 operative: the penalty is applied to the standard deviation as intended, and Eq. 4 is "more of a
-high-level explanation" (personal communication, 21 August 2026; quoted here and below with the
-first author's permission, given on the record — see Data and code; the exchange is reproduced in
-full, anonymised, in the supplementary material as `SUPPLEMENTARY_CORRESPONDENCE.md`, so these
-quotations are checkable rather than asserted). We measure the code's quantity
-throughout, which is now known to be the intended one.
+high-level explanation" (personal communication, 21 August 2026, quoted with the first author's
+permission; the exchange is reproduced, anonymised, in the supplementary
+`SUPPLEMENTARY_CORRESPONDENCE.md`, and see Data and code). We measure the code's quantity
+throughout, which is the intended one.
 
 The same correspondence confirms the discard directly: "the aleatoric term is not used in
 downstream training. It is reported in Fig. 3 (right) as an analysis of the model behavior."
-(The figure number is the first author's and follows arXiv:2504.16680**v1**; in the current
-v3 that figure is Fig. 4. The crosswalk is in
-`results/original_paper_figures.json`.) So
-what follows is not an implementation slip being reported back to its authors — it is the
-intended design, and the aleatoric head exists to shape training and be inspected rather than to
-be consumed.
+(The figure number follows arXiv:2504.16680**v1**; in the current v3 it is Fig. 4, and
+the crosswalk is in `results/original_paper_figures.json`.) So the discard is the intended design,
+not an implementation slip: the aleatoric head, the one the state loss and the bound loss shape
+and §6.3 explains, is computed on every imagination step to shape training and be inspected, and
+is never consumed. We report both quantities below. Our own arms are ensemble size 1, where the
+epistemic term is identically zero by construction, so the epistemic measurement is possible only
+on the released checkpoint.
 
-So the aleatoric head — the one the state loss and the bound loss shape, and the one §6.3
-explains — is computed on every imagination step and discarded. We report both quantities below.
-Our own arms are ensemble size 1, where the epistemic term is identically zero by construction,
-so the epistemic measurement is possible only on the released checkpoint.
-
-**What the follow-up does and does not claim, stated before we measure anything.** It does not
-claim its uncertainty is a calibrated interval. The follow-up's §5.1 claims the epistemic term "closely follows
-the trend of the prediction error" and that this "justifies its role as a trust metric", and of
-the aleatoric term it observes only that it "remains low, reflecting small stochasticity in the
-environment". Our measurement **supports the first claim** — the epistemic ordering is real and
-strong. What follows is therefore not a refutation of a calibration claim nobody made. It is
-three things the papers do not address: that the aleatoric head is discarded before use, that
-neither quantity is usable as a scale, and that the low aleatoric value has a different cause
-than the one offered.
+**What the follow-up does and does not claim.** It does not claim its uncertainty is a calibrated
+interval. Its §5.1 claims the epistemic term "closely follows the trend of the prediction error"
+and that this "justifies its role as a trust metric", and of the aleatoric term it observes only
+that it "remains low, reflecting small stochasticity in the environment". Our measurement
+**supports the first claim**: the epistemic ordering is real and strong. What follows is therefore
+not a refutation of a calibration claim nobody made, but three things the papers do not address:
+that the aleatoric head is discarded before use, that neither quantity is usable as a scale, and
+that the low aleatoric value has a different cause than the one offered.
 
 ### 6.2 The measurement
 
@@ -646,21 +639,13 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.27% insid
 | teacher-forced Arm B | 315× [177, 509] | 12.96% [7.04, 20.93] | 1.22% [0.84, 1.61] |
 | released checkpoint | 7,878× [5,410, 9,934] | 0.56% [0.00, 1.67] | 0.08% [0.06, 0.11] |
 
-*Our arms are at 2,500 training iterations; the released checkpoint is as released. Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = 4; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = 4 the bootstrap has 256 distinct resamples and the intervals are quantised at that resolution.*
+*Our arms are at 2,500 training iterations; the released checkpoint is as released. Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = 4, quantised as the n = 4 caveat of §3 describes; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8).*
 
-**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards.
+**All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards. The released checkpoint's 7,878× is its whole 368-step rollout on those same 4 trajectories, for comparability with the arms; its best-sampled figure is the 11,683× below, cumulative to h = 100 at n_independent = 20. **Both are correct, on a different arena and a different horizon**, and neither is out-of-sample for that checkpoint (the in-sample caveat of §3).
 
 ![Calibration of all four models on the held-out arena. (a) reliability: observed against predicted coverage, with the calibrated diagonal; the inset repeats the same points with observed coverage on a log scale, where the four models separate. (b) coverage at $\pm1\sigma$ against forecast horizon, log scale, against the 68.27\% a calibrated Gaussian gives. Every curve sits far below the diagonal and falls further with horizon. (c) the overconfidence factor for each model: mean absolute error divided by mean predicted $\sigma$, log scale, with the dashed line where error equals $\sigma$.](figures/paper_fig1_calibration.png)
 
-*A note on the released checkpoint's row, so the next table does not read as a
-contradiction.* Its 7,878× is the whole 368-step rollout on those same
-4 trajectories, for comparability with the three arms beside it. The released
-checkpoint trained on all ten episodes, so its own best-sampled figure is the
-11,683× below — cumulative to h = 100, at n_independent = 20.
-**Both are correct and they differ in two ways at once: a different arena and a
-different horizon.** Neither is a held-out measurement *of the released checkpoint*, which has no held-out arena in this dataset (§3).
-
-**The quantity the method does use is also uncalibrated.** On the released 5-member checkpoint over all 10 episodes, n_independent = **20** non-overlapping 400-step trajectories. We use all ten rather than the held-out pair here because the released checkpoint trained on all ten, so restricting it to two buys no independence and costs four fifths of the sample — the same argument this paper makes about that checkpoint elsewhere. The held-out-only version at n_independent = 4 is in the supplementary material (`results/task_b2_epistemic.json`). The epistemic column agrees in direction with this one at all 6 of 6 horizons; the aleatoric column agrees at 4 of 6 — it flips sign at h=8 and h=100, where both readings sit close enough to chance that the sign is not meaningful in either, and where the aleatoric σ is in any case 1,827× (h = 1) to 20,669× (h = 368) too small for its ordering to be the interesting quantity. Where the two tables differ materially we say so.
+**The quantity the method does use is also uncalibrated.** On the released 5-member checkpoint over all 10 episodes, n_independent = **20** non-overlapping 400-step trajectories. The checkpoint trained on all ten, so restricting it to the held-out pair would buy no independence and cost four fifths of the sample; that version, at n_independent = 4, is in the supplementary material (`results/task_b2_epistemic.json`). Its epistemic column agrees in direction with this one at all 6 of 6 horizons; its aleatoric column agrees at 4 of 6, flipping sign at h=8 and h=100, where both readings sit close to chance and the aleatoric σ is in any case 1,827× (h = 1) to 20,669× (h = 368) too small for its ordering to be the interesting quantity.
 
 | h | aleatoric err/σ [95% CI] | aleatoric ±1σ | epistemic err/σ [95% CI] | epistemic ±1σ [95% CI] | epistemic ±2σ | dims r>0 | permutation P |
 |---|---|---|---|---|---|---|---|
@@ -677,27 +662,18 @@ coverage of 16.22% [13.44, 18.89] against a calibrated
 68.27%. The discarded per-member σ is 1,827× out at h = 1 as well.
 Everything further down the table is deterioration from a starting point that is already broken.
 
-**Why that row and not the deep ones — the objection this section has to meet.** A reviewer will
-say: a per-step predicted σ is a *conditional* quantity. It answers "given this input, how
-uncertain is the next state?", and in an open-loop rollout the input is the model's own previous
-output, which is wrong by an amount σ never claimed to describe. Comparing a conditional σ against
-*accumulated* rollout error is then comparing two different things, and the 368-step
-figure would be an artifact of that mismatch rather than a finding about the σ head. §6.9 answers
-a different objection — that the model is trained on 8 steps and cannot be expected to
-speak about 368 — and does not answer this one.
+**Why that row, and not the deep ones.** The obvious objection is that a per-step σ is a
+*conditional* quantity: it says how uncertain the next state is given this input, and in an
+open-loop rollout the input is the model's own previous output, wrong by an amount σ never claimed
+to describe. Comparing it with *accumulated* rollout error would then make the 368-step
+figure an artifact of that mismatch. (§6.9 answers a different objection, that a model trained on
+8 steps cannot be expected to speak about 368.) **h = 1 answers it at no extra
+cost.** At one step there is no accumulation: the input *is* the true state, and σ is asked exactly
+the question it was trained to answer. At h = 1 it is out by 8.3×, and
+16.22% of outcomes fall inside an interval that should hold 68.27%.
+Whatever compounding does at depth, it did not do that.
 
-**h = 1 answers it, and costs no new computation.** At one step there is no accumulation, no
-compounding and no mismatch: the input *is* the true state, the prediction is one step ahead, and
-σ is being asked exactly the question it was trained to answer. At h = 1 it is out by
-8.3×, and 16.22% of outcomes fall inside an interval that should
-hold 68.27%. Whatever compounding does at depth, it did not do that.
-
-**And that row is measured on data the checkpoint trained on.** The released checkpoint trained on all ten episodes, and this arena is all ten — 10 of 10 of them (`results/insample_framing.json`). In-sample measurement biases *toward* better calibration, so the 8.3× at h = 1 is if anything flattering. We stated the arena before and declined the inference; the inference is that the one-step figure is an upper bound on how well this checkpoint is calibrated.
-
-So the horizon curve is not the claim; it is the shape of the deterioration, and the claim is the
-h = 1 row. We keep h = 100 because it is where the method actually deploys, and
-h = 368 because it is the upstream's own diagnostic length — landmarks on a curve, not
-the evidence.
+**And that row is measured on data the checkpoint trained on**: all ten episodes, 10 of 10 of them (`results/insample_framing.json`). In-sample measurement biases *toward* better calibration, so the 8.3× at h = 1 is if anything flattering: an upper bound on how well this checkpoint is calibrated. So the horizon curve is not the claim; it is the shape of the deterioration, and the claim is the h = 1 row. We keep h = 100 because it is where the method actually deploys, and h = 368 because it is the upstream's own diagnostic length.
 
 At h = 100, the method's own imagination rollout length, epistemic is
 349× better than aleatoric and still wrong by
@@ -706,15 +682,15 @@ At h = 100, the method's own imagination rollout length, epistemic is
 68.27%. At one step it is **8.3×** out and
 220× better than aleatoric; at h = 368 the two-term ratio is
 600×. **The gap between the two uncertainty terms is itself
-horizon-dependent, which is why each figure above names its horizon.** At the open-loop diagnostic horizon of h = 368 it is 34.4× [29.8, 40.3] with 3.59% coverage — barely different, which is why the re-anchoring changes the reading and not the conclusion. **Total** uncertainty, `sqrt(aleatoric² + epistemic²)`, equals the epistemic value to four significant figures at every horizon, because the aleatoric term is too small to move it.
+horizon-dependent, which is why each figure above names its horizon.** At the open-loop diagnostic horizon of h = 368 it is 34.4× [29.8, 40.3] with 3.59% coverage, barely different from h = 100. **Total** uncertainty, `sqrt(aleatoric² + epistemic²)`, equals the epistemic value to four significant figures at every horizon, because the aleatoric term is too small to move it.
 
-**A constant scale error would not matter, and this one is not constant.** The penalty enters as `r̃ = r − λu`, so a `u` uniformly `c` times too small is arithmetically identical to running with `λ/c`, and λ is tuned. The measurement answers this directly. Rescaling σ by the single constant that best calibrates it — fitted and scored on the same data, so it is an upper bound on what *any* constant achieves — needs 10.4 at h = 1 and 43.2 at h = 368, a factor of 4 across the rollout (`M-65`). No single λ is both of those. The mechanism is §6.9's: σ is nearly flat while error grows by an order of magnitude, so the ratio runs 8.3× at h = 1, 33.4× at h = 100 and 34.4× at h = 368. The penalty is applied at every step of a 100-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk. **The limit, in the same breath**: this bounds what the quantity reports across depth, not what the distortion costs a trained policy, and no policy is trained here (§11).
+**A constant scale error would not matter, and this one is not constant.** The penalty enters as `r̃ = r − λu`, so a `u` uniformly `c` times too small is arithmetically identical to running with `λ/c`, and λ is tuned. Rescaling σ by the single constant that best calibrates it, fitted and scored on the same data and so an upper bound on what *any* constant achieves, needs 10.4 at h = 1 and 43.2 at h = 368, a factor of 4 across the rollout (rule M-65, Appendix E). No single λ is both of those. The mechanism is §6.9's: σ is nearly flat while error grows by an order of magnitude, so the ratio runs 8.3× at h = 1, 33.4× at h = 100 and 34.4× at h = 368. The penalty is applied at every step of a 100-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk. This bounds what the quantity reports across depth, not what the distortion costs a trained policy (the policy caveat of §11).
 
-**The larger sample changes one thing materially.** At n_independent = 4 the epistemic ordering looked like chance at short horizon — 23 of 45 dimensions at h=1. At n_independent = 20 it is 44 of 45 at h=1, with mean r = +0.662, the *strongest* mean correlation of any horizon. The in-sample permutation test says the same (§6.6). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model, and we record it as such rather than keeping the more interesting-sounding horizon story.
+**The larger sample changes one thing materially.** At n_independent = 4 the epistemic ordering looked like chance at short horizon, 23 of 45 dimensions at h=1. At n_independent = 20 it is 44 of 45 at h=1, with mean r = +0.662, the *strongest* mean correlation of any horizon, and the in-sample permutation test agrees (§6.6). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model.
 
-**Two pre-registered checks on how these numbers are read, both committed before they were computed.** `M-62` asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **NO MOVE**: in the one arena with power at that level — all ten episodes, n = 20 falling to 10 — the pooled correlation's interval widens by 27% and the double-demeaned one by a factor of 0.98, and neither crosses zero. The other 4 cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance rather than discovering it, and they are reported as uninformative rather than as intervals.
+**Two pre-registered checks on how these numbers are read.** The first (rule M-62, Appendix E) asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **NO MOVE**: in the one arena with power at that level, all ten episodes (n = 20 falling to 10), the pooled correlation's interval widens by 27% and the double-demeaned one by a factor of 0.98, and neither crosses zero. The other 4 cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance, and they are reported as uninformative rather than as intervals.
 
-**`M-63` asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **UNIFORM**: the interquartile range across dimensions is 10.0 points against a 15-point threshold committed in advance, and the five worst dimensions carry well under the half of the shortfall that would have made it concentrated. **No channel is exempt**, which is what §6.3's mechanism predicts: an objective whose optimum is σ = 0 has no reason to spare any dimension. The reading is coarse by construction — at h = 1 on 20 trajectories a per-dimension coverage moves in 5-point steps, and the rule fixed that limit before the run.
+**The second (rule M-63, Appendix E) asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **UNIFORM**: the interquartile range across dimensions is 10.0 points against a 15-point threshold committed in advance, and the five worst dimensions carry well under half of the shortfall. **No channel is exempt**, which is what §6.3's mechanism predicts: an objective whose optimum is σ = 0 has no reason to spare any dimension. The reading is coarse by construction: at h = 1 on 20 trajectories a per-dimension coverage moves in 5-point steps, a limit the rule fixed before the run.
 
 **The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (§6.7, 3 seeds, out-of-sample, n_independent = 4 400-step trajectories) give, averaged over seeds:
 
@@ -729,19 +705,18 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 Our arms are **better calibrated than the released checkpoint and fail the same way**: 10.5× overconfident at h = 100 against its 33.4×, with 8.19% coverage where a calibrated Gaussian gives 68.27%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being closer to calibrated is not being calibrated.
 
-The last column of the table above gives permutation P-values over whole trajectories, not binomial ones, computed on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here and how far it was wrong. **h = 100 carries the abstract, so it is tested rather than left blank**. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells — the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
+The last column of the released checkpoint's table gives permutation P-values over whole trajectories, not binomial ones, on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here. h = 100 is tested too. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells: the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
 
-The scalar penalty as actually applied — `means.std(0).sum(-1)` at `envs/base.py:166` — correlates **+0.605** with total absolute error over the rollout, 95% CI [+0.545, +0.694] from a bootstrap over whole trajectories, n_independent = 20 (7,360 pooled trajectory-step points). The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
+The scalar penalty as actually applied, `means.std(0).sum(-1)` at `envs/base.py:166`, correlates **+0.605** with total absolute error over the rollout, 95% CI [+0.545, +0.694] from a bootstrap over whole trajectories, n_independent = 20 (7,360 pooled trajectory-step points). The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
 
 ### 6.3 Why the aleatoric head collapses: the optimum is σ = 0
 
-This subsection explains the aleatoric column and only that column. Ensemble disagreement is not
-shaped by the mechanism below, and why *it* is miscalibrated is not established here.
-
-It also supplies the alternative explanation promised in §6.1. The follow-up reads the low
-aleatoric value as reflecting "small stochasticity in the environment". The observation is
-correct and the reading is not: σ is low because σ = 0 is the optimum of the loss that trains it,
-and it would be low on any dataset, stochastic or not.
+This subsection explains the aleatoric column and only that column; ensemble disagreement is not
+shaped by the mechanism below, and why *it* is miscalibrated is not established here. It also
+supplies the alternative explanation promised in §6.1. The follow-up reads the low aleatoric value
+as reflecting "small stochasticity in the environment". The observation is correct and the reading
+is not: σ is low because σ = 0 is the optimum of the loss that trains it, and it would be low on
+any dataset, stochastic or not.
 
 The state loss is squared error on a *sample* drawn from the predicted Gaussian, not a likelihood:
 
@@ -757,10 +732,10 @@ and `min_logstd` cancels algebraically, taking no gradient from that term. The f
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 **The derivation above covers two terms, and the objective has 7.** Its completeness
-rests on the other 5 being inert with respect to σ, and a reader should not have to
-take that on trust. Each term is therefore computed alone on one real batch and back-propagated
-alone, and the gradient reaching the log-σ tower, `state_log_delta_logstd` and `state_min_logstd`
-is recorded. A term that cannot move σ produces exactly zero on all three.
+rests on the other 5 being inert with respect to σ, so each term is computed alone on
+one real batch and back-propagated alone, and the gradient reaching the log-σ tower,
+`state_log_delta_logstd` and `state_min_logstd` is recorded. A term that cannot move σ produces
+exactly zero on all three.
 
 | loss term | live? | weight | where the reference computes it | ∂/∂ log-σ tower | ∂/∂ `log_delta_logstd` | ∂/∂ `min_logstd` |
 |---|---|---|---|---|---|---|
@@ -773,18 +748,17 @@ is recorded. A term that cannot move σ produces exactly zero on all three.
 | `termination` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
 
 4 of the 7 configured terms are live at all under the released
-configuration — `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
+configuration: `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
 `"single"` on both paths, and `kl` and `extension` are zero because their dimensions are. Of the
 7, exactly 2 reach σ: `state` and `bound`. The remaining 5
-produce a gradient of exactly zero, which is a stronger statement than reading the code and
-concluding they do not matter (`results/e4_sigma_gradients.json`).
+produce a gradient of exactly zero, not merely a term the code suggests is irrelevant
+(`results/e4_sigma_gradients.json`).
 
-**The derivation says this would happen on any dataset. That is testable, and until now it was
-only asserted** — which matters, because it is the sentence that answers the follow-up's own
-explanation. The follow-up attributes its low aleatoric term to "small stochasticity in the
-environment", and on the released CSV that reading and ours are observationally identical: the
-data may simply be nearly deterministic. Under a rule committed before the runs (`M-50`) we
-therefore built data where it is not.
+**The derivation says the collapse happens on any dataset, and that is testable.** It matters
+because it is what answers the follow-up's own explanation: on the released CSV, "small
+stochasticity in the environment" and our reading are observationally identical, since the data may
+simply be nearly deterministic. So under a rule committed before the runs (rule M-50, Appendix E)
+we built data where it is not.
 
 Synthetic data whose true noise level is **known** and varies by a factor of 25 across
 the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
@@ -793,15 +767,13 @@ model — `MLPStateHead` unmodified, including the double-softplus clamp, the le
 trained under each objective in turn on 4,000 points for 12,000 iterations at
 3 seeds. Nothing else differs between the arms.
 
-*Two ways this is not the released setting, stated because "unmodified" is a claim about the class
-and not about the instantiation.* The head is built here over a **one-dimensional** state with no
-recurrent trunk in front of it, where the released one predicts 45 dimensions from a
-GRU. The trunk's absence is deliberate — the question is about the head's objective, and
-interposing a GRU adds a confound rather than removing one. The dimensionality has a consequence
-worth naming: the state loss sums over state dimensions, so at one dimension it is roughly
-45× smaller relative to the bound term than in the released path, and the bound term
-is the other term §6.3's derivation is about. That makes this arm's conditions *more* favourable to
-σ surviving, not less — the collapse happens anyway.
+*Two ways this is not the released setting.* The head is built here over a **one-dimensional**
+state with no recurrent trunk in front of it, where the released one predicts 45
+dimensions from a GRU. The trunk's absence is deliberate: the question is about the head's
+objective, and a GRU would add a confound. The dimensionality matters because the state loss sums
+over state dimensions, so at one dimension it is roughly 45× smaller relative to the
+bound term than in the released path. That makes this setting *more* favourable to σ surviving, and
+the collapse happens anyway.
 
 | objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
 |---|---|---|---|
@@ -812,51 +784,48 @@ is the other term §6.3's derivation is about. That makes this arm's conditions 
 the mean of a spread hides which seeds recovered.*
 
 **Under the implemented objective σ sits 21.7× below the true noise and does not
-track it at all** — a spread of 1.003× where the truth spans 25×, and a
+track it at all**: a spread of 1.003× where the truth spans 25×, and a
 slope below the 0.00309 the design can detect. Under the authors' own branch, same data
-and same head, σ recovers the true level to a median ratio of 0.9779 and every
-one of the 3 seeds `M-50` was discharged over clears the slope threshold.
-**Twenty seeds show that clearance is not general**: 11 of
-20 clear it, so the all-seeds criterion would not have held at that
-sample. `M-50`'s verdict stands as returned over its own 3 and is not
-re-opened by more seeds (§8); what twenty establish is that the hedge below was necessary
-rather than cautious. **The recovering arm is seed-variable and `M-50` said so before the
-runs**: its slopes span 0.0078–0.3537, a factor of
+and same head, σ recovers the true level to a median ratio of 0.9779, and every one of
+the 3 seeds the rule was discharged over clears the slope threshold. **Twenty seeds
+show that clearance is not general**: 11 of 20 clear it, so
+the all-seeds criterion would not have held at that sample. The rule's verdict stands as returned
+over its own 3 and is not re-opened by more seeds (§8); what twenty establish is that
+the hedge below was necessary. **The recovering arm is seed-variable, and the rule said so before
+the runs**: its slopes span 0.0078–0.3537, a factor of
 45, and two of 3 seeds recover a σ spread of only
 1.02× against the truth's 25×. So what this experiment establishes is
-the **contrast** — one objective tracks the noise at all and the other does not — and not the
-magnitude of the recovery, which this training budget does not pin down. **OBJECTIVE-DRIVEN**, which is the verdict `M-50` names for that pattern.
+the **contrast**, that one objective tracks the noise at all and the other does not, and not the
+magnitude of the recovery, which this training budget does not pin down. **OBJECTIVE-DRIVEN**, which is the verdict the rule names for that pattern.
 
-*The statistic is the slope and not the correlation, and the reason is worth one sentence: a
-correlation is scale-free, so a σ̂ that is essentially constant still returns a large one off its
-own numerical noise. Under a permutation null — the same data with the input-to-noise pairing
-destroyed — a head whose σ spanned 1.0004× returned correlations as large as
-±0.24, while its slope was 2e-05. The detection threshold is set at
-the slope corresponding to a 1.01× spread rather than at that noise floor, and the
-measured false-positive rate at zero signal is 0%.*
+*The statistic is the slope, not the correlation, because a correlation is scale-free: a σ̂ that is
+essentially constant still returns a large one off its own numerical noise. Under a permutation
+null, the same data with the input-to-noise pairing destroyed, a head whose σ spanned
+1.0004× returned correlations as large as ±0.24, while its slope was
+2e-05. The detection threshold is set at the slope corresponding to a
+1.01× spread rather than at that noise floor, and the measured false-positive rate at
+zero signal is 0%.*
 
 **What this does that the derivation alone could not.** It removes the competing explanation
-rather than arguing against it. The stochasticity here is large, known, and input-dependent, and
-the collapse happens anyway. The design's limit is stated in `M-50` and holds: the dilution ladder
-detects the signal at full strength and at no dilution below it, so this establishes that σ does
-not track the noise **at all**, not the magnitude of how badly.
+rather than arguing against it: the stochasticity here is large, known and input-dependent, and the
+collapse happens anyway. The design's limit, stated in the rule, holds: the dilution ladder detects
+the signal at full strength and at no dilution below it, so this establishes that σ does not track
+the noise **at all**, not the magnitude of how badly.
 
 We predicted the collapse from this algebra before training, then observed it. Three run counts
 appear below and they are not the same set. This project trained 33 runs in all, of
 which 28 are at the released `rnn_hidden_size` of 256 and form the collapse
-family; the remaining 5 are `M-49`'s capacity-matched arm at width
-124, a different architecture, and are excluded from every rate quoted here
-(Appendix B). Across all 28 runs of that family the collapse is linear in iteration count
-and its rate is nearly identical (Figure 4a). Rates are fitted on 22 of those
-28: the 6 10,000-iteration runs are excluded from the rate statistics
-because they continue seeds already counted at 2,500 and would double-weight them. Figure 4(a)
-shows all 28 runs of the collapse family; Figure 4(b) plots only the 22 the
-rate is fitted on, so the scatter and the quoted statistic describe the same set.
+family; the remaining 5 are the capacity-matched arm of rule M-49 (Appendix E) at
+width 124, a different architecture, excluded from every rate quoted here (Appendix B).
+Across all 28 runs of that family the collapse is linear in iteration count and its rate is
+nearly identical (Figure 4a). Rates are fitted on 22 of those 28: the
+6 10,000-iteration runs continue seeds already counted at 2,500 and would
+double-weight them. Figure 4(a) shows all 28 runs of the collapse family and Figure 4(b)
+only the 22 the rate is fitted on, so the scatter and the quoted statistic describe
+the same set. The 33 runs, with the width column separating the collapse family from the
+capacity-matched arm:
 
 ![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 28 runs of the collapse family, which is every run at the released width. The runs are drawn individually but are visually coincident within each objective, so the 28 read as two lines, one falling and one rising -- which is the point: the trajectory does not vary visibly from run to run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
-
-The 33 runs, so a reader can count them; the width column is what separates the
-collapse family from the capacity-matched arm:
 
 | arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
 |---|---|---|---|---|---|---|---|
@@ -872,14 +841,14 @@ collapse family from the capacity-matched arm:
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
--9.3857e-05 per iteration with a standard deviation of 6.0e-07 — **including the
-teacher-forced arm**, which shares the objective — and reverses to +3.2296e-05 in the
-5 runs that change it. *Input-independence is not.* That varies by a factor of
+-9.3857e-05 per iteration with a standard deviation of 6.0e-07, **including the
+teacher-forced arm**, which shares the objective, and reverses to +3.2296e-05 in the
+5 runs that change it. *Input-independence is not.* It varies by a factor of
 15.6 between two arms trained under the same objective, so the objective
 cannot be what produces it.
 
-Under the corrected objective the sign flips (Figure 4b) — which is the strongest evidence
-that the mechanism is the objective and not the optimiser, the data or the architecture.
+Under the corrected objective the sign flips (Figure 4b), the strongest evidence that the mechanism
+is the objective and not the optimiser, the data or the architecture.
 
 ### 6.4 Why the epistemic term may be miscalibrated: the members are not independent models
 

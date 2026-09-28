@@ -62,7 +62,10 @@ OUT_JSON = "a1_consent_letter.json"
 # sentence rather than by section number, so a renumbering does not silently empty
 # the extraction. Each is (section, start marker, end marker).
 PASSAGES = [
-    ("6.1", "Eq. 4 specifies a", "So the aleatoric head", TEMPLATE),
+    # Re-anchored in pre-submission S7: §6.1 was shortened and its "So the aleatoric head"
+    # paragraph merged into the one before. The passage still ends right after the
+    # correspondence quotations and before §6.1's quotations of the arXiv paper itself.
+    ("6.1", "Eq. 4 specifies a", "So the discard is the intended design", TEMPLATE),
     ("8", "**What the author says.**", "That last point reframes this section.",
      os.path.join("docs", "APPENDIX_G_VARIANCE_ARITHMETIC.template.md")),
 ]

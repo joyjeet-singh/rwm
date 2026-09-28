@@ -9,18 +9,10 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 61,
+  "n_pointers": 60,
   "n_ok": 59,
-  "n_reviewed_correct": 2,
+  "n_reviewed_correct": 1,
   "reviewed": [
-    {
-      "class": "semantic",
-      "pointer": "\u00a76.3 explains \u2014 is computed on every imagination step and discarded",
-      "ok": "reviewed-correct",
-      "detail": "target 6.3; nouns ['computed', 'imagination', 'step', 'discarded']; absent ['imagination', 'step', 'discarded']",
-      "context": "\u00a76.3\nexplains \u2014 is computed on every imagination step and discarded",
-      "reviewed": "CORRECT \u2014 appositive. The sentence is 'the aleatoric head ... the one \u00a76.3 explains'; \u00a76.3 is titled 'Why the aleatoric head collapses'. The text the matcher scored is the clause after the em-dash, not the claim."
-    },
     {
       "class": "semantic",
       "pointer": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinc",
@@ -64,18 +56,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.3 explains \u2014 is computed on every imagination step and discarded",
-      "ok": "reviewed-correct",
-      "detail": "target 6.3; nouns ['computed', 'imagination', 'step', 'discarded']; absent ['imagination', 'step', 'discarded']",
-      "context": "\u00a76.3\nexplains \u2014 is computed on every imagination step and discarded",
-      "reviewed": "CORRECT \u2014 appositive. The sentence is 'the aleatoric head ... the one \u00a76.3 explains'; \u00a76.3 is titled 'Why the aleatoric head collapses'. The text the matcher scored is the clause after the em-dash, not the claim."
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a76.6 explains why a binomial null is inadmissible here and how far it was ",
+      "pointer": "\u00a76.6 explains why a binomial null is inadmissible here",
       "ok": true,
-      "detail": "target 6.6; nouns ['binomial', 'null', 'inadmissible', 'here', 'wrong']; absent ['inadmissible']",
-      "context": "\u00a76.6 explains why a binomial null is inadmissible here and how far it was wrong"
+      "detail": "target 6.6; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
+      "context": "\u00a76.6 explains why a binomial null is inadmissible here"
     },
     {
       "class": "semantic",

@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 674 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 669 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -404,3 +404,16 @@ claims stayed, and only their history moved.
 - **[§5]** M-23 is anchored at h = 368, where the claim is actually about, because M-16,
   anchored at the training horizon, returned "cannot be settled". That change of anchor was made
   before the runs, not after them (§8).
+- **[§6.2]** The epistemic ratio at h = 368 (34.4×) barely differs
+  from the one at h = 100 (33.4×). That is why re-anchoring the
+  paper's calibration claims from the diagnostic horizon to the deployment one changed the reading
+  and not the conclusion.
+- **[§6.2]** An earlier draft stated that the one-step row is measured on data the checkpoint
+  trained on, and declined to draw the inference that the figure is therefore an upper bound on its
+  calibration. The paper now draws it.
+- **[§6.2]** At n_independent = 4 the short-horizon epistemic ordering looked like chance,
+  and an earlier draft told a more interesting-sounding horizon story from it. At
+  n_independent = 20 that result proved an artifact of four trajectories, and it is
+  recorded as one.
+- **[§6.3]** That the collapse would happen on any dataset was, until the synthetic experiment,
+  only asserted from the derivation; the experiment was run to test it.

@@ -741,7 +741,9 @@ CLAIMS = [
     # populations partition, so the paper could and did quote them against each
     # other. The table a reader is invited to count is checked by counting it.
     {"id": "C22.1", "kind": "population_partition", "where": "6.3 / Appendix B",
-     "says": "so a reader can count them",
+     # Re-anchored in pre-submission S7: §6.3's lead-in to the run table was shortened; the
+     # partition this checks (total = family + off-width; fitted + excluded) is unchanged.
+     "says": "with the width column separating the collapse family",
      "total": "run_total", "family": "n_runs", "excluded": "n_runs_offwidth",
      "fitted": "e2_fitted_runs", "fitted_excluded": "e2_excluded_10k",
      "table": "run_table", "figure_family": ("paper_figures.json", "fig3", "n_runs")},

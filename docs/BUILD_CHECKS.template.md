@@ -382,3 +382,16 @@ claims stayed, and only their history moved.
 - **[§5]** M-23 is anchored at h = {{v2_diag_h}}, where the claim is actually about, because M-16,
   anchored at the training horizon, returned "cannot be settled". That change of anchor was made
   before the runs, not after them (§8).
+- **[§6.2]** The epistemic ratio at h = {{v2_diag_h}} ({{d1n_epi_ratio_h368}}×) barely differs
+  from the one at h = {{v2_deploy_h}} ({{d1n_epi_ratio_h100}}×). That is why re-anchoring the
+  paper's calibration claims from the diagnostic horizon to the deployment one changed the reading
+  and not the conclusion.
+- **[§6.2]** An earlier draft stated that the one-step row is measured on data the checkpoint
+  trained on, and declined to draw the inference that the figure is therefore an upper bound on its
+  calibration. The paper now draws it.
+- **[§6.2]** At n_independent = {{b2_nind}} the short-horizon epistemic ordering looked like chance,
+  and an earlier draft told a more interesting-sounding horizon story from it. At
+  n_independent = {{d1n_nind}} that result proved an artifact of four trajectories, and it is
+  recorded as one.
+- **[§6.3]** That the collapse would happen on any dataset was, until the synthetic experiment,
+  only asserted from the derivation; the experiment was run to test it.
