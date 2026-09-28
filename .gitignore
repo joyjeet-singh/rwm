@@ -63,3 +63,7 @@ SUPPLEMENTARY_CORRESPONDENCE.md
 # cites "0.90% of the 905,391 numeric values under results/" in §8 and Appendix D,
 # and writing intermediates there would move a denominator the paper commits to.
 cache/
+
+# pre-submission programme: local copies of the original papers (plan S1). Not ours to
+# redistribute, so never committed.
+docs/presubmission/sources/
