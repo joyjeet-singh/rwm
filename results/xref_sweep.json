@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 65,
-  "n_ok": 63,
+  "n_pointers": 61,
+  "n_ok": 59,
   "n_reviewed_correct": 2,
   "reviewed": [
     {
@@ -36,45 +36,17 @@
   "pointers": [
     {
       "class": "semantic",
-      "pointer": "Appendix E gives every pre-registered rule with its lead time and its verdict",
+      "pointer": "Appendix E gives every pre-registered rule with its lead time and its\nverdict",
       "ok": true,
-      "detail": "target Appendix E; nouns ['pre-registered', 'rule', 'lead', 'time', 'verdict']; absent []",
-      "context": "Appendix E gives every pre-registered rule with its lead time and its verdict"
+      "detail": "target Appendix E; nouns ['pre-registered', 'rule', 'lead', 'time', 'verdict', 'gives', 'lessons', 'form', 'practitioner', 'without', 'reading', 'rest']; absent ['gives', 'lessons', 'practitioner']",
+      "context": "Appendix E gives every pre-registered rule with its lead time and its\nverdict, and \u00a79 gives the lessons in a form a practitioner can use without reading the rest"
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.4 sets out what follows",
+      "pointer": "Appendix G gives both forms and the comparison the second one inverts",
       "ok": true,
-      "detail": "target 6.4; nouns ['follows']; absent ['follows']",
-      "context": "\u00a76.4 sets out what follows"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a76.8 says what is new relative\nto it rather than leaving a reader to w",
-      "ok": true,
-      "detail": "target 6.8; nouns ['relative', 'rather', 'leaving', 'reader', 'work', 'conditioning', 'variable', 'forecast', 'horizon', 'single', 'global', 'multipl']; absent ['relative', 'leaving']",
-      "context": "\u00a76.8 says what is new relative\nto it rather than leaving a reader to work it out: the conditioning variable is the forecast\nhorizon, and a single global multipl"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a76.3 gives the derivation and demonstrates it against known noise",
-      "ok": true,
-      "detail": "target 6.3; nouns ['derivation', 'demonstrates', 'against', 'known', 'noise']; absent ['demonstrates']",
-      "context": "\u00a76.3 gives the derivation and demonstrates it against known noise"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix G gives both forms and the inversion",
-      "ok": true,
-      "detail": "target Appendix G; nouns ['forms', 'inversion']; absent []",
-      "context": "Appendix G gives both forms and the inversion"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix C sets out what testing them would take",
-      "ok": true,
-      "detail": "target Appendix C; nouns ['testing', 'them', 'would', 'take']; absent ['take']",
-      "context": "Appendix C sets out what testing them would take"
+      "detail": "target Appendix G; nouns ['forms', 'comparison', 'second', 'inverts']; absent ['second']",
+      "context": "Appendix G gives both forms and the comparison the second one inverts"
     },
     {
       "class": "semantic",

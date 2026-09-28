@@ -37,128 +37,101 @@ uncertainty-aware Robotic World Model reports one. This paper asks what that num
 and the title gives the answer: it gets the order of the model's errors right and their size
 wrong.
 
-We came to the question sideways. Our aim was an ordinary reproduction: rebuild the proprioceptive
-dynamics model from scratch, check it against the released implementation, and see whether the
-paper's central training claim holds. It does. But the same rebuild made a second question cheap
-to ask, because we had a from-scratch model, the released checkpoint, and a harness that could
-score both: *is the predicted σ calibrated?* Neither of the two the checkpoint emits is: on data it
-trained on, the per-member σ is too small by {{d1n_alea_ratio_h1}}× at h = 1 to
-{{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}, and the ensemble disagreement the method actually uses
-by {{d1n_epi_ratio_h1}}× to {{d1n_epi_ratio_h368}}× over the same horizons. For the first of them the
-reason is structural rather than incidental. The disagreement
-still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is
-its size.
+We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
+check it against the released implementation, and test the central training claim. The claim
+holds. The rebuild then made a second question cheap to ask: *is the predicted σ calibrated?*
+Neither of the two the checkpoint emits is. On data it trained on, the per-member σ is too small
+by {{d1n_alea_ratio_h1}}× at h = 1 to {{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}, and the
+ensemble disagreement the method actually uses by {{d1n_epi_ratio_h1}}× to {{d1n_epi_ratio_h368}}×
+over the same horizons; the first failure is structural rather than incidental. The disagreement
+still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is its
+size.
 
-This is a reproduction paper, and we mean the term in its stronger sense: the contribution is not
-that the numbers came out the same, but what systematically re-measuring the method reveals about
-where it is robust and where it is not. §9 collects the lessons in a form a practitioner can apply
-without reading the rest. Three things distinguish the work from a re-run of the authors' code.
-
-**We rebuilt rather than imported.** The forward pass, the loss and the training step are written
-from scratch and then checked against the reference: outputs match bitwise, and losses and
-gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
-{{diff_n_params}} parameter tensors before any training begins
-(Appendix A). A discrepancy found later is therefore a property of the method, not of our wiring.
-
-**Decision rules were committed before the data.** The verdicts below were fixed in advance, in
-git, with timestamps a reader can check (§8, Figure 1). One of them returned "cannot be settled"
-and we report that too.
-
-**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and the supplementary `docs/BUILD_CHECKS.md` give them in full. The ledger keeps {{n_superseded}} superseded entries, each beside the evidence that withdrew it: {{n_retractions_lower}} claims withdrawn on evidence, {{n_retract_framing_word}} framings withdrawn, and the rest early hypotheses closed as housekeeping. Appendix E gives every pre-registered rule with its lead time and its verdict.
+Three things distinguish this from a re-run of the authors' code. **We rebuilt rather than
+imported**, and matched the rebuild to the reference before any training (Appendix A), so a
+discrepancy found later belongs to the method, not to our wiring. **Decision rules were committed
+to git before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot
+be settled", and we report it. **We keep our withdrawn findings in the record.** The ledger keeps
+{{n_superseded}} superseded entries, each beside the evidence that withdrew it:
+{{n_retractions_lower}} claims withdrawn on evidence, {{n_retract_framing_word}} framings withdrawn,
+and the rest early hypotheses closed as housekeeping (§8 and the supplementary
+`docs/BUILD_CHECKS.md`). Appendix E gives every pre-registered rule with its lead time and its
+verdict, and §9 gives the lessons in a form a practitioner can use without reading the rest.
 
 **Contributions.**
 
 - **The uncertainty gets the order right and the size wrong, in the first calibration
   measurement we are aware of for this released checkpoint** (Lu et al. (2022) measure this family
-  of penalties on models they train themselves; §2). Ensemble disagreement, the quantity the
-  method uses, ranks realised error and still correlates {{a2_rdd}} with it with the rollout and
-  the forecast depth both held fixed, yet on data the checkpoint trained on it is
-  {{d1n_epi_ratio_h1}}× smaller than that error at h = 1 and {{d1n_epi_ratio_h100}}× at
-  h = {{v2_deploy_h}} (§6.2, §6.7). Of the {{e7_n_new}} free baselines added here it beats
-  {{e7_n_beaten}}; the model's own predicted step size ranks error at {{e7_step_r}} against
-  disagreement's {{e7_r_dis}}, a margin that {{q2_n_req}} independent trajectories would resolve if
-  it is the true one, against the {{e7_nind}} here (§11).
+  of penalties on models they train themselves; §2). Ensemble disagreement ranks realised error,
+  and still correlates {{a2_rdd}} with it with the rollout and forecast depth held fixed, yet on
+  data the checkpoint trained on it is {{d1n_epi_ratio_h1}}× smaller than that error at h = 1 and
+  {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} (§6.2, §6.7). It beats {{e7_n_beaten}} of the
+  {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at
+  {{e7_step_r}} against its {{e7_r_dis}}, a margin that {{q2_n_req}} independent trajectories would
+  resolve if it is real, against the {{e7_nind}} here (§11).
 - **The base paper's central training claim reproduces, and reverses at one step.** Training on
   the model's own rollouts beats teacher forcing by {{d1_ratio}}× on relative-L1 at
   h = {{v2_diag_h}} over {{d1_seeds}} seeds, and by {{d1_ratio_h100}}× at h = {{v2_deploy_h}},
-  under a rule committed to git before the runs existed (§5). At one step a second pre-registered
-  rule, rebuilding the evaluation at a {{m64_h1_unit}}-row unit with {{m64_h1_n}} independent units
-  where the 400-step unit gives {{a1_nind}}, finds a gap of {{m64_h1_gap}} {{m64_h1_ci}}: it
-  excludes zero in favour of **teacher forcing** (§5).
-- **The σ = 0 optimum of the implemented objective.** The per-member σ, which the method discards,
-  is minimised at zero by the implemented state loss: the collapse is derived analytically rather
-  than observed, and demonstrated against known noise (§6.3).
+  under a rule committed before the runs (§5). At one step, a second pre-registered rule with
+  {{m64_h1_n}} independent {{m64_h1_unit}}-row units, where the 400-step unit gives {{a1_nind}},
+  finds a gap of {{m64_h1_gap}} {{m64_h1_ci}}, in favour of **teacher forcing** (§5).
+- **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
+  σ = 0, so the per-member σ the method discards collapses by construction: derived rather than
+  observed, and demonstrated against known noise (§6.3).
 - **Trunk-sharing, tested.** The five members share one trunk, one recurrent state and
-  {{v1_shared_pct}}% of each member's parameters, so their spread cannot express uncertainty the
-  trunk does not already carry (§6.4). Under a rule committed before the runs, an ensemble of
-  {{r2_n_indep}} independently-initialised full models is {{m44_ratio_gain}}× better calibrated
-  than the shared-trunk arms, against a pre-registered minimum detectable effect of
-  {{m44_mde_ratio}}×, and still {{r2_indep_ratio_h100}}× overconfident at h = {{v2_deploy_h}}
-  (§6.10).
-- **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one episode
-  and scored on the other, brings every released-checkpoint coverage estimate near nominal where a
-  global multiplier does not, though no single cell is resolvable (§6.8). That checkpoint trained
-  on both episodes, so its cells are unseen by the multiplier only; on Arm A, whose model never saw
-  them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells.
-- **The released evaluation is misaligned by one step, and what that costs is small.** Training
-  pairs states and actions index-for-index; evaluation feeds the action from *t−1*. On
-  {{ad_nind}} independent trajectories the stale pairing overstates the checkpoint's error at
-  h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in
-  nRMSE, and over all ten episodes the sign reverses (§7.2); one line fixes it.
+  {{v1_shared_pct}}% of each member's parameters, so their spread can express only uncertainty the
+  trunk already carries (§6.4). Under a rule committed before the runs, {{r2_n_indep}}
+  independently initialised full models are {{m44_ratio_gain}}× better calibrated than the
+  shared-trunk arms, against a pre-registered minimum detectable effect of {{m44_mde_ratio}}×, and
+  still {{r2_indep_ratio_h100}}× overconfident at h = {{v2_deploy_h}} (§6.10).
+- **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one
+  episode and scored on the other, brings every released-checkpoint coverage estimate near nominal
+  where a global multiplier does not, though no single cell is resolvable (§6.8). Those cells are
+  unseen by the multiplier only, because the checkpoint trained on both episodes; on Arm A, whose
+  model never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}}
+  disagreement cells.
+- **The released evaluation is misaligned by one step, and what that costs is small.** Evaluation
+  feeds the action from *t−1* where training pairs states and actions index-for-index. On
+  {{ad_nind}} independent trajectories this overstates the checkpoint's error at h = {{v2_diag_h}}
+  by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, and over
+  all ten episodes the sign reverses (§7.2); one line fixes it.
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
-  module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms
-  and {{diff_n_params}} parameter tensors, before any training (Appendix A).
-
-A reader who wants only what to do differently should read §9, *Actionable lessons*; the rest of
-the paper is the evidence behind it.
+  module bitwise, and losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss
+  terms and {{diff_n_params}} parameter tensors, before any training (Appendix A).
 
 ---
 
 ## 2. Related work
 
-This paper measures whether an ensemble-disagreement penalty is calibrated, and separates its use
-as a *ranking* from its use as a *scale*. Both questions have a literature, and one paper asks
-almost exactly ours four years earlier. Stating that plainly is not a concession: it tells a
-reader which part of what follows is a new measurement and which part is a new measurement *of a
-new object*.
+This paper asks whether an ensemble-disagreement penalty is calibrated, and separates its use as a
+*ranking* from its use as a *scale*. Both questions have a literature, and one paper asked almost
+exactly ours four years earlier; below we say which parts of what follows are new.
 
 **The direct precedent.** Lu, Ball, Parker-Holder, Osborne and Roberts (*Revisiting Design Choices
 in Offline Model-Based Reinforcement Learning*, ICLR 2022) compare uncertainty heuristics in
 offline model-based RL under protocols built, in their words, to "capture the specific covariate
-shift induced by model-based RL", explicitly in order to assess calibration. They report Spearman
-rank and Pearson bivariate correlation against true model error **separately**, and observe that
-"despite the similar rank correlations $\rho$, the bivariate correlations $r$ can vary
-considerably" —
-that is, a configuration can preserve ordering while changing the relationship between the
-penalty's magnitude and the error's. That is our ranking-versus-scale distinction, on the same
-family of penalties.
+shift induced by model-based RL", in order to assess calibration. They report Spearman rank and
+Pearson bivariate correlation against true model error **separately**, and observe that "despite
+the similar rank correlations $\rho$, the bivariate correlations $r$ can vary considerably": a
+configuration can keep the ordering while the penalty's size relative to the error changes. That
+is our ranking-versus-scale distinction, on the same family of penalties. They also find the
+ensemble standard deviation, the exact quantity `system_dynamics.py:126` computes and
+`envs/base.py:166` applies, to track model error *better* than the penalties of MOPO and MOReL,
+being "strikingly similar" to the latter but better behaved; §6.7 finds the same quantity a usable
+ranking signal.
 
-Their results also bear on ours directly, and in the same direction. They find the ensemble
-standard deviation — the exact quantity `system_dynamics.py:126` computes and `envs/base.py:166`
-applies — to correlate with model error *better* than the penalties of MOPO and MOReL, being
-"strikingly similar" to the latter but better behaved. Our §6.7 finds the same quantity to be a
-usable ranking signal. Two independent measurements, on different systems, agreeing.
+**What is new here is four things.** Lu et al. measure models they train themselves, on simulated
+benchmarks, and their statistics describe ordering and shape, not coverage. We measure a
+**released checkpoint** from a pipeline its authors deployed on hardware, where reading the penalty
+as an interval has consequences; we measure **coverage** against a nominal; we verify our
+reimplementation against the reference at the gradient level before any training (Appendix A); and
+§6.3 derives the σ = 0 optimum for the objective the released code *substitutes*, squared error on
+a reparameterised sample, rather than for the likelihood the parameterisation was built around.
 
-So what is left for us. Lu et al. ask their question of simulated benchmarks, of models they
-train themselves, and they do not ask whether the penalty is a calibrated interval — rank and
-bivariate correlation are both ordering-and-shape statistics, not coverage. We ask it of a
-**released checkpoint** from a pipeline its authors deployed on hardware, where the interval
-reading is consequential; we measure **coverage** against a nominal, not only correlation; and we
-do it with a from-scratch reimplementation verified against the reference at the gradient level,
-so that a discrepancy is a property of the method rather than of our wiring. The contribution is
-not the idea of checking. It is the object checked, the quantity measured, and the standard of
-verification.
-
-**Stated positively, the delta is four things.** The object measured is a released checkpoint from
-a pipeline its authors deployed on hardware. The statistic measured is coverage against a nominal,
-not correlation with error. The standard of verification is gradient-level agreement with the
-reference implementation before any training begins (Appendix A). And the σ = 0 optimum of §6.3 is
-derived for the objective the released code *substitutes* — squared error on a reparameterised
-sample — rather than for the likelihood the parameterisation was built around.
-
-**Where the parameterisation comes from, and how far the result reaches.** The
-bounded log-σ head that §6.3 shows has its optimum at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the probabilistic ensembles of Chua, Calandra, McAllister and
-Levine (PETS, NeurIPS 2018). PETS's Appendix A.1 gives
+**Where the parameterisation comes from.** The bounded log-σ head that §6.3 shows has its optimum
+at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the
+probabilistic ensembles of Chua, Calandra, McAllister and Levine (PETS, NeurIPS 2018). PETS's
+Appendix A.1 gives
 
 ```
 logvar = max_logvar - softplus(max_logvar - logvar)
@@ -168,176 +141,161 @@ logvar = min_logvar + softplus(logvar - min_logvar)
 and `architectures/mlp.py:92-93` is those two lines in log-standard-deviation rather than
 log-variance, with `system_dynamics.py:302` supplying PETS's regulariser on the bounds.
 
-What is **not** inherited is the objective, and one line of the bounds' parameterisation. PETS uses "the
-negative log prediction probability as our loss function", and it is that likelihood's log-σ term
-which opposes σ → 0. `system_dynamics.py:283` substitutes squared error on a reparameterised
-sample, which has no such term. And `architectures/mlp.py:91` builds the upper bound from the
-lower one, as the floor plus a learned positive gap, where PETS keeps the two as independent
-parameters. §6.3 needs both changes. The substitution removes the log-σ term, and the tie is why
-the bound regulariser does not take its place: the floor cancels out of it and takes no gradient
-from it. In a descendant that made the substitution but kept PETS's independent bounds, the same
-regulariser pushes the floor up instead, so the objective pulls σ down onto a floor the
-regulariser pushes up. That is not the situation §6.3
-derives, and where it settles we have not tested (ledger `M-72`). So the collapse follows from the substitution *together with* a floor that nothing pushes
-back up, not from the substitution alone: **a descendant of this lineage that replaced the
-likelihood with a sampled squared error, and left nothing pushing its variance floor back up,
-would inherit the same optimum.** We state that as a hypothesis about mechanism and mark it
-clearly: we have not tested it in any other descendant (§11).
+What is **not** inherited is the objective, and one line of the bounds. PETS uses "the negative
+log prediction probability as our loss function", and that likelihood's log-σ term opposes
+σ → 0; `system_dynamics.py:283` substitutes squared error on a reparameterised sample, which has no
+such term. And `architectures/mlp.py:91` builds the upper bound as the floor plus a learned positive
+gap, where PETS keeps the two bounds independent. §6.3 needs both changes: the substitution removes
+the log-σ term, and the tie is why the bound regulariser does not take its place, since the floor
+cancels out of it. In a descendant that kept PETS's independent bounds, the same regulariser pushes
+the floor up while the objective pulls σ down onto it, a case §6.3 does not derive and we have not
+tested (ledger `M-72`). So **a descendant of this lineage that replaced the likelihood with a
+sampled squared error, and left nothing pushing its variance floor back up, would inherit the same
+optimum.** That is a hypothesis about mechanism, untested in any other descendant (§11).
 
-**How far it reaches is a separate question, and the answer narrows it.** We counted how often
-the substitution is made. Of {{q1_n_examined}} public repositories examined on {{q1_date}} under the protocol in `results/q1_search_protocol.md`, {{q1_n_carry}} carry the construction and {{q1_n_inherit}} of those
-trains it against a sampled squared error — and that one only in an optional value-aware mode,
-not by default; the other {{q1_n_keep}} keep PETS's likelihood
-(`results/q1_pets_descendants.json`, ledger `R-75`). The protocol's inclusion test needs both the bounded head and a loss that squares the error of a
-*sampled* prediction. It also requires the bounds to be learnable parameters, which we read as
-parameters the code can train, whether or not it trains them by default. That reading was settled after the survey, because in `mbrl-lib` and in `va_mbpo`, the one
-repository that inherits, the bounds train only when a caller switches that on; the reading keeps
-both among the {{q1_n_carry}} that carry the construction (ledger `M-73`). Squaring the error of
-the predicted *mean*, which several of these repositories offer as an option, leaves σ untrained rather than driving it to zero, and does not count. The survey tested the
-substitution and not how each repository handles its variance floor, so {{q1_n_inherit}} of
-{{q1_n_examined}} is an upper bound on how often both of the conditions above hold. A further {{q1_n_absent}} repositories were
-set aside because the construction is absent from them. One is mainline `rsl_rl`, whose only
-softplus is a policy distribution: the bounded head exists in the fork this paper pins, not in
-the library it forks. That fork is not counted, since counting the thing §6.3 measured as
-evidence that the result travels would be circular. The protocol capped the survey at {{q1_cap}} repositories, and it stopped at
-{{q1_n_examined}}; the survey's notes record no reason for stopping there. We wrote the protocol before the search, and the sha256 the survey recorded is that file's;
-but neither the protocol nor its hash reached git before the results did, so the claim that it came first rests on our own record rather than on a commit. It is a search
-protocol rather than a decision rule, and is not among Appendix E's pre-registered rules. This is a count over what we examined, not over the field
-— search engines rank and truncate, so it is a sample of convenience — but on that sample the
-substitution is rare rather than common, and a reader who takes the hypothesis to reach widely is
-inferring more than the evidence supports.
+**How often the substitution is made, which narrows the hypothesis.** Of {{q1_n_examined}} public
+repositories examined on {{q1_date}} under the protocol in `results/q1_search_protocol.md`,
+{{q1_n_carry}} carry the construction and {{q1_n_inherit}} of those trains it against a sampled
+squared error, and that one only in an optional value-aware mode; the other {{q1_n_keep}} keep
+PETS's likelihood (`results/q1_pets_descendants.json`). The protocol counts a repository only if
+it has the bounded head, learnable bounds, and a loss that squares the error of a *sampled*
+prediction; squaring the error of the predicted *mean*, an option several of these repositories
+offer, leaves σ untrained rather than driving it to zero, and does not count. We read "learnable"
+as "trainable by the code, by default or not", a reading settled after the survey, because in
+`mbrl-lib` and in `va_mbpo`, the one repository that inherits, the bounds train only when a caller
+switches that on (ledger `M-73`). The survey did not check how each repository treats its variance
+floor, so {{q1_n_inherit}} of {{q1_n_examined}} is an upper bound on how often both conditions
+hold. A further {{q1_n_absent}} repositories lack the construction, among them mainline `rsl_rl`:
+the bounded head exists in the fork this paper pins, not in the library it forks, and we do not
+count the fork, since counting what §6.3 measured as evidence that the result travels would be
+circular. The protocol capped the survey at {{q1_cap}} repositories; it stopped at
+{{q1_n_examined}}, and its notes give no reason. We wrote the protocol before the search, but
+neither it nor its hash reached git before the results did, so that order rests on our own record;
+it is a search protocol, not one of Appendix E's decision rules. Search engines rank and truncate,
+so this is a sample of convenience, but on it the substitution is rare, and a reader who takes the
+hypothesis to reach widely infers more than the evidence supports.
 
-**The method being reproduced sits in a well-populated family.** MOPO (Yu, Thomas, Yu, Ermon, Zou,
-Levine, Finn and Ma, NeurIPS 2020) penalises the reward by an ensemble uncertainty estimate to
-solve a pessimistic MDP; MOReL (Kidambi, Rajeswaran, Netrapalli and Joachims, NeurIPS 2020) builds
-an unknown-state detector from pairwise ensemble disagreement instead; and both branch short model
-rollouts from real states in the manner of MBPO (Janner, Fu, Zhang and Levine, NeurIPS 2019). The
-follow-up we reproduce adapts MOPO's penalty into MBPO's loop, which is what "MOPO-PPO" names. The
-rollout-length-versus-model-error trade MBPO introduces is the one the follow-up's 100-step
-imagination horizon sits inside (§6.2, and X-13 in the ledger).
+**The method's family.** MOPO (Yu, Thomas, Yu, Ermon, Zou, Levine, Finn and Ma, NeurIPS 2020)
+penalises the reward by an ensemble uncertainty estimate to solve a pessimistic MDP; MOReL
+(Kidambi, Rajeswaran, Netrapalli and Joachims, NeurIPS 2020) builds an unknown-state detector from
+pairwise ensemble disagreement instead; and both branch short model rollouts from real states in
+the manner of MBPO (Janner, Fu, Zhang and Levine, NeurIPS 2019). The follow-up we reproduce adapts
+MOPO's penalty into MBPO's loop, which is what "MOPO-PPO" names, and its 100-step imagination
+horizon sits inside MBPO's trade between rollout length and model error (§6.2).
 
 **What "ensemble" is supposed to mean.** Deep ensembles (Lakshminarayanan, Pritzel and Blundell,
 NeurIPS 2017) are several networks trained from *different random initialisations and different
-data orderings*, and their spread is the uncertainty estimate. That definition is the reference
-point for §6.4: the released checkpoint's five members share one GRU trunk, one recurrent hidden
-state, and {{v1_shared_pct}}% of each member's state-prediction parameters. Whatever that spread
-measures, it is not what a deep ensemble measures, and §6.4 sets out what follows.
+data orderings*, and their spread is the uncertainty estimate. The released checkpoint's five
+members share one GRU trunk, one recurrent hidden state, and {{v1_shared_pct}}% of each member's
+state-prediction parameters, so whatever their spread measures, it is not what a deep ensemble
+measures (§6.4).
 
 **Three sources of uncertainty, and the one nobody here estimates.** Abbas, Sokota, Talvitie and
 White (ICML 2020) separate predictive uncertainty in model-based RL into aleatoric noise,
 parameter uncertainty, and **model inadequacy**, and observe that selective-planning work attends
 almost entirely to the second. The checkpoint we measure emits an aleatoric term and a
-parameter-uncertainty term, discards the first before use (§6.1), and has no estimate of the third
-at all. Model inadequacy is precisely the component that compounds with rollout depth, which is
-the shape §6.9 reports: σ flat while error grows.
+parameter-uncertainty term, discards the first before use (§6.1), and has no estimate of the third,
+which is precisely the component that compounds with rollout depth: the shape §6.9 reports.
 
-**Why miscalibration is the expected finding rather than a surprising one.** Modern networks are
-systematically miscalibrated (Guo, Pleiss, Sun and Weinberger, ICML 2017), and calibration
-degrades further under covariate shift, worsening with distance from the training distribution
-(Ovadia, Fertig, Ren, Nado, Sculley, Nowozin, Dillon, Lakshminarayanan and Snoek, NeurIPS 2019).
-An autoregressive rollout manufactures its own covariate shift, increasing with depth, so
-horizon-dependent calibration failure is the shape one should expect. Our contribution on this
-axis is the *magnitude* and the *mechanism*, not the direction. Finally, §6.8's per-horizon
-multiplier is a coarse instance of calibrated regression (Kuleshov, Fenner and Ermon, ICML 2018):
-a post-hoc map fitted on one episode and scored on another. We present it as an application of that idea to a horizon
-index, not as a new one.
+**Why miscalibration is the expected finding.** Modern networks are systematically miscalibrated
+(Guo, Pleiss, Sun and Weinberger, ICML 2017), and calibration degrades further under covariate
+shift, worsening with distance from the training distribution (Ovadia, Fertig, Ren, Nado, Sculley,
+Nowozin, Dillon, Lakshminarayanan and Snoek, NeurIPS 2019). An autoregressive rollout manufactures
+its own covariate shift, increasing with depth, so horizon-dependent calibration failure is what
+one should expect; our contribution on this axis is the *magnitude* and the *mechanism*, not the
+direction. §6.8's per-horizon multiplier is a coarse instance of calibrated regression (Kuleshov,
+Fenner and Ermon, ICML 2018), a post-hoc map fitted on one episode and scored on another, applied
+to a horizon index; we do not present it as a new idea.
 
 **The closest published work to our one constructive result.** Malik, Kuleshov, Song, Nemer,
 Seymour and Ermon (ICML 2019) recalibrate a dynamics model's uncertainty inside model-based RL,
-and argue that "good uncertainties must be calibrated" rather than merely well ranked — which is
-the distinction §6.7 and §6.2 draw between what the released checkpoint's disagreement does and
-does not do. §6.8 is a horizon-indexed instance of that idea, and §6.8 says what is new relative
-to it rather than leaving a reader to work it out: the conditioning variable is the forecast
-horizon, and a single global multiplier **fails**, its fitted value varying across horizons, where a per-horizon one puts every released-checkpoint estimate unseen by the multiplier within its tolerance band, though no single cell is resolvable at this arena and the evidence is mixed on a model that has not seen the test episodes. That distinction
-is not decoration — an open-loop rollout's error accumulates with depth, so a horizon-blind
-recalibration cannot follow it, and ours is the measurement showing it does not.
+and argue that "good uncertainties must be calibrated" rather than merely well ranked, the
+distinction §6.2 and §6.7 draw. §6.8 is a horizon-indexed instance: a single global multiplier
+**fails**, its fitted value varying across horizons, where a per-horizon one puts every
+released-checkpoint estimate within its tolerance band, though those cells are unseen by the
+multiplier but not by the model and no single cell is resolvable (§6.8). An open-loop rollout's
+error accumulates with depth, so a horizon-blind recalibration cannot follow it.
 
 **§6.4's mechanism is known, and we say so.** That heads sharing a trunk under-report disagreement
 relative to independently initialised networks is established: Lee, Purushwalkam, Cogswell,
-Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to be engineered
-rather than assumed; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that what independent
-initialisation buys is decorrelation that subspace methods do not match; and BatchEnsemble (Wen,
-Tran and Ba, ICLR 2020) and MIMO (Havasi, Jenatton, Fort, Liu, Snoek, Lakshminarayanan, Dai and
-Tran, ICLR 2021) share deliberately and state what they trade away. §6.4 is not the discovery of
-that effect. **What is ours is finding it in a released robotics checkpoint that its authors
-deployed on hardware, with the sharing quantified at {{v1_shared_pct}}% of each member and the
-cost measured at {{m44_ratio_gain}}× (§6.10).** The problem is not sharing; it is sharing and then
-reading the spread as though the members were independent.
+Crandall and Batra (arXiv:1511.06314) treat ensemble diversity as something to engineer rather than
+assume; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that independent initialisation buys
+a decorrelation subspace methods do not match; and BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and
+MIMO (Havasi, Jenatton, Fort, Liu, Snoek, Lakshminarayanan, Dai and Tran, ICLR 2021) share
+deliberately and state what they trade away. **What is ours is finding it in a released robotics
+checkpoint, with the sharing quantified at {{v1_shared_pct}}% of each member and the cost measured
+at {{m44_ratio_gain}}× (§6.10).** The problem is not sharing; it is sharing and then reading the
+spread as though the members were independent.
 
 **And the objective in §6.3 has a neighbour.** Seitzer, Tavakoli, Antic and Martius (ICLR 2022)
 identify failure modes of heteroscedastic σ heads trained by maximising log-likelihood. The
-released model's state loss is not a log-likelihood at all — a *sample* enters a squared error —
-so the failure §6.3 derives is more basic than the ones they characterise, and it does not depend
-on the optimiser. §6.3 gives the derivation and demonstrates it against known noise.
+released model's state loss is not a log-likelihood at all (a *sample* enters a squared error), so
+the failure §6.3 derives is more basic than theirs and does not depend on the optimiser. §6.3
+derives it and demonstrates it against known noise.
 
-*Every entry above was checked against the paper itself — title, full author list, venue and year
-from the arXiv record, and for any sentence we attribute, the sentence matched verbatim against
-the paper's own text. {{t1_n_verified}} of {{t1_n_refs}} entries verified,
-{{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments verbatim, though {{t1_n_frag_oneword}} of
-them are single common words whose presence the cited paper's subject guarantees, so their match could not have failed and
-verifies nothing about the attribution (`results/t1_bibliography_verified.json`, ledger `D-35`). No entry was added that was not verified.*
+*Every entry above was checked against the paper itself: title, full author list, venue and year
+from the arXiv record, and every sentence we attribute matched verbatim against the paper's text.
+{{t1_n_verified}} of {{t1_n_refs}} entries are verified and {{t1_n_frag_ok}} of {{t1_n_frag}}
+attributed fragments match verbatim, though {{t1_n_frag_oneword}} of those are single common words
+whose match verifies nothing about the attribution (`results/t1_bibliography_verified.json`). No
+entry was added that was not verified.*
 
 ---
 
 ## 3. Setup
 
 **Data.** The released dataset is {{rows}} rows of ANYmal D proprioceptive state and policy
-actions at 50 Hz. It is not one recording: it is ten concatenated 20-second episodes, and its
-termination column is identically zero, so nothing in the file marks the boundaries.
+actions at 50 Hz: ten concatenated 20-second episodes, with a termination column that is
+identically zero, so nothing in the file marks the boundaries.
 
-**The segments are not all the same length, and the arithmetic below does not work if one
-assumes they are.** The first episode is {{ep0_rows}} rows and the other {{n_ep_rest_word}} are
-{{ep_rest_rows}} each, with a reset at rows {{reset_rows_first}}, {{reset_rows_second}} …
-{{reset_rows_last}} and {{orphan_rows}} orphan row at the end of the file that begins an eleventh
-episode and ends immediately: {{row_structure}}. The boundaries are recovered from the data
-rather than assumed — at every reset row the twelve joint velocities, the four HAA joint
-positions and all twelve actions are exactly zero, and no other row has that fingerprint. Ten
-equal segments of {{ep_rest_rows}} would give one fewer crossing window and one more usable one,
-so a reader checking the counts below against the obvious reading would find them off by one and
-be right to. `results/step0_regimes.json` re-derives the crossing count a second time from the
+**The segments are not all the same length.** The first episode is {{ep0_rows}} rows and the other
+{{n_ep_rest_word}} are {{ep_rest_rows}} each, with a reset at rows {{reset_rows_first}},
+{{reset_rows_second}} … {{reset_rows_last}} and {{orphan_rows}} orphan row at the end of the file
+that begins an eleventh episode and ends immediately: {{row_structure}}. We recover the boundaries
+from the data: at every reset row the twelve joint velocities, the four HAA joint positions and all
+twelve actions are exactly zero, and no other row has that fingerprint. Ten equal segments of
+{{ep_rest_rows}} would give one fewer crossing window and one more usable one, so the counts below
+differ by one from that reading; `results/step0_regimes.json` re-derives the crossing count from the
 segment lengths alone, and the two agree.
 
-A window is {{win_len}} rows — {{win_hist}} of history and {{win_fore}} of forecast — so the
-reference window builder marks all {{win_naive}} windows valid, including {{win_cross}} that
-splice one episode's end onto the next one's start. The usable, episode-respecting count is
-{{win_usable}} — {{rows}} rows, less {{win_tail}} that cannot start a full window, less
+A window is {{win_len}} rows, {{win_hist}} of history and {{win_fore}} of forecast, and the
+reference window builder marks all {{win_naive}} windows valid, including {{win_cross}} that splice
+one episode's end onto the next one's start. The usable, episode-respecting count is
+{{win_usable}}: {{rows}} rows, less {{win_tail}} that cannot start a full window, less
 {{win_cross}} that cross a boundary. The contamination rate is {{contam_pct}}%.
 
 **Model.** A GRU-based ensemble predicting the next proprioceptive state, with a mean head and a
 bounded log-σ head, plus auxiliary heads for contact and termination. The paper describes two loss
 terms; the implementation has {{diff_terms}}.
 
-**Evaluation.** Two arenas, held separate throughout: *out-of-sample*, the two episodes withheld
-from training, and *in-sample*, the eight used for it. We report both, because the released
-evaluation draws its trajectories from training data and the distinction is invisible in the
-original. The released checkpoint trained on all ten episodes, so it has no held-out arena in
-this dataset at all — and that is a constraint, not a choice we made: more data cannot be
-generated from either repository this reproduction pins, nor on this hardware. Neither contains
-code that writes a dataset. The only code that touches the file reads it (`train.py:44` in the
-lite release), and the environment the lite release ships rolls the learned model forward
-rather than physics, so it cannot stand in for a generator. Its readme sends anyone wanting
-simulator-based collection to a third repository, the authors' Isaac Lab extension, which this
-reproduction does not pin (`readme.md:13`). Generating more would need that repository, Isaac Lab and an RTX-class GPU
-(Appendix C; ledger `D-36`).
+**Evaluation.** Two arenas, kept separate throughout: *out-of-sample*, the two episodes withheld
+from training, and *in-sample*, the eight used for it. The released evaluation draws its
+trajectories from training data, and the original does not distinguish the two. **The released
+checkpoint trained on all ten episodes, so it has no held-out arena in this dataset**, and every
+figure for it is in-sample; later sections refer back to this as the in-sample caveat of §3. More
+data cannot be generated from either repository this reproduction pins. Neither contains code that
+writes a dataset: the only code that touches the file reads it (`train.py:44` in the lite release),
+and the lite release's environment rolls the learned model forward rather than physics. Its readme
+sends anyone wanting simulator-based collection to the authors' Isaac Lab extension
+(`readme.md:13`), which we do not pin and which would need Isaac Lab and an RTX-class GPU
+(Appendix C).
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
-{{m23_nind}} mutually non-overlapping 400-step trajectories. Every long-horizon verdict in this
-paper survives a bootstrap over independent trajectories, and every table reports that count;
-§8 reports both resampling units where they differ.
+{{m23_nind}} mutually non-overlapping 400-step trajectories. A bootstrap over whole trajectories at
+that size has {{c3_resamples}} distinct resamples, so its intervals are quantised at that
+resolution. Every long-horizon verdict in this paper survives a bootstrap over independent
+trajectories, every table reports that count, and §8 reports both resampling units where they
+differ. Later sections refer back to this as the n = {{m23_nind}} caveat of §3.
 
 ### 3.1 Metrics
 
-Every metric below is stated as implemented, with the `file:line` of the implementation; each
-citation is read back and checked against its own source text on every build
-({{v3_n_citations}} of them). This section exists because two metrics in this project once
-disagreed in *direction* at h = 1, and because a choice between two aggregations of the same
-metric once inverted a comparison against the released model. A reader who cannot see the
-denominator cannot check the headline.
+Each metric is stated as implemented, with the `file:line` of its implementation, because a reader
+who cannot see the denominator cannot check the headline.
 
-**Relative-L1** is the reference's own metric, reproduced verbatim in behaviour
-(`model_training.py:203`) so that our numbers are comparable to the upstream's printed one. On
-config-normalised states, per forecast step,
+**Relative-L1** is the reference's own metric, reproduced in behaviour (`model_training.py:203`) so
+that our numbers are comparable to the upstream's printed one. On config-normalised states, per
+forecast step,
 
 $${{v3_rel_l1}}$$
 
@@ -346,9 +304,9 @@ and the reported figure is the flat mean over trajectories and steps,
 $${{v3_rel_l1_agg}}$$
 
 with $t_0$ = `history_horizon` = {{v2_history}}: the first {{v2_history}} steps are teacher-forced
-and excluded. The denominator is recomputed at every step and is a 45-term sum in normalised
-space, so it can pass through zero — which is why this metric goes non-finite on low-dimensional
-state groups, and why a second one exists.
+and excluded. The denominator is recomputed at every step as a 45-term sum in normalised space, so
+it can pass through zero, which is why this metric goes non-finite on low-dimensional state groups
+and why a second one exists.
 
 **Normalised RMSE** fixes the denominator once, over the training episodes only:
 
@@ -358,65 +316,59 @@ where the scale constant is
 
 $${{v3_scale}}$$
 
-computed once, stored in `results/step4_0a_results.json`, never recomputed per step and never
-derived from held-out data. A value of 1.0 means no better than predicting the training mean.
-**The aggregation matters and is form 1**: pool the per-dimension mean squared errors, then
-divide — a ratio of means. The alternative, a mean of per-dimension ratios, gives whichever
-dimension has the smallest scale unbounded leverage, and the choice between the two once inverted
-a published-model comparison in this project. Appendix G gives both forms and the inversion.
+computed once, stored in `results/step4_0a_results.json`, and never recomputed per step or derived
+from held-out data. A value of 1.0 means no better than predicting the training mean. **The
+aggregation is form 1**: pool the per-dimension mean squared errors, then divide, a ratio of means.
+A mean of per-dimension ratios gives whichever dimension has the smallest scale unbounded leverage;
+Appendix G gives both forms and the comparison the second one inverts.
 
 **Coverage at ±kσ** is the fraction of scalar (trajectory, forecast step, state dimension) triples
 whose absolute realised error falls within k times the σ predicted for that same triple:
 
 $${{v3_coverage}}$$
 
-Three things a reader needs and the prose did not previously give. It is pooled over all three
-axes with equal weight per triple. It is **cumulative** over steps 1..h — coverage "at h" averages
-the whole rollout up to h and is not the value at step h, and the same convention governs every
-horizon-indexed quantity in this paper. And because the statistic is built from an *absolute*
-error, $z \le k$ is the two-sided event, so the calibrated targets are
+It is pooled over all three axes with equal weight per triple. It is **cumulative** over steps
+1..h: coverage "at h" averages the whole rollout up to h and is not the value at step h, and every
+horizon-indexed quantity in this paper follows the same convention. Because it is built from an
+*absolute* error, $z \le k$ is the two-sided event, so the calibrated targets are
 $\mathrm{erf}(k/\sqrt{2})$: **{{v3_cov_nominal1}}%** at ±1σ and **{{v3_cov_nominal2}}%** at ±2σ.
-**That nominal is checked rather than assumed.** Rescaling each model's σ by the single constant that makes mean|error| / mean σ equal a calibrated Gaussian's {{m65_calib_ratio}} lands coverage at or above {{v3_cov_nominal1}}% in every one of {{m65_n_cells}} model × horizon cells, with {{m65_n_heavy}} below it (`M-65`). The shortfalls reported below are therefore a property of the scale and not of the tail.
+**That nominal is checked rather than assumed.** Rescaling each model's σ by the single constant that makes mean|error| / mean σ equal a calibrated Gaussian's {{m65_calib_ratio}} lands coverage at or above {{v3_cov_nominal1}}% in every one of {{m65_n_cells}} model × horizon cells, with {{m65_n_heavy}} below it (`M-65`), so the shortfalls reported below are a property of the scale and not of the tail.
 
 **The overconfidence factor** is how many times larger the typical realised error is than the
 typical predicted σ:
 
 $${{v3_rho}}$$
 
-It too is a **ratio of means**, not a mean of ratios — the latter is unbounded whenever a single σ
-approaches zero, which is exactly the regime §6.3 puts these models in. One caution on reading it:
-$\rho = 1$ is *not* calibration. A calibrated Gaussian has mean|error| / σ = $\sqrt{2/\pi}$ =
-{{v3_rho_calibrated}}. $\rho$ is reported as a magnitude of miscalibration and coverage is the
-calibrated reading, which is why both appear everywhere.
+It too is a **ratio of means**, because a mean of ratios is unbounded whenever a single σ
+approaches zero, which is exactly the regime §6.3 puts these models in. $\rho = 1$ is *not*
+calibration: a calibrated Gaussian has mean|error| / σ = $\sqrt{2/\pi}$ = {{v3_rho_calibrated}}. So
+$\rho$ is reported as a magnitude of miscalibration and coverage as the calibrated reading, and
+both appear everywhere.
 
 **Which metric each headline uses.** The A/B training claim (§5) is relative-L1, because the claim
 is about reproducing the upstream's comparison and that is the upstream's metric. The calibration
-claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ
-at all. The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and
-total absolute error, because a ranking claim is about order rather than scale. Every headline
-number in the abstract names its metric. §7.2's alignment defect is given in both metrics side
-by side, each at h = {{v2_diag_h}} on the same {{ad_nind}} independent trajectories: {{ad_rel}}%
-{{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, so a reader can check
-either against its own number.
+claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ.
+The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and total
+absolute error, because a ranking claim is about order rather than scale. Every headline number in
+the abstract names its metric. §7.2's alignment defect is given in both metrics side by side, each
+at h = {{v2_diag_h}} on the same {{ad_nind}} independent trajectories: {{ad_rel}}% {{ad_rel_ci}} on
+relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,{{v2_deploy_h}},\,128,\,{{v2_diag_h}}\}$.
 Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's
-own imagination rollout length — the horizon over which the uncertainty-penalised policy loop
-actually runs this model (arXiv:2504.16680 Table S9 in v1, Table S11 in v3; the value is unchanged
-between them, and v3 states it in prose as well). **h = {{v2_diag_h}}** is the upstream's
-open-loop diagnostic length: `len_eval_trajectory` = {{v2_len_eval}} minus the {{v2_history}}-step
-teacher-forced prefix, which is the curve the follow-up plots as its uncertainty figure. It is
-{{v2_ratio}}× the method's own rollout length and it is not a deployment horizon; earlier drafts
-of this paper called it one, and that label is withdrawn. Both are kept in every table, because
-h = {{v2_diag_h}} is what makes our numbers comparable to the original's *figure* while
-h = {{v2_deploy_h}} makes them comparable to the original's *method*.
+own imagination rollout length, the horizon over which the uncertainty-penalised policy loop
+actually runs this model (arXiv:2504.16680 Table S9 in v1 and Table S11 in v3, with the same
+value). **h = {{v2_diag_h}}** is the upstream's open-loop diagnostic length: `len_eval_trajectory` =
+{{v2_len_eval}} minus the {{v2_history}}-step teacher-forced prefix, the curve the follow-up plots
+as its uncertainty figure. It is {{v2_ratio}}× the method's own rollout length and is not a
+deployment horizon. Every table keeps both: h = {{v2_diag_h}} makes our numbers comparable to the
+original's *figure*, and h = {{v2_deploy_h}} to its *method*.
 
 ### 3.2 What each claim rests on
 
 Every headline claim in this paper is measured on one of the three arenas above, at a stated
-number of independent trajectories, and a reader should be able to see all of them at once
-before meeting any of them. The table is generated from the artifacts each claim is computed
-from, so no arena label and no sample size in it is typed by hand.
+number of independent trajectories. The table is generated from the artifacts each claim is
+computed from, so no arena label and no sample size in it is typed by hand.
 
 | claim | § | arena | n_independent | in-sample for the model measured? | verdict | survives multiplicity correction? |
 |---|---|---|---|---|---|---|
@@ -434,28 +386,21 @@ everything. It did not.
 (§5), and the follow-up's two claims about what its uncertainty outputs report (§6). Of the {{n_untested_word}} we did not test, **{{appE_n_sim_word}} need a simulator we do not
 have**: {{appF_sim_list}}. **{{appF_n_polhw_word}} of those {{appE_n_sim_word}} are claims about
 policy learning or hardware** — every one but {{appF_model_list}}, which needs a simulator and
-recorded data from other robots but is a claim about the model rather than about a policy, and
-does not belong in that bucket however convenient it is to put it there. This work trains no
-policy at all and runs on two CPU cores. **The remaining {{appE_n_cpu_word}} need none of that
-and we still did not run them**: {{appF_cpu_list}} are within reach of the CPU budget this
-project already spent, and Appendix C prices both. They are unrun for want of time, not for want
-of hardware.
-
-Both counts and both lists above are generated from a classification tag carried in Appendix D's
-verdict column, so the enumeration cannot disagree with the count beside it. It did: an earlier
-draft of *this* sentence — itself the replacement for retracted claim `S-17`, which was a count
-defect in this same place — said {{appE_n_sim_word}} and then named {{appF_n_polhw_lower}}, and
-called all of them claims about policy learning or hardware when one of them is not. `S-17`
-withdrew a universal quantifier here; its replacement got the arithmetic wrong instead, which is
-the worse failure of the two because the sentence had just been rewritten under scrutiny. §11 states what that bounds, and Appendix C sets out what testing them would take.
+recorded data from other robots but is a claim about the model rather than about a policy. This
+work trains no policy and runs on two CPU cores. **The remaining {{appE_n_cpu_word}} need none of
+that and we still did not run them**: {{appF_cpu_list}} are within reach of the CPU budget this
+project already spent, and Appendix C prices both. They are unrun for want of time, not of
+hardware. The counts and lists are generated from the classification tags in Appendix D's verdict
+column, and they replace a withdrawn claim that every untested claim concerns policy learning or
+hardware (`S-17`). §11 states what the untested claims bound, and Appendix C what testing them
+would take.
 
 **For all {{orig_n_tested}} of the claims we did test, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
-caption or table. So our {{d1_ratio}}× at h = {{v2_diag_h}} is neither a confirmation of a published figure nor a
-contradiction of one — it is the first figure attached to the claim, and the same is true of the
-follow-up's "strong correlation" between disagreement and error, for which §6.7 supplies the first
-coefficient. Where a magnitude is legible only from a plotted curve we say so rather than
-estimating it from the axis.
+caption or table. So our {{d1_ratio}}× at h = {{v2_diag_h}} neither confirms nor contradicts a
+published figure: it is the first figure attached to the claim, as §6.7's coefficient is for the
+follow-up's "strong correlation" between disagreement and error. Where a magnitude is legible only
+from a plotted curve we say so rather than estimating it from the axis.
 
 **Appendix D gives the full table**, claim by claim, with what the original states, where it
 states it, and our verdict.

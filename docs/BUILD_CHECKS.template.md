@@ -348,3 +348,30 @@ values (`M-66`). A sweep of all {{audit_n_hits}} pattern-based input discoveries
 `scripts/` and `src/` now classifies each as an open population or frozen at write time;
 {{audit_n_frozen}} was frozen, and artifacts that discover their inputs now record the
 file list they were computed over.
+
+---
+
+## Moved from the paper body (pre-submission edit)
+
+The pre-submission edit cut the paper body by moving its drafting history here rather than
+deleting it: what an earlier draft said, how a check came to exist, and what a sweep found. Each
+item is labelled with the section it left. Nothing below is a claim the paper no longer makes; the
+claims stayed, and only their history moved.
+
+- **[§3.1]** Every `file:line` citation in §3.1 is read back and checked against its own source
+  text on every build ({{v3_n_citations}} of them).
+- **[§3.1]** The section exists because two metrics in this project once disagreed in *direction*
+  at h = 1, and because a choice between two aggregations of the same metric once inverted a
+  comparison against the released model (Appendix G).
+- **[§3.1]** Three properties of the coverage statistic — pooled over all three axes, cumulative
+  over steps 1..h, and two-sided — were missing from the prose until the referee revision.
+- **[§3.1]** Earlier drafts called h = {{v2_diag_h}} a "deployment horizon". It is the upstream's
+  open-loop diagnostic length, and the label is withdrawn.
+- **[§4]** Both counts and both lists of untested claims are generated from a classification tag
+  carried in Appendix D's verdict column, so the enumeration cannot disagree with the count beside
+  it. It did once: an earlier draft of that sentence, itself the replacement for the withdrawn
+  claim `S-17` (a count defect in the same place), said {{appE_n_sim_word}} and then named
+  {{appF_n_polhw_lower}}, and called all of them claims about policy learning or hardware when one
+  of them is not. `S-17` withdrew a universal quantifier; its replacement got the arithmetic wrong
+  instead, the worse failure of the two because the sentence had just been rewritten under
+  scrutiny.

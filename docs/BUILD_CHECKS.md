@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 690 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 684 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -370,3 +370,30 @@ values (`M-66`). A sweep of all 21 pattern-based input discoveries in
 `scripts/` and `src/` now classifies each as an open population or frozen at write time;
 1 was frozen, and artifacts that discover their inputs now record the
 file list they were computed over.
+
+---
+
+## Moved from the paper body (pre-submission edit)
+
+The pre-submission edit cut the paper body by moving its drafting history here rather than
+deleting it: what an earlier draft said, how a check came to exist, and what a sweep found. Each
+item is labelled with the section it left. Nothing below is a claim the paper no longer makes; the
+claims stayed, and only their history moved.
+
+- **[§3.1]** Every `file:line` citation in §3.1 is read back and checked against its own source
+  text on every build (20 of them).
+- **[§3.1]** The section exists because two metrics in this project once disagreed in *direction*
+  at h = 1, and because a choice between two aggregations of the same metric once inverted a
+  comparison against the released model (Appendix G).
+- **[§3.1]** Three properties of the coverage statistic — pooled over all three axes, cumulative
+  over steps 1..h, and two-sided — were missing from the prose until the referee revision.
+- **[§3.1]** Earlier drafts called h = 368 a "deployment horizon". It is the upstream's
+  open-loop diagnostic length, and the label is withdrawn.
+- **[§4]** Both counts and both lists of untested claims are generated from a classification tag
+  carried in Appendix D's verdict column, so the enumeration cannot disagree with the count beside
+  it. It did once: an earlier draft of that sentence, itself the replacement for the withdrawn
+  claim `S-17` (a count defect in the same place), said six and then named
+  five, and called all of them claims about policy learning or hardware when one
+  of them is not. `S-17` withdrew a universal quantifier; its replacement got the arithmetic wrong
+  instead, the worse failure of the two because the sentence had just been rewritten under
+  scrutiny.
