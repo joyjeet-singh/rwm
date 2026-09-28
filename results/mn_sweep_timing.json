@@ -1,0 +1,149 @@
+{
+  "rule": "M-74",
+  "probe_iterations": 20,
+  "calibration": {
+    "centre_probe": {
+      "M": 32,
+      "N": 8,
+      "window": 40,
+      "steady_s_per_iter": 1.0965985806842102,
+      "probe_wall_clock_s": 21.948797544999252,
+      "n_train_windows": 7687
+    },
+    "centre_full_runs_wall_clock_s": [
+      4625.6387873310005,
+      2912.892670175,
+      3418.2364349269997
+    ],
+    "factor": 1.332212544672655,
+    "what": "mean wall_clock_s of Arm A seeds 0-2 at 2,500 iterations over 2,500 x the centre probe's steady s/iter; covers checkpoint evaluations and rolling checkpoints"
+  },
+  "configs": [
+    {
+      "M": 32,
+      "N": 32,
+      "window": 64,
+      "steady_s_per_iter": 2.049880422263078,
+      "probe_wall_clock_s": 40.933577640000294,
+      "n_train_windows": 7495,
+      "projected_h_per_run": 1.8964419539012167,
+      "projected_h_config": 5.68932586170365
+    },
+    {
+      "M": 16,
+      "N": 8,
+      "window": 24,
+      "steady_s_per_iter": 0.6810127648947711,
+      "probe_wall_clock_s": 13.806142855999497,
+      "n_train_windows": 7815,
+      "projected_h_per_run": 0.6300373253298774,
+      "projected_h_config": 1.8901119759896323
+    },
+    {
+      "M": 32,
+      "N": 16,
+      "window": 48,
+      "steady_s_per_iter": 1.4878047503158374,
+      "probe_wall_clock_s": 29.643458497999745,
+      "n_train_windows": 7623,
+      "projected_h_per_run": 1.3764389947182816,
+      "projected_h_config": 4.129316984154845
+    },
+    {
+      "M": 8,
+      "N": 8,
+      "window": 16,
+      "steady_s_per_iter": 0.4384685552630751,
+      "probe_wall_clock_s": 8.807687635999173,
+      "n_train_windows": 7879,
+      "projected_h_per_run": 0.4056481317819194,
+      "projected_h_config": 1.2169443953457582
+    },
+    {
+      "M": 32,
+      "N": 2,
+      "window": 34,
+      "steady_s_per_iter": 1.072583557210524,
+      "probe_wall_clock_s": 21.319761015998665,
+      "n_train_windows": 7735,
+      "projected_h_per_run": 0.9922981042538058,
+      "projected_h_config": 2.9768943127614174
+    },
+    {
+      "M": 32,
+      "N": 1,
+      "window": 33,
+      "steady_s_per_iter": 0.9153757737368371,
+      "probe_wall_clock_s": 18.2529118270013,
+      "n_train_windows": 7743,
+      "projected_h_per_run": 0.8468577005983695,
+      "projected_h_config": 2.5405731017951085
+    },
+    {
+      "M": 2,
+      "N": 8,
+      "window": 10,
+      "steady_s_per_iter": 0.32140764042100944,
+      "probe_wall_clock_s": 6.716566527999021,
+      "n_train_windows": 7927,
+      "projected_h_per_run": 0.29734950730729626,
+      "projected_h_config": 0.8920485219218888
+    },
+    {
+      "M": 1,
+      "N": 8,
+      "window": 9,
+      "steady_s_per_iter": 0.26111671500008304,
+      "probe_wall_clock_s": 5.278759834000084,
+      "n_train_windows": 7935,
+      "projected_h_per_run": 0.24157150232418403,
+      "projected_h_config": 0.7247145069725521
+    }
+  ],
+  "cap_hours": 25.0,
+  "projected_total_hours": 20.059929660644855,
+  "queued_configs": [
+    [
+      32,
+      32
+    ],
+    [
+      16,
+      8
+    ],
+    [
+      32,
+      16
+    ],
+    [
+      8,
+      8
+    ],
+    [
+      32,
+      2
+    ],
+    [
+      32,
+      1
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      1,
+      8
+    ]
+  ],
+  "dropped_configs": [],
+  "drop_recorded_in": null,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "iterations": 2500,
+  "probe_wall_minutes": 3.4321719487508138,
+  "threads": "none set, as every existing run (FILE_MAP.md \u00a75)"
+}
