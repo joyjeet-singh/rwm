@@ -53,7 +53,9 @@ over the same horizons; the first failure is structural rather than incidental. 
 still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is its
 size.
 
-Three things distinguish this from a re-run of the authors' code. **We rebuilt rather than
+This is a reproduction in the stronger sense: the contribution is not that the numbers came out
+the same, but what re-measuring the method reveals about where it is robust and where it is not.
+Three things distinguish it from a re-run of the authors' code. **We rebuilt rather than
 imported**, and matched the rebuild to the reference before any training (Appendix A), so a
 discrepancy found later belongs to the method, not to our wiring. **Decision rules were committed
 to git before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot
@@ -474,8 +476,9 @@ trajectories the gap excludes zero at 5 of 6 horizons and
 spans it at h=1: h = 368 is the end of a trend rather than a point we
 picked, h = 100 sits partway along it, and the claim is weakest exactly where the
 model is trained. **Only the h = 368 row is pre-registered.** Every other row was
-computed after the data existed, so by this paper's own standard (§8) it carries none of a
-pre-registration's weight, and nothing in the table discharges or re-opens the rule.
+computed after the data existed, so by this paper's own standard (§8) it carries none of a pre-registration's weight, the same
+treatment §6.7 gives the expectation we held about the counter-baseline, and nothing in the table
+discharges or re-opens the rule.
 
 **At h = 1 the table understates the evidence, and the correction runs against us.** The row
 rests on 4 independent 400-step trajectories. A 400-step unit is required only by the
@@ -561,8 +564,8 @@ calibration tables, so no model is run to build this table. **This table is at 2
 Both metrics put the released checkpoint first at h = 1 and h = 8, they name
 different leaders at h = 100, and at h = 368 both put an Arm A variant
 ahead of it: the reimplementation is behind the artifact it reimplements at short horizons and
-ahead of it at the longest horizon we measure. That reading flatters the released checkpoint,
-because the arena is out-of-sample for our arms and in-sample for it, which trained on all
+ahead of it at the longest horizon we measure. That reading flatters the released checkpoint, because the split is ours: the arena is
+out-of-sample for our arms and in-sample for it, which trained on all
 ten episodes (the in-sample caveat of §3).
 
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
@@ -573,7 +576,7 @@ The base paper's headline is a sample-efficiency result: policies transfer to ha
 
 A dynamics model trained on 0.133% of the reference's data still reproduces the training result, 4.61× at h = 368 and 2.58× at h = 100, and still beats the hold-last floor, by 2.8× and 2.0× at those two horizons. That is what this paper can add to the sample-efficiency question without training a policy.
 
-**Three limits.** It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's 6,000,000 transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
+**Three limits.** It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's 6,000,000 transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
 ---
 

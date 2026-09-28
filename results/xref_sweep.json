@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 60,
-  "n_ok": 58,
+  "n_pointers": 61,
+  "n_ok": 59,
   "n_reviewed_correct": 2,
   "reviewed": [
     {
@@ -54,6 +54,13 @@
       "ok": true,
       "detail": "target Appendix D; nouns ['full', 'table', 'claim', 'claim', 'original', 'states', 'where', 'states', 'verdict']; absent []",
       "context": "Appendix D gives the full table**, claim by claim, with what the original states, where it\nstates it, and our verdict"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.7 gives the expectation we held about the counter-baseline, and noth",
+      "ok": true,
+      "detail": "target 6.7; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['counter-baseline', 're-opens']",
+      "context": "\u00a76.7 gives the expectation we held about the counter-baseline, and nothing in the table\ndischarges or re-opens the rule"
     },
     {
       "class": "semantic",
