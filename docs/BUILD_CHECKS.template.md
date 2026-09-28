@@ -375,3 +375,10 @@ claims stayed, and only their history moved.
   of them is not. `S-17` withdrew a universal quantifier; its replacement got the arithmetic wrong
   instead, the worse failure of the two because the sentence had just been rewritten under
   scrutiny.
+- **[§5]** That the rule M-23 is anchored at the diagnostic horizon rather than the deployment one
+  is recorded in the ledger as `M-46`; nothing in §5's by-horizon table discharges or re-opens M-23.
+- **[§5]** The hold-last floor's win at one step is stated in §5 because an earlier §5 quoted the
+  h = {{v2_diag_h}} margin over the floor with no indication that it does not hold everywhere.
+- **[§5]** M-23 is anchored at h = {{v2_diag_h}}, where the claim is actually about, because M-16,
+  anchored at the training horizon, returned "cannot be settled". That change of anchor was made
+  before the runs, not after them (§8).

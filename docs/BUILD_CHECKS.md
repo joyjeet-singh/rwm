@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 684 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 673 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -397,3 +397,10 @@ claims stayed, and only their history moved.
   of them is not. `S-17` withdrew a universal quantifier; its replacement got the arithmetic wrong
   instead, the worse failure of the two because the sentence had just been rewritten under
   scrutiny.
+- **[§5]** That the rule M-23 is anchored at the diagnostic horizon rather than the deployment one
+  is recorded in the ledger as `M-46`; nothing in §5's by-horizon table discharges or re-opens M-23.
+- **[§5]** The hold-last floor's win at one step is stated in §5 because an earlier §5 quoted the
+  h = 368 margin over the floor with no indication that it does not hold everywhere.
+- **[§5]** M-23 is anchored at h = 368, where the claim is actually about, because M-16,
+  anchored at the training horizon, returned "cannot be settled". That change of anchor was made
+  before the runs, not after them (§8).
