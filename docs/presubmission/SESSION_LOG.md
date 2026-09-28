@@ -67,3 +67,41 @@ Next: S2a (Opus 5.5, high effort). Read `PLAN.md` §1 and S2a, rule **M-74** (gr
 Then S2b follows M-75/M-76: Table S7 architectures, both regimes, 18 governing runs, and the parameter-matched variants only within the cap.
 FILE_MAP §8's next-free IDs are superseded: next free **M-77**, S-20, R-76.
 Decisions for user: DECISIONS_FOR_USER.md#S1-original-vs-plan (three questions, answered 2026-09-28).
+
+## S2a — 2026-09-28 15:12 — Opus 5.5 (session effort could not be raised from inside the session; one reviewer on Sonnet 5) — status: COMPLETE
+Commits: bda0ebb [S2a][item 1] Configurable M and N for rule M-74, with a bitwise differential test
+cb9204c [S2a][items 2-3] Common-window evaluator, and the centre re-scored on it
+51c3d7f [S2a][item 4] Verdict script for rule M-74, committed before any sweep run
+2097c9b [S2a][items 5-6] Queue runner, and the timing probe against the cap (pushed before launch)
+ae7a7fe [S2a][item 7] Queue launched: RUN_QUEUE.md, the launch record, and unbuffered run logs
+(the commit carrying this entry) [S2a] Session log: S2a complete
+Done:
+- Item 1: `scripts/step5_train.py --sweep --history M --forecast N` builds windows of M + N rows and sets the config's horizons. Nothing else changes.
+  - Artifacts go to `results/mn_sweep_run_M*_N*_seed*.json`, weights to `runs/mn_M*_N*_seed*/`, both outside every `results/step5_*` glob the paper reads.
+  - The window count is asserted against the episode lengths in every run.
+  - `scripts/mn_sweep_differential.py` checks bitwise identity to Arm A seed 0's stored trace, first 20 iterations, all six terms. Both the new path at (32, 8) and the edited default path pass (`results/mn_sweep_differential.json`).
+  - Training-window counts: (32,8) 7,687; (32,32) 7,495; (16,8) 7,815; (32,16) 7,623; (8,8) 7,879; (32,2) 7,735; (32,1) 7,743; (2,8) 7,927; (1,8) 7,935.
+- Items 2–3: `scripts/mn_sweep_eval.py`, the common-window evaluator.
+  - The held-out windows are §5's four trajectories (starts 999, 1399, 7999, 8399; asserted), with `n_independent = 4`; the in-sample arena has 16.
+  - For every configuration, the history is the M rows before the same 368 target rows.
+  - The centre, Arm A seeds 0–2 at 2,500 iterations, was re-scored by inference only (`results/mn_sweep_centre.json`). It reproduces the head-to-head table to 3.9e-8.
+- Item 4: `scripts/verdict_mn_sweep.py` implements M-74 exactly.
+  - It uses the exact 256-resample bootstrap imported from `p5_sweep_power.py`, Holm with ties broken by M-74's grid order (validated against the grid), the four branches, and the failure path.
+  - `--self-test` passes 23 checks: every branch, the sign structure, Holm stops, ties and drops, 300 random families, and 5 end-to-end cases.
+  - One adversarial reviewer (Sonnet) found 1 blocker (tie-break order taken from the queue unvalidated) and 2 should-fix items; all were fixed and reconfirmed PASS.
+  - Committed and **pushed (2097c9b) before launch**.
+- Items 5–6: `scripts/queue_runner.sh` (never edited while running) and `scripts/queue_run.py` (arch dispatch plus a check of every finished artifact). The runner was tested on a dry queue: skipping, an unknown arch, a failed check, and the success branch of the check.
+  - The timing probe, calibrated against Arm A's own wall clock, projects **19.53 CPU-hours** against the 25-hour cap, so nothing is dropped and no ledger entry is needed.
+  - The queue holds 24 runs, written in M-74's priority order.
+- Item 7: **launched 14:51:27 +0530** with the plan's `nohup caffeinate -i` command. The first run, (32, 32) seed 0, has passed 500 iterations, with every parameter finite at 250 and 500.
+  - Its log stays empty until it ends, because of Python output buffering. `queue_run.py` now starts later runs unbuffered, a logging-only change.
+  - `docs/presubmission/RUN_QUEUE.md` records the runs, the projection, a finish at about 2026-09-29 10:23 +0530, and the status command.
+Build/checks: pass. The fast build, all 8 checks and gates, and a second build ran before launch, and every generated output was byte-identical to the committed tree; S2a changes nothing the paper reads. The build was not re-run after launch, so as not to take CPU from the first run. Nothing that feeds the paper changed after that check.
+Paper numbers changed: none
+CPU jobs over 1 min: all before launch — the differential test (45 s, then 60 s), the timing probe (3.4 min, then 3.4 min), and one build-and-check pass (about 50 s). After launch: one checkpoint-finiteness check (under 5 s), overlapping the first run.
+Next: S2b (Opus 5.5, high effort). Read `PLAN.md` §1 and S2b, `ORIGINAL_SPECS.md` §(b), rules **M-75 and M-76** (ledger entries only) and `FILE_MAP.md`. The rules govern where they differ from PLAN S2b: Table S7 architectures, both regimes, 18 governing runs, parameter-matched variants only within the 20 CPU-hour cap.
+- Add each baseline trainer to `TRAINERS` in `scripts/queue_run.py`, with its checks. **Never edit `scripts/queue_runner.sh`.**
+- Name baseline artifacts outside `results/step5_*`, append the runs to `runs/queue.txt` after the sweep lines, and update `RUN_QUEUE.md`.
+- If the runner has already exited when the runs are appended, relaunch it with the same command. It skips done and failed ids.
+- Timing probes during S2b compete with the running queue: log them.
+Decisions for user: none.
