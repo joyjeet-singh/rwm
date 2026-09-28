@@ -81,7 +81,11 @@ def main():
         sys.exit(1)
     print(f"queue_run: {run_id}: {' '.join(os.path.relpath(c, ROOT) if c.startswith(ROOT) else c for c in cmd[1:])}",
           flush=True)
-    rc = subprocess.run(cmd, cwd=ROOT).returncode
+    # Unbuffered, so runs/queue_logs/<id>.log shows progress while the run is live. The
+    # first queued run (mn_M32_N32_s0) started before this line existed: its log fills
+    # only when it ends. Logging only; no number a run computes depends on it.
+    env = {**os.environ, "PYTHONUNBUFFERED": "1"}
+    rc = subprocess.run(cmd, cwd=ROOT, env=env).returncode
     if rc != 0:
         print(f"queue_run: {run_id}: trainer exited {rc}")
         sys.exit(1)

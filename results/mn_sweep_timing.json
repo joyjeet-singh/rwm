@@ -6,8 +6,8 @@
       "M": 32,
       "N": 8,
       "window": 40,
-      "steady_s_per_iter": 1.0965985806842102,
-      "probe_wall_clock_s": 21.948797544999252,
+      "steady_s_per_iter": 1.0686806636315993,
+      "probe_wall_clock_s": 21.376204139000038,
       "n_train_windows": 7687
     },
     "centre_full_runs_wall_clock_s": [
@@ -15,7 +15,7 @@
       2912.892670175,
       3418.2364349269997
     ],
-    "factor": 1.332212544672655,
+    "factor": 1.367014895444335,
     "what": "mean wall_clock_s of Arm A seeds 0-2 at 2,500 iterations over 2,500 x the centre probe's steady s/iter; covers checkpoint evaluations and rolling checkpoints"
   },
   "configs": [
@@ -23,85 +23,85 @@
       "M": 32,
       "N": 32,
       "window": 64,
-      "steady_s_per_iter": 2.049880422263078,
-      "probe_wall_clock_s": 40.933577640000294,
+      "steady_s_per_iter": 1.9304336645789015,
+      "probe_wall_clock_s": 39.19340737499988,
       "n_train_windows": 7495,
-      "projected_h_per_run": 1.8964419539012167,
-      "projected_h_config": 5.68932586170365
+      "projected_h_per_run": 1.8325913709351052,
+      "projected_h_config": 5.497774112805315
     },
     {
       "M": 16,
       "N": 8,
       "window": 24,
-      "steady_s_per_iter": 0.6810127648947711,
-      "probe_wall_clock_s": 13.806142855999497,
+      "steady_s_per_iter": 0.6404859736842474,
+      "probe_wall_clock_s": 12.81255241100007,
       "n_train_windows": 7815,
-      "projected_h_per_run": 0.6300373253298774,
-      "projected_h_config": 1.8901119759896323
+      "projected_h_per_run": 0.6080235182982879,
+      "projected_h_config": 1.8240705548948637
     },
     {
       "M": 32,
       "N": 16,
       "window": 48,
-      "steady_s_per_iter": 1.4878047503158374,
-      "probe_wall_clock_s": 29.643458497999745,
+      "steady_s_per_iter": 1.444618423789411,
+      "probe_wall_clock_s": 28.797516713000732,
       "n_train_windows": 7623,
-      "projected_h_per_run": 1.3764389947182816,
-      "projected_h_config": 4.129316984154845
+      "projected_h_per_run": 1.371399238578779,
+      "projected_h_config": 4.114197715736337
     },
     {
       "M": 8,
       "N": 8,
       "window": 16,
-      "steady_s_per_iter": 0.4384685552630751,
-      "probe_wall_clock_s": 8.807687635999173,
+      "steady_s_per_iter": 0.42805023105259016,
+      "probe_wall_clock_s": 8.597923847000857,
       "n_train_windows": 7879,
-      "projected_h_per_run": 0.4056481317819194,
-      "projected_h_config": 1.2169443953457582
+      "projected_h_per_run": 0.4063548901717222,
+      "projected_h_config": 1.2190646705151666
     },
     {
       "M": 32,
       "N": 2,
       "window": 34,
-      "steady_s_per_iter": 1.072583557210524,
-      "probe_wall_clock_s": 21.319761015998665,
+      "steady_s_per_iter": 1.0129869003684642,
+      "probe_wall_clock_s": 20.202936253999724,
       "n_train_windows": 7735,
-      "projected_h_per_run": 0.9922981042538058,
-      "projected_h_config": 2.9768943127614174
+      "projected_h_per_run": 0.9616445706206092,
+      "projected_h_config": 2.8849337118618275
     },
     {
       "M": 32,
       "N": 1,
       "window": 33,
-      "steady_s_per_iter": 0.9153757737368371,
-      "probe_wall_clock_s": 18.2529118270013,
+      "steady_s_per_iter": 0.8707103583158307,
+      "probe_wall_clock_s": 17.443880537999576,
       "n_train_windows": 7743,
-      "projected_h_per_run": 0.8468577005983695,
-      "projected_h_config": 2.5405731017951085
+      "projected_h_per_run": 0.8265791871079269,
+      "projected_h_config": 2.4797375613237804
     },
     {
       "M": 2,
       "N": 8,
       "window": 10,
-      "steady_s_per_iter": 0.32140764042100944,
-      "probe_wall_clock_s": 6.716566527999021,
+      "steady_s_per_iter": 0.28299638399996757,
+      "probe_wall_clock_s": 5.825501893999899,
       "n_train_windows": 7927,
-      "projected_h_per_run": 0.29734950730729626,
-      "projected_h_config": 0.8920485219218888
+      "projected_h_per_run": 0.2686529668644726,
+      "projected_h_config": 0.8059589005934178
     },
     {
       "M": 1,
       "N": 8,
       "window": 9,
-      "steady_s_per_iter": 0.26111671500008304,
-      "probe_wall_clock_s": 5.278759834000084,
+      "steady_s_per_iter": 0.24859179431577536,
+      "probe_wall_clock_s": 5.0078535310003645,
       "n_train_windows": 7935,
-      "projected_h_per_run": 0.24157150232418403,
-      "projected_h_config": 0.7247145069725521
+      "projected_h_per_run": 0.23599214285756892,
+      "projected_h_config": 0.7079764285727068
     }
   ],
   "cap_hours": 25.0,
-  "projected_total_hours": 20.059929660644855,
+  "projected_total_hours": 19.533713656303412,
   "queued_configs": [
     [
       32,
@@ -144,6 +144,6 @@
     2
   ],
   "iterations": 2500,
-  "probe_wall_minutes": 3.4321719487508138,
+  "probe_wall_minutes": 3.299738335609436,
   "threads": "none set, as every existing run (FILE_MAP.md \u00a75)"
 }
