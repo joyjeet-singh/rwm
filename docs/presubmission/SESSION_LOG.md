@@ -155,3 +155,31 @@ Paper numbers changed: none
 CPU jobs over 1 min: see the BLOCKED entry above. Since then, only the 3-iteration dispatch test (about 15 s).
 Next: S3 (Opus 5.5, high effort). Items 1, 2 and 4: text only, so it can run while the queue trains. It is limited to jobs under about 10 CPU-minutes, each logged if over 1 minute. S3's item 4 computes `results/alignment_defect_ci.json`, which is inference on the released checkpoint: keep it short. Check the queue with `RUN_QUEUE.md`'s command.
 Decisions for user: none open (S2b-baseline-cap answered).
+
+## S3 — 2026-09-28 19:30 — Opus 5.5 (session effort could not be raised from inside the session) — status: BLOCKED
+Commits: 12e9da6 [S3][items 1-2] §5 names the setting of every h = 8 figure, and every arm table names its checkpoint
+(the commit carrying this entry) [S3] BLOCKED at item 4: the alignment defect's 75% does not survive independent trajectories
+Done:
+- Item 1: every h = 8 statement is traced (`docs/presubmission/S3_ITEM1_TRACE.md`).
+  - The plan's lead was wrong. The prose's 0.008 is M-23's single-seed estimate at the table's own 10,000-iteration checkpoint; "0 of 4" counts three-seed cells at 500 and 2,500.
+  - Case (a): each figure now names its setting through bound keys. The advantage is described as small at the training horizon and large beyond it. Figure 2's caption names its checkpoint.
+  - Guard: `check_h8_gap_labels`.
+  - R-42's single-seed interpretation, now contradicted, goes to OUT_OF_SCOPE for the user.
+- Item 2: all seven arm tables name their training iterations, bound (`iters_main` / `iters_long`). The head-to-head caption explains 0.5856 against 0.3582.
+  - Guard: `check_arm_table_captions`.
+  - §7.4 has no table, as recorded in OUT_OF_SCOPE.
+- Items 1–2 checks: all pass; the gate self-test catches 6 of 6; two consecutive builds are byte-identical.
+- Item 4: **BLOCKED** (`DECISIONS_FOR_USER.md#S3-alignment-defect`). `results/alignment_defect_ci.json` reproduces the published 75% and 9.5% exactly, but only on Protocol A's ten overlapping sampled windows, where one trajectory makes the 75%.
+  - On §5's four independent held-out trajectories: relative-L1 7.9% [3.1, 13.0], nRMSE form 1 6.6% [1.0, 8.0].
+  - On all twenty: the sign reverses, with intervals spanning zero.
+  - The §7.2 evidence and the author query both depend on the ruling and are not done.
+Build/checks: pass, after items 1–2. The item 4 work so far adds a script and an artifact that nothing in the build reads.
+Paper numbers changed: `pdf_pages` 48 → 49 and `tn_typed` 686 → 691 (both generated). Added keys: `iters_main`, `iters_long`, `m23_seed`, `bu_ckpts`.
+CPU jobs over 1 min, all overlapping the queue's runs:
+- build-and-check passes: 1 min 8 s, then 2 × about 1 min;
+- `alignment_defect_ci.py`: 3 min 39 s, twice.
+Next: the user answers `DECISIONS_FOR_USER.md#S3-alignment-defect`, then `Resume session S3.` Item 4 then continues under the ruling:
+- the text in §7.2, §3.1 and the contribution bullet;
+- the reset-row evidence in §7.2;
+- the author query.
+Decisions for user: DECISIONS_FOR_USER.md#S3-alignment-defect

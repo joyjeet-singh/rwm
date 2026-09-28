@@ -59,3 +59,47 @@ S2b stopped BLOCKED on 2026-09-28 at 19:00, before queueing any baseline run.
 **Answer (verbatim, asked in chat, 2026-09-28):** "Raise cap; queue all 18"
 
 **How S2b applies it:** the baseline cap becomes 23 CPU-hours, covering the 22.01-hour projection. All 18 Table S7 runs are appended after the sweep, in the rules' order: M-75 (tf) then M-76 (ar), MLP, RSSM, transformer, seeds 0–2. The parameter-matched variants (46.07 h in all) do not fit and are not run. The projected all-new total is 19.53 + 22.01 = 41.5 h, within Appendix C's 45.
+
+## S3-alignment-defect
+
+S3 stopped BLOCKED on 2026-09-28 at 19:30, at item 4. **Both of the plan's stop conditions fired:**
+- the n = 4 point estimates do not reproduce 75% and 9.5%;
+- the n = 20 companion differs in direction.
+
+**Evidence:** `results/alignment_defect_ci.json` (`scripts/alignment_defect_ci.py`). It uses the released checkpoint, rolled out exactly as `scripts/step4_0a_restate.py` rolls it out, and gives the overstatement at h = 368 as err(released pairing, offset 0) / err(causal pairing, offset 1) − 1.
+
+| Arena | Trajectories | nRMSE, as published (per-step, mean of ratios) | nRMSE form 1 | relative-L1 |
+|---|---|---|---|---|
+| **Protocol A**, where the published figures come from: 10 windows sampled (seed 0) from episodes 1 and 8, **overlapping** | 10, not independent | **74.70%** (the paper's 75%) | 23.51% | **9.48%** (the paper's 9.5%) |
+| §5's held-out arena: 4 non-overlapping | n_independent 4 | 10.73% [4.98, 12.84] | **6.55% [0.95, 7.97]** | **7.88% [3.11, 13.02]** |
+| All ten episodes, 20 non-overlapping (in-sample for the checkpoint) | n_independent 20 | −3.97% [−16.97, 5.48] | −2.14% [−9.97, 3.95] | −4.64% [−13.36, 3.17] |
+
+The intervals are 95% cluster bootstraps over whole trajectories, with both pairings inside each draw (exact over 256 resamples at n = 4; 20,000 at n = 20).
+
+**What the evidence says:**
+1. **The script reproduces the published figures exactly on their own arena** (74.70% and 9.48%, identical at printed precision). The computation is right; the arena and the estimator are the issue.
+2. **One trajectory makes the 75%.** In Protocol A's ten overlapping windows, the window starting at row 8,375 (episode 8) is overstated by +110.7% (nRMSE) and +81.3% (relative-L1); the other nine range from −1.8% to +10.6%. The published nRMSE takes the RMSE across trajectories at each step and averages ratios over dimensions, which lets that one trajectory dominate. Form 1 on the same ten windows gives 23.5%.
+3. **On the paper's own standard, independent trajectories with a cluster bootstrap:**
+   - on the held-out pair, the overstatement is about **7–8%** (relative-L1 7.9% [3.1, 13.0]; nRMSE form 1 6.6% [1.0, 8.0]), and all four trajectories are positive;
+   - **across all ten episodes it reverses sign** (−4.6% and −2.1%), with intervals spanning zero and per-trajectory values from −47% to +35%.
+4. **D-13 stands.** Row t holds the action that produced state t, and the all-zero actions at every reset row say so. The released evaluation's pairing is still one step stale. **What does not stand is the size, and the consistency of sign, of what that costs in error.**
+
+**Where 75% and 9.5% appear:**
+- the abstract (`PAPER.template.md:13`);
+- the contribution bullet "the checkpoint is materially better than its own evaluation reports" (`:65-69`);
+- §3.1 (`:383-384`);
+- §7.2 (`:1448`);
+- PLAN Appendix A's new abstract, which S4 installs.
+
+The source is `results/step4_0a_results.json` via ledger R-15.
+
+**Options:**
+1. **Restate on independent trajectories.** Recommended: it is the paper's own standard, and the only one the 75% fails.
+   - §7.2, §3.1 and the contribution bullet give the held-out n = 4 figures with intervals, relative-L1 7.9% [3.1, 13.0] and nRMSE form 1 6.6% [1.0, 8.0], both at h = 368.
+   - §7.2 adds the n = 20 companion, which reverses sign.
+   - "Materially better" and the 75% go. The defect stays a correctness defect, a one-step stale pairing, with a small error cost that is not consistent in sign.
+   - A supersession ledger entry records it. The abstract sentence (current and Appendix A) is rewritten to match.
+2. **Keep 75% and 9.5%, labelled as Protocol A**, with the independent-arena figures and the reversal beside them. The headline number stays, qualified.
+3. **Withdraw the size claim entirely.** Keep the convention defect (§7.2's alignment argument and the reset-row evidence) with no overstatement figure.
+
+**Answer:** (pending)
