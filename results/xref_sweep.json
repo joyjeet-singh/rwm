@@ -9,19 +9,10 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 59,
-  "n_ok": 58,
-  "n_reviewed_correct": 1,
-  "reviewed": [
-    {
-      "class": "semantic",
-      "pointer": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinc",
-      "ok": "reviewed-correct",
-      "detail": "target 2; nouns ['prior', 'work', 'calibrated-versus-well-ranked', 'distinction', 'turns']; absent ['prior', 'calibrated-versus-well-ranked', 'turns']",
-      "context": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinction it turns on",
-      "reviewed": "CORRECT \u2014 \u00a72 contains Malik, Kuleshov, 'calibrated' and 'well ranked', verified directly. The absent tokens are 'prior' and the hyphenated compound this sentence coins, neither of which the target needs to contain."
-    }
-  ],
+  "n_pointers": 57,
+  "n_ok": 57,
+  "n_reviewed_correct": 0,
+  "reviewed": [],
   "n_unverified": 0,
   "n_bad": 0,
   "bad": [],
@@ -88,21 +79,6 @@
       "ok": true,
       "detail": "target 6.6; nouns ['page', 'correcting', 'coupled', 'state', 'dimensions']; absent ['page', 'correcting']",
       "context": "\u00a76.6 spends a page correcting for the 45 coupled state dimensions"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinc",
-      "ok": "reviewed-correct",
-      "detail": "target 2; nouns ['prior', 'work', 'calibrated-versus-well-ranked', 'distinction', 'turns']; absent ['prior', 'calibrated-versus-well-ranked', 'turns']",
-      "context": "\u00a72 gives the prior work and the\ncalibrated-versus-well-ranked distinction it turns on",
-      "reviewed": "CORRECT \u2014 \u00a72 contains Malik, Kuleshov, 'calibrated' and 'well ranked', verified directly. The absent tokens are 'prior' and the hyphenated compound this sentence coins, neither of which the target needs to contain."
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a711 sets out that independently-seeded runs differ in *both*\ninitialisati",
-      "ok": true,
-      "detail": "target 11; nouns ['independently-seeded', 'runs', 'differ', 'initialisation', 'data', 'ordering', 'comparison', 'bounds', 'architectural', 'effect', 'rather']; absent ['architectural']",
-      "context": "\u00a711 sets out that independently-seeded runs differ in *both*\ninitialisation and data ordering, so this comparison **bounds** the architectural effect rather\nthan i"
     },
     {
       "class": "semantic",

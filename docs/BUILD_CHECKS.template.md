@@ -413,3 +413,7 @@ claims stayed, and only their history moved.
   it now says it ranks whole rollouts at one step ahead.
 - **[§6.7]** The released checkpoint's six-horizon count and the ensemble-5 rule's five-horizon
   count are kept in separate keys, so the build cannot print one where the other belongs.
+- **[§6.10]** An earlier draft gave the range of the σ gain as its values at the two shortest
+  horizons, which do not span it: the weakest gain lies at another horizon, below the stated floor.
+  The horizon sweep found it, flagging the sentence for carrying two horizons' figures while naming
+  two others.

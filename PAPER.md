@@ -1100,15 +1100,11 @@ opposite, and `M-54` records the correction.
 
 ### 6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena
 
-**Recalibrating a dynamics model's uncertainty inside model-based RL is not new, and this
-section is an instance of it rather than a departure from it** — §2 gives the prior work and the
-calibrated-versus-well-ranked distinction it turns on. **What is new here is the conditioning
-variable and one negative result.** The
-variable is the *forecast horizon*, and the negative result is that a single global multiplier
-**fails** where a per-horizon one shows no sign of failing. That is not a detail: an open-loop rollout's error
-accumulates with depth while its predicted σ does not (§6.9), so a horizon-blind recalibration
-cannot follow the thing it is trying to correct. This section is the measurement showing it does
-not.
+**Recalibrating a dynamics model's uncertainty inside model-based RL is not new** (§2). What is
+new here is the conditioning variable, the *forecast horizon*, and one negative result: a single
+global multiplier **fails** where a per-horizon one shows no sign of failing. An open-loop
+rollout's error accumulates with depth while its predicted σ does not (§6.9), so a horizon-blind
+recalibration cannot follow the thing it is trying to correct, and this section measures that.
 
 If σ had the right shape and the wrong scale, a single multiplier would repair it, and the
 finding would be a units problem with a one-line remedy. We tested that. A scalar was fitted on
@@ -1128,25 +1124,25 @@ method uses — a scalar of 5.08–5.82 brings h=1 coverage to
 and leaves h=368 at 17–21%. On the aleatoric term a scalar of
 593–611 gives 64–70% at h=1 and
 11–15% at h=368. Fitting over the whole rollout instead
-drives one-step coverage to 100% — an interval wide enough to be vacuous where the model is
-accurate — while still falling short at the far end.
+drives one-step coverage to 100%, an interval wide enough to be vacuous where the model is
+accurate, while still falling short at the far end. A constant multiplier cannot track an error
+that grows while σ does not (§6.9), so for a *constant* scale "right shape, wrong scale" does not
+survive.
 
-The reason is §6.9's mechanism: a constant multiplier cannot track an error that grows while σ does not. So "right shape, wrong scale" is the charitable reading of these tables, and for a *constant* scale it does not survive.
-
-**On the released checkpoint a per-horizon scalar lands near target, and this is the one concrete remedy in this paper; on a model that has not seen the test episodes the evidence is mixed.** Fitting one multiplier per horizon on one held-out episode and evaluating on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute 4 non-overlapping 400-step trajectories between them, so each direction fits on n_independent = 2 and is scored on the other 2. The last column repeats the test on Arm A at ensemble size 5 and 2,500 iterations (3 seeds), whose model never saw either episode:
+**On the released checkpoint a per-horizon scalar lands near target, and this is the one concrete remedy in this paper; on a model that has not seen the test episodes the evidence is mixed.** One multiplier per horizon is fitted on one held-out episode and evaluated on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute 4 non-overlapping 400-step trajectories between them, so each direction fits on n_independent = 2 and is scored on the other 2. The last column repeats the test on Arm A at ensemble size 5 and 2,500 iterations (3 seeds), whose model never saw either episode:
 
 | quantity | released checkpoint: cells unseen by the multiplier within 10 points of 68.27%, per-horizon c (unpowered) | same, constant c | same, per-horizon c fitted on a *different model* (unpowered) | range of fitted c | Arm A, its own per-horizon c: cells within the band, unseen by the model too |
 |---|---|---|---|---|---|
 | aleatoric | **12 / 12** | 2 / 12 | 0 / 72 | 592.6 – 7782 (13.1×) | 10 / 36 |
 | epistemic | **12 / 12** | 2 / 12 | 12 / 72 | 5.082 – 47.33 (9.31×) | 17 / 36 |
 
-On the released checkpoint every point estimate lands within 10 points of the 68.27% target for both quantities. **That is the same absolute test this section's table applies in its *different model* column, and it is just as UNPOWERED here:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the 10-point band resolvable at 0 of 12 quantity-by-horizon pairs, with a binding minimum detectable effect of 12.55–40.62 points. So a cell inside the band is compatible with a true coverage well outside it — and nothing here shows any cell is outside it either. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48% — 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at. **On Arm A, where the episodes are unseen by the model as well, its own multipliers manage 17 of 36 epistemic and 10 of 36 aleatoric cells**, so the recipe that lands every released-checkpoint cell does not carry over intact to a model that has not seen the test episodes.
+On the released checkpoint every point estimate lands within 10 points of the 68.27% target for both quantities. **That absolute test is UNPOWERED here, as in the *different model* column:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the 10-point band resolvable at 0 of 12 quantity-by-horizon pairs, with a binding minimum detectable effect of 12.55–40.62 points. So a cell inside the band is compatible with a true coverage well outside it, and nothing here shows any cell is outside it either. The largest deviation over all 24 held-out cells is aleatoric at h=100, fitted on episode 8 and scored on the other, at 77.48%, 9.21 points off target. The two largest deviations are both on the aleatoric term and both above target — 77.48% at h=100 and 76.55% at h=128 — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages 2 of 12, and those are the h=1 cells it was fitted at. **On Arm A, where the episodes are unseen by the model as well, its own multipliers manage 17 of 36 epistemic and 10 of 36 aleatoric cells**, so the recipe that lands every released-checkpoint cell does not carry over intact to a model that has not seen the test episodes.
 
-Three cautions a reader should apply. The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample — only cells unseen by the multiplier are evidence, and those are the cells reported. **And that column is thinner than its count suggests:** the 12 cells are 6 horizons × two fold directions on the same 4 trajectories, and each multiplier is fitted on n_independent = 2 and scored on the other 2. They are not 12 independent successes and no P-value attaches to the count; it is reported so a reader can see how thin the evidence is, alongside a result we believe. And the correction is a calibration patch, not a fix: it leaves the model's σ carrying no more information than before and simply rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
+**Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **That column is thinner than its count suggests:** the 12 cells are 6 horizons × two fold directions on the same 4 trajectories, each multiplier fitted on n_independent = 2 and scored on the other 2. They are not 12 independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.8 caution. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
 
-**The fourth column, and what it does not say. The table is a property of the model, not of the horizon.** Everything above is established across *episodes*, on one model. Whether the same lookup table works on a *different* model is a separate claim, and M-69 fixed what an answer would look like — criterion, arena, horizons and minimum detectable effect — before any cross-model multiplier was computed. Multipliers were fitted on Arm A at ensemble size 5 (3 seeds) and scored on the released checkpoint, then the reverse, over the same 4 held-out trajectories and the same 6 horizons. The statistic the rule governs on is the **paired** change in held-out coverage — coverage under the other model's multiplier minus coverage under the same model's, on the same trajectories — because this arena can resolve that (largest minimum detectable effect 5.73 points against the ±10-point band) and cannot resolve the absolute one (12.55–40.62 points, resolvable at 0 of 12 quantity-by-horizon pairs). The verdict is **DOES NOT TRANSFER — A PROPERTY OF THE MODEL**: of 72 governing cells, 52 have a 95% interval on the paired change lying entirely outside the band, 3 entirely inside and 17 straddling an edge, and the largest paired change has magnitude 67.5 points. That is branch 1 of the rule's three. Per direction the verdict is the same: fitting on Arm A, **DOES NOT TRANSFER — A PROPERTY OF THE MODEL** (29 of 36 cells outside the band); fitting on the released checkpoint, **DOES NOT TRANSFER — A PROPERTY OF THE MODEL** (23 of 36). The plainest statement of the gap is the multipliers themselves: Arm A's are 0.0069× to 1.36× the released checkpoint's at the same horizon. 
+**The fourth column: the table is a property of the model, not of the horizon.** Everything above is established across *episodes*, on one model. Whether the same lookup table works on a *different* model is a separate claim, and rule M-69 (Appendix E) fixed what an answer would look like — criterion, arena, horizons and minimum detectable effect — before any cross-model multiplier was computed. Multipliers were fitted on Arm A at ensemble size 5 (3 seeds) and scored on the released checkpoint, then the reverse, over the same 4 held-out trajectories and 6 horizons. The statistic the rule governs on is the **paired** change in held-out coverage, coverage under the other model's multiplier minus coverage under the same model's, on the same trajectories, because this arena can resolve that (largest minimum detectable effect 5.73 points against the ±10-point band) and cannot resolve the absolute one. The verdict is **DOES NOT TRANSFER — A PROPERTY OF THE MODEL**: of 72 governing cells, 52 have a 95% interval on the paired change lying entirely outside the band, 3 entirely inside and 17 straddling an edge, and the largest paired change has magnitude 67.5 points. That is branch 1 of the rule's three. Per direction the verdict is the same: fitting on Arm A, **DOES NOT TRANSFER — A PROPERTY OF THE MODEL** (29 of 36 cells outside the band); fitting on the released checkpoint, **DOES NOT TRANSFER — A PROPERTY OF THE MODEL** (23 of 36). The plainest statement of the gap is the multipliers themselves: Arm A's are 0.0069× to 1.36× the released checkpoint's at the same horizon.
 
-**The new column is the absolute test — held-out coverage within 10 points of 68.27% under a multiplier fitted on a different model — and it is UNPOWERED.** A cell inside that band is not evidence the multiplier transferred; at this arena the binding minimum detectable effect on that quantity is 12.55–40.62 points against a 10-point band, so such a cell is compatible with a true coverage well outside it. It is reported because the column §6.8 already has that shape, and because dropping it would hide the fact that this arena cannot resolve it. It is not the verdict and cannot move it. **And the same caution the per-horizon column above carries applies here unchanged and harder:** this is 6 horizons × two directions on the same 4 trajectories and is **not 12 independent successes**, the 72 governing cells are not 72 independent tests, the 3 Arm A seeds share their training data and differ only in initialisation and ordering, and no P-value attaches to any count here. The two models also differ on several axes at once, so this bounds transfer between these two models rather than attributing it to any one difference.
+**The *different model* column is the absolute test, and it is unpowered for the reason above**, so a cell inside its band is not evidence the multiplier transferred. It is reported because dropping it would hide that this arena cannot resolve it; it is not the verdict and cannot move it. The §6.8 caution applies here unchanged and harder: the 72 governing cells are not 72 independent tests, the 3 Arm A seeds share their training data and differ only in initialisation and ordering, and no P-value attaches to any count here. The two models also differ on several axes at once, so this bounds transfer between these two models rather than attributing it to any one difference.
 
 So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage 17 of 36 epistemic cells, so there the evidence is mixed.**
 
@@ -1172,20 +1168,20 @@ growing error against a fixed σ.
 ### 6.10 Testing the mechanism: an ensemble that shares nothing
 
 §6.4 establishes the topology as a fact and the mechanism as a hypothesis. This subsection tests
-the hypothesis, under a rule (M-44) committed to git before any of the artifacts below existed,
-together with a power check estimating what that rule could detect at the sample size it would
+the hypothesis, under a rule committed to git before any of the artifacts below existed (rule
+M-44, Appendix E), with a power check estimating what it could detect at the sample size it would
 face.
 
 **The contrast, and why it is affordable.** Training 5 genuinely independent models
-from scratch costs about 4.8 h of wall clock on two cores at the iteration count these
-runs use — 4.8 h against Appendix B's 49.8 h for the whole project. Arm A at
-ensemble size 1 already existed at seeds 0, 1 and 2; we added two more at about
-0.9 h each, 1.7 h in total, and scored the 5 together as an
-ensemble **at evaluation time**. No new training code and no new architecture — and the
-disagreement across 5 independently-initialised *full models* is exactly the contrast
-§6.4 asks for. The rollout protocol mirrors the shared-trunk one in every respect except the one
-under test: each member sees the same input state, each keeps **its own** recurrent hidden state,
-and the ensemble mean is fed back to all of them.
+from scratch costs about 4.8 h of wall clock on two cores at these runs' iteration
+count, against Appendix B's 49.8 h for the whole project. Arm A at ensemble size 1 already
+existed at seeds 0, 1 and 2; we added two more at about 0.9 h each,
+1.7 h in total, and scored the 5 together as an ensemble **at
+evaluation time**. There is no new training code and no new architecture, and the disagreement
+across 5 independently initialised *full models* is exactly the contrast §6.4 asks
+for. The rollout protocol mirrors the shared-trunk one in every respect except the one under test:
+each member sees the same input state, each keeps **its own** recurrent hidden state, and the
+ensemble mean is fed back to all of them.
 
 | h | independent err/σ | shared-trunk err/σ | independent ±1σ | shared-trunk ±1σ |
 |---|---|---|---|---|
@@ -1199,20 +1195,19 @@ and the ensemble mean is fed back to all of them.
 *Same trajectories, same harness, n_independent = 4, every model at 2,500 training iterations. The shared-trunk column is the mean
 over 3 seeds; the comparison below is paired against each of them separately.*
 
-**M-44 returns MECHANISM SUPPORTED.** All 6 of its
+**The rule returns MECHANISM SUPPORTED.** All 6 of its
 6 conditions hold, against every one of the 3 shared-trunk seeds.
 At h = 100 the independent ensemble's overconfidence factor is
-0.485–0.503× the shared-trunk arms' — a **2.03×**
-improvement against a pre-registered minimum detectable effect of 1.45× — and its
-±1σ coverage is 6.69 to 7.33 points higher, a mean of +7.12 against
-an MDE of 2.26. Every paired interval excludes zero. **Members that share a feature
-extractor do produce a smaller spread, and the effect is large enough to matter.**
+0.485–0.503× the shared-trunk arms', a **2.03×** improvement
+against a pre-registered minimum detectable effect of 1.45×, and its ±1σ coverage is
+6.69 to 7.33 points higher, a mean of +7.12 against an MDE of
+2.26. Every paired interval excludes zero. **Members that share a feature extractor do
+produce a smaller spread, and the effect is large enough to matter.**
 
 **Where the improvement comes from, which is not all one thing.** The overconfidence factor is
-error over σ, so it improves if σ grows *or* if error shrinks — and only the first is the
-trunk-sharing mechanism. Five independent models also denoise better than five heads on one
-trunk, which is an ordinary ensembling effect and not the thing under test. Splitting the
-improvement into its two multiplicative parts:
+error over σ, so it improves if σ grows *or* if error shrinks, and only the first is the
+trunk-sharing mechanism; five independent models also denoise better than five heads on one trunk,
+an ordinary ensembling effect. Splitting the improvement into its two multiplicative parts:
 
 | h | σ larger by | error smaller by | total | share from σ | share from accuracy |
 |---|---|---|---|---|---|
@@ -1227,26 +1222,21 @@ improvement into its two multiplicative parts:
 independent ensemble is very slightly the **worse** predictor there and the σ gain more than
 covers it.*
 
-**The reading, stated at the horizon the rule is stated over.** σ is larger at every horizon — by 1.49× at its weakest
-(h = 368) and 1.81× at its strongest
-(h = 8) — which is the direction trunk-sharing predicts, and at
-h = 100 it is 1.65×, **71%** of the
-improvement. So the
-mechanism is supported and it is the larger part of the effect where the method operates. At the
-open-loop diagnostic horizon of h = 368 the split reverses — 57% of
-the improvement there is the ensemble simply predicting better — so a reader who takes the 2.53× figure at that horizon as a measure of the
-architectural effect would overstate it. We report both columns for that reason. (An
-earlier draft gave the σ range above as the h = 1 and h = 8 values, which do not span it —
-h = 368's 1.49× falls below the stated floor. Found by the
-horizon sweep, which flagged the sentence for carrying two horizons' figures while naming
-two others.)
+**The reading, at the horizon the rule is stated over.** σ is larger at every horizon, by
+1.49× at its weakest (h = 368) and 1.81× at its strongest
+(h = 8), the direction trunk-sharing predicts, and at h = 100 it is
+1.65×, **71%** of the improvement. So the mechanism is supported,
+and it is the larger part of the effect where the method operates. At the open-loop diagnostic
+horizon of h = 368 the split reverses: 57% of the improvement there is
+the ensemble simply predicting better, so a reader who takes the 2.53× figure at that
+horizon as a measure of the architectural effect would overstate it.
 
 **What this does and does not license.** It licenses saying that **the released ensemble's
 disagreement understates epistemic uncertainty partly because its members are not independent
 models**, with a measured size at the horizon that matters. It does not license attributing the
-whole gap to trunk-sharing: §11 sets out that independently-seeded runs differ in *both*
-initialisation and data ordering, so this comparison **bounds** the architectural effect rather
-than isolating it, and the bound is generous to the mechanism by construction.
+whole gap to trunk-sharing: independently seeded runs differ in *both* initialisation and data
+ordering (§11), so this comparison **bounds** the architectural effect rather than isolating it,
+and the bound is generous to the mechanism by construction.
 
 **And it does not repair the interval.** The independent ensemble is
 5.2× overconfident at h = 100 with
@@ -1257,27 +1247,25 @@ doing and it is not sufficient; §6.8's per-horizon multiplier remains the only 
 
 ### 6.11 Both fixes on the same models: the combined arm
 
-§6.10 changes the **topology** and holds the objective at `mse`. §6.5's arms change the
-**objective** and hold the topology at ensemble size 1, where the disagreement across members is
-zero by construction. Neither answers the question a practitioner has, which is what the two
-together give. A reader is otherwise invited to add two effects that were never measured on the
-same model — the arithmetic this paper criticises elsewhere. This subsection runs the combination,
-under a rule (M-68) committed to git before either of the two new members existed, with a minimum
-detectable effect estimated before them as well.
+§6.10 changes the **topology** and holds the objective at `mse`; §6.5's arms change the
+**objective** and hold the topology at ensemble size 1, where disagreement is zero by construction.
+Neither answers the practitioner's question of what the two give together, and adding two effects
+never measured on the same model is the arithmetic this paper criticises elsewhere. This subsection
+runs the combination, under a rule committed to git before either new member existed (rule M-68,
+Appendix E), with a minimum detectable effect estimated in advance as well.
 
-**The arm.** 5 independently-initialised full models, sharing no trunk and no hidden
-state, trained under `gaussian_nll` — every setting identical to §6.10's arm except the loss type.
-Three of the five — seeds 0, 1 and 2 — already existed under that objective; two more
-were trained, and the
-5 are scored together as an ensemble at evaluation time under §6.10's rollout
+**The arm.** 5 independently initialised full models, sharing no trunk and no hidden
+state, trained under `gaussian_nll`, every setting identical to §6.10's arm except the loss type.
+Three of the five, seeds 0, 1 and 2, already existed under that objective; two more were trained,
+and the 5 are scored together as an ensemble at evaluation time under §6.10's rollout
 protocol, on the same held-out arena of non-overlapping 400-step trajectories at
 n_independent = 4, over the same six horizons.
 
 **Which σ the coverage is against.** The combined arm is the first arm in this paper carrying
 **both** an aleatoric head that has not collapsed to zero and an across-member epistemic spread.
-The figures below are the **epistemic** one: the standard deviation across the five members' mean predictions, taken per state dimension, rather than the aleatoric head's output. That is the quantity M-68 names and
-the quantity §6.10's table reports, so the two tables are comparable line for line. The aleatoric
-head is reported separately in §6.5 and does not enter here.
+The figures below are the **epistemic** one, the standard deviation across the five members' mean predictions, taken per state dimension, rather than the aleatoric head's output: the quantity the rule names and
+§6.10's table reports, so the two tables are comparable line for line. The aleatoric head is
+reported in §6.5 and does not enter here.
 
 | h | combined err/σ | shared-trunk err/σ | combined ±1σ | shared ±1σ | combined ±2σ | shared ±2σ |
 |---|---|---|---|---|---|---|
@@ -1291,7 +1279,7 @@ head is reported separately in §6.5 and does not enter here.
 *Same trajectories, same harness, same bootstrap unit as §6.10, every model at 2,500 training iterations. The shared-trunk columns are the
 mean over 3 seeds; the comparison below is paired against each of them separately.*
 
-**M-68 returns THE COMBINATION IMPROVES CALIBRATION** — branch 2 of the four the rule names. All
+**The rule returns THE COMBINATION IMPROVES CALIBRATION**, branch 2 of the four it names. All
 5 of its 5 conditions hold, against every one of the
 3 shared-trunk seeds. At h = 100 the combined arm's overconfidence
 factor is 0.506–0.525× the shared-trunk arms', a **1.94×**
@@ -1300,12 +1288,12 @@ improvement against a minimum detectable effect of 1.218× fixed in advance
 +7.34 against an MDE of 2.50 points; and every paired interval excludes zero.
 
 **Condition (e), and how we read it.** The rule's fifth condition asks that both statistics move in
-the improving direction at at least four of the six horizons. Its text says "against every
-shared-trunk seed" and the rule states globally that a condition holds only if it holds against all
-three, so we applied the strict reading: a horizon counts only when **both** statistics improve
-there against **all three** seeds. It holds at 6 of 6 horizons, so the
-looser per-seed reading would not have changed the verdict. We record which we applied because the
-two readings can differ and the rule does not spell the difference out.
+the improving direction at at least four of the six horizons, "against every shared-trunk seed",
+and the rule states globally that a condition holds only if it holds against all three. We applied
+the strict reading: a horizon counts only when **both** statistics improve there against **all
+three** seeds. It holds at 6 of 6 horizons, so the looser per-seed
+reading would not have changed the verdict; we record which we applied because the rule does not
+spell the difference out.
 
 | h | σ larger by | error smaller by | total | share from σ | share from accuracy |
 |---|---|---|---|---|---|
@@ -1319,42 +1307,40 @@ two readings can differ and the rule does not spell the difference out.
 *The same σ-versus-accuracy split §6.10 uses, so the two arms' improvements can be compared part by
 part. Shares are of the log improvement, so the two columns add to one.*
 
-**The objective's own contribution is below what this design can resolve.** M-68 scores the combined
-arm against the **shared-trunk** arms, so what its verdict measures is the two fixes together. The
+**The objective's own contribution is below what this design can resolve.** The rule scores the
+combined arm against the **shared-trunk** arms, so its verdict measures the two fixes together. The
 comparison that isolates the objective is against §6.10's independent arm, which differs from this
-one in the loss type and in nothing else, and both come from the same script on the same
-trajectories. At h = 100 switching `mse` for `gaussian_nll` multiplies the overconfidence
-factor by **1.044×** (a 95% interval from the same cluster bootstrap over whole
-trajectories, [1.029, 1.054]) — the wrong direction, slightly — moves ±1σ coverage by
-+0.22 points ([-0.31, +1.09], which spans zero), and multiplies the
-epistemic σ by 0.940×. Both effects sit under the minimum detectable effect this
-design fixed in advance — 1.218× on the factor and 2.50 points on coverage
-(results/p3_combined_arm_power.json, binding_mde at h = 100 (largest of the four calibrations)) — so although the factor's interval lies wholly on the worse side of no
-change, the objective's separate effect is **below the size this design was built to resolve at
-n_independent = 4**, and the
-point estimate points away from an improvement rather than towards one. It does not establish that
-the objective contributes nothing: reading a null out of an effect smaller than its own floor is the error M-24
-and M-43 record, and M-68's fourth branch exists to say underpowered rather than null. What the arm
-does settle is the combination, which is better calibrated than the shared-trunk arms by essentially
-the amount §6.10 already measured for independence alone (2.03× there,
-1.94× here). **The two fixes do not add. A reader who added them would have been
-wrong, which is why the arm was run.** That the objective's separate effect is at most small here is
-not a surprise once stated: the objective governs the **aleatoric** head, and the epistemic term is
-a spread across members that the loss never sees.
+one in the loss type and nothing else, from the same script on the same trajectories. At
+h = 100 switching `mse` for `gaussian_nll` multiplies the overconfidence factor by
+**1.044×** (95% interval from the same cluster bootstrap over whole trajectories,
+[1.029, 1.054]), the wrong direction, slightly; moves ±1σ coverage by
++0.22 points ([-0.31, +1.09], which spans zero); and multiplies the
+epistemic σ by 0.940×. Both effects sit under the minimum detectable effect fixed
+in advance, 1.218× on the factor and 2.50 points on coverage
+(results/p3_combined_arm_power.json, binding_mde at h = 100 (largest of the four calibrations)), so although the factor's interval lies wholly on the worse side of no change,
+the objective's separate effect is **below the size this design was built to resolve at
+n_independent = 4**, and the point estimate points away from an improvement. It does not
+establish that the objective contributes nothing: reading a null out of an effect smaller than its
+own floor is the error M-24 and M-43 record, and the rule's fourth branch exists to say
+underpowered rather than null. What the arm does settle is the combination, which is better
+calibrated than the shared-trunk arms by essentially the amount §6.10 measured for independence
+alone (2.03× there, 1.94× here). **The two fixes do not add. A reader
+who added them would have been wrong, which is why the arm was run.** That the objective's separate
+effect is at most small is not a surprise once stated: the objective governs the **aleatoric**
+head, and the epistemic term is a spread across members that the loss never sees.
 
 **And it still does not repair the interval.** The combined arm is 5.4×
 overconfident at h = 100 with 15.53% coverage where a calibrated
 Gaussian gives 68.27%. Better than the shared-trunk arms, no better than independence
 alone, and still not an interval. §6.8's per-horizon multiplier remains the only correction in this paper whose estimates all land within the band, though only on the released checkpoint and no single cell is resolvable at this arena. On Arm A, whose model never saw the test episodes, it manages 17 of 36 epistemic cells (§6.8).
 
-**What the arm does not separate.** It differs from the shared-trunk arms on three axes at once —
+**What the arm does not separate.** It differs from the shared-trunk arms on three axes at once:
 trunk sharing, the objective, and capacity (a factor of 3.49 in state-pathway
-parameters, as §6.10's contrast carries) — and independently-seeded runs also differ in data ordering. M-68 said so in advance:
-it bounds the combination and attributes nothing. The one further comparison this subsection makes —
-the `mse`/`gaussian_nll` pair above, which holds every other axis fixed — sits outside the rule's
-governing statistics and lands under the design's own minimum detectable effect, so it bounds the
-objective's separate contribution rather than measuring it.
-
+parameters, as §6.10's contrast carries), and independently seeded runs also differ in data
+ordering. The rule said so in advance: it bounds the combination and attributes nothing. The one
+further comparison here, the `mse`/`gaussian_nll` pair above, which holds every other axis fixed,
+sits outside the rule's governing statistics and under the design's own minimum detectable effect,
+so it bounds the objective's separate contribution rather than measuring it.
 
 ---
 
