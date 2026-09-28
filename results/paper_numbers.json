@@ -7913,7 +7913,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 693
+    "value": 691
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

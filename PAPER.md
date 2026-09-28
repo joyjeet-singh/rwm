@@ -4,7 +4,7 @@
      then run: python scripts/build_paper.py
      1055 values substituted from 78 artifacts. -->
 
-# What a released robotic world model's uncertainty is worth: a one-step evaluation defect and a collapsed σ
+# Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
 ---
 
@@ -40,7 +40,9 @@ held-out coverage estimate near nominal, though no cell is individually resolvab
 ## 1. Introduction
 
 A world model that reports its own uncertainty is more useful than one that does not, and the
-uncertainty-aware Robotic World Model reports one. This paper asks what that number means.
+uncertainty-aware Robotic World Model reports one. This paper asks what that number means,
+and the title gives the answer: it gets the order of the model's errors right and their size
+wrong.
 
 We came to the question sideways. Our aim was an ordinary reproduction: rebuild the proprioceptive
 dynamics model from scratch, check it against the released implementation, and see whether the
@@ -48,7 +50,9 @@ paper's central training claim holds. It does. But the same rebuild made a secon
 to ask, because we had a from-scratch model, the released checkpoint, and a harness that could
 score both: *is the predicted σ calibrated?* Neither of the two the checkpoint emits is — the
 per-member σ by three to four orders of magnitude, the ensemble disagreement the method actually
-uses by one to two — and for the first of them the reason is structural rather than incidental.
+uses by one to two — and for the first of them the reason is structural rather than incidental. The disagreement
+still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is
+its size.
 
 This is a reproduction paper, and we mean the term in its stronger sense: the contribution is not
 that the numbers came out the same, but what systematically re-measuring the method reveals about
@@ -71,38 +75,46 @@ and we report that too.
 
 **Contributions.**
 
+- **The uncertainty gets the order right and the size wrong, in the first calibration
+  measurement we are aware of for this released checkpoint** (Lu et al. (2022) measure this family
+  of penalties on models they train themselves; §2). Ensemble disagreement, the quantity the
+  method uses, ranks realised error and still correlates +0.419 with it with the rollout and
+  the forecast depth both held fixed, yet on data the checkpoint trained on it is
+  8.3× smaller than that error at h = 1 and 33.4× at
+  h = 100 (§6.2, §6.7). Of the 2 free baselines added here it beats
+  1; the model's own predicted step size ranks error at +0.4697 against
+  disagreement's +0.6053, a margin that 25 independent trajectories would resolve if
+  it is the true one, against the 20 here (§11).
+- **The base paper's central training claim reproduces, and reverses at one step.** Training on
+  the model's own rollouts beats teacher forcing by 4.61× on relative-L1 at
+  h = 368 over 3 seeds, and by 2.58× at h = 100,
+  under a rule committed to git before the runs existed (§5). At one step a second pre-registered
+  rule, rebuilding the evaluation at a 33-row unit with 60 independent units
+  where the 400-step unit gives 4, finds a gap of -0.0194 [-0.0310, -0.0093]: it
+  excludes zero in favour of **teacher forcing** (§5).
+- **The σ = 0 optimum of the implemented objective.** The per-member σ, which the method discards,
+  is minimised at zero by the implemented state loss: the collapse is derived analytically rather
+  than observed, and demonstrated against known noise (§6.3).
+- **Trunk-sharing, tested.** The five members share one trunk, one recurrent state and
+  89.15% of each member's parameters, so their spread cannot express uncertainty the
+  trunk does not already carry (§6.4). Under a rule committed before the runs, an ensemble of
+  5 independently-initialised full models is 2.03× better calibrated
+  than the shared-trunk arms, against a pre-registered minimum detectable effect of
+  1.45×, and still 5.2× overconfident at h = 100
+  (§6.10).
+- **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one episode
+  and scored on the other, brings every released-checkpoint coverage estimate near nominal where a
+  global multiplier does not, though no single cell is resolvable (§6.8). That checkpoint trained
+  on both episodes, so its cells are unseen by the multiplier only; on Arm A, whose model never saw
+  them, its own multipliers manage 17 of 36 disagreement cells.
 - **The released evaluation is misaligned by one step, and what that costs is small.** Training
   pairs states and actions index-for-index; evaluation feeds the action from *t−1*. On
   4 independent trajectories the stale pairing overstates the checkpoint's error at
   h = 368 by 7.9% [3.1, 13.0] on relative-L1 and 6.6% [1.0, 8.0] in
   nRMSE, and over all ten episodes the sign reverses (§7.2); one line fixes it.
-- **The σ = 0 optimum of the implemented objective.** The aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.3).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise; losses and gradients match to 0.000e+00 across 7 loss terms
   and 106 parameter tensors, before any training (Appendix A).
-- **The first calibration measurement we are aware of for either uncertainty output of this released checkpoint.** Lu et al. (2022) assess calibration for this family of penalties on models they train themselves (§2); we measure coverage against a nominal, on a checkpoint its authors deployed. Both outputs are overconfident by one to four orders of magnitude, with intervals over independent trajectories at every horizon (§6.2).
-- **The base paper's central training claim reproduces, and the advantage grows with
-  forecast horizon**: a factor of 4.61× on relative-L1 at h = 368 over
-  3 seeds, under a rule committed to git before the runs existed, rising
-  monotonically to that from 2.58× at h = 100 (§5).
-- **At one step the comparison reverses, and we report it against our own arm.** A second
-  pre-registered rule rebuilds the evaluation at a 33-row unit, giving
-  60 independent units where the 400-step unit gives 4. The gap becomes
-  -0.0194 [-0.0310, -0.0093] — it excludes zero in favour of **teacher forcing**. What the
-  400-step unit could only report as spanning zero is a real reversal (§5).
-- **A candidate mechanism for the epistemic failure, from source.** The five members share one
-  trunk, one recurrent state and 89.15% of each member's parameters, so their spread
-  cannot express uncertainty the trunk does not already carry (§6.4).
-- **The ranking claim tested against free baselines neither original ran**, and against six
-  controls, the last of which removes trajectory difficulty rather than forecast depth and is the
-  only one that isolates within-rollout information. Of the 2 baselines added here, disagreement beats 1 (§6.7).
-- **A free baseline ranks error nearly as well as the ensemble.** The baseline disagreement does not beat is the model's own predicted step size (the size of the change between consecutive predictions), which needs no ensemble and no second model: it ranks error at +0.4697 against five-member disagreement's +0.6053, and the margin between them is below what this sample can resolve, so we cannot say the ensemble ranks better than a subtraction (§6.7). Disagreement does carry information the subtraction lacks — a partial correlation of +0.5430 with step size removed — and the margin is nearer to resolving than §6.7's pre-registered threshold implies: if the observed margin is the true one, 25 independent trajectories would resolve it against the 20 here, or 91 under the protocol §6.7 pre-registered (§11).
-- **The mechanism tested rather than asserted, under a rule committed before the runs.** An ensemble of 5 independently-initialised full models, sharing nothing, is 2.03× better calibrated than the shared-trunk arms against a pre-registered minimum detectable effect of 1.45×. The decomposition says what that is made of: σ larger by 1.65×, 71% of the improvement at h = 100, reversing to 57% from accuracy at h = 368 (§6.10).
-- **A candidate repair, with mixed evidence.** One multiplier per horizon, fitted on one episode
-  and scored on the other, brings every released-checkpoint coverage estimate near nominal where a
-  global multiplier does not, though no single cell is resolvable (§6.8). That checkpoint trained
-  on both episodes, so its cells are unseen by the multiplier only; on Arm A, whose model never saw
-  them, its own multipliers manage 17 of 36 disagreement cells.
 
 A reader who wants only what to do differently should read §9, *Actionable lessons*; the rest of
 the paper is the evidence behind it.
