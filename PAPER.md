@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1055 values substituted from 78 artifacts. -->
+     1057 values substituted from 78 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -10,30 +10,32 @@
 
 ## Abstract
 
-We rebuild the proprioceptive dynamics model of the *Robotic World Model*
-(arXiv:2501.10100v1) and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on
-CPU, checked against the released reference at gradient level.
-
-**The released evaluation is misaligned by one step.** Training pairs states and actions
-index-for-index; evaluation feeds the action from *t−1*. On 4 independent trajectories
-this overstates the checkpoint's error at h = 368 by 6.6% [1.0, 8.0] in
-nRMSE, a small cost whose sign does not hold across
-all ten episodes; one line fixes it.
-
-**The σ the method discards is optimised away.** The implemented state loss is minimised at
-σ = 0 for any μ, with no log-σ term to oppose it: the collapse is derived, not observed.
-
-**The disagreement the method penalises with is miscalibrated as a scale.** Ensemble
-disagreement is smaller than realised error by 8.3× at h = 1, on data this
-checkpoint trained on, and by 33.4× at h = 100, where its
-imagination rollouts run.
-
-**The base paper's central training claim reproduces**: 4.61× on relative-L1 at h = 368, on held-out data over only 4 independent trajectories, under a rule committed to git before the runs, but on 7,991 transitions
-against the reference's 6,000,000, 0.133% of its world-model budget, on one robot, one
-gait, one terrain.
-
-A per-horizon multiplier, fitted on one held-out episode and scored on the other, brings every
-held-out coverage estimate near nominal, though no cell is individually resolvable.
+We rebuild the proprioceptive dynamics model of the *Robotic World Model* (arXiv:2501.10100v1)
+and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU. Before training,
+outputs, losses and gradients match the released implementation exactly. The base paper's central
+training claim reproduces: training on the model's own rollouts beats teacher forcing by
+4.61× at 368 steps and 2.58× at 100, under a rule
+committed before the runs, though teacher forcing leads at one step. It uses 0.133% of the
+reference's world-model data, one robot, gait and terrain, and 4 independent
+held-out trajectories. The follow-up's uncertainty gets the order right and the size wrong.
+Ensemble disagreement, which the method subtracts from reward, correlates +0.605 with
+realised error, and +0.419 with rollout and depth both held fixed. Yet on data the
+checkpoint trained on, it is 8.3× smaller than that error at one step and
+33.4× at the method's 100-step horizon. Because the shortfall grows
+with depth, no single penalty weight absorbs it. A free signal, the model's predicted step size,
+ranks error nearly as well (+0.470); the margin is unresolved. The five members share
+89% of their parameters; at 100 steps, five independent models are
+2.03× better calibrated and still 5.2× overconfident. The
+per-member σ, which the method discards, is driven to zero by the implemented loss, as we derive
+and confirm on data with known noise. A per-horizon rescaling brings the released checkpoint's
+coverage within 10 points of nominal on episodes it trained on, though no cell is
+resolvable. On episodes our own ensembles never saw, it does so in only 17 of
+36 disagreement cells: a recipe to refit, not a demonstrated fix. Separately,
+the released evaluation pairs each prediction with the previous step's action, which on the same
+trajectories overstates the checkpoint's error at 368 steps by 6.6%
+[1.0, 8.0] in nRMSE and 7.9% [3.1, 13.0] in relative-L1; across all ten episodes the
+sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
+miscalibration costs.
 
 ---
 

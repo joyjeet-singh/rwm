@@ -3791,6 +3791,10 @@
     "source": "results/e7_free_baselines.json",
     "value": "+0.4697"
   },
+  "e7_step_r3": {
+    "source": "results/e7_free_baselines.json",
+    "value": "+0.470"
+  },
   "e7_step_ws": {
     "source": "results/e7_free_baselines.json",
     "value": "+0.5196"
@@ -7913,7 +7917,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 691
+    "value": 688
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -8058,6 +8062,10 @@
   "v1_shared_pct": {
     "source": "results/v1_ensemble_topology.json",
     "value": "89.15"
+  },
+  "v1_shared_pct0": {
+    "source": "results/v1_ensemble_topology.json",
+    "value": "89"
   },
   "v1_shared_pct_model": {
     "source": "results/v1_ensemble_topology.json",

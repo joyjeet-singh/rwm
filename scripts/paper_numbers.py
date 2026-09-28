@@ -462,6 +462,9 @@ def main():
         "results/e7_free_baselines_power.json")
     put("e7_mde_partial", f'{E7["thresholds"]["partial"]:.4f}',
         "results/e7_free_baselines_power.json")
+    # The abstract prints the step-size correlation at the three decimals its neighbours use.
+    put("e7_step_r3", f'{_bl["step-size"]["r_baseline_error"]:+.3f}',
+        "results/e7_free_baselines.json")
     for _k, _tag in (("step-size", "step"), ("entry-res", "entry"),
                      ("forecast-index", "index")):
         _r = _bl[_k]
@@ -2039,6 +2042,8 @@ def main():
     put("v1_member_params", f'{_ref["state_pathway_params_per_member"]:,}',
         "results/v1_ensemble_topology.json")
     put("v1_shared_pct", f'{_mech["shared_pct_of_member"]:.2f}',
+        "results/v1_ensemble_topology.json")
+    put("v1_shared_pct0", f'{_mech["shared_pct_of_member"]:.0f}',      # the abstract's rounding
         "results/v1_ensemble_topology.json")
     put("v1_private_pct", f'{_mech["private_pct_of_member"]:.2f}',
         "results/v1_ensemble_topology.json")

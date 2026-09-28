@@ -330,7 +330,11 @@ CLAIMS = [
     # count in the abstract, the lessons or the conclusion must carry an
     # interval beside it or a footnote saying the units are not independent.
     {"id": "C9.1", "kind": "count-dependence", "where": "abstract / 9 / 12",
-     "says": "held-out coverage estimate near nominal, though no cell is individually resolvable",
+     # Re-anchored in pre-submission S4: the abstract, §9 and §12 were rewritten (item 3's
+     # "unseen by the multiplier / by the model" caveat and PLAN Appendix A's abstract), and
+     # the old fragment went with them. The scan itself -- clean k-of-k counts in these three
+     # sections -- is unchanged.
+     "says": "A per-horizon rescaling brings the released checkpoint's coverage within",
      "sections": ["Abstract", "9. Actionable lessons", "12. Conclusion"]},
 
     # ---- C10 retraction-consistency --------------------------------------
@@ -511,7 +515,18 @@ CLAIMS = [
      # as an address, a horizon label or a declared constant, with the build
      # failing on anything left over. B8 replaced a false claim with an
      # over-strong one; this replaces it with the enforced one.
-     "max_words": 370, "max_numerals": 18},
+     #
+     # Pre-submission S4 (2026-09-28): 17 to 26 numerals and 237 to 330 words.
+     # This fourth raise is the first argued outside the check, and the reason is a
+     # ruling rather than a trim. The plan asked for its Appendix A abstract with
+     # every listed number bound, and for the alignment sentence on S3's independent
+     # figures in both metrics with both intervals; together that is 26. Asked, the
+     # user ruled "Full Appendix A; raise cap"
+     # (docs/presubmission/DECISIONS_FOR_USER.md#S4-abstract-budget). The cap is set
+     # AT the installed count, not above it, so the next addition fails the build and
+     # has to be argued for as these were. The word cap is unchanged; the plan's own
+     # limit, 330, is tighter and the abstract meets it.
+     "max_words": 370, "max_numerals": 26},
 
     # ---- C13 interval-required -------------------------------------------
     # 6.2's ratios and coverages were bare point estimates in a paper whose
