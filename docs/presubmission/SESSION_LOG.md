@@ -385,20 +385,20 @@ Done:
   |---|---:|---:|---|---|---:|---:|
   | §6 lead-in | 73 | 56 | | §6.9 | 192 | 192 |
   | §6.1 | 548 | 488 | | §6.10 | 966 | 887 |
-  | §6.2 | 2,205 | ~1,970 | | §6.11 | 1,278 | 1,226 |
+  | §6.2 | 2,205 | 1,968 | | §6.11 | 1,278 | 1,226 |
   | §6.3 | 1,828 | 1,729 | | §7 (7.1–7.5) | 888 | 827 |
   | §6.4 | 626 | 512 | | §8 | 596 | 518 |
-  | §6.5 | 122 | 122 | | §9 | 769 | ~690 |
+  | §6.5 | 122 | 122 | | §9 | 769 | 687 |
   | §6.6 | 1,363 | 1,225 | | §10 | 200 | 200 (S4's text) |
   | §6.7 | 2,791 | 2,549 | | §11 | 2,186 | 1,854 |
   | §6.8 | 1,585 | 1,416 | | §12 | 918 | 850 |
   | | | | | Data and code | 513 | 513 (disclosures) |
 
-  The range went from 19,647 to about 17,820 (−9%).
+  The range went from 19,647 to 17,819 (−9.3%).
 - **Final report against the target (the plan's S7 duty).**
   - The body (§1 to Data and code) is **24,753 words** against S0's 27,387, a cut of **2,634 words (9.6%)**.
   - The target was ≤ 19,170 (30%). **The shortfall is 5,583 words.** Per the plan, the cut is under 30%, so no cuts were forced.
-  - **The largest remaining sections:** §6.7 2,549; §5 2,011; §6.2 ~1,970; §11 1,854; §6.3 1,729; §2 1,613; §6.8 1,416; §6.11 1,226; §6.6 1,225; §6.10 887; §1 879; §12 850.
+  - **The largest remaining sections:** §6.7 2,549; §5 2,011; §6.2 1,968; §11 1,854; §6.3 1,729; §2 1,613; §6.8 1,416; §6.11 1,226; §6.6 1,225; §6.10 887; §1 879; §12 850.
   - What is left is results, tables and the qualifications S3–S5 required; the drafting history is out. Reaching 30% would mean removing measured content or moving whole analyses to the supplement, which is a decision for the user, not a style edit.
 - **Drafting history moved, not deleted.** 21 items went to BUILD_CHECKS' "Moved from the paper body (pre-submission edit)", labelled [§6.2], [§6.3], [§6.4], [§6.6], [§6.7], [§6.10], [§7.4], [§8], [Appendix B], [Appendix D] and [Appendix E]. With S6's 8, the section holds 29.
 - **Rule IDs.** Each rule is named once per section at first mention, as "(rule M-xx, Appendix E)"; all were checked against Appendix E's 17 rules. The ledger notes M-24, M-54 and M-71 stay as plain pointers. D-13 is removed from prose.
