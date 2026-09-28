@@ -274,6 +274,13 @@ INCLUDE_FILES = [
     # bundle. The assertion below makes the whole class impossible rather than
     # this one instance.
 ]
+# Pre-submission S5, by user ruling 2026-09-28: the pre-submission programme's own
+# records (PLAN, SESSION_LOG, DECISIONS_FOR_USER, the unsent author query, FILE_MAP)
+# are internal working documents, like docs/SUBMISSION_PACKAGE.md, and never ship in
+# any bundle. They also quote the paper's old title, which item 4 keeps out of the
+# bundle. A whole directory, so it is pruned from the walk rather than listed by file.
+EXCLUDE_DIRS = ("docs/presubmission",)
+
 # This file and its sibling carry the very patterns they search for.
 EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            # The cover statement is addressed to the action editor, not to a
@@ -391,7 +398,8 @@ def collect():
         if not os.path.isdir(d):
             continue
         for root, dirs, names in os.walk(d):
-            dirs[:] = [x for x in dirs if x != "__pycache__"]
+            dirs[:] = [x for x in dirs if x != "__pycache__"
+                       and os.path.join(root, x) not in EXCLUDE_DIRS]
             for n in sorted(names):
                 p = os.path.join(root, n)
                 if p in EXCLUDE or p.endswith(SKIP_SUFFIX) or n.startswith("."):

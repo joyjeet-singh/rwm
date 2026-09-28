@@ -134,3 +134,23 @@ Asked in chat by S4 on 2026-09-28, before any S4 edit. **The plan contradicted i
 - The alignment sentence uses S3's independent figures (`ad_*`) in both metrics with both intervals, and states the ten-episode reversal.
 - The wording is trimmed to at most 330 words.
 - C12.1's `max_numerals` rises to the count installed. The reason goes beside the three earlier raises and names this ruling as its authority; the word cap stays at 370.
+
+## S5-bundle-presubmission
+
+Asked in chat by S5 on 2026-09-28. **The problem:**
+- `scripts/make_anon_bundle.py` walks all of `docs/`, and nothing excluded `docs/presubmission/`.
+- So the anonymous bundle would ship this programme's own records: PLAN, SESSION_LOG, DECISIONS_FOR_USER with the user's rulings, the unsent author query, and FILE_MAP.
+- PLAN.md and FILE_MAP.md quote the paper's old title, which item 4 keeps out of the bundle.
+- S3 had flagged the directory for "the bundle session", but no later session edits the bundle builders, and S11 makes no edits.
+
+**Options put:**
+1. Exclude the directory from both builders (recommended).
+2. Ship it and scrub the old title from PLAN and FILE_MAP.
+3. Leave it for later.
+
+**Answer (verbatim):** "Exclude the directory (Recommended)"
+
+**How S5 applies it:**
+- `EXCLUDE_DIRS = ("docs/presubmission",)` prunes the directory from the walk in both `scripts/make_anon_bundle.py` and `scripts/build_supplementary.py`, with the ruling cited beside it.
+- PLAN.md and FILE_MAP.md stay as records, unedited.
+- A dry run of `collect()` gives 459 files, none under `docs/presubmission/`, and none containing the old title. The gitignored `docs/presubmission/sources/` is no longer walked.

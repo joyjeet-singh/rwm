@@ -164,12 +164,21 @@ def scrub(text):
     return hits
 
 
+# Pre-submission S5, by user ruling 2026-09-28: the pre-submission programme's own
+# records (PLAN, SESSION_LOG, DECISIONS_FOR_USER, the unsent author query, FILE_MAP)
+# are internal working documents, like docs/SUBMISSION_PACKAGE.md, and never ship in
+# any bundle. They also quote the paper's old title, which item 4 keeps out of the
+# bundle. A whole directory, so it is pruned from the walk rather than listed by file.
+EXCLUDE_DIRS = ("docs/presubmission",)
+
+
 def main():
     files = []
     for d in INCLUDE_DIRS:
         if not os.path.isdir(d):
             continue
-        for root, _, names in os.walk(d):
+        for root, dirs, names in os.walk(d):
+            dirs[:] = [x for x in dirs if os.path.join(root, x) not in EXCLUDE_DIRS]
             if "__pycache__" in root:
                 continue
             for n in sorted(names):
