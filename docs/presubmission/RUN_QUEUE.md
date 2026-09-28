@@ -34,7 +34,36 @@ setting the centre's. They run as whole configurations, in M-74's priority order
   covers the checkpoint evaluations at 500 and 2,500 iterations.
 - **Projected finish of the sweep: about 2026-09-29 10:23 (+0530)**, if nothing else uses
   the CPU.
-- **Baselines:** S2b appends rules M-75 and M-76's runs after these lines and updates this file.
+- **Baselines:** queued after the sweep by S2b (below).
+
+**Rules M-75 and M-76, the architecture baselines:** added by S2b on 2026-09-28. There are 18
+runs: MLP, RSSM and transformer at the original's Table S7 sizes, × teacher-forced (M-75) and
+autoregressive (M-76) regimes, × seeds 0–2, at 2,500 iterations each. They are queued in the
+rules' order.
+
+| Rule | Baseline | Regime | Parameters | Probe s/iter (contended) | Projected h/run | Projected h, 3 seeds |
+|---|---|---|---:|---:|---:|---:|
+| M-75 | mlp | tf | 610,484 | 0.139 | 0.07 | 0.21 |
+| M-75 | rssm | tf | 3,180,468 | 5.485 | 2.81 | 8.43 |
+| M-75 | transformer | tf | 132,148 | 2.010 | 1.03 | 3.09 |
+| M-76 | mlp | ar | 610,484 | 0.196 | 0.10 | 0.30 |
+| M-76 | rssm | ar | 3,180,468 | 4.459 | 2.28 | 6.85 |
+| M-76 | transformer | ar | 132,148 | 2.042 | 1.05 | 3.14 |
+
+- **Projection:** 22.01 CPU-hours, above PLAN Appendix C's
+  20-hour baseline cap. S2b stopped BLOCKED, and the user raised
+  the cap to 23 hours (`DECISIONS_FOR_USER.md#S2b-baseline-cap`: "Raise cap;
+  queue all 18").
+- **Why it is conservative:** the projection comes from `results/baselines_timing.json`. The
+  probes ran while the sweep trained, and the calibration factor (0.737)
+  also carries RWM's checkpoint evaluations, which the baselines never run.
+- **Parameter-matched variants:** not run. All specs together project
+  46.07 h, over the cap, so under M-75 and M-76 none of them is queued.
+- **Projected finish of everything: about 2026-09-30 08:23 (+0530).**
+- **Outputs:** each baseline run writes `results/baseline_run_<arch>_<regime>_s7_seed<s>.json`
+  and `runs/baseline_<arch>_<regime>_s7_seed<s>/`. `scripts/queue_run.py` checks its
+  iterations, M = 32, N = 8, arch, regime, spec, seed, parameter count, `wall_clock_s`, finite
+  losses and weights.
 
 Each run writes:
 - its artifact to `results/mn_sweep_run_M<M>_N<N>_seed<s>.json`, outside every

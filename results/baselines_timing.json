@@ -172,13 +172,47 @@
       "n_params": 686196
     }
   ],
-  "cap_hours": 20.0,
+  "cap_hours": 23.0,
   "projected_governing_hours": 22.014498983608703,
   "projected_all_hours": 46.07395852674619,
   "matched_variants_fit": false,
-  "queued": [],
-  "blocked": [
+  "queued": [
+    [
+      "mlp",
+      "tf",
+      "s7"
+    ],
+    [
+      "rssm",
+      "tf",
+      "s7"
+    ],
+    [
+      "transformer",
+      "tf",
+      "s7"
+    ],
+    [
+      "mlp",
+      "ar",
+      "s7"
+    ],
+    [
+      "rssm",
+      "ar",
+      "s7"
+    ],
+    [
+      "transformer",
+      "ar",
+      "s7"
+    ]
+  ],
+  "blocked": [],
+  "probe_wall_minutes": 12.054532702763876,
+  "blocked_before_ruling": [
     "the Table S7 arms project 22.01 CPU-hours, above the 20-hour cap; no baseline may be dropped (PLAN S2b)"
   ],
-  "probe_wall_minutes": 12.054532702763876
+  "cap_hours_before_ruling": 20.0,
+  "cap_ruling": "docs/presubmission/DECISIONS_FOR_USER.md#S2b-baseline-cap"
 }

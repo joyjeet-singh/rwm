@@ -56,4 +56,6 @@ S2b stopped BLOCKED on 2026-09-28 at 19:00, before queueing any baseline run.
 2. **Keep the cap and re-probe once the sweep has finished**, on an idle machine. That delays queueing the baselines until the sweep ends, around 2026-09-29 10:30.
 3. **Another decision**, such as fewer seeds or a smaller RSSM. That would change M-75 and M-76, which fix three seeds and Table S7 sizes, and would need a new ledger entry.
 
-**Answer:** (pending)
+**Answer (verbatim, asked in chat, 2026-09-28):** "Raise cap; queue all 18"
+
+**How S2b applies it:** the baseline cap becomes 23 CPU-hours, covering the 22.01-hour projection. All 18 Table S7 runs are appended after the sweep, in the rules' order: M-75 (tf) then M-76 (ar), MLP, RSSM, transformer, seeds 0–2. The parameter-matched variants (46.07 h in all) do not fit and are not run. The projected all-new total is 19.53 + 22.01 = 41.5 h, within Appendix C's 45.

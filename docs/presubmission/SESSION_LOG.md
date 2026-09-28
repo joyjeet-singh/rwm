@@ -138,3 +138,20 @@ CPU jobs over 1 min: all overlapped the M-74 sweep and inflate its `wall_clock_s
 - **Smaller jobs:** the evaluator self-test (about 2 min, twice), the verdict self-tests (about 1 min each) and the 3-iteration smoke tests (about 2 min).
 Next: the user answers `DECISIONS_FOR_USER.md#S2b-baseline-cap`, then `Resume session S2b.` The remaining S2b work is to append the Table S7 runs to `runs/queue.txt` (`scripts/baselines_timing.py --write-queue` refuses while blocked, so the resume follows the ruling), update `RUN_QUEUE.md`, log COMPLETE and push. The sweep keeps running meanwhile (3 of 24 runs done at 18:48).
 Decisions for user: DECISIONS_FOR_USER.md#S2b-baseline-cap
+
+## S2b — 2026-09-28 19:10 — Opus 5.5 (resumed in the same session after the ruling) — status: COMPLETE
+Commits: c030999 [S2b] BLOCKED at the baseline cap: timing record, queue dispatcher, log
+(the commit carrying this entry) [S2b][item 7] Baselines queued under the user's cap ruling
+Done:
+- The user ruled in chat, "Raise cap; queue all 18", recorded verbatim at `DECISIONS_FOR_USER.md#S2b-baseline-cap`. The baseline cap is now 23 CPU-hours, covering the 22.01-hour projection.
+- `scripts/baselines_timing.py --from-record-cap 23 --ruling …` queued from the committed probe record, with no re-probe. The record keeps the original block beside the ruling (`blocked_before_ruling`, `cap_hours_before_ruling`).
+- **18 Table S7 runs appended to `runs/queue.txt`** after the 24 sweep lines: M-75 (tf) then M-76 (ar), each MLP, RSSM, transformer, seeds 0–2. The parameter-matched variants (46.07 h in all) do not fit and are not run, as M-75 and M-76 require.
+- The baseline dispatch was tested end to end (MLP, 3 iterations): every field check passed, and the only failure was the expected missing checkpoint. The test files were removed.
+- `RUN_QUEUE.md` updated. The projected finish of the whole queue is about 2026-09-30 08:23 +0530.
+- The rules text needed no ledger entry: M-75 and M-76 pre-registered that S2b stops for the user's decision, and the decision is recorded and pushed before any baseline data exists.
+- The ladder passes for all three baselines; the deviations table has no UNVERIFIED rows; the verdict script was committed and pushed before any baseline run (5785260).
+Build/checks: not re-run. Nothing the paper reads has changed since S2a's pre-launch pass, which had every check passing.
+Paper numbers changed: none
+CPU jobs over 1 min: see the BLOCKED entry above. Since then, only the 3-iteration dispatch test (about 15 s).
+Next: S3 (Opus 5.5, high effort). Items 1, 2 and 4: text only, so it can run while the queue trains. It is limited to jobs under about 10 CPU-minutes, each logged if over 1 minute. S3's item 4 computes `results/alignment_defect_ci.json`, which is inference on the released checkpoint: keep it short. Check the queue with `RUN_QUEUE.md`'s command.
+Decisions for user: none open (S2b-baseline-cap answered).

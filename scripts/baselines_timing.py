@@ -52,10 +52,50 @@ def run(cmd, log):
         return subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT, cwd=R.REPO_ROOT).returncode
 
 
+def write_queue(queued):
+    qp = os.path.join(R.REPO_ROOT, "runs", "queue.txt")
+    text = open(qp).read()
+    assert "bl_" not in text, "baseline lines are already queued"
+    with open(qp, "a") as f:
+        f.write("# --- rules M-75 (tf) and M-76 (ar): architecture baselines, Table S7 first\n")
+        for arch, regime, spec in queued:
+            for s in SEEDS:
+                f.write(f"bl_{arch}_{regime}_{spec}_s{s} {arch}-{regime}-{spec} 32 8 {s} {ITERS}\n")
+    print(f"  appended {len(queued) * len(SEEDS)} runs to runs/queue.txt")
+
+
+def from_record(cap, ruling):
+    """Queue from the committed probe record under a cap the USER set after a block.
+
+    No re-probe: the record is the measurement. Only the cap changes, and only by the user's
+    ruling, which is recorded beside the original block rather than over it.
+    """
+    op = os.path.join(R.RESULTS, "baselines_timing.json")
+    t = json.load(open(op))
+    assert t["blocked"] and not t["queued"], "from-record is only for a recorded block"
+    assert cap >= t["projected_governing_hours"], "the ruled cap does not cover the Table S7 arms"
+    matched_fit = t["projected_all_hours"] <= cap
+    queued = [[r["arch"], r["regime"], r["spec"]] for r in t["configs"]
+              if r["governs"] or matched_fit]
+    t.update({"blocked_before_ruling": t["blocked"], "blocked": [], "cap_hours_before_ruling":
+              t["cap_hours"], "cap_hours": cap, "cap_ruling": ruling,
+              "matched_variants_fit": matched_fit, "queued": queued})
+    json.dump(t, open(op, "w"), indent=2)
+    print(f"  cap {cap} h by {ruling}; Table S7 {t['projected_governing_hours']:.2f} h queued; "
+          f"matched variants {'queued' if matched_fit else 'NOT RUN'} ({t['projected_all_hours']:.2f} h)")
+    write_queue(queued)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-queue", action="store_true")
+    ap.add_argument("--from-record-cap", type=float, default=None,
+                    help="after a recorded block: queue under this cap, set by the user's ruling")
+    ap.add_argument("--ruling", default=None, help="where the user's ruling is recorded")
     args = ap.parse_args()
+    if args.from_record_cap is not None:
+        assert args.ruling, "--from-record-cap needs --ruling"
+        return from_record(args.from_record_cap, args.ruling)
     if os.path.isdir(PROBE_DIR):
         shutil.rmtree(PROBE_DIR)
     os.makedirs(PROBE_DIR)
@@ -131,15 +171,7 @@ def main():
     if blocked:
         sys.exit(3)
     if args.write_queue:
-        qp = os.path.join(R.REPO_ROOT, "runs", "queue.txt")
-        text = open(qp).read()
-        assert "bl_" not in text, "baseline lines are already queued"
-        with open(qp, "a") as f:
-            f.write("# --- rules M-75 (tf) and M-76 (ar): architecture baselines, Table S7 first\n")
-            for arch, regime, spec in queued:
-                for s in SEEDS:
-                    f.write(f"bl_{arch}_{regime}_{spec}_s{s} {arch}-{regime}-{spec} 32 8 {s} {ITERS}\n")
-        print(f"  appended {len(queued) * len(SEEDS)} runs to runs/queue.txt")
+        write_queue(queued)
 
 
 if __name__ == "__main__":
