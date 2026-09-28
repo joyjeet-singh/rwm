@@ -1,0 +1,322 @@
+{
+  "purpose": "PLAN S2b step 5: the verification ladder, every baseline, before any run",
+  "rwm_state_pathway_params": 714164,
+  "memorise": {
+    "batch": 32,
+    "lr": 0.001,
+    "max_iterations": 3000,
+    "required_factor": 100.0
+  },
+  "determinism_iterations": 10,
+  "baselines": {
+    "mlp_s7": {
+      "n_params": 610484,
+      "ratio_to_rwm": 0.854823261883825,
+      "zero_delta_max_abs": 0.0,
+      "zero_delta_ok": true,
+      "memorise": {
+        "tf": {
+          "reached": true,
+          "iterations": 151,
+          "first": 6.444488525390625,
+          "last": 0.06436526030302048,
+          "factor": 100.12370796064664,
+          "seconds": 6.988260008998623
+        },
+        "ar": {
+          "reached": true,
+          "iterations": 272,
+          "first": 43.8856086730957,
+          "last": 0.42696258425712585,
+          "factor": 102.78560766501934,
+          "seconds": 17.526610617002007
+        }
+      },
+      "determinism": {
+        "tf": {
+          "identical": true,
+          "first_losses": [
+            8.243538856506348,
+            8.580429077148438,
+            8.747360229492188,
+            8.706836700439453,
+            7.8061723709106445,
+            8.404512405395508,
+            8.66708755493164,
+            8.369499206542969,
+            7.685549259185791,
+            7.721319198608398
+          ]
+        },
+        "ar": {
+          "identical": true,
+          "first_losses": [
+            48.32180404663086,
+            48.71771240234375,
+            47.838951110839844,
+            45.39992904663086,
+            41.46441650390625,
+            43.43564224243164,
+            45.615570068359375,
+            41.50018310546875,
+            38.433982849121094,
+            38.65447998046875
+          ]
+        }
+      },
+      "alignment": {
+        "tf": true,
+        "ar": true,
+        "rollout": true
+      },
+      "passed": true
+    },
+    "transformer_s7": {
+      "n_params": 132148,
+      "ratio_to_rwm": 0.1850387305996942,
+      "zero_delta_max_abs": 0.0,
+      "zero_delta_ok": true,
+      "memorise": {
+        "tf": {
+          "reached": true,
+          "iterations": 199,
+          "first": 9.277223587036133,
+          "last": 0.08812638372182846,
+          "factor": 105.27180618598572,
+          "seconds": 82.26346261400249
+        },
+        "ar": {
+          "reached": true,
+          "iterations": 208,
+          "first": 112.02998352050781,
+          "last": 1.1060408353805542,
+          "factor": 101.28919289129301,
+          "seconds": 88.3824155809998
+        }
+      },
+      "determinism": {
+        "tf": {
+          "identical": true,
+          "first_losses": [
+            11.048705101013184,
+            11.315428733825684,
+            11.294754028320312,
+            11.054143905639648,
+            9.935951232910156,
+            10.452138900756836,
+            10.590116500854492,
+            10.084264755249023,
+            9.333523750305176,
+            9.238147735595703
+          ]
+        },
+        "ar": {
+          "identical": true,
+          "first_losses": [
+            114.96503448486328,
+            113.89177703857422,
+            108.75739288330078,
+            101.55706024169922,
+            92.44390869140625,
+            92.21160888671875,
+            91.8244857788086,
+            81.99433898925781,
+            76.83087158203125,
+            74.24046325683594
+          ]
+        }
+      },
+      "alignment": {
+        "tf": true,
+        "ar": true,
+        "rollout": true
+      },
+      "passed": true
+    },
+    "rssm_s7": {
+      "n_params": 3180468,
+      "ratio_to_rwm": 4.453414061756123,
+      "zero_delta_max_abs": 0.0,
+      "zero_delta_ok": true,
+      "memorise": {
+        "tf": {
+          "reached": true,
+          "iterations": 717,
+          "first": 7.312290191650391,
+          "last": 0.0729907751083374,
+          "factor": 100.18101850264009,
+          "seconds": 1019.4631227669997
+        },
+        "ar": {
+          "reached": true,
+          "iterations": 1118,
+          "first": 41.13815689086914,
+          "last": 0.4009953439235687,
+          "factor": 102.59011111787432,
+          "seconds": 1107.9518197670004
+        }
+      },
+      "determinism": {
+        "tf": {
+          "identical": true,
+          "first_losses": [
+            8.559765815734863,
+            8.738027572631836,
+            8.736780166625977,
+            8.859930038452148,
+            8.443971633911133,
+            8.383524894714355,
+            9.149914741516113,
+            8.854936599731445,
+            8.046405792236328,
+            8.329002380371094
+          ]
+        },
+        "ar": {
+          "identical": true,
+          "first_losses": [
+            46.31223678588867,
+            48.29108810424805,
+            48.46308517456055,
+            46.825531005859375,
+            43.69478988647461,
+            46.3341178894043,
+            48.81480407714844,
+            45.03578186035156,
+            42.38142776489258,
+            42.97721862792969
+          ]
+        }
+      },
+      "alignment": {
+        "tf": true,
+        "ar": true,
+        "rollout": true
+      },
+      "passed": true
+    },
+    "mlp_matched": {
+      "n_params": 713171,
+      "ratio_to_rwm": 0.9986095630695471,
+      "within_5pct": true,
+      "zero_delta_max_abs": 0.0,
+      "zero_delta_ok": true,
+      "memorise": {
+        "tf": {
+          "reached": true,
+          "iterations": 137,
+          "first": 6.3340864181518555,
+          "last": 0.06241495907306671,
+          "factor": 101.48346665959986,
+          "seconds": 6.785772788000031
+        }
+      },
+      "determinism": {
+        "tf": {
+          "identical": true,
+          "first_losses": [
+            8.211782455444336,
+            8.49735164642334,
+            8.714864730834961,
+            8.691001892089844,
+            7.794886589050293,
+            8.400955200195312,
+            8.64605712890625,
+            8.363119125366211,
+            7.649041175842285,
+            7.680118083953857
+          ]
+        }
+      },
+      "alignment": {
+        "tf": true,
+        "ar": true,
+        "rollout": true
+      },
+      "passed": true
+    },
+    "transformer_matched": {
+      "n_params": 686196,
+      "ratio_to_rwm": 0.9608381268168096,
+      "within_5pct": true,
+      "zero_delta_max_abs": 0.0,
+      "zero_delta_ok": true,
+      "memorise": {
+        "tf": {
+          "reached": true,
+          "iterations": 137,
+          "first": 9.29493522644043,
+          "last": 0.09259349852800369,
+          "factor": 100.38431827510328,
+          "seconds": 140.52662960499947
+        }
+      },
+      "determinism": {
+        "tf": {
+          "identical": true,
+          "first_losses": [
+            11.203474998474121,
+            11.008041381835938,
+            10.579144477844238,
+            10.07878303527832,
+            8.898187637329102,
+            9.320170402526855,
+            9.487401962280273,
+            9.080215454101562,
+            8.314807891845703,
+            8.284570693969727
+          ]
+        }
+      },
+      "alignment": {
+        "tf": true,
+        "ar": true,
+        "rollout": true
+      },
+      "passed": true
+    },
+    "rssm_matched": {
+      "n_params": 730668,
+      "ratio_to_rwm": 1.0231095378652522,
+      "within_5pct": true,
+      "zero_delta_max_abs": 0.0,
+      "zero_delta_ok": true,
+      "memorise": {
+        "tf": {
+          "reached": true,
+          "iterations": 1308,
+          "first": 7.495440483093262,
+          "last": 0.07462421804666519,
+          "factor": 100.44246598880399,
+          "seconds": 463.4299426510006
+        }
+      },
+      "determinism": {
+        "tf": {
+          "identical": true,
+          "first_losses": [
+            11.686246871948242,
+            11.850781440734863,
+            11.831130027770996,
+            11.947948455810547,
+            11.515872955322266,
+            11.447970390319824,
+            12.195926666259766,
+            11.90108585357666,
+            11.0833101272583,
+            11.36916446685791
+          ]
+        }
+      },
+      "alignment": {
+        "tf": true,
+        "ar": true,
+        "rollout": true
+      },
+      "passed": true
+    }
+  },
+  "all_passed": true,
+  "wall_seconds": 3559.6465740480016,
+  "note": "run while the M-74 sweep queue was training; the wall-clock of the sweep run it overlapped is inflated accordingly"
+}
