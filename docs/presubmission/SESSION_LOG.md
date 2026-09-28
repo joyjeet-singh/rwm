@@ -271,3 +271,51 @@ Next:
   - The old title remains in `docs/SUBMISSION_PACKAGE.md`, and in `docs/presubmission/PLAN.md` / `FILE_MAP.md`, which are records.
   - `docs/EXTERNAL_READ_BRIEF.md`'s 75% is still S5's, from S3.
 Decisions for user: DECISIONS_FOR_USER.md#S4-abstract-budget (answered)
+
+## S5 — 2026-09-29 00:15 — Opus 5.5 (the plan assigns Sonnet 5; subagents Sonnet 5) — status: COMPLETE
+Commits:
+- d60da15 [S5] Neither bundle ships docs/presubmission/
+- 45ede7e [S5][item 8] One vocabulary for withdrawals, bound ranges for orders of magnitude, and the sweep
+- (the next commit) [S5] C7.5 names both places it checks (review nit)
+- (the commit carrying this entry) [S5] COMPLETE: session log
+Done:
+- **Step 1, the sweep.** One Explore agent (Sonnet) swept the paper, README, model card, captions and docs for all five patterns; every hit it cited was re-read before any edit.
+- **Step 2, retraction counts.**
+  - One vocabulary: claims withdrawn on evidence (6), framings withdrawn (7), superseded entries (20). The remaining 7 are early hypotheses closed as housekeeping.
+  - `scripts/ledger_check.py` classifies every S- entry, refuses any that fits no class, and writes the classes to `results/claims_to_evidence.json`. `paper_numbers.py` reads them from there, with a staleness assert, instead of classifying again.
+  - The introduction (which printed a combined 13), §8, the README and BUILD_CHECKS now use the vocabulary. The README's typed "four" is now bound.
+  - New gate `check_retraction_counts` in `build_paper.py`: the introduction and §8 must each state all three counts after their own keys, and neither may print the old total. It is in the self-test (7 of 7) and documented in BUILD_CHECKS.
+- **Re-anchors (§1.2.8), each logged in the check:**
+  - C7.1 (2 → 3 sites) and C7.2 (2 → 3 sites);
+  - C7.5, from the retired total to the superseded count (1 → 2 sites);
+  - C10.5: `says` moved, and its evidence-class recogniser gains "withdrawn on evidence";
+  - C11.1: `n_retractions_word` → `n_retractions_lower`, plus `n_superseded` (6 → 7 keys);
+  - C11.3: +8 keys (15 → 23). None is weaker; the review confirmed this.
+- **Step 3, orders of magnitude.** Each decision, with its data:
+  - intro "three to four" (σ) → bound range: 10^3.26–10^4.32, `d1n_alea_ratio_h1`–`h368`;
+  - intro "one to two" (disagreement) → bound range: 10^0.92–10^1.54, `d1n_epi_ratio_h1`–`h368`. Both ends are the true minimum and maximum over horizons, and both are scoped "on data it trained on";
+  - §6.2 "three to four orders too small" → the same σ range, bound;
+  - §6.3 "an order of magnitude closer" → dropped, "closer": 33.4 / 10.5 ≈ 3.2×;
+  - Appendix G "differ in scale by orders of magnitude" → "differ widely in scale": the form-2 denominators span about 48× in the units the error is computed in, and no artifact holds them;
+  - Figure 2's caption, "grows by an order of magnitude" → bound range 1.79–6.11× over steps 1–8, new keys `err_growth_lo` / `err_growth_hi`;
+  - kept, exactly true: §6.2's "between one and four orders" (the four models' aleatoric ratios are 10^1.04–10^3.90) and "error grows by an order of magnitude" (×11.35, h = 1 → 368);
+  - kept, records: BUILD_CHECKS' quotation of a historical defect and self-test prose, `docs/APPENDIX_G_RULES.md:472` (pre-registered rule text), and `docs/C1_REVIEW_CHECKLIST.md` / `CLAIMS_AUDIT.md` (dated audit records).
+- **Step 4, old title.** It is gone from the paper (since S4) and from the bundle. The ruling "Exclude the directory (Recommended)" (`DECISIONS_FOR_USER.md#S5-bundle-presubmission`) removes `docs/presubmission/` from both builders. A dry run gives 459 files, none holding the old title. The README never mirrored the title.
+- **The consistency sweep beyond item 8:**
+  - the README's "interval is repairable", the model card's remedy and `docs/EXTERNAL_READ_BRIEF.md` now carry S4 item 3's caveat and the 17 / 36. The model card's own ensemble-5 checkpoints are the Arm A models that manage it;
+  - the brief no longer presents 75% / 9.5% as a finding. It names them withdrawn (S-20) and gives the independent figures and the new counts.
+- **Review** (subagent 2 of 2, Sonnet, read-only): PASS, with one NIT, fixed (C7.5's `where`).
+- **OUT_OF_SCOPE**, three lines: the stale submission documents (`SUBMISSION_PACKAGE.md`, `COVER_STATEMENT.md`, stale in title, counts, the multiplier claim and checksums); §6.2's "σ nearly flat" (it grows 2.74×); and `docs/E4_REPLY_DRAFT.md`'s stale counts.
+Build/checks: pass.
+- 60/60 comparative claims verified and 60/60 corruptions caught; the gate self-test catches 7 of 7.
+- 0 unclassified typed numerals; 0 scope findings; `ledger_check` PASS with the retraction classes.
+- Two consecutive build-and-check passes are byte-identical.
+Paper numbers changed (all generated): `tn_typed` 688 → 690. Added: `err_growth_lo` (1.79) and `err_growth_hi` (6.11). Ten count keys now name `results/claims_to_evidence.json (scripts/ledger_check.py)` as their source; their values are unchanged.
+CPU jobs over 1 min, all overlapping the queue:
+- four double build-and-check passes and one single pass, about 2 min each;
+- one per-dimension scale computation, a few seconds.
+The queue stands at 12 done, 0 failed.
+Next:
+- S6 (item 7, part 1). The body is longer than at S0 after S3–S5's additions; S6 and S7 measure against `BASELINE_S0.md`.
+- The submission documents in OUT_OF_SCOPE need a refresh once the paper is frozen.
+Decisions for user: DECISIONS_FOR_USER.md#S5-bundle-presubmission (answered)
