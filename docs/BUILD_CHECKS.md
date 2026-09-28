@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 651 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 646 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -439,3 +439,21 @@ claims stayed, and only their history moved.
   horizons, which do not span it: the weakest gain lies at another horizon, below the stated floor.
   The horizon sweep found it, flagging the sentence for carrying two horizons' figures while naming
   two others.
+- **[§7.4]** The duplication control was run only because the first version of the splice finding
+  inferred the mechanism (content rather than count) without it.
+- **[§8]** The duplication-control rule's lead time is dated from the commit that introduced the
+  log line, because the log records wall clock with no date and no offset; that is what makes
+  Figure 1 reproducible outside this machine's timezone. Before that change the figure used the
+  local timestamp.
+- **[§8]** `S-15` was named by position in §8 ("the second framing retraction") until the second
+  pre-submission review entered four more framing retractions and moved it.
+- **[Appendix B]** The runtime split was rounded to whole hours in an earlier draft, so its parts did
+  not sum to the stated total; the `arithmetic` check now asserts that a stated total equals the sum
+  of its stated parts. An earlier version of the appendix also gave a longest-run figure that
+  predated the ten-thousand-iteration runs added for the three-seed headline.
+- **[Appendix B]** `paper_numbers.py` selected the collapse family by filename until the first
+  capacity-matched run walked into it through a glob; that collision and the second unguarded glob
+  the fix did not reach are recorded above (`M-66`).
+- **[Appendix D]** The epistemic ranking row read "weaker per-dimension than we first reported".
+- **[Appendix E]** The table once omitted `M-52`: the selector matched entry titles, and M-52's
+  title does not contain the word, so the row a sceptical reader most wants was silently absent.

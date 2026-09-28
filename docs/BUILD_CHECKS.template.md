@@ -417,3 +417,21 @@ claims stayed, and only their history moved.
   horizons, which do not span it: the weakest gain lies at another horizon, below the stated floor.
   The horizon sweep found it, flagging the sentence for carrying two horizons' figures while naming
   two others.
+- **[§7.4]** The duplication control was run only because the first version of the splice finding
+  inferred the mechanism (content rather than count) without it.
+- **[§8]** The duplication-control rule's lead time is dated from the commit that introduced the
+  log line, because the log records wall clock with no date and no offset; that is what makes
+  Figure 1 reproducible outside this machine's timezone. Before that change the figure used the
+  local timestamp.
+- **[§8]** `S-15` was named by position in §8 ("the second framing retraction") until the second
+  pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it.
+- **[Appendix B]** The runtime split was rounded to whole hours in an earlier draft, so its parts did
+  not sum to the stated total; the `arithmetic` check now asserts that a stated total equals the sum
+  of its stated parts. An earlier version of the appendix also gave a longest-run figure that
+  predated the ten-thousand-iteration runs added for the three-seed headline.
+- **[Appendix B]** `paper_numbers.py` selected the collapse family by filename until the first
+  capacity-matched run walked into it through a glob; that collision and the second unguarded glob
+  the fix did not reach are recorded above (`M-66`).
+- **[Appendix D]** The epistemic ranking row read "weaker per-dimension than we first reported".
+- **[Appendix E]** The table once omitted `M-52`: the selector matched entry titles, and M-52's
+  title does not contain the word, so the row a sceptical reader most wants was silently absent.

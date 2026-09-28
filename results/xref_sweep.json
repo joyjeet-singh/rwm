@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 57,
-  "n_ok": 57,
+  "n_pointers": 56,
+  "n_ok": 56,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -79,13 +79,6 @@
       "ok": true,
       "detail": "target 6.6; nouns ['page', 'correcting', 'coupled', 'state', 'dimensions']; absent ['page', 'correcting']",
       "context": "\u00a76.6 spends a page correcting for the 45 coupled state dimensions"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix E gives the lead time of every rule added since",
-      "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'rule', 'added', 'since']; absent ['added', 'since']",
-      "context": "Appendix E gives the lead time of every rule added since"
     },
     {
       "class": "artifact",
