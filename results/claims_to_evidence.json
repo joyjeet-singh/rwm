@@ -3250,13 +3250,68 @@
         "results/q1_search_protocol.md"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-74",
+      "claim": "PRE-REGISTERED decision rule for the configuration claim: is (M, N) = (32, 8) optimal?",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/mn_sweep_verdict.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/mn_sweep_eval.json",
+        "results/mn_sweep_verdict.json",
+        "results/p5_sweep_power.json",
+        "scripts/appendix_g_rules.py",
+        "scripts/head_to_head_accuracy.py",
+        "scripts/verdict_mn_sweep.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-75",
+      "claim": "PRE-REGISTERED decision rule for the architecture claim, baselines teacher-forced, as th",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/baselines_verdict.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baselines_eval.json",
+        "results/baselines_verdict.json",
+        "results/p5_sweep_power.json",
+        "results/p6_baseline_power.json",
+        "scripts/verdict_baselines.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-76",
+      "claim": "PRE-REGISTERED decision rule for the architecture claim, baselines trained autoregressiv",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/baselines_verdict.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baselines_eval.json",
+        "results/baselines_verdict.json",
+        "results/p5_sweep_power.json",
+        "results/p6_baseline_power.json",
+        "scripts/verdict_baselines.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 73,
+    "M": 76,
     "O": 14,
     "R": 75,
     "S": 19,
