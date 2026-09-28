@@ -1,0 +1,98 @@
+{
+  "purpose": "sources of the RSSM baselines' settings (BASELINE_SPECS.md), verified as scripts/t1_bibliography.py verifies the paper's references",
+  "not_in_t1_entries_until": "S9 cites them in the paper (\u00a75.3)",
+  "entries": [
+    {
+      "key": "hafner2021dreamerv2",
+      "arxiv": "2010.02193",
+      "venue": "ICLR 2021",
+      "found": true,
+      "title_matches": true,
+      "authors_match": true,
+      "title_arxiv": "Mastering Atari with Discrete World Models",
+      "authors_arxiv": [
+        "Danijar Hafner",
+        "Timothy Lillicrap",
+        "Mohammad Norouzi",
+        "Jimmy Ba"
+      ],
+      "arxiv_version": "2010.02193v4",
+      "values": [
+        {
+          "value": "categorical latents: 32 discrete latent dimensions of 32 classes",
+          "page": 19,
+          "found_on_page": true
+        },
+        {
+          "value": "KL loss scale beta = 0.1",
+          "page": 19,
+          "found_on_page": true
+        },
+        {
+          "value": "KL balancing alpha = 0.8",
+          "page": 19,
+          "found_on_page": true
+        },
+        {
+          "value": "KL balancing is used instead of free nats",
+          "page": 18,
+          "found_on_page": true
+        },
+        {
+          "value": "ELU activations in every model component",
+          "page": 4,
+          "found_on_page": true
+        },
+        {
+          "value": "straight-through gradients for categorical latents",
+          "page": 18,
+          "found_on_page": true
+        }
+      ],
+      "verified": true
+    },
+    {
+      "key": "hafner2019planet",
+      "arxiv": "1811.04551",
+      "venue": "ICML 2019",
+      "found": true,
+      "title_matches": true,
+      "authors_match": true,
+      "title_arxiv": "Learning Latent Dynamics for Planning from Pixels",
+      "authors_arxiv": [
+        "Danijar Hafner",
+        "Timothy Lillicrap",
+        "Ian Fischer",
+        "Ruben Villegas",
+        "David Ha",
+        "Honglak Lee",
+        "James Davidson"
+      ],
+      "arxiv_version": "1811.04551v5",
+      "values": [
+        {
+          "value": "3 free nats, KL clipped below",
+          "page": 12,
+          "found_on_page": true
+        },
+        {
+          "value": "KL not scaled against reconstruction",
+          "page": 12,
+          "found_on_page": true
+        },
+        {
+          "value": "30-dimensional diagonal Gaussian latents",
+          "page": 12,
+          "found_on_page": true
+        },
+        {
+          "value": "fully connected layers with ReLU",
+          "page": 12,
+          "found_on_page": true
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "all_verified": true
+}
