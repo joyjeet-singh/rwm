@@ -1573,24 +1573,22 @@ result that would otherwise have looked like a training bug.
 
 ## 10. Broader impact
 
-This is a reproduction of a dynamics model on public simulation data, and the reproduction itself
-carries no significant risk of harm: no new capability, no personal data, no deployment.
+This is a reproduction of a dynamics model on public simulation data. It creates no new
+capability, uses no personal data and deploys nothing.
 
-The finding does bear on safety, in one specific way worth stating. The distortion is not a units problem a tuned coefficient absorbs: the constant that would best rescale this σ grows by a factor of {{m65_c_growth}} between one step and {{v2_diag_h}} (§6.2), so a penalty weight chosen for one rollout depth is wrong at another. The method this paper examines
-uses its uncertainty estimate as a **trust metric** — a reward penalty that steers a policy away
-from states the model is unsure about. That use is supported by our measurements, with one
-qualification a deployer should weigh: a free signal — the model's own predicted step size — ranks
-error nearly as well, {{e7_step_r}} against {{e7_r_dis}}, so the ranking evidence alone does not
-establish that the ensemble is worth its cost (§6.7). But a downstream
-user who reads the same quantity as a *calibrated interval* — a safety margin, a confidence bound,
-a gate on when to hand control to a fallback controller — would be materially misled: at the horizon the method itself rolls out over — h = {{v2_deploy_h}} — the released checkpoint's ensemble disagreement is {{d1n_epi_ratio_h100}}× smaller than the realised error, giving {{d1n_epi_cov1_h100}}% coverage where {{v3_cov_nominal1}}% is expected. On hardware, a margin that is wrong by that factor is the difference
-between a conservative controller and one that believes it is safe when it is not. The limit on
-that sentence belongs beside it rather than only in §11: no policy is trained anywhere in this
-work, so the finding bounds what the quantity reports rather than what the distortion costs a
-policy that consumes it (§11).
+The findings bear on one practice, and it is not the one the original method uses. The follow-up
+applies ensemble disagreement as a reward penalty. For that use, our measurements support its
+ordering (§6.7), with the qualification that a free signal ranks error nearly as well. A different
+use is reading the same number as an error bar, a safety margin, or a trigger for handing control
+to a fallback controller. The original papers neither make nor recommend that use, and it is the
+use our measurements rule out. At the method's own {{v2_deploy_h}}-step horizon, the disagreement
+is {{d1n_epi_ratio_h100}}× smaller than realised error and covers {{d1n_epi_cov1_h100}}% of
+outcomes where {{v3_cov_nominal1}}% is expected. We say this because the released checkpoint
+exposes the quantity, and it is easy to read as an interval.
 
-We think that makes the finding worth publishing rather than the reverse, and it is the reason
-§6 reports coverage rather than only correlation.
+We do not claim the original method is unsafe. No policy is trained here. The one policy-free
+test we ran found that correcting the scale per horizon leaves every pairwise ordering of
+accumulated penalty unchanged on the available trajectories (§11).
 
 ---
 
