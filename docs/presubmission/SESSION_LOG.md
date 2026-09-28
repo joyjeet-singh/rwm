@@ -217,3 +217,57 @@ Next:
   - `docs/CLAIMS_AUDIT.md:308` also quotes "materially better". It is a dated audit record, so it is left as history unless S5 rules otherwise.
 - `make_anon_bundle.py` walks `docs/`, including `docs/presubmission/`, which holds this programme's records and the query draft. The bundle session should decide whether that directory ships.
 Decisions for user: none new. Sending `AUTHOR_QUERY_ALIGNMENT.md` is the user's (PLAN, "After S3").
+
+## S4 — 2026-09-28 23:45 — Opus 5.5 — status: COMPLETE
+Commits:
+- 4a71b31 [S4] Record the abstract-budget and title rulings
+- 8e26f38 [S4][item 6] Broader impact replaced with PLAN Appendix B
+- 9753713 [S4][item 3] The per-horizon fix: unseen by the multiplier, not by the model
+- 18a0f67 [S4][item 5] Title "Right Order, Wrong Size", seven contributions, and the introduction
+- ca4087d [S4] Abstract replaced with PLAN Appendix A, every number bound
+- dabb268 [S4] Abstract: the ten-episode reversal is scoped to training data
+- (the commit carrying this entry) [S4] COMPLETE: session log
+Done:
+- **Rulings, asked in chat before any edit** (`DECISIONS_FOR_USER.md#S4-abstract-budget`):
+  - "Full Appendix A; raise cap". Appendix A measured 347 words and 23 numerals under C12.1's own counter; restated on S3's independent alignment figures it needed 26, against a cap of 18.
+  - "Right Order, Wrong Size (Recommended)".
+- **Item 6.** §10 is Appendix B's text, with four bound numbers: `v2_deploy_h`, `d1n_epi_ratio_h100`, `d1n_epi_cov1_h100`, `v3_cov_nominal1`.
+- **Item 3.**
+  - §6.8 defines "unseen by the multiplier" and "unseen by the model" once, and says every released-checkpoint cell is the first kind only.
+  - The table gains an Arm A column: `d3x_own_epi_ok` / `d3x_own_epi_cells` = 17 / 36 and `d3x_own_ale_ok` / `d3x_own_ale_cells` = 10 / 36. It names `{{iters_main}}` iterations, and `paper_numbers.py` asserts the cross-model artifact is at it.
+  - The caveat, in at most one extra sentence each, is in: the contribution bullet, §2 (twice), §6.8's lead and closing, §6.10, §6.11, §9, §11 and §12. "Looks repairable" is gone.
+  - The §3.2 verdict cell (`scripts/evidence_summary.py`, rerun) carries the Arm A count.
+- **Item 5.**
+  - Title installed.
+  - Eleven bullets became seven, in the plan's order, each at most three sentences. Every number that left the contributions is still in the body; `e7_n_new` and `e7_n_beaten` exist nowhere else, so they stay.
+  - The introduction's first two paragraphs state the title's answer, with no new claim.
+- **Abstract.**
+  - Appendix A, every listed number bound, and the alignment sentence on S3's independent figures in both metrics with both intervals.
+  - 330 words and 26 numerals. Trimmed from 352 words without dropping a claim or a number.
+- **Checks changed.**
+  - C12.1's `max_numerals` 18 → 26, set at the installed count, with the ruling recorded beside the three earlier raises. The word cap is unchanged at 370.
+  - **Re-anchor:** C9.1's `says` moved to the new abstract's per-horizon sentence; its k-of-k scan is unchanged.
+- **Values that differ from Appendix A's draft, with the artifact's value used:**
+  - 75% [CI] / 9.5% [CI] → 6.6% [1.0, 8.0] nRMSE and 7.9% [3.1, 13.0] relative-L1, on the same four trajectories, by S3's ruling.
+  - +0.470 and 89% are the draft's roundings of the body's +0.4697 (`e7_step_r`) and 89.15% (`v1_shared_pct`), printed through the new keys `e7_step_r3` and `v1_shared_pct0` from the same artifacts. S10's checklist item 11 should read them as the same numbers.
+  - 2.03× is bound to `r2_total_x_h100` (h = 100). "At 100 steps" was added so the 5.2× names its horizon.
+  - The arXiv version tags (v1) are kept.
+- **Review** (subagent 2 of 2, Sonnet 5, read-only): 1 SHOULD-FIX, fixed in dabb268 (the reversal is now scoped to training data), and 1 NIT, fixed. Subagent 1 was the Explore sweep for item 3.
+- **OUT_OF_SCOPE**, four new lines:
+  - `README.template.md:57-59` and `scripts/build_model_card.py:177` state the multiplier result unscoped; S5's '"held-out" near "multiplier"' sweep owns them.
+  - Figure 1's caption (`scripts/build_paper.py:337`) and §6.6 (`PAPER.template.md:1000-1002`) apply "held-out" to the released checkpoint.
+Build/checks: pass.
+- 60/60 comparative claims verified and 60/60 corruptions caught; the gate self-test catches 6 of 6.
+- 0 unclassified typed numerals; 0 scope findings; `ledger_check` PASS.
+- C12.1: 330 words, 26 numerals.
+- Two consecutive build-and-check passes are byte-identical.
+- Deny-list: 0 hits in every file S4 changed. MODEL_CARD.md's hits predate S4; that file is scrubbed by the bundle builder by design.
+Paper numbers changed (all generated): `tn_typed` 694 → 688; `evidence_table` (the §6.8 row). Added: `e7_step_r3`, `v1_shared_pct0`.
+CPU jobs over 1 min, all overlapping the queue: seven double build-and-check passes and one single pass, about 2 min each. The queue stands at 11 done, 0 failed.
+Next:
+- S5.
+  - Its '"held-out" within 2 lines of "multiplier"' sweep should take the README and model-card lines above.
+  - "Orders of magnitude" remain in the introduction's second paragraph, for item 8.
+  - The old title remains in `docs/SUBMISSION_PACKAGE.md`, and in `docs/presubmission/PLAN.md` / `FILE_MAP.md`, which are records.
+  - `docs/EXTERNAL_READ_BRIEF.md`'s 75% is still S5's, from S3.
+Decisions for user: DECISIONS_FOR_USER.md#S4-abstract-budget (answered)
