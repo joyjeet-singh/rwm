@@ -319,3 +319,53 @@ Next:
 - S6 (item 7, part 1). The body is longer than at S0 after S3–S5's additions; S6 and S7 measure against `BASELINE_S0.md`.
 - The submission documents in OUT_OF_SCOPE need a refresh once the paper is frozen.
 Decisions for user: DECISIONS_FOR_USER.md#S5-bundle-presubmission (answered)
+
+## S6 — 2026-09-29 00:50 — Opus 5.5 — status: COMPLETE
+Commits:
+- 1b7131e [S6][item 7] §1-§4 shortened, their drafting history moved to BUILD_CHECKS
+- aba094a [S6][item 7] §5 and §5.1 shortened; rule IDs at first mention; §5's history moved
+- (the commit before this entry) [S6][item 7] Restore what the cut lost (independent audit)
+- (the commit carrying this entry) [S6] COMPLETE: session log
+Done:
+- **Item 7, part 1, from the title page to the end of §5.1.** Words are counted with S0's convention (FILE_MAP §13) on the rendered `PAPER.md`, before → after:
+
+  | section | before | after |
+  |---|---:|---:|
+  | §1 | 1,023 | 879 |
+  | §2 | 2,093 | 1,613 |
+  | §3 | 530 | 505 |
+  | §3.1 | 851 | 708 |
+  | §3.2 | 569 | 551 (a generated table) |
+  | §4 | 488 | 378 |
+  | §5 | 2,403 | 2,011 |
+  | §5.1 | 317 | 289 |
+  | **range** | **8,274** | **6,934** (−16.2%) |
+
+  The body (§1 to "Data and code") went from 27,921 at S6's start to 26,581. S0's baseline was 27,387; S3–S5 had added 534.
+- **Drafting history moved, not deleted,** to `docs/BUILD_CHECKS.md` under "Moved from the paper body (pre-submission edit)". There are 8 items, labelled [§3.1], [§4] and [§5]:
+  - the every-build citation check;
+  - why §3.1 exists;
+  - the coverage properties earlier drafts omitted;
+  - the withdrawn "deployment horizon" label;
+  - §4's untested-count history (the paper keeps one sentence citing `S-17`);
+  - the M-46 note;
+  - why §5 states the h = 1 floor result;
+  - the M-16 → M-23 re-anchoring history.
+- **Rule IDs.** Each is given once per section, at first mention, as "(rule M-23, Appendix E)", and likewise for M-64 and M-16; all three are confirmed rows in Appendix E. R-75, X-13, D-35 and D-36 are removed from running prose, and their artifacts stay cited.
+- **Caveats stated once.** The in-sample caveat for the released checkpoint and the n = 4 / 256-resample caveat are now in §3, and §5 refers back to both. S7 can point §6's repetitions at the same two.
+- **Every key is kept.** A replacer asserted it section by section. Two keys left the paper and are printed in the moved section: `v3_n_citations` and `appF_n_polhw_lower`. Both tables in §5 are byte-identical except one row label ("(M-23)" → "(pre-registered)").
+- **Checks.** None was re-anchored or retired. C19.1 fired once, because a list of moved items read as one sentence holding a typed "h = 1" beside "correction" and "horizon"; that was fixed by rewording the moved text.
+- **Review** (subagent 1 of 1, Sonnet, read-only claim-by-claim audit): FAIL with 2 SHOULD-FIX (§1's "stronger sense" framing and §5's "the split is ours", both lost) and 2 NITs. All four were restored, and the counts above include them.
+Build/checks: pass.
+- 60/60 comparative claims verified, and the gate self-test catches 7 of 7.
+- 0 unclassified typed numerals; 0 scope findings.
+- Two consecutive build-and-check passes are byte-identical.
+Paper numbers changed: none measured. `tn_typed` and `pdf_pages` move with the text; all are generated.
+CPU jobs over 1 min, all overlapping the queue: nine single build-and-check passes, about 1 min each. The queue stands at 13 done, 0 failed.
+Next:
+- **S7: §6–§13 and appendix drafting-prose.**
+  - S7 needs the body at or below 19,170 to meet the 30% target, a cut of 7,411 words (about 38%) from §6–§13, which now hold about 19,650. S6's range, which is mostly results, gave 16%.
+  - Per the plan, S7 reports the shortfall and lists the largest remaining sections rather than forcing cuts.
+  - The moved-text section is ready to extend, and the replacer and check scripts are in the scratchpad (not committed).
+- **Trap for S7:** C19.1 (the typed-restatement check) scans the paper plus BUILD_CHECKS as one text, and a markdown bullet list reads as one sentence. Moved items must not put a typed horizon beside words another sentence shares with a bound horizon.
+Decisions for user: none
