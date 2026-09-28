@@ -16,6 +16,7 @@ instead.
 
 Usage:
   python scripts/step5_train.py --arm A --seed 0
+  python scripts/step5_train.py --arm A --seed 0 --sweep --history 16 --forecast 8   # M-74
 """
 
 import argparse
@@ -134,11 +135,35 @@ def main():
     ap.add_argument("--hidden", type=int, default=None,
                     help="override rnn_hidden_size; M-49's capacity-matched arm "
                          "trains five members at 124 against the released 256")
+    # M-74, the M/N sweep. History length M and forecast length N are otherwise the
+    # reference config's (32, 8), and the window is rwm_train.WINDOW = 40. The sweep
+    # changes those two numbers and nothing else, and names its run and artifact so
+    # that no results/step5_*.json glob in paper_numbers.py or paper_figures.py can
+    # pick a sweep run up -- the M-49 defect this project already paid for once.
+    ap.add_argument("--sweep", action="store_true",
+                    help="rule M-74: train Arm A at --history M, --forecast N")
+    ap.add_argument("--history", type=int, default=None, help="M, with --sweep only")
+    ap.add_argument("--forecast", type=int, default=None, help="N, with --sweep only")
+    ap.add_argument("--out-dir", default=None,
+                    help="write the artifact and weights under this directory "
+                         "(timing probe, differential test); default results/ and runs/")
     args = ap.parse_args()
     teacher_forcing = args.arm == "B"
+    if args.sweep or args.history is not None or args.forecast is not None:
+        assert args.sweep and args.history and args.forecast, \
+            "--history and --forecast go together, and only with --sweep"
+        assert (args.arm == "A" and not args.contaminated and not args.duplicated
+                and args.loss_type == "mse" and args.ensemble == 1
+                and args.hidden is None and not args.tag), \
+            "M-74 varies M and N only: Arm A, faithful MSE, ensemble 1, released width"
 
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
+    window = T.WINDOW
+    if args.sweep:
+        cfg["history_horizon"] = args.history
+        cfg["forecast_horizon"] = args.forecast
+        window = args.history + args.forecast
     if args.hidden is not None:
         assert args.tag, ("--hidden must carry a --tag: a run at a different width "
                           "would otherwise overwrite the released-width run of the "
@@ -152,8 +177,9 @@ def main():
     scale = MET.training_scale(data, episode_id, split["train_episodes"],
                               cfg["state_data_mean"], cfg["state_data_std"])
 
-    run = f"arm{args.arm}_seed{args.seed}{args.tag}"
-    rundir = os.path.join(R.REPO_ROOT, "runs", run)
+    run = (f"mn_M{args.history}_N{args.forecast}_seed{args.seed}" if args.sweep
+           else f"arm{args.arm}_seed{args.seed}{args.tag}")
+    rundir = os.path.join(args.out_dir or os.path.join(R.REPO_ROOT, "runs"), run)
     os.makedirs(rundir, exist_ok=True)
 
     print("=" * 82)
@@ -181,8 +207,17 @@ def main():
         print(f"    duplication seed {ds.duplication_seed}, first 5 duplicated starts"
               f" {ds.duplicated_window_starts[:5]}")
     else:
-        ds = T.WindowDataset(data, episode_id, split["train_episodes"], cfg)
+        ds = T.WindowDataset(data, episode_id, split["train_episodes"], cfg, window=window)
         print(f"  {len(ds)} training windows from episodes {ds.episodes}")
+    n_expected = None
+    if args.sweep:
+        # Asserted, not assumed: an episode of L rows holds L - window + 1 windows,
+        # counted here from the episode lengths alone, independently of the builder.
+        n_expected = sum(int((episode_id == e).sum()) - window + 1
+                         for e in split["train_episodes"])
+        assert len(ds) == n_expected, f"{len(ds)} windows built, {n_expected} expected"
+        print(f"  M-74 SWEEP: M = {args.history}, N = {args.forecast}, window {window}; "
+              f"window count {len(ds)} asserted against the episode lengths")
     if args.loss_type != "mse":
         print(f"  LOSS TYPE: {args.loss_type} (the authors' unused branch, system_dynamics.py:285)")
 
@@ -335,7 +370,16 @@ def main():
            "curves": {k: hist[k] for k in ("state", "bound", "contact",
                                            "termination", "total", "grad_norm")},
            "torch": torch.__version__}
-    jp = os.path.join(R.RESULTS, f"step5_{run}.json")
+    if args.sweep:
+        out["rule"] = "M-74"
+        out["arch"] = "rwm"
+        out["hyperparameters"].update({"history_horizon": args.history,
+                                       "forecast_horizon": args.forecast,
+                                       "window": window,
+                                       "n_train_windows_expected": n_expected})
+    jp = os.path.join(args.out_dir or R.RESULTS,
+                      (f"mn_sweep_run_M{args.history}_N{args.forecast}_seed{args.seed}.json"
+                       if args.sweep else f"step5_{run}.json"))
     with open(jp, "w") as f:
         json.dump(out, f, indent=2)
     print(f"\n  wrote {R.rel(jp)}")

@@ -1,0 +1,152 @@
+{
+  "rule": "M-74",
+  "test": "the --sweep path at (32, 8), first 20 iterations, against results/step5_armA_seed0.json, compared bitwise",
+  "reference": "results/step5_armA_seed0.json",
+  "n_iterations": 20,
+  "keys": {
+    "state": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "bound": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "contact": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "termination": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "total": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "grad_norm": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    }
+  },
+  "default_path_keys": {
+    "state": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "bound": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "contact": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "termination": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "total": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    },
+    "grad_norm": {
+      "identical": true,
+      "n_compared": 20,
+      "first_mismatch": null,
+      "max_abs_diff": 0.0
+    }
+  },
+  "default_path_identical": true,
+  "sweep_path_identical": true,
+  "identical": true,
+  "training_windows": {
+    "M32_N8": {
+      "M": 32,
+      "N": 8,
+      "window": 40,
+      "n_train_windows": 7687
+    },
+    "M32_N32": {
+      "M": 32,
+      "N": 32,
+      "window": 64,
+      "n_train_windows": 7495
+    },
+    "M16_N8": {
+      "M": 16,
+      "N": 8,
+      "window": 24,
+      "n_train_windows": 7815
+    },
+    "M32_N16": {
+      "M": 32,
+      "N": 16,
+      "window": 48,
+      "n_train_windows": 7623
+    },
+    "M8_N8": {
+      "M": 8,
+      "N": 8,
+      "window": 16,
+      "n_train_windows": 7879
+    },
+    "M32_N2": {
+      "M": 32,
+      "N": 2,
+      "window": 34,
+      "n_train_windows": 7735
+    },
+    "M32_N1": {
+      "M": 32,
+      "N": 1,
+      "window": 33,
+      "n_train_windows": 7743
+    },
+    "M2_N8": {
+      "M": 2,
+      "N": 8,
+      "window": 10,
+      "n_train_windows": 7927
+    },
+    "M1_N8": {
+      "M": 1,
+      "N": 8,
+      "window": 9,
+      "n_train_windows": 7935
+    }
+  },
+  "train_episodes": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9
+  ],
+  "torch": "2.2.2"
+}
