@@ -137,6 +137,20 @@ def main():
     put("m23_h8_gap", round(g8["gap"], 4), "results/task5_analysis.json")
     put("m23_h8_excl", "excludes zero" if g8["excludes_zero"] else "includes zero",
         "results/task5_analysis.json")
+    # Pre-submission S3, items 1-2. A sentence or caption that names a checkpoint or a
+    # seed count reads it from the artifact that holds it, never types it. M-23's own
+    # analysis ran on one seed (task5_analysis.json provenance); every run artifact
+    # records its iteration count, and the two families are asserted uniform.
+    assert t5["provenance"]["n_seeds"] == 1 and len(t5["provenance"]["seeds"]) == 1
+    put("m23_seed", t5["provenance"]["seeds"][0], "results/task5_analysis.json")
+    _iters = {}
+    for _f in sorted(glob.glob("results/step5_arm*.json")):
+        _iters.setdefault("long" if _f.endswith("_10k.json") else "main", set()).add(
+            J(os.path.basename(_f))["hyperparameters"]["iterations"])
+    assert all(len(v) == 1 for v in _iters.values()), _iters
+    put("iters_main", f"{next(iter(_iters['main'])):,}",
+        "results/step5_arm*.json (every run but the _10k runs)")
+    put("iters_long", f"{next(iter(_iters['long'])):,}", "results/step5_arm*_10k.json")
     put("q4_implied_A", f"{t5['q4']['A']['implied_iters']:,.0f}", "results/task5_analysis.json")
     put("q4_implied_B", f"{t5['q4']['B']['implied_iters']:,.0f}", "results/task5_analysis.json")
 
@@ -191,6 +205,10 @@ def main():
     put("ab_short_cells", len(short), "results/review_bootstrap_unit.json")
     put("ab_short_excl", sum(1 for v in short if v["cluster"]["excludes_zero"]),
         "results/review_bootstrap_unit.json")
+    # S3 item 1: the checkpoints those h = 8 cells were computed at, from their own keys
+    # ("out-of-sample|<length>|<checkpoint>|h8"), so the prose can say which they are.
+    _bu_ck = sorted({int(k.split("|")[2]) for k in oos if k.endswith("|h8")})
+    put("bu_ckpts", " and ".join(f"{c:,}" for c in _bu_ck), "results/review_bootstrap_unit.json")
     put("bu_changes", bu["_summary"]["n_verdict_changes"], "results/review_bootstrap_unit.json")
 
     # --- verification ------------------------------------------------------

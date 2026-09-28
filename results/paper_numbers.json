@@ -1339,6 +1339,10 @@
     "source": "results/review_bootstrap_unit.json",
     "value": 1
   },
+  "bu_ckpts": {
+    "source": "results/review_bootstrap_unit.json",
+    "value": "500 and 2,500"
+  },
   "bu_max_ratio": {
     "source": "results/review_bootstrap_unit.json",
     "value": 1.69
@@ -4019,6 +4023,14 @@
     "source": "results/insample_framing.json",
     "value": 10
   },
+  "iters_long": {
+    "source": "results/step5_arm*_10k.json",
+    "value": "10,000"
+  },
+  "iters_main": {
+    "source": "results/step5_arm*.json (every run but the _10k runs)",
+    "value": "2,500"
+  },
   "lead_flip": {
     "source": "results/paper_figures.json",
     "value": "4.8 hours"
@@ -4102,6 +4114,10 @@
   "m23_ratio": {
     "source": "results/task5_analysis.json",
     "value": "4.4"
+  },
+  "m23_seed": {
+    "source": "results/task5_analysis.json",
+    "value": 1
   },
   "m23_sign_h368": {
     "source": "results/task5_analysis.json",
@@ -4921,7 +4937,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 48
+    "value": 49
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -7829,7 +7845,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 686
+    "value": 691
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

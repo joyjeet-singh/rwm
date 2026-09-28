@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 686 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 691 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -252,6 +252,25 @@ motivated it:
 Each of the four is run against a deliberately corrupted input on every build and must fire,
 on the same grounds as the self-test above: a refusal that has quietly stopped being able to
 refuse reads as coverage and is not.
+
+## Two refusals added in the pre-submission edit: a checkpoint on every figure that needs one
+
+Both answer one defect, which reached a finished draft. §5 printed an h = 8 gap from one setting
+(a single seed) beside a table from another (three seeds pooled), with no label on either, and
+the two contradicted each other. Separately, no table said which training checkpoint its arms
+were at, so §5's by-horizon table and the head-to-head accuracy table printed different numbers
+for the same arm with nothing to say why. `scripts/build_paper.py` now refuses to build when:
+
+- **an h = 8 gap figure in §5 is unlabelled.** Every §5 sentence that prints an h = 8 gap key
+  either uses the table's own key, or names its checkpoint with a bound iteration or checkpoint
+  key (`check_h8_gap_labels`);
+- **a table with an arm row names no training iterations.** Every table with an Arm A, Arm B,
+  ensemble or combined-arm row or column must carry a bound iteration or checkpoint key in the
+  caption paragraph beside it, or an iterations column (`check_arm_table_captions`). Tables
+  generated from a placeholder are expanded before the check, so none escapes. Tables of the
+  originals' claims are not arm tables.
+
+Both join the gate's self-test, and each is fed a corrupted input on every build and must fire.
 
 ---
 

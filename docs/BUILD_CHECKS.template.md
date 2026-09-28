@@ -233,6 +233,25 @@ Each of the four is run against a deliberately corrupted input on every build an
 on the same grounds as the self-test above: a refusal that has quietly stopped being able to
 refuse reads as coverage and is not.
 
+## Two refusals added in the pre-submission edit: a checkpoint on every figure that needs one
+
+Both answer one defect, which reached a finished draft. §5 printed an h = 8 gap from one setting
+(a single seed) beside a table from another (three seeds pooled), with no label on either, and
+the two contradicted each other. Separately, no table said which training checkpoint its arms
+were at, so §5's by-horizon table and the head-to-head accuracy table printed different numbers
+for the same arm with nothing to say why. `scripts/build_paper.py` now refuses to build when:
+
+- **an h = 8 gap figure in §5 is unlabelled.** Every §5 sentence that prints an h = 8 gap key
+  either uses the table's own key, or names its checkpoint with a bound iteration or checkpoint
+  key (`check_h8_gap_labels`);
+- **a table with an arm row names no training iterations.** Every table with an Arm A, Arm B,
+  ensemble or combined-arm row or column must carry a bound iteration or checkpoint key in the
+  caption paragraph beside it, or an iterations column (`check_arm_table_captions`). Tables
+  generated from a placeholder are expanded before the check, so none escapes. Tables of the
+  originals' claims are not arm tables.
+
+Both join the gate's self-test, and each is fed a corrupted input on every build and must fire.
+
 ---
 
 ## Exclusions from the numeric comparison: the mechanism

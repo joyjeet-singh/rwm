@@ -478,8 +478,8 @@ own imagination rollout length and the horizon everything in §6 is anchored to,
 three seeds give **{{d1_ratio_h100}}×**.
 
 **Quoting one of those and not the other would be a choice, so we report the curve**
-(Figure 2). Same rollouts, same {{d1_seeds}} seeds, same held-out arena, n_independent =
-{{a1_nind}}, with a cluster bootstrap over whole trajectories:
+(Figure 2). Same rollouts, same {{d1_seeds}} seeds at {{iters_long}} training iterations, same
+held-out arena, n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories:
 
 | h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |
 |---|---|---|---|---|---|---|---|---|---|
@@ -559,17 +559,23 @@ training loss ends up predicting the future worse than a model that makes no pre
 bias costs here. **The floor is not a weak baseline everywhere**, and the table above says
 where it is not: at {{a1_A_worse_than_floor_at}} it beats the autoregressive arm as well. 
 
-**What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
-comparison out-of-sample gives a gap of {{m23_h8_gap}} whose interval {{m23_h8_excl}}.
-The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored
-at h = 8, returned "cannot be settled"; anchoring a rule to the horizon the claim is actually
-about was a correction we had to make in advance of the runs, not after them (§8).
+**What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
+advantage is small, and it resolves only with the longer training and all {{d1_seeds}} seeds. The table
+above, at {{iters_long}} iterations with {{d1_seeds}} seeds pooled, gives an h = 8 gap of {{a1_gap_h8}}
+{{a1_gap_ci_h8}}, which excludes zero, a factor of {{a1_ratio_h8}}×. The single seed M-23 was
+run on (seed {{m23_seed}}) gives an h = 8 gap of {{m23_h8_gap}} at the same {{iters_long}}-iteration checkpoint,
+and its interval {{m23_h8_excl}}. At the {{bu_ckpts}}-iteration checkpoints, with all {{d1_seeds}} seeds
+pooled, the gap excludes zero in **{{ab_short_excl}} of {{ab_short_cells}}** h = 8 cells (both
+trajectory lengths crossed with both checkpoints). An earlier rule of ours, anchored at h = 8 and
+evaluated at those same checkpoints (M-16), returned "cannot be settled". Anchoring a rule to the
+horizon the claim is actually about was a correction we had to make before the runs, not after
+them (§8). **The advantage is small at the training horizon and large beyond it.**
 
-The pattern is consistent across the design. Under the correct cluster bootstrap, the
-out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells —
-both trajectory lengths crossed with both checkpoints — and in **{{ab_short_excl}} of
-{{ab_short_cells}}** at h = 8. These figures are relative-L1; the nRMSE aggregation is reported
-separately and does not change the direction.
+At long horizons the pattern is consistent across the design. Under the correct cluster
+bootstrap, the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}**
+long-horizon cells, both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints.
+These figures are relative-L1; the nRMSE aggregation is reported separately and does not change
+the direction.
 
 **Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample
 comparisons, so we state the correction rather than leaving it to a reader. All
@@ -591,10 +597,10 @@ never put side by side on absolute accuracy. Both aggregations, one arena, five 
 
 **Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}},
 {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2h_nind}}.**
-Arm rows are the mean over {{h2h_nseeds}} seeds at the `{{h2h_arm_ckpt}}` checkpoint and the
+Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterations (the `{{h2h_arm_ckpt}}` checkpoint) and the
 per-seed values are in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1) and both
 metrics are cumulative over forecast steps 1..h. Every model row is read from the stored
-rollouts §6.2's calibration tables are computed from, so no model is run to build this table.
+rollouts §6.2's calibration tables are computed from, so no model is run to build this table. **This table is at {{iters_main}} iterations and §5's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.
 
 Both metrics put the released checkpoint first at {{h2h_released_sweeps_at}}, they name
 different leaders at {{h2h_split_at}}, and at {{h2h_armA_sweeps_at}} both put an Arm A variant
@@ -681,7 +687,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts {{v3_cov_nom
 | teacher-forced Arm B | {{cal_armB_ratio}}× [{{cal_armB_ratio_ci}}] | {{cal_armB_cov1}}% [{{cal_armB_cov1_ci}}] | {{cal_armB_cov100}}% [{{cal_armB_cov100_ci}}] |
 | released checkpoint | {{cal_rel_ratio}}× [{{cal_rel_ratio_ci}}] | {{cal_rel_cov1}}% [{{cal_rel_cov1_ci}}] | {{cal_rel_cov100}}% [{{cal_rel_cov100_ci}}] |
 
-*Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = {{b2_nind}}; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = {{b2_nind}} the bootstrap has {{c3_resamples}} distinct resamples and the intervals are quantised at that resolution.*
+*Our arms are at {{iters_main}} training iterations; the released checkpoint is as released. Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = {{b2_nind}}; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = {{b2_nind}} the bootstrap has {{c3_resamples}} distinct resamples and the intervals are quantised at that resolution.*
 
 **All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = {{b2_nind}} 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards.
 
@@ -963,7 +969,7 @@ improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overco
 ### 6.6 The failure is one of magnitude; the ordering is weaker than it looks
 
 Measuring the teacher-forced arm — which we had trained for §5, and which our own first three
-calibration tables omitted — sharpens the finding:
+calibration tables omitted — sharpens the finding (our arms at {{iters_main}} training iterations; the released checkpoint as released):
 
 | model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, in-sample |
 |---|---|---|---|---|
@@ -1226,7 +1232,7 @@ So the accurate form of this section is: **a constant scalar does not repair the
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 5):
+σ is flat while error grows (Figure 5; our arms at {{iters_main}} training iterations, the released checkpoint as released):
 
 | model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
 |---|---|---|
@@ -1266,7 +1272,7 @@ and the ensemble mean is fed back to all of them.
 | 128 | {{r2_indep_ratio_h128}}× | {{r2_shared_ratio_h128}}× | {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% |
 | {{v2_diag_h}} | {{r2_indep_ratio_h368}}× | {{r2_shared_ratio_h368}}× | {{r2_indep_cov1_h368}}% | {{r2_shared_cov1_h368}}% |
 
-*Same trajectories, same harness, n_independent = {{r2_nind}}. The shared-trunk column is the mean
+*Same trajectories, same harness, n_independent = {{r2_nind}}, every model at {{iters_main}} training iterations. The shared-trunk column is the mean
 over {{r2_n_shared}} seeds; the comparison below is paired against each of them separately.*
 
 **M-44 returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its
@@ -1358,7 +1364,7 @@ head is reported separately in §6.5 and does not enter here.
 | 128 | {{m68_indep_ratio_h128}}× | {{m68_shared_ratio_h128}}× | {{m68_indep_cov1_h128}}% | {{m68_shared_cov1_h128}}% | {{m68_indep_cov2_h128}}% | {{m68_shared_cov2_h128}}% |
 | {{v2_diag_h}} | {{m68_indep_ratio_h368}}× | {{m68_shared_ratio_h368}}× | {{m68_indep_cov1_h368}}% | {{m68_shared_cov1_h368}}% | {{m68_indep_cov2_h368}}% | {{m68_shared_cov2_h368}}% |
 
-*Same trajectories, same harness, same bootstrap unit as §6.10. The shared-trunk columns are the
+*Same trajectories, same harness, same bootstrap unit as §6.10, every model at {{iters_main}} training iterations. The shared-trunk columns are the
 mean over {{m68_n_shared}} seeds; the comparison below is paired against each of them separately.*
 
 **M-68 returns {{m68_verdict}}** — branch {{m68_branch}} of the four the rule names. All

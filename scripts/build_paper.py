@@ -104,6 +104,76 @@ def check_number_word_case(template, values):
     return bad
 
 
+# Pre-submission S3. Two refusals for a defect that reached a finished draft: §5 printed an
+# h = 8 gap from one setting (one seed) beside a table from another (three seeds), with no
+# label on either, and they contradicted each other; and no table said which training
+# checkpoint its arms were at, so §5's 10,000-iteration table and the 2,500-iteration
+# head-to-head table printed different numbers for the same arm with nothing to say why.
+_CKPT_KEY = re.compile(r"\{\{[a-z0-9_]*(?:iters|ckpts?)[a-z0-9_]*\}\}")
+_H8_GAP_KEY = re.compile(r"\{\{(?:m23_h8_[a-z]+|ab_short_[a-z]+|a1_(?:gap|gap_ci|excl)_h8)\}\}")
+_ARM_CELL = re.compile(r"\b(Arm [AB]|faithful|corrected|teacher[- ]forced|autoregressive)\b", re.I)
+_ARM_HEADER = re.compile(r"\b(autoregressive|teacher forcing|independent|shared-trunk|combined|"
+                         r"ensemble)\b", re.I)
+
+
+def check_h8_gap_labels(template):
+    """Every §5 sentence that prints an h = 8 gap figure either uses the table's own key
+    ({{a1_gap_h8}}) or names its checkpoint with a bound iteration or checkpoint key."""
+    m = re.search(r"\n## 5\.(.*?)\n## 6\.", template, re.S)
+    if not m:
+        return ["§5 not found"]
+    prose = " ".join(ln for ln in m.group(1).split("\n") if not ln.startswith("|"))
+    bad = []
+    for sent in re.split(r"(?<=[.!?])\s+(?=[A-Z*(])", prose):
+        if _H8_GAP_KEY.search(sent) and "{{a1_gap_h8}}" not in sent and not _CKPT_KEY.search(sent):
+            bad.append(sent.strip()[:110])
+    return bad
+
+
+def _paragraph(lines, i, step):
+    """The paragraph adjacent to line i, walking in direction step past blank lines."""
+    j = i + step
+    while 0 <= j < len(lines) and lines[j].strip() == "":
+        j += step
+    out = []
+    while 0 <= j < len(lines) and lines[j].strip() and not lines[j].startswith(("|", "#")):
+        out.append(lines[j])
+        j += step
+    return " ".join(out)
+
+
+def check_arm_table_captions(template, values):
+    """Every table with an arm row, or arm columns, names its training iterations: a bound
+    iteration or checkpoint key in the caption paragraph beside it (before or after), or an
+    iterations column. Placeholder-generated tables are expanded first so none escapes;
+    tables of the originals' claims are not arm tables."""
+    lines = []
+    for ln in template.split("\n"):
+        k = re.fullmatch(r"\{\{([A-Za-z0-9_]+)\}\}", ln.strip())
+        v = str(values.get(k.group(1), {}).get("value", "")) if k else ""
+        lines += v.split("\n") if v.lstrip().startswith("|") else [ln]
+    bad, i = [], 0
+    while i < len(lines):
+        if (lines[i].startswith("|") and i + 1 < len(lines) and lines[i + 1].startswith("|")
+                and set(lines[i + 1].replace("|", "").strip()) <= set("-: ")):
+            j = i + 2
+            while j < len(lines) and lines[j].startswith("|"):
+                j += 1
+            header = lines[i]
+            first_head = header.split("|")[1].strip().lower()
+            firsts = [r.split("|")[1] for r in lines[i + 2:j] if r.count("|") > 1]
+            arm = (_ARM_HEADER.search(header) or any(_ARM_CELL.search(c) for c in firsts))
+            if (arm and not first_head.startswith("claim")
+                    and not re.search(r"\biterations\b", header, re.I)
+                    and not _CKPT_KEY.search(_paragraph(lines, i, -1))
+                    and not _CKPT_KEY.search(_paragraph(lines, j - 1, +1))):
+                bad.append(f"table at line {i + 1}: {header[:70]}")
+            i = j
+        else:
+            i += 1
+    return bad
+
+
 def selftest_gates():
     """Run each gate rule against a deliberately corrupted input; each must fire.
 
@@ -120,7 +190,16 @@ def selftest_gates():
         r"median +0.737[\textasciicircum{}stepcount] and [^stepcount]: adjacent steps"))
     caught += bool(check_number_word_case(
         "and then named {{n_word_probe}}, and", {"n_word_probe": {"value": "Five"}}))
+    # S3: an unlabelled h = 8 gap in §5, and an arm table whose caption names no checkpoint.
+    caught += bool(check_h8_gap_labels(
+        "x\n## 5. T\nAt h = 8 the gap is {{m23_h8_gap}} and its interval {{m23_h8_excl}}.\n## 6. U"))
+    caught += bool(check_arm_table_captions(
+        "A caption naming nothing.\n\n| model | x |\n|---|---|\n| faithful Arm A | 1 |\n\nAfter.",
+        {}))
     return caught
+
+
+N_GATE_RULES = 6
 
 
 def main():
@@ -206,9 +285,15 @@ def main():
     _wordcase = check_number_word_case(text, N)
     assert not _wordcase, ("a capitalised number-word substituted mid-sentence -- use the "
                            "matching _lower key:\n  " + "\n  ".join(_wordcase[:5]))
+    _h8 = check_h8_gap_labels(text)
+    assert not _h8, ("an h = 8 gap figure in §5 names neither the table's key nor its checkpoint "
+                     "-- bind a checkpoint label (S3 item 1):\n  " + "\n  ".join(_h8[:5]))
+    _cap = check_arm_table_captions(text, N)
+    assert not _cap, ("a table with an arm row names no training iterations in its caption -- "
+                      "bind one, e.g. {{iters_main}} (S3 item 2):\n  " + "\n  ".join(_cap[:8]))
     _gate_caught = selftest_gates()
-    assert _gate_caught == 4, (
-        f"converter gate self-test: only {_gate_caught} of 4 rules caught their corruption")
+    assert _gate_caught == N_GATE_RULES, (
+        f"gate self-test: only {_gate_caught} of {N_GATE_RULES} rules caught their corruption")
 
     unused = sorted(set(N) - used)
 
@@ -281,7 +366,8 @@ def main():
             "retracted as a pre-registration in this paper.",
         "paper_fig6_ab_by_horizon.png":
             "The autoregressive-versus-teacher-forcing advantage as a function of forecast "
-            "horizon, out-of-sample over three seeds. (a) the ratio, which grows monotonically "
+            "horizon, out-of-sample over three seeds at " + str(N["iters_long"]["value"])
+            + " training iterations. (a) the ratio, which grows monotonically "
             "with depth: h = 368 is the end of a trend rather than a selected point, and the "
             "method's own rollout length of h = 100 sits partway along it. (b) the same "
             "comparison as a gap with its 95\\% cluster-bootstrap interval over whole "
@@ -417,7 +503,7 @@ def main():
     print(f"  placeholders filled : {len(used)}")
     print(f"  distinct artifacts  : {len(set(N[k]['source'] for k in used))}")
     print(f"  figures attached    : {len(figs)}")
-    print(f"  converter gate self-test: {_gate_caught} of 4 rules caught their corruption")
+    print(f"  gate self-test: {_gate_caught} of {N_GATE_RULES} rules caught their corruption")
     print(f"  numerals typed in prose : {len(typed_nums)}  "
           f"(section numbers, arXiv ids and constants expected)")
     print(f"  number-words in prose   : {len(typed_words)}  {', '.join(typed_words)}")

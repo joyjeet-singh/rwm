@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1037 values substituted from 75 artifacts. -->
+     1041 values substituted from 77 artifacts. -->
 
 # What a released robotic world model's uncertainty is worth: a one-step evaluation defect and a collapsed σ
 
@@ -498,10 +498,10 @@ own imagination rollout length and the horizon everything in §6 is anchored to,
 three seeds give **2.58×**.
 
 **Quoting one of those and not the other would be a choice, so we report the curve**
-(Figure 2). Same rollouts, same 3 seeds, same held-out arena, n_independent =
-4, with a cluster bootstrap over whole trajectories:
+(Figure 2). Same rollouts, same 3 seeds at 10,000 training iterations, same
+held-out arena, n_independent = 4, with a cluster bootstrap over whole trajectories:
 
-![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Only the h = 368 figure is pre-registered (M-23); the rest were computed after the data existed.](figures/paper_fig6_ab_by_horizon.png)
+![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds at 10,000 training iterations. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Only the h = 368 figure is pre-registered (M-23); the rest were computed after the data existed.](figures/paper_fig6_ab_by_horizon.png)
 
 | h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |
 |---|---|---|---|---|---|---|---|---|---|
@@ -581,17 +581,23 @@ every horizon we measured. That is the sharper statement of what exposure
 bias costs here. **The floor is not a weak baseline everywhere**, and the table above says
 where it is not: at h=1 it beats the autoregressive arm as well. 
 
-**What does not hold, and we say so.** At h = 8 — the horizon the model is trained on — the same
-comparison out-of-sample gives a gap of 0.008 whose interval includes zero.
-The advantage is a long-horizon phenomenon. An earlier rule of ours, anchored
-at h = 8, returned "cannot be settled"; anchoring a rule to the horizon the claim is actually
-about was a correction we had to make in advance of the runs, not after them (§8).
+**What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
+advantage is small, and it resolves only with the longer training and all 3 seeds. The table
+above, at 10,000 iterations with 3 seeds pooled, gives an h = 8 gap of +0.0485
+[+0.0271, +0.0844], which excludes zero, a factor of 1.16×. The single seed M-23 was
+run on (seed 1) gives an h = 8 gap of 0.008 at the same 10,000-iteration checkpoint,
+and its interval includes zero. At the 500 and 2,500-iteration checkpoints, with all 3 seeds
+pooled, the gap excludes zero in **0 of 4** h = 8 cells (both
+trajectory lengths crossed with both checkpoints). An earlier rule of ours, anchored at h = 8 and
+evaluated at those same checkpoints (M-16), returned "cannot be settled". Anchoring a rule to the
+horizon the claim is actually about was a correction we had to make before the runs, not after
+them (§8). **The advantage is small at the training horizon and large beyond it.**
 
-The pattern is consistent across the design. Under the correct cluster bootstrap, the
-out-of-sample gap excludes zero in **4 of 4** long-horizon cells —
-both trajectory lengths crossed with both checkpoints — and in **0 of
-4** at h = 8. These figures are relative-L1; the nRMSE aggregation is reported
-separately and does not change the direction.
+At long horizons the pattern is consistent across the design. Under the correct cluster
+bootstrap, the out-of-sample gap excludes zero in **4 of 4**
+long-horizon cells, both trajectory lengths crossed with the 500 and 2,500-iteration checkpoints.
+These figures are relative-L1; the nRMSE aggregation is reported separately and does not change
+the direction.
 
 **Multiplicity.** Those 4 cells sit in a family of 8 out-of-sample
 comparisons, so we state the correction rather than leaving it to a reader. All
@@ -613,10 +619,10 @@ never put side by side on absolute accuracy. Both aggregations, one arena, five 
 
 **Arena, stated once for the whole table: out-of-sample held-out pair, episodes 1 and 8,
 4 non-overlapping 400-step trajectories, n_independent = 4.**
-Arm rows are the mean over 3 seeds at the `weights_2500.pt` checkpoint and the
+Arm rows are the mean over 3 seeds at 2,500 training iterations (the `weights_2500.pt` checkpoint) and the
 per-seed values are in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1) and both
 metrics are cumulative over forecast steps 1..h. Every model row is read from the stored
-rollouts §6.2's calibration tables are computed from, so no model is run to build this table.
+rollouts §6.2's calibration tables are computed from, so no model is run to build this table. **This table is at 2,500 iterations and §5's by-horizon table at 10,000**, which is why Arm A's relative-L1 at h = 368 reads 0.5856 here and 0.3582 there: the same arm, trained longer.
 
 Both metrics put the released checkpoint first at h = 1 and h = 8, they name
 different leaders at h = 100, and at h = 368 both put an Arm A variant
@@ -703,7 +709,7 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts 68.27% insid
 | teacher-forced Arm B | 315× [177, 509] | 12.96% [7.04, 20.93] | 1.22% [0.84, 1.61] |
 | released checkpoint | 7,878× [5,410, 9,934] | 0.56% [0.00, 1.67] | 0.08% [0.06, 0.11] |
 
-*Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = 4; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = 4 the bootstrap has 256 distinct resamples and the intervals are quantised at that resolution.*
+*Our arms are at 2,500 training iterations; the released checkpoint is as released. Every cell carries a 95% interval from a cluster bootstrap over whole trajectories, n_independent = 4; where three seeds contribute, seeds are pooled inside each draw rather than resampled, because seeds are not trajectories (§8). At n_independent = 4 the bootstrap has 256 distinct resamples and the intervals are quantised at that resolution.*
 
 **All four rows are the held-out arena** — the two episodes withheld from our own arms, n_independent = 4 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards.
 
@@ -1003,7 +1009,7 @@ improves the magnitude from 52.2× to 10.9× overconfident. It does not produce 
 ### 6.6 The failure is one of magnitude; the ordering is weaker than it looks
 
 Measuring the teacher-forced arm — which we had trained for §5, and which our own first three
-calibration tables omitted — sharpens the finding:
+calibration tables omitted — sharpens the finding (our arms at 2,500 training iterations; the released checkpoint as released):
 
 | model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 at h=368, out-of-sample | perm P at h=368, out-of-sample | perm P at h=368, in-sample |
 |---|---|---|---|---|
@@ -1266,7 +1272,7 @@ So the accurate form of this section is: **a constant scalar does not repair the
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 5):
+σ is flat while error grows (Figure 5; our arms at 2,500 training iterations, the released checkpoint as released):
 
 ![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1. (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows by an order of magnitude over the same steps. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
 
@@ -1308,7 +1314,7 @@ and the ensemble mean is fed back to all of them.
 | 128 | 5.3× | 11.0× | 15.03% | 7.79% |
 | 368 | 5.1× | 13.0× | 15.00% | 6.30% |
 
-*Same trajectories, same harness, n_independent = 4. The shared-trunk column is the mean
+*Same trajectories, same harness, n_independent = 4, every model at 2,500 training iterations. The shared-trunk column is the mean
 over 3 seeds; the comparison below is paired against each of them separately.*
 
 **M-44 returns MECHANISM SUPPORTED.** All 6 of its
@@ -1400,7 +1406,7 @@ head is reported separately in §6.5 and does not enter here.
 | 128 | 5.5× | 11.0× | 15.39% | 7.79% | 27.97% | 15.34% |
 | 368 | 5.4× | 13.0× | 14.44% | 6.30% | 27.63% | 12.51% |
 
-*Same trajectories, same harness, same bootstrap unit as §6.10. The shared-trunk columns are the
+*Same trajectories, same harness, same bootstrap unit as §6.10, every model at 2,500 training iterations. The shared-trunk columns are the
 mean over 3 seeds; the comparison below is paired against each of them separately.*
 
 **M-68 returns THE COMBINATION IMPROVES CALIBRATION** — branch 2 of the four the rule names. All
