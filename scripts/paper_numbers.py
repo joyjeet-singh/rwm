@@ -876,8 +876,14 @@ def main():
     # entered four.
     #
     # A framing retraction's COHORT is the commit that first introduced its
-    # ledger heading. Cohorts are ordered by commit time; the last cohort is the
-    # most recent review's, which is what both sentences are about.
+    # ledger heading. Cohorts are ordered by commit time. Both sentences are about
+    # the second pre-submission review's cohort. That was "the last cohort" until
+    # the pre-submission programme entered S-20 in a cohort of its own, and every
+    # sentence built on these keys went false at once ("the second pre-submission
+    # review entered one more"). So the review's cohort is fixed by a boundary in
+    # history rather than by position: it is the last cohort committed before the
+    # commit that added docs/presubmission/PLAN.md. The `last` in the key names
+    # means that. Cohorts after the boundary are the programme's own.
     _sha = {}
     for sid in fram:
         _out = subprocess.run(
@@ -891,8 +897,14 @@ def main():
     for sid, (h, t) in _sha.items():
         _cohorts.setdefault(h, {"t": t, "ids": []})["ids"].append(sid)
     _ordered = sorted(_cohorts.values(), key=lambda c: c["t"])
-    _last = _ordered[-1]["ids"]
-    _earlier = [x for c in _ordered[:-1] for x in c["ids"]]
+    _plan = subprocess.run(
+        ["git", "log", "--diff-filter=A", "--format=%ct", "--",
+         "docs/presubmission/PLAN.md"], capture_output=True, text=True).stdout.split()
+    assert _plan, "no commit adds docs/presubmission/PLAN.md"
+    _before = [c for c in _ordered if c["t"] < int(_plan[-1])]
+    _last = _before[-1]["ids"]
+    _earlier = [x for c in _before[:-1] for x in c["ids"]]
+    _after = [x for c in _ordered[len(_before):] for x in c["ids"]]
     put("n_framing_last_cohort", len(_last), "FINDINGS_LEDGER.md + git log")
     put("n_framing_last_cohort_word", WORDS.get(len(_last), str(len(_last))).lower(),
         "FINDINGS_LEDGER.md + git log")
@@ -900,6 +912,11 @@ def main():
     put("n_framing_before_last_word", WORDS.get(len(_earlier), str(len(_earlier))).lower(),
         "FINDINGS_LEDGER.md + git log")
     put("n_framing_cohorts", len(_ordered), "FINDINGS_LEDGER.md + git log")
+    # What the count read when the review's cohort landed: appendix D's
+    # counterfactual ("would have said six and enumerated two").
+    _thru = len(_earlier) + len(_last)
+    put("n_framing_through_review_word", WORDS.get(_thru, str(_thru)).lower(),
+        "FINDINGS_LEDGER.md + git log")
     put("framing_last_cohort_ids", ", ".join(f"`{x}`" for x in sorted(_last)),
         "FINDINGS_LEDGER.md + git log")
     # The last cohort's entries, less the final one, which appendix D describes
@@ -911,7 +928,7 @@ def main():
         "FINDINGS_LEDGER.md + git log")
     put("framing_last_cohort_final", f"`{sorted(_last)[-1]}`",
         "FINDINGS_LEDGER.md + git log")
-    assert len(_last) + len(_earlier) == len(fram)
+    assert len(_last) + len(_earlier) + len(_after) == len(fram)
 
     # E2 -- the residual factor between the implied iteration count and the one
     # the checkpoint's author recalls. The abstract said only "not reachable",
@@ -1717,6 +1734,31 @@ def main():
     # claims every abstract headline names its metric.
     put("stale_pct_rel", f'{100*(_r15["A_off0"]["e"]/_r15["A_off1"]["e"]-1):.1f}',
         "results/step4_0a_results.json")
+
+    # Pre-submission S3, item 4 (S-20; ruling "Restate on independent"). The same defect on
+    # independent trajectories, with 95% cluster-bootstrap intervals and both pairings inside
+    # each draw. stale_pct / stale_pct_rel above now appear only where §7.2 withdraws them.
+    _ad = J("alignment_defect_ci.json")["arenas"]
+    _h4, _h20, _pa = _ad["held_out_n4"], _ad["all_ten_n20"], _ad["protocol_a"]
+    _src = "results/alignment_defect_ci.json"
+    _ci = lambda c: f"[{c[0]:.1f}, {c[1]:.1f}]"
+    put("ad_nind", _h4["n_trajectories"], _src)
+    put("ad20_nind", _h20["n_trajectories"], _src)
+    for _tag, _a in (("ad", _h4), ("ad20", _h20)):
+        put(f"{_tag}_rel", f'{_a["overstatement_pct"]["rel_l1"]:.1f}', _src)
+        put(f"{_tag}_rel_ci", _ci(_a["ci95_pct"]["rel_l1"]), _src)
+        put(f"{_tag}_nrmse", f'{_a["overstatement_pct"]["nrmse_form1"]:.1f}', _src)
+        put(f"{_tag}_nrmse_ci", _ci(_a["ci95_pct"]["nrmse_form1"]), _src)
+    _pt = _h4["per_trajectory_overstatement_pct"]
+    put("ad_rel_traj", ", ".join(f"{x:+.1f}%" for x in _pt["rel_l1"]), _src)
+    put("ad_nrmse_traj", ", ".join(f"{x:+.1f}%" for x in _pt["nrmse_form1"]), _src)
+    _p20 = _h20["per_trajectory_overstatement_pct"]["rel_l1"]
+    put("ad20_traj_lo", f"{min(_p20):+.1f}", _src)
+    put("ad20_traj_hi", f"{max(_p20):+.1f}", _src)
+    _pn = _pa["per_trajectory_overstatement_pct"]["nrmse_form1"]
+    _k = max(range(len(_pn)), key=lambda i: _pn[i])
+    put("ad_pa_n", _pa["n_trajectories"], _src)
+    put("ad_pa_out_row", f'{_pa["starts"][_k]:,}', _src)
 
     # D3: the hold-last floor. Section 3 quoted 0.3509 against 1.5540 with no
     # baseline, so a reader could not judge whether 0.3509 was good.

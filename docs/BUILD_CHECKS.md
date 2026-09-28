@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 691 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 694 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -60,7 +60,7 @@ nothing about reproduction, and are never folded into the figure; counting them 
 *Formerly the paper's Appendix C, moved here in the referee revision. The text is as it stood
 there; only headings and cross-references that now point the other way were changed.*
 
-**The six numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The six framing retractions**, withdrawn as stated claims rather
+**The six numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The seven framing retractions**, withdrawn as stated claims rather
 than as numbers, and generated from the ledger rather than listed here — a typed
 enumeration beside a generated count is the same defect as a typed count. This one was typed
 with two entries at a time when the ledger held
@@ -69,7 +69,7 @@ replaced it with a generated list in the same commit, so it never actually stood
 appears here as a note rather than above as an entry for that reason, and the reason is luck:
 nothing compared the typed enumeration against the count beside it, and had the two changes
 landed in separate commits the paper would have said six and enumerated
-two:
+two. All seven, generated:
 
 - **Task 3's duplication rule was pre-registered** (`S-12`).
 
@@ -83,7 +83,9 @@ two:
 
 - **The released checkpoint cannot have come from the released recipe** (`S-19`).
 
-The last four were entered by the second pre-submission review, in a
+- **The released evaluation overstates its own model's error by 75%** (`S-20`).
+
+The second pre-submission review entered four of them, in a
 single commit — which is how that count is established rather than recalled.
 `S-16`, `S-17` and `S-18`
 are sentences of the 24 August draft that were false. `S-19` is different in kind and worse

@@ -3305,6 +3305,21 @@
         "scripts/verdict_baselines.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "S-20",
+      "claim": "\"The released evaluation overstates its own model's error by 75%\"",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/alignment_defect_ci.json",
+        "results/step4_0a_results.json",
+        "scripts/alignment_defect_ci.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -3314,7 +3329,7 @@
     "M": 76,
     "O": 14,
     "R": 75,
-    "S": 19,
+    "S": 20,
     "X": 17
   }
 }

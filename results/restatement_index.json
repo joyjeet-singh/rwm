@@ -1,10 +1,10 @@
 {
   "scanned": "PAPER.template.md",
-  "n_substituted": 1374,
+  "n_substituted": 1384,
   "n_typed": 217,
-  "n_restatements": 108,
+  "n_restatements": 110,
   "n_same_quantity_candidates": 56,
-  "n_lower_signal": 52,
+  "n_lower_signal": 54,
   "restatements": [
     {
       "value": "+0.419",
@@ -47,19 +47,19 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1537,
+          "line": 1550,
           "key": "a2_rdd",
           "ctx": "ast depth and the rollout held constant it still correlates {{a2_rdd}} {{a2_rdd_ci}} with error (\u00a76.7). But it"
         },
         {
           "section": "12. Conclusion",
-          "line": 1692,
+          "line": 1705,
           "key": "a2_rdd",
           "ctx": " and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.7"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1890,
+          "line": 1903,
           "key": "a2_rdd",
           "ctx": "s \u2014 plus a sixth on trajectory difficulty \u2014 the last giving {{a2_rdd}} {{a2_rdd_ci}} with both the rollout and"
         }
@@ -159,19 +159,19 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1531,
+          "line": 1544,
           "key": "d2b_par_all",
           "ctx": " index is defined \u2014 every one of them \u2014 and it retains {{d2b_par_all}} once that index is partialled out (\u00a76.7"
         },
         {
           "section": "12. Conclusion",
-          "line": 1692,
+          "line": 1705,
           "key": "d2b_par_all",
           "ctx": " ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. Again"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1890,
+          "line": 1903,
           "key": "d2b_par_all",
           "ctx": "rols on forecast depth \u2014 the linear partial that keeps {{d2b_par_all}}, and four harder ones \u2014 plus a sixth on"
         }
@@ -245,19 +245,19 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1531,
+          "line": 1544,
           "key": "d4_r",
           "ctx": "1 there is only one moment. Over the full rollout it falls to {{d4_r}} {{d4_ci}}. That decay is the useful par"
         },
         {
           "section": "12. Conclusion",
-          "line": 1692,
+          "line": 1705,
           "key": "a2_r_pooled",
           "ctx": " error (\u00a76.7, M-45). That is a smaller number than the {{a2_r_pooled}} pooled figure and it is the one that me"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1890,
+          "line": 1903,
           "key": "d4_r",
           "ctx": "ng, against a real baseline** \u2014 the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_inde"
         }
@@ -299,7 +299,7 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1531,
+          "line": 1544,
           "key": "d2_epi_h1",
           "ctx": "forecast step it ranks whole rollouts almost perfectly \u2014 {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npo"
         }
@@ -409,25 +409,25 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1473,
+          "line": 1486,
           "key": "tw_cc_cluster_hurt",
           "ctx": "rizons \u00d7 two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_"
         },
         {
           "section": "8. Method",
-          "line": 1518,
+          "line": 1531,
           "key": "ver_part_sci",
           "ctx": " measurement, a statistic or the verdict of a test is {{ver_part_sci}}.** One of the build's own gates, the cl"
         },
         {
           "section": "11. Limitations",
-          "line": 1635,
+          "line": 1648,
           "key": "q3_n_reorder",
           "ctx": "hich trained on all ten. Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order and the rule returns **{{q"
         },
         {
           "section": "Abstract",
-          "line": 17,
+          "line": 18,
           "key": null,
           "ctx": "* The implemented state loss is minimised at \u03c3 = 0 for any \u03bc, with no log-\u03c3 term to oppose it: the collapse is"
         },
@@ -435,7 +435,7 @@
           "section": "1. Introduction",
           "line": 71,
           "key": null,
-          "ctx": "itory, and it costs one line to fix. - **The \u03c3 = 0 optimum of the implemented objective.** The aleatoric colla"
+          "ctx": " reverses (\u00a77.2); one line fixes it. - **The \u03c3 = 0 optimum of the implemented objective.** The aleatoric colla"
         },
         {
           "section": "2. Related work",
@@ -499,19 +499,19 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1672,
+          "line": 1685,
           "key": null,
           "ctx": "ses a GPU. And **we did not test whether the \u03c3 = 0 optimum affects other descendants of the PETS parameterisat"
         },
         {
           "section": "12. Conclusion",
-          "line": 1687,
+          "line": 1700,
           "key": null,
           "ctx": "the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of th"
         },
         {
           "section": "12. Conclusion",
-          "line": 1695,
+          "line": 1708,
           "key": null,
           "ctx": " both are present together: \u00a76.3 derives the \u03c3 = 0 optimum from squared error on a sampled prediction through "
         }
@@ -553,13 +553,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1653,
+          "line": 1666,
           "key": "perm_oos_holm_thr",
           "ctx": "oarser than the multiplicity-corrected threshold {{perm_oos_holm_thr}}, so that arena cannot reject at any eff"
         },
         {
           "section": "11. Limitations",
-          "line": 1653,
+          "line": 1666,
           "key": "perm_all_holm_thr",
           "ctx": "s {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} need"
         }
@@ -786,7 +786,7 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m49_shrink",
           "ctx": "o_gain}}\u00d7 to {{m49_ratio_gain}}\u00d7, a difference of about {{m49_shrink}}, which is untested \u2014 no artifact here p"
         }
@@ -1089,31 +1089,31 @@
         },
         {
           "section": "8. Method",
-          "line": 1508,
+          "line": 1521,
           "key": "f4_n_negative",
           "ctx": "ne; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not. Figure 1 plots the set it was d"
         },
         {
           "section": "8. Method",
-          "line": 1512,
+          "line": 1525,
           "key": "bu_changes",
           "ctx": "dens intervals by a mean {{bu_mean_ratio}}\u00d7 and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 c"
         },
         {
           "section": "11. Limitations",
-          "line": 1592,
+          "line": 1605,
           "key": "e5_n_excl",
           "ctx": "exclude zero at a majority of horizons and it does so at {{e5_n_excl}} of {{e5_n_horizons}}. The binding const"
         },
         {
           "section": "12. Conclusion",
-          "line": 1701,
+          "line": 1714,
           "key": "q1_n_inherit",
           "ctx": "odebase. On \u00a72's count the substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants ex"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1921,
+          "line": 1934,
           "key": "appG_n_negative",
           "ctx": "ime, of which {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is kept de"
         },
@@ -1121,13 +1121,13 @@
           "section": "Abstract",
           "line": 12,
           "key": null,
-          "ctx": "x-for-index; evaluation feeds the action from *t\u22121*. Scored causally, nRMSE at h = \u2400 falls from \u2400 to \u2400, a \u2400% o"
+          "ctx": "x-for-index; evaluation feeds the action from *t\u22121*. On \u2400 independent trajectories this overstates the checkpo"
         },
         {
           "section": "1. Introduction",
           "line": 67,
           "key": null,
-          "ctx": "dex-for-index; evaluation feeds the action from *t\u22121*. Scored causally, nRMSE at h = \u2400 falls from \u2400 to \u2400 \u2014 the"
+          "ctx": "dex-for-index; evaluation feeds the action from *t\u22121*. On \u2400 independent trajectories the stale pairing oversta"
         },
         {
           "section": "3.1 Metrics",
@@ -1377,37 +1377,37 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1441,
+          "line": 1444,
           "key": null,
-          "ctx": "ct. The evaluation path feeds the action from *t\u22121* to predict state *t* \u2014 stale by one step. Scored correctly"
+          "ctx": "ect; the evaluation path feeds the action from *t\u22121* to predict state *t*, stale by one step. What the stale p"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1528,
+          "line": 1541,
           "key": null,
           "ctx": "llouts*, not of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to"
         },
         {
           "section": "11. Limitations",
-          "line": 1597,
+          "line": 1610,
           "key": null,
           "ctx": "ension matched comparison, both computed on seed 1 alone. The headline A/B result is not among them: it is a t"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1857,
+          "line": 1870,
           "key": null,
           "ctx": "ly numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the ho"
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1938,
+          "line": 1951,
           "key": null,
           "ctx": "inverted \u00a73.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the \u2400 "
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1944,
+          "line": 1957,
           "key": null,
           "ctx": "ning episodes has a very small denominator. Form 1 has no such lever: a dimension contributes in proportion to"
         }
@@ -1437,7 +1437,7 @@
         },
         {
           "section": "8. Method",
-          "line": 1516,
+          "line": 1529,
           "key": "ver_claim_pct",
           "ctx": ".sh --quick --force`, which skips training) rewrites {{ver_claim_pct}}% of the numeric values under `results/`"
         }
@@ -1527,7 +1527,7 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1611,
+          "line": 1624,
           "key": "q2_factor",
           "ctx": "ectories, where all ten episodes provide {{e7_nind}}** \u2014 {{q2_factor}}\u00d7 the present sample, by the constructio"
         }
@@ -1718,13 +1718,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m49_ratio_gain",
           "ctx": "ement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde"
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m49_ratio_gain",
           "ctx": "he point estimates fall from {{m44_ratio_gain}}\u00d7 to {{m49_ratio_gain}}\u00d7, a difference of about {{m49_shrink}},"
         }
@@ -1834,7 +1834,7 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1620,
+          "line": 1633,
           "key": "q2_se_ratio",
           "ctx": "rom the forecast-index margin, whose standard error is {{q2_se_ratio}}\u00d7 the step-size margin's; the observed m"
         }
@@ -1842,13 +1842,14 @@
     },
     {
       "value": "10",
-      "n_locations": 38,
+      "n_locations": 39,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 38,
+      "n_substituted": 39,
       "sources": [
         "results/a1_ab_by_horizon.json",
+        "results/alignment_defect_ci.json",
         "results/insample_framing.json",
         "results/m62_episode_clustering.json",
         "results/q1_pets_descendants.json",
@@ -1869,6 +1870,7 @@
         "a1_sign_pos_h32",
         "a1_sign_pos_h368",
         "a1_sign_pos_h8",
+        "ad_pa_n",
         "c3_sign_n",
         "c3_sign_pos",
         "d1n_eps",
@@ -2087,26 +2089,32 @@
           "ctx": "uantity is {{d3x_umde_lo}}\u2013{{d3x_umde_hi}} points against a {{d3_tol}}-point band, so such a cell is compatibl"
         },
         {
+          "section": "7. Defects in the released pipeline",
+          "line": 1460,
+          "key": "ad_pa_n",
+          "ctx": "_rel}}% (relative-L1) this paper reported before came from {{ad_pa_n}} overlapping windows sampled as the upst"
+        },
+        {
           "section": "9. Actionable lessons",
-          "line": 1539,
+          "line": 1552,
           "key": "d3_tol",
           "ctx": "ld-out data, brings every held-out coverage estimate within {{d3_tol}} points of nominal, though this arena ca"
         },
         {
           "section": "11. Limitations",
-          "line": 1679,
+          "line": 1692,
           "key": "q1_n_examined",
           "ctx": "counted how often the substitution is made among the {{q1_n_examined}} we examined (\u00a72), which bears on how fa"
         },
         {
           "section": "12. Conclusion",
-          "line": 1692,
+          "line": 1705,
           "key": "d3_tol",
           "ctx": " on another, brings every held-out coverage estimate within {{d3_tol}} points of nominal, though no single cel"
         },
         {
           "section": "12. Conclusion",
-          "line": 1701,
+          "line": 1714,
           "key": "q1_n_examined",
           "ctx": "e substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants examined, and there only in"
         }
@@ -2179,7 +2187,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1781,
+          "line": 1794,
           "key": null,
           "ctx": "on two CPU cores: \u2400 hours for the \u2400 runs at 10,000 iterations and \u2400 for the remaining \u2400 at 2,500. (Those were "
         }
@@ -2235,13 +2243,13 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1537,
+          "line": 1550,
           "key": "e5_ratio_h100",
           "ctx": "_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}\u00d7 [{{e5_ratio_ci_h100}}] on the ensemble"
         },
         {
           "section": "11. Limitations",
-          "line": 1592,
+          "line": 1605,
           "key": "e5_ratio_h100",
           "ctx": " seed-horizon cells and the *calibration* failure at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h36"
         }
@@ -2303,7 +2311,7 @@
       "locations": [
         {
           "section": "1. Introduction",
-          "line": 54,
+          "line": 55,
           "key": "diff_n_params",
           "ctx": "diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors before any training b"
         },
@@ -2321,7 +2329,7 @@
         },
         {
           "section": "Appendix A \u2014 verification chain",
-          "line": 1795,
+          "line": 1808,
           "key": "diff_n_params",
           "ctx": "* | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | trainer | can memorise a "
         }
@@ -2397,13 +2405,12 @@
     },
     {
       "value": "12",
-      "n_locations": 18,
+      "n_locations": 17,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 18,
+      "n_substituted": 17,
       "sources": [
-        "FINDINGS_LEDGER.md",
         "results/p4_transfer_power.json",
         "results/task_d3_cross_model.json",
         "results/task_d3_ens5.json",
@@ -2417,16 +2424,9 @@
         "d3x_epi_ok",
         "d3x_tol_pairs",
         "e5_lead_cells",
-        "e5_total_cells",
-        "n_retract_total"
+        "e5_total_cells"
       ],
       "locations": [
-        {
-          "section": "1. Introduction",
-          "line": 61,
-          "key": "n_retract_total",
-          "ctx": "docs/BUILD_CHECKS.md` give them in full. There are {{n_retract_total}} retractions of our own claims, kept wit"
-        },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
           "line": 1118,
@@ -2519,13 +2519,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1592,
+          "line": 1605,
           "key": "e5_lead_cells",
           "ctx": " They reproduce the *direction* of \u00a76.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cell"
         },
         {
           "section": "11. Limitations",
-          "line": 1592,
+          "line": 1605,
           "key": "e5_total_cells",
           "ctx": "irection* of \u00a76.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration"
         }
@@ -2602,9 +2602,39 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1650,
+          "line": 1663,
           "key": null,
           "ctx": " contains, rather than a better test. **At h = 128 and below that is no longer true and we say so**: a shorter"
+        }
+      ]
+    },
+    {
+      "value": "13",
+      "n_locations": 2,
+      "same_quantity_candidate": false,
+      "fails_build": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "FINDINGS_LEDGER.md",
+        "results/r2_independent_ensemble.json"
+      ],
+      "keys": [
+        "n_retract_total",
+        "r2_from_acc_h32"
+      ],
+      "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 62,
+          "key": "n_retract_total",
+          "ctx": "docs/BUILD_CHECKS.md` give them in full. There are {{n_retract_total}} retractions of our own claims, kept wit"
+        },
+        {
+          "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
+          "line": 1297,
+          "key": "r2_from_acc_h32",
+          "ctx": "\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigma_h32}}% | {{r2_from_acc_h32}}% | | **{{v2_deploy_h}}** | **{{r2_sigma"
         }
       ]
     },
@@ -2646,7 +2676,7 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1592,
+          "line": 1605,
           "key": "e5_ratio_h368",
           "ctx": "ailure at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h368}}\u00d7 at h = {{v2_diag_h}}) \u2014 but the pre-re"
         }
@@ -2676,13 +2706,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1653,
+          "line": 1666,
           "key": "m64_oos_n_h100",
           "ctx": "ue and we say so**: a shorter evaluation unit gives {{m64_oos_n_h100}} independent units at h = {{v2_deploy_h}"
         },
         {
           "section": "Data and code",
-          "line": 1728,
+          "line": 1741,
           "key": "f4_n_commits",
           "ctx": "y commit from the one that introduced it onward, so **{{f4_n_commits}} of the commits Figure 1 cites keep thei"
         }
@@ -2832,19 +2862,19 @@
         },
         {
           "section": "8. Method",
-          "line": 1512,
+          "line": 1525,
           "key": "bu_cells",
           "ctx": "y a mean {{bu_mean_ratio}}\u00d7 and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already reco"
         },
         {
           "section": "References",
-          "line": 1780,
+          "line": 1793,
           "key": "t1_n_verified",
           "ctx": "nce matched verbatim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_fra"
         },
         {
           "section": "References",
-          "line": 1780,
+          "line": 1793,
           "key": "t1_n_refs",
           "ctx": "tim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_"
         }
@@ -2942,19 +2972,19 @@
         },
         {
           "section": "References",
-          "line": 1780,
+          "line": 1793,
           "key": "t1_n_frag_ok",
           "ctx": "text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, "
         },
         {
           "section": "References",
-          "line": 1780,
+          "line": 1793,
           "key": "t1_n_frag",
           "ctx": "ified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_onewo"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1921,
+          "line": 1934,
           "key": "appG_n_positive",
           "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
         }
@@ -2987,37 +3017,37 @@
         },
         {
           "section": "8. Method",
-          "line": 1508,
+          "line": 1521,
           "key": "appG_n_rules",
           "ctx": "ime for {{f4_n_rules}} of them and Appendix E for all {{appG_n_rules}}, every one of which now carries one; {{"
         },
         {
           "section": "11. Limitations",
-          "line": 1655,
+          "line": 1668,
           "key": "appG_n_rules",
           "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendi"
         },
         {
           "section": "References",
-          "line": 1777,
+          "line": 1790,
           "key": "t1_last_entry_n",
           "ctx": "{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the \u00a72 bibliography, generated from"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1920,
+          "line": 1933,
           "key": "appG_n_rules",
           "ctx": " one, which is what a lead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1920,
+          "line": 1933,
           "key": "appG_n_lead",
           "ctx": "ead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1938,
+          "line": 1951,
           "key": "appG_n_rules",
           "ctx": "he same script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an appe"
         }
@@ -3130,31 +3160,31 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1475,
+          "line": 1488,
           "key": "tw_dc_cluster_helped",
           "ctx": " The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells. **\"Costs nothing\" is the wrong "
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1539,
+          "line": 1552,
           "key": "d3_epi_const_ok",
           "ctx": "l to that band; a single global multiplier manages {{d3_epi_const_ok}} of them (\u00a76.8). The held-out cells are "
         },
         {
           "section": "12. Conclusion",
-          "line": 1692,
+          "line": 1705,
           "key": "d3_epi_const_ok",
           "ctx": "e at this arena, where a global multiplier manages {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in eac"
         },
         {
           "section": "Appendix C \u2014 what testing the untested claims would require",
-          "line": 1852,
+          "line": 1865,
           "key": "appE_n_cpu",
           "ctx": "t. This table has one row per untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion tha"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1912,
+          "line": 1925,
           "key": "m69_amend_min",
           "ctx": "{{appG_table}} `M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so the ru"
         },
@@ -3202,13 +3232,13 @@
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1939,
+          "line": 1952,
           "key": null,
           "ctx": "de by the pooled scale \u2014 a ratio of means. **Form 2** is the mean of per-dimension ratios. The two differ beca"
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1942,
+          "line": 1955,
           "key": null,
           "ctx": "ons differ in scale by orders of magnitude. Form 2 gives whichever dimension has the smallest denominator unbo"
         }
@@ -3303,13 +3333,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m49_mde_ratio",
           "ctx": "o **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde_ratio}}\u00d7. `M-49` therefore returns **{{m49_verd"
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m49_mde_ratio",
           "ctx": "ependent arms against each other \u2014 and far below the {{m49_mde_ratio}}\u00d7 this comparison can resolve. Closing i"
         }
@@ -3374,13 +3404,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m44_ratio_gain",
           "ctx": "esolve.** The overconfidence improvement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 mat"
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m44_ratio_gain",
           "ctx": "n does not answer it: the point estimates fall from {{m44_ratio_gain}}\u00d7 to {{m49_ratio_gain}}\u00d7, a difference o"
         }
@@ -3468,13 +3498,15 @@
     },
     {
       "value": "20",
-      "n_locations": 36,
+      "n_locations": 38,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 3,
-      "n_substituted": 33,
+      "n_substituted": 35,
       "sources": [
+        "FINDINGS_LEDGER.md",
         "results/a2_trajectory_level_control.json",
+        "results/alignment_defect_ci.json",
         "results/e5_synthetic_sigma.json",
         "results/e7_free_baselines.json",
         "results/m62_episode_clustering.json",
@@ -3488,6 +3520,7 @@
         "None",
         "a2_h1_npoints",
         "a2_nind",
+        "ad20_nind",
         "cal_rel_npos",
         "d1n_nind",
         "d4_nind",
@@ -3495,6 +3528,7 @@
         "e5s_corrob_seeds",
         "e7_nind",
         "m62_n_traj",
+        "n_superseded",
         "perm_all_nind",
         "relale_all_nind",
         "relale_oos_pos_h368",
@@ -3676,26 +3710,38 @@
           "ctx": "gin}} this sample size can resolve \u2014 so at n_independent = {{e7_nind}} 400-step trajectories we cannot say the"
         },
         {
+          "section": "7. Defects in the released pipeline",
+          "line": 1455,
+          "key": "ad20_nind",
+          "ctx": "1 and {{ad_nrmse_traj}} in nRMSE. Over all ten episodes, {{ad20_nind}} independent trajectories, the sign reve"
+        },
+        {
+          "section": "8. Method",
+          "line": 1523,
+          "key": "n_superseded",
+          "ctx": "ions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, p"
+        },
+        {
           "section": "9. Actionable lessons",
-          "line": 1531,
+          "line": 1544,
           "key": "a2_h1_npoints",
           "ctx": "erfectly \u2014 {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npoints}} trajectories, and that is a ranking of "
         },
         {
           "section": "11. Limitations",
-          "line": 1611,
+          "line": 1624,
           "key": "e7_nind",
           "ctx": "dent 400-step trajectories, where all ten episodes provide {{e7_nind}}** \u2014 {{q2_factor}}\u00d7 the present sample, "
         },
         {
           "section": "12. Conclusion",
-          "line": 1709,
+          "line": 1722,
           "key": "d1n_nind",
           "ctx": "dependent 400-step trajectories and all ten episodes hold {{d1n_nind}}, which is why \u00a711 leaves the replicatio"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1890,
+          "line": 1903,
           "key": "d4_nind",
           "ctx": " {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at ev"
         },
@@ -3713,7 +3759,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1781,
+          "line": 1794,
           "key": null,
           "ctx": "unded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts th"
         }
@@ -3822,7 +3868,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1781,
+          "line": 1794,
           "key": null,
           "ctx": "hours. An earlier version of this appendix said 22 hours; that figure predated the \u2400 ten-thousand-iteration ru"
         }
@@ -3938,7 +3984,7 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1610,
+          "line": 1623,
           "key": "q2_n_req",
           "ctx": "If the observed margin is the true one, settling it needs {{q2_n_req}} independent 400-step trajectories, wher"
         }
@@ -3981,13 +4027,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1657,
+          "line": 1670,
           "key": "released_width",
           "ctx": "rnn_hidden_size` {{m49_width}} against the released {{released_width}}, giving {{m49_matched_params}} state-pa"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1810,
+          "line": 1823,
           "key": "released_width",
           "ctx": "dden_size` {{m49_width}}** rather than the released {{released_width}}. They are part of this project's CPU sp"
         },
@@ -3999,7 +4045,7 @@
         },
         {
           "section": "Data and code",
-          "line": 1718,
+          "line": 1731,
           "key": null,
           "ctx": "hes both at pinned commits and verifies two SHA-256 hashes. **The repository's history was rewritten once, and"
         }
@@ -4060,13 +4106,13 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1807,
+          "line": 1820,
           "key": "rt_runs_short",
           "ctx": " iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole "
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1781,
+          "line": 1794,
           "key": null,
           "ctx": " to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a "
         }
@@ -4292,25 +4338,25 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1592,
+          "line": 1605,
           "key": "e5_seeds",
           "ctx": "y made on the released checkpoint alone. We since trained {{e5_seeds}} Arm A arms at ensemble size 5 (\u00a76.7). T"
         },
         {
           "section": "References",
-          "line": 1777,
+          "line": 1790,
           "key": "t1_first_entry_n",
           "ctx": "er_figures.json`.* {{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the \u00a72 bibliogr"
         },
         {
           "section": "References",
-          "line": 1781,
+          "line": 1794,
           "key": "t1_n_frag_oneword",
           "ctx": "frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_oneword}} of them single common words whose prese"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1896,
+          "line": 1909,
           "key": null,
           "ctx": "tely.** `S-12` withdraws the claim that the Task 3 duplication rule was pre-registered; the control runs had f"
         }
@@ -4352,13 +4398,13 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1657,
+          "line": 1670,
           "key": "v1_cap_ratio",
           "ctx": "the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own tru"
         },
         {
           "section": "11. Limitations",
-          "line": 1657,
+          "line": 1670,
           "key": "v1_cap_ratio",
           "ctx": "ched_ratio}}, where \u00a76.10's original contrast carried {{v1_cap_ratio}}. **With capacity held fixed the indepen"
         }
@@ -4438,19 +4484,19 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1472,
+          "line": 1485,
           "key": "tw_cells",
           "ctx": "ing inferred the mechanism without it. In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory leng"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1473,
+          "line": 1486,
           "key": "tw_cells",
           "ctx": "cs), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} ("
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1479,
+          "line": 1492,
           "key": "tw_cells",
           "ctx": "t}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measured effects in opp"
         },
@@ -4518,19 +4564,19 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1807,
+          "line": 1820,
           "key": "rt_runs",
           "ctx": "which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of re"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1809,
+          "line": 1822,
           "key": "rt_runs",
           "ctx": "ifact rather than re-estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m49}} hours, are `M-49"
         },
         {
           "section": "Appendix C \u2014 what testing the untested claims would require",
-          "line": 1847,
+          "line": 1860,
           "key": "rt_runs",
           "ctx": "ator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; "
         }
@@ -4651,8 +4697,8 @@
       "n_locations": 75,
       "same_quantity_candidate": true,
       "fails_build": false,
-      "n_typed": 7,
-      "n_substituted": 68,
+      "n_typed": 6,
+      "n_substituted": 69,
       "sources": [
         "results/q3_penalty_reordering.json",
         "results/r2_independent_ensemble.json",
@@ -4675,19 +4721,19 @@
           "section": "Abstract",
           "line": 13,
           "key": "v2_diag_h",
-          "ctx": "eds the action from *t\u22121*. Scored causally, nRMSE at h = {{v2_diag_h}} falls from {{stale_nrmse}} to {{causal_"
+          "ctx": "ajectories this overstates the checkpoint's error at h = {{v2_diag_h}} by {{ad_nrmse}}% {{ad_nrmse_ci}} in nRM"
         },
         {
           "section": "Abstract",
-          "line": 24,
+          "line": 25,
           "key": "v2_diag_h",
           "ctx": " claim reproduces**: {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}}, on held-out data over only {{nind_oos_"
         },
         {
           "section": "1. Introduction",
-          "line": 67,
+          "line": 69,
           "key": "v2_diag_h",
-          "ctx": "feeds the action from *t\u22121*. Scored causally, nRMSE at h = {{v2_diag_h}} falls from {{stale_nrmse}} to {{causa"
+          "ctx": "e stale pairing overstates the checkpoint's error at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relativ"
         },
         {
           "section": "1. Introduction",
@@ -4705,7 +4751,7 @@
           "section": "3.1 Metrics",
           "line": 383,
           "key": "v2_diag_h",
-          "ctx": " the same comparison overstates by {{stale_pct}}% at h = {{v2_diag_h}} and by {{stale_pct_rel}}% on relative-L"
+          "ctx": "efect is given in both metrics side by side, each at h = {{v2_diag_h}} on the same {{ad_nind}} independent tra"
         },
         {
           "section": "3.1 Metrics",
@@ -5020,62 +5066,68 @@
           "ctx": " | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag_h}} | {{m68_sigma_x_h368}}\u00d7 | {{m68_acc_x_h"
         },
         {
+          "section": "7. Defects in the released pipeline",
+          "line": 1452,
+          "key": "v2_diag_h",
+          "ctx": "ies it overstates the released checkpoint's error at h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relat"
+        },
+        {
           "section": "9. Actionable lessons",
-          "line": 1556,
+          "line": 1569,
           "key": "v2_diag_h",
           "ctx": "h = {{v2_deploy_h}}, and {{d1n_alea_ratio_h368}}\u00d7 at h = {{v2_diag_h}}. Reading the loss took an afternoon and"
         },
         {
           "section": "10. Broader impact",
-          "line": 1566,
+          "line": 1579,
           "key": "v2_diag_h",
           "ctx": "ows by a factor of {{m65_c_growth}} between one step and {{v2_diag_h}} (\u00a76.2), so a penalty weight chosen for "
         },
         {
           "section": "11. Limitations",
-          "line": 1592,
+          "line": 1605,
           "key": "v2_diag_h",
           "ctx": "100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h368}}\u00d7 at h = {{v2_diag_h}}) \u2014 but the pre-registered rule governin"
         },
         {
           "section": "11. Limitations",
-          "line": 1645,
+          "line": 1658,
           "key": "q3_dom_h",
           "ctx": "as computed after the verdict: the last horizon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_ste"
         },
         {
           "section": "11. Limitations",
-          "line": 1646,
+          "line": 1659,
           "key": "q3_steps",
           "ctx": "zon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_steps}} steps and {{q3_dom_share}}% of the corr"
         },
         {
           "section": "11. Limitations",
-          "line": 1653,
+          "line": 1666,
           "key": "v2_diag_h",
           "ctx": " threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released d"
         },
         {
           "section": "12. Conclusion",
-          "line": 1694,
+          "line": 1707,
           "key": "v2_diag_h",
           "ctx": "ry one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar"
         },
         {
           "section": "12. Conclusion",
-          "line": 1694,
+          "line": 1707,
           "key": "v2_diag_h",
           "ctx": "* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1890,
+          "line": 1903,
           "key": "v2_diag_h",
           "ctx": " **Weaker per-dimension than we first reported**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1890,
+          "line": 1903,
           "key": "v2_diag_h",
           "ctx": "n rollout length, and {{d1n_epi_ratio_h368}}\u00d7 at the h = {{v2_diag_h}} diagnostic horizon; repairable per hori"
         },
@@ -5114,12 +5166,6 @@
           "line": 1203,
           "key": null,
           "ctx": "calibrated against the \u2400% target, and leaves h=368 at \u2400\u2013\u2400%. On the aleatoric term a scalar of \u2400\u2013\u2400 gives \u2400\u2013\u2400% a"
-        },
-        {
-          "section": "7. Defects in the released pipeline",
-          "line": 1443,
-          "key": null,
-          "ctx": " own released evaluation reports: nRMSE at h = 368 falls from \u2400 under the released pairing to \u2400 under the caus"
         }
       ]
     },
@@ -5161,7 +5207,7 @@
         },
         {
           "section": "References",
-          "line": 1773,
+          "line": 1786,
           "key": "v4_name_n_v1",
           "ctx": " The two names never co-occur: v1 uses {{v4_name_v1}} {{v4_name_n_v1}} times and no {{v4_name_v3}}, v3 the rev"
         }
@@ -5199,7 +5245,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1807,
+          "line": 1820,
           "key": "rt_longest",
           "ctx": "the sum of its stated parts.) The longest single run is {{rt_longest}} hours. An earlier version of this appen"
         }
@@ -5225,7 +5271,7 @@
       "locations": [
         {
           "section": "Abstract",
-          "line": 24,
+          "line": 25,
           "key": "d1_ratio",
           "ctx": ". **The base paper's central training claim reproduces**: {{d1_ratio}}\u00d7 on relative-L1 at h = {{v2_diag_h}}, o"
         },
@@ -5273,7 +5319,7 @@
         },
         {
           "section": "10. Broader impact",
-          "line": 1573,
+          "line": 1586,
           "key": "d1n_epi_cov1_h100",
           "ctx": "_h100}}\u00d7 smaller than the realised error, giving {{d1n_epi_cov1_h100}}% coverage where {{v3_cov_nominal1}}% is"
         }
@@ -5480,37 +5526,37 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1540,
+          "line": 1553,
           "key": null,
           "ctx": "ependent trajectories, not trajectories.** Two 400-step windows that overlap at all are one piece of evidence,"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1542,
+          "line": 1555,
           "key": null,
           "ctx": "The held-out arena here contains \u2400 independent 400-step trajectories however many windows are drawn from it, a"
         },
         {
           "section": "11. Limitations",
-          "line": 1584,
+          "line": 1597,
           "key": null,
           "ctx": "m.** The out-of-sample arena has \u2400 independent 400-step trajectories. That is the binding constraint on \u00a75, an"
         },
         {
           "section": "11. Limitations",
-          "line": 1607,
+          "line": 1620,
           "key": null,
           "ctx": " the true one, settling it needs \u2400 independent 400-step trajectories, where all ten episodes provide \u2400** \u2014 \u2400\u00d7 "
         },
         {
           "section": "11. Limitations",
-          "line": 1650,
+          "line": 1663,
           "key": null,
           "ctx": "t gives \u2400 independent units at h = \u2400 where the 400-step unit gives \u2400 (`M-64`), and we did not rerun this permu"
         },
         {
           "section": "12. Conclusion",
-          "line": 1705,
+          "line": 1718,
           "key": null,
           "ctx": ": our arms' held-out arena holds \u2400 independent 400-step trajectories and all ten episodes hold \u2400, which is why"
         }
@@ -5746,43 +5792,43 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1459,
+          "line": 1472,
           "key": "bound_both_train",
           "ctx": "}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are train"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1531,
+          "line": 1544,
           "key": "d2p_n_separating",
           "ctx": "we tested, on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons wher"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1531,
+          "line": 1544,
           "key": "d2p_n_horizons",
           "ctx": "t that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons where the index is defined \u2014 e"
         },
         {
           "section": "11. Limitations",
-          "line": 1657,
+          "line": 1670,
           "key": "r2_n_indep",
           "ctx": "ectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size"
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m49_n_conditions_met",
           "ctx": "therefore returns **{{m49_verdict_short}}** \u2014 {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions "
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1809,
+          "line": 1822,
           "key": "rt_runs_m49",
           "ctx": "ield of every run artifact rather than re-estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1890,
+          "line": 1903,
           "key": "d2r_ncontrols",
           "ctx": "um detectable effect ({{e7_verdict}}) \u2014 and survives {{d2r_ncontrols}} controls on forecast depth \u2014 the linear"
         },
@@ -5812,13 +5858,13 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1534,
+          "line": 1547,
           "key": null,
           "ctx": "e released checkpoint and \u2400\u00d7 [\u2400] on the ensemble-5 arms we trained \u2014 and a risk gate or safety margin that rea"
         },
         {
           "section": "11. Limitations",
-          "line": 1589,
+          "line": 1602,
           "key": null,
           "ctx": ". We since trained \u2400 Arm A arms at ensemble size 5 (\u00a76.7). They reproduce the *direction* of \u00a76.7's finding in"
         }
@@ -5996,37 +6042,37 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1539,
+          "line": 1552,
           "key": "d3_nhoriz",
           "ctx": "d3_epi_const_ok}} of them (\u00a76.8). The held-out cells are {{d3_nhoriz}} horizons \u00d7 two fold directions on the s"
         },
         {
           "section": "11. Limitations",
-          "line": 1635,
+          "line": 1648,
           "key": "q3_n_pairs",
           "ctx": "t from the checkpoint, which trained on all ten. Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order an"
         },
         {
           "section": "11. Limitations",
-          "line": 1659,
+          "line": 1672,
           "key": "m49_n_conditions",
           "ctx": "rdict_short}}** \u2014 {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions hold and the ratio threshold"
         },
         {
           "section": "12. Conclusion",
-          "line": 1692,
+          "line": 1705,
           "key": "d3_nhoriz",
           "ctx": " global multiplier manages {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in each of two fold directions"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1807,
+          "line": 1820,
           "key": "rt_runs_10k",
           "ctx": "clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hour"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1807,
+          "line": 1820,
           "key": "rt_runs_10k",
           "ctx": " this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for t"
         }
@@ -6239,7 +6285,7 @@
       "locations": [
         {
           "section": "1. Introduction",
-          "line": 53,
+          "line": 54,
           "key": "diff_terms",
           "ctx": " losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parame"
         },
@@ -6281,19 +6327,19 @@
         },
         {
           "section": "8. Method",
-          "line": 1508,
+          "line": 1521,
           "key": "f4_n_positive",
           "ctx": "{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_n"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1556,
+          "line": 1569,
           "key": "diff_terms",
           "ctx": " paper describes two loss terms; the implementation has {{diff_terms}}. The predicted variance has an optimum "
         },
         {
           "section": "Appendix A \u2014 verification chain",
-          "line": 1795,
+          "line": 1808,
           "key": "diff_terms",
           "ctx": "sses and gradients match** | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | "
         }
@@ -6323,7 +6369,7 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1454,
+          "line": 1467,
           "key": "arm_clean_windows",
           "ctx": "rm on {{arm_contam_windows}} windows \u2014 the clean {{arm_clean_windows}} plus {{arm_splices}} splices \u2014 and, bec"
         }
@@ -6364,6 +6410,48 @@
           "line": 1364,
           "key": "m68_shared_cov1_h128",
           "ctx": "ed_ratio_h128}}\u00d7 | {{m68_indep_cov1_h128}}% | {{m68_shared_cov1_h128}}% | {{m68_indep_cov2_h128}}% | {{m68_sha"
+        }
+      ]
+    },
+    {
+      "value": "7.9",
+      "n_locations": 4,
+      "same_quantity_candidate": false,
+      "fails_build": false,
+      "n_typed": 0,
+      "n_substituted": 4,
+      "sources": [
+        "results/alignment_defect_ci.json",
+        "results/task_d1_threeseed.json"
+      ],
+      "keys": [
+        "ad_rel",
+        "d1_A_relsd"
+      ],
+      "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 69,
+          "key": "ad_rel",
+          "ctx": "g overstates the checkpoint's error at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_"
+        },
+        {
+          "section": "3.1 Metrics",
+          "line": 383,
+          "key": "ad_rel",
+          "ctx": "_diag_h}} on the same {{ad_nind}} independent trajectories: {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_"
+        },
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 530,
+          "key": "d1_A_relsd",
+          "ctx": "ing: Arm A ranges {{d1_A_lo}}\u2013{{d1_A_hi}} across seeds ({{d1_A_relsd}}% relative), Arm B {{d1_B_lo}}\u2013{{d1_B_hi"
+        },
+        {
+          "section": "7. Defects in the released pipeline",
+          "line": 1452,
+          "key": "ad_rel",
+          "ctx": "s the released checkpoint's error at h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relative-L1** and **{"
         }
       ]
     },
@@ -6417,11 +6505,11 @@
     },
     {
       "value": "75",
-      "n_locations": 5,
+      "n_locations": 2,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 5,
+      "n_substituted": 2,
       "sources": [
         "results/step4_0a_results.json",
         "results/task_d3b_ens5_power.json"
@@ -6432,24 +6520,6 @@
       ],
       "locations": [
         {
-          "section": "Abstract",
-          "line": 13,
-          "key": "stale_pct",
-          "ctx": "ag_h}} falls from {{stale_nrmse}} to {{causal_nrmse}}, a {{stale_pct}}% overstatement of its own checkpoint's "
-        },
-        {
-          "section": "1. Introduction",
-          "line": 69,
-          "key": "stale_pct",
-          "ctx": "the released harness overstates its own model's error by {{stale_pct}}% (\u00a77.2). This is the finding most immed"
-        },
-        {
-          "section": "3.1 Metrics",
-          "line": 383,
-          "key": "stale_pct",
-          "ctx": "d is horizon-specific: the same comparison overstates by {{stale_pct}}% at h = {{v2_diag_h}} and by {{stale_pc"
-        },
-        {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
           "line": 1132,
           "key": "e5_power_mean",
@@ -6457,9 +6527,9 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1448,
+          "line": 1459,
           "key": "stale_pct",
-          "ctx": "e released evaluation overstates its own model's error by {{stale_pct}}%. **7.3 No held-out evaluation.** Eval"
+          "ctx": " this checkpoint, which trained on all ten episodes. The {{stale_pct}}% (nRMSE) and {{stale_pct_rel}}% (relati"
         }
       ]
     },
@@ -6548,7 +6618,7 @@
         },
         {
           "section": "8. Method",
-          "line": 1508,
+          "line": 1521,
           "key": "f4_n_rules",
           "ctx": "m, with one exception. Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix E for all {{appG_n"
         },
@@ -6620,19 +6690,19 @@
         },
         {
           "section": "8. Method",
-          "line": 1509,
+          "line": 1522,
           "key": null,
           "ctx": "a mean \u2400\u00d7 and changes \u2400 of \u2400 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon v"
         },
         {
           "section": "Appendix C \u2014 what testing the untested claims would require",
-          "line": 1821,
+          "line": 1834,
           "key": null,
           "ctx": "mes three, if run at our data budget | | M=32, N=8 optimal (\u00a7IV-C) | no simulator needed; a sweep over M and N"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1858,
+          "line": 1871,
           "key": null,
           "ctx": " B is worse than the hold-last floor | | M=32, N=8 is the optimal configuration (\u00a7IV-C) | no | \u2014 | `[cpu: the "
         }
@@ -6746,19 +6816,19 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1460,
+          "line": 1473,
           "key": "bound_total",
           "ctx": "ining episodes, because {{bound_touch_holdout}} of the {{bound_total}} put held-out rows into training. That i"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1474,
+          "line": 1487,
           "key": "tw_cc_cluster_helped",
           "ctx": "cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} (Figure 6a). The control is inert, diff"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1479,
+          "line": 1492,
           "key": "tw_cc_cluster_helped",
           "ctx": "'s {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measure"
         }
@@ -6788,13 +6858,13 @@
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1539,
+          "line": 1552,
           "key": "d3_epi_cspread",
           "ctx": "ations as the evidence. The fitted multipliers span {{d3_epi_cspread}}\u00d7 across horizons, which is precisely wh"
         },
         {
           "section": "11. Limitations",
-          "line": 1639,
+          "line": 1652,
           "key": "q3_c_ratio",
           "ctx": "ch rollout is penalised more. The multipliers differ by {{q3_c_ratio}}\u00d7 across horizons, so the design could h"
         }

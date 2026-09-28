@@ -84,6 +84,11 @@ EXPLICIT_HORIZON = {
     "stale_nrmse": 368,
     "causal_nrmse": 368,
     "stale_pct": 368,
+    # Pre-submission S3, item 4: the same defect restated on independent trajectories
+    # (S-20). Every one of these is at h = 368, and the sweep must see it.
+    **{k: 368 for k in ("ad_rel", "ad_rel_ci", "ad_nrmse", "ad_nrmse_ci", "ad_rel_traj",
+                        "ad_nrmse_traj", "ad20_rel", "ad20_rel_ci", "ad20_nrmse",
+                        "ad20_nrmse_ci", "ad20_traj_lo", "ad20_traj_hi")},
 }
 
 

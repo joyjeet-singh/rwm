@@ -675,6 +675,70 @@
     "source": "results/review_bootstrap_unit.json",
     "value": 0
   },
+  "ad20_nind": {
+    "source": "results/alignment_defect_ci.json",
+    "value": 20
+  },
+  "ad20_nrmse": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "-2.1"
+  },
+  "ad20_nrmse_ci": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "[-10.0, 3.9]"
+  },
+  "ad20_rel": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "-4.6"
+  },
+  "ad20_rel_ci": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "[-13.4, 3.2]"
+  },
+  "ad20_traj_hi": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "+35.2"
+  },
+  "ad20_traj_lo": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "-47.4"
+  },
+  "ad_nind": {
+    "source": "results/alignment_defect_ci.json",
+    "value": 4
+  },
+  "ad_nrmse": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "6.6"
+  },
+  "ad_nrmse_ci": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "[1.0, 8.0]"
+  },
+  "ad_nrmse_traj": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "+2.4%, +5.8%, +8.3%, -0.3%"
+  },
+  "ad_pa_n": {
+    "source": "results/alignment_defect_ci.json",
+    "value": 10
+  },
+  "ad_pa_out_row": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "8,375"
+  },
+  "ad_rel": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "7.9"
+  },
+  "ad_rel_ci": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "[3.1, 13.0]"
+  },
+  "ad_rel_traj": {
+    "source": "results/alignment_defect_ci.json",
+    "value": "+0.8%, +9.8%, +14.8%, +6.5%"
+  },
   "agree_alea": {
     "source": "results/task_b2_epistemic.json + task_d_nind20.json",
     "value": 4
@@ -4053,7 +4117,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "541"
+    "value": "543"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -4733,7 +4797,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 257
+    "value": 258
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -4753,7 +4817,7 @@
   },
   "n_framing_cohorts": {
     "source": "FINDINGS_LEDGER.md + git log",
-    "value": 3
+    "value": 4
   },
   "n_framing_last_cohort": {
     "source": "FINDINGS_LEDGER.md + git log",
@@ -4762,6 +4826,10 @@
   "n_framing_last_cohort_word": {
     "source": "FINDINGS_LEDGER.md + git log",
     "value": "four"
+  },
+  "n_framing_through_review_word": {
+    "source": "FINDINGS_LEDGER.md + git log",
+    "value": "six"
   },
   "n_holdout_eps": {
     "source": "results/step5_armA_seed0.json (split)",
@@ -4777,31 +4845,31 @@
   },
   "n_retract_framing": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 6
+    "value": 7
   },
   "n_retract_framing_ids": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "`S-12`, `S-15`, `S-16`, `S-17`, `S-18`, `S-19`"
+    "value": "`S-12`, `S-15`, `S-16`, `S-17`, `S-18`, `S-19`, `S-20`"
   },
   "n_retract_framing_list": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "\n\n- **Task 3's duplication rule was pre-registered** (`S-12`).\n\n- **The binomial P-values attached to every dimension count** (`S-15`).\n\n- **The two largest held-out deviations are in opposite directions** (`S-16`).\n\n- **The eight untested claims are, without exception, about policy learning or hardware** (`S-17`).\n\n- **The per-member \u03c3 is worse by three orders of magnitude** (`S-18`).\n\n- **The released checkpoint cannot have come from the released recipe** (`S-19`)."
+    "value": "\n\n- **Task 3's duplication rule was pre-registered** (`S-12`).\n\n- **The binomial P-values attached to every dimension count** (`S-15`).\n\n- **The two largest held-out deviations are in opposite directions** (`S-16`).\n\n- **The eight untested claims are, without exception, about policy learning or hardware** (`S-17`).\n\n- **The per-member \u03c3 is worse by three orders of magnitude** (`S-18`).\n\n- **The released checkpoint cannot have come from the released recipe** (`S-19`).\n\n- **The released evaluation overstates its own model's error by 75%** (`S-20`)."
   },
   "n_retract_framing_phrase": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "6 further"
+    "value": "7 further"
   },
   "n_retract_framing_word": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "six"
+    "value": "seven"
   },
   "n_retract_framing_word_cap": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "Six"
+    "value": "Seven"
   },
   "n_retract_total": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 12
+    "value": 13
   },
   "n_retractions": {
     "source": "FINDINGS_LEDGER.md",
@@ -4829,7 +4897,7 @@
   },
   "n_superseded": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 19
+    "value": 20
   },
   "n_train_eps": {
     "source": "results/step5_armA_seed0.json (split)",
@@ -7845,7 +7913,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 691
+    "value": 694
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

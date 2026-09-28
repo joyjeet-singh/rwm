@@ -19,11 +19,11 @@ way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean 
 49 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 257 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 258 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
-are never edited in place: 19 are marked `SUPERSEDED` and kept.
+are never edited in place: 20 are marked `SUPERSEDED` and kept.
 Six of those are retractions of our own **numbered claims** on evidence this
-project produced, and six withdraw **framings** — a sentence the paper
+project produced, and seven withdraw **framings** — a sentence the paper
 asserted that turned out to be false, rather than a number that turned out to be wrong. The two
 counts are separate and the paper keeps them separate; four of the framing retractions were
 entered by the second pre-submission review, and one of those is the record of a claim §7.5 had

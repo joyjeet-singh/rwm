@@ -102,4 +102,12 @@ The source is `results/step4_0a_results.json` via ledger R-15.
 2. **Keep 75% and 9.5%, labelled as Protocol A**, with the independent-arena figures and the reversal beside them. The headline number stays, qualified.
 3. **Withdraw the size claim entirely.** Keep the convention defect (§7.2's alignment argument and the reset-row evidence) with no overstatement figure.
 
-**Answer:** (pending)
+**Answer (verbatim, asked in chat, 2026-09-28):** "Restate on independent"
+
+**How S3 applies it:**
+- §7.2, §3.1 and the contribution bullet give the four-trajectory held-out figures with their intervals, in both metrics, at h = 368.
+- The current abstract gives one of them, nRMSE form 1 with its interval (the primary metric of §3.1). With both, the abstract held 20 numerals, and the abstract-budget check (C12.1) allows 18. The check was not loosened.
+- §7.2 adds the twenty-trajectory companion, which reverses sign, and the reset-row evidence for the convention.
+- "75%" and "materially better" go, and the withdrawn figures are named once, with their supersession entry.
+- The supersession entry is S-20. It withdraws the 75% / 9.5% framing, which is a framing rather than a numbered claim: R-15's measurements stand as measured.
+- **S4 must install PLAN Appendix A's abstract with this sentence rewritten to the same independent figure, not with 75% and 9.5%:** `{{ad_nind}}` trajectories, `{{ad_nrmse}}% {{ad_nrmse_ci}}` in nRMSE, within C12.1's budget. SESSION_LOG's S3 entry says so.

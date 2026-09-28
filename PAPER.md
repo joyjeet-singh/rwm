@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1041 values substituted from 77 artifacts. -->
+     1055 values substituted from 78 artifacts. -->
 
 # What a released robotic world model's uncertainty is worth: a one-step evaluation defect and a collapsed σ
 
@@ -15,9 +15,10 @@ We rebuild the proprioceptive dynamics model of the *Robotic World Model*
 CPU, checked against the released reference at gradient level.
 
 **The released evaluation is misaligned by one step.** Training pairs states and actions
-index-for-index; evaluation feeds the action from *t−1*. Scored causally, nRMSE at
-h = 368 falls from 1.3228 to 0.7572, a 75% overstatement
-of its own checkpoint's error, and one line fixes it.
+index-for-index; evaluation feeds the action from *t−1*. On 4 independent trajectories
+this overstates the checkpoint's error at h = 368 by 6.6% [1.0, 8.0] in
+nRMSE, a small cost whose sign does not hold across
+all ten episodes; one line fixes it.
 
 **The σ the method discards is optimised away.** The implemented state loss is minimised at
 σ = 0 for any μ, with no log-σ term to oppose it: the collapse is derived, not observed.
@@ -66,16 +67,15 @@ and we report that too.
 
 ![Pre-registration lead time for each decision rule, from git commit timestamps. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. The one negative bar is the Task 3 duplication rule, retracted as a pre-registration in this paper.](figures/paper_fig4_prereg_timeline.png)
 
-**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and the supplementary `docs/BUILD_CHECKS.md` give them in full. There are 12 retractions of our own claims, kept with the evidence that withdrew them, and Appendix E's table of every pre-registered rule with its lead time and its verdict.
+**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and the supplementary `docs/BUILD_CHECKS.md` give them in full. There are 13 retractions of our own claims, kept with the evidence that withdrew them, and Appendix E's table of every pre-registered rule with its lead time and its verdict.
 
 **Contributions.**
 
-- **The released evaluation is misaligned by one step, and the checkpoint is materially better
-  than its own evaluation reports.** Training pairs states and actions index-for-index; evaluation
-  feeds the action from *t−1*. Scored causally, nRMSE at h = 368 falls from
-  1.3228 to 0.7572 — the released harness overstates its own model's error by
-  75% (§7.2). This is the finding most immediately useful to anyone using that
-  repository, and it costs one line to fix.
+- **The released evaluation is misaligned by one step, and what that costs is small.** Training
+  pairs states and actions index-for-index; evaluation feeds the action from *t−1*. On
+  4 independent trajectories the stale pairing overstates the checkpoint's error at
+  h = 368 by 7.9% [3.1, 13.0] on relative-L1 and 6.6% [1.0, 8.0] in
+  nRMSE, and over all ten episodes the sign reverses (§7.2); one line fixes it.
 - **The σ = 0 optimum of the implemented objective.** The aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.3).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise; losses and gradients match to 0.000e+00 across 7 loss terms
@@ -387,10 +387,10 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ
 at all. The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and
 total absolute error, because a ranking claim is about order rather than scale. Every headline
-number in the abstract names its metric, including §7.2's alignment defect, which is nRMSE and
-is horizon-specific: the same comparison overstates by 75% at h = 368 and by
-9.5% on relative-L1, so quoting it without both scopes invites a reader to check it
-against the wrong number.
+number in the abstract names its metric. §7.2's alignment defect is given in both metrics side
+by side, each at h = 368 on the same 4 independent trajectories: 7.9%
+[3.1, 13.0] on relative-L1 and 6.6% [1.0, 8.0] in nRMSE, so a reader can check
+either against its own number.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,100,\,128,\,368\}$.
 Two of those are load-bearing and the rest are landmarks. **h = 100** is the method's
@@ -1482,12 +1482,25 @@ objective's separate contribution rather than measuring it.
 identically zero, so it marks all 9,961 windows valid.
 
 **7.2 Training and evaluation disagree on action alignment, and evaluation is the broken one.**
-Row *t* holds the action that *produced* state *t*. The training path pairs states and actions
-index-for-index, which is causally correct. The evaluation path feeds the action from *t−1* to
-predict state *t* — stale by one step. Scored correctly the released checkpoint is materially
-better than its own released evaluation reports: nRMSE at h = 368 falls from 1.3228
-under the released pairing to 0.7572 under the causal one, so the released evaluation
-overstates its own model's error by 75%.
+Row *t* holds the action that *produced* state *t* (D-13). The data say so directly: at every
+reset row all twelve actions are exactly zero (§3), and a policy network with biases cannot emit
+exact zeros, so those zeros mark the absence of a producing action — the reset produced that
+state, not a policy step. The training path pairs states and actions index-for-index, which is
+causally correct; the evaluation path feeds the action from *t−1* to predict state *t*, stale by
+one step.
+
+What the stale pairing costs is small, and its sign is not consistent. On the held-out pair's
+4 independent trajectories it overstates the released checkpoint's error at
+h = 368 by **7.9% [3.1, 13.0] on relative-L1** and **6.6%
+[1.0, 8.0] in nRMSE** (each a 95% interval from a cluster bootstrap over whole trajectories, both pairings
+inside each draw; `results/alignment_defect_ci.json`). The four per-trajectory values are +0.8%, +9.8%, +14.8%, +6.5%
+on relative-L1 and +2.4%, +5.8%, +8.3%, -0.3% in nRMSE. Over all ten episodes, 20 independent
+trajectories, the sign reverses: -4.6% [-13.4, 3.2] on relative-L1 and -2.1%
+[-10.0, 3.9] in nRMSE, with single trajectories from -47.4% to +35.2%.
+Every arena here is in-sample for this checkpoint, which trained on all ten episodes. The
+75% (nRMSE) and 9.5% (relative-L1) this paper reported before came from
+10 overlapping windows sampled as the upstream samples them, one of which (starting at
+row 8,375) carries most of the effect; they are withdrawn (S-20).
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
@@ -1547,11 +1560,11 @@ it rests on, because it is what let us detect the gap at all.
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (257 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (258 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix E for all 18, every one of which now carries one; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over and is not re-drawn; Appendix E gives the lead time of every rule added since. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
-**Six retractions on our own evidence**, out of 19 superseded claims kept in the record, plus six that withdraw framings rather than numbers (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
+**Six retractions on our own evidence**, out of 20 superseded claims kept in the record, plus seven that withdraw framings rather than numbers (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered four more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean 1.42× and changes 1 of 16 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
@@ -1956,7 +1969,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 541 KB ledger, so here is the table. It is generated from
+or an instruction to open a 543 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data

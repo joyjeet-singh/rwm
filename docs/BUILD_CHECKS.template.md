@@ -68,10 +68,10 @@ with {{n_framing_before_last_word}} entries at a time when the ledger held
 replaced it with a generated list in the same commit, so it never actually stood wrong. It
 appears here as a note rather than above as an entry for that reason, and the reason is luck:
 nothing compared the typed enumeration against the count beside it, and had the two changes
-landed in separate commits the paper would have said {{n_retract_framing_word}} and enumerated
-{{n_framing_before_last_word}}:{{n_retract_framing_list}}
+landed in separate commits the paper would have said {{n_framing_through_review_word}} and enumerated
+{{n_framing_before_last_word}}. All {{n_retract_framing_word}}, generated:{{n_retract_framing_list}}
 
-The last {{n_framing_last_cohort_word}} were entered by the second pre-submission review, in a
+The second pre-submission review entered {{n_framing_last_cohort_word}} of them, in a
 single commit — which is how that count is established rather than recalled.
 {{framing_last_cohort_ids_but_last}}
 are sentences of the 24 August draft that were false. {{framing_last_cohort_final}} is different in kind and worse

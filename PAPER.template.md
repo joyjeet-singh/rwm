@@ -9,9 +9,10 @@ We rebuild the proprioceptive dynamics model of the *Robotic World Model*
 CPU, checked against the released reference at gradient level.
 
 **The released evaluation is misaligned by one step.** Training pairs states and actions
-index-for-index; evaluation feeds the action from *t−1*. Scored causally, nRMSE at
-h = {{v2_diag_h}} falls from {{stale_nrmse}} to {{causal_nrmse}}, a {{stale_pct}}% overstatement
-of its own checkpoint's error, and one line fixes it.
+index-for-index; evaluation feeds the action from *t−1*. On {{ad_nind}} independent trajectories
+this overstates the checkpoint's error at h = {{v2_diag_h}} by {{ad_nrmse}}% {{ad_nrmse_ci}} in
+nRMSE, a small cost whose sign does not hold across
+all ten episodes; one line fixes it.
 
 **The σ the method discards is optimised away.** The implemented state loss is minimised at
 σ = 0 for any μ, with no log-σ term to oppose it: the collapse is derived, not observed.
@@ -62,12 +63,11 @@ and we report that too.
 
 **Contributions.**
 
-- **The released evaluation is misaligned by one step, and the checkpoint is materially better
-  than its own evaluation reports.** Training pairs states and actions index-for-index; evaluation
-  feeds the action from *t−1*. Scored causally, nRMSE at h = {{v2_diag_h}} falls from
-  {{stale_nrmse}} to {{causal_nrmse}} — the released harness overstates its own model's error by
-  {{stale_pct}}% (§7.2). This is the finding most immediately useful to anyone using that
-  repository, and it costs one line to fix.
+- **The released evaluation is misaligned by one step, and what that costs is small.** Training
+  pairs states and actions index-for-index; evaluation feeds the action from *t−1*. On
+  {{ad_nind}} independent trajectories the stale pairing overstates the checkpoint's error at
+  h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in
+  nRMSE, and over all ten episodes the sign reverses (§7.2); one line fixes it.
 - **The σ = 0 optimum of the implemented objective.** The aleatoric collapse is derived analytically from the implemented objective rather than observed (§6.3).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise; losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms
@@ -379,10 +379,10 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ
 at all. The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and
 total absolute error, because a ranking claim is about order rather than scale. Every headline
-number in the abstract names its metric, including §7.2's alignment defect, which is nRMSE and
-is horizon-specific: the same comparison overstates by {{stale_pct}}% at h = {{v2_diag_h}} and by
-{{stale_pct_rel}}% on relative-L1, so quoting it without both scopes invites a reader to check it
-against the wrong number.
+number in the abstract names its metric. §7.2's alignment defect is given in both metrics side
+by side, each at h = {{v2_diag_h}} on the same {{ad_nind}} independent trajectories: {{ad_rel}}%
+{{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, so a reader can check
+either against its own number.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,{{v2_deploy_h}},\,128,\,{{v2_diag_h}}\}$.
 Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's
@@ -1440,12 +1440,25 @@ objective's separate contribution rather than measuring it.
 identically zero, so it marks all {{win_naive}} windows valid.
 
 **7.2 Training and evaluation disagree on action alignment, and evaluation is the broken one.**
-Row *t* holds the action that *produced* state *t*. The training path pairs states and actions
-index-for-index, which is causally correct. The evaluation path feeds the action from *t−1* to
-predict state *t* — stale by one step. Scored correctly the released checkpoint is materially
-better than its own released evaluation reports: nRMSE at h = 368 falls from {{stale_nrmse}}
-under the released pairing to {{causal_nrmse}} under the causal one, so the released evaluation
-overstates its own model's error by {{stale_pct}}%.
+Row *t* holds the action that *produced* state *t* (D-13). The data say so directly: at every
+reset row all twelve actions are exactly zero (§3), and a policy network with biases cannot emit
+exact zeros, so those zeros mark the absence of a producing action — the reset produced that
+state, not a policy step. The training path pairs states and actions index-for-index, which is
+causally correct; the evaluation path feeds the action from *t−1* to predict state *t*, stale by
+one step.
+
+What the stale pairing costs is small, and its sign is not consistent. On the held-out pair's
+{{ad_nind}} independent trajectories it overstates the released checkpoint's error at
+h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relative-L1** and **{{ad_nrmse}}%
+{{ad_nrmse_ci}} in nRMSE** (each a 95% interval from a cluster bootstrap over whole trajectories, both pairings
+inside each draw; `results/alignment_defect_ci.json`). The four per-trajectory values are {{ad_rel_traj}}
+on relative-L1 and {{ad_nrmse_traj}} in nRMSE. Over all ten episodes, {{ad20_nind}} independent
+trajectories, the sign reverses: {{ad20_rel}}% {{ad20_rel_ci}} on relative-L1 and {{ad20_nrmse}}%
+{{ad20_nrmse_ci}} in nRMSE, with single trajectories from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%.
+Every arena here is in-sample for this checkpoint, which trained on all ten episodes. The
+{{stale_pct}}% (nRMSE) and {{stale_pct_rel}}% (relative-L1) this paper reported before came from
+{{ad_pa_n}} overlapping windows sampled as the upstream samples them, one of which (starting at
+row {{ad_pa_out_row}}) carries most of the effect; they are withdrawn (S-20).
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
