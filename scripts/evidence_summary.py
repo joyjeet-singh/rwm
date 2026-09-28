@@ -297,23 +297,30 @@ def build_rows():
     d3_arena = arena_of_episodes(D3["holdout_episodes"])
     d3_model = measured_model(T("task_d3_perhorizon_report.txt"))
     d3v = D3["quantities"]["epistemic"]["verdict"]
+    d3x_own = J("task_d3_cross_model.json")["armA_own_model"]["epistemic"]
     # p4 scored this model under these same multipliers: is the tolerance band
     # resolvable at any quantity x horizon pair of this arena?
     d3_res = [v for q in J("p4_transfer_power.json")["tolerance_resolvable"].values()
               for v in q.values()]
     rows.append({
-        "claim": "A per-horizon multiplier brings held-out coverage near nominal where a constant one does not",
+        "claim": "A per-horizon multiplier brings coverage near nominal where a constant one does not",
         "section": "6.8",
         "arena": d3_arena,
         "n_independent": sum(D3["design"]["trajectories_per_episode"].values()),
         "in_sample": in_sample(d3_model, d3_arena),
-        "verdict": (("every held-out point estimate within tolerance"
+        # S4: the released checkpoint trained on both held-out episodes, so its cells are
+        # unseen by the multiplier only; Arm A's own multipliers are the same test on a model
+        # that never saw them (results/task_d3_cross_model.json).
+        "verdict": (("every point estimate unseen by the multiplier within tolerance"
                      if d3v["per_horizon_restores_calibration"]
-                     else "not every held-out point estimate within tolerance")
+                     else "not every point estimate unseen by the multiplier within tolerance")
+                    + f"; unseen by the model too (Arm A's own), {d3x_own['cells_within_tolerance']}"
+                      f" of {d3x_own['n_cells']} epistemic cells"
                     + ("" if all(d3_res) else "; tolerance not resolvable at this arena")),
         "multiplicity": multiplicity(mde_met=all(d3_res)),
         "model": d3_model,
-        "artifacts": ["results/task_d3_perhorizon.json", "results/p4_transfer_power.json"],
+        "artifacts": ["results/task_d3_perhorizon.json", "results/p4_transfer_power.json",
+                      "results/task_d3_cross_model.json"],
     })
 
     # --- 10, 11: the two ensemble-topology contrasts --------------------------

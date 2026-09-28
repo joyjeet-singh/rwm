@@ -1242,6 +1242,8 @@ def main():
             "results/task_d3_cross_model.json")
     put("d3x_nseeds", len(DX["seeds"]), "results/task_d3_cross_model.json")
     put("d3x_ens", DX["design"]["ensemble"], "results/task_d3_cross_model.json")
+    # §6.8's table names Arm A's checkpoint with {{iters_main}}: assert the artifact is at it.
+    assert DX["design"]["iterations"] in _iters["main"], (DX["design"]["iterations"], _iters)
     put("d3x_nind", DX["design"]["n_independent"], "results/task_d3_cross_model.json")
     put("d3x_band", f'{DX["band_pts"]:.0f}', "results/task_d3_cross_model.json")
     put("d3x_ratio_lo", f'{DX["multipliers"]["ratio_min"]:.3g}',
