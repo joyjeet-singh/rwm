@@ -111,3 +111,26 @@ The source is `results/step4_0a_results.json` via ledger R-15.
 - "75%" and "materially better" go, and the withdrawn figures are named once, with their supersession entry.
 - The supersession entry is S-20. It withdraws the 75% / 9.5% framing, which is a framing rather than a numbered claim: R-15's measurements stand as measured.
 - **S4 must install PLAN Appendix A's abstract with this sentence rewritten to the same independent figure, not with 75% and 9.5%:** `{{ad_nind}}` trajectories, `{{ad_nrmse}}% {{ad_nrmse_ci}}` in nRMSE, within C12.1's budget. SESSION_LOG's S3 entry says so.
+
+## S4-abstract-budget
+
+Asked in chat by S4 on 2026-09-28, before any S4 edit. **The plan contradicted itself on the abstract:**
+- it said to install Appendix A's abstract with every listed number bound, in at most 330 words;
+- measured with C12.1's own counter (`scripts/check_comparative_claims.py`, abstract-budget), Appendix A as written is 347 words and 23 numerals;
+- restated on the independent alignment figures that S3's ruling requires, in both metrics with both intervals (S10 checklist item 4), it is about 27 numerals;
+- C12.1 caps the abstract at 18 numerals, and §1.2.8 says never to loosen a failing check.
+
+**Options put:**
+1. Trim to fit C12.1: move six figures to the body and give one alignment metric (recommended).
+2. Full Appendix A, alignment on the independent figures in both metrics with both intervals; raise C12.1's cap to fit, with the reason recorded in the check as its three earlier raises were.
+3. Full Appendix A with one alignment metric; raise the cap to fit.
+
+**Answer (verbatim):** "Full Appendix A; raise cap"
+
+**Title, asked at the same time.** The options were Appendix A's primary and its alternate. **Answer (verbatim):** "Right Order, Wrong Size (Recommended)"
+
+**How S4 applies it:**
+- The abstract gives every number Appendix A lists, bound through `paper_numbers.py`.
+- The alignment sentence uses S3's independent figures (`ad_*`) in both metrics with both intervals, and states the ten-episode reversal.
+- The wording is trimmed to at most 330 words.
+- C12.1's `max_numerals` rises to the count installed. The reason goes beside the three earlier raises and names this ruling as its authority; the word cap stays at 370.
