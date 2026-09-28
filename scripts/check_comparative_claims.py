@@ -243,7 +243,8 @@ CLAIMS = [
      "family": ("task_b_permutation.json", "holm_all"),
      "named": {"label": "faithful (mse) h=368"}, "expect": "min"},
     {"id": "C3.4", "kind": "compare", "where": "6.6",
-     "says": "It does not beat Arm B's head on strength either",
+     # Re-anchored in pre-submission S7 (§6.6 reworded); the comparison is unchanged.
+     "says": "Nor does it beat Arm B's head on strength",
      "a": ("task_b2_epistemic.json", "by_horizon.368.epistemic.corr_mean"),
      "b": ("task1_calibration.json", "teacher-forced armB.sigma_err_corr_mean"),
      "expect": "lt"},

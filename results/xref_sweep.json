@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 60,
-  "n_ok": 59,
+  "n_pointers": 59,
+  "n_ok": 58,
   "n_reviewed_correct": 1,
   "reviewed": [
     {
@@ -63,24 +63,17 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.3 explains the aleatoric column and says of the epistemic one that the ",
+      "pointer": "\u00a76.3 explains the aleatoric column and leaves the epistemic one open",
       "ok": true,
-      "detail": "target 6.3; nouns ['aleatoric', 'column', 'says', 'epistemic', 'mechanism', 'established']; absent ['epistemic']",
-      "context": "\u00a76.3 explains the aleatoric column and says of the epistemic one that the mechanism is not\nestablished"
+      "detail": "target 6.3; nouns ['aleatoric', 'column', 'leaves', 'epistemic', 'open']; absent ['leaves', 'epistemic']",
+      "context": "\u00a76.3 explains the aleatoric column and leaves the epistemic one open"
     },
     {
       "class": "semantic",
-      "pointer": "\u00a72 gives the four papers that establish\nit",
+      "pointer": "\u00a712 quotes the larger arena",
       "ok": true,
-      "detail": "target 2; nouns ['papers', 'establish']; absent []",
-      "context": "\u00a72 gives the four papers that establish\nit"
-    },
-    {
-      "class": "semantic",
-      "pointer": "\u00a712 quotes the larger arena and says so",
-      "ok": true,
-      "detail": "target 12; nouns ['larger', 'arena', 'says']; absent ['larger']",
-      "context": "\u00a712 quotes the larger arena and says so"
+      "detail": "target 12; nouns ['larger', 'arena']; absent ['larger']",
+      "context": "\u00a712 quotes the larger arena"
     },
     {
       "class": "semantic",

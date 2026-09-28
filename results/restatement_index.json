@@ -1,6 +1,6 @@
 {
   "scanned": "PAPER.template.md",
-  "n_substituted": 1413,
+  "n_substituted": 1410,
   "n_typed": 215,
   "n_restatements": 110,
   "n_same_quantity_candidates": 57,
@@ -35,43 +35,43 @@
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 968,
+          "line": 950,
           "key": "a2_rdd",
           "ctx": "rollouts disagree more? | | **both, additively (r_dd)** | **{{a2_rdd}}** | **{{a2_rdd_ci}}** | **at a given de"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 989,
+          "line": 969,
           "key": "a2_rdd",
-          "ctx": "isive statistic is the double-demeaned one and it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_n"
+          "ctx": "sive statistic is the double-demeaned one, and it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_n"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1004,
+          "line": 984,
           "key": "a2_rdd_h368",
           "ctx": "d_h128}} | {{a2_rdd_ci_h128}} | yes | | {{v2_diag_h}} | {{a2_rdd_h368}} | {{a2_rdd_ci_h368}} | yes | *(h = 1 h"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1008,
+          "line": 988,
           "key": "a2_rdd",
-          "ctx": "t effect is **materially smaller than the pooled figure** \u2014 {{a2_rdd}} against {{a2_r_pooled}} \u2014 so a practiti"
+          "ctx": "ut effect is **materially smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitio"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1463,
+          "line": 1432,
           "key": "a2_rdd",
           "ctx": "ast depth and the rollout held constant it still correlates {{a2_rdd}} {{a2_rdd_ci}} with error (\u00a76.7). But it"
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "a2_rdd",
           "ctx": " and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.7"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1814,
+          "line": 1783,
           "key": "a2_rdd",
           "ctx": "s \u2014 plus a sixth on trajectory difficulty \u2014 the last giving {{a2_rdd}} {{a2_rdd_ci}} with both the rollout and"
         }
@@ -101,7 +101,7 @@
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 966,
+          "line": 948,
           "key": "a2_r_within",
           "ctx": "ithin-step control, pooled | | trajectory means only | {{a2_r_within}} | {{a2_r_within_ci}} | \u2014 | | everything"
         }
@@ -124,13 +124,13 @@
       "locations": [
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 962,
+          "line": 944,
           "key": "d2r_cub",
           "ctx": "} | a non-linear model of depth | | a cubic in the index | {{d2r_cub}} | {{d2r_cub_ci}} | any polynomial trend"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 972,
+          "line": 954,
           "key": "d2r_weakest",
           "ctx": " figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so disagreement is not re-encoding the"
         }
@@ -154,13 +154,13 @@
       "locations": [
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 961,
+          "line": 943,
           "key": "d2r_log",
           "ctx": "all_abs}} of it, from {{d2b_epi_all}} | | log(1 + index) | {{d2r_log}} | {{d2r_log_ci}} | a non-linear model o"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 965,
+          "line": 947,
           "key": "a2_step_only",
           "ctx": "_win_med}}[^stepcount] | | forecast-step means only | {{a2_step_only}} | \u2014 | the within-step control, pooled |"
         }
@@ -183,37 +183,37 @@
       "locations": [
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 935,
+          "line": 919,
           "key": "d2b_par_h368",
           "ctx": "i_h368}} | **{{d2b_epi_h368}}** {{d2b_epi_ci_h368}} | {{d2b_par_h368}} {{d2b_par_ci_h368}} | {{d2p_diff_h368}}"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 945,
+          "line": 927,
           "key": "d2b_par_all",
           "ctx": "ion by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what disagreement knows"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 960,
+          "line": 942,
           "key": "d2b_par_all",
           "ctx": " {{a2_r_pooled_ci}} | \u2014 | | the step index, linearly | {{d2b_par_all}} | \u2014 | depth explains {{d2b_shrink_all_a"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1457,
+          "line": 1426,
           "key": "d2b_par_all",
           "ctx": " index is defined \u2014 every one of them \u2014 and it retains {{d2b_par_all}} once that index is partialled out (\u00a76.7"
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "d2b_par_all",
           "ctx": " ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. Again"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1814,
+          "line": 1783,
           "key": "d2b_par_all",
           "ctx": "rols on forecast depth \u2014 the linear partial that keeps {{d2b_par_all}}, and four harder ones \u2014 plus a sixth on"
         }
@@ -251,61 +251,61 @@
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 935,
+          "line": 919,
           "key": "d2b_epi_h368",
           "ctx": "}} | | 368 | {{d2b_idx_h368}} {{d2b_idx_ci_h368}} | **{{d2b_epi_h368}}** {{d2b_epi_ci_h368}} | {{d2b_par_h368}"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 939,
+          "line": 923,
           "key": "d2b_epi_h368",
           "ctx": "unter reaches {{d2b_idx_h368}} against disagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_w"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 945,
+          "line": 927,
           "key": "d2b_epi_all",
           "ctx": "greement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 959,
+          "line": 941,
           "key": "a2_r_pooled",
           "ctx": "t survives it | |---|---|---|---| | nothing (pooled) | {{a2_r_pooled}} | {{a2_r_pooled_ci}} | \u2014 | | the step i"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 960,
+          "line": 942,
           "key": "d2b_epi_all",
           "ctx": " \u2014 | depth explains {{d2b_shrink_all_abs}} of it, from {{d2b_epi_all}} | | log(1 + index) | {{d2r_log}} | {{d2"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 987,
+          "line": 968,
           "key": "a2_r_pooled",
-          "ctx": ", which is why it reads {{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it. It was described "
+          "ctx": ", which is why it reads {{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it. The decisive stat"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1008,
+          "line": 988,
           "key": "a2_r_pooled",
-          "ctx": " smaller than the pooled figure** \u2014 {{a2_rdd}} against {{a2_r_pooled}} \u2014 so a practitioner should expect disag"
+          "ctx": "y smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitioner should expect disagr"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1457,
+          "line": 1426,
           "key": "d4_r",
           "ctx": "1 there is only one moment. Over the full rollout it falls to {{d4_r}} {{d4_ci}}. That decay is the useful par"
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "a2_r_pooled",
           "ctx": " error (\u00a76.7, M-45). That is a smaller number than the {{a2_r_pooled}} pooled figure and it is the one that me"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1814,
+          "line": 1783,
           "key": "d4_r",
           "ctx": "ng, against a real baseline** \u2014 the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_inde"
         }
@@ -329,25 +329,25 @@
       "locations": [
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 930,
+          "line": 914,
           "key": "d2_epi_h1",
           "ctx": "greement \u2212 index | |---|---|---|---|---| | **1** | \u2014 | **{{d2_epi_h1}}** {{d2_epi_ci_h1}} | \u2014 | \u2014 | | 8 | {{d2"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 978,
+          "line": 960,
           "key": "a2_h1_r",
-          "ctx": "sted checking: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine pe"
+          "ctx": "pointed there: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine pe"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1011,
+          "line": 991,
           "key": "a2_h1_r",
           "ctx": "at it looked like.** At h = 1 the panel has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}}"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1457,
+          "line": 1426,
           "key": "d2_epi_h1",
           "ctx": "forecast step it ranks whole rollouts almost perfectly \u2014 {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npo"
         }
@@ -409,67 +409,67 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 887,
+          "line": 877,
           "key": "relale_all_pos_h368",
-          "ctx": "_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}} \u2014 negativ"
+          "ctx": "_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}}, negative"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 912,
+          "line": 900,
           "key": "perm_oos_holm_rej",
           "ctx": "lm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 912,
+          "line": 900,
           "key": "perm_ins_holm_rej",
           "ctx": ".05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} ove"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 912,
+          "line": 900,
           "key": "perm_all_holm_rej",
           "ctx": "t of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample th"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 939,
+          "line": 923,
           "key": "d2b_n_index_wins",
           "ctx": "eement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons. "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3x_ale_ok",
           "ctx": "le_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | {{d3_ale_c_lo}} \u2013"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3x_tol_res",
           "ctx": "iers and found the {{d3_tol}}-point band resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizo"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_tol_res",
           "ctx": "({{d3x_umde_lo}}\u2013{{d3x_umde_hi}} points, resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizo"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1399,
+          "line": 1368,
           "key": "tw_cc_cluster_hurt",
           "ctx": "rizons \u00d7 two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_"
         },
         {
           "section": "8. Method",
-          "line": 1444,
+          "line": 1413,
           "key": "ver_part_sci",
           "ctx": " measurement, a statistic or the verdict of a test is {{ver_part_sci}}.** One of the build's own gates, the cl"
         },
         {
           "section": "11. Limitations",
-          "line": 1559,
+          "line": 1528,
           "key": "q3_n_reorder",
           "ctx": "hich trained on all ten. Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order and the rule returns **{{q"
         },
@@ -541,25 +541,25 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 877,
+          "line": 867,
           "key": null,
           "ctx": "on across inputs (CoV) | dims with r(\u03c3, error) > 0 at h=\u2400, out-of-sample | perm P at h=\u2400, out-of-sample | perm"
         },
         {
           "section": "11. Limitations",
-          "line": 1596,
+          "line": 1565,
           "key": null,
           "ctx": "ses a GPU. And **we did not test whether the \u03c3 = 0 optimum affects other descendants of the PETS parameterisat"
         },
         {
           "section": "12. Conclusion",
-          "line": 1611,
+          "line": 1580,
           "key": null,
           "ctx": "the cause is that the objective's optimum is \u03c3 = 0 with the term that should prevent this cancelling out of th"
         },
         {
           "section": "12. Conclusion",
-          "line": 1619,
+          "line": 1588,
           "key": null,
           "ctx": " both are present together: \u00a76.3 derives the \u03c3 = 0 optimum from squared error on a sampled prediction through "
         }
@@ -589,25 +589,25 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 912,
+          "line": 900,
           "key": "perm_oos_holm_thr",
           "ctx": "hich already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have be"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 912,
+          "line": 900,
           "key": "perm_ins_holm_thr",
-          "ctx": "at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}. So the honest form of this section's "
+          "ctx": "at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}. So this section's claim is: **the mag"
         },
         {
           "section": "11. Limitations",
-          "line": 1577,
+          "line": 1546,
           "key": "perm_oos_holm_thr",
           "ctx": "oarser than the multiplicity-corrected threshold {{perm_oos_holm_thr}}, so that arena cannot reject at any eff"
         },
         {
           "section": "11. Limitations",
-          "line": 1577,
+          "line": 1546,
           "key": "perm_all_holm_thr",
           "ctx": "s {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} need"
         }
@@ -667,13 +667,13 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 908,
+          "line": 896,
           "key": "perm_all_epi_p_h8",
           "ctx": "ent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_ratio_lo",
           "ctx": "of the gap is the multipliers themselves: Arm A's are {{d3x_ratio_lo}}\u00d7 to {{d3x_ratio_hi}}\u00d7 the released chec"
         }
@@ -726,21 +726,21 @@
       "locations": [
         {
           "section": "6.5 The correction fails differently rather than succeeding",
-          "line": 873,
+          "line": 864,
           "key": "perm_oos_faithA_p_h368",
           "ctx": "at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of samp"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 882,
+          "line": 872,
           "key": "perm_oos_faithA_p_h368",
           "ctx": "| {{cal_faithA_npos}}/{{cal_faithA_ndim}} | {{perm_oos_faithA_p_h368}} | {{perm_ins_faithA_p_h368}} | | correc"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 908,
+          "line": 896,
           "key": "perm_oos_epi_p_h128",
-          "ctx": "mic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h="
+          "ctx": "emic ordering looks strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h="
         }
       ]
     },
@@ -834,7 +834,7 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m49_shrink",
           "ctx": "o_gain}}\u00d7 to {{m49_ratio_gain}}\u00d7, a difference of about {{m49_shrink}}, which is untested \u2014 no artifact here p"
         }
@@ -1125,43 +1125,43 @@
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1026,
+          "line": 1003,
           "key": "e5_n_excl",
           "ctx": "The second fails: the paired difference excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a ma"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_branch",
           "ctx": "as magnitude {{d3x_worst_delta}} points. That is branch {{d3x_branch}} of the rule's three. Per direction the "
         },
         {
           "section": "8. Method",
-          "line": 1434,
+          "line": 1403,
           "key": "f4_n_negative",
           "ctx": "ne; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not. Figure 1 plots the set it was d"
         },
         {
           "section": "8. Method",
-          "line": 1438,
+          "line": 1407,
           "key": "bu_changes",
           "ctx": "dens intervals by a mean {{bu_mean_ratio}}\u00d7 and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 c"
         },
         {
           "section": "11. Limitations",
-          "line": 1516,
+          "line": 1485,
           "key": "e5_n_excl",
           "ctx": "exclude zero at a majority of horizons and it does so at {{e5_n_excl}} of {{e5_n_horizons}}. The binding const"
         },
         {
           "section": "12. Conclusion",
-          "line": 1625,
+          "line": 1594,
           "key": "q1_n_inherit",
           "ctx": "odebase. On \u00a72's count the substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants ex"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1845,
+          "line": 1814,
           "key": "appG_n_negative",
           "ctx": "ime, of which {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is kept de"
         },
@@ -1299,169 +1299,169 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 884,
+          "line": 874,
           "key": null,
-          "ctx": "ery row**, which is the only \u03c3 the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric C"
+          "ctx": "c \u03c3 in every row**, the only \u03c3 the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric C"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 903,
+          "line": 891,
           "key": null,
-          "ctx": " the horizon test the same way: \u03c3 grows \u2400\u00d7 from h=1 to h=368 while error grows \u2400\u00d7. **The horizon story we firs"
+          "ctx": " the horizon test the same way: \u03c3 grows \u2400\u00d7 from h=1 to h=368 while error grows \u2400\u00d7. **The larger arenas agree w"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 905,
+          "line": 893,
           "key": null,
           "ctx": "8, \u2400 at h=368) and unremarkable at short (\u2400 at h=1). Both larger arenas invert that. In sample (n_independent "
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 907,
+          "line": 895,
           "key": null,
           "ctx": "5 is close to what chance alone delivers; at h = 1 the null sits near \u2400 and the same count is genuinely surpri"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 934,
+          "line": 918,
           "key": null,
           "ctx": " | \u2400 \u2400 | | 368 | \u2400 \u2400 | **\u2400** \u2400 | \u2400 \u2400 | \u2400 \u2400 | *(h=1 has a single forecast step, so the index is constant and it"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 958,
+          "line": 940,
           "key": null,
           "ctx": "| \u2400 | \u2014 | depth explains \u2400 of it, from \u2400 | | log(1 + index) | \u2400 | \u2400 | a non-linear model of depth | | a cubic "
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 975,
+          "line": 957,
           "key": null,
-          "ctx": ". Two things suggested checking: the \u2400-point h = 1 figure of \u2400, which is not the shape of a genuine per-step s"
+          "ctx": "t all. Two things pointed there: the \u2400-point h = 1 figure of \u2400, which is not the shape of a genuine per-step s"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1003,
+          "line": 983,
           "key": null,
           "ctx": " | 128 | \u2400 | \u2400 | yes | | \u2400 | \u2400 | \u2400 | yes | *(h = 1 has one forecast step per trajectory, so there is nothing w"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1007,
+          "line": 987,
           "key": null,
-          "ctx": "d. At h = \u2400 it is established, at \u2400 \u2400. **The h = 1 figure survives the same test, but it is not what it looked"
+          "ctx": "t. At h = \u2400 it is established, at \u2400 \u2400. **The h = 1 figure survives the same test, but it is not what it looked"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1007,
+          "line": 987,
           "key": null,
           "ctx": "est, but it is not what it looked like.** At h = 1 the panel has one column, so \u2400 is a correlation over \u2400 *tra"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1018,
+          "line": 995,
           "key": null,
           "ctx": "oint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore "
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1045,
+          "line": 1016,
           "key": null,
           "ctx": "e model's own predicted state change \u2016\u00b5_t \u2212 \u00b5_{t\u22121}\u2016, which costs nothing because the rollout has already made"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1114,
+          "line": 1083,
           "key": null,
           "ctx": "ntity the method uses \u2014 a scalar of \u2400\u2013\u2400 brings h=1 coverage to \u2400\u2013\u2400%, essentially calibrated against the \u2400% tar"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1117,
+          "line": 1086,
           "key": null,
           "ctx": "e aleatoric term a scalar of \u2400\u2013\u2400 gives \u2400\u2013\u2400% at h=1 and \u2400\u2013\u2400% at h=368. Fitting over the whole rollout instead d"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": null,
           "ctx": "stant scalar manages \u2400 of \u2400, and those are the h=1 cells it was fitted at. **On Arm A, where the episodes are "
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1147,
+          "line": 1116,
           "key": null,
           "ctx": "heckpoint as released): | model | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful A"
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1147,
+          "line": 1116,
           "key": null,
           "ctx": "odel | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A | \u2400\u00d7 | \u2400\u00d7 | | correcte"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1168,
+          "line": 1137,
           "key": null,
           "ctx": " h for the whole project. Arm A at ensemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at abo"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1168,
+          "line": 1137,
           "key": null,
           "ctx": "A at ensemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at about \u2400 h each, \u2400 h in total, and"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1212,
+          "line": 1181,
           "key": null,
           "ctx": "nt, so they add to 100%. A share above 100% at h=1 means the independent ensemble is very slightly the **worse"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1225,
+          "line": 1194,
           "key": null,
           "ctx": " earlier draft gave the \u03c3 range above as the h = 1 and h = 8 values, which do not span it \u2014 h = \u2400's \u2400\u00d7 falls b"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1256,
+          "line": 1225,
           "key": null,
           "ctx": "cept the loss type. Three of the five \u2014 seeds 0, 1 and 2 \u2014 already existed under that objective; two more were"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1357,
+          "line": 1326,
           "key": null,
           "ctx": "ect; the evaluation path feeds the action from *t\u22121* to predict state *t*, stale by one step. What the stale p"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1454,
+          "line": 1423,
           "key": null,
           "ctx": "llouts*, not of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to"
         },
         {
           "section": "11. Limitations",
-          "line": 1521,
+          "line": 1490,
           "key": null,
           "ctx": "ension matched comparison, both computed on seed 1 alone. The headline A/B result is not among them: it is a t"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1781,
+          "line": 1750,
           "key": null,
           "ctx": "ly numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the ho"
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1862,
+          "line": 1831,
           "key": null,
           "ctx": "inverted \u00a73.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the \u2400 "
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1868,
+          "line": 1837,
           "key": null,
           "ctx": "ning episodes has a very small denominator. Form 1 has no such lever: a dimension contributes in proportion to"
         }
@@ -1491,7 +1491,7 @@
         },
         {
           "section": "8. Method",
-          "line": 1442,
+          "line": 1411,
           "key": "ver_claim_pct",
           "ctx": ".sh --quick --force`, which skips training) rewrites {{ver_claim_pct}}% of the numeric values under `results/`"
         }
@@ -1521,7 +1521,7 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1209,
+          "line": 1178,
           "key": "r2_acc_x_h8",
           "ctx": "}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sigma_x_h8}}\u00d7 | {{r2_acc_x_h8}}\u00d7 | {{r2_total_x_h8}}\u00d7 | {{r2_from_sigma"
         }
@@ -1551,7 +1551,7 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1210,
+          "line": 1179,
           "key": "r2_acc_x_h32",
           "ctx": " | {{r2_from_acc_h8}}% | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_acc_x_h32}}\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigm"
         }
@@ -1575,13 +1575,13 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1304,
+          "line": 1273,
           "key": "m68_acc_x_h100",
           "ctx": "| **{{v2_deploy_h}}** | **{{m68_sigma_x_h100}}\u00d7** | {{m68_acc_x_h100}}\u00d7 | {{m68_total_x_h100}}\u00d7 | **{{m68_from"
         },
         {
           "section": "11. Limitations",
-          "line": 1535,
+          "line": 1504,
           "key": "q2_factor",
           "ctx": "ectories, where all ten episodes provide {{e7_nind}}** \u2014 {{q2_factor}}\u00d7 the present sample, by the constructio"
         }
@@ -1605,13 +1605,13 @@
       "locations": [
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1181,
+          "line": 1150,
           "key": "r2_indep_ratio_h1",
           "ctx": "| shared-trunk \u00b11\u03c3 | |---|---|---|---|---| | 1 | {{r2_indep_ratio_h1}}\u00d7 | {{r2_shared_ratio_h1}}\u00d7 | {{r2_indep"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1273,
+          "line": 1242,
           "key": "m68_indep_ratio_h1",
           "ctx": "hared \u00b12\u03c3 | |---|---|---|---|---|---|---| | 1 | {{m68_indep_ratio_h1}}\u00d7 | {{m68_shared_ratio_h1}}\u00d7 | {{m68_ind"
         }
@@ -1634,19 +1634,19 @@
       "locations": [
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1213,
+          "line": 1182,
           "key": "r2_sigma_x_h368",
           "ctx": "128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}}\u00d7 | {{r2_acc_x_h368}}\u00d7 | {{r2_total_x_h3"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1219,
+          "line": 1188,
           "key": "r2_sigma_x_lo",
           "ctx": " is stated over.** \u03c3 is larger at every horizon \u2014 by {{r2_sigma_x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1229,
+          "line": 1198,
           "key": "r2_sigma_x_lo",
           "ctx": "es, which do not span it \u2014 h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}\u00d7 falls below the stated floor. Found by"
         }
@@ -1670,19 +1670,19 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1301,
+          "line": 1270,
           "key": "m68_sigma_x_h1",
           "ctx": "are from accuracy | |---|---|---|---|---|---| | 1 | {{m68_sigma_x_h1}}\u00d7 | {{m68_acc_x_h1}}\u00d7 | {{m68_total_x_h1"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1301,
+          "line": 1270,
           "key": "m68_total_x_h1",
           "ctx": "--| | 1 | {{m68_sigma_x_h1}}\u00d7 | {{m68_acc_x_h1}}\u00d7 | {{m68_total_x_h1}}\u00d7 | {{m68_from_sigma_h1}}% | {{m68_from_"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1305,
+          "line": 1274,
           "key": "m68_sigma_x_h128",
           "ctx": "igma_h100}}%** | {{m68_from_acc_h100}}% | | 128 | {{m68_sigma_x_h128}}\u00d7 | {{m68_acc_x_h128}}\u00d7 | {{m68_total_x_"
         }
@@ -1742,7 +1742,7 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1172,
+          "line": 1141,
           "key": "r2_added_h_total",
           "ctx": "added_word}} more at about {{r2_added_h}} h each, {{r2_added_h_total}} h in total, and scored the {{r2_n_indep"
         }
@@ -1766,19 +1766,19 @@
       "locations": [
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1155,
+          "line": 1124,
           "key": "err_rel_growth",
           "ctx": "h}}\u00d7 | | released checkpoint | {{sig_rel_growth}}\u00d7 | {{err_rel_growth}}\u00d7 | The faithful arm's \u03c3 *declines* ({{"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m49_ratio_gain",
           "ctx": "ement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m49_ratio_gain",
           "ctx": "he point estimates fall from {{m44_ratio_gain}}\u00d7 to {{m49_ratio_gain}}\u00d7, a difference of about {{m49_shrink}},"
         }
@@ -1803,19 +1803,19 @@
       "locations": [
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1209,
+          "line": 1178,
           "key": "r2_sigma_x_h8",
           "ctx": " {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sigma_x_h8}}\u00d7 | {{r2_acc_x_h8}}\u00d7 | {{r2_total_x_h8}}"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1220,
+          "line": 1189,
           "key": "r2_sigma_x_hi",
           "ctx": "x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}\u00d7 at its strongest (h = {{r2_sigma_x_hi_"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1303,
+          "line": 1272,
           "key": "m68_total_x_h32",
           "ctx": "| 32 | {{m68_sigma_x_h32}}\u00d7 | {{m68_acc_x_h32}}\u00d7 | {{m68_total_x_h32}}\u00d7 | {{m68_from_sigma_h32}}% | {{m68_from"
         }
@@ -1839,13 +1839,13 @@
       "locations": [
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1210,
+          "line": 1179,
           "key": "r2_total_x_h32",
           "ctx": " | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_acc_x_h32}}\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigma_h32}}% | {{r2_from_a"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1302,
+          "line": 1271,
           "key": "m68_total_x_h8",
           "ctx": "% | | 8 | {{m68_sigma_x_h8}}\u00d7 | {{m68_acc_x_h8}}\u00d7 | {{m68_total_x_h8}}\u00d7 | {{m68_from_sigma_h8}}% | {{m68_from_"
         }
@@ -1870,25 +1870,25 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1286,
+          "line": 1255,
           "key": "m68_ratio_gain",
           "ctx": "_lo}}\u2013{{m68_ratio_hi}}\u00d7 the shared-trunk arms', a **{{m68_ratio_gain}}\u00d7** improvement against a minimum detect"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1304,
+          "line": 1273,
           "key": "m68_total_x_h100",
           "ctx": "**{{m68_sigma_x_h100}}\u00d7** | {{m68_acc_x_h100}}\u00d7 | {{m68_total_x_h100}}\u00d7 | **{{m68_from_sigma_h100}}%** | {{m68"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1329,
+          "line": 1298,
           "key": "m68_ratio_gain",
           "ctx": " for independence alone ({{m44_ratio_gain}}\u00d7 there, {{m68_ratio_gain}}\u00d7 here). **The two fixes do not add. A r"
         },
         {
           "section": "11. Limitations",
-          "line": 1544,
+          "line": 1513,
           "key": "q2_se_ratio",
           "ctx": "rom the forecast-index margin, whose standard error is {{q2_se_ratio}}\u00d7 the step-size margin's; the observed m"
         }
@@ -2096,85 +2096,85 @@
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1129,
+          "line": 1098,
           "key": "d3_tol",
           "ctx": " released checkpoint: cells unseen by the multiplier within {{d3_tol}} points of {{d3_target}}%, per-horizon c"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3x_own_ale_ok",
           "ctx": "le_c_lo}} \u2013 {{d3_ale_c_hi}} ({{d3_ale_cspread}}\u00d7) | {{d3x_own_ale_ok}} / {{d3x_own_ale_cells}} | | epistemic |"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3_tol",
           "ctx": "n the released checkpoint every point estimate lands within {{d3_tol}} points of the {{d3_target}}% target for"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3_tol",
           "ctx": "cored this model under these very multipliers and found the {{d3_tol}}-point band resolvable at {{d3x_tol_res}"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3x_own_ale_ok",
           "ctx": "own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cell"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_band",
           "ctx": "mum detectable effect {{d3x_pmde_hi}} points against the \u00b1{{d3x_band}}-point band) and cannot resolve the abso"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1140,
+          "line": 1109,
           "key": "d3_tol",
           "ctx": " new column is the absolute test \u2014 held-out coverage within {{d3_tol}} points of {{d3_target}}% under a multip"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1140,
+          "line": 1109,
           "key": "d3_tol",
           "ctx": "uantity is {{d3x_umde_lo}}\u2013{{d3x_umde_hi}} points against a {{d3_tol}}-point band, so such a cell is compatibl"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1373,
+          "line": 1342,
           "key": "ad_pa_n",
           "ctx": "_rel}}% (relative-L1) this paper reported before came from {{ad_pa_n}} overlapping windows sampled as the upst"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1465,
+          "line": 1434,
           "key": "d3_tol",
           "ctx": ", brings every released-checkpoint coverage estimate within {{d3_tol}} points of nominal, though this arena ca"
         },
         {
           "section": "11. Limitations",
-          "line": 1522,
+          "line": 1491,
           "key": "d3x_own_ale_ok",
           "ctx": "own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cell"
         },
         {
           "section": "11. Limitations",
-          "line": 1603,
+          "line": 1572,
           "key": "q1_n_examined",
           "ctx": "counted how often the substitution is made among the {{q1_n_examined}} we examined (\u00a72), which bears on how fa"
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "d3_tol",
           "ctx": "nd scored on another, brings every coverage estimate within {{d3_tol}} points of nominal, though no single cel"
         },
         {
           "section": "12. Conclusion",
-          "line": 1625,
+          "line": 1594,
           "key": "q1_n_examined",
           "ctx": "e substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants examined, and there only in"
         }
@@ -2247,7 +2247,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1705,
+          "line": 1674,
           "key": null,
           "ctx": "on two CPU cores: \u2400 hours for the \u2400 runs at 10,000 iterations and \u2400 for the remaining \u2400 at 2,500. (Those were "
         }
@@ -2285,31 +2285,31 @@
         },
         {
           "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-          "line": 859,
+          "line": 853,
           "key": "e5_ratio_h100",
-          "ctx": "ms checked. So \u00a76.2's \"our arms fail the same way at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}\" compares two i"
+          "ctx": "ogy.json`). So \u00a76.2's \"our arms fail the same way at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}\" compares two i"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1184,
+          "line": 1153,
           "key": "r2_shared_ratio_h100",
           "ctx": "ploy_h}}** | **{{r2_indep_ratio_h100}}\u00d7** | **{{r2_shared_ratio_h100}}\u00d7** | **{{r2_indep_cov1_h100}}%** | **{{"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1276,
+          "line": 1245,
           "key": "m68_shared_ratio_h100",
           "ctx": "oy_h}}** | **{{m68_indep_ratio_h100}}\u00d7** | **{{m68_shared_ratio_h100}}\u00d7** | **{{m68_indep_cov1_h100}}%** | **{"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1463,
+          "line": 1432,
           "key": "e5_ratio_h100",
           "ctx": "_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}\u00d7 [{{e5_ratio_ci_h100}}] on the ensemble"
         },
         {
           "section": "11. Limitations",
-          "line": 1516,
+          "line": 1485,
           "key": "e5_ratio_h100",
           "ctx": " seed-horizon cells and the *calibration* failure at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h36"
         }
@@ -2341,13 +2341,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1183,
+          "line": 1152,
           "key": "r2_shared_cov1_h32",
           "ctx": "_shared_ratio_h32}}\u00d7 | {{r2_indep_cov1_h32}}% | {{r2_shared_cov1_h32}}% | | **{{v2_deploy_h}}** | **{{r2_indep"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1275,
+          "line": 1244,
           "key": "m68_shared_cov1_h32",
           "ctx": "hared_ratio_h32}}\u00d7 | {{m68_indep_cov1_h32}}% | {{m68_shared_cov1_h32}}% | {{m68_indep_cov2_h32}}% | {{m68_shar"
         }
@@ -2377,13 +2377,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1208,
+          "line": 1177,
           "key": "r2_from_sigma_h1",
           "ctx": "x_h1}}\u00d7 | {{r2_acc_x_h1}}\u00d7 | {{r2_total_x_h1}}\u00d7 | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sig"
         },
         {
           "section": "Appendix A \u2014 verification chain",
-          "line": 1719,
+          "line": 1688,
           "key": "diff_n_params",
           "ctx": "* | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | trainer | can memorise a "
         }
@@ -2413,7 +2413,7 @@
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1121,
+          "line": 1090,
           "key": "d2_ale_cov368_lo",
           "ctx": "{{d2_ale_cov1_lo}}\u2013{{d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}\u2013{{d2_ale_cov368_hi}}% at h=368. Fitting"
         }
@@ -2445,13 +2445,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1185,
+          "line": 1154,
           "key": "r2_shared_ratio_h128",
           "ctx": "100}}%** | | 128 | {{r2_indep_ratio_h128}}\u00d7 | {{r2_shared_ratio_h128}}\u00d7 | {{r2_indep_cov1_h128}}% | {{r2_share"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1277,
+          "line": 1246,
           "key": "m68_shared_ratio_h128",
           "ctx": "100}}% | | 128 | {{m68_indep_ratio_h128}}\u00d7 | {{m68_shared_ratio_h128}}\u00d7 | {{m68_indep_cov1_h128}}% | {{m68_sha"
         }
@@ -2483,103 +2483,103 @@
       "locations": [
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1024,
+          "line": 1001,
           "key": "e5_lead_cells",
-          "ctx": "asses completely \u2014 disagreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon ce"
+          "ctx": "passes completely: disagreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon ce"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1024,
+          "line": 1001,
           "key": "e5_total_cells",
           "ctx": "agreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired esti"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3_ale_ok",
           "ctx": "he model too | |---|---|---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_o"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3_ale_cells",
           "ctx": "|---|---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cell"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3_ale_cells",
           "ctx": "ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3_epi_ok",
           "ctx": "x_own_ale_ok}} / {{d3x_own_ale_cells}} | | epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_o"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3_epi_cells",
           "ctx": "d3x_own_ale_cells}} | | epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cell"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3_epi_cells",
           "ctx": "epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3x_epi_ok",
           "ctx": "pi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | {{d3_epi_c_lo}} \u2013"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3x_tol_pairs",
           "ctx": "d3_tol}}-point band resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizon pairs, with a bindi"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3_epi_cells",
           "ctx": "s. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the h=1 cells it was fit"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1136,
+          "line": 1105,
           "key": "d3_epi_cells",
           "ctx": "that column is thinner than its count suggests:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons \u00d7 two "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1136,
+          "line": 1105,
           "key": "d3_epi_cells",
           "ctx": "and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value at"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_tol_pairs",
           "ctx": "x_umde_hi}} points, resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizon pairs). The verdict"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1140,
+          "line": 1109,
           "key": "d3_epi_cells",
           "ctx": "on the same {{d3_nind_tot}} trajectories and is **not {{d3_epi_cells}} independent successes**, the {{d3x_ncel"
         },
         {
           "section": "11. Limitations",
-          "line": 1516,
+          "line": 1485,
           "key": "e5_lead_cells",
           "ctx": " They reproduce the *direction* of \u00a76.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cell"
         },
         {
           "section": "11. Limitations",
-          "line": 1516,
+          "line": 1485,
           "key": "e5_total_cells",
           "ctx": "irection* of \u00a76.7's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration"
         }
@@ -2609,7 +2609,7 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1278,
+          "line": 1247,
           "key": "m68_shared_cov2_h368",
           "ctx": "ared_cov1_h368}}% | {{m68_indep_cov2_h368}}% | {{m68_shared_cov2_h368}}% | *Same trajectories, same harness, s"
         }
@@ -2632,31 +2632,31 @@
       "locations": [
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3_second_h",
           "ctx": "cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} \u2014 so the fitted multiplier is mildly **"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 903,
+          "line": 891,
           "key": null,
           "ctx": " is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with rea"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 905,
+          "line": 893,
           "key": null,
-          "ctx": "with h = \u2400 at \u2400 sitting between h=32's \u2400 and h=128's \u2400 \u2014 the horizon added by this revision falls where the ex"
+          "ctx": "and \u2400, with h = \u2400 at \u2400, between h=32's \u2400 and h=128's \u2400. Two independent arenas at four and five times the samp"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 907,
+          "line": 895,
           "key": null,
-          "ctx": " is no longer demonstrably underpowered at h = 128 and below. Running it there is one pass over stored rollout"
+          "ctx": " rows, and is no longer demonstrably so at h = 128 and below. Running it there is one pass over stored rollout"
         },
         {
           "section": "11. Limitations",
-          "line": 1574,
+          "line": 1543,
           "key": null,
           "ctx": " contains, rather than a better test. **At h = 128 and below that is no longer true and we say so**: a shorter"
         }
@@ -2688,19 +2688,19 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1186,
+          "line": 1155,
           "key": "r2_shared_ratio_h368",
           "ctx": " | {{v2_diag_h}} | {{r2_indep_ratio_h368}}\u00d7 | {{r2_shared_ratio_h368}}\u00d7 | {{r2_indep_cov1_h368}}% | {{r2_share"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1278,
+          "line": 1247,
           "key": "m68_shared_ratio_h368",
           "ctx": " {{v2_diag_h}} | {{m68_indep_ratio_h368}}\u00d7 | {{m68_shared_ratio_h368}}\u00d7 | {{m68_indep_cov1_h368}}% | {{m68_sha"
         },
         {
           "section": "11. Limitations",
-          "line": 1516,
+          "line": 1485,
           "key": "e5_ratio_h368",
           "ctx": "ailure at {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h368}}\u00d7 at h = {{v2_diag_h}}) \u2014 but the pre-re"
         }
@@ -2724,19 +2724,19 @@
       "locations": [
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 910,
+          "line": 898,
           "key": "m64_oos_n_h100",
-          "ctx": "1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (`M-64`). **We d"
+          "ctx": "1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (rule M-64, Appe"
         },
         {
           "section": "11. Limitations",
-          "line": 1577,
+          "line": 1546,
           "key": "m64_oos_n_h100",
           "ctx": "ue and we say so**: a shorter evaluation unit gives {{m64_oos_n_h100}} independent units at h = {{v2_deploy_h}"
         },
         {
           "section": "Data and code",
-          "line": 1652,
+          "line": 1621,
           "key": "f4_n_commits",
           "ctx": "y commit from the one that introduced it onward, so **{{f4_n_commits}} of the commits Figure 1 cites keep thei"
         }
@@ -2768,13 +2768,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1182,
+          "line": 1151,
           "key": "r2_shared_cov1_h8",
           "ctx": "{r2_shared_ratio_h8}}\u00d7 | {{r2_indep_cov1_h8}}% | {{r2_shared_cov1_h8}}% | | 32 | {{r2_indep_ratio_h32}}\u00d7 | {{r"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1274,
+          "line": 1243,
           "key": "m68_shared_cov1_h8",
           "ctx": "8_shared_ratio_h8}}\u00d7 | {{m68_indep_cov1_h8}}% | {{m68_shared_cov1_h8}}% | {{m68_indep_cov2_h8}}% | {{m68_share"
         }
@@ -2804,7 +2804,7 @@
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1121,
+          "line": 1090,
           "key": "d2_ale_cov368_hi",
           "ctx": "d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}\u2013{{d2_ale_cov368_hi}}% at h=368. Fitting over the whole rollo"
         }
@@ -2834,7 +2834,7 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1277,
+          "line": 1246,
           "key": "m68_shared_cov2_h128",
           "ctx": "red_cov1_h128}}% | {{m68_indep_cov2_h128}}% | {{m68_shared_cov2_h128}}% | | {{v2_diag_h}} | {{m68_indep_ratio_"
         }
@@ -2880,25 +2880,25 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 908,
+          "line": 896,
           "key": "perm_ins_nind",
           "ctx": "arger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_"
         },
         {
           "section": "8. Method",
-          "line": 1438,
+          "line": 1407,
           "key": "bu_cells",
           "ctx": "y a mean {{bu_mean_ratio}}\u00d7 and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already reco"
         },
         {
           "section": "References",
-          "line": 1704,
+          "line": 1673,
           "key": "t1_n_verified",
           "ctx": "nce matched verbatim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_fra"
         },
         {
           "section": "References",
-          "line": 1704,
+          "line": 1673,
           "key": "t1_n_refs",
           "ctx": "tim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_"
         }
@@ -2928,7 +2928,7 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1276,
+          "line": 1245,
           "key": "m68_shared_cov2_h100",
           "ctx": "d_cov1_h100}}%** | {{m68_indep_cov2_h100}}% | {{m68_shared_cov2_h100}}% | | 128 | {{m68_indep_ratio_h128}}\u00d7 | "
         }
@@ -2990,79 +2990,79 @@
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1119,
+          "line": 1088,
           "key": "d2_epi_cov368_lo",
           "ctx": "st the {{d2_target}}% target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%. On the aleatoric"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3x_own_epi_ok",
           "ctx": "epi_c_lo}} \u2013 {{d3_epi_c_hi}} ({{d3_epi_cspread}}\u00d7) | {{d3x_own_epi_ok}} / {{d3x_own_epi_cells}} | On the relea"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3x_own_epi_ok",
           "ctx": "en by the model as well, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_n_strad",
           "ctx": "ely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} straddling an edge, and the largest pai"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1142,
+          "line": 1111,
           "key": "d3x_own_epi_ok",
           "ctx": "y the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1244,
+          "line": 1213,
           "key": "d3x_own_epi_ok",
           "ctx": "whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1337,
+          "line": 1306,
           "key": "d3x_own_epi_ok",
           "ctx": "whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1465,
+          "line": 1434,
           "key": "d3x_own_epi_ok",
           "ctx": "se model never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "11. Limitations",
-          "line": 1522,
+          "line": 1491,
           "key": "d3x_own_epi_ok",
           "ctx": "whose model never saw them, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and "
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "d3x_own_epi_ok",
           "ctx": "ever saw those episodes, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "References",
-          "line": 1704,
+          "line": 1673,
           "key": "t1_n_frag_ok",
           "ctx": "text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, "
         },
         {
           "section": "References",
-          "line": 1704,
+          "line": 1673,
           "key": "t1_n_frag",
           "ctx": "ified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_onewo"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1845,
+          "line": 1814,
           "key": "appG_n_positive",
           "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
         }
@@ -3089,43 +3089,43 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1303,
+          "line": 1272,
           "key": "m68_from_acc_h32",
           "ctx": " {{m68_total_x_h32}}\u00d7 | {{m68_from_sigma_h32}}% | {{m68_from_acc_h32}}% | | **{{v2_deploy_h}}** | **{{m68_sigm"
         },
         {
           "section": "8. Method",
-          "line": 1434,
+          "line": 1403,
           "key": "appG_n_rules",
           "ctx": "ime for {{f4_n_rules}} of them and Appendix E for all {{appG_n_rules}}, every one of which now carries one; {{"
         },
         {
           "section": "11. Limitations",
-          "line": 1579,
+          "line": 1548,
           "key": "appG_n_rules",
           "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendi"
         },
         {
           "section": "References",
-          "line": 1701,
+          "line": 1670,
           "key": "t1_last_entry_n",
           "ctx": "{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the \u00a72 bibliography, generated from"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1844,
+          "line": 1813,
           "key": "appG_n_rules",
           "ctx": " one, which is what a lead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1844,
+          "line": 1813,
           "key": "appG_n_lead",
           "ctx": "ead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1862,
+          "line": 1831,
           "key": "appG_n_rules",
           "ctx": "he same script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an appe"
         }
@@ -3184,85 +3184,85 @@
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 943,
+          "line": 925,
           "key": "d2p_n_overlap",
-          "ctx": "_n_horizons}}** horizons. The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons. At "
+          "ctx": "_n_horizons}}** horizons. The distinction matters at {{d2p_n_overlap}} of them: at {{d2p_overlap_h}} the margi"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1127,
+          "line": 1096,
           "key": "d3_nind_fit",
           "ctx": "etween them, so each direction fits on n_independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fi"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1127,
+          "line": 1096,
           "key": "d3_nind_fit",
           "ctx": "dependent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fit}}. The last column repeats the test on Ar"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3_ale_const_ok",
           "ctx": "aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3_epi_const_ok",
           "ctx": "epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3_epi_const_ok",
           "ctx": "le in both directions. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1136,
+          "line": 1105,
           "key": "d3_nind_fit",
           "ctx": "ries, and each multiplier is fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1136,
+          "line": 1105,
           "key": "d3_nind_fit",
           "ctx": "_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independ"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1283,
+          "line": 1252,
           "key": "m68_branch",
           "ctx": " separately.* **M-68 returns {{m68_verdict}}** \u2014 branch {{m68_branch}} of the four the rule names. All {{m68_n"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1401,
+          "line": 1370,
           "key": "tw_dc_cluster_helped",
           "ctx": " The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells. **\"Costs nothing\" is the wrong "
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1465,
+          "line": 1434,
           "key": "d3_epi_const_ok",
           "ctx": "l to that band; a single global multiplier manages {{d3_epi_const_ok}} of them (\u00a76.8). That checkpoint trained"
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "d3_epi_const_ok",
           "ctx": "e at this arena, where a global multiplier manages {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in eac"
         },
         {
           "section": "Appendix C \u2014 what testing the untested claims would require",
-          "line": 1776,
+          "line": 1745,
           "key": "appE_n_cpu",
           "ctx": "t. This table has one row per untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion tha"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1836,
+          "line": 1805,
           "key": "m69_amend_min",
           "ctx": "{{appG_table}} `M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so the ru"
         },
@@ -3298,25 +3298,25 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1168,
+          "line": 1137,
           "key": null,
           "ctx": "nsemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at about \u2400 h each, \u2400 h in total, and score"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1256,
+          "line": 1225,
           "key": null,
           "ctx": "he loss type. Three of the five \u2014 seeds 0, 1 and 2 \u2014 already existed under that objective; two more were train"
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1863,
+          "line": 1832,
           "key": null,
           "ctx": "de by the pooled scale \u2014 a ratio of means. **Form 2** is the mean of per-dimension ratios. The two differ beca"
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1866,
+          "line": 1835,
           "key": null,
           "ctx": "he state dimensions differ widely in scale. Form 2 gives whichever dimension has the smallest denominator unbo"
         }
@@ -3357,31 +3357,31 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 878,
+          "line": 868,
           "key": "iters_main",
-          "ctx": "tion tables omitted \u2014 sharpens the finding (our arms at {{iters_main}} training iterations; the released check"
+          "ctx": " arm, trained for \u00a75, sharpens the finding (our arms at {{iters_main}} training iterations; the released check"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1127,
+          "line": 1096,
           "key": "iters_main",
           "ctx": "eats the test on Arm A at ensemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_nseeds}} seeds), whos"
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1148,
+          "line": 1117,
           "key": "iters_main",
           "ctx": "zon, \u03c3 is flat while error grows (Figure 5; our arms at {{iters_main}} training iterations, the released check"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1188,
+          "line": 1157,
           "key": "iters_main",
           "ctx": "me harness, n_independent = {{r2_nind}}, every model at {{iters_main}} training iterations. The shared-trunk c"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1280,
+          "line": 1249,
           "key": "iters_main",
           "ctx": "e harness, same bootstrap unit as \u00a76.10, every model at {{iters_main}} training iterations. The shared-trunk c"
         },
@@ -3411,19 +3411,19 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1305,
+          "line": 1274,
           "key": "m68_total_x_h128",
           "ctx": "8 | {{m68_sigma_x_h128}}\u00d7 | {{m68_acc_x_h128}}\u00d7 | {{m68_total_x_h128}}\u00d7 | {{m68_from_sigma_h128}}% | {{m68_fro"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m49_mde_ratio",
           "ctx": "o **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde_ratio}}\u00d7. `M-49` therefore returns **{{m49_verd"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m49_mde_ratio",
           "ctx": "ependent arms against each other \u2014 and far below the {{m49_mde_ratio}}\u00d7 this comparison can resolve. Closing i"
         }
@@ -3464,43 +3464,43 @@
         },
         {
           "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-          "line": 823,
+          "line": 819,
           "key": "m44_ratio_gain",
-          "ctx": " measured**: {{v1_shared_pct}}% of each member, and {{m44_ratio_gain}}\u00d7 on the overconfidence factor (\u00a76.10). "
+          "ctx": "ared_pct}}% of each member and the cost measured at {{m44_ratio_gain}}\u00d7 on the overconfidence factor (\u00a76.10). "
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1194,
+          "line": 1163,
           "key": "m44_ratio_gain",
           "ctx": "_lo}}\u2013{{r2_ratio_hi}}\u00d7 the shared-trunk arms' \u2014 a **{{m44_ratio_gain}}\u00d7** improvement against a pre-registered"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1211,
+          "line": 1180,
           "key": "r2_total_x_h100",
           "ctx": " | **{{r2_sigma_x_h100}}\u00d7** | {{r2_acc_x_h100}}\u00d7 | {{r2_total_x_h100}}\u00d7 | **{{r2_from_sigma_h100}}%** | {{r2_f"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1243,
+          "line": 1212,
           "key": "m44_ratio_gain",
           "ctx": "n gives {{v3_cov_nominal1}}%. Better by a factor of {{m44_ratio_gain}}, and still not an interval. Building th"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1328,
+          "line": 1297,
           "key": "m44_ratio_gain",
           "ctx": "ount \u00a76.10 already measured for independence alone ({{m44_ratio_gain}}\u00d7 there, {{m68_ratio_gain}}\u00d7 here). **Th"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m44_ratio_gain",
           "ctx": "esolve.** The overconfidence improvement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 mat"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m44_ratio_gain",
           "ctx": "n does not answer it: the point estimates fall from {{m44_ratio_gain}}\u00d7 to {{m49_ratio_gain}}\u00d7, a difference o"
         }
@@ -3532,13 +3532,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1181,
+          "line": 1150,
           "key": "r2_shared_ratio_h1",
           "ctx": "---|---|---|---| | 1 | {{r2_indep_ratio_h1}}\u00d7 | {{r2_shared_ratio_h1}}\u00d7 | {{r2_indep_cov1_h1}}% | {{r2_shared_"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1273,
+          "line": 1242,
           "key": "m68_shared_ratio_h1",
           "ctx": "-|---|---|---| | 1 | {{m68_indep_ratio_h1}}\u00d7 | {{m68_shared_ratio_h1}}\u00d7 | {{m68_indep_cov1_h1}}% | {{m68_share"
         }
@@ -3691,151 +3691,151 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 885,
+          "line": 875,
           "key": "cal_rel_npos",
           "ctx": "_h368}}** | | released checkpoint | {{cal_rel_cov}} | {{cal_rel_npos}}/{{cal_rel_ndim}} | {{perm_oos_relale_p_"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 887,
+          "line": 877,
           "key": "relale_all_nind",
-          "ctx": "tive one: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{re"
+          "ctx": "ve arena: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{re"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 887,
+          "line": 877,
           "key": "relale_oos_pos_h368",
-          "ctx": "ated with error on *every* dimension \u2014 against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here. \u00a712"
+          "ctx": "lated with error on *every* dimension, against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here; \u00a712"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 906,
+          "line": 894,
           "key": "d1n_nind",
-          "ctx": "r the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}. The figure the abstract and \u00a712 use is"
+          "ctx": "r the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}, and the abstract and \u00a712 use {{d1n_epi"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 906,
+          "line": 894,
           "key": "d1n_nind",
-          "ctx": "d1n_epi_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, on the same {{d1n_nind}} trajectories. It does not beat Arm B's "
+          "ctx": "e {{d1n_epi_ratio_h100}}\u00d7 at h = {{v2_deploy_h}} on those {{d1n_nind}} trajectories. Nor does it beat Arm B's "
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 908,
+          "line": 896,
           "key": "perm_all_nind",
           "ctx": "8}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 926,
+          "line": 910,
           "key": "d1n_nind",
-          "ctx": "166` \u2014 against total absolute error, over n_independent = {{d1n_nind}} trajectories, with 95% intervals from a"
+          "ctx": ":166`, against total absolute error, over n_independent = {{d1n_nind}} trajectories, with 95% intervals from a"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 967,
+          "line": 949,
           "key": "a2_nind",
           "ctx": "r_within_ci}} | \u2014 | | everything within a trajectory \u2014 the {{a2_nind}} trajectory means alone | {{a2_r_between"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 970,
+          "line": 952,
           "key": "a2_nind",
           "ctx": "now?** | [^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent \u2014 st"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 978,
+          "line": 960,
           "key": "a2_h1_npoints",
-          "ctx": "rmation whatever. Two things suggested checking: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, whic"
+          "ctx": "ut information at all. Two things pointed there: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, whic"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 989,
+          "line": 969,
           "key": "a2_nind",
-          "ctx": "d it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}}, against M-45's pre-committed threshold"
+          "ctx": "d it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}}, against the rule's pre-committed thres"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 995,
+          "line": 975,
           "key": "a2_nind",
           "ctx": "eporting which episode is hard. **Per horizon, on the same {{a2_nind}} trajectories and the same cluster boots"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1011,
+          "line": 991,
           "key": "a2_h1_npoints",
           "ctx": "has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}} *trajectory-level* points and nothing w"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1017,
+          "line": 996,
           "key": "a2_h1_npoints",
-          "ctx": "out **ranking whole rollouts at one step ahead**, on {{a2_h1_npoints}} points, and \u00a79 now says that rather tha"
+          "ctx": "bout **ranking whole rollouts at one step ahead**, on {{a2_h1_npoints}} points, and \u00a79 states it that way. **D"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1038,
+          "line": 1009,
           "key": "d1n_nind",
-          "ctx": "_independent = {{e5_nind}}, where \u00a76.7's own finding used {{d1n_nind}}. Subsampling four trajectories at a tim"
+          "ctx": "{{e5_nind}}, where the released checkpoint's finding used {{d1n_nind}}. Subsampling four trajectories at a tim"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1040,
+          "line": 1011,
           "key": "e5_comp_nind",
           "ctx": "as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** fo"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1040,
+          "line": 1011,
           "key": "d1n_nind",
           "ctx": "d it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like. **We ran the baselin"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1060,
+          "line": 1031,
           "key": "e7_nind",
           "ctx": "{{e7_r_dis}} on the released checkpoint at n_independent = {{e7_nind}} 400-step trajectories. Minimum detectab"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1068,
+          "line": 1039,
           "key": "e7_nind",
-          "ctx": "gin}} this sample size can resolve \u2014 so at n_independent = {{e7_nind}} 400-step trajectories we cannot say the"
+          "ctx": "rgin}} this sample size can resolve, so at n_independent = {{e7_nind}} 400-step trajectories we cannot say the"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1368,
+          "line": 1337,
           "key": "ad20_nind",
           "ctx": "1 and {{ad_nrmse_traj}} in nRMSE. Over all ten episodes, {{ad20_nind}} independent trajectories, the sign reve"
         },
         {
           "section": "8. Method",
-          "line": 1436,
+          "line": 1405,
           "key": "n_superseded",
           "ctx": "word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record ("
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1457,
+          "line": 1426,
           "key": "a2_h1_npoints",
           "ctx": "erfectly \u2014 {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npoints}} trajectories, and that is a ranking of "
         },
         {
           "section": "11. Limitations",
-          "line": 1535,
+          "line": 1504,
           "key": "e7_nind",
           "ctx": "dent 400-step trajectories, where all ten episodes provide {{e7_nind}}** \u2014 {{q2_factor}}\u00d7 the present sample, "
         },
         {
           "section": "12. Conclusion",
-          "line": 1633,
+          "line": 1602,
           "key": "d1n_nind",
           "ctx": "dependent 400-step trajectories and all ten episodes hold {{d1n_nind}}, which is why \u00a711 leaves the replicatio"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1814,
+          "line": 1783,
           "key": "d4_nind",
           "ctx": " {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at ev"
         },
@@ -3853,7 +3853,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1705,
+          "line": 1674,
           "key": null,
           "ctx": "unded to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts th"
         }
@@ -3883,7 +3883,7 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1275,
+          "line": 1244,
           "key": "m68_shared_cov2_h32",
           "ctx": "shared_cov1_h32}}% | {{m68_indep_cov2_h32}}% | {{m68_shared_cov2_h32}}% | | **{{v2_deploy_h}}** | **{{m68_inde"
         }
@@ -3891,43 +3891,35 @@
     },
     {
       "value": "21",
-      "n_locations": 4,
+      "n_locations": 3,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 4,
+      "n_substituted": 3,
       "sources": [
         "results/task1_calibration.json",
-        "results/task_d2_recalibration.json",
-        "results/v1_ensemble_topology.json"
+        "results/task_d2_recalibration.json"
       ],
       "keys": [
         "cal_nll_npos",
-        "d2_epi_cov368_hi",
-        "v1_n_citations"
+        "d2_epi_cov368_hi"
       ],
       "locations": [
         {
-          "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-          "line": 860,
-          "key": "v1_n_citations",
-          "ctx": "stances of one architecture, not two architectures. {{v1_n_citations}} source citations support the paragraphs"
-        },
-        {
           "section": "6.5 The correction fails differently rather than succeeding",
-          "line": 873,
+          "line": 864,
           "key": "cal_nll_npos",
           "ctx": "cal_faithA_ndim}} dimensions positively correlated to {{cal_nll_npos}}/{{cal_nll_ndim}}, which is chance. Unde"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 883,
+          "line": 873,
           "key": "cal_nll_npos",
           "ctx": "ithA_p_h368}} | | corrected Arm A | {{cal_nll_cov}} | {{cal_nll_npos}}/{{cal_nll_ndim}} | {{perm_oos_nll_p_h36"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1119,
+          "line": 1088,
           "key": "d2_epi_cov368_hi",
           "ctx": " target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%. On the aleatoric term a scalar of {{d"
         }
@@ -3962,7 +3954,7 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1705,
+          "line": 1674,
           "key": null,
           "ctx": "hours. An earlier version of this appendix said 22 hours; that figure predated the \u2400 ten-thousand-iteration ru"
         }
@@ -3992,7 +3984,7 @@
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_n_out_r2a",
           "ctx": "on the released checkpoint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest st"
         }
@@ -4016,13 +4008,13 @@
       "locations": [
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1038,
+          "line": 1009,
           "key": "e5_power_worst",
           "ctx": " {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estima"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3_ncells_all",
           "ctx": "is outside it either. The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={"
         }
@@ -4078,7 +4070,7 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1534,
+          "line": 1503,
           "key": "q2_n_req",
           "ctx": "If the observed margin is the true one, settling it needs {{q2_n_req}} independent 400-step trajectories, wher"
         }
@@ -4115,25 +4107,25 @@
         },
         {
           "section": "11. Limitations",
-          "line": 1581,
+          "line": 1550,
           "key": "released_width",
           "ctx": "rnn_hidden_size` {{m49_width}} against the released {{released_width}}, giving {{m49_matched_params}} state-pa"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1734,
+          "line": 1703,
           "key": "released_width",
           "ctx": "dden_size` {{m49_width}}** rather than the released {{released_width}}. They are part of this project's CPU sp"
         },
         {
           "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-          "line": 841,
+          "line": 837,
           "key": null,
-          "ctx": "e spread of \u2400 two-layer MLPs read off a single 256-dimensional vector, at whatever point that one trajectory h"
+          "ctx": "he spread of \u2400 two-layer MLPs read off a single 256-dimensional vector. **Members which share a feature extrac"
         },
         {
           "section": "Data and code",
-          "line": 1642,
+          "line": 1611,
           "key": null,
           "ctx": "hes both at pinned commits and verifies two SHA-256 hashes. **The repository's history was rewritten once, and"
         }
@@ -4163,7 +4155,7 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1274,
+          "line": 1243,
           "key": "m68_shared_cov2_h8",
           "ctx": "68_shared_cov1_h8}}% | {{m68_indep_cov2_h8}}% | {{m68_shared_cov2_h8}}% | | 32 | {{m68_indep_ratio_h32}}\u00d7 | {{"
         }
@@ -4194,13 +4186,13 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1731,
+          "line": 1700,
           "key": "rt_runs_short",
           "ctx": " iterations and {{rt_hours_short}} for the remaining {{rt_runs_short}} at 2,500. (Those were rounded to whole "
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1705,
+          "line": 1674,
           "key": null,
           "ctx": " to whole hours in an earlier draft, where 20 + 27 did not make 46; the `arithmetic` check now asserts that a "
         }
@@ -4224,13 +4216,13 @@
       "locations": [
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_n_out_a2r",
           "ctx": "the same: fitting on Arm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1211,
+          "line": 1180,
           "key": "r2_from_acc_h100",
           "ctx": "2_total_x_h100}}\u00d7 | **{{r2_from_sigma_h100}}%** | {{r2_from_acc_h100}}% | | 128 | {{r2_sigma_x_h128}}\u00d7 | {{r2_"
         }
@@ -4372,85 +4364,85 @@
         },
         {
           "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-          "line": 859,
+          "line": 853,
           "key": "v1_n_arms_checked",
-          "ctx": "} per head, {{v1_total_params}} in total, on all {{v1_n_arms_checked}} arms checked. So \u00a76.2's \"our arms fail "
+          "ctx": "} per head, {{v1_total_params}} in total, on all {{v1_n_arms_checked}} arms checked (`results/v1_ensemble_topo"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1127,
+          "line": 1096,
           "key": "d3x_nseeds",
           "ctx": "nsemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_nseeds}} seeds), whose model never saw either ep"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_nseeds",
           "ctx": "iers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on the released check"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_n_in",
           "ctx": "val on the paired change lying entirely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} str"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1140,
+          "line": 1109,
           "key": "d3x_nseeds",
           "ctx": "ing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} Arm A seeds share their training data a"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1189,
+          "line": 1158,
           "key": "r2_n_shared",
           "ctx": "g iterations. The shared-trunk column is the mean over {{r2_n_shared}} seeds; the comparison below is paired a"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1192,
+          "line": 1161,
           "key": "r2_n_shared",
           "ctx": "conditions}} conditions hold, against every one of the {{r2_n_shared}} shared-trunk seeds. At h = {{v2_deploy_"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1209,
+          "line": 1178,
           "key": "r2_from_acc_h8",
           "ctx": "8}}\u00d7 | {{r2_total_x_h8}}\u00d7 | {{r2_from_sigma_h8}}% | {{r2_from_acc_h8}}% | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_ac"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1281,
+          "line": 1250,
           "key": "m68_n_shared",
           "ctx": "terations. The shared-trunk columns are the mean over {{m68_n_shared}} seeds; the comparison below is paired a"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1285,
+          "line": 1254,
           "key": "m68_n_shared",
           "ctx": "onditions}} conditions hold, against every one of the {{m68_n_shared}} shared-trunk seeds. At h = {{v2_deploy_"
         },
         {
           "section": "11. Limitations",
-          "line": 1516,
+          "line": 1485,
           "key": "e5_seeds",
           "ctx": "y made on the released checkpoint alone. We since trained {{e5_seeds}} Arm A arms at ensemble size 5 (\u00a76.7). T"
         },
         {
           "section": "References",
-          "line": 1701,
+          "line": 1670,
           "key": "t1_first_entry_n",
           "ctx": "er_figures.json`.* {{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the \u00a72 bibliogr"
         },
         {
           "section": "References",
-          "line": 1705,
+          "line": 1674,
           "key": "t1_n_frag_oneword",
           "ctx": "frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_oneword}} of them single common words whose prese"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1820,
+          "line": 1789,
           "key": null,
           "ctx": "tely.** `S-12` withdraws the claim that the Task 3 duplication rule was pre-registered; the control runs had f"
         }
@@ -4474,31 +4466,31 @@
       "locations": [
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1152,
+          "line": 1121,
           "key": "err_faithA_growth",
           "ctx": "---| | faithful Arm A | {{sig_faithA_growth}}\u00d7 | {{err_faithA_growth}}\u00d7 | | corrected Arm A | {{sig_nll_growth"
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1158,
+          "line": 1127,
           "key": "err_faithA_growth",
           "ctx": "* ({{sig_faithA_growth}}\u00d7) while its error grows {{err_faithA_growth}}\u00d7. The coverage collapse in Figure 3(b) "
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1340,
+          "line": 1309,
           "key": "v1_cap_ratio",
           "ctx": "unk sharing, the objective, and capacity (a factor of {{v1_cap_ratio}} in state-pathway parameters, as \u00a76.10's"
         },
         {
           "section": "11. Limitations",
-          "line": 1581,
+          "line": 1550,
           "key": "v1_cap_ratio",
           "ctx": "the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own tru"
         },
         {
           "section": "11. Limitations",
-          "line": 1581,
+          "line": 1550,
           "key": "v1_cap_ratio",
           "ctx": "ched_ratio}}, where \u00a76.10's original contrast carried {{v1_cap_ratio}}. **With capacity held fixed the indepen"
         }
@@ -4527,7 +4519,7 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 912,
+          "line": 900,
           "key": "perm_oos_holm_n",
           "ctx": " three arenas.** Holm\u2013Bonferroni over each arena's {{perm_oos_holm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejec"
         }
@@ -4578,19 +4570,19 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1398,
+          "line": 1367,
           "key": "tw_cells",
           "ctx": "ing inferred the mechanism without it. In rollout, across {{tw_cells}} cells (two arenas \u00d7 two trajectory leng"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1399,
+          "line": 1368,
           "key": "tw_cells",
           "ctx": "cs), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} ("
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1405,
+          "line": 1374,
           "key": "tw_cells",
           "ctx": "t}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measured effects in opp"
         },
@@ -4602,9 +4594,9 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 905,
+          "line": 893,
           "key": null,
-          "ctx": ": \u2400, \u2400 and \u2400, with h = \u2400 at \u2400 sitting between h=32's \u2400 and h=128's \u2400 \u2014 the horizon added by this revision fall"
+          "ctx": "nt = \u2400): \u2400, \u2400 and \u2400, with h = \u2400 at \u2400, between h=32's \u2400 and h=128's \u2400. Two independent arenas at four and five "
         }
       ]
     },
@@ -4652,25 +4644,25 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 910,
+          "line": 898,
           "key": "m64_h1_unit",
-          "ctx": "not of the arena**, and the distinction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} indepen"
+          "ctx": "ss belongs to the 400-step unit, not to the arena**: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} indepen"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1731,
+          "line": 1700,
           "key": "rt_runs",
           "ctx": "which is what makes the quick path practical. Training all {{rt_runs}} runs takes **{{rt_hours}} hours** of re"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1733,
+          "line": 1702,
           "key": "rt_runs",
           "ctx": "ifact rather than re-estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m49}} hours, are `M-49"
         },
         {
           "section": "Appendix C \u2014 what testing the untested claims would require",
-          "line": 1771,
+          "line": 1740,
           "key": "rt_runs",
           "ctx": "ator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; "
         }
@@ -4693,13 +4685,13 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1304,
+          "line": 1273,
           "key": "m68_from_acc_h100",
           "ctx": "total_x_h100}}\u00d7 | **{{m68_from_sigma_h100}}%** | {{m68_from_acc_h100}}% | | 128 | {{m68_sigma_x_h128}}\u00d7 | {{m6"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1306,
+          "line": 1275,
           "key": "m68_from_sigma_h368",
           "ctx": "| {{m68_acc_x_h368}}\u00d7 | {{m68_total_x_h368}}\u00d7 | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% | *The same "
         }
@@ -4731,13 +4723,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1181,
+          "line": 1150,
           "key": "r2_shared_cov1_h1",
           "ctx": "{r2_shared_ratio_h1}}\u00d7 | {{r2_indep_cov1_h1}}% | {{r2_shared_cov1_h1}}% | | 8 | {{r2_indep_ratio_h8}}\u00d7 | {{r2_"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1273,
+          "line": 1242,
           "key": "m68_shared_cov1_h1",
           "ctx": "8_shared_ratio_h1}}\u00d7 | {{m68_indep_cov1_h1}}% | {{m68_shared_cov1_h1}}% | {{m68_indep_cov2_h1}}% | {{m68_share"
         }
@@ -4774,79 +4766,79 @@
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3x_own_ale_cells",
           "ctx": "i}} ({{d3_ale_cspread}}\u00d7) | {{d3x_own_ale_ok}} / {{d3x_own_ale_cells}} | | epistemic | **{{d3_epi_ok}} / {{d3_"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3x_own_epi_cells",
           "ctx": "hi}} ({{d3_epi_cspread}}\u00d7) | {{d3x_own_epi_ok}} / {{d3x_own_epi_cells}} | On the released checkpoint every poi"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3x_own_epi_cells",
           "ctx": "its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3x_own_ale_cells",
           "ctx": "_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells**, so the recipe that l"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_ncells_a2r",
           "ctx": "rm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the band); fitting on the"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_ncells_r2a",
           "ctx": "oint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest statement of the gap is "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1142,
+          "line": 1111,
           "key": "d3x_own_epi_cells",
           "ctx": "A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence "
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1244,
+          "line": 1213,
           "key": "d3x_own_epi_cells",
           "ctx": "he test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (\u00a76.8). ### 6.11 Both"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1337,
+          "line": 1306,
           "key": "d3x_own_epi_cells",
           "ctx": "e test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (\u00a76.8). **What the arm"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1465,
+          "line": 1434,
           "key": "d3x_own_epi_cells",
           "ctx": "its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. The released checkpoin"
         },
         {
           "section": "11. Limitations",
-          "line": 1522,
+          "line": 1491,
           "key": "d3x_own_epi_cells",
           "ctx": "m, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d"
         },
         {
           "section": "11. Limitations",
-          "line": 1522,
+          "line": 1491,
           "key": "d3x_own_ale_cells",
           "ctx": "_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells, and two episodes is no"
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "d3x_own_epi_cells",
           "ctx": "its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. And the ranking use th"
         }
@@ -5077,205 +5069,205 @@
         },
         {
           "section": "6.5 The correction fails differently rather than succeeding",
-          "line": 873,
+          "line": 864,
           "key": "v2_diag_h",
           "ctx": "e. Under the trajectory permutation test of \u00a76.6, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faith"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 880,
+          "line": 870,
           "key": "v2_diag_h",
           "ctx": "ion across inputs (CoV) | dims with r(\u03c3, error) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 880,
+          "line": 870,
           "key": "v2_diag_h",
           "ctx": "ror) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 880,
+          "line": 870,
           "key": "v2_diag_h",
           "ctx": "| perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, in-sample | |---|---|---|---|---| | fa"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 887,
+          "line": 877,
           "key": "v2_diag_h",
-          "ctx": "leatoric head it is not the most informative one: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}}"
+          "ctx": "atoric head it is not the most informative arena: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}}"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 893,
+          "line": 883,
           "key": "perm_worst_h",
           "ctx": " The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At "
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 893,
+          "line": 883,
           "key": "v2_diag_h",
           "ctx": "erm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h36"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 906,
+          "line": 894,
           "key": "v2_diag_h",
           "ctx": " while being {{b2_epi_ratio_h368}}\u00d7 overconfident at h = {{v2_diag_h}}. **All figures in this paragraph are th"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 906,
+          "line": 894,
           "key": "v2_diag_h",
-          "ctx": "quotes {{d1n_epi_ratio_h368}}\u00d7 for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}. The f"
+          "ctx": "quotes {{d1n_epi_ratio_h368}}\u00d7 for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}, and t"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 910,
+          "line": 898,
           "key": "v2_diag_h",
-          "ctx": "ict in it: the arena is demonstrably underpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}"
+          "ctx": "claim, not any verdict: the arena is underpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 939,
+          "line": 923,
           "key": "v2_diag_h",
           "ctx": "eement wins at every horizon tested.** Over the full h = {{v2_diag_h}} rollout the counter reaches {{d2b_idx_h"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 964,
+          "line": 946,
           "key": "d2r_win_pos",
           "ctx": " step | **{{d2r_win}}** | {{d2r_win_ci}} | positive at {{d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_wi"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 964,
+          "line": 946,
           "key": "d2r_win_n",
           "ctx": "in}}** | {{d2r_win_ci}} | positive at {{d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_win_med}}[^stepcoun"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 970,
+          "line": 952,
           "key": "d2r_win_pos",
           "ctx": "r_win_ci}} is the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}. The weakest figure acro"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 970,
+          "line": 952,
           "key": "d2r_win_n",
           "ctx": "the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}. The weakest figure across the {{d2r_n"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 985,
+          "line": 967,
           "key": "d2r_win_n",
-          "ctx": "ntrol rather than merely adding to it**: it is a mean of {{d2r_win_n}} between-trajectory correlations, which "
+          "ctx": "at reinterprets the within-step control: it is a mean of {{d2r_win_n}} between-trajectory correlations, which "
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1004,
+          "line": 984,
           "key": "v2_diag_h",
           "ctx": "| | 128 | {{a2_rdd_h128}} | {{a2_rdd_ci_h128}} | yes | | {{v2_diag_h}} | {{a2_rdd_h368}} | {{a2_rdd_ci_h368}} "
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1186,
+          "line": 1155,
           "key": "v2_diag_h",
           "ctx": "| {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h368}}\u00d7 | {{r2_share"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1213,
+          "line": 1182,
           "key": "v2_diag_h",
           "ctx": "}\u00d7 | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}}\u00d7 | {{r2_acc_x_h36"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1220,
+          "line": 1189,
           "key": "r2_sigma_x_lo_h",
           "ctx": "orizon \u2014 by {{r2_sigma_x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}\u00d7 at its stronges"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1225,
+          "line": 1194,
           "key": "v2_diag_h",
           "ctx": "hod operates. At the open-loop diagnostic horizon of h = {{v2_diag_h}} the split reverses \u2014 {{r2_from_acc_h368"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1229,
+          "line": 1198,
           "key": "r2_sigma_x_lo_h",
           "ctx": "h = 1 and h = 8 values, which do not span it \u2014 h = {{r2_sigma_x_lo_h}}'s {{r2_sigma_x_lo}}\u00d7 falls below the st"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1278,
+          "line": 1247,
           "key": "v2_diag_h",
           "ctx": "{{m68_indep_cov2_h128}}% | {{m68_shared_cov2_h128}}% | | {{v2_diag_h}} | {{m68_indep_ratio_h368}}\u00d7 | {{m68_sha"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1306,
+          "line": 1275,
           "key": "v2_diag_h",
           "ctx": " | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag_h}} | {{m68_sigma_x_h368}}\u00d7 | {{m68_acc_x_h"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1365,
+          "line": 1334,
           "key": "v2_diag_h",
           "ctx": "ies it overstates the released checkpoint's error at h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relat"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1482,
+          "line": 1451,
           "key": "v2_diag_h",
           "ctx": "h = {{v2_deploy_h}}, and {{d1n_alea_ratio_h368}}\u00d7 at h = {{v2_diag_h}}. Reading the loss took an afternoon and"
         },
         {
           "section": "11. Limitations",
-          "line": 1516,
+          "line": 1485,
           "key": "v2_diag_h",
           "ctx": "100}}\u00d7 at h = {{v2_deploy_h}} ({{e5_ratio_h368}}\u00d7 at h = {{v2_diag_h}}) \u2014 but the pre-registered rule governin"
         },
         {
           "section": "11. Limitations",
-          "line": 1569,
+          "line": 1538,
           "key": "q3_dom_h",
           "ctx": "as computed after the verdict: the last horizon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_ste"
         },
         {
           "section": "11. Limitations",
-          "line": 1570,
+          "line": 1539,
           "key": "q3_steps",
           "ctx": "zon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_steps}} steps and {{q3_dom_share}}% of the corr"
         },
         {
           "section": "11. Limitations",
-          "line": 1577,
+          "line": 1546,
           "key": "v2_diag_h",
           "ctx": " threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released d"
         },
         {
           "section": "12. Conclusion",
-          "line": 1618,
+          "line": 1587,
           "key": "v2_diag_h",
           "ctx": "ry one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar"
         },
         {
           "section": "12. Conclusion",
-          "line": 1618,
+          "line": 1587,
           "key": "v2_diag_h",
           "ctx": "* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1814,
+          "line": 1783,
           "key": "v2_diag_h",
           "ctx": " **Weaker per-dimension than we first reported**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1814,
+          "line": 1783,
           "key": "v2_diag_h",
           "ctx": "n rollout length, and {{d1n_epi_ratio_h368}}\u00d7 at the h = {{v2_diag_h}} diagnostic horizon; repairable per hori"
         },
@@ -5287,31 +5279,31 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 903,
+          "line": 891,
           "key": null,
           "ctx": "the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised erro"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 903,
+          "line": 891,
           "key": null,
-          "ctx": " on strength either: its mean correlation at h=368 is \u2400 against \u2400. The two quantities rank comparably; neither"
+          "ctx": "'s head on strength: its mean correlation at h=368 is \u2400 against \u2400. The two rank comparably, and neither is clo"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 903,
+          "line": 891,
           "key": null,
-          "ctx": "zon test the same way: \u03c3 grows \u2400\u00d7 from h=1 to h=368 while error grows \u2400\u00d7. **The horizon story we first told wa"
+          "ctx": "zon test the same way: \u03c3 grows \u2400\u00d7 from h=1 to h=368 while error grows \u2400\u00d7. **The larger arenas agree with each "
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 905,
+          "line": 893,
           "key": null,
           "ctx": " strongest at long horizon (\u2400 at h=128, \u2400 at h=368) and unremarkable at short (\u2400 at h=1). Both larger arenas i"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1116,
+          "line": 1085,
           "key": null,
           "ctx": "calibrated against the \u2400% target, and leaves h=368 at \u2400\u2013\u2400%. On the aleatoric term a scalar of \u2400\u2013\u2400 gives \u2400\u2013\u2400% a"
         }
@@ -5343,19 +5335,19 @@
         },
         {
           "section": "6.5 The correction fails differently rather than succeeding",
-          "line": 873,
+          "line": 864,
           "key": "cal_faithA_npos",
           "ctx": "ul arm had: the \u03c3-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positive"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 882,
+          "line": 872,
           "key": "cal_faithA_npos",
           "ctx": "-|---|---| | faithful Arm A | {{cal_faithA_cov}} | {{cal_faithA_npos}}/{{cal_faithA_ndim}} | {{perm_oos_faithA"
         },
         {
           "section": "References",
-          "line": 1697,
+          "line": 1666,
           "key": "v4_name_n_v1",
           "ctx": " The two names never co-occur: v1 uses {{v4_name_v1}} {{v4_name_n_v1}} times and no {{v4_name_v3}}, v3 the rev"
         }
@@ -5381,19 +5373,19 @@
       "locations": [
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1183,
+          "line": 1152,
           "key": "r2_indep_ratio_h32",
           "ctx": "ep_cov1_h8}}% | {{r2_shared_cov1_h8}}% | | 32 | {{r2_indep_ratio_h32}}\u00d7 | {{r2_shared_ratio_h32}}\u00d7 | {{r2_inde"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1275,
+          "line": 1244,
           "key": "m68_indep_ratio_h32",
           "ctx": "_cov2_h8}}% | {{m68_shared_cov2_h8}}% | | 32 | {{m68_indep_ratio_h32}}\u00d7 | {{m68_shared_ratio_h32}}\u00d7 | {{m68_in"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1731,
+          "line": 1700,
           "key": "rt_longest",
           "ctx": "the sum of its stated parts.) The longest single run is {{rt_longest}} hours. An earlier version of this appen"
         }
@@ -5467,7 +5459,7 @@
         },
         {
           "section": "10. Broader impact",
-          "line": 1498,
+          "line": 1467,
           "key": "d1n_epi_cov1_h100",
           "ctx": "o_h100}}\u00d7 smaller than realised error and covers {{d1n_epi_cov1_h100}}% of outcomes where {{v3_cov_nominal1}}%"
         }
@@ -5503,7 +5495,7 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1305,
+          "line": 1274,
           "key": "m68_from_acc_h128",
           "ctx": "m68_total_x_h128}}\u00d7 | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag_h}} | {{m68_sigma_x_h368"
         }
@@ -5542,9 +5534,9 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 910,
+          "line": 898,
           "key": "long_unit_rows",
-          "ctx": "rpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}} rows, and is no longer demonstrably und"
+          "ctx": "rpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}} rows, and is no longer demonstrably so "
         },
         {
           "section": "1. Introduction",
@@ -5620,85 +5612,85 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 905,
+          "line": 893,
           "key": null,
           "ctx": "r against the smallest.** At n_independent = \u2400 400-step trajectories out of sample, the epistemic ordering loo"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 907,
+          "line": 895,
           "key": null,
-          "ctx": "horizon. **That blindness is a property of the 400-step unit, not of the arena**, and the distinction now matt"
+          "ctx": "t any horizon. **That blindness belongs to the 400-step unit, not to the arena**: a \u2400-row unit gives \u2400 indepen"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 940,
+          "line": 922,
           "key": null,
-          "ctx": "t rest anything on that horizon alone \u2014 at the 400-step unit. At the shorter unit `M-64` builds, \u2400 non-overlap"
+          "ctx": " the smallest lower bound in the table, at the 400-step unit. At the shorter unit of rule M-64 (Appendix E), \u2400"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1037,
+          "line": 1008,
           "key": null,
           "ctx": "harge:* on all ten episodes (n_independent = \u2400 400-step trajectories, **in-sample** for these arms, which trai"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1057,
+          "line": 1028,
           "key": null,
           "ctx": "n the released checkpoint at n_independent = \u2400 400-step trajectories. Minimum detectable effect, estimated bef"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1065,
+          "line": 1036,
           "key": null,
-          "ctx": "ple size can resolve \u2014 so at n_independent = \u2400 400-step trajectories we cannot say the ensemble ranks better t"
+          "ctx": "mple size can resolve, so at n_independent = \u2400 400-step trajectories we cannot say the ensemble ranks better t"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1124,
+          "line": 1093,
           "key": null,
           "ctx": "held-out episodes contribute \u2400 non-overlapping 400-step trajectories between them, so each direction fits on n"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1259,
+          "line": 1228,
           "key": null,
           "ctx": " on the same held-out arena of non-overlapping 400-step trajectories at n_independent = \u2400, over the same six h"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1466,
+          "line": 1435,
           "key": null,
           "ctx": "ependent trajectories, not trajectories.** Two 400-step windows that overlap at all are one piece of evidence,"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1468,
+          "line": 1437,
           "key": null,
           "ctx": "The held-out arena here contains \u2400 independent 400-step trajectories however many windows are drawn from it, a"
         },
         {
           "section": "11. Limitations",
-          "line": 1508,
+          "line": 1477,
           "key": null,
           "ctx": "m.** The out-of-sample arena has \u2400 independent 400-step trajectories. That is the binding constraint on \u00a75, an"
         },
         {
           "section": "11. Limitations",
-          "line": 1531,
+          "line": 1500,
           "key": null,
           "ctx": " the true one, settling it needs \u2400 independent 400-step trajectories, where all ten episodes provide \u2400** \u2014 \u2400\u00d7 "
         },
         {
           "section": "11. Limitations",
-          "line": 1574,
+          "line": 1543,
           "key": null,
           "ctx": "t gives \u2400 independent units at h = \u2400 where the 400-step unit gives \u2400 (`M-64`), and we did not rerun this permu"
         },
         {
           "section": "12. Conclusion",
-          "line": 1629,
+          "line": 1598,
           "key": null,
           "ctx": ": our arms' held-out arena holds \u2400 independent 400-step trajectories and all ten episodes hold \u2400, which is why"
         }
@@ -5721,13 +5713,13 @@
       "locations": [
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 893,
+          "line": 883,
           "key": "perm_worst_null",
-          "ctx": "the dependence, a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensio"
+          "ctx": " the dependence a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensio"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 893,
+          "line": 883,
           "key": "perm_null_hi",
           "ctx": "eserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena. "
         }
@@ -5764,11 +5756,11 @@
     },
     {
       "value": "5",
-      "n_locations": 35,
+      "n_locations": 34,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 6,
-      "n_substituted": 29,
+      "n_substituted": 28,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e4_sigma_gradients.json",
@@ -5856,127 +5848,121 @@
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 939,
+          "line": 923,
           "key": "d2b_n_horizons_tested",
-          "ctx": "nd the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons. **The last column answers th"
+          "ctx": "nd the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons. **The last column is the tes"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 941,
+          "line": 925,
           "key": "d2p_n_separating",
-          "ctx": "t and the more powerful one. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The "
+          "ctx": "ate and more powerful test. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The d"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 941,
+          "line": 925,
           "key": "d2p_n_horizons",
-          "ctx": "l one. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The distinction matters at"
+          "ctx": "test. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The distinction matters at "
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 943,
-          "key": "d2p_n_horizons",
-          "ctx": "The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons. At {{d2p_overlap_h}} the marg"
-        },
-        {
-          "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 972,
+          "line": 954,
           "key": "d2r_ncontrols",
           "ctx": "n_pos}}/{{d2r_win_n}}. The weakest figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so d"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1127,
+          "line": 1096,
           "key": "d3x_ens",
           "ctx": "The last column repeats the test on Arm A at ensemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_ns"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_ens",
           "ctx": "omputed. Multipliers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on th"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1168,
+          "line": 1137,
           "key": "r2_n_indep",
           "ctx": "e. **The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models from scrat"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1172,
+          "line": 1141,
           "key": "r2_n_indep",
           "ctx": "h each, {{r2_added_h_total}} h in total, and scored the {{r2_n_indep}} together as an ensemble **at evaluation"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1174,
+          "line": 1143,
           "key": "r2_n_indep",
           "ctx": "e and no new architecture \u2014 and the disagreement across {{r2_n_indep}} independently-initialised *full models*"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1257,
+          "line": 1226,
           "key": "m68_n_indep",
           "ctx": "ble effect estimated before them as well. **The arm.** {{m68_n_indep}} independently-initialised full models, "
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1261,
+          "line": 1230,
           "key": "m68_n_indep",
           "ctx": "d under that objective; two more were trained, and the {{m68_n_indep}} are scored together as an ensemble at e"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1284,
+          "line": 1253,
           "key": "m68_n_conditions_met",
           "ctx": "{m68_branch}} of the four the rule names. All {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions "
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1284,
+          "line": 1253,
           "key": "m68_n_conditions",
           "ctx": "e rule names. All {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, against every one of t"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1385,
+          "line": 1354,
           "key": "bound_both_train",
           "ctx": "}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are train"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1457,
+          "line": 1426,
           "key": "d2p_n_separating",
           "ctx": "we tested, on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons wher"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1457,
+          "line": 1426,
           "key": "d2p_n_horizons",
           "ctx": "t that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons where the index is defined \u2014 e"
         },
         {
           "section": "11. Limitations",
-          "line": 1581,
+          "line": 1550,
           "key": "r2_n_indep",
           "ctx": "ectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m49_n_conditions_met",
           "ctx": "therefore returns **{{m49_verdict_short}}** \u2014 {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions "
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1733,
+          "line": 1702,
           "key": "rt_runs_m49",
           "ctx": "ield of every run artifact rather than re-estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1814,
+          "line": 1783,
           "key": "d2r_ncontrols",
           "ctx": "um detectable effect ({{e7_verdict}}) \u2014 and survives {{d2r_ncontrols}} controls on forecast depth \u2014 the linear"
         },
@@ -5988,31 +5974,31 @@
         },
         {
           "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-          "line": 852,
+          "line": 846,
           "key": null,
           "ctx": "is why \u00a76.2's comparison is fair.** Our ensemble-5 arms build one trunk the same way (`src/rwm_model.py:164-16"
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 884,
+          "line": 874,
           "key": null,
           "ctx": "ly \u03c3 the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric CoV is comparable to the ot"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1018,
+          "line": 995,
           "key": null,
           "ctx": "fore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1460,
+          "line": 1429,
           "key": null,
           "ctx": "e released checkpoint and \u2400\u00d7 [\u2400] on the ensemble-5 arms we trained \u2014 and a risk gate or safety margin that rea"
         },
         {
           "section": "11. Limitations",
-          "line": 1513,
+          "line": 1482,
           "key": null,
           "ctx": ". We since trained \u2400 Arm A arms at ensemble size 5 (\u00a76.7). They reproduce the *direction* of \u00a76.7's finding in"
         }
@@ -6036,13 +6022,13 @@
       "locations": [
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 893,
+          "line": 883,
           "key": "perm_null_lo",
           "ctx": "}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1186,
+          "line": 1155,
           "key": "r2_indep_ratio_h368",
           "ctx": "| {{r2_shared_cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h368}}\u00d7 | {{r2_shared_ratio_h368}}\u00d7 | {{r2_ind"
         }
@@ -6065,19 +6051,19 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1276,
+          "line": 1245,
           "key": "m68_indep_ratio_h100",
           "ctx": "hared_cov2_h32}}% | | **{{v2_deploy_h}}** | **{{m68_indep_ratio_h100}}\u00d7** | **{{m68_shared_ratio_h100}}\u00d7** | *"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1278,
+          "line": 1247,
           "key": "m68_indep_ratio_h368",
           "ctx": "{{m68_shared_cov2_h128}}% | | {{v2_diag_h}} | {{m68_indep_ratio_h368}}\u00d7 | {{m68_shared_ratio_h368}}\u00d7 | {{m68_i"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1334,
+          "line": 1303,
           "key": "m68_indep_ratio_h100",
           "ctx": "ot repair the interval.** The combined arm is {{m68_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} w"
         }
@@ -6148,79 +6134,79 @@
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1136,
+          "line": 1105,
           "key": "d3_nhoriz",
           "ctx": "han its count suggests:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons \u00d7 two fold directions on the s"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3_nhoriz",
           "ctx": "the same {{d3x_nind}} held-out trajectories and the same {{d3_nhoriz}} horizons. The statistic the rule govern"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1140,
+          "line": 1109,
           "key": "d3_nhoriz",
           "ctx": "ove carries applies here unchanged and harder:** this is {{d3_nhoriz}} horizons \u00d7 two directions on the same {"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1191,
+          "line": 1160,
           "key": "m44_n_conditions_met",
           "ctx": "ately.* **M-44 returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions "
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1192,
+          "line": 1161,
           "key": "m44_n_conditions",
           "ctx": "_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions hold, against every one of t"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1295,
+          "line": 1264,
           "key": "m68_n_dir",
           "ctx": "s improve there against **all three** seeds. It holds at {{m68_n_dir}} of {{m68_n_horizons}} horizons, so the "
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1295,
+          "line": 1264,
           "key": "m68_n_horizons",
           "ctx": "t **all three** seeds. It holds at {{m68_n_dir}} of {{m68_n_horizons}} horizons, so the looser per-seed readin"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1465,
+          "line": 1434,
           "key": "d3_nhoriz",
           "ctx": "s}} epistemic cells. The released checkpoint's cells are {{d3_nhoriz}} horizons \u00d7 two fold directions on the s"
         },
         {
           "section": "11. Limitations",
-          "line": 1559,
+          "line": 1528,
           "key": "q3_n_pairs",
           "ctx": "t from the checkpoint, which trained on all ten. Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order an"
         },
         {
           "section": "11. Limitations",
-          "line": 1583,
+          "line": 1552,
           "key": "m49_n_conditions",
           "ctx": "rdict_short}}** \u2014 {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions hold and the ratio threshold"
         },
         {
           "section": "12. Conclusion",
-          "line": 1616,
+          "line": 1585,
           "key": "d3_nhoriz",
           "ctx": " global multiplier manages {{d3_epi_const_ok}} of them \u2014 {{d3_nhoriz}} horizons in each of two fold directions"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1731,
+          "line": 1700,
           "key": "rt_runs_10k",
           "ctx": "clock on two CPU cores: {{rt_hours_10k}} hours for the {{rt_runs_10k}} runs at 10,000 iterations and {{rt_hour"
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1731,
+          "line": 1700,
           "key": "rt_runs_10k",
           "ctx": " this appendix said 22 hours; that figure predated the {{rt_runs_10k}} ten-thousand-iteration runs added for t"
         }
@@ -6252,13 +6238,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1182,
+          "line": 1151,
           "key": "r2_shared_ratio_h8",
           "ctx": "red_cov1_h1}}% | | 8 | {{r2_indep_ratio_h8}}\u00d7 | {{r2_shared_ratio_h8}}\u00d7 | {{r2_indep_cov1_h8}}% | {{r2_shared_"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1274,
+          "line": 1243,
           "key": "m68_shared_ratio_h8",
           "ctx": "d_cov2_h1}}% | | 8 | {{m68_indep_ratio_h8}}\u00d7 | {{m68_shared_ratio_h8}}\u00d7 | {{m68_indep_cov1_h8}}% | {{m68_share"
         }
@@ -6290,13 +6276,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1186,
+          "line": 1155,
           "key": "r2_shared_cov1_h368",
           "ctx": "hared_ratio_h368}}\u00d7 | {{r2_indep_cov1_h368}}% | {{r2_shared_cov1_h368}}% | *Same trajectories, same harness, n"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1278,
+          "line": 1247,
           "key": "m68_shared_cov1_h368",
           "ctx": "ed_ratio_h368}}\u00d7 | {{m68_indep_cov1_h368}}% | {{m68_shared_cov1_h368}}% | {{m68_indep_cov2_h368}}% | {{m68_sha"
         }
@@ -6334,19 +6320,19 @@
         },
         {
           "section": "6.6 The failure is one of magnitude; the ordering is weaker than it looks",
-          "line": 910,
+          "line": 898,
           "key": "m64_oos_n_h1",
-          "ctx": "inction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episo"
+          "ctx": " not to the arena**: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episo"
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 943,
+          "line": 925,
           "key": "m64_h128_n",
-          "ctx": "t the 400-step unit. At the shorter unit `M-64` builds, {{m64_h128_n}} non-overlapping units over the same ten"
+          "ctx": "ep unit. At the shorter unit of rule M-64 (Appendix E), {{m64_h128_n}} non-overlapping units over the same ten"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1305,
+          "line": 1274,
           "key": "m68_from_sigma_h128",
           "ctx": " {{m68_acc_x_h128}}\u00d7 | {{m68_total_x_h128}}\u00d7 | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag"
         }
@@ -6376,7 +6362,7 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1273,
+          "line": 1242,
           "key": "m68_shared_cov2_h1",
           "ctx": "68_shared_cov1_h1}}% | {{m68_indep_cov2_h1}}% | {{m68_shared_cov2_h1}}% | | 8 | {{m68_indep_ratio_h8}}\u00d7 | {{m6"
         }
@@ -6399,13 +6385,13 @@
       "locations": [
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1304,
+          "line": 1273,
           "key": "m68_from_sigma_h100",
           "ctx": "{m68_acc_x_h100}}\u00d7 | {{m68_total_x_h100}}\u00d7 | **{{m68_from_sigma_h100}}%** | {{m68_from_acc_h100}}% | | 128 | {"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1306,
+          "line": 1275,
           "key": "m68_from_acc_h368",
           "ctx": "{m68_total_x_h368}}\u00d7 | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% | *The same \u03c3-versus-accuracy split \u00a7"
         }
@@ -6463,25 +6449,25 @@
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1302,
+          "line": 1271,
           "key": "m68_from_acc_h8",
           "ctx": "\u00d7 | {{m68_total_x_h8}}\u00d7 | {{m68_from_sigma_h8}}% | {{m68_from_acc_h8}}% | | 32 | {{m68_sigma_x_h32}}\u00d7 | {{m68_"
         },
         {
           "section": "8. Method",
-          "line": 1434,
+          "line": 1403,
           "key": "f4_n_positive",
           "ctx": "{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_n"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1482,
+          "line": 1451,
           "key": "diff_terms",
           "ctx": " paper describes two loss terms; the implementation has {{diff_terms}}. The predicted variance has an optimum "
         },
         {
           "section": "Appendix A \u2014 verification chain",
-          "line": 1719,
+          "line": 1688,
           "key": "diff_terms",
           "ctx": "sses and gradients match** | **{{diff_grad_max}} across {{diff_terms}} terms, {{diff_n_params}} tensors** | | "
         }
@@ -6511,7 +6497,7 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1380,
+          "line": 1349,
           "key": "arm_clean_windows",
           "ctx": "rm on {{arm_contam_windows}} windows \u2014 the clean {{arm_clean_windows}} plus {{arm_splices}} splices \u2014 and, bec"
         }
@@ -6543,13 +6529,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1185,
+          "line": 1154,
           "key": "r2_shared_cov1_h128",
           "ctx": "ared_ratio_h128}}\u00d7 | {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% | | {{v2_diag_h}} | {{r2_indep_ratio_h"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1277,
+          "line": 1246,
           "key": "m68_shared_cov1_h128",
           "ctx": "ed_ratio_h128}}\u00d7 | {{m68_indep_cov1_h128}}% | {{m68_shared_cov1_h128}}% | {{m68_indep_cov2_h128}}% | {{m68_sha"
         }
@@ -6597,7 +6583,7 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1365,
+          "line": 1334,
           "key": "ad_rel",
           "ctx": "s the released checkpoint's error at h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relative-L1** and **{"
         }
@@ -6621,31 +6607,31 @@
       "locations": [
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1131,
+          "line": 1100,
           "key": "d3x_ale_cells",
           "ctx": "ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | {{d3_ale_c_lo}} \u2013 {{d3_ale_c_hi}} ({{"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3x_epi_cells",
           "ctx": "epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | {{d3_epi_c_lo}} \u2013 {{d3_epi_c_hi}} ({{"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1138,
+          "line": 1107,
           "key": "d3x_ncells",
           "ctx": "-horizon pairs). The verdict is **{{d3x_verdict}}**: of {{d3x_ncells}} governing cells, {{d3x_n_out}} have a 9"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1140,
+          "line": 1109,
           "key": "d3x_ncells",
           "ctx": " is **not {{d3_epi_cells}} independent successes**, the {{d3x_ncells}} governing cells are not {{d3x_ncells}} "
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1140,
+          "line": 1109,
           "key": "d3x_ncells",
           "ctx": "successes**, the {{d3x_ncells}} governing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} A"
         }
@@ -6669,13 +6655,13 @@
       "locations": [
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1038,
+          "line": 1009,
           "key": "e5_power_mean",
           "ctx": "wenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_p"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1372,
+          "line": 1341,
           "key": "stale_pct",
           "ctx": " this checkpoint, which trained on all ten episodes. The {{stale_pct}}% (nRMSE) and {{stale_pct_rel}}% (relati"
         }
@@ -6748,31 +6734,31 @@
         },
         {
           "section": "6.7 Ensemble disagreement beats the trivial baseline",
-          "line": 1038,
+          "line": 1009,
           "key": "e5_power_worst_h",
           "ctx": "s on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, b"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1112,
+          "line": 1081,
           "key": "n_train_eps",
           "ctx": "unseen by our arms' models, which trained on the other {{n_train_eps}}, but not by the released checkpoint, wh"
         },
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1134,
+          "line": 1103,
           "key": "d3_worst_ep",
           "ctx": " {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1221,
+          "line": 1190,
           "key": "r2_sigma_x_hi_h",
           "ctx": "_h}}) and {{r2_sigma_x_hi}}\u00d7 at its strongest (h = {{r2_sigma_x_hi_h}}) \u2014 which is the direction trunk-sharing"
         },
         {
           "section": "8. Method",
-          "line": 1434,
+          "line": 1403,
           "key": "f4_n_rules",
           "ctx": "m, with one exception. Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix E for all {{appG_n"
         },
@@ -6814,49 +6800,49 @@
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1143,
+          "line": 1112,
           "key": null,
           "ctx": "rvive One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated uncert"
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1144,
+          "line": 1113,
           "key": null,
           "ctx": "y about step 368. It cannot report it about step 8 either. Inside the trained horizon, \u03c3 is flat while error g"
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1147,
+          "line": 1116,
           "key": null,
           "ctx": "point as released): | model | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A"
         },
         {
           "section": "6.9 The structural excuse does not survive",
-          "line": 1147,
+          "line": 1116,
           "key": null,
           "ctx": " | \u03c3 growth, step 1 \u2192 8 | error growth, step 1 \u2192 8 | |---|---|---| | faithful Arm A | \u2400\u00d7 | \u2400\u00d7 | | corrected Ar"
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1225,
+          "line": 1194,
           "key": null,
           "ctx": "raft gave the \u03c3 range above as the h = 1 and h = 8 values, which do not span it \u2014 h = \u2400's \u2400\u00d7 falls below the s"
         },
         {
           "section": "8. Method",
-          "line": 1435,
+          "line": 1404,
           "key": null,
           "ctx": "a mean \u2400\u00d7 and changes \u2400 of \u2400 verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon v"
         },
         {
           "section": "Appendix C \u2014 what testing the untested claims would require",
-          "line": 1745,
+          "line": 1714,
           "key": null,
           "ctx": "mes three, if run at our data budget | | M=32, N=8 optimal (\u00a7IV-C) | no simulator needed; a sweep over M and N"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1782,
+          "line": 1751,
           "key": null,
           "ctx": " B is worse than the hold-last floor | | M=32, N=8 is the optimal configuration (\u00a7IV-C) | no | \u2014 | `[cpu: the "
         }
@@ -6888,13 +6874,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1183,
+          "line": 1152,
           "key": "r2_shared_ratio_h32",
           "ctx": "_cov1_h8}}% | | 32 | {{r2_indep_ratio_h32}}\u00d7 | {{r2_shared_ratio_h32}}\u00d7 | {{r2_indep_cov1_h32}}% | {{r2_shared"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1275,
+          "line": 1244,
           "key": "m68_shared_ratio_h32",
           "ctx": "ov2_h8}}% | | 32 | {{m68_indep_ratio_h32}}\u00d7 | {{m68_shared_ratio_h32}}\u00d7 | {{m68_indep_cov1_h32}}% | {{m68_shar"
         }
@@ -6932,13 +6918,13 @@
         },
         {
           "section": "6.10 Testing the mechanism: an ensemble that shares nothing",
-          "line": 1184,
+          "line": 1153,
           "key": "r2_shared_cov1_h100",
           "ctx": "io_h100}}\u00d7** | **{{r2_indep_cov1_h100}}%** | **{{r2_shared_cov1_h100}}%** | | 128 | {{r2_indep_ratio_h128}}\u00d7 |"
         },
         {
           "section": "6.11 Both fixes on the same models: the combined arm",
-          "line": 1276,
+          "line": 1245,
           "key": "m68_shared_cov1_h100",
           "ctx": "_h100}}\u00d7** | **{{m68_indep_cov1_h100}}%** | **{{m68_shared_cov1_h100}}%** | {{m68_indep_cov2_h100}}% | {{m68_s"
         }
@@ -6970,19 +6956,19 @@
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1386,
+          "line": 1355,
           "key": "bound_total",
           "ctx": "ining episodes, because {{bound_touch_holdout}} of the {{bound_total}} put held-out rows into training. That i"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1400,
+          "line": 1369,
           "key": "tw_cc_cluster_helped",
           "ctx": "cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} (Figure 6a). The control is inert, diff"
         },
         {
           "section": "7. Defects in the released pipeline",
-          "line": 1405,
+          "line": 1374,
           "key": "tw_cc_cluster_helped",
           "ctx": "'s {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells. Both are measure"
         }
@@ -7006,19 +6992,19 @@
       "locations": [
         {
           "section": "6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 1132,
+          "line": 1101,
           "key": "d3_epi_cspread",
           "ctx": "3x_epi_cells}} | {{d3_epi_c_lo}} \u2013 {{d3_epi_c_hi}} ({{d3_epi_cspread}}\u00d7) | {{d3x_own_epi_ok}} / {{d3x_own_epi_"
         },
         {
           "section": "9. Actionable lessons",
-          "line": 1465,
+          "line": 1434,
           "key": "d3_epi_cspread",
           "ctx": "ations as the evidence. The fitted multipliers span {{d3_epi_cspread}}\u00d7 across horizons, which is precisely wh"
         },
         {
           "section": "11. Limitations",
-          "line": 1563,
+          "line": 1532,
           "key": "q3_c_ratio",
           "ctx": "ch rollout is penalised more. The multipliers differ by {{q3_c_ratio}}\u00d7 across horizons, so the design could h"
         }

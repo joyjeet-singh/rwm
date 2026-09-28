@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 669 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 658 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -417,3 +417,21 @@ claims stayed, and only their history moved.
   recorded as one.
 - **[§6.3]** That the collapse would happen on any dataset was, until the synthetic experiment,
   only asserted from the derivation; the experiment was run to test it.
+- **[§6.4]** Every source citation behind §6.4's topology argument is read back from the pinned
+  upstream and checked on every build (21 of them, `results/v1_ensemble_topology.json`).
+- **[§6.6]** The teacher-forced arm was trained for §5 but was missing from the first three
+  calibration tables of earlier drafts; §6.6 adds it.
+- **[§6.6]** The epistemic horizon story an earlier draft told, strongest at long horizon, was
+  backwards: it rested on the smallest arena. When h = 100 was added to the evaluation
+  grid, its permutation P fell between the neighbouring horizons' values, where the existing reading
+  said it should, which was not guaranteed in advance.
+- **[§6.6]** The section's claim is narrower than the one first written: the ordering is
+  directionally consistent but not established at conventional significance once the dependence
+  between dimensions is respected.
+- **[§6.7]** An earlier draft described the within-step control as "the decisive one". It is a mean
+  of between-trajectory correlations, not a within-rollout test, and that description is withdrawn;
+  the double-demeaned statistic is the decisive one.
+- **[§6.7]** §9 once called the one-step figure a ranking of realised error without qualification;
+  it now says it ranks whole rollouts at one step ahead.
+- **[§6.7]** The released checkpoint's six-horizon count and the ensemble-5 rule's five-horizon
+  count are kept in separate keys, so the build cannot print one where the other belongs.

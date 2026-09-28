@@ -812,16 +812,12 @@ is the objective and not the optimiser, the data or the architecture.
 
 ### 6.4 Why the epistemic term may be miscalibrated: the members are not independent models
 
-§6.3 explains the aleatoric column and says of the epistemic one that the mechanism is not
-established. This subsection supplies a candidate, structurally symmetric to §6.3's, from source
-and from the checkpoint's own tensors. Nothing here is trained and nothing is inferred from a
-measurement.
-
-**The effect is known and we are not claiming it** — §2 gives the four papers that establish
-it. **What is ours is finding it in a released robotics checkpoint that its authors deployed on
-hardware, with the sharing quantified and the cost measured**: {{v1_shared_pct}}% of each member,
-and {{m44_ratio_gain}}× on the overconfidence factor (§6.10). The problem is not sharing. It is
-sharing and then reading the spread as though the members were independent.
+§6.3 explains the aleatoric column and leaves the epistemic one open. This subsection supplies a
+candidate, structurally symmetric to §6.3's, from source and from the checkpoint's own tensors;
+nothing here is trained and nothing is inferred from a measurement. The effect is known (§2). What
+is ours is finding it in a released robotics checkpoint, with the sharing quantified at
+{{v1_shared_pct}}% of each member and the cost measured at {{m44_ratio_gain}}× on the
+overconfidence factor (§6.10).
 
 **The released five-member ensemble is not five models.** `system_dynamics.py:34` builds **one**
 `state_base`. `system_dynamics.py:35-41` replicates the *heads* `ensemble_size` times, and only
@@ -836,36 +832,31 @@ The parameter counts make the scale of the sharing concrete. The state pathway i
 other member's. Only {{v1_private_pct}}% differ. Across the whole released object, the two shared
 trunks are {{v1_shared_pct_model}}% of {{v1_total_params}} parameters.
 
-**The sharing is stronger than the parameter count suggests, and this is the part that matters.**
-The trunk owns a *single* recurrent hidden state (`rnn.py:40`), and an autoregressive rollout
-feeds the ensemble **mean** back into it (`system_dynamics.py:115`; `src/rwm_model.py:223` in our
-reimplementation). So the {{v1_members_word}} members do not roll out independently at all. There is exactly
-{{v1_hidden_states_word}} hidden-state trajectory between them, and disagreement at step *t* is
-the spread of {{v1_members_word}} two-layer MLPs read off a single 256-dimensional vector, at
-whatever point that one trajectory has reached.
+**The sharing is stronger than the parameter count suggests.** The trunk owns a *single* recurrent
+hidden state (`rnn.py:40`), and an autoregressive rollout feeds the ensemble **mean** back into it
+(`system_dynamics.py:115`; `src/rwm_model.py:223` in our reimplementation). So the
+{{v1_members_word}} members do not roll out independently at all. There is exactly
+{{v1_hidden_states_word}} hidden-state trajectory between them, and disagreement at step *t* is the
+spread of {{v1_members_word}} two-layer MLPs read off a single 256-dimensional vector.
 
-That is the argument. **Members which share a feature extractor have correlated errors by
-construction, and their spread cannot express uncertainty the shared trunk does not already
-carry.** Where a deep ensemble in the sense of Lakshminarayanan et al. varies initialisation *and*
-data ordering across whole models, here only the output heads differ — so the quantity the method
-penalises rewards with is a lower bound on epistemic uncertainty by construction, not by accident.
-It is the same shape of finding as §6.3: not a training failure, a structural one.
+**Members which share a feature extractor have correlated errors by construction, and their spread
+cannot express uncertainty the shared trunk does not already carry.** Where a deep ensemble varies
+initialisation *and* data ordering across whole models, here only the output heads differ, so the
+quantity the method penalises rewards with is a lower bound on epistemic uncertainty by
+construction. It is the same shape of finding as §6.3: not a training failure, a structural one.
 
 **This applies to our own arms identically, which is why §6.2's comparison is fair.** Our
 ensemble-5 arms build one trunk the same way (`src/rwm_model.py:164-167`), evaluate it once
 (`:182`), hand the same vector to every head (`:185`) and compute the same spread (`:200`). Their
 tensor names and parameter counts match the released checkpoint exactly —
 {{v1_shared_params}} shared, {{v1_private_params}} per head, {{v1_total_params}} in total, on all
-{{v1_n_arms_checked}} arms checked. So §6.2's "our arms fail the same way at {{e5_ratio_h100}}× at h = {{v2_deploy_h}}" compares two instances of one architecture, not two architectures.
-{{v1_n_citations}} source citations support the paragraphs above and each is read back from the
-pinned upstream and checked on every build (`results/v1_ensemble_topology.json`).
+{{v1_n_arms_checked}} arms checked (`results/v1_ensemble_topology.json`). So §6.2's "our arms fail the same way at {{e5_ratio_h100}}× at h = {{v2_deploy_h}}" compares two instances of one architecture, not two architectures.
 
-**What this is and is not.** It is a *candidate* mechanism, established structurally. It is not
-yet a demonstration that trunk-sharing is *the* explanation for the miscalibration in §6.2 —
-architecture could be a minor contributor to a failure dominated by something else. Establishing
-that needs a comparison against an ensemble which shares nothing, which is what M-44 pre-registers
-and what §6.10 reports. We keep the topology and the mechanism separate on purpose: the topology
-is a fact about the released artifact, and the mechanism is a hypothesis about that fact.
+**What this is and is not.** It is a *candidate* mechanism, established structurally. It does not
+show that trunk-sharing is *the* explanation for §6.2's miscalibration; architecture could be a
+minor contributor to a failure dominated by something else. That needs an ensemble which shares
+nothing, pre-registered as rule M-44 (Appendix E) and reported in §6.10. The topology is a fact
+about the released artifact; the mechanism is a hypothesis about that fact.
 
 ### 6.5 The correction fails differently rather than succeeding
 
@@ -874,8 +865,7 @@ improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overco
 
 ### 6.6 The failure is one of magnitude; the ordering is weaker than it looks
 
-Measuring the teacher-forced arm — which we had trained for §5, and which our own first three
-calibration tables omitted — sharpens the finding (our arms at {{iters_main}} training iterations; the released checkpoint as released):
+Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at {{iters_main}} training iterations; the released checkpoint as released):
 
 | model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, out-of-sample | perm P at h={{v2_diag_h}}, in-sample |
 |---|---|---|---|---|
@@ -884,46 +874,40 @@ calibration tables omitted — sharpens the finding (our arms at {{iters_main}} 
 | **teacher-forced Arm B** | **{{cal_armB_cov}}** | **{{cal_armB_npos}}/{{cal_armB_ndim}}** | **{{perm_oos_armB_p_h368}}** | **{{perm_ins_armB_p_h368}}** |
 | released checkpoint | {{cal_rel_cov}} | {{cal_rel_npos}}/{{cal_rel_ndim}} | {{perm_oos_relale_p_h368}} | {{perm_ins_relale_p_h368}} |
 
-**The CoV column is the aleatoric σ in every row**, which is the only σ the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at {{e5_cov_lo}}–{{e5_cov_hi}} against the released checkpoint's {{cal_rel_cov}} (§6.7). **The count column is the out-of-sample arena** (n_independent = {{relale_oos_nind}}), so that all four models are compared on trajectories none of our own arms was trained on. It is not the only arena, and for the released checkpoint's aleatoric head it is not the most informative one: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}} — negatively correlated with error on *every* dimension — against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here. §12 quotes the larger arena and says so.
+**The CoV column is the aleatoric σ in every row**, the only σ the ensemble-size-1 arms have. Our ensemble-5 arms have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at {{e5_cov_lo}}–{{e5_cov_hi}} against the released checkpoint's {{cal_rel_cov}} (§6.7). **The count column is the out-of-sample arena** (n_independent = {{relale_oos_nind}}), so that all four models are compared on trajectories none of our arms trained on. For the released checkpoint's aleatoric head it is not the most informative arena: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}}, negatively correlated with error on *every* dimension, against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here; §12 quotes the larger arena.
 
 Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = {{cal_armB_r}}). It is still {{cal_armB_ratio}}× overconfident.
 
-**The P column above is not a binomial one, and an earlier draft of this paper was wrong to make it one.** Converting a count of positive per-dimension correlations to a P-value against a fair-coin null assumes the 45 state dimensions are independent trials. They are not. Position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error — including one it was never paired with.
+**The P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to these counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
 
-We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which leaves both marginal distributions and the entire cross-dimension dependence structure intact and destroys only the association under test. The correction is large, and it is largest exactly where we leaned hardest. The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}} — a factor of about {{perm_worst_factor}} — because under a null that preserves the dependence, a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average. Observing {{perm_ins_armB_npos_h368}} of {{perm_ins_armB_ndim_h368}} against that null is close to unremarkable. A fair coin, by contrast, centres the count at {{perm_faircoin}} of {{perm_ins_armB_ndim_h368}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena.
+We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which keeps both marginal distributions and the entire cross-dimension dependence structure and destroys only the association under test. The correction is large, and largest exactly where we leaned hardest. The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}}, a factor of about {{perm_worst_factor}}, because under a null that keeps the dependence a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average, so observing {{perm_ins_armB_npos_h368}} of {{perm_ins_armB_ndim_h368}} is close to unremarkable. A fair coin centres the count at {{perm_faircoin}} of {{perm_ins_armB_ndim_h368}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena.
 
 So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not.
 The teacher-forced arm collapses in magnitude exactly like the autoregressive ones — same
 objective, same rate — while retaining {{cal_armB_over_faithA_cov}}× more variation across
 inputs. Input-independence is a property of the autoregressive arms and the released checkpoint,
 and input-dependence and correct ranking are both achievable without the interval becoming
-meaningful.
+meaningful. One candidate mechanism, stated as an untested hypothesis: autoregressive feedback
+narrows the input distribution toward the model's own manifold, leaving a heteroscedastic head less
+variation to key on.
 
-One candidate mechanism, stated as a hypothesis and not a result: autoregressive feedback narrows
-the input distribution toward the model's own manifold, leaving a heteroscedastic head less
-variation to key on. We have not tested it.
+**The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, matching the best aleatoric head here on the sign count, while being {{b2_epi_ratio_h368}}× overconfident at h = {{v2_diag_h}}. **All figures in this paragraph are the held-out arena (n_independent = {{b2_nind}})**, so the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes {{d1n_epi_ratio_h368}}× for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}, and the abstract and §12 use {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} on those {{d1n_nind}} trajectories. Nor does it beat Arm B's head on strength: its mean correlation at h=368 is {{b2_epi_r_h368}} against {{cal_armB_r}}. The two rank comparably, and neither is close to an interval. Under the permutation null that count gives P = {{perm_oos_epi_p_h368}} out of sample and {{perm_ins_epi_p_h368}} in sample, against {{perm_oos_epi_binom_h368}} from the independent-trials test. It still fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while error grows {{b2_epi_err_growth}}×.
 
-**The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, matching the best aleatoric head here on the sign count, while being {{b2_epi_ratio_h368}}× overconfident at h = {{v2_diag_h}}. **All figures in this paragraph are the held-out arena (n_independent = {{b2_nind}})**, so that the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes {{d1n_epi_ratio_h368}}× for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}. The figure the abstract and §12 use is neither of those: it is {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}}, on the same {{d1n_nind}} trajectories. It does not beat Arm B's head on strength either: its mean correlation at h=368 is {{b2_epi_r_h368}} against {{cal_armB_r}}. The two quantities rank comparably; neither is close to an interval. Under the permutation null that count gives P = {{perm_oos_epi_p_h368}} out of sample and {{perm_ins_epi_p_h368}} in sample, against {{perm_oos_epi_binom_h368}} from the independent-trials test we should not have used. It still fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while error grows {{b2_epi_err_growth}}×.
+**The larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} 400-step trajectories out of sample, the epistemic ordering looks strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1). Both larger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_ins_epi_p_h8}} at h=8, against {{perm_ins_epi_p_h128}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at {{perm_all_epi_p_h100}}, between h=32's {{perm_all_epi_p_h32}} and h=128's {{perm_all_epi_p_h128}}. Two independent arenas at four and five times the sample say the effect is strongest at *short* horizon.
 
-**The horizon story we first told was backwards, and the larger arenas agree with each other against the smallest.** At n_independent = {{perm_oos_nind}} 400-step trajectories out of sample, the epistemic ordering looked strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h=368) and unremarkable at short ({{perm_oos_epi_p_h1}} at h=1). Both larger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_ins_epi_p_h8}} at h=8, against {{perm_ins_epi_p_h128}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {{v2_deploy_h}} at {{perm_all_epi_p_h100}} sitting between h=32's {{perm_all_epi_p_h32}} and h=128's {{perm_all_epi_p_h128}} — the horizon added by this revision falls where the existing reading says it should, which is worth stating because it was not free to. Two independent arenas at four and five times the sample say the effect is strongest at *short* horizon.
+The null means explain why, and the explanation is the one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so it cannot tell a strong effect from a marginal one at any horizon. **That blindness belongs to the 400-step unit, not to the arena**: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (rule M-64, Appendix E). We did not recompute this permutation family at the shorter unit, so what the short units change is the scope of the design claim, not any verdict: the arena is underpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}} rows, and is no longer demonstrably so at h = 128 and below. Running it there is one pass over stored rollouts, and we did not do it. The small arena's numbers are reported because it is the only arena out-of-sample for our own arms, not because it is the better measurement.
 
-The null means explain why, and the explanation is the same one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so at this unit it cannot distinguish a strong effect from a marginal one at any horizon. **That blindness is a property of the 400-step unit, not of the arena**, and the distinction now matters: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (`M-64`). **We did not recompute this permutation family at the shorter unit**, so what the short units change here is the scope of the design claim rather than any verdict in it: the arena is demonstrably underpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}} rows, and is no longer demonstrably underpowered at h = 128 and below. Running it there is one pass over stored rollouts and we did not do it. We report the small arena's numbers alongside because it is the only arena that is out-of-sample for our own arms, not because it is the better measurement.
+**Nothing here survives multiplicity correction, in any of the three arenas.** Holm–Bonferroni over each arena's {{perm_oos_holm_n}} model × horizon cells at α = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample that is a property of the design: with {{perm_oos_nind}} independent trajectories the smallest attainable P-value is {{perm_oos_floor}}, which already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have been rejected there. In sample the miss is real: the smallest P in the family is {{perm_ins_holm_min_cell}} at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}.
 
-**Nothing here survives multiplicity correction, in any of the three arenas.** Holm–Bonferroni over each arena's {{perm_oos_holm_n}} model × horizon cells at α = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample that is a property of the design rather than of the models: with {{perm_oos_nind}} independent trajectories the smallest attainable P-value is {{perm_oos_floor}}, which already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have been rejected there. In sample the miss is real — the smallest P in the family is {{perm_ins_holm_min_cell}} at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}.
-
-So the honest form of this section's claim is narrower than the one we first wrote. **The magnitude failure is established and large; the ordering is directionally consistent across every model and horizon we measured, and is not established at conventional significance once the dependence between dimensions is respected.**
+So this section's claim is: **the magnitude failure is established and large; the ordering is directionally consistent across every model and horizon we measured, and is not established at conventional significance once the dependence between dimensions is respected.**
 
 **The failure is specifically magnitude calibration, in both components.**
 
 ### 6.7 Ensemble disagreement beats the trivial baseline
 
-What this section finds coexists with §6.6 without contradiction: the *scalar* the method applies tracks error well, while the *per-dimension* sign counts we had leaned on carry far less evidence than an independent-trials test suggested. The quantity is a usable ranking signal and is still not an interval.
+The follow-up justifies ensemble disagreement as a trust metric on the grounds that it "closely follows the trend of the prediction error". §6.6 shows the per-dimension version of that claim is weaker than it looks; this section finds that the *scalar* the method applies tracks error well, which coexists with §6.6 without contradiction, and asks the question that matters more to a practitioner: **does disagreement beat something free?** The quantity is a usable ranking signal and is still not an interval.
 
-The follow-up justifies ensemble disagreement as a trust metric on the grounds that it "closely follows the trend of the prediction error". Section 6.6 shows the per-dimension version of that claim is weaker than it looks. This section asks a different and, for a practitioner, more important question: **does disagreement beat something free?**
-
-Error in an autoregressive rollout grows with depth. So the trivial competitor to any trust metric is the forecast step index — a counter. It needs no ensemble, no second forward pass and no model. If a counter ranks error as well as disagreement does, the ensemble is not earning its cost. Neither paper runs this comparison, so we do.
-
-All three correlations below are on the scalar quantity the method actually applies — `means.std(0).sum(-1)` at `envs/base.py:166` — against total absolute error, over n_independent = {{d1n_nind}} trajectories, with 95% intervals from a bootstrap over whole trajectories.
+Error in an autoregressive rollout grows with depth, so the trivial competitor to any trust metric is the forecast step index — a counter. It needs no ensemble, no second forward pass and no model. If a counter ranks error as well as disagreement does, the ensemble is not earning its cost. Neither paper runs this comparison, so we do. All three correlations below are on the scalar the method applies, `means.std(0).sum(-1)` at `envs/base.py:166`, against total absolute error, over n_independent = {{d1n_nind}} trajectories, with 95% intervals from a bootstrap over whole trajectories.
 
 | h | r(step index, \|error\|) | r(disagreement, \|error\|) | partial r(disagreement, \|error\| · index) | paired difference, disagreement − index |
 |---|---|---|---|---|
@@ -938,21 +922,19 @@ All three correlations below are on the scalar quantity the method actually appl
 
 **Disagreement wins at every horizon tested.** Over the full h = {{v2_diag_h}} rollout the counter reaches {{d2b_idx_h368}} against disagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons.
 
-**The last column answers the first question — does disagreement beat the counter — and it is not the test a reader might expect.** Comparing the two marginal intervals for overlap is the wrong comparison here: both correlations are measured on the *same* trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference — resampling whole trajectories and recomputing *both* correlations inside each draw — is the appropriate test and the more powerful one. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons.
+**The last column is the test of whether disagreement beats the counter.** Comparing the two marginal intervals for overlap is the wrong comparison: both correlations are measured on the *same* trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference, resampling whole trajectories and recomputing *both* correlations inside each draw, is the appropriate and more powerful test. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The distinction matters at {{d2p_n_overlap}} of them: at {{d2p_overlap_h}} the marginal intervals *do* overlap. {{d2b_idx_strongest_h}} is where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest: the paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero only just: {{d2p_narrowest_lo}} is the smallest lower bound in the table, at the 400-step unit. At the shorter unit of rule M-64 (Appendix E), {{m64_h128_n}} non-overlapping units over the same ten episodes give {{m64_h128_ci}} for the same paired difference, so that horizon carries more weight than it did. At h = {{v2_deploy_h}} the paired difference is {{d2p_diff_h100}} {{d2p_ci_h100}}, which also excludes zero.
 
-The distinction matters at {{d2p_n_overlap}} of the {{d2p_n_horizons}} horizons. At {{d2p_overlap_h}} the marginal intervals *do* overlap. {{d2b_idx_strongest_h}} is where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest: the paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero, but only just — {{d2p_narrowest_lo}} is the smallest lower bound in the table and we would not rest anything on that horizon alone — at the 400-step unit. At the shorter unit `M-64` builds, {{m64_h128_n}} non-overlapping units over the same ten episodes give {{m64_h128_ci}} for the same paired difference, so the horizon that carried the least weight carries more than it did. At h = {{v2_deploy_h}} the paired difference is {{d2p_diff_h100}} {{d2p_ci_h100}}, which also excludes zero.
+**The third column asks whether disagreement merely re-encodes the clock.** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what disagreement knows is explained by how deep into the rollout you are: it carries real information about *this* rollout.
 
-**The third column answers a different question: is disagreement merely re-encoding the clock?** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what disagreement knows is explained by knowing how deep into the rollout you are. It is carrying real information about *this* rollout, not a re-encoding of the clock.
-
-**What survives removing each confound.** A linear partial is not much of a control — error
+**What survives removing each confound.** A linear partial is not much of a control: error
 does not grow linearly with depth, and a control that under-fits the index leaves index-driven
-variance in the residual and flatters disagreement. The table has two halves. The first five
-rows after the pooled baseline are **depth controls**: each partials out a different model of
-how far into the rollout you are. The last four **decompose** the pooled figure into its
-between-trajectory and within-trajectory parts, and the last of those was pre-registered before
-it was computed (M-45, §8). **One row is not comparable to the others**: the rank partial is a
-correlation of ranks rather than of values, so it is a different statistic and its being larger
-than the pooled figure says nothing about how much depth explains.
+variance in the residual and flatters disagreement. The first five rows after the pooled baseline
+below are **depth controls**, each partialling out a different model of how far into the rollout
+you are; the last four **decompose** the pooled figure into its between-trajectory and
+within-trajectory parts, and the last of those was pre-registered before it was computed (rule
+M-45, Appendix E). **One row is not comparable to the others**: the rank partial is a correlation
+of ranks rather than of values, so its being larger than the pooled figure says nothing about how
+much depth explains.
 
 | what is removed | correlation | 95% CI | what survives it |
 |---|---|---|---|
@@ -974,24 +956,22 @@ is not re-encoding the clock: at a fixed depth it still knows which rollouts are
 depth was never the only confound. Per-episode difficulty spans {{d12_lo}} to {{d12_hi}} and is
 uncorrelated with commanded speed, so if harder trajectories simply have both larger error and
 larger disagreement, the pooled correlation would look exactly as it does with disagreement
-carrying no within-rollout information whatever. Two things suggested checking: the
+carrying no within-rollout information at all. Two things pointed there: the
 {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine per-step
-signal, and the within-step control coming out *above* the pooled figure, which is the signature
-of a between-unit effect.
+signal, and the within-step control coming out *above* the pooled figure, the signature of a
+between-unit effect.
 
 **The verdict.** The between-trajectory correlation is {{a2_r_between}} and the two components
 contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance, so a large
-part of what this section has been reporting is a between-rollout effect. **That reinterprets the
-within-step control rather than merely adding to it**: it is a mean of {{d2r_win_n}}
-between-trajectory correlations, which is why it reads {{d2r_win}} against the pooled
-{{a2_r_pooled}} rather than below it. It was described in an earlier draft as "the decisive one";
-it is not, and we withdraw that description. The decisive statistic is the double-demeaned one and
-it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}}, against M-45's
-pre-committed threshold that the interval exclude zero and a minimum detectable effect of
-{{p1_m45_mde}}, estimated by a dilution study placing detection between {{p1_m45_undetected}}
-(not detected) and {{p1_m45_detected}} (detected). **M-45 returns {{m45_verdict}}**: with both the
-rollout and the depth held constant, disagreement still tracks error rather than merely reporting
-which episode is hard.
+part of what this section reports is a between-rollout effect. That reinterprets the within-step
+control: it is a mean of {{d2r_win_n}} between-trajectory correlations, which is why it reads
+{{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it. The decisive statistic is the
+double-demeaned one, and it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}},
+against the rule's pre-committed threshold that the interval exclude zero and a minimum detectable
+effect of {{p1_m45_mde}}, estimated by a dilution study placing detection between
+{{p1_m45_undetected}} (not detected) and {{p1_m45_detected}} (detected). **The rule returns
+{{m45_verdict}}**: with both the rollout and the depth held constant, disagreement still tracks
+error rather than merely reporting which episode is hard.
 **Per horizon, on the same {{a2_nind}} trajectories and the same cluster bootstrap:**
 
 | h | r_dd, double-demeaned | 95% CI | excludes zero |
@@ -1005,51 +985,42 @@ which episode is hard.
 
 *(h = 1 has one forecast step per trajectory, so there is nothing within a rollout to demean against and r_dd is undefined rather than zero.)*
 
-Two qualifications a reader should carry away with that. The within-rollout effect is **materially smaller than the pooled figure** — {{a2_rdd}} against {{a2_r_pooled}} — so a practitioner should expect disagreement to separate *rollouts* better than it separates *moments within a rollout*. And it is **not established at short horizon**: r_dd's interval excludes zero at {{a2_excl_h}} and spans zero at {{a2_spans_h}}, where too few steps exist to demean against. That inverts the shape one might expect and we report it as measured. At h = {{v2_deploy_h}} it is established, at {{a2_rdd_h100}} {{a2_rdd_ci_h100}}.
+Two qualifications go with that. The within-rollout effect is **materially smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitioner should expect disagreement to separate *rollouts* better than it separates *moments within a rollout*. And it is **not established at short horizon**: r_dd's interval excludes zero at {{a2_excl_h}} and spans zero at {{a2_spans_h}}, where too few steps exist to demean against. At h = {{v2_deploy_h}} it is established, at {{a2_rdd_h100}} {{a2_rdd_ci_h100}}.
 
 **The h = 1 figure survives the same test, but it is not what it looked like.** At h = 1 the panel
 has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}} *trajectory-level* points
-and nothing within a rollout is being tested at all. We checked whether trajectory difficulty
-manufactures it: disagreement correlates {{a2_h1_speed_r}} with commanded speed and
-{{a2_h1_diff_r}} with per-episode difficulty, and partialling both out of the
-disagreement–error correlation leaves {{a2_h1_partial_both}} — it does not move. So the figure is
-real and is not a difficulty artifact. It is nevertheless a statement about **ranking whole
-rollouts at one step ahead**, on {{a2_h1_npoints}} points, and §9 now says that rather than
-calling it a ranking of realised error without qualification.
+and nothing within a rollout is being tested. Disagreement correlates {{a2_h1_speed_r}} with
+commanded speed and {{a2_h1_diff_r}} with per-episode difficulty, and partialling both out of the
+disagreement–error correlation leaves {{a2_h1_partial_both}}: it does not move, so the figure is
+real and not a difficulty artifact. It is nevertheless a statement about **ranking whole rollouts
+at one step ahead**, on {{a2_h1_npoints}} points, and §9 states it that way.
 
+**Does it hold on a model we trained?** Everything above is measured on the released checkpoint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed to git before the runs existed (rule M-43, Appendix E). It asked that disagreement lead the index at every horizon, and that the paired difference exclude zero at a majority of them.
 
-**Does it hold on a model we trained?** Everything above is measured on the released checkpoint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed to git before the runs existed (§8, M-43). The rule asked for two things: that disagreement lead the index at every horizon, and that the paired difference exclude zero at a majority of them.
-
-**It returns {{e5_verdict}}.** The first condition passes completely — disagreement leads
+**It returns {{e5_verdict}}.** The first condition passes completely: disagreement leads
 the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired
 estimate positive, {{e5_diff_lo}} to {{e5_diff_hi}}. The second fails: the paired difference
 excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a majority. We report the
-verdict the rule returns and do not rewrite the rule.
+verdict the rule returns and do not rewrite the rule, nor its denominator: it was committed over
+{{e5_n_horizons}} horizons, and adding h = {{v2_deploy_h}} after the fact would change what "a
+majority" means in a discharged rule. The released checkpoint's table above follows the six-horizon
+grid, because no pre-registration is stated over it, so the two counts are deliberately different.
 
-**And we do not rewrite its denominator either, which is the less obvious half of the same
-discipline.** M-43 was committed over {{e5_n_horizons}} horizons, before the data. Adding
-h = {{v2_deploy_h}} to the evaluation grid after the fact would change what "a majority of
-horizons" means in a rule already discharged — a way of moving a threshold that looks like
-reporting rather than like moving a threshold. The verdict above is over M-43's own {{e5_n_horizons}}.
-The released checkpoint's table in §6.7 does follow the six-horizon grid,
-because no pre-registration is stated over it; the two counts are deliberately different
-numbers and the build keeps them in separate keys for that reason.
+**What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = {{e5_nind}}, where the released checkpoint's finding used {{d1n_nind}}. Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, because the pool it subsamples is in-sample for these arms, where the effect is {{e5_eff_ins}} against {{e5_eff_oos}} on the held-out pair. So the rule was under-powered at the sample size it faced, decisively at one horizon. We do not claim it could not have passed, only that it was committed without checking what it could detect: a failure of ours, the same one the ledger records as M-24, a rule anchored without regard to the regime it would be applied in.
 
-**What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = {{e5_nind}}, where §6.7's own finding used {{d1n_nind}}. Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, because the pool it subsamples is in-sample for these arms, where the effect is {{e5_eff_ins}} against {{e5_eff_oos}} on the held-out pair. So the rule was under-powered at the sample size it faced, decisively at one horizon — and we do not claim it could not have passed, only that it was committed without anyone checking what it could detect. That is a failure of ours, and it is the same one the ledger already records as M-24: a rule anchored without regard to the regime it would be applied in.
+*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions. It cannot discharge the rule, which is stated over the out-of-sample arena; we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.
 
-*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions. It cannot discharge M-43, which is stated over the out-of-sample arena, and we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.
+**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result, making the trust metric close to vacuous, since a counter is free. We record that as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration. It did not go that way against the counter. It went that way against something else.
 
-**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result — it would make the trust metric close to vacuous, since a counter is free — and that is the outcome this test was set up to expose. We record the expectation as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration, and it carries none of the weight one would. It did not go that way against the counter. It went that way against something else.
-
-**One adversary is one, so we added two more — and the ranking claim survives only one of them.**
+**One adversary is one, so we added two more, and the ranking claim survives only one of them.**
 A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
-before either was computed (`M-51`, corrected by `M-52`), we added two further baselines needing
-no ensemble and no second model: `step-size`, the magnitude of the model's own predicted state
-change ‖µ_t − µ_{t−1}‖, which costs nothing because the rollout has already made those
+before either was computed (rule M-51, Appendix E, corrected by rule M-52), we added two baselines
+needing no ensemble and no second model: `step-size`, the magnitude of the model's own predicted
+state change ‖µ_t − µ_{t−1}‖, which costs nothing because the rollout has already made those
 predictions; and `entry-res`, its one-step error at the step *before* the forecast window opens,
-which costs **one extra rollout in this harness** and nothing in deployment, where a model
-consumes the history to build its recurrent state anyway. `M-51` called both free without
-distinguishing those, and `M-52` records the correction.
+which costs **one extra rollout in this harness** and nothing in deployment, where a model consumes
+the history to build its recurrent state anyway. The first rule called both free without
+distinguishing those, and the second records the correction.
 
 | baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? |
 |---|---|---|---|---|
@@ -1064,7 +1035,7 @@ Minimum detectable effect, estimated before either baseline existed: {{e7_mde_ma
 **The verdict is {{e7_verdict}}, and the reason is the row a reader should look at twice.** The
 magnitude of the model's own predicted state change ranks realised error at {{e7_step_r}}, against
 {{e7_r_dis}} for the five-member ensemble disagreement the method is built on. The margin between
-them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve — so at
+them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve, so at
 n_independent = {{e7_nind}} 400-step trajectories we cannot say the ensemble ranks better than a
 subtraction.
 
@@ -1072,22 +1043,20 @@ subtraction.
 partialled out it retains {{e7_step_partial}}, far above the {{e7_mde_partial}} MDE for that test,
 and holding the forecast step exactly fixed it keeps {{e7_ws_dis}} against `step-size`'s
 {{e7_step_ws}}. It is not re-encoding predicted step size. What is not established is that it adds
-enough to be worth five models.
-
-`M-51` fixed this reading in advance rather than after the fact: the partial is the load-bearing
-test and the margin is corroboration, so a baseline passing the partial while failing the margin
-does not refute the ranking claim. **It does refute a framing.** "Disagreement ranks error well"
-is supported. "You need the ensemble to rank error" is not.
+enough to be worth five models. The rule fixed this reading in advance: the partial is the
+load-bearing test and the margin is corroboration, so a baseline passing the partial while failing
+the margin does not refute the ranking claim. **It does refute a framing.** "Disagreement ranks
+error well" is supported. "You need the ensemble to rank error" is not.
 
 **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and
 that is the strongest form of support this paper offers any claim of either original work — now with the qualification that a free baseline comes closer to it than the counter did.
 
 *A note on the `undefined` cell.* The within-step control holds the forecast step fixed and
 correlates across trajectories, so it annihilates any quantity that is constant across
-trajectories at a fixed step — which is the forecast index, and its within-step correlation is
+trajectories at a fixed step — which is the forecast index, whose within-step correlation is
 therefore {{e7_index_ws}} rather than zero. It does **not** annihilate a per-trajectory scalar
-like `entry-res`, which varies across exactly the axis the control varies over. `M-51` said the
-opposite and `M-54` records the correction.
+like `entry-res`, which varies across exactly the axis the control varies over. Rule M-51 said the
+opposite, and `M-54` records the correction.
 
 ### 6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena
 

@@ -395,3 +395,21 @@ claims stayed, and only their history moved.
   recorded as one.
 - **[§6.3]** That the collapse would happen on any dataset was, until the synthetic experiment,
   only asserted from the derivation; the experiment was run to test it.
+- **[§6.4]** Every source citation behind §6.4's topology argument is read back from the pinned
+  upstream and checked on every build ({{v1_n_citations}} of them, `results/v1_ensemble_topology.json`).
+- **[§6.6]** The teacher-forced arm was trained for §5 but was missing from the first three
+  calibration tables of earlier drafts; §6.6 adds it.
+- **[§6.6]** The epistemic horizon story an earlier draft told, strongest at long horizon, was
+  backwards: it rested on the smallest arena. When h = {{v2_deploy_h}} was added to the evaluation
+  grid, its permutation P fell between the neighbouring horizons' values, where the existing reading
+  said it should, which was not guaranteed in advance.
+- **[§6.6]** The section's claim is narrower than the one first written: the ordering is
+  directionally consistent but not established at conventional significance once the dependence
+  between dimensions is respected.
+- **[§6.7]** An earlier draft described the within-step control as "the decisive one". It is a mean
+  of between-trajectory correlations, not a within-rollout test, and that description is withdrawn;
+  the double-demeaned statistic is the decisive one.
+- **[§6.7]** §9 once called the one-step figure a ranking of realised error without qualification;
+  it now says it ranks whole rollouts at one step ahead.
+- **[§6.7]** The released checkpoint's six-horizon count and the ensemble-5 rule's five-horizon
+  count are kept in separate keys, so the build cannot print one where the other belongs.
