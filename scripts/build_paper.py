@@ -174,6 +174,45 @@ def check_arm_table_captions(template, values):
     return bad
 
 
+# S5 (item 8): one vocabulary for the ledger's withdrawals, and the same count everywhere.
+# The introduction said "13 retractions of our own claims" while section 8 said "six ... plus
+# seven": both true, counted two ways. The three counts are ledger_check.py's classes, and
+# each phrase must sit directly after its own key in both places.
+_RETRACT_VOCAB = {"claims withdrawn on evidence": "n_retractions",
+                  "framings withdrawn": "n_retract_framing",
+                  "superseded entries": "n_superseded"}
+_RETRACT_PH = re.compile(r"\{\{(n_[a-z_]+)\}\}\s+(" + "|".join(_RETRACT_VOCAB) + r")\b")
+
+
+def _key_family(k):
+    return re.sub(r"(_word_lower|_word_cap|_word|_lower|_cap)$", "", k)
+
+
+def check_retraction_counts(template):
+    """The introduction and section 8 each state all three withdrawal counts, each phrase
+    directly after the key that counts it, and neither uses the old total."""
+    secs = {"introduction": re.search(r"\n## 1\. (.*?)\n## 2\. ", template, re.S),
+            "section 8": re.search(r"\n## 8\. (.*?)\n## 9\. ", template, re.S)}
+    bad, found = [], {}
+    for name, m in secs.items():
+        if not m:
+            bad.append(f"{name} not found")
+            continue
+        body = m.group(1)
+        if "{{n_retract_total}}" in body:
+            bad.append(f"{name} prints {{{{n_retract_total}}}}, a fourth way of counting")
+        got = {}
+        for km in _RETRACT_PH.finditer(body):
+            got.setdefault(km.group(2), set()).add(_key_family(km.group(1)))
+        for phrase, fam in _RETRACT_VOCAB.items():
+            if phrase not in got:
+                bad.append(f"{name} does not state {phrase!r} after its count")
+            elif got[phrase] != {fam}:
+                bad.append(f"{name} counts {phrase!r} with {sorted(got[phrase])}, not {fam}")
+        found[name] = got
+    return bad
+
+
 def selftest_gates():
     """Run each gate rule against a deliberately corrupted input; each must fire.
 
@@ -196,10 +235,16 @@ def selftest_gates():
     caught += bool(check_arm_table_captions(
         "A caption naming nothing.\n\n| model | x |\n|---|---|\n| faithful Arm A | 1 |\n\nAfter.",
         {}))
+    # S5: the introduction counts claims withdrawn on evidence with the old total.
+    _v = ("{{n_superseded}} superseded entries, {{n_retractions_word}} claims withdrawn on "
+          "evidence and {{n_retract_framing_word}} framings withdrawn")
+    caught += bool(check_retraction_counts(
+        "x\n## 1. I\n" + _v.replace("n_retractions_word", "n_retract_total") + "\n## 2. R\n"
+        + "y\n## 8. M\n" + _v + "\n## 9. L\n"))
     return caught
 
 
-N_GATE_RULES = 6
+N_GATE_RULES = 7
 
 
 def main():
@@ -291,6 +336,10 @@ def main():
     _cap = check_arm_table_captions(text, N)
     assert not _cap, ("a table with an arm row names no training iterations in its caption -- "
                       "bind one, e.g. {{iters_main}} (S3 item 2):\n  " + "\n  ".join(_cap[:8]))
+    _rc = check_retraction_counts(text)
+    assert not _rc, ("the introduction and section 8 must state the ledger's three withdrawal "
+                     "counts in one vocabulary, from ledger_check.py (S5 item 8):\n  "
+                     + "\n  ".join(_rc[:6]))
     _gate_caught = selftest_gates()
     assert _gate_caught == N_GATE_RULES, (
         f"gate self-test: only {_gate_caught} of {N_GATE_RULES} rules caught their corruption")
@@ -346,7 +395,8 @@ def main():
         "paper_fig2_sigma_profile.png":
             "Why the coverage collapse is a horizon effect. Both panels are normalised to "
             "forecast step 1. (a) predicted $\\sigma$ barely moves, and for the faithful arm it "
-            "declines. (b) realised error grows by an order of magnitude over the same steps. "
+            "declines. (b) realised error grows " + str(N["err_growth_lo"]["value"]) + "× to "
+            + str(N["err_growth_hi"]["value"]) + "× over the same steps, across the four models. "
             "The gap between the panels is the collapse.",
         "paper_fig3_collapse.png":
             "The variance collapse is objective-driven. (a) mean "

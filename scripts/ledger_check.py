@@ -84,6 +84,32 @@ for sid,tid,why in unmarked: print(f"    !! {sid} retracts {tid} but {why}")
 if declared:
     print(f"  S-* entries with no **Retracts** line: {len(declared)}")
     for d in declared: print(f"    !! {d}")
+# Fifth (pre-submission S5): the three retraction counts the paper prints. Every S-
+# entry is exactly one of: a claim withdrawn on evidence (its **Retracts** line names the
+# IDs it supersedes); a framing withdrawn (the line opens with an em dash -- a sentence
+# withdrawn, not a numbered claim); or an early hypothesis closed as housekeeping (an
+# em-dash line saying "early hypothesis"). paper_numbers.py reads the counts from the JSON
+# below, so the introduction, section 8, the README and the supplement cannot count them
+# two ways. This classification used to live in paper_numbers.py.
+classes={"evidence":[], "framing":[], "early_hypothesis":[]}
+unclassed=[]
+for r in rows:
+    if not r["id"].startswith("S-"): continue
+    blk=txt.split("### "+r["id"]+" ",1)[1].split("\n### ")[0]
+    m=re.search(r'^\*\*Retracts\*\* (.+)$', blk, re.M)
+    if not m:
+        unclassed.append(r["id"]); continue
+    line=m.group(1).lstrip()
+    if not line.startswith("\u2014"): classes["evidence"].append(r["id"])
+    elif "early hypothesis" in line: classes["early_hypothesis"].append(r["id"])
+    else: classes["framing"].append(r["id"])
+n_sup=sum(1 for r in rows if r["id"].startswith("S-"))
+if sum(len(v) for v in classes.values())!=n_sup and not unclassed:
+    unclassed.append("the classes do not partition the S- entries")
+print(f"\n  retraction classes: {len(classes['evidence'])} claims withdrawn on evidence, "
+      f"{len(classes['framing'])} framings withdrawn, {len(classes['early_hypothesis'])} early "
+      f"hypotheses closed; {n_sup} superseded entries in all")
+for u in unclassed: print(f"    !! {u}: no **Retracts** line the classes can read")
 # Fourth invariant: RESULTS.md's discrepancy table is a hand-maintained count of
 # ledger entries by prefix. It had drifted 11 entries across four rows before anyone
 # noticed, and it is trivially derivable. Check it.
@@ -103,7 +129,8 @@ print(f"\n  entry counts by prefix: "
 print(f"  RESULTS.md discrepancy-table rows out of date: {len(stale)}")
 for pfx,said,real in stale:
     print(f"    !! {pfx}- : RESULTS.md says {said}, ledger has {real}")
-json.dump({"entries":rows,"counts_by_prefix":dict(sorted(counts.items()))},
+json.dump({"entries":rows,"counts_by_prefix":dict(sorted(counts.items())),
+           "retraction_classes":{**classes,"n_superseded":n_sup}},
           open("results/claims_to_evidence.json","w"),indent=2)
 with open("results/claims_to_evidence.md","w") as f:
     f.write("# Claims-to-evidence map\n\nOne row per CONTRIB ledger entry.\n\n")
@@ -112,6 +139,6 @@ with open("results/claims_to_evidence.md","w") as f:
         f.write(f"| `{r['id']}` | {r['claim']} | {', '.join('`'+e+'`' for e in r['evidence']) or '—'} "
                 f"| {r['status'][:40]} | {', '.join('`'+a+'`' for a in r['artifacts'][:2]) or '—'} |\n")
 print(f"\n  wrote results/claims_to_evidence.md ({len(contrib)} CONTRIB rows)")
-ok = not flagged and not missing and not unmarked and not declared and not stale
+ok = not flagged and not missing and not unmarked and not declared and not stale and not unclassed
 print(f"\n  RESULT: {'PASS' if ok else 'BLOCKER -- see flags above'}")
 sys.exit(0 if ok else 1)

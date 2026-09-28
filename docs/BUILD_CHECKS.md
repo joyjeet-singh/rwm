@@ -51,7 +51,7 @@ tolerance added.
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,598 values, or 1.01%
 of the 950,503 numeric values under `results/`. The other 940,905 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 688 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 99-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 690 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **60 comparative claims** across 27 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 60 of 60 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -60,7 +60,7 @@ nothing about reproduction, and are never folded into the figure; counting them 
 *Formerly the paper's Appendix C, moved here in the referee revision. The text is as it stood
 there; only headings and cross-references that now point the other way were changed.*
 
-**The six numbered retractions, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The seven framing retractions**, withdrawn as stated claims rather
+**The six claims withdrawn on evidence, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The seven framings withdrawn**, as stated claims rather
 than as numbers, and generated from the ledger rather than listed here — a typed
 enumeration beside a generated count is the same defect as a typed count. This one was typed
 with two entries at a time when the ledger held
@@ -273,6 +273,31 @@ for the same arm with nothing to say why. `scripts/build_paper.py` now refuses t
   originals' claims are not arm tables.
 
 Both join the gate's self-test, and each is fed a corrupted input on every build and must fire.
+
+---
+
+## A third refusal: the ledger's withdrawals, counted one way
+
+The introduction said there were thirteen "retractions of our own claims". Section 8 said "six
+retractions on our own evidence ... plus seven that withdraw framings" out of twenty superseded
+claims. Both were true, both were generated from the ledger, and they counted the same entries in
+two vocabularies, so a reader comparing them could not tell whether the paper had retracted six
+claims or thirteen.
+
+There is now one vocabulary and one source:
+- **claims withdrawn on evidence** (6);
+- **framings withdrawn** (7);
+- **superseded entries** (20), which also include the early hypotheses closed as
+  housekeeping.
+
+`scripts/ledger_check.py` classifies every S- entry into exactly one class and refuses to pass if
+any entry fits none. `scripts/paper_numbers.py` reads the three counts from its output
+(`results/claims_to_evidence.json`) rather than classifying again, and refuses a stale output.
+
+`scripts/build_paper.py` now refuses to build when **the introduction and section 8 do not each
+state all three counts, each phrase directly after the key that counts it, or when either prints
+the old combined total** (`check_retraction_counts`). It joins the gate's self-test with a
+corrupted introduction.
 
 ---
 

@@ -21,12 +21,13 @@ way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean 
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 258 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
-are never edited in place: 20 are marked `SUPERSEDED` and kept.
-Six of those are retractions of our own **numbered claims** on evidence this
-project produced, and seven withdraw **framings** — a sentence the paper
-asserted that turned out to be false, rather than a number that turned out to be wrong. The two
-counts are separate and the paper keeps them separate; four of the framing retractions were
-entered by the second pre-submission review, and one of those is the record of a claim §7.5 had
+are never edited in place: the ledger keeps 20 superseded entries.
+Of those, six claims withdrawn on evidence are our own **numbered claims**,
+withdrawn on evidence this project produced; seven framings withdrawn are
+sentences the paper asserted that turned out to be false, rather than numbers that turned out to be
+wrong; the rest close early hypotheses. The counts are separate and the paper keeps them separate;
+four of the framings withdrawn were entered by the second pre-submission
+review, and one of those is the record of a claim §7.5 had
 already narrowed in the paper while the ledger and this README went on asserting it.
 
 ## What this found
@@ -54,9 +55,12 @@ step index — a free counter neither original paper compared against — at eve
 the rollout and the forecast depth held constant it still correlates **+0.419
 [+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard.
 
-**4 — The interval is repairable.** One multiplier per forecast horizon, fitted on one held-out
-episode and scored on the other, restores nominal coverage on every held-out cell; a single global
-multiplier manages 2 of them.
+**4 — The interval may be repairable per horizon, with mixed evidence.** On the released
+checkpoint, one multiplier per forecast horizon, fitted on one held-out episode and scored on the
+other, restores nominal coverage on every cell, where a single global multiplier manages
+2 of them. But that checkpoint trained on both episodes, so those cells are unseen
+by the multiplier only; on Arm A, whose model never saw them, its own multipliers manage
+17 of 36 epistemic cells.
 
 **5 — The released five-member ensemble is not five models.** One GRU trunk, one recurrent hidden
 state, and 89.15% of each member's state-prediction parameters numerically identical

@@ -265,18 +265,26 @@ CLAIMS = [
     # guards nothing.
     {"id": "C7.1", "kind": "count-consistency", "where": "8 / BUILD_CHECKS",
      "surface": ["docs/BUILD_CHECKS.md"],
-     "label": "numbered retractions",
-     "says": "retractions on our own evidence",
+     # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
+     # and the supplement now share one vocabulary -- claims withdrawn on evidence,
+     # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
+     "label": "claims withdrawn on evidence",
+     "says": "claims withdrawn on evidence**, and",
      "value": ("paper_numbers.json", "n_retractions.value"),
-     "sites": ["retractions on our own evidence",
-               "numbered retractions, in order"]},
+     "sites": ["each beside the evidence that withdrew it:",
+               "claims withdrawn on evidence**, and",
+               "claims withdrawn on evidence, in order"]},
     {"id": "C7.2", "kind": "count-consistency", "where": "8 / BUILD_CHECKS",
      "surface": ["docs/BUILD_CHECKS.md"],
-     "label": "framing retractions",
-     "says": "that withdraw framings rather than numbers",
+     # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
+     # and the supplement now share one vocabulary -- claims withdrawn on evidence,
+     # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
+     "label": "framings withdrawn",
+     "says": "framings withdrawn rather than numbers",
      "value": ("paper_numbers.json", "n_retract_framing.value"),
-     "sites": ["that withdraw framings rather than numbers",
-               "framing retractions**, withdrawn as stated claims"]},
+     "sites": ["framings withdrawn, and the rest early hypotheses",
+               "framings withdrawn rather than numbers",
+               "framings withdrawn**, as stated claims"]},
     # ...and the TOTAL, which is what §1 now states and the contributions list
     # repeats. A count that moved out of two places into two others is exactly
     # where a count-consistency defect gets in.
@@ -284,10 +292,17 @@ CLAIMS = [
     # paragraph said it too, which is the duplication D2 was meant to remove and
     # did not: it compressed the paragraph and left the number in both places.
     {"id": "C7.5", "kind": "count-consistency", "where": "1",
-     "label": "total retractions",
-     "says": "retractions of our own claims",
-     "value": ("paper_numbers.json", "n_retract_total.value"),
-     "sites": ["retractions of our own claims"]},
+     # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
+     # and the supplement now share one vocabulary -- claims withdrawn on evidence,
+     # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
+     # The introduction no longer prints the combined total (n_retract_total), which
+     # was the fourth way of counting; it states the superseded-entry count instead, and
+     # this check follows that assertion into both places it is made.
+     "label": "superseded entries",
+     "says": "superseded entries, each beside the evidence",
+     "value": ("paper_numbers.json", "n_superseded.value"),
+     "sites": ["superseded entries, each beside the evidence",
+               "superseded entries kept in the record"]},
     {"id": "C6.1", "kind": "relvar", "where": "5",
      "says": "Teacher forcing is more than twice as variable across seeds",
      "a": ("task_d1_threeseed.json", "aggregate.A.sd_ddof1", "aggregate.A.mean"),
@@ -386,7 +401,10 @@ CLAIMS = [
     # B4: the generated enumeration left PAPER.md for docs/BUILD_CHECKS.md, and with
     # only the template listed this claim fell from 19 namings to 9 while passing.
     {"id": "C10.5", "kind": "retraction_class_consistency", "where": "8 / BUILD_CHECKS",
-     "says": "The most consequential of the framing retractions",
+     # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
+     # and the supplement now share one vocabulary -- claims withdrawn on evidence,
+     # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
+     "says": "The most consequential of the framings withdrawn",
      "files": ["PAPER.md", "docs/BUILD_CHECKS.template.md", "docs/BUILD_CHECKS.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
 
@@ -400,8 +418,9 @@ CLAIMS = [
      # C3(rev2): the page count is here because the README quoted "9 pages" for a
      # 30-page PDF for two revisions, and nothing compared them. It moves every
      # time the paper grows, which is exactly the property that made it drift.
+     # S5: the README prints the lower-case form now, and the superseded count joins.
      "keys": ["n_runs", "ver_values", "ver_files", "pdf_pages",
-              "n_retractions_word", "n_retract_framing_word"],
+              "n_retractions_lower", "n_retract_framing_word", "n_superseded"],
      "file": "README.md"},
     # The external-read brief is a hand-written document that quotes the paper's
     # headline figures, and it drifted within hours of being written: it still
@@ -415,7 +434,11 @@ CLAIMS = [
      "keys": ["rt_hours", "rt_runs", "d1_ratio", "d1n_epi_ratio_h1",
               "d1n_epi_cov1_h1", "v3_cov_nominal1", "a2_rdd", "stale_pct",
               "v1_shared_pct", "m44_ratio_gain", "m49_ratio_gain",
-              "e7_step_r", "e7_r_dis", "e5s_span", "e5s_mse_under"],
+              "e7_step_r", "e7_r_dis", "e5s_span", "e5s_mse_under",
+              # S5: the brief now gives S-20's replacement figures, the Arm A count and the
+              # ledger's withdrawal counts; each must still match the artifact.
+              "ad_nrmse", "ad_nrmse_ci", "ad_rel", "ad_rel_ci", "d3x_own_epi_ok",
+              "n_retractions_lower", "n_retract_framing_word", "n_superseded"],
      "file": "docs/EXTERNAL_READ_BRIEF.md"},
     {"id": "C11.2", "kind": "cross-artifact-sync", "where": "MODEL_CARD",
      "surface": ["docs/BUILD_CHECKS.md"],
@@ -995,7 +1018,9 @@ def evaluate(c, paper, override=None):
         cls.update(exp.get("_forced_ledger", {}))
         MARK = {"framing": r"framings?\b",
                 "evidence": r"numbered retractions?|own evidence"
-                            r"|our own \*\*numbered claims\*\*"}
+                            r"|our own \*\*numbered claims\*\*"
+                            # S5: the new vocabulary's name for the class
+                            r"|withdrawn on evidence"}
         bad, seen = [], 0
         for f in exp["files"]:
             if not os.path.exists(f):

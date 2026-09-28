@@ -50,13 +50,15 @@ trajectories, no such count in our paper survives multiplicity correction.
 If you need an interval, the raw σ will not give you one. Do not use it for risk-gating,
 safety margins, or anything that treats σ as a scale.
 
-**There is a remedy, and it is cheap.** A single multiplier does not work, because the
-miscalibration grows with forecast horizon. One multiplier *per horizon*, fitted on held-out
-data, does: on the released reference checkpoint it restored ±1σ coverage to within
-10 points of nominal on 12 of 12 held-out cells,
-where a single global multiplier managed 2. We measured that on the
-reference checkpoint rather than on these arms, and on two episodes only, so refit it on your
-own data rather than copying our constants.
+**There is a candidate remedy, and on these checkpoints the evidence is mixed.** A single
+multiplier does not work, because the miscalibration grows with forecast horizon. One
+multiplier *per horizon*, fitted on one episode and scored on the other, restored ±1σ
+coverage on the released reference checkpoint to within 10 points of nominal on
+12 of 12 cells, where a single global multiplier managed
+2; but that checkpoint trained on both episodes. On these ensemble-5
+checkpoints, which never saw them, their own multipliers manage 17 of
+36 epistemic cells, on two episodes only. Refit it on your own data and
+check it rather than copying our constants.
 
 ## The ensemble-5 checkpoints, and what they are for
 

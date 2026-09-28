@@ -3823,6 +3823,14 @@
     "source": "results/task2_sigma_profile.json",
     "value": 3.49
   },
+  "err_growth_hi": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 6.11
+  },
+  "err_growth_lo": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 1.79
+  },
   "err_nll_growth": {
     "source": "results/task2_sigma_profile.json",
     "value": 3.41
@@ -4848,7 +4856,7 @@
     "value": "Six"
   },
   "n_retract_framing": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": 7
   },
   "n_retract_framing_ids": {
@@ -4860,35 +4868,35 @@
     "value": "\n\n- **Task 3's duplication rule was pre-registered** (`S-12`).\n\n- **The binomial P-values attached to every dimension count** (`S-15`).\n\n- **The two largest held-out deviations are in opposite directions** (`S-16`).\n\n- **The eight untested claims are, without exception, about policy learning or hardware** (`S-17`).\n\n- **The per-member \u03c3 is worse by three orders of magnitude** (`S-18`).\n\n- **The released checkpoint cannot have come from the released recipe** (`S-19`).\n\n- **The released evaluation overstates its own model's error by 75%** (`S-20`)."
   },
   "n_retract_framing_phrase": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": "7 further"
   },
   "n_retract_framing_word": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": "seven"
   },
   "n_retract_framing_word_cap": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": "Seven"
   },
   "n_retract_total": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": 13
   },
   "n_retractions": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": 6
   },
   "n_retractions_lower": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": "six"
   },
   "n_retractions_word": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": "Six"
   },
   "n_retractions_word_lower": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": "six"
   },
   "n_runs": {
@@ -4900,7 +4908,7 @@
     "value": 5
   },
   "n_superseded": {
-    "source": "FINDINGS_LEDGER.md",
+    "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
     "value": 20
   },
   "n_train_eps": {
@@ -7917,7 +7925,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 688
+    "value": 690
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 64,
-  "n_ok": 62,
+  "n_pointers": 65,
+  "n_ok": 63,
   "n_reviewed_correct": 2,
   "reviewed": [
     {
@@ -34,6 +34,13 @@
   "n_bad": 0,
   "bad": [],
   "pointers": [
+    {
+      "class": "semantic",
+      "pointer": "Appendix E gives every pre-registered rule with its lead time and its verdict",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['pre-registered', 'rule', 'lead', 'time', 'verdict']; absent []",
+      "context": "Appendix E gives every pre-registered rule with its lead time and its verdict"
+    },
     {
       "class": "semantic",
       "pointer": "\u00a76.4 sets out what follows",

@@ -20,3 +20,11 @@ records here anything outside its own tasks and does not fix it, however quick t
 - `scripts/build_model_card.py:177` (rendered `MODEL_CARD.md:53-58`) — "…on {d3_epi_ok} of {d3_epi_cells} held-out cells", the same unscoped statement. Owner: S5's sweep.
 - `scripts/build_paper.py:337` — Figure 1's caption, "Calibration of all four models on the held-out arena", applies "held-out" to the released checkpoint's raw calibration (§6.2, not §6.8's multiplier) without the in-text caveat at `PAPER.template.md:700`. Found by S4's sweep; not in S4's item list.
 - `PAPER.template.md:1000-1002` (§6.6) — "All figures in this paragraph are the held-out arena", applied to all four models' epistemic term, including the released checkpoint, with no caveat in the paragraph. Found by S4's sweep; not in S4's item list.
+- `docs/SUBMISSION_PACKAGE.md:54,116-117` and `docs/COVER_STATEMENT.md:45-47,67-69` — hand-written submission documents, excluded from both bundles, now stale in four ways:
+  - the old title, under "## 2. Title";
+  - "twelve retractions … six that withdraw numbers and six that withdraw framings", where the ledger now has 6 claims withdrawn on evidence and 7 framings withdrawn, out of 20 superseded entries;
+  - an unqualified "repairable" multiplier claim, missing S4 item 3's caveat;
+  - the SHA-256s of `PAPER.pdf` and the bundles, which every paper change since S28 invalidates.
+  Owner: the user, or S11's final report, once the paper is frozen. Found by S5's sweep.
+- `PAPER.template.md:763` (§6.2) — "σ is nearly flat while error grows by an order of magnitude". The error half holds: 11.35× from h = 1 to h = 368, in `results/task_d_nind20.json` (`d1_by_horizon`, epistemic `mean_abs_err`). But the epistemic σ grows 2.74× over the same horizons (`mean_sigma`), which is not "nearly flat". Not an orders-of-magnitude statement, so outside S5 item 8.
+- `docs/E4_REPLY_DRAFT.md:47-50` — "200 entries" and "six numbered retractions … plus six that withdraw framings" are stale (258 entries; 6 + 7). The draft is excluded from both bundles; it matters only if it is ever sent.

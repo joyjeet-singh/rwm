@@ -114,6 +114,11 @@ def main():
     for k, tag in slab.items():
         put(f"sig_{tag}_growth", round(sig[k]["sigma_growth_1_to_8"], 4), "results/task2_sigma_profile.json")
         put(f"err_{tag}_growth", round(sig[k]["err_growth_1_to_8"], 2), "results/task2_sigma_profile.json")
+    # S5: Figure 2's caption said error "grows by an order of magnitude" over steps 1-8; it
+    # grows by the range below across the four models, read rather than typed.
+    _eg = [round(sig[k]["err_growth_1_to_8"], 2) for k in slab]
+    put("err_growth_lo", min(_eg), "results/task2_sigma_profile.json")
+    put("err_growth_hi", max(_eg), "results/task2_sigma_profile.json")
 
     # --- the A/B claim -----------------------------------------------------
     put("t5_seeds", t5["provenance"]["n_seeds"], "results/task5_analysis.json")
@@ -820,29 +825,20 @@ def main():
     led = open("FINDINGS_LEDGER.md").read()
     TPL = open("PAPER.template.md").read()
     sup = re.findall(r"^### (S-\d+) ", led, re.M)
-    retr = []
-    for sid in sup:
-        blk = led[led.index("### " + sid + " "):]
-        blk = blk[:blk.find("\n### ", 5)] if "\n### " in blk[5:] else blk
-        m = re.search(r"^\*\*Retracts\*\* (.+)$", blk, re.M)
-        if m and not m.group(1).lstrip().startswith("\u2014"):
-            retr.append(sid)
-    # Framing retractions split two ways. S-01..S-07 withdraw early hypotheses that
-    # were never numbered claims -- routine housekeeping. S-12 and S-15 withdraw
-    # something the paper had asserted (a pre-registration status; an inference
-    # from counts to P-values). The abstract and section 8 count the second group
-    # separately, and an earlier draft typed "a seventh" for what is now two.
-    fram = []
-    for sid in sup:
-        blk = led[led.index("### " + sid + " "):]
-        blk = blk[:blk.find("\n### ", 5)] if "\n### " in blk[5:] else blk
-        m = re.search(r"^\*\*Retracts\*\* (.+)$", blk, re.M)
-        if m and m.group(1).lstrip().startswith("\u2014") \
-                and "early hypothesis" not in m.group(1):
-            fram.append(sid)
-    put("n_superseded", len(sup), "FINDINGS_LEDGER.md")
-    put("n_retractions", len(retr), "FINDINGS_LEDGER.md")
-    put("n_retract_framing", len(fram), "FINDINGS_LEDGER.md")
+    # S5: the three classes -- claims withdrawn on evidence, framings withdrawn, and
+    # early hypotheses closed as housekeeping -- are scripts/ledger_check.py's, read from
+    # its output rather than re-derived here, so there is one classification and one set
+    # of counts. S-01..S-07 are the early hypotheses; S-12 and S-15 onward the framings.
+    # A stale output is refused rather than printed.
+    _CLS = J("claims_to_evidence.json")["retraction_classes"]
+    assert _CLS["n_superseded"] == len(sup), (
+        "results/claims_to_evidence.json is stale against FINDINGS_LEDGER.md: run "
+        "scripts/ledger_check.py first", _CLS["n_superseded"], len(sup))
+    retr, fram = list(_CLS["evidence"]), list(_CLS["framing"])
+    _SRC_CLS = "results/claims_to_evidence.json (scripts/ledger_check.py)"
+    put("n_superseded", _CLS["n_superseded"], _SRC_CLS)
+    put("n_retractions", len(retr), _SRC_CLS)
+    put("n_retract_framing", len(fram), _SRC_CLS)
     # Section 8 and appendix D each ENUMERATED the framing retractions in prose
     # ("the claim that a pre-registration was pre-registered, and the binomial
     # inference of 6.6"). Two more were entered by the second revision and a
@@ -859,14 +855,14 @@ def main():
         "".join(f"\n\n- **{t}** (`{sid}`)." for sid, t in zip(fram, _ftitles)),
         "FINDINGS_LEDGER.md")
     put("n_retract_framing_ids", ", ".join(f"`{x}`" for x in fram), "FINDINGS_LEDGER.md")
-    put("n_retractions_word", WORDS.get(len(retr), str(len(retr))), "FINDINGS_LEDGER.md")
-    put("n_retractions_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
-    put("n_retractions_word_lower", WORDS.get(len(retr), str(len(retr))).lower(), "FINDINGS_LEDGER.md")
-    put("n_retract_framing_word", WORDS.get(len(fram), str(len(fram))).lower(), "FINDINGS_LEDGER.md")
-    put("n_retract_framing_word_cap", WORDS.get(len(fram), str(len(fram))), "FINDINGS_LEDGER.md")
+    put("n_retractions_word", WORDS.get(len(retr), str(len(retr))), _SRC_CLS)
+    put("n_retractions_lower", WORDS.get(len(retr), str(len(retr))).lower(), _SRC_CLS)
+    put("n_retractions_word_lower", WORDS.get(len(retr), str(len(retr))).lower(), _SRC_CLS)
+    put("n_retract_framing_word", WORDS.get(len(fram), str(len(fram))).lower(), _SRC_CLS)
+    put("n_retract_framing_word_cap", WORDS.get(len(fram), str(len(fram))), _SRC_CLS)
     ORD = {1: "a seventh", 2: "two further", 3: "three further", 4: "four further"}
-    put("n_retract_framing_phrase", ORD.get(len(fram), f"{len(fram)} further"), "FINDINGS_LEDGER.md")
-    put("n_retract_total", len(retr) + len(fram), "FINDINGS_LEDGER.md")
+    put("n_retract_framing_phrase", ORD.get(len(fram), f"{len(fram)} further"), _SRC_CLS)
+    put("n_retract_total", len(retr) + len(fram), _SRC_CLS)
 
     # B4/B5. Which review entered which framing retraction, from git rather than
     # from memory.

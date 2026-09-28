@@ -41,9 +41,11 @@ We came to the question sideways. Our aim was an ordinary reproduction: rebuild 
 dynamics model from scratch, check it against the released implementation, and see whether the
 paper's central training claim holds. It does. But the same rebuild made a second question cheap
 to ask, because we had a from-scratch model, the released checkpoint, and a harness that could
-score both: *is the predicted σ calibrated?* Neither of the two the checkpoint emits is — the
-per-member σ by three to four orders of magnitude, the ensemble disagreement the method actually
-uses by one to two — and for the first of them the reason is structural rather than incidental. The disagreement
+score both: *is the predicted σ calibrated?* Neither of the two the checkpoint emits is: on data it
+trained on, the per-member σ is too small by {{d1n_alea_ratio_h1}}× at h = 1 to
+{{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}, and the ensemble disagreement the method actually uses
+by {{d1n_epi_ratio_h1}}× to {{d1n_epi_ratio_h368}}× over the same horizons. For the first of them the
+reason is structural rather than incidental. The disagreement
 still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is
 its size.
 
@@ -62,7 +64,7 @@ gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and
 git, with timestamps a reader can check (§8, Figure 1). One of them returned "cannot be settled"
 and we report that too.
 
-**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and the supplementary `docs/BUILD_CHECKS.md` give them in full. There are {{n_retract_total}} retractions of our own claims, kept with the evidence that withdrew them, and Appendix E's table of every pre-registered rule with its lead time and its verdict.
+**We retract our own findings when they fail**, on this project's own evidence, and keep them in the record rather than deleting them; §8 and the supplementary `docs/BUILD_CHECKS.md` give them in full. The ledger keeps {{n_superseded}} superseded entries, each beside the evidence that withdrew it: {{n_retractions_lower}} claims withdrawn on evidence, {{n_retract_framing_word}} framings withdrawn, and the rest early hypotheses closed as housekeeping. Appendix E gives every pre-registered rule with its lead time and its verdict.
 
 **Contributions.**
 
@@ -712,7 +714,7 @@ checkpoint trained on all ten episodes, so its own best-sampled figure is the
 **Both are correct and they differ in two ways at once: a different arena and a
 different horizon.** Neither is a held-out measurement *of the released checkpoint*, which has no held-out arena in this dataset (§3).
 
-**The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories. We use all ten rather than the held-out pair here because the released checkpoint trained on all ten, so restricting it to two buys no independence and costs four fifths of the sample — the same argument this paper makes about that checkpoint elsewhere. The held-out-only version at n_independent = {{b2_nind}} is in the supplementary material (`results/task_b2_epistemic.json`). The epistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; the aleatoric column agrees at {{agree_alea}} of {{agree_nh}} — it flips sign at {{agree_alea_dis}}, where both readings sit close enough to chance that the sign is not meaningful in either, and where the aleatoric σ is in any case three to four orders of magnitude too small for its ordering to be the interesting quantity. Where the two tables differ materially we say so.
+**The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories. We use all ten rather than the held-out pair here because the released checkpoint trained on all ten, so restricting it to two buys no independence and costs four fifths of the sample — the same argument this paper makes about that checkpoint elsewhere. The held-out-only version at n_independent = {{b2_nind}} is in the supplementary material (`results/task_b2_epistemic.json`). The epistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; the aleatoric column agrees at {{agree_alea}} of {{agree_nh}} — it flips sign at {{agree_alea_dis}}, where both readings sit close enough to chance that the sign is not meaningful in either, and where the aleatoric σ is in any case {{d1n_alea_ratio_h1}}× (h = 1) to {{d1n_alea_ratio_h368}}× (h = {{v2_diag_h}}) too small for its ordering to be the interesting quantity. Where the two tables differ materially we say so.
 
 | h | aleatoric err/σ [95% CI] | aleatoric ±1σ | epistemic err/σ [95% CI] | epistemic ±1σ [95% CI] | epistemic ±2σ | dims r>0 | permutation P |
 |---|---|---|---|---|---|---|---|
@@ -779,7 +781,7 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 | 128 | {{e5_ratio_h128}}× [{{e5_ratio_ci_h128}}] | {{e5_cov1_h128}}% [{{e5_cov1_ci_h128}}] | {{e5_cov2_h128}}% | {{e5_npos_h128}}/45 |
 | 368 | **{{e5_ratio_h368}}×** [{{e5_ratio_ci_h368}}] | {{e5_cov1_h368}}% [{{e5_cov1_ci_h368}}] | {{e5_cov2_h368}}% | {{e5_npos_h368}}/45 |
 
-Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h100}}× overconfident at h = {{v2_deploy_h}} against its {{d1n_epi_ratio_h100}}×, with {{e5_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being an order of magnitude closer to calibrated is not being calibrated.
+Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h100}}× overconfident at h = {{v2_deploy_h}} against its {{d1n_epi_ratio_h100}}×, with {{e5_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being closer to calibrated is not being calibrated.
 
 The last column of the table above gives permutation P-values over whole trajectories, not binomial ones, computed on the same {{perm_all_nind}} trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here and how far it was wrong. **h = {{v2_deploy_h}} carries the abstract, so it is tested rather than left blank**. These are {{perm_n_tests_col_word}} tests on one family and none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells — the smallest is {{perm_all_holm_min_cell}} at {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Read the column as a consistency check on direction, not as {{perm_n_tests_col_word}} independent findings.
 
@@ -1540,7 +1542,7 @@ it rests on, because it is what let us detect the gap at all.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix E for all {{appG_n_rules}}, every one of which now carries one; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not. Figure 1 plots the set it was drawn over and is not re-drawn; Appendix E gives the lead time of every rule added since. Every positive bar is a difference of two commit timestamps. **The negative one is not, and the difference matters**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, and that is a line in `results/control_driver.log` rather than a commit. The log records wall clock with no date and no offset, so both are taken from the commit that introduced that line, which is what makes the figure reproducible outside this machine's timezone; `docs/BUILD_CHECKS.md`, shipped as supplementary, records what it did before that. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands — the arm was built without reference to its outcome — but the claim that it was pre-registered does not, and we withdraw it. A discipline that is only checked when it succeeds is not a discipline.
 
-**{{n_retractions_word}} retractions on our own evidence**, out of {{n_superseded}} superseded claims kept in the record, plus {{n_retract_framing_word}} that withdraw framings rather than numbers (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framing retractions is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more framing retractions and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
+**{{n_retractions_word}} claims withdrawn on evidence**, and {{n_retract_framing_word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framings withdrawn is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). It was named by position here until the second pre-submission review entered {{n_framing_last_cohort_word}} more of them and moved it. Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called the strongest result here.
 
 **A statistic that was resampling the wrong unit.** Our bootstrap pooled three seeds over a shared trajectory set and resampled the pooled vector while reporting the independent-trajectory count, so each trajectory appeared three times. Resampling trajectories instead widens intervals by a mean {{bu_mean_ratio}}× and changes {{bu_changes}} of {{bu_cells}} verdicts, in an h = 8 cell already recorded as unresolvable. Every long-horizon verdict survives; both units are reported.
 
@@ -1996,7 +1998,7 @@ the work.
 {{cal_rel_ndim}} state dimensions, then divide by the pooled scale — a ratio of means. **Form 2**
 is the mean of per-dimension ratios.
 
-The two differ because the state dimensions differ in scale by orders of magnitude. Form 2 gives
+The two differ because the state dimensions differ widely in scale. Form 2 gives
 whichever dimension has the smallest denominator unbounded leverage over the aggregate, and a
 dimension that is nearly constant in the training episodes has a very small denominator. Form 1
 has no such lever: a dimension contributes in proportion to its share of the total squared error.
