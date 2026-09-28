@@ -8249,3 +8249,44 @@ branches is a defect in this rule and is reported as one.
 
 **Evidence** `RUN` `results/p6_baseline_power.json` — the power estimate. `SRC` `docs/presubmission/ORIGINAL_SPECS.md` — the claim. Discharged by `results/baselines_verdict.json`, from `scripts/verdict_baselines.py`, neither of which exists yet.
 **Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/baselines_verdict.json` · **Relevance** METHOD
+
+### S-20 — "The released evaluation overstates its own model's error by 75%" · **NEW**
+**Retracts** — a framing, not a numbered claim; the measurements it was computed from stand as measured
+**What is retracted:** the size, and the sign-consistency, the paper gave the alignment defect.
+The abstract, a contribution bullet, §3.1 and §7.2 said the released evaluation overstates its
+checkpoint's error at h = 368 by 75% in nRMSE and 9.5% on
+relative-L1, and that the checkpoint is "materially better" than its evaluation reports. Those
+figures are exactly right for what they measured (`results/alignment_defect_ci.json` reproduces
+both at printed precision): 10 windows sampled, as the upstream harness samples
+them, from the held-out pair, and **overlapping**. One of them, starting at row
+8,375, is overstated by 110.7% in
+nRMSE form 1 while the other 9 lie between -1.8% and 5.3%. The
+published nRMSE averages ratios over dimensions at each step, and that lets the one window
+dominate.
+
+**What replaces it**, on the paper's own standard of independent trajectories with a cluster
+bootstrap:
+- **the held-out pair's 4 non-overlapping trajectories:** relative-L1
+  7.9% [3.1, 13.0] and nRMSE form 1
+  6.6% [1.0, 8.0];
+- **all ten episodes' 20 non-overlapping trajectories:** relative-L1
+  -4.6% [-13.4, 3.2] and nRMSE form 1
+  -2.1% [-10.0, 3.9]. **The sign
+  reverses.**
+
+All of these are in-sample for the released checkpoint, which trained on every episode.
+
+**What is not retracted:**
+- the defect itself. Row t holds the action that produced state t (D-13). The evaluation's
+  pairing is one step stale (B-05), and the fix is one line;
+- R-15's measurements, which are correct for their arena.
+
+What changes is what they license: a real correctness defect, whose cost in error is small and not
+consistent in sign.
+
+**Who found it:** PLAN S3 item 4, which asked for intervals on the two figures and set as stop
+conditions that the four-trajectory estimates reproduce them, and that the twenty-trajectory
+companion not reverse. Neither held. The user ruled "Restate on independent", 2026-09-28
+(`docs/presubmission/DECISIONS_FOR_USER.md#S3-alignment-defect`).
+**Evidence** `RUN` `results/alignment_defect_ci.json` (`scripts/alignment_defect_ci.py`), `results/step4_0a_results.json`.
+**Status** RETRACTED · **Relevance** METHOD

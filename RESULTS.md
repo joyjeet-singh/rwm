@@ -93,7 +93,7 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | `R-` measured results | 75 | — |
 | `O-` open questions | 14 | — |
 | `X-` deliberate deviations | 17 | — |
-| `S-` superseded, retained | 19 | — |
+| `S-` superseded, retained | 20 | — |
 
 Highlights: the released data has **ten episode boundaries its own termination column does not
 mark**, so the reference builder trains on 352 spliced windows (`B-01`, `D-03`). Training and
