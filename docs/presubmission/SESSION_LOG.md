@@ -369,3 +369,62 @@ Next:
   - The moved-text section is ready to extend, and the replacer and check scripts are in the scratchpad (not committed).
 - **Trap for S7:** C19.1 (the typed-restatement check) scans the paper plus BUILD_CHECKS as one text, and a markdown bullet list reads as one sentence. Moved items must not put a typed horizon beside words another sentence shares with a bound horizon.
 Decisions for user: none
+
+## S7 — 2026-09-29 01:40 — Opus 5.5 — status: COMPLETE
+Commits:
+- 3c1ae49 [S7][item 7] §6 lead-in to §6.3 shortened; caveats point back to §3 and §11
+- b17be21 [S7][item 7] §6.4-§6.7 shortened; drafting history moved; S-15 cited once
+- f27025f [S7][item 7] §6.8-§6.11 shortened; unpowered and independence caveats stated once
+- 2dffcda [S7][item 7] §7-§12 and appendix drafting prose; S-12 and S-15 cited once each
+- 978a6a0 [S7][item 7] Restore what the cut lost (independent audit)
+- (the commit carrying this entry) [S7] COMPLETE: session log
+Done:
+- **Item 7, part 2: §6–§13, plus the appendix prose that narrated drafting.** Rendered `PAPER.md`, S0's convention, before (9ad4c24) → after:
+
+  | section | before | after | | section | before | after |
+  |---|---:|---:|---|---|---:|---:|
+  | §6 lead-in | 73 | 56 | | §6.9 | 192 | 192 |
+  | §6.1 | 548 | 488 | | §6.10 | 966 | 887 |
+  | §6.2 | 2,205 | ~1,970 | | §6.11 | 1,278 | 1,226 |
+  | §6.3 | 1,828 | 1,729 | | §7 (7.1–7.5) | 888 | 827 |
+  | §6.4 | 626 | 512 | | §8 | 596 | 518 |
+  | §6.5 | 122 | 122 | | §9 | 769 | ~690 |
+  | §6.6 | 1,363 | 1,225 | | §10 | 200 | 200 (S4's text) |
+  | §6.7 | 2,791 | 2,549 | | §11 | 2,186 | 1,854 |
+  | §6.8 | 1,585 | 1,416 | | §12 | 918 | 850 |
+  | | | | | Data and code | 513 | 513 (disclosures) |
+
+  The range went from 19,647 to about 17,820 (−9%).
+- **Final report against the target (the plan's S7 duty).**
+  - The body (§1 to Data and code) is **24,753 words** against S0's 27,387, a cut of **2,634 words (9.6%)**.
+  - The target was ≤ 19,170 (30%). **The shortfall is 5,583 words.** Per the plan, the cut is under 30%, so no cuts were forced.
+  - **The largest remaining sections:** §6.7 2,549; §5 2,011; §6.2 ~1,970; §11 1,854; §6.3 1,729; §2 1,613; §6.8 1,416; §6.11 1,226; §6.6 1,225; §6.10 887; §1 879; §12 850.
+  - What is left is results, tables and the qualifications S3–S5 required; the drafting history is out. Reaching 30% would mean removing measured content or moving whole analyses to the supplement, which is a decision for the user, not a style edit.
+- **Drafting history moved, not deleted.** 21 items went to BUILD_CHECKS' "Moved from the paper body (pre-submission edit)", labelled [§6.2], [§6.3], [§6.4], [§6.6], [§6.7], [§6.10], [§7.4], [§8], [Appendix B], [Appendix D] and [Appendix E]. With S6's 8, the section holds 29.
+- **Rule IDs.** Each rule is named once per section at first mention, as "(rule M-xx, Appendix E)"; all were checked against Appendix E's 17 rules. The ledger notes M-24, M-54 and M-71 stay as plain pointers. D-13 is removed from prose.
+- **Retractions.** One sentence per retraction that changed a claim: `S-15` in §6.6, §9 and §12; `S-12` in §8; `S-20` in §7.2.
+- **Caveats stated once and referred back:**
+  - the in-sample and n = 4 / 256-resample caveats (§3);
+  - "not N independent successes" (the §6.8 caution);
+  - "bounds what it reports, not what it costs" (the policy caveat of §11);
+  - "unpowered" (once in §6.8).
+- **Nothing lost mechanically.** Every table is byte-identical, spliced in rather than retyped. The replacer asserted per section that no key vanished: those that left a section are printed elsewhere or in the moved section (`v1_n_citations`, `n_framing_last_cohort_word`).
+- **No numeric assertion was retired. Re-anchors, each logged beside the check:**
+  - `scripts/a1_consent_letter.py`'s §6.1 closing marker; it extracts the same five quoted fragments as before;
+  - C22.1's `says`;
+  - C3.4's `says`.
+  C2.2's phrase was restored in the text instead.
+- **Two traps met.**
+  - C19.1's sentence splitter breaks only at ". ". A line break straight after a period, and markdown bullet lists, join sentences, so a typed horizon can collide with a bound one. It was fixed each time by rewording, never by changing the check.
+  - C14.1 scans BUILD_CHECKS too, so moved text must bind its horizons.
+- **Audit** (subagent 1 of 1, Sonnet, claim by claim against 9ad4c24): FAIL with 1 BLOCKER (§9's "an interval beside a trajectory count overstates precision", lost), 1 SHOULD-FIX (§6.2's reason h = 100 is tested) and 1 NIT. All three were restored, and the counts above include them.
+Build/checks: pass.
+- 60/60 comparative claims verified, and the gate self-test catches 7 of 7.
+- 0 unclassified typed numerals; 0 scope findings.
+- Two consecutive build-and-check passes are byte-identical.
+Paper numbers changed: none measured. `tn_typed` and `pdf_pages` move with the text; all are generated.
+CPU jobs over 1 min, all overlapping the queue: about 16 single build-and-check passes, about 1 min each. The queue stands at 14 done, 0 failed.
+Next:
+- S8 (queue gate and evaluation). The queue is projected to finish around 2026-09-30 08:23; S8 must not start before it finishes.
+- For S10's checklist item 7: the body is 24,753 against a target of 19,170, and the shortfall is reported here with the largest sections listed.
+Decisions for user: none raised. Whether to move whole analyses to the supplement to reach 30% is open for the user; S7 did not force it.
