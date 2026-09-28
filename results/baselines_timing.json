@@ -1,0 +1,184 @@
+{
+  "rules": [
+    "M-75",
+    "M-76"
+  ],
+  "probe_iterations": 20,
+  "calibration": {
+    "centre_probe_s_per_iter": 1.98123095878959,
+    "centre_full_runs_wall_clock_s": [
+      4625.6387873310005,
+      2912.892670175,
+      3418.2364349269997
+    ],
+    "factor": 0.7373710667989232,
+    "note": "probes ran while the M-74 sweep trained; the factor carries the contention and RWM's checkpoint evaluations, so the projection is conservative"
+  },
+  "configs": [
+    {
+      "arch": "mlp",
+      "regime": "tf",
+      "spec": "s7",
+      "governs": true,
+      "steady_s_per_iter": 0.13923194557891724,
+      "projected_h_per_run": 0.07129556128056655,
+      "projected_h_3_seeds": 0.21388668384169962,
+      "probe_losses_finite": true,
+      "probe_first_total": 8.243538856506348,
+      "probe_last_total": 7.543914318084717,
+      "n_params": 610484
+    },
+    {
+      "arch": "rssm",
+      "regime": "tf",
+      "spec": "s7",
+      "governs": true,
+      "steady_s_per_iter": 5.484689752315669,
+      "projected_h_per_run": 2.8085080095320323,
+      "projected_h_3_seeds": 8.425524028596096,
+      "probe_losses_finite": true,
+      "probe_first_total": 8.559765815734863,
+      "probe_last_total": 8.265044212341309,
+      "n_params": 3180468
+    },
+    {
+      "arch": "transformer",
+      "regime": "tf",
+      "spec": "s7",
+      "governs": true,
+      "steady_s_per_iter": 2.00992937242106,
+      "projected_h_per_run": 1.0292109482865326,
+      "projected_h_3_seeds": 3.0876328448595975,
+      "probe_losses_finite": true,
+      "probe_first_total": 11.048705101013184,
+      "probe_last_total": 8.665643692016602,
+      "n_params": 132148
+    },
+    {
+      "arch": "mlp",
+      "regime": "ar",
+      "spec": "s7",
+      "governs": true,
+      "steady_s_per_iter": 0.19594347526320857,
+      "projected_h_per_run": 0.10033545096327813,
+      "projected_h_3_seeds": 0.3010063528898344,
+      "probe_losses_finite": true,
+      "probe_first_total": 48.32180404663086,
+      "probe_last_total": 34.11549377441406,
+      "n_params": 610484
+    },
+    {
+      "arch": "rssm",
+      "regime": "ar",
+      "spec": "s7",
+      "governs": true,
+      "steady_s_per_iter": 4.458515929999856,
+      "projected_h_per_run": 2.2830421164194354,
+      "projected_h_3_seeds": 6.849126349258306,
+      "probe_losses_finite": true,
+      "probe_first_total": 46.31222915649414,
+      "probe_last_total": 43.56679916381836,
+      "n_params": 3180468
+    },
+    {
+      "arch": "transformer",
+      "regime": "ar",
+      "spec": "s7",
+      "governs": true,
+      "steady_s_per_iter": 2.042275558947279,
+      "projected_h_per_run": 1.0457742413877238,
+      "projected_h_3_seeds": 3.137322724163171,
+      "probe_losses_finite": true,
+      "probe_first_total": 114.96504211425781,
+      "probe_last_total": 58.600406646728516,
+      "n_params": 132148
+    },
+    {
+      "arch": "mlp",
+      "regime": "tf",
+      "spec": "matched",
+      "governs": false,
+      "steady_s_per_iter": 0.18810865757883508,
+      "projected_h_per_run": 0.0963235288284854,
+      "projected_h_3_seeds": 0.28897058648545615,
+      "probe_losses_finite": true,
+      "probe_first_total": 8.211782455444336,
+      "probe_last_total": 7.523436546325684,
+      "n_params": 713171
+    },
+    {
+      "arch": "rssm",
+      "regime": "tf",
+      "spec": "matched",
+      "governs": false,
+      "steady_s_per_iter": 1.3759322576841346,
+      "projected_h_per_run": 0.7045643310358343,
+      "projected_h_3_seeds": 2.1136929931075024,
+      "probe_losses_finite": true,
+      "probe_first_total": 11.686246871948242,
+      "probe_last_total": 11.254220962524414,
+      "n_params": 730668
+    },
+    {
+      "arch": "transformer",
+      "regime": "tf",
+      "spec": "matched",
+      "governs": false,
+      "steady_s_per_iter": 6.400630026894904,
+      "projected_h_per_run": 3.2775273549421637,
+      "projected_h_3_seeds": 9.832582064826488,
+      "probe_losses_finite": true,
+      "probe_first_total": 11.203474998474121,
+      "probe_last_total": 7.959611892700195,
+      "n_params": 686196
+    },
+    {
+      "arch": "mlp",
+      "regime": "ar",
+      "spec": "matched",
+      "governs": false,
+      "steady_s_per_iter": 0.22454442315804618,
+      "projected_h_per_run": 0.11498094503319259,
+      "projected_h_3_seeds": 0.34494283509957774,
+      "probe_losses_finite": true,
+      "probe_first_total": 47.19774627685547,
+      "probe_last_total": 33.4246711730957,
+      "n_params": 713171
+    },
+    {
+      "arch": "rssm",
+      "regime": "ar",
+      "spec": "matched",
+      "governs": false,
+      "steady_s_per_iter": 1.0569913630001553,
+      "projected_h_per_run": 0.5412464228699113,
+      "projected_h_3_seeds": 1.6237392686097343,
+      "probe_losses_finite": true,
+      "probe_first_total": 52.67657470703125,
+      "probe_last_total": 46.56071472167969,
+      "n_params": 730668
+    },
+    {
+      "arch": "transformer",
+      "regime": "ar",
+      "spec": "matched",
+      "governs": false,
+      "steady_s_per_iter": 6.415569412210492,
+      "projected_h_per_run": 3.2851772650029103,
+      "projected_h_3_seeds": 9.855531795008732,
+      "probe_losses_finite": true,
+      "probe_first_total": 119.34881591796875,
+      "probe_last_total": 42.79533386230469,
+      "n_params": 686196
+    }
+  ],
+  "cap_hours": 20.0,
+  "projected_governing_hours": 22.014498983608703,
+  "projected_all_hours": 46.07395852674619,
+  "matched_variants_fit": false,
+  "queued": [],
+  "blocked": [
+    "the Table S7 arms project 22.01 CPU-hours, above the 20-hour cap; no baseline may be dropped (PLAN S2b)"
+  ],
+  "probe_wall_minutes": 12.054532702763876
+}

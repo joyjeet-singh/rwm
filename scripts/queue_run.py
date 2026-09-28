@@ -9,6 +9,7 @@ and bash reads a running script by byte offset: editing it mid-run destroyed a d
 (M-30; CLAUDE.md rule 7). So the runner does nothing but walk the queue, and everything
 that may need to grow lives here, in a file Python reads afresh for every run. S2b adds
 its baseline architectures to TRAINERS below between runs; it never touches the runner.
+(Done in S2b: the twelve arch-regime-spec strings, e.g. 'mlp-tf-s7'.)
 
 WHAT IS CHECKED after every run (PLAN S8's gate, applied as each run ends rather than
 all at once at the end):
@@ -38,23 +39,55 @@ def rwm(run_id, m, n, seed, iters):
            "--forecast", str(n)]
     artifact = os.path.join(ROOT, "results", f"mn_sweep_run_M{m}_N{n}_seed{seed}.json")
     weights = os.path.join(ROOT, "runs", f"mn_M{m}_N{n}_seed{seed}", f"weights_{iters}.pt")
-    return cmd, artifact, weights
+    expect = {"iterations": iters, "history_horizon (M)": m, "forecast_horizon (N)": n,
+              "arch": "rwm", "seed": seed, "rnn_hidden_size (width)": 256}
+    return cmd, artifact, weights, expect
+
+
+def baseline(arch, regime, spec):
+    """Rules M-75 (tf) and M-76 (ar): one architecture baseline (S2b)."""
+    def trainer(run_id, m, n, seed, iters):
+        assert (m, n) == (32, 8), "the baselines train on Arm A's (32, 8) windows"
+        cmd = [sys.executable, os.path.join(ROOT, "scripts", "train_baseline.py"), "--arch",
+               arch, "--regime", regime, "--spec", spec, "--seed", str(seed), "--iters",
+               str(iters)]
+        tag = f"{arch}_{regime}_{spec}"
+        artifact = os.path.join(ROOT, "results", f"baseline_run_{tag}_seed{seed}.json")
+        weights = os.path.join(ROOT, "runs", f"baseline_{tag}_seed{seed}", f"weights_{iters}.pt")
+        sys.path.insert(0, os.path.join(ROOT, "src"))
+        import rwm_data as R
+        import baselines as BL
+        n_par = BL.n_params(BL.build(arch, spec, R.load_reference_config(R.repo_paths()["lite"])))
+        expect = {"iterations": iters, "history_horizon (M)": m, "forecast_horizon (N)": n,
+                  "arch": arch, "regime": regime, "spec": spec, "seed": seed,
+                  "n_params (width)": n_par}
+        return cmd, artifact, weights, expect
+    return trainer
 
 
 TRAINERS = {"rwm": rwm}
+for _a in ("mlp", "rssm", "transformer"):
+    for _r in ("tf", "ar"):
+        for _s in ("s7", "matched"):
+            TRAINERS[f"{_a}-{_r}-{_s}"] = baseline(_a, _r, _s)
+
+FIELDS = {"iterations": lambda a, hp: hp.get("iterations"),
+          "history_horizon (M)": lambda a, hp: hp.get("history_horizon"),
+          "forecast_horizon (N)": lambda a, hp: hp.get("forecast_horizon"),
+          "arch": lambda a, hp: a.get("arch"), "regime": lambda a, hp: a.get("regime"),
+          "spec": lambda a, hp: a.get("spec"), "seed": lambda a, hp: a.get("seed"),
+          "rnn_hidden_size (width)": lambda a, hp: hp.get("rnn_hidden_size"),
+          "n_params (width)": lambda a, hp: hp.get("n_params")}
 
 
-def check(artifact, weights, arch, m, n, seed, iters):
+def check(artifact, weights, expect):
     bad = []
     if not os.path.exists(artifact):
         return [f"artifact missing: {artifact}"]
     a = json.load(open(artifact))
     hp = a.get("hyperparameters", {})
-    for field, want, got in (("iterations", iters, hp.get("iterations")),
-                             ("history_horizon (M)", m, hp.get("history_horizon")),
-                             ("forecast_horizon (N)", n, hp.get("forecast_horizon")),
-                             ("arch", arch, a.get("arch")), ("seed", seed, a.get("seed")),
-                             ("rnn_hidden_size (width)", 256, hp.get("rnn_hidden_size"))):
+    for field, want in expect.items():
+        got = FIELDS[field](a, hp)
         if got != want:
             bad.append(f"{field}: queued {want}, artifact {got}")
     if not isinstance(a.get("wall_clock_s"), (int, float)):
@@ -75,7 +108,7 @@ def main():
     if arch not in TRAINERS:
         print(f"queue_run: no trainer for arch '{arch}' (known: {sorted(TRAINERS)})")
         sys.exit(1)
-    cmd, artifact, weights = TRAINERS[arch](run_id, m, n, seed, iters)
+    cmd, artifact, weights, expect = TRAINERS[arch](run_id, m, n, seed, iters)
     if os.path.exists(artifact):
         print(f"queue_run: {artifact} already exists; refusing to overwrite a finished run")
         sys.exit(1)
@@ -89,7 +122,7 @@ def main():
     if rc != 0:
         print(f"queue_run: {run_id}: trainer exited {rc}")
         sys.exit(1)
-    bad = check(artifact, weights, arch, m, n, seed, iters)
+    bad = check(artifact, weights, expect)
     for b in bad:
         print(f"queue_run: {run_id}: CHECK FAILED — {b}")
     if bad:

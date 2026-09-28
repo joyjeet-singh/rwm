@@ -29,3 +29,31 @@ what the original states.
 - Answer 1 gives two pre-registered verdicts, each with Holm's correction across its three baselines: M-75 for teacher-forced baselines (the claim as the original makes it) and M-76 for autoregressive baselines (architecture with the training regime held fixed).
 - Answer 2: Table S7 architectures govern both verdicts. The parameter-matched variants of PLAN S2b run only if S2b's timing probe projects every baseline run, both specs, within the 20 CPU-hour cap. If run, they are reported alongside and never govern.
 - Answer 3 fixes the grid in M-74.
+
+## S2b-baseline-cap
+
+S2b stopped BLOCKED on 2026-09-28 at 19:00, before queueing any baseline run.
+- **The block:** the 18 governing Table S7 baseline runs (rules M-75 and M-76: MLP, RSSM and transformer × tf and ar × seeds 0–2) project **22.01 CPU-hours** against PLAN Appendix C's **20-hour** baseline cap. PLAN S2b says: "If the baselines project above their cap, stop with BLOCKED. Never drop a baseline yourself." M-75 and M-76 say the same.
+- **Evidence:** `results/baselines_timing.json` (`scripts/baselines_timing.py`). All 13 probes ran 20 iterations with every loss finite and falling; nothing diverged.
+
+| Table S7 arm | projected CPU-hours, 3 seeds |
+|---|---:|
+| MLP tf / ar | 0.21 / 0.30 |
+| RSSM tf / ar | 8.43 / 6.85 |
+| transformer tf / ar | 3.09 / 3.14 |
+
+**Why the projection is conservative:**
+- The probes ran while the M-74 sweep trained. The calibration factor (0.737) carries that contention through; it also carries RWM's checkpoint evaluations at 500 and 2,500 iterations, which the baselines never run.
+- Scaling instead by the measured contention alone (the centre probe took 1.98 s/iter contended, against 1.07 uncontended) gives roughly 16 hours. That figure is an estimate, not the rule's projection.
+
+**What else is true:**
+- The sweep (19.53 h projected) plus these baselines (22.01 h) totals 41.5 h, inside PLAN Appendix C's 45-hour cap on all new runs.
+- The parameter-matched variants would bring every baseline run to 46.07 h, so under M-75 and M-76 they are **not run** (the transformer at d_model 160 costs 9.8 h per regime).
+- The RSSM at the original's Table S7 size (3.18 million parameters) is 15.3 of the 22 hours.
+
+**Options:**
+1. **Raise the baseline cap to cover the 22.01 h projection** (for example to 23 h). Queue all 18 Table S7 runs after the sweep. The matched variants stay unrun. Recommended: nothing is dropped, and the all-new total stays within 45 h.
+2. **Keep the cap and re-probe once the sweep has finished**, on an idle machine. That delays queueing the baselines until the sweep ends, around 2026-09-29 10:30.
+3. **Another decision**, such as fewer seeds or a smaller RSSM. That would change M-75 and M-76, which fix three seeds and Table S7 sizes, and would need a new ledger entry.
+
+**Answer:** (pending)

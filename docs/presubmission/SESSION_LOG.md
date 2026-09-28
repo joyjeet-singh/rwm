@@ -105,3 +105,36 @@ Next: S2b (Opus 5.5, high effort). Read `PLAN.md` §1 and S2b, `ORIGINAL_SPECS.m
 - If the runner has already exited when the runs are appended, relaunch it with the same command. It skips done and failed ids.
 - Timing probes during S2b compete with the running queue: log them.
 Decisions for user: none.
+
+## S2b — 2026-09-28 19:00 — Opus 5.5 (session effort could not be raised from inside the session; one reviewer on Sonnet 5) — status: BLOCKED
+Commits: c3273be [S2b][item 1] State-only check, and the baselines' specifications with their sources
+520b59e [S2b][items 2-4] The three baselines and their trainer
+2a834ad [S2b][item 5] Verification ladder: every baseline passes every rung
+5785260 [S2b][item 6] Evaluator and verdict script for rules M-75 and M-76, before any baseline run (pushed)
+(the commit carrying this entry) [S2b] BLOCKED at the baseline cap: timing record, queue dispatcher, log
+Done:
+- Item 1: RWM's state prediction does not read its auxiliary branch (`BASELINE_SPECS.md` §1).
+  - The pinned upstream ships an MLP base and its autoregressive path, so the MLP baseline is a port of the authors' own code.
+  - The 38-row deviations table has no UNVERIFIED rows.
+  - The RSSM's settings come from DreamerV2 and PlaNet, both verified against the arXiv API page by page (`results/baseline_citations_verified.json`).
+- Items 2–4: `src/baselines/` holds the MLP, transformer and RSSM at Table S7 sizes (610,484 / 132,148 / 3,180,468 parameters), plus parameter-matched variants within 5% of 714,164.
+  - All reuse RWM's state head, objective and causal slicing, in both regimes.
+  - `scripts/train_baseline.py` keeps Arm A's pipeline.
+- Item 5: the ladder passes for all six variants (`results/baseline_verification.json`). Rung results:
+  - zero delta is exactly hold-last;
+  - memorisation reaches at least 100×;
+  - the first 10 losses are bitwise-deterministic;
+  - action alignment holds in both regimes and in rollout.
+- Item 6: `scripts/baselines_eval.py` (it reuses the sweep evaluator; RWM reproduces the head-to-head table) and `scripts/verdict_baselines.py` (M-75 and M-76 exactly; 19-check self-test).
+  - One Sonnet reviewer found 0 blockers, 1 should-fix and 1 minor; both were fixed and reconfirmed.
+  - Committed and **pushed before any baseline run**.
+- Item 7: **BLOCKED.** The timing probe projects the 18 governing Table S7 runs at 22.01 CPU-hours against the 20-hour cap, so nothing is queued (`DECISIONS_FOR_USER.md#S2b-baseline-cap`). The parameter-matched variants would bring every baseline run to 46.07 h, so they are not run.
+  - `scripts/queue_run.py` already dispatches all twelve arch-regime-spec strings. Its sweep path was re-checked on two finished sweep runs.
+Build/checks: not re-run at this stop. No file the paper reads has changed since S2a's pre-launch pass; src/baselines and the new scripts are read by nothing in the build.
+Paper numbers changed: none
+CPU jobs over 1 min: all overlapped the M-74 sweep and inflate its `wall_clock_s`.
+- **Verification ladder:** 59 min on one thread, 17:47–18:46, overlapping `mn_M32_N32_s2`. This is well over PLAN §1.5's "about 10 CPU-minutes"; it was the necessary S2b step, run on one thread to halve the contention.
+- **Timing probe:** 12.1 min, 18:48–19:00, overlapping `mn_M16_N8_s0`.
+- **Smaller jobs:** the evaluator self-test (about 2 min, twice), the verdict self-tests (about 1 min each) and the 3-iteration smoke tests (about 2 min).
+Next: the user answers `DECISIONS_FOR_USER.md#S2b-baseline-cap`, then `Resume session S2b.` The remaining S2b work is to append the Table S7 runs to `runs/queue.txt` (`scripts/baselines_timing.py --write-queue` refuses while blocked, so the resume follows the ruling), update `RUN_QUEUE.md`, log COMPLETE and push. The sweep keeps running meanwhile (3 of 24 runs done at 18:48).
+Decisions for user: DECISIONS_FOR_USER.md#S2b-baseline-cap
