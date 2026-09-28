@@ -705,7 +705,7 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 Our arms are **better calibrated than the released checkpoint and fail the same way**: 10.5× overconfident at h = 100 against its 33.4×, with 8.19% coverage where a calibrated Gaussian gives 68.27%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being closer to calibrated is not being calibrated.
 
-The last column of the released checkpoint's table gives permutation P-values over whole trajectories, not binomial ones, on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here. h = 100 is tested too. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells: the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
+The last column of the released checkpoint's table gives permutation P-values over whole trajectories, not binomial ones, on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here. h = 100 is tested too, because it carries the abstract's headline figure. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells: the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
 
 The scalar penalty as actually applied, `means.std(0).sum(-1)` at `envs/base.py:166`, correlates **+0.605** with total absolute error over the rollout, 95% CI [+0.545, +0.694] from a bootstrap over whole trajectories, n_independent = 20 (7,360 pooled trajectory-step points). The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
 
@@ -1456,7 +1456,8 @@ Six things a practitioner can apply without reading the rest of this paper.
 **Count independent trajectories, not trajectories.** Two 400-step windows that overlap at all
 are one piece of evidence, not two. The held-out arena here contains 4 independent
 400-step trajectories however many windows are drawn from it, and that number bounds every
-long-horizon claim (§3). Resampling pooled seed × trajectory values instead of trajectories narrows
+long-horizon claim (§3); reporting an interval beside a trajectory count rather than an
+independent-trajectory count overstates precision. Resampling pooled seed × trajectory values instead of trajectories narrows
 intervals by a further 1.42× (§8).
 
 **Anchor a decision rule to the horizon the claim is about.** Our first pre-registered rule was

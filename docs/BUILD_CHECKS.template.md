@@ -431,7 +431,8 @@ claims stayed, and only their history moved.
   predated the ten-thousand-iteration runs added for the three-seed headline.
 - **[Appendix B]** `paper_numbers.py` selected the collapse family by filename until the first
   capacity-matched run walked into it through a glob; that collision and the second unguarded glob
-  the fix did not reach are recorded above (`M-66`).
+  the fix did not reach are recorded above (`M-66`), with the sweep of every pattern-based
+  input discovery in `scripts/` and `src/` that followed.
 - **[Appendix D]** The epistemic ranking row read "weaker per-dimension than we first reported".
 - **[Appendix E]** The table once omitted `M-52`: the selector matched entry titles, and M-52's
   title does not contain the word, so the row a sceptical reader most wants was silently absent.
