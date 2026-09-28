@@ -173,7 +173,7 @@
     {
       "id": "C7.5",
       "kind": "count-consistency",
-      "where": "1",
+      "where": "1 / 8",
       "says": "superseded entries, each beside the evidence",
       "pass": true,
       "detail": "superseded entries = 20 (20); 2/2 sites agree"

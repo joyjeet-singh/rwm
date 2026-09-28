@@ -291,7 +291,7 @@ CLAIMS = [
     # The count is stated ONCE in §1 now -- in the contributions list. §1's prose
     # paragraph said it too, which is the duplication D2 was meant to remove and
     # did not: it compressed the paragraph and left the number in both places.
-    {"id": "C7.5", "kind": "count-consistency", "where": "1",
+    {"id": "C7.5", "kind": "count-consistency", "where": "1 / 8",
      # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
      # and the supplement now share one vocabulary -- claims withdrawn on evidence,
      # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
