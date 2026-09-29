@@ -3335,6 +3335,10 @@
     "source": "results/step5_arm*.json",
     "value": 5
   },
+  "e4_batch": {
+    "source": "results/e4_sigma_gradients.json",
+    "value": 64
+  },
   "e4_n_inert": {
     "source": "results/e4_sigma_gradients.json",
     "value": 5
@@ -3901,7 +3905,7 @@
   },
   "evidence_table": {
     "source": "results/evidence_summary.json",
-    "value": "| Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) | 5.2 | out-of-sample | 4 | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) | 5.3 | out-of-sample | 4 | no | reproduces | yes |\n| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) | 5.3 | out-of-sample | 4 | no | rwm ahead of all three | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not | 6.8 | out-of-sample | 4 | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity | 11 | out-of-sample | 4 | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology | 6.11 | out-of-sample | 4 | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
+    "value": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | reproduces | yes |\n| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | rwm ahead of all three | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.7) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.7) | all ten episodes (20) | released | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.7) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.8) | out-of-sample (4) | released | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.10) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.11) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error (\u00a77.2) | out-of-sample (4) | released | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
   },
   "f4_n_commits": {
     "source": "results/paper_figures.json",
@@ -5031,6 +5035,10 @@
     "source": "results/mn_sweep_verdict.json",
     "value": "(1, 8) on in-sample relative-L1 and nRMSE at h = 368, and (16, 8) on held-out nRMSE at h = 368"
   },
+  "mn_n1_label": {
+    "source": "results/mn_sweep_eval.json",
+    "value": "(32, 1)"
+  },
   "mn_n_alongside": {
     "source": "results/mn_sweep_verdict.json",
     "value": 12
@@ -5070,6 +5078,10 @@
   "mn_table": {
     "source": "results/mn_sweep_eval.json + results/mn_sweep_verdict.json + results/presubmission_runtime.json",
     "value": "| **(32, 8)**, the centre | 0.4798 | **0.5856** | \u2014 | \u2014 | \u2014 (existing runs) |\n| (1, 8) | 0.3796 | 0.5340 | -0.0516 [-0.1835, +0.0400] | not resolved | 0.15 |\n| (2, 8) | 0.3524 | 0.4717 | -0.1139 [-0.2988, -0.0088] | **configuration better** | 0.16 |\n| (8, 8) | 0.4043 | 0.4852 | -0.1004 [-0.2449, -0.0167] | **configuration better** | 0.30 |\n| (16, 8) | 0.4467 | 0.6161 | +0.0305 [-0.0008, +0.0720] | not resolved | 0.51 |\n| (32, 1) | 1.0903 | 3.7198 | +3.1342 [+1.3012, +6.5096] | centre better | 0.51 |\n| (32, 2) | 0.8886 | 2.0374 | +1.4518 [+0.6250, +2.6933] | centre better | 0.74 |\n| (32, 16) | 0.3544 | 0.3347 | -0.2509 [-0.5218, -0.0956] | **configuration better** | 0.78 |\n| (32, 32) | 0.3348 | 0.2987 | -0.2869 [-0.5951, -0.1005] | **configuration better** | 1.32 |"
+  },
+  "mn_tf_ratio": {
+    "source": "results/mn_sweep_eval.json",
+    "value": "6.35"
   },
   "mn_unres_list": {
     "source": "results/mn_sweep_verdict.json",
@@ -5229,15 +5241,15 @@
   },
   "orig_n_with": {
     "source": "results/original_paper_figures.json",
-    "value": 1
+    "value": 2
   },
   "orig_n_without": {
     "source": "results/original_paper_figures.json",
-    "value": 5
+    "value": 4
   },
   "orig_n_without_word": {
     "source": "results/original_paper_figures.json",
-    "value": "five"
+    "value": "four"
   },
   "orig_se_ppo": {
     "source": "results/original_paper_figures.json",
@@ -5254,6 +5266,18 @@
   "orig_se_rwm_rew": {
     "source": "results/original_paper_figures.json",
     "value": "0.90 +- 0.04"
+  },
+  "orig_tf_e_centre": {
+    "source": "results/original_paper_figures.json",
+    "value": "0.47"
+  },
+  "orig_tf_e_n1": {
+    "source": "results/original_paper_figures.json",
+    "value": "3.99"
+  },
+  "orig_tf_ratio": {
+    "source": "results/original_paper_figures.json",
+    "value": "8.5"
   },
   "orphan_rows": {
     "source": "results/step0_regimes.json",
@@ -5305,7 +5329,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 48
+    "value": 49
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -8151,6 +8175,10 @@
     "source": "results/step5_arm*.json",
     "value": 33
   },
+  "sig_arena": {
+    "source": "results/task2_sigma_profile.json",
+    "value": "out-of-sample held-out pair"
+  },
   "sig_armB_growth": {
     "source": "results/task2_sigma_profile.json",
     "value": 1.0096
@@ -8158,6 +8186,10 @@
   "sig_faithA_growth": {
     "source": "results/task2_sigma_profile.json",
     "value": 0.9241
+  },
+  "sig_nind": {
+    "source": "results/task2_sigma_profile.json",
+    "value": 4
   },
   "sig_nll_growth": {
     "source": "results/task2_sigma_profile.json",
@@ -8249,7 +8281,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 706
+    "value": 711
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

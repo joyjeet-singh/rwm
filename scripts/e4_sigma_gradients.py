@@ -132,6 +132,13 @@ def main():
     json.dump({"n_terms": len(rows), "n_live": len(live), "n_touching_sigma": len(touch),
                "touching": [r["term"] for r in touch],
                "batch_size": int(state.shape[0]),
+               # S10 (user ruling D4): what the gradients were measured on
+               "design": {"weights": "freshly initialised (torch seed 0); no trained checkpoint",
+                          "architecture": "the released configuration, ensemble size 5",
+                          "data": "one batch of windows sampled (generator seed 0) from the "
+                                  "training episodes of the seed-0 split",
+                          "train_episodes": [int(e) for e in split["train_episodes"]],
+                          "batch_size": int(state.shape[0])},
                "terms": rows}, open(os.path.join(R.RESULTS, OUT), "w"), indent=2)
     print(f"  wrote results/{OUT}")
     return 0

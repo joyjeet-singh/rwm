@@ -53,17 +53,23 @@ CLAIMS = [
         "claim": 'Teacher forcing gives "poor autoregressive performance"',
         "where_v1": "2501.10100v1 IV-C (Dual-autoregressive Mechanism)",
         "where_v2": "2501.10100v2 Appendix A.4.1 (same title)",
-        "original_figure": None,
+        "original_figure": "Figure 6 (v1 p. 7; v2 Fig. S8): the N = 1 (teacher-forced) row of the e heatmap",
         "original_states": (
             "Interestingly, when the forecast horizon N=1 (teacher-forcing), training can be "
             "highly parallelized, resulting in minimal training time. However, this setting "
             "leads to poor autoregressive performance, as the model lacks exposure to "
             "long-horizon prediction during training and fails to effectively handle "
             "compounding errors."),
-        "form": "qualitative",
-        "numeral_in_text": False,
-        "note": ("The only numeral in the passage is the configuration N=1, which names the "
-                 "teacher-forcing setting rather than measuring its cost."),
+        "form": "quantitative: Fig. 6 prints e in every cell of the teacher-forced N = 1 row",
+        "numeral_in_text": True,
+        # Transcribed from v1 Fig. 6's printed cells (docs/presubmission/ORIGINAL_SPECS.md a.5):
+        # the teacher-forced configuration at the centre's M, and the centre itself.
+        "printed_e": {"M32_N1": 3.99, "M32_N8": 0.47},
+        "note": ("The passage's only numeral is the configuration N=1, but Fig. 6 prints e in "
+                 "every cell of the N = 1 row, 3.99 at (32, 1) against 0.47 at (32, 8) "
+                 "(docs/presubmission/ORIGINAL_SPECS.md a.5), on evaluation data and at a horizon "
+                 "the paper does not state. Reclassified from 'qualitative' in pre-submission S10, "
+                 "by user ruling (DECISIONS_FOR_USER.md#S10-review-blocked, D5)."),
     },
     # Added in pre-submission S9, when rules M-74, M-75 and M-76 tested them. Their full
     # specification, with page anchors and fingerprints, is docs/presubmission/ORIGINAL_SPECS.md.

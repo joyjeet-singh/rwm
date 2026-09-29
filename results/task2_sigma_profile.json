@@ -178,5 +178,23 @@
     "sigma_growth_1_to_8": 1.0006510059516467,
     "sigma_growth_1_to_late": 1.0125892437834956,
     "err_growth_1_to_8": 1.792213001137739
+  },
+  "_design": {
+    "arena": "out-of-sample held-out pair",
+    "episodes": [
+      1,
+      8
+    ],
+    "n_independent": 4,
+    "n_trajectories": 4,
+    "traj_len": 400,
+    "our_arms_seeds": [
+      0,
+      1,
+      2
+    ],
+    "our_arms_checkpoint": "weights_2500.pt",
+    "released_checkpoint": "pretrain_rnn_ens.pt",
+    "action_offset": 1
   }
 }

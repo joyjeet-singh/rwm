@@ -81,5 +81,10 @@ if allflat:
     print("  error against a fixed sigma, not by sigma failing to keep up.")
 else:
     print("  READING 1 -- at least one model learned horizon-dependence within the trained range.")
+# S10 (user ruling D3): record the arena and checkpoints, so Figure 5's caption can cite them
+out["_design"]={"arena":"out-of-sample held-out pair","episodes":[int(e) for e in split["holdout_episodes"]],
+                "n_independent":len(starts),"n_trajectories":len(starts),"traj_len":400,
+                "our_arms_seeds":list(SEEDS),"our_arms_checkpoint":"weights_2500.pt",
+                "released_checkpoint":os.path.basename(paths["ckpt"]),"action_offset":1}
 json.dump(out,open(os.path.join(R.RESULTS,"task2_sigma_profile.json"),"w"),indent=2)
 print(f"\n  wrote {R.rel(os.path.join(R.RESULTS,'task2_sigma_profile.json'))}")

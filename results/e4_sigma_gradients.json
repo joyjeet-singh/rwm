@@ -7,6 +7,22 @@
     "bound"
   ],
   "batch_size": 64,
+  "design": {
+    "weights": "freshly initialised (torch seed 0); no trained checkpoint",
+    "architecture": "the released configuration, ensemble size 5",
+    "data": "one batch of windows sampled (generator seed 0) from the training episodes of the seed-0 split",
+    "train_episodes": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    "batch_size": 64
+  },
   "terms": [
     {
       "term": "state",

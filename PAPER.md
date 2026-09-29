@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1122 values substituted from 84 artifacts. -->
+     1130 values substituted from 84 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -384,27 +384,28 @@ original's *figure*, and h = 100 to its *method*.
 ### 3.2 What each claim rests on
 
 Every headline claim in this paper is measured on one of the three arenas above, at a stated
-number of independent trajectories. The table is generated from the artifacts each claim is
-computed from, so no arena label and no sample size in it is typed by hand.
+number of independent trajectories, and at one checkpoint: the released one, or ours at a stated
+number of training iterations. The table is generated from the artifacts each claim is computed
+from, so no arena label, sample size or checkpoint in it is typed by hand.
 
-| claim | § | arena | n_independent | in-sample for the model measured? | verdict | survives multiplicity correction? |
-|---|---|---|---|---|---|---|
-| Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |
-| The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |
-| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) | 5.2 | out-of-sample | 4 | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |
-| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) | 5.3 | out-of-sample | 4 | no | reproduces | yes |
-| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) | 5.3 | out-of-sample | 4 | no | rwm ahead of all three | yes |
-| Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
-| Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
-| The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
-| Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |
-| Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |
-| With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |
-| A per-horizon multiplier brings coverage near nominal where a constant one does not | 6.8 | out-of-sample | 4 | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |
-| An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |
-| The same contrast at matched capacity | 11 | out-of-sample | 4 | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
-| Independence and the corrected objective together improve on the released topology | 6.11 | out-of-sample | 4 | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
-| The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |
+| claim (§) | arena (n_independent) | checkpoint | in-sample for the model measured? | verdict | survives multiplicity correction? |
+|---|---|---|---|---|---|
+| Autoregressive training beats teacher forcing at h = 368 (§5) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes |
+| The same comparison reverses at h = 1, at the short unit M-64 built (§5) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |
+| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |
+| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) (§5.3) | out-of-sample (4) | 2,500 iterations | no | reproduces | yes |
+| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) (§5.3) | out-of-sample (4) | 2,500 iterations | no | rwm ahead of all three | yes |
+| Ensemble disagreement is smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| Ensemble disagreement is smaller than realised error, at h = 100 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| Disagreement ranks realised error better than the forecast step index, at h = 100 (§6.7) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |
+| Disagreement ranks realised error better than the model's own predicted step size (§6.7) | all ten episodes (20) | released | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |
+| With both the rollout and the depth held constant, disagreement still tracks error (§6.7) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |
+| A per-horizon multiplier brings coverage near nominal where a constant one does not (§6.8) | out-of-sample (4) | released | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |
+| An ensemble that shares no trunk is better calibrated than the released topology (§6.10) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |
+| The same contrast at matched capacity (§11) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
+| Independence and the corrected objective together improve on the released topology (§6.11) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
+| The released evaluation pairs states and actions one step stale and overstates its own model's error (§7.2) | out-of-sample (4) | released | yes | confirmed; the released pairing scores worse than the causal one | not applicable |
 
 ---
 
@@ -426,12 +427,16 @@ column, and they replace a withdrawn claim that every untested claim concerns po
 hardware (`S-17`). §11 states what the untested claims bound, and Appendix C what testing them
 would take.
 
-**For five of the six claims we tested, the original reports no quantitative
+**For four of the six claims we tested, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot, with no number in text, caption or
-table. So our 4.61× at h = 368 neither confirms nor contradicts a
-published figure: it is the first figure attached to the claim, as §6.7's coefficient is for the
-follow-up's "strong correlation" between disagreement and error. The exception is the configuration claim, whose heatmap prints a
-value in every cell (§5.2). Where a magnitude is legible only from a plotted curve we say so rather
+table; §6.7's coefficient is the first figure attached to the follow-up's "strong correlation"
+between disagreement and error. The exceptions are the configuration claim and the teacher-forcing
+claim, whose values one heatmap prints in every cell (§5.2). For the teacher-forced (32, 1)
+it prints 3.99 against 0.47 at the centre, 8.5× worse, on
+evaluation data and at a horizon it does not state; our sweep's (32, 1) is
+6.35× worse on relative-L1 at h = 368. Our 4.61× compares Arm B,
+which trains on 8 teacher-forced targets per window rather than one
+(`docs/presubmission/ORIGINAL_SPECS.md` §2), so it neither confirms nor contradicts that figure. Where a magnitude is legible only from a plotted curve we say so rather
 than estimating it from the axis.
 
 **Appendix D gives the full table**, claim by claim, with what the original states, where it
@@ -857,7 +862,8 @@ closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 **The derivation above covers two terms, and the objective has 7.** Its completeness
 rests on the other 5 being inert with respect to σ, so each term is computed alone on
-one real batch and back-propagated alone, and the gradient reaching the log-σ tower,
+one real batch (64 windows from the training episodes, at freshly initialised weights of
+the released architecture) and back-propagated alone, and the gradient reaching the log-σ tower,
 `state_log_delta_logstd` and `state_min_logstd` is recorded. A term that cannot move σ produces
 exactly zero on all three.
 
@@ -1281,9 +1287,10 @@ So the accurate form of this section is: **a constant scalar does not repair the
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 5; our arms at 2,500 training iterations, the released checkpoint as released):
+σ is flat while error grows (Figure 5; out-of-sample held-out pair, n_independent = 4 400-step trajectories; our arms at
+2,500 training iterations, the released checkpoint as released):
 
-![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1. (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows 1.79× to 6.11× over the same steps, across the four models. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
+![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1, on the out-of-sample held-out pair, n\_independent = 4 400-step trajectories; our arms at 2,500 training iterations, the released checkpoint as released. (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows 1.79× to 6.11× over the same steps, across the four models. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
 
 | model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
 |---|---|---|
@@ -1726,7 +1733,7 @@ At h = 100, the horizon the method's own imagination rollouts run to, the aleato
 
 The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large. The scale may be repairable per horizon, but on a model that has not seen the test episodes the evidence is mixed. On the released checkpoint a per-horizon multiplier, fitted on one episode and scored on another, brings every coverage estimate within 10 points of nominal, though no single cell is resolvable at this arena and the cells are not independent trials (§6.8), where a global multiplier manages 2 of them. On Arm A, whose model never saw those episodes, its own multipliers manage 17 of 36 epistemic cells. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps +0.596 once the index is partialled out. Against a second free baseline it does less well: the model's own predicted step size ranks error at +0.4697 against disagreement's +0.6053, a margin this sample cannot resolve, so the verdict is SURVIVES entry-res ONLY. **The control this rests on removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates +0.419 [+0.318, +0.576] with realised error (§6.7). That is smaller than the +0.605 pooled figure, and it is the one that means what a practitioner needs it to mean: not a re-encoding of the clock, and not merely a report of which episode is hard. It is the closest either original work comes to a claim this reproduction strengthens rather than qualifies, and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well.
 
-What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction: the epistemic term on every one of the 45 dimensions at h=368, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials, since the dimensions are physically coupled (§6.6). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = 368 on every one of 45 dimensions over all ten episodes and at chance on the held-out pair alone, a dependence on arena that §6.6 sets out. The corrected arm sits at chance in both. Once the coupling is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction; the independent-trials P-values an earlier draft carried were wrong by up to a factor of about 10^13 and are withdrawn (`S-15`). Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
+What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction: the epistemic term on every one of the 45 dimensions at h=368, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials, since the dimensions are physically coupled (§6.6). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = 368 on every one of 45 dimensions over all ten episodes and at chance on the held-out pair alone, a dependence on arena that §6.6 sets out. The corrected arm sits at chance in both. Once the coupling is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction; the independent-trials P-values an earlier draft carried were wrong by up to a factor of about 10^13 and are withdrawn (`S-15`). Neither quantity yields a usable interval. Per dimension, uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective. As the scalar the method applies, ensemble disagreement gets the order right (§6.7) and the size wrong: it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
 
 **What should travel from this paper, and what should not.** The findings are of three kinds. *Properties of the objective and of how its bounds are built* are the ones to expect elsewhere,
 and only where both are present together: §6.3 derives the σ = 0 optimum from squared
@@ -1933,7 +1940,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 | claim, and where | tested | what the original reports | verdict |
 |---|---|---|---|
 | RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 7 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
-| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
+| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **quantitative**: Fig. 6 prints e for the teacher-forced N=1 row, 3.99 at (32, 1) against 0.47 at the centre, on unstated data and horizon; the passage itself gives no number | reproduces, and more strongly: Arm B is worse than the hold-last floor, and §5.2's (32, 1) is 6.35× the centre's error at h = 368 |
 | M=32, N=8 gives the optimal trade-off between accuracy and training time (§IV-C) | **yes** | **quantitative**: Fig. 6 prints the error and the training hours of every cell of its grid, and the centre's error is the tied-lowest (`docs/presubmission/ORIGINAL_SPECS.md` a.5) | **NOT OPTIMAL AT OUR BUDGET** on the accuracy half (§5.2): (32, 32), (32, 16), (8, 8) and (2, 8) beat it. Training time is reported, not tested |
 | Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **REPRODUCES** with the baselines teacher-forced, as the original trains them, and **RWM AHEAD OF ALL THREE** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§5.3). One robot where the original has several |
 | Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |

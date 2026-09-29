@@ -2046,6 +2046,17 @@ def main():
     put("mn_best_config", _cfgname(_best), "results/mn_sweep_eval.json")
     put("mn_best_l1_h368", f"{_l368[_best]:.4f}", "results/mn_sweep_eval.json")
     put("mn_centre_l1_h368", f"{_l368['M32_N8']:.4f}", "results/mn_sweep_eval.json")
+    # S10 (user ruling D5): the teacher-forcing claim is quantitative -- Fig. 6 prints its
+    # N = 1 row -- so §4 and Appendix D set the original's printed cells beside our sweep's.
+    _tfp = next(c for c in J("original_paper_figures.json")["claims"] if c["key"] == "tf_poor")
+    assert _tfp["numeral_in_text"] and set(_tfp["printed_e"]) == {"M32_N1", "M32_N8"}
+    _ofs = "results/original_paper_figures.json"
+    put("orig_tf_e_n1", f'{_tfp["printed_e"]["M32_N1"]:.2f}', _ofs)
+    put("orig_tf_e_centre", f'{_tfp["printed_e"]["M32_N8"]:.2f}', _ofs)
+    put("orig_tf_ratio", f'{_tfp["printed_e"]["M32_N1"] / _tfp["printed_e"]["M32_N8"]:.1f}', _ofs)
+    put("mn_n1_label", _cfgname("M32_N1"), "results/mn_sweep_eval.json")
+    assert _l368["M32_N1"] > _l368["M32_N8"], "§4 says the sweep's (32, 1) is worse"
+    put("mn_tf_ratio", f"{_l368['M32_N1'] / _l368['M32_N8']:.2f}", "results/mn_sweep_eval.json")
     put("mn_best_D", f"{_mg['per_config'][_best]['D']:+.4f}", _mvs)
     put("mn_best_ci", f"[{_mg['per_config'][_best]['ci95'][0]:+.4f}, {_mg['per_config'][_best]['ci95'][1]:+.4f}]", _mvs)
     put("mn_floor_h100", f'{MV["hold_last_floor_l1"]["held_out"]["100"]:.4f}', _mvs)
@@ -2199,6 +2210,16 @@ def main():
     _lens = sorted({int(k[1]) for k in _twk})
     _cks = sorted({int(k[2]) for k in _twk})
     _nind = sorted({_tw[k]["n_independent"] for k in _tw if k != "_summary"})
+    # D3 and D4 (user rulings): the two producers now record their design, and the
+    # captions cite it.
+    _sd = J("task2_sigma_profile.json")["_design"]
+    assert _sd["our_arms_checkpoint"] == "weights_" + N["iters_main"]["value"].replace(",", "") + ".pt"
+    assert _sd["n_independent"] == _sd["n_trajectories"] and _sd["traj_len"] == 400
+    put("sig_arena", _sd["arena"], "results/task2_sigma_profile.json")
+    put("sig_nind", _sd["n_independent"], "results/task2_sigma_profile.json")
+    _e4d = J("e4_sigma_gradients.json")["design"]
+    assert _e4d["weights"].startswith("freshly initialised") and "training episodes" in _e4d["data"]
+    put("e4_batch", _e4d["batch_size"], "results/e4_sigma_gradients.json")
     put("tw_design", f"the held-out pair and the training episodes, "
                      f"{' and '.join(str(x) for x in _lens)}-step trajectories, the "
                      f"{' and '.join(f'{x:,}' for x in _cks)}-iteration checkpoints, "

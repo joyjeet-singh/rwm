@@ -43,6 +43,7 @@ Writes results/evidence_summary.json.
 """
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
@@ -212,6 +213,9 @@ def build_rows():
         "multiplicity": multiplicity(),
         "model": a1_model,
         "artifacts": ["results/m64_short_units.json"],
+        # M-64's arena_matching line: this cell is the short-unit rebuild of
+        # a1_ab_by_horizon.json's row, so its checkpoint is that artifact's.
+        "checkpoint_from": ["results/a1_ab_by_horizon.json"],
     })
 
     # --- S9: the configuration and architecture claims (rules M-74, M-75, M-76) --
@@ -422,14 +426,42 @@ def build_rows():
     return rows
 
 
+def checkpoint_of(row):
+    """The checkpoint a row is measured at, read from its artifacts (S10, user ruling D2).
+
+    "released" for the released checkpoint; otherwise the training iterations the row's own
+    artifact records, from design.iterations, a top-level checkpoint_iterations, or a
+    design.checkpoint of the form weights_<N>.pt. A row with none of these fails loudly
+    rather than printing a blank, which would read as "no checkpoint".
+    """
+    if row["model"] == "released checkpoint":
+        return "released"
+    for a in row.get("checkpoint_from", []) + row["artifacts"]:
+        d = J(os.path.basename(a))
+        ds = d.get("design") or {}
+        it = ds.get("iterations") or d.get("checkpoint_iterations")
+        if not it and isinstance(ds.get("checkpoint"), str):
+            m = re.search(r"weights_(\d+)\.pt", ds["checkpoint"])
+            it = int(m.group(1)) if m else None
+        if it:
+            return f"{int(it):,} iterations"
+    raise AssertionError(f"no checkpoint recorded for: {row['claim']}")
+
+
 def markdown(rows):
+    # Six columns carrying eight fields. With the checkpoint column (S10, D2) eight
+    # columns' unbreakable words no longer fit the line and the PDF gate failed on
+    # overfull boxes, so the section rides with the claim and n_independent with its arena.
     return "\n".join(
-        f'| {r["claim"]} | {r["section"]} | {r["arena"]} | {r["n_independent"]} | '
-        f'{r["in_sample"]} | {r["verdict"]} | {r["multiplicity"]} |' for r in rows)
+        f'| {r["claim"]} (§{r["section"]}) | {r["arena"]} ({r["n_independent"]}) | '
+        f'{r["checkpoint"]} | {r["in_sample"]} | {r["verdict"]} | {r["multiplicity"]} |'
+        for r in rows)
 
 
 def main():
     rows = build_rows()
+    for r in rows:
+        r["checkpoint"] = checkpoint_of(r)
     out = {
         "what": "one row per headline claim, for section 3.2",
         "computation": "none; every cell is read from an artifact or derived from one",

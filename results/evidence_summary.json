@@ -68,7 +68,8 @@
       "artifacts": [
         "results/a1_ab_by_horizon.json",
         "results/task_c3_multiplicity.json"
-      ]
+      ],
+      "checkpoint": "10,000 iterations"
     },
     {
       "claim": "The same comparison reverses at h = 1, at the short unit M-64 built",
@@ -81,7 +82,11 @@
       "model": "our arms",
       "artifacts": [
         "results/m64_short_units.json"
-      ]
+      ],
+      "checkpoint_from": [
+        "results/a1_ab_by_horizon.json"
+      ],
+      "checkpoint": "10,000 iterations"
     },
     {
       "claim": "(M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off)",
@@ -95,7 +100,8 @@
       "artifacts": [
         "results/mn_sweep_verdict.json",
         "results/mn_sweep_eval.json"
-      ]
+      ],
+      "checkpoint": "2,500 iterations"
     },
     {
       "claim": "RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them)",
@@ -109,7 +115,8 @@
       "artifacts": [
         "results/baselines_verdict.json",
         "results/baselines_eval.json"
-      ]
+      ],
+      "checkpoint": "2,500 iterations"
     },
     {
       "claim": "RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim)",
@@ -123,7 +130,8 @@
       "artifacts": [
         "results/baselines_verdict.json",
         "results/baselines_eval.json"
-      ]
+      ],
+      "checkpoint": "2,500 iterations"
     },
     {
       "claim": "Ensemble disagreement is smaller than realised error, at h = 1",
@@ -136,7 +144,8 @@
       "model": "released checkpoint",
       "artifacts": [
         "results/task_d_nind20.json"
-      ]
+      ],
+      "checkpoint": "released"
     },
     {
       "claim": "Ensemble disagreement is smaller than realised error, at h = 100",
@@ -149,7 +158,8 @@
       "model": "released checkpoint",
       "artifacts": [
         "results/task_d_nind20.json"
-      ]
+      ],
+      "checkpoint": "released"
     },
     {
       "claim": "The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1",
@@ -162,7 +172,8 @@
       "model": "released checkpoint",
       "artifacts": [
         "results/task_d_nind20.json"
-      ]
+      ],
+      "checkpoint": "released"
     },
     {
       "claim": "Disagreement ranks realised error better than the forecast step index, at h = 100",
@@ -175,7 +186,8 @@
       "model": "released checkpoint",
       "artifacts": [
         "results/task_d_nind20.json"
-      ]
+      ],
+      "checkpoint": "released"
     },
     {
       "claim": "Disagreement ranks realised error better than the model's own predicted step size",
@@ -188,7 +200,8 @@
       "model": "released checkpoint",
       "artifacts": [
         "results/e7_free_baselines.json"
-      ]
+      ],
+      "checkpoint": "released"
     },
     {
       "claim": "With both the rollout and the depth held constant, disagreement still tracks error",
@@ -201,7 +214,8 @@
       "model": "released checkpoint",
       "artifacts": [
         "results/a2_trajectory_level_control.json"
-      ]
+      ],
+      "checkpoint": "released"
     },
     {
       "claim": "A per-horizon multiplier brings coverage near nominal where a constant one does not",
@@ -216,7 +230,8 @@
         "results/task_d3_perhorizon.json",
         "results/p4_transfer_power.json",
         "results/task_d3_cross_model.json"
-      ]
+      ],
+      "checkpoint": "released"
     },
     {
       "claim": "An ensemble that shares no trunk is better calibrated than the released topology",
@@ -229,7 +244,8 @@
       "model": "our arms",
       "artifacts": [
         "results/r2_independent_ensemble.json"
-      ]
+      ],
+      "checkpoint": "2,500 iterations"
     },
     {
       "claim": "The same contrast at matched capacity",
@@ -242,7 +258,8 @@
       "model": "our arms",
       "artifacts": [
         "results/m49_capacity_matched.json"
-      ]
+      ],
+      "checkpoint": "2,500 iterations"
     },
     {
       "claim": "Independence and the corrected objective together improve on the released topology",
@@ -255,7 +272,8 @@
       "model": "our arms",
       "artifacts": [
         "results/r2_combined_arm.json"
-      ]
+      ],
+      "checkpoint": "2,500 iterations"
     },
     {
       "claim": "The released evaluation pairs states and actions one step stale and overstates its own model's error",
@@ -268,8 +286,9 @@
       "model": "released checkpoint",
       "artifacts": [
         "results/step4_0a_results.json"
-      ]
+      ],
+      "checkpoint": "released"
     }
   ],
-  "table_markdown": "| Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) | 5.2 | out-of-sample | 4 | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) | 5.3 | out-of-sample | 4 | no | reproduces | yes |\n| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) | 5.3 | out-of-sample | 4 | no | rwm ahead of all three | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 | 6.7 | all ten episodes | 20 | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size | 6.7 | all ten episodes | 20 | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error | 6.7 | all ten episodes | 20 | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not | 6.8 | out-of-sample | 4 | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology | 6.10 | out-of-sample | 4 | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity | 11 | out-of-sample | 4 | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology | 6.11 | out-of-sample | 4 | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error | 7.2 | out-of-sample | 4 | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
+  "table_markdown": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | reproduces | yes |\n| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | rwm ahead of all three | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.7) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.7) | all ten episodes (20) | released | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.7) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.8) | out-of-sample (4) | released | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.10) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.11) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error (\u00a77.2) | out-of-sample (4) | released | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
 }

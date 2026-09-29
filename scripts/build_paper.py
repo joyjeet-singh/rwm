@@ -394,7 +394,10 @@ def main():
             "predicted $\\sigma$, log scale, with the dashed line where error equals $\\sigma$.",
         "paper_fig2_sigma_profile.png":
             "Why the coverage collapse is a horizon effect. Both panels are normalised to "
-            "forecast step 1. (a) predicted $\\sigma$ barely moves, and for the faithful arm it "
+            "forecast step 1, on the " + str(N["sig_arena"]["value"]) + ", n\\_independent = "
+            + str(N["sig_nind"]["value"]) + " 400-step trajectories; our arms at "
+            + str(N["iters_main"]["value"]) + " training iterations, the released checkpoint "
+            "as released. (a) predicted $\\sigma$ barely moves, and for the faithful arm it "
             "declines. (b) realised error grows " + str(N["err_growth_lo"]["value"]) + "× to "
             + str(N["err_growth_hi"]["value"]) + "× over the same steps, across the four models. "
             "The gap between the panels is the collapse.",

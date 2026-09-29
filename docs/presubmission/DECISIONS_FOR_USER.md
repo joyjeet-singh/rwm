@@ -200,3 +200,12 @@ S10 stops **BLOCKED** because PLAN's S10 item 4 says anything larger than a smal
   - `docs/SUBMISSION_PACKAGE.md:54` still carries the old title.
   - The tracked, pushed `supplementary_anon.zip` (2026-09-27) holds the pre-S3 paper. Rebuild it with `scripts/make_anon_bundle.py --zip`, which rewrites a committed public file, and refresh the package doc?
 - **D7. Length.** The body is 1.8% shorter than S0, against a 30% target. Accept as reported, or move whole analyses to the supplement?
+
+**Answers (verbatim), 2026-09-29:**
+- D1: "the conclusion should be scoped to the per-dimension evidence"
+- D2: "add the checkpoint column"
+- D3: "re-run/annotate the script and add"
+- D4: "the same solution as D3"
+- D5: "reclassify changes"
+- D6: "rebuild with the new title."
+- D7: "Accept as reported"

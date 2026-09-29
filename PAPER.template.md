@@ -376,11 +376,12 @@ original's *figure*, and h = {{v2_deploy_h}} to its *method*.
 ### 3.2 What each claim rests on
 
 Every headline claim in this paper is measured on one of the three arenas above, at a stated
-number of independent trajectories. The table is generated from the artifacts each claim is
-computed from, so no arena label and no sample size in it is typed by hand.
+number of independent trajectories, and at one checkpoint: the released one, or ours at a stated
+number of training iterations. The table is generated from the artifacts each claim is computed
+from, so no arena label, sample size or checkpoint in it is typed by hand.
 
-| claim | § | arena | n_independent | in-sample for the model measured? | verdict | survives multiplicity correction? |
-|---|---|---|---|---|---|---|
+| claim (§) | arena (n_independent) | checkpoint | in-sample for the model measured? | verdict | survives multiplicity correction? |
+|---|---|---|---|---|---|
 {{evidence_table}}
 
 ---
@@ -405,10 +406,14 @@ would take.
 
 **For {{orig_n_without_word}} of the {{orig_n_tested_word}} claims we tested, the original reports no quantitative
 figure.** Each is asserted qualitatively and shown in a plot, with no number in text, caption or
-table. So our {{d1_ratio}}× at h = {{v2_diag_h}} neither confirms nor contradicts a
-published figure: it is the first figure attached to the claim, as §6.7's coefficient is for the
-follow-up's "strong correlation" between disagreement and error. The exception is the configuration claim, whose heatmap prints a
-value in every cell (§5.2). Where a magnitude is legible only from a plotted curve we say so rather
+table; §6.7's coefficient is the first figure attached to the follow-up's "strong correlation"
+between disagreement and error. The exceptions are the configuration claim and the teacher-forcing
+claim, whose values one heatmap prints in every cell (§5.2). For the teacher-forced {{mn_n1_label}}
+it prints {{orig_tf_e_n1}} against {{orig_tf_e_centre}} at the centre, {{orig_tf_ratio}}× worse, on
+evaluation data and at a horizon it does not state; our sweep's {{mn_n1_label}} is
+{{mn_tf_ratio}}× worse on relative-L1 at h = {{v2_diag_h}}. Our {{d1_ratio}}× compares Arm B,
+which trains on {{win_fore}} teacher-forced targets per window rather than one
+(`docs/presubmission/ORIGINAL_SPECS.md` §2), so it neither confirms nor contradicts that figure. Where a magnitude is legible only from a plotted curve we say so rather
 than estimating it from the axis.
 
 **Appendix D gives the full table**, claim by claim, with what the original states, where it
@@ -816,7 +821,8 @@ closes onto therefore freezes while the interval closes: a one-way ratchet.
 
 **The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Its completeness
 rests on the other {{e4_n_inert}} being inert with respect to σ, so each term is computed alone on
-one real batch and back-propagated alone, and the gradient reaching the log-σ tower,
+one real batch ({{e4_batch}} windows from the training episodes, at freshly initialised weights of
+the released architecture) and back-propagated alone, and the gradient reaching the log-σ tower,
 `state_log_delta_logstd` and `state_min_logstd` is recorded. A term that cannot move σ produces
 exactly zero on all three.
 
@@ -1224,7 +1230,8 @@ So the accurate form of this section is: **a constant scalar does not repair the
 
 One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 5; our arms at {{iters_main}} training iterations, the released checkpoint as released):
+σ is flat while error grows (Figure 5; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories; our arms at
+{{iters_main}} training iterations, the released checkpoint as released):
 
 | model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
 |---|---|---|
@@ -1665,7 +1672,7 @@ At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to
 
 The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large. The scale may be repairable per horizon, but on a model that has not seen the test episodes the evidence is mixed. On the released checkpoint a per-horizon multiplier, fitted on one episode and scored on another, brings every coverage estimate within {{d3_tol}} points of nominal, though no single cell is resolvable at this arena and the cells are not independent trials (§6.8), where a global multiplier manages {{d3_epi_const_ok}} of them. On Arm A, whose model never saw those episodes, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. Against a second free baseline it does less well: the model's own predicted step size ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, a margin this sample cannot resolve, so the verdict is {{e7_verdict}}. **The control this rests on removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (§6.7). That is smaller than the {{a2_r_pooled}} pooled figure, and it is the one that means what a practitioner needs it to mean: not a re-encoding of the clock, and not merely a report of which episode is hard. It is the closest either original work comes to a claim this reproduction strengthens rather than qualifies, and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well.
 
-What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction: the epistemic term on every one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials, since the dimensions are physically coupled (§6.6). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_h368}} dimensions over all ten episodes and at chance on the held-out pair alone, a dependence on arena that §6.6 sets out. The corrected arm sits at chance in both. Once the coupling is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction; the independent-trials P-values an earlier draft carried were wrong by up to a factor of about {{perm_worst_factor}} and are withdrawn (`S-15`). Neither quantity yields a usable interval. Uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective; it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
+What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction: the epistemic term on every one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials, since the dimensions are physically coupled (§6.6). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_h368}} dimensions over all ten episodes and at chance on the held-out pair alone, a dependence on arena that §6.6 sets out. The corrected arm sits at chance in both. Once the coupling is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction; the independent-trials P-values an earlier draft carried were wrong by up to a factor of about {{perm_worst_factor}} and are withdrawn (`S-15`). Neither quantity yields a usable interval. Per dimension, uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective. As the scalar the method applies, ensemble disagreement gets the order right (§6.7) and the size wrong: it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
 
 **What should travel from this paper, and what should not.** The findings are of three kinds. *Properties of the objective and of how its bounds are built* are the ones to expect elsewhere,
 and only where both are present together: §6.3 derives the σ = 0 optimum from squared
@@ -1855,7 +1862,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 | claim, and where | tested | what the original reports | verdict |
 |---|---|---|---|
 | RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 7 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
-| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
+| Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **quantitative**: Fig. 6 prints e for the teacher-forced N=1 row, {{orig_tf_e_n1}} at {{mn_n1_label}} against {{orig_tf_e_centre}} at the centre, on unstated data and horizon; the passage itself gives no number | reproduces, and more strongly: Arm B is worse than the hold-last floor, and §5.2's {{mn_n1_label}} is {{mn_tf_ratio}}× the centre's error at h = {{v2_diag_h}} |
 | M=32, N=8 gives the optimal trade-off between accuracy and training time (§IV-C) | **yes** | **quantitative**: Fig. 6 prints the error and the training hours of every cell of its grid, and the centre's error is the tied-lowest (`docs/presubmission/ORIGINAL_SPECS.md` a.5) | **{{mn_verdict}}** on the accuracy half (§5.2): {{mn_better_list}} beat it. Training time is reported, not tested |
 | Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **{{bl_tf_verdict}}** with the baselines teacher-forced, as the original trains them, and **{{bl_ar_verdict}}** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§5.3). One robot where the original has several |
 | Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |

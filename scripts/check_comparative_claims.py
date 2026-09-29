@@ -779,7 +779,8 @@ CLAIMS = [
     # state no arena at all) are reported as unconfirmed rather than silently
     # counted as passing.
     {"id": "C24.1", "kind": "arena_consistency", "where": "3.2",
-     "says": "so no arena label and no sample size in it is typed by hand"},
+     # S10 re-anchor (user ruling D2 added the checkpoint column and reworded this sentence)
+     "says": "so no arena label, sample size or checkpoint in it is typed by hand"},
 ]
 
 
