@@ -51,7 +51,11 @@ since `c16267c`; do not upload until they match.
 
 ## 2. Title
 
-What a released robotic world model's uncertainty is worth: a one-step evaluation defect and a collapsed σ
+Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
+
+*Title updated in pre-submission S10 (user ruling D6, `docs/presubmission/DECISIONS_FOR_USER.md#S10-review-blocked`).
+The rest of this document (abstract, counts, SHA-256s) predates the pre-submission edit and is refreshed
+once the paper is frozen.*
 
 ## 3. Abstract
 
