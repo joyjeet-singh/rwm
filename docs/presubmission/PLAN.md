@@ -16,7 +16,7 @@ Numbers quoted below were read from the paper PDF of 28 Sep 2026. Where an artif
 |---|---|
 | Opus, high effort | `CLAUDE_CODE_SUBAGENT_MODEL=sonnet claude --model claude-opus-5-5 --effort high` |
 | Opus, default effort | `CLAUDE_CODE_SUBAGENT_MODEL=sonnet claude --model claude-opus-5-5` |
-| Sonnet | `claude --model claude-sonnet-5` |
+| Sonnet | `claude --model claude-sonnet-5-5` |
 
 Then type:
 
@@ -50,7 +50,7 @@ Then type:
 | S8 | Sonnet 5 | default | Check the queue finished; evaluate new runs; run the verdict scripts (no interpretation) | 1 h + eval |
 | S9 | Opus 5.5 | high | Write the new results into the paper | 1–2 h |
 | S10 | Opus 5.5 | high | Fresh-eyes review against Appendix E; small fixes only | 1 h |
-| S11 | Sonnet 5 | default | Clean-clone verification and final report. No edits. | 1 h + CPU |
+| S11 | Sonnet 5.5 | default | Clean-clone verification and final report. No edits. | 1 h + CPU |
 
 ---
 
@@ -398,7 +398,7 @@ Reads: §1, S10, Appendix E's checklist.
    - Every caption must carry its arena, n_independent and checkpoint.
 4. **Fix size limit.** Fix only small issues (3 sentences or fewer each). Anything larger: stop with BLOCKED and the list.
 
-### S11 — Clean-clone verification (Sonnet 5) — last; no edits
+### S11 — Clean-clone verification (Sonnet 5.5) — last; no edits
 1. **Push and clone.** Push `presubmission`, then clone it into a fresh temporary directory (not the working copy).
 2. **Rebuild from scratch.** In the clone, run each of these in order:
    1. `./setup.sh` (it verifies the two pinned upstream hashes);
