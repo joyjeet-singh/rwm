@@ -579,3 +579,28 @@ Next:
   - D7: length.
 - S10 resumes as PARTIAL/BLOCKED once those are ruled. S11 waits for S10 COMPLETE.
 Decisions for user: DECISIONS_FOR_USER.md#S10-fresh-terminal (answered), DECISIONS_FOR_USER.md#S10-review-blocked (open)
+
+## S10 (resumed) — 2026-09-29 23:10 — Opus 5.5 — status: COMPLETE
+Commits:
+- b317e30 [S10][item 4] User rulings D1-D5 on the review's larger items
+- 040d54c [S10][item 4] User ruling D6: rebuild both bundles with the new title
+- (the commit carrying this entry) [S10] COMPLETE: REVIEW.md resolutions and session log
+Done: resumed from BLOCKED on the user's rulings, recorded verbatim in `DECISIONS_FOR_USER.md#S10-review-blocked`. No subagent was used: S10's two were spent.
+- **D1.** §12's "weak ordering at best" is scoped to the per-dimension evidence. As the scalar the method applies, disagreement "gets the order right (§6.7) and the size wrong", so the title, abstract and conclusion agree.
+- **D2.** §3.2 gains a checkpoint column read from each row's artifact (`checkpoint_of`; M-64's row via `a1_ab_by_horizon.json`, as its arena_matching states). Eight columns overflowed the PDF gate (7 overfull boxes), so the table carries its eight fields in six columns, with § and n_independent paired to claim and arena. The gate was not loosened.
+- **D3 and D4.** Both producers now record their design and were re-run; every existing value is identical. Figure 5's caption and the σ-growth table name the held-out pair and n_independent = 4; §6.3 names its batch and its freshly initialised weights.
+- **D5.** `tf_poor` is reclassified quantitative. §4 now reads "four of the six", and sets the original's (32, 1) against (32, 8), 3.99 against 0.47 (8.5×), beside our sweep's 6.35× at h = 368. It says our 4.61× (Arm B) is not that configuration, and Appendix D follows.
+- **D6.** Both zips are rebuilt with the new title: the anonymous one has 499 files and 0 identifying strings, and neither holds an old-title file. `SUBMISSION_PACKAGE.md`'s title is updated.
+- **D7.** Length accepted as reported.
+- `REVIEW.md`: checklist 5 now passes; 7 is accepted as reported. A resolutions table was added.
+Build/checks: pass.
+- 60/60 comparative claims verified, and the gate self-test catches 7 of 7. The PDF has 0 overfull boxes (49 pages).
+- Two consecutive build-and-check passes are byte-identical, and match the committed outputs.
+- **Re-anchored (logged per §1.2.8):** C24.1 "so no arena label and no sample size in it is typed by hand" → "so no arena label, sample size or checkpoint in it is typed by hand", because D2 reworded the sentence. The check's logic is unchanged.
+Paper numbers changed:
+- `orig_n_without` 5 → 4 and `orig_n_with` 1 → 2 (D5).
+- New keys: `orig_tf_e_n1` 3.99, `orig_tf_e_centre` 0.47, `orig_tf_ratio` 8.5, `mn_tf_ratio` 6.35, `mn_n1_label`, `sig_arena`, `sig_nind` 4, `e4_batch` 64.
+- `evidence_table` gains the checkpoint field.
+CPU jobs over 1 min: none. The two producer re-runs took 18 s and 12 s; each build-and-check pass took about 3 min.
+Next: S11, clean-clone verification (Sonnet 5.5; last; no edits), in a new terminal.
+Decisions for user: DECISIONS_FOR_USER.md#S10-review-blocked (answered)
