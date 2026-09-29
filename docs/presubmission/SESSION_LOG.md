@@ -428,3 +428,45 @@ Next:
 - S8 (queue gate and evaluation). The queue is projected to finish around 2026-09-30 08:23; S8 must not start before it finishes.
 - For S10's checklist item 7: the body is 24,753 against a target of 19,170, and the shortfall is reported here with the largest sections listed.
 Decisions for user: none raised. Whether to move whole analyses to the supplement to reach 30% is open for the user; S7 did not force it.
+
+## S8 — 2026-09-29 19:45 — Opus 5.5 (the plan assigns Sonnet 5) — status: COMPLETE
+Commits:
+- 9f5656f [S8] Queue gate, evaluation and runtime inputs for the 42 pre-submission runs
+- 5d9e28d [S8] discharge M-74, M-75 and M-76 as M-77, M-78 and M-79
+- (the commit carrying this entry) [S8] COMPLETE: session log
+Done:
+- **Step 1, the gate: PASS** (`docs/presubmission/s8_gate.py`). The queue finished at 19:11:02 on 2026-09-29 with 42 queued, 42 done and 0 failed. Every artifact has the expected iterations, M, N, arch/regime/spec, seed and width (RWM `rnn_hidden_size` 256; each baseline the parameter count its spec builds). Every loss trace, final term and `wall_clock_s` is finite, and the weights exist.
+- **Step 2, evaluation.** The S2a and S2b evaluators, unchanged since their pre-run commits, were run in both arenas:
+  - `results/mn_sweep_eval.json`: the 24 sweep runs plus the centre;
+  - `results/baselines_eval.json`: the 18 baseline runs plus RWM.
+  In both, RWM reproduces `results/head_to_head_accuracy.json` to 3.9e-08. The verdict scripts are unchanged since their pre-run commits (51c3d7f, 5785260), and their self-tests pass.
+- **Step 3, discharge.** By the ruling "New entries + Status line (Recommended)" (`DECISIONS_FOR_USER.md#S8-discharge-status`):
+  - **M-74 → `M-77`: NOT OPTIMAL AT OUR BUDGET.**
+    - (32, 32), (32, 16), (8, 8) and (2, 8) exclude zero in their own favour.
+    - (32, 2) and (32, 1) exclude zero in the centre's favour.
+    - (16, 8) and (1, 8) are not rejected.
+  - **M-75 → `M-78`: REPRODUCES.** RWM beats the teacher-forced MLP, RSSM and transformer.
+  - **M-76 → `M-79`: RWM AHEAD OF ALL THREE**, against the autoregressive baselines.
+  - Only each rule's Status line changed, and the writer asserts that. `ledger_check` PASS, with 0 rules undischarged.
+- **Step 4, runtime inputs** (`results/presubmission_runtime.json`, from `docs/presubmission/s8_runtime.py`):
+  - The 42 runs took 28.3 h: the sweep 13.4 h, the teacher-forced baselines 7.9 h, the autoregressive baselines 7.0 h.
+  - New keys `rt_pre_*`, `rt_sweep_*`, `rt_bl_tf_*` and `rt_bl_ar_*` sit beside Appendix B's `rt_*`, which are unchanged. Appendix B's prose describes the step5 runs, and its remainder is released-width hours, which the baselines are not.
+  - **8 runs overlapped a CPU job a session logged:**
+    - `mn_M32_N32_s2`: 59 min, S2b's verification ladder;
+    - `mn_M16_N8_s0`: S2b's timing probe, S3's `alignment_defect_ci.py` window, and builds;
+    - `mn_M16_N8_s1`, `mn_M32_N16_s0`, `mn_M8_N8_s2`, and `mn_M32_N2_s0`/`s1`/`s2`: S3–S7 build passes.
+  - Every logged job and its basis (exact, logged, or window only) is in `docs/presubmission/s8_cpu_jobs.json`. No baseline run overlapped one.
+- **Step 5.** No paper prose was edited; templates are unchanged.
+Build/checks: pass.
+- 60/60 comparative claims verified, and the gate self-test catches 7 of 7.
+- Two consecutive build-and-check passes are byte-identical.
+Paper numbers changed (all generated): `n_entries` 258 → 261, `ledger_kb` 543 → 552. Added: `rt_pre_runs` 42, `rt_pre_hours` 28.3, `rt_sweep_runs`/`_hours` 24 / 13.4, `rt_bl_tf_runs`/`_hours` 9 / 7.9, `rt_bl_ar_runs`/`_hours` 9 / 7.0, and `rt_pre_overlapped` 8.
+CPU jobs over 1 min: none. The evaluators and verdicts took about 2 min in all, after the queue had finished.
+Next:
+- **S9 writes the new results into the paper**: §5.2 (M/N sweep), §5.3 (baselines), and §4, Appendices B–E, §3.2 and §11 moving from 4 to 6 tested claims.
+- For S9:
+  - `results/appendix_g_rules.json` (Appendix E's table and lead times) has not been regenerated since M-74–M-76 were discharged; it is a reproduce stage, not the fast build. Figure 1's lead times and `appG_*` / `f4_*` will move when it is.
+  - Appendix B's prose needs the new runtime keys.
+  - Appendix C's rows for the sweep and the baselines still say they are unrun.
+  - `src/baselines` is ours. OUT_OF_SCOPE already records that the paper's "lite ships only the RNN variant" is wrong (S2b).
+Decisions for user: DECISIONS_FOR_USER.md#S8-discharge-status (answered)
