@@ -530,3 +530,52 @@ Next:
   - "the cheapest of the four" in Appendix C.
 - S2b's OUT_OF_SCOPE item ("the lite release ships only the RNN variant") is resolved: the sentence is gone, and §5.3 says the pinned code has an MLP, which ours follows.
 Decisions for user: DECISIONS_FOR_USER.md#S9-contributions-abstract (answered, three rulings)
+
+## S10 — 2026-09-29 22:40 — Opus 5.5; reviewers Sonnet 5.5 (Explore) — status: BLOCKED
+Commits:
+- 040f336 [S10][item 4] Small fixes from the fresh-eyes review
+- 01b9ec0 [S10][item 1] REVIEW.md: the checklist, the table spot-checks, the front matter, and the list that blocks
+- (the commit carrying this entry) [S10] BLOCKED: session log
+Done:
+- **Setup.** By the ruling "Here, fresh agents review" (`DECISIONS_FOR_USER.md#S10-fresh-terminal`), S10 ran in the S9 conversation. Two read-only Sonnet 5.5 Explore agents, as S10 item 2 prescribes and within §1.3's cap, did the review from PLAN's S10 text, Appendix E's checklist and file locations only. This session re-checked every finding against its artifact before editing.
+- **Item 1: `REVIEW.md`.** Of the 11 checklist items:
+  - 9 pass, some after fixes;
+  - item 5 is partial: the old title survives in `docs/SUBMISSION_PACKAGE.md:54` and the pushed `supplementary_anon.zip`;
+  - item 7 fails on length and is reported: the body is 26,900 words to References against S0's 27,387 (−1.8%).
+- **Item 2: tables against prose.** 34 mismatches were reported: 13 for §5 and the front matter, 21 for §6–§7 and the captions. 29 were confirmed and fixed, 27 distinct, because two were reported by both agents. None was a wrong number; all were quantifiers, scopes, pointers or captions. 5 are listed as D1–D4 and D6.
+- **Item 3: front matter.**
+  - Every abstract and contribution number is now in the body and bound (abstract +0.470 → `e7_step_r`; "1 of the 2" now in §6.7).
+  - "One line fixes it" was unsupported and not literally true, since the upstream loop slices actions in two places. It now reads "a one-step shift of the action index", with `model_training.py:129`/`:132` in §7.2.
+  - The conclusion now carries the one-step reversal.
+  - "Under a rule committed in advance" now qualifies the verdict, not the three-seed magnitudes: M-23 was discharged on seed 1.
+- **Item 4: fixes, each three sentences or fewer (`040f336`).** Items addressed to S10 in OUT_OF_SCOPE are resolved:
+  - Fig. 4 → Fig. 7 in Appendix D and `original_paper_figures.py`;
+  - "the cheapest of the four".
+  - The `tf_poor` classification is not a small fix: D5.
+- New keys: `m16_verdict`, `bu_change_cell`, `tw_design`. New assertions guard:
+  - the in-sample exception;
+  - §6.7's and §6.10's arenas;
+  - the ensemble-5 iterations;
+  - M-16's single returned verdict.
+- Appendix E's M-16 row now shows CANNOT BE SETTLED AT THIS BUDGET, through `appendix_g_rules.py`'s `RETURNED` map.
+Build/checks: pass.
+- 60/60 comparative claims verified, and the gate self-test catches 7 of 7.
+- Two consecutive build-and-check passes are byte-identical.
+- The abstract is 330 words. No check was re-anchored.
+Paper numbers changed:
+- Keys added: `m16_verdict`, `bu_change_cell`, `tw_design`.
+- `appG_table`'s M-16 cell changed. The abstract now prints `e7_step_r` (+0.4697) instead of `e7_step_r3` (+0.470).
+- No measured value changed.
+CPU jobs over 1 min: build-and-check passes only.
+Correction to S9's entry: "The body is 26,203 words (S7: 24,753)" compared a count to "Data and code" with S7's count to "References". Like for like, the body now has 26,900 words to References and 26,387 to "Data and code"; S0 had 27,387 and 26,874.
+Next:
+- **Blocked on `DECISIONS_FOR_USER.md#S10-review-blocked`:**
+  - D1: title against conclusion ("right order" / "weak ordering at best");
+  - D2: §3.2 checkpoint column;
+  - D3: Figure 5 arena and n;
+  - D4: §6.3 gradient table's checkpoint;
+  - D5: `tf_poor` reclassification;
+  - D6: stale `supplementary_anon.zip` and SUBMISSION_PACKAGE title;
+  - D7: length.
+- S10 resumes as PARTIAL/BLOCKED once those are ruled. S11 waits for S10 COMPLETE.
+Decisions for user: DECISIONS_FOR_USER.md#S10-fresh-terminal (answered), DECISIONS_FOR_USER.md#S10-review-blocked (open)
