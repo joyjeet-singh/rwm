@@ -470,3 +470,63 @@ Next:
   - Appendix C's rows for the sweep and the baselines still say they are unrun.
   - `src/baselines` is ours. OUT_OF_SCOPE already records that the paper's "lite ships only the RNN variant" is wrong (S2b).
 Decisions for user: DECISIONS_FOR_USER.md#S8-discharge-status (answered)
+
+## S9 — 2026-09-29 22:10 — Opus 5.5 — status: COMPLETE
+Commits:
+- 8f1fa20 [S9] Write M-74, M-75 and M-76 into the paper: §5.2, §5.3, and everything generated from the claim counts
+- (the commit carrying this entry) [S9] COMPLETE: session log
+Done:
+- **Item 1, two new sections.**
+  - §5.2, the configuration claim: **NOT OPTIMAL AT OUR BUDGET**. (32, 32), (32, 16), (8, 8) and (2, 8) beat the centre; (32, 2) and (32, 1) are worse; (1, 8) and (16, 8) are unresolved. The original's direction on N holds, and its direction on M holds only in part. On the governing reading no shorter history is worse; the in-sample readings put (1, 8) behind the centre at h = 368, and held-out nRMSE puts (16, 8) behind it. The prose names both, generated as `mn_mvar_other_worse`.
+  - §5.3, the architecture claim: **REPRODUCES** (M-75, teacher-forced baselines) and **RWM AHEAD OF ALL THREE** (M-76, autoregressive). Following M-76's own "Licenses" line, the paper calls M-76 a comparison of architectures at one training regime, not a verdict on the original's claim. The original's statement that an autoregressive RSSM is comparable to RWM is reported as not reproduced, with our RSSM reading as a possible cause.
+  - Word counts, placeholders counted as one word: §5.2 525, §5.3 514. Rendered: 760 and 661, because generated lists, captions and clauses expand. The overrun on PLAN's "about 500" comes from the review corrections below; nothing was cut to meet it.
+  - "Architecture baselines" is used throughout and defined at first use. Both sections cite `ORIGINAL_SPECS.md` and `BASELINE_SPECS.md`.
+- **Item 2, head-to-head table.** Six baseline rows, relative-L1 only. The baseline evaluator's relative-L1 reproduces Arm A's row to 1e-6 (asserted), but its nRMSE is averaged per trajectory while the table pools it, so those cells are "—" and the caption says why (OUT_OF_SCOPE). The released checkpoint still leads at h = 1 and h = 8.
+- **Item 3, everything generated from counts.**
+  - §4 moves to six tested and six untested claims, through Appendix D's tags. A new assertion checks that no untested row is tagged `cpu`, which is what makes "every one of the six we did not test needs a simulator or hardware" true. The review caught the first wording ("needs a simulator"): the offline-MBRL-on-real-robots row needs hardware, not a simulator.
+  - `orig_n_without` 4 → 5 and `orig_n_with` 0 → 1: the configuration claim's heatmap prints its values.
+  - Appendix C: the two CPU rows are removed. The "within reach" paragraph becomes history, and the row-count history moved to BUILD_CHECKS.
+  - Appendix D: both rows are marked tested, with their verdicts; the baselines row cites Fig. 7.
+  - Appendix E regenerated: 18 → 21 rules. Figure 1 is unchanged; the paper already says Appendix E adds every rule since.
+  - Appendix B: a paragraph on the 42 runs (28.3 h), asserted to sum by rule. It states that 8 runs overlapped logged CPU work, and §5.2's caption now says so too.
+  - §3.2: three rows from `scripts/evidence_summary.py`.
+  - §11: one paragraph on the scope of the two verdicts. §12: one sentence in the opening and one in "what should travel".
+- **Item 4.** An 8th contribution bullet, per the ruling raising the cap to 8. One numeral-free abstract sentence; trims elsewhere keep the abstract at 330 words, with C12.1 unchanged and passing. The only content removed from the abstract is the sentence "Because the shortfall grows with depth, no single penalty weight absorbs it", which §6.8 still states.
+- **Item 5, citations.** DreamerV2 (2010.02193, ICLR 2021 from its arXiv comment) and PlaNet (1811.04551) are verified by `t1_bibliography.py`'s own `verify()`, restricted to the two entries, and pinned with their fingerprints: 18 of 18 metadata-verified. PlaNet's arXiv record has no journal_ref and its comment names no venue. Its venue, ICML 2019 (PMLR 97), is from the paper's own first page, and the paper's two bibliography notes now say venues come from the record or the first page.
+- **Bundles.** Both builders ship `ORIGINAL_SPECS.md`, `BASELINE_SPECS.md` and `verify_original_specs.py` and still exclude the rest of `docs/presubmission/`. `make_anon_bundle.py` (no zip): PASS, 0 residual identifying hits. Its side-effect files (`docs/COMMIT_LABEL_MAP.json`, `results/anon_bundle.json`) were restored, not committed.
+- **Review** (PLAN §1.3's cap: two subagents). The first, on Sonnet 5.5, stopped on a rate limit before producing anything. The second ran as a one-agent workflow on Opus 5.5. It recomputed every table value and list, and found 0 wrong numbers and 9 wording issues, all fixed:
+  - the M-direction reading held only on the governing reading;
+  - §12 filed a resolved verdict under "limits, not findings";
+  - §4's "needs a simulator" was untrue for the hardware row;
+  - "error falling steeply as M grows" left out the original's own plateau;
+  - §5.2's hours column did not mention the 8 overlapped runs;
+  - "the RSSM takes DreamerV2's settings" was too broad;
+  - the bullet said "built to its specification" rather than "our reading of" it;
+  - "smallest resolvable difference" was used for what is a minimum detectable effect;
+  - the bullet counted M-76 toward the original's claim.
+Build/checks: pass.
+- 60/60 comparative claims verified, and the gate self-test catches 7 of 7.
+- Two consecutive build-and-check passes are byte-identical.
+- **Re-anchored (logged per §1.2.8):**
+  - C15.3 "of the claims we did test, the original reports no quantitative" → "claims we tested, the original reports no quantitative". The arithmetic is unchanged: `appF_n_claims` 12 = 6 + 6.
+  - C17.1 "within reach of the CPU budget this project already spent" → "we did not test needs a simulator or hardware we do not have". Its forbid list and self-test are unchanged, and the universal it now anchors is backed by the new no-`cpu`-row assertion.
+- New assertions in `paper_numbers.py`:
+  - §5.2/§5.3's arena equals §5's (episodes, `n_independent`, 400-row units);
+  - every quantifier in §5.2 and §5.3;
+  - the Appendix B sum;
+  - no untested `cpu` row.
+Paper numbers changed (all generated):
+- `orig_n_tested` 4 → 6; `n_untested` 8 → 6; `appE_n_cpu` 2 → 0.
+- `appG_n_rules` 18 → 21; `t1_n_refs` 16 → 18.
+- `pdf_pages` 45 → 48; `tn_typed` 646 → 694.
+- About 70 keys added (`mn_*`, `bl_*`, `h2h_bl_*`, `orig_n_*_word`).
+- The body is 26,203 words (S7: 24,753).
+CPU jobs over 1 min: build-and-check passes only (about 3 min each); no training.
+Scratchpad: the session scratchpad was cleared externally mid-session. The check runner was recreated verbatim; the HF upload tooling is gone, and that upload had already completed.
+Next:
+- **S10, fresh-eyes review.** OUT_OF_SCOPE items addressed to S10:
+  - the Fig. 4 → Fig. 7 citation in the AR-versus-TF and generality rows of Appendix D and in `original_paper_figures.py` `ar_beats_tf`;
+  - `tf_poor`'s "no quantitative figure", although Fig. 6's N = 1 row prints values;
+  - "the cheapest of the four" in Appendix C.
+- S2b's OUT_OF_SCOPE item ("the lite release ships only the RNN variant") is resolved: the sentence is gone, and §5.3 says the pinned code has an MLP, which ours follows.
+Decisions for user: DECISIONS_FOR_USER.md#S9-contributions-abstract (answered, three rulings)
