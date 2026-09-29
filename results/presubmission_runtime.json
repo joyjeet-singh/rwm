@@ -1,0 +1,982 @@
+{
+ "what": "per-run wall-clock of the pre-submission queue (M-74 sweep, M-75 and M-76 baselines), with every overlap against a logged CPU job",
+ "sources": [
+  "runs/queue.txt",
+  "runs/queue.log (gitignored; times copied here)",
+  "results/mn_sweep_run_*.json",
+  "results/baseline_run_*.json",
+  "docs/presubmission/s8_cpu_jobs.json"
+ ],
+ "note": "a job logged only as a window, or with no times, is matched against that window or not at all; its 'basis' says which. Overlap inflates wall_clock_s; it does not change any trained weight or any verdict.",
+ "n_runs": 42,
+ "wall_clock_s": 101763.22349494303,
+ "by_rule": {
+  "M-74": {
+   "n_runs": 24,
+   "wall_clock_s": 48075.667917540006
+  },
+  "M-75": {
+   "n_runs": 9,
+   "wall_clock_s": 28439.691344960003
+  },
+  "M-76": {
+   "n_runs": 9,
+   "wall_clock_s": 25247.86423244301
+  }
+ },
+ "by_family": {
+  "M-74 M32_N32": {
+   "n_runs": 3,
+   "wall_clock_s": 14223.325289509003,
+   "mean_s": 4741.108429836334
+  },
+  "M-74 M16_N8": {
+   "n_runs": 3,
+   "wall_clock_s": 5471.678386430001,
+   "mean_s": 1823.892795476667
+  },
+  "M-74 M32_N16": {
+   "n_runs": 3,
+   "wall_clock_s": 8397.538756716003,
+   "mean_s": 2799.179585572001
+  },
+  "M-74 M8_N8": {
+   "n_runs": 3,
+   "wall_clock_s": 3204.404140423998,
+   "mean_s": 1068.134713474666
+  },
+  "M-74 M32_N2": {
+   "n_runs": 3,
+   "wall_clock_s": 7939.578773239002,
+   "mean_s": 2646.526257746334
+  },
+  "M-74 M32_N1": {
+   "n_runs": 3,
+   "wall_clock_s": 5455.414883917001,
+   "mean_s": 1818.4716279723336
+  },
+  "M-74 M2_N8": {
+   "n_runs": 3,
+   "wall_clock_s": 1779.2624438210041,
+   "mean_s": 593.087481273668
+  },
+  "M-74 M1_N8": {
+   "n_runs": 3,
+   "wall_clock_s": 1604.4652434839954,
+   "mean_s": 534.8217478279985
+  },
+  "M-75 mlp_tf_s7": {
+   "n_runs": 3,
+   "wall_clock_s": 477.83228070500627,
+   "mean_s": 159.27742690166875
+  },
+  "M-75 rssm_tf_s7": {
+   "n_runs": 3,
+   "wall_clock_s": 20273.014452984004,
+   "mean_s": 6757.6714843280015
+  },
+  "M-75 transformer_tf_s7": {
+   "n_runs": 3,
+   "wall_clock_s": 7688.8446112709935,
+   "mean_s": 2562.948203756998
+  },
+  "M-76 mlp_ar_s7": {
+   "n_runs": 3,
+   "wall_clock_s": 700.4535854819987,
+   "mean_s": 233.4845284939996
+  },
+  "M-76 rssm_ar_s7": {
+   "n_runs": 3,
+   "wall_clock_s": 16565.842172908015,
+   "mean_s": 5521.947390969338
+  },
+  "M-76 transformer_ar_s7": {
+   "n_runs": 3,
+   "wall_clock_s": 7981.568474052998,
+   "mean_s": 2660.5228246843326
+  }
+ },
+ "n_runs_overlapped": 8,
+ "unassignable_jobs": [
+  "S2b smaller jobs: evaluator self-tests (about 2 min, twice), verdict self-tests (about 1 min each), 3-iteration smoke tests (about 2 min)"
+ ],
+ "runs": [
+  {
+   "run": "mn_M32_N32_s0",
+   "rule": "M-74",
+   "family": "M32_N32",
+   "seed": 0,
+   "start": "2026-09-28T14:51:27+05:30",
+   "end": "2026-09-28T16:03:24+05:30",
+   "wall_clock_s": 4312.571391208001,
+   "artifact": "results/mn_sweep_run_M32_N32_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M32_N32_s1",
+   "rule": "M-74",
+   "family": "M32_N32",
+   "seed": 1,
+   "start": "2026-09-28T16:03:24+05:30",
+   "end": "2026-09-28T17:10:42+05:30",
+   "wall_clock_s": 4031.7414991709993,
+   "artifact": "results/mn_sweep_run_M32_N32_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M32_N32_s2",
+   "rule": "M-74",
+   "family": "M32_N32",
+   "seed": 2,
+   "start": "2026-09-28T17:10:42+05:30",
+   "end": "2026-09-28T18:48:50+05:30",
+   "wall_clock_s": 5879.012399130002,
+   "artifact": "results/mn_sweep_run_M32_N32_seed2.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "S2b verification ladder",
+     "overlap_s": 3540,
+     "basis": "logged"
+    },
+    {
+     "job": "S2b timing probe",
+     "overlap_s": 50,
+     "basis": "logged"
+    }
+   ],
+   "overlap_s": 3590
+  },
+  {
+   "run": "mn_M16_N8_s0",
+   "rule": "M-74",
+   "family": "M16_N8",
+   "seed": 0,
+   "start": "2026-09-28T18:48:50+05:30",
+   "end": "2026-09-28T19:25:37+05:30",
+   "wall_clock_s": 2200.7435897780015,
+   "artifact": "results/mn_sweep_run_M16_N8_seed0.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "build-and-check pass (s3a)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3b1)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3b2)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "S2b timing probe",
+     "overlap_s": 670,
+     "basis": "logged"
+    },
+    {
+     "job": "S3 alignment_defect_ci.py, two runs of 3 min 39 s",
+     "overlap_s": 937,
+     "basis": "window only"
+    }
+   ],
+   "overlap_s": 1804
+  },
+  {
+   "run": "mn_M16_N8_s1",
+   "rule": "M-74",
+   "family": "M16_N8",
+   "seed": 1,
+   "start": "2026-09-28T19:25:37+05:30",
+   "end": "2026-09-28T19:57:53+05:30",
+   "wall_clock_s": 1931.423034366002,
+   "artifact": "results/mn_sweep_run_M16_N8_seed1.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "build-and-check pass (s3c)",
+     "overlap_s": 53,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d1)",
+     "overlap_s": 58,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d2)",
+     "overlap_s": 64,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d3)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d4)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d5)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d6)",
+     "overlap_s": 64,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d7)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s3d8)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "S3 alignment_defect_ci.py, two runs of 3 min 39 s",
+     "overlap_s": 301,
+     "basis": "window only"
+    }
+   ],
+   "overlap_s": 855
+  },
+  {
+   "run": "mn_M16_N8_s2",
+   "rule": "M-74",
+   "family": "M16_N8",
+   "seed": 2,
+   "start": "2026-09-28T19:57:53+05:30",
+   "end": "2026-09-28T20:20:16+05:30",
+   "wall_clock_s": 1339.511762285998,
+   "artifact": "results/mn_sweep_run_M16_N8_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M32_N16_s0",
+   "rule": "M-74",
+   "family": "M32_N16",
+   "seed": 0,
+   "start": "2026-09-28T20:20:16+05:30",
+   "end": "2026-09-28T21:08:37+05:30",
+   "wall_clock_s": 2897.1906563949997,
+   "artifact": "results/mn_sweep_run_M32_N16_seed0.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "build-and-check pass (s4a)",
+     "overlap_s": 61,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4b)",
+     "overlap_s": 62,
+     "basis": "exact"
+    }
+   ],
+   "overlap_s": 123
+  },
+  {
+   "run": "mn_M32_N16_s1",
+   "rule": "M-74",
+   "family": "M32_N16",
+   "seed": 1,
+   "start": "2026-09-28T21:08:37+05:30",
+   "end": "2026-09-28T21:54:12+05:30",
+   "wall_clock_s": 2729.0783327129975,
+   "artifact": "results/mn_sweep_run_M32_N16_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M32_N16_s2",
+   "rule": "M-74",
+   "family": "M32_N16",
+   "seed": 2,
+   "start": "2026-09-28T21:54:12+05:30",
+   "end": "2026-09-28T22:40:27+05:30",
+   "wall_clock_s": 2771.269767608006,
+   "artifact": "results/mn_sweep_run_M32_N16_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M8_N8_s0",
+   "rule": "M-74",
+   "family": "M8_N8",
+   "seed": 0,
+   "start": "2026-09-28T22:40:27+05:30",
+   "end": "2026-09-28T22:55:34+05:30",
+   "wall_clock_s": 903.944543808997,
+   "artifact": "results/mn_sweep_run_M8_N8_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M8_N8_s1",
+   "rule": "M-74",
+   "family": "M8_N8",
+   "seed": 1,
+   "start": "2026-09-28T22:55:34+05:30",
+   "end": "2026-09-28T23:10:50+05:30",
+   "wall_clock_s": 912.4631671899988,
+   "artifact": "results/mn_sweep_run_M8_N8_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M8_N8_s2",
+   "rule": "M-74",
+   "family": "M8_N8",
+   "seed": 2,
+   "start": "2026-09-28T23:10:50+05:30",
+   "end": "2026-09-28T23:34:02+05:30",
+   "wall_clock_s": 1387.9964294250021,
+   "artifact": "results/mn_sweep_run_M8_N8_seed2.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "build-and-check pass (s4c1)",
+     "overlap_s": 64,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4c2)",
+     "overlap_s": 61,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4d1)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4d2)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4e1)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4e2)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4f1)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4f2)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4g1)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4g2)",
+     "overlap_s": 64,
+     "basis": "exact"
+    }
+   ],
+   "overlap_s": 635
+  },
+  {
+   "run": "mn_M32_N2_s0",
+   "rule": "M-74",
+   "family": "M32_N2",
+   "seed": 0,
+   "start": "2026-09-28T23:34:02+05:30",
+   "end": "2026-09-29T00:15:31+05:30",
+   "wall_clock_s": 2484.9257966799996,
+   "artifact": "results/mn_sweep_run_M32_N2_seed0.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "build-and-check pass (s4h1)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s4h2)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s5a)",
+     "overlap_s": 67,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s5b1)",
+     "overlap_s": 60,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s5b2)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s5c1)",
+     "overlap_s": 61,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s5c2)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s5d1)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s5d2)",
+     "overlap_s": 61,
+     "basis": "exact"
+    }
+   ],
+   "overlap_s": 567
+  },
+  {
+   "run": "mn_M32_N2_s1",
+   "rule": "M-74",
+   "family": "M32_N2",
+   "seed": 1,
+   "start": "2026-09-29T00:15:31+05:30",
+   "end": "2026-09-29T01:01:55+05:30",
+   "wall_clock_s": 2779.0136043579987,
+   "artifact": "results/mn_sweep_run_M32_N2_seed1.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "build-and-check pass (s6a)",
+     "overlap_s": 61,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6b)",
+     "overlap_s": 67,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6c)",
+     "overlap_s": 64,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6d)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6e)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6f)",
+     "overlap_s": 60,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6g)",
+     "overlap_s": 62,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6h)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6i)",
+     "overlap_s": 64,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6j)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s6k)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7a)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7b)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7c)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7d)",
+     "overlap_s": 68,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7e)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7f)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7g)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7h)",
+     "overlap_s": 67,
+     "basis": "exact"
+    }
+   ],
+   "overlap_s": 1217
+  },
+  {
+   "run": "mn_M32_N2_s2",
+   "rule": "M-74",
+   "family": "M32_N2",
+   "seed": 2,
+   "start": "2026-09-29T01:01:55+05:30",
+   "end": "2026-09-29T01:46:37+05:30",
+   "wall_clock_s": 2675.6393722010034,
+   "artifact": "results/mn_sweep_run_M32_N2_seed2.json",
+   "overlapping_logged_jobs": [
+    {
+     "job": "build-and-check pass (s7i)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7j)",
+     "overlap_s": 67,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7k)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7l)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7m)",
+     "overlap_s": 67,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7n)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7o)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7p)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7q)",
+     "overlap_s": 64,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7r)",
+     "overlap_s": 63,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7s)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7t)",
+     "overlap_s": 64,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7u)",
+     "overlap_s": 66,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7v)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7w)",
+     "overlap_s": 65,
+     "basis": "exact"
+    },
+    {
+     "job": "build-and-check pass (s7x)",
+     "overlap_s": 64,
+     "basis": "exact"
+    }
+   ],
+   "overlap_s": 1045
+  },
+  {
+   "run": "mn_M32_N1_s0",
+   "rule": "M-74",
+   "family": "M32_N1",
+   "seed": 0,
+   "start": "2026-09-29T01:46:37+05:30",
+   "end": "2026-09-29T02:17:30+05:30",
+   "wall_clock_s": 1845.574875831997,
+   "artifact": "results/mn_sweep_run_M32_N1_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M32_N1_s1",
+   "rule": "M-74",
+   "family": "M32_N1",
+   "seed": 1,
+   "start": "2026-09-29T02:17:30+05:30",
+   "end": "2026-09-29T02:47:41+05:30",
+   "wall_clock_s": 1807.5844772060009,
+   "artifact": "results/mn_sweep_run_M32_N1_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M32_N1_s2",
+   "rule": "M-74",
+   "family": "M32_N1",
+   "seed": 2,
+   "start": "2026-09-29T02:47:41+05:30",
+   "end": "2026-09-29T03:17:46+05:30",
+   "wall_clock_s": 1802.2555308790033,
+   "artifact": "results/mn_sweep_run_M32_N1_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M2_N8_s0",
+   "rule": "M-74",
+   "family": "M2_N8",
+   "seed": 0,
+   "start": "2026-09-29T03:17:46+05:30",
+   "end": "2026-09-29T03:27:52+05:30",
+   "wall_clock_s": 602.6004890430049,
+   "artifact": "results/mn_sweep_run_M2_N8_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M2_N8_s1",
+   "rule": "M-74",
+   "family": "M2_N8",
+   "seed": 1,
+   "start": "2026-09-29T03:27:52+05:30",
+   "end": "2026-09-29T03:37:49+05:30",
+   "wall_clock_s": 589.6744670900007,
+   "artifact": "results/mn_sweep_run_M2_N8_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M2_N8_s2",
+   "rule": "M-74",
+   "family": "M2_N8",
+   "seed": 2,
+   "start": "2026-09-29T03:37:49+05:30",
+   "end": "2026-09-29T03:47:39+05:30",
+   "wall_clock_s": 586.9874876879985,
+   "artifact": "results/mn_sweep_run_M2_N8_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M1_N8_s0",
+   "rule": "M-74",
+   "family": "M1_N8",
+   "seed": 0,
+   "start": "2026-09-29T03:47:39+05:30",
+   "end": "2026-09-29T03:56:24+05:30",
+   "wall_clock_s": 521.6294035719984,
+   "artifact": "results/mn_sweep_run_M1_N8_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M1_N8_s1",
+   "rule": "M-74",
+   "family": "M1_N8",
+   "seed": 1,
+   "start": "2026-09-29T03:56:24+05:30",
+   "end": "2026-09-29T04:05:32+05:30",
+   "wall_clock_s": 545.6301154829998,
+   "artifact": "results/mn_sweep_run_M1_N8_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "mn_M1_N8_s2",
+   "rule": "M-74",
+   "family": "M1_N8",
+   "seed": 2,
+   "start": "2026-09-29T04:05:33+05:30",
+   "end": "2026-09-29T04:14:33+05:30",
+   "wall_clock_s": 537.2057244289972,
+   "artifact": "results/mn_sweep_run_M1_N8_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_mlp_tf_s7_s0",
+   "rule": "M-75",
+   "family": "mlp_tf_s7",
+   "seed": 0,
+   "start": "2026-09-29T04:14:33+05:30",
+   "end": "2026-09-29T04:17:16+05:30",
+   "wall_clock_s": 157.56123428299907,
+   "artifact": "results/baseline_run_mlp_tf_s7_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_mlp_tf_s7_s1",
+   "rule": "M-75",
+   "family": "mlp_tf_s7",
+   "seed": 1,
+   "start": "2026-09-29T04:17:16+05:30",
+   "end": "2026-09-29T04:20:00+05:30",
+   "wall_clock_s": 159.39692232500238,
+   "artifact": "results/baseline_run_mlp_tf_s7_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_mlp_tf_s7_s2",
+   "rule": "M-75",
+   "family": "mlp_tf_s7",
+   "seed": 2,
+   "start": "2026-09-29T04:20:00+05:30",
+   "end": "2026-09-29T04:22:46+05:30",
+   "wall_clock_s": 160.87412409700482,
+   "artifact": "results/baseline_run_mlp_tf_s7_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_rssm_tf_s7_s0",
+   "rule": "M-75",
+   "family": "rssm_tf_s7",
+   "seed": 0,
+   "start": "2026-09-29T04:22:47+05:30",
+   "end": "2026-09-29T06:15:00+05:30",
+   "wall_clock_s": 6727.874278772004,
+   "artifact": "results/baseline_run_rssm_tf_s7_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_rssm_tf_s7_s1",
+   "rule": "M-75",
+   "family": "rssm_tf_s7",
+   "seed": 1,
+   "start": "2026-09-29T06:15:00+05:30",
+   "end": "2026-09-29T08:07:28+05:30",
+   "wall_clock_s": 6743.074569162993,
+   "artifact": "results/baseline_run_rssm_tf_s7_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_rssm_tf_s7_s2",
+   "rule": "M-75",
+   "family": "rssm_tf_s7",
+   "seed": 2,
+   "start": "2026-09-29T08:07:28+05:30",
+   "end": "2026-09-29T10:00:56+05:30",
+   "wall_clock_s": 6802.065605049007,
+   "artifact": "results/baseline_run_rssm_tf_s7_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_transformer_tf_s7_s0",
+   "rule": "M-75",
+   "family": "transformer_tf_s7",
+   "seed": 0,
+   "start": "2026-09-29T10:00:56+05:30",
+   "end": "2026-09-29T10:43:47+05:30",
+   "wall_clock_s": 2566.030375133996,
+   "artifact": "results/baseline_run_transformer_tf_s7_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_transformer_tf_s7_s1",
+   "rule": "M-75",
+   "family": "transformer_tf_s7",
+   "seed": 1,
+   "start": "2026-09-29T10:43:47+05:30",
+   "end": "2026-09-29T11:26:43+05:30",
+   "wall_clock_s": 2571.2057114630006,
+   "artifact": "results/baseline_run_transformer_tf_s7_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_transformer_tf_s7_s2",
+   "rule": "M-75",
+   "family": "transformer_tf_s7",
+   "seed": 2,
+   "start": "2026-09-29T11:26:43+05:30",
+   "end": "2026-09-29T12:09:20+05:30",
+   "wall_clock_s": 2551.6085246739967,
+   "artifact": "results/baseline_run_transformer_tf_s7_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_mlp_ar_s7_s0",
+   "rule": "M-76",
+   "family": "mlp_ar_s7",
+   "seed": 0,
+   "start": "2026-09-29T12:09:20+05:30",
+   "end": "2026-09-29T12:13:21+05:30",
+   "wall_clock_s": 235.4755394419917,
+   "artifact": "results/baseline_run_mlp_ar_s7_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_mlp_ar_s7_s1",
+   "rule": "M-76",
+   "family": "mlp_ar_s7",
+   "seed": 1,
+   "start": "2026-09-29T12:13:21+05:30",
+   "end": "2026-09-29T12:17:20+05:30",
+   "wall_clock_s": 233.6790853739949,
+   "artifact": "results/baseline_run_mlp_ar_s7_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_mlp_ar_s7_s2",
+   "rule": "M-76",
+   "family": "mlp_ar_s7",
+   "seed": 2,
+   "start": "2026-09-29T12:17:20+05:30",
+   "end": "2026-09-29T12:21:16+05:30",
+   "wall_clock_s": 231.29896066601214,
+   "artifact": "results/baseline_run_mlp_ar_s7_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_rssm_ar_s7_s0",
+   "rule": "M-76",
+   "family": "rssm_ar_s7",
+   "seed": 0,
+   "start": "2026-09-29T12:21:16+05:30",
+   "end": "2026-09-29T13:53:49+05:30",
+   "wall_clock_s": 5547.300299419992,
+   "artifact": "results/baseline_run_rssm_ar_s7_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_rssm_ar_s7_s1",
+   "rule": "M-76",
+   "family": "rssm_ar_s7",
+   "seed": 1,
+   "start": "2026-09-29T13:53:49+05:30",
+   "end": "2026-09-29T15:25:33+05:30",
+   "wall_clock_s": 5498.516876935013,
+   "artifact": "results/baseline_run_rssm_ar_s7_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_rssm_ar_s7_s2",
+   "rule": "M-76",
+   "family": "rssm_ar_s7",
+   "seed": 2,
+   "start": "2026-09-29T15:25:33+05:30",
+   "end": "2026-09-29T16:57:41+05:30",
+   "wall_clock_s": 5520.024996553009,
+   "artifact": "results/baseline_run_rssm_ar_s7_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_transformer_ar_s7_s0",
+   "rule": "M-76",
+   "family": "transformer_ar_s7",
+   "seed": 0,
+   "start": "2026-09-29T16:57:41+05:30",
+   "end": "2026-09-29T17:42:36+05:30",
+   "wall_clock_s": 2686.690016830995,
+   "artifact": "results/baseline_run_transformer_ar_s7_seed0.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_transformer_ar_s7_s1",
+   "rule": "M-76",
+   "family": "transformer_ar_s7",
+   "seed": 1,
+   "start": "2026-09-29T17:42:36+05:30",
+   "end": "2026-09-29T18:26:44+05:30",
+   "wall_clock_s": 2642.5664288209955,
+   "artifact": "results/baseline_run_transformer_ar_s7_seed1.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  },
+  {
+   "run": "bl_transformer_ar_s7_s2",
+   "rule": "M-76",
+   "family": "transformer_ar_s7",
+   "seed": 2,
+   "start": "2026-09-29T18:26:44+05:30",
+   "end": "2026-09-29T19:11:02+05:30",
+   "wall_clock_s": 2652.3120284010074,
+   "artifact": "results/baseline_run_transformer_ar_s7_seed2.json",
+   "overlapping_logged_jobs": [],
+   "overlap_s": 0
+  }
+ ]
+}

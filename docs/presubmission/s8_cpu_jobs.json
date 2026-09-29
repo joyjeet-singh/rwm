@@ -1,0 +1,539 @@
+{
+ "what": "every CPU job over one minute logged by the pre-submission sessions while the training queue ran (PLAN S8 step 4)",
+ "timezone": "+05:30",
+ "n_jobs": 76,
+ "jobs": [
+  {
+   "job": "build-and-check pass (baseline)",
+   "start": "2026-09-28T13:12:46+05:30",
+   "end": "2026-09-28T13:13:35+05:30",
+   "seconds": 49,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (endcheck)",
+   "start": "2026-09-28T13:21:52+05:30",
+   "end": "2026-09-28T13:22:30+05:30",
+   "seconds": 38,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s1check)",
+   "start": "2026-09-28T14:09:49+05:30",
+   "end": "2026-09-28T14:10:29+05:30",
+   "seconds": 40,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s2acheck)",
+   "start": "2026-09-28T14:46:48+05:30",
+   "end": "2026-09-28T14:47:25+05:30",
+   "seconds": 37,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3a)",
+   "start": "2026-09-28T19:15:33+05:30",
+   "end": "2026-09-28T19:16:39+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3b1)",
+   "start": "2026-09-28T19:17:18+05:30",
+   "end": "2026-09-28T19:18:23+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3b2)",
+   "start": "2026-09-28T19:18:24+05:30",
+   "end": "2026-09-28T19:19:30+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3c)",
+   "start": "2026-09-28T19:34:48+05:30",
+   "end": "2026-09-28T19:35:41+05:30",
+   "seconds": 53,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d1)",
+   "start": "2026-09-28T19:36:15+05:30",
+   "end": "2026-09-28T19:37:13+05:30",
+   "seconds": 58,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d2)",
+   "start": "2026-09-28T19:37:13+05:30",
+   "end": "2026-09-28T19:38:17+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d3)",
+   "start": "2026-09-28T19:40:29+05:30",
+   "end": "2026-09-28T19:41:31+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d4)",
+   "start": "2026-09-28T19:41:31+05:30",
+   "end": "2026-09-28T19:42:36+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d5)",
+   "start": "2026-09-28T19:44:58+05:30",
+   "end": "2026-09-28T19:46:01+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d6)",
+   "start": "2026-09-28T19:46:01+05:30",
+   "end": "2026-09-28T19:47:05+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d7)",
+   "start": "2026-09-28T19:50:25+05:30",
+   "end": "2026-09-28T19:51:27+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s3d8)",
+   "start": "2026-09-28T19:51:28+05:30",
+   "end": "2026-09-28T19:52:31+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4a)",
+   "start": "2026-09-28T20:57:47+05:30",
+   "end": "2026-09-28T20:58:48+05:30",
+   "seconds": 61,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4b)",
+   "start": "2026-09-28T20:59:10+05:30",
+   "end": "2026-09-28T21:00:12+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4c1)",
+   "start": "2026-09-28T23:13:26+05:30",
+   "end": "2026-09-28T23:14:30+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4c2)",
+   "start": "2026-09-28T23:14:31+05:30",
+   "end": "2026-09-28T23:15:32+05:30",
+   "seconds": 61,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4d1)",
+   "start": "2026-09-28T23:15:48+05:30",
+   "end": "2026-09-28T23:16:50+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4d2)",
+   "start": "2026-09-28T23:16:50+05:30",
+   "end": "2026-09-28T23:17:53+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4e1)",
+   "start": "2026-09-28T23:20:28+05:30",
+   "end": "2026-09-28T23:21:31+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4e2)",
+   "start": "2026-09-28T23:21:32+05:30",
+   "end": "2026-09-28T23:22:37+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4f1)",
+   "start": "2026-09-28T23:24:56+05:30",
+   "end": "2026-09-28T23:26:01+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4f2)",
+   "start": "2026-09-28T23:26:02+05:30",
+   "end": "2026-09-28T23:27:05+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4g1)",
+   "start": "2026-09-28T23:27:35+05:30",
+   "end": "2026-09-28T23:28:40+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4g2)",
+   "start": "2026-09-28T23:28:40+05:30",
+   "end": "2026-09-28T23:29:44+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4h1)",
+   "start": "2026-09-28T23:40:02+05:30",
+   "end": "2026-09-28T23:41:08+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s4h2)",
+   "start": "2026-09-28T23:41:08+05:30",
+   "end": "2026-09-28T23:42:13+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s5a)",
+   "start": "2026-09-28T23:51:40+05:30",
+   "end": "2026-09-28T23:52:47+05:30",
+   "seconds": 67,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s5b1)",
+   "start": "2026-09-28T23:59:44+05:30",
+   "end": "2026-09-29T00:00:44+05:30",
+   "seconds": 60,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s5b2)",
+   "start": "2026-09-29T00:00:44+05:30",
+   "end": "2026-09-29T00:01:47+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s5c1)",
+   "start": "2026-09-29T00:02:41+05:30",
+   "end": "2026-09-29T00:03:42+05:30",
+   "seconds": 61,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s5c2)",
+   "start": "2026-09-29T00:03:42+05:30",
+   "end": "2026-09-29T00:04:44+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s5d1)",
+   "start": "2026-09-29T00:13:13+05:30",
+   "end": "2026-09-29T00:14:15+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s5d2)",
+   "start": "2026-09-29T00:14:15+05:30",
+   "end": "2026-09-29T00:15:16+05:30",
+   "seconds": 61,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6a)",
+   "start": "2026-09-29T00:20:15+05:30",
+   "end": "2026-09-29T00:21:16+05:30",
+   "seconds": 61,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6b)",
+   "start": "2026-09-29T00:22:40+05:30",
+   "end": "2026-09-29T00:23:47+05:30",
+   "seconds": 67,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6c)",
+   "start": "2026-09-29T00:25:22+05:30",
+   "end": "2026-09-29T00:26:26+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6d)",
+   "start": "2026-09-29T00:26:56+05:30",
+   "end": "2026-09-29T00:27:58+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6e)",
+   "start": "2026-09-29T00:28:24+05:30",
+   "end": "2026-09-29T00:29:26+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6f)",
+   "start": "2026-09-29T00:31:39+05:30",
+   "end": "2026-09-29T00:32:39+05:30",
+   "seconds": 60,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6g)",
+   "start": "2026-09-29T00:33:18+05:30",
+   "end": "2026-09-29T00:34:20+05:30",
+   "seconds": 62,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6h)",
+   "start": "2026-09-29T00:34:59+05:30",
+   "end": "2026-09-29T00:36:02+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6i)",
+   "start": "2026-09-29T00:36:59+05:30",
+   "end": "2026-09-29T00:38:03+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6j)",
+   "start": "2026-09-29T00:42:52+05:30",
+   "end": "2026-09-29T00:43:57+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s6k)",
+   "start": "2026-09-29T00:43:57+05:30",
+   "end": "2026-09-29T00:45:00+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7a)",
+   "start": "2026-09-29T00:49:22+05:30",
+   "end": "2026-09-29T00:50:25+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7b)",
+   "start": "2026-09-29T00:51:30+05:30",
+   "end": "2026-09-29T00:52:36+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7c)",
+   "start": "2026-09-29T00:52:48+05:30",
+   "end": "2026-09-29T00:53:54+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7d)",
+   "start": "2026-09-29T00:54:37+05:30",
+   "end": "2026-09-29T00:55:45+05:30",
+   "seconds": 68,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7e)",
+   "start": "2026-09-29T00:55:57+05:30",
+   "end": "2026-09-29T00:57:03+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7f)",
+   "start": "2026-09-29T00:57:24+05:30",
+   "end": "2026-09-29T00:58:29+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7g)",
+   "start": "2026-09-29T00:59:34+05:30",
+   "end": "2026-09-29T01:00:37+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7h)",
+   "start": "2026-09-29T01:00:45+05:30",
+   "end": "2026-09-29T01:01:52+05:30",
+   "seconds": 67,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7i)",
+   "start": "2026-09-29T01:02:54+05:30",
+   "end": "2026-09-29T01:04:00+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7j)",
+   "start": "2026-09-29T01:04:09+05:30",
+   "end": "2026-09-29T01:05:16+05:30",
+   "seconds": 67,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7k)",
+   "start": "2026-09-29T01:05:29+05:30",
+   "end": "2026-09-29T01:06:34+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7l)",
+   "start": "2026-09-29T01:07:19+05:30",
+   "end": "2026-09-29T01:08:25+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7m)",
+   "start": "2026-09-29T01:09:19+05:30",
+   "end": "2026-09-29T01:10:26+05:30",
+   "seconds": 67,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7n)",
+   "start": "2026-09-29T01:10:40+05:30",
+   "end": "2026-09-29T01:11:46+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7o)",
+   "start": "2026-09-29T01:11:58+05:30",
+   "end": "2026-09-29T01:13:03+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7p)",
+   "start": "2026-09-29T01:14:47+05:30",
+   "end": "2026-09-29T01:15:53+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7q)",
+   "start": "2026-09-29T01:16:32+05:30",
+   "end": "2026-09-29T01:17:36+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7r)",
+   "start": "2026-09-29T01:18:46+05:30",
+   "end": "2026-09-29T01:19:49+05:30",
+   "seconds": 63,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7s)",
+   "start": "2026-09-29T01:20:22+05:30",
+   "end": "2026-09-29T01:21:28+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7t)",
+   "start": "2026-09-29T01:22:00+05:30",
+   "end": "2026-09-29T01:23:04+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7u)",
+   "start": "2026-09-29T01:23:58+05:30",
+   "end": "2026-09-29T01:25:04+05:30",
+   "seconds": 66,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7v)",
+   "start": "2026-09-29T01:25:19+05:30",
+   "end": "2026-09-29T01:26:24+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7w)",
+   "start": "2026-09-29T01:33:05+05:30",
+   "end": "2026-09-29T01:34:10+05:30",
+   "seconds": 65,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "build-and-check pass (s7x)",
+   "start": "2026-09-29T01:34:11+05:30",
+   "end": "2026-09-29T01:35:15+05:30",
+   "seconds": 64,
+   "basis": "exact: the pass's summary.tsv modification time and its summed step durations"
+  },
+  {
+   "job": "S2b verification ladder",
+   "start": "2026-09-28T17:47:00+05:30",
+   "end": "2026-09-28T18:46:00+05:30",
+   "seconds": 3540,
+   "basis": "logged: SESSION_LOG S2b (BLOCKED) entry, 17:47-18:46, one thread"
+  },
+  {
+   "job": "S2b timing probe",
+   "start": "2026-09-28T18:48:00+05:30",
+   "end": "2026-09-28T19:00:00+05:30",
+   "seconds": 726,
+   "basis": "logged: SESSION_LOG S2b (BLOCKED) entry, 18:48-19:00"
+  },
+  {
+   "job": "S3 alignment_defect_ci.py, two runs of 3 min 39 s",
+   "start": "2026-09-28T19:10:00+05:30",
+   "end": "2026-09-28T19:30:38+05:30",
+   "seconds": 438,
+   "basis": "window only: between S2b's COMPLETE entry (19:10) and the commit that added the artifact (a1eb779, 19:30:38); exact times not logged"
+  },
+  {
+   "job": "S2b smaller jobs: evaluator self-tests (about 2 min, twice), verdict self-tests (about 1 min each), 3-iteration smoke tests (about 2 min)",
+   "start": null,
+   "end": null,
+   "seconds": 480,
+   "basis": "logged without times in SESSION_LOG S2b; not assignable to a run"
+  }
+ ]
+}
