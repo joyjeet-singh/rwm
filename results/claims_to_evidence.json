@@ -3255,7 +3255,7 @@
       "id": "M-74",
       "claim": "PRE-REGISTERED decision rule for the configuration claim: is (M, N) = (32, 8) optimal?",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/mn_sweep_verdict.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/mn_sweep_verdict.json`. **It returns NOT OPTIMAL AT OUR BUDGET.** Recorded in `M-77`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3274,7 +3274,7 @@
       "id": "M-75",
       "claim": "PRE-REGISTERED decision rule for the architecture claim, baselines teacher-forced, as th",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/baselines_verdict.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/baselines_verdict.json`. **It returns REPRODUCES.** Recorded in `M-78`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3292,7 +3292,7 @@
       "id": "M-76",
       "claim": "PRE-REGISTERED decision rule for the architecture claim, baselines trained autoregressiv",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/baselines_verdict.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/baselines_verdict.json`. **It returns RWM AHEAD OF ALL THREE.** Recorded in `M-79`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3320,13 +3320,67 @@
         "scripts/alignment_defect_ci.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-77",
+      "claim": "`M-74` discharged: the centre (M, N) = (32, 8) returns NOT OPTIMAL AT OUR BUDGET",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/mn_sweep_eval.json",
+        "results/mn_sweep_verdict.json",
+        "results/presubmission_runtime.json",
+        "scripts/mn_sweep_eval.py",
+        "scripts/verdict_mn_sweep.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-78",
+      "claim": "`M-75` discharged: the architecture claim, baselines teacher-forced, returns REPRODUCES",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baselines_eval.json",
+        "results/baselines_verdict.json",
+        "results/presubmission_runtime.json",
+        "scripts/baselines_eval.py",
+        "scripts/verdict_baselines.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-79",
+      "claim": "`M-76` discharged: the architecture claim, baselines autoregressive, returns RWM AHEAD O",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baselines_eval.json",
+        "results/baselines_verdict.json",
+        "results/presubmission_runtime.json",
+        "scripts/baselines_eval.py",
+        "scripts/verdict_baselines.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 76,
+    "M": 79,
     "O": 14,
     "R": 75,
     "S": 20,

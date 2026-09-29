@@ -154,3 +154,19 @@ Asked in chat by S5 on 2026-09-28. **The problem:**
 - `EXCLUDE_DIRS = ("docs/presubmission",)` prunes the directory from the walk in both `scripts/make_anon_bundle.py` and `scripts/build_supplementary.py`, with the ruling cited beside it.
 - PLAN.md and FILE_MAP.md stay as records, unedited.
 - A dry run of `collect()` gives 459 files, none under `docs/presubmission/`, and none containing the old title. The gitignored `docs/presubmission/sources/` is no longer walked.
+
+## S8-discharge-status
+
+Asked in chat by S8 on 2026-09-29, after the three verdicts were computed. **The problem:**
+- The rules M-74, M-75 and M-76 say the discharging session records the verdict "in a new ledger entry naming this one". They leave whether it also sets the rule's own `Status` line to be "settled under" PLAN §1.2.3, which says never to edit a ledger entry in place.
+- Every earlier rule's Status line was set at discharge (for example M-70, "DISCHARGED … returns DOES NOT REORDER"). That line is what `scripts/ledger_check.py` and Appendix E's generator (`scripts/appendix_g_rules.py`) read.
+
+**Options put:**
+1. New entries, plus the Status line (recommended).
+2. New entries only, leaving the rules' Status lines reading "NOT YET DISCHARGED".
+
+**Answer (verbatim):** "New entries + Status line (Recommended)"
+
+**How S8 applies it:**
+- M-77, M-78 and M-79 record the three verdicts exactly as the scripts return them.
+- In M-74, M-75 and M-76 only the `Status` line changes, to "PRE-REGISTERED, DISCHARGED by `…`. **It returns X.** Recorded in `M-7x`." No character of any rule's text changes, and `git diff` shows one line per rule.

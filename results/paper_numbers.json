@@ -4129,7 +4129,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "543"
+    "value": "552"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -4809,7 +4809,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 258
+    "value": 261
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -7779,6 +7779,22 @@
     "source": "results/step0_regimes.json",
     "value": "10,000"
   },
+  "rt_bl_ar_hours": {
+    "source": "results/presubmission_runtime.json",
+    "value": "7.0"
+  },
+  "rt_bl_ar_runs": {
+    "source": "results/presubmission_runtime.json",
+    "value": 9
+  },
+  "rt_bl_tf_hours": {
+    "source": "results/presubmission_runtime.json",
+    "value": "7.9"
+  },
+  "rt_bl_tf_runs": {
+    "source": "results/presubmission_runtime.json",
+    "value": 9
+  },
   "rt_hours": {
     "source": "results/step5_*.json",
     "value": "49.8"
@@ -7803,6 +7819,18 @@
     "source": "results/step5_*.json",
     "value": "4.4"
   },
+  "rt_pre_hours": {
+    "source": "results/presubmission_runtime.json",
+    "value": "28.3"
+  },
+  "rt_pre_overlapped": {
+    "source": "results/presubmission_runtime.json",
+    "value": 8
+  },
+  "rt_pre_runs": {
+    "source": "results/presubmission_runtime.json",
+    "value": 42
+  },
   "rt_runs": {
     "source": "results/step5_*.json",
     "value": 33
@@ -7818,6 +7846,14 @@
   "rt_runs_short": {
     "source": "results/step5_*.json",
     "value": 27
+  },
+  "rt_sweep_hours": {
+    "source": "results/presubmission_runtime.json",
+    "value": "13.4"
+  },
+  "rt_sweep_runs": {
+    "source": "results/presubmission_runtime.json",
+    "value": 24
   },
   "run_table": {
     "source": "results/step5_arm*.json",

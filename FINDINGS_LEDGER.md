@@ -8014,7 +8014,7 @@ section. **It may not change one character of the rule text above.** A result th
 branches is a defect in this rule and is reported as one, not resolved by choosing.
 
 **Evidence** `RUN` `results/p5_sweep_power.json` — the power estimate. `SRC` `docs/presubmission/ORIGINAL_SPECS.md` — the claim. Discharged by `results/mn_sweep_verdict.json`, from `scripts/verdict_mn_sweep.py`, neither of which exists yet.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/mn_sweep_verdict.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/mn_sweep_verdict.json`. **It returns NOT OPTIMAL AT OUR BUDGET.** Recorded in `M-77`. · **Relevance** METHOD
 
 ### M-75 — PRE-REGISTERED decision rule for the architecture claim, baselines teacher-forced, as the original trains them · **NEW**
 **Entered before any baseline model exists.** No baseline has been implemented, trained or scored,
@@ -8131,7 +8131,7 @@ line settled under PLAN §1.2.3; **not one character of the rule text changed.**
 branches is a defect in this rule and is reported as one.
 
 **Evidence** `RUN` `results/p6_baseline_power.json` — the power estimate. `SRC` `docs/presubmission/ORIGINAL_SPECS.md` — the claim. Discharged by `results/baselines_verdict.json`, from `scripts/verdict_baselines.py`, neither of which exists yet.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/baselines_verdict.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/baselines_verdict.json`. **It returns REPRODUCES.** Recorded in `M-78`. · **Relevance** METHOD
 
 ### M-76 — PRE-REGISTERED decision rule for the architecture claim, baselines trained autoregressively, as RWM is · **NEW**
 **Entered before any baseline model exists.** No baseline has been implemented, trained or scored,
@@ -8248,7 +8248,7 @@ line settled under PLAN §1.2.3; **not one character of the rule text changed.**
 branches is a defect in this rule and is reported as one.
 
 **Evidence** `RUN` `results/p6_baseline_power.json` — the power estimate. `SRC` `docs/presubmission/ORIGINAL_SPECS.md` — the claim. Discharged by `results/baselines_verdict.json`, from `scripts/verdict_baselines.py`, neither of which exists yet.
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/baselines_verdict.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/baselines_verdict.json`. **It returns RWM AHEAD OF ALL THREE.** Recorded in `M-79`. · **Relevance** METHOD
 
 ### S-20 — "The released evaluation overstates its own model's error by 75%" · **NEW**
 **Retracts** — a framing, not a numbered claim; the measurements it was computed from stand as measured
@@ -8290,3 +8290,85 @@ companion not reverse. Neither held. The user ruled "Restate on independent", 20
 (`docs/presubmission/DECISIONS_FOR_USER.md#S3-alignment-defect`).
 **Evidence** `RUN` `results/alignment_defect_ci.json` (`scripts/alignment_defect_ci.py`), `results/step4_0a_results.json`.
 **Status** RETRACTED · **Relevance** METHOD
+
+### M-77 — `M-74` discharged: the centre (M, N) = (32, 8) returns NOT OPTIMAL AT OUR BUDGET · **NEW**
+**Discharges** `M-74`. `scripts/verdict_mn_sweep.py`, exactly as committed before the first sweep run, on
+`results/mn_sweep_eval.json` (`scripts/mn_sweep_eval.py`), returns **NOT OPTIMAL AT OUR BUDGET**.
+
+**The governing statistic, as the rule fixes it:** D_c = mean over the 4 held-out trajectories of [3-seed mean
+error of configuration c − 3-seed mean error of the centre], relative-L1 at h = 368;
+positive favours the centre. Exact cluster bootstrap over all 256 resamples; Holm step-down at family-wise
+α = 0.05 over m = 8 configurations, ties in the rule's priority order.
+
+| (M, N) | D_c | 95% interval | p | Holm rank / level | result | episodes favouring the centre / the configuration (reported alongside) | mean h per run |
+|---|---|---|---|---|---|---|---|
+| (32, 32) | -0.2869 | [-0.5951, -0.1005] | 0.00000 | 1 / 0.00625 | REJECTED toward the configuration | 0 / 10 | 1.32 |
+| (16, 8) | +0.0305 | [-0.0008, +0.0720] | 0.11719 | 7 / 0.02500 | not rejected | 6 / 4 | 0.51 |
+| (32, 16) | -0.2509 | [-0.5218, -0.0956] | 0.00000 | 2 / 0.00714 | REJECTED toward the configuration | 0 / 10 | 0.78 |
+| (8, 8) | -0.1004 | [-0.2449, -0.0167] | 0.00000 | 3 / 0.00833 | REJECTED toward the configuration | 2 / 8 | 0.30 |
+| (32, 2) | +1.4518 | [+0.6250, +2.6933] | 0.00000 | 4 / 0.01000 | REJECTED toward the centre | 10 / 0 | 0.74 |
+| (32, 1) | +3.1342 | [+1.3012, +6.5096] | 0.00000 | 5 / 0.01250 | REJECTED toward the centre | 10 / 0 | 0.51 |
+| (2, 8) | -0.1139 | [-0.2988, -0.0088] | 0.00781 | 6 / 0.01667 | REJECTED toward the configuration | 1 / 9 | 0.16 |
+| (1, 8) | -0.0516 | [-0.1835, +0.0400] | 0.51562 | 8 / 0.05000 | not rejected | 7 / 3 | 0.15 |
+
+Configurations excluding zero in their own favour: M32_N32, M32_N16, M8_N8, M2_N8.
+In the centre's favour: M32_N2, M32_N1. The centre has the lowest
+error: False. The centre's three seeds are the existing Arm A runs at 2,500
+iterations, not re-trained, so the centre has no runtime row here.
+
+**Reported alongside, never governing** (the rule's own list): held-out relative-L1 at h = 1 **NOT OPTIMAL AT OUR BUDGET**; relative-L1 at h = 8 **NOT OPTIMAL AT OUR BUDGET**; relative-L1 at h = 32 **NOT OPTIMAL AT OUR BUDGET**; relative-L1 at h = 100 **NOT OPTIMAL AT OUR BUDGET**; relative-L1 at h = 128 **NOT OPTIMAL AT OUR BUDGET**; relative-L1 at h = 368 **NOT OPTIMAL AT OUR BUDGET**; nRMSE at h = 1 **CANNOT BE DISTINGUISHED**; nRMSE at h = 8 **NOT OPTIMAL AT OUR BUDGET**; nRMSE at h = 32 **NOT OPTIMAL AT OUR BUDGET**; nRMSE at h = 100 **NOT OPTIMAL AT OUR BUDGET**; nRMSE at h = 128 **NOT OPTIMAL AT OUR BUDGET**; nRMSE at h = 368 **NOT OPTIMAL AT OUR BUDGET**. In-sample
+(n_independent = 16): relative-L1 at h = 100 **NOT OPTIMAL AT OUR BUDGET**; relative-L1 at h = 368 **NOT OPTIMAL AT OUR BUDGET**; nRMSE at h = 100 **NOT OPTIMAL AT OUR BUDGET**; nRMSE at h = 368 **NOT OPTIMAL AT OUR BUDGET**. The minimum detectable effect at Holm step 1, as a percentage of
+the centre's error: relative-L1 at h = 368 14.5%, relative-L1 at h = 100 17.2%, nRMSE at h = 368 15.0%, nRMSE at h = 100 13.0%.
+
+**Training time, reported beside the verdict as the rule requires:** 24 runs,
+13.35 h of wall clock in all (`results/presubmission_runtime.json`).
+8 of them overlapped a CPU job a
+session logged, which inflates their `wall_clock_s` and changes no weight; that artifact lists each overlap.
+**Evidence** `RUN` `results/mn_sweep_verdict.json`, `results/mn_sweep_eval.json`, `results/presubmission_runtime.json`; the 24 sweep run artifacts (results/mn_sweep_run_M…_N…_seed….json); `SRC` `scripts/verdict_mn_sweep.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### M-78 — `M-75` discharged: the architecture claim, baselines teacher-forced, returns REPRODUCES · **NEW**
+**Discharges** `M-75`. `scripts/verdict_baselines.py`, exactly as committed before any baseline run, on
+`results/baselines_eval.json` (`scripts/baselines_eval.py`), returns **REPRODUCES**.
+
+**The governing statistic, as the rule fixes it:** D_b = mean over the 4 held-out trajectories of [3-seed mean
+error of baseline b − 3-seed mean error of RWM (Arm A, (32, 8), 2,500 iterations, seeds 0–2)], relative-L1 at
+h = 368; positive favours RWM. Baselines at the original's Table S7 sizes, regime `tf`. Exact cluster
+bootstrap over all 256 resamples; Holm step-down at α = 0.05 over m = 3, ties in the order
+mlp, rssm, transformer.
+
+| baseline | D_b | 95% interval | p | Holm rank / level | result | episodes favouring RWM / the baseline (reported alongside) | mean h per run |
+|---|---|---|---|---|---|---|---|
+| mlp | +144.5794 | [+14.8420, +373.9553] | 0.00000 | 1 / 0.01667 | **RWM BETTER** | 10 / 0 | 0.04 |
+| rssm | +5.7862 | [+2.6251, +10.8616] | 0.00000 | 2 / 0.02500 | **RWM BETTER** | 10 / 0 | 1.88 |
+| transformer | +14.5692 | [+8.7931, +24.0102] | 0.00000 | 3 / 0.05000 | **RWM BETTER** | 10 / 0 | 0.71 |
+
+**Reported alongside, never governing** (the rule's own list): held-out relative-L1 at h = 1 **CANNOT BE SETTLED**; relative-L1 at h = 8 **PARTIAL**; relative-L1 at h = 32 **REPRODUCES**; relative-L1 at h = 100 **REPRODUCES**; relative-L1 at h = 128 **REPRODUCES**; relative-L1 at h = 368 **REPRODUCES**; nRMSE at h = 1 **CANNOT BE SETTLED**; nRMSE at h = 8 **PARTIAL**; nRMSE at h = 32 **REPRODUCES**; nRMSE at h = 100 **REPRODUCES**; nRMSE at h = 128 **REPRODUCES**; nRMSE at h = 368 **REPRODUCES**. The minimum
+detectable effect at Holm step 1, as a percentage of RWM's error: relative-L1 at h = 368 12.0%, relative-L1 at h = 100 15.6%.
+Training time: 9 runs, 7.90 h
+(`results/presubmission_runtime.json`); none overlapped a logged CPU job.
+**Evidence** `RUN` `results/baselines_verdict.json`, `results/baselines_eval.json`, `results/presubmission_runtime.json`; the nine run artifacts of this regime (results/baseline_run_…_tf_s7_seed….json); `SRC` `scripts/verdict_baselines.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### M-79 — `M-76` discharged: the architecture claim, baselines autoregressive, returns RWM AHEAD OF ALL THREE · **NEW**
+**Discharges** `M-76`. `scripts/verdict_baselines.py`, exactly as committed before any baseline run, on
+`results/baselines_eval.json` (`scripts/baselines_eval.py`), returns **RWM AHEAD OF ALL THREE**.
+
+**The governing statistic, as the rule fixes it:** D_b = mean over the 4 held-out trajectories of [3-seed mean
+error of baseline b − 3-seed mean error of RWM (Arm A, (32, 8), 2,500 iterations, seeds 0–2)], relative-L1 at
+h = 368; positive favours RWM. Baselines at the original's Table S7 sizes, regime `ar`. Exact cluster
+bootstrap over all 256 resamples; Holm step-down at α = 0.05 over m = 3, ties in the order
+mlp, rssm, transformer.
+
+| baseline | D_b | 95% interval | p | Holm rank / level | result | episodes favouring RWM / the baseline (reported alongside) | mean h per run |
+|---|---|---|---|---|---|---|---|
+| mlp | +0.8772 | [+0.4248, +1.5662] | 0.00000 | 1 / 0.01667 | **RWM BETTER** | 10 / 0 | 0.06 |
+| rssm | +10.0549 | [+5.7436, +18.1659] | 0.00000 | 2 / 0.02500 | **RWM BETTER** | 10 / 0 | 1.53 |
+| transformer | +1.2915 | [+0.7258, +1.8079] | 0.00000 | 3 / 0.05000 | **RWM BETTER** | 10 / 0 | 0.74 |
+
+**Reported alongside, never governing** (the rule's own list): held-out relative-L1 at h = 1 **CANNOT BE SETTLED**; relative-L1 at h = 8 **PARTIAL**; relative-L1 at h = 32 **PARTIAL**; relative-L1 at h = 100 **RWM AHEAD OF ALL THREE**; relative-L1 at h = 128 **RWM AHEAD OF ALL THREE**; relative-L1 at h = 368 **RWM AHEAD OF ALL THREE**; nRMSE at h = 1 **CANNOT BE SETTLED**; nRMSE at h = 8 **PARTIAL**; nRMSE at h = 32 **PARTIAL**; nRMSE at h = 100 **RWM AHEAD OF ALL THREE**; nRMSE at h = 128 **RWM AHEAD OF ALL THREE**; nRMSE at h = 368 **RWM AHEAD OF ALL THREE**. The minimum
+detectable effect at Holm step 1, as a percentage of RWM's error: relative-L1 at h = 368 12.0%, relative-L1 at h = 100 15.6%.
+Training time: 9 runs, 7.01 h
+(`results/presubmission_runtime.json`); none overlapped a logged CPU job.
+**Evidence** `RUN` `results/baselines_verdict.json`, `results/baselines_eval.json`, `results/presubmission_runtime.json`; the nine run artifacts of this regime (results/baseline_run_…_ar_s7_seed….json); `SRC` `scripts/verdict_baselines.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

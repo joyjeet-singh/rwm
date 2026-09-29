@@ -1372,6 +1372,17 @@ def main():
     put("time_rel_lo", f"{100*min(_rel.values()):.0f}", "results/step4_5_timing.json")
     put("time_worst_cfg", _wk, "results/step4_5_timing.json")
     put("rt_longest", f"{max(w for _, w in _runs)/3600:.1f}", "results/step5_*.json")
+    # S8: the pre-submission queue's runtime inputs, beside the rt_* keys above rather than
+    # folded into them. Those describe the step5 runs, and Appendix B's prose says the rest of
+    # their total is released-width hours, which the architecture baselines are not.
+    _PR = J("presubmission_runtime.json")
+    put("rt_pre_runs", _PR["n_runs"], "results/presubmission_runtime.json")
+    put("rt_pre_hours", f'{_PR["wall_clock_s"]/3600:.1f}', "results/presubmission_runtime.json")
+    for _r, _tag in (("M-74", "sweep"), ("M-75", "bl_tf"), ("M-76", "bl_ar")):
+        put(f"rt_{_tag}_runs", _PR["by_rule"][_r]["n_runs"], "results/presubmission_runtime.json")
+        put(f"rt_{_tag}_hours", f'{_PR["by_rule"][_r]["wall_clock_s"]/3600:.1f}',
+            "results/presubmission_runtime.json")
+    put("rt_pre_overlapped", _PR["n_runs_overlapped"], "results/presubmission_runtime.json")
 
     # Section 5.2 claims the n=4 table "agrees in direction" with the n=20 one.
     # Checked rather than asserted: it does for the epistemic column at all five
