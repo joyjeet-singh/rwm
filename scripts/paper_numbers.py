@@ -2160,6 +2160,50 @@ def main():
     # "parameter-matched variants were specified but not run":
     assert BV["matched_variants"] == {}
 
+    # --- S10: keys and assertions behind the fresh-eyes review's fixes ----------------------
+    # Appendix E's verdict column for M-16 printed its Status line ("SETTLED — rule
+    # pre-registered"), while §5, §8 and the introduction cite what it RETURNED.
+    _m16 = {c["verdict"] for c in J("task4_arenas.json")["m16_arenas"].values()}
+    assert len(_m16) == 1, _m16
+    put("m16_verdict", _m16.pop().upper(), "results/task4_arenas.json")
+    # §8 names the one h = 8 cell whose verdict the bootstrap unit changes.
+    _bus = J("review_bootstrap_unit.json")
+    _chg = _bus["_summary"]["cells_that_change"]
+    assert len(_chg) == 1 and _chg[0].endswith("|h8"), _chg
+    _ar, _ln, _ck, _ = _chg[0].split("|")
+    put("bu_change_cell", f"the {_ar} h = 8 cell at {_ln}-step trajectories and "
+                          f"{int(_ck):,} iterations", "results/review_bootstrap_unit.json")
+    # §5: the in-sample arena agrees in sign with the held-out one in every bootstrap-unit
+    # cell except h = 8 after 500 iterations, where teacher forcing leads in-sample and the
+    # interval excludes zero, at both trajectory lengths.
+    for _k, _v in _bus.items():
+        if _k == "_summary" or not _k.startswith("in-sample"):
+            continue
+        _g = _v["cluster"]
+        if _k.endswith("|500|h8"):
+            assert _g["gap"] < 0 and _g["excludes_zero"], _k
+            _oos = _bus[_k.replace("in-sample", "out-of-sample")]["cluster"]["gap"]
+            assert _oos > 0, _k
+        else:
+            assert _g["gap"] > 0, _k
+    # §6.7's opening names the arena and checkpoint of its tables; §6.10's names its arena;
+    # §6.2's ensemble-5 table names its iterations.
+    _d20 = J("task_d_nind20.json")["design"]
+    assert _d20["arena"] == "all ten episodes" and _d20["checkpoint"].endswith("pretrain_rnn_ens.pt")
+    assert J("r2_independent_ensemble.json")["design"]["arena"] == "out-of-sample held-out pair"
+    assert J("task_d3_ens5.json")["design"]["iterations"] == int(N["iters_main"]["value"].replace(",", ""))
+    # §7.4 names the contamination control's design from its own cell keys.
+    _tw = J("task3_three_way.json")
+    _twk = [k.split("|") for k in _tw if k != "_summary"]
+    assert {k[0] for k in _twk} == {"in-sample", "out-of-sample"}
+    _lens = sorted({int(k[1]) for k in _twk})
+    _cks = sorted({int(k[2]) for k in _twk})
+    _nind = sorted({_tw[k]["n_independent"] for k in _tw if k != "_summary"})
+    put("tw_design", f"the held-out pair and the training episodes, "
+                     f"{' and '.join(str(x) for x in _lens)}-step trajectories, the "
+                     f"{' and '.join(f'{x:,}' for x in _cks)}-iteration checkpoints, "
+                     f"n_independent {_nind[0]} to {_nind[-1]}", "results/task3_three_way.json")
+
     _xc = _d1["cross_check"]
     put("d1_xc_runs", len(_xc), "results/task_d1_threeseed.json")
     put("d1_xc_values", f'{sum(r.get("values_compared", 0) for r in _xc):,}',

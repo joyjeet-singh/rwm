@@ -71,7 +71,10 @@ def main():
     # these says "PRE-REGISTERED, DISCHARGED", which records that the rule ran and
     # not what it said, and a table of verdicts that printed "DISCHARGED" in the
     # verdict column would be answering a different question from the one it asks.
-    RETURNED = {"M-43": "e5_verdict", "M-44": "m44_verdict", "M-45": "m45_verdict"}
+    RETURNED = {"M-43": "e5_verdict", "M-44": "m44_verdict", "M-45": "m45_verdict",
+                # M-16's Status line says the rule was pre-registered ("SETTLED"), not
+                # what it returned; §5, §8 and the introduction cite the return (S10).
+                "M-16": "m16_verdict"}
     lead = FIG["fig4"]
     commits = {c["rule"]: c for c in FIG["fig4_commits"]}
 

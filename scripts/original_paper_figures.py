@@ -40,9 +40,9 @@ CLAIMS = [
             "RWM-AR significantly outperforms its teacher-forcing counterpart (RWM-TF), "
             "underscoring the importance of autoregressive training in mitigating compounding "
             "prediction errors over long rollouts."),
-        "form": "qualitative; shown in Figure 4",
+        "form": "qualitative; shown in Figure 7 (v1)",
         "numeral_in_text": False,
-        "note": ("Figure 4 plots autoregressive prediction error for RWM-AR against RWM-TF and "
+        "note": ("Figure 7 (v1) plots autoregressive prediction error for RWM-AR against RWM-TF and "
                  "the MLP, RSSM and transformer baselines across environments. No numeral for "
                  "the AR-vs-TF gap appears in the running text, the caption, or any table. The "
                  "magnitude is legible only from the plotted curves, and we do not estimate it "

@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 61,
-  "n_ok": 61,
+  "n_pointers": 65,
+  "n_ok": 65,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -79,6 +79,13 @@
       "ok": true,
       "detail": "target 6.6; nouns ['page', 'correcting', 'coupled', 'state', 'dimensions']; absent ['page', 'correcting']",
       "context": "\u00a76.6 spends a page correcting for the 45 coupled state dimensions"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix B gives for all of \u00a75\u2013\u00a77's runs",
+      "ok": true,
+      "detail": "target Appendix B; nouns ['runs']; absent []",
+      "context": "Appendix B gives for all of \u00a75\u2013\u00a77's runs"
     },
     {
       "class": "artifact",
@@ -238,6 +245,12 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/review_bootstrap_unit.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/step0_regimes.json",
       "ok": true,
       "detail": "exists"
@@ -285,6 +298,12 @@
       "detail": "resolves"
     },
     {
+      "class": "repo",
+      "pointer": "src/score_reference.py:180-190",
+      "ok": true,
+      "detail": "resolves"
+    },
+    {
       "class": "upstream",
       "pointer": "base.py:142",
       "ok": true,
@@ -295,6 +314,12 @@
       "pointer": "base.py:166",
       "ok": true,
       "detail": "../robotic_world_model_lite/scripts/envs/base.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "model_training.py:129",
+      "ok": true,
+      "detail": "../robotic_world_model_lite/scripts/model_training.py has the line"
     },
     {
       "class": "upstream",

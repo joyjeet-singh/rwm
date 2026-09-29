@@ -367,7 +367,8 @@ def build_rows():
         mde_keys = [k for k in cond if k.endswith("_mde")]
         rows.append({
             "claim": claim,
-            "section": "6.10",
+            # the matched-capacity result is reported in §11, not §6.10 (S10)
+            "section": "6.10" if name == "r2_independent_ensemble" else "11",
             "arena": arena,
             "n_independent": art["design"]["n_independent"],
             "in_sample": in_sample(model, arena),
