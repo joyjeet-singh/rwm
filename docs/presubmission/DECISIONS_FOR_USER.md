@@ -182,3 +182,21 @@ Asked in chat by S9 on 2026-09-29. **Two plan constraints collided:**
 - "No numerals, trim to 330 (Recommended)". One abstract sentence with no numerals, with wording trimmed elsewhere so the abstract stays at ≤ 330 words; C12.1 is unchanged.
 
 **Asked later in S9, 2026-09-29.** §5.2 and §5.3 must cite `ORIGINAL_SPECS.md` (the original's specifications, with page anchors) and `BASELINE_SPECS.md` (the baselines' deviations table, PLAN §1.2.5). Both are in `docs/presubmission/`, which the S5 ruling excludes from both bundles. Options put: ship those two files (recommended); copy them into `docs/`; keep them internal. **Answer (verbatim):** "Ship those two files (Recommended)". Both builders keep excluding `docs/presubmission/`, except `ORIGINAL_SPECS.md`, `BASELINE_SPECS.md` and `verify_original_specs.py`, the anchor checker.
+
+## S10-fresh-terminal
+
+Asked in chat at the start of S10 on 2026-09-29. PLAN's S10 says "Run this in a new terminal with nothing carried over from earlier sessions", and §1.3 says a compacted conversation should checkpoint and stop. The request "Start S10" came in the conversation that had just run S9 (whose §5.2/§5.3 text S10 reviews) and had been compacted once. Options put: a new terminal (recommended); or run it here, with the review done by fresh-context agents. **Answer (verbatim):** "Here, fresh agents review". S10 runs in this session. Its checklist review and table spot-checks are done by two agents given only PLAN's S10 text, Appendix E's checklist and file locations, within §1.3's two-subagent cap. This session verifies their findings, makes the small fixes and writes REVIEW.md.
+
+## S10-review-blocked
+
+S10 stops **BLOCKED** because PLAN's S10 item 4 says anything larger than a small fix stops the session with a list. The fresh-eyes review (`docs/presubmission/REVIEW.md`) confirmed 27 distinct issues; all are fixed in `040f336`, and none was a wrong number. The items below need you:
+
+- **D1. The title against the conclusion.** The title, abstract and contribution 1 say the uncertainty "gets the order right". The conclusion says it "should be read as a weak ordering at best", and reports that the aleatoric head ranks error inversely at h = 368. Keep both, with the conclusion scoped to the per-dimension evidence? Or soften one of them?
+- **D2. §3.2's summary table has no checkpoint column.** Its rows mix 10,000-iteration, 2,500-iteration and released-checkpoint results. Add a generated column, or accept that each row's section names its checkpoint?
+- **D3. Figure 5's caption names neither arena nor n_independent.** Its artifact, `results/task2_sigma_profile.json`, records neither. Re-run or annotate its producer, or accept?
+- **D4. §6.3's loss-term gradient table names no checkpoint or arena.** `results/e4_sigma_gradients.json` records neither. Same choice as D3.
+- **D5. `tf_poor` is classed "no quantitative figure".** The original's Fig. 6 prints e for the whole N = 1 (teacher-forced) row. Reclassifying moves §4's count (five of six → four) and qualifies §4's "the first figure attached to the claim". Reclassify, or keep it with a stated reason?
+- **D6. The old title in the package and a pushed zip.**
+  - `docs/SUBMISSION_PACKAGE.md:54` still carries the old title.
+  - The tracked, pushed `supplementary_anon.zip` (2026-09-27) holds the pre-S3 paper. Rebuild it with `scripts/make_anon_bundle.py --zip`, which rewrites a committed public file, and refresh the package doc?
+- **D7. Length.** The body is 1.8% shorter than S0, against a 30% target. Accept as reported, or move whole analyses to the supplement?
