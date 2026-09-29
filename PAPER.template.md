@@ -8,24 +8,22 @@ We rebuild the proprioceptive dynamics model of the *Robotic World Model* (arXiv
 and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU. Before training,
 outputs, losses and gradients match the released implementation exactly. The base paper's central
 training claim reproduces: training on the model's own rollouts beats teacher forcing by
-{{d1_ratio}}× at {{v2_diag_h}} steps and {{d1_ratio_h100}}× at {{v2_deploy_h}}, under a rule
-committed before the runs, though teacher forcing leads at one step. It uses {{c2_pct}}% of the
+{{d1_ratio}}× at {{v2_diag_h}} steps and {{d1_ratio_h100}}× at {{v2_deploy_h}}, under a rule committed in advance, though teacher forcing leads at one step. It uses {{c2_pct}}% of the
 reference's world-model data, one robot, gait and terrain, and {{nind_oos_400}} independent
-held-out trajectories. The follow-up's uncertainty gets the order right and the size wrong.
-Ensemble disagreement, which the method subtracts from reward, correlates {{a2_r_pooled}} with
-realised error, and {{a2_rdd}} with rollout and depth both held fixed. Yet on data the
-checkpoint trained on, it is {{d1n_epi_ratio_h1}}× smaller than that error at one step and
-{{d1n_epi_ratio_h100}}× at the method's {{v2_deploy_h}}-step horizon. Because the shortfall grows
-with depth, no single penalty weight absorbs it. A free signal, the model's predicted step size,
-ranks error nearly as well ({{e7_step_r3}}); the margin is unresolved. The members share {{v1_shared_pct0}}% of their parameters; at {{v2_deploy_h}} steps, five independent models are
-{{r2_total_x_h100}}× better calibrated and still {{r2_indep_ratio_h100}}× overconfident. The
-per-member σ, which the method discards, is driven to zero by the implemented loss, as derived and confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
-coverage within {{d3_tol}} points of nominal on episodes it trained on, though no cell is
+held-out trajectories. The base paper's architecture claim holds against our MLP, RSSM and
+transformer baselines; its chosen history and forecast lengths are beaten at our budget. The follow-up's uncertainty gets the order right and the size wrong.
+Ensemble disagreement, the method's reward penalty, correlates {{a2_r_pooled}} with
+realised error, and {{a2_rdd}} with rollout and depth held fixed. Yet on the checkpoint's training data it is {{d1n_epi_ratio_h1}}× smaller than that error at one step and
+{{d1n_epi_ratio_h100}}× at the method's {{v2_deploy_h}}-step horizon. A free signal, the model's predicted step size,
+ranks error nearly as well ({{e7_step_r3}}), by an unresolved margin. The members share {{v1_shared_pct0}}% of their parameters; at {{v2_deploy_h}} steps, five independent models are
+{{r2_total_x_h100}}× better calibrated and still {{r2_indep_ratio_h100}}× overconfident. The implemented loss drives the per-member σ, which the method discards, to zero, as derived and
+confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
+coverage within {{d3_tol}} points of nominal on its training episodes, though no cell is
 resolvable. On episodes our ensembles never saw, it does so in only {{d3x_own_epi_ok}} of
 {{d3x_own_epi_cells}} disagreement cells: a recipe to refit, not a demonstrated fix. Separately,
-the released evaluation pairs each prediction with the previous action, which on the same
-trajectories overstates the checkpoint's error at {{v2_diag_h}} steps by {{ad_nrmse}}%
-{{ad_nrmse_ci}} in nRMSE and {{ad_rel}}% {{ad_rel_ci}} in relative-L1; across all ten episodes, which it trained on, the sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
+the released evaluation pairs each prediction with the previous action, overstating the
+checkpoint's error on the same trajectories at {{v2_diag_h}} steps by {{ad_nrmse}}%
+{{ad_nrmse_ci}} in nRMSE and {{ad_rel}}% {{ad_rel_ci}} in relative-L1; across its ten training episodes the sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---
@@ -77,6 +75,14 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   under a rule committed before the runs (§5). At one step, a second pre-registered rule with
   {{m64_h1_n}} independent {{m64_h1_unit}}-row units, where the 400-step unit gives {{a1_nind}},
   finds a gap of {{m64_h1_gap}} {{m64_h1_ci}}, in favour of **teacher forcing** (§5).
+- **Two more of the base paper's claims, tested under rules committed before the runs.** Its
+  architecture claim holds: RWM is ahead at h = {{v2_diag_h}} of MLP, RSSM and transformer baselines
+  built to our reading of its specification and teacher-forced as it trains them, and stays ahead
+  when they are trained autoregressively, a comparison of architectures at one training regime
+  rather than a test of the claim (§5.3). Its chosen history and forecast lengths,
+  {{mn_centre_label}}, are not optimal at our budget: {{mn_n_better_word}} of their
+  {{mn_n_configs_word}} one-factor neighbours beat them, the best reaching {{mn_best_l1_h368}}
+  against {{mn_centre_l1_h368}} in relative-L1 at h = {{v2_diag_h}} (§5.2).
 - **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
   σ = 0, so the per-member σ the method discards collapses by construction: derived rather than
   observed, and demonstrated against known noise (§6.3).
@@ -235,8 +241,9 @@ released model's state loss is not a log-likelihood at all (a *sample* enters a 
 the failure §6.3 derives is more basic than theirs and does not depend on the optimiser. §6.3
 derives it and demonstrates it against known noise.
 
-*Every entry above was checked against the paper itself: title, full author list, venue and year
-from the arXiv record, and every sentence we attribute matched verbatim against the paper's text.
+*Every entry cited here and in §5.3 was checked against the paper itself: title, full author list
+and year from the arXiv record, venue from the record or, where it names none, from the paper's own
+first page, and every sentence we attribute matched verbatim against the paper's text.
 {{t1_n_verified}} of {{t1_n_refs}} entries are verified and {{t1_n_frag_ok}} of {{t1_n_frag}}
 attributed fragments match verbatim, though {{t1_n_frag_oneword}} of those are single common words
 whose match verifies nothing about the attribution (`results/t1_bibliography_verified.json`). No
@@ -383,26 +390,26 @@ computed from, so no arena label and no sample size in it is typed by hand.
 A reproduction that does not say what it left alone invites the reader to assume it tested
 everything. It did not.
 
-**We tested four claims and left eight untested.** The four are the base paper's autoregressive
--versus-teacher-forcing comparison and its claim that teacher forcing generalises poorly
-(§5), and the follow-up's two claims about what its uncertainty outputs report (§6). Of the {{n_untested_word}} we did not test, **{{appE_n_sim_word}} need a simulator we do not
-have**: {{appF_sim_list}}. **{{appF_n_polhw_word}} of those {{appE_n_sim_word}} are claims about
-policy learning or hardware** — every one but {{appF_model_list}}, which needs a simulator and
-recorded data from other robots but is a claim about the model rather than about a policy. This
-work trains no policy and runs on two CPU cores. **The remaining {{appE_n_cpu_word}} need none of
-that and we still did not run them**: {{appF_cpu_list}} are within reach of the CPU budget this
-project already spent, and Appendix C prices both. They are unrun for want of time, not of
-hardware. The counts and lists are generated from the classification tags in Appendix D's verdict
+**We tested {{orig_n_tested_word}} claims and left {{n_untested_word}} untested.** The {{orig_n_tested_word}} are the base paper's
+autoregressive-versus-teacher-forcing comparison and its claim that teacher forcing generalises
+poorly (§5), its configuration claim (§5.2) and its claim against MLP, RSSM and transformer
+baselines (§5.3), and the follow-up's two claims about what its uncertainty outputs report (§6).
+**Every one of the {{n_untested_word}} we did not test needs a simulator or hardware we do not have**: {{appF_sim_list}}.
+**{{appF_n_polhw_word}} of them are claims about policy learning or hardware** — every one but
+{{appF_model_list}}, which needs a simulator and recorded data from other robots but is a claim
+about the model rather than about a policy. This work trains no policy and runs on two CPU cores.
+The counts and lists are generated from the classification tags in Appendix D's verdict
 column, and they replace a withdrawn claim that every untested claim concerns policy learning or
 hardware (`S-17`). §11 states what the untested claims bound, and Appendix C what testing them
 would take.
 
-**For all {{orig_n_tested}} of the claims we did test, the original reports no quantitative
-figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
-caption or table. So our {{d1_ratio}}× at h = {{v2_diag_h}} neither confirms nor contradicts a
+**For {{orig_n_without_word}} of the {{orig_n_tested_word}} claims we tested, the original reports no quantitative
+figure.** Each is asserted qualitatively and shown in a plot, with no number in text, caption or
+table. So our {{d1_ratio}}× at h = {{v2_diag_h}} neither confirms nor contradicts a
 published figure: it is the first figure attached to the claim, as §6.7's coefficient is for the
-follow-up's "strong correlation" between disagreement and error. Where a magnitude is legible only
-from a plotted curve we say so rather than estimating it from the axis.
+follow-up's "strong correlation" between disagreement and error. The exception is the configuration claim, whose heatmap prints a
+value in every cell (§5.2). Where a magnitude is legible only from a plotted curve we say so rather
+than estimating it from the axis.
 
 **Appendix D gives the full table**, claim by claim, with what the original states, where it
 states it, and our verdict.
@@ -522,7 +529,7 @@ test above is unaffected either way.
 **How good the reimplementation is as a model, next to the artifact it reimplements.**
 The tables above compare two training rules with each other and §6.2's compares calibration, so
 neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
-aggregations, one arena, five rows:
+aggregations for those, relative-L1 alone for §5.3's architecture baselines, and one arena:
 
 | model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = {{v2_deploy_h}} | rel-L1 h = {{v2_deploy_h}} | nRMSE h = {{v2_diag_h}} | rel-L1 h = {{v2_diag_h}} |
 |---|---|---|---|---|---|---|---|---|
@@ -530,14 +537,22 @@ aggregations, one arena, five rows:
 | Arm A — autoregressive, faithful MSE | {{h2h_armA_nrmse_h1}} | {{h2h_armA_l1_h1}} | {{h2h_armA_nrmse_h8}} | {{h2h_armA_l1_h8}} | {{h2h_armA_nrmse_h100}} | {{h2h_armA_l1_h100}} | {{h2h_armA_nrmse_h368}} | {{h2h_armA_l1_h368}} |
 | Arm A — autoregressive, `gaussian_nll` | {{h2h_armAnll_nrmse_h1}} | {{h2h_armAnll_l1_h1}} | {{h2h_armAnll_nrmse_h8}} | {{h2h_armAnll_l1_h8}} | {{h2h_armAnll_nrmse_h100}} | {{h2h_armAnll_l1_h100}} | {{h2h_armAnll_nrmse_h368}} | {{h2h_armAnll_l1_h368}} |
 | Arm B — teacher-forced | {{h2h_armB_nrmse_h1}} | {{h2h_armB_l1_h1}} | {{h2h_armB_nrmse_h8}} | {{h2h_armB_l1_h8}} | {{h2h_armB_nrmse_h100}} | {{h2h_armB_l1_h100}} | {{h2h_armB_nrmse_h368}} | {{h2h_armB_l1_h368}} |
+| MLP, teacher-forced (§5.3) | — | {{h2h_bl_mlp_tf_l1_h1}} | — | {{h2h_bl_mlp_tf_l1_h8}} | — | {{h2h_bl_mlp_tf_l1_h100}} | — | {{h2h_bl_mlp_tf_l1_h368}} |
+| MLP, autoregressive (§5.3) | — | {{h2h_bl_mlp_ar_l1_h1}} | — | {{h2h_bl_mlp_ar_l1_h8}} | — | {{h2h_bl_mlp_ar_l1_h100}} | — | {{h2h_bl_mlp_ar_l1_h368}} |
+| RSSM, teacher-forced (§5.3) | — | {{h2h_bl_rssm_tf_l1_h1}} | — | {{h2h_bl_rssm_tf_l1_h8}} | — | {{h2h_bl_rssm_tf_l1_h100}} | — | {{h2h_bl_rssm_tf_l1_h368}} |
+| RSSM, autoregressive (§5.3) | — | {{h2h_bl_rssm_ar_l1_h1}} | — | {{h2h_bl_rssm_ar_l1_h8}} | — | {{h2h_bl_rssm_ar_l1_h100}} | — | {{h2h_bl_rssm_ar_l1_h368}} |
+| transformer, teacher-forced (§5.3) | — | {{h2h_bl_transformer_tf_l1_h1}} | — | {{h2h_bl_transformer_tf_l1_h8}} | — | {{h2h_bl_transformer_tf_l1_h100}} | — | {{h2h_bl_transformer_tf_l1_h368}} |
+| transformer, autoregressive (§5.3) | — | {{h2h_bl_transformer_ar_l1_h1}} | — | {{h2h_bl_transformer_ar_l1_h8}} | — | {{h2h_bl_transformer_ar_l1_h100}} | — | {{h2h_bl_transformer_ar_l1_h368}} |
 | hold-last floor | {{h2h_floor_nrmse_h1}} | {{h2h_floor_l1_h1}} | {{h2h_floor_nrmse_h8}} | {{h2h_floor_l1_h8}} | {{h2h_floor_nrmse_h100}} | {{h2h_floor_l1_h100}} | {{h2h_floor_nrmse_h368}} | {{h2h_floor_l1_h368}} |
 
 **Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}},
 {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2h_nind}}.**
 Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterations (the `{{h2h_arm_ckpt}}` checkpoint), with
 per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1), and both metrics
-are cumulative over forecast steps 1..h. Every row is read from the stored rollouts behind §6.2's
-calibration tables, so no model is run to build this table. **This table is at {{iters_main}} iterations and §5's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.
+are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
+calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
+their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
+exactly; its nRMSE is aggregated per trajectory rather than pooled, so it is not shown here. **This table is at {{iters_main}} iterations and §5's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.
 
 Both metrics put the released checkpoint first at {{h2h_released_sweeps_at}}, they name
 different leaders at {{h2h_split_at}}, and at {{h2h_armA_sweeps_at}} both put an Arm A variant
@@ -555,6 +570,99 @@ The base paper's headline is a sample-efficiency result: policies transfer to ha
 A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the training result, {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, and still beats the hold-last floor, by {{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons. That is what this paper can add to the sample-efficiency question without training a policy.
 
 **Three limits.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's {{c2_ref}} transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
+
+### 5.2 The configuration claim: history and forecast horizons
+
+**Claim under test.** The model reads a history of M past steps and, in training, forecasts the
+next N steps from its own predictions. The base paper sweeps both and says that moderate values give
+an optimal trade-off between accuracy and training time, with {{mn_centre_label}} as the instance
+(§IV-C). Its heatmap prints the error of every cell, and the centre's is the tied-lowest, level with
+its longest-forecast neighbour (`docs/presubmission/ORIGINAL_SPECS.md` a.5).
+
+**Rule, committed in advance** (rule M-74, Appendix E). It tests the accuracy half only: whether the centre has the lowest error among its {{mn_n_configs_word}} one-factor neighbours in the original's
+grid, M of {{mn_grid_M}} at the centre's N and N of {{mn_grid_N}} at its M. Each is trained as Arm A
+is, for {{iters_main}} iterations on {{mn_seeds_word}} seeds. The statistic is a configuration's
+relative-L1 at h = {{v2_diag_h}} minus the centre's, averaged over trajectories and tested by an exact
+bootstrap over trajectories, with Holm's correction holding the chance of any false "better" in the
+family at α = 0.05. Training time is reported and governs nothing: hours on
+two CPU cores are not what the original timed on a GPU.
+
+| (M, N) | relative-L1, h = {{v2_deploy_h}} | relative-L1, h = {{v2_diag_h}} | difference from the centre [95% interval] | result | hours per run |
+|---|---|---|---|---|---|
+{{mn_table}}
+
+**Arena: {{h2h_arena}}, episodes {{h2h_episodes}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind}}.** Each row is the
+mean over {{mn_seeds_word}} seeds at {{iters_main}} iterations (`results/mn_sweep_eval.json`). A
+difference is positive when the centre is better, and "result" is after Holm
+(`results/mn_sweep_verdict.json`). Hours are wall clock per run (`results/presubmission_runtime.json`);
+{{mn_n_overlapped}} of the {{rt_sweep_runs}} sweep runs overlapped other logged CPU work, which
+inflates their hours and changes no weight (Appendix B). The hold-last floor is {{mn_floor_h100}} at h = {{v2_deploy_h}} and {{mn_floor_h368}} at h = {{v2_diag_h}}.
+
+**Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre, {{mn_worse_list}} are worse, and
+{{mn_unres_list}} cannot be told apart from it. At h = {{v2_diag_h}} the lowest error is {{mn_best_config}}'s,
+{{mn_best_l1_h368}} against the centre's {{mn_centre_l1_h368}}, a difference of {{mn_best_D}}
+{{mn_best_ci}}. The verdict does not rest on the anchor: on the in-sample arena's {{mn_nind_ins}} independent {{h2h_unit}}-step trajectories, {{mn_insample_clause}}, and among the held-out readings the rule
+reports alongside, {{mn_alongside_clause}}.
+
+The original's direction on N holds. The shortest forecasts are far worse, which is §5's
+teacher-forcing result again, and the longest are better. Its direction on M holds only in part. The
+original's error falls steeply from M = 1 to M = 8 and then flattens (`ORIGINAL_SPECS.md` a.5). On
+the governing reading ours does not fall at all: {{mn_mvar_better_list}} beat the centre and no
+shorter history is resolvably worse, though other readings the rule reports put
+shorter histories behind it: {{mn_mvar_other_worse}}. The centre's tie with its longest-forecast neighbour becomes a loss.
+
+**Limits.** One factor is varied at a time, so no interaction between M and N is tested. Our data
+budget is {{c2_pct}}% of the reference's (§5.1), and the original states neither the ablation's
+budget, its evaluation data nor the horizon behind its error, so the verdict holds at our budget and
+no further: a larger one may favour a longer history. With {{mn_nind}} independent trajectories, the rule's minimum detectable effect at h = {{v2_diag_h}},
+the difference its first Holm step would usually detect, is about {{mn_mde_h368}}% of the centre's
+error.
+
+### 5.3 The architecture claim: MLP, RSSM and transformer baselines
+
+**Claim under test.** The base paper compares RWM with three **architecture baselines**: other network designs trained on the same data to make the same predictions. They are a multilayer
+perceptron (MLP) over a flattened window of history; a recurrent state-space model (RSSM; Hafner et al., ICML 2019), in the form DreamerV2 refined (Hafner et al., ICLR 2021); and a decoder-only transformer. It says RWM
+"consistently achieves the lowest prediction errors across all environments" (§IV-D), gives no number (Fig. 7), and trains the baselines teacher-forced.
+
+**What we built.** The pinned upstream code has an MLP but no RSSM or transformer, so all three are ours, the MLP following the upstream one. They follow the shapes in the original's Table
+S7 as we read it, with {{bl_params_list}} parameters against RWM's
+{{bl_rwm_params}}. Where the table is silent they take RWM's data, windows, objective, optimiser,
+iterations and seeds, and the RSSM takes its latent, activation and KL settings from DreamerV2. Each choice is a row of
+`docs/presubmission/BASELINE_SPECS.md`. Only the predicted state is compared.
+
+**Two rules, committed in advance** (M-75 and M-76, Appendix E). M-75 trains the baselines
+teacher-forced, as the original does. M-76 trains them autoregressively, as RWM is, so that training rule and architecture are not confounded. Both take Arm A at {{iters_main}} iterations
+as RWM and test each baseline's relative-L1 at h = {{v2_diag_h}} against it, on §5.2's arena with
+§5.2's bootstrap and Holm correction.
+
+| model | parameters | relative-L1, h = {{v2_deploy_h}} | relative-L1, h = {{v2_diag_h}} | difference from RWM [95% interval] | result | hours per run |
+|---|---|---|---|---|---|---|
+{{bl_table}}
+
+**Arena as in §5.2: {{h2h_arena}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind}}.** Each row is the mean over
+{{mn_seeds_word}} seeds at {{iters_main}} iterations (`results/baselines_eval.json`). A difference is
+positive when RWM is better, and "result" is after Holm (`results/baselines_verdict.json`); hours
+are as in §5.2.
+
+**Result: {{bl_tf_verdict}} with the baselines teacher-forced, and {{bl_ar_verdict}} with them
+trained autoregressively.** All {{bl_n_rows_word}} comparisons favour RWM, with intervals that
+exclude zero, and every baseline row is above the hold-last floor at h = {{v2_diag_h}}, which RWM is
+below. The second verdict compares architectures at one training regime and is not a verdict on the
+original's claim, which the first carries. The lead is a long-horizon one.
+At h = 1 both rules return {{bl_tf_h1}}, and the teacher-forced RSSM's error, {{h2h_bl_rssm_tf_l1_h1}},
+is below RWM's {{h2h_armA_l1_h1}} without being resolvable. At h = 8 both return {{bl_tf_h8}}.
+
+**Where ours departs.** The original adds that an RSSM trained autoregressively
+performs comparably to RWM. Ours does not: {{h2h_bl_rssm_ar_l1_h368}} against RWM's
+{{bl_rwm_l1_h368}} at h = {{v2_diag_h}}. That may be our RSSM rather than the architecture: Table
+S7's latent is ambiguous, and we read it in DreamerV2's naming, without its layer-normalised
+recurrent cell (`BASELINE_SPECS.md`, the RSSM rows).
+
+**Limits.** One robot on flat ground; the original has several environments. The baselines
+are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and
+budget are RWM's, not tuned for them. Their sizes are Table S7's, not matched to RWM's;
+parameter-matched variants were specified but not run. With {{mn_nind}} independent trajectories, the minimum detectable effect at h = {{v2_diag_h}} is
+about {{bl_mde_h368}}% of RWM's error, well below every difference here.
 
 ---
 
@@ -1519,6 +1627,12 @@ degenerate by construction (`M-71`).
 
 **§6.4's mechanism is a structural fact plus a hypothesis.** That the five members share a trunk, a hidden state and {{v1_shared_pct}}% of each member's parameters is measured; that this *causes* the epistemic miscalibration is the hypothesis, and only §6.10 bears on it.
 
+**The configuration and architecture verdicts hold at our budget and on our reading.** §5.2
+varies one factor at a time at {{c2_pct}}% of the reference's data, so it cannot say what the
+original's budget would favour. §5.3's baselines are our reconstruction of a table that fixes only
+their shapes, tested on one robot where the original has several. Both sections state these limits
+beside their results.
+
 **Deliberately out of scope.** No policy-learning result of either paper is reproduced or tested:
 there is no simulator, no RL loop, no ANYmal, and no policy is trained anywhere in this work. The
 sample-efficiency comparison (roughly 6M against 250M transitions) is not tested for the same
@@ -1534,7 +1648,9 @@ we tested the mechanism in none of them.
 
 ## 12. Conclusion
 
-The Robotic World Model's central training claim reproduces, and the margin is large. Neither
+The Robotic World Model's central training claim reproduces, and the margin is large. Its
+architecture claim also holds against baselines we built, while its chosen history and forecast
+lengths are beaten at our budget (§5.2, §5.3). Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
 At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to, the aleatoric σ is {{d1n_alea_ratio_h100}}× smaller than its own error, because the objective's optimum is σ = 0 and the term that should prevent this cancels out of the gradient. The epistemic term the method actually penalises with is better by a factor of {{d1n_epi_over_alea_h100}} and still {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] overconfident where it is used, both figures at h = {{v2_deploy_h}}.
 
@@ -1556,7 +1672,8 @@ at h = {{v2_deploy_h}} (§6.2), are measurements of one checkpoint. *Properties 
 and its arenas* are limits on what could be resolved, not findings in either direction, and neither pinned repository can lift them (§3): our arms' held-out arena holds {{m23_nind}} independent 400-step
 trajectories and all ten episodes hold {{d1n_nind}}, which is why §11 leaves the replication at
 ensemble size 5, the free-baseline margin and capacity's share of the trunk-sharing effect open
-rather than settled.
+rather than settled. §5.2's configuration verdict should not travel either: it is
+resolved, but at our data budget, and says nothing about the original's.
 
 ---
 
@@ -1622,10 +1739,10 @@ renamed {{v4_name_v1}} to {{v4_name_v3}} — the same model, with the letter re-
 is in `results/original_paper_figures.json`.*
 {{t1_reference_list}}
 
-*Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are the §2 bibliography, generated from
+*Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are the bibliography of §2 and §5.3, generated from
 `results/t1_bibliography_verified.json` rather than listed here — a hand-maintained list of what a
 paper cites drifts exactly as a hand-typed count does, and this one had: six entries cited in §2's
-prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments,
+prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title and full author list from the arXiv record, venue from the record or the paper's first page, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments,
 {{t1_n_frag_oneword}} of them single common words whose presence the cited paper's subject guarantees,
 so their match could not have failed and verifies nothing about the attribution
 (`results/t1_bibliography_verified.json`, ledger `D-35`).*
@@ -1664,14 +1781,21 @@ architecture and mixing widths into it would make "nearly identical across runs"
 different models. Every run artifact records the width it trained at, and `paper_numbers.py`
 selects the collapse family by that field rather than by filename; `docs/BUILD_CHECKS.md`, shipped as supplementary, records how that selection came to be made.
 
+**The pre-submission runs are counted separately.** §5.2's sweep and §5.3's baselines added
+{{rt_pre_runs}} runs and **{{rt_pre_hours}} hours**: {{rt_sweep_runs}} sweep runs ({{rt_sweep_hours}} h),
+then {{rt_bl_tf_runs}} teacher-forced and {{rt_bl_ar_runs}} autoregressive baseline runs
+({{rt_bl_tf_hours}} h and {{rt_bl_ar_hours}} h), read from `results/presubmission_runtime.json`. They
+are outside the total above, whose remainder that paragraph describes as released-width runs, which
+the baselines are not. Of these, {{rt_pre_overlapped}} overlapped other CPU work a session logged,
+which inflates their wall clock and changes no weight; the artifact lists each overlap.
+
 ## Appendix C — what testing the untested claims would require
 
 §4's table marks {{orig_n_tested}} claims tested and the rest not. "Not tested" is an apology
 unless it comes with a price, so here is what each would cost. We give compute orders where we
 can estimate them honestly from this project's own measurements and say so where we cannot.
 
-**All but the last {{appE_n_cpu_word}} rows need what this reproduction did not have:
-interaction.** Our arms train on the released CSV, which is a recording. Those claims need a
+**Every row needs what this reproduction did not have: interaction.** Our arms train on the released CSV, which is a recording. Those claims need a
 policy acting in an environment, simulated or real, and the environment responding. In
 simulation that means Isaac Lab, which needs an RTX-class NVIDIA GPU, and no amount of CPU
 substitutes: the reference's data generation is GPU-parallel simulation, not a data-loading
@@ -1688,15 +1812,12 @@ readme places collection in a third repository, the authors' Isaac Lab extension
 | Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our {{rt_hours}} h scale; the model training is the cheap half and the data is not |
 | Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's {{rt_hours}} h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our {{rt_runs}} runs took {{rt_hours}} h on two cores; a modest sweep is a small multiple of that |
 
-**The {{appE_n_cpu_word}} at the bottom are within reach of this setup** — {{appF_cpu_list}} —
-and are the honest next steps for anyone extending this work on CPU. The {{appE_n_sim_word}} above
-them are not, and no amount of care with the released CSV changes that. This table has one row per
-untested claim; it listed {{appE_n_cpu}} fewer than that until the assertion that counts its rows
-against Appendix D's was written, and the two it omitted were the two whose cost is hardest to
-state honestly.
+
+**Two claims this table once priced as within reach of this setup have since been run**: the
+configuration claim (§5.2) and the architecture claim (§5.3), {{rt_pre_runs}} runs and
+{{rt_pre_hours}} h of CPU training between them (Appendix B). The {{appE_n_sim_word}} that remain all
+need a simulator or hardware, and no amount of care with the released CSV changes that.
 
 **What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
 items, it bears directly on a limitation §11 states our measurements cannot settle — whether the
@@ -1726,8 +1847,8 @@ names. All locations, and the occurrence counts that establish that, are recorde
 |---|---|---|---|
 | RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 4 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
 | Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
-| M=32, N=8 is the optimal configuration (§IV-C) | no | — | `[cpu: the M/N configuration sweep]` we use the released configuration and did not sweep it |
-| Beats MLP, RSSM and transformer baselines (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[cpu: the MLP/RSSM/transformer baseline comparison]` the lite release ships only the RNN variant |
+| M=32, N=8 gives the optimal trade-off between accuracy and training time (§IV-C) | **yes** | **quantitative**: Fig. 6 prints the error and the training hours of every cell of its grid, and the centre's error is the tied-lowest (`docs/presubmission/ORIGINAL_SPECS.md` a.5) | **{{mn_verdict}}** on the accuracy half (§5.2): {{mn_better_list}} beat it. Training time is reported, not tested |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **{{bl_tf_verdict}}** with the baselines teacher-forced, as the original trains them, and **{{bl_ar_verdict}}** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§5.3). One robot where the original has several |
 | Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |
 | Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **{{orig_se_rwm}} against {{orig_se_ppo}} state transitions** at equal real tracking reward ({{orig_se_rwm_rew}} against {{orig_se_ppo_rew}}), Table I — the only table of numbers in either paper | `[policy, hardware: the sample-efficiency result]` **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | `[policy: the comparisons against SHAC and Dreamer]` no policy learning reproduced |

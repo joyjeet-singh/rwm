@@ -170,3 +170,15 @@ Asked in chat by S8 on 2026-09-29, after the three verdicts were computed. **The
 **How S8 applies it:**
 - M-77, M-78 and M-79 record the three verdicts exactly as the scripts return them.
 - In M-74, M-75 and M-76 only the `Status` line changes, to "PRE-REGISTERED, DISCHARGED by `…`. **It returns X.** Recorded in `M-7x`." No character of any rule's text changes, and `git diff` shows one line per rule.
+
+## S9-contributions-abstract
+
+Asked in chat by S9 on 2026-09-29. **Two plan constraints collided:**
+- S9 says "add one contribution bullet" for resolved verdicts, and all three resolve (NOT OPTIMAL AT OUR BUDGET, REPRODUCES, RWM AHEAD OF ALL THREE). But S4 capped the contributions at 7 bullets, and S10's checklist checks "≤ 7".
+- S9 allows at most one abstract sentence, and the abstract is exactly at S4's 330-word limit and C12.1's 26-numeral cap.
+
+**Answers (verbatim):**
+- "Add an 8th bullet". The ≤ 7 limit (S4; S10 checklist item 5) is raised to 8 by this ruling.
+- "No numerals, trim to 330 (Recommended)". One abstract sentence with no numerals, with wording trimmed elsewhere so the abstract stays at ≤ 330 words; C12.1 is unchanged.
+
+**Asked later in S9, 2026-09-29.** §5.2 and §5.3 must cite `ORIGINAL_SPECS.md` (the original's specifications, with page anchors) and `BASELINE_SPECS.md` (the baselines' deviations table, PLAN §1.2.5). Both are in `docs/presubmission/`, which the S5 ruling excludes from both bundles. Options put: ship those two files (recommended); copy them into `docs/`; keep them internal. **Answer (verbatim):** "Ship those two files (Recommended)". Both builders keep excluding `docs/presubmission/`, except `ORIGINAL_SPECS.md`, `BASELINE_SPECS.md` and `verify_original_specs.py`, the anchor checker.

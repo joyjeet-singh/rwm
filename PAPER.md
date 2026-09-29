@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1053 values substituted from 78 artifacts. -->
+     1121 values substituted from 84 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -14,24 +14,22 @@ We rebuild the proprioceptive dynamics model of the *Robotic World Model* (arXiv
 and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU. Before training,
 outputs, losses and gradients match the released implementation exactly. The base paper's central
 training claim reproduces: training on the model's own rollouts beats teacher forcing by
-4.61× at 368 steps and 2.58× at 100, under a rule
-committed before the runs, though teacher forcing leads at one step. It uses 0.133% of the
+4.61× at 368 steps and 2.58× at 100, under a rule committed in advance, though teacher forcing leads at one step. It uses 0.133% of the
 reference's world-model data, one robot, gait and terrain, and 4 independent
-held-out trajectories. The follow-up's uncertainty gets the order right and the size wrong.
-Ensemble disagreement, which the method subtracts from reward, correlates +0.605 with
-realised error, and +0.419 with rollout and depth both held fixed. Yet on data the
-checkpoint trained on, it is 8.3× smaller than that error at one step and
-33.4× at the method's 100-step horizon. Because the shortfall grows
-with depth, no single penalty weight absorbs it. A free signal, the model's predicted step size,
-ranks error nearly as well (+0.470); the margin is unresolved. The members share 89% of their parameters; at 100 steps, five independent models are
-2.03× better calibrated and still 5.2× overconfident. The
-per-member σ, which the method discards, is driven to zero by the implemented loss, as derived and confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
-coverage within 10 points of nominal on episodes it trained on, though no cell is
+held-out trajectories. The base paper's architecture claim holds against our MLP, RSSM and
+transformer baselines; its chosen history and forecast lengths are beaten at our budget. The follow-up's uncertainty gets the order right and the size wrong.
+Ensemble disagreement, the method's reward penalty, correlates +0.605 with
+realised error, and +0.419 with rollout and depth held fixed. Yet on the checkpoint's training data it is 8.3× smaller than that error at one step and
+33.4× at the method's 100-step horizon. A free signal, the model's predicted step size,
+ranks error nearly as well (+0.470), by an unresolved margin. The members share 89% of their parameters; at 100 steps, five independent models are
+2.03× better calibrated and still 5.2× overconfident. The implemented loss drives the per-member σ, which the method discards, to zero, as derived and
+confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
+coverage within 10 points of nominal on its training episodes, though no cell is
 resolvable. On episodes our ensembles never saw, it does so in only 17 of
 36 disagreement cells: a recipe to refit, not a demonstrated fix. Separately,
-the released evaluation pairs each prediction with the previous action, which on the same
-trajectories overstates the checkpoint's error at 368 steps by 6.6%
-[1.0, 8.0] in nRMSE and 7.9% [3.1, 13.0] in relative-L1; across all ten episodes, which it trained on, the sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
+the released evaluation pairs each prediction with the previous action, overstating the
+checkpoint's error on the same trajectories at 368 steps by 6.6%
+[1.0, 8.0] in nRMSE and 7.9% [3.1, 13.0] in relative-L1; across its ten training episodes the sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---
@@ -85,6 +83,14 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   under a rule committed before the runs (§5). At one step, a second pre-registered rule with
   60 independent 33-row units, where the 400-step unit gives 4,
   finds a gap of -0.0194 [-0.0310, -0.0093], in favour of **teacher forcing** (§5).
+- **Two more of the base paper's claims, tested under rules committed before the runs.** Its
+  architecture claim holds: RWM is ahead at h = 368 of MLP, RSSM and transformer baselines
+  built to our reading of its specification and teacher-forced as it trains them, and stays ahead
+  when they are trained autoregressively, a comparison of architectures at one training regime
+  rather than a test of the claim (§5.3). Its chosen history and forecast lengths,
+  (M, N) = (32, 8), are not optimal at our budget: four of their
+  eight one-factor neighbours beat them, the best reaching 0.2987
+  against 0.5856 in relative-L1 at h = 368 (§5.2).
 - **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
   σ = 0, so the per-member σ the method discards collapses by construction: derived rather than
   observed, and demonstrated against known noise (§6.3).
@@ -243,9 +249,10 @@ released model's state loss is not a log-likelihood at all (a *sample* enters a 
 the failure §6.3 derives is more basic than theirs and does not depend on the optimiser. §6.3
 derives it and demonstrates it against known noise.
 
-*Every entry above was checked against the paper itself: title, full author list, venue and year
-from the arXiv record, and every sentence we attribute matched verbatim against the paper's text.
-16 of 16 entries are verified and 17 of 17
+*Every entry cited here and in §5.3 was checked against the paper itself: title, full author list
+and year from the arXiv record, venue from the record or, where it names none, from the paper's own
+first page, and every sentence we attribute matched verbatim against the paper's text.
+18 of 18 entries are verified and 17 of 17
 attributed fragments match verbatim, though 3 of those are single common words
 whose match verifies nothing about the attribution (`results/t1_bibliography_verified.json`). No
 entry was added that was not verified.*
@@ -384,6 +391,9 @@ computed from, so no arena label and no sample size in it is typed by hand.
 |---|---|---|---|---|---|---|
 | Autoregressive training beats teacher forcing at h = 368 | 5 | out-of-sample | 4 | no | gap excludes zero, favouring autoregressive training | yes |
 | The same comparison reverses at h = 1, at the short unit M-64 built | 5 | out-of-sample | 60 | no | gap excludes zero, favouring teacher forcing | not applicable |
+| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) | 5.2 | out-of-sample | 4 | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |
+| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) | 5.3 | out-of-sample | 4 | no | reproduces | yes |
+| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) | 5.3 | out-of-sample | 4 | no | rwm ahead of all three | yes |
 | Ensemble disagreement is smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
 | Ensemble disagreement is smaller than realised error, at h = 100 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
 | The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 | 6.2 | all ten episodes | 20 | yes | overconfident; the ratio interval excludes 1 | not applicable |
@@ -403,26 +413,26 @@ computed from, so no arena label and no sample size in it is typed by hand.
 A reproduction that does not say what it left alone invites the reader to assume it tested
 everything. It did not.
 
-**We tested four claims and left eight untested.** The four are the base paper's autoregressive
--versus-teacher-forcing comparison and its claim that teacher forcing generalises poorly
-(§5), and the follow-up's two claims about what its uncertainty outputs report (§6). Of the eight we did not test, **six need a simulator we do not
-have**: zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, generality across robot morphologies, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy. **Five of those six are claims about
-policy learning or hardware** — every one but generality across robot morphologies, which needs a simulator and
-recorded data from other robots but is a claim about the model rather than about a policy. This
-work trains no policy and runs on two CPU cores. **The remaining two need none of
-that and we still did not run them**: the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison are within reach of the CPU budget this
-project already spent, and Appendix C prices both. They are unrun for want of time, not of
-hardware. The counts and lists are generated from the classification tags in Appendix D's verdict
+**We tested six claims and left six untested.** The six are the base paper's
+autoregressive-versus-teacher-forcing comparison and its claim that teacher forcing generalises
+poorly (§5), its configuration claim (§5.2) and its claim against MLP, RSSM and transformer
+baselines (§5.3), and the follow-up's two claims about what its uncertainty outputs report (§6).
+**Every one of the six we did not test needs a simulator or hardware we do not have**: zero-shot transfer, the sample-efficiency result, the comparisons against SHAC and Dreamer, generality across robot morphologies, offline MBRL on real robots and the core claim that penalising rewards by disagreement improves the learned policy.
+**Five of them are claims about policy learning or hardware** — every one but
+generality across robot morphologies, which needs a simulator and recorded data from other robots but is a claim
+about the model rather than about a policy. This work trains no policy and runs on two CPU cores.
+The counts and lists are generated from the classification tags in Appendix D's verdict
 column, and they replace a withdrawn claim that every untested claim concerns policy learning or
 hardware (`S-17`). §11 states what the untested claims bound, and Appendix C what testing them
 would take.
 
-**For all 4 of the claims we did test, the original reports no quantitative
-figure.** Each is asserted qualitatively and shown in a plot; none is given a number in text,
-caption or table. So our 4.61× at h = 368 neither confirms nor contradicts a
+**For five of the six claims we tested, the original reports no quantitative
+figure.** Each is asserted qualitatively and shown in a plot, with no number in text, caption or
+table. So our 4.61× at h = 368 neither confirms nor contradicts a
 published figure: it is the first figure attached to the claim, as §6.7's coefficient is for the
-follow-up's "strong correlation" between disagreement and error. Where a magnitude is legible only
-from a plotted curve we say so rather than estimating it from the axis.
+follow-up's "strong correlation" between disagreement and error. The exception is the configuration claim, whose heatmap prints a
+value in every cell (§5.2). Where a magnitude is legible only from a plotted curve we say so rather
+than estimating it from the axis.
 
 **Appendix D gives the full table**, claim by claim, with what the original states, where it
 states it, and our verdict.
@@ -544,7 +554,7 @@ test above is unaffected either way.
 **How good the reimplementation is as a model, next to the artifact it reimplements.**
 The tables above compare two training rules with each other and §6.2's compares calibration, so
 neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
-aggregations, one arena, five rows:
+aggregations for those, relative-L1 alone for §5.3's architecture baselines, and one arena:
 
 | model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = 100 | rel-L1 h = 100 | nRMSE h = 368 | rel-L1 h = 368 |
 |---|---|---|---|---|---|---|---|---|
@@ -552,14 +562,22 @@ aggregations, one arena, five rows:
 | Arm A — autoregressive, faithful MSE | 0.1262 | 0.1232 | 0.3029 | 0.3289 | 0.4913 | 0.4798 | 0.5425 | 0.5856 |
 | Arm A — autoregressive, `gaussian_nll` | 0.1204 | 0.1195 | 0.2867 | 0.3154 | 0.4603 | 0.4413 | 0.5245 | 0.5608 |
 | Arm B — teacher-forced | 0.0879 | 0.0929 | 0.3064 | 0.3392 | 1.0363 | 1.0849 | 3.7927 | 4.5684 |
+| MLP, teacher-forced (§5.3) | — | 0.1539 | — | 0.4086 | — | 1.2057 | — | 145.1650 |
+| MLP, autoregressive (§5.3) | — | 0.1470 | — | 0.3492 | — | 0.5400 | — | 1.4628 |
+| RSSM, teacher-forced (§5.3) | — | 0.0761 | — | 0.3686 | — | 2.2128 | — | 6.3718 |
+| RSSM, autoregressive (§5.3) | — | 0.1354 | — | 0.6211 | — | 3.2660 | — | 10.6405 |
+| transformer, teacher-forced (§5.3) | — | 0.1239 | — | 0.3969 | — | 2.0607 | — | 15.1548 |
+| transformer, autoregressive (§5.3) | — | 0.1384 | — | 0.3025 | — | 0.5821 | — | 1.8771 |
 | hold-last floor | 0.0989 | 0.0796 | 0.4117 | 0.3298 | 0.9537 | 0.7558 | 1.0897 | 0.9930 |
 
 **Arena, stated once for the whole table: out-of-sample held-out pair, episodes 1 and 8,
 4 non-overlapping 400-step trajectories, n_independent = 4.**
 Arm rows are the mean over 3 seeds at 2,500 training iterations (the `weights_2500.pt` checkpoint), with
 per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1), and both metrics
-are cumulative over forecast steps 1..h. Every row is read from the stored rollouts behind §6.2's
-calibration tables, so no model is run to build this table. **This table is at 2,500 iterations and §5's by-horizon table at 10,000**, which is why Arm A's relative-L1 at h = 368 reads 0.5856 here and 0.3582 there: the same arm, trained longer.
+are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
+calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
+their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
+exactly; its nRMSE is aggregated per trajectory rather than pooled, so it is not shown here. **This table is at 2,500 iterations and §5's by-horizon table at 10,000**, which is why Arm A's relative-L1 at h = 368 reads 0.5856 here and 0.3582 there: the same arm, trained longer.
 
 Both metrics put the released checkpoint first at h = 1 and h = 8, they name
 different leaders at h = 100, and at h = 368 both put an Arm A variant
@@ -577,6 +595,113 @@ The base paper's headline is a sample-efficiency result: policies transfer to ha
 A dynamics model trained on 0.133% of the reference's data still reproduces the training result, 4.61× at h = 368 and 2.58× at h = 100, and still beats the hold-last floor, by 2.8× and 2.0× at those two horizons. That is what this paper can add to the sample-efficiency question without training a policy.
 
 **Three limits.** It is not a reproduction of the 6,000,000-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's 6,000,000 transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
+
+### 5.2 The configuration claim: history and forecast horizons
+
+**Claim under test.** The model reads a history of M past steps and, in training, forecasts the
+next N steps from its own predictions. The base paper sweeps both and says that moderate values give
+an optimal trade-off between accuracy and training time, with (M, N) = (32, 8) as the instance
+(§IV-C). Its heatmap prints the error of every cell, and the centre's is the tied-lowest, level with
+its longest-forecast neighbour (`docs/presubmission/ORIGINAL_SPECS.md` a.5).
+
+**Rule, committed in advance** (rule M-74, Appendix E). It tests the accuracy half only: whether the centre has the lowest error among its eight one-factor neighbours in the original's
+grid, M of 1, 2, 8 and 16 at the centre's N and N of 1, 2, 16 and 32 at its M. Each is trained as Arm A
+is, for 2,500 iterations on three seeds. The statistic is a configuration's
+relative-L1 at h = 368 minus the centre's, averaged over trajectories and tested by an exact
+bootstrap over trajectories, with Holm's correction holding the chance of any false "better" in the
+family at α = 0.05. Training time is reported and governs nothing: hours on
+two CPU cores are not what the original timed on a GPU.
+
+| (M, N) | relative-L1, h = 100 | relative-L1, h = 368 | difference from the centre [95% interval] | result | hours per run |
+|---|---|---|---|---|---|
+| **(32, 8)**, the centre | 0.4798 | **0.5856** | — | — | — (existing runs) |
+| (1, 8) | 0.3796 | 0.5340 | -0.0516 [-0.1835, +0.0400] | not resolved | 0.15 |
+| (2, 8) | 0.3524 | 0.4717 | -0.1139 [-0.2988, -0.0088] | **configuration better** | 0.16 |
+| (8, 8) | 0.4043 | 0.4852 | -0.1004 [-0.2449, -0.0167] | **configuration better** | 0.30 |
+| (16, 8) | 0.4467 | 0.6161 | +0.0305 [-0.0008, +0.0720] | not resolved | 0.51 |
+| (32, 1) | 1.0903 | 3.7198 | +3.1342 [+1.3012, +6.5096] | centre better | 0.51 |
+| (32, 2) | 0.8886 | 2.0374 | +1.4518 [+0.6250, +2.6933] | centre better | 0.74 |
+| (32, 16) | 0.3544 | 0.3347 | -0.2509 [-0.5218, -0.0956] | **configuration better** | 0.78 |
+| (32, 32) | 0.3348 | 0.2987 | -0.2869 [-0.5951, -0.1005] | **configuration better** | 1.32 |
+
+**Arena: out-of-sample held-out pair, episodes 1 and 8, 4 non-overlapping 400-step trajectories, n_independent = 4.** Each row is the
+mean over three seeds at 2,500 iterations (`results/mn_sweep_eval.json`). A
+difference is positive when the centre is better, and "result" is after Holm
+(`results/mn_sweep_verdict.json`). Hours are wall clock per run (`results/presubmission_runtime.json`);
+8 of the 24 sweep runs overlapped other logged CPU work, which
+inflates their hours and changes no weight (Appendix B). The hold-last floor is 0.7558 at h = 100 and 0.9930 at h = 368.
+
+**Result: NOT OPTIMAL AT OUR BUDGET.** (32, 32), (32, 16), (8, 8) and (2, 8) beat the centre, (32, 2) and (32, 1) are worse, and
+(1, 8) and (16, 8) cannot be told apart from it. At h = 368 the lowest error is (32, 32)'s,
+0.2987 against the centre's 0.5856, a difference of -0.2869
+[-0.5951, -0.1005]. The verdict does not rest on the anchor: on the in-sample arena's 16 independent 400-step trajectories, all four readings there return the same verdict, and among the held-out readings the rule
+reports alongside, every one agrees except nRMSE at h = 1, which returns CANNOT BE DISTINGUISHED.
+
+The original's direction on N holds. The shortest forecasts are far worse, which is §5's
+teacher-forcing result again, and the longest are better. Its direction on M holds only in part. The
+original's error falls steeply from M = 1 to M = 8 and then flattens (`ORIGINAL_SPECS.md` a.5). On
+the governing reading ours does not fall at all: (2, 8) and (8, 8) beat the centre and no
+shorter history is resolvably worse, though other readings the rule reports put
+shorter histories behind it: (1, 8) on in-sample relative-L1 and nRMSE at h = 368, and (16, 8) on held-out nRMSE at h = 368. The centre's tie with its longest-forecast neighbour becomes a loss.
+
+**Limits.** One factor is varied at a time, so no interaction between M and N is tested. Our data
+budget is 0.133% of the reference's (§5.1), and the original states neither the ablation's
+budget, its evaluation data nor the horizon behind its error, so the verdict holds at our budget and
+no further: a larger one may favour a longer history. With 4 independent trajectories, the rule's minimum detectable effect at h = 368,
+the difference its first Holm step would usually detect, is about 14.5% of the centre's
+error.
+
+### 5.3 The architecture claim: MLP, RSSM and transformer baselines
+
+**Claim under test.** The base paper compares RWM with three **architecture baselines**: other network designs trained on the same data to make the same predictions. They are a multilayer
+perceptron (MLP) over a flattened window of history; a recurrent state-space model (RSSM; Hafner et al., ICML 2019), in the form DreamerV2 refined (Hafner et al., ICLR 2021); and a decoder-only transformer. It says RWM
+"consistently achieves the lowest prediction errors across all environments" (§IV-D), gives no number (Fig. 7), and trains the baselines teacher-forced.
+
+**What we built.** The pinned upstream code has an MLP but no RSSM or transformer, so all three are ours, the MLP following the upstream one. They follow the shapes in the original's Table
+S7 as we read it, with 610,484 (MLP), 3,180,468 (RSSM) and 132,148 (transformer) parameters against RWM's
+714,164. Where the table is silent they take RWM's data, windows, objective, optimiser,
+iterations and seeds, and the RSSM takes its latent, activation and KL settings from DreamerV2. Each choice is a row of
+`docs/presubmission/BASELINE_SPECS.md`. Only the predicted state is compared.
+
+**Two rules, committed in advance** (M-75 and M-76, Appendix E). M-75 trains the baselines
+teacher-forced, as the original does. M-76 trains them autoregressively, as RWM is, so that training rule and architecture are not confounded. Both take Arm A at 2,500 iterations
+as RWM and test each baseline's relative-L1 at h = 368 against it, on §5.2's arena with
+§5.2's bootstrap and Holm correction.
+
+| model | parameters | relative-L1, h = 100 | relative-L1, h = 368 | difference from RWM [95% interval] | result | hours per run |
+|---|---|---|---|---|---|---|
+| **RWM** (Arm A, autoregressive) | 714,164 | 0.4798 | **0.5856** | — | — | — (existing runs) |
+| MLP, teacher-forced | 610,484 | 1.2057 | 145.1650 | +144.5794 [+14.8420, +373.9553] | RWM better | 0.04 |
+| RSSM, teacher-forced | 3,180,468 | 2.2128 | 6.3718 | +5.7862 [+2.6251, +10.8616] | RWM better | 1.88 |
+| transformer, teacher-forced | 132,148 | 2.0607 | 15.1548 | +14.5692 [+8.7931, +24.0102] | RWM better | 0.71 |
+| MLP, autoregressive | 610,484 | 0.5400 | 1.4628 | +0.8772 [+0.4248, +1.5662] | RWM better | 0.06 |
+| RSSM, autoregressive | 3,180,468 | 3.2660 | 10.6405 | +10.0549 [+5.7436, +18.1659] | RWM better | 1.53 |
+| transformer, autoregressive | 132,148 | 0.5821 | 1.8771 | +1.2915 [+0.7258, +1.8079] | RWM better | 0.74 |
+
+**Arena as in §5.2: out-of-sample held-out pair, 4 non-overlapping 400-step trajectories, n_independent = 4.** Each row is the mean over
+three seeds at 2,500 iterations (`results/baselines_eval.json`). A difference is
+positive when RWM is better, and "result" is after Holm (`results/baselines_verdict.json`); hours
+are as in §5.2.
+
+**Result: REPRODUCES with the baselines teacher-forced, and RWM AHEAD OF ALL THREE with them
+trained autoregressively.** All six comparisons favour RWM, with intervals that
+exclude zero, and every baseline row is above the hold-last floor at h = 368, which RWM is
+below. The second verdict compares architectures at one training regime and is not a verdict on the
+original's claim, which the first carries. The lead is a long-horizon one.
+At h = 1 both rules return CANNOT BE SETTLED, and the teacher-forced RSSM's error, 0.0761,
+is below RWM's 0.1232 without being resolvable. At h = 8 both return PARTIAL.
+
+**Where ours departs.** The original adds that an RSSM trained autoregressively
+performs comparably to RWM. Ours does not: 10.6405 against RWM's
+0.5856 at h = 368. That may be our RSSM rather than the architecture: Table
+S7's latent is ambiguous, and we read it in DreamerV2's naming, without its layer-normalised
+recurrent cell (`BASELINE_SPECS.md`, the RSSM rows).
+
+**Limits.** One robot on flat ground; the original has several environments. The baselines
+are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and
+budget are RWM's, not tuned for them. Their sizes are Table S7's, not matched to RWM's;
+parameter-matched variants were specified but not run. With 4 independent trajectories, the minimum detectable effect at h = 368 is
+about 12.0% of RWM's error, well below every difference here.
 
 ---
 
@@ -1424,7 +1549,7 @@ arithmetic and the five assumptions it rests on.
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (261 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix E for all 18; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over; Appendix E adds every rule since. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix E for all 21; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over; Appendix E adds every rule since. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
 
 **Six claims withdrawn on evidence**, and seven framings withdrawn rather than numbers, out of 20 superseded entries kept in the record (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framings withdrawn is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.6). Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called its strongest result.
 
@@ -1555,13 +1680,19 @@ degenerate by construction (`M-71`).
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.6), the out-of-sample arena's 4 independent trajectories cannot reject at any effect size, and the larger arenas can and do not: over all ten episodes the smallest P in the family is 0.0037 against a threshold of 0.001667. Resolving it at h = 368 needs more episodes than the released dataset contains, not a better test. At h = 128 and below that is no longer true: a shorter unit gives 14 independent units at h = 100 where the 400-step unit gives 4 (§6.6), and we did not rerun this permutation family there. This limits the *per-dimension* evidence only; the aggregate scalar the method applies is one test rather than forty-five coupled ones, and more strongly supported (§6.7).
 
-**No family-wide correction is applied across our own pre-registered rules.** There are 18 of them with per-rule verdicts (Appendix E), each reported against the thresholds it was committed with. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers a corrected family threshold can apply it from that count.
+**No family-wide correction is applied across our own pre-registered rules.** There are 21 of them with per-rule verdicts (Appendix E), each reported against the thresholds it was committed with. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers a corrected family threshold can apply it from that count.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it.** §6.10's contrast trains five models at five seeds and scores them together. Independently seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk, and greater capacity can inflate σ as well as shrink error. **Capacity is controlled separately.** Rule M-49 (Appendix E), committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132, a ratio of 0.9998 where §6.10's contrast carried 3.49. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
 **It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from 2.03× unmatched to **1.79× matched**, against an MDE of 2.00×, so the rule returns **UNDER-POWERED**: 5 of its 6 conditions hold, and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested, as §6.10 said before the runs. So trunk-sharing is **not** explained away by capacity: the effect points the same way on every pair, with every interval excluding zero. Whether capacity accounts for *any* of it this design does not answer: the point estimates fall by about 0.24, a difference no artifact here tests and far below the 2.00× this comparison can resolve, and closing it needs more independent trajectories than the dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which the rule does not address. That asymmetry is generous to the mechanism: had the factor barely moved despite the handicap, architecture would not be the explanation; since it moved, the design flaw is identified but not attributed to trunk-sharing alone. Isolating it would need an ensemble that shares data ordering and not parameters, a different experiment, as rule M-44 states in its own text.
 
 **§6.4's mechanism is a structural fact plus a hypothesis.** That the five members share a trunk, a hidden state and 89.15% of each member's parameters is measured; that this *causes* the epistemic miscalibration is the hypothesis, and only §6.10 bears on it.
+
+**The configuration and architecture verdicts hold at our budget and on our reading.** §5.2
+varies one factor at a time at 0.133% of the reference's data, so it cannot say what the
+original's budget would favour. §5.3's baselines are our reconstruction of a table that fixes only
+their shapes, tested on one robot where the original has several. Both sections state these limits
+beside their results.
 
 **Deliberately out of scope.** No policy-learning result of either paper is reproduced or tested:
 there is no simulator, no RL loop, no ANYmal, and no policy is trained anywhere in this work. The
@@ -1578,7 +1709,9 @@ we tested the mechanism in none of them.
 
 ## 12. Conclusion
 
-The Robotic World Model's central training claim reproduces, and the margin is large. Neither
+The Robotic World Model's central training claim reproduces, and the margin is large. Its
+architecture claim also holds against baselines we built, while its chosen history and forecast
+lengths are beaten at our budget (§5.2, §5.3). Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
 At h = 100, the horizon the method's own imagination rollouts run to, the aleatoric σ is 11,683× smaller than its own error, because the objective's optimum is σ = 0 and the term that should prevent this cancels out of the gradient. The epistemic term the method actually penalises with is better by a factor of 349 and still 33.4× [28.7, 39.0] overconfident where it is used, both figures at h = 100.
 
@@ -1600,7 +1733,8 @@ at h = 100 (§6.2), are measurements of one checkpoint. *Properties of this data
 and its arenas* are limits on what could be resolved, not findings in either direction, and neither pinned repository can lift them (§3): our arms' held-out arena holds 4 independent 400-step
 trajectories and all ten episodes hold 20, which is why §11 leaves the replication at
 ensemble size 5, the free-baseline margin and capacity's share of the trunk-sharing effect open
-rather than settled.
+rather than settled. §5.2's configuration verdict should not travel either: it is
+resolved, but at our data budget, and says nothing about the original's.
 
 ---
 
@@ -1668,23 +1802,25 @@ is in `results/original_paper_figures.json`.*
 4. K. Chua, R. Calandra, R. McAllister, S. Levine. *Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.* NeurIPS 2018. arXiv:1805.12114, 2018.
 5. S. Fort, H. Hu, B. Lakshminarayanan. *Deep Ensembles: A Loss Landscape Perspective.* arXiv:1912.02757, 2019.
 6. C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. *On Calibration of Modern Neural Networks.* ICML 2017. arXiv:1706.04599, 2017.
-7. M. Havasi, R. Jenatton, S. Fort, J. Z. Liu, J. Snoek, B. Lakshminarayanan, A. M. Dai, D. Tran. *Training independent subnetworks for robust prediction.* ICLR 2021. arXiv:2010.06610, 2021.
-8. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253, 2019.
-9. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951, 2020.
-10. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263, 2018.
-11. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474, 2017.
-12. S. Lee, S. Purushwalkam, M. Cogswell, D. Crandall, D. Batra. *Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks.* arXiv:1511.06314, 2015.
-13. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135, 2022.
-14. A. Malik, V. Kuleshov, J. Song, D. Nemer, H. Seymour, S. Ermon. *Calibrated Model-Based Deep Reinforcement Learning.* ICML 2019 (PMLR 97:4314-4323). arXiv:1906.08312, 2019.
-15. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530, 2019.
-16. M. Seitzer, A. Tavakoli, D. Antic, G. Martius. *On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks.* ICLR 2022. arXiv:2203.09168, 2022.
-17. Y. Wen, D. Tran, J. Ba. *BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning.* ICLR 2020. arXiv:2002.06715, 2020.
-18. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239, 2020.
+7. D. Hafner, T. Lillicrap, I. Fischer, R. Villegas, D. Ha, H. Lee, J. Davidson. *Learning Latent Dynamics for Planning from Pixels.* ICML 2019 (PMLR 97). arXiv:1811.04551, 2019.
+8. D. Hafner, T. Lillicrap, M. Norouzi, J. Ba. *Mastering Atari with Discrete World Models.* ICLR 2021. arXiv:2010.02193, 2021.
+9. M. Havasi, R. Jenatton, S. Fort, J. Z. Liu, J. Snoek, B. Lakshminarayanan, A. M. Dai, D. Tran. *Training independent subnetworks for robust prediction.* ICLR 2021. arXiv:2010.06610, 2021.
+10. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253, 2019.
+11. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951, 2020.
+12. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263, 2018.
+13. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474, 2017.
+14. S. Lee, S. Purushwalkam, M. Cogswell, D. Crandall, D. Batra. *Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks.* arXiv:1511.06314, 2015.
+15. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135, 2022.
+16. A. Malik, V. Kuleshov, J. Song, D. Nemer, H. Seymour, S. Ermon. *Calibrated Model-Based Deep Reinforcement Learning.* ICML 2019 (PMLR 97:4314-4323). arXiv:1906.08312, 2019.
+17. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530, 2019.
+18. M. Seitzer, A. Tavakoli, D. Antic, G. Martius. *On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks.* ICLR 2022. arXiv:2203.09168, 2022.
+19. Y. Wen, D. Tran, J. Ba. *BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning.* ICLR 2020. arXiv:2002.06715, 2020.
+20. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239, 2020.
 
-*Entries 3–18 are the §2 bibliography, generated from
+*Entries 3–20 are the bibliography of §2 and §5.3, generated from
 `results/t1_bibliography_verified.json` rather than listed here — a hand-maintained list of what a
 paper cites drifts exactly as a hand-typed count does, and this one had: six entries cited in §2's
-prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title, full author list and venue from the arXiv record, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 16 of 16 entries and 17 of 17 attributed fragments,
+prose appeared in no reference entry while the note below claimed all of them verified. Each was checked against the paper itself: title and full author list from the arXiv record, venue from the record or the paper's first page, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — 18 of 18 entries and 17 of 17 attributed fragments,
 3 of them single common words whose presence the cited paper's subject guarantees,
 so their match could not have failed and verifies nothing about the attribution
 (`results/t1_bibliography_verified.json`, ledger `D-35`).*
@@ -1723,14 +1859,21 @@ architecture and mixing widths into it would make "nearly identical across runs"
 different models. Every run artifact records the width it trained at, and `paper_numbers.py`
 selects the collapse family by that field rather than by filename; `docs/BUILD_CHECKS.md`, shipped as supplementary, records how that selection came to be made.
 
+**The pre-submission runs are counted separately.** §5.2's sweep and §5.3's baselines added
+42 runs and **28.3 hours**: 24 sweep runs (13.4 h),
+then 9 teacher-forced and 9 autoregressive baseline runs
+(7.9 h and 7.0 h), read from `results/presubmission_runtime.json`. They
+are outside the total above, whose remainder that paragraph describes as released-width runs, which
+the baselines are not. Of these, 8 overlapped other CPU work a session logged,
+which inflates their wall clock and changes no weight; the artifact lists each overlap.
+
 ## Appendix C — what testing the untested claims would require
 
-§4's table marks 4 claims tested and the rest not. "Not tested" is an apology
+§4's table marks 6 claims tested and the rest not. "Not tested" is an apology
 unless it comes with a price, so here is what each would cost. We give compute orders where we
 can estimate them honestly from this project's own measurements and say so where we cannot.
 
-**All but the last two rows need what this reproduction did not have:
-interaction.** Our arms train on the released CSV, which is a recording. Those claims need a
+**Every row needs what this reproduction did not have: interaction.** Our arms train on the released CSV, which is a recording. Those claims need a
 policy acting in an environment, simulated or real, and the environment responding. In
 simulation that means Isaac Lab, which needs an RTX-class NVIDIA GPU, and no amount of CPU
 substitutes: the reference's data generation is GPU-parallel simulation, not a data-loading
@@ -1747,15 +1890,12 @@ readme places collection in a third repository, the authors' Isaac Lab extension
 | Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 49.8 h scale; the model training is the cheap half and the data is not |
 | Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the four, and the one that would bound §11's open question about what the miscalibration costs |
-| Beats MLP, RSSM, transformer baselines (§IV-D) | no simulator needed — but the lite release ships only the RNN variant, so all three baselines would have to be implemented | comparable to our own model's 49.8 h of CPU training per architecture, times three, if run at our data budget |
-| M=32, N=8 optimal (§IV-C) | no simulator needed; a sweep over M and N at our data budget | our 33 runs took 49.8 h on two cores; a modest sweep is a small multiple of that |
 
-**The two at the bottom are within reach of this setup** — the M/N configuration sweep and the MLP/RSSM/transformer baseline comparison —
-and are the honest next steps for anyone extending this work on CPU. The six above
-them are not, and no amount of care with the released CSV changes that. This table has one row per
-untested claim; it listed 2 fewer than that until the assertion that counts its rows
-against Appendix D's was written, and the two it omitted were the two whose cost is hardest to
-state honestly.
+
+**Two claims this table once priced as within reach of this setup have since been run**: the
+configuration claim (§5.2) and the architecture claim (§5.3), 42 runs and
+28.3 h of CPU training between them (Appendix B). The six that remain all
+need a simulator or hardware, and no amount of care with the released CSV changes that.
 
 **What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
 items, it bears directly on a limitation §11 states our measurements cannot settle — whether the
@@ -1785,8 +1925,8 @@ names. All locations, and the occurrence counts that establish that, are recorde
 |---|---|---|---|
 | RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 4 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
 | Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **no quantitative figure.** Qualitative; the only numeral in the passage is the configuration N=1 | reproduces, and more strongly: Arm B is worse than the hold-last floor |
-| M=32, N=8 is the optimal configuration (§IV-C) | no | — | `[cpu: the M/N configuration sweep]` we use the released configuration and did not sweep it |
-| Beats MLP, RSSM and transformer baselines (§IV-D) | no | plotted in Fig. 4; no numbers in text | `[cpu: the MLP/RSSM/transformer baseline comparison]` the lite release ships only the RNN variant |
+| M=32, N=8 gives the optimal trade-off between accuracy and training time (§IV-C) | **yes** | **quantitative**: Fig. 6 prints the error and the training hours of every cell of its grid, and the centre's error is the tied-lowest (`docs/presubmission/ORIGINAL_SPECS.md` a.5) | **NOT OPTIMAL AT OUR BUDGET** on the accuracy half (§5.2): (32, 32), (32, 16), (8, 8) and (2, 8) beat it. Training time is reported, not tested |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **REPRODUCES** with the baselines teacher-forced, as the original trains them, and **RWM AHEAD OF ALL THREE** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§5.3). One robot where the original has several |
 | Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |
 | Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **6M against 250M state transitions** at equal real tracking reward (0.90 +- 0.04 against 0.90 +- 0.03), Table I — the only table of numbers in either paper | `[policy, hardware: the sample-efficiency result]` **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | `[policy: the comparisons against SHAC and Dreamer]` no policy learning reproduced |
@@ -1828,6 +1968,9 @@ existed. This is the same computation Figure 1 plots.
 | `M-68` | The combined arm: independence and the corrected objective together | — | +5.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |
 | `M-69` | The cross-model transfer of the per-horizon multiplier table | — | +23 min | results/task_d3_cross_model.json | DOES NOT TRANSFER — A PROPERTY OF THE MODEL |
 | `M-70` | Whether the per-horizon correction reorders cumulative penalties | — | +115.2 h | results/q3_penalty_reordering.json | DOES NOT REORDER |
+| `M-74` | The configuration claim: is (M, N) = (32, 8) optimal? | — | +29.4 h | results/mn_sweep_verdict.json | NOT OPTIMAL AT OUR BUDGET |
+| `M-75` | The architecture claim, baselines teacher-forced, as the original trains them | — | +29.4 h | results/baselines_verdict.json | REPRODUCES |
+| `M-76` | The architecture claim, baselines trained autoregressively, as RWM is | — | +29.4 h | results/baselines_verdict.json | RWM AHEAD OF ALL THREE |
 | `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
 
 `M-69`'s discharge commit was amended 2 minutes after it was created, so the
@@ -1838,8 +1981,8 @@ store either reading. Both readings are
 positive, so the rule reached git before the data that tested it existed on either one, which is
 what a lead time is here to establish.
 
-18 rules, 18 with a computed lead time, of which
-17 are positive and 1 negative. **The negative one is
+21 rules, 21 with a computed lead time, of which
+20 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.
@@ -1852,7 +1995,7 @@ the replacement, committed before the replacement's statistic was computed. A ta
 
 **What each rule says, in its own committed words** is in the supplementary material, as
 `docs/APPENDIX_G_RULES.md` — every rule's text unabridged, generated from the ledger by the same
-script that generates this table. Quoting all 18 in full here would add pages to an
+script that generates this table. Quoting all 21 in full here would add pages to an
 appendix whose job is to be checkable at a glance, and quoting them in part would ship
 quotations ending mid-sentence. The table is the claim; the supplementary is the evidence.
 

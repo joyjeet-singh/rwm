@@ -436,3 +436,7 @@ claims stayed, and only their history moved.
 - **[Appendix D]** The epistemic ranking row read "weaker per-dimension than we first reported".
 - **[Appendix E]** The table once omitted `M-52`: the selector matched entry titles, and M-52's
   title does not contain the word, so the row a sceptical reader most wants was silently absent.
+- **[Appendix C]** The pricing table has one row per untested claim. Until the assertion that counts
+  its rows against Appendix D's was written, it listed two fewer, and the two it omitted were the
+  two whose cost was hardest to state honestly. Those two (the configuration sweep and the
+  architecture baselines) have since been run (§5.2, §5.3).

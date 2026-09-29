@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 56,
-  "n_ok": 56,
+  "n_pointers": 61,
+  "n_ok": 61,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -94,6 +94,18 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/baselines_eval.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/baselines_verdict.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/e4_sigma_gradients.json",
       "ok": true,
       "detail": "exists"
@@ -154,6 +166,18 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/mn_sweep_eval.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/mn_sweep_verdict.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/original_paper_figures.json",
       "ok": true,
       "detail": "exists"
@@ -173,6 +197,12 @@
     {
       "class": "artifact",
       "pointer": "results/paper_numbers.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/presubmission_runtime.json",
       "ok": true,
       "detail": "exists"
     },

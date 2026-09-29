@@ -635,7 +635,7 @@ CLAIMS = [
      "says": "runs at 10,000 iterations and",
      "total": "rt_runs", "parts": ["rt_runs_10k", "rt_runs_short"], "tol": 0},
     {"id": "C15.3", "kind": "arithmetic", "where": "4 / Appendix D",
-     "says": "of the claims we did test, the original reports no quantitative",
+     "says": "claims we tested, the original reports no quantitative",
      "total": "appF_n_claims", "parts": ["orig_n_tested", "n_untested"], "tol": 0},
     {"id": "C15.4", "kind": "arithmetic", "where": "4 / Appendix C",
      "says": "are claims about policy learning or hardware",
@@ -716,7 +716,10 @@ CLAIMS = [
      "says": "Curves are reported at"},
 
     {"id": "C17.1", "kind": "scope-consistency", "where": "4 / Appendix C",
-     "says": "within reach of the CPU budget this project already spent",
+     # S9 re-anchor: the two claims this sentence called within CPU reach were run (§5.2, §5.3),
+     # and §4 now says every untested claim needs a simulator or hardware. paper_numbers.py asserts that
+     # no untested Appendix D row is tagged `cpu`, which is what makes that universal true.
+     "says": "we did not test needs a simulator or hardware we do not have",
      "section": "4. What the original papers claim, and which claims we test",
      "forbid": ["without exception", "in all cases", "in every case",
                 "all eight", "none of the eight", "each of the eight"]},

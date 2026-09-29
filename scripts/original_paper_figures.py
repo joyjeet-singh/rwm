@@ -65,6 +65,36 @@ CLAIMS = [
         "note": ("The only numeral in the passage is the configuration N=1, which names the "
                  "teacher-forcing setting rather than measuring its cost."),
     },
+    # Added in pre-submission S9, when rules M-74, M-75 and M-76 tested them. Their full
+    # specification, with page anchors and fingerprints, is docs/presubmission/ORIGINAL_SPECS.md.
+    {
+        "key": "mn_optimal",
+        "claim": "History and forecast horizons (M, N) = (32, 8) give an optimal trade-off between prediction accuracy and training efficiency",
+        "where_v1": "2501.10100v1 IV-C (Dual-autoregressive Mechanism)",
+        "where_v2": "2501.10100v2 Appendix A.4.1 (same title)",
+        "original_figure": "Figure 6 (v1 p. 7; v2 Fig. S8): a heatmap of e and one of training hours over a 5 x 5 grid of (M, N)",
+        "original_states": "an optimal trade-off emerges ... balance prediction accuracy and training efficiency",
+        "form": "quantitative: every heatmap cell prints its value",
+        "numeral_in_text": True,
+        "note": ("The numerals are printed inside Figure 6's cells rather than in the running text; no "
+                 "value is read off an axis. (32, 8) prints the tied-lowest e with (32, 32) "
+                 "(docs/presubmission/ORIGINAL_SPECS.md a.5). The claim is a trade-off between accuracy "
+                 "and training time; rule M-74 tests the accuracy half and reports training time "
+                 "beside it."),
+    },
+    {
+        "key": "arch_baselines",
+        "claim": "RWM-AR achieves the lowest prediction error against MLP, RSSM and transformer baselines",
+        "where_v1": "2501.10100v1 IV-D (Generality across Robotic Environments)",
+        "where_v2": "2501.10100v2 4.3 (same title)",
+        "original_figure": None,
+        "original_states": "consistently achieves the lowest prediction errors across all environments",
+        "form": "qualitative; plotted per environment in Figure 7 (v1)",
+        "numeral_in_text": False,
+        "note": ("No number is given in text, caption or table (docs/presubmission/ORIGINAL_SPECS.md "
+                 "b.10). The original trains the baselines by teacher forcing (b.4) at the sizes of its "
+                 "Table S7; rules M-75 and M-76 test that regime and autoregressive training."),
+    },
     {
         "key": "epistemic_trust",
         "claim": ('Epistemic uncertainty "closely follows the trend of the prediction error", '

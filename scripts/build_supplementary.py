@@ -170,6 +170,13 @@ def scrub(text):
 # any bundle. They also quote the paper's old title, which item 4 keeps out of the
 # bundle. A whole directory, so it is pruned from the walk rather than listed by file.
 EXCLUDE_DIRS = ("docs/presubmission",)
+# ...except the three technical records the paper cites (S9, by user ruling 2026-09-29):
+# the original's specifications with their page anchors, the baselines' deviations table,
+# and the anchor checker. They hold no rulings and no correspondence.
+SHIP_FROM_EXCLUDED = ("docs/presubmission/ORIGINAL_SPECS.md",
+                      "docs/presubmission/BASELINE_SPECS.md",
+                      "docs/presubmission/verify_original_specs.py")
+
 
 
 def main():
@@ -185,7 +192,7 @@ def main():
                 if n.endswith(SKIP_SUFFIX):
                     continue
                 files.append(os.path.join(root, n))
-    files += [f for f in INCLUDE_FILES if os.path.exists(f)]
+    files += [f for f in list(INCLUDE_FILES) + list(SHIP_FROM_EXCLUDED) if os.path.exists(f)]
     files = sorted(set(files) - EXCLUDE)
     # The same invariant make_anon_bundle.py asserts, for the same reason: this
     # archive must be reproducible from a clean clone, and a gitignored file is

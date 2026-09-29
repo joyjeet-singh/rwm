@@ -280,6 +280,13 @@ INCLUDE_FILES = [
 # any bundle. They also quote the paper's old title, which item 4 keeps out of the
 # bundle. A whole directory, so it is pruned from the walk rather than listed by file.
 EXCLUDE_DIRS = ("docs/presubmission",)
+# ...except the three technical records the paper cites (S9, by user ruling 2026-09-29):
+# the original's specifications with their page anchors, the baselines' deviations table,
+# and the anchor checker. They hold no rulings and no correspondence.
+SHIP_FROM_EXCLUDED = ("docs/presubmission/ORIGINAL_SPECS.md",
+                      "docs/presubmission/BASELINE_SPECS.md",
+                      "docs/presubmission/verify_original_specs.py")
+
 
 # This file and its sibling carry the very patterns they search for.
 EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
@@ -405,7 +412,7 @@ def collect():
                 if p in EXCLUDE or p.endswith(SKIP_SUFFIX) or n.startswith("."):
                     continue
                 files.append(p)
-    for f in INCLUDE_FILES:
+    for f in list(INCLUDE_FILES) + list(SHIP_FROM_EXCLUDED):
         if os.path.exists(f) and f not in EXCLUDE:
             files.append(f)
     files = sorted(set(files))

@@ -35,6 +35,7 @@ import rwm_data as R  # noqa: E402
 
 CHECKED_ON = "2026-08-23"
 CHECKED_ON_REV3 = "2026-08-29"   # the six entries added in the revision-3 pass
+CHECKED_ON_S9 = "2026-09-29"     # the two entries added in pre-submission S9 (5.3's RSSM)
 ATOM = {"a": "http://www.w3.org/2005/Atom"}
 
 # Every field below was read from the arXiv API entry for the id, on CHECKED_ON.
@@ -382,6 +383,49 @@ ENTRIES = [
             "log-likelihood",
         ],
     },
+    # ------------------------------------------------------------------
+    # Added in pre-submission S9, for §5.3's RSSM baseline. Metadata from the arXiv API on
+    # CHECKED_ON_S9. No fragment is recorded because §5.3 asserts nothing a paper SAYS in
+    # prose: the settings taken from DreamerV2 (and the PlaNet settings deliberately not
+    # taken) are each checked against a page of the paper's PDF in
+    # results/baseline_citations_verified.json, and cited row by row in
+    # docs/presubmission/BASELINE_SPECS.md.
+    # ------------------------------------------------------------------
+    {
+        "key": "hafner2019",
+        "arxiv": "1811.04551",
+        "title": "Learning Latent Dynamics for Planning from Pixels",
+        "authors": ["Danijar Hafner", "Timothy Lillicrap", "Ian Fischer", "Ruben Villegas",
+                    "David Ha", "Honglak Lee", "James Davidson"],
+        # The arXiv record carries no journal_ref and its comment names no venue; the venue
+        # is from the paper's own first page (v5 PDF): "Proceedings of the 36th International
+        # Conference on Machine Learning, Long Beach, California, PMLR 97, 2019".
+        "venue": "ICML 2019 (PMLR 97)",
+        "year": 2019,
+        "establishes": "the recurrent state-space model (RSSM): a latent dynamics model whose "
+                       "state has a deterministic recurrent part and a stochastic part",
+        "why_we_engage":
+            "The base paper's RSSM baseline is this architecture, and 5.3 builds one. It is "
+            "cited as the architecture's origin; the settings 5.3 takes come from DreamerV2, "
+            "which replaces PlaNet's free nats with KL balancing.",
+        "fragments": [],
+    },
+    {
+        "key": "hafner2021",
+        "arxiv": "2010.02193",
+        "title": "Mastering Atari with Discrete World Models",
+        "authors": ["Danijar Hafner", "Timothy Lillicrap", "Mohammad Norouzi", "Jimmy Ba"],
+        "venue": "ICLR 2021",
+        "year": 2021,
+        "establishes": "an RSSM with categorical latents, KL balancing and straight-through "
+                       "gradients (DreamerV2)",
+        "why_we_engage":
+            "Table S7 of the base paper fixes the RSSM's shapes and says it is categorical, "
+            "and nothing else. 5.3 takes every unstated RSSM setting from DreamerV2 and reads "
+            "Table S7's ambiguous latent size in DreamerV2's naming "
+            "(docs/presubmission/BASELINE_SPECS.md).",
+        "fragments": [],
+    },
 ]
 
 
@@ -588,7 +632,23 @@ _PER_ENTRY = [   {   'key': 'lu2022',
                    'http://github.com/martius-lab/beta-nll',
         'n_fragments': 1,
         'n_fragments_found': 1,
-        'entry_fingerprint': '08920163622e7d19'}]
+        'entry_fingerprint': '08920163622e7d19'},
+    # The two entries added in pre-submission S9, verified by the same verify() on CHECKED_ON_S9
+    # with ENTRIES restricted to them; the sixteen above were not re-fetched.
+    {   'key': 'hafner2019',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2018-11-12',
+        'arxiv_version': '1811.04551v5',
+        'comment': '20 pages, 12 figures, 1 table',
+        'entry_fingerprint': '8aeb2cfad4f82bdb'},
+    {   'key': 'hafner2021',
+        'title_matches': True,
+        'authors_match': True,
+        'published': '2020-10-05',
+        'arxiv_version': '2010.02193v4',
+        'comment': 'Published at ICLR 2021. Website: https://danijar.com/dreamerv2',
+        'entry_fingerprint': '8b3f331043afe526'}]
 
 
 def fingerprint(ent):

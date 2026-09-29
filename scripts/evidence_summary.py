@@ -214,6 +214,39 @@ def build_rows():
         "artifacts": ["results/m64_short_units.json"],
     })
 
+    # --- S9: the configuration and architecture claims (rules M-74, M-75, M-76) --
+    # Each rule applies Holm within its own family, so its verdict is already corrected.
+    MV, BV, ME = J("mn_sweep_verdict.json"), J("baselines_verdict.json"), J("mn_sweep_eval.json")
+    mn_arena = arena_of_episodes(ME["arenas"]["held_out"]["episodes"])
+    _better = MV["governing"]["conditions"]["configs_excluding_zero_in_their_favour"]
+    rows.append({
+        "claim": "(M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off)",
+        "section": "5.2",
+        "arena": mn_arena,
+        "n_independent": ME["arenas"]["held_out"]["n_independent"],
+        "in_sample": in_sample("our arms", mn_arena),
+        "verdict": (MV["verdict"].lower() + f"; {len(_better)} of {MV['governing']['m']} "
+                    "neighbours beat the centre"),
+        "multiplicity": "yes",
+        "model": "our arms",
+        "artifacts": ["results/mn_sweep_verdict.json", "results/mn_sweep_eval.json"],
+    })
+    for _rule, _how in (("M-75", "teacher-forced, as the original trains them"),
+                        ("M-76", "trained autoregressively: architecture at one training regime, "
+                                 "not the original's claim")):
+        _R = BV["rules"][_rule]
+        rows.append({
+            "claim": f"RWM beats MLP, RSSM and transformer baselines ({_how})",
+            "section": "5.3",
+            "arena": mn_arena,
+            "n_independent": ME["arenas"]["held_out"]["n_independent"],
+            "in_sample": in_sample("our arms", mn_arena),
+            "verdict": _R["verdict"].lower(),
+            "multiplicity": "yes",
+            "model": "our arms",
+            "artifacts": ["results/baselines_verdict.json", "results/baselines_eval.json"],
+        })
+
     # --- 3, 4, 5: the calibration claims -------------------------------------
     d20_arena = arena_of_text(D20["design"]["arena"])
     d20_model = measured_model(D20["design"]["checkpoint"])

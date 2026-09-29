@@ -6,6 +6,7 @@ placeholder is unresolved or any key here is unused. No number in the paper is t
 """
 import glob
 import json
+import numpy as np
 import os
 import re
 import subprocess
@@ -1383,6 +1384,10 @@ def main():
         put(f"rt_{_tag}_hours", f'{_PR["by_rule"][_r]["wall_clock_s"]/3600:.1f}',
             "results/presubmission_runtime.json")
     put("rt_pre_overlapped", _PR["n_runs_overlapped"], "results/presubmission_runtime.json")
+    # Appendix B prints the three parts beside the total; they must make it.
+    _parts = [_PR["by_rule"][r] for r in ("M-74", "M-75", "M-76")]
+    assert len(_PR["by_rule"]) == 3 and sum(x["n_runs"] for x in _parts) == _PR["n_runs"]
+    assert abs(sum(x["wall_clock_s"] for x in _parts) - _PR["wall_clock_s"]) < 1e-6
 
     # Section 5.2 claims the n=4 table "agrees in direction" with the n=20 one.
     # Checked rather than asserted: it does for the epistemic column at all five
@@ -1618,6 +1623,11 @@ def main():
         "untested Appendix D rows with no `[tag]` in their verdict cell, so §4's "
         f"count and enumeration cannot be derived from them: {_untagged}")
     _f_cpu = [r for r in _f_untested if "cpu" in _tags(r)]
+    # S9: the two claims this tag marked (the M/N sweep and the architecture baselines) were
+    # run. §4 now says every untested claim needs a simulator or hardware; that is true only while
+    # no untested row carries the `cpu` tag.
+    assert not _f_cpu, ("an untested Appendix D row is tagged `cpu`, and §4 says every untested "
+                        "claim needs a simulator or hardware: " + ", ".join(_label(r) for r in _f_cpu))
     _f_sim = [r for r in _f_untested if "cpu" not in _tags(r)]
     assert len(_f_cpu) == len(_e_cpu), (
         f"Appendix D tags {len(_f_cpu)} untested claims `cpu` while Appendix C "
@@ -1645,6 +1655,8 @@ def main():
 
     def _english(items):
         items = list(items)
+        if not items:
+            return "none"
         if len(items) == 1:
             return items[0]
         return ", ".join(items[:-1]) + " and " + items[-1]
@@ -1661,10 +1673,12 @@ def main():
     # A6 -- what the originals report for each claim we tested
     OP = J("original_paper_figures.json")
     put("orig_n_tested", OP["n_tested_claims"], "results/original_paper_figures.json")
+    put("orig_n_tested_word", WORDS[OP["n_tested_claims"]].lower(), "results/original_paper_figures.json")
     assert len(_f_tested) == OP["n_tested_claims"], (
         f"Appendix D marks {len(_f_tested)} claims tested; "
         f"original_paper_figures.json says {OP['n_tested_claims']}")
     put("orig_n_without", OP["n_without"], "results/original_paper_figures.json")
+    put("orig_n_without_word", WORDS[OP["n_without"]].lower(), "results/original_paper_figures.json")
     put("orig_n_with", OP["n_with_quantitative_figure"], "results/original_paper_figures.json")
     _se = OP["sample_efficiency"]["figures"]
     put("orig_se_rwm", _se["RWM pretraining state transitions"],
@@ -1980,6 +1994,171 @@ def main():
     put("h2h_armA_sweeps_at", _hs(H2["armA_leads_both_metrics_at"]), _h2src)
     put("h2h_split_at", _hs(H2["metrics_disagree_at"]), _h2src)
     put("h2h_ckpt_neps_word", WORDS[H2["released_ckpt_trained_on_n_episodes"]].lower(), _h2src)
+
+    # --- S9: rules M-74 (the M/N sweep) and M-75/M-76 (the architecture baselines) ---------
+    # Every figure is read from the verdict and evaluation artifacts S8 wrote. The governing
+    # statistic is relative-L1 at h = 368 on §5's four held-out trajectories; values are the
+    # mean over three seeds of each seed's mean over the four trajectories, which is exactly the
+    # head-to-head table's definition -- asserted below on RWM, whose rows must coincide.
+    MV, ME = J("mn_sweep_verdict.json"), J("mn_sweep_eval.json")
+    BV, BE = J("baselines_verdict.json"), J("baselines_eval.json")
+    PR = J("presubmission_runtime.json")
+    _mvs, _bvs = "results/mn_sweep_verdict.json", "results/baselines_verdict.json"
+
+    def _m3(cfg, h, m="l1", arena="held_out"):
+        return float(np.mean([np.mean(cfg["seeds"][s][arena][str(h)][m]) for s in cfg["seeds"]]))
+
+    for _h in H2["horizons"]:
+        _d = abs(_m3(BE["configs"]["rwm"], _h) - H2["rows"]["armA"]["cells"][str(_h)]["l1"])
+        assert _d < 1e-6, ("baselines_eval's RWM relative-L1 no longer reproduces the head-to-head "
+                           f"table's Arm A row at h={_h}: {_d}")
+    assert ME["checkpoint_iterations"] == BE["checkpoint_iterations"] == int(N["iters_main"]["value"].replace(",", ""))
+    _cfgname = lambda c: f"({c[1:].split('_N')[0]}, {c.split('_N')[1]})"
+    _mg = MV["governing"]
+    _order = ["M32_N8", "M1_N8", "M2_N8", "M8_N8", "M16_N8", "M32_N1", "M32_N2", "M32_N16", "M32_N32"]
+    assert sorted(_order[1:]) == sorted(_mg["per_config"]), sorted(_mg["per_config"])
+    _res = lambda r: ("**configuration better**" if r["rejected"] and r["direction"] == "config"
+                      else "centre better" if r["rejected"] else "not resolved")
+    _rows = []
+    for _c in _order:
+        _cf = ME["configs"][_c]
+        _hrs = PR["by_family"].get(f"M-74 {_c}")
+        _hrs = f'{_hrs["mean_s"] / 3600:.2f}' if _hrs else "— (existing runs)"
+        if _c == "M32_N8":
+            _rows.append(f"| **{_cfgname(_c)}**, the centre | {_m3(_cf, 100):.4f} | **{_m3(_cf, 368):.4f}** | — | — | {_hrs} |")
+            continue
+        _r = _mg["per_config"][_c]
+        _rows.append(f"| {_cfgname(_c)} | {_m3(_cf, 100):.4f} | {_m3(_cf, 368):.4f} | "
+                     f"{_r['D']:+.4f} [{_r['ci95'][0]:+.4f}, {_r['ci95'][1]:+.4f}] | {_res(_r)} | {_hrs} |")
+    put("mn_table", "\n".join(_rows), "results/mn_sweep_eval.json + " + _mvs + " + results/presubmission_runtime.json")
+    put("mn_verdict", MV["verdict"], _mvs)
+    put("mn_n_configs", _mg["m"], _mvs)
+    put("mn_n_configs_word", WORDS[_mg["m"]].lower(), _mvs)
+    _eng = lambda xs: (", ".join(xs[:-1]) + " and " + xs[-1]) if len(xs) > 1 else (xs[0] if xs else "none")
+    _cond = _mg["conditions"]
+    put("mn_better_list", _eng([_cfgname(c) for c in _cond["configs_excluding_zero_in_their_favour"]]), _mvs)
+    put("mn_n_better_word", WORDS[len(_cond["configs_excluding_zero_in_their_favour"])].lower(), _mvs)
+    put("mn_worse_list", _eng([_cfgname(c) for c in _cond["configs_excluding_zero_in_centre_favour"]]), _mvs)
+    _unres = [c for c in _order[1:] if not _mg["per_config"][c]["rejected"]]
+    put("mn_unres_list", _eng([_cfgname(c) for c in _unres]), _mvs)
+    _l368 = {c: _m3(ME["configs"][c], 368) for c in _order}
+    _best = min(_l368, key=_l368.get)
+    put("mn_best_config", _cfgname(_best), "results/mn_sweep_eval.json")
+    put("mn_best_l1_h368", f"{_l368[_best]:.4f}", "results/mn_sweep_eval.json")
+    put("mn_centre_l1_h368", f"{_l368['M32_N8']:.4f}", "results/mn_sweep_eval.json")
+    put("mn_best_D", f"{_mg['per_config'][_best]['D']:+.4f}", _mvs)
+    put("mn_best_ci", f"[{_mg['per_config'][_best]['ci95'][0]:+.4f}, {_mg['per_config'][_best]['ci95'][1]:+.4f}]", _mvs)
+    put("mn_floor_h100", f'{MV["hold_last_floor_l1"]["held_out"]["100"]:.4f}', _mvs)
+    put("mn_floor_h368", f'{MV["hold_last_floor_l1"]["held_out"]["368"]:.4f}', _mvs)
+    put("mn_mde_h368", f'{MV["mde_pct_of_centre_holm_step_1"]["l1_h368"]:.1f}', _mvs)
+    _lab = lambda k: ("relative-L1" if k.split("_h")[0] == "l1" else "nRMSE") + " at h = " + k.split("_h")[1]
+    _other = [f"{_lab(k)}, which returns {v['branch']}" for k, v in MV["alongside"].items() if v["branch"] != MV["verdict"]]
+    put("mn_alongside_other", _eng(_other), _mvs)
+    put("mn_n_alongside", len(MV["alongside"]), _mvs)
+    _ins_other = [f"{_lab(k)} ({v['branch']})" for k, v in MV["in_sample"].items() if v["branch"] != MV["verdict"]]
+    put("mn_insample_clause",
+        f"all {WORDS[len(MV['in_sample'])].lower()} readings there return the same verdict"
+        if not _ins_other else "the readings there differ at " + _eng(_ins_other), _mvs)
+    _al_other = [f"{_lab(k)}, which returns {v['branch']}" for k, v in MV["alongside"].items()
+                 if v["branch"] != MV["verdict"]]
+    put("mn_alongside_clause", "every one agrees" if not _al_other
+        else "every one agrees except " + _eng(_al_other), _mvs)
+    put("mn_nind", ME["arenas"]["held_out"]["n_independent"], "results/mn_sweep_eval.json")
+    put("mn_nind_ins", ME["arenas"]["in_sample"]["n_independent"], "results/mn_sweep_eval.json")
+    assert BE["arenas"]["held_out"]["n_independent"] == ME["arenas"]["held_out"]["n_independent"]
+    # §5.2 prints the head-to-head table's arena label and episodes for this arena.
+    assert sorted(ME["arenas"]["held_out"]["episodes"]) == sorted(H2["arena_episodes"]), "§5.2's arena is not §5's"
+    assert sorted(BE["arenas"]["held_out"]["episodes"]) == sorted(H2["arena_episodes"]), "§5.3's arena is not §5's"
+    # ... and its trajectory count and unit, which §5.2 and §5.3 print from the h2h keys.
+    assert ME["arenas"]["held_out"]["n_independent"] == H2["n_independent"] == len(ME["arenas"]["held_out"]["starts"]) == H2["n_trajectories"]
+    assert all(r[1] - s + 1 == H2["unit_length"] for s, r in zip(ME["arenas"]["held_out"]["starts"], ME["arenas"]["held_out"]["forecast_rows"]))
+    assert all(r[1] - s + 1 == H2["unit_length"] for s, r in zip(ME["arenas"]["in_sample"]["starts"], ME["arenas"]["in_sample"]["forecast_rows"]))
+    put("mn_seeds_word", WORDS[len(ME["seeds"])].lower(), "results/mn_sweep_eval.json")
+    _cen = ME["configs"]["M32_N8"]
+    _Ms = sorted(ME["configs"][c]["M"] for c in _order[1:] if ME["configs"][c]["N"] == _cen["N"])
+    _Ns = sorted(ME["configs"][c]["N"] for c in _order[1:] if ME["configs"][c]["M"] == _cen["M"])
+    assert len(_Ms) + len(_Ns) == _mg["m"]
+    put("mn_grid_M", _eng([str(x) for x in _Ms]), "results/mn_sweep_eval.json")
+    put("mn_grid_N", _eng([str(x) for x in _Ns]), "results/mn_sweep_eval.json")
+    put("mn_centre_label", "(M, N) = " + _cfgname("M32_N8"), "results/mn_sweep_eval.json")
+    # §5.2's reading in words, each clause asserted: the shortest forecasts are worse, the longest
+    # better (so the original's tie with (32, 32) becomes a loss), and no shorter history is worse.
+    _worse = set(_cond["configs_excluding_zero_in_centre_favour"])
+    _better = set(_cond["configs_excluding_zero_in_their_favour"])
+    _nmin = [c for c in _order[1:] if ME["configs"][c]["M"] == _cen["M"] and ME["configs"][c]["N"] < _cen["N"]]
+    _nmax = [c for c in _order[1:] if ME["configs"][c]["M"] == _cen["M"] and ME["configs"][c]["N"] > _cen["N"]]
+    _mvar = [c for c in _order[1:] if ME["configs"][c]["N"] == _cen["N"]]
+    assert set(_nmin) <= _worse and max(_nmax, key=lambda c: ME["configs"][c]["N"]) in _better, "§5.2's N reading"
+    assert not (_worse & set(_mvar)), "§5.2 says no shorter history is worse than the centre's"
+    # ... on the governing reading. §5.2 names the shorter histories that beat the centre there, and
+    # every other reading the rule reports that puts a shorter history behind the centre.
+    put("mn_mvar_better_list", _eng([_cfgname(c) for c in _order[1:] if c in _better and c in _mvar]), _mvs)
+    _ow = {}
+    for _arena, _blk in (("in-sample", MV["in_sample"]), ("held-out", MV["alongside"])):
+        for _k, _v in _blk.items():
+            for _c in _v["conditions"]["configs_excluding_zero_in_centre_favour"]:
+                if _c in _mvar:
+                    _met, _h = _k.split("_h")
+                    _ow.setdefault(_c, {}).setdefault((_arena, _h), []).append(
+                        "relative-L1" if _met == "l1" else "nRMSE")
+    assert _ow, "§5.2 says other readings put a shorter history behind the centre"
+    _owl = [f"{_cfgname(c)} on {' and '.join(f'{a} ' + ' and '.join(ms) + f' at h = {h}' for (a, h), ms in _ow[c].items())}"
+            for c in _order[1:] if c in _ow]
+    # a serial comma, because each item already contains "and"
+    put("mn_mvar_other_worse", (", ".join(_owl[:-1]) + ", and " + _owl[-1]) if len(_owl) > 1 else _owl[0], _mvs)
+    _ovl = [r for r in PR["runs"] if r["rule"] == "M-74" and r["overlap_s"] > 0]
+    put("mn_n_overlapped", len(_ovl), "results/presubmission_runtime.json")
+    put("mn_n_insample", len(MV["in_sample"]), _mvs)
+
+    _brows, _bl_order = [], ["mlp", "rssm", "transformer"]
+    _rwm = BE["configs"]["rwm"]
+    _brows.append(f"| **RWM** (Arm A, autoregressive) | {_rwm['seeds']['0']['n_params']:,} | "
+                  f"{_m3(_rwm, 100):.4f} | **{_m3(_rwm, 368):.4f}** | — | — | — (existing runs) |")
+    for _rule, _reg, _regname in (("M-75", "tf", "teacher-forced"), ("M-76", "ar", "autoregressive")):
+        _g = BV["rules"][_rule]["governing"]["per_baseline"]
+        for _a in BV["priority_order"]:
+            _cf = BE["configs"][f"{_a}_{_reg}_s7"]
+            _r = _g[_a]
+            _hrs = PR["by_family"][f"{_rule} {_a}_{_reg}_s7"]["mean_s"] / 3600
+            _name = {"mlp": "MLP", "rssm": "RSSM", "transformer": "transformer"}[_a]
+            _brows.append(f"| {_name}, {_regname} | {_cf['seeds']['0']['n_params']:,} | {_m3(_cf, 100):.4f} | "
+                          f"{_m3(_cf, 368):.4f} | {_r['D']:+.4f} [{_r['ci95'][0]:+.4f}, {_r['ci95'][1]:+.4f}] | "
+                          f"{'RWM better' if _r['result'] == 'RWM BETTER' else _r['result']} | {_hrs:.2f} |")
+            for _h in H2["horizons"]:
+                put(f"h2h_bl_{_a}_{_reg}_l1_h{_h}", f"{_m3(_cf, _h):.4f}", "results/baselines_eval.json")
+    put("bl_table", "\n".join(_brows), "results/baselines_eval.json + " + _bvs + " + results/presubmission_runtime.json")
+    put("bl_tf_verdict", BV["rules"]["M-75"]["verdict"], _bvs)
+    put("bl_ar_verdict", BV["rules"]["M-76"]["verdict"], _bvs)
+    put("bl_rwm_l1_h368", f"{_m3(_rwm, 368):.4f}", "results/baselines_eval.json")
+    put("bl_mde_h368", f'{BV["mde_pct_of_rwm_holm_step_1"]["M-75"]["l1_h368"]:.1f}', _bvs)
+    for _rule, _tag in (("M-75", "tf"), ("M-76", "ar")):
+        _al = BV["rules"][_rule]["alongside"]
+        for _k in ("l1_h1", "l1_h8", "l1_h32"):
+            put(f"bl_{_tag}_{_k.replace('l1_', '')}", _al[_k]["verdict"], _bvs)
+    put("bl_rwm_params", f"{_rwm['seeds']['0']['n_params']:,}", "results/baselines_eval.json")
+    _nm = {"mlp": "MLP", "rssm": "RSSM", "transformer": "transformer"}
+    put("bl_params_list", _eng([f"{BE['configs'][f'{a}_tf_s7']['seeds']['0']['n_params']:,} ({_nm[a]})"
+                                for a in BV["priority_order"]]), "results/baselines_eval.json")
+    # §5.3's sentences, each asserted. "All N comparisons favour RWM":
+    _all = [(r, b, BV["rules"][r]["governing"]["per_baseline"][b]) for r in ("M-75", "M-76")
+            for b in BV["priority_order"]]
+    assert all(x["result"] == "RWM BETTER" for _, _, x in _all), "§5.3 says every comparison favours RWM"
+    put("bl_n_rows_word", WORDS[len(_all)].lower(), _bvs)
+    # "every baseline row is above the hold-last floor at h = 368, which RWM is below":
+    _fl = BV["hold_last_floor_l1"]["held_out"]["368"]
+    assert all(_m3(BE["configs"][f"{b}_{g}_s7"], 368) > _fl for b in BV["priority_order"] for g in ("tf", "ar"))
+    assert _m3(_rwm, 368) < _fl and abs(_fl - MV["hold_last_floor_l1"]["held_out"]["368"]) < 1e-12
+    # "At h = 1 both rules return X ... at h = 8 both return Y":
+    for _k in ("l1_h1", "l1_h8"):
+        assert BV["rules"]["M-75"]["alongside"][_k]["verdict"] == BV["rules"]["M-76"]["alongside"][_k]["verdict"], _k
+    # "the teacher-forced RSSM's one-step error is below RWM's without being resolvable":
+    assert _m3(BE["configs"]["rssm_tf_s7"], 1) < _m3(_rwm, 1)
+    assert BV["rules"]["M-75"]["alongside"]["l1_h1"]["per_baseline"]["rssm"]["result"] == "CANNOT BE SETTLED"
+    # "the smallest resolvable difference ... is well below every difference here":
+    assert BV["mde_pct_of_rwm_holm_step_1"]["M-75"]["l1_h368"] == BV["mde_pct_of_rwm_holm_step_1"]["M-76"]["l1_h368"]
+    assert min(x["D"] for _, _, x in _all) > 2 * BV["mde_pct_of_rwm_holm_step_1"]["M-75"]["l1_h368"] / 100 * _m3(_rwm, 368)
+    # "parameter-matched variants were specified but not run":
+    assert BV["matched_variants"] == {}
 
     _xc = _d1["cross_check"]
     put("d1_xc_runs", len(_xc), "results/task_d1_threeseed.json")
