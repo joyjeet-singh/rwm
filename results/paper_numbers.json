@@ -8565,15 +8565,15 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "950,503"
+    "value": "1,659,040"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
-    "value": "353 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses)"
+    "value": "352 in `results/task_c1_claims_audit.json` (how many substituted numbers each audited sentence of this document holds); 3 in `results/task_c1_claims_audit.json` (how many of this document's sentences the claims audit found, by review status); 1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_frozen`); 1 in `results/paper_numbers.json` (the build's input-audit count `audit_n_hits`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`); 1 in `results/t5_anon_transcript.json` (how many correspondence quotations this document uses)"
   },
   "ver_claim_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "1.01"
+    "value": "0.59"
   },
   "ver_close": {
     "source": "results/verify_reproduction.json",
@@ -8581,11 +8581,11 @@
   },
   "ver_copied": {
     "source": "results/verify_reproduction.json",
-    "value": "940,905"
+    "value": "1,649,323"
   },
   "ver_diff_by_file": {
     "source": "results/verify_reproduction.json",
-    "value": "`results/task_c1_claims_audit.json` (356), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/t5_anon_transcript.json` (1)"
+    "value": "`results/task_c1_claims_audit.json` (355), `results/supplementary_manifest.json` (4), `results/anon_bundle.json` (2), `results/paper_numbers.json` (2), `results/t5_anon_transcript.json` (1)"
   },
   "ver_diff_nfiles": {
     "source": "results/verify_reproduction.json",
@@ -8593,11 +8593,11 @@
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 365
+    "value": 364
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 49
+    "value": 48
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",
@@ -8605,7 +8605,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "9,233"
+    "value": "9,353"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
@@ -8621,7 +8621,7 @@
   },
   "ver_overstate": {
     "source": "results/verify_reproduction.json",
-    "value": "99"
+    "value": "171"
   },
   "ver_part_dilution": {
     "source": "results/verify_reproduction.json",
@@ -8629,7 +8629,7 @@
   },
   "ver_part_else": {
     "source": "results/verify_reproduction.json",
-    "value": 365
+    "value": 364
   },
   "ver_part_index": {
     "source": "results/verify_reproduction.json",
@@ -8641,7 +8641,7 @@
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "96.20"
+    "value": "96.25"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
@@ -8669,11 +8669,11 @@
   },
   "ver_timing": {
     "source": "results/verify_reproduction.json",
-    "value": "5,210"
+    "value": "11,547"
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "9,598"
+    "value": "9,717"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",

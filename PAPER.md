@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1130 values substituted from 84 artifacts. -->
+     1129 values substituted from 84 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -21,7 +21,7 @@ transformer baselines; its chosen history and forecast lengths are beaten at our
 Ensemble disagreement, the method's reward penalty, correlates +0.605 with
 realised error, and +0.419 with rollout and depth held fixed. Yet on the checkpoint's training data it is 8.3× smaller than that error at one step and
 33.4× at the method's 100-step horizon. A free signal, the model's predicted step size,
-ranks error nearly as well (+0.4697), by an unresolved margin. The members share 89% of their parameters; at 100 steps, five independent models are
+ranks error nearly as well (+0.4697), by an unresolved margin. The members share 89.15% of their parameters; at 100 steps, five independent models are
 2.03× better calibrated and still 5.2× overconfident. The implemented loss drives the per-member σ, which the method discards, to zero, as derived and
 confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
 coverage within 10 points of nominal on its training episodes, though no cell is
@@ -1572,11 +1572,11 @@ arithmetic and the five assumptions it rests on.
 
 **Reproducibility, and a build that checks its own prose.** Every measured number in this paper is
 substituted from an artifact on each build, and a quick run on a clean clone (`./reproduce.sh --quick --force`, which skips
-training) rewrites 1.01% of the numeric values under `results/`; the rest are carried in
+training) rewrites 0.59% of the numeric values under `results/` that the comparison counts; the rest are carried in
 and prove nothing about reproduction. **The number of regenerated values that differ and are
 themselves a measurement, a statistic or the verdict of a test is 0.** One of the
 build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ
-at all; 365 do, so it fails, and it is published as failing rather than given a
+at all; 364 do, so it fails, and it is published as failing rather than given a
 tolerance. The accounting behind these figures, the registry of checks the build runs on this
 paper's own prose, and the paper's record of verifying its own claims are in `docs/BUILD_CHECKS.md`,
 shipped as supplementary.

@@ -49,8 +49,7 @@ that no regenerated value differ; {{ver_differing}} do, and it is published as f
 tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: {{ver_values}} values, or {{ver_claim_pct}}%
-of the {{ver_all}} numeric values under `results/`. The other {{ver_copied}} are carried in, prove
+honest test is the subset the run actually rewrites: {{ver_values}} values, or {{ver_claim_pct}}% of the {{ver_all}} numeric values under `results/` that the comparison counts. The other {{ver_copied}} are carried in, prove
 nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about {{ver_overstate}}-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the {{tn_typed}} numerals that is not one is classified as an address, a horizon label or a declared constant — {{tn_classes}} classes and {{tn_exceptions}} declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **{{cc_n}} comparative claims** across {{cc_kinds}} kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, {{cc_st_caught}} of {{cc_st_n}} caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the {{cc_selfdefects_lower}} defects the self-test has found in the checker itself.**
 
 ---
@@ -130,9 +129,7 @@ during this revision — two calibration figures that named no horizon, and one 
 three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this record: of the {{ver_all}} numeric values under `results/`, a clean
-clone regenerates {{ver_values}} and carries in {{ver_copied}}. The reproducibility claim covers
-{{ver_claim_pct}}% of the directory and is silent about the rest. We state that fraction because a
+bounds everything in this record: of the {{ver_all}} numeric values under `results/` that the comparison counts, a clean clone regenerates {{ver_values}} and carries in {{ver_copied}}. The reproducibility claim covers {{ver_claim_pct}}% of that counted set and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
 *The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected

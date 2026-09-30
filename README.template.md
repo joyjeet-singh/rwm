@@ -158,8 +158,7 @@ the total exactly. A further {{ver_keys_lost}} values are in the committed artif
 after regeneration, across {{ver_keys_lost_files}} files
 (`results/verify_reproduction.json`).
 
-**How big the claim is.** {{ver_values}} values is {{ver_claim_pct}}% of the {{ver_all}} numeric
-values under `results/`. The other {{ver_copied}} are carried in by the clone rather than
+**How big the claim is.** {{ver_values}} values is {{ver_claim_pct}}% of the {{ver_all}} numeric values under `results/` that the comparison counts. The other {{ver_copied}} are carried in by the clone rather than
 regenerated, and are held out of the figure entirely.
 
 **A note on what that number is not.** An earlier version of this section counted every numeric

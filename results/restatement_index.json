@@ -2,8 +2,8 @@
   "scanned": "PAPER.template.md",
   "n_substituted": 1482,
   "n_typed": 216,
-  "n_restatements": 111,
-  "n_same_quantity_candidates": 56,
+  "n_restatements": 110,
+  "n_same_quantity_candidates": 55,
   "n_lower_signal": 55,
   "restatements": [
     {
@@ -1500,36 +1500,6 @@
           "line": 1922,
           "key": null,
           "ctx": "ning episodes has a very small denominator. Form 1 has no such lever: a dimension contributes in proportion to"
-        }
-      ]
-    },
-    {
-      "value": "1.01",
-      "n_locations": 2,
-      "same_quantity_candidate": true,
-      "fails_build": false,
-      "n_typed": 0,
-      "n_substituted": 2,
-      "sources": [
-        "results/e5_sigma_dilution.json",
-        "results/verify_reproduction.json"
-      ],
-      "keys": [
-        "e5s_span_floor",
-        "ver_claim_pct"
-      ],
-      "locations": [
-        {
-          "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
-          "line": 889,
-          "key": "e5s_span_floor",
-          "ctx": "on threshold is set at the slope corresponding to a {{e5s_span_floor}}\u00d7 spread rather than at that noise floor"
-        },
-        {
-          "section": "8. Method",
-          "line": 1514,
-          "key": "ver_claim_pct",
-          "ctx": ".sh --quick --force`, which skips training) rewrites {{ver_claim_pct}}% of the numeric values under `results/`"
         }
       ]
     },

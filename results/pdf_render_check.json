@@ -3,7 +3,7 @@
   "one_time": "not registered as a check kind. It exists because text moved through a transformation layer in Sessions 5a and 6; the moves are done.",
   "pdf": "PAPER.pdf",
   "pages": 49,
-  "chars_extracted": 185478,
+  "chars_extracted": 185504,
   "cannot_detect": "extracted PDF text loses layout. This sees that a table's header cells are present and that references resolve; it cannot see a column rendered too narrow or a float landing pages from its reference. Those need a reader, which \u00a7F.2 asks for.",
   "n_checks": 5,
   "n_pass": 5,

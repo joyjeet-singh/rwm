@@ -15,7 +15,7 @@ transformer baselines; its chosen history and forecast lengths are beaten at our
 Ensemble disagreement, the method's reward penalty, correlates {{a2_r_pooled}} with
 realised error, and {{a2_rdd}} with rollout and depth held fixed. Yet on the checkpoint's training data it is {{d1n_epi_ratio_h1}}× smaller than that error at one step and
 {{d1n_epi_ratio_h100}}× at the method's {{v2_deploy_h}}-step horizon. A free signal, the model's predicted step size,
-ranks error nearly as well ({{e7_step_r}}), by an unresolved margin. The members share {{v1_shared_pct0}}% of their parameters; at {{v2_deploy_h}} steps, five independent models are
+ranks error nearly as well ({{e7_step_r}}), by an unresolved margin. The members share {{v1_shared_pct}}% of their parameters; at {{v2_deploy_h}} steps, five independent models are
 {{r2_total_x_h100}}× better calibrated and still {{r2_indep_ratio_h100}}× overconfident. The implemented loss drives the per-member σ, which the method discards, to zero, as derived and
 confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
 coverage within {{d3_tol}} points of nominal on its training episodes, though no cell is
@@ -1511,7 +1511,7 @@ arithmetic and the five assumptions it rests on.
 
 **Reproducibility, and a build that checks its own prose.** Every measured number in this paper is
 substituted from an artifact on each build, and a quick run on a clean clone (`./reproduce.sh --quick --force`, which skips
-training) rewrites {{ver_claim_pct}}% of the numeric values under `results/`; the rest are carried in
+training) rewrites {{ver_claim_pct}}% of the numeric values under `results/` that the comparison counts; the rest are carried in
 and prove nothing about reproduction. **The number of regenerated values that differ and are
 themselves a measurement, a statistic or the verdict of a test is {{ver_part_sci}}.** One of the
 build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ
