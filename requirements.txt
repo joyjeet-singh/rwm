@@ -22,3 +22,10 @@ pandas==2.2.3
 matplotlib==3.8.4
 gitpython==3.1.59
 tensordict==0.3.2
+
+# pypdf reads the compiled PDF for the rendered-PDF check, the submission gates and the
+# PDF-channel anonymity scan (scripts/pdf_render_check.py, part_f_gate.py, submission_check.py,
+# f5_pdf_channels.py, baseline_citations.py). It was installed by hand and never pinned, so a venv
+# built from this file failed all four checks (found by the clean-clone session S11). Pinned to the
+# version every recorded check ran under.
+pypdf==6.16.1

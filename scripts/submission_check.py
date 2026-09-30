@@ -47,7 +47,6 @@ def built_pdf_text():
         if not os.path.exists(pdf):
             return None
         try:
-            sys.path.insert(0, "/tmp/pdfvenv/lib/python3.14/site-packages")
             from pypdf import PdfReader
         except Exception:
             return "PYPDF_UNAVAILABLE"
