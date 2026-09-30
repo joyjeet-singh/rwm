@@ -1,6 +1,6 @@
 APPENDIX G — PRE-REGISTERED RULES
 ====================================================================================================
-  M-16          +1.33 h  SETTLED — rule pre-registere The Arm A / Arm B comparison
+  M-16          +1.33 h  CANNOT BE SETTLED AT THIS BU The Arm A / Arm B comparison
   M-22          +0.09 h  RESOLVED — branch 1, 4c not  Whether episode difficulty biases the A/B co
   M-23          +0.04 h  RESOLVED — reproduces at lon The 10,000-iteration comparison
   M-43         +13.29 h  DOES NOT GENERALISE          The ensemble-5 replication
@@ -17,8 +17,11 @@ APPENDIX G — PRE-REGISTERED RULES
   M-68          +5.15 h  THE COMBINATION IMPROVES CAL The combined arm: independence and the corre
   M-69          +0.39 h  DOES NOT TRANSFER — A PROPER The cross-model transfer of the per-horizon 
   M-70        +115.19 h  DOES NOT REORDER             Whether the per-horizon correction reorders 
+  M-74         +29.38 h  NOT OPTIMAL AT OUR BUDGET    The configuration claim: is (M, N) = (32, 8)
+  M-75         +29.38 h  REPRODUCES                   The architecture claim, baselines teacher-fo
+  M-76         +29.38 h  RWM AHEAD OF ALL THREE       The architecture claim, baselines trained au
   S-12          -2.94 h  RETRACTED                    "Task 3's duplication rule was pre-registere
 ====================================================================================================
-  18 rules, 18 with a computed lead time
+  21 rules, 21 with a computed lead time
   wrote results/appendix_g_rules.json
-  wrote docs/APPENDIX_G_RULES.md (18 rules, each its ledger block verbatim)
+  wrote docs/APPENDIX_G_RULES.md (21 rules, each its ledger block verbatim)

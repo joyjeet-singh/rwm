@@ -16,8 +16,10 @@ T1 — BIBLIOGRAPHY VERIFICATION
   [ok] havasi2021             ICLR 2021              arXiv:2010.06610   fragments 1/1
   [ok] wen2020                ICLR 2020              arXiv:2002.06715   fragments 1/1
   [ok] seitzer2022            ICLR 2022              arXiv:2203.09168   fragments 1/1
+  [ok] hafner2019             ICML 2019 (PMLR 97)    arXiv:1811.04551
+  [ok] hafner2021             ICLR 2021              arXiv:2010.02193
 
-  16 of 16 entries metadata-verified; 17 of 17 asserted fragments verbatim
-  references: 2 -> 18
+  18 of 18 entries metadata-verified; 17 of 17 asserted fragments verbatim
+  references: 2 -> 20
 
   wrote results/t1_bibliography_verified.json

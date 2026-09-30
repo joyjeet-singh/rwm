@@ -1,10 +1,17 @@
 PIPELINE COVERAGE — every artifact the paper reads has a stage that writes it
 ================================================================================================
-  artifacts feeding paper_numbers.json : 67
-  paper keys they supply               : 2001
+  artifacts feeding paper_numbers.json : 74
+  paper keys they supply               : 2127
   exempt, with a stated reason         : 2
 
-  1 NOT WRITTEN BY ANY SCRIPT reproduce.sh RUNS:
+  8 NOT WRITTEN BY ANY SCRIPT reproduce.sh RUNS:
+    !! baselines_eval.json                      28 keys  writers ['baselines_eval', 'verdict_baselines']
+    !! mn_sweep_verdict.json                    20 keys  writers ['verdict_mn_sweep']
+    !! alignment_defect_ci.json                 16 keys  writers ['alignment_defect_ci']
+    !! presubmission_runtime.json               12 keys  writers none detected
+    !! mn_sweep_eval.json                       12 keys  writers ['mn_sweep_eval', 'verdict_mn_sweep']
+    !! baselines_verdict.json                   11 keys  writers ['verdict_baselines']
+    !! claims_to_evidence.json                  10 keys  writers none detected
     !! p4_transfer_power.json                    5 keys  writers ['p4_transfer_power']
 
   A clean clone carries these in and every check passes. The
