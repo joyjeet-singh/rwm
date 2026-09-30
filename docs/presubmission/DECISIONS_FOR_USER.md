@@ -209,3 +209,34 @@ S10 stops **BLOCKED** because PLAN's S10 item 4 says anything larger than a smal
 - D5: "reclassify changes"
 - D6: "rebuild with the new title."
 - D7: "Accept as reported"
+
+## S11-clean-clone-blocked
+
+S11 stops **BLOCKED** under PLAN S11 item 5 ("On any failure: make no fixes"). A clean clone of the pushed `presubmission` (c3b7e9d) was rebuilt from scratch, as a reviewer following the README would rebuild it. Three things fail. The full account, with every figure's source, is in `docs/presubmission/FINAL_REPORT.md`; the logs are in the S11 evidence directory it names. What holds: 0 of the 364 differing regenerated values is a measurement, a statistic or a verdict. The verifier's three runs are byte-identical, the paper and PDF rebuild byte-identical, and the anonymity sweeps find 0 hits. PLAN routes the fixes to an Opus "S10-fix" session, then S11 again. Each item below gives a recommendation first.
+
+- **B1. `pypdf` is missing from `requirements.txt`.**
+  - Five scripts import it. A fresh venv therefore fails stage 28b1, `pdf_render_check.py` and `part_f_gate.py` (which crashes), and puts `submission_check.py`'s A1 at PENDING.
+  - The same venv with `pypdf==6.16.1` added clears all four.
+  - Recommended: pin `pypdf==6.16.1`, the project venv's version, in `requirements.txt`.
+  - Optional: remove the hard-coded `/tmp/pdfvenv/lib/python3.14/site-packages` path at `scripts/submission_check.py:50`.
+- **B2. `part_f_gate` check 6 fails, a new failure.** The published record fails check 4 alone.
+  - The abstract prints `{{v1_shared_pct0}}` ("share 89% of their parameters", template line 18). No body sentence prints that key's value; the body prints 89.15% (`v1_shared_pct`).
+  - (a) Recommended: print `{{v1_shared_pct}}` (89.15%) in the abstract, as the body does. This is one numeral for one numeral, and it leaves the word count unchanged.
+  - (b) Or have the body state the rounded figure.
+  - The gate must not be loosened (§1.2.8).
+- **B3. The reproduction figures in the paper, BUILD_CHECKS, README, COVER_STATEMENT and SUBMISSION_CHECKLIST are C3's (c16267c).**
+  - A clone of c3b7e9d measures 364 differing, not 365, and 0.59%, not 1.01%. 10 of the 17 `ver_*` keys differ, or 13 with `pypdf`.
+  - Recommended:
+    - after B1 and B2, restate by the restatement ordering: prose edits first, then a clean clone of the fixed commit, measured right after `reproduce.sh` with `pypdf` installed (49 files), then substitution and the document-line index;
+    - refresh the hand-written copies from the same measurement;
+    - leave `_BOOK` alone, because `.zip_bytes` differs only if the bundle is rebuilt before the verifier runs.
+  - Two decisions are yours:
+    - Which state to measure: the plan-timed state recommended above, or after the bundle build.
+    - Whether the restatement may also reword §8's denominator. The 2026-09-27 ruling recorded the 1.01% denominator as known; fixing it now costs no extra loop, because the restatement reruns it anyway.
+- **B4. Not blocking; recommended in the same fix session.** Several committed reports and gate records are stale against the pushed paper, and they ship in both bundles:
+  - `typed_numerals_report.txt` says 686 typed numerals, against 711;
+  - `appendix_g_rules_report.txt` says M-16 "SETTLED" and lacks M-74 to M-76;
+  - `t1_bibliography_report.txt` counts 16 entries, against 18;
+  - `results/part_f_gate.json` and `results/pdf_channels.json` say 48 pages.
+
+  Regenerate them with `./reproduce.sh --quick --force --stage N`, then rebuild both bundles.

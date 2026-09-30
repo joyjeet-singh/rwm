@@ -604,3 +604,43 @@ Paper numbers changed:
 CPU jobs over 1 min: none. The two producer re-runs took 18 s and 12 s; each build-and-check pass took about 3 min.
 Next: S11, clean-clone verification (Sonnet 5.5; last; no edits), in a new terminal.
 Decisions for user: DECISIONS_FOR_USER.md#S10-review-blocked (answered)
+
+## S11 — 2026-09-30 12:11 — Opus 5.5 (the plan assigns Sonnet 5.5); audit and adversarial check on Sonnet 5.5 — status: BLOCKED
+Commits:
+- 9bcb4a6 [S11][item 4] FINAL_REPORT.md: clean-clone verification of c3b7e9d, BLOCKED
+- (the commit carrying this entry) [S11] BLOCKED: session log and decisions
+Done:
+- **Setup.** The session ran on Opus 5.5 and did the mechanical work. Two read-only Sonnet 5.5 agents, within §1.3's cap, did the audit and its adversarial re-derivation. The second confirmed 46 of 50 items and corrected two wordings; no figure or verdict changed. It left 2 items unverifiable.
+- **Item 1.** `presubmission` was already pushed at c3b7e9d (checked with `git ls-remote`), so there was nothing to push. Two fresh clones were made from the public remote: the measured clone and a pristine reference.
+- **Item 2.**
+  - `setup.sh` passed; both pinned upstreams and both hashes verified.
+  - A fresh venv was built from `requirements.txt` only. All six pins held and seven transitive packages float. `pypdf` is absent.
+  - `reproduce.sh --quick --force`: 97 stages, 54 OK, 36 skipped, 7 failed, in 2.0 h. The seven are the six known failures plus 28b1, which fails on the missing `pypdf` (it was OK at C3).
+  - The full build and every gate ran. The paper, `README.md` and Appendix G rebuild byte-identical, and so does `MODEL_CARD.md` with `runs/` linked. Build 1 equals build 2.
+  - Both bundles were built. The builder's own scan and the independent sweep each find 0 identifying strings.
+  - The PDF was compiled with TMLR in anonymous mode: 49 pages, 0 errors, 0 overfull boxes. After blanking its dates and ID it is identical to the committed PDF.
+- **Item 3.**
+  - Regenerated values that differ and are measurements, statistics or verdicts: **0**. The total number of differing values is **364**, all bookkeeping; most are claims-audit counts.
+  - The verifier's three runs are byte-identical.
+  - `part_f_gate` does **not** fail the same way. In the plan's venv it crashes on the `pypdf` import. With `pypdf` it fails checks 4 **and 6**. Check 6 fails because the abstract key `v1_shared_pct0` (89%) is absent from the body, which prints 89.15%; that key entered in S4.
+- **Item 4.** `FINAL_REPORT.md`:
+  - 49 pages (S0: 48);
+  - body 27,035 words to References against S0's 27,387, −1.29%;
+  - every check with its status against S0.
+- **Item 5.** No fixes. BLOCKED on three items, set out with options in `DECISIONS_FOR_USER.md#S11-clean-clone-blocked`:
+  - `pypdf` is missing from `requirements.txt`;
+  - `part_f_gate` check 6;
+  - the printed reproduction figures are C3's: 10 of the 17 `ver_*` keys differ from this clone's measurement (365 → 364, 1.01% → 0.59%).
+- Evidence: `/Users/Shared/rwm_verify/evidence/PS11/`. It holds the driver, every log, and the audit output. The clone and its reference are in `/Users/Shared/rwm_verify/ps11/`, left in place.
+Build/checks: pass. In the working tree, with the project venv, the fast build and all eight prose checks exit 0. Every generated file is byte-identical to the commit; `PAPER.pdf` differs only in date and ID and was restored. In the clean clone, the new failures are the ones listed in item 5.
+Paper numbers changed: none.
+CPU jobs over 1 min, all in the clone and none in the working tree:
+- `reproduce.sh` 7,228 s;
+- the anonymity sweep 609 s;
+- the anonymised bundle 230 s;
+- the supplementary bundle 113 s.
+Next: an Opus "S10-fix" session on B1–B4, then S11 again.
+Decisions for user: DECISIONS_FOR_USER.md#S11-clean-clone-blocked
+Reminders (PLAN S11 item 6):
+- Send the author query (`docs/presubmission/AUTHOR_QUERY_ALIGNMENT.md`) if it has not gone yet.
+- Trigger a fresh Software Heritage archive of the final pushed state, because §13's timestamp argument now needs it to cover the new pre-registrations. Do this after the fix session and a passing S11, since the pushed state will change.
