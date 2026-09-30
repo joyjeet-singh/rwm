@@ -97,7 +97,7 @@ PART C — COMPARATIVE CLAIM CHECK
   caught C10.3  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'docs/BUILD_CHECKS.template.md', 'README.md', 'MODEL_CARD.md', 'RESULTS.md']
   caught C10.4  retracted assertion "reproduction" STILL ASSERTED in ['PAPER.template.md', 'docs/BUILD_CHECKS.template.md', 'README.md', 'MODEL_CARD.md', 'RESULTS.md']
   caught C10.5  PAPER.md: S-15 called framing, ledger says evidence; docs/BUILD_CHECKS.template.md: S-15 called framing, ledger says evidence; docs/BUILD_CHECKS.md: S-15 called framing, ledger says evidence
-  caught C11.1  0/8 headline values present in requirements.txt; missing ['n_runs', 'ver_values', 'ver_files', 'pdf_pages', 'n_retractions_lower', 'n_retract_framing_word', 'n_superseded', 'd1_ratio']
+  caught C11.1  1/8 headline values present in requirements.txt; missing ['ver_values', 'ver_files', 'pdf_pages', 'n_retractions_lower', 'n_retract_framing_word', 'n_superseded', 'd1_ratio']
   caught C11.3  0/24 headline values present in requirements.txt; missing ['rt_hours', 'rt_runs', 'd1_ratio', 'd1n_epi_ratio_h1', 'd1n_epi_cov1_h1', 'v3_cov_nominal1', 'a2_rdd', 'stale_pct', 'v1_shared_pct', 'm44_ratio_gain', 'm49_ratio_gain', 'e7_step_r', 'e7_r_dis', 'e5s_span', 'e5s_mse_under', 'ad_nrmse', 'ad_nrmse_ci', 'ad_rel', 'ad_rel_ci', 'd3x_own_epi_ok', 'n_retractions_lower', 'n_retract_framing_word', 'n_superseded', 'd1_ratio']
   caught C11.2  0/5 headline values present in requirements.txt; missing ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'm44_ratio_gain', 'r2_indep_ratio_h100', 'd1_ratio']
   caught C11.4  0/5 headline values present in requirements.txt; missing ['cc_n', 'cc_kinds', 'cc_st_caught', 'cc_selfdefects_word', 'd1_ratio']

@@ -8565,7 +8565,7 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "1,659,040"
+    "value": "1,659,161"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
@@ -8581,7 +8581,7 @@
   },
   "ver_copied": {
     "source": "results/verify_reproduction.json",
-    "value": "1,649,323"
+    "value": "1,649,444"
   },
   "ver_diff_by_file": {
     "source": "results/verify_reproduction.json",
@@ -8597,7 +8597,7 @@
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
-    "value": 48
+    "value": 49
   },
   "ver_hostkeys": {
     "source": "results/verify_reproduction.json",

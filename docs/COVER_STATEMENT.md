@@ -47,11 +47,11 @@ file on disk. Concretely:
   10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
 
 - **A build gate published as failing.** The clean-clone check requires that no regenerated value
-  differ; 365 of 9,598 do, so it fails, it says where, and it is reported as failing. It was not
-  given a tolerance, and none of the 365 is a measurement, a statistic or the verdict of a test. The
-  reproducibility figure is stated over the 1.01% of the numeric values under `results/` that a
+  differ; 364 of 9,717 do, so it fails, it says where, and it is reported as failing. It was not
+  given a tolerance, and none of the 364 is a measurement, a statistic or the verdict of a test. The
+  reproducibility figure is stated over the 0.59% of the numeric values under `results/` that a
   clean clone regenerates and the comparison counts, rather than over the whole directory: counting
-  the values a clone merely carries in would overstate it about 99-fold, and an earlier version of
+  the values a clone merely carries in would overstate it about 171-fold, and an earlier version of
   this claim did exactly that.
 
 ### 2. Would some individuals in TMLR's audience be interested in the findings?
