@@ -26,6 +26,7 @@ tensordict==0.3.2
 # pypdf reads the compiled PDF for the rendered-PDF check, the submission gates and the
 # PDF-channel anonymity scan (scripts/pdf_render_check.py, part_f_gate.py, submission_check.py,
 # f5_pdf_channels.py, baseline_citations.py). It was installed by hand and never pinned, so a venv
-# built from this file failed all four checks (found by the clean-clone session S11). Pinned to the
-# version every recorded check ran under.
+# built from this file broke four checks (found by the clean-clone session S11): stage 28b1 and
+# pdf_render_check.py failed, part_f_gate.py crashed, and submission_check.py left A1 pending.
+# Pinned to the project venv's version.
 pypdf==6.16.1
