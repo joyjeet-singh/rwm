@@ -240,3 +240,11 @@ S11 stops **BLOCKED** under PLAN S11 item 5 ("On any failure: make no fixes"). A
   - `results/part_f_gate.json` and `results/pdf_channels.json` say 48 pages.
 
   Regenerate them with `./reproduce.sh --quick --force --stage N`, then rebuild both bundles.
+
+**Answers, 2026-09-30:**
+- The user's words: "All recommendations approved. Run Opus S10-fix session on B1–B4, then S11 again."
+  - B1: pin `pypdf==6.16.1` and remove the `/tmp/pdfvenv` path.
+  - B2: the abstract prints `{{v1_shared_pct}}`.
+  - B3: restate from a clean clone of the fixed commit, measured right after `reproduce.sh` with `pypdf` installed; refresh the hand-written copies; leave `_BOOK` alone.
+  - B4: regenerate the stale reports and gate records, then rebuild both bundles.
+- Asked in chat on the open B3 point (the denominator), answered "Reword it (Recommended)". §8, BUILD_CHECKS and README now say the percentage is of the numeric values the comparison counts. This supersedes the 2026-09-27 ruling "Record as known; keep C3" (`docs/DEFERRED.md`, tail S27).
