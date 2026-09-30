@@ -644,3 +644,54 @@ Decisions for user: DECISIONS_FOR_USER.md#S11-clean-clone-blocked
 Reminders (PLAN S11 item 6):
 - Send the author query (`docs/presubmission/AUTHOR_QUERY_ALIGNMENT.md`) if it has not gone yet.
 - Trigger a fresh Software Heritage archive of the final pushed state, because §13's timestamp argument now needs it to cover the new pre-registrations. Do this after the fix session and a passing S11, since the pushed state will change.
+
+## S10-fix — 2026-09-30 15:30 — Opus 5.5; reviewers Sonnet 5.5 — status: COMPLETE
+Commits:
+- 63e694d [S10-fix] Record the rulings on S11's B1-B4 and the denominator
+- 1932d6b [S10-fix][B1] Pin pypdf; drop submission_check's hard-coded /tmp path
+- f66f0f4 [S10-fix][B2][B3] Abstract prints 89.15%; the denominator names the counted set; interim restatement from S11
+- 228fbdd [S10-fix][B4] Regenerate the stale reports and the PDF-channel record
+- c6a1e52 [S10-fix][B1] requirements.txt: say which four checks broke, and whose version the pin is
+- 5e30429 [S10-fix][B3] The script that refreshes the hand-written copies of section 8's figures
+- a19d2ae [S10-fix][B3] Restate section 8 from a clean clone of the fix commit c6a1e52
+- f87b772 [S10-fix][B4] Rebuild both bundles on the restated tree
+- 586d49d [S10-fix] Numbers-review fixes: the checklist note covers the denominator status; OUT_OF_SCOPE wording
+- (the commit carrying this entry) [S10-fix] COMPLETE: session log
+Done: the user approved every S11 recommendation and ruled "Reword it" on the denominator (`DECISIONS_FOR_USER.md#S11-clean-clone-blocked`).
+- **B1.** `pypdf==6.16.1` is pinned in `requirements.txt`, and `submission_check.py` no longer prepends `/tmp/pdfvenv`.
+- **B2.** The abstract prints `{{v1_shared_pct}}` (89.15%), the figure the body prints, so `part_f_gate` check 6 passes. The abstract is still 26 numerals and 330 words.
+- **B3.**
+  - Every prose edit came first. §8, BUILD_CHECKS (two places) and README now say the percentage is of the numeric values the comparison counts.
+  - The fix commit was measured next. c6a1e52 was pushed and measured as **M1**, a clean clone with a fresh venv from `requirements.txt` (evidence `/Users/Shared/rwm_verify/evidence/S10FIX/M1/`):
+    - 97 stages, 55 OK, 36 skipped and 6 failed. The six are the known ones, the same tally as S24T's clean clone of C3; stage 28b1 passes again.
+    - The three verifier runs are byte-identical: 49 files, 9,717 values, 9,353 identical, 364 differing, **0 scientific**.
+    - `part_f_gate`, run on the fresh measurement, fails check 4 alone.
+  - Section 8 was then restated from M1, and `docs/presubmission/s10fix_docs.py` refreshed COVER_STATEMENT's copies from `paper_numbers.json`.
+  - The checklist gained a dated note, and DEFERRED a RESOLVED line.
+  - Before pushing, a local simulation of a clean clone of the restated tree predicted 17 of 17 keys matching (`evidence/S10FIX/predict.zsh`). The numbers reviewer confirmed this independently, reproducing M1's record byte for byte.
+- **B4.**
+  - Seven stale reports were regenerated through their stages, and a second pass left them identical.
+  - The `pdf_channels` and `part_f_gate` records were regenerated.
+  - Both bundles were rebuilt after the restatement: the builder's scan finds 0 residual hits, and the independent sweep finds 0 hits in both zips and the PDF.
+- **Found and worked around.** The anonymised-bundle self-test plants HEAD's 7-character prefix, which the detector's float guard refuses when that prefix is digits plus one `e`. It failed at 5e30429. The bundles were built on a HEAD with an ordinary prefix, and every pushed HEAD is checked. This is recorded in OUT_OF_SCOPE with a proposed fix (plant the full hash); the fix is the user's call.
+- **Reviewers.** Two read-only Sonnet 5.5 agents, within §1.3's cap:
+  - the diff review, before the measurement: PASS; its F1 comment fix was applied;
+  - the numbers review, after the restatement: PASS-WITH-FIXES. All 24 printed figures it checked match. Its F3 and F5 fixes were applied, and README's lost-value parenthetical went to OUT_OF_SCOPE.
+Build/checks: pass. The fast build, 8 gates and fast build ran with the two builds byte-identical, both at the fix and after the restatement. `part_f_gate` scores 7/8, failing check 4 alone. Both bundles' self-tests are live.
+Paper numbers changed:
+- the abstract's `v1_shared_pct0` (89) became `v1_shared_pct` (89.15);
+- from `results/verify_reproduction.json` (C3 → M1):
+  - `ver_values` 9,598 → 9,717;
+  - `ver_identical` 9,233 → 9,353;
+  - `ver_pct` 96.20 → 96.25;
+  - `ver_differing` and `ver_part_else` 365 → 364;
+  - `ver_copied` 940,905 → 1,649,444;
+  - `ver_all` 950,503 → 1,659,161;
+  - `ver_claim_pct` 1.01 → 0.59;
+  - `ver_overstate` 99 → 171;
+  - `ver_files` 49, unchanged.
+CPU jobs over 1 min:
+- M1's `reproduce.sh`: 7,326 s, in the clone;
+- in the working tree: each build-and-check pass took about 3 min, the two bundle builds about 2 and 4 min, and the independent sweep about 10 min.
+Next: S11 (second run). Clean-clone verification of the pushed HEAD, run the same way as the first; its driver is `evidence/PS11b/s11b_driver.zsh`.
+Decisions for user: none open. `DECISIONS_FOR_USER.md#S11-clean-clone-blocked` is answered. New in OUT_OF_SCOPE: the bundle self-test probe and README's parenthetical.
