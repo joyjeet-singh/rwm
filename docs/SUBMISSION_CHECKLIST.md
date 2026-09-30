@@ -7,7 +7,7 @@ return. The previous pass, over commit `426fe35` on 2026-09-19, is kept below as
 what that pass found; it describes a paper and a tree that have since changed, and the only edit to
 it is the level of its "Open items" heading.
 
-*[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30).*
+*[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
 ## This pass, over `c16267c`
 
