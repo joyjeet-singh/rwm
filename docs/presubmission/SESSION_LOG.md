@@ -695,3 +695,39 @@ CPU jobs over 1 min:
 - in the working tree: each build-and-check pass took about 3 min, the two bundle builds about 2 and 4 min, and the independent sweep about 10 min.
 Next: S11 (second run). Clean-clone verification of the pushed HEAD, run the same way as the first; its driver is `evidence/PS11b/s11b_driver.zsh`.
 Decisions for user: none open. `DECISIONS_FOR_USER.md#S11-clean-clone-blocked` is answered. New in OUT_OF_SCOPE: the bundle self-test probe and README's parenthetical.
+
+## S11 (second run) — 2026-09-30 18:10 — Opus 5.5 (the plan assigns Sonnet 5.5); audit and adversarial check on Sonnet 5.5 — status: COMPLETE
+Commits:
+- (the commit carrying this entry) [S11] COMPLETE: FINAL_REPORT.md and session log, second run
+Done: clean-clone verification of the pushed HEAD, 30910fb, after S10-fix. Evidence: `/Users/Shared/rwm_verify/evidence/PS11b/`; the clone and its reference are in `/Users/Shared/rwm_verify/ps11b/`, left in place.
+- **Setup.** A mechanical driver did the work. Two read-only Sonnet 5.5 agents, within §1.3's cap, did the audit and its adversarial re-derivation, which confirmed all 21 items it re-derived. Both returned COMPLETE.
+- **Item 1.** Nothing to push: the remote equals 30910fb. Two fresh clones were made from the public remote.
+- **Item 2.**
+  - `setup.sh` passed, and both pinned hashes held.
+  - A fresh venv was built from `requirements.txt`. Every pin held, `pypdf` included, and nothing was missing.
+  - `reproduce.sh --quick --force`: 97 stages, 55 OK, 36 skipped and the six known failures, identical to S24T's clean clone of C3.
+  - The full build and every gate ran, and build 1 equals build 2.
+  - Both bundles were built: 0 residual hits, the self-test is live, and the independent sweep finds 0 hits.
+  - The PDF has 49 pages in TMLR anonymous mode, and is identical to the committed PDF after blanking its dates and ID.
+- **Item 3.**
+  - Regenerated values that differ and are measurements, statistics or verdicts: **0**.
+  - Total differing values: **364**, all bookkeeping; 355 of them are in the stale claims audit.
+  - `part_f_gate` fails exactly as published: 7/8, with check 4 alone failing.
+  - The paper prints what the clone measures: 17 of 17 reproduction figures, and all 2,178 `paper_numbers` keys (`fixedpoint.txt`).
+- **Item 4.** `FINAL_REPORT.md` was rewritten for this pass; the BLOCKED first pass stays at 9bcb4a6.
+  - 49 pages (S0: 48).
+  - The body is 27,039 words to References against S0's 27,387 (−1.27%). The shortfall was accepted as D7.
+  - Every check is listed against S0.
+Build/checks: pass. In the clean clone, every gate returns S0's result or a recorded known result.
+Paper numbers changed: none.
+CPU jobs over 1 min, all in the clone:
+- `reproduce.sh` 7,276 s;
+- the anonymity sweep 638 s;
+- the anonymised bundle 238 s;
+- the supplementary bundle 119 s.
+Next: none in PLAN. The pre-submission programme is complete.
+Decisions for user: none open. Open items are in `FINAL_REPORT.md` §6–7 and `OUT_OF_SCOPE.md`.
+Reminders (PLAN S11 item 6):
+- Send the author query (`docs/presubmission/AUTHOR_QUERY_ALIGNMENT.md`) if it has not gone yet.
+- Trigger a fresh Software Heritage archive of the final pushed state, because §13's timestamp argument now needs it to cover the new pre-registrations.
+- Also: refresh `docs/SUBMISSION_PACKAGE.md`, which is self-declared pre-edit, and the rest of `docs/COVER_STATEMENT.md` before uploading.
