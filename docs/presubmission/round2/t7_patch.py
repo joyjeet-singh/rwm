@@ -212,5 +212,88 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 ]
 
 
+# ---- §11: limitations not already stated where they bite; the full text -> Appendix R ------------------
+_R = "## Appendix R — the limitations in full (§11)"
+_S11 = """## 11. Limitations
+
+Limits that belong to one result are stated beside it: the budget and our reading of Table S7
+(§5.2, §5.3), the mechanism of §6.4 as a hypothesis, and the recalibration's two episodes (§6.7).
+Appendix R gives every limitation below in full.
+
+**Effective sample size bounds every long-horizon claim.** The out-of-sample arena has
+{{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3), the binding
+constraint on §5, and a larger dataset cannot be generated here (Appendix C), so the released
+checkpoint's lack of a held-out arena is a constraint, not a choice.
+
+**One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait is
+a single trot, so "generalisation" here means across velocity commands only.
+
+**Single seeds.** The long-horizon trend fit and the per-dimension matched comparison rest on seed 1
+alone (Appendix H), and the headline A/B verdict on seed {{m23_seed}}, the one its rule ran on; the
+magnitudes beside it are three-seed means with per-seed values (§5).
+
+**Ensemble size: supported, not established.** Our ensemble-5 arms reproduce the direction of §6.6's
+ranking finding and the calibration failure, but rule M-43 returns **{{e5_verdict}}** on their
+{{e5_nind}} independent 400-step trajectories (§6.6). So that finding is established on the released
+checkpoint and supported but not established on a model we trained.
+
+**The ranking claim is not established as needing an ensemble.** The model's own predicted step
+size ranks error nearly as well, by a margin this sample cannot resolve (§6.6). If the observed
+margin is the true one, settling it needs {{q2_n_req}} independent 400-step trajectories where all ten
+episodes provide {{e7_nind}}, a required-sample-size estimate under an assumed effect (Appendix R).
+
+**We did not measure what the miscalibration costs.** The penalty the follow-up applies is
+miscalibrated as a scale, {{d1n_epi_ratio_h100}}× overconfident at h = {{v2_deploy_h}}, the horizon its
+own imagination rollouts run to, but the method's only use of that quantity is to shape policy
+learning, and we did not train a policy. **The finding bounds what the quantity reports, not what it
+costs**, and the ratio is not a measure of harm. Other sections refer back to this as the policy
+caveat of §11. A proxy that needs no policy, the ordering of the penalty accumulated along whole
+rollouts before and after the per-horizon correction, finds none of the {{q3_n_pairs}} pairs reordered
+(rule M-70: **{{q3_verdict}}**), but it orders the penalty alone, not the penalised return, and its
+null is partly structural (Appendix R).
+
+**The per-dimension ordering tests are underpowered at every sample size we can reach** (§6.5,
+Appendix K). This limits the per-dimension evidence only; the aggregate scalar the method applies is
+one test, not forty-five coupled ones (§6.6).
+
+**No family-wide correction is applied across our own pre-registered rules.** There are
+{{appG_n_rules}} of them with per-rule verdicts (Appendix E), each committed before its data and
+reported against its own thresholds; a reader who prefers a corrected family threshold can apply it
+from that count.
+
+**The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it.**
+Independent members differ from shared-trunk heads in data ordering and in capacity as well as in
+sharing. Rule M-49 (Appendix E) holds capacity fixed, at {{m49_matched_params}} state-pathway
+parameters, a ratio of {{m49_matched_ratio}}: the independent ensemble is still better calibrated on
+every shared-trunk seed, every paired interval excludes zero and its coverage gain of
+{{m49_cov_gain}} points clears its own MDE, but the overconfidence improvement falls from
+{{m44_ratio_gain}}× to **{{m49_ratio_gain}}×** against an MDE of {{m49_mde_ratio}}×, so the rule returns
+**{{m49_verdict_short}}**. Capacity does not explain the effect away; how much of it capacity accounts
+for, this design cannot say (Appendix R).
+
+**Deliberately out of scope.** No policy-learning result of either paper is reproduced or tested,
+the sample-efficiency comparison is not tested for the same reason, and nothing here uses a GPU. We
+did not test whether the σ = 0 optimum affects other descendants of the PETS parameterisation: the
+hypothesis is well-founded only for one that makes the same substitution, and is untested for any
+(§2, Appendix I).
+
+"""
+
+
+def _s11(t):
+    L = t.split("\n")
+    a = [i for i, x in enumerate(L) if x.startswith("## 11. ")]
+    b = [i for i, x in enumerate(L) if x.startswith("## 12. ")]
+    assert len(a) == 1 and len(b) == 1
+    old = "\n".join(L[a[0] + 1:b[0]]).strip("\n")
+    assert old.endswith("---")
+    old = old[:-3].rstrip("\n")
+    t = "\n".join(L[:a[0]]) + "\n" + _S11 + "---\n\n" + "\n".join(L[b[0]:])
+    return t.rstrip("\n") + "\n\n" + _R + "\n\n" + old + "\n\n---\n"
+
+
+ITEMS["s11"] = [("fn", _s11)]
+
+
 if __name__ == "__main__":
     E.main()
