@@ -739,6 +739,14 @@
     "source": "results/alignment_defect_ci.json",
     "value": "+0.8%, +9.8%, +14.8%, +6.5%"
   },
+  "adh_rel_ci_h1": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[10.6, 75.0]"
+  },
+  "adh_rel_h1": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "34.2"
+  },
   "agree_alea": {
     "source": "results/task_b2_epistemic.json + task_d_nind20.json",
     "value": 4
@@ -4303,7 +4311,15 @@
     "source": "results/task5_analysis.json",
     "value": "0.3509"
   },
+  "m23_A_s1": {
+    "source": "results/task5_analysis.json",
+    "value": "0.3509"
+  },
   "m23_B": {
+    "source": "results/task5_analysis.json",
+    "value": "1.5540"
+  },
+  "m23_B_s1": {
     "source": "results/task5_analysis.json",
     "value": "1.5540"
   },
@@ -4351,9 +4367,13 @@
     "source": "results/task5_analysis.json",
     "value": 4
   },
+  "m23_other_seeds": {
+    "source": "results/task_d1_threeseed.json + task5_analysis.json",
+    "value": "0 and 2"
+  },
   "m23_ratio": {
     "source": "results/task5_analysis.json",
-    "value": "4.4"
+    "value": "4.43"
   },
   "m23_seed": {
     "source": "results/task5_analysis.json",
@@ -8035,6 +8055,10 @@
     "source": "results/r2_independent_ensemble.json",
     "value": "1.84"
   },
+  "r60_date": {
+    "source": "git log -S '### R-60' FINDINGS_LEDGER.md (the commit that entered R-60)",
+    "value": "2026-08-22"
+  },
   "relale_all_neg_h368": {
     "source": "results/task_b_permutation.json",
     "value": 45
@@ -8199,6 +8223,14 @@
     "source": "results/task2_sigma_profile.json",
     "value": 1.0007
   },
+  "stale_armA_rel_h1": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "-0.22"
+  },
+  "stale_armA_rel_h368": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "+0.15"
+  },
   "stale_nrmse": {
     "source": "results/step4_0a_results.json",
     "value": "1.3228"
@@ -8281,7 +8313,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 711
+    "value": 717
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

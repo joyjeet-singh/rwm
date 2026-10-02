@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1129 values substituted from 84 artifacts. -->
+     1134 values substituted from 86 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -12,9 +12,9 @@
 
 We rebuild the proprioceptive dynamics model of the *Robotic World Model* (arXiv:2501.10100v1)
 and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU. Before training,
-outputs, losses and gradients match the released implementation exactly. The base paper's central training claim reproduces under a rule committed in advance: training on
-the model's own rollouts beats teacher forcing by 4.61× at 368 steps and
-2.58× at 100, though teacher forcing leads at one step. It uses 0.133% of the
+outputs, losses and gradients match the released implementation exactly. The base paper's central training claim reproduces under a rule committed in advance and run on one seed
+per arm; over 3 seeds, training on the model's own rollouts beats teacher forcing by 4.61× at
+368 steps and 2.58× at 100, though teacher forcing leads at one step. It uses 0.133% of the
 reference's world-model data, one robot, gait and terrain, and 4 independent
 held-out trajectories. The base paper's architecture claim holds against our MLP, RSSM and
 transformer baselines; its chosen history and forecast lengths are beaten at our budget. The follow-up's uncertainty gets the order right and the size wrong.
@@ -26,10 +26,7 @@ ranks error nearly as well (+0.4697), by an unresolved margin. The members share
 confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
 coverage within 10 points of nominal on its training episodes, though no cell is
 resolvable. On episodes our ensembles never saw, it does so in only 17 of
-36 disagreement cells: a recipe to refit, not a demonstrated fix. Separately,
-the released evaluation pairs each prediction with the previous action, overstating the
-checkpoint's error on the same trajectories at 368 steps by 6.6%
-[1.0, 8.0] in nRMSE and 7.9% [3.1, 13.0] in relative-L1; across its ten training episodes the sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
+36 disagreement cells: a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action; this inflates the checkpoint's error most at short horizons, and at the longest horizon the cost is small and not consistent in sign. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---
@@ -77,12 +74,11 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   2 free baselines added here; the model's own predicted step size ranks error at
   +0.4697 against its +0.6053, a margin that 25 independent trajectories would
   resolve if it is real, against the 20 here (§11).
-- **The base paper's central training claim reproduces, and reverses at one step.** Under a rule
-  committed before the runs, training on the model's own rollouts beats teacher forcing, by
-  4.61× on relative-L1 at h = 368 over 3 seeds and by
-  2.58× at h = 100 (§5). At one step, a second pre-registered rule with
-  60 independent 33-row units, where the 400-step unit gives 4,
-  finds a gap of -0.0194 [-0.0310, -0.0093], in favour of **teacher forcing** (§5).
+- **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before
+  the runs, run on one seed per arm, found autoregressive training ahead by 4.43× at
+  h = 368; over 3 seeds the factor is 4.61×, and 2.58× at
+  h = 100 (§5). At one step a second pre-registered rule, on 60 independent
+  33-row units, finds a gap of -0.0194 [-0.0310, -0.0093] in favour of **teacher forcing** (§5).
 - **Two more of the base paper's claims, tested under rules committed before the runs.** Its
   architecture claim holds: RWM is ahead at h = 368 of MLP, RSSM and transformer baselines
   built to our reading of its specification and teacher-forced as it trains them, and stays ahead
@@ -106,11 +102,14 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   unseen by the multiplier only, because the checkpoint trained on both episodes; on Arm A, whose
   model never saw them, its own multipliers manage 17 of 36
   disagreement cells.
-- **The released evaluation is misaligned by one step, and what that costs is small.** Evaluation
-  feeds the action from *t−1* where training pairs states and actions index-for-index. On
-  4 independent trajectories this overstates the checkpoint's error at h = 368
-  by 7.9% [3.1, 13.0] on relative-L1 and 6.6% [1.0, 8.0] in nRMSE, and over
-  all ten episodes the sign reverses (§7.2); shifting evaluation's action index by one step fixes it.
+- **The released evaluation is misaligned by one step; the cost is concentrated at short horizons, and at
+  h = 368 it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
+  training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
+  the held-out pair's 4 independent trajectories, which this checkpoint trained on, the stale
+  action raises its error by
+  34.2% [10.6, 75.0] at h = 1, and at h = 368 by 7.9% [3.1, 13.0] on
+  relative-L1 and 6.6% [1.0, 8.0] in nRMSE; over all ten episodes the sign at h = 368
+  reverses (§7.2).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise, and losses and gradients match to 0.000e+00 across 7 loss
   terms and 106 parameter tensors, before any training (Appendix A).
@@ -303,7 +302,10 @@ spans overlap are not independent evidence, and the out-of-sample arena contains
 that size has 256 distinct resamples, so its intervals are quantised at that
 resolution. Every long-horizon verdict in this paper survives a bootstrap over independent
 trajectories, every table reports that count, and §8 reports both resampling units where they
-differ. Later sections refer back to this as the n = 4 caveat of §3.
+differ. Later sections refer back to this as the n = 4 caveat of §3. One trajectory can carry
+much of a long-horizon effect: a one-step shift of the action moves single trajectories' 368-step
+error by anywhere from -47.4% to +35.2% (§7.2), which is why 4 trajectories
+bound every long-horizon claim.
 
 ### 3.1 Metrics
 
@@ -367,9 +369,9 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ.
 The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and total
 absolute error, because a ranking claim is about order rather than scale. Every headline number in
-the abstract names its metric. §7.2's alignment defect is given in both metrics side by side, each
-at h = 368 on the same 4 independent trajectories: 7.9% [3.1, 13.0] on
-relative-L1 and 6.6% [1.0, 8.0] in nRMSE.
+the abstract names its metric. §7.2's alignment defect is given in both metrics side by side at h = 368, on the same
+4 independent trajectories: 7.9% [3.1, 13.0] on relative-L1 and 6.6%
+[1.0, 8.0] in nRMSE; its larger cost at short horizons is given on relative-L1, at h = 1.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,100,\,128,\,368\}$.
 Two of those are load-bearing and the rest are landmarks. **h = 100** is the method's
@@ -434,9 +436,8 @@ between disagreement and error. The exceptions are the configuration claim and t
 claim, whose values one heatmap prints in every cell (§5.2). For the teacher-forced (32, 1)
 it prints 3.99 against 0.47 at the centre, 8.5× worse, on
 evaluation data and at a horizon it does not state; our sweep's (32, 1) is
-6.35× worse on relative-L1 at h = 368. Our 4.61× compares Arm B,
-which trains on 8 teacher-forced targets per window rather than one
-(`docs/presubmission/ORIGINAL_SPECS.md` §2), so it neither confirms nor contradicts that figure. Where a magnitude is legible only from a plotted curve we say so rather
+6.35× worse on relative-L1 at h = 368. Our 4.61× uses a different definition of teacher forcing
+(`docs/presubmission/ORIGINAL_SPECS.md` §2); §5 relates the two. Where a magnitude is legible only from a plotted curve we say so rather
 than estimating it from the axis.
 
 **Appendix D gives the full table**, claim by claim, with what the original states, where it
@@ -450,8 +451,11 @@ states it, and our verdict.
 
 **Rule, committed in advance** (rule M-23, Appendix E; commit `efc35b8`), naming conditions rather
 than outcomes. Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
-under a bootstrap over independent trajectories; the sign is consistent across episodes; and the
-effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule is anchored at
+under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule was run on
+seed 1 of each arm: autoregressive 0.3509 against teacher forcing 1.5540 at
+h = 368, 4.43×, gap interval [0.56, 2.05]. Seeds 0 and 2
+were trained after the verdict (ledger R-60, 2026-08-22), so the three-seed figures below extend it
+and carry none of its weight. The rule is anchored at
 h = 368, the upstream's **open-loop diagnostic** length and not a deployment horizon
 (§3.1), and its verdict is returned there; we do not re-anchor a discharged rule. The method's own
 horizon is h = 100, so the comparison is reported there too, and the two differ in size.
@@ -469,14 +473,16 @@ excludes zero at both trajectory lengths (`results/review_bootstrap_unit.json`).
 
 *The out-of-sample effect size, at every horizon.* At h = 368, the rule's horizon,
 autoregressive training reaches **0.3582 ± 0.0283** against teacher forcing's
-**1.6497 ± 0.2858** (standard deviation over seeds, `ddof=1`), a factor of
-**4.61×**. At h = 100, the method's own imagination rollout length and the
+**1.6497 ± 0.2858** (standard deviation over seeds, `ddof=1`), a factor of **4.61×**. Arm B predicts each of the window's 8 forecast targets from
+true inputs, where the original's teacher forcing is N = 1; the sweep's (32, 1), trained that way, is
+6.35× worse than the centre at h = 368 (§5.2), so the claim holds under both definitions.
+At h = 100, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **2.58×**.
 Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
 same 3 seeds at 10,000 training iterations, same held-out arena,
 n_independent = 4, with a cluster bootstrap over whole trajectories:
 
-![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds at 10,000 training iterations. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Only the h = 368 figure is pre-registered (M-23); the rest were computed after the data existed.](figures/paper_fig6_ab_by_horizon.png)
+![The autoregressive-versus-teacher-forcing advantage as a function of forecast horizon, out-of-sample over three seeds at 10,000 training iterations. (a) the ratio, which grows monotonically with depth: h = 368 is the end of a trend rather than a selected point, and the method's own rollout length of h = 100 sits partway along it. (b) the same comparison as a gap with its 95\% cluster-bootstrap interval over whole trajectories; the interval spans zero only at h = 1, where teacher forcing is ahead -- a lead a shorter evaluation unit resolves as real, not nominal (\S5, M-64). Rule M-23 was run at h = 368 on seed 1 of each arm; these three-seed values, and every other horizon, were computed afterwards.](figures/paper_fig6_ab_by_horizon.png)
 
 | h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |
 |---|---|---|---|---|---|---|---|---|---|
@@ -485,16 +491,16 @@ n_independent = 4, with a cluster bootstrap over whole trajectories:
 | 32 | 0.3415 ± 0.0491 | 0.6555 ± 0.0699 | 1.92× | +0.3140 [+0.1233, +0.5047] | yes | 0.5950 | 1.7× | 1.10× | 10/10 |
 | **100** | **0.3700 ± 0.0290** | **0.9561 ± 0.0211** | **2.58×** | **+0.5861 [+0.2174, +0.9547]** | **yes** | 0.7558 | **2.0×** | **1.27×** | **10/10** |
 | 128 | 0.3558 ± 0.0231 | 0.9881 ± 0.0376 | 2.78× | +0.6324 [+0.2716, +0.9931] | yes | 0.7999 | 2.2× | 1.24× | 10/10 |
-| **368** *(pre-registered)* | **0.3582 ± 0.0283** | **1.6497 ± 0.2858** | **4.61×** | **+1.2915 [+0.7004, +2.3390]** | **yes** | 0.9930 | **2.8×** | **1.66×** | **10/10** |
+| **368** *(the rule's horizon)* | **0.3582 ± 0.0283** | **1.6497 ± 0.2858** | **4.61×** | **+1.2915 [+0.7004, +2.3390]** | **yes** | 0.9930 | **2.8×** | **1.66×** | **10/10** |
 
 **The advantage does grow monotonically with forecast depth.** Over 400-step
 trajectories the gap excludes zero at 5 of 6 horizons and
 spans it at h=1: h = 368 is the end of a trend rather than a point we
 picked, h = 100 sits partway along it, and the claim is weakest exactly where the
-model is trained. **Only the h = 368 row is pre-registered.** Every other row was
-computed after the data existed, so by this paper's own standard (§8) it carries none of a pre-registration's weight, the same
-treatment §6.7 gives the expectation we held about the counter-baseline, and nothing in the table
-discharges or re-opens the rule.
+model is trained. **Only the h = 368 row is the rule's horizon, and the rule ran on seed 1 alone.** Every
+value in the table is a three-seed mean computed after the data existed, so by this paper's own standard (§8)
+none carries a pre-registration's weight, the same treatment §6.7 gives the expectation we held about the
+counter-baseline, and nothing in the table discharges or re-opens the rule.
 
 **At h = 1 the table understates the evidence, and the correction runs against us.** The row
 rests on 4 independent 400-step trajectories. A 400-step unit is required only by the
@@ -1494,7 +1500,8 @@ so those zeros mark the absence of a producing action — the reset produced tha
 step. The training path pairs states and actions index-for-index, which is causally correct; the
 evaluation path feeds the action from *t−1* to predict state *t*, stale by one step.
 
-What the stale pairing costs is small, and its sign is not consistent. On the held-out pair's
+What the stale pairing costs is concentrated at short horizons; at h = 368 it is small, and its
+sign is not consistent. On the held-out pair's
 4 independent trajectories it overstates the released checkpoint's error at
 h = 368 by **7.9% [3.1, 13.0] on relative-L1** and **6.6%
 [1.0, 8.0] in nRMSE** (each a 95% interval from a cluster bootstrap over whole trajectories, both pairings
@@ -1504,10 +1511,11 @@ does this with `action_offset = 1` (`src/score_reference.py:180-190`). The four 
 on relative-L1 and +2.4%, +5.8%, +8.3%, -0.3% in nRMSE. Over all ten episodes, 20 independent
 trajectories, the sign reverses: -4.6% [-13.4, 3.2] on relative-L1 and -2.1%
 [-10.0, 3.9] in nRMSE, with single trajectories from -47.4% to +35.2%.
-Every arena here is in-sample for this checkpoint, which trained on all ten episodes. The
-75% (nRMSE) and 9.5% (relative-L1) this paper reported before came from
-10 overlapping windows sampled as the upstream samples them, one of which (starting at
-row 8,375) carries most of the effect; they are withdrawn (S-20).
+Every arena here is in-sample for this checkpoint, which trained on all ten episodes. One step ahead, where a
+stale action should matter most, it changes the checkpoint's error by 34.2% [10.6, 75.0] on the
+same 4 trajectories (`results/alignment_by_horizon.json`). Our own Arm A checkpoints at 10,000
+iterations, trained under the causal pairing, change by -0.22% at h = 1 and
++0.15% at h = 368 when fed the stale one.
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
@@ -1649,7 +1657,8 @@ gaits or terrain.
 
 **The per-horizon recalibration is fitted and tested on two episodes only.** §6.8's remedy puts every released-checkpoint estimate within the band across the two held-out episodes in both directions, though at this n no single cell is resolvable, and those cells are unseen by the multiplier only, because the checkpoint trained on both episodes. On Arm A, whose model never saw them, the same recipe manages 17 of 36 epistemic and 10 of 36 aleatoric cells, and two episodes is not a demonstration that the multipliers transfer to a new robot, gait or terrain. Treat the lookup table as a recipe to refit, not as constants to copy.
 
-**Two secondary analyses rest on a single training seed**, the long-horizon trend fit and the per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B result is not among them: it is a three-seed mean with per-seed values reported (§5).
+**Two secondary analyses rest on a single training seed**, the long-horizon trend fit and the per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B verdict rests on one seed too, seed 1, the one its rule ran on; the magnitudes
+beside it are three-seed means with per-seed values (§5).
 
 **The ranking claim is not established as needing an ensemble.** Under a rule committed before the
 comparison (rule M-51, Appendix E), the model's own predicted state change, a subtraction needing no
