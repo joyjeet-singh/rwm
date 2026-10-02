@@ -1,0 +1,1939 @@
+[
+ {
+  "id": "D-03",
+  "claim": "The termination column is identically zero",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "D-04",
+  "claim": "Ten unmarked episode boundaries",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "D-06",
+  "claim": "Usable window count",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step0_regimes.json",
+   "scripts/step0_velocity_regimes.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   261,
+   265,
+   266,
+   267,
+   268
+  ],
+  "mechanical_keys": [
+   "contam_pct",
+   "ep0_rows",
+   "ep_rest_rows",
+   "n_ep_rest_word",
+   "orphan_rows",
+   "reset_rows_first"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "D-07",
+  "claim": "Actions are not joint targets in radians",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "D-10",
+  "claim": "Twenty-one commanded-velocity regime segments, not one",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step0_report.txt"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "D-12",
+  "claim": "Per-episode difficulty varies threefold and is not explained by speed",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "D-13",
+  "claim": "Row *t* holds the action that **produced** state[*t*] (k = \u22121)",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "B-01",
+  "claim": "The window builder cannot see the episode resets",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "B-02",
+  "claim": "Latent falsy-index bug in the same guard",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "B-03",
+  "claim": "Train/test split leaks",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "B-04",
+  "claim": "Evaluation trajectories are drawn from training data",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "B-05",
+  "claim": "Training and evaluation use different action alignments",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-01",
+  "claim": "The loss has seven terms, not two",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-02",
+  "claim": "The mean head is residual",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-03",
+  "claim": "Two GRU trunks, not one",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-04",
+  "claim": "The \"ensemble of 5\" shares both trunks",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-05",
+  "claim": "Training samples, inference takes the mean",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-06",
+  "claim": "Learnable bounded log-standard-deviation",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-07",
+  "claim": "Actions are not normalised",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-09",
+  "claim": "There is no forecast decay factor in the implementation at all",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-10",
+  "claim": "The aleatoric variance head has collapsed to a constant",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-11",
+  "claim": "`state_min_logstd` receives no gradient from the bound loss",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-12",
+  "claim": "The released checkpoint's collapse implies ~155,000 iterations, not 500 or 2500",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-13",
+  "claim": "Three different iteration counts are in play",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-14",
+  "claim": "The method penalises EPISTEMIC uncertainty; the aleatoric head is discarded before use",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "C-15",
+  "claim": "Eq. 4 defines the penalty on variance; the code computes a standard deviation",
+  "status": "RESOLVED \u2014 the code is intended",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-02",
+  "claim": "The hold-last floor is the zero-delta model",
+  "status": "**CONFIRMED** (was PENDING VERIFICATION)",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-04",
+  "claim": "Ten trajectories is not enough to support a gap claim",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-13",
+  "claim": "The auxiliary branch is teacher-forced; the state branch is not",
+  "status": "CONFIRMED",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-17",
+  "claim": "nRMSE is a TAIL statistic and is biased low at small n; relative-L1 is not",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task3b_convergence.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-19",
+  "claim": "Aggregating nRMSE as a mean of per-dimension ratios is wrong when scales span decades",
+  "status": "CONFIRMED (aggregation); Jensen mechanism CONSISTENT BUT UNPROVEN",
+  "artifacts": [
+   "results/taskAB_gate_r27.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-20",
+  "claim": "Effective sample size, and what actually drives long-horizon verdicts",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/batch1_post_retraction.json",
+   "src/rwm_metrics.py"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-24",
+  "claim": "A pre-registered rule must be anchored to the regime the claim is about",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task4_arenas.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   590
+  ],
+  "mechanical_keys": [
+   "floor_over_A"
+  ],
+  "id_cited_lines": [
+   1191,
+   1466
+  ],
+  "superseded_note": false
+ },
+ {
+  "id": "R-02",
+  "claim": "Protocol A and B, clean",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/manifest.json",
+   "results/step3_report.txt"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-03",
+  "claim": "Hold-last floor",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step2_acceptance.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-04",
+  "claim": "Error by forecast horizon, protocol A clean",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step3_report.txt"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-05",
+  "claim": "Boundary crossing does not inflate error",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step3_report.txt"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-06",
+  "claim": "Convention swap is worth 0.066",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step3_report.txt"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-07",
+  "claim": "Protocol B's noise sweep is non-monotonic",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step3_report.txt"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-08",
+  "claim": "Epistemic uncertainty dwarfs aleatoric",
+  "status": "CONFIRMED as a measurement",
+  "artifacts": [
+   "results/step3_report.txt"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-09",
+  "claim": "Error by forecast horizon under the causal convention",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task2_4_results.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-15",
+  "claim": "Step 3 results restated under the causal convention",
+  "status": "SUPERSEDED IN PART by S-09 \u2014 the numbers stand as measured, but both were taken",
+  "artifacts": [],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": true
+ },
+ {
+  "id": "R-17",
+  "claim": "Overfit one batch: partial, and the collapse prediction confirmed",
+  "status": "CONFIRMED (collapse)",
+  "artifacts": [
+   "figures/step4_overfit_ens1.png"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-19",
+  "claim": "Arm A (autoregressive, faithful), seed 0",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step5_armA_seed0.json",
+   "results/step5_armA_seed0_report.txt"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   451,
+   1524,
+   1529,
+   1530
+  ],
+  "mechanical_keys": [
+   "arm_clean_windows",
+   "bound_both_train",
+   "bound_total",
+   "bound_touch_holdout",
+   "n_train_eps"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": true
+ },
+ {
+  "id": "R-20",
+  "claim": "The two metrics disagree in DIRECTION at h=1",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step5_armA_seed0.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   451,
+   1524,
+   1529,
+   1530
+  ],
+  "mechanical_keys": [
+   "arm_clean_windows",
+   "bound_both_train",
+   "bound_total",
+   "bound_touch_holdout",
+   "n_train_eps"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-22",
+  "claim": "The paper's central claim REPRODUCES: autoregressive beats teacher forcing",
+  "status": "CONFIRMED as measurements under the reference protocol",
+  "artifacts": [
+   "figures/step6_arms_comparison.png",
+   "results/step6_analysis.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-23",
+  "claim": "Teacher forcing reaches a 3\u00d7 lower training loss and a 4\u00d7 worse rollout",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step6_analysis.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-24",
+  "claim": "Pooled collapse fit across six independent runs",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step6_analysis.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-25",
+  "claim": "`min_logstd` gives O-12 a second, slower, independent axis",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step6_3_min_logstd.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-26",
+  "claim": "Neither arm has converged at the paper's own iteration count",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/step6_analysis.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-28",
+  "claim": "Re-evaluation at 100 trajectories: M-16 unchanged, M-04 revised",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task3_4_power_ddof.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-29",
+  "claim": "The released checkpoint loses on 7 of 45 dimensions, and one of them carries R-27",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/taskAB_gate_r27.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-30",
+  "claim": "The \"heavy tail\" is two short regions, not a property of the model",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/taskAB_gate_r27.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-31",
+  "claim": "M-16 is robust to the aggregation choice",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/taskAB_gate_r27.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-32",
+  "claim": "The retraction's arithmetic, verified",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/batch1_post_retraction.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-33",
+  "claim": "The Jensen mechanism is SUPPORTED at 40 seeds",
+  "status": "SUPPORTED",
+  "artifacts": [
+   "results/batch1_post_retraction.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-34",
+  "claim": "The released checkpoint characterised on all ten episodes, independent trajectories",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/batch1_post_retraction.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-35",
+  "claim": "M-16 re-evaluated in both arenas: CANNOT BE SETTLED, in all eight combinations",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task4_arenas.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   590
+  ],
+  "mechanical_keys": [
+   "floor_over_A"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-36",
+  "claim": "The pre-registered teacher-forcing flip pattern FIRES, in the in-sample arena",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task4_arenas.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   590
+  ],
+  "mechanical_keys": [
+   "floor_over_A"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-37",
+  "claim": "Per-episode A/B gap: sign-consistent at h=368, reverses at h=8",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task4_arenas.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   590
+  ],
+  "mechanical_keys": [
+   "floor_over_A"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-38",
+  "claim": "Long-horizon A/B figures from the existing six runs",
+  "status": "CONFIRMED as measurements, NOT PRE-REGISTERED as a verdict",
+  "artifacts": [
+   "results/task4_arenas.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   590
+  ],
+  "mechanical_keys": [
+   "floor_over_A"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-39",
+  "claim": "The h=368 magnitude rests on an episode-1 outlier; the direction does not",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task4_arenas.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   590
+  ],
+  "mechanical_keys": [
+   "floor_over_A"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-40",
+  "claim": "M-23: the claim REPRODUCES AT LONG HORIZON",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task5_analysis.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   72,
+   299,
+   439,
+   440,
+   448
+  ],
+  "mechanical_keys": [
+   "m23_A_s1",
+   "m23_B_s1",
+   "m23_c1",
+   "m23_ci_hi",
+   "m23_ci_lo",
+   "m23_h8_excl"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-41",
+  "claim": "A from-scratch model does NOT develop the released checkpoint's failure pattern",
+  "status": "SUPERSEDED IN PART by S-11 and R-45 \u2014 the comparison was against a seven-dimension",
+  "artifacts": [
+   "results/task5_analysis.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   72,
+   299,
+   439,
+   440,
+   448
+  ],
+  "mechanical_keys": [
+   "m23_A_s1",
+   "m23_B_s1",
+   "m23_c1",
+   "m23_ci_hi",
+   "m23_ci_lo",
+   "m23_h8_excl"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": true
+ },
+ {
+  "id": "R-42",
+  "claim": "The A/B gap across five checkpoints: persists everywhere, resolves in-sample at h=8",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task5_analysis.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   72,
+   299,
+   439,
+   440,
+   448
+  ],
+  "mechanical_keys": [
+   "m23_A_s1",
+   "m23_B_s1",
+   "m23_c1",
+   "m23_ci_hi",
+   "m23_ci_lo",
+   "m23_h8_excl"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-43",
+  "claim": "The collapse rate stays linear to 10,000; the pre-registered prediction lands",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task5_analysis.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   72,
+   299,
+   439,
+   440,
+   448
+  ],
+  "mechanical_keys": [
+   "m23_A_s1",
+   "m23_B_s1",
+   "m23_c1",
+   "m23_ci_hi",
+   "m23_ci_lo",
+   "m23_h8_excl"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-44",
+  "claim": "The central claim's full history, with commit timestamps",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task5_analysis.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   72,
+   299,
+   439,
+   440,
+   448
+  ],
+  "mechanical_keys": [
+   "m23_A_s1",
+   "m23_B_s1",
+   "m23_c1",
+   "m23_ci_hi",
+   "m23_ci_lo",
+   "m23_h8_excl"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-45",
+  "claim": "Matched per-dimension comparison: released checkpoint vs Arm A",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task2_3_matched_trend.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-46",
+  "claim": "The gap-narrowing trend: absolute gap closes, relative advantage does not",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task2_3_matched_trend.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-47",
+  "claim": "The spliced windows cost nothing measurable, and if anything help",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task4_contamination.json"
+  ],
+  "mechanical_covered": false,
+  "mechanical_lines": [],
+  "mechanical_keys": [],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-48",
+  "claim": "The corrected objective reverses the collapse mechanism but produces no usable uncertain",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task1_calibration.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   790,
+   791,
+   792,
+   793,
+   917
+  ],
+  "mechanical_keys": [
+   "cal_armB_cov",
+   "cal_armB_cov1",
+   "cal_armB_cov100",
+   "cal_armB_cov100_ci",
+   "cal_armB_cov1_ci",
+   "cal_armB_ndim"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-49",
+  "claim": "The released checkpoint's uncertainty output is worthless, quantified",
+  "status": "SUPERSEDED IN PART by S-14 \u2014 the numbers stand; the phrase \"the uncertainty",
+  "artifacts": [
+   "results/task1_calibration.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   790,
+   791,
+   792,
+   793,
+   917
+  ],
+  "mechanical_keys": [
+   "cal_armB_cov",
+   "cal_armB_cov1",
+   "cal_armB_cov100",
+   "cal_armB_cov100_ci",
+   "cal_armB_cov1_ci",
+   "cal_armB_ndim"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": true
+ },
+ {
+  "id": "R-50",
+  "claim": "Under `gaussian_nll` the released checkpoint's variance state is unreachable at any iter",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task1_calibration.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   790,
+   791,
+   792,
+   793,
+   917
+  ],
+  "mechanical_keys": [
+   "cal_armB_cov",
+   "cal_armB_cov1",
+   "cal_armB_cov100",
+   "cal_armB_cov100_ci",
+   "cal_armB_cov1_ci",
+   "cal_armB_ndim"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-51",
+  "claim": "All four models are catastrophically overconfident",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task1_calibration.json",
+   "results/task2_sigma_profile.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   790,
+   791,
+   792,
+   793,
+   917
+  ],
+  "mechanical_keys": [
+   "cal_armB_cov",
+   "cal_armB_cov1",
+   "cal_armB_cov100",
+   "cal_armB_cov100_ci",
+   "cal_armB_cov1_ci",
+   "cal_armB_ndim"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-53",
+  "claim": "The correction improved magnitude and destroyed what ordering signal existed",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task1_calibration.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   790,
+   791,
+   792,
+   793,
+   917
+  ],
+  "mechanical_keys": [
+   "cal_armB_cov",
+   "cal_armB_cov1",
+   "cal_armB_cov100",
+   "cal_armB_cov100_ci",
+   "cal_armB_cov1_ci",
+   "cal_armB_ndim"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-54",
+  "claim": "\u03c3 is flat *inside* the trained horizon, which removes the structural excuse",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task2_sigma_profile.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   1296,
+   1301,
+   1302,
+   1303,
+   1304
+  ],
+  "mechanical_keys": [
+   "err_armB_growth",
+   "err_faithA_growth",
+   "err_growth_hi",
+   "err_growth_lo",
+   "err_nll_growth",
+   "err_rel_growth"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-55",
+  "claim": "The duplication control: R-47's mechanism survives, its statistic does not",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task3_control_arm.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   1535,
+   1536,
+   1537
+  ],
+  "mechanical_keys": [
+   "contam_cost_pct",
+   "dup_ci_hi",
+   "dup_ci_lo",
+   "dup_cost_pct"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-56",
+  "claim": "The three-way comparison: the control is inert, contamination still costs nothing",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task3_three_way.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   1540,
+   1541,
+   1542,
+   1543
+  ],
+  "mechanical_keys": [
+   "tw_cc_cluster_helped",
+   "tw_cc_cluster_hurt",
+   "tw_cells",
+   "tw_dc_cluster_helped",
+   "tw_design"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-57",
+  "claim": "All four models, measured on one table",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task1_calibration.json",
+   "scripts/task1_calibration.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   790,
+   791,
+   792,
+   793,
+   917
+  ],
+  "mechanical_keys": [
+   "cal_armB_cov",
+   "cal_armB_cov1",
+   "cal_armB_cov100",
+   "cal_armB_cov100_ci",
+   "cal_armB_cov1_ci",
+   "cal_armB_ndim"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-58",
+  "claim": "The uncertainty the method actually uses is also uncalibrated",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_b2_epistemic.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   524,
+   799,
+   840,
+   1071
+  ],
+  "mechanical_keys": [
+   "agree_alea",
+   "agree_alea_dis",
+   "agree_epi",
+   "agree_nh",
+   "b2_epi_err_growth",
+   "b2_epi_ndim_h1"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-59",
+  "claim": "One scalar cannot fix it, and the way it fails is the horizon",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_d2_recalibration.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   1265,
+   1266,
+   1267,
+   1268,
+   1269
+  ],
+  "mechanical_keys": [
+   "d2_ale_c_hi",
+   "d2_ale_c_lo",
+   "d2_ale_cov1_hi",
+   "d2_ale_cov1_lo",
+   "d2_ale_cov368_hi",
+   "d2_ale_cov368_lo"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-60",
+  "claim": "The headline over three seeds",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_d1_threeseed.json",
+   "scripts/task_d1_threeseed.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   10,
+   11,
+   441,
+   460,
+   461
+  ],
+  "mechanical_keys": [
+   "d1_A_hi",
+   "d1_A_lo",
+   "d1_A_mean",
+   "d1_A_relsd",
+   "d1_A_sd",
+   "d1_B_hi"
+  ],
+  "id_cited_lines": [
+   441
+  ],
+  "superseded_note": false
+ },
+ {
+  "id": "O-12",
+  "claim": "The released checkpoint's variance collapse is inconsistent with the released configurat",
+  "status": "OPEN \u2014 the discrepancy is measured and confirmed; its *cause* is not.",
+  "artifacts": [
+   "results/step4_4_overfit_b32lr1e3.json",
+   "results/step4_4_overfit_ens1.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   1846
+  ],
+  "mechanical_keys": [
+   "overfit_reduction"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-61",
+  "claim": "The dimension-count P-values assumed independence the data does not have",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task1_calibration.json",
+   "results/task_b2_epistemic.json",
+   "results/task_b_permutation.json",
+   "scripts/task_b_permutation.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   524,
+   790,
+   791,
+   792,
+   793
+  ],
+  "mechanical_keys": [
+   "agree_alea",
+   "agree_alea_dis",
+   "agree_epi",
+   "agree_nh",
+   "b2_epi_err_growth",
+   "b2_epi_ndim_h1"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-62",
+  "claim": "The epistemic table at n_independent = 20, and a short-horizon result that reverses our ",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_d_nind20.json",
+   "scripts/task_d_nind20.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   18,
+   19,
+   41,
+   42,
+   797
+  ],
+  "mechanical_keys": [
+   "d1n_alea_cov1_h1",
+   "d1n_alea_cov1_h100",
+   "d1n_alea_cov1_h128",
+   "d1n_alea_cov1_h32",
+   "d1n_alea_cov1_h368",
+   "d1n_alea_cov1_h8"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-63",
+  "claim": "Ensemble disagreement beats the free baseline, and that is the one claim we strengthen",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_d_nind20.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   18,
+   19,
+   41,
+   42,
+   797
+  ],
+  "mechanical_keys": [
+   "d1n_alea_cov1_h1",
+   "d1n_alea_cov1_h100",
+   "d1n_alea_cov1_h128",
+   "d1n_alea_cov1_h32",
+   "d1n_alea_cov1_h368",
+   "d1n_alea_cov1_h8"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-64",
+  "claim": "A per-horizon scalar restores calibration where a constant one cannot",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/p4_transfer_power.json",
+   "results/task_d3_perhorizon.json",
+   "scripts/task_d3_perhorizon.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   23,
+   1275,
+   1277,
+   1279,
+   1280
+  ],
+  "mechanical_keys": [
+   "d3_ale_c_hi",
+   "d3_ale_c_lo",
+   "d3_ale_cells",
+   "d3_ale_const_ok",
+   "d3_ale_cspread",
+   "d3_ale_ok"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-65",
+  "claim": "The penalty correlation, with the interval and the n it never had",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_d_nind20.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   18,
+   19,
+   41,
+   42,
+   797
+  ],
+  "mechanical_keys": [
+   "d1n_alea_cov1_h1",
+   "d1n_alea_cov1_h100",
+   "d1n_alea_cov1_h128",
+   "d1n_alea_cov1_h32",
+   "d1n_alea_cov1_h368",
+   "d1n_alea_cov1_h8"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-66",
+  "claim": "The forecast-index control was too weak to be believed, so we strengthened it four ways",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_d2b_robustness.json",
+   "scripts/task_d2b_robustness.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   1123,
+   1124,
+   1125,
+   1126,
+   1134
+  ],
+  "mechanical_keys": [
+   "d2r_cub",
+   "d2r_cub_ci",
+   "d2r_log",
+   "d2r_log_ci",
+   "d2r_ncontrols",
+   "d2r_spr"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-67",
+  "claim": "The ensemble-5 replication: the direction holds, the pre-registered rule does not",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/task_d3_ens5.json",
+   "results/task_d3b_ens5_power.json",
+   "scripts/task_d3_ens5.py",
+   "scripts/task_d3b_ens5_power.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   846,
+   850,
+   851,
+   852,
+   853
+  ],
+  "mechanical_keys": [
+   "e5_comp_excl",
+   "e5_comp_n",
+   "e5_comp_nind",
+   "e5_cov1_ci_h1",
+   "e5_cov1_ci_h100",
+   "e5_cov1_ci_h128"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "X-12",
+  "claim": "The five ensemble members share a trunk, a hidden state, and 89% of their parameters",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/v1_ensemble_topology.json",
+   "scripts/v1_ensemble_topology.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   20,
+   1006,
+   1007,
+   1008,
+   1009
+  ],
+  "mechanical_keys": [
+   "v1_cap_indep",
+   "v1_cap_ratio",
+   "v1_cap_shared",
+   "v1_hidden_states_word",
+   "v1_member_params",
+   "v1_members_word"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "X-13",
+  "claim": "h=368 is the upstream's open-loop diagnostic length, not a deployment horizon",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/v2_deployment_horizon.json",
+   "scripts/v2_deployment_horizon.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   11,
+   324,
+   380,
+   381,
+   1930
+  ],
+  "mechanical_keys": [
+   "v2_deploy_h",
+   "v2_diag_h",
+   "v2_fig_v1",
+   "v2_fig_v3",
+   "v2_history",
+   "v2_len_eval"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-68",
+  "claim": "Trunk-sharing is part of why the epistemic spread is too small",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/p1_power_check.json",
+   "results/r2_independent_ensemble.json",
+   "results/v1_ensemble_topology.json",
+   "scripts/r2_independent_ensemble.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   20,
+   21,
+   93,
+   94,
+   95
+  ],
+  "mechanical_keys": [
+   "m44_cov_gain",
+   "m44_mde_cov",
+   "m44_mde_ratio",
+   "m44_n_conditions",
+   "m44_n_conditions_met",
+   "m44_ratio_gain"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-69",
+  "claim": "The within-rollout signal survives, and the control it replaces was measuring something ",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/a2_trajectory_level_control.json",
+   "results/p1_power_check.json",
+   "scripts/a2_trajectory_level_control.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   17,
+   18,
+   1121,
+   1127,
+   1128
+  ],
+  "mechanical_keys": [
+   "a2_excl_h",
+   "a2_h1_diff_r",
+   "a2_h1_npoints",
+   "a2_h1_partial_both",
+   "a2_h1_r",
+   "a2_h1_speed_r"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-71",
+  "claim": "M-50 returns OBJECTIVE-DRIVEN: sigma collapses on data whose noise is known and large",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/e5_sigma_dilution.json",
+   "results/e5_synthetic_sigma.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   909,
+   913,
+   914,
+   926,
+   927
+  ],
+  "mechanical_keys": [
+   "e5s_corrob_clearing",
+   "e5s_corrob_seeds",
+   "e5s_fp_rate",
+   "e5s_iters",
+   "e5s_mse_ratio",
+   "e5s_mse_slope"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-72",
+  "claim": "M-51 returns SURVIVES entry-res ONLY: a free baseline ranks error almost as well",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/e7_free_baselines.json",
+   "results/e7_free_baselines_power.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   20,
+   67,
+   68,
+   69,
+   70
+  ],
+  "mechanical_keys": [
+   "e7_entry_beaten",
+   "e7_entry_margin",
+   "e7_entry_partial",
+   "e7_entry_r",
+   "e7_index_margin",
+   "e7_index_partial"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-73",
+  "claim": "M-49 returns UNDER-POWERED: the effect survives capacity matching, by less than the rule",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/m49_capacity_matched.json",
+   "results/p2_capacity_power.json"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   966,
+   1707,
+   1709
+  ],
+  "mechanical_keys": [
+   "m49_cov_gain",
+   "m49_matched_params",
+   "m49_matched_ratio",
+   "m49_mde_ratio",
+   "m49_n_conditions",
+   "m49_n_conditions_met"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-74",
+  "claim": "25 independent trajectories would resolve the step-size margin, and M-51's threshold is ",
+  "status": "ACTIVE",
+  "artifacts": [
+   "results/e7_free_baselines.json",
+   "results/e7_free_baselines_power.json",
+   "results/q2_free_baseline_power.json",
+   "scripts/e7_free_baselines.py",
+   "scripts/q2_free_baseline_power.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   20,
+   67,
+   68,
+   69,
+   70
+  ],
+  "mechanical_keys": [
+   "e7_entry_beaten",
+   "e7_entry_margin",
+   "e7_entry_partial",
+   "e7_entry_r",
+   "e7_index_margin",
+   "e7_index_partial"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-75",
+  "claim": "The substitution behind the sigma = 0 optimum is rare among public descendants, not comm",
+  "status": "ACTIVE",
+  "artifacts": [
+   "results/q1_pets_descendants.json",
+   "scripts/q1_pets_descendants.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   169,
+   170,
+   171,
+   172,
+   181
+  ],
+  "mechanical_keys": [
+   "q1_cap",
+   "q1_date",
+   "q1_n_absent",
+   "q1_n_carry",
+   "q1_n_examined",
+   "q1_n_inherit"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-77",
+  "claim": "`M-74` discharged: the centre (M, N) = (32, 8) returns NOT OPTIMAL AT OUR BUDGET",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/mn_sweep_eval.json",
+   "results/mn_sweep_verdict.json",
+   "results/presubmission_runtime.json",
+   "scripts/mn_sweep_eval.py",
+   "scripts/verdict_mn_sweep.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   13,
+   82,
+   83,
+   84,
+   420
+  ],
+  "mechanical_keys": [
+   "mn_alongside_clause",
+   "mn_best_D",
+   "mn_best_ci",
+   "mn_best_config",
+   "mn_best_l1_h368",
+   "mn_better_kinds"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-78",
+  "claim": "`M-75` discharged: the architecture claim, baselines teacher-forced, returns REPRODUCES",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/baselines_eval.json",
+   "results/baselines_verdict.json",
+   "results/presubmission_runtime.json",
+   "scripts/baselines_eval.py",
+   "scripts/verdict_baselines.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   559,
+   560,
+   561,
+   562,
+   563
+  ],
+  "mechanical_keys": [
+   "bl_ar_lead_from",
+   "bl_ar_mlp_D_h100",
+   "bl_ar_mlp_ci_h100",
+   "bl_ar_mlp_pct_h100",
+   "bl_ar_rssm_lead_from",
+   "bl_ar_tr_D_h100"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "M-79",
+  "claim": "`M-76` discharged: the architecture claim, baselines autoregressive, returns RWM AHEAD O",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/baselines_eval.json",
+   "results/baselines_verdict.json",
+   "results/presubmission_runtime.json",
+   "scripts/baselines_eval.py",
+   "scripts/verdict_baselines.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   559,
+   560,
+   561,
+   562,
+   563
+  ],
+  "mechanical_keys": [
+   "bl_ar_lead_from",
+   "bl_ar_mlp_D_h100",
+   "bl_ar_mlp_ci_h100",
+   "bl_ar_mlp_pct_h100",
+   "bl_ar_rssm_lead_from",
+   "bl_ar_tr_D_h100"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-76",
+  "claim": "The alignment defect's cost depends on the horizon, and our own checkpoints barely feel ",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/alignment_by_horizon.json",
+   "results/alignment_defect_ci.json",
+   "scripts/alignment_by_horizon.py",
+   "scripts/alignment_defect_ci.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   106,
+   108,
+   109,
+   306,
+   1508
+  ],
+  "mechanical_keys": [
+   "ad20_nind",
+   "ad20_nrmse",
+   "ad20_nrmse_ci",
+   "ad20_rel",
+   "ad20_rel_ci",
+   "ad20_traj_hi"
+  ],
+  "id_cited_lines": [],
+  "superseded_note": false
+ },
+ {
+  "id": "R-77",
+  "claim": "The sweep and baseline evaluators averaged nRMSE per trajectory where section 3.1 pools ",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/pooled_nrmse_alongside.json",
+   "results/pooled_nrmse_rescore.json",
+   "scripts/baselines_eval.py",
+   "scripts/head_to_head_accuracy.py",
+   "scripts/mn_sweep_eval.py",
+   "scripts/pooled_nrmse_rescore.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   559,
+   560,
+   561,
+   562,
+   563
+  ],
+  "mechanical_keys": [
+   "bl_table",
+   "div_factor",
+   "div_n_word",
+   "div_per_seed",
+   "h2h_bl_mlp_ar_label",
+   "h2h_bl_mlp_ar_nrmse_h1"
+  ],
+  "id_cited_lines": [
+   622
+  ],
+  "superseded_note": false
+ },
+ {
+  "id": "R-78",
+  "claim": "(32, 32)'s advantage over the centre survives giving the centre twice the training compu",
+  "status": "CONFIRMED",
+  "artifacts": [
+   "results/mn_compute_matched.json",
+   "results/mn_sweep_timing.json",
+   "results/training_tail_slopes.json",
+   "scripts/mn_compute_matched.py",
+   "scripts/training_tail_slopes.py"
+  ],
+  "mechanical_covered": true,
+  "mechanical_lines": [
+   14,
+   612,
+   642,
+   644,
+   645
+  ],
+  "mechanical_keys": [
+   "bl_table",
+   "mn_table",
+   "n3_best_D_long",
+   "n3_best_D_mid",
+   "n3_best_ci_long",
+   "n3_best_ci_mid"
+  ],
+  "id_cited_lines": [
+   641
+  ],
+  "superseded_note": false
+ }
+]

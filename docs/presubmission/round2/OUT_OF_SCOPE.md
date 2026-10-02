@@ -1,3 +1,5 @@
 # Round-2 out of scope
 
 One line per item, with file:line. Logged, not fixed (PLAN.md §1.1).
+- T5: PAPER.template.md:1136 gives per-episode difficulty as {{d12_lo}} to {{d12_hi}} (0.562 to 1.591, `results/a2_trajectory_level_control.json`), while FINDINGS_LEDGER.md `D-12` says 0.601 to 1.674 (`step3_report.txt`, Step 3's protocol). Two artifacts and two protocols; which definition each uses is unchecked. The paper's figure is bound and current. Whether D-12 needs a correction entry naming the protocol is for T10's read (round2/COVERAGE.md).
+- T5: FINDINGS_LEDGER.md `R-28` reports M-16 SETTLED at 100 overlapping windows, while PAPER.template.md:534-536 (§5) reports CANNOT BE SETTLED at n_independent = 4. These are different units, not a contradiction: the paper's is the governing one, and R-28 is left out of Appendix H for that reason (round2/COVERAGE.md).
