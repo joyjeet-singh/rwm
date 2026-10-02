@@ -680,7 +680,11 @@ as RWM and test each baseline's relative-L1 at h = {{v2_diag_h}} against it, on 
 {{mn_seeds_word}} seeds at {{iters_main}} iterations (`results/baselines_eval.json`). A difference is
 positive when RWM is better, and "result" is after Holm (`results/baselines_verdict.json`). The last
 column is timed beside RWM in one sitting (`results/mn_compute_matched.json`); hours per run are in
-Appendix B.
+Appendix B. † marks a diverged row, one where any seed's mean relative-L1 at h = {{v2_diag_h}} exceeds
+{{div_factor}}× the hold-last floor's (`results/pooled_nrmse_rescore.json`, post hoc). Run-away
+rollouts dominate those {{div_n_word}} rows' means; per seed they are {{div_per_seed}}. No verdict
+depends on that magnitude, only on the sign: each such row's four per-trajectory differences from
+RWM are all positive, so every bootstrap resample favours RWM whatever their size.
 
 **Result: {{bl_tf_verdict}} with the baselines teacher-forced, and {{bl_ar_verdict}} with them
 trained autoregressively.** RWM is ahead of baselines built to our reading of Table S7 and trained
