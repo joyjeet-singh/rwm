@@ -3428,13 +3428,30 @@
         "scripts/training_tail_slopes.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-80",
+      "claim": "PRE-REGISTERED rule X1: is our RSSM's long-horizon failure a matter of how its forecast ",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/rssm_diagnostics.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baselines_eval.json",
+        "results/baselines_verdict.json",
+        "results/rssm_diagnostics.json",
+        "scripts/rssm_diagnostics.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 79,
+    "M": 80,
     "O": 14,
     "R": 78,
     "S": 20,
