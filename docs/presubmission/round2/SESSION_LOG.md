@@ -240,3 +240,63 @@ CPU jobs over 1 min: 5 build-and-gate passes, about 3-4 min each. No training.
 Body words (FILE_MAP §13 command): 27,703 (T0: 26,526). Appendix H sits after "Data and code"; only the §7 pointer counts.
 Next: T6, length pass 1 (§1–§6.6) (Opus 5.5, default effort). The body must come down from 27,703 to U3's ≤ 19,000 across T6 and T7. The abstract is at 368 of 370 words.
 Decisions for user: none.
+
+## T6 — 2026-10-02 19:10 — Opus 5.5, xhigh effort (the plan assigns default) — status: COMPLETE
+Commits:
+6beab8f [T6][s2] Section 2's PETS lineage and survey move to Appendix I
+e1fbfac [T6][s6.3] Section 6.3's synthetic-noise experiment moves to Appendix J
+c9affa1 [T6][s6.6] Section 6.6's permutation machinery moves to Appendix K
+1f1cee6 [T6][s5] Section 5's long-horizon detail and the head-to-head table move to Appendix L
+d27285d [T6][s6.2] Section 6.2's two reading checks and the permutation column's note move to Appendix M
+469ffa3 [T6][s1] Section 1 tightened, wording only
+e4fafda [T6][s5] Section 5 tightened, wording only
+1eff373 [T6][s6.3] Section 6.3's gradient check and run table join Appendix J
+fa49754 [T6][s3] Section 3's account of why no more data can be generated joins Appendix C
+15badef [T6] Rebuild after the moves (fast build, gates, fast build: byte-identical)
+7718ae5 [T6][review] Fix the length review's findings: qualifiers, pointers, references
+(the commit carrying this entry) [T6] COMPLETE: session log
+Done:
+- **How this session ran.** In the same conversation as T3–T5, at the user's request.
+- **Every move is in `round2/t6_patch.py`, one ITEM each.**
+  - Each move cuts a block verbatim and appends it to an appendix, or inserts it into one.
+  - Each was replayed from the previous commit and committed alone.
+  - The words before and after every move are in `round2/LENGTH_LOG.md`.
+  - The quick check after each move (`round2/t6_qc.zsh`: numbers, paper, claims, xref, restatement, horizon, scope, typed numerals) passed with 0 suspect pointers each time.
+- **New appendices.**
+  - I: §2's PETS lineage and survey of descendants.
+  - J: §6.3's synthetic-noise test (M-50), term-by-term gradient check and the runs behind the collapse rate.
+  - K: §6.6's permutation machinery.
+  - L: §5's long-horizon cells, multiplicity and the head-to-head accuracy table.
+  - M: §6.2's reading checks (M-62, M-63) and the permutation column's note.
+  - One block joined the existing Appendix C (from §3).
+- **The body keeps everything the plan names**: §9; every table §3.2 cites; the abstract's numbers; every verdict.
+- **Nothing left the paper, checked mechanically.** All 1,257 keys the template used at T5's end, every table row, every ledger ID and every `results/` path are still in it.
+- **Not done, with reasons.**
+  - **§6.5's merge into §6.3 is left to T7.** It needs §6 renumbered (U6), and T7 must renumber anyway for §6.9 and §6.10–§6.11. One renumbering, with one pointer map, avoids doing about 280 cross-file references twice. §6.5 is 122 words.
+  - **§1 is at 1,049, not ~750.** Bullets 2, 3 and 6 are Annex 3's text, and the others are the paper's claims with their figures.
+- **Review.** A Sonnet 5.5 subagent (read-only, the session's one) returned PASS-WITH-FIXES (`evidence/R2T6/t6_review.md`), all fixed in 7718ae5.
+  - Summaries had dropped qualifiers (F1–F3, F11).
+  - §1 had lost a sentence (F12).
+  - Pointers needed re-aiming at Appendix K (F5–F6).
+  - Relative references in J, L and C needed their sections named (F7–F9).
+  - A clause, already in the text before T6, attributed rule M-63's uniformity to §6.3's mechanism. M-63 measures the epistemic term, so the clause was withdrawn and recorded in BUILD_CHECKS' moved-from-body list (F4).
+  - Restoring qualifiers cost 109 words.
+Build/gates: pass. Two build-gates-build passes after the review, 8/8 gates, 62/62 claims, 62/62 corruptions caught, byte-identical, and the second pass equal to the first (`t6rev_1`, `t6rev_2`). The rendered-PDF check is 5/5, with appendices I–M lettered as in the source. PDF: 54 pages (was 52).
+Paper numbers changed: `pdf_pages` 52 → 54, and generated counts only (`tn_typed`).
+New keys: none
+Re-anchored checks: none. Anchors that moved with their text (C3.5 into Appendix K, C22.1 into Appendix J) are still found, because those checks read the whole paper. One xref pointer was reworded rather than re-anchored: §6.3's first sentence now says it "leaves the epistemic one open", the words the pointer in §6.4 uses.
+CPU jobs over 1 min: 5 build-and-gate passes, about 3-4 min each, and 13 quick checks, about 1 min each.
+Body words (FILE_MAP §13 command): 24,719 (T0: 26,526; T5's end: 27,703). T6 cut 2,984 from the body (34% of the 8,703 needed) against the plan's aim of 45%. T6's range is 16,080 → 13,090 words.
+Next: T7 (§6.7–§12 and the appendices; Opus 5.5, default effort).
+- **Starting point.** T7's range holds 11,629 words, and reaching 19,000 needs 5,719 of them, about half.
+- **Its own moves:**
+  - §6.7's robustness checks;
+  - §6.10–§6.11 to about 700 words;
+  - §7.4 and §7.5 to two sentences each;
+  - §11 to about 900;
+  - §12 to about 500;
+  - the §6.9 merge.
+- **Inherited from T6:** §6.5's merge into §6.3 and a single §6 renumbering, with a pointer map (U6).
+- **Expected outcome.** These are likely to leave a shortfall. U3 says to report it rather than force it.
+- **Tools.** T7 can reuse `round2/t6_patch.py` (`move`, `sub`, `insert`, `append` operations), `t6_words.py`, `t6_anchors.py` and `t6_qc.zsh`.
+Decisions for user: none.
