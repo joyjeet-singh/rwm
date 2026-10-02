@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 79,
-  "n_ok": 79,
+  "n_pointers": 80,
+  "n_ok": 80,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -40,10 +40,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.7 gives the expectation we held about the\ncounter-baseline, and noth",
+      "pointer": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and noth",
       "ok": true,
-      "detail": "target 6.7; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['counter-baseline', 're-opens']",
-      "context": "\u00a76.7 gives the expectation we held about the\ncounter-baseline, and nothing in the table discharges or re-opens the rule"
+      "detail": "target 6.6; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['held', 'counter-baseline', 'discharges', 're-opens']",
+      "context": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and nothing in the table discharges or re-opens the rule"
     },
     {
       "class": "semantic",
@@ -75,17 +75,17 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix B gives for all of \u00a75\u2013\u00a77's runs",
-      "ok": true,
-      "detail": "target Appendix B; nouns ['runs']; absent []",
-      "context": "Appendix B gives for all of \u00a75\u2013\u00a77's runs"
-    },
-    {
-      "class": "semantic",
       "pointer": "Appendix H lists the ledger's other confirmed contributions that the body doe",
       "ok": true,
       "detail": "target Appendix H; nouns ['ledger', 'confirmed', 'contributions', 'body', 'does', 'state', 'among', 'them', 'defects', 'released', 'data', 'pipeline', 'departures', 'releas']; absent ['among', 'departures']",
       "context": "Appendix H lists the ledger's other confirmed contributions that the body does not state, among\nthem defects in the released data pipeline and departures of the releas"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix R gives every limitation below in full",
+      "ok": true,
+      "detail": "target Appendix R; nouns ['limitation', 'below', 'full']; absent []",
+      "context": "Appendix R gives every limitation below in full"
     },
     {
       "class": "semantic",
@@ -100,6 +100,13 @@
       "ok": true,
       "detail": "target Appendix K; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
       "context": "Appendix K explains why a binomial null is inadmissible here"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix B gives for all of \u00a75\u2013\u00a77's runs",
+      "ok": true,
+      "detail": "target Appendix B; nouns ['runs']; absent []",
+      "context": "Appendix B gives for all of \u00a75\u2013\u00a77's runs"
     },
     {
       "class": "artifact",

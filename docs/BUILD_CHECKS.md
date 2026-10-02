@@ -50,7 +50,7 @@ tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,717 values, or 0.59% of the 1,659,161 numeric values under `results/` that the comparison counts. The other 1,649,444 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 171-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 787 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **62 comparative claims** across 29 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 62 of 62 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 171-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 843 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **62 comparative claims** across 29 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 62 of 62 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -106,8 +106,8 @@ Six failure modes survive it, and all six occurred in this paper. Five are relat
 - **an extremum that is not the extremum** — the worst-calibrated held-out cell named as
   epistemic at h=1, which is third; the largest deviation is aleatoric at
   h=100. **This one has now been wrong twice as well**, and the second time was
-  here rather than in §6.8. This sentence named h=128, which was the extremum before h = 100
-  entered the evaluation grid; §6.8 was re-derived when the grid changed and the sentence
+  here rather than in §6.7. This sentence named h=128, which was the extremum before h = 100
+  entered the evaluation grid; §6.7 was re-derived when the grid changed and the sentence
   describing the *correction* was not. Both now read the same key, and the `extremum` kind
   covers this record and not only the section that computes it;
 - **a stated change with the wrong sign** — "a change of **+**0.010", where partialling the
@@ -122,7 +122,7 @@ None is a numeral. None appears in `results/paper_numbers.json`. Each was typed.
 
 **A sixth failure mode is not a relation at all, and it defeated the gate rather than
 evading it.** `build_paper.py` asserted that no `{{`-delimited placeholder survived
-substitution, and none did — while a sentence of §6.7 reached the PDF as an empty
+substitution, and none did — while a sentence of §6.6 reached the PDF as an empty
 one-column table. The sentence contained `|r_dd|`, the line wrapped so that the pipe began a
 line, and the Markdown-to-LaTeX converter read a leading pipe as a table row. Every numeral
 in it was correct and provenanced. The gate now refuses three further shapes as well as
@@ -368,6 +368,10 @@ file list they were computed over.
 
 ---
 
+## Section numbers before round 2 (ruling U6)
+
+Round 2 merged three subsections of §6 and renumbered it; §1–§5 and §7 onward are unchanged. The ledger, the rule texts in `docs/APPENDIX_G_RULES.md` and every document written before round 2 use the old numbers. Old → new: §6.5 → §6.3 (folded in), §6.6 → §6.5, §6.7 → §6.6, §6.8 → §6.7, §6.9 → §6.5 (folded in), §6.10 → §6.8, §6.11 → §6.8 (merged; the detail of both rules is in Appendices O and P).
+
 ## Moved from the paper body (pre-submission edit)
 
 The pre-submission edit cut the paper body by moving its drafting history here rather than
@@ -418,23 +422,23 @@ claims stayed, and only their history moved.
   only asserted from the derivation; the experiment was run to test it.
 - **[§6.4]** Every source citation behind §6.4's topology argument is read back from the pinned
   upstream and checked on every build (21 of them, `results/v1_ensemble_topology.json`).
-- **[§6.6]** The teacher-forced arm was trained for §5 but was missing from the first three
-  calibration tables of earlier drafts; §6.6 adds it.
-- **[§6.6]** The epistemic horizon story an earlier draft told, strongest at long horizon, was
+- **[§6.5]** The teacher-forced arm was trained for §5 but was missing from the first three
+  calibration tables of earlier drafts; §6.5 adds it.
+- **[§6.5]** The epistemic horizon story an earlier draft told, strongest at long horizon, was
   backwards: it rested on the smallest arena. When h = 100 was added to the evaluation
   grid, its permutation P fell between the neighbouring horizons' values, where the existing reading
   said it should, which was not guaranteed in advance.
-- **[§6.6]** The section's claim is narrower than the one first written: the ordering is
+- **[§6.5]** The section's claim is narrower than the one first written: the ordering is
   directionally consistent but not established at conventional significance once the dependence
   between dimensions is respected.
-- **[§6.7]** An earlier draft described the within-step control as "the decisive one". It is a mean
+- **[§6.6]** An earlier draft described the within-step control as "the decisive one". It is a mean
   of between-trajectory correlations, not a within-rollout test, and that description is withdrawn;
   the double-demeaned statistic is the decisive one.
-- **[§6.7]** §9 once called the one-step figure a ranking of realised error without qualification;
+- **[§6.6]** §9 once called the one-step figure a ranking of realised error without qualification;
   it now says it ranks whole rollouts at one step ahead.
-- **[§6.7]** The released checkpoint's six-horizon count and the ensemble-5 rule's five-horizon
+- **[§6.6]** The released checkpoint's six-horizon count and the ensemble-5 rule's five-horizon
   count are kept in separate keys, so the build cannot print one where the other belongs.
-- **[§6.10]** An earlier draft gave the range of the σ gain as its values at the two shortest
+- **[§6.8]** An earlier draft gave the range of the σ gain as its values at the two shortest
   horizons, which do not span it: the weakest gain lies at another horizon, below the stated floor.
   The horizon sweep found it, flagging the sentence for carrying two horizons' figures while naming
   two others.

@@ -16,7 +16,7 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-54 pages, 0 overfull boxes, 0 LaTeX warnings
+56 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 267 entries, each
@@ -78,7 +78,7 @@ against a minimum detectable effect of 1.45× fixed before the runs existed. σ 
 larger by 1.65×, which is 71% of the improvement there, and the
 split reverses at the 368-step diagnostic horizon. The rule (M-44) returns
 **MECHANISM SUPPORTED**. It is still 5.2× overconfident: building the ensemble
-properly is worth doing and is not sufficient (§6.10).
+properly is worth doing and is not sufficient (§6.8).
 
 **And five defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
