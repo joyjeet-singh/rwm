@@ -1488,6 +1488,10 @@ so it bounds the objective's separate contribution rather than measuring it.
 
 ## 7. Defects in the released pipeline
 
+Appendix H lists the ledger's other confirmed findings that the body does not state, among them
+latent defects in the released data pipeline and departures of the released code from the paper's
+description.
+
 **7.1 Ten unmarked episode boundaries.** §3. The window builder reads a termination column that is
 identically zero, so it marks all {{win_naive}} windows valid.
 
