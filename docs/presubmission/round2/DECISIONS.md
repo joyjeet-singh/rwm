@@ -33,3 +33,5 @@ Options:
   - §3.2's row: "defect confirmed in the code; its cost is concentrated at short horizons, and at h = 368 is small and not consistent in sign".
 - **(B)** Install Annex 3's wording as written, accepting that it understates the short-horizon cost that R-76 records.
 - **(C)** Make the abstract clause name the defect and no cost: "Separately, the released evaluation pairs each prediction with the previous step's action." The costs stay in contribution 6 and §7.2.
+
+**Answer, 2026-10-02**, asked in chat: "Concentrated, then small (Recommended)", option (A). T3 keeps U4's form (one clause, no numbers) and words it so it holds at every horizon. The abstract, contribution 6's lead and §3.2's row say the cost is concentrated at short horizons, and at the method's long horizon is small and not consistent in sign. The numbers stay in contribution 6 and §7.2. This amends U4's and Annex 3's wording, not their structure.
