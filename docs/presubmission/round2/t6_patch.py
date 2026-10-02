@@ -56,6 +56,29 @@ shaped by the mechanism below,""",
      """This subsection explains the aleatoric column and only that column, and leaves the epistemic one
 open: ensemble disagreement is not shaped by the mechanism below,""")]
 
+# ---- §6.6: the per-dimension permutation machinery -> Appendix K -----------------------------------------
+_K = "## Appendix K — the per-dimension permutation tests behind §6.6"
+ITEMS["s66_perm"] = [
+    ("move", "**The P column is a permutation P, not a binomial one**", "So σ *collapsing in magnitude* is objective-driven",
+     """**The P column is a permutation P**, which pairs each trajectory's σ with a different trajectory's
+realised error and so keeps the coupling between dimensions and the growth of error with depth that
+every trajectory shares. The binomial P-values an earlier draft attached to these counts are
+withdrawn (`S-15`), and the correction is large (Appendix K).
+
+""", _K),
+    ("move", "**The larger arenas agree with each other against the smallest.**", "So this section's claim is:",
+     """**Across arenas, and after correction for multiplicity.** The two larger arenas put the epistemic
+ordering's strength at *short* horizon. At long horizon the forecast-depth trend every trajectory
+shares lifts the null until a full count is close to chance, which is what motivates §6.7's index
+control, and the out-of-sample arena, at {{perm_oos_nind}} trajectories, cannot reach significance
+at any horizon. Nothing here survives Holm–Bonferroni in any of the three arenas (Appendix K).
+
+""", _K),
+    # a pointer in §6.7's footnote described the machinery that moved (xref_sweep)
+    ("sub", "structurally the same problem §6.6 spends a page correcting for the 45 coupled state dimensions.",
+     "structurally the same problem that §6.6's permutation null corrects for across the 45 coupled state dimensions (Appendix K)."),
+]
+
 
 def main():
     t = open(F).read()
@@ -74,10 +97,14 @@ def main():
                 ei = [i for i, x in enumerate(L) if x.startswith(end) and i > si[0]]
                 assert ei, f"{it}: end {end!r} not found after start"
                 block = "\n".join(L[si[0]:ei[0]]).strip("\n")
-                assert heading not in t, f"{it}: {heading[:40]!r} already present"
                 assert t.rstrip().endswith("---"), "the template no longer ends with an appendix rule"
                 t = "\n".join(L[:si[0]]) + "\n" + summary + "\n".join(L[ei[0]:])
-                t = t.rstrip("\n") + "\n\n" + heading + "\n\n" + block + "\n\n---\n"
+                if heading in t:
+                    # a second block for the appendix just created: it must be the last one
+                    assert t.rindex("\n## Appendix") == t.index("\n" + heading), f"{it}: {heading[:40]!r} is not the last appendix"
+                    t = t.rstrip("\n")[:-3].rstrip("\n") + "\n\n" + block + "\n\n---\n"
+                else:
+                    t = t.rstrip("\n") + "\n\n" + heading + "\n\n" + block + "\n\n---\n"
             else:
                 raise ValueError(op[0])
     shutil.copy(F, F + ".bak")
