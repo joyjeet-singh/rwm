@@ -2418,6 +2418,80 @@ def main():
     assert X1["part_c"] is None, "X1 Part C has a reading: write section 5.3's Part C sentence from it (T9)"
     put("rssm_partc_sentence", "Retraining variants are running (X1 Part C): both have trained, and neither is scored yet.", _x1s)
 
+    # --- Round 2, T5: Appendix H, the confirmed findings the body does not state ---------------
+    # Each row's claim is asserted where its key is made. Rows with no artifact (source-code facts)
+    # carry only addresses, which are not measurements.
+    # D-10: commanded-velocity segments
+    _rg = J("step0_regimes.json")["regimes"]
+    _per = {}
+    for _x in _rg:
+        _per[_x["ep"]] = _per.get(_x["ep"], 0) + 1
+    _mode = max(set(_per.values()), key=list(_per.values()).count)
+    _odd = [e for e, n in _per.items() if n != _mode]
+    assert len(_per) == 10 and len(_odd) == 1 and _per[_odd[0]] == _mode + 1, _per
+    put("d10_n_regimes", len(_rg), "results/step0_regimes.json")
+    put("d10_per_ep_word", WORDS[_mode].lower(), "results/step0_regimes.json")
+    put("d10_extra_ep", _odd[0], "results/step0_regimes.json")
+    # R-25: a second variance parameter implies the same order of iterations
+    _ml = J("step6_3_min_logstd.json")
+    assert _ml["verdict"] == "second axis, agrees" and _ml["rate_ratio"] > 1
+    put("r25_implied_ld", f'{_ml["iters_implied_log_delta"]:,.0f}', "results/step6_3_min_logstd.json")
+    put("r25_implied_min", f'{_ml["iters_implied_min_logstd"]:,.0f}', "results/step6_3_min_logstd.json")
+    # R-30: the apparent heavy tail is two short regions
+    _g27 = J("taskAB_gate_r27.json")
+    _tl = _g27["tail"]
+    _pt = sorted(_tl["nonoverlap_per_traj"])
+    _med = (_pt[1] + _pt[2]) / 2 if len(_pt) == 4 else float(np.median(_pt))
+    assert _tl["n_distinct_regions"] == len(_tl["regions"]) and len({r[2] for r in _tl["regions"]}) == len(_tl["regions"])
+    put("r30_tail_share", f'{100 * _tl["worst5pct_share"]:.1f}', "results/taskAB_gate_r27.json")
+    put("r30_n_regions_word", WORDS[_tl["n_distinct_regions"]].lower(), "results/taskAB_gate_r27.json")
+    put("r30_n_nonoverlap", len(_tl["nonoverlap_starts"]), "results/taskAB_gate_r27.json")
+    put("r30_maxmed", f"{max(_pt) / _med:.1f}", "results/taskAB_gate_r27.json")
+    assert _tl["nonoverlap_nrmse_model"] < _tl["nonoverlap_nrmse_floor"], "R-30: on the four it beats the floor"
+    # R-39: the held-out pair's h = 368 magnitude rests on episode 1 (three seeds, 2,500 iterations)
+    _pe = J("task4_arenas.json")["task4b"]["per_episode"]
+    _gp = {int(e): v["l1368"] for e, v in _pe.items()}
+    _sg = sorted(_gp.values(), reverse=True)
+    _e1 = max(_gp, key=_gp.get)
+    _c4 = J("task4_arenas.json")["task4b"]["correlations"]["l1368"]
+    assert all(v > 0 for v in _gp.values()) and _c4["gap_holdout"] > _c4["gap_other"]
+    assert _e1 in {int(e) for e in H2["arena_episodes"]}, "R-39: the outlier episode is one of the held-out pair"
+    put("r39_ep", _e1, "results/task4_arenas.json")
+    put("r39_ep_gap", f"{_gp[_e1]:+.2f}", "results/task4_arenas.json")
+    put("r39_ep_over_next", f"{_sg[0] / _sg[1]:.1f}", "results/task4_arenas.json")
+    put("r39_gap_lo", f"{min(_gp.values()):+.2f}", "results/task4_arenas.json")
+    put("r39_gap_holdout", f'{_c4["gap_holdout"]:+.2f}', "results/task4_arenas.json")
+    put("r39_gap_other", f'{_c4["gap_other"]:+.2f}', "results/task4_arenas.json")
+    put("r39_ho_over_other", f'{_c4["gap_holdout"] / _c4["gap_other"]:.1f}', "results/task4_arenas.json")
+    put("r39_n_eps_word", WORDS[len(_gp)].lower(), "results/task4_arenas.json")
+    put("r39_n_other_word", WORDS[len(_gp) - len(H2["arena_episodes"])].lower(), "results/task4_arenas.json")
+    # R-45 (with R-29): matched per-dimension comparison, seed 1
+    _mt = J("task2_3_matched_trend.json")
+    _m10, _m18 = _mt["all ten episodes (as run in Q1)"], _mt["episodes 1 and 8 ONLY"]
+    assert _mt["provenance"]["seeds"] == [1]
+    assert _m10["shared"] == _m18["shared"] == _m10["armA_lost"] == _m18["armA_lost"], "R-45: Arm A loses on the same one"
+    assert {"g_x", "g_y", "g_z"} <= set(_m10["released_lost"]) & set(_m18["released_lost"])
+    put("r45_n_dims", len(_g27["dim_names"]), "results/taskAB_gate_r27.json")
+    put("r45_rel_all", len(_m10["released_lost"]), "results/task2_3_matched_trend.json")
+    put("r45_rel_ho", len(_m18["released_lost"]), "results/task2_3_matched_trend.json")
+    put("r45_A_n", len(_m10["armA_lost"]), "results/task2_3_matched_trend.json")
+    put("r45_A_dim", "`" + _m10["armA_lost"][0] + "`", "results/task2_3_matched_trend.json")
+    put("r45_nind_all", _m10["n_ind"], "results/task2_3_matched_trend.json")
+    put("r45_nind_ho", _m18["n_ind"], "results/task2_3_matched_trend.json")
+    put("r45_seed", _mt["provenance"]["seeds"][0], "results/task2_3_matched_trend.json")
+    # R-46: absolute gap narrows with training, ratio does not (seed 1)
+    _tr = _mt["trend"]
+    _o, _i = _tr["out-of-sample|h368"], _tr["in-sample|h368"]
+    assert _o["gap"][-1] < _o["gap"][0] and _i["gap"][-1] < _i["gap"][0], "R-46: the absolute gap narrows"
+    assert _o["ratio"][-1] > _o["ratio"][0] and _i["ratio"][-1] > _i["ratio"][0], "R-46: the ratio does not shrink"
+    assert len(_o["gap"]) == len(_i["gap"])
+    put("r46_n_ck_word", WORDS[len(_o["gap"])].lower(), "results/task2_3_matched_trend.json")
+    for _tag, _t in (("o", _o), ("i", _i)):
+        put(f"r46_{_tag}_gap0", f'{_t["gap"][0]:+.2f}', "results/task2_3_matched_trend.json")
+        put(f"r46_{_tag}_gap1", f'{_t["gap"][-1]:+.2f}', "results/task2_3_matched_trend.json")
+        put(f"r46_{_tag}_ratio0", f'{_t["ratio"][0]:.2f}', "results/task2_3_matched_trend.json")
+        put(f"r46_{_tag}_ratio1", f'{_t["ratio"][-1]:.2f}', "results/task2_3_matched_trend.json")
+
     # --- S10: keys and assertions behind the fresh-eyes review's fixes ----------------------
     # Appendix E's verdict column for M-16 printed its Status line ("SETTLED — rule
     # pre-registered"), while §5, §8 and the introduction cite what it RETURNED.
