@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1253 values substituted from 97 artifacts. -->
+     1257 values substituted from 97 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -1547,8 +1547,8 @@ so it bounds the objective's separate contribution rather than measuring it.
 
 ## 7. Defects in the released pipeline
 
-Appendix H lists the ledger's other confirmed findings that the body does not state, among them
-latent defects in the released data pipeline and departures of the released code from the paper's
+Appendix H lists the ledger's other confirmed contributions that the body does not state, among
+them defects in the released data pipeline and departures of the released code from the paper's
 description.
 
 **7.1 Ten unmarked episode boundaries.** §3. The window builder reads a termination column that is
@@ -2154,25 +2154,26 @@ form 2.
 The ledger tags some of its entries as contributions of this project. These are the confirmed ones the
 body does not state, or uses without stating the finding itself, each checked against its ledger entry.
 Code facts are cited by file and line at the pinned upstream commits; every measurement is read from
-the artifact named. Measurements are at 2,500 training iterations unless a row says otherwise.
+the artifact named. Measurements are at 2,500 training iterations unless a row says otherwise or concerns the
+released checkpoint.
 
 | finding | evidence (ledger ID, artifact) | bearing on the paper |
 |---|---|---|
 | ***Paper-versus-code gaps*** | | |
-| No forecast decay factor exists: the training loss averages every forecast step with equal weight, though the paper describes a decay | C-09; `system_dynamics.py:186-231` and both config files | Our training does the same, so the released behaviour is an undecayed loss on both sides of every comparison |
-| The auxiliary heads (contact and termination) are trained on true next states, the state head on its own samples | M-13; `system_dynamics.py:216, 264` | In a rollout the auxiliary heads read predicted states they never trained on; this paper compares states only (§5.3) and does not measure them |
-| Training feeds back a reparameterised sample, inference the mean | C-05; `system_dynamics.py:114, 215` | With the per-member σ collapsed (§6.3) the sample is numerically the mean, so no result here depends on the difference |
-| Actions enter the network raw (the config's action mean and standard deviation are zeros and ones), and no action scale is recorded in either repository, so they are not joint targets in radians | C-07, D-07; `anymal_d_flat_cfg.py` | A perturbation of one size means different things for actions and for states; nothing here perturbs either |
-| The release's configuration, the paper (Table S7, 2,500) and the checkpoint's own tag state three different training lengths; the first author confirms the configuration's is a typo | C-13; `base_cfg.py:97`, the checkpoint's `iter` field | §7.5: none of them reaches the released variance state at a constant rate |
+| No forecast decay factor exists: the training loss averages every forecast step with equal weight, though the paper describes a decay | C-09; `system_dynamics.py:186-231` and both config files | Our training does the same, so the loss is undecayed in the released code and in ours |
+| The auxiliary heads (contact and termination) are trained on true next states, the state head on its own samples | M-13; `system_dynamics.py:217, 261` | In a rollout the auxiliary heads read predicted states they never trained on; this paper compares states only (§5.3) and does not measure them |
+| Training feeds back a reparameterised sample, inference the mean | C-05; `system_dynamics.py:115, 217` | Our arms train and roll out the same way; for the released checkpoint, whose per-member σ has collapsed (§6.3), the sample is numerically the mean |
+| Actions enter the network raw (the config's action mean and standard deviation are zeros and ones), and no action scale is recorded in either repository; measured against joint motion, they are not joint targets in radians | C-07, D-07; `anymal_d_flat_cfg.py` | A perturbation of one size means different things for actions and for states; no reported result perturbs either |
+| The release's configuration, the paper (Table S9, 2,500) and the checkpoint's own tag state three different training lengths; the first author believes the configuration's is a typo | C-13; `base_cfg.py:97`, the checkpoint's `iter` field | §7.5: none of them reaches the released variance state at a constant rate |
 | ***Pipeline defects*** | | |
 | The reset guard tests index *values* for truthiness, so a reset at the first row would be missed | B-02; `train.py:143` | Latent twice over: this dataset has no reset at its first row and marks none at all (§7.1) |
 | The train/test split draws windows at random, and adjacent windows share all but one of their 40 rows, so the released test loss is not held out | B-03; `model_training.py:33` | The held-out arena (§3) is built from whole episodes and does not use this split |
 | ***Measurements*** | | |
-| The data hold 21 commanded-velocity segments, two per episode with a third in episode 7 | D-10; `results/step0_regimes.json` | A held-out episode is not a near-duplicate of a training one: the held-out pair tests generalisation across velocity commands, within one gait and terrain |
-| `state_min_logstd`, on the slower gradient path C-11 identifies, drifts 5.2× slower than `log_delta_logstd`; extrapolated, the two imply 154,451 and 267,883 iterations for the released variance state | R-25; `results/step6_3_min_logstd.json` | §7.5's conclusion does not rest on one parameter |
-| Over overlapping trajectories, the released checkpoint's worst twentieth carry 92.6% of its squared error at h = 368 on the held-out pair, but they fall in two short stretches of data, one per episode; on the 4 non-overlapping trajectories the largest is 1.2× the median, and the checkpoint beats the floor | R-30; `results/taskAB_gate_r27.json` | A tail measured on overlapping trajectories can be one short stretch of data, which a count of independent trajectories (§3) exposes |
-| The A/B relative-L1 gap at h = 368 is positive on all ten episodes, from +0.73 up; episode 1, one of the held-out pair, gives +6.97, 2.5× the next largest, so the pair's +3.98 is 3.0× the other eight episodes' +1.33 | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
-| Per state dimension, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not; one seed (seed 1, §11) |
-| Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair +3.33 to +1.20, in-sample +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×) | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, §11) |
+| The data hold 21 plateaus of achieved base velocity, two per episode with a third in episode 7; the command itself is not recorded, and the plateaus match the simulator's command resampling | D-10; `results/step0_regimes.json` | A held-out episode is not a near-duplicate of a training one: the held-out pair tests generalisation across velocity commands, within one gait and terrain |
+| `state_min_logstd`, on the slower gradient path C-11 identifies, drifts 5.2× slower than `log_delta_logstd`; extrapolated from one Arm A run's rates, the two imply about 150,000 and 270,000 iterations for the released variance state, an order of magnitude rather than a fitted count | R-25; `results/step6_3_min_logstd.json` | §7.5's conclusion does not rest on one parameter |
+| Over overlapping trajectories on the held-out pair, which the released checkpoint trained on, its worst twentieth carry 92.6% of its squared error at h = 368 as each dimension's own scale weights it (form 2, which `g_z` dominates; Appendix G), and they start within two short ranges of rows, one per episode; on the 4 non-overlapping trajectories the largest is 1.2× the median | R-30; `results/taskAB_gate_r27.json` | A tail measured on overlapping trajectories can be one short stretch of data, which a count of independent trajectories (§3) exposes |
+| The A/B relative-L1 gap at h = 368 (teacher forcing's error minus autoregressive training's, over 2 independent trajectories per episode) is positive on all ten episodes, from +0.73 up; episode 1, one of the held-out pair, gives +6.97, 2.5× the next largest, so the pair's +3.98 is 3.0× the other eight episodes' +1.33 | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
+| Per state dimension, over the whole 368-step forecast, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = 368 (R-45). One seed (seed 1, §11) |
+| Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair +3.33 to +1.20, in-sample +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, §11) |
 
 ---

@@ -2435,8 +2435,11 @@ def main():
     # R-25: a second variance parameter implies the same order of iterations
     _ml = J("step6_3_min_logstd.json")
     assert _ml["verdict"] == "second axis, agrees" and _ml["rate_ratio"] > 1
-    put("r25_implied_ld", f'{_ml["iters_implied_log_delta"]:,.0f}', "results/step6_3_min_logstd.json")
-    put("r25_implied_min", f'{_ml["iters_implied_min_logstd"]:,.0f}', "results/step6_3_min_logstd.json")
+    # an order-of-magnitude extrapolation from one Arm A run's rates, not a fitted count
+    # (step6_3_min_logstd.py says so), so two significant figures (T5 review A4)
+    _2sf = lambda x: f"{float(format(x, '.2g')):,.0f}"
+    put("r25_implied_ld", _2sf(_ml["iters_implied_log_delta"]), "results/step6_3_min_logstd.json")
+    put("r25_implied_min", _2sf(_ml["iters_implied_min_logstd"]), "results/step6_3_min_logstd.json")
     # R-30: the apparent heavy tail is two short regions
     _g27 = J("taskAB_gate_r27.json")
     _tl = _g27["tail"]
@@ -2447,7 +2450,9 @@ def main():
     put("r30_n_regions_word", WORDS[_tl["n_distinct_regions"]].lower(), "results/taskAB_gate_r27.json")
     put("r30_n_nonoverlap", len(_tl["nonoverlap_starts"]), "results/taskAB_gate_r27.json")
     put("r30_maxmed", f"{max(_pt) / _med:.1f}", "results/taskAB_gate_r27.json")
-    assert _tl["nonoverlap_nrmse_model"] < _tl["nonoverlap_nrmse_floor"], "R-30: on the four it beats the floor"
+    # the share is of scale-normalised squared error (form 2), which one dimension dominates (T5 review A5)
+    _pd2 = [x * x for x in _g27["per_dim_model"]]
+    assert _pd2[_g27["dim_names"].index("g_z")] / sum(_pd2) > 0.5, "R-30's row says g_z dominates form 2"
     # R-39: the held-out pair's h = 368 magnitude rests on episode 1 (three seeds, 2,500 iterations)
     _pe = J("task4_arenas.json")["task4b"]["per_episode"]
     _gp = {int(e): v["l1368"] for e, v in _pe.items()}
@@ -2456,6 +2461,8 @@ def main():
     _c4 = J("task4_arenas.json")["task4b"]["correlations"]["l1368"]
     assert all(v > 0 for v in _gp.values()) and _c4["gap_holdout"] > _c4["gap_other"]
     assert _e1 in {int(e) for e in H2["arena_episodes"]}, "R-39: the outlier episode is one of the held-out pair"
+    assert len({v["n"] for v in _pe.values()}) == 1
+    put("r39_n_per_ep", next(iter(_pe.values()))["n"], "results/task4_arenas.json")
     put("r39_ep", _e1, "results/task4_arenas.json")
     put("r39_ep_gap", f"{_gp[_e1]:+.2f}", "results/task4_arenas.json")
     put("r39_ep_over_next", f"{_sg[0] / _sg[1]:.1f}", "results/task4_arenas.json")
@@ -2486,6 +2493,11 @@ def main():
     assert _o["ratio"][-1] > _o["ratio"][0] and _i["ratio"][-1] > _i["ratio"][0], "R-46: the ratio does not shrink"
     assert len(_o["gap"]) == len(_i["gap"])
     put("r46_n_ck_word", WORDS[len(_o["gap"])].lower(), "results/task2_3_matched_trend.json")
+    _pk = max(range(len(_o["gap"])), key=lambda j: _o["gap"][j])
+    assert _pk == max(range(len(_o["ratio"])), key=lambda j: _o["ratio"][j]) and 0 < _pk < len(_o["gap"]) - 1
+    put("r46_pk_ord", {1: "second", 2: "third", 3: "fourth"}[_pk], "results/task2_3_matched_trend.json")
+    put("r46_o_gap_pk", f'{_o["gap"][_pk]:+.2f}', "results/task2_3_matched_trend.json")
+    put("r46_o_ratio_pk", f'{_o["ratio"][_pk]:.2f}', "results/task2_3_matched_trend.json")
     for _tag, _t in (("o", _o), ("i", _i)):
         put(f"r46_{_tag}_gap0", f'{_t["gap"][0]:+.2f}', "results/task2_3_matched_trend.json")
         put(f"r46_{_tag}_gap1", f'{_t["gap"][-1]:+.2f}', "results/task2_3_matched_trend.json")

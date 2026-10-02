@@ -1,7 +1,7 @@
 {
   "scanned": "PAPER.template.md",
-  "n_substituted": 1609,
-  "n_typed": 222,
+  "n_substituted": 1614,
+  "n_typed": 224,
   "n_restatements": 120,
   "n_same_quantity_candidates": 64,
   "n_lower_signal": 56,
@@ -1288,25 +1288,25 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2063,
+          "line": 2064,
           "key": "r39_ep",
           "ctx": "{r39_n_eps_word}} episodes, from {{r39_gap_lo}} up; episode {{r39_ep}}, one of the held-out pair, gives {{r39_"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2064,
+          "line": 2065,
           "key": "r45_A_n",
           "ctx": "ravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each, {{r45_A_dim}} | R-45, and R-29"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2064,
+          "line": 2065,
           "key": "r45_seed",
-          "ctx": "e checkpoint trained on and Arm A did not; one seed (seed {{r45_seed}}, \u00a711) | | Over {{r46_n_ck_word}} checkp"
+          "ctx": "= 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, \u00a711) | | Over {{r46_n_ck_word}} checkp"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2065,
+          "line": 2066,
           "key": "r45_seed",
           "ctx": "t, and \u00a75 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}, \u00a711) | --- "
         },
@@ -2516,19 +2516,19 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2064,
+          "line": 2065,
           "key": "iters_long",
           "ctx": "ng all three components of the gravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2065,
+          "line": 2066,
           "key": "iters_long",
           "ctx": "ed}}, \u00a711) | | Over {{r46_n_ck_word}} checkpoints up to {{iters_long}} iterations, the absolute A/B gap at h ="
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2065,
+          "line": 2066,
           "key": "iters_long",
           "ctx": "hat remains, a ratio does not, and \u00a75 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}"
         },
@@ -3385,7 +3385,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2064,
+          "line": 2065,
           "key": "r45_rel_all",
           "ctx": "he released checkpoint loses to the hold-last floor on {{r45_rel_all}} of {{r45_n_dims}} across all ten episod"
         }
@@ -3393,11 +3393,11 @@
     },
     {
       "value": "2",
-      "n_locations": 25,
+      "n_locations": 26,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 8,
-      "n_substituted": 17,
+      "n_substituted": 18,
       "sources": [
         "results/appendix_g_rules.json + git log",
         "results/e4_sigma_gradients.json",
@@ -3405,6 +3405,7 @@
         "results/m62_episode_clustering.json",
         "results/r2_combined_arm.json",
         "results/task3_three_way.json",
+        "results/task4_arenas.json",
         "results/task_d3_perhorizon.json",
         "results/task_d_nind20.json"
       ],
@@ -3419,6 +3420,7 @@
         "m62_n_ep_oos",
         "m68_branch",
         "m69_amend_min",
+        "r39_n_per_ep",
         "tw_dc_cluster_helped"
       ],
       "locations": [
@@ -3523,6 +3525,12 @@
           "line": 1972,
           "key": "m69_amend_min",
           "ctx": "{{appG_table}} `M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so the ru"
+        },
+        {
+          "section": "Appendix H \u2014 findings not in the main text",
+          "line": 2064,
+          "key": "r39_n_per_ep",
+          "ctx": "forcing's error minus autoregressive training's, over {{r39_n_per_ep}} independent trajectories per episode) i"
         },
         {
           "section": "3.1 Metrics",
@@ -3705,9 +3713,9 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2055,
+          "line": 2056,
           "key": "iters_main",
-          "ctx": "r | | The release's configuration, the paper (Table S7, {{iters_main}}) and the checkpoint's own tag state thr"
+          "ctx": "r | | The release's configuration, the paper (Table S9, {{iters_main}}) and the checkpoint's own tag state thr"
         },
         {
           "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
@@ -4183,7 +4191,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2064,
+          "line": 2065,
           "key": "r45_nind_all",
           "ctx": "_rel_all}} of {{r45_n_dims}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajector"
         },
@@ -4302,9 +4310,9 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2060,
+          "line": 2061,
           "key": "d10_n_regimes",
-          "ctx": "s split | | ***Measurements*** | | | | The data hold {{d10_n_regimes}} commanded-velocity segments, {{d10_per_"
+          "ctx": "s split | | ***Measurements*** | | | | The data hold {{d10_n_regimes}} plateaus of achieved base velocity, {{d"
         }
       ]
     },
@@ -5279,11 +5287,11 @@
     },
     {
       "value": "368",
-      "n_locations": 98,
+      "n_locations": 100,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 6,
-      "n_substituted": 92,
+      "n_substituted": 94,
       "sources": [
         "results/q3_penalty_reordering.json",
         "results/r2_independent_ensemble.json",
@@ -5838,19 +5846,31 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2062,
+          "line": 2063,
           "key": "v2_diag_h",
-          "ctx": "th carry {{r30_tail_share}}% of its squared error at h = {{v2_diag_h}} on the held-out pair, but they fall in "
+          "ctx": "th carry {{r30_tail_share}}% of its squared error at h = {{v2_diag_h}} as each dimension's own scale weights i"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2063,
+          "line": 2064,
           "key": "v2_diag_h",
-          "ctx": "ectories (\u00a73) exposes | | The A/B relative-L1 gap at h = {{v2_diag_h}} is positive on all {{r39_n_eps_word}} e"
+          "ctx": "ectories (\u00a73) exposes | | The A/B relative-L1 gap at h = {{v2_diag_h}} (teacher forcing's error minus autoregr"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
           "line": 2065,
+          "key": "v2_diag_h",
+          "ctx": " typical episode | | Per state dimension, over the whole {{v2_diag_h}}-step forecast, the released checkpoint "
+        },
+        {
+          "section": "Appendix H \u2014 findings not in the main text",
+          "line": 2065,
+          "key": "v2_diag_h",
+          "ctx": "e released checkpoint is ahead at h = 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, \u00a71"
+        },
+        {
+          "section": "Appendix H \u2014 findings not in the main text",
+          "line": 2066,
           "key": "v2_diag_h",
           "ctx": "o {{iters_long}} iterations, the absolute A/B gap at h = {{v2_diag_h}} narrows as both arms improve (held-out "
         },
@@ -6004,7 +6024,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2065,
+          "line": 2066,
           "key": "r46_o_ratio1",
           "ctx": "while the ratio does not shrink ({{r46_o_ratio0}}\u00d7 to {{r46_o_ratio1}}\u00d7, in-sample {{r46_i_ratio0}}\u00d7 to {{r46_"
         }
@@ -6120,7 +6140,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2058,
+          "line": 2059,
           "key": "win_len",
           "ctx": "at random, and adjacent windows share all but one of their {{win_len}} rows, so the released test loss is not "
         }
@@ -6183,7 +6203,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2064,
+          "line": 2065,
           "key": "h2h_unit",
           "ctx": "s}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}"
         },
@@ -6755,7 +6775,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2061,
+          "line": 2062,
           "key": "o12_rate_ratio",
           "ctx": "on the slower gradient path C-11 identifies, drifts {{o12_rate_ratio}}\u00d7 slower than `log_delta_logstd`; extrap"
         }
@@ -7216,9 +7236,9 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2060,
+          "line": 2061,
           "key": "d10_extra_ep",
-          "ctx": "d10_per_ep_word}} per episode with a third in episode {{d10_extra_ep}} | D-10; `results/step0_regimes.json` | "
+          "ctx": "d10_per_ep_word}} per episode with a third in episode {{d10_extra_ep}}; the command itself is not recorded, an"
         }
       ]
     },
@@ -7420,10 +7440,10 @@
     },
     {
       "value": "8",
-      "n_locations": 30,
+      "n_locations": 31,
       "same_quantity_candidate": true,
       "fails_build": false,
-      "n_typed": 15,
+      "n_typed": 16,
       "n_substituted": 15,
       "sources": [
         "results/paper_figures.json",
@@ -7538,7 +7558,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 2064,
+          "line": 2065,
           "key": "r45_rel_ho",
           "ctx": "ll}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}} on the held-out pair ({{r45_nind_ho}}),"
         },
@@ -7631,6 +7651,12 @@
           "line": 1918,
           "key": null,
           "ctx": " \u2400 is \u2400\u00d7 the centre's error at h = \u2400 | | M=32, N=8 gives the optimal trade-off between accuracy and training t"
+        },
+        {
+          "section": "Appendix H \u2014 findings not in the main text",
+          "line": 2039,
+          "key": null,
+          "ctx": "out pair the released checkpoint is ahead at h = 8 and level at h = \u2400 (R-45). One seed (seed \u2400, \u00a711) | | Over "
         }
       ]
     },

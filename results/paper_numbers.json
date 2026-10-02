@@ -8049,11 +8049,11 @@
   },
   "r25_implied_ld": {
     "source": "results/step6_3_min_logstd.json",
-    "value": "154,451"
+    "value": "150,000"
   },
   "r25_implied_min": {
     "source": "results/step6_3_min_logstd.json",
-    "value": "267,883"
+    "value": "270,000"
   },
   "r2_acc_x_h1": {
     "source": "results/r2_independent_ensemble.json",
@@ -8411,6 +8411,10 @@
     "source": "results/task4_arenas.json",
     "value": "eight"
   },
+  "r39_n_per_ep": {
+    "source": "results/task4_arenas.json",
+    "value": 2
+  },
   "r45_A_dim": {
     "source": "results/task2_3_matched_trend.json",
     "value": "`g_z`"
@@ -8471,6 +8475,10 @@
     "source": "results/task2_3_matched_trend.json",
     "value": "+1.20"
   },
+  "r46_o_gap_pk": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "+6.74"
+  },
   "r46_o_ratio0": {
     "source": "results/task2_3_matched_trend.json",
     "value": "3.34"
@@ -8478,6 +8486,14 @@
   "r46_o_ratio1": {
     "source": "results/task2_3_matched_trend.json",
     "value": "4.43"
+  },
+  "r46_o_ratio_pk": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "12.38"
+  },
+  "r46_pk_ord": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "second"
   },
   "r60_date": {
     "source": "git log -S '### R-60' FINDINGS_LEDGER.md (the commit that entered R-60)",
@@ -8757,7 +8773,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 760
+    "value": 763
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
