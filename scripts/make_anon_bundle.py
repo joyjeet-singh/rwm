@@ -349,7 +349,7 @@ EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            # The real-hash map behind the submission's commit labels (D1).
            MAP_FILE}
 SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".prebak", ".t2bak", ".t3bak", ".t4bak",
-               ".tmpbak", ".zip", ".pdf")
+               ".tmpbak", ".appbak", ".c2bak", ".d1bak", ".rev2bak", ".zip", ".pdf")
 BINARY_SUFFIX = (".png", ".jpg", ".gz")
 
 

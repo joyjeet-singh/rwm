@@ -48,6 +48,8 @@ checkpoint_manifest.json
 *.t4bak
 *.prebak
 *.tmpbak
+*.appbak
+*.d1bak
 
 # NEVER-PUBLISH. Private correspondence with the first author; consent to quote
 # it on the record has not been given. It is generated OUTSIDE this tree by

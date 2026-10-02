@@ -129,7 +129,7 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]
-SKIP_SUFFIX = (".pt", ".pyc", ".bak")
+SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".appbak", ".c2bak", ".d1bak", ".rev2bak")
 
 
 def anon_git_log():
