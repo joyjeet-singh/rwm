@@ -129,3 +129,57 @@ CPU jobs over 1 min: 15 build-and-gate passes, about 3-4 min each. In the backgr
 Body words (FILE_MAP §13 command): 26,840 (T0: 26,526)
 Next: T4, paper edits group 2 (§5.2/§5.3 with N2, N3 and X1; abstract; contribution 3; Appendix D rows). Part C has finished, so no placeholder is needed for it, but its verdict is T8's to read under M-80.
 Decisions for user: none.
+
+## T4 — 2026-10-02 17:00 — Opus 5.5, xhigh effort (the plan assigns high) — status: COMPLETE
+Commits:
+7ea674b [T4][keys] Keys and assertions for sections 5.2 and 5.3 from N2, N3 and X1
+659d475 [T4][item 1] The configuration claim becomes an accuracy-only statement (E2): cost per iteration, equal compute, history length, still learning; hours to Appendix B
+2c0f002 [T4][item 2] The architecture claim is softened and the RSSM diagnosed (E3): where the lead begins, h = 100, X1 Parts A and B
+2d5e38d [T4][item 3] nRMSE as section 3.1 defines it (E6): pooled alongside readings and the head-to-head table's baseline cells
+ba5fa10 [T4][item 4] The diverged-rollout flag (E7): dagger rows, per-seed values, sign-only verdicts
+0138946 [T4][item 5] Abstract and contribution 3 (Annex 3, variant (a) by N3's reading)
+a08b506 [T4][item 6] Appendix D rows for the configuration and architecture claims
+80dc072 [T4] Rebuild after items 1-6 (fast build, gates, fast build: byte-identical)
+ace7220 [T4][review] Fix the wording review's findings: scope, arena and post hoc labels
+(the commit carrying this entry) [T4] COMPLETE: session log
+Done:
+- **How this session ran.** T4 ran in the same conversation as T3, continuing after a context compaction, because the user asked for that in chat. §0.3 asks for a fresh terminal: the `claude` CLI is not on PATH on this machine, so the user chose the in-app session. At their request, `CLAUDE_CODE_SUBAGENT_MODEL=claude-sonnet-5-5` now sits in the `env` block of the user's Claude settings for later sessions. This session predates that, so its one subagent was given Sonnet by alias.
+- **Item 1 (E2).**
+  - §5.2's table: "hours per run" becomes "cost per iteration, relative to the centre", from N3 part 1; the centre's cell is 1.00.
+  - Hours per run move to a new Appendix B table, one row per run family, with overlap counts (`rt_pre_table`); §5.3's column moves the same way.
+  - The history-length finding leads its paragraph.
+  - New paragraph, "Accuracy at equal compute (post hoc; ledger R-78)". N3 selects **variant (a)**: at 5,000 iterations, with 1.11× the computation, the centre is still behind (32, 32), −0.2031 [−0.5033, −0.0275]. The same paragraph says where it stops: not resolved at 10,000 iterations, level in-sample at 5,000, and the shorter histories pass the centre at 10,000.
+  - The Limits gain the training-loss slopes: all 48 runs at 2,500 iterations are still falling.
+- **Item 2 (E3).**
+  - §5.3's Result: RWM leads baselines built to our reading of Table S7 and trained with RWM's settings, and every baseline is worse than the floor at h = 368.
+  - Where the lead begins, from the rules' held-out relative-L1 readings: teacher-forced from h = 32, the transformer from h = 8; autoregressive RSSM from h = 8, MLP and transformer from h = 100, bound with their intervals.
+  - "Where ours departs" is replaced by an RSSM paragraph:
+    - it is the most accurate of §5.3's models at h = 1 and has collapsed by h = 32;
+    - X1 Part A (**NOT EVALUATION-LIMITED**, M-81) and Part B (descriptive) are reported as returned;
+    - the Part C sentence is a placeholder: "Retraining variants are running (X1 Part C): both have trained, and neither is scored yet." The build fails once `part_c` exists until T9 writes it.
+  - The architecture claim now rests on the MLP and the transformer.
+- **Item 3 (E6).**
+  - The M-74 alongside clauses read N2's pooled readings.
+  - One sentence in §5.2 says the pooled readings return the same verdict everywhere except two in-sample readings of §5.3's rules (R-77). Those two are named from `readings_whose_result_changed`.
+  - The head-to-head table's baseline nRMSE cells are filled from `pooled_nrmse_rescore.json`, and the "not shown here" sentence goes.
+- **Item 4 (E7).** N2's flag marks MLP-tf, transformer-tf and RSSM-ar with † in both tables. The caption gives the per-seed values and says verdicts depend on sign only, which is asserted: every flagged row's four per-trajectory differences are positive.
+- **Item 5.**
+  - Abstract: Annex 3's base-claim sentence (installed in T3), the baselines sentence, and the configuration sentence in variant (a). The winners' description, "two shorter histories and both longer training forecasts", is generated from the M-74 verdict.
+  - Contribution 3 rewritten. There are 7 bullets, each at most 3 sentences; the title is unchanged.
+  - The abstract is **368 words, 21 numerals** (caps 370/26). The plan's aim of ≤ 350 was not reached by trimming wording alone, and no finding was cut to reach it.
+- **Item 6.** The paper's Appendix D rows for the configuration and architecture claims carry the new statements.
+- **Item 7.** No edit needed: the §3.2 generator prints the §5.2 and §5.3 verdicts verbatim and nothing beyond them.
+- **Review.** A Sonnet 5.5 subagent (read-only Explore, one of two allowed) recomputed every T4 number and found all sound (`evidence/R2T4/t4_review.md`). Its verdict was PASS-WITH-FIXES, with four fix-now findings, six minor ones and notes. All were fixed in ace7220. F4 was the Conclusion's stale "architecture claim also holds … beaten at our budget", an Annex 2 anchor outside the named sections.
+Build/gates: pass. Two build-gates-build passes, 8/8 gates, 62/62 claims, 62/62 corruptions caught, byte-identical, and the second pass equal to the first (`t4rev_1`, `t4rev_2`). PDF: 50 pages (was 49).
+Paper numbers changed: `mn_table` and `bl_table`: the last column is cost per iteration (results/mn_compute_matched.json), and three `bl_table` rows carry †. `pdf_pages` 49 → 50. `tn_typed` 717 → 725 (generated).
+New keys (85; artifacts results/mn_compute_matched.json, pooled_nrmse_rescore.json, pooled_nrmse_alongside.json, rssm_diagnostics.json, training_tail_slopes.json, baselines_verdict.json, presubmission_runtime.json):
+- n3_*, mn_better_kinds, mn_better_long_phrase, mn_n_short_better_word, tail_n, tail_slope_lo/hi;
+- h2h_bl_*_nrmse_h{1,8,100,368}, h2h_bl_*_label, n2_n_changed_word, n2_changed_list;
+- div_factor, div_n_word, div_per_seed;
+- bl_tf_lead_from, bl_tf_tr_lead_from, bl_ar_lead_from, bl_ar_rssm_lead_from, bl_ar_{mlp,tr}_{D,ci}_h100, bl_ar_mlp_pct_h100;
+- x1_*, x1b_*, rssm_partc_sentence, rt_pre_table.
+Re-anchored checks: none.
+CPU jobs over 1 min: 7 build-and-gate passes, about 3-4 min each. No training.
+Body words (FILE_MAP §13 command): 27,671 (T0: 26,526). The equal-compute, RSSM and nRMSE text Annex 2 requires adds about 830; U3's target of ≤ 19,000 is T6 and T7's.
+Next: T5, the coverage audit and Appendix H (Opus 5.5, default effort), in a fresh session. X1 Part C's two seed-0 runs have finished training (`results/baseline_run_rssm_tf_x1v{1,2}_seed0.json`, untracked) and wait for T8 to score them.
+Decisions for user: none.
