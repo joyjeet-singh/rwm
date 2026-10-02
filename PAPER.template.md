@@ -830,6 +830,9 @@ cannot be what produces it.
 Under the corrected objective the sign flips (Figure 4b), the strongest evidence that the mechanism
 is the objective and not the optimiser, the data or the architecture.
 
+**The correction fails differently rather than succeeding.** The reference contains an unused `gaussian_nll` branch. Running it reverses the collapse and
+improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overconfident. It does not produce a usable estimate, and it destroys something the faithful arm had: the σ-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positively correlated to {{cal_nll_npos}}/{{cal_nll_ndim}}, which is chance. Under the trajectory permutation test of §6.6, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample. The faithful arm's ordering is the one result in this family that points the same way in both arenas; it is also the weakest effect of the three, and it does not survive multiplicity correction either.
+
 ### 6.4 Why the epistemic term may be miscalibrated: the members are not independent models
 
 §6.3 explains the aleatoric column and leaves the epistemic one open. This subsection supplies a
@@ -878,11 +881,6 @@ minor contributor to a failure dominated by something else. That needs an ensemb
 nothing, pre-registered as rule M-44 (Appendix E) and reported in §6.10. The topology is a fact
 about the released artifact; the mechanism is a hypothesis about that fact.
 
-### 6.5 The correction fails differently rather than succeeding
-
-The reference contains an unused `gaussian_nll` branch. Running it reverses the collapse and
-improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overconfident. It does not produce a usable estimate, and it destroys something the faithful arm had: the σ-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positively correlated to {{cal_nll_npos}}/{{cal_nll_ndim}}, which is chance. Under the trajectory permutation test of §6.6, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample. The faithful arm's ordering is the one result in this family that points the same way in both arenas; it is also the weakest effect of the three, and it does not survive multiplicity correction either.
-
 ### 6.6 The failure is one of magnitude; the ordering is weaker than it looks
 
 Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at {{iters_main}} training iterations; the released checkpoint as released):
@@ -925,6 +923,22 @@ nothing could, since its smallest attainable P already exceeds the smallest Holm
 So this section's claim is: **the magnitude failure is established and large; the ordering is directionally consistent across every model and horizon we measured, and is not established at conventional significance once the dependence between dimensions is respected.**
 
 **The failure is specifically magnitude calibration, in both components.**
+
+**The structural excuse does not survive.** One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
+uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
+σ is flat while error grows (Figure 5; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories; our arms at
+{{iters_main}} training iterations, the released checkpoint as released):
+
+| model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
+|---|---|---|
+| faithful Arm A | {{sig_faithA_growth}}× | {{err_faithA_growth}}× |
+| corrected Arm A | {{sig_nll_growth}}× | {{err_nll_growth}}× |
+| teacher-forced Arm B | {{sig_armB_growth}}× | {{err_armB_growth}}× |
+| released checkpoint | {{sig_rel_growth}}× | {{err_rel_growth}}× |
+
+The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows
+{{err_faithA_growth}}×. The coverage collapse in Figure 3(b) is therefore driven entirely by
+growing error against a fixed σ.
 
 ### 6.7 Ensemble disagreement beats the trivial baseline
 
@@ -1073,24 +1087,6 @@ On the released checkpoint every point estimate lands within {{d3_tol}} points o
 **The *different model* column is the absolute test, and it is unpowered for the reason above**, so a cell inside its band is not evidence the multiplier transferred. It is reported because dropping it would hide that this arena cannot resolve it; it is not the verdict and cannot move it. The §6.8 caution applies here unchanged and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} Arm A seeds share their training data and differ only in initialisation and ordering, and no P-value attaches to any count here. The two models also differ on several axes at once, so this bounds transfer between these two models rather than attributing it to any one difference.
 
 So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence is mixed.**
-
-### 6.9 The structural excuse does not survive
-
-One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
-uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 5; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories; our arms at
-{{iters_main}} training iterations, the released checkpoint as released):
-
-| model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
-|---|---|---|
-| faithful Arm A | {{sig_faithA_growth}}× | {{err_faithA_growth}}× |
-| corrected Arm A | {{sig_nll_growth}}× | {{err_nll_growth}}× |
-| teacher-forced Arm B | {{sig_armB_growth}}× | {{err_armB_growth}}× |
-| released checkpoint | {{sig_rel_growth}}× | {{err_rel_growth}}× |
-
-The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows
-{{err_faithA_growth}}×. The coverage collapse in Figure 3(b) is therefore driven entirely by
-growing error against a fixed σ.
 
 ### 6.10 Testing the mechanism: an ensemble that shares nothing
 

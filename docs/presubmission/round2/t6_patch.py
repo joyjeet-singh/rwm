@@ -286,6 +286,9 @@ def main():
                     t = t[:r].rstrip("\n") + "\n\n" + block + "\n" + t[r:]
                 else:
                     t = t.rstrip("\n") + "\n\n" + heading + "\n\n" + block + "\n\n---\n"
+            elif op[0] == "fn":
+                # a restructuring too irregular for move/sub: a function from text to text (round 2, T7)
+                t = op[1](t)
             elif op[0] == "insert":
                 # verbatim text cut by a preceding "sub", inserted before an existing appendix's closing rule
                 _, text, heading = op
