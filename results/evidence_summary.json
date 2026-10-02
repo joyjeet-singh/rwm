@@ -94,7 +94,7 @@
       "arena": "out-of-sample",
       "n_independent": 4,
       "in_sample": "no",
-      "verdict": "not optimal at our budget; 4 of 8 neighbours beat the centre",
+      "verdict": "NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre",
       "multiplicity": "yes",
       "model": "our arms",
       "artifacts": [
@@ -109,7 +109,7 @@
       "arena": "out-of-sample",
       "n_independent": 4,
       "in_sample": "no",
-      "verdict": "reproduces",
+      "verdict": "REPRODUCES",
       "multiplicity": "yes",
       "model": "our arms",
       "artifacts": [
@@ -124,7 +124,7 @@
       "arena": "out-of-sample",
       "n_independent": 4,
       "in_sample": "no",
-      "verdict": "rwm ahead of all three",
+      "verdict": "RWM AHEAD OF ALL THREE",
       "multiplicity": "yes",
       "model": "our arms",
       "artifacts": [
@@ -281,14 +281,15 @@
       "arena": "out-of-sample",
       "n_independent": 4,
       "in_sample": "yes",
-      "verdict": "confirmed; the released pairing scores worse than the causal one",
+      "verdict": "defect confirmed in the code; its cost is concentrated at short horizons, and at h = 368 is small and not consistent in sign",
       "multiplicity": "not applicable",
       "model": "released checkpoint",
       "artifacts": [
-        "results/step4_0a_results.json"
+        "results/step4_0a_results.json",
+        "results/alignment_by_horizon.json"
       ],
       "checkpoint": "released"
     }
   ],
-  "table_markdown": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | reproduces | yes |\n| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | rwm ahead of all three | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.7) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.7) | all ten episodes (20) | released | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.7) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.8) | out-of-sample (4) | released | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.10) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.11) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error (\u00a77.2) | out-of-sample (4) | released | yes | confirmed; the released pairing scores worse than the causal one | not applicable |"
+  "table_markdown": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES | yes |\n| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.7) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.7) | all ten episodes (20) | released | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.7) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.8) | held-out pair (4) | released | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.10) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.11) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error (\u00a77.2) | held-out pair (4) | released | yes | defect confirmed in the code; its cost is concentrated at short horizons, and at h = 368 is small and not consistent in sign | not applicable |"
 }

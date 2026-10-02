@@ -394,20 +394,20 @@ from, so no arena label, sample size or checkpoint in it is typed by hand.
 |---|---|---|---|---|---|
 | Autoregressive training beats teacher forcing at h = 368 (§5) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes |
 | The same comparison reverses at h = 1, at the short unit M-64 built (§5) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |
-| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | not optimal at our budget; 4 of 8 neighbours beat the centre | yes |
-| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) (§5.3) | out-of-sample (4) | 2,500 iterations | no | reproduces | yes |
-| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) (§5.3) | out-of-sample (4) | 2,500 iterations | no | rwm ahead of all three | yes |
+| (M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre | yes |
+| RWM beats MLP, RSSM and transformer baselines (teacher-forced, as the original trains them) (§5.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES | yes |
+| RWM beats MLP, RSSM and transformer baselines (trained autoregressively: architecture at one training regime, not the original's claim) (§5.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE | yes |
 | Ensemble disagreement is smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
 | Ensemble disagreement is smaller than realised error, at h = 100 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
 | The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
 | Disagreement ranks realised error better than the forecast step index, at h = 100 (§6.7) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |
 | Disagreement ranks realised error better than the model's own predicted step size (§6.7) | all ten episodes (20) | released | yes | the partial survives; the margin is below the minimum detectable effect | could not at this n |
 | With both the rollout and the depth held constant, disagreement still tracks error (§6.7) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |
-| A per-horizon multiplier brings coverage near nominal where a constant one does not (§6.8) | out-of-sample (4) | released | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |
+| A per-horizon multiplier brings coverage near nominal where a constant one does not (§6.8) | held-out pair (4) | released | yes | every point estimate unseen by the multiplier within tolerance; unseen by the model too (Arm A's own), 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |
 | An ensemble that shares no trunk is better calibrated than the released topology (§6.10) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |
 | The same contrast at matched capacity (§11) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
 | Independence and the corrected objective together improve on the released topology (§6.11) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
-| The released evaluation pairs states and actions one step stale and overstates its own model's error (§7.2) | out-of-sample (4) | released | yes | confirmed; the released pairing scores worse than the causal one | not applicable |
+| The released evaluation pairs states and actions one step stale and overstates its own model's error (§7.2) | held-out pair (4) | released | yes | defect confirmed in the code; its cost is concentrated at short horizons, and at h = 368 is small and not consistent in sign | not applicable |
 
 ---
 

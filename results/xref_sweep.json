@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 65,
-  "n_ok": 65,
+  "n_pointers": 66,
+  "n_ok": 66,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -40,10 +40,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.7 gives the expectation we held about the counter-baseline, and noth",
+      "pointer": "\u00a76.7 gives the expectation we held about the\ncounter-baseline, and noth",
       "ok": true,
       "detail": "target 6.7; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['counter-baseline', 're-opens']",
-      "context": "\u00a76.7 gives the expectation we held about the counter-baseline, and nothing in the table\ndischarges or re-opens the rule"
+      "context": "\u00a76.7 gives the expectation we held about the\ncounter-baseline, and nothing in the table discharges or re-opens the rule"
     },
     {
       "class": "semantic",
@@ -86,6 +86,12 @@
       "ok": true,
       "detail": "target Appendix B; nouns ['runs']; absent []",
       "context": "Appendix B gives for all of \u00a75\u2013\u00a77's runs"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/alignment_by_horizon.json",
+      "ok": true,
+      "detail": "exists"
     },
     {
       "class": "artifact",

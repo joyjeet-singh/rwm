@@ -229,7 +229,8 @@ def build_rows():
         "arena": mn_arena,
         "n_independent": ME["arenas"]["held_out"]["n_independent"],
         "in_sample": in_sample("our arms", mn_arena),
-        "verdict": (MV["verdict"].lower() + f"; {len(_better)} of {MV['governing']['m']} "
+        # Round 2, T3 item 4(c): a returned verdict is printed verbatim, in the case the rule returned it.
+        "verdict": (MV["verdict"] + f"; {len(_better)} of {MV['governing']['m']} "
                     "neighbours beat the centre"),
         "multiplicity": "yes",
         "model": "our arms",
@@ -245,7 +246,7 @@ def build_rows():
             "arena": mn_arena,
             "n_independent": ME["arenas"]["held_out"]["n_independent"],
             "in_sample": in_sample("our arms", mn_arena),
-            "verdict": _R["verdict"].lower(),
+            "verdict": _R["verdict"],
             "multiplicity": "yes",
             "model": "our arms",
             "artifacts": ["results/baselines_verdict.json", "results/baselines_eval.json"],
@@ -409,6 +410,19 @@ def build_rows():
     s4_model = measured_model(T("step3_report.txt"))
     stale = S4["protocols"]["A_off0"]["nrmse"][str(diag)]
     causal = S4["protocols"]["A_off1"]["nrmse"][str(diag)]
+    # Round 2, T3 item 4(b), ruling A (DECISIONS.md#T3-alignment-framing): the cost by horizon (N1, R-76).
+    # Concentrated at short horizons if the held-out pair's largest relative-L1 overstatement lies at
+    # h < diag and exceeds the h = diag one; not consistent in sign at h = diag if the held-out pair and
+    # all ten episodes disagree in sign there.
+    AH = J("alignment_by_horizon.json")["released"]["summary"]
+    _ho = {int(h): v["rel_l1"]["pct"] for h, v in AH["held_out_n4"].items()}
+    _ten = AH["all_ten_n20"][str(diag)]["rel_l1"]["pct"]
+    _hmax = max(_ho, key=_ho.get)
+    _short = _hmax < diag and _ho[_hmax] > _ho[diag]
+    _flip = (_ho[diag] > 0) != (_ten > 0)
+    _cost = ("its cost is concentrated at short horizons, and at h = " + str(diag)
+             + (" is small and not consistent in sign" if _flip else " is small")) if _short else (
+             "its cost is not concentrated at short horizons")
     rows.append({
         "claim": ("The released evaluation pairs states and actions one step "
                   "stale and overstates its own model's error"),
@@ -416,12 +430,11 @@ def build_rows():
         "arena": s4_arena,
         "n_independent": ARENA[s4_arena]["n_independent"],
         "in_sample": in_sample(s4_model, s4_arena),
-        "verdict": ("confirmed; the released pairing scores worse than the causal one"
-                    if stale > causal
+        "verdict": (("defect confirmed in the code; " + _cost) if stale > causal
                     else "not confirmed; the released pairing does not score worse"),
         "multiplicity": multiplicity(),
         "model": s4_model,
-        "artifacts": ["results/step4_0a_results.json"],
+        "artifacts": ["results/step4_0a_results.json", "results/alignment_by_horizon.json"],
     })
     return rows
 
@@ -448,12 +461,21 @@ def checkpoint_of(row):
     raise AssertionError(f"no checkpoint recorded for: {row['claim']}")
 
 
+def arena_label(row):
+    """Round 2, T3 item 4(a): the held-out pair is out-of-sample for our arms only. The released
+    checkpoint trained on it, so its rows there name the arena, "held-out pair", and the in-sample
+    column already says yes. The registry key (row["arena"]) is unchanged."""
+    if row["model"] == "released checkpoint" and row["arena"] == "out-of-sample":
+        return "held-out pair"
+    return row["arena"]
+
+
 def markdown(rows):
     # Six columns carrying eight fields. With the checkpoint column (S10, D2) eight
     # columns' unbreakable words no longer fit the line and the PDF gate failed on
     # overfull boxes, so the section rides with the claim and n_independent with its arena.
     return "\n".join(
-        f'| {r["claim"]} (§{r["section"]}) | {r["arena"]} ({r["n_independent"]}) | '
+        f'| {r["claim"]} (§{r["section"]}) | {arena_label(r)} ({r["n_independent"]}) | '
         f'{r["checkpoint"]} | {r["in_sample"]} | {r["verdict"]} | {r["multiplicity"]} |'
         for r in rows)
 
