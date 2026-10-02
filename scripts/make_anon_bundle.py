@@ -506,7 +506,11 @@ def main():
             "planted by make_anon_bundle.py: joyjeet-singh, "
             "https://github.com/joyjeet-singh/rwm, "
             "swh:1:rev:0123456789abcdef0123456789abcdef01234567, "
-            f"commit {max((h for h in COMMIT_LABELS if COMMIT_LABELS[h][0] == 'C'), key=COMMIT_LABELS.get)[:7]}\n")
+            # The FULL hash, not its 7-character prefix (round 2, T8; round 1's OUT_OF_SCOPE). The detector
+            # refuses a run of digits with one `e` so a float such as 5e30429 is never read as a commit, and
+            # when HEAD's prefix had that shape (about one commit in forty) the planted prefix went undetected
+            # and the self-test failed on a scan that was working. A full hash always contains its own stem.
+            f"commit {max((h for h in COMMIT_LABELS if COMMIT_LABELS[h][0] == 'C'), key=COMMIT_LABELS.get)}\n")
         planted = scan_tree(staging)
         caught = [b for b in planted if "_selftest" in b[0]]
         assert caught, ("SELF-TEST FAILED: the scan did not detect a planted "
