@@ -103,6 +103,26 @@ for r in rows:
     if not line.startswith("\u2014"): classes["evidence"].append(r["id"])
     elif "early hypothesis" in line: classes["early_hypothesis"].append(r["id"])
     else: classes["framing"].append(r["id"])
+# Sixth (round 2, ruling U1): a later entry may RECLASSIFY an S- entry. The ledger is append-only,
+# so an S- entry's own **Retracts** line can never be edited; the reclassifying entry carries
+#     **Reclassifies** `S-NN` as evidence | framing | early hypothesis
+# Each S- entry may be reclassified at most once; the target must exist, must be classed above,
+# and must change class. The reclassification is applied after the classification it corrects and
+# is written to results/claims_to_evidence.json beside the classes.
+reclassified=[]
+_ckey={"evidence":"evidence","framing":"framing","early hypothesis":"early_hypothesis"}
+for r in rows:
+    blk=txt.split("### "+r["id"]+" ",1)[1].split("\n### ")[0]
+    for m in re.finditer(r'^\*\*Reclassifies\*\* `(S-\d+)` as (evidence|framing|early hypothesis)\s*$', blk, re.M):
+        tgt,to=m.group(1),_ckey[m.group(2)]
+        frm=next((c for c,ids in classes.items() if tgt in ids),None)
+        if frm is None: unclassed.append(f"{r['id']} reclassifies {tgt}, which no class holds"); continue
+        if frm==to: unclassed.append(f"{r['id']} reclassifies {tgt} into the class it is already in"); continue
+        if any(x["target"]==tgt for x in reclassified): unclassed.append(f"{tgt} is reclassified twice"); continue
+        classes[frm].remove(tgt); classes[to].append(tgt)
+        reclassified.append({"target":tgt,"from":frm,"to":to,"by":r["id"]})
+for x in reclassified:
+    print(f"\n  reclassified: {x['target']} {x['from']} -> {x['to']}, by {x['by']}")
 n_sup=sum(1 for r in rows if r["id"].startswith("S-"))
 if sum(len(v) for v in classes.values())!=n_sup and not unclassed:
     unclassed.append("the classes do not partition the S- entries")
@@ -130,7 +150,7 @@ print(f"  RESULTS.md discrepancy-table rows out of date: {len(stale)}")
 for pfx,said,real in stale:
     print(f"    !! {pfx}- : RESULTS.md says {said}, ledger has {real}")
 json.dump({"entries":rows,"counts_by_prefix":dict(sorted(counts.items())),
-           "retraction_classes":{**classes,"n_superseded":n_sup}},
+           "retraction_classes":{**classes,"n_superseded":n_sup,"reclassified":reclassified}},
           open("results/claims_to_evidence.json","w"),indent=2)
 with open("results/claims_to_evidence.md","w") as f:
     f.write("# Claims-to-evidence map\n\nOne row per CONTRIB ledger entry.\n\n")

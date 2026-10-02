@@ -3461,13 +3461,29 @@
         "scripts/rssm_diagnostics.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-82",
+      "claim": "Ruling U1: `S-20` is counted as a claim withdrawn on evidence, not a framing",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/alignment_defect_ci.json",
+        "results/claims_to_evidence.json",
+        "scripts/ledger_check.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 81,
+    "M": 82,
     "O": 14,
     "R": 78,
     "S": 20,
@@ -3480,7 +3496,8 @@
       "S-10",
       "S-11",
       "S-13",
-      "S-14"
+      "S-14",
+      "S-20"
     ],
     "framing": [
       "S-12",
@@ -3488,8 +3505,7 @@
       "S-16",
       "S-17",
       "S-18",
-      "S-19",
-      "S-20"
+      "S-19"
     ],
     "early_hypothesis": [
       "S-01",
@@ -3500,6 +3516,14 @@
       "S-06",
       "S-07"
     ],
-    "n_superseded": 20
+    "n_superseded": 20,
+    "reclassified": [
+      {
+        "target": "S-20",
+        "from": "framing",
+        "to": "evidence",
+        "by": "M-82"
+      }
+    ]
   }
 }

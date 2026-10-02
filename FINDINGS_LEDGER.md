@@ -8594,3 +8594,19 @@ prior's and the posterior's mode latents at the same GRU state, their ratio, and
 | rssm_ar_s7, seed2 | 0.2686 | 0.2672 | 1.01 | 13.46 | 1.04 | 9.35 |
 **Evidence** `RUN` `results/rssm_diagnostics.json`; `SRC` `scripts/rssm_diagnostics.py`.
 **Status** CONFIRMED · **Relevance** METHOD
+
+### M-82 — Ruling U1: `S-20` is counted as a claim withdrawn on evidence, not a framing · **NEW**
+**Reclassifies** `S-20` as evidence
+**Why.** S-20 withdrew the 75% (nRMSE) and 9.5% (relative-L1) figures the paper gave the alignment defect,
+because new evidence contradicted them: intervals over independent trajectories, and the reversal of sign over
+all ten episodes (`results/alignment_defect_ci.json`). Its own **Retracts** line opens with a dash, which files it
+with the framings withdrawn (pre-submission S5's classifier, now `scripts/ledger_check.py`). The round-2 ruling U1
+(`docs/presubmission/round2/DECISIONS.md`) counts it as a claim withdrawn on evidence.
+
+**How, append-only.** S-20's text is not edited. `scripts/ledger_check.py` reads this entry's **Reclassifies**
+line after its own classification, moves S-20 from the framings to the claims withdrawn on evidence, and records
+the move in `results/claims_to_evidence.json` (`retraction_classes.reclassified`). Each S- entry may be reclassified
+once, and only into a different class. The counts the introduction, section 8, the README and the supplement print
+are generated from that file, so they move together.
+**Evidence** `SRC` `scripts/ledger_check.py`; `RUN` `results/claims_to_evidence.json`.
+**Status** CONFIRMED · **Relevance** METHOD

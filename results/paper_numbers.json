@@ -4297,7 +4297,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "569"
+    "value": "570"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5121,7 +5121,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 266
+    "value": 267
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -5141,7 +5141,7 @@
   },
   "n_framing_cohorts": {
     "source": "FINDINGS_LEDGER.md + git log",
-    "value": 4
+    "value": 3
   },
   "n_framing_last_cohort": {
     "source": "FINDINGS_LEDGER.md + git log",
@@ -5169,27 +5169,27 @@
   },
   "n_retract_framing": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": 7
+    "value": 6
   },
   "n_retract_framing_ids": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "`S-12`, `S-15`, `S-16`, `S-17`, `S-18`, `S-19`, `S-20`"
+    "value": "`S-12`, `S-15`, `S-16`, `S-17`, `S-18`, `S-19`"
   },
   "n_retract_framing_list": {
     "source": "FINDINGS_LEDGER.md",
-    "value": "\n\n- **Task 3's duplication rule was pre-registered** (`S-12`).\n\n- **The binomial P-values attached to every dimension count** (`S-15`).\n\n- **The two largest held-out deviations are in opposite directions** (`S-16`).\n\n- **The eight untested claims are, without exception, about policy learning or hardware** (`S-17`).\n\n- **The per-member \u03c3 is worse by three orders of magnitude** (`S-18`).\n\n- **The released checkpoint cannot have come from the released recipe** (`S-19`).\n\n- **The released evaluation overstates its own model's error by 75%** (`S-20`)."
+    "value": "\n\n- **Task 3's duplication rule was pre-registered** (`S-12`).\n\n- **The binomial P-values attached to every dimension count** (`S-15`).\n\n- **The two largest held-out deviations are in opposite directions** (`S-16`).\n\n- **The eight untested claims are, without exception, about policy learning or hardware** (`S-17`).\n\n- **The per-member \u03c3 is worse by three orders of magnitude** (`S-18`).\n\n- **The released checkpoint cannot have come from the released recipe** (`S-19`)."
   },
   "n_retract_framing_phrase": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "7 further"
+    "value": "6 further"
   },
   "n_retract_framing_word": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "seven"
+    "value": "six"
   },
   "n_retract_framing_word_cap": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "Seven"
+    "value": "Six"
   },
   "n_retract_total": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
@@ -5197,19 +5197,19 @@
   },
   "n_retractions": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": 6
+    "value": 7
   },
   "n_retractions_lower": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "six"
+    "value": "seven"
   },
   "n_retractions_word": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "Six"
+    "value": "Seven"
   },
   "n_retractions_word_lower": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "six"
+    "value": "seven"
   },
   "n_runs": {
     "source": "results/step5_arm*.json",
