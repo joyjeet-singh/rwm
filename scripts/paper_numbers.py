@@ -253,6 +253,16 @@ def main():
     put("ver_overstate", f"{_all/ver['values_compared']:.0f}", "results/verify_reproduction.json")
     put("ver_keys_lost_files", len(ver["keys_lost_files"]),
         "results/verify_reproduction.json")
+    # Round 2, T8: the README named only the file that records this count, which read as
+    # naming the file that lost the value. Name both, the lost keys from the artifact's
+    # per-file record, and check that they account for the count.
+    _lost = [(f, ver["per_file"][f]["keys_lost_paths"]) for f in ver["keys_lost_files"]]
+    assert sum(len(ps) for _, ps in _lost) == ver["keys_lost"], _lost
+    put("ver_keys_lost_noun", "value is" if ver["keys_lost"] == 1 else "values are",
+        "results/verify_reproduction.json")
+    put("ver_keys_lost_where", "; ".join(
+        f"`results/{f}` (key{'s' if len(ps) > 1 else ''} " + ", ".join(f"`{p}`" for p in ps) + ")"
+        for f, ps in _lost), "results/verify_reproduction.json")
     put("ver_timing", f'{ver["timing_excluded"]:,}', "results/verify_reproduction.json")
     put("ver_machine", ver["machine_file_values_excluded"], "results/verify_reproduction.json")
     _tb = ver.get("time_bounded_files_excluded", [])

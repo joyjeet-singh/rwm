@@ -157,9 +157,9 @@ byte-identical between them.
 A clean-clone run of `reproduce.sh --quick --force` regenerates **{{ver_files}} artifact files and
 {{ver_values}} numeric values: {{ver_identical}} bitwise identical ({{ver_pct}}%),
 {{ver_close}} equal within floating-point tolerance, and {{ver_differing}} differing** — the three account for
-the total exactly. A further {{ver_keys_lost}} values are in the committed artifacts and absent
-after regeneration, across {{ver_keys_lost_files}} files
-(`results/verify_reproduction.json`).
+the total exactly. A further {{ver_keys_lost}} {{ver_keys_lost_noun}} in the committed artifacts and absent
+after regeneration: {{ver_keys_lost_where}}. All of these counts are recorded in
+`results/verify_reproduction.json`.
 
 **How big the claim is.** {{ver_values}} values is {{ver_claim_pct}}% of the {{ver_all}} numeric values under `results/` that the comparison counts. The other {{ver_copied}} are carried in by the clone rather than
 regenerated, and are held out of the figure entirely.
