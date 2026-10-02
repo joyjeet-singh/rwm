@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 70,
-  "n_ok": 70,
+  "n_pointers": 79,
+  "n_ok": 79,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -86,6 +86,13 @@
       "ok": true,
       "detail": "target Appendix B; nouns ['runs']; absent []",
       "context": "Appendix B gives for all of \u00a75\u2013\u00a77's runs"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix H lists the ledger's other confirmed findings that the body does not",
+      "ok": true,
+      "detail": "target Appendix H; nouns ['ledger', 'confirmed', 'findings', 'body', 'does', 'state', 'among', 'them', 'latent', 'defects', 'released', 'data', 'pipeline', 'departures', 'rele']; absent ['among', 'departures']",
+      "context": "Appendix H lists the ledger's other confirmed findings that the body does not state, among them\nlatent defects in the released data pipeline and departures of the rele"
     },
     {
       "class": "artifact",
@@ -287,7 +294,31 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/step6_3_min_logstd.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/t1_bibliography_verified.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/task2_3_matched_trend.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/task4_arenas.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/taskAB_gate_r27.json",
       "ok": true,
       "detail": "exists"
     },
@@ -359,6 +390,18 @@
     },
     {
       "class": "upstream",
+      "pointer": "model_training.py:33",
+      "ok": true,
+      "detail": "../robotic_world_model_lite/scripts/model_training.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:114",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
       "pointer": "system_dynamics.py:115",
       "ok": true,
       "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
@@ -372,6 +415,18 @@
     {
       "class": "upstream",
       "pointer": "system_dynamics.py:126",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:186",
+      "ok": true,
+      "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
+    },
+    {
+      "class": "upstream",
+      "pointer": "system_dynamics.py:216",
       "ok": true,
       "detail": "../rsl_rl_rwm/rsl_rl/modules/system_dynamics.py has the line"
     },

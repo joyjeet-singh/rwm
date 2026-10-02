@@ -1871,6 +1871,18 @@
     "source": "results/step0_regimes.json",
     "value": 3.53
   },
+  "d10_extra_ep": {
+    "source": "results/step0_regimes.json",
+    "value": 7
+  },
+  "d10_n_regimes": {
+    "source": "results/step0_regimes.json",
+    "value": 21
+  },
+  "d10_per_ep_word": {
+    "source": "results/step0_regimes.json",
+    "value": "two"
+  },
   "d12_hi": {
     "source": "results/a2_trajectory_level_control.json",
     "value": "1.591"
@@ -5633,7 +5645,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 50
+    "value": 52
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -8035,6 +8047,14 @@
     "source": "results/task5_analysis.json",
     "value": "158,003"
   },
+  "r25_implied_ld": {
+    "source": "results/step6_3_min_logstd.json",
+    "value": "154,451"
+  },
+  "r25_implied_min": {
+    "source": "results/step6_3_min_logstd.json",
+    "value": "267,883"
+  },
   "r2_acc_x_h1": {
     "source": "results/r2_independent_ensemble.json",
     "value": "0.97"
@@ -8339,6 +8359,126 @@
     "source": "results/r2_independent_ensemble.json",
     "value": "1.84"
   },
+  "r30_maxmed": {
+    "source": "results/taskAB_gate_r27.json",
+    "value": "1.2"
+  },
+  "r30_n_nonoverlap": {
+    "source": "results/taskAB_gate_r27.json",
+    "value": 4
+  },
+  "r30_n_regions_word": {
+    "source": "results/taskAB_gate_r27.json",
+    "value": "two"
+  },
+  "r30_tail_share": {
+    "source": "results/taskAB_gate_r27.json",
+    "value": "92.6"
+  },
+  "r39_ep": {
+    "source": "results/task4_arenas.json",
+    "value": 1
+  },
+  "r39_ep_gap": {
+    "source": "results/task4_arenas.json",
+    "value": "+6.97"
+  },
+  "r39_ep_over_next": {
+    "source": "results/task4_arenas.json",
+    "value": "2.5"
+  },
+  "r39_gap_holdout": {
+    "source": "results/task4_arenas.json",
+    "value": "+3.98"
+  },
+  "r39_gap_lo": {
+    "source": "results/task4_arenas.json",
+    "value": "+0.73"
+  },
+  "r39_gap_other": {
+    "source": "results/task4_arenas.json",
+    "value": "+1.33"
+  },
+  "r39_ho_over_other": {
+    "source": "results/task4_arenas.json",
+    "value": "3.0"
+  },
+  "r39_n_eps_word": {
+    "source": "results/task4_arenas.json",
+    "value": "ten"
+  },
+  "r39_n_other_word": {
+    "source": "results/task4_arenas.json",
+    "value": "eight"
+  },
+  "r45_A_dim": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "`g_z`"
+  },
+  "r45_A_n": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": 1
+  },
+  "r45_n_dims": {
+    "source": "results/taskAB_gate_r27.json",
+    "value": 45
+  },
+  "r45_nind_all": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": 20
+  },
+  "r45_nind_ho": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": 4
+  },
+  "r45_rel_all": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": 18
+  },
+  "r45_rel_ho": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": 8
+  },
+  "r45_seed": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": 1
+  },
+  "r46_i_gap0": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "+1.72"
+  },
+  "r46_i_gap1": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "+0.87"
+  },
+  "r46_i_ratio0": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "2.33"
+  },
+  "r46_i_ratio1": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "9.70"
+  },
+  "r46_n_ck_word": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "five"
+  },
+  "r46_o_gap0": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "+3.33"
+  },
+  "r46_o_gap1": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "+1.20"
+  },
+  "r46_o_ratio0": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "3.34"
+  },
+  "r46_o_ratio1": {
+    "source": "results/task2_3_matched_trend.json",
+    "value": "4.43"
+  },
   "r60_date": {
     "source": "git log -S '### R-60' FINDINGS_LEDGER.md (the commit that entered R-60)",
     "value": "2026-08-22"
@@ -8617,7 +8757,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 725
+    "value": 760
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
