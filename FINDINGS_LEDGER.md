@@ -8557,3 +8557,40 @@ the number of samples, the seed, the floor, the criterion, or the variants; add 
 here as bearing on M-75's or M-76's verdicts.
 **Evidence** `SRC` `scripts/rssm_diagnostics.py`; `RUN` `results/rssm_diagnostics.json` (awaited).
 **Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/rssm_diagnostics.json` · **Relevance** METHOD
+
+### M-81 — Rule X1 (M-80), Part A: `results/rssm_diagnostics.json` returns NOT EVALUATION-LIMITED · **NEW**
+**Records** M-80's Part A reading, exactly as `scripts/rssm_diagnostics.py --part ab` returned it, as committed
+before the reading existed (commit `2433f44`). It does not discharge M-80: the final reading waits on Part C,
+which this reading opens (ruling U2 allows it). Exploratory; M-75 and M-76 are unchanged.
+
+**Part A.** Held-out pair, relative-L1, 3-seed mean; hold-last floor
+h = 1 0.0796, h = 8 0.3298, h = 32 0.5950, h = 100 0.7558, h = 368 0.9930. The mode read-out reproduces `results/baselines_eval.json`
+(max difference 0.0e+00) and equals the model's own rollout.
+
+| model | read-out | h = 1 | h = 8 | h = 32 | h = 100 | h = 368 | below the floor at h = 32 |
+|---|---|---|---|---|---|---|---|
+| rssm_tf_s7 | mode | 0.0761 | 0.3686 | 1.0182 | 2.2128 | 6.3718 | no |
+| rssm_tf_s7 | expected | 0.0678 | 0.2925 | 0.7165 | 1.4521 | 4.3342 | no |
+| rssm_tf_s7 | sampled | 0.0677 | 0.2911 | 0.6914 | 1.4102 | 4.1689 | no |
+| rssm_ar_s7 | mode | 0.1354 | 0.6211 | 1.5541 | 3.2660 | 10.6405 | no |
+| rssm_ar_s7 | expected | 0.1271 | 0.5126 | 1.0328 | 1.6754 | 4.3815 | no |
+| rssm_ar_s7 | sampled | 0.1271 | 0.5124 | 1.0294 | 1.6704 | 4.3853 | no |
+
+The teacher-forced RSSM's expected and sampled read-outs lower its error at every horizon, but neither is below
+the floor at h = 32, so the rule returns **NOT EVALUATION-LIMITED**: reading the forecast differently does not
+rescue it.
+
+**Part B, descriptive.** Over the 32 history steps, one row per run and seed: one-step decoded relative-L1 from the
+prior's and the posterior's mode latents at the same GRU state, their ratio, and KL(posterior ‖ prior) per step
+(nats), at 2,500 iterations and at 500:
+
+| run | prior | posterior | prior / posterior | KL | prior / posterior @ 500 | KL @ 500 |
+|---|---|---|---|---|---|---|
+| rssm_tf_s7, seed0 | 0.2476 | 0.1951 | 1.27 | 20.02 | 1.18 | 12.28 |
+| rssm_tf_s7, seed1 | 0.2169 | 0.1812 | 1.20 | 19.03 | 1.23 | 12.75 |
+| rssm_tf_s7, seed2 | 0.2126 | 0.1839 | 1.16 | 16.42 | 1.17 | 12.30 |
+| rssm_ar_s7, seed0 | 0.2685 | 0.2665 | 1.01 | 16.42 | 1.02 | 10.48 |
+| rssm_ar_s7, seed1 | 0.2851 | 0.2791 | 1.02 | 16.78 | 1.02 | 8.16 |
+| rssm_ar_s7, seed2 | 0.2686 | 0.2672 | 1.01 | 13.46 | 1.04 | 9.35 |
+**Evidence** `RUN` `results/rssm_diagnostics.json`; `SRC` `scripts/rssm_diagnostics.py`.
+**Status** CONFIRMED · **Relevance** METHOD

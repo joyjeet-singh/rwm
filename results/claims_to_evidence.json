@@ -3445,13 +3445,29 @@
         "scripts/rssm_diagnostics.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-81",
+      "claim": "Rule X1 (M-80), Part A: `results/rssm_diagnostics.json` returns NOT EVALUATION-LIMITED",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baselines_eval.json",
+        "results/rssm_diagnostics.json",
+        "scripts/rssm_diagnostics.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 80,
+    "M": 81,
     "O": 14,
     "R": 78,
     "S": 20,
