@@ -10,3 +10,4 @@ Body words by FILE_MAP §13's rule (`round2/t6_words.py`, from `PAPER.md` after 
 | T6 | s5_detail (+ appx_refs) | §5, the long-horizon cell counts, multiplicity, the head-to-head accuracy table with its caption and reading, and the seeds paragraph's note on other sections' stored values | Appendix L; the body keeps the counts, the Holm result and the comparison with the released checkpoint in keys | 26,182 | 25,564 | −618 |
 | T6 | s62_checks | §6.2, rules M-62 and M-63 (how the numbers are read) and the permutation column's note | Appendix M; the body keeps both verdicts and the column's Holm result | 25,564 | 25,330 | −234 |
 | T6 | s1_tighten | §1, wording only (the opening paragraphs; bullets 1, 4 and 6) | — (nothing moved; no claim or number removed) | 25,330 | 25,247 | −83 |
+| T6 | s5_tighten | §5, wording only (sign test, M-64's short unit) | — | 25,247 | 25,221 | −26 |

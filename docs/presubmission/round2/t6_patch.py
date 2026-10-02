@@ -200,6 +200,26 @@ a practitioner can use without reading the rest."""),
   {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells."""),
 ]
 
+# ---- §5: wording only -------------------------------------------------------------------------------------
+ITEMS["s5_tighten"] = [
+    ("sub", """It is one test on ten paired episodes, with no bootstrap and no multiplicity correction, and unlike §6's per-dimension counts, episodes are separable units, so a binomial null is admissible.""",
+     """It needs no bootstrap or multiplicity correction, and episodes, unlike §6's state dimensions, are separable units, so a binomial null is admissible."""),
+    ("sub", """The row
+rests on {{a1_nind}} independent 400-step trajectories. A 400-step unit is required only by the
+longest horizon. Under a rule committed before the index was built (rule M-64, Appendix E), we
+rebuilt it at {{m64_h1_unit}} rows, 32 of history and one forecast step, non-overlapping within an
+episode, which yields {{m64_h1_n}} units on the same two episodes.""",
+     """The row
+rests on {{a1_nind}} independent 400-step trajectories, a unit only the longest horizon needs.
+Rebuilt under a rule committed before the index was built (rule M-64, Appendix E) at
+{{m64_h1_unit}} rows, 32 of history and one forecast step, non-overlapping within an episode, the
+same two episodes yield {{m64_h1_n}} units."""),
+    ("sub", """Both
+readings are true at their own unit and both are reported: the 400-step unit is the one the rule above was discharged on, and the short unit resolves the sign.""",
+     """Both
+readings are reported: the rule above was discharged on the 400-step unit, and the short unit resolves the sign."""),
+]
+
 
 def main():
     t = open(F).read()

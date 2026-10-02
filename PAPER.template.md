@@ -407,7 +407,7 @@ horizon is h = {{v2_deploy_h}}, so the comparison is reported there too, and the
 **Result.** Every condition {{m23_c1}}. We give the evidence in order of how little it depends
 on the small held-out sample.
 
-*The sign test, which does not depend on n.* At h = {{v2_diag_h}} the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes, an exact two-sided binomial test with p = **{{c3_sign_p}}**. At h = {{v2_deploy_h}} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, and at h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, the same story the interval tells. It is one test on ten paired episodes, with no bootstrap and no multiplicity correction, and unlike §6's per-dimension counts, episodes are separable units, so a binomial null is admissible. **Its scope is narrower than the arena labels suggest**: {{n_train_eps}} of the {{c3_sign_n}} episodes are training data for *both* arms. The test is a valid **paired** comparison, since both arms saw identical data and an episode-level difference is due to the training rule rather than to memorisation, but it is not ten out-of-sample episodes and does not measure generalisation. The out-of-sample effect size below carries that burden, on {{nind_oos_400}} independent trajectories.
+*The sign test, which does not depend on n.* At h = {{v2_diag_h}} the per-episode gap favours autoregressive training on **{{c3_sign_pos}} of {{c3_sign_n}}** episodes, an exact two-sided binomial test with p = **{{c3_sign_p}}**. At h = {{v2_deploy_h}} it is **{{a1_sign_pos_h100}} of {{a1_sign_n_h100}}**, p = **{{a1_sign_p_h100}}**, and at h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, the same story the interval tells. It needs no bootstrap or multiplicity correction, and episodes, unlike §6's state dimensions, are separable units, so a binomial null is admissible. **Its scope is narrower than the arena labels suggest**: {{n_train_eps}} of the {{c3_sign_n}} episodes are training data for *both* arms. The test is a valid **paired** comparison, since both arms saw identical data and an episode-level difference is due to the training rule rather than to memorisation, but it is not ten out-of-sample episodes and does not measure generalisation. The out-of-sample effect size below carries that burden, on {{nind_oos_400}} independent trajectories.
 
 *The in-sample arena, where the sample is larger.* The same comparison on the eight training
 episodes has {{nind_ins_400}} independent 400-step trajectories against the held-out arena's
@@ -446,12 +446,12 @@ none carries a pre-registration's weight, the same treatment §6.7 gives the exp
 counter-baseline, and nothing in the table discharges or re-opens the rule.
 
 **At h = 1 the table understates the evidence, and the correction runs against us.** The row
-rests on {{a1_nind}} independent 400-step trajectories. A 400-step unit is required only by the
-longest horizon. Under a rule committed before the index was built (rule M-64, Appendix E), we
-rebuilt it at {{m64_h1_unit}} rows, 32 of history and one forecast step, non-overlapping within an
-episode, which yields {{m64_h1_n}} units on the same two episodes. The gap is {{m64_h1_gap}}
+rests on {{a1_nind}} independent 400-step trajectories, a unit only the longest horizon needs.
+Rebuilt under a rule committed before the index was built (rule M-64, Appendix E) at
+{{m64_h1_unit}} rows, 32 of history and one forecast step, non-overlapping within an episode, the
+same two episodes yield {{m64_h1_n}} units. The gap is {{m64_h1_gap}}
 {{m64_h1_ci}}: it **excludes zero, in favour of teacher forcing** ({{m64_h1_ratio}}×). Both
-readings are true at their own unit and both are reported: the 400-step unit is the one the rule above was discharged on, and the short unit resolves the sign. At one step **autoregressive
+readings are reported: the rule above was discharged on the 400-step unit, and the short unit resolves the sign. At one step **autoregressive
 training is worse**, the direction the sign test and the hold-last floor already pointed.
 
 *Against a baseline, because neither number means anything without one.* The hold-last
