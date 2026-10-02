@@ -8556,7 +8556,7 @@ ledger entry; change only this entry's Status line at discharge. Not: change the
 the number of samples, the seed, the floor, the criterion, or the variants; add a variant; or read any number
 here as bearing on M-75's or M-76's verdicts.
 **Evidence** `SRC` `scripts/rssm_diagnostics.py`; `RUN` `results/rssm_diagnostics.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/rssm_diagnostics.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/rssm_diagnostics.json`. **It returns NOT RESCUED BY THE SETTINGS TRIED.** Recorded in `M-83`. · **Relevance** METHOD
 
 ### M-81 — Rule X1 (M-80), Part A: `results/rssm_diagnostics.json` returns NOT EVALUATION-LIMITED · **NEW**
 **Records** M-80's Part A reading, exactly as `scripts/rssm_diagnostics.py --part ab` returned it, as committed
@@ -8609,4 +8609,21 @@ the move in `results/claims_to_evidence.json` (`retraction_classes.reclassified`
 once, and only into a different class. The counts the introduction, section 8, the README and the supplement print
 are generated from that file, so they move together.
 **Evidence** `SRC` `scripts/ledger_check.py`; `RUN` `results/claims_to_evidence.json`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-83 — Rule X1 (M-80), Part C and final reading: `results/rssm_diagnostics.json` returns NOT RESCUED BY THE SETTINGS TRIED · **NEW**
+**Records** M-80's Part C reading and its final reading, exactly as `scripts/rssm_diagnostics.py --part c` returned them, as
+committed before any reading existed (commit `2433f44`). Discharges M-80. Exploratory; M-75 and M-76 are unchanged.
+
+**Part C.** Teacher-forced RSSM, seed 0, 2,500 iterations; held-out pair, relative-L1, mode read-out; the reading horizon is
+h = 32.
+
+| variant | h = 1 | h = 8 | h = 32 | h = 100 | h = 368 | per-trajectory minus floor at h = 32 | rescues on seed 0 |
+|---|---|---|---|---|---|---|---|
+| V1 (`x1v1`) | 0.0873 | 0.4214 | 1.2588 | 2.7015 | 8.3548 | +0.5874, +2.0512, -0.0084, +0.0248 | no |
+| V2 (`x1v2`) | 0.1253 | 0.4720 | 1.4685 | 2.6937 | 6.2673 | +0.5881, +3.5674, -0.3270, -0.3344 | no |
+| hold-last floor | 0.0796 | 0.3298 | 0.5950 | 0.7558 | 0.9930 | | |
+
+**Final reading: NOT RESCUED BY THE SETTINGS TRIED.**
+**Evidence** `RUN` `results/rssm_diagnostics.json`, `results/baseline_run_rssm_tf_x1v1_seed0.json`, `results/baseline_run_rssm_tf_x1v2_seed0.json`; `SRC` `scripts/rssm_diagnostics.py`.
 **Status** CONFIRMED · **Relevance** METHOD

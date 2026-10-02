@@ -3433,7 +3433,7 @@
       "id": "M-80",
       "claim": "PRE-REGISTERED rule X1: is our RSSM's long-horizon failure a matter of how its forecast ",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/rssm_diagnostics.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/rssm_diagnostics.json`. **It returns NOT RESCUED BY THE SETTINGS TRIED.** Recorded in `M-83`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3477,13 +3477,30 @@
         "scripts/ledger_check.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-83",
+      "claim": "Rule X1 (M-80), Part C and final reading: `results/rssm_diagnostics.json` returns NOT RE",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baseline_run_rssm_tf_x1v1_seed0.json",
+        "results/baseline_run_rssm_tf_x1v2_seed0.json",
+        "results/rssm_diagnostics.json",
+        "scripts/rssm_diagnostics.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 82,
+    "M": 83,
     "O": 14,
     "R": 78,
     "S": 20,

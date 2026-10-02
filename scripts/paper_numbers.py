@@ -2415,8 +2415,22 @@ def main():
                        f'{_ovf[f"{_rule} {_a}_{_reg}_s7"]} |')
     assert len(_rt) == len(PR["by_family"]) and sum(_ovf.values()) == PR["n_runs_overlapped"]
     put("rt_pre_table", "\n".join(_rt), "results/presubmission_runtime.json")
-    assert X1["part_c"] is None, "X1 Part C has a reading: write section 5.3's Part C sentence from it (T9)"
-    put("rssm_partc_sentence", "Retraining variants are running (X1 Part C): both have trained, and neither is scored yet.", _x1s)
+    if X1["part_c"] is None:
+        put("rssm_partc_sentence", "Retraining variants are running (X1 Part C): both have trained, and neither is scored yet.", _x1s)
+    else:
+        # Round 2, T8: Part C has run (ledger M-83). The sentence reports the final reading verbatim and is
+        # bound to the artifact; it describes the case where neither variant rescues on seed 0, and asserts
+        # it, so any other reading stops the build until the sentence is rewritten for it.
+        _pc = X1["part_c"]
+        assert set(_pc) == {"V1", "V2"} and not any(r["seed0"] for r in _pc.values()), _pc
+        assert X1["final_reading"] == "NOT RESCUED BY THE SETTINGS TRIED", X1["final_reading"]
+        _rh = X1["arena"]["horizons"][2]
+        put("x1_final_reading", X1["final_reading"], _x1s)
+        put("rssm_partc_sentence",
+            f"Its two retraining variants, PlaNet's KL settings and DreamerV2's layer-normalised recurrent "
+            f"cell (X1 Part C, seed 0), each miss the rule's criterion at h = {_rh}, a mean below the "
+            f"hold-last floor with every trajectory below it, so rule X1 returns **{X1['final_reading']}** "
+            f"(ledger M-83).", _x1s)
 
     # --- Round 2, T5: Appendix H, the confirmed findings the body does not state ---------------
     # Each row's claim is asserted where its key is made. Rows with no artifact (source-code facts)

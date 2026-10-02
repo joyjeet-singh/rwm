@@ -2290,7 +2290,7 @@ ledger entry; change only this entry's Status line at discharge. Not: change the
 the number of samples, the seed, the floor, the criterion, or the variants; add a variant; or read any number
 here as bearing on M-75's or M-76's verdicts.
 **Evidence** `SRC` `scripts/rssm_diagnostics.py`; `RUN` `results/rssm_diagnostics.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/rssm_diagnostics.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/rssm_diagnostics.json`. **It returns NOT RESCUED BY THE SETTINGS TRIED.** Recorded in `M-83`. · **Relevance** METHOD
 
 ## S-12 — "Task 3's duplication rule was pre-registered"
 
