@@ -950,52 +950,14 @@ Error in an autoregressive rollout grows with depth, so the trivial competitor t
 
 **The third column asks whether disagreement merely re-encodes the clock.** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what disagreement knows is explained by how deep into the rollout you are: it carries real information about *this* rollout.
 
-**What survives removing each confound.** A linear partial is not much of a control: error
-does not grow linearly with depth, and a control that under-fits the index leaves index-driven
-variance in the residual and flatters disagreement. The first five rows after the pooled baseline
-below are **depth controls**, each partialling out a different model of how far into the rollout
-you are; the last four **decompose** the pooled figure into its between-trajectory and
-within-trajectory parts, and the last of those was pre-registered before it was computed (rule
-M-45, Appendix E). **One row is not comparable to the others**: the rank partial is a correlation
-of ranks rather than of values, so its being larger than the pooled figure says nothing about how
-much depth explains.
+**What survives removing each confound** (Appendix N). Across {{d2r_ncontrols}} models of how far
+into the rollout a step is, the weakest figure is {{d2r_weakest}}, so disagreement is not
+re-encoding the clock; but the pooled figure is in large part a between-rollout effect, so the
+statistic that matters holds both the rollout and the depth constant. Pre-registered as rule M-45,
+it gives {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}} 400-step trajectories, and the rule returns
+**{{m45_verdict}}**: disagreement still tracks error rather than merely reporting which episode is
+hard.
 
-| what is removed | correlation | 95% CI | what survives it |
-|---|---|---|---|
-| nothing (pooled) | {{a2_r_pooled}} | {{a2_r_pooled_ci}} | — |
-| the step index, linearly | {{d2b_par_all}} | — | depth explains {{d2b_shrink_all_abs}} of it, from {{d2b_epi_all}} |
-| log(1 + index) | {{d2r_log}} | {{d2r_log_ci}} | a non-linear model of depth |
-| a cubic in the index | {{d2r_cub}} | {{d2r_cub_ci}} | any polynomial trend in depth |
-| any monotone function of depth (rank partial) | {{d2r_spr}} | {{d2r_spr_ci}} | depth in any monotone form |
-| depth exactly, within each forecast step | **{{d2r_win}}** | {{d2r_win_ci}} | positive at {{d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_win_med}}[^stepcount] |
-| forecast-step means only | {{a2_step_only}} | — | the within-step control, pooled |
-| trajectory means only | {{a2_r_within}} | {{a2_r_within_ci}} | — |
-| everything within a trajectory — the {{a2_nind}} trajectory means alone | {{a2_r_between}} | {{a2_r_between_ci}} | do harder rollouts disagree more? |
-| **both, additively (r_dd)** | **{{a2_rdd}}** | **{{a2_rdd_ci}}** | **at a given depth, in a given rollout, does disagreement know?** |
-
-[^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent — structurally the same problem that §6.6's permutation null corrects for across the 45 coupled state dimensions (Appendix K). The count is descriptive; the interval {{d2r_win_ci}} is the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}.
-
-The weakest figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so disagreement
-is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong. But
-depth was never the only confound. Per-episode difficulty spans {{d12_lo}} to {{d12_hi}} and is
-uncorrelated with commanded speed, so if harder trajectories simply have both larger error and
-larger disagreement, the pooled correlation would look exactly as it does with disagreement
-carrying no within-rollout information at all. Two things pointed there: the
-{{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine per-step
-signal, and the within-step control coming out *above* the pooled figure, the signature of a
-between-unit effect.
-
-**The verdict.** The between-trajectory correlation is {{a2_r_between}} and the two components
-contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance, so a large
-part of what this section reports is a between-rollout effect. That reinterprets the within-step
-control: it is a mean of {{d2r_win_n}} between-trajectory correlations, which is why it reads
-{{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it. The decisive statistic is the
-double-demeaned one, and it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}},
-against the rule's pre-committed threshold that the interval exclude zero and a minimum detectable
-effect of {{p1_m45_mde}} from the bootstrap's standard error; a dilution study missed an effect of
-{{p1_m45_undetected}} and caught one of {{p1_m45_detected}}. **The rule returns
-{{m45_verdict}}**: with both the rollout and the depth held constant, disagreement still tracks
-error rather than merely reporting which episode is hard.
 **Per horizon, on the same {{a2_nind}} trajectories and the same kind of cluster bootstrap:** it is
 a separate run, so its h = {{v2_diag_h}} interval differs from the one above in the third
 decimal, as the pooled interval above does from §6.2's {{d4_ci}}.
@@ -1011,30 +973,16 @@ decimal, as the pooled interval above does from §6.2's {{d4_ci}}.
 
 *(h = 1 has one forecast step per trajectory, so there is nothing within a rollout to demean against and r_dd is undefined rather than zero.)*
 
-Two qualifications go with that. The within-rollout effect is **materially smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitioner should expect disagreement to separate *rollouts* better than it separates *moments within a rollout*. And it is **not established at short horizon**: r_dd's interval excludes zero at {{a2_excl_h}} and spans zero at {{a2_spans_h}}, where too few steps exist to demean against. At h = {{v2_deploy_h}} it is established, at {{a2_rdd_h100}} {{a2_rdd_ci_h100}}.
+The within-rollout effect is materially smaller than the pooled figure and not established at short
+horizon; at h = 1 the correlation ranks whole rollouts, on {{a2_h1_npoints}} trajectory-level points
+(Appendix N).
 
-**The h = 1 figure survives the same test, but it is not what it looked like.** At h = 1 the panel
-has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}} *trajectory-level* points
-and nothing within a rollout is being tested. Disagreement correlates {{a2_h1_speed_r}} with
-commanded speed and {{a2_h1_diff_r}} with per-episode difficulty, and partialling both out of the
-disagreement–error correlation leaves {{a2_h1_partial_both}}: it does not move, so the figure is
-real and not a difficulty artifact. It is nevertheless a statement about **ranking whole rollouts
-at one step ahead**, on {{a2_h1_npoints}} points, and §9 states it that way.
-
-**Does it hold on a model we trained?** Everything above is measured on the released checkpoint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed to git before the runs existed (rule M-43, Appendix E). It asked that disagreement lead the index at every horizon, and that the paired difference exclude zero at a majority of them.
-
-**It returns {{e5_verdict}}.** The first condition passes completely: disagreement leads
-the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired
-estimate positive, {{e5_diff_lo}} to {{e5_diff_hi}}. The second fails: the paired difference
-excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a majority. We report the
-verdict the rule returns and do not rewrite the rule, nor its denominator: it was committed over
-{{e5_n_horizons}} horizons, and adding h = {{v2_deploy_h}} after the fact would change what "a
-majority" means in a discharged rule. The released checkpoint's table above follows the six-horizon
-grid, because no pre-registration is stated over it, so the two counts are deliberately different.
-
-**What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = {{e5_nind}}, where the released checkpoint's finding used {{d1n_nind}}. Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, because the pool it subsamples is in-sample for these arms, where the effect is {{e5_eff_ins}} against {{e5_eff_oos}} on the held-out pair. So the rule was under-powered at the sample size it faced, decisively at one horizon. We do not claim it could not have passed, only that it was committed without checking what it could detect: a failure of ours, the same one the ledger records as M-24, a rule anchored without regard to the regime it would be applied in.
-
-*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions. It cannot discharge the rule, which is stated over the out-of-sample arena; we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.
+**Does it hold on a model we trained?** Three Arm A arms at ensemble size 5, under a rule
+committed before the runs (rule M-43, Appendix E), lead the index in **{{e5_lead_cells}} of
+{{e5_total_cells}}** seed-horizon cells, but the paired difference excludes zero at only
+{{e5_n_excl}} of {{e5_n_horizons}} horizons, so the rule returns **{{e5_verdict}}**. At
+n_independent = {{e5_nind}} 400-step trajectories it was under-powered, which we measured after the fact and should have
+checked before committing it (Appendix N).
 
 **We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result, making the trust metric close to vacuous, since a counter is free. We record that as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration. It did not go that way against the counter. It went that way against something else.
 
@@ -1077,13 +1025,6 @@ error well" is supported. "You need the ensemble to rank error" is not.
 
 **On this axis the follow-up's claim survives adversarial testing against a real baseline**, and
 that is the strongest form of support this paper offers any claim of either original work — now with the qualification that a free baseline comes closer to it than the counter did.
-
-*A note on the `undefined` cell.* The within-step control holds the forecast step fixed and
-correlates across trajectories, so it annihilates any quantity that is constant across
-trajectories at a fixed step — which is the forecast index, whose within-step correlation is
-therefore {{e7_index_ws}} rather than zero. It does **not** annihilate a per-trajectory scalar
-like `entry-res`, which varies across exactly the axis the control varies over. Rule M-51 said the
-opposite, and `M-54` records the correction.
 
 ### 6.8 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena
 
@@ -2143,5 +2084,88 @@ give intervals only, coarse for the same reason (the n = {{m23_nind}} caveat of 
 **The second (rule M-63, Appendix E) asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **{{m63_verdict}}**: the interquartile range across dimensions is {{m63_iqr}} points against a {{m63_iqr_thr}}-point threshold committed in advance, and the five worst dimensions carry well under half of the shortfall. **No channel is exempt.** The reading is coarse by construction: at h = 1 on {{d1n_nind}} trajectories a per-dimension coverage moves in {{m63_quant}}-point steps, a limit the rule fixed before the run.
 
 The last column of §6.2's released-checkpoint table gives permutation P-values over whole trajectories, not binomial ones, on the same {{perm_all_nind}} trajectories as the counts beside them; Appendix K explains why a binomial null is inadmissible here. h = {{v2_deploy_h}} is tested too, because it carries the abstract's headline figure. These are {{perm_n_tests_col_word}} tests on one family and none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells: the smallest is {{perm_all_holm_min_cell}} at {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Read the column as a consistency check on direction, not as {{perm_n_tests_col_word}} independent findings.
+
+---
+
+## Appendix N — section 6.7's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control
+
+**What survives removing each confound.** A linear partial is not much of a control: error
+does not grow linearly with depth, and a control that under-fits the index leaves index-driven
+variance in the residual and flatters disagreement. The first five rows after the pooled baseline
+below are **depth controls**, each partialling out a different model of how far into the rollout
+you are; the last four **decompose** the pooled figure into its between-trajectory and
+within-trajectory parts, and the last of those was pre-registered before it was computed (rule
+M-45, Appendix E). **One row is not comparable to the others**: the rank partial is a correlation
+of ranks rather than of values, so its being larger than the pooled figure says nothing about how
+much depth explains.
+
+| what is removed | correlation | 95% CI | what survives it |
+|---|---|---|---|
+| nothing (pooled) | {{a2_r_pooled}} | {{a2_r_pooled_ci}} | — |
+| the step index, linearly | {{d2b_par_all}} | — | depth explains {{d2b_shrink_all_abs}} of it, from {{d2b_epi_all}} |
+| log(1 + index) | {{d2r_log}} | {{d2r_log_ci}} | a non-linear model of depth |
+| a cubic in the index | {{d2r_cub}} | {{d2r_cub_ci}} | any polynomial trend in depth |
+| any monotone function of depth (rank partial) | {{d2r_spr}} | {{d2r_spr_ci}} | depth in any monotone form |
+| depth exactly, within each forecast step | **{{d2r_win}}** | {{d2r_win_ci}} | positive at {{d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_win_med}}[^stepcount] |
+| forecast-step means only | {{a2_step_only}} | — | the within-step control, pooled |
+| trajectory means only | {{a2_r_within}} | {{a2_r_within_ci}} | — |
+| everything within a trajectory — the {{a2_nind}} trajectory means alone | {{a2_r_between}} | {{a2_r_between_ci}} | do harder rollouts disagree more? |
+| **both, additively (r_dd)** | **{{a2_rdd}}** | **{{a2_rdd_ci}}** | **at a given depth, in a given rollout, does disagreement know?** |
+
+[^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent — structurally the same problem that §6.6's permutation null corrects for across the 45 coupled state dimensions (Appendix K). The count is descriptive; the interval {{d2r_win_ci}} is the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}.
+
+The weakest figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so disagreement
+is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong. But
+depth was never the only confound. Per-episode difficulty spans {{d12_lo}} to {{d12_hi}} and is
+uncorrelated with commanded speed, so if harder trajectories simply have both larger error and
+larger disagreement, the pooled correlation would look exactly as it does with disagreement
+carrying no within-rollout information at all. Two things pointed there: the
+{{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine per-step
+signal, and the within-step control coming out *above* the pooled figure, the signature of a
+between-unit effect.
+
+**The verdict.** The between-trajectory correlation is {{a2_r_between}} and the two components
+contribute {{a2_share_between}}% and {{a2_share_within}}% of the pooled covariance, so a large
+part of what §6.7 reports is a between-rollout effect. That reinterprets the within-step
+control: it is a mean of {{d2r_win_n}} between-trajectory correlations, which is why it reads
+{{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it. The decisive statistic is the
+double-demeaned one, and it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}},
+against the rule's pre-committed threshold that the interval exclude zero and a minimum detectable
+effect of {{p1_m45_mde}} from the bootstrap's standard error; a dilution study missed an effect of
+{{p1_m45_undetected}} and caught one of {{p1_m45_detected}}. **The rule returns
+{{m45_verdict}}**: with both the rollout and the depth held constant, disagreement still tracks
+error rather than merely reporting which episode is hard.
+
+Two qualifications go with that. The within-rollout effect is **materially smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitioner should expect disagreement to separate *rollouts* better than it separates *moments within a rollout*. And it is **not established at short horizon**: r_dd's interval excludes zero at {{a2_excl_h}} and spans zero at {{a2_spans_h}}, where too few steps exist to demean against. At h = {{v2_deploy_h}} it is established, at {{a2_rdd_h100}} {{a2_rdd_ci_h100}}.
+
+**The h = 1 figure survives the same test, but it is not what it looked like.** At h = 1 the panel
+has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}} *trajectory-level* points
+and nothing within a rollout is being tested. Disagreement correlates {{a2_h1_speed_r}} with
+commanded speed and {{a2_h1_diff_r}} with per-episode difficulty, and partialling both out of the
+disagreement–error correlation leaves {{a2_h1_partial_both}}: it does not move, so the figure is
+real and not a difficulty artifact. It is nevertheless a statement about **ranking whole rollouts
+at one step ahead**, on {{a2_h1_npoints}} points, and §9 states it that way.
+
+**Does it hold on a model we trained?** Everything else in §6.7 is measured on the released checkpoint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed to git before the runs existed (rule M-43, Appendix E). It asked that disagreement lead the index at every horizon, and that the paired difference exclude zero at a majority of them.
+
+**It returns {{e5_verdict}}.** The first condition passes completely: disagreement leads
+the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired
+estimate positive, {{e5_diff_lo}} to {{e5_diff_hi}}. The second fails: the paired difference
+excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a majority. We report the
+verdict the rule returns and do not rewrite the rule, nor its denominator: it was committed over
+{{e5_n_horizons}} horizons, and adding h = {{v2_deploy_h}} after the fact would change what "a
+majority" means in a discharged rule. §6.7's released-checkpoint table follows the six-horizon
+grid, because no pre-registration is stated over it, so the two counts are deliberately different.
+
+**What separates the two conditions is sample size, and we measured that rather than asserting it.** Our own arms can only be scored out-of-sample on the held-out pair, n_independent = {{e5_nind}}, where the released checkpoint's finding used {{d1n_nind}}. Subsampling four trajectories at a time from a twenty-trajectory pool, the rule's criterion fires on {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, because the pool it subsamples is in-sample for these arms, where the effect is {{e5_eff_ins}} against {{e5_eff_oos}} on the held-out pair. So the rule was under-powered at the sample size it faced, decisively at one horizon. We do not claim it could not have passed, only that it was committed without checking what it could detect: a failure of ours, the same one the ledger records as M-24, a rule anchored without regard to the regime it would be applied in.
+
+*Reported as a companion and not as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** for these arms, which trained on eight of them) the same measurement excludes zero at {{e5_comp_excl}} of {{e5_comp_n}} horizons and would have satisfied both conditions. It cannot discharge the rule, which is stated over the out-of-sample arena; we record it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like.
+
+*A note on the `undefined` cell in §6.7's table of free baselines.* The within-step control holds the forecast step fixed and
+correlates across trajectories, so it annihilates any quantity that is constant across
+trajectories at a fixed step — which is the forecast index, whose within-step correlation is
+therefore {{e7_index_ws}} rather than zero. It does **not** annihilate a per-trajectory scalar
+like `entry-res`, which varies across exactly the axis the control varies over. Rule M-51 said the
+opposite, and `M-54` records the correction.
 
 ---
