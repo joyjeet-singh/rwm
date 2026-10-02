@@ -413,9 +413,8 @@ between disagreement and error. The exceptions are the configuration claim and t
 claim, whose values one heatmap prints in every cell (§5.2). For the teacher-forced {{mn_n1_label}}
 it prints {{orig_tf_e_n1}} against {{orig_tf_e_centre}} at the centre, {{orig_tf_ratio}}× worse, on
 evaluation data and at a horizon it does not state; our sweep's {{mn_n1_label}} is
-{{mn_tf_ratio}}× worse on relative-L1 at h = {{v2_diag_h}}. Our {{d1_ratio}}× compares Arm B,
-which trains on {{win_fore}} teacher-forced targets per window rather than one
-(`docs/presubmission/ORIGINAL_SPECS.md` §2), so it neither confirms nor contradicts that figure. Where a magnitude is legible only from a plotted curve we say so rather
+{{mn_tf_ratio}}× worse on relative-L1 at h = {{v2_diag_h}}. Our {{d1_ratio}}× uses a different definition of teacher forcing
+(`docs/presubmission/ORIGINAL_SPECS.md` §2); §5 relates the two. Where a magnitude is legible only from a plotted curve we say so rather
 than estimating it from the axis.
 
 **Appendix D gives the full table**, claim by claim, with what the original states, where it
@@ -451,8 +450,10 @@ excludes zero at both trajectory lengths (`results/review_bootstrap_unit.json`).
 
 *The out-of-sample effect size, at every horizon.* At h = {{v2_diag_h}}, the rule's horizon,
 autoregressive training reaches **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's
-**{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`), a factor of
-**{{d1_ratio}}×**. At h = {{v2_deploy_h}}, the method's own imagination rollout length and the
+**{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`), a factor of **{{d1_ratio}}×**. Arm B predicts each of the window's {{win_fore}} forecast targets from
+true inputs, where the original's teacher forcing is N = 1; the sweep's {{mn_n1_label}}, trained that way, is
+{{mn_tf_ratio}}× worse than the centre at h = {{v2_diag_h}} (§5.2), so the claim holds under both definitions.
+At h = {{v2_deploy_h}}, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **{{d1_ratio_h100}}×**.
 Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
 same {{d1_seeds}} seeds at {{iters_long}} training iterations, same held-out arena,
