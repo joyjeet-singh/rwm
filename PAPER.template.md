@@ -678,18 +678,36 @@ column is timed beside RWM in one sitting (`results/mn_compute_matched.json`); h
 Appendix B.
 
 **Result: {{bl_tf_verdict}} with the baselines teacher-forced, and {{bl_ar_verdict}} with them
-trained autoregressively.** All {{bl_n_rows_word}} comparisons favour RWM, with intervals that
-exclude zero, and every baseline row is above the hold-last floor at h = {{v2_diag_h}}, which RWM is
-below. The second verdict compares architectures at one training regime and is not a verdict on the
-original's claim, which the first carries. The lead is a long-horizon one.
-At h = 1 both rules return {{bl_tf_h1}}, and the teacher-forced RSSM's error, {{h2h_bl_rssm_tf_l1_h1}},
-is below RWM's {{h2h_armA_l1_h1}} without being resolvable. At h = 8 both return {{bl_tf_h8}}.
+trained autoregressively.** RWM is ahead of baselines built to our reading of Table S7 and trained
+with RWM's settings for {{iters_main}} iterations: all {{bl_n_rows_word}} comparisons favour it, with
+intervals that exclude zero. That says less than it seems at h = {{v2_diag_h}}, where every baseline
+row, in both regimes, is above the hold-last floor and RWM is below it: no baseline beats predicting
+no change. The second verdict compares architectures at one training regime and is not a verdict on
+the original's claim, which the first carries. The lead is a long-horizon one, and the rules'
+relative-L1 readings at other horizons say where it starts. Teacher-forced, the baselines fall
+resolvably behind from {{bl_tf_lead_from}} (the transformer from {{bl_tf_tr_lead_from}}).
+Trained autoregressively, the RSSM falls behind from {{bl_ar_rssm_lead_from}}, but the MLP and the transformer only from {{bl_ar_lead_from}}, the method's own horizon, where they trail by
+{{bl_ar_mlp_D_h100}} {{bl_ar_mlp_ci_h100}}, about {{bl_ar_mlp_pct_h100}}% of RWM's
+{{h2h_armA_l1_h100}}, and {{bl_ar_tr_D_h100}} {{bl_ar_tr_ci_h100}}. Before those horizons a baseline
+cannot be told apart from RWM: at h = 1 both rules return {{bl_tf_h1}}, and at h = 8 both return
+{{bl_tf_h8}}.
 
-**Where ours departs.** The original adds that an RSSM trained autoregressively
-performs comparably to RWM. Ours does not: {{h2h_bl_rssm_ar_l1_h368}} against RWM's
-{{bl_rwm_l1_h368}} at h = {{v2_diag_h}}. That may be our RSSM rather than the architecture: Table
-S7's latent is ambiguous, and we read it in DreamerV2's naming, without its layer-normalised
-recurrent cell (`BASELINE_SPECS.md`, the RSSM rows).
+**Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate model here one
+step ahead, {{h2h_bl_rssm_tf_l1_h1}} against RWM's {{h2h_armA_l1_h1}} and the floor's {{x1_floor_h1}},
+though not resolvably, and it has collapsed open-loop by h = 32, where its {{x1_tf_mode_h32}} is above
+the floor's {{x1_floor_h32}}. The original adds that an RSSM trained autoregressively performs
+comparably to RWM; ours does not, {{h2h_bl_rssm_ar_l1_h368}} against RWM's {{bl_rwm_l1_h368}} at
+h = {{v2_diag_h}}. A diagnostic committed before its readings existed (rule X1, ledger M-80;
+exploratory, it re-opens neither rule) asks why. Its Part A reads the forecast differently, feeding
+the prior's expected or sampled latent in place of its most likely one: the error at h = 32 falls to
+{{x1_tf_exp_h32}} and {{x1_tf_samp_h32}}, still above the floor, so it returns **{{x1_reading_a}}**
+(M-81). Its Part B is descriptive: over the history, the teacher-forced RSSM's one-step error from its
+prior is {{x1b_tf_ratio_lo}} to {{x1b_tf_ratio_hi}}× its error from its posterior at the same
+recurrent state (the autoregressive one's at most {{x1b_ar_ratio_hi}}×), with {{x1b_kl_lo}} to
+{{x1b_kl_hi}} nats of KL divergence between them per step. {{rssm_partc_sentence}} The failure may be
+our RSSM rather than the architecture: Table S7's latent is ambiguous, and we read it in DreamerV2's
+naming, without its layer-normalised recurrent cell (`BASELINE_SPECS.md`, the RSSM rows). Until X1
+says otherwise, the architecture claim rests on the MLP and the transformer.
 
 **Limits.** One robot on flat ground; the original has several environments. The baselines
 are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and
