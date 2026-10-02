@@ -90,7 +90,7 @@ Two headline claims were formed, promoted and then **retracted on this project's
 | `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm and its duplication control (`R-56`) |
 | `D-` dataset properties and paper-verification findings | 36 | `D-14`'s four defects, all one class; `D-15`'s three typed measurements |
 | `M-` methodological findings | 79 | `M-49` pre-registers the capacity-matched test of §6.10, with the MDE that says what it can and cannot resolve |
-| `R-` measured results | 75 | — |
+| `R-` measured results | 78 | — |
 | `O-` open questions | 14 | — |
 | `X-` deliberate deviations | 17 | — |
 | `S-` superseded, retained | 20 | — |

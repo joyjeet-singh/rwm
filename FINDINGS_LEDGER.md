@@ -8372,3 +8372,126 @@ Training time: 9 runs, 7.01 h
 (`results/presubmission_runtime.json`); none overlapped a logged CPU job.
 **Evidence** `RUN` `results/baselines_verdict.json`, `results/baselines_eval.json`, `results/presubmission_runtime.json`; the nine run artifacts of this regime (results/baseline_run_…_ar_s7_seed….json); `SRC` `scripts/verdict_baselines.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-76 — The alignment defect's cost depends on the horizon, and our own checkpoints barely feel it (post hoc) · **NEW**
+**Post hoc** (round 2, analysis N1). Not pre-registered; it re-opens no rule and changes no verdict.
+
+**What was measured.** The overstatement err(offset 0) / err(offset 1) − 1 — the released evaluation's
+pairing (each prediction with the previous row's action) over training's causal pairing — at every
+horizon section 3.1 uses, cumulative over steps 1..h, on the released checkpoint and on our Arm A.
+The statistic, the rollout and the bootstrap are `scripts/alignment_defect_ci.py`'s, imported and
+run with its horizon set to each h: 95% cluster bootstrap over whole trajectories with both pairings
+inside each draw, exact over all 256 resamples on the held-out pair (n_independent = 4), 20,000 Monte
+Carlo resamples (seed 0) over all ten episodes (n_independent = 20). At h = 368 the script reproduces
+`results/alignment_defect_ci.json` to 1e-9 in both arenas.
+
+**The released checkpoint.** Relative-L1 and nRMSE form 1, overstatement with its interval:
+
+| h | held-out pair, rel-L1 | held-out pair, nRMSE | all ten episodes, rel-L1 | all ten episodes, nRMSE |
+|---|---|---|---|---|
+| 1 | +34.22% [+10.57, +75.00] | +50.99% [+11.81, +88.01] | +54.99% [+26.29, +92.66] | +7.44% [-14.83, +87.75] |
+| 8 | +37.21% [+7.94, +95.59] | +59.84% [+12.39, +97.79] | +54.41% [+37.50, +82.34] | +31.52% [+24.67, +68.15] |
+| 32 | +47.72% [+5.77, +131.77] | +99.59% [+11.93, +170.52] | +37.45% [+21.30, +65.43] | +17.36% [+7.71, +47.38] |
+| 100 | +22.49% [+6.32, +41.69] | +27.65% [+7.60, +40.89] | +8.18% [-10.39, +24.88] | +7.87% [-18.87, +32.94] |
+| 128 | +20.28% [+6.96, +35.67] | +21.62% [+5.89, +28.69] | -8.79% [-23.77, +4.86] | -8.33% [-30.26, +5.77] |
+| 368 | +7.88% [+3.11, +13.02] | +6.55% [+0.95, +7.97] | -4.64% [-13.36, +3.17] | -2.14% [-9.97, +3.95] |
+
+On the held-out pair the relative-L1 interval excludes zero at h = 1, 8, 32, 100, 128, 368; at h = 1 the stale
+action raises the error by +34.22% [+10.57, +75.00]. Over all ten episodes (in-sample for this checkpoint) the
+relative-L1 interval excludes zero at h = 1, 8, 32, and the point estimate is negative at
+h = 128, 368. On the held-out pair the relative-L1 overstatement is largest at h = 32
+(+47.72%) and smallest at h = 368 (+7.88%): the cost is concentrated at short horizons,
+and at h = 368 it is the small, sign-unstable figure section 7.2 already reports.
+
+**Our Arm A**, trained under the causal pairing, on the held-out pair: relative-L1 overstatement,
+3-seed mean (seeds 0, 1, 2):
+
+| h | 2,500 iterations | 10,000 iterations |
+|---|---|---|
+| 1 | -0.13% (-0.21%, -0.25%, +0.06%) | -0.22% (-0.33%, -0.11%, -0.22%) |
+| 8 | -0.28% (-0.18%, -0.31%, -0.34%) | +0.33% (-0.21%, +0.56%, +0.64%) |
+| 32 | +0.80% (+1.00%, +0.90%, +0.50%) | +0.69% (+1.04%, +0.17%, +0.87%) |
+| 100 | +0.93% (+1.12%, +0.59%, +1.08%) | +0.76% (+1.13%, +0.27%, +0.89%) |
+| 128 | +0.82% (+1.07%, +0.56%, +0.84%) | +0.65% (+0.92%, +0.24%, +0.80%) |
+| 368 | +0.16% (+0.28%, +0.09%, +0.10%) | +0.15% (+0.22%, +0.03%, +0.19%) |
+
+Every 3-seed mean, in both metrics and at both checkpoints, is within 0.93% of zero: our checkpoints are
+almost insensitive to the stale pairing, so the model card's untested sentence that a consumer feeding
+actions the other way "will get materially worse numbers" is not borne out for these checkpoints.
+**Evidence** `RUN` `results/alignment_by_horizon.json`; `SRC` `scripts/alignment_by_horizon.py`, `scripts/alignment_defect_ci.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-77 — The sweep and baseline evaluators averaged nRMSE per trajectory where section 3.1 pools it; pooled, no held-out alongside reading changes (post hoc) · **NEW**
+**Post hoc** (round 2, analysis N2). Not pre-registered; no discharged rule is re-opened and no committed
+evaluation or verdict artifact is edited.
+
+**The deviation.** Section 3.1's nRMSE form 1 (`rwm_metrics.nrmse_pooled`) pools squared error across
+trajectories before the root, as `scripts/head_to_head_accuracy.py` does. `scripts/mn_sweep_eval.py`
+and `scripts/baselines_eval.py` applied form 1 to each trajectory alone and their consumers averaged
+those values. For RWM (Arm A, 2,500 iterations) at h = 368 on the held-out pair the two give
+0.5425 pooled and 0.4911 averaged.
+
+**Re-run** with the evaluators' own `score()`: the sweep's centre and eight configurations and the six
+Table S7 baseline families, seeds 0-2, both arenas, all six horizons. Asserted first, all passing:
+the centre's pooled values equal the head-to-head table's (max difference
+0.0e+00); every per-trajectory relative-L1 and nRMSE equals the committed evaluators'
+(max 0.0e+00); and the reading machinery, run with the rules' own
+per-trajectory statistic, reproduces all 32 committed alongside nRMSE readings of M-74, M-75 and M-76 exactly.
+
+**The pooled readings.** The verdict scripts' reading function takes per-trajectory differences, which
+pooled nRMSE does not have, so each alongside nRMSE reading was recomputed with the rule's design and
+only the statistic changed: 3-seed mean pooled nRMSE minus the reference's, recomputed on each of the
+rule's own resamples, with the rules' p, interval, Holm and branch functions. **The governing verdicts
+use relative-L1 at h = 368 and are unaffected.** Readings whose result changes under pooling:
+M-75, in_sample, nRMSE at h = 1: CANNOT BE SETTLED → DOES NOT REPRODUCE; M-76, in_sample, nRMSE at h = 100: RWM AHEAD OF ALL THREE → PARTIAL. Reported, never substituted into a discharged rule
+(`results/pooled_nrmse_alongside.json` holds every reading side by side).
+
+**The diverged flag**, defined here before any table renders it: a model row is diverged if any seed's mean relative-L1 over the held-out trajectories at h = 368 exceeds 10x the hold-last floor's. Flagged:
+`mlp_tf_s7` (181.5, 16.0, 238.0 against a threshold of 9.93), `rssm_ar_s7` (9.9, 10.8, 11.3 against a threshold of 9.93), `transformer_tf_s7` (11.2, 10.4, 23.9 against a threshold of 9.93).
+**Evidence** `RUN` `results/pooled_nrmse_rescore.json`, `results/pooled_nrmse_alongside.json`; `SRC` `scripts/pooled_nrmse_rescore.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-78 — (32, 32)'s advantage over the centre survives giving the centre twice the training compute, and every run is still learning at 2,500 iterations (post hoc) · **NEW**
+**Post hoc** (round 2, analysis N3). Not pre-registered: section 5 had already printed the centre at
+10,000 iterations on the same four held-out trajectories (round 2 PREFLIGHT.md, P2). M-74's verdict
+(M-77) is not re-opened; no Holm step is applied and no verdict is returned.
+
+**Cost per iteration, relative to the centre (32, 8).** The sweep's from `results/mn_sweep_timing.json`,
+whose probes ran uncontended (PREFLIGHT.md, P3): M16_N8 0.60x, M1_N8 0.23x, M2_N8 0.26x, M32_N1 0.81x, M32_N16 1.35x, M32_N2 0.95x, M32_N32 1.81x, M8_N8 0.40x.
+The six baseline families were re-probed for 50 iterations beside a same-sitting centre probe
+(1.330 s per iteration, against round 1's 1.069):
+mlp_tf_s7 0.07x, rssm_tf_s7 2.37x, transformer_tf_s7 0.91x, mlp_ar_s7 0.08x, rssm_ar_s7 1.99x, transformer_ar_s7 0.97x.
+
+**The centre at more compute.** Arm A's 10k runs scored with the sweep's evaluator; the 2,500
+checkpoint reproduces the sweep's centre row (max difference 0.0e+00). Held-out relative-L1,
+3-seed mean, at h = 368: 2,500 iterations 0.5856, 5,000 iterations 0.5018, 7,500 iterations 0.3854, 10,000 iterations 0.3582.
+
+**The reading**, M-74's statistic and interval (exact, 256 resamples, n_independent = 4), relative-L1,
+negative favouring the configuration; compute is the configuration's total training compute over the
+centre's at k:
+
+| comparison | compute | h = 100 | h = 368 |
+|---|---|---|---|
+| M2_N8 @ 2,500 vs centre @ 2,500 | 0.26x | -0.1274 [-0.2175, -0.0373] | -0.1139 [-0.2988, -0.0088] |
+| M2_N8 @ 2,500 vs centre @ 5,000 | 0.13x | -0.0742 [-0.1586, +0.0101] | -0.0301 [-0.1976, +0.0711] |
+| M2_N8 @ 2,500 vs centre @ 10,000 | 0.07x | -0.0176 [-0.0921, +0.0475] | +0.1135 [+0.0983, +0.1357] |
+| M32_N16 @ 2,500 vs centre @ 2,500 | 1.35x | -0.1254 [-0.2054, -0.0454] | -0.2509 [-0.5218, -0.0956] |
+| M32_N16 @ 2,500 vs centre @ 5,000 | 0.68x | -0.0723 [-0.1466, +0.0020] | -0.1671 [-0.4301, -0.0117] |
+| M32_N16 @ 2,500 vs centre @ 10,000 | 0.34x | -0.0157 [-0.0707, +0.0393] | -0.0235 [-0.1158, +0.0388] |
+| M32_N32 @ 2,500 vs centre @ 2,500 | 1.81x | -0.1450 [-0.2490, -0.0409] | -0.2869 [-0.5951, -0.1005] |
+| M32_N32 @ 2,500 vs centre @ 5,000 | 0.90x | -0.0918 [-0.1901, +0.0065] | -0.2031 [-0.5033, -0.0275] |
+| M32_N32 @ 2,500 vs centre @ 10,000 | 0.45x | -0.0352 [-0.1142, +0.0438] | -0.0594 [-0.1903, +0.0340] |
+| M8_N8 @ 2,500 vs centre @ 2,500 | 0.40x | -0.0755 [-0.1410, -0.0269] | -0.1004 [-0.2449, -0.0167] |
+| M8_N8 @ 2,500 vs centre @ 5,000 | 0.20x | -0.0223 [-0.0782, +0.0244] | -0.0166 [-0.1434, +0.0719] |
+| M8_N8 @ 2,500 vs centre @ 10,000 | 0.10x | +0.0343 [-0.0198, +0.0719] | +0.1270 [+0.0987, +0.1589] |
+
+The best neighbour at h = 368 under M-74 is M32_N32; against the centre at 5,000 iterations its h = 368
+difference is -0.2031 [-0.50, -0.03], so Annex 3's variant (a) applies.
+Against the centre at 10,000 iterations, at h = 368: (2, 8) the centre ahead; (32, 16) not resolved; (32, 32) not resolved; (8, 8) the centre ahead.
+
+**Non-convergence.** The state-loss slope over the final 250 iterations is negative for all
+48 runs at 2,500 iterations (sweep, Table S7 baselines, Arm A and Arm B), from -1.99e-03 to
+-9.15e-05 per iteration; at 10,000 iterations 5 of 6 Arm A and Arm B runs are still falling.
+The sweep's ranking is a ranking at this budget, not at convergence.
+**Evidence** `RUN` `results/mn_compute_matched.json`, `results/training_tail_slopes.json`; `SRC` `scripts/mn_compute_matched.py`, `scripts/training_tail_slopes.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

@@ -3374,6 +3374,60 @@
         "scripts/verdict_baselines.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-76",
+      "claim": "The alignment defect's cost depends on the horizon, and our own checkpoints barely feel ",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/alignment_by_horizon.json",
+        "results/alignment_defect_ci.json",
+        "scripts/alignment_by_horizon.py",
+        "scripts/alignment_defect_ci.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-77",
+      "claim": "The sweep and baseline evaluators averaged nRMSE per trajectory where section 3.1 pools ",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/pooled_nrmse_alongside.json",
+        "results/pooled_nrmse_rescore.json",
+        "scripts/baselines_eval.py",
+        "scripts/head_to_head_accuracy.py",
+        "scripts/mn_sweep_eval.py",
+        "scripts/pooled_nrmse_rescore.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "R-78",
+      "claim": "(32, 32)'s advantage over the centre survives giving the centre twice the training compu",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/mn_compute_matched.json",
+        "results/mn_sweep_timing.json",
+        "results/training_tail_slopes.json",
+        "scripts/mn_compute_matched.py",
+        "scripts/training_tail_slopes.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -3382,7 +3436,7 @@
     "D": 36,
     "M": 79,
     "O": 14,
-    "R": 75,
+    "R": 78,
     "S": 20,
     "X": 17
   },

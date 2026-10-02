@@ -106,3 +106,6 @@ One row per CONTRIB ledger entry.
 | `M-77` | `M-74` discharged: the centre (M, N) = (32, 8) returns NOT OPTIMAL AT OUR BUDGET | `RUN`, `SRC` | CONFIRMED | `results/mn_sweep_eval.json`, `results/mn_sweep_verdict.json` |
 | `M-78` | `M-75` discharged: the architecture claim, baselines teacher-forced, returns REPRODUCES | `RUN`, `SRC` | CONFIRMED | `results/baselines_eval.json`, `results/baselines_verdict.json` |
 | `M-79` | `M-76` discharged: the architecture claim, baselines autoregressive, returns RWM AHEAD O | `RUN`, `SRC` | CONFIRMED | `results/baselines_eval.json`, `results/baselines_verdict.json` |
+| `R-76` | The alignment defect's cost depends on the horizon, and our own checkpoints barely feel  | `RUN`, `SRC` | CONFIRMED | `results/alignment_by_horizon.json`, `results/alignment_defect_ci.json` |
+| `R-77` | The sweep and baseline evaluators averaged nRMSE per trajectory where section 3.1 pools  | `RUN`, `SRC` | CONFIRMED | `results/pooled_nrmse_alongside.json`, `results/pooled_nrmse_rescore.json` |
+| `R-78` | (32, 32)'s advantage over the centre survives giving the centre twice the training compu | `RUN`, `SRC` | CONFIRMED | `results/mn_compute_matched.json`, `results/mn_sweep_timing.json` |
