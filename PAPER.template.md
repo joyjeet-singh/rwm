@@ -600,16 +600,17 @@ bootstrap over trajectories, with Holm's correction holding the chance of any fa
 family at α = 0.05. Training time is reported and governs nothing: hours on
 two CPU cores are not what the original timed on a GPU.
 
-| (M, N) | relative-L1, h = {{v2_deploy_h}} | relative-L1, h = {{v2_diag_h}} | difference from the centre [95% interval] | result | hours per run |
+| (M, N) | relative-L1, h = {{v2_deploy_h}} | relative-L1, h = {{v2_diag_h}} | difference from the centre [95% interval] | result | cost per iteration, relative to the centre |
 |---|---|---|---|---|---|
 {{mn_table}}
 
 **Arena: {{h2h_arena}}, episodes {{h2h_episodes}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind}}.** Each row is the
 mean over {{mn_seeds_word}} seeds at {{iters_main}} iterations (`results/mn_sweep_eval.json`). A
 difference is positive when the centre is better, and "result" is after Holm
-(`results/mn_sweep_verdict.json`). Hours are wall clock per run (`results/presubmission_runtime.json`);
-{{mn_n_overlapped}} of the {{rt_sweep_runs}} sweep runs overlapped other logged CPU work, which
-inflates their hours and changes no weight (Appendix B). The hold-last floor is {{mn_floor_h100}} at h = {{v2_deploy_h}} and {{mn_floor_h368}} at h = {{v2_diag_h}}.
+(`results/mn_sweep_verdict.json`). The last column is a configuration's steady training time per
+iteration over the centre's, timed without contention (`results/mn_compute_matched.json`); hours per
+run, and the {{mn_n_overlapped}} of {{rt_sweep_runs}} sweep runs that overlapped other logged CPU work,
+are in Appendix B. The hold-last floor is {{mn_floor_h100}} at h = {{v2_deploy_h}} and {{mn_floor_h368}} at h = {{v2_diag_h}}.
 
 **Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre, {{mn_worse_list}} are worse, and
 {{mn_unres_list}} cannot be told apart from it. At h = {{v2_diag_h}} the lowest error is {{mn_best_config}}'s,
@@ -617,17 +618,35 @@ inflates their hours and changes no weight (Appendix B). The hold-last floor is 
 {{mn_best_ci}}. The verdict does not rest on the anchor: on the in-sample arena's {{mn_nind_ins}} independent {{h2h_unit}}-step trajectories, {{mn_insample_clause}}, and among the held-out readings the rule
 reports alongside, {{mn_alongside_clause}}.
 
-The original's direction on N holds. The shortest forecasts are far worse, which is §5's
-teacher-forcing result again, and the longest are better. Its direction on M holds only in part. The
-original's error falls steeply from M = 1 to M = 8 and then flattens (`ORIGINAL_SPECS.md` a.5). On
-the governing reading ours does not fall at all: {{mn_mvar_better_list}} beat the centre and no
-shorter history is resolvably worse, though other readings the rule reports put
-shorter histories behind it: {{mn_mvar_other_worse}}. The centre's tie with its longest-forecast neighbour becomes a loss.
+**The history length departs furthest from the original.** The original's error falls steeply
+from M = 1 to M = 8 and then flattens (`ORIGINAL_SPECS.md` a.5). On the governing reading ours does
+not fall at all: {{mn_mvar_better_list}}, histories shorter than the centre's, beat it, and no
+shorter history is resolvably worse, though other readings the rule reports put shorter histories
+behind it: {{mn_mvar_other_worse}}. The original's direction on N holds: the shortest forecasts
+are far worse, which is §5's teacher-forcing result again, and the longest are better, so the
+centre's tie with its longest-forecast neighbour becomes a loss.
+
+**Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per
+iteration, {{n3_cost_M32_N16}}× the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}× for {{mn_best_config}}, so at
+a given iteration count those also had more computation; the shorter histories that win cost less,
+{{n3_cost_M8_N8}}× and {{n3_cost_M2_N8}}×. Training the centre longer controls for this
+(`results/mn_compute_matched.json`; differences signed as in the table). At {{n3_k_mid}} iterations
+the centre has had {{n3_best_over_mid}}× the computation of {{mn_best_config}} at {{iters_main}}, and
+{{mn_best_config}} is still ahead at h = {{v2_diag_h}}, a difference of {{n3_best_D_mid}}
+{{n3_best_ci_mid}}, so its advantage is not an artefact of extra computation per iteration. That is
+as far as it goes. At {{iters_long}} iterations, {{n3_best_over_long}}× the computation, the
+difference is {{n3_best_D_long}} {{n3_best_ci_long}}, not resolved; on the in-sample arena the centre
+at {{n3_k_mid}} already draws level with {{mn_best_config}} ({{n3_best_ins_D_mid}} {{n3_best_ins_ci_mid}})
+and passes {{n3_lf_label}} ({{n3_lf_ins_D_mid}} {{n3_lf_ins_ci_mid}}); and at {{iters_long}} it passes
+both shorter histories, {{n3_sh_long_clause}}. None of this re-opens rule M-74.
 
 **Limits.** One factor is varied at a time, so no interaction between M and N is tested. Our data
 budget is {{c2_pct}}% of the reference's (§5.1), and the original states neither the ablation's
 budget, its evaluation data nor the horizon behind its error, so the verdict holds at our budget and
-no further: a larger one may favour a longer history. With {{mn_nind}} independent trajectories, the rule's minimum detectable effect at h = {{v2_diag_h}},
+no further: a larger one may favour a longer history. All {{tail_n}} runs at {{iters_main}} iterations,
+the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes
+from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`,
+post hoc), so the ranking is at this budget, not at convergence. With {{mn_nind}} independent trajectories, the rule's minimum detectable effect at h = {{v2_diag_h}},
 the difference its first Holm step would usually detect, is about {{mn_mde_h368}}% of the centre's
 error.
 
@@ -648,14 +667,15 @@ teacher-forced, as the original does. M-76 trains them autoregressively, as RWM 
 as RWM and test each baseline's relative-L1 at h = {{v2_diag_h}} against it, on §5.2's arena with
 §5.2's bootstrap and Holm correction.
 
-| model | parameters | relative-L1, h = {{v2_deploy_h}} | relative-L1, h = {{v2_diag_h}} | difference from RWM [95% interval] | result | hours per run |
+| model | parameters | relative-L1, h = {{v2_deploy_h}} | relative-L1, h = {{v2_diag_h}} | difference from RWM [95% interval] | result | cost per iteration, relative to RWM |
 |---|---|---|---|---|---|---|
 {{bl_table}}
 
 **Arena as in §5.2: {{h2h_arena}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind}}.** Each row is the mean over
 {{mn_seeds_word}} seeds at {{iters_main}} iterations (`results/baselines_eval.json`). A difference is
-positive when RWM is better, and "result" is after Holm (`results/baselines_verdict.json`); hours
-are as in §5.2.
+positive when RWM is better, and "result" is after Holm (`results/baselines_verdict.json`). The last
+column is timed beside RWM in one sitting (`results/mn_compute_matched.json`); hours per run are in
+Appendix B.
 
 **Result: {{bl_tf_verdict}} with the baselines teacher-forced, and {{bl_ar_verdict}} with them
 trained autoregressively.** All {{bl_n_rows_word}} comparisons favour RWM, with intervals that
@@ -1817,7 +1837,12 @@ then {{rt_bl_tf_runs}} teacher-forced and {{rt_bl_ar_runs}} autoregressive basel
 ({{rt_bl_tf_hours}} h and {{rt_bl_ar_hours}} h), read from `results/presubmission_runtime.json`. They
 are outside the total above, whose remainder that paragraph describes as released-width runs, which
 the baselines are not. Of these, {{rt_pre_overlapped}} overlapped other CPU work a session logged,
-which inflates their wall clock and changes no weight; the artifact lists each overlap.
+which inflates their wall clock and changes no weight; the artifact lists each overlap. Per run family,
+every run at {{iters_main}} iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
+
+| run family | runs | hours per run, mean | runs that overlapped other CPU work |
+|---|---|---|---|
+{{rt_pre_table}}
 
 ## Appendix C — what testing the untested claims would require
 
