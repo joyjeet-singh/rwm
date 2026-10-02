@@ -220,6 +220,30 @@ readings are true at their own unit and both are reported: the 400-step unit is 
 readings are reported: the rule above was discharged on the 400-step unit, and the short unit resolves the sign."""),
 ]
 
+# ---- §6.3: the term-by-term gradient check and the runs behind the collapse rate -> Appendix J -----------
+_J_OLD = "## Appendix J — the synthetic-noise test of the σ = 0 optimum (rule M-50)"
+_J = "## Appendix J — the σ = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate"
+ITEMS["s63_more"] = [
+    ("sub", _J_OLD, _J),
+    ("move", "**The derivation above covers two terms, and the objective has {{e4_n_terms}}.**",
+     "**The derivation says the collapse happens on any dataset, and that is testable.**",
+     """**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Each term,
+back-propagated alone on one real batch, confirms it: {{e4_n_live}} are live under the released
+configuration, exactly {{e4_n_touch}} reach σ ({{e4_touching}}), and the other {{e4_n_inert}} give a
+gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
+
+""", _J),
+    ("move", "We predicted the collapse from this algebra before training", "**Two different things are being explained here",
+     """We predicted the collapse from this algebra before training, then observed it: across all
+{{n_runs}} runs at the released width the collapse is linear in iteration count and its rate is
+nearly identical (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
+every rate, and the {{e2_fitted_runs}} the rate is fitted on.
+
+""", _J),
+    ("sub", "**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Its completeness",
+     "**§6.3's derivation covers two terms, and the objective has {{e4_n_terms}}.** Its completeness"),
+]
+
 
 def main():
     t = open(F).read()
@@ -241,9 +265,10 @@ def main():
                 assert t.rstrip().endswith("---"), "the template no longer ends with an appendix rule"
                 t = "\n".join(L[:si[0]]) + "\n" + summary + "\n".join(L[ei[0]:])
                 if heading in t:
-                    # a second block for the appendix just created: it must be the last one
-                    assert t.rindex("\n## Appendix") == t.index("\n" + heading), f"{it}: {heading[:40]!r} is not the last appendix"
-                    t = t.rstrip("\n")[:-3].rstrip("\n") + "\n\n" + block + "\n\n---\n"
+                    # a further block for an existing appendix: insert it before that appendix's closing rule
+                    h = t.index("\n" + heading)
+                    r = t.index("\n---\n", h)
+                    t = t[:r].rstrip("\n") + "\n\n" + block + "\n" + t[r:]
                 else:
                     t = t.rstrip("\n") + "\n\n" + heading + "\n\n" + block + "\n\n---\n"
             elif op[0] == "append":

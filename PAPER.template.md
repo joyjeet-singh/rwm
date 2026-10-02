@@ -803,23 +803,10 @@ $$\overline{\log\sigma_{\max}} - \overline{\log\sigma_{\min}} \;=\; \overline{\e
 and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
-**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Its completeness
-rests on the other {{e4_n_inert}} being inert with respect to σ, so each term is computed alone on
-one real batch ({{e4_batch}} windows from the training episodes, at freshly initialised weights of
-the released architecture) and back-propagated alone, and the gradient reaching the log-σ tower,
-`state_log_delta_logstd` and `state_min_logstd` is recorded. A term that cannot move σ produces
-exactly zero on all three.
-
-| loss term | live? | weight | where the reference computes it | ∂/∂ log-σ tower | ∂/∂ `log_delta_logstd` | ∂/∂ `min_logstd` |
-|---|---|---|---|---|---|---|
-{{e4_table}}
-
-{{e4_n_live}} of the {{e4_n_terms}} configured terms are live at all under the released
-configuration: `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
-`"single"` on both paths, and `kl` and `extension` are zero because their dimensions are. Of the
-{{e4_n_terms}}, exactly {{e4_n_touch}} reach σ: {{e4_touching}}. The remaining {{e4_n_inert}}
-produce a gradient of exactly zero, not merely a term the code suggests is irrelevant
-(`results/e4_sigma_gradients.json`).
+**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Each term,
+back-propagated alone on one real batch, confirms it: {{e4_n_live}} are live under the released
+configuration, exactly {{e4_n_touch}} reach σ ({{e4_touching}}), and the other {{e4_n_inert}} give a
+gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
 
 **The derivation says the collapse happens on any dataset, and that is testable.** On the
 released data, "small stochasticity in the environment" and our reading are observationally
@@ -831,23 +818,10 @@ the true level to a median ratio of {{e5s_nll_ratio}}, seed-variably. The rule r
 **{{e5s_verdict}}**: the experiment establishes the contrast, not the size of the recovery
 (Appendix J).
 
-We predicted the collapse from this algebra before training, then observed it. Three run counts
-appear below and they are not the same set. This project trained {{run_total}} runs for §5–§7, besides the {{rt_pre_runs}} of §5.2 and §5.3
-(Appendix B), of
-which {{n_runs}} are at the released `rnn_hidden_size` of {{released_width}} and form the collapse
-family; the remaining {{n_runs_offwidth}} are the capacity-matched arm of rule M-49 (Appendix E) at
-width {{m49_width}}, a different architecture, excluded from every rate quoted here (Appendix B).
-Across all {{n_runs}} runs of that family the collapse is linear in iteration count and its rate is
-nearly identical (Figure 4a). Rates are fitted on {{e2_fitted_runs}} of those {{n_runs}}: the
-{{e2_excluded_10k}} 10,000-iteration runs continue seeds already counted at 2,500 and would
-double-weight them. Figure 4(a) shows all {{n_runs}} runs of the collapse family and Figure 4(b)
-only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted statistic describe
-the same set. The {{run_total}} runs, with the width column separating the collapse family from the
-capacity-matched arm:
-
-| arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
-|---|---|---|---|---|---|---|---|
-{{run_table}}
+We predicted the collapse from this algebra before training, then observed it: across all
+{{n_runs}} runs at the released width the collapse is linear in iteration count and its rate is
+nearly identical (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
+every rate, and the {{e2_fitted_runs}} the rate is fitted on.
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of
@@ -1990,7 +1964,7 @@ hypothesis to reach widely infers more than the evidence supports.
 
 ---
 
-## Appendix J — the synthetic-noise test of the σ = 0 optimum (rule M-50)
+## Appendix J — the σ = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate
 
 **The derivation says the collapse happens on any dataset, and that is testable.** It matters
 because it is what answers the follow-up's own explanation: on the released CSV, "small
@@ -2049,6 +2023,42 @@ rather than arguing against it: the stochasticity here is large, known and input
 collapse happens anyway. The design's limit, stated in the rule, holds: the dilution ladder detects
 the signal at full strength and at no dilution below it, so this establishes that σ does not track
 the noise **at all**, not the magnitude of how badly.
+
+**§6.3's derivation covers two terms, and the objective has {{e4_n_terms}}.** Its completeness
+rests on the other {{e4_n_inert}} being inert with respect to σ, so each term is computed alone on
+one real batch ({{e4_batch}} windows from the training episodes, at freshly initialised weights of
+the released architecture) and back-propagated alone, and the gradient reaching the log-σ tower,
+`state_log_delta_logstd` and `state_min_logstd` is recorded. A term that cannot move σ produces
+exactly zero on all three.
+
+| loss term | live? | weight | where the reference computes it | ∂/∂ log-σ tower | ∂/∂ `log_delta_logstd` | ∂/∂ `min_logstd` |
+|---|---|---|---|---|---|---|
+{{e4_table}}
+
+{{e4_n_live}} of the {{e4_n_terms}} configured terms are live at all under the released
+configuration: `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
+`"single"` on both paths, and `kl` and `extension` are zero because their dimensions are. Of the
+{{e4_n_terms}}, exactly {{e4_n_touch}} reach σ: {{e4_touching}}. The remaining {{e4_n_inert}}
+produce a gradient of exactly zero, not merely a term the code suggests is irrelevant
+(`results/e4_sigma_gradients.json`).
+
+We predicted the collapse from this algebra before training, then observed it. Three run counts
+appear below and they are not the same set. This project trained {{run_total}} runs for §5–§7, besides the {{rt_pre_runs}} of §5.2 and §5.3
+(Appendix B), of
+which {{n_runs}} are at the released `rnn_hidden_size` of {{released_width}} and form the collapse
+family; the remaining {{n_runs_offwidth}} are the capacity-matched arm of rule M-49 (Appendix E) at
+width {{m49_width}}, a different architecture, excluded from every rate quoted here (Appendix B).
+Across all {{n_runs}} runs of that family the collapse is linear in iteration count and its rate is
+nearly identical (Figure 4a). Rates are fitted on {{e2_fitted_runs}} of those {{n_runs}}: the
+{{e2_excluded_10k}} 10,000-iteration runs continue seeds already counted at 2,500 and would
+double-weight them. Figure 4(a) shows all {{n_runs}} runs of the collapse family and Figure 4(b)
+only the {{e2_fitted_runs}} the rate is fitted on, so the scatter and the quoted statistic describe
+the same set. The {{run_total}} runs, with the width column separating the collapse family from the
+capacity-matched arm:
+
+| arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
+|---|---|---|---|---|---|---|---|
+{{run_table}}
 
 ---
 

@@ -11,3 +11,4 @@ Body words by FILE_MAP §13's rule (`round2/t6_words.py`, from `PAPER.md` after 
 | T6 | s62_checks | §6.2, rules M-62 and M-63 (how the numbers are read) and the permutation column's note | Appendix M; the body keeps both verdicts and the column's Holm result | 25,564 | 25,330 | −234 |
 | T6 | s1_tighten | §1, wording only (the opening paragraphs; bullets 1, 4 and 6) | — (nothing moved; no claim or number removed) | 25,330 | 25,247 | −83 |
 | T6 | s5_tighten | §5, wording only (sign test, M-64's short unit) | — | 25,247 | 25,221 | −26 |
+| T6 | s63_more | §6.3, the term-by-term gradient check (E4) with its table, and the run-count paragraph with the run table | Appendix J (renamed to cover all three); the body keeps each result in a sentence and Figure 4's reference | 25,221 | 24,673 | −548 |
