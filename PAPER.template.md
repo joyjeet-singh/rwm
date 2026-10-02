@@ -482,10 +482,7 @@ seeds pooled, at h = {{v2_diag_h}}) are **{{a1_gap_traj_h368}}**. All
 {{a1_gap_traj_n_positive_h368}} of {{a1_gap_traj_n_h368}} are positive, which is the sign test,
 but one trajectory carries {{a1_gap_traj_max_h368}} against a smallest of
 {{a1_gap_traj_min_h368}}, which no interval on four units shows. At h = {{v2_deploy_h}} the four
-are {{a1_gap_traj_h100}}. §6.10's and §11's paired contrasts at the same n store their four
-per-trajectory values in `results/r2_independent_ensemble.json` and
-`results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = {{b2_nind}},
-give intervals only, coarse for the same reason.
+are {{a1_gap_traj_h100}}.
 
 **What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
 advantage is small, and it resolves only with the longer training and all {{d1_seeds}} seeds. The table
@@ -498,51 +495,13 @@ trajectory lengths crossed with both checkpoints). An earlier rule of ours, anch
 evaluated at those same checkpoints (rule M-16, Appendix E), returned "cannot be settled".
 **The advantage is small at the training horizon and large beyond it.**
 
-At long horizons the pattern is consistent across the design. Under the cluster bootstrap, the
-out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells,
-both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints. These figures are
-relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
-
-**Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample
-comparisons. All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of
-0.05/{{c3_family}}, and Holm–Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**. The sign
-test above is unaffected either way.
-
-**How good the reimplementation is as a model, next to the artifact it reimplements.**
-The tables above compare two training rules with each other and §6.2's compares calibration, so
-neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
-aggregations, for these models and for §5.3's architecture baselines, on one arena:
-
-| model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = {{v2_deploy_h}} | rel-L1 h = {{v2_deploy_h}} | nRMSE h = {{v2_diag_h}} | rel-L1 h = {{v2_diag_h}} |
-|---|---|---|---|---|---|---|---|---|
-| released checkpoint | {{h2h_released_nrmse_h1}} | {{h2h_released_l1_h1}} | {{h2h_released_nrmse_h8}} | {{h2h_released_l1_h8}} | {{h2h_released_nrmse_h100}} | {{h2h_released_l1_h100}} | {{h2h_released_nrmse_h368}} | {{h2h_released_l1_h368}} |
-| Arm A — autoregressive, faithful MSE | {{h2h_armA_nrmse_h1}} | {{h2h_armA_l1_h1}} | {{h2h_armA_nrmse_h8}} | {{h2h_armA_l1_h8}} | {{h2h_armA_nrmse_h100}} | {{h2h_armA_l1_h100}} | {{h2h_armA_nrmse_h368}} | {{h2h_armA_l1_h368}} |
-| Arm A — autoregressive, `gaussian_nll` | {{h2h_armAnll_nrmse_h1}} | {{h2h_armAnll_l1_h1}} | {{h2h_armAnll_nrmse_h8}} | {{h2h_armAnll_l1_h8}} | {{h2h_armAnll_nrmse_h100}} | {{h2h_armAnll_l1_h100}} | {{h2h_armAnll_nrmse_h368}} | {{h2h_armAnll_l1_h368}} |
-| Arm B — teacher-forced | {{h2h_armB_nrmse_h1}} | {{h2h_armB_l1_h1}} | {{h2h_armB_nrmse_h8}} | {{h2h_armB_l1_h8}} | {{h2h_armB_nrmse_h100}} | {{h2h_armB_l1_h100}} | {{h2h_armB_nrmse_h368}} | {{h2h_armB_l1_h368}} |
-| {{h2h_bl_mlp_tf_label}} | {{h2h_bl_mlp_tf_nrmse_h1}} | {{h2h_bl_mlp_tf_l1_h1}} | {{h2h_bl_mlp_tf_nrmse_h8}} | {{h2h_bl_mlp_tf_l1_h8}} | {{h2h_bl_mlp_tf_nrmse_h100}} | {{h2h_bl_mlp_tf_l1_h100}} | {{h2h_bl_mlp_tf_nrmse_h368}} | {{h2h_bl_mlp_tf_l1_h368}} |
-| {{h2h_bl_mlp_ar_label}} | {{h2h_bl_mlp_ar_nrmse_h1}} | {{h2h_bl_mlp_ar_l1_h1}} | {{h2h_bl_mlp_ar_nrmse_h8}} | {{h2h_bl_mlp_ar_l1_h8}} | {{h2h_bl_mlp_ar_nrmse_h100}} | {{h2h_bl_mlp_ar_l1_h100}} | {{h2h_bl_mlp_ar_nrmse_h368}} | {{h2h_bl_mlp_ar_l1_h368}} |
-| {{h2h_bl_rssm_tf_label}} | {{h2h_bl_rssm_tf_nrmse_h1}} | {{h2h_bl_rssm_tf_l1_h1}} | {{h2h_bl_rssm_tf_nrmse_h8}} | {{h2h_bl_rssm_tf_l1_h8}} | {{h2h_bl_rssm_tf_nrmse_h100}} | {{h2h_bl_rssm_tf_l1_h100}} | {{h2h_bl_rssm_tf_nrmse_h368}} | {{h2h_bl_rssm_tf_l1_h368}} |
-| {{h2h_bl_rssm_ar_label}} | {{h2h_bl_rssm_ar_nrmse_h1}} | {{h2h_bl_rssm_ar_l1_h1}} | {{h2h_bl_rssm_ar_nrmse_h8}} | {{h2h_bl_rssm_ar_l1_h8}} | {{h2h_bl_rssm_ar_nrmse_h100}} | {{h2h_bl_rssm_ar_l1_h100}} | {{h2h_bl_rssm_ar_nrmse_h368}} | {{h2h_bl_rssm_ar_l1_h368}} |
-| {{h2h_bl_transformer_tf_label}} | {{h2h_bl_transformer_tf_nrmse_h1}} | {{h2h_bl_transformer_tf_l1_h1}} | {{h2h_bl_transformer_tf_nrmse_h8}} | {{h2h_bl_transformer_tf_l1_h8}} | {{h2h_bl_transformer_tf_nrmse_h100}} | {{h2h_bl_transformer_tf_l1_h100}} | {{h2h_bl_transformer_tf_nrmse_h368}} | {{h2h_bl_transformer_tf_l1_h368}} |
-| {{h2h_bl_transformer_ar_label}} | {{h2h_bl_transformer_ar_nrmse_h1}} | {{h2h_bl_transformer_ar_l1_h1}} | {{h2h_bl_transformer_ar_nrmse_h8}} | {{h2h_bl_transformer_ar_l1_h8}} | {{h2h_bl_transformer_ar_nrmse_h100}} | {{h2h_bl_transformer_ar_l1_h100}} | {{h2h_bl_transformer_ar_nrmse_h368}} | {{h2h_bl_transformer_ar_l1_h368}} |
-| hold-last floor | {{h2h_floor_nrmse_h1}} | {{h2h_floor_l1_h1}} | {{h2h_floor_nrmse_h8}} | {{h2h_floor_l1_h8}} | {{h2h_floor_nrmse_h100}} | {{h2h_floor_l1_h100}} | {{h2h_floor_nrmse_h368}} | {{h2h_floor_l1_h368}} |
-
-**Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}},
-{{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2h_nind}}.**
-Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterations (the `{{h2h_arm_ckpt}}` checkpoint), with
-per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1), and both metrics
-are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
-calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
-their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
-exactly; their nRMSE is pooled as §3.1 defines it, recomputed afterwards with the same evaluator
-(post hoc, `results/pooled_nrmse_rescore.json`), and † marks a diverged row (§5.3). **This table is at {{iters_main}} iterations and §5's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.
-
-Both metrics put the released checkpoint first at {{h2h_released_sweeps_at}}, they name
-different leaders at {{h2h_split_at}}, and at {{h2h_armA_sweeps_at}} both put an Arm A variant
-ahead of it: the reimplementation is behind the artifact it reimplements at short horizons and
-ahead of it at the longest horizon we measure. That reading flatters the released checkpoint, because the split is ours: the arena is
-out-of-sample for our arms and in-sample for it, which trained on all
-{{h2h_ckpt_neps_word}} episodes (the in-sample caveat of §3).
+At long horizons the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}**
+cells, both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints, and Holm–Bonferroni
+over the family of {{c3_family}} out-of-sample comparisons still rejects **{{c3_holm_rejected}} of
+{{c3_long}}** (Appendix L). Beside the artifact it reimplements, at {{iters_main}} iterations, both
+metrics put the released checkpoint first at {{h2h_released_sweeps_at}} and an Arm A variant ahead of
+it at {{h2h_armA_sweeps_at}}, on an arena that is out-of-sample for our arms and in-sample for the
+checkpoint (Appendix L).
 
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
 
@@ -2096,7 +2055,7 @@ the noise **at all**, not the magnitude of how badly.
 
 ## Appendix K — the per-dimension permutation tests behind §6.6
 
-**The P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to these counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
+**§6.6's P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to its counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
 
 We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which keeps both marginal distributions and the entire cross-dimension dependence structure and destroys only the association under test. The correction is large, and largest exactly where we leaned hardest. The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}}, a factor of about {{perm_worst_factor}}, because under a null that keeps the dependence a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average, so observing {{perm_ins_armB_npos_h368}} of {{perm_ins_armB_ndim_h368}} is close to unremarkable. A fair coin centres the count at {{perm_faircoin}} of {{perm_ins_armB_ndim_h368}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena.
 
@@ -2107,5 +2066,60 @@ the {{perm_all_nind}}.
 The null means explain why, and the explanation is the one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to {{perm_all_epi_null_h128}} of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near {{perm_all_epi_null_h1}} and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at {{perm_oos_nind}} trajectories its smallest attainable P-value is {{perm_oos_floor}}, so it cannot tell a strong effect from a marginal one at any horizon. **That blindness belongs to the 400-step unit, not to the arena**: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episodes, and {{m64_oos_n_h100}} at h = {{v2_deploy_h}} (rule M-64, Appendix E). We did not recompute this permutation family at the shorter unit, so what the short units change is the scope of the design claim, not any verdict: the arena is underpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}} rows, and is no longer demonstrably so at h = 128 and below. Running it there is one pass over stored rollouts, and we did not do it. The small arena's numbers are reported because it is the only arena out-of-sample for our own arms, not because it is the better measurement.
 
 **Nothing here survives multiplicity correction, in any of the three arenas.** Holm–Bonferroni over each arena's {{perm_oos_holm_n}} model × horizon cells at α = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample that is a property of the design: with {{perm_oos_nind}} independent trajectories the smallest attainable P-value is {{perm_oos_floor}}, which already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have been rejected there. In sample the miss is real: the smallest P in the family is {{perm_ins_holm_min_cell}} at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}.
+
+---
+
+## Appendix L — section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint
+
+At long horizons the pattern is consistent across the design. Under the cluster bootstrap, the
+out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells,
+both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints. These figures are
+relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
+
+**Multiplicity.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample
+comparisons. All {{c3_bonf_excl}} of {{c3_long}} still exclude zero at a Bonferroni level of
+0.05/{{c3_family}}, and Holm–Bonferroni rejects **{{c3_holm_rejected}} of {{c3_long}}**. §5's sign
+test is unaffected either way.
+
+**How good the reimplementation is as a model, next to the artifact it reimplements.**
+§5's tables compare two training rules with each other and §6.2's compares calibration, so
+neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
+aggregations, for these models and for §5.3's architecture baselines, on one arena:
+
+| model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = {{v2_deploy_h}} | rel-L1 h = {{v2_deploy_h}} | nRMSE h = {{v2_diag_h}} | rel-L1 h = {{v2_diag_h}} |
+|---|---|---|---|---|---|---|---|---|
+| released checkpoint | {{h2h_released_nrmse_h1}} | {{h2h_released_l1_h1}} | {{h2h_released_nrmse_h8}} | {{h2h_released_l1_h8}} | {{h2h_released_nrmse_h100}} | {{h2h_released_l1_h100}} | {{h2h_released_nrmse_h368}} | {{h2h_released_l1_h368}} |
+| Arm A — autoregressive, faithful MSE | {{h2h_armA_nrmse_h1}} | {{h2h_armA_l1_h1}} | {{h2h_armA_nrmse_h8}} | {{h2h_armA_l1_h8}} | {{h2h_armA_nrmse_h100}} | {{h2h_armA_l1_h100}} | {{h2h_armA_nrmse_h368}} | {{h2h_armA_l1_h368}} |
+| Arm A — autoregressive, `gaussian_nll` | {{h2h_armAnll_nrmse_h1}} | {{h2h_armAnll_l1_h1}} | {{h2h_armAnll_nrmse_h8}} | {{h2h_armAnll_l1_h8}} | {{h2h_armAnll_nrmse_h100}} | {{h2h_armAnll_l1_h100}} | {{h2h_armAnll_nrmse_h368}} | {{h2h_armAnll_l1_h368}} |
+| Arm B — teacher-forced | {{h2h_armB_nrmse_h1}} | {{h2h_armB_l1_h1}} | {{h2h_armB_nrmse_h8}} | {{h2h_armB_l1_h8}} | {{h2h_armB_nrmse_h100}} | {{h2h_armB_l1_h100}} | {{h2h_armB_nrmse_h368}} | {{h2h_armB_l1_h368}} |
+| {{h2h_bl_mlp_tf_label}} | {{h2h_bl_mlp_tf_nrmse_h1}} | {{h2h_bl_mlp_tf_l1_h1}} | {{h2h_bl_mlp_tf_nrmse_h8}} | {{h2h_bl_mlp_tf_l1_h8}} | {{h2h_bl_mlp_tf_nrmse_h100}} | {{h2h_bl_mlp_tf_l1_h100}} | {{h2h_bl_mlp_tf_nrmse_h368}} | {{h2h_bl_mlp_tf_l1_h368}} |
+| {{h2h_bl_mlp_ar_label}} | {{h2h_bl_mlp_ar_nrmse_h1}} | {{h2h_bl_mlp_ar_l1_h1}} | {{h2h_bl_mlp_ar_nrmse_h8}} | {{h2h_bl_mlp_ar_l1_h8}} | {{h2h_bl_mlp_ar_nrmse_h100}} | {{h2h_bl_mlp_ar_l1_h100}} | {{h2h_bl_mlp_ar_nrmse_h368}} | {{h2h_bl_mlp_ar_l1_h368}} |
+| {{h2h_bl_rssm_tf_label}} | {{h2h_bl_rssm_tf_nrmse_h1}} | {{h2h_bl_rssm_tf_l1_h1}} | {{h2h_bl_rssm_tf_nrmse_h8}} | {{h2h_bl_rssm_tf_l1_h8}} | {{h2h_bl_rssm_tf_nrmse_h100}} | {{h2h_bl_rssm_tf_l1_h100}} | {{h2h_bl_rssm_tf_nrmse_h368}} | {{h2h_bl_rssm_tf_l1_h368}} |
+| {{h2h_bl_rssm_ar_label}} | {{h2h_bl_rssm_ar_nrmse_h1}} | {{h2h_bl_rssm_ar_l1_h1}} | {{h2h_bl_rssm_ar_nrmse_h8}} | {{h2h_bl_rssm_ar_l1_h8}} | {{h2h_bl_rssm_ar_nrmse_h100}} | {{h2h_bl_rssm_ar_l1_h100}} | {{h2h_bl_rssm_ar_nrmse_h368}} | {{h2h_bl_rssm_ar_l1_h368}} |
+| {{h2h_bl_transformer_tf_label}} | {{h2h_bl_transformer_tf_nrmse_h1}} | {{h2h_bl_transformer_tf_l1_h1}} | {{h2h_bl_transformer_tf_nrmse_h8}} | {{h2h_bl_transformer_tf_l1_h8}} | {{h2h_bl_transformer_tf_nrmse_h100}} | {{h2h_bl_transformer_tf_l1_h100}} | {{h2h_bl_transformer_tf_nrmse_h368}} | {{h2h_bl_transformer_tf_l1_h368}} |
+| {{h2h_bl_transformer_ar_label}} | {{h2h_bl_transformer_ar_nrmse_h1}} | {{h2h_bl_transformer_ar_l1_h1}} | {{h2h_bl_transformer_ar_nrmse_h8}} | {{h2h_bl_transformer_ar_l1_h8}} | {{h2h_bl_transformer_ar_nrmse_h100}} | {{h2h_bl_transformer_ar_l1_h100}} | {{h2h_bl_transformer_ar_nrmse_h368}} | {{h2h_bl_transformer_ar_l1_h368}} |
+| hold-last floor | {{h2h_floor_nrmse_h1}} | {{h2h_floor_l1_h1}} | {{h2h_floor_nrmse_h8}} | {{h2h_floor_l1_h8}} | {{h2h_floor_nrmse_h100}} | {{h2h_floor_l1_h100}} | {{h2h_floor_nrmse_h368}} | {{h2h_floor_l1_h368}} |
+
+**Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}},
+{{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2h_nind}}.**
+Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterations (the `{{h2h_arm_ckpt}}` checkpoint), with
+per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1), and both metrics
+are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
+calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
+their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
+exactly; their nRMSE is pooled as §3.1 defines it, recomputed afterwards with the same evaluator
+(post hoc, `results/pooled_nrmse_rescore.json`), and † marks a diverged row (§5.3). **This table is at {{iters_main}} iterations and §5's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.
+
+Both metrics put the released checkpoint first at {{h2h_released_sweeps_at}}, they name
+different leaders at {{h2h_split_at}}, and at {{h2h_armA_sweeps_at}} both put an Arm A variant
+ahead of it: the reimplementation is behind the artifact it reimplements at short horizons and
+ahead of it at the longest horizon we measure. That reading flatters the released checkpoint, because the split is ours: the arena is
+out-of-sample for our arms and in-sample for it, which trained on all
+{{h2h_ckpt_neps_word}} episodes (the in-sample caveat of §3).
+
+*Stored per-trajectory values elsewhere.* §6.10's and §11's paired contrasts at the same n store their four
+per-trajectory values in `results/r2_independent_ensemble.json` and
+`results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = {{b2_nind}},
+give intervals only, coarse for the same reason.
 
 ---
