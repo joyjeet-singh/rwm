@@ -183,3 +183,60 @@ CPU jobs over 1 min: 7 build-and-gate passes, about 3-4 min each. No training.
 Body words (FILE_MAP §13 command): 27,671 (T0: 26,526). The equal-compute, RSSM and nRMSE text Annex 2 requires adds about 830; U3's target of ≤ 19,000 is T6 and T7's.
 Next: T5, the coverage audit and Appendix H (Opus 5.5, default effort), in a fresh session. X1 Part C's two seed-0 runs have finished training (`results/baseline_run_rssm_tf_x1v{1,2}_seed0.json`, untracked) and wait for T8 to score them.
 Decisions for user: none.
+
+## T5 — 2026-10-02 17:50 — Opus 5.5, xhigh effort (the plan assigns default) — status: COMPLETE
+Commits:
+de0bb1e [T5][items 1, 2, 4, 7] COVERAGE.md: every contribution-tagged entry, classified
+044e60b [T5][keys] Keys and assertions for Appendix H's measurement rows
+79d88a0 [T5][item 5] Appendix H: findings not in the main text
+cde74f4 [T5][item 6] Section 7 points to Appendix H
+9a30565 [T5] Rebuild after items 5-6 (fast build, gates, fast build: byte-identical)
+54e7b1e [T5][review] Fix the Appendix H review's findings: addresses, table, scope, metric
+(the commit carrying this entry) [T5] COMPLETE: session log
+Done:
+- **How this session ran.** T5 ran in the same conversation as T3 and T4, at the user's request in chat.
+- **Items 1, 2 and 7.** `round2/COVERAGE.md` has one row per contribution-tagged entry. There are 105 such entries: the plan's 102 plus T1's R-76 to R-78.
+  - **(a) Mechanically** (`round2/t5_coverage.py`, on the template at d0c6451, before T5): 49 entries are covered by an artifact-sourced key the paper uses.
+  - **(b) By phrase:** the other 56, plus candidate R-39, were checked by one Sonnet 5.5 Explore subagent. Its output is kept verbatim in `round2/t5_coverage_md.py`.
+  - **Before T5:** 65 covered, 26 partly covered, 14 absent.
+  - **Left out:** 6 absent entries, each with its reason.
+    - R-02: superseded as headline by R-15.
+    - R-05 and R-07: ten overlapping trajectories under the released protocol.
+    - R-28: an overlapping-window count, not a sample size.
+    - M-17: narrowed by R-30 and M-19, and replaced by Appendix G.
+    - R-33: status SUPPORTED, not CONFIRMED.
+  - Every partly covered entry without an Appendix H row says why the body's statement suffices.
+- **Item 4.** All 16 plan candidates were read in full. All are CONFIRMED and none is superseded in part without a replacement.
+- **Item 5.** Appendix H, "Findings not in the main text", has 15 entries in one compact table, grouped as follows.
+  - *Paper-versus-code gaps:* C-09; M-13; C-05; C-07 with D-07; C-13.
+  - *Pipeline defects:* B-02; B-03.
+  - *Measurements:* D-10; R-25; R-30; R-39; R-45 with R-29; R-46.
+  - Code facts are cited by file and line at the pinned commits. Every measurement is a key, and each row's claim is asserted in `paper_numbers.py`.
+  - No artifact records the configuration's 500 or the checkpoint tag's 5,000, so C-13's row states the finding without those numbers.
+- **Item 6.**
+  - One sentence at the head of §7 points to Appendix H.
+  - R-26 gets no new sentence: T4's §5.2 Limits already says every run at 2,500 iterations, both arms included, is still learning.
+- **Review.** A second Sonnet 5.5 subagent (`evidence/R2T5/t5_review.md`) reproduced every measurement row. Its verdict was PASS-WITH-FIXES, all fixed in 54e7b1e:
+  - stale `system_dynamics.py` addresses copied from the ledger, re-read at 18eebcd;
+  - "Table S7" should be Table S9;
+  - three unscoped bearings;
+  - R-25 shown as an order of magnitude;
+  - R-30's share is form 2, which `g_z` dominates (now asserted);
+  - qualifiers on R-39, R-45, R-46 and D-10.
+- **OUT_OF_SCOPE.md** gains three lines:
+  - D-12's span differs between the paper and the ledger (two artifacts);
+  - R-28's SETTLED is at 100 overlapping windows;
+  - the ledger's C-13 says Table S7 for Table S9 (needs an append-only correction).
+Build/gates: pass. Two build-gates-build passes, 8/8 gates, 62/62 claims, 62/62 corruptions caught, byte-identical, and the second pass equal to the first (`t5rev_1`, `t5rev_2`). PDF: 52 pages (was 50).
+Paper numbers changed: `pdf_pages` 50 → 52; `tn_typed` 725 → 763 (generated: Appendix H's code addresses, all classified).
+New keys (39):
+- `d10_*` (results/step0_regimes.json);
+- `r25_*` (step6_3_min_logstd.json);
+- `r30_*` (taskAB_gate_r27.json);
+- `r39_*` (task4_arenas.json);
+- `r45_*` and `r46_*` (task2_3_matched_trend.json; `r45_n_dims` from taskAB_gate_r27.json).
+Re-anchored checks: none.
+CPU jobs over 1 min: 5 build-and-gate passes, about 3-4 min each. No training.
+Body words (FILE_MAP §13 command): 27,703 (T0: 26,526). Appendix H sits after "Data and code"; only the §7 pointer counts.
+Next: T6, length pass 1 (§1–§6.6) (Opus 5.5, default effort). The body must come down from 27,703 to U3's ≤ 19,000 across T6 and T7. The abstract is at 368 of 370 words.
+Decisions for user: none.
