@@ -64,6 +64,11 @@ def main():
     # retraction-consistency when Appendix D's machinery moved. The criterion is
     # unchanged: the sentence must still exist in a reader-facing surface.
     sup = tpl + norm("docs/APPENDIX_G_VARIANCE_ARITHMETIC.template.md")
+    # The referee revision (B4) moved section 8's reproducibility block, which names
+    # the one artifact excluded from numeric verification, into the build-checks
+    # supplementary. E7 went PENDING there unseen, because stage 29 already failed
+    # on C1. Same repair as E4 and E5: the surface follows the text.
+    bc = tpl + norm("docs/BUILD_CHECKS.template.md")
     tex = open("PAPER.tex").read()
     led = norm("FINDINGS_LEDGER.md")
     rows = []
@@ -158,7 +163,8 @@ def main():
              # norm() collapses whitespace, so the needle must be single-spaced --
              # the phrase is line-wrapped in the template.
              "archived by a third-party archive before submission", tpl, "template"),
-            ("E7 excluded artifact named", "step4_5_timing.json", tpl, "template")):
+            ("E7 excluded artifact named", "step4_5_timing.json", bc,
+             "template or its build-checks supplementary")):
         chk(item, needle in where, f"found in {src}" if needle in where else f"absent from {src}")
 
     for item, path in (("B2 epistemic measured", "results/task_b2_epistemic.json"),
