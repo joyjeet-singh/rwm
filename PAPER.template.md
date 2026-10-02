@@ -5,22 +5,25 @@
 ## Abstract
 
 We rebuild the proprioceptive dynamics model of the *Robotic World Model* (arXiv:2501.10100v1)
-and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU. Before training,
-outputs, losses and gradients match the released implementation exactly. The base paper's central training claim reproduces under a rule committed in advance and run on one seed
-per arm; over {{d1_seeds}} seeds, training on the model's own rollouts beats teacher forcing by {{d1_ratio}}× at
-{{v2_diag_h}} steps and {{d1_ratio_h100}}× at {{v2_deploy_h}}, though teacher forcing leads at one step. It uses {{c2_pct}}% of the
+and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU, matching the released
+implementation's outputs, losses and gradients exactly before training. With {{c2_pct}}% of the
 reference's world-model data, one robot, gait and terrain, and {{nind_oos_400}} independent
-held-out trajectories. The base paper's architecture claim holds against our MLP, RSSM and
-transformer baselines; its chosen history and forecast lengths are beaten at our budget. The follow-up's uncertainty gets the order right and the size wrong.
+held-out trajectories, the base paper's central training claim reproduces under a rule committed in advance and run on one seed
+per arm: over {{d1_seeds}} seeds, training on the model's own rollouts beats teacher forcing {{d1_ratio}}× at
+{{v2_diag_h}} steps and {{d1_ratio_h100}}× at {{v2_deploy_h}}, though teacher forcing leads at one step. RWM is ahead of MLP, RSSM and transformer baselines built to our reading of the original and
+trained like it, though at {{v2_diag_h}} steps each does worse than predicting no change.
+On accuracy alone, {{mn_better_kinds}} beat the original's chosen setting at
+our budget, the best even when that setting trains longer; it was chosen as a trade-off with training time,
+which we do not test. The follow-up's uncertainty gets the order right and the size wrong.
 Ensemble disagreement, the method's reward penalty, correlates {{a2_r_pooled}} with
-realised error, and {{a2_rdd}} with rollout and depth held fixed. Yet on the checkpoint's training data it is {{d1n_epi_ratio_h1}}× smaller than that error at one step and
+realised error ({{a2_rdd}} with rollout and depth held fixed), yet on the checkpoint's training data is {{d1n_epi_ratio_h1}}× smaller than that error at one step and
 {{d1n_epi_ratio_h100}}× at the method's {{v2_deploy_h}}-step horizon. A free signal, the model's predicted step size,
 ranks error nearly as well ({{e7_step_r}}), by an unresolved margin. The members share {{v1_shared_pct}}% of their parameters; at {{v2_deploy_h}} steps, five independent models are
-{{r2_total_x_h100}}× better calibrated and still {{r2_indep_ratio_h100}}× overconfident. The implemented loss drives the per-member σ, which the method discards, to zero, as derived and
-confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
-coverage within {{d3_tol}} points of nominal on its training episodes, though no cell is
-resolvable. On episodes our ensembles never saw, it does so in only {{d3x_own_epi_ok}} of
-{{d3x_own_epi_cells}} disagreement cells: a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action; this inflates the checkpoint's error most at short horizons, and at the longest horizon the cost is small and not consistent in sign. We train no policy, so we bound what the uncertainty reports, not what its
+{{r2_total_x_h100}}× better calibrated and still {{r2_indep_ratio_h100}}× overconfident. The implemented loss provably drives the per-member σ the method discards to zero, as data
+with known noise confirm. A per-horizon rescaling brings the released checkpoint's
+coverage within {{d3_tol}} points of nominal on its training episodes (no cell resolvable), and
+only {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells on episodes our ensembles never saw:
+a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action, inflating error mainly at short horizons; at the longest the cost is small and not consistent in sign. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---
@@ -71,14 +74,16 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   h = {{v2_diag_h}}; over {{d1_seeds}} seeds the factor is {{d1_ratio}}×, and {{d1_ratio_h100}}× at
   h = {{v2_deploy_h}} (§5). At one step a second pre-registered rule, on {{m64_h1_n}} independent
   {{m64_h1_unit}}-row units, finds a gap of {{m64_h1_gap}} {{m64_h1_ci}} in favour of **teacher forcing** (§5).
-- **Two more of the base paper's claims, tested under rules committed before the runs.** Its
-  architecture claim holds: RWM is ahead at h = {{v2_diag_h}} of MLP, RSSM and transformer baselines
-  built to our reading of its specification and teacher-forced as it trains them, and stays ahead
-  when they are trained autoregressively, a comparison of architectures at one training regime
-  rather than a test of the claim (§5.3). Its chosen history and forecast lengths,
-  {{mn_centre_label}}, are not optimal at our budget: {{mn_n_better_word}} of their
-  {{mn_n_configs_word}} one-factor neighbours beat them, the best reaching {{mn_best_l1_h368}}
-  against {{mn_centre_l1_h368}} in relative-L1 at h = {{v2_diag_h}} (§5.2).
+- **Two more of the base paper's claims, tested under rules committed before the runs.** RWM is
+  ahead at h = {{v2_diag_h}} of MLP, RSSM and transformer baselines built to our reading of its
+  specification and trained with RWM's settings, whether teacher-forced as the original trains them
+  or autoregressively, though every baseline is worse there than predicting no change and our RSSM's
+  open-loop collapse is not a matter of how its forecast is read (§5.3). On accuracy alone,
+  {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor neighbours of the original's
+  {{mn_centre_label}} beat it at our budget — {{mn_better_long_phrase}}, and the
+  {{mn_n_short_better_word}} shorter histories {{mn_mvar_better_list}}, although the original's error
+  falls steeply as the history grows to M = 8 — the best of them even when the centre trains longer;
+  the original chose the centre as a trade-off with training time, which we do not test (§5.2).
 - **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
   σ = 0, so the per-member σ the method discards collapses by construction: derived rather than
   observed, and demonstrated against known noise (§6.3).
