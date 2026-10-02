@@ -5375,6 +5375,10 @@
     "source": "results/mn_compute_matched.json",
     "value": "(32, 16)"
   },
+  "n3_mid_factor_word": {
+    "source": "results/mn_compute_matched.json",
+    "value": "twice"
+  },
   "n3_sh_D_long_M2_N8": {
     "source": "results/mn_compute_matched.json",
     "value": "+0.1135"
@@ -8397,7 +8401,7 @@
   },
   "rssm_partc_sentence": {
     "source": "results/rssm_diagnostics.json",
-    "value": "Its two retraining variants (X1 Part C) have been trained and are not yet scored."
+    "value": "Retraining variants are running (X1 Part C): both have trained, and neither is scored yet."
   },
   "rt_bl_ar_hours": {
     "source": "results/presubmission_runtime.json",
@@ -8613,7 +8617,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 724
+    "value": 725
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -9073,7 +9077,7 @@
   },
   "x1b_kl_lo": {
     "source": "results/rssm_diagnostics.json",
-    "value": "13.5"
+    "value": "16.4"
   },
   "x1b_tf_ratio_hi": {
     "source": "results/rssm_diagnostics.json",

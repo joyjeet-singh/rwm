@@ -2254,6 +2254,9 @@ def main():
     _k_mid, _k_long = sorted({v["centre_iterations"] for v in _rd.values()} - {int(N["iters_main"]["value"].replace(",", ""))})
     assert _k_long == int(N["iters_long"]["value"].replace(",", "")), _k_long
     put("n3_k_mid", f"{_k_mid:,}", _n3s)
+    _fac_mid = _k_mid / int(N["iters_main"]["value"].replace(",", ""))
+    assert _fac_mid in (2, 3, 4), _fac_mid
+    put("n3_mid_factor_word", {2: "twice", 3: "three times", 4: "four times"}[int(_fac_mid)], _n3s)
     for _tag, _k in (("mid", _k_mid), ("long", _k_long)):
         _r = _rd[f"{_best}|centre@{_k}"]
         # the centre's compute over the neighbour's: the inverse of the artifact's ratio
@@ -2348,6 +2351,9 @@ def main():
         i = len(ok) - 1
         while i > 0 and ok[i - 1]:
             i -= 1
+        # "before those horizons a baseline cannot be told apart from RWM" (T4 review F7)
+        assert all(BV["rules"][rule]["alongside"][f"l1_h{h}"]["per_baseline"][a]["result"] == "CANNOT BE SETTLED"
+                   for h in _hz[:i]), (rule, a)
         return _hz[i]
     _lf75 = {a: _lead_from("M-75", a) for a in BV["priority_order"]}
     _lf76 = {a: _lead_from("M-76", a) for a in BV["priority_order"]}
@@ -2383,7 +2389,8 @@ def main():
     _pb = X1["part_b"]
     _rat = lambda reg: [v[str(int(N["iters_main"]["value"].replace(",", "")))]["mean_over_steps"]["prior_over_posterior"]
                         for k, v in _pb.items() if k.startswith(f"rssm_{reg}_s7|")]
-    _kl = [v[str(int(N["iters_main"]["value"].replace(",", "")))]["mean_over_steps"]["kl"] for v in _pb.values()]
+    _kl = [v[str(int(N["iters_main"]["value"].replace(",", "")))]["mean_over_steps"]["kl"]
+           for k, v in _pb.items() if k.startswith("rssm_tf_s7|")]
     put("x1b_tf_ratio_lo", f"{min(_rat('tf')):.2f}", _x1s)
     put("x1b_tf_ratio_hi", f"{max(_rat('tf')):.2f}", _x1s)
     put("x1b_ar_ratio_hi", f"{max(_rat('ar')):.2f}", _x1s)
@@ -2409,7 +2416,7 @@ def main():
     assert len(_rt) == len(PR["by_family"]) and sum(_ovf.values()) == PR["n_runs_overlapped"]
     put("rt_pre_table", "\n".join(_rt), "results/presubmission_runtime.json")
     assert X1["part_c"] is None, "X1 Part C has a reading: write section 5.3's Part C sentence from it (T9)"
-    put("rssm_partc_sentence", "Its two retraining variants (X1 Part C) have been trained and are not yet scored.", _x1s)
+    put("rssm_partc_sentence", "Retraining variants are running (X1 Part C): both have trained, and neither is scored yet.", _x1s)
 
     # --- S10: keys and assertions behind the fresh-eyes review's fixes ----------------------
     # Appendix E's verdict column for M-16 printed its Status line ("SETTLED — rule
