@@ -1411,6 +1411,34 @@
     "source": "results/baselines_verdict.json",
     "value": "PARTIAL"
   },
+  "bl_ar_lead_from": {
+    "source": "results/baselines_verdict.json",
+    "value": "h = 100"
+  },
+  "bl_ar_mlp_D_h100": {
+    "source": "results/baselines_verdict.json",
+    "value": "0.060"
+  },
+  "bl_ar_mlp_ci_h100": {
+    "source": "results/baselines_verdict.json",
+    "value": "[0.024, 0.096]"
+  },
+  "bl_ar_mlp_pct_h100": {
+    "source": "results/baselines_verdict.json + results/baselines_eval.json",
+    "value": "12.5"
+  },
+  "bl_ar_rssm_lead_from": {
+    "source": "results/baselines_verdict.json",
+    "value": "h = 8"
+  },
+  "bl_ar_tr_D_h100": {
+    "source": "results/baselines_verdict.json",
+    "value": "0.102"
+  },
+  "bl_ar_tr_ci_h100": {
+    "source": "results/baselines_verdict.json",
+    "value": "[0.034, 0.185]"
+  },
   "bl_ar_verdict": {
     "source": "results/baselines_verdict.json",
     "value": "RWM AHEAD OF ALL THREE"
@@ -1436,8 +1464,8 @@
     "value": "714,164"
   },
   "bl_table": {
-    "source": "results/baselines_eval.json + results/baselines_verdict.json + results/presubmission_runtime.json",
-    "value": "| **RWM** (Arm A, autoregressive) | 714,164 | 0.4798 | **0.5856** | \u2014 | \u2014 | \u2014 (existing runs) |\n| MLP, teacher-forced | 610,484 | 1.2057 | 145.1650 | +144.5794 [+14.8420, +373.9553] | RWM better | 0.04 |\n| RSSM, teacher-forced | 3,180,468 | 2.2128 | 6.3718 | +5.7862 [+2.6251, +10.8616] | RWM better | 1.88 |\n| transformer, teacher-forced | 132,148 | 2.0607 | 15.1548 | +14.5692 [+8.7931, +24.0102] | RWM better | 0.71 |\n| MLP, autoregressive | 610,484 | 0.5400 | 1.4628 | +0.8772 [+0.4248, +1.5662] | RWM better | 0.06 |\n| RSSM, autoregressive | 3,180,468 | 3.2660 | 10.6405 | +10.0549 [+5.7436, +18.1659] | RWM better | 1.53 |\n| transformer, autoregressive | 132,148 | 0.5821 | 1.8771 | +1.2915 [+0.7258, +1.8079] | RWM better | 0.74 |"
+    "source": "results/baselines_eval.json + results/baselines_verdict.json + results/mn_compute_matched.json + results/pooled_nrmse_rescore.json",
+    "value": "| **RWM** (Arm A, autoregressive) | 714,164 | 0.4798 | **0.5856** | \u2014 | \u2014 | 1.00 |\n| MLP, teacher-forced \u2020 | 610,484 | 1.2057 | 145.1650 | +144.5794 [+14.8420, +373.9553] | RWM better | 0.07 |\n| RSSM, teacher-forced | 3,180,468 | 2.2128 | 6.3718 | +5.7862 [+2.6251, +10.8616] | RWM better | 2.37 |\n| transformer, teacher-forced \u2020 | 132,148 | 2.0607 | 15.1548 | +14.5692 [+8.7931, +24.0102] | RWM better | 0.91 |\n| MLP, autoregressive | 610,484 | 0.5400 | 1.4628 | +0.8772 [+0.4248, +1.5662] | RWM better | 0.08 |\n| RSSM, autoregressive \u2020 | 3,180,468 | 3.2660 | 10.6405 | +10.0549 [+5.7436, +18.1659] | RWM better | 1.99 |\n| transformer, autoregressive | 132,148 | 0.5821 | 1.8771 | +1.2915 [+0.7258, +1.8079] | RWM better | 0.97 |"
   },
   "bl_tf_h1": {
     "source": "results/baselines_verdict.json",
@@ -1450,6 +1478,14 @@
   "bl_tf_h8": {
     "source": "results/baselines_verdict.json",
     "value": "PARTIAL"
+  },
+  "bl_tf_lead_from": {
+    "source": "results/baselines_verdict.json",
+    "value": "h = 32"
+  },
+  "bl_tf_tr_lead_from": {
+    "source": "results/baselines_verdict.json",
+    "value": "h = 8"
   },
   "bl_tf_verdict": {
     "source": "results/baselines_verdict.json",
@@ -3311,6 +3347,18 @@
     "source": "results/step4_3_differential.json",
     "value": 7
   },
+  "div_factor": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "10"
+  },
+  "div_n_word": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "three"
+  },
+  "div_per_seed": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "MLP, teacher-forced: 182, 16.0 and 238; transformer, teacher-forced: 11.2, 10.4 and 23.9; RSSM, autoregressive: 9.87, 10.8 and 11.3"
+  },
   "dup_ci_hi": {
     "source": "results/task3_control_arm.json",
     "value": 0.0215
@@ -4083,6 +4131,26 @@
     "source": "results/baselines_eval.json",
     "value": "0.3492"
   },
+  "h2h_bl_mlp_ar_label": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "MLP, autoregressive (\u00a75.3)"
+  },
+  "h2h_bl_mlp_ar_nrmse_h1": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.1364"
+  },
+  "h2h_bl_mlp_ar_nrmse_h100": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.5452"
+  },
+  "h2h_bl_mlp_ar_nrmse_h368": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "1.4383"
+  },
+  "h2h_bl_mlp_ar_nrmse_h8": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.3016"
+  },
   "h2h_bl_mlp_tf_l1_h1": {
     "source": "results/baselines_eval.json",
     "value": "0.1539"
@@ -4098,6 +4166,26 @@
   "h2h_bl_mlp_tf_l1_h8": {
     "source": "results/baselines_eval.json",
     "value": "0.4086"
+  },
+  "h2h_bl_mlp_tf_label": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "MLP, teacher-forced (\u00a75.3) \u2020"
+  },
+  "h2h_bl_mlp_tf_nrmse_h1": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.1393"
+  },
+  "h2h_bl_mlp_tf_nrmse_h100": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "1.1399"
+  },
+  "h2h_bl_mlp_tf_nrmse_h368": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "112.5344"
+  },
+  "h2h_bl_mlp_tf_nrmse_h8": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.3624"
   },
   "h2h_bl_rssm_ar_l1_h1": {
     "source": "results/baselines_eval.json",
@@ -4115,6 +4203,26 @@
     "source": "results/baselines_eval.json",
     "value": "0.6211"
   },
+  "h2h_bl_rssm_ar_label": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "RSSM, autoregressive (\u00a75.3) \u2020"
+  },
+  "h2h_bl_rssm_ar_nrmse_h1": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.1223"
+  },
+  "h2h_bl_rssm_ar_nrmse_h100": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "3.1128"
+  },
+  "h2h_bl_rssm_ar_nrmse_h368": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "9.2508"
+  },
+  "h2h_bl_rssm_ar_nrmse_h8": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.6004"
+  },
   "h2h_bl_rssm_tf_l1_h1": {
     "source": "results/baselines_eval.json",
     "value": "0.0761"
@@ -4130,6 +4238,26 @@
   "h2h_bl_rssm_tf_l1_h8": {
     "source": "results/baselines_eval.json",
     "value": "0.3686"
+  },
+  "h2h_bl_rssm_tf_label": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "RSSM, teacher-forced (\u00a75.3)"
+  },
+  "h2h_bl_rssm_tf_nrmse_h1": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.0707"
+  },
+  "h2h_bl_rssm_tf_nrmse_h100": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "2.0376"
+  },
+  "h2h_bl_rssm_tf_nrmse_h368": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "5.3890"
+  },
+  "h2h_bl_rssm_tf_nrmse_h8": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.3393"
   },
   "h2h_bl_transformer_ar_l1_h1": {
     "source": "results/baselines_eval.json",
@@ -4147,6 +4275,26 @@
     "source": "results/baselines_eval.json",
     "value": "0.3025"
   },
+  "h2h_bl_transformer_ar_label": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "transformer, autoregressive (\u00a75.3)"
+  },
+  "h2h_bl_transformer_ar_nrmse_h1": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.1329"
+  },
+  "h2h_bl_transformer_ar_nrmse_h100": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.5821"
+  },
+  "h2h_bl_transformer_ar_nrmse_h368": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "2.0110"
+  },
+  "h2h_bl_transformer_ar_nrmse_h8": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.2562"
+  },
   "h2h_bl_transformer_tf_l1_h1": {
     "source": "results/baselines_eval.json",
     "value": "0.1239"
@@ -4162,6 +4310,26 @@
   "h2h_bl_transformer_tf_l1_h8": {
     "source": "results/baselines_eval.json",
     "value": "0.3969"
+  },
+  "h2h_bl_transformer_tf_label": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "transformer, teacher-forced (\u00a75.3) \u2020"
+  },
+  "h2h_bl_transformer_tf_nrmse_h1": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.1202"
+  },
+  "h2h_bl_transformer_tf_nrmse_h100": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "2.0195"
+  },
+  "h2h_bl_transformer_tf_nrmse_h368": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "13.4730"
+  },
+  "h2h_bl_transformer_tf_nrmse_h8": {
+    "source": "results/pooled_nrmse_rescore.json",
+    "value": "0.3773"
   },
   "h2h_ckpt_neps_word": {
     "source": "results/head_to_head_accuracy.json",
@@ -4996,11 +5164,11 @@
     "value": "+23 min"
   },
   "mn_alongside_clause": {
-    "source": "results/mn_sweep_verdict.json",
+    "source": "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json",
     "value": "every one agrees except nRMSE at h = 1, which returns CANNOT BE DISTINGUISHED"
   },
   "mn_alongside_other": {
-    "source": "results/mn_sweep_verdict.json",
+    "source": "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json",
     "value": "nRMSE at h = 1, which returns CANNOT BE DISTINGUISHED"
   },
   "mn_best_D": {
@@ -5019,9 +5187,17 @@
     "source": "results/mn_sweep_eval.json",
     "value": "0.2987"
   },
+  "mn_better_kinds": {
+    "source": "results/mn_sweep_verdict.json",
+    "value": "two shorter histories and both longer training forecasts"
+  },
   "mn_better_list": {
     "source": "results/mn_sweep_verdict.json",
     "value": "(32, 32), (32, 16), (8, 8) and (2, 8)"
+  },
+  "mn_better_long_phrase": {
+    "source": "results/mn_sweep_verdict.json",
+    "value": "both longer training forecasts"
   },
   "mn_centre_l1_h368": {
     "source": "results/mn_sweep_eval.json",
@@ -5048,7 +5224,7 @@
     "value": "1, 2, 16 and 32"
   },
   "mn_insample_clause": {
-    "source": "results/mn_sweep_verdict.json",
+    "source": "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json",
     "value": "all four readings there return the same verdict"
   },
   "mn_mde_h368": {
@@ -5091,6 +5267,10 @@
     "source": "results/presubmission_runtime.json",
     "value": 8
   },
+  "mn_n_short_better_word": {
+    "source": "results/mn_sweep_verdict.json",
+    "value": "two"
+  },
   "mn_nind": {
     "source": "results/mn_sweep_eval.json",
     "value": 4
@@ -5104,8 +5284,8 @@
     "value": "three"
   },
   "mn_table": {
-    "source": "results/mn_sweep_eval.json + results/mn_sweep_verdict.json + results/presubmission_runtime.json",
-    "value": "| **(32, 8)**, the centre | 0.4798 | **0.5856** | \u2014 | \u2014 | \u2014 (existing runs) |\n| (1, 8) | 0.3796 | 0.5340 | -0.0516 [-0.1835, +0.0400] | not resolved | 0.15 |\n| (2, 8) | 0.3524 | 0.4717 | -0.1139 [-0.2988, -0.0088] | **configuration better** | 0.16 |\n| (8, 8) | 0.4043 | 0.4852 | -0.1004 [-0.2449, -0.0167] | **configuration better** | 0.30 |\n| (16, 8) | 0.4467 | 0.6161 | +0.0305 [-0.0008, +0.0720] | not resolved | 0.51 |\n| (32, 1) | 1.0903 | 3.7198 | +3.1342 [+1.3012, +6.5096] | centre better | 0.51 |\n| (32, 2) | 0.8886 | 2.0374 | +1.4518 [+0.6250, +2.6933] | centre better | 0.74 |\n| (32, 16) | 0.3544 | 0.3347 | -0.2509 [-0.5218, -0.0956] | **configuration better** | 0.78 |\n| (32, 32) | 0.3348 | 0.2987 | -0.2869 [-0.5951, -0.1005] | **configuration better** | 1.32 |"
+    "source": "results/mn_sweep_eval.json + results/mn_sweep_verdict.json + results/mn_compute_matched.json",
+    "value": "| **(32, 8)**, the centre | 0.4798 | **0.5856** | \u2014 | \u2014 | 1.00 |\n| (1, 8) | 0.3796 | 0.5340 | -0.0516 [-0.1835, +0.0400] | not resolved | 0.23 |\n| (2, 8) | 0.3524 | 0.4717 | -0.1139 [-0.2988, -0.0088] | **configuration better** | 0.26 |\n| (8, 8) | 0.4043 | 0.4852 | -0.1004 [-0.2449, -0.0167] | **configuration better** | 0.40 |\n| (16, 8) | 0.4467 | 0.6161 | +0.0305 [-0.0008, +0.0720] | not resolved | 0.60 |\n| (32, 1) | 1.0903 | 3.7198 | +3.1342 [+1.3012, +6.5096] | centre better | 0.81 |\n| (32, 2) | 0.8886 | 2.0374 | +1.4518 [+0.6250, +2.6933] | centre better | 0.95 |\n| (32, 16) | 0.3544 | 0.3347 | -0.2509 [-0.5218, -0.0956] | **configuration better** | 1.35 |\n| (32, 32) | 0.3348 | 0.2987 | -0.2869 [-0.5951, -0.1005] | **configuration better** | 1.81 |"
   },
   "mn_tf_ratio": {
     "source": "results/mn_sweep_eval.json",
@@ -5122,6 +5302,98 @@
   "mn_worse_list": {
     "source": "results/mn_sweep_verdict.json",
     "value": "(32, 2) and (32, 1)"
+  },
+  "n2_changed_list": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "with the baselines teacher-forced, in-sample nRMSE at h = 1 returns DOES NOT REPRODUCE pooled against CANNOT BE SETTLED averaged; with the baselines autoregressive, in-sample nRMSE at h = 100 returns PARTIAL pooled against RWM AHEAD OF ALL THREE averaged"
+  },
+  "n2_n_changed_word": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "two"
+  },
+  "n3_best_D_long": {
+    "source": "results/mn_compute_matched.json",
+    "value": "-0.0594"
+  },
+  "n3_best_D_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "-0.2031"
+  },
+  "n3_best_ci_long": {
+    "source": "results/mn_compute_matched.json",
+    "value": "[-0.1903, +0.0340]"
+  },
+  "n3_best_ci_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "[-0.5033, -0.0275]"
+  },
+  "n3_best_ins_D_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "+0.0084"
+  },
+  "n3_best_ins_ci_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "[-0.0006, +0.0161]"
+  },
+  "n3_best_over_long": {
+    "source": "results/mn_compute_matched.json",
+    "value": "2.21"
+  },
+  "n3_best_over_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "1.11"
+  },
+  "n3_cost_M2_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "0.26"
+  },
+  "n3_cost_M32_N16": {
+    "source": "results/mn_compute_matched.json",
+    "value": "1.35"
+  },
+  "n3_cost_M32_N32": {
+    "source": "results/mn_compute_matched.json",
+    "value": "1.81"
+  },
+  "n3_cost_M8_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "0.40"
+  },
+  "n3_k_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "5,000"
+  },
+  "n3_lf_ins_D_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "+0.0142"
+  },
+  "n3_lf_ins_ci_mid": {
+    "source": "results/mn_compute_matched.json",
+    "value": "[+0.0068, +0.0205]"
+  },
+  "n3_lf_label": {
+    "source": "results/mn_compute_matched.json",
+    "value": "(32, 16)"
+  },
+  "n3_sh_D_long_M2_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "+0.1135"
+  },
+  "n3_sh_D_long_M8_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "+0.1270"
+  },
+  "n3_sh_ci_long_M2_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "[+0.0983, +0.1357]"
+  },
+  "n3_sh_ci_long_M8_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "[+0.0987, +0.1589]"
+  },
+  "n3_sh_long_clause": {
+    "source": "results/mn_compute_matched.json",
+    "value": "(2, 8) by +0.1135 [+0.0983, +0.1357] and (8, 8) by +0.1270 [+0.0987, +0.1589]"
   },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
@@ -5357,7 +5629,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 49
+    "value": 50
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -8123,6 +8395,10 @@
     "source": "results/step0_regimes.json",
     "value": "10,000"
   },
+  "rssm_partc_sentence": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "Its two retraining variants (X1 Part C) have been trained and are not yet scored."
+  },
   "rt_bl_ar_hours": {
     "source": "results/presubmission_runtime.json",
     "value": "7.0"
@@ -8174,6 +8450,10 @@
   "rt_pre_runs": {
     "source": "results/presubmission_runtime.json",
     "value": 42
+  },
+  "rt_pre_table": {
+    "source": "results/presubmission_runtime.json",
+    "value": "| (1, 8) (\u00a75.2) | 3 | 0.15 | 0 |\n| (2, 8) (\u00a75.2) | 3 | 0.16 | 0 |\n| (8, 8) (\u00a75.2) | 3 | 0.30 | 1 |\n| (16, 8) (\u00a75.2) | 3 | 0.51 | 2 |\n| (32, 1) (\u00a75.2) | 3 | 0.51 | 0 |\n| (32, 2) (\u00a75.2) | 3 | 0.74 | 3 |\n| (32, 16) (\u00a75.2) | 3 | 0.78 | 1 |\n| (32, 32) (\u00a75.2) | 3 | 1.32 | 1 |\n| MLP, teacher-forced (\u00a75.3) | 3 | 0.04 | 0 |\n| RSSM, teacher-forced (\u00a75.3) | 3 | 1.88 | 0 |\n| transformer, teacher-forced (\u00a75.3) | 3 | 0.71 | 0 |\n| MLP, autoregressive (\u00a75.3) | 3 | 0.06 | 0 |\n| RSSM, autoregressive (\u00a75.3) | 3 | 1.53 | 0 |\n| transformer, autoregressive (\u00a75.3) | 3 | 0.74 | 0 |"
   },
   "rt_runs": {
     "source": "results/step5_*.json",
@@ -8295,6 +8575,18 @@
     "source": "results/task5_analysis.json",
     "value": 1
   },
+  "tail_n": {
+    "source": "results/training_tail_slopes.json",
+    "value": 48
+  },
+  "tail_slope_hi": {
+    "source": "results/training_tail_slopes.json",
+    "value": "-0.09"
+  },
+  "tail_slope_lo": {
+    "source": "results/training_tail_slopes.json",
+    "value": "-1.99"
+  },
   "time_cfgs": {
     "source": "results/step4_5_timing.json",
     "value": 4
@@ -8321,7 +8613,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 717
+    "value": 724
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -8746,6 +9038,50 @@
   "wiring_max_diff": {
     "source": "results/task5_differential.json",
     "value": "0.000e+00"
+  },
+  "x1_floor_h1": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "0.0796"
+  },
+  "x1_floor_h32": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "0.5950"
+  },
+  "x1_reading_a": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "NOT EVALUATION-LIMITED"
+  },
+  "x1_tf_exp_h32": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "0.7165"
+  },
+  "x1_tf_mode_h32": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "1.0182"
+  },
+  "x1_tf_samp_h32": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "0.6914"
+  },
+  "x1b_ar_ratio_hi": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "1.02"
+  },
+  "x1b_kl_hi": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "20.0"
+  },
+  "x1b_kl_lo": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "13.5"
+  },
+  "x1b_tf_ratio_hi": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "1.27"
+  },
+  "x1b_tf_ratio_lo": {
+    "source": "results/rssm_diagnostics.json",
+    "value": "1.16"
   },
   "zero_delta_resid": {
     "source": "results/task3_hardening.json",

@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 66,
-  "n_ok": 66,
+  "n_pointers": 70,
+  "n_ok": 70,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -179,6 +179,12 @@
     },
     {
       "class": "artifact",
+      "pointer": "results/mn_compute_matched.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
       "pointer": "results/mn_sweep_eval.json",
       "ok": true,
       "detail": "exists"
@@ -210,6 +216,18 @@
     {
       "class": "artifact",
       "pointer": "results/paper_numbers.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/pooled_nrmse_alongside.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/pooled_nrmse_rescore.json",
       "ok": true,
       "detail": "exists"
     },
@@ -282,6 +300,12 @@
     {
       "class": "artifact",
       "pointer": "results/task_d3_cross_model.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/training_tail_slopes.json",
       "ok": true,
       "detail": "exists"
     },
