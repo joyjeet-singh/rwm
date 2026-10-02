@@ -33,14 +33,17 @@ already narrowed in the paper while the ledger and this README went on asserting
 ## What this found
 
 **1 — The base paper's central training claim reproduces, and the advantage grows with horizon.**
-Autoregressive training beats teacher forcing by a factor of **{{d1_ratio}}×** on the reference's
-own relative-L1 error at the {{v2_diag_h}}-step open-loop horizon, over {{d1_seeds}} seeds on
-held-out episodes ({{d1_A_mean}} against {{d1_B_mean}}), under a decision rule committed to git
-before the runs that tested it existed. Across the whole horizon grid the ratio rises
+Under a decision rule committed to git before the runs that tested it existed, and run on one
+seed per arm (seed {{m23_seed}}), autoregressive training beats teacher forcing by {{m23_ratio}}× on
+the reference's own relative-L1 error at the {{v2_diag_h}}-step open-loop horizon, on held-out
+episodes. The {{iters_long}}-iteration runs of seeds {{m23_other_seeds}} were trained after that verdict; over
+{{d1_seeds}} seeds the factor is **{{d1_ratio}}×** ({{d1_A_mean}} against {{d1_B_mean}}), a three-seed
+extension that carries none of the rule's weight. Across the whole horizon grid the ratio rises
 monotonically to that figure — **{{d1_ratio_h100}}×** at h = {{v2_deploy_h}}, the horizon the
 method deploys at — and the gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons,
-spanning it only at {{a1_spans_zero_at}}. Only the h = {{v2_diag_h}} figure is pre-registered;
-the rest were computed after the data existed and are marked as such.
+spanning it only at {{a1_spans_zero_at}}. Only the rule's one-seed verdict is pre-registered;
+the three-seed figures and every other horizon were computed after the data existed, and are
+marked as such.
 
 **2 — Neither uncertainty output of the follow-up is usable as an interval.** At
 h = {{v2_deploy_h}} — the horizon the method's own imagination rollouts run to — the ensemble

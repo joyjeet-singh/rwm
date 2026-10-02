@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1134 values substituted from 86 artifacts. -->
+     1136 values substituted from 86 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -106,7 +106,7 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   h = 368 it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
   training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
   the held-out pair's 4 independent trajectories, which this checkpoint trained on, the stale
-  action raises its error by
+  action raises its relative-L1 error by
   34.2% [10.6, 75.0] at h = 1, and at h = 368 by 7.9% [3.1, 13.0] on
   relative-L1 and 6.6% [1.0, 8.0] in nRMSE; over all ten episodes the sign at h = 368
   reverses (§7.2).
@@ -303,9 +303,10 @@ that size has 256 distinct resamples, so its intervals are quantised at that
 resolution. Every long-horizon verdict in this paper survives a bootstrap over independent
 trajectories, every table reports that count, and §8 reports both resampling units where they
 differ. Later sections refer back to this as the n = 4 caveat of §3. One trajectory can carry
-much of a long-horizon effect: a one-step shift of the action moves single trajectories' 368-step
-error by anywhere from -47.4% to +35.2% (§7.2), which is why 4 trajectories
-bound every long-horizon claim.
+much of a long-horizon effect: a one-step shift of the action moves the released checkpoint's
+368-step relative-L1 error on single trajectories of its own training episodes by anywhere from
+-47.4% to +35.2% (§7.2), which illustrates why 4 trajectories bound every
+long-horizon claim.
 
 ### 3.1 Metrics
 
@@ -453,8 +454,9 @@ states it, and our verdict.
 than outcomes. Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule was run on
 seed 1 of each arm: autoregressive 0.3509 against teacher forcing 1.5540 at
-h = 368, 4.43×, gap interval [0.56, 2.05]. Seeds 0 and 2
-were trained after the verdict (ledger R-60, 2026-08-22), so the three-seed figures below extend it
+h = 368, 4.43×, gap interval [0.56, 2.05]. The 10,000-iteration runs of seeds
+0 and 2 were trained after the verdict (ledger R-60, entered 2026-08-22), so the three-seed
+figures below extend it
 and carry none of its weight. The rule is anchored at
 h = 368, the upstream's **open-loop diagnostic** length and not a deployment horizon
 (§3.1), and its verdict is returned there; we do not re-anchor a discharged rule. The method's own
@@ -471,11 +473,12 @@ episodes has 16 independent 400-step trajectories against the held-out arena's
 but one: at h = 8 after 500 iterations teacher forcing leads in-sample, with an interval that
 excludes zero at both trajectory lengths (`results/review_bootstrap_unit.json`).
 
-*The out-of-sample effect size, at every horizon.* At h = 368, the rule's horizon,
-autoregressive training reaches **0.3582 ± 0.0283** against teacher forcing's
+*The out-of-sample effect size, at every horizon.* At h = 368, the rule's horizon, the
+three-seed extension puts autoregressive training at **0.3582 ± 0.0283** against teacher forcing's
 **1.6497 ± 0.2858** (standard deviation over seeds, `ddof=1`), a factor of **4.61×**. Arm B predicts each of the window's 8 forecast targets from
 true inputs, where the original's teacher forcing is N = 1; the sweep's (32, 1), trained that way, is
-6.35× worse than the centre at h = 368 (§5.2), so the claim holds under both definitions.
+6.35× worse than the centre at h = 368 at 2,500 iterations (§5.2), so the direction
+holds under both definitions.
 At h = 100, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **2.58×**.
 Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
@@ -1296,7 +1299,7 @@ uncertainty about step 368. It cannot report it about step 8 either. Inside the 
 σ is flat while error grows (Figure 5; out-of-sample held-out pair, n_independent = 4 400-step trajectories; our arms at
 2,500 training iterations, the released checkpoint as released):
 
-![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1, on the out-of-sample held-out pair, n\_independent = 4 400-step trajectories; our arms at 2,500 training iterations, the released checkpoint as released. (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows 1.79× to 6.11× over the same steps, across the four models. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
+![Why the coverage collapse is a horizon effect. Both panels are normalised to forecast step 1, on the out-of-sample held-out pair, n\_independent = 4 400-step trajectories; our arms at 2,500 training iterations, the released checkpoint as released; it trained on these episodes, so for it this arena is in-sample (\S3). (a) predicted $\sigma$ barely moves, and for the faithful arm it declines. (b) realised error grows 1.79× to 6.11× over the same steps, across the four models. The gap between the panels is the collapse.](figures/paper_fig2_sigma_profile.png)
 
 | model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
 |---|---|---|
@@ -1512,10 +1515,12 @@ on relative-L1 and +2.4%, +5.8%, +8.3%, -0.3% in nRMSE. Over all ten episodes, 2
 trajectories, the sign reverses: -4.6% [-13.4, 3.2] on relative-L1 and -2.1%
 [-10.0, 3.9] in nRMSE, with single trajectories from -47.4% to +35.2%.
 Every arena here is in-sample for this checkpoint, which trained on all ten episodes. One step ahead, where a
-stale action should matter most, it changes the checkpoint's error by 34.2% [10.6, 75.0] on the
-same 4 trajectories (`results/alignment_by_horizon.json`). Our own Arm A checkpoints at 10,000
-iterations, trained under the causal pairing, change by -0.22% at h = 1 and
-+0.15% at h = 368 when fed the stale one.
+stale action should matter most, it changes the checkpoint's relative-L1 error by 34.2%
+[10.6, 75.0] on the held-out pair's 4 trajectories, and by 22.5% [6.3, 41.7]
+at h = 100, the method's own horizon (`results/alignment_by_horizon.json`). Our own Arm A
+checkpoints at 10,000 iterations, trained under the causal pairing, change by -0.22%
+at h = 1 and +0.15% at h = 368 when fed the stale one (three-seed mean,
+relative-L1, held-out pair).
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).

@@ -98,7 +98,7 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   h = {{v2_diag_h}} it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
   training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
   the held-out pair's {{ad_nind}} independent trajectories, which this checkpoint trained on, the stale
-  action raises its error by
+  action raises its relative-L1 error by
   {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on
   relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE; over all ten episodes the sign at h = {{v2_diag_h}}
   reverses (§7.2).
@@ -295,9 +295,10 @@ that size has {{c3_resamples}} distinct resamples, so its intervals are quantise
 resolution. Every long-horizon verdict in this paper survives a bootstrap over independent
 trajectories, every table reports that count, and §8 reports both resampling units where they
 differ. Later sections refer back to this as the n = {{m23_nind}} caveat of §3. One trajectory can carry
-much of a long-horizon effect: a one-step shift of the action moves single trajectories' {{v2_diag_h}}-step
-error by anywhere from {{ad20_traj_lo}}% to {{ad20_traj_hi}}% (§7.2), which is why {{m23_nind}} trajectories
-bound every long-horizon claim.
+much of a long-horizon effect: a one-step shift of the action moves the released checkpoint's
+{{v2_diag_h}}-step relative-L1 error on single trajectories of its own training episodes by anywhere from
+{{ad20_traj_lo}}% to {{ad20_traj_hi}}% (§7.2), which illustrates why {{m23_nind}} trajectories bound every
+long-horizon claim.
 
 ### 3.1 Metrics
 
@@ -430,8 +431,9 @@ states it, and our verdict.
 than outcomes. Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule was run on
 seed {{m23_seed}} of each arm: autoregressive {{m23_A_s1}} against teacher forcing {{m23_B_s1}} at
-h = {{v2_diag_h}}, {{m23_ratio}}×, gap interval [{{m23_ci_lo}}, {{m23_ci_hi}}]. Seeds {{m23_other_seeds}}
-were trained after the verdict (ledger R-60, {{r60_date}}), so the three-seed figures below extend it
+h = {{v2_diag_h}}, {{m23_ratio}}×, gap interval [{{m23_ci_lo}}, {{m23_ci_hi}}]. The {{iters_long}}-iteration runs of seeds
+{{m23_other_seeds}} were trained after the verdict (ledger R-60, entered {{r60_date}}), so the three-seed
+figures below extend it
 and carry none of its weight. The rule is anchored at
 h = {{v2_diag_h}}, the upstream's **open-loop diagnostic** length and not a deployment horizon
 (§3.1), and its verdict is returned there; we do not re-anchor a discharged rule. The method's own
@@ -448,11 +450,12 @@ episodes has {{nind_ins_400}} independent 400-step trajectories against the held
 but one: at h = 8 after 500 iterations teacher forcing leads in-sample, with an interval that
 excludes zero at both trajectory lengths (`results/review_bootstrap_unit.json`).
 
-*The out-of-sample effect size, at every horizon.* At h = {{v2_diag_h}}, the rule's horizon,
-autoregressive training reaches **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's
+*The out-of-sample effect size, at every horizon.* At h = {{v2_diag_h}}, the rule's horizon, the
+three-seed extension puts autoregressive training at **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's
 **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`), a factor of **{{d1_ratio}}×**. Arm B predicts each of the window's {{win_fore}} forecast targets from
 true inputs, where the original's teacher forcing is N = 1; the sweep's {{mn_n1_label}}, trained that way, is
-{{mn_tf_ratio}}× worse than the centre at h = {{v2_diag_h}} (§5.2), so the claim holds under both definitions.
+{{mn_tf_ratio}}× worse than the centre at h = {{v2_diag_h}} at {{iters_main}} iterations (§5.2), so the direction
+holds under both definitions.
 At h = {{v2_deploy_h}}, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **{{d1_ratio_h100}}×**.
 Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
@@ -1453,10 +1456,12 @@ on relative-L1 and {{ad_nrmse_traj}} in nRMSE. Over all ten episodes, {{ad20_nin
 trajectories, the sign reverses: {{ad20_rel}}% {{ad20_rel_ci}} on relative-L1 and {{ad20_nrmse}}%
 {{ad20_nrmse_ci}} in nRMSE, with single trajectories from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%.
 Every arena here is in-sample for this checkpoint, which trained on all ten episodes. One step ahead, where a
-stale action should matter most, it changes the checkpoint's error by {{adh_rel_h1}}% {{adh_rel_ci_h1}} on the
-same {{ad_nind}} trajectories (`results/alignment_by_horizon.json`). Our own Arm A checkpoints at {{iters_long}}
-iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}% at h = 1 and
-{{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one.
+stale action should matter most, it changes the checkpoint's relative-L1 error by {{adh_rel_h1}}%
+{{adh_rel_ci_h1}} on the held-out pair's {{ad_nind}} trajectories, and by {{adh_rel_h100}}% {{adh_rel_ci_h100}}
+at h = {{v2_deploy_h}}, the method's own horizon (`results/alignment_by_horizon.json`). Our own Arm A
+checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}%
+at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one (three-seed mean,
+relative-L1, held-out pair).
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).

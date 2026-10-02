@@ -1809,7 +1809,13 @@ def main():
     _r1 = _ah["released"]["summary"]["held_out_n4"]["1"]["rel_l1"]
     put("adh_rel_h1", f'{_r1["pct"]:.1f}', _src2)
     put("adh_rel_ci_h1", _ci(_r1["ci95_pct"]), _src2)
-    _am = _ah["arm_a"]["10000"]["summary_three_seed_mean_pct"]
+    # ...and at the method's own horizon, so "concentrated at short horizons" can be checked from
+    # the paper (T3 review F8). The horizon is read from the artifact that names it, not typed.
+    _hd = str(J("v2_deployment_horizon.json")["verdict"]["deployment_horizon_is"])
+    _rd = _ah["released"]["summary"]["held_out_n4"][_hd]["rel_l1"]
+    put("adh_rel_h100", f'{_rd["pct"]:.1f}', _src2)
+    put("adh_rel_ci_h100", _ci(_rd["ci95_pct"]), _src2)
+    _am =_ah["arm_a"]["10000"]["summary_three_seed_mean_pct"]
     put("stale_armA_rel_h1", f'{_am["1"]["rel_l1"]:+.2f}', _src2)
     put("stale_armA_rel_h368", f'{_am["368"]["rel_l1"]:+.2f}', _src2)
 

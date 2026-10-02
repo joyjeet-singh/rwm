@@ -43,6 +43,17 @@ def norm(s):
 def main():
     reader = PdfReader(PDF)
     pages = [p.extract_text() or "" for p in reader.pages]
+    # Page furniture is not text the source states. Each page's text ends with its page number
+    # and the next begins with the running header, so a reference split by a page break read
+    # "(Figure 10 Under review as submission to TMLR 2)" and check 2 reported a Figure 10 (round 2,
+    # T3). Exactly those two lines are dropped, and only if every page carries them where expected:
+    # a layout that moves them fails here rather than silently leaving them in.
+    HEADER = "Under review as submission to TMLR"
+    for i, t in enumerate(pages):
+        ln = t.rstrip().split("\n")
+        assert ln[0].strip() == HEADER and ln[-1].strip() == str(i + 1), (
+            f"page {i + 1}: running header or page number not where expected; furniture cannot be stripped")
+        pages[i] = "\n".join(ln[1:-1])
     pdf_raw = "\n".join(pages)
     pdf = norm(pdf_raw)
     md = open(MD).read()

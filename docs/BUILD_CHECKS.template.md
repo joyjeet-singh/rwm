@@ -59,7 +59,7 @@ nothing about reproduction, and are never folded into the figure; counting them 
 *Formerly the paper's Appendix C, moved here in the referee revision. The text is as it stood
 there; only headings and cross-references that now point the other way were changed.*
 
-**The {{n_retractions_word_lower}} claims withdrawn on evidence, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; and the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards. **The {{n_retract_framing_word}} framings withdrawn**, as stated claims rather
+**The {{n_retractions_word_lower}} claims withdrawn on evidence, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards; and the size of the released evaluation's one-step action misalignment, measured on overlapping windows one of which carried most of the effect, withdrawn when intervals over independent trajectories made it small and its sign reversed across the ten episodes (S-20, reclassified by M-82 as withdrawn on evidence). **The {{n_retract_framing_word}} framings withdrawn**, as stated claims rather
 than as numbers, and generated from the ledger rather than listed here — a typed
 enumeration beside a generated count is the same defect as a typed count. This one was typed
 with {{n_framing_before_last_word}} entries at a time when the ledger held
@@ -367,9 +367,9 @@ claims stayed, and only their history moved.
 - **[§4]** Both counts and both lists of untested claims are generated from a classification tag
   carried in Appendix D's verdict column, so the enumeration cannot disagree with the count beside
   it. It did once: an earlier draft of that sentence, itself the replacement for the withdrawn
-  claim `S-17` (a count defect in the same place), said {{appE_n_sim_word}} and then named
+  framing `S-17` (a count defect in the same place), said {{appE_n_sim_word}} and then named
   {{appF_n_polhw_lower}}, and called all of them claims about policy learning or hardware when one
-  of them is not. `S-17` withdrew a universal quantifier; its replacement got the arithmetic wrong
+  of them is not. The framing `S-17` withdrew a universal quantifier; its replacement got the arithmetic wrong
   instead, the worse failure of the two because the sentence had just been rewritten under
   scrutiny.
 - **[§5]** That the rule M-23 is anchored at the diagnostic horizon rather than the deployment one
@@ -416,7 +416,7 @@ claims stayed, and only their history moved.
   two others.
 - **[§7.2]** The {{stale_pct}}% (nRMSE) and {{stale_pct_rel}}% (relative-L1) this paper reported before came
   from {{ad_pa_n}} overlapping windows sampled as the upstream samples them, one of which (starting at row
-  {{ad_pa_out_row}}) carries most of the effect; they are withdrawn (S-20).
+  {{ad_pa_out_row}}) carries most of the effect; they are withdrawn on evidence (S-20, reclassified by M-82).
 - **[§7.4]** The duplication control was run only because the first version of the splice finding
   inferred the mechanism (content rather than count) without it.
 - **[§8]** The duplication-control rule's lead time is dated from the commit that introduced the

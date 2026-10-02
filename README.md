@@ -33,14 +33,17 @@ already narrowed in the paper while the ledger and this README went on asserting
 ## What this found
 
 **1 — The base paper's central training claim reproduces, and the advantage grows with horizon.**
-Autoregressive training beats teacher forcing by a factor of **4.61×** on the reference's
-own relative-L1 error at the 368-step open-loop horizon, over 3 seeds on
-held-out episodes (0.3582 against 1.6497), under a decision rule committed to git
-before the runs that tested it existed. Across the whole horizon grid the ratio rises
+Under a decision rule committed to git before the runs that tested it existed, and run on one
+seed per arm (seed 1), autoregressive training beats teacher forcing by 4.43× on
+the reference's own relative-L1 error at the 368-step open-loop horizon, on held-out
+episodes. The 10,000-iteration runs of seeds 0 and 2 were trained after that verdict; over
+3 seeds the factor is **4.61×** (0.3582 against 1.6497), a three-seed
+extension that carries none of the rule's weight. Across the whole horizon grid the ratio rises
 monotonically to that figure — **2.58×** at h = 100, the horizon the
 method deploys at — and the gap excludes zero at 5 of 6 horizons,
-spanning it only at h=1. Only the h = 368 figure is pre-registered;
-the rest were computed after the data existed and are marked as such.
+spanning it only at h=1. Only the rule's one-seed verdict is pre-registered;
+the three-seed figures and every other horizon were computed after the data existed, and are
+marked as such.
 
 **2 — Neither uncertainty output of the follow-up is usable as an interval.** At
 h = 100 — the horizon the method's own imagination rollouts run to — the ensemble

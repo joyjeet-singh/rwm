@@ -743,9 +743,17 @@
     "source": "results/alignment_by_horizon.json",
     "value": "[10.6, 75.0]"
   },
+  "adh_rel_ci_h100": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[6.3, 41.7]"
+  },
   "adh_rel_h1": {
     "source": "results/alignment_by_horizon.json",
     "value": "34.2"
+  },
+  "adh_rel_h100": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "22.5"
   },
   "agree_alea": {
     "source": "results/task_b2_epistemic.json + task_d_nind20.json",

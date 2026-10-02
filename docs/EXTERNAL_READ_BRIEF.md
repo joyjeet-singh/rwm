@@ -51,10 +51,11 @@ uncertainty outputs report.
    multipliers manage 17 of 36 epistemic cells. Separately, the released evaluation pairs each
    state with the previous step's action. The paper used to say this overstates the checkpoint's
    error by 75% on nRMSE at h = 368 (9.5% on relative-L1). Those figures came from overlapping
-   windows, one of which carried most of the effect, and they are withdrawn (`S-20`). On four
-   independent trajectories the overstatement is 6.6% [1.0, 8.0] in nRMSE and 7.9% [3.1, 13.0] on
-   relative-L1, and across all ten episodes, which the checkpoint trained on, the sign reverses:
-   a real correctness defect with a small cost.
+   windows, one of which carried most of the effect, and they are withdrawn (`S-20`). Measured
+   horizon by horizon, the cost is concentrated at short horizons. At h = 368, on four independent
+   trajectories, the overstatement is 6.6% [1.0, 8.0] in nRMSE and 7.9% [3.1, 13.0] on relative-L1,
+   and across all ten episodes, which the checkpoint trained on, the sign reverses: a real
+   correctness defect whose cost at the longest horizon is small and not consistent in sign.
 
 **Scale, so you can calibrate how much to trust each.** Two CPU cores, 49.8 hours of training
 across 33 runs, 0.133% of the reference's world-model data budget. The out-of-sample arena has
@@ -130,7 +131,7 @@ In rough order:
 2. Anything in the abstract that you would read as a stronger claim than the body supports.
 3. A section you would cut. The paper is long, roughly a fifth of it is about its own process, and
    we would rather hear "§8 is too long" from you than from a reviewer.
-4. Anything that reads as defensive rather than careful. The ledger keeps 20 superseded entries, six claims withdrawn on evidence and seven framings withdrawn among them, and the paper says so repeatedly; we cannot tell any more whether that reads as rigour or as
+4. Anything that reads as defensive rather than careful. The ledger keeps 20 superseded entries, seven claims withdrawn on evidence and six framings withdrawn among them, and the paper says so repeatedly; we cannot tell any more whether that reads as rigour or as
    anxiety.
 
 **What is not useful:** arithmetic, citation formatting, or anything of the form "this number

@@ -792,7 +792,11 @@ CLAIMS = [
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "README.template.md"],
      "keys_regex": r"d1_ratio|a1_[A-Za-z_]*h368", "trigger_regex": r"\brules?\b|pre-regist",
      "window_lines": 2,
-     "marker_regex": r"\{\{m23_seed\}\}|three-seed|three seeds|\{\{d1_seeds\}\} seeds"},
+     # T3 review F2: "{{d1_seeds}} seeds" and "three seeds" were markers, and they pass the very
+     # text this check exists to catch ("over 3 seeds" does not say the rule ran on one). Only
+     # phrases that name the rule's seed, or call the three seeds an extension, count.
+     # Whitespace-tolerant: the abstract's "one seed per arm" wraps across a line break.
+     "marker_regex": r"\{\{m23_seed\}\}|one\s+seed\s+per\s+arm|three-seed\s+extension|extends?\s+(it|the\s+rule)"},
     # C25.2: the alignment defect's cost is small and not consistent in sign at h = 368 (S-20, R-76). No
     # sentence may pair "overstat..." with an alignment figure unless its paragraph names the reversal.
     {"id": "C25.2", "kind": "overstat-reversal", "where": "7.2 / abstract / contributions",
@@ -1041,6 +1045,12 @@ def evaluate(c, paper, override=None):
             cls[sid] = ("evidence" if not tail.startswith("—")
                         else "hypothesis" if "early hypothesis" in tail
                         else "framing")
+        # Round 2 (ruling U1): an S- entry's **Retracts** line can never be edited, so a later entry
+        # may reclassify it with `**Reclassifies** \`S-NN\` as <class>` (M-82 moves S-20 to evidence).
+        # Read with ledger_check.py's own pattern, so the two cannot disagree about a class.
+        for m in re.finditer(r"^\*\*Reclassifies\*\* `(S-\d+)` as (evidence|framing|early hypothesis)\s*$",
+                             _led, re.M):
+            cls[m.group(1)] = "hypothesis" if m.group(2) == "early hypothesis" else m.group(2)
         cls.update(exp.get("_forced_ledger", {}))
         MARK = {"framing": r"framings?\b",
                 "evidence": r"numbered retractions?|own evidence"
@@ -1373,9 +1383,12 @@ def evaluate(c, paper, override=None):
     if k == "rule-seed-scope":
         keys = re.compile(r"\{\{(?:" + exp["keys_regex"] + r")\}\}")
         trig, mark, W = re.compile(exp["trigger_regex"], re.I), re.compile(exp["marker_regex"], re.I), exp["window_lines"]
-        bad, n = [], 0
+        bad, n, plant, missed_plant = [], 0, exp.get("_plant", {}), []
         for f in exp["files"]:
             L = open(f).read().split("\n")
+            n0 = len(L)
+            if f in plant:                         # --self-test: the old wording, appended
+                L += [""] + plant[f].split("\n")
             blk, b_i = [], 0                       # paragraph index of every line
             for ln in L:
                 if not ln.strip():
@@ -1392,22 +1405,50 @@ def evaluate(c, paper, override=None):
                 region = "\n".join(x for j, x in enumerate(L) if blk[j] == cur or blk[j] == follow)
                 if not mark.search(region):
                     bad.append(f"{f}:{i + 1}")
+            if f in plant and not any(b.startswith(f"{f}:") and int(b.rsplit(":", 1)[1]) > n0 for b in bad):
+                missed_plant.append(f)
+        if missed_plant:                           # every planted paragraph must be caught, not just one
+            return True, f"planted old wording NOT caught in {missed_plant}"
         return n > 0 and not bad, (f"{n} lines quote the rule-horizon figures near 'rule'/'pre-register'; "
                                    f"{n - len(bad)} name the seed or the three-seed extension"
                                    + (f"; missing at {bad}" if bad else ""))
     if k == "overstat-reversal":
         fig, rev = re.compile(r"\{\{(?:" + exp["figure_regex"] + r")\}\}"), re.compile(exp["reversal_regex"], re.I)
-        bad, n = [], 0
+        bad, n, plant, missed_plant = [], 0, exp.get("_plant", {}), []
         for f in exp["files"]:
-            for para in re.split(r"\n\s*\n", open(f).read()):
+            paras = [(p, False) for p in re.split(r"\n\s*\n", open(f).read())]
+            if f in plant:                         # --self-test: the old wording, appended
+                paras += [(p, True) for p in re.split(r"\n\s*\n", plant[f])]
+            caught_plant = False
+            for para, planted in paras:
                 sents = re.split(r"(?<=[.;])\s+", para)
                 if any(re.search(r"overstat", s, re.I) and fig.search(s) for s in sents):
                     n += 1
                     if not rev.search(para):
                         bad.append(f"{f}: {para.strip()[:70]!r}")
+                        caught_plant |= planted
+            if f in plant and not caught_plant:
+                missed_plant.append(f)
+        if missed_plant:
+            return True, f"planted old wording NOT caught in {missed_plant}"
         return not bad, (f"{n} paragraphs pair 'overstat' with an alignment figure; "
                          f"{n - len(bad)} name the reversal" + (f"; missing in {bad}" if bad else ""))
     raise ValueError(k)
+
+
+# The real wording the C25 checks exist to catch, verbatim from git history (see corruption_for).
+_OLD_RULE_SCOPE_PAPER = """- **The base paper's central training claim reproduces, and reverses at one step.** Under a rule
+  committed before the runs, training on the model's own rollouts beats teacher forcing, by
+  {{d1_ratio}}× on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds and by
+  {{d1_ratio_h100}}× at h = {{v2_deploy_h}} (§5)."""
+_OLD_RULE_SCOPE_README = """Autoregressive training beats teacher forcing by a factor of **{{d1_ratio}}×** on the reference's
+own relative-L1 error at the {{v2_diag_h}}-step open-loop horizon, over {{d1_seeds}} seeds on
+held-out episodes ({{d1_A_mean}} against {{d1_B_mean}}), under a decision rule committed to git
+before the runs that tested it existed."""
+_OLD_OVERSTAT_PAPER = """predict state *t* — stale by one step. Scored correctly the released checkpoint is materially
+better than its own released evaluation reports: nRMSE at h = 368 falls from {{stale_nrmse}}
+under the released pairing to {{causal_nrmse}} under the causal one, so the released evaluation
+overstates its own model's error by {{stale_pct}}%."""
 
 
 def corruption_for(c):
@@ -1569,9 +1610,14 @@ def corruption_for(c):
             return {"named": {"h": runner_up[2:]}}
         return {"named": {"label": runner_up}}
     if k == "rule-seed-scope":
-        return {"marker_regex": "@@never@@"}       # no sentence can name the seed: every quoted one fails
+        # Plant the sentences this check was written to catch, as they really stood: contribution 2
+        # before round 2's T3 (commit 9c892c8) and the README's contribution 1 before the T3 review.
+        # Blanking the marker could not show that the marker itself was too loose; this can.
+        return {"_plant": {"PAPER.template.md": _OLD_RULE_SCOPE_PAPER, "README.template.md": _OLD_RULE_SCOPE_README}}
     if k == "overstat-reversal":
-        return {"reversal_regex": "@@never@@"}     # no paragraph can name the reversal
+        # Plant S-20's original sentence (section 7.2 before commit 798a362): an overstatement figure
+        # with no reversal anywhere in its paragraph.
+        return {"_plant": {"PAPER.template.md": _OLD_OVERSTAT_PAPER}}
     raise ValueError(k)
 
 

@@ -398,7 +398,8 @@ def main():
             "forecast step 1, on the " + str(N["sig_arena"]["value"]) + ", n\\_independent = "
             + str(N["sig_nind"]["value"]) + " 400-step trajectories; our arms at "
             + str(N["iters_main"]["value"]) + " training iterations, the released checkpoint "
-            "as released. (a) predicted $\\sigma$ barely moves, and for the faithful arm it "
+            "as released; it trained on these episodes, so for it this arena is in-sample "
+            "(\\S3). (a) predicted $\\sigma$ barely moves, and for the faithful arm it "
             "declines. (b) realised error grows " + str(N["err_growth_lo"]["value"]) + "× to "
             + str(N["err_growth_hi"]["value"]) + "× over the same steps, across the four models. "
             "The gap between the panels is the collapse.",
