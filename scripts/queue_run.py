@@ -70,6 +70,9 @@ for _a in ("mlp", "rssm", "transformer"):
     for _r in ("tf", "ar"):
         for _s in ("s7", "matched"):
             TRAINERS[f"{_a}-{_r}-{_s}"] = baseline(_a, _r, _s)
+# Round 2, rule X1 Part C (ledger M-80): the Table S7 RSSM with one setting changed, teacher-forced.
+for _s in ("x1v1", "x1v2"):
+    TRAINERS[f"rssm-tf-{_s}"] = baseline("rssm", "tf", _s)
 
 FIELDS = {"iterations": lambda a, hp: hp.get("iterations"),
           "history_horizon (M)": lambda a, hp: hp.get("history_horizon"),

@@ -7,6 +7,9 @@
 #   queue carries on; each run's output -> runs/queue_logs/<id>.log
 #
 # Launched as:  nohup caffeinate -i scripts/queue_runner.sh > runs/queue.log 2>&1 &
+#   or, with a queue file:  nohup caffeinate -i scripts/queue_runner.sh runs/queue_round2.txt > runs/queue_round2.log 2>&1 &
+#   (round 2). With no argument it reads runs/queue.txt exactly as before; with a file Q it keeps
+#   its done and failed lists beside it, as Q's name with _done / _failed for .txt.
 #
 # The queue file is re-read before every run, so lines appended while the queue runs
 # (S2b's baselines) are picked up in order. One run at a time: the machine has 8 GB.
@@ -18,9 +21,9 @@
 set -u
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 PY="${PY:-$(cd .. && pwd)/.venv-rwm311/bin/python}"
-Q=runs/queue.txt
-DONE=runs/queue_done.txt
-FAILED=runs/queue_failed.txt
+Q="${1:-runs/queue.txt}"
+DONE="${Q%.txt}_done.txt"
+FAILED="${Q%.txt}_failed.txt"
 LOGS=runs/queue_logs
 mkdir -p "$LOGS"
 touch "$DONE" "$FAILED"

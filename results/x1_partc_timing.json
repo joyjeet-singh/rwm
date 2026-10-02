@@ -1,0 +1,47 @@
+{
+  "rule": "X1 (ledger M-80), Part C",
+  "probe_iterations": 20,
+  "iterations": 2500,
+  "cap_hours": 10.0,
+  "calibration": {
+    "centre_probe_steady_s_per_iter": 1.1678627197368434,
+    "arm_a_full_wall_clock_s": [
+      4625.6387873310005,
+      2912.892670175,
+      3418.2364349269997
+    ],
+    "factor": 1.2509196166368945
+  },
+  "variants": {
+    "V1": {
+      "spec": "x1v1",
+      "steady_s_per_iter": 3.6349279625262985,
+      "projected_h_per_run": 3.1576407592959206,
+      "probe_losses_finite": true
+    },
+    "V2": {
+      "spec": "x1v2",
+      "steady_s_per_iter": 3.6251181249473645,
+      "projected_h_per_run": 3.149119010501816,
+      "probe_losses_finite": true
+    }
+  },
+  "projected_hours_committed_seed0_runs": 6.306759769797736,
+  "projected_hours_worst_case_all_seeds": 18.92027930939321,
+  "committed_within_cap": true,
+  "loadavg_before": [
+    3.59619140625,
+    4.38916015625,
+    5.38525390625
+  ],
+  "loadavg_after": [
+    6.298828125,
+    4.93505859375,
+    5.38134765625
+  ],
+  "queued": [
+    "x1_x1v1_s0 rssm-tf-x1v1 32 8 0 2500",
+    "x1_x1v2_s0 rssm-tf-x1v2 32 8 0 2500"
+  ],
+  "queue_file": "runs/queue_round2.txt"
+}
