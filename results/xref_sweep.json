@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 78,
-  "n_ok": 78,
+  "n_pointers": 79,
+  "n_ok": 79,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -89,10 +89,17 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.6 explains why a binomial null is inadmissible here",
+      "pointer": "\u00a76.3 quotes (Appendix B)",
       "ok": true,
-      "detail": "target 6.6; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
-      "context": "\u00a76.6 explains why a binomial null is inadmissible here"
+      "detail": "target 6.3; nouns ['appendix']; absent []",
+      "context": "\u00a76.3 quotes (Appendix B)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix K explains why a binomial null is inadmissible here",
+      "ok": true,
+      "detail": "target Appendix K; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
+      "context": "Appendix K explains why a binomial null is inadmissible here"
     },
     {
       "class": "artifact",

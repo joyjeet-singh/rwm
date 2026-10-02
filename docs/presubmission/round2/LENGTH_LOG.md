@@ -13,3 +13,4 @@ Body words by FILE_MAP §13's rule (`round2/t6_words.py`, from `PAPER.md` after 
 | T6 | s5_tighten | §5, wording only (sign test, M-64's short unit) | — | 25,247 | 25,221 | −26 |
 | T6 | s63_more | §6.3, the term-by-term gradient check (E4) with its table, and the run-count paragraph with the run table | Appendix J (renamed to cover all three); the body keeps each result in a sentence and Figure 4's reference | 25,221 | 24,673 | −548 |
 | T6 | s3_nodata | §3, why more data cannot be generated (the code addresses and the readme pointer) | Appendix C; the body keeps the claim and a pointer | 24,673 | 24,610 | −63 |
+| T6 | review | qualifiers restored in summaries (F1–F3, F11, F12), M-63's misattributed clause withdrawn (F4), pointers re-aimed at Appendix K (F5, F6), relative references in J, L and C (F7–F9) | — | 24,610 | 24,719 | +109 |

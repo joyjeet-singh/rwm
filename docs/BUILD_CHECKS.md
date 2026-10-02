@@ -50,7 +50,7 @@ tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,717 values, or 0.59% of the 1,659,161 numeric values under `results/` that the comparison counts. The other 1,649,444 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 171-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 785 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **62 comparative claims** across 29 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 62 of 62 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 171-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 787 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **62 comparative claims** across 29 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 62 of 62 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -406,6 +406,10 @@ claims stayed, and only their history moved.
 - **[§6.2]** An earlier draft stated that the one-step row is measured on data the checkpoint
   trained on, and declined to draw the inference that the figure is therefore an upper bound on its
   calibration. The paper now draws it.
+- **[§6.2]** An earlier draft said rule M-63's finding, that no state dimension is exempt from the
+  one-step coverage failure, "is what §6.3's mechanism predicts: an objective whose optimum is σ = 0
+  has no reason to spare any dimension". M-63 decomposes the epistemic term's coverage, and §6.3
+  explains only the aleatoric head, so the clause is withdrawn (round 2, T6 review).
 - **[§6.2]** At n_independent = 4 the short-horizon epistemic ordering looked like chance,
   and an earlier draft told a more interesting-sounding horizon story from it. At
   n_independent = 20 that result proved an artifact of four trajectories, and it is

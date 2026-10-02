@@ -386,6 +386,10 @@ claims stayed, and only their history moved.
 - **[§6.2]** An earlier draft stated that the one-step row is measured on data the checkpoint
   trained on, and declined to draw the inference that the figure is therefore an upper bound on its
   calibration. The paper now draws it.
+- **[§6.2]** An earlier draft said rule M-63's finding, that no state dimension is exempt from the
+  one-step coverage failure, "is what §6.3's mechanism predicts: an objective whose optimum is σ = 0
+  has no reason to spare any dimension". M-63 decomposes the epistemic term's coverage, and §6.3
+  explains only the aleatoric head, so the clause is withdrawn (round 2, T6 review).
 - **[§6.2]** At n_independent = {{b2_nind}} the short-horizon epistemic ordering looked like chance,
   and an earlier draft told a more interesting-sounding horizon story from it. At
   n_independent = {{d1n_nind}} that result proved an artifact of four trajectories, and it is
