@@ -324,10 +324,19 @@ def main():
     A(f"- **Data.** The released ANYmal D dataset: {v('rows')} rows at 50 Hz, ten 20-second "
       f"episodes. Trained on {v('arm_clean_windows')} episode-respecting windows from eight "
       "episodes; two held out.")
+    # Round 2, T8: this said a consumer feeding the stale action "will get materially worse
+    # numbers", with no measurement behind it. N1 measured Arm A at 10,000 iterations: the
+    # sentence now quotes that, at the paper's two horizons, in the arena it was measured in.
+    # The key name carries its horizon, so the horizon printed beside it is checked against it.
+    assert str(v("v2_diag_h")) == "368", v("v2_diag_h")
     A("- **Action convention.** Row *t* holds the action that *produced* state *t*. These models "
       "are trained and evaluated under that causal pairing. The reference's *evaluation* path "
-      "uses a stale action; ours does not. A consumer feeding actions the other way will get "
-      "materially worse numbers.")
+      "uses a stale action; ours does not. Fed the stale action instead, the three "
+      "`autoregressive-10k` checkpoints' relative-L1 error changes by "
+      f"{v('stale_armA_rel_h1')}% at h = 1 and by {v('stale_armA_rel_h368')}% at "
+      f"h = {v('v2_diag_h')} (their mean, on the two held-out episodes' {v('ad_nind')} "
+      "trajectories; `results/alignment_by_horizon.json`). The figure covers those three "
+      "checkpoints only.")
     A("- **Normalisation.** States are normalised with the reference's stored mean and std. "
       "Actions are not normalised, matching the reference.")
     A("")
