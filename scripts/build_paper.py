@@ -426,8 +426,8 @@ def main():
             "comparison as a gap with its 95\\% cluster-bootstrap interval over whole "
             "trajectories; the interval spans zero only at h = 1, where teacher forcing is "
             "ahead -- a lead a shorter evaluation unit resolves as real, not nominal "
-            "(\\S5, M-64). Only the h = 368 figure is pre-registered (M-23); the rest were "
-            "computed after the data existed.",
+            "(\\S5, M-64). Rule M-23 was run at h = 368 on seed " + str(N["m23_seed"]["value"])
+            + " of each arm; these three-seed values, and every other horizon, were computed afterwards.",
         "paper_fig5_three_way.png":
             "The contamination control. (a) outcome across 32 cells for each arm pair, naive "
             "bootstrap on the left of each position and cluster bootstrap on the right; the "
