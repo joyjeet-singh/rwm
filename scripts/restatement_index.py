@@ -80,7 +80,9 @@ COINCIDENCES = {
 
 # (section, value) pairs adjudicated as not an ambiguity, with the reason.
 ACCEPTED_AMBIGUOUS = {
-    ("6.10 Testing the mechanism: an ensemble that shares nothing", "3"):
+    # Re-anchored in round 2, T7: §6.10's decomposition table and the prose beside it moved verbatim to
+    # Appendix O when §6.10 and §6.11 were merged (ruling U6); the case is the same one.
+    ("Appendix O — rule M-44 in full: an ensemble that shares nothing", "3"):
         "the shared-trunk seed count in prose against a percentage share in a "
         "cell of the decomposition table. Different units, different places, and "
         "no sentence puts them side by side -- unlike the abstract's 4.61x beside "

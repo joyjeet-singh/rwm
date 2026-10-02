@@ -1088,23 +1088,16 @@ On the released checkpoint every point estimate lands within {{d3_tol}} points o
 
 So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence is mixed.**
 
-### 6.10 Testing the mechanism: an ensemble that shares nothing
+### 6.10 Testing the mechanism: an ensemble that shares nothing, alone and with the corrected objective
 
-§6.4 establishes the topology as a fact and the mechanism as a hypothesis. This subsection tests
-the hypothesis, under a rule committed to git before any of the artifacts below existed (rule
-M-44, Appendix E), with a power check estimating what it could detect at the sample size it would
-face.
-
-**The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models
-from scratch costs about {{r2_scratch_h}} h of wall clock on two cores at these runs' iteration
-count, against the {{rt_hours}} h Appendix B gives for all of §5–§7's runs. Arm A at ensemble size 1 already
-existed at seeds 0, 1 and 2; we added {{r2_n_added_word}} more at about {{r2_added_h}} h each,
-{{r2_added_h_total}} h in total, and scored the {{r2_n_indep}} together as an ensemble **at
-evaluation time**. There is no new training code and no new architecture, and the disagreement
-across {{r2_n_indep}} independently initialised *full models* is exactly the contrast §6.4 asks
-for. The rollout protocol mirrors the shared-trunk one in every respect except the one under test:
-each member sees the same input state, each keeps **its own** recurrent hidden state, and the
-ensemble mean is fed back to all of them.
+§6.4 establishes the topology as a fact and the mechanism as a hypothesis. Two rules committed to git
+before any of their artifacts existed test it, each with a minimum detectable effect estimated in
+advance (Appendix E). Rule M-44 scores {{r2_n_indep}} independently initialised full models, Arm A at
+ensemble size 1 trained at {{r2_n_indep}} seeds, together as an ensemble at evaluation time: each
+member keeps its own recurrent hidden state and the ensemble mean is fed back to all of them, so the
+rollout differs from the shared-trunk one only in what is under test. Rule M-68 repeats it with every
+member trained under `gaussian_nll`, so the two fixes are measured on the same models. Both are scored
+on the held-out pair against each of the shared-trunk seeds separately.
 
 | h | independent err/σ | shared-trunk err/σ | independent ±1σ | shared-trunk ±1σ |
 |---|---|---|---|---|
@@ -1118,77 +1111,14 @@ ensemble mean is fed back to all of them.
 *Same trajectories (the held-out pair), same harness, n_independent = {{r2_nind}}, every model at {{iters_main}} training iterations. The shared-trunk column is the mean
 over {{r2_n_shared}} seeds; the comparison below is paired against each of them separately.*
 
-**The rule returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its
-{{m44_n_conditions}} conditions hold, against every one of the {{r2_n_shared}} shared-trunk seeds.
-At h = {{v2_deploy_h}} the independent ensemble's overconfidence factor is
-{{r2_ratio_lo}}–{{r2_ratio_hi}}× the shared-trunk arms', a **{{m44_ratio_gain}}×** improvement
-against a pre-registered minimum detectable effect of {{m44_mde_ratio}}×, and its ±1σ coverage is
-{{r2_cov_lo}} to {{r2_cov_hi}} points higher, a mean of {{m44_cov_gain}} against an MDE of
-{{m44_mde_cov}}. Every paired interval excludes zero. **Members that share a feature extractor do
-produce a smaller spread, and the effect is large enough to matter.**
-
-**Where the improvement comes from, which is not all one thing.** The overconfidence factor is
-error over σ, so it improves if σ grows *or* if error shrinks, and only the first is the
-trunk-sharing mechanism; five independent models also denoise better than five heads on one trunk,
-an ordinary ensembling effect. Splitting the improvement into its two multiplicative parts:
-
-| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
-|---|---|---|---|---|---|
-| 1 | {{r2_sigma_x_h1}}× | {{r2_acc_x_h1}}× | {{r2_total_x_h1}}× | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% |
-| 8 | {{r2_sigma_x_h8}}× | {{r2_acc_x_h8}}× | {{r2_total_x_h8}}× | {{r2_from_sigma_h8}}% | {{r2_from_acc_h8}}% |
-| 32 | {{r2_sigma_x_h32}}× | {{r2_acc_x_h32}}× | {{r2_total_x_h32}}× | {{r2_from_sigma_h32}}% | {{r2_from_acc_h32}}% |
-| **{{v2_deploy_h}}** | **{{r2_sigma_x_h100}}×** | {{r2_acc_x_h100}}× | {{r2_total_x_h100}}× | **{{r2_from_sigma_h100}}%** | {{r2_from_acc_h100}}% |
-| 128 | {{r2_sigma_x_h128}}× | {{r2_acc_x_h128}}× | {{r2_total_x_h128}}× | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% |
-| {{v2_diag_h}} | {{r2_sigma_x_h368}}× | {{r2_acc_x_h368}}× | {{r2_total_x_h368}}× | {{r2_from_sigma_h368}}% | {{r2_from_acc_h368}}% |
-
-*Shares are of the log improvement, so they add to 100%. A share above 100% at h=1 means the
-independent ensemble is very slightly the **worse** predictor there and the σ gain more than
-covers it.*
-
-**The reading, at the horizon the rule is stated over.** σ is larger at every horizon, by
-{{r2_sigma_x_lo}}× at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its strongest
-(h = {{r2_sigma_x_hi_h}}), the direction trunk-sharing predicts, and at h = {{v2_deploy_h}} it is
-{{r2_sigma_x_h100}}×, **{{r2_from_sigma_h100}}%** of the improvement. So the mechanism is supported,
-and it is the larger part of the effect where the method operates. At the open-loop diagnostic
-horizon of h = {{v2_diag_h}} the split reverses: {{r2_from_acc_h368}}% of the improvement there is
-the ensemble simply predicting better, so a reader who takes the {{r2_total_x_h368}}× figure at that
-horizon as a measure of the architectural effect would overstate it.
-
-**What this does and does not license.** It licenses saying that **the released ensemble's
-disagreement understates epistemic uncertainty partly because its members are not independent
-models**, with a measured size at the horizon that matters. It does not license attributing the
-whole gap to trunk-sharing: independently seeded runs differ in *both* initialisation and data
-ordering (§11), so this comparison **bounds** the architectural effect rather than isolating it,
-and the bound is generous to the mechanism by construction.
-
-**And it does not repair the interval.** The independent ensemble is
-{{r2_indep_ratio_h100}}× overconfident at h = {{v2_deploy_h}} with
-{{r2_indep_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. Better by
-a factor of {{m44_ratio_gain}}, and still not an interval. Building the ensemble properly is worth
-doing and it is not sufficient; §6.8's per-horizon multiplier remains the only correction in this paper whose estimates all land within the band, though only on the released checkpoint and no single cell is resolvable at this arena. On Arm A, whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (§6.8).
-
-
-### 6.11 Both fixes on the same models: the combined arm
-
-§6.10 changes the **topology** and holds the objective at `mse`; §6.5's arms change the
-**objective** and hold the topology at ensemble size 1, where disagreement is zero by construction.
-Neither answers the practitioner's question of what the two give together, and adding two effects
-never measured on the same model is the arithmetic this paper criticises elsewhere. This subsection
-runs the combination, under a rule committed to git before either new member existed (rule M-68,
-Appendix E), with a minimum detectable effect estimated in advance as well.
-
-**The arm.** {{m68_n_indep}} independently initialised full models, sharing no trunk and no hidden
-state, trained under `gaussian_nll`, every setting identical to §6.10's arm except the loss type.
-Three of the five, seeds 0, 1 and 2, already existed under that objective; two more were trained,
-and the {{m68_n_indep}} are scored together as an ensemble at evaluation time under §6.10's rollout
-protocol, on the same held-out arena of non-overlapping 400-step trajectories at
-n_independent = {{m68_nind}}, over the same six horizons.
-
-**Which σ the coverage is against.** The combined arm is the first arm in this paper carrying
-**both** an aleatoric head that has not collapsed to zero and an across-member epistemic spread.
-The figures below are the **epistemic** one, {{m68_sigma_used}}: the quantity the rule names and
-§6.10's table reports, so the two tables are comparable line for line. The aleatoric head is
-reported in §6.5 and does not enter here.
+**Rule M-44 returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}}
+conditions hold against every one of the {{r2_n_shared}} shared-trunk seeds: at h = {{v2_deploy_h}}
+the overconfidence factor improves **{{m44_ratio_gain}}×** against a minimum detectable effect of
+{{m44_mde_ratio}}×, coverage rises a mean of {{m44_cov_gain}} points against {{m44_mde_cov}}, and every
+paired interval excludes zero. σ itself grows {{r2_sigma_x_h100}}× there, **{{r2_from_sigma_h100}}%**
+of the improvement, so the trunk-sharing mechanism is the larger part of the effect where the method
+operates; at h = {{v2_diag_h}}, {{r2_from_acc_h368}}% is the ensemble simply predicting better
+(Appendix O).
 
 | h | combined err/σ | shared-trunk err/σ | combined ±1σ | shared ±1σ | combined ±2σ | shared ±2σ |
 |---|---|---|---|---|---|---|
@@ -1202,68 +1132,24 @@ reported in §6.5 and does not enter here.
 *Same trajectories, same harness, same bootstrap unit as §6.10, every model at {{iters_main}} training iterations. The shared-trunk columns are the
 mean over {{m68_n_shared}} seeds; the comparison below is paired against each of them separately.*
 
-**The rule returns {{m68_verdict}}**, branch {{m68_branch}} of the four it names. All
-{{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, against every one of the
-{{m68_n_shared}} shared-trunk seeds. At h = {{v2_deploy_h}} the combined arm's overconfidence
-factor is {{m68_ratio_lo}}–{{m68_ratio_hi}}× the shared-trunk arms', a **{{m68_ratio_gain}}×**
-improvement against a minimum detectable effect of {{m68_mde_ratio}}× fixed in advance
-({{m68_mde_source}}); its ±1σ coverage is {{m68_cov_lo}} to {{m68_cov_hi}} points higher, a mean of
-{{m68_cov_gain}} against an MDE of {{m68_mde_cov}} points; and every paired interval excludes zero.
+**Rule M-68 returns {{m68_verdict}}**, branch {{m68_branch}} of the four it names: all
+{{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, a **{{m68_ratio_gain}}×**
+improvement against a minimum detectable effect of {{m68_mde_ratio}}×. That is essentially what
+independence gave alone. Against the independent arm, which differs in the loss and nothing else,
+switching to `gaussian_nll` multiplies the overconfidence factor by {{m68_vs_mse_ratio}}×
+{{m68_vs_mse_ratio_ci}}, slightly the wrong way and below what the design can resolve (Appendix P).
+**The two fixes do not add**, and once stated that is no surprise: the objective governs the
+aleatoric head, and the epistemic term is a spread across members the loss never sees.
 
-**Condition (e), and how we read it.** The rule's fifth condition asks that both statistics move in
-the improving direction at at least four of the six horizons, "against every shared-trunk seed",
-and the rule states globally that a condition holds only if it holds against all three. We applied
-the strict reading: a horizon counts only when **both** statistics improve there against **all
-three** seeds. It holds at {{m68_n_dir}} of {{m68_n_horizons}} horizons, so the looser per-seed
-reading would not have changed the verdict; we record which we applied because the rule does not
-spell the difference out.
-
-| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
-|---|---|---|---|---|---|
-| 1 | {{m68_sigma_x_h1}}× | {{m68_acc_x_h1}}× | {{m68_total_x_h1}}× | {{m68_from_sigma_h1}}% | {{m68_from_acc_h1}}% |
-| 8 | {{m68_sigma_x_h8}}× | {{m68_acc_x_h8}}× | {{m68_total_x_h8}}× | {{m68_from_sigma_h8}}% | {{m68_from_acc_h8}}% |
-| 32 | {{m68_sigma_x_h32}}× | {{m68_acc_x_h32}}× | {{m68_total_x_h32}}× | {{m68_from_sigma_h32}}% | {{m68_from_acc_h32}}% |
-| **{{v2_deploy_h}}** | **{{m68_sigma_x_h100}}×** | {{m68_acc_x_h100}}× | {{m68_total_x_h100}}× | **{{m68_from_sigma_h100}}%** | {{m68_from_acc_h100}}% |
-| 128 | {{m68_sigma_x_h128}}× | {{m68_acc_x_h128}}× | {{m68_total_x_h128}}× | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% |
-| {{v2_diag_h}} | {{m68_sigma_x_h368}}× | {{m68_acc_x_h368}}× | {{m68_total_x_h368}}× | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% |
-
-*The same σ-versus-accuracy split §6.10 uses, so the two arms' improvements can be compared part by
-part. Shares are of the log improvement, so the two columns add to one.*
-
-**The objective's own contribution is below what this design can resolve.** The rule scores the
-combined arm against the **shared-trunk** arms, so its verdict measures the two fixes together. The
-comparison that isolates the objective is against §6.10's independent arm, which differs from this
-one in the loss type and nothing else, from the same script on the same trajectories. At
-h = {{v2_deploy_h}} switching `mse` for `gaussian_nll` multiplies the overconfidence factor by
-**{{m68_vs_mse_ratio}}×** (95% interval from the same cluster bootstrap over whole trajectories,
-{{m68_vs_mse_ratio_ci}}), the wrong direction, slightly; moves ±1σ coverage by
-{{m68_vs_mse_cov_pts}} points ({{m68_vs_mse_cov_ci}}, which spans zero); and multiplies the
-epistemic σ by {{m68_vs_mse_sigma_x}}×. Both effects sit under the minimum detectable effect fixed
-in advance, {{m68_mde_ratio}}× on the factor and {{m68_mde_cov}} points on coverage
-({{m68_mde_source}}), so although the factor's interval lies wholly on the worse side of no change,
-the objective's separate effect is **below the size this design was built to resolve at
-n_independent = {{m68_nind}}**, and the point estimate points away from an improvement. It does not
-establish that the objective contributes nothing: reading a null out of an effect smaller than its
-own floor is the error M-24 and M-43 record, and the rule's fourth branch exists to say
-underpowered rather than null. What the arm does settle is the combination, which is better
-calibrated than the shared-trunk arms by essentially the amount §6.10 measured for independence
-alone ({{m44_ratio_gain}}× there, {{m68_ratio_gain}}× here). **The two fixes do not add. A reader
-who added them would have been wrong, which is why the arm was run.** That the objective's separate
-effect is at most small is not a surprise once stated: the objective governs the **aleatoric**
-head, and the epistemic term is a spread across members that the loss never sees.
-
-**And it still does not repair the interval.** The combined arm is {{m68_indep_ratio_h100}}×
-overconfident at h = {{v2_deploy_h}} with {{m68_indep_cov1_h100}}% coverage where a calibrated
-Gaussian gives {{v3_cov_nominal1}}%. Better than the shared-trunk arms, no better than independence
-alone, and still not an interval. §6.8's per-horizon multiplier remains the only correction in this paper whose estimates all land within the band, though only on the released checkpoint and no single cell is resolvable at this arena. On Arm A, whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (§6.8).
-
-**What the arm does not separate.** It differs from the shared-trunk arms on three axes at once:
-trunk sharing, the objective, and capacity (a factor of {{v1_cap_ratio}} in state-pathway
-parameters, as §6.10's contrast also does; §11), and independently seeded runs also differ in data
-ordering. The rule said so in advance: it bounds the combination and attributes nothing. The one
-further comparison here, the `mse`/`gaussian_nll` pair above, which holds every other axis fixed,
-sits outside the rule's governing statistics and under the design's own minimum detectable effect,
-so it bounds the objective's separate contribution rather than measuring it.
+**What the arms bound, and what they do not repair.** Independently seeded runs differ in data
+ordering as well as initialisation, and the independent members carry {{v1_cap_ratio}}× the
+shared-trunk arms' state-pathway parameters, so these comparisons bound the architectural effect
+rather than isolating it; at matched capacity the improvement falls to {{m49_ratio_gain}}× (rule M-49,
+§11). Neither arm is an interval: at h = {{v2_deploy_h}} the independent ensemble is
+{{r2_indep_ratio_h100}}× overconfident with {{r2_indep_cov1_h100}}% coverage and the combined arm
+{{m68_indep_ratio_h100}}× with {{m68_indep_cov1_h100}}%, where a calibrated Gaussian gives
+{{v3_cov_nominal1}}%. §6.8's per-horizon multiplier remains the only correction in this paper whose
+estimates all land within the band, and only on the released checkpoint.
 
 ---
 
@@ -2163,5 +2049,161 @@ trajectories at a fixed step — which is the forecast index, whose within-step 
 therefore {{e7_index_ws}} rather than zero. It does **not** annihilate a per-trajectory scalar
 like `entry-res`, which varies across exactly the axis the control varies over. Rule M-51 said the
 opposite, and `M-54` records the correction.
+
+---
+
+## Appendix O — rule M-44 in full: an ensemble that shares nothing
+
+§6.4 establishes the topology as a fact and the mechanism as a hypothesis. This subsection tests
+the hypothesis, under a rule committed to git before any of the artifacts below existed (rule
+M-44, Appendix E), with a power check estimating what it could detect at the sample size it would
+face.
+
+**The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models
+from scratch costs about {{r2_scratch_h}} h of wall clock on two cores at these runs' iteration
+count, against the {{rt_hours}} h Appendix B gives for all of §5–§7's runs. Arm A at ensemble size 1 already
+existed at seeds 0, 1 and 2; we added {{r2_n_added_word}} more at about {{r2_added_h}} h each,
+{{r2_added_h_total}} h in total, and scored the {{r2_n_indep}} together as an ensemble **at
+evaluation time**. There is no new training code and no new architecture, and the disagreement
+across {{r2_n_indep}} independently initialised *full models* is exactly the contrast §6.4 asks
+for. The rollout protocol mirrors the shared-trunk one in every respect except the one under test:
+each member sees the same input state, each keeps **its own** recurrent hidden state, and the
+ensemble mean is fed back to all of them.
+
+**The rule returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its
+{{m44_n_conditions}} conditions hold, against every one of the {{r2_n_shared}} shared-trunk seeds.
+At h = {{v2_deploy_h}} the independent ensemble's overconfidence factor is
+{{r2_ratio_lo}}–{{r2_ratio_hi}}× the shared-trunk arms', a **{{m44_ratio_gain}}×** improvement
+against a pre-registered minimum detectable effect of {{m44_mde_ratio}}×, and its ±1σ coverage is
+{{r2_cov_lo}} to {{r2_cov_hi}} points higher, a mean of {{m44_cov_gain}} against an MDE of
+{{m44_mde_cov}}. Every paired interval excludes zero. **Members that share a feature extractor do
+produce a smaller spread, and the effect is large enough to matter.**
+
+**Where the improvement comes from, which is not all one thing.** The overconfidence factor is
+error over σ, so it improves if σ grows *or* if error shrinks, and only the first is the
+trunk-sharing mechanism; five independent models also denoise better than five heads on one trunk,
+an ordinary ensembling effect. Splitting the improvement into its two multiplicative parts:
+
+| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
+|---|---|---|---|---|---|
+| 1 | {{r2_sigma_x_h1}}× | {{r2_acc_x_h1}}× | {{r2_total_x_h1}}× | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% |
+| 8 | {{r2_sigma_x_h8}}× | {{r2_acc_x_h8}}× | {{r2_total_x_h8}}× | {{r2_from_sigma_h8}}% | {{r2_from_acc_h8}}% |
+| 32 | {{r2_sigma_x_h32}}× | {{r2_acc_x_h32}}× | {{r2_total_x_h32}}× | {{r2_from_sigma_h32}}% | {{r2_from_acc_h32}}% |
+| **{{v2_deploy_h}}** | **{{r2_sigma_x_h100}}×** | {{r2_acc_x_h100}}× | {{r2_total_x_h100}}× | **{{r2_from_sigma_h100}}%** | {{r2_from_acc_h100}}% |
+| 128 | {{r2_sigma_x_h128}}× | {{r2_acc_x_h128}}× | {{r2_total_x_h128}}× | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% |
+| {{v2_diag_h}} | {{r2_sigma_x_h368}}× | {{r2_acc_x_h368}}× | {{r2_total_x_h368}}× | {{r2_from_sigma_h368}}% | {{r2_from_acc_h368}}% |
+
+*Shares are of the log improvement, so they add to 100%. A share above 100% at h=1 means the
+independent ensemble is very slightly the **worse** predictor there and the σ gain more than
+covers it.*
+
+**The reading, at the horizon the rule is stated over.** σ is larger at every horizon, by
+{{r2_sigma_x_lo}}× at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}× at its strongest
+(h = {{r2_sigma_x_hi_h}}), the direction trunk-sharing predicts, and at h = {{v2_deploy_h}} it is
+{{r2_sigma_x_h100}}×, **{{r2_from_sigma_h100}}%** of the improvement. So the mechanism is supported,
+and it is the larger part of the effect where the method operates. At the open-loop diagnostic
+horizon of h = {{v2_diag_h}} the split reverses: {{r2_from_acc_h368}}% of the improvement there is
+the ensemble simply predicting better, so a reader who takes the {{r2_total_x_h368}}× figure at that
+horizon as a measure of the architectural effect would overstate it.
+
+**What this does and does not license.** It licenses saying that **the released ensemble's
+disagreement understates epistemic uncertainty partly because its members are not independent
+models**, with a measured size at the horizon that matters. It does not license attributing the
+whole gap to trunk-sharing: independently seeded runs differ in *both* initialisation and data
+ordering (§11), so this comparison **bounds** the architectural effect rather than isolating it,
+and the bound is generous to the mechanism by construction.
+
+**And it does not repair the interval.** The independent ensemble is
+{{r2_indep_ratio_h100}}× overconfident at h = {{v2_deploy_h}} with
+{{r2_indep_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. Better by
+a factor of {{m44_ratio_gain}}, and still not an interval. Building the ensemble properly is worth
+doing and it is not sufficient; §6.8's per-horizon multiplier remains the only correction in this paper whose estimates all land within the band, though only on the released checkpoint and no single cell is resolvable at this arena. On Arm A, whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (§6.8).
+
+---
+
+## Appendix P — rule M-68 in full: both fixes on the same models
+
+§6.10 changes the **topology** and holds the objective at `mse`; §6.5's arms change the
+**objective** and hold the topology at ensemble size 1, where disagreement is zero by construction.
+Neither answers the practitioner's question of what the two give together, and adding two effects
+never measured on the same model is the arithmetic this paper criticises elsewhere. This subsection
+runs the combination, under a rule committed to git before either new member existed (rule M-68,
+Appendix E), with a minimum detectable effect estimated in advance as well.
+
+**The arm.** {{m68_n_indep}} independently initialised full models, sharing no trunk and no hidden
+state, trained under `gaussian_nll`, every setting identical to §6.10's arm except the loss type.
+Three of the five, seeds 0, 1 and 2, already existed under that objective; two more were trained,
+and the {{m68_n_indep}} are scored together as an ensemble at evaluation time under §6.10's rollout
+protocol, on the same held-out arena of non-overlapping 400-step trajectories at
+n_independent = {{m68_nind}}, over the same six horizons.
+
+**Which σ the coverage is against.** The combined arm is the first arm in this paper carrying
+**both** an aleatoric head that has not collapsed to zero and an across-member epistemic spread.
+The figures below are the **epistemic** one, {{m68_sigma_used}}: the quantity the rule names and
+§6.10's table reports, so the two tables are comparable line for line. The aleatoric head is
+reported in §6.5 and does not enter here.
+
+**The rule returns {{m68_verdict}}**, branch {{m68_branch}} of the four it names. All
+{{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, against every one of the
+{{m68_n_shared}} shared-trunk seeds. At h = {{v2_deploy_h}} the combined arm's overconfidence
+factor is {{m68_ratio_lo}}–{{m68_ratio_hi}}× the shared-trunk arms', a **{{m68_ratio_gain}}×**
+improvement against a minimum detectable effect of {{m68_mde_ratio}}× fixed in advance
+({{m68_mde_source}}); its ±1σ coverage is {{m68_cov_lo}} to {{m68_cov_hi}} points higher, a mean of
+{{m68_cov_gain}} against an MDE of {{m68_mde_cov}} points; and every paired interval excludes zero.
+
+**Condition (e), and how we read it.** The rule's fifth condition asks that both statistics move in
+the improving direction at at least four of the six horizons, "against every shared-trunk seed",
+and the rule states globally that a condition holds only if it holds against all three. We applied
+the strict reading: a horizon counts only when **both** statistics improve there against **all
+three** seeds. It holds at {{m68_n_dir}} of {{m68_n_horizons}} horizons, so the looser per-seed
+reading would not have changed the verdict; we record which we applied because the rule does not
+spell the difference out.
+
+| h | σ larger by | error smaller by | total | share from σ | share from accuracy |
+|---|---|---|---|---|---|
+| 1 | {{m68_sigma_x_h1}}× | {{m68_acc_x_h1}}× | {{m68_total_x_h1}}× | {{m68_from_sigma_h1}}% | {{m68_from_acc_h1}}% |
+| 8 | {{m68_sigma_x_h8}}× | {{m68_acc_x_h8}}× | {{m68_total_x_h8}}× | {{m68_from_sigma_h8}}% | {{m68_from_acc_h8}}% |
+| 32 | {{m68_sigma_x_h32}}× | {{m68_acc_x_h32}}× | {{m68_total_x_h32}}× | {{m68_from_sigma_h32}}% | {{m68_from_acc_h32}}% |
+| **{{v2_deploy_h}}** | **{{m68_sigma_x_h100}}×** | {{m68_acc_x_h100}}× | {{m68_total_x_h100}}× | **{{m68_from_sigma_h100}}%** | {{m68_from_acc_h100}}% |
+| 128 | {{m68_sigma_x_h128}}× | {{m68_acc_x_h128}}× | {{m68_total_x_h128}}× | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% |
+| {{v2_diag_h}} | {{m68_sigma_x_h368}}× | {{m68_acc_x_h368}}× | {{m68_total_x_h368}}× | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% |
+
+*The same σ-versus-accuracy split §6.10 uses, so the two arms' improvements can be compared part by
+part. Shares are of the log improvement, so the two columns add to one.*
+
+**The objective's own contribution is below what this design can resolve.** The rule scores the
+combined arm against the **shared-trunk** arms, so its verdict measures the two fixes together. The
+comparison that isolates the objective is against §6.10's independent arm, which differs from this
+one in the loss type and nothing else, from the same script on the same trajectories. At
+h = {{v2_deploy_h}} switching `mse` for `gaussian_nll` multiplies the overconfidence factor by
+**{{m68_vs_mse_ratio}}×** (95% interval from the same cluster bootstrap over whole trajectories,
+{{m68_vs_mse_ratio_ci}}), the wrong direction, slightly; moves ±1σ coverage by
+{{m68_vs_mse_cov_pts}} points ({{m68_vs_mse_cov_ci}}, which spans zero); and multiplies the
+epistemic σ by {{m68_vs_mse_sigma_x}}×. Both effects sit under the minimum detectable effect fixed
+in advance, {{m68_mde_ratio}}× on the factor and {{m68_mde_cov}} points on coverage
+({{m68_mde_source}}), so although the factor's interval lies wholly on the worse side of no change,
+the objective's separate effect is **below the size this design was built to resolve at
+n_independent = {{m68_nind}}**, and the point estimate points away from an improvement. It does not
+establish that the objective contributes nothing: reading a null out of an effect smaller than its
+own floor is the error M-24 and M-43 record, and the rule's fourth branch exists to say
+underpowered rather than null. What the arm does settle is the combination, which is better
+calibrated than the shared-trunk arms by essentially the amount §6.10 measured for independence
+alone ({{m44_ratio_gain}}× there, {{m68_ratio_gain}}× here). **The two fixes do not add. A reader
+who added them would have been wrong, which is why the arm was run.** That the objective's separate
+effect is at most small is not a surprise once stated: the objective governs the **aleatoric**
+head, and the epistemic term is a spread across members that the loss never sees.
+
+**And it still does not repair the interval.** The combined arm is {{m68_indep_ratio_h100}}×
+overconfident at h = {{v2_deploy_h}} with {{m68_indep_cov1_h100}}% coverage where a calibrated
+Gaussian gives {{v3_cov_nominal1}}%. Better than the shared-trunk arms, no better than independence
+alone, and still not an interval. §6.8's per-horizon multiplier remains the only correction in this paper whose estimates all land within the band, though only on the released checkpoint and no single cell is resolvable at this arena. On Arm A, whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (§6.8).
+
+**What the arm does not separate.** It differs from the shared-trunk arms on three axes at once:
+trunk sharing, the objective, and capacity (a factor of {{v1_cap_ratio}} in state-pathway
+parameters, as §6.10's contrast also does; §11), and independently seeded runs also differ in data
+ordering. The rule said so in advance: it bounds the combination and attributes nothing. The one
+further comparison here, the `mse`/`gaussian_nll` pair above, which holds every other axis fixed,
+sits outside the rule's governing statistics and under the design's own minimum detectable effect,
+so it bounds the objective's separate contribution rather than measuring it.
 
 ---
