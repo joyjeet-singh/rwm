@@ -111,6 +111,27 @@ ITEMS["appx_refs"] = [
      "**§6.6's P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to its counts"),
 ]
 
+# ---- §6.2: the two reading checks (M-62, M-63) and the permutation column's note -> Appendix M -------------
+_M = "## Appendix M — section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column"
+ITEMS["s62_checks"] = [
+    ("move", "**Two pre-registered checks on how these numbers are read.**", "**The released checkpoint is no longer the only ensemble measured.**",
+     """**Two rules committed in advance check how these numbers are read** (Appendix M). Resampling whole
+episodes rather than 400-step trajectories changes no verdict (rule M-62: **{{m62_verdict}}**), and the
+one-step failure is spread across the {{d1n_epi_ndim_h1}} state dimensions rather than carried by a few
+(rule M-63: **{{m63_verdict}}**), which is what §6.3's mechanism predicts.
+
+""", _M),
+    ("move", "The last column of the released checkpoint's table gives permutation P-values", "The scalar penalty as actually applied,",
+     """The last column of the released checkpoint's table gives permutation P-values over whole
+trajectories; none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells, so it is a
+consistency check on direction (Appendix M).
+
+""", _M),
+    ("sub", "**Two pre-registered checks on how these numbers are read.**", "**Two pre-registered checks on how §6.2's numbers are read.**"),
+    ("sub", "The last column of the released checkpoint's table gives permutation P-values over whole trajectories, not binomial ones",
+     "The last column of §6.2's released-checkpoint table gives permutation P-values over whole trajectories, not binomial ones"),
+]
+
 
 def main():
     t = open(F).read()
