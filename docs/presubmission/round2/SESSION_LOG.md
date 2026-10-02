@@ -300,3 +300,56 @@ Next: T7 (§6.7–§12 and the appendices; Opus 5.5, default effort).
 - **Expected outcome.** These are likely to leave a shortfall. U3 says to report it rather than force it.
 - **Tools.** T7 can reuse `round2/t6_patch.py` (`move`, `sub`, `insert`, `append` operations), `t6_words.py`, `t6_anchors.py` and `t6_qc.zsh`.
 Decisions for user: none.
+
+## T7 — 2026-10-02 20:30 — Opus 5.5, xhigh effort (the plan assigns default) — status: COMPLETE
+Commits:
+5b5a1a5 [T7][s6.7] Section 6.7's robustness checks move to Appendix N
+f73b499 [T7][s6.5, s6.9] Fold sections 6.5 and 6.9 into the subsections they support (ruling U6)
+b8bfb1c [T7][s6.10] Sections 6.10 and 6.11 become one section; their detail moves to Appendices O and P
+adf9f4e [T7][renumber] Renumber section 6 once, with a pointer map (ruling U6)
+5ee21e4 [T7][s7.4, s7.5] Sections 7.4 and 7.5 to a summary each; their detail to Appendices Q and F
+8906190 [T7][s11] Section 11 keeps the limitations not stated where they bite; the full text moves to Appendix R
+d0effd6 [T7][s12] Section 12's middle paragraphs condense to one; their text moves to Appendix S
+ce15edf [T7][s6.7] The multiplier section's cross-model test (rule M-69) moves to Appendix T
+211ac21 [T7] Rebuild after the moves and the renumbering (fast build, gates, fast build: byte-identical)
+b66d9e9 [T7][review] Fix the length review's findings: qualifiers, renumbering misses, pointers
+(the commit carrying this entry) [T7] COMPLETE: session log
+Done:
+- **How this session ran.** In the same conversation as T3–T6, at the user's request. Ultracode was on, but the plan's §1.3 limits a session to two read-only subagents and forbids delegating edits, so the edits were made in session and one subagent reviewed them.
+- **Every move is in `round2/t7_patch.py`**, which reuses T6's engine with a new `fn` operation for restructuring. The words before and after each move are in `round2/LENGTH_LOG.md`.
+- **Moves, with section numbers as they were before the renumbering.**
+  - **§6.7's robustness checks** go to Appendix N: the depth controls and decomposition, the within-rollout qualifications and the h = 1 reading, M-43's power analysis and companion arena, and the note on the undefined cell. The body keeps the main table, the per-horizon r_dd table (it backs a §3.2 row), M-45's statistic and verdict (the abstract's +0.419), M-43's verdict and the step-size result.
+  - **§6.5 and §6.9 are folded** into §6.3 and §6.6, which they support. §6.9 is placed after §6.3 so the figure order holds.
+  - **§6.10 and §6.11 become one section** of about 700 words. It keeps the design of both rules, both main tables, both verdicts, the share that is σ, "the two fixes do not add", the capacity and data-order caveat with M-49's matched verdict, and that neither arm is an interval. Their other paragraphs go verbatim to Appendices O (M-44) and P (M-68).
+  - **§7.4 and §7.5** become summaries; their text goes to Appendices Q and F.
+  - **§11** is rewritten to the limitations not stated where they bite, keeping M-43's, M-70's and M-49's verdicts and the policy caveat that other sections cite. The original goes to Appendix R.
+  - **§12's middle paragraphs** condense to one; their text goes to Appendix S. The three-kind "what should travel" paragraph is intact.
+  - **Rule M-69's cross-model transfer test** (§6.7, the multiplier section) goes to Appendix T.
+- **The renumbering** (`round2/t7_renumber.py`) is one simultaneous substitution. Old → new: 6.5 → 6.3, 6.6 → 6.5, 6.7 → 6.6, 6.8 → 6.7, 6.9 → 6.5, 6.10 → 6.8, 6.11 → 6.8.
+  - Applied to: the paper, the README, BUILD_CHECKS, the external brief, the model card, §3.2's section keys and the checker's labels.
+  - Not applied to the ledger or to the rule texts quoted from it.
+  - The pointer map is in `docs/BUILD_CHECKS.md` and in the preamble of `docs/APPENDIX_G_RULES.md`.
+  - §1–§5 and §7 onward keep their numbers.
+- **Nothing left the paper, checked mechanically.**
+  - Every key, ledger ID and `results/` path present at T5's end is still in it.
+  - The two table rows that changed are Appendix D rows whose §6 references were renumbered.
+- **Review.** A Sonnet 5.5 subagent (`evidence/R2T7/t7_review.md`) returned PASS-WITH-FIXES, all fixed in b66d9e9.
+  - Everything checked out: every move was faithful, all 172 §6 references but two were right, and the figures are in order.
+  - The ten fix-now defects were in the new connecting prose: dropped qualifiers in summaries, three renumbering misses (including the unregenerated `docs/APPENDIX_G_RULES.md`) and two stale pointers.
+  - Two pre-existing items went to OUT_OF_SCOPE.md.
+- **What T7 reports (PLAN T6/T7).**
+  - **Final body count:** 20,166 words against the 19,000 target, a shortfall of 1,166 (6%). Reported rather than forced, per U3.
+    - T6 and T7 together cut 7,537 words, 87% of what was needed (body 27,703 → 20,166).
+    - Every move the plan lists is done. Cutting further would mean removing the argument in §5, §6.2 and §6.6, not detail.
+  - **Three largest remaining sections:** §6.2 The measurement (1,771); §5 (to §5.1: 1,731); §6.6 Ensemble disagreement beats the trivial baseline (1,516). By top-level section: §6 (7,963), §5 (4,231), §3 (1,903).
+  - **Pages before References:** 32. "Data and code" is on page 32 and References begins on page 33, of 57 pages in all.
+Build/gates: pass. Three build-gates-build passes after the review, 8/8 gates, 62/62 claims, 62/62 corruptions caught, byte-identical, and the second pass equal to the third (`t7rev_2`, `t7rev_3`). The rendered-PDF check is 5/5, with appendices N–T lettered as in the source.
+Paper numbers changed: `pdf_pages` 54 → 57; generated counts only.
+New keys: none
+Re-anchored checks:
+- `restatement_index` ACCEPTED_AMBIGUOUS: ("6.10 Testing the mechanism: an ensemble that shares nothing", "3") → ("Appendix O — rule M-44 in full: an ensemble that shares nothing", "3"). The decomposition table it accepts moved verbatim.
+- The checker's `where` labels and §3.2's section keys were renumbered with the paper (U6); no check's logic changed.
+CPU jobs over 1 min: 6 build-and-gate passes, about 3-4 min each, and about 12 quick checks, about 1 min each.
+Body words (FILE_MAP §13 command): 20,166 (T0: 26,526; T6's end: 24,719).
+Next: T8 (Sonnet 5.5): the retraining gate and X1 Part C's scoring (`rssm_diagnostics.py --part c` on the two finished seed-0 runs), pipeline hygiene and figure labels. The §6.8 and §5.3 numbers and section references T8 or T9 touch are now in the renumbered scheme.
+Decisions for user: none (the shortfall is reported under U3, not raised as a decision).
