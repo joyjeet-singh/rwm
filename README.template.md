@@ -78,7 +78,7 @@ against a minimum detectable effect of {{m44_mde_ratio}}× fixed before the runs
 larger by {{r2_sigma_x_h100}}×, which is {{r2_from_sigma_h100}}% of the improvement there, and the
 split reverses at the {{v2_diag_h}}-step diagnostic horizon. The rule (M-44) returns
 **{{m44_verdict}}**. It is still {{r2_indep_ratio_h100}}× overconfident: building the ensemble
-properly is worth doing and is not sufficient (§6.10).
+properly is worth doing and is not sufficient (§6.8).
 
 **And {{n_defects}} defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count

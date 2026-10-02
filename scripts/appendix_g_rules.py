@@ -125,7 +125,7 @@ def main():
                        r"(?:decision\s+)?rule\s+(?:for\s+)?", "", title)
         # Drop the section reference from the TABLE's description column. Ledger
         # titles carry the numbering current when the entry was written -- M-45
-        # reads "the within-trajectory control on §5.6", which is now §6.7 -- and
+        # reads "the within-trajectory control on §5.6", which is now §6.6 -- and
         # this column is a description this appendix generates, not a quotation,
         # so a stale reference in it is simply wrong rather than historical. The
         # quoted rule TEXTS below the table keep theirs, because those are
@@ -298,7 +298,7 @@ def main():
         _f.write("These are quotations. Their section references are the ones current "
                  "when each rule was committed and some no longer resolve — `M-45` "
                  "governs \"the within-trajectory control on section 5.6\", which is now "
-                 "section 6.7. Renumbering a quotation to keep a cross-reference checker "
+                 "section 6.6. Round 2 renumbered section 6 (old → new: §6.5 → §6.3 (folded in), §6.6 → §6.5, §6.7 → §6.6, §6.8 → §6.7, §6.9 → §6.5 (folded in), §6.10 → §6.8, §6.11 → §6.8 (merged; the detail of both rules is in Appendices O and P)). Renumbering a quotation to keep a cross-reference checker "
                  "happy would falsify it, so they stand as written. The same holds for "
                  "appendix letters, which moved in the referee revision: a rule that "
                  "says \"Appendix D\" means the appendix that bore that letter when the "

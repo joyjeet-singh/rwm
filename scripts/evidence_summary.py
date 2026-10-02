@@ -278,7 +278,7 @@ def build_rows():
     rows.append({
         "claim": (f'Disagreement ranks realised error better than the forecast '
                   f'step index, at h = {idx["horizon"]}'),
-        "section": "6.7",
+        "section": "6.6",
         "arena": d20_arena,
         "n_independent": idx["n_independent"],
         "in_sample": in_sample(d20_model, d20_arena),
@@ -295,7 +295,7 @@ def build_rows():
     e7_model = measured_model(T("e7_free_baselines_report.txt"))
     rows.append({
         "claim": "Disagreement ranks realised error better than the model's own predicted step size",
-        "section": "6.7",
+        "section": "6.6",
         "arena": e7_arena,
         "n_independent": E7["design"]["n_independent"],
         "in_sample": in_sample(e7_model, e7_arena),
@@ -315,7 +315,7 @@ def build_rows():
     rows.append({
         "claim": ("With both the rollout and the depth held constant, disagreement "
                   "still tracks error"),
-        "section": "6.7",
+        "section": "6.6",
         "arena": a2_arena,
         "n_independent": A2["design"]["n_independent"],
         "in_sample": in_sample(a2_model, a2_arena),
@@ -342,7 +342,7 @@ def build_rows():
               for v in q.values()]
     rows.append({
         "claim": "A per-horizon multiplier brings coverage near nominal where a constant one does not",
-        "section": "6.8",
+        "section": "6.7",
         "arena": d3_arena,
         "n_independent": sum(D3["design"]["trajectories_per_episode"].values()),
         "in_sample": in_sample(d3_model, d3_arena),
@@ -373,7 +373,7 @@ def build_rows():
         rows.append({
             "claim": claim,
             # the matched-capacity result is reported in §11, not §6.10 (S10)
-            "section": "6.10" if name == "r2_independent_ensemble" else "11",
+            "section": "6.8" if name == "r2_independent_ensemble" else "11",
             "arena": arena,
             "n_independent": art["design"]["n_independent"],
             "in_sample": in_sample(model, arena),
@@ -395,7 +395,7 @@ def build_rows():
     rows.append({
         "claim": "Independence and the corrected objective together improve on the "
                  "released topology",
-        "section": "6.11",
+        "section": "6.8",
         "arena": _c68arena,
         "n_independent": C68["design"]["n_independent"],
         "in_sample": in_sample(measured_model(T("r2_combined_arm_report.txt")), _c68arena),

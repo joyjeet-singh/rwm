@@ -6,7 +6,7 @@ already check that every sentence agrees with the artifact behind it, and they a
 None of them can tell whether the artifacts answer the right question, and every issue worth
 finding now is of that kind.
 
-If you have time for only one thing, read §6.2 and §6.7 and press on the three questions below.
+If you have time for only one thing, read §6.2 and §6.6 and press on the three questions below.
 
 ---
 
@@ -89,7 +89,7 @@ have a shape that argues for something else?
 
 ### 2. Is the ranking result carrying more weight than its evidence?
 
-§6.7 is the paper's best positive result, and the abstract now says both of its limits: the
+§6.6 is the paper's best positive result, and the abstract now says both of its limits: the
 evidence is in-sample for a checkpoint that trained on all ten episodes, and the pre-registered
 replication on our own ensemble-5 arms returned DOES NOT GENERALISE (because its second condition
 needs the paired difference to exclude zero at a majority of horizons, and at n_independent = 4 it
@@ -104,7 +104,7 @@ failed replication, and we would like to know if that reading is the reasonable 
 
 §6.4 argues that five ensemble heads on one shared trunk cannot disagree about anything the trunk
 does not already carry — 89.15% of each member's parameters are shared, along with one recurrent
-state. §6.10 measures the cost: an independent five-model ensemble is 2.03× better calibrated.
+state. §6.8 measures the cost: an independent five-model ensemble is 2.03× better calibrated.
 
 The revision added the literature this belongs to (Lee 2015, Fort 2019, BatchEnsemble, MIMO) and
 now says the *mechanism is known* and that what is ours is finding it in a released robotics
@@ -112,7 +112,7 @@ checkpoint that its authors deployed on hardware, with the sharing quantified an
 measured.
 
 **Press on:** is that positioning honest, or is it still claiming too much? And is the contrast in
-§6.10 clean? It confounds independence with **capacity** — 3.49× more state-pathway parameters —
+§6.8 clean? It confounds independence with **capacity** — 3.49× more state-pathway parameters —
 which §11 concedes and which `M-49` was pre-registered to fix by matching capacity at reduced
 width. **It has run.** With capacity held fixed the independent ensemble is still better on every
 shared-trunk seed, every interval still excludes zero, and the coverage gain still clears its MDE

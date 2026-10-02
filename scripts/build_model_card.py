@@ -43,7 +43,7 @@ CKPTS = [
     # the paper without them.
     ("armA_seed3/weights_2500.pt", "autoregressive-ens1-seed3", None,
      "Arm A at ensemble size 1, seed 3. Trained for the independent-ensemble test: seeds 0-4 "
-     "of this arm are scored together as a five-model ensemble that shares nothing (§6.10). "
+     "of this arm are scored together as a five-model ensemble that shares nothing (§6.8). "
      "Not part of the three-seed headline. **No per-arm σ calibration is quoted below**: "
      "`task1_calibration.py` measures seed 0 only, and pasting seed 0's figure onto this "
      "checkpoint is exactly the mis-attribution this card was corrected for elsewhere. What "
@@ -218,7 +218,7 @@ def main():
     A("## Scoring five of these together: the independent-ensemble result")
     A("")
     A("**If you download the ensemble-size-1 autoregressive checkpoints, score them as an")
-    A("ensemble.** The paper's §6.10 takes seeds 0-4 of Arm A -- five separately initialised,")
+    A("ensemble.** The paper's §6.8 takes seeds 0-4 of Arm A -- five separately initialised,")
     A("separately trained models, sharing no parameters and no recurrent state -- and scores")
     A("their disagreement the way the method scores its own. That is the contrast the released")
     A("five-member checkpoint cannot provide, because its five members share one GRU trunk and")
