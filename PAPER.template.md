@@ -542,7 +542,7 @@ test above is unaffected either way.
 **How good the reimplementation is as a model, next to the artifact it reimplements.**
 The tables above compare two training rules with each other and §6.2's compares calibration, so
 neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
-aggregations for those, relative-L1 alone for §5.3's architecture baselines, and one arena:
+aggregations, for those and for §5.3's architecture baselines, and one arena:
 
 | model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = {{v2_deploy_h}} | rel-L1 h = {{v2_deploy_h}} | nRMSE h = {{v2_diag_h}} | rel-L1 h = {{v2_diag_h}} |
 |---|---|---|---|---|---|---|---|---|
@@ -550,12 +550,12 @@ aggregations for those, relative-L1 alone for §5.3's architecture baselines, an
 | Arm A — autoregressive, faithful MSE | {{h2h_armA_nrmse_h1}} | {{h2h_armA_l1_h1}} | {{h2h_armA_nrmse_h8}} | {{h2h_armA_l1_h8}} | {{h2h_armA_nrmse_h100}} | {{h2h_armA_l1_h100}} | {{h2h_armA_nrmse_h368}} | {{h2h_armA_l1_h368}} |
 | Arm A — autoregressive, `gaussian_nll` | {{h2h_armAnll_nrmse_h1}} | {{h2h_armAnll_l1_h1}} | {{h2h_armAnll_nrmse_h8}} | {{h2h_armAnll_l1_h8}} | {{h2h_armAnll_nrmse_h100}} | {{h2h_armAnll_l1_h100}} | {{h2h_armAnll_nrmse_h368}} | {{h2h_armAnll_l1_h368}} |
 | Arm B — teacher-forced | {{h2h_armB_nrmse_h1}} | {{h2h_armB_l1_h1}} | {{h2h_armB_nrmse_h8}} | {{h2h_armB_l1_h8}} | {{h2h_armB_nrmse_h100}} | {{h2h_armB_l1_h100}} | {{h2h_armB_nrmse_h368}} | {{h2h_armB_l1_h368}} |
-| MLP, teacher-forced (§5.3) | — | {{h2h_bl_mlp_tf_l1_h1}} | — | {{h2h_bl_mlp_tf_l1_h8}} | — | {{h2h_bl_mlp_tf_l1_h100}} | — | {{h2h_bl_mlp_tf_l1_h368}} |
-| MLP, autoregressive (§5.3) | — | {{h2h_bl_mlp_ar_l1_h1}} | — | {{h2h_bl_mlp_ar_l1_h8}} | — | {{h2h_bl_mlp_ar_l1_h100}} | — | {{h2h_bl_mlp_ar_l1_h368}} |
-| RSSM, teacher-forced (§5.3) | — | {{h2h_bl_rssm_tf_l1_h1}} | — | {{h2h_bl_rssm_tf_l1_h8}} | — | {{h2h_bl_rssm_tf_l1_h100}} | — | {{h2h_bl_rssm_tf_l1_h368}} |
-| RSSM, autoregressive (§5.3) | — | {{h2h_bl_rssm_ar_l1_h1}} | — | {{h2h_bl_rssm_ar_l1_h8}} | — | {{h2h_bl_rssm_ar_l1_h100}} | — | {{h2h_bl_rssm_ar_l1_h368}} |
-| transformer, teacher-forced (§5.3) | — | {{h2h_bl_transformer_tf_l1_h1}} | — | {{h2h_bl_transformer_tf_l1_h8}} | — | {{h2h_bl_transformer_tf_l1_h100}} | — | {{h2h_bl_transformer_tf_l1_h368}} |
-| transformer, autoregressive (§5.3) | — | {{h2h_bl_transformer_ar_l1_h1}} | — | {{h2h_bl_transformer_ar_l1_h8}} | — | {{h2h_bl_transformer_ar_l1_h100}} | — | {{h2h_bl_transformer_ar_l1_h368}} |
+| {{h2h_bl_mlp_tf_label}} | {{h2h_bl_mlp_tf_nrmse_h1}} | {{h2h_bl_mlp_tf_l1_h1}} | {{h2h_bl_mlp_tf_nrmse_h8}} | {{h2h_bl_mlp_tf_l1_h8}} | {{h2h_bl_mlp_tf_nrmse_h100}} | {{h2h_bl_mlp_tf_l1_h100}} | {{h2h_bl_mlp_tf_nrmse_h368}} | {{h2h_bl_mlp_tf_l1_h368}} |
+| {{h2h_bl_mlp_ar_label}} | {{h2h_bl_mlp_ar_nrmse_h1}} | {{h2h_bl_mlp_ar_l1_h1}} | {{h2h_bl_mlp_ar_nrmse_h8}} | {{h2h_bl_mlp_ar_l1_h8}} | {{h2h_bl_mlp_ar_nrmse_h100}} | {{h2h_bl_mlp_ar_l1_h100}} | {{h2h_bl_mlp_ar_nrmse_h368}} | {{h2h_bl_mlp_ar_l1_h368}} |
+| {{h2h_bl_rssm_tf_label}} | {{h2h_bl_rssm_tf_nrmse_h1}} | {{h2h_bl_rssm_tf_l1_h1}} | {{h2h_bl_rssm_tf_nrmse_h8}} | {{h2h_bl_rssm_tf_l1_h8}} | {{h2h_bl_rssm_tf_nrmse_h100}} | {{h2h_bl_rssm_tf_l1_h100}} | {{h2h_bl_rssm_tf_nrmse_h368}} | {{h2h_bl_rssm_tf_l1_h368}} |
+| {{h2h_bl_rssm_ar_label}} | {{h2h_bl_rssm_ar_nrmse_h1}} | {{h2h_bl_rssm_ar_l1_h1}} | {{h2h_bl_rssm_ar_nrmse_h8}} | {{h2h_bl_rssm_ar_l1_h8}} | {{h2h_bl_rssm_ar_nrmse_h100}} | {{h2h_bl_rssm_ar_l1_h100}} | {{h2h_bl_rssm_ar_nrmse_h368}} | {{h2h_bl_rssm_ar_l1_h368}} |
+| {{h2h_bl_transformer_tf_label}} | {{h2h_bl_transformer_tf_nrmse_h1}} | {{h2h_bl_transformer_tf_l1_h1}} | {{h2h_bl_transformer_tf_nrmse_h8}} | {{h2h_bl_transformer_tf_l1_h8}} | {{h2h_bl_transformer_tf_nrmse_h100}} | {{h2h_bl_transformer_tf_l1_h100}} | {{h2h_bl_transformer_tf_nrmse_h368}} | {{h2h_bl_transformer_tf_l1_h368}} |
+| {{h2h_bl_transformer_ar_label}} | {{h2h_bl_transformer_ar_nrmse_h1}} | {{h2h_bl_transformer_ar_l1_h1}} | {{h2h_bl_transformer_ar_nrmse_h8}} | {{h2h_bl_transformer_ar_l1_h8}} | {{h2h_bl_transformer_ar_nrmse_h100}} | {{h2h_bl_transformer_ar_l1_h100}} | {{h2h_bl_transformer_ar_nrmse_h368}} | {{h2h_bl_transformer_ar_l1_h368}} |
 | hold-last floor | {{h2h_floor_nrmse_h1}} | {{h2h_floor_l1_h1}} | {{h2h_floor_nrmse_h8}} | {{h2h_floor_l1_h8}} | {{h2h_floor_nrmse_h100}} | {{h2h_floor_l1_h100}} | {{h2h_floor_nrmse_h368}} | {{h2h_floor_l1_h368}} |
 
 **Arena, stated once for the whole table: {{h2h_arena}}, episodes {{h2h_episodes}},
@@ -565,7 +565,8 @@ per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1)
 are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
 calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
 their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
-exactly; its nRMSE is aggregated per trajectory rather than pooled, so it is not shown here. **This table is at {{iters_main}} iterations and §5's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.
+exactly; their nRMSE is pooled as §3.1 defines it, recomputed afterwards from the same rollouts
+(post hoc, `results/pooled_nrmse_rescore.json`), and † marks a diverged row (§5.3). **This table is at {{iters_main}} iterations and §5's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer.
 
 Both metrics put the released checkpoint first at {{h2h_released_sweeps_at}}, they name
 different leaders at {{h2h_split_at}}, and at {{h2h_armA_sweeps_at}} both put an Arm A variant
@@ -611,6 +612,10 @@ difference is positive when the centre is better, and "result" is after Holm
 iteration over the centre's, timed without contention (`results/mn_compute_matched.json`); hours per
 run, and the {{mn_n_overlapped}} of {{rt_sweep_runs}} sweep runs that overlapped other logged CPU work,
 are in Appendix B. The hold-last floor is {{mn_floor_h100}} at h = {{v2_deploy_h}} and {{mn_floor_h368}} at h = {{v2_diag_h}}.
+The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
+alongside the rules here and in §5.3 are pooled, recomputed afterwards (post hoc; ledger R-77,
+`results/pooled_nrmse_alongside.json`), and return what the averaged ones did everywhere except
+{{n2_n_changed_word}} in-sample readings of §5.3's rules: {{n2_changed_list}}.
 
 **Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre, {{mn_worse_list}} are worse, and
 {{mn_unres_list}} cannot be told apart from it. At h = {{v2_diag_h}} the lowest error is {{mn_best_config}}'s,
