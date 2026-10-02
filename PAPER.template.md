@@ -6,9 +6,9 @@
 
 We rebuild the proprioceptive dynamics model of the *Robotic World Model* (arXiv:2501.10100v1)
 and its uncertainty-aware follow-up (arXiv:2504.16680v1) from scratch on CPU. Before training,
-outputs, losses and gradients match the released implementation exactly. The base paper's central training claim reproduces under a rule committed in advance: training on
-the model's own rollouts beats teacher forcing by {{d1_ratio}}× at {{v2_diag_h}} steps and
-{{d1_ratio_h100}}× at {{v2_deploy_h}}, though teacher forcing leads at one step. It uses {{c2_pct}}% of the
+outputs, losses and gradients match the released implementation exactly. The base paper's central training claim reproduces under a rule committed in advance and run on one seed
+per arm; over {{d1_seeds}} seeds, training on the model's own rollouts beats teacher forcing by {{d1_ratio}}× at
+{{v2_diag_h}} steps and {{d1_ratio_h100}}× at {{v2_deploy_h}}, though teacher forcing leads at one step. It uses {{c2_pct}}% of the
 reference's world-model data, one robot, gait and terrain, and {{nind_oos_400}} independent
 held-out trajectories. The base paper's architecture claim holds against our MLP, RSSM and
 transformer baselines; its chosen history and forecast lengths are beaten at our budget. The follow-up's uncertainty gets the order right and the size wrong.
@@ -66,12 +66,11 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at
   {{e7_step_r}} against its {{e7_r_dis}}, a margin that {{q2_n_req}} independent trajectories would
   resolve if it is real, against the {{e7_nind}} here (§11).
-- **The base paper's central training claim reproduces, and reverses at one step.** Under a rule
-  committed before the runs, training on the model's own rollouts beats teacher forcing, by
-  {{d1_ratio}}× on relative-L1 at h = {{v2_diag_h}} over {{d1_seeds}} seeds and by
-  {{d1_ratio_h100}}× at h = {{v2_deploy_h}} (§5). At one step, a second pre-registered rule with
-  {{m64_h1_n}} independent {{m64_h1_unit}}-row units, where the 400-step unit gives {{a1_nind}},
-  finds a gap of {{m64_h1_gap}} {{m64_h1_ci}}, in favour of **teacher forcing** (§5).
+- **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before
+  the runs, run on one seed per arm, found autoregressive training ahead by {{m23_ratio}}× at
+  h = {{v2_diag_h}}; over {{d1_seeds}} seeds the factor is {{d1_ratio}}×, and {{d1_ratio_h100}}× at
+  h = {{v2_deploy_h}} (§5). At one step a second pre-registered rule, on {{m64_h1_n}} independent
+  {{m64_h1_unit}}-row units, finds a gap of {{m64_h1_gap}} {{m64_h1_ci}} in favour of **teacher forcing** (§5).
 - **Two more of the base paper's claims, tested under rules committed before the runs.** Its
   architecture claim holds: RWM is ahead at h = {{v2_diag_h}} of MLP, RSSM and transformer baselines
   built to our reading of its specification and teacher-forced as it trains them, and stays ahead
@@ -430,8 +429,11 @@ states it, and our verdict.
 
 **Rule, committed in advance** (rule M-23, Appendix E; commit `efc35b8`), naming conditions rather
 than outcomes. Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
-under a bootstrap over independent trajectories; the sign is consistent across episodes; and the
-effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule is anchored at
+under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule was run on
+seed {{m23_seed}} of each arm: autoregressive {{m23_A_s1}} against teacher forcing {{m23_B_s1}} at
+h = {{v2_diag_h}}, {{m23_ratio}}×, gap interval [{{m23_ci_lo}}, {{m23_ci_hi}}]. Seeds {{m23_other_seeds}}
+were trained after the verdict (ledger R-60, {{r60_date}}), so the three-seed figures below extend it
+and carry none of its weight. The rule is anchored at
 h = {{v2_diag_h}}, the upstream's **open-loop diagnostic** length and not a deployment horizon
 (§3.1), and its verdict is returned there; we do not re-anchor a discharged rule. The method's own
 horizon is h = {{v2_deploy_h}}, so the comparison is reported there too, and the two differ in size.
@@ -463,16 +465,16 @@ n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories:
 | 32 | {{a1_A_h32}} ± {{a1_A_sd_h32}} | {{a1_B_h32}} ± {{a1_B_sd_h32}} | {{a1_ratio_h32}}× | {{a1_gap_h32}} {{a1_gap_ci_h32}} | {{a1_excl_h32}} | {{a1_floor_h32}} | {{a1_floor_over_A_h32}}× | {{a1_B_over_floor_h32}}× | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} |
 | **{{v2_deploy_h}}** | **{{a1_A_h100}} ± {{a1_A_sd_h100}}** | **{{a1_B_h100}} ± {{a1_B_sd_h100}}** | **{{a1_ratio_h100}}×** | **{{a1_gap_h100}} {{a1_gap_ci_h100}}** | **{{a1_excl_h100}}** | {{a1_floor_h100}} | **{{a1_floor_over_A_h100}}×** | **{{a1_B_over_floor_h100}}×** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** |
 | 128 | {{a1_A_h128}} ± {{a1_A_sd_h128}} | {{a1_B_h128}} ± {{a1_B_sd_h128}} | {{a1_ratio_h128}}× | {{a1_gap_h128}} {{a1_gap_ci_h128}} | {{a1_excl_h128}} | {{a1_floor_h128}} | {{a1_floor_over_A_h128}}× | {{a1_B_over_floor_h128}}× | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} |
-| **{{v2_diag_h}}** *(pre-registered)* | **{{a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap_h368}} {{a1_gap_ci_h368}}** | **{{a1_excl_h368}}** | {{a1_floor_h368}} | **{{a1_floor_over_A_h368}}×** | **{{a1_B_over_floor_h368}}×** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** |
+| **{{v2_diag_h}}** *(the rule's horizon)* | **{{a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap_h368}} {{a1_gap_ci_h368}}** | **{{a1_excl_h368}}** | {{a1_floor_h368}} | **{{a1_floor_over_A_h368}}×** | **{{a1_B_over_floor_h368}}×** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** |
 
 **The advantage {{a1_monotone}} grow monotonically with forecast depth.** Over 400-step
 trajectories the gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and
 spans it at {{a1_spans_zero_at}}: h = {{v2_diag_h}} is the end of a trend rather than a point we
 picked, h = {{v2_deploy_h}} sits partway along it, and the claim is weakest exactly where the
-model is trained. **Only the h = {{v2_diag_h}} row is pre-registered.** Every other row was
-computed after the data existed, so by this paper's own standard (§8) it carries none of a pre-registration's weight, the same
-treatment §6.7 gives the expectation we held about the counter-baseline, and nothing in the table
-discharges or re-opens the rule.
+model is trained. **Only the h = {{v2_diag_h}} row is the rule's horizon, and the rule ran on seed {{m23_seed}} alone.** Every
+value in the table is a three-seed mean computed after the data existed, so by this paper's own standard (§8)
+none carries a pre-registration's weight, the same treatment §6.7 gives the expectation we held about the
+counter-baseline, and nothing in the table discharges or re-opens the rule.
 
 **At h = 1 the table understates the evidence, and the correction runs against us.** The row
 rests on {{a1_nind}} independent 400-step trajectories. A 400-step unit is required only by the
@@ -1593,7 +1595,8 @@ gaits or terrain.
 
 **The per-horizon recalibration is fitted and tested on two episodes only.** §6.8's remedy puts every released-checkpoint estimate within the band across the two held-out episodes in both directions, though at this n no single cell is resolvable, and those cells are unseen by the multiplier only, because the checkpoint trained on both episodes. On Arm A, whose model never saw them, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells, and two episodes is not a demonstration that the multipliers transfer to a new robot, gait or terrain. Treat the lookup table as a recipe to refit, not as constants to copy.
 
-**Two secondary analyses rest on a single training seed**, the long-horizon trend fit and the per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B result is not among them: it is a three-seed mean with per-seed values reported (§5).
+**Two secondary analyses rest on a single training seed**, the long-horizon trend fit and the per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B verdict rests on one seed too, seed {{m23_seed}}, the one its rule ran on; the magnitudes
+beside it are three-seed means with per-seed values (§5).
 
 **The ranking claim is not established as needing an ensemble.** Under a rule committed before the
 comparison (rule M-51, Appendix E), the model's own predicted state change, a subtraction needing no

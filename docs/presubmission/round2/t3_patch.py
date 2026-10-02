@@ -122,6 +122,8 @@ E5 = [
 
 ITEMS = {"e1": E1, "e4": E4, "e5": E5}
 edits = ITEMS[sys.argv[1]]
+if "--only" in sys.argv:          # restrict an item to one file, e.g. to commit a template change on its own
+    edits = [e for e in edits if e[0] == sys.argv[sys.argv.index("--only") + 1]]
 texts = {}
 for f, old, new in edits:
     t = texts.setdefault(f, open(f, encoding="utf-8").read())
