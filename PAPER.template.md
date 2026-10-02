@@ -141,52 +141,15 @@ reimplementation against the reference at the gradient level before any training
 §6.3 derives the σ = 0 optimum for the objective the released code *substitutes*, squared error on
 a reparameterised sample, rather than for the likelihood the parameterisation was built around.
 
-**Where the parameterisation comes from.** The bounded log-σ head that §6.3 shows has its optimum
-at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the
-probabilistic ensembles of Chua, Calandra, McAllister and Levine (PETS, NeurIPS 2018). PETS's
-Appendix A.1 gives
-
-```
-logvar = max_logvar - softplus(max_logvar - logvar)
-logvar = min_logvar + softplus(logvar - min_logvar)
-```
-
-and `architectures/mlp.py:92-93` is those two lines in log-standard-deviation rather than
-log-variance, with `system_dynamics.py:302` supplying PETS's regulariser on the bounds.
-
-What is **not** inherited is the objective, and one line of the bounds. PETS uses "the negative
-log prediction probability as our loss function", and that likelihood's log-σ term opposes
-σ → 0; `system_dynamics.py:283` substitutes squared error on a reparameterised sample, which has no
-such term. And `architectures/mlp.py:91` builds the upper bound as the floor plus a learned positive
-gap, where PETS keeps the two bounds independent. §6.3 needs both changes: the substitution removes
-the log-σ term, and the tie is why the bound regulariser does not take its place, since the floor
-cancels out of it. In a descendant that kept PETS's independent bounds, the same regulariser pushes
-the floor up while the objective pulls σ down onto it, a case §6.3 does not derive and we have not
-tested (ledger `M-72`). So **a descendant of this lineage that replaced the likelihood with a
-sampled squared error, and left nothing pushing its variance floor back up, would inherit the same
-optimum.** That is a hypothesis about mechanism, untested in any other descendant (§11).
-
-**How often the substitution is made, which narrows the hypothesis.** Of {{q1_n_examined}} public
-repositories examined on {{q1_date}} under the protocol in `results/q1_search_protocol.md`,
-{{q1_n_carry}} carry the construction and {{q1_n_inherit}} of those trains it against a sampled
-squared error, and that one only in an optional value-aware mode; the other {{q1_n_keep}} keep
-PETS's likelihood (`results/q1_pets_descendants.json`). The protocol counts a repository only if
-it has the bounded head, learnable bounds, and a loss that squares the error of a *sampled*
-prediction; squaring the error of the predicted *mean*, an option several of these repositories
-offer, leaves σ untrained rather than driving it to zero, and does not count. We read "learnable"
-as "trainable by the code, by default or not", a reading settled after the survey, because in
-`mbrl-lib` and in `va_mbpo`, the one repository that inherits, the bounds train only when a caller
-switches that on (ledger `M-73`). The survey did not check how each repository treats its variance
-floor, so {{q1_n_inherit}} of {{q1_n_examined}} is an upper bound on how often both conditions
-hold. A further {{q1_n_absent}} repositories lack the construction, among them mainline `rsl_rl`:
-the bounded head exists in the fork this paper pins, not in the library it forks, and we do not
-count the fork, since counting what §6.3 measured as evidence that the result travels would be
-circular. The protocol capped the survey at {{q1_cap}} repositories; it stopped at
-{{q1_n_examined}}, and its notes give no reason. We wrote the protocol before the search, but
-neither it nor its hash reached git before the results did, so that order rests on our own record;
-it is a search protocol, not one of Appendix E's decision rules. Search engines rank and truncate,
-so this is a sample of convenience, but on it the substitution is rare, and a reader who takes the
-hypothesis to reach widely infers more than the evidence supports.
+**Where the parameterisation comes from.** The bounded log-σ head whose optimum §6.3 shows is
+σ = 0 is inherited, line for line, from the probabilistic ensembles of Chua, Calandra, McAllister
+and Levine (PETS, NeurIPS 2018), but the objective is not: the released code replaces PETS's
+likelihood with squared error on a sampled prediction and ties the upper bound to the floor, so
+**a descendant of this lineage that made the same substitution, and left nothing pushing its
+variance floor back up, would inherit the same optimum**, a hypothesis about mechanism untested in
+any other descendant (§11). Of {{q1_n_examined}} public repositories examined, {{q1_n_carry}} carry
+the construction and {{q1_n_inherit}} of those trains it against a sampled squared error, only in
+an optional mode, so on this sample of convenience the substitution is rare (Appendix I).
 
 **The method's family.** MOPO (Yu, Thomas, Yu, Ermon, Zou, Levine, Finn and Ma, NeurIPS 2020)
 penalises the reward by an ensemble uncertainty estimate to solve a pessimistic MDP; MOReL
@@ -2064,5 +2027,56 @@ released checkpoint.
 | The A/B relative-L1 gap at h = {{v2_diag_h}} (teacher forcing's error minus autoregressive training's, over {{r39_n_per_ep}} independent trajectories per episode) is positive on all {{r39_n_eps_word}} episodes, from {{r39_gap_lo}} up; episode {{r39_ep}}, one of the held-out pair, gives {{r39_ep_gap}}, {{r39_ep_over_next}}× the next largest, so the pair's {{r39_gap_holdout}} is {{r39_ho_over_other}}× the other {{r39_n_other_word}} episodes' {{r39_gap_other}} | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
 | Per state dimension, over the whole {{v2_diag_h}}-step forecast, the released checkpoint loses to the hold-last floor on {{r45_rel_all}} of {{r45_n_dims}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}} on the held-out pair ({{r45_nind_ho}}), including all three components of the gravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each, {{r45_A_dim}} | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, §11) |
 | Over {{r46_n_ck_word}} checkpoints up to {{iters_long}} iterations, the absolute A/B gap at h = {{v2_diag_h}} narrows as both arms improve (held-out pair {{r46_o_gap0}} to {{r46_o_gap1}}, in-sample {{r46_i_gap0}} to {{r46_i_gap1}}), while the ratio does not shrink ({{r46_o_ratio0}}× to {{r46_o_ratio1}}×, in-sample {{r46_i_ratio0}}× to {{r46_i_ratio1}}×). The held-out values are not monotone: both peak at the {{r46_pk_ord}} checkpoint ({{r46_o_gap_pk}}, {{r46_o_ratio_pk}}×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}, §11) |
+
+---
+
+## Appendix I — the PETS lineage of the bounded σ head, and how often its descendants substitute the objective
+
+**Where the parameterisation comes from.** The bounded log-σ head that §6.3 shows has its optimum
+at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the
+probabilistic ensembles of Chua, Calandra, McAllister and Levine (PETS, NeurIPS 2018). PETS's
+Appendix A.1 gives
+
+```
+logvar = max_logvar - softplus(max_logvar - logvar)
+logvar = min_logvar + softplus(logvar - min_logvar)
+```
+
+and `architectures/mlp.py:92-93` is those two lines in log-standard-deviation rather than
+log-variance, with `system_dynamics.py:302` supplying PETS's regulariser on the bounds.
+
+What is **not** inherited is the objective, and one line of the bounds. PETS uses "the negative
+log prediction probability as our loss function", and that likelihood's log-σ term opposes
+σ → 0; `system_dynamics.py:283` substitutes squared error on a reparameterised sample, which has no
+such term. And `architectures/mlp.py:91` builds the upper bound as the floor plus a learned positive
+gap, where PETS keeps the two bounds independent. §6.3 needs both changes: the substitution removes
+the log-σ term, and the tie is why the bound regulariser does not take its place, since the floor
+cancels out of it. In a descendant that kept PETS's independent bounds, the same regulariser pushes
+the floor up while the objective pulls σ down onto it, a case §6.3 does not derive and we have not
+tested (ledger `M-72`). So **a descendant of this lineage that replaced the likelihood with a
+sampled squared error, and left nothing pushing its variance floor back up, would inherit the same
+optimum.** That is a hypothesis about mechanism, untested in any other descendant (§11).
+
+**How often the substitution is made, which narrows the hypothesis.** Of {{q1_n_examined}} public
+repositories examined on {{q1_date}} under the protocol in `results/q1_search_protocol.md`,
+{{q1_n_carry}} carry the construction and {{q1_n_inherit}} of those trains it against a sampled
+squared error, and that one only in an optional value-aware mode; the other {{q1_n_keep}} keep
+PETS's likelihood (`results/q1_pets_descendants.json`). The protocol counts a repository only if
+it has the bounded head, learnable bounds, and a loss that squares the error of a *sampled*
+prediction; squaring the error of the predicted *mean*, an option several of these repositories
+offer, leaves σ untrained rather than driving it to zero, and does not count. We read "learnable"
+as "trainable by the code, by default or not", a reading settled after the survey, because in
+`mbrl-lib` and in `va_mbpo`, the one repository that inherits, the bounds train only when a caller
+switches that on (ledger `M-73`). The survey did not check how each repository treats its variance
+floor, so {{q1_n_inherit}} of {{q1_n_examined}} is an upper bound on how often both conditions
+hold. A further {{q1_n_absent}} repositories lack the construction, among them mainline `rsl_rl`:
+the bounded head exists in the fork this paper pins, not in the library it forks, and we do not
+count the fork, since counting what §6.3 measured as evidence that the result travels would be
+circular. The protocol capped the survey at {{q1_cap}} repositories; it stopped at
+{{q1_n_examined}}, and its notes give no reason. We wrote the protocol before the search, but
+neither it nor its hash reached git before the results did, so that order rests on our own record;
+it is a search protocol, not one of Appendix E's decision rules. Search engines rank and truncate,
+so this is a sample of convenience, but on it the substitution is rare, and a reader who takes the
+hypothesis to reach widely infers more than the evidence supports.
 
 ---
