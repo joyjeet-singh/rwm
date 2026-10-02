@@ -2037,6 +2037,30 @@ def main():
     BV, BE = J("baselines_verdict.json"), J("baselines_eval.json")
     PR = J("presubmission_runtime.json")
     _mvs, _bvs = "results/mn_sweep_verdict.json", "results/baselines_verdict.json"
+    # Round 2, T4 (Annex 2 E2, E6, E7): the tables' cost column is N3's cost per iteration relative to
+    # the centre (wall-clock hours move to Appendix B); the nRMSE readings quoted alongside the rules are
+    # N2's pooled ones (section 3.1's aggregation); a diverged row is marked by N2's flag.
+    N3, N2R, N2A = J("mn_compute_matched.json"), J("pooled_nrmse_rescore.json"), J("pooled_nrmse_alongside.json")
+    _n3s, _n2s, _n2as = ("results/mn_compute_matched.json", "results/pooled_nrmse_rescore.json",
+                         "results/pooled_nrmse_alongside.json")
+    _cost = N3["part1_relative_cost_per_iteration"]
+    assert _cost["sweep"]["M32_N8"]["relative_to_centre"] == 1.0
+    _div = set(N2R["diverged_flag"]["flagged"])
+    assert _div == {k for k, v in N2R["diverged_flag"]["rows"].items() if v["diverged"]}
+
+    def _pooled(rule, arena, key, committed):
+        """An nRMSE reading the rule quotes alongside, as N2 pooled it; a relative-L1 one as committed.
+        N2 reproduced every committed reading before pooling (its D machinery assert), so only the
+        statistic differs."""
+        if not key.startswith("nrmse"):
+            return committed
+        p = N2A["readings"][rule][f"{arena}|{key}"]["pooled"]
+        pk = p["per_key"]
+        return {"branch": p["result"],
+                "conditions": {"configs_excluding_zero_in_their_favour": [c for c, x in pk.items() if x["rejected"] and x["D"] < 0],
+                               "configs_excluding_zero_in_centre_favour": [c for c, x in pk.items() if x["rejected"] and x["D"] > 0]}}
+    _al74 = {k: _pooled("M-74", "held_out", k, v) for k, v in MV["alongside"].items()}
+    _in74 = {k: _pooled("M-74", "in_sample", k, v) for k, v in MV["in_sample"].items()}
 
     def _m3(cfg, h, m="l1", arena="held_out"):
         return float(np.mean([np.mean(cfg["seeds"][s][arena][str(h)][m]) for s in cfg["seeds"]]))
@@ -2055,15 +2079,15 @@ def main():
     _rows = []
     for _c in _order:
         _cf = ME["configs"][_c]
-        _hrs = PR["by_family"].get(f"M-74 {_c}")
-        _hrs = f'{_hrs["mean_s"] / 3600:.2f}' if _hrs else "— (existing runs)"
+        assert _c not in _div, f"{_c} is flagged diverged; mark it in section 5.2's table"
+        _hrs = f'{_cost["sweep"][_c]["relative_to_centre"]:.2f}'
         if _c == "M32_N8":
             _rows.append(f"| **{_cfgname(_c)}**, the centre | {_m3(_cf, 100):.4f} | **{_m3(_cf, 368):.4f}** | — | — | {_hrs} |")
             continue
         _r = _mg["per_config"][_c]
         _rows.append(f"| {_cfgname(_c)} | {_m3(_cf, 100):.4f} | {_m3(_cf, 368):.4f} | "
                      f"{_r['D']:+.4f} [{_r['ci95'][0]:+.4f}, {_r['ci95'][1]:+.4f}] | {_res(_r)} | {_hrs} |")
-    put("mn_table", "\n".join(_rows), "results/mn_sweep_eval.json + " + _mvs + " + results/presubmission_runtime.json")
+    put("mn_table", "\n".join(_rows), "results/mn_sweep_eval.json + " + _mvs + " + " + _n3s)
     put("mn_verdict", MV["verdict"], _mvs)
     put("mn_n_configs", _mg["m"], _mvs)
     put("mn_n_configs_word", WORDS[_mg["m"]].lower(), _mvs)
@@ -2096,17 +2120,17 @@ def main():
     put("mn_floor_h368", f'{MV["hold_last_floor_l1"]["held_out"]["368"]:.4f}', _mvs)
     put("mn_mde_h368", f'{MV["mde_pct_of_centre_holm_step_1"]["l1_h368"]:.1f}', _mvs)
     _lab = lambda k: ("relative-L1" if k.split("_h")[0] == "l1" else "nRMSE") + " at h = " + k.split("_h")[1]
-    _other = [f"{_lab(k)}, which returns {v['branch']}" for k, v in MV["alongside"].items() if v["branch"] != MV["verdict"]]
-    put("mn_alongside_other", _eng(_other), _mvs)
+    _other = [f"{_lab(k)}, which returns {v['branch']}" for k, v in _al74.items() if v["branch"] != MV["verdict"]]
+    put("mn_alongside_other", _eng(_other), _mvs + " + " + _n2as)
     put("mn_n_alongside", len(MV["alongside"]), _mvs)
-    _ins_other = [f"{_lab(k)} ({v['branch']})" for k, v in MV["in_sample"].items() if v["branch"] != MV["verdict"]]
+    _ins_other = [f"{_lab(k)} ({v['branch']})" for k, v in _in74.items() if v["branch"] != MV["verdict"]]
     put("mn_insample_clause",
-        f"all {WORDS[len(MV['in_sample'])].lower()} readings there return the same verdict"
-        if not _ins_other else "the readings there differ at " + _eng(_ins_other), _mvs)
-    _al_other = [f"{_lab(k)}, which returns {v['branch']}" for k, v in MV["alongside"].items()
+        f"all {WORDS[len(_in74)].lower()} readings there return the same verdict"
+        if not _ins_other else "the readings there differ at " + _eng(_ins_other), _mvs + " + " + _n2as)
+    _al_other = [f"{_lab(k)}, which returns {v['branch']}" for k, v in _al74.items()
                  if v["branch"] != MV["verdict"]]
     put("mn_alongside_clause", "every one agrees" if not _al_other
-        else "every one agrees except " + _eng(_al_other), _mvs)
+        else "every one agrees except " + _eng(_al_other), _mvs + " + " + _n2as)
     put("mn_nind", ME["arenas"]["held_out"]["n_independent"], "results/mn_sweep_eval.json")
     put("mn_nind_ins", ME["arenas"]["in_sample"]["n_independent"], "results/mn_sweep_eval.json")
     assert BE["arenas"]["held_out"]["n_independent"] == ME["arenas"]["held_out"]["n_independent"]
@@ -2138,7 +2162,7 @@ def main():
     # every other reading the rule reports that puts a shorter history behind the centre.
     put("mn_mvar_better_list", _eng([_cfgname(c) for c in _order[1:] if c in _better and c in _mvar]), _mvs)
     _ow = {}
-    for _arena, _blk in (("in-sample", MV["in_sample"]), ("held-out", MV["alongside"])):
+    for _arena, _blk in (("in-sample", _in74), ("held-out", _al74)):
         for _k, _v in _blk.items():
             for _c in _v["conditions"]["configs_excluding_zero_in_centre_favour"]:
                 if _c in _mvar:
@@ -2157,20 +2181,21 @@ def main():
     _brows, _bl_order = [], ["mlp", "rssm", "transformer"]
     _rwm = BE["configs"]["rwm"]
     _brows.append(f"| **RWM** (Arm A, autoregressive) | {_rwm['seeds']['0']['n_params']:,} | "
-                  f"{_m3(_rwm, 100):.4f} | **{_m3(_rwm, 368):.4f}** | — | — | — (existing runs) |")
+                  f"{_m3(_rwm, 100):.4f} | **{_m3(_rwm, 368):.4f}** | — | — | 1.00 |")
     for _rule, _reg, _regname in (("M-75", "tf", "teacher-forced"), ("M-76", "ar", "autoregressive")):
         _g = BV["rules"][_rule]["governing"]["per_baseline"]
         for _a in BV["priority_order"]:
             _cf = BE["configs"][f"{_a}_{_reg}_s7"]
             _r = _g[_a]
-            _hrs = PR["by_family"][f"{_rule} {_a}_{_reg}_s7"]["mean_s"] / 3600
+            _hrs = _cost["baselines"][f"{_a}_{_reg}_s7"]["relative_to_same_sitting_centre"]
             _name = {"mlp": "MLP", "rssm": "RSSM", "transformer": "transformer"}[_a]
-            _brows.append(f"| {_name}, {_regname} | {_cf['seeds']['0']['n_params']:,} | {_m3(_cf, 100):.4f} | "
+            _dag = " †" if f"{_a}_{_reg}_s7" in _div else ""
+            _brows.append(f"| {_name}, {_regname}{_dag} | {_cf['seeds']['0']['n_params']:,} | {_m3(_cf, 100):.4f} | "
                           f"{_m3(_cf, 368):.4f} | {_r['D']:+.4f} [{_r['ci95'][0]:+.4f}, {_r['ci95'][1]:+.4f}] | "
                           f"{'RWM better' if _r['result'] == 'RWM BETTER' else _r['result']} | {_hrs:.2f} |")
             for _h in H2["horizons"]:
                 put(f"h2h_bl_{_a}_{_reg}_l1_h{_h}", f"{_m3(_cf, _h):.4f}", "results/baselines_eval.json")
-    put("bl_table", "\n".join(_brows), "results/baselines_eval.json + " + _bvs + " + results/presubmission_runtime.json")
+    put("bl_table", "\n".join(_brows), "results/baselines_eval.json + " + _bvs + " + " + _n3s + " + " + _n2s)
     put("bl_tf_verdict", BV["rules"]["M-75"]["verdict"], _bvs)
     put("bl_ar_verdict", BV["rules"]["M-76"]["verdict"], _bvs)
     put("bl_rwm_l1_h368", f"{_m3(_rwm, 368):.4f}", "results/baselines_eval.json")
@@ -2203,6 +2228,188 @@ def main():
     assert min(x["D"] for _, _, x in _all) > 2 * BV["mde_pct_of_rwm_holm_step_1"]["M-75"]["l1_h368"] / 100 * _m3(_rwm, 368)
     # "parameter-matched variants were specified but not run":
     assert BV["matched_variants"] == {}
+
+    # --- Round 2, T4: sections 5.2 and 5.3 with N2, N3 and X1 (Annex 2 E2, E3, E6, E7) -----------
+    _sd = lambda x: f"{x:+.4f}"
+    _sci = lambda c: f"[{c[0]:+.4f}, {c[1]:+.4f}]"
+    # Annex 3: the winners described by kind, counted from the verdict rather than typed.
+    _bsh = [c for c in _better if ME["configs"][c]["N"] == _cen["N"] and ME["configs"][c]["M"] < _cen["M"]]
+    _blf = [c for c in _better if ME["configs"][c]["M"] == _cen["M"] and ME["configs"][c]["N"] > _cen["N"]]
+    _alf = [c for c in _order[1:] if ME["configs"][c]["M"] == _cen["M"] and ME["configs"][c]["N"] > _cen["N"]]
+    assert len(_bsh) + len(_blf) == len(_better) and _blf, (_bsh, _blf)
+    _lfp = ("both" if len(_alf) == 2 else "all") if len(_blf) == len(_alf) else WORDS[len(_blf)].lower()
+    put("mn_better_long_phrase", f"{_lfp} longer training forecast{'s' if len(_blf) > 1 else ''}", _mvs)
+    put("mn_n_short_better_word", WORDS[len(_bsh)].lower(), _mvs)
+    put("mn_better_kinds", f"{WORDS[len(_bsh)].lower()} shorter histor{'ies' if len(_bsh) > 1 else 'y'} and "
+                           f"{_lfp} longer training forecast{'s' if len(_blf) > 1 else ''}", _mvs)
+    # E2 / N3 part 1: cost per iteration relative to the centre, for the four configurations that beat it.
+    for _c in _cond["configs_excluding_zero_in_their_favour"]:
+        put(f"n3_cost_{_c}", f'{_cost["sweep"][_c]["relative_to_centre"]:.2f}', _n3s)
+    # E2 / N3 parts 2-3: the best neighbour at h = 368 against the centre trained longer (Annex 3 variant).
+    _av = N3["annex3_variant"]
+    assert _av["best_neighbour_at_h368"] == _best and _av["variant"] == "a", _av
+    assert _av["neighbour_minus_centre_at_5000_h368_held_out"]["ci95"][1] < 0, "variant (a) needs the interval below zero"
+    _rd = N3["part3_readings"]["readings"]
+    assert N3["part2_centre_at_more_compute"]["reproduces_sweep_centre_at_2500"]["max_abs_diff"] <= 1e-6
+    _k_mid, _k_long = sorted({v["centre_iterations"] for v in _rd.values()} - {int(N["iters_main"]["value"].replace(",", ""))})
+    assert _k_long == int(N["iters_long"]["value"].replace(",", "")), _k_long
+    put("n3_k_mid", f"{_k_mid:,}", _n3s)
+    for _tag, _k in (("mid", _k_mid), ("long", _k_long)):
+        _r = _rd[f"{_best}|centre@{_k}"]
+        # the centre's compute over the neighbour's: the inverse of the artifact's ratio
+        put(f"n3_best_over_{_tag}", f'{1 / _r["compute_ratios"]["config_total_compute_over_centre_at_k"]:.2f}', _n3s)
+        put(f"n3_best_D_{_tag}", _sd(_r["h368"]["held_out"]["D"]), _n3s)
+        put(f"n3_best_ci_{_tag}", _sci(_r["h368"]["held_out"]["ci95"]), _n3s)
+    assert _rd[f"{_best}|centre@{_k_mid}"]["h368"]["held_out"]["ci95"][1] < 0          # still ahead at mid
+    _cl = _rd[f"{_best}|centre@{_k_long}"]["h368"]["held_out"]["ci95"]
+    assert _cl[0] < 0 < _cl[1], "section 5.2 says the long-centre difference is not resolved"
+    # in-sample, the centre at mid draws level with the best and passes (32, 16)
+    _bi = _rd[f"{_best}|centre@{_k_mid}"]["h368"]["in_sample"]
+    assert _bi["ci95"][0] < 0 < _bi["ci95"][1], "section 5.2 says the centre draws level in-sample"
+    put("n3_best_ins_D_mid", _sd(_bi["D"]), _n3s)
+    put("n3_best_ins_ci_mid", _sci(_bi["ci95"]), _n3s)
+    _lf = [c for c in _cond["configs_excluding_zero_in_their_favour"] if c != _best and ME["configs"][c]["M"] == _cen["M"]]
+    assert len(_lf) == 1, _lf
+    _li = _rd[f"{_lf[0]}|centre@{_k_mid}"]["h368"]["in_sample"]
+    assert _li["ci95"][0] > 0, "section 5.2 says the centre passes the other longer forecast in-sample"
+    put("n3_lf_label", _cfgname(_lf[0]), _n3s)
+    put("n3_lf_ins_D_mid", _sd(_li["D"]), _n3s)
+    put("n3_lf_ins_ci_mid", _sci(_li["ci95"]), _n3s)
+    # the shorter histories cost less per iteration than the centre, and fall behind it at the long centre
+    _sh = [c for c in _order[1:] if c in _better and c in _mvar]
+    assert all(_cost["sweep"][c]["relative_to_centre"] < 1 for c in _sh)
+    for _c in _sh:
+        _r = _rd[f"{_c}|centre@{_k_long}"]["h368"]["held_out"]
+        assert _r["ci95"][0] > 0, f"section 5.2 says {_c} falls behind the centre at {_k_long:,}"
+        put(f"n3_sh_D_long_{_c}", _sd(_r["D"]), _n3s)
+        put(f"n3_sh_ci_long_{_c}", _sci(_r["ci95"]), _n3s)
+    put("n3_sh_long_clause", _eng([f'{_cfgname(c)} by {_sd(_rd[f"{c}|centre@{_k_long}"]["h368"]["held_out"]["D"])} '
+                                   f'{_sci(_rd[f"{c}|centre@{_k_long}"]["h368"]["held_out"]["ci95"])}' for c in _sh]), _n3s)
+    # E2 / N3 part 4: every run at 2,500 iterations is still learning.
+    _ts = J("training_tail_slopes.json")
+    _t25 = _ts["summary"]["at_2500_all"]
+    assert _t25["n_falling"] == _t25["n"] and _t25["n_flat_or_rising"] == 0
+    assert _ts["definition_reproduces_stored"]["max_rel_diff"] <= _ts["definition_reproduces_stored"]["tolerance"]
+    put("tail_n", _t25["n"], "results/training_tail_slopes.json")
+    put("tail_slope_lo", f'{_t25["min"] * 1000:.2f}', "results/training_tail_slopes.json")
+    put("tail_slope_hi", f'{_t25["max"] * 1000:.2f}', "results/training_tail_slopes.json")
+    # E6 / N2: the baselines' pooled nRMSE in the head-to-head table, and how the pooled readings compare.
+    assert N2R["asserts"]["a_centre_matches_head_to_head_pooled"]["max_abs_diff"] <= 1e-6
+    for _h in N2R["asserts"]["a_centre_matches_head_to_head_pooled"]["horizons"]:
+        assert f'{N2R["three_seed_mean"]["M32_N8"]["held_out"]["pooled_nrmse"][str(_h)]:.4f}' == \
+            N[f"h2h_armA_nrmse_h{_h}"]["value"], _h
+    _nm2r = {"tf": "teacher-forced", "ar": "autoregressive"}
+    for _a in BV["priority_order"]:
+        for _reg in ("tf", "ar"):
+            _cfn = f"{_a}_{_reg}_s7"
+            for _h in H2["horizons"]:
+                put(f"h2h_bl_{_a}_{_reg}_nrmse_h{_h}", f'{N2R["three_seed_mean"][_cfn]["held_out"]["pooled_nrmse"][str(_h)]:.4f}', _n2s)
+            put(f"h2h_bl_{_a}_{_reg}_label", f'{_nm[_a]}, {_nm2r[_reg]} (§5.3){" †" if _cfn in _div else ""}', _n2s)
+    _chg = N2A["readings_whose_result_changed"]
+    assert not any(c.startswith("M-74") or "held_out" in c for c in _chg), "a pooled held-out or M-74 reading changed"
+    _nm2 = {"M-75": "teacher-forced", "M-76": "autoregressive"}
+    _chg_txt = []
+    for _c in _chg:
+        _rule, _cell = _c.split(" ")
+        _arena, _key = _cell.split("|")
+        _v = N2A["readings"][_rule][_cell]
+        _chg_txt.append(f'with the baselines {_nm2[_rule]}, {_arena.replace("_", "-")} nRMSE at h = '
+                        f'{_key.split("_h")[1]} returns {_v["pooled"]["result"]} pooled against '
+                        f'{_v["committed"]["result"]} averaged')
+    put("n2_n_changed_word", WORDS[len(_chg)].lower(), _n2as)
+    put("n2_changed_list", "; ".join(_chg_txt), _n2as)
+    # E7: the diverged flag, as N2 defines it.
+    _dr = N2R["diverged_flag"]["rows"]
+    _fac = {round(v["threshold"] / v["floor_l1_h368"], 6) for v in _dr.values()}
+    assert len(_fac) == 1, _fac
+    put("div_factor", f"{_fac.pop():g}", _n2s)
+    _sig = lambda x: f"{x:.0f}" if x >= 100 else f"{x:.1f}" if x >= 10 else f"{x:.2f}"
+    _dn = {"mlp_tf_s7": "MLP, teacher-forced", "transformer_tf_s7": "transformer, teacher-forced",
+           "rssm_tf_s7": "RSSM, teacher-forced", "mlp_ar_s7": "MLP, autoregressive",
+           "transformer_ar_s7": "transformer, autoregressive", "rssm_ar_s7": "RSSM, autoregressive"}
+    _dl = [k for k in ("mlp_tf_s7", "rssm_tf_s7", "transformer_tf_s7", "mlp_ar_s7", "rssm_ar_s7", "transformer_ar_s7") if k in _div]
+    put("div_n_word", WORDS[len(_dl)].lower(), _n2s)
+    put("div_per_seed", "; ".join(f'{_dn[k]}: ' + _eng([_sig(_dr[k]["per_seed_mean_l1_h368"][s]) for s in ("0", "1", "2")])
+                                  for k in _dl), _n2s)
+    # "no verdict depends on the magnitude, only on the sign": every flagged row's four per-trajectory
+    # differences from RWM at h = 368 are positive, so every bootstrap resample's mean is positive
+    # whatever their size, and the exact interval and p are those of the sign pattern alone.
+    for _k in _dl:
+        _a, _reg = _k.split("_")[0], _k.split("_")[1]
+        _rule = "M-75" if _reg == "tf" else "M-76"
+        assert all(x > 0 for x in BV["rules"][_rule]["governing"]["per_baseline"][_a]["per_traj"]), _k
+    # E3: where RWM's lead begins, read from the rules' relative-L1 readings (alongside and governing).
+    _hz = [1, 8, 32, 100, 128, 368]
+
+    def _lead_from(rule, a):
+        """The shortest horizon from which RWM is resolvably better at every longer one too."""
+        ok = [BV["rules"][rule]["alongside"][f"l1_h{h}"]["per_baseline"][a]["result"] == "RWM BETTER" for h in _hz]
+        assert ok[-1]
+        i = len(ok) - 1
+        while i > 0 and ok[i - 1]:
+            i -= 1
+        return _hz[i]
+    _lf75 = {a: _lead_from("M-75", a) for a in BV["priority_order"]}
+    _lf76 = {a: _lead_from("M-76", a) for a in BV["priority_order"]}
+    assert _lf75["mlp"] == _lf75["rssm"] and _lf76["mlp"] == _lf76["transformer"], (_lf75, _lf76)
+    put("bl_tf_lead_from", f'h = {_lf75["mlp"]}', _bvs)
+    put("bl_tf_tr_lead_from", f'h = {_lf75["transformer"]}', _bvs)
+    put("bl_ar_lead_from", f'h = {_lf76["mlp"]}', _bvs)
+    put("bl_ar_rssm_lead_from", f'h = {_lf76["rssm"]}', _bvs)
+    _hdep = J("v2_deployment_horizon.json")["verdict"]["deployment_horizon_is"]
+    assert str(_lf76["mlp"]) == str(_hdep), "section 5.3 reads the M-76 h = 100 figures at the lead's start"
+    _a100 = BV["rules"]["M-76"]["alongside"][f'l1_h{_hdep}']["per_baseline"]
+    for _a, _t in (("mlp", "mlp"), ("transformer", "tr")):
+        put(f"bl_ar_{_t}_D_h100", f'{_a100[_a]["D"]:.3f}', _bvs)
+        put(f"bl_ar_{_t}_ci_h100", f'[{_a100[_a]["ci95"][0]:.3f}, {_a100[_a]["ci95"][1]:.3f}]', _bvs)
+    put("bl_ar_mlp_pct_h100", f'{100 * _a100["mlp"]["D"] / _m3(_rwm, _hdep):.1f}', _bvs + " + results/baselines_eval.json")
+    # E3 / X1 (ledger M-80, M-81): the RSSM paragraph.
+    X1 = J("rssm_diagnostics.json")
+    _x1s = "results/rssm_diagnostics.json"
+    assert X1["part_a_mode_reproduces_baselines_eval"]["max_abs_diff"] <= 1e-6
+    _xa = X1["part_a"]["rssm_tf_s7"]["three_seed_mean"]
+    assert f'{_xa["mode"]["1"]:.4f}' == N["h2h_bl_rssm_tf_l1_h1"]["value"]
+    assert _xa["mode"]["1"] < X1["floor_mean"]["1"] and _xa["mode"]["1"] < _m3(_rwm, 1), "most accurate at h = 1"
+    assert all(_xa["mode"]["1"] < _m3(BE["configs"][f"{a}_{g}_s7"], 1) for a in BV["priority_order"]
+               for g in ("tf", "ar") if (a, g) != ("rssm", "tf")), "the most accurate model at h = 1"
+    assert _xa["mode"]["32"] > X1["floor_mean"]["32"], "collapses by h = 32"
+    put("x1_floor_h1", f'{X1["floor_mean"]["1"]:.4f}', _x1s)
+    put("x1_floor_h32", f'{X1["floor_mean"]["32"]:.4f}', _x1s)
+    put("x1_tf_mode_h32", f'{_xa["mode"]["32"]:.4f}', _x1s)
+    put("x1_tf_exp_h32", f'{_xa["expected"]["32"]:.4f}', _x1s)
+    put("x1_tf_samp_h32", f'{_xa["sampled"]["32"]:.4f}', _x1s)
+    put("x1_reading_a", X1["part_a_reading"], _x1s)
+    assert X1["part_a_reading"] == "NOT EVALUATION-LIMITED"
+    _pb = X1["part_b"]
+    _rat = lambda reg: [v[str(int(N["iters_main"]["value"].replace(",", "")))]["mean_over_steps"]["prior_over_posterior"]
+                        for k, v in _pb.items() if k.startswith(f"rssm_{reg}_s7|")]
+    _kl = [v[str(int(N["iters_main"]["value"].replace(",", "")))]["mean_over_steps"]["kl"] for v in _pb.values()]
+    put("x1b_tf_ratio_lo", f"{min(_rat('tf')):.2f}", _x1s)
+    put("x1b_tf_ratio_hi", f"{max(_rat('tf')):.2f}", _x1s)
+    put("x1b_ar_ratio_hi", f"{max(_rat('ar')):.2f}", _x1s)
+    put("x1b_kl_lo", f"{min(_kl):.1f}", _x1s)
+    put("x1b_kl_hi", f"{max(_kl):.1f}", _x1s)
+    # Part C's sentence. T9 replaces this with the reading once rssm_diagnostics.py --part c has run;
+    # T10's checklist fails if this placeholder survives.
+    # E2: the wall-clock hours sections 5.2 and 5.3 printed move to Appendix B, one row per run family,
+    # with how many of its runs overlapped other logged CPU work.
+    _ovf = {}
+    for _r in PR["runs"]:
+        _ovf.setdefault(f'{_r["rule"]} {_r["family"]}', 0)
+        _ovf[f'{_r["rule"]} {_r["family"]}'] += _r["overlap_s"] > 0
+    _rt = []
+    for _c in _order[1:]:
+        _f = PR["by_family"][f"M-74 {_c}"]
+        _rt.append(f'| {_cfgname(_c)} (§5.2) | {_f["n_runs"]} | {_f["mean_s"] / 3600:.2f} | {_ovf[f"M-74 {_c}"]} |')
+    for _rule, _reg, _regname in (("M-75", "tf", "teacher-forced"), ("M-76", "ar", "autoregressive")):
+        for _a in BV["priority_order"]:
+            _f = PR["by_family"][f"{_rule} {_a}_{_reg}_s7"]
+            _rt.append(f'| {_nm[_a]}, {_regname} (§5.3) | {_f["n_runs"]} | {_f["mean_s"] / 3600:.2f} | '
+                       f'{_ovf[f"{_rule} {_a}_{_reg}_s7"]} |')
+    assert len(_rt) == len(PR["by_family"]) and sum(_ovf.values()) == PR["n_runs_overlapped"]
+    put("rt_pre_table", "\n".join(_rt), "results/presubmission_runtime.json")
+    assert X1["part_c"] is None, "X1 Part C has a reading: write section 5.3's Part C sentence from it (T9)"
+    put("rssm_partc_sentence", "Its two retraining variants (X1 Part C) have been trained and are not yet scored.", _x1s)
 
     # --- S10: keys and assertions behind the fresh-eyes review's fixes ----------------------
     # Appendix E's verdict column for M-16 printed its Status line ("SETTLED — rule
