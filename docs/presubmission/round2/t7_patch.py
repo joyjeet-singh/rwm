@@ -295,5 +295,23 @@ def _s11(t):
 ITEMS["s11"] = [("fn", _s11)]
 
 
+# ---- §12: the opening, one paragraph for the middle, and the three-kind paragraph -> ~500 words --------
+_S = "## Appendix S — the conclusion's discussion of the ranking, the scale and the per-dimension evidence (§12)"
+ITEMS["s12"] = [
+    ("move", "The more useful finding is asymmetric, and it cuts both ways.", "**What should travel from this paper",
+     """The ranking use the follow-up claims survives a real test. Ensemble disagreement beats the forecast
+step index at every horizon and, with both the rollout and the depth held constant, still correlates
+{{a2_rdd}} {{a2_rdd_ci}} with realised error (§6.6), though a free subtraction, the model's own
+predicted step size, ranks error nearly as well ({{e7_verdict}}). The scale may be repairable per
+horizon on the released checkpoint, but on a model that never saw the test episodes the evidence is
+mixed (§6.7), and per dimension no ordering reaches significance once the coupling between
+dimensions is respected (§6.5). As the scalar the method applies, ensemble disagreement gets the
+order right and the size wrong: it should not be read as a scale, and a ranking use deserves its own
+validation on the deployment distribution (Appendix S).
+
+""", _S),
+]
+
+
 if __name__ == "__main__":
     E.main()
