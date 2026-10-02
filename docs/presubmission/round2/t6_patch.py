@@ -132,6 +132,74 @@ consistency check on direction (Appendix M).
      "The last column of §6.2's released-checkpoint table gives permutation P-values over whole trajectories, not binomial ones"),
 ]
 
+# ---- §1: tightened (no number or claim removed; every number here is restated where it is measured) ------
+ITEMS["s1_tighten"] = [
+    ("sub", """We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
+check it against the released implementation, and test the central training claim. The claim
+holds. The rebuild then made a second question cheap to ask: *is the predicted σ calibrated?*
+Neither of the two the checkpoint emits is. On data it trained on, the per-member σ is too small
+by {{d1n_alea_ratio_h1}}× at h = 1 to {{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}, and the
+ensemble disagreement the method actually uses by {{d1n_epi_ratio_h1}}× to {{d1n_epi_ratio_h368}}×
+over the same horizons; the first failure is structural rather than incidental. The disagreement
+still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is its
+size.""",
+     """We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
+check it against the released implementation, and test the central training claim, which holds.
+The rebuild made a second question cheap to ask: *is the predicted σ calibrated?* Neither of the
+two the checkpoint emits is. On data it trained on, the per-member σ is too small by
+{{d1n_alea_ratio_h1}}× at h = 1 to {{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}, by construction
+(§6.3), and the ensemble disagreement the method uses by {{d1n_epi_ratio_h1}}× to
+{{d1n_epi_ratio_h368}}×; the disagreement still ranks realised error, the use the method makes of it
+(§6.7)."""),
+    ("sub", """This is a reproduction in the stronger sense: the contribution is not that the numbers came out
+the same, but what re-measuring the method reveals about where it is robust and where it is not.
+Three things distinguish it from a re-run of the authors' code. **We rebuilt rather than
+imported**, and matched the rebuild to the reference before any training (Appendix A), so a
+discrepancy found later belongs to the method, not to our wiring. **Decision rules were committed
+to git before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot
+be settled", and we report it.""",
+     """Three things distinguish this from a re-run of the authors' code. **We rebuilt rather than
+imported**, and matched the rebuild to the reference before any training (Appendix A), so a later
+discrepancy belongs to the method, not to our wiring. **Decision rules were committed to git
+before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot be
+settled", and we report it."""),
+    ("sub", """`docs/BUILD_CHECKS.md`). Appendix E gives every pre-registered rule with its lead time and its
+verdict, and §9 gives the lessons in a form a practitioner can use without reading the rest.""",
+     """`docs/BUILD_CHECKS.md`; every pre-registered rule is in Appendix E). §9 gives the lessons in a form
+a practitioner can use without reading the rest."""),
+    ("sub", """Ensemble disagreement ranks realised error,
+  and still correlates {{a2_rdd}} with it with the rollout and forecast depth held fixed, yet on
+  data the checkpoint trained on it is""",
+     """Ensemble disagreement ranks realised error,
+  correlating {{a2_rdd}} with it with rollout and forecast depth held fixed, yet on data the
+  checkpoint trained on it is"""),
+    ("sub", """It beats {{e7_n_beaten}} of the
+  {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at
+  {{e7_step_r}} against its {{e7_r_dis}}, a margin that {{q2_n_req}} independent trajectories would
+  resolve if it is real, against the {{e7_nind}} here (§11).""",
+     """It beats {{e7_n_beaten}} of the
+  {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at
+  {{e7_step_r}} against its {{e7_r_dis}}, a margin {{q2_n_req}} independent trajectories would
+  resolve, against the {{e7_nind}} here (§11)."""),
+    ("sub", """The implemented state loss is minimised at
+  σ = 0, so the per-member σ the method discards collapses by construction: derived rather than
+  observed, and demonstrated against known noise (§6.3).""",
+     """The implemented state loss is minimised at
+  σ = 0, so the per-member σ the method discards collapses by construction: derived, and
+  demonstrated against known noise (§6.3)."""),
+    ("sub", """- **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one
+  episode and scored on the other, brings every released-checkpoint coverage estimate near nominal
+  where a global multiplier does not, though no single cell is resolvable (§6.8). Those cells are
+  unseen by the multiplier only, because the checkpoint trained on both episodes; on Arm A, whose
+  model never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}}
+  disagreement cells.""",
+     """- **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one
+  episode and scored on the other, brings every released-checkpoint coverage estimate near nominal
+  where a global one does not, though no single cell is resolvable and the checkpoint trained on
+  both episodes (§6.8); on Arm A, which never saw them, its own multipliers manage
+  {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells."""),
+]
+
 
 def main():
     t = open(F).read()

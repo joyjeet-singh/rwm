@@ -35,39 +35,36 @@ and the title gives the answer: it gets the order of the model's errors right an
 wrong.
 
 We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
-check it against the released implementation, and test the central training claim. The claim
-holds. The rebuild then made a second question cheap to ask: *is the predicted σ calibrated?*
-Neither of the two the checkpoint emits is. On data it trained on, the per-member σ is too small
-by {{d1n_alea_ratio_h1}}× at h = 1 to {{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}, and the
-ensemble disagreement the method actually uses by {{d1n_epi_ratio_h1}}× to {{d1n_epi_ratio_h368}}×
-over the same horizons; the first failure is structural rather than incidental. The disagreement
-still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is its
-size.
+check it against the released implementation, and test the central training claim, which holds.
+The rebuild made a second question cheap to ask: *is the predicted σ calibrated?* Neither of the
+two the checkpoint emits is. On data it trained on, the per-member σ is too small by
+{{d1n_alea_ratio_h1}}× at h = 1 to {{d1n_alea_ratio_h368}}× at h = {{v2_diag_h}}, by construction
+(§6.3), and the ensemble disagreement the method uses by {{d1n_epi_ratio_h1}}× to
+{{d1n_epi_ratio_h368}}×; the disagreement still ranks realised error, the use the method makes of it
+(§6.7).
 
-This is a reproduction in the stronger sense: the contribution is not that the numbers came out
-the same, but what re-measuring the method reveals about where it is robust and where it is not.
-Three things distinguish it from a re-run of the authors' code. **We rebuilt rather than
-imported**, and matched the rebuild to the reference before any training (Appendix A), so a
-discrepancy found later belongs to the method, not to our wiring. **Decision rules were committed
-to git before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot
-be settled", and we report it. **We keep our withdrawn findings in the record.** The ledger keeps
+Three things distinguish this from a re-run of the authors' code. **We rebuilt rather than
+imported**, and matched the rebuild to the reference before any training (Appendix A), so a later
+discrepancy belongs to the method, not to our wiring. **Decision rules were committed to git
+before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot be
+settled", and we report it. **We keep our withdrawn findings in the record.** The ledger keeps
 {{n_superseded}} superseded entries, each beside the evidence that withdrew it:
 {{n_retractions_lower}} claims withdrawn on evidence, {{n_retract_framing_word}} framings withdrawn,
 and the rest early hypotheses closed as housekeeping (§8 and the supplementary
-`docs/BUILD_CHECKS.md`). Appendix E gives every pre-registered rule with its lead time and its
-verdict, and §9 gives the lessons in a form a practitioner can use without reading the rest.
+`docs/BUILD_CHECKS.md`; every pre-registered rule is in Appendix E). §9 gives the lessons in a form
+a practitioner can use without reading the rest.
 
 **Contributions.**
 
 - **The uncertainty gets the order right and the size wrong, in the first calibration
   measurement we are aware of for this released checkpoint** (Lu et al. (2022) measure this family
   of penalties on models they train themselves; §2). Ensemble disagreement ranks realised error,
-  and still correlates {{a2_rdd}} with it with the rollout and forecast depth held fixed, yet on
-  data the checkpoint trained on it is {{d1n_epi_ratio_h1}}× smaller than that error at h = 1 and
+  correlating {{a2_rdd}} with it with rollout and forecast depth held fixed, yet on data the
+  checkpoint trained on it is {{d1n_epi_ratio_h1}}× smaller than that error at h = 1 and
   {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} (§6.2, §6.7). It beats {{e7_n_beaten}} of the
   {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at
-  {{e7_step_r}} against its {{e7_r_dis}}, a margin that {{q2_n_req}} independent trajectories would
-  resolve if it is real, against the {{e7_nind}} here (§11).
+  {{e7_step_r}} against its {{e7_r_dis}}, a margin {{q2_n_req}} independent trajectories would
+  resolve, against the {{e7_nind}} here (§11).
 - **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before
   the runs, run on one seed per arm, found autoregressive training ahead by {{m23_ratio}}× at
   h = {{v2_diag_h}}; over {{d1_seeds}} seeds the factor is {{d1_ratio}}×, and {{d1_ratio_h100}}× at
@@ -86,8 +83,8 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   {{n3_mid_factor_word}} as long (post hoc);
   the original chose the centre as a trade-off with training time, which we do not test (§5.2).
 - **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
-  σ = 0, so the per-member σ the method discards collapses by construction: derived rather than
-  observed, and demonstrated against known noise (§6.3).
+  σ = 0, so the per-member σ the method discards collapses by construction: derived, and
+  demonstrated against known noise (§6.3).
 - **Trunk-sharing, tested.** The five members share one trunk, one recurrent state and
   {{v1_shared_pct}}% of each member's parameters, so their spread can express only uncertainty the
   trunk already carries (§6.4). Under a rule committed before the runs, {{r2_n_indep}}
@@ -96,10 +93,9 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   still {{r2_indep_ratio_h100}}× overconfident at h = {{v2_deploy_h}} (§6.10).
 - **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one
   episode and scored on the other, brings every released-checkpoint coverage estimate near nominal
-  where a global multiplier does not, though no single cell is resolvable (§6.8). Those cells are
-  unseen by the multiplier only, because the checkpoint trained on both episodes; on Arm A, whose
-  model never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}}
-  disagreement cells.
+  where a global one does not, though no single cell is resolvable and the checkpoint trained on
+  both episodes (§6.8); on Arm A, which never saw them, its own multipliers manage
+  {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells.
 - **The released evaluation is misaligned by one step; the cost is concentrated at short horizons, and at
   h = {{v2_diag_h}} it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
   training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
