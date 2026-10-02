@@ -825,8 +825,8 @@ The scalar penalty as actually applied, `means.std(0).sum(-1)` at `envs/base.py:
 
 ### 6.3 Why the aleatoric head collapses: the optimum is σ = 0
 
-This subsection explains the aleatoric column and only that column; ensemble disagreement is not
-shaped by the mechanism below, and why *it* is miscalibrated is not established here. It also
+This subsection explains the aleatoric column and only that column, and leaves the epistemic one
+open: ensemble disagreement is not shaped by the mechanism below, and why *it* is miscalibrated is not established here. It also
 supplies the alternative explanation promised in §6.1. The follow-up reads the low aleatoric value
 as reflecting "small stochasticity in the environment". The observation is correct and the reading
 is not: σ is low because σ = 0 is the optimum of the loss that trains it, and it would be low on
@@ -863,63 +863,15 @@ configuration: `sequence_loss` is dead code, guarded by a `prediction_type` the 
 produce a gradient of exactly zero, not merely a term the code suggests is irrelevant
 (`results/e4_sigma_gradients.json`).
 
-**The derivation says the collapse happens on any dataset, and that is testable.** It matters
-because it is what answers the follow-up's own explanation: on the released CSV, "small
-stochasticity in the environment" and our reading are observationally identical, since the data may
-simply be nearly deterministic. So under a rule committed before the runs (rule M-50, Appendix E)
-we built data where it is not.
-
-Synthetic data whose true noise level is **known** and varies by a factor of {{e5s_span}} across
-the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
-model — `MLPStateHead` unmodified, including the double-softplus clamp, the learnable
-`state_min_logstd` and `state_log_delta_logstd`, and the bound loss at its configured weight —
-trained under each objective in turn on {{e5s_n_train}} points for {{e5s_iters}} iterations at
-{{e5s_seeds}} seeds. Nothing else differs between the arms.
-
-*Two ways this is not the released setting.* The head is built here over a **one-dimensional**
-state with no recurrent trunk in front of it, where the released one predicts {{cal_rel_ndim}}
-dimensions from a GRU. The trunk's absence is deliberate: the question is about the head's
-objective, and a GRU would add a confound. The dimensionality matters because the state loss sums
-over state dimensions, so at one dimension it is roughly {{cal_rel_ndim}}× smaller relative to the
-bound term than in the released path. That makes this setting *more* favourable to σ surviving, and
-the collapse happens anyway.
-
-| objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
-|---|---|---|---|
-| `mse` — the implemented branch | **{{e5s_mse_ratio}}** | {{e5s_mse_spread_range}}× | {{e5s_mse_slope}} |
-| `gaussian_nll` — the authors' unused branch | {{e5s_nll_ratio}} | {{e5s_nll_spread_range}}× | {{e5s_nll_slope}} |
-
-*Ratios and slopes are means over {{e5s_seeds}} seeds; spreads are the range across them, because
-the mean of a spread hides which seeds recovered.*
-
-**Under the implemented objective σ sits {{e5s_mse_under}}× below the true noise and does not
-track it at all**: a spread of {{e5s_mse_spread}}× where the truth spans {{e5s_span}}×, and a
-slope below the {{e5s_slope_thr}} the design can detect. Under the authors' own branch, same data
-and same head, σ recovers the true level to a median ratio of {{e5s_nll_ratio}}, and every one of
-the {{e5s_seeds}} seeds the rule was discharged over clears the slope threshold. **Twenty seeds
-show that clearance is not general**: {{e5s_corrob_clearing}} of {{e5s_corrob_seeds}} clear it, so
-the all-seeds criterion would not have held at that sample. The rule's verdict stands as returned
-over its own {{e5s_seeds}} and is not re-opened by more seeds (§8); what twenty establish is that
-the hedge below was necessary. **The recovering arm is seed-variable, and the rule said so before
-the runs**: its slopes span {{e5s_nll_slope_range}}, a factor of
-{{e5s_nll_slope_spread_factor}}, and two of {{e5s_seeds}} seeds recover a σ spread of only
-{{e5s_nll_spread_lo}}× against the truth's {{e5s_span}}×. So what this experiment establishes is
-the **contrast**, that one objective tracks the noise at all and the other does not, and not the
-magnitude of the recovery, which this training budget does not pin down. **{{e5s_verdict}}**, which is the verdict the rule names for that pattern.
-
-*The statistic is the slope, not the correlation, because a correlation is scale-free: a σ̂ that is
-essentially constant still returns a large one off its own numerical noise. Under a permutation
-null, the same data with the input-to-noise pairing destroyed, a head whose σ spanned
-{{e5s_null_spread}}× returned correlations as large as ±{{e5s_null_r_max}}, while its slope was
-{{e5s_null_slope_p95}}. The detection threshold is set at the slope corresponding to a
-{{e5s_span_floor}}× spread rather than at that noise floor, and the measured false-positive rate at
-zero signal is {{e5s_fp_rate}}%.*
-
-**What this does that the derivation alone could not.** It removes the competing explanation
-rather than arguing against it: the stochasticity here is large, known and input-dependent, and the
-collapse happens anyway. The design's limit, stated in the rule, holds: the dilution ladder detects
-the signal at full strength and at no dilution below it, so this establishes that σ does not track
-the noise **at all**, not the magnitude of how badly.
+**The derivation says the collapse happens on any dataset, and that is testable.** On the
+released data, "small stochasticity in the environment" and our reading are observationally
+identical, so under a rule committed before the runs (rule M-50, Appendix E) we trained the released
+head, unmodified, on synthetic data whose known noise varies {{e5s_span}}× across the input range.
+**Under the implemented objective σ sits {{e5s_mse_under}}× below the true noise and does not track
+it at all**, while under the authors' unused likelihood branch, same data and same head, it recovers
+the true level to a median ratio of {{e5s_nll_ratio}}, seed-variably. The rule returns
+**{{e5s_verdict}}**: the experiment establishes the contrast, not the size of the recovery
+(Appendix J).
 
 We predicted the collapse from this algebra before training, then observed it. Three run counts
 appear below and they are not the same set. This project trained {{run_total}} runs for §5–§7, besides the {{rt_pre_runs}} of §5.2 and §5.3
@@ -2078,5 +2030,67 @@ neither it nor its hash reached git before the results did, so that order rests 
 it is a search protocol, not one of Appendix E's decision rules. Search engines rank and truncate,
 so this is a sample of convenience, but on it the substitution is rare, and a reader who takes the
 hypothesis to reach widely infers more than the evidence supports.
+
+---
+
+## Appendix J — the synthetic-noise test of the σ = 0 optimum (rule M-50)
+
+**The derivation says the collapse happens on any dataset, and that is testable.** It matters
+because it is what answers the follow-up's own explanation: on the released CSV, "small
+stochasticity in the environment" and our reading are observationally identical, since the data may
+simply be nearly deterministic. So under a rule committed before the runs (rule M-50, Appendix E)
+we built data where it is not.
+
+Synthetic data whose true noise level is **known** and varies by a factor of {{e5s_span}} across
+the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
+model — `MLPStateHead` unmodified, including the double-softplus clamp, the learnable
+`state_min_logstd` and `state_log_delta_logstd`, and the bound loss at its configured weight —
+trained under each objective in turn on {{e5s_n_train}} points for {{e5s_iters}} iterations at
+{{e5s_seeds}} seeds. Nothing else differs between the arms.
+
+*Two ways this is not the released setting.* The head is built here over a **one-dimensional**
+state with no recurrent trunk in front of it, where the released one predicts {{cal_rel_ndim}}
+dimensions from a GRU. The trunk's absence is deliberate: the question is about the head's
+objective, and a GRU would add a confound. The dimensionality matters because the state loss sums
+over state dimensions, so at one dimension it is roughly {{cal_rel_ndim}}× smaller relative to the
+bound term than in the released path. That makes this setting *more* favourable to σ surviving, and
+the collapse happens anyway.
+
+| objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
+|---|---|---|---|
+| `mse` — the implemented branch | **{{e5s_mse_ratio}}** | {{e5s_mse_spread_range}}× | {{e5s_mse_slope}} |
+| `gaussian_nll` — the authors' unused branch | {{e5s_nll_ratio}} | {{e5s_nll_spread_range}}× | {{e5s_nll_slope}} |
+
+*Ratios and slopes are means over {{e5s_seeds}} seeds; spreads are the range across them, because
+the mean of a spread hides which seeds recovered.*
+
+**Under the implemented objective σ sits {{e5s_mse_under}}× below the true noise and does not
+track it at all**: a spread of {{e5s_mse_spread}}× where the truth spans {{e5s_span}}×, and a
+slope below the {{e5s_slope_thr}} the design can detect. Under the authors' own branch, same data
+and same head, σ recovers the true level to a median ratio of {{e5s_nll_ratio}}, and every one of
+the {{e5s_seeds}} seeds the rule was discharged over clears the slope threshold. **Twenty seeds
+show that clearance is not general**: {{e5s_corrob_clearing}} of {{e5s_corrob_seeds}} clear it, so
+the all-seeds criterion would not have held at that sample. The rule's verdict stands as returned
+over its own {{e5s_seeds}} and is not re-opened by more seeds (§8); what twenty establish is that
+the hedge below was necessary. **The recovering arm is seed-variable, and the rule said so before
+the runs**: its slopes span {{e5s_nll_slope_range}}, a factor of
+{{e5s_nll_slope_spread_factor}}, and two of {{e5s_seeds}} seeds recover a σ spread of only
+{{e5s_nll_spread_lo}}× against the truth's {{e5s_span}}×. So what this experiment establishes is
+the **contrast**, that one objective tracks the noise at all and the other does not, and not the
+magnitude of the recovery, which this training budget does not pin down. **{{e5s_verdict}}**, which is the verdict the rule names for that pattern.
+
+*The statistic is the slope, not the correlation, because a correlation is scale-free: a σ̂ that is
+essentially constant still returns a large one off its own numerical noise. Under a permutation
+null, the same data with the input-to-noise pairing destroyed, a head whose σ spanned
+{{e5s_null_spread}}× returned correlations as large as ±{{e5s_null_r_max}}, while its slope was
+{{e5s_null_slope_p95}}. The detection threshold is set at the slope corresponding to a
+{{e5s_span_floor}}× spread rather than at that noise floor, and the measured false-positive rate at
+zero signal is {{e5s_fp_rate}}%.*
+
+**What this does that the derivation alone could not.** It removes the competing explanation
+rather than arguing against it: the stochasticity here is large, known and input-dependent, and the
+collapse happens anyway. The design's limit, stated in the rule, holds: the dilution ladder detects
+the signal at full strength and at no dilution below it, so this establishes that σ does not track
+the noise **at all**, not the magnitude of how badly.
 
 ---

@@ -33,6 +33,29 @@ an optional mode, so on this sample of convenience the substitution is rare (App
 """,
     "## Appendix I — the PETS lineage of the bounded σ head, and how often its descendants substitute the objective")]
 
+# ---- §6.3: the synthetic-noise experiment (rule M-50) -> Appendix J -------------------------------------
+ITEMS["s63_noise"] = [("move",
+    "**The derivation says the collapse happens on any dataset, and that is testable.**",
+    "We predicted the collapse from this algebra",
+    """**The derivation says the collapse happens on any dataset, and that is testable.** On the
+released data, "small stochasticity in the environment" and our reading are observationally
+identical, so under a rule committed before the runs (rule M-50, Appendix E) we trained the released
+head, unmodified, on synthetic data whose known noise varies {{e5s_span}}× across the input range.
+**Under the implemented objective σ sits {{e5s_mse_under}}× below the true noise and does not track
+it at all**, while under the authors' unused likelihood branch, same data and same head, it recovers
+the true level to a median ratio of {{e5s_nll_ratio}}, seed-variably. The rule returns
+**{{e5s_verdict}}**: the experiment establishes the contrast, not the size of the recovery
+(Appendix J).
+
+""",
+    "## Appendix J — the synthetic-noise test of the σ = 0 optimum (rule M-50)"),
+    # the pointer "§6.3 explains the aleatoric column and leaves the epistemic one open" (xref_sweep) is
+    # true of §6.3's first sentence; say it in those words, since the moved block carried them
+    ("sub", """This subsection explains the aleatoric column and only that column; ensemble disagreement is not
+shaped by the mechanism below,""",
+     """This subsection explains the aleatoric column and only that column, and leaves the epistemic one
+open: ensemble disagreement is not shaped by the mechanism below,""")]
+
 
 def main():
     t = open(F).read()

@@ -5,3 +5,4 @@ Body words by FILE_MAP §13's rule (`round2/t6_words.py`, from `PAPER.md` after 
 | session | item | moved from | to | body before | body after | change |
 |---|---|---|---|---:|---:|---:|
 | T6 | s2_pets | §2, PETS lineage and the survey of public descendants (Q1, R-75, M-72, M-73) | Appendix I; the body keeps the hypothesis and the count | 27,703 | 27,264 | −439 |
+| T6 | s63_noise | §6.3, the synthetic-noise test of the σ = 0 optimum (rule M-50) | Appendix J; the body keeps the rule, the headline ratio, the recovering branch's median and the verdict | 27,264 | 26,703 | −561 |
