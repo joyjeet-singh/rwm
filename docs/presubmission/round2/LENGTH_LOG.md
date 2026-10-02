@@ -19,3 +19,4 @@ Body words by FILE_MAP §13's rule (`round2/t6_words.py`, from `PAPER.md` after 
 | T7 | s7_45 | §7.4 (the contaminated arm and duplication control) and §7.5 (the variance-state argument), each to a summary | Appendix Q; Appendix F | 22,216 | 21,955 | −261 |
 | T7 | s11 | §11, rewritten to the limitations not stated where they bite, each verdict kept (M-43, M-70, M-49) with its governing figure and the policy caveat | Appendix R (the original §11, verbatim) | 21,955 | 20,696 | −1,259 |
 | T7 | s12 | §12, the asymmetry and per-dimension paragraphs condensed into one | Appendix S | 20,696 | 20,315 | −381 |
+| T7 | s67_m69 | §6.7 (the per-horizon multiplier), rule M-69's cross-model transfer test and the note on the different-model column | Appendix T; the body keeps the verdict, the cell counts and the multiplier ratio | 20,315 | 20,041 | −274 |

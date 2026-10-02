@@ -313,5 +313,24 @@ validation on the deployment distribution (Appendix S).
 ]
 
 
+# ---- §6.7: the cross-model transfer test (rule M-69) -> Appendix T ---------------------------------------
+_T = "## Appendix T — whether the per-horizon multipliers transfer between models (rule M-69, §6.7)"
+ITEMS["s67_m69"] = [
+    ("move", "**The fourth column: the table is a property of the model, not of the horizon.**", "So the accurate form of this section is:",
+     """**The fourth column: the table is a property of the model, not of the horizon.** Under rule M-69
+(Appendix E), multipliers fitted on Arm A and scored on the released checkpoint, and the reverse, on
+the same {{d3x_nind}} held-out trajectories, return **{{d3x_verdict}}** on the paired change in coverage
+the arena can resolve: {{d3x_n_out}} of {{d3x_ncells}} governing cells have an interval wholly outside
+the ±{{d3x_band}}-point band, and Arm A's multipliers are {{d3x_ratio_lo}}× to {{d3x_ratio_hi}}× the
+released checkpoint's at the same horizon (Appendix T). The *different model* column is the absolute
+test, unpowered for the reason above, so it is reported and cannot move that verdict.
+
+""", _T),
+    ("sub", "The §6.7 caution applies here unchanged and harder:", "§6.7's caution applies here unchanged and harder:"),
+    ("sub", 'Everything above is established across *episodes*, on one model.', 'Everything else in §6.7 is established across *episodes*, on one model.'),
+    ("sub", '**The *different model* column is the absolute test, and it is unpowered for the reason above**', '**The *different model* column is the absolute test, and it is unpowered for the reason §6.7 gives**'),
+]
+
+
 if __name__ == "__main__":
     E.main()
