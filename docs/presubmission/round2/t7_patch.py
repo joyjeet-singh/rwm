@@ -174,5 +174,43 @@ def _s610(t):
 ITEMS["s610_merge"] = [("fn", _s610)]
 
 
+# ---- §7.4 and §7.5: two sentences each -------------------------------------------------------------------
+_Q = "## Appendix Q — what the spliced windows cost: the contaminated arm and the duplication control (§7.4)"
+_F = "## Appendix F — the variance-state arithmetic behind §7.5"
+ITEMS["s7_45"] = [
+    ("move", "**7.4 What the spliced windows cost: nothing measurable.**", "**7.5 The released artifacts do not reproduce",
+     """**7.4 What the spliced windows cost: nothing measurable in rollout.** A contaminated arm trained with
+{{arm_splices}} spliced windows added, at {{arm_contam_pct}}% contamination (below the pipeline's
+{{contam_pct}}%, by design, so that no held-out row leaks), raises training loss by
+{{contam_cost_pct}}% where a duplication control adding the same number of exact copies raises it by
+{{dup_cost_pct}}%, and in rollout it is hurt in {{tw_cc_cluster_hurt}} of {{tw_cells}} cells and helped
+in {{tw_cc_cluster_helped}} (Figure 6a), the signature of regularisation. At this rate the splices do
+not harm rollout; the unmarked boundaries remain a real defect on leakage grounds (Appendix Q).
+
+---
+
+""", _Q),
+    ("move", "**7.5 The released artifacts do not reproduce", "## 8. ",
+     """**7.5 The released artifacts do not reproduce the released checkpoint's variance state.** Read as a
+clock, §6.3's collapse rate puts the checkpoint's variance state out of reach of a constant-rate run
+from the released initialisation at every iteration count the release, the paper and the checkpoint
+tag state. The first author's account, that the release is several revisions removed from the setup
+that trained it, supplies a mechanism, a warm start or a different initialisation, so this is a
+documentation gap between a release and a run rather than an inconsistency (Appendix F and the
+supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
+
+---
+
+""", _F),
+    # the moved blocks carried the rule that followed them; collapse runs of consecutive rules into one
+    ("fn", lambda t: __import__("re").sub(r"(\n---\n)(?:\n---\n)+", r"\1", t)),
+    # the moved blocks' own numbered leads would duplicate the body's §7.4 and §7.5 leads
+    ("sub", "**7.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm",
+     "**The design.** We trained a contaminated arm"),
+    ("sub", "**7.5 The released artifacts do not reproduce the released checkpoint's variance state.**\nThe σ collapse is linear",
+     "**§7.5's argument in full.** The σ collapse is linear"),
+]
+
+
 if __name__ == "__main__":
     E.main()

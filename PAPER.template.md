@@ -1191,49 +1191,23 @@ relative-L1, held-out pair).
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
 
-**7.4 What the spliced windows cost: nothing measurable.** We trained a contaminated arm on
-{{arm_contam_windows}} windows, the clean {{arm_clean_windows}} plus {{arm_splices}} splices, and,
-because that confounds *content* with *count*, a duplication control adding the same
-{{arm_splices}} windows as exact copies of windows already present.
-
-The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's
-{{contam_pct}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose
-*both* sides are training episodes, because {{bound_touch_holdout}} of the {{bound_total}} between the ten full
-episodes put held-out rows into training, a leakage problem rather than a physics one that would have
-invalidated our own comparison. So this experiment measures the cost of training on physically
-impossible transitions, not the reference's full exposure.
-
-Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs
-{{contam_cost_pct}}%. The bootstrap interval on duplicated − clean is
-[{{dup_ci_lo}}, {{dup_ci_hi}}], including zero, so the rise is caused by splice content, not by
-dataset size.
-
-In rollout, across {{tw_cells}} cells ({{tw_design}}, at two horizons on two
-metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and
-helps in {{tw_cc_cluster_helped}} (Figure 6a). The control is inert, differing from clean in
-{{tw_dc_cluster_helped}} cells.
-
-**So "costs nothing" is too strong.** Splicing raises training loss by {{contam_cost_pct}}% against
-duplication's {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}}
-cells: measured effects in opposite directions, the signature of regularisation. The spliced
-windows contain transitions the model cannot fit, it fits the rest less tightly as a result, and it
-rolls out slightly better. The defensible statement is that **at this rate the splices do not harm
-rollout and appear to help slightly. The unmarked boundaries remain a real defect on leakage
-grounds; the physically-impossible-transition component costs nothing detectable at this rate.**
+**7.4 What the spliced windows cost: nothing measurable in rollout.** A contaminated arm trained with
+{{arm_splices}} spliced windows added, at {{arm_contam_pct}}% contamination (below the pipeline's
+{{contam_pct}}%, by design, so that no held-out row leaks), raises training loss by
+{{contam_cost_pct}}% where a duplication control adding the same number of exact copies raises it by
+{{dup_cost_pct}}%, and in rollout it is hurt in {{tw_cc_cluster_hurt}} of {{tw_cells}} cells and helped
+in {{tw_cc_cluster_helped}} (Figure 6a), the signature of regularisation. At this rate the splices do
+not harm rollout; the unmarked boundaries remain a real defect on leakage grounds (Appendix Q).
 
 ---
 
-**7.5 The released artifacts do not reproduce the released checkpoint's variance state.**
-The σ collapse is linear in iteration count and its rate is nearly identical across our runs
-(§6.3), which makes it a clock, and read as a clock it puts the checkpoint's variance state out
-of reach of a constant-rate run from the released initialisation at the configured learning rate,
-at every iteration count the release, the paper and the checkpoint tag state. The first author's
-account is that the released repository is several revisions removed from the setup that trained
-the checkpoint, which supplies a mechanism, a warm start or a different `log_delta_logstd`
-initialisation, that would explain it with no inconsistency at all. So this is a **documentation
-gap between a release and a run**: common, worth recording, and much less interesting than an
-inconsistency. `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`, shipped as supplementary, gives the
-arithmetic and the five assumptions it rests on.
+**7.5 The released artifacts do not reproduce the released checkpoint's variance state.** Read as a
+clock, §6.3's collapse rate puts the checkpoint's variance state out of reach of a constant-rate run
+from the released initialisation at every iteration count the release, the paper and the checkpoint
+tag state. The first author's account, that the release is several revisions removed from the setup
+that trained it, supplies a mechanism, a warm start or a different initialisation, so this is a
+documentation gap between a release and a run rather than an inconsistency (Appendix F and the
+supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 ---
 
@@ -1683,7 +1657,16 @@ a release and a run — common, worth recording, and much less interesting than 
 We report the arithmetic because it is what let us detect the gap at all, not as a charge against
 the work.
 
----
+**§7.5's argument in full.** The σ collapse is linear in iteration count and its rate is nearly identical across our runs
+(§6.3), which makes it a clock, and read as a clock it puts the checkpoint's variance state out
+of reach of a constant-rate run from the released initialisation at the configured learning rate,
+at every iteration count the release, the paper and the checkpoint tag state. The first author's
+account is that the released repository is several revisions removed from the setup that trained
+the checkpoint, which supplies a mechanism, a warm start or a different `log_delta_logstd`
+initialisation, that would explain it with no inconsistency at all. So this is a **documentation
+gap between a release and a run**: common, worth recording, and much less interesting than an
+inconsistency. `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`, shipped as supplementary, gives the
+arithmetic and the five assumptions it rests on.
 
 ---
 
@@ -2205,5 +2188,39 @@ ordering. The rule said so in advance: it bounds the combination and attributes 
 further comparison here, the `mse`/`gaussian_nll` pair above, which holds every other axis fixed,
 sits outside the rule's governing statistics and under the design's own minimum detectable effect,
 so it bounds the objective's separate contribution rather than measuring it.
+
+---
+
+## Appendix Q — what the spliced windows cost: the contaminated arm and the duplication control (§7.4)
+
+**The design.** We trained a contaminated arm on
+{{arm_contam_windows}} windows, the clean {{arm_clean_windows}} plus {{arm_splices}} splices, and,
+because that confounds *content* with *count*, a duplication control adding the same
+{{arm_splices}} windows as exact copies of windows already present.
+
+The arm's contamination rate is {{arm_contam_pct}}%, against the reference pipeline's
+{{contam_pct}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose
+*both* sides are training episodes, because {{bound_touch_holdout}} of the {{bound_total}} between the ten full
+episodes put held-out rows into training, a leakage problem rather than a physics one that would have
+invalidated our own comparison. So this experiment measures the cost of training on physically
+impossible transitions, not the reference's full exposure.
+
+Training loss over the final 250 iterations: duplication costs {{dup_cost_pct}}%, splicing costs
+{{contam_cost_pct}}%. The bootstrap interval on duplicated − clean is
+[{{dup_ci_lo}}, {{dup_ci_hi}}], including zero, so the rise is caused by splice content, not by
+dataset size.
+
+In rollout, across {{tw_cells}} cells ({{tw_design}}, at two horizons on two
+metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and
+helps in {{tw_cc_cluster_helped}} (Figure 6a). The control is inert, differing from clean in
+{{tw_dc_cluster_helped}} cells.
+
+**So "costs nothing" is too strong.** Splicing raises training loss by {{contam_cost_pct}}% against
+duplication's {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}}
+cells: measured effects in opposite directions, the signature of regularisation. The spliced
+windows contain transitions the model cannot fit, it fits the rest less tightly as a result, and it
+rolls out slightly better. The defensible statement is that **at this rate the splices do not harm
+rollout and appear to help slightly. The unmarked boundaries remain a real defect on leakage
+grounds; the physically-impossible-transition component costs nothing detectable at this rate.**
 
 ---
