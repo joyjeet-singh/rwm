@@ -246,12 +246,7 @@ from training, and *in-sample*, the eight used for it. The released evaluation d
 trajectories from training data, and the original does not distinguish the two. **The released
 checkpoint trained on all ten episodes, so it has no held-out arena in this dataset**, and every
 figure for it is in-sample; later sections refer back to this as the in-sample caveat of §3. More
-data cannot be generated from either repository this reproduction pins. Neither contains code that
-writes a dataset: the only code that touches the file reads it (`train.py:44` in the lite release),
-and the lite release's environment rolls the learned model forward rather than physics. Its readme
-sends anyone wanting simulator-based collection to the authors' Isaac Lab extension
-(`readme.md:13`), which we do not pin and which would need Isaac Lab and an RTX-class GPU
-(Appendix C).
+data cannot be generated from either repository this reproduction pins (Appendix C).
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
@@ -1764,6 +1759,12 @@ items, it bears directly on a limitation §11 states our measurements cannot set
 miscalibration we document costs anything downstream, where §11's policy-free proxy tests only
 whether the per-horizon correction reorders the penalty component and measures no cost — and it
 needs no robot.
+
+*Why more data cannot be generated.* No repository this reproduction pins can generate data. Neither contains code that
+writes a dataset: the only code that touches the file reads it (`train.py:44` in the lite release),
+and the lite release's environment rolls the learned model forward rather than physics. Its readme
+sends anyone wanting simulator-based collection to the authors' Isaac Lab extension
+(`readme.md:13`), which we do not pin and which would need Isaac Lab and an RTX-class GPU.
 
 ---
 

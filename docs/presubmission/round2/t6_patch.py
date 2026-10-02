@@ -244,6 +244,21 @@ every rate, and the {{e2_fitted_runs}} the rate is fitted on.
      "**§6.3's derivation covers two terms, and the objective has {{e4_n_terms}}.** Its completeness"),
 ]
 
+# ---- §3: why more data cannot be generated -> Appendix C (what testing the untested claims would require) --
+_C = "## Appendix C — what testing the untested claims would require"
+_NODATA = """Neither contains code that
+writes a dataset: the only code that touches the file reads it (`train.py:44` in the lite release),
+and the lite release's environment rolls the learned model forward rather than physics. Its readme
+sends anyone wanting simulator-based collection to the authors' Isaac Lab extension
+(`readme.md:13`), which we do not pin and which would need Isaac Lab and an RTX-class GPU
+(Appendix C)."""
+ITEMS["s3_nodata"] = [
+    ("sub", "More\ndata cannot be generated from either repository this reproduction pins. " + _NODATA,
+     "More\ndata cannot be generated from either repository this reproduction pins (Appendix C)."),
+    ("insert", "*Why more data cannot be generated.* No repository this reproduction pins can generate data. " +
+     _NODATA.replace("\n(Appendix C).", "."), _C),
+]
+
 
 def main():
     t = open(F).read()
@@ -271,6 +286,12 @@ def main():
                     t = t[:r].rstrip("\n") + "\n\n" + block + "\n" + t[r:]
                 else:
                     t = t.rstrip("\n") + "\n\n" + heading + "\n\n" + block + "\n\n---\n"
+            elif op[0] == "insert":
+                # verbatim text cut by a preceding "sub", inserted before an existing appendix's closing rule
+                _, text, heading = op
+                h = t.index("\n" + heading)
+                r = t.index("\n---\n", h)
+                t = t[:r].rstrip("\n") + "\n\n" + text.strip("\n") + "\n" + t[r:]
             elif op[0] == "append":
                 _, text, heading = op
                 assert t.rindex("\n## Appendix") == t.index("\n" + heading), f"{it}: {heading[:40]!r} is not the last appendix"
