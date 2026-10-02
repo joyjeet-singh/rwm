@@ -5,25 +5,25 @@
     "open population",
     "frozen at write time"
   ],
-  "n_hits": 21,
-  "n_open": 20,
-  "n_frozen": 1,
+  "n_hits": 26,
+  "n_open": 26,
+  "n_frozen": 0,
   "n_unclassified": 0,
   "unclassified": [],
   "hits": [
     {
       "file": "scripts/build_paper.py",
-      "line": 110,
-      "citation": "scripts/build_paper.py:110",
+      "line": 365,
+      "citation": "scripts/build_paper.py:365",
       "text": "figs = sorted(f for f in os.listdir(R.FIGURES) if f.startswith(\"paper_fig\"))",
       "classification": "open population",
       "reason": "bundles the paper figures that exist; a build step, not a comparison set"
     },
     {
       "file": "scripts/build_supplementary.py",
-      "line": 136,
-      "citation": "scripts/build_supplementary.py:136",
-      "text": "for root, _, names in os.walk(d):",
+      "line": 187,
+      "citation": "scripts/build_supplementary.py:187",
+      "text": "for root, dirs, names in os.walk(d):",
       "classification": "open population",
       "reason": "walks the tree to bundle whatever is present"
     },
@@ -45,88 +45,96 @@
     },
     {
       "file": "scripts/make_anon_bundle.py",
-      "line": 213,
-      "citation": "scripts/make_anon_bundle.py:213",
+      "line": 407,
+      "citation": "scripts/make_anon_bundle.py:407",
       "text": "for root, dirs, names in os.walk(d):",
       "classification": "open population",
-      "reason": "walks staging to anonymise"
+      "reason": "walks the tree to stage it"
     },
     {
       "file": "scripts/make_anon_bundle.py",
-      "line": 280,
-      "citation": "scripts/make_anon_bundle.py:280",
+      "line": 475,
+      "citation": "scripts/make_anon_bundle.py:475",
       "text": "for root, dirs, names in os.walk(staging):",
       "classification": "open population",
       "reason": "walks staging to anonymise"
     },
     {
       "file": "scripts/make_anon_bundle.py",
-      "line": 391,
-      "citation": "scripts/make_anon_bundle.py:391",
+      "line": 590,
+      "citation": "scripts/make_anon_bundle.py:590",
       "text": "for root, _, names in os.walk(staging):",
       "classification": "open population",
       "reason": "walks staging to verify"
     },
     {
       "file": "scripts/paper_figures.py",
-      "line": 184,
-      "citation": "scripts/paper_figures.py:184",
+      "line": 208,
+      "citation": "scripts/paper_figures.py:208",
       "text": "for f in sorted(glob.glob(os.path.join(R.RESULTS, \"step5_arm*.json\"))):",
       "classification": "open population",
-      "reason": "GUARDED: filters to the released width at :187-190, the Appendix B fix"
+      "reason": "GUARDED: the loop skips any run whose recorded rnn_hidden_size is not the released width, the Appendix B fix"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 514,
-      "citation": "scripts/paper_numbers.py:514",
+      "line": 164,
+      "citation": "scripts/paper_numbers.py:164",
+      "text": "for _f in sorted(glob.glob(\"results/step5_arm*.json\")):",
+      "classification": "open population",
+      "reason": "GUARDED by assertion: every run, of any width or objective, must share one iteration count per group (main, _10k), so a run at another count fails the build instead of entering iters_main or iters_long silently (round 2, T8: the glob the plan names)"
+    },
+    {
+      "file": "scripts/paper_numbers.py",
+      "line": 785,
+      "citation": "scripts/paper_numbers.py:785",
       "text": "runs_all = sorted(glob.glob(\"results/step5_arm*.json\"))",
       "classification": "open population",
-      "reason": "GUARDED: the _width predicate at :531, the Appendix B fix itself"
+      "reason": "GUARDED: the _width predicate defined beside it filters to the released width, the Appendix B fix itself"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 974,
-      "citation": "scripts/paper_numbers.py:974",
+      "line": 1307,
+      "citation": "scripts/paper_numbers.py:1307",
       "text": "for _f in sorted(_glob.glob(\"results/step5_*.json\")):",
       "classification": "open population",
       "reason": "the CPU budget deliberately includes every run, M-49's arm included, and Appendix B states how many of them are that arm"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1435,
-      "citation": "scripts/paper_numbers.py:1435",
+      "line": 1858,
+      "citation": "scripts/paper_numbers.py:1858",
       "text": "for _f in sorted(_g.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
-      "reason": "GUARDED: _width(_f) != _released_w continues at :1442"
+      "reason": "GUARDED: _width(_f) != _released_w continues, inside the loop"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1453,
-      "citation": "scripts/paper_numbers.py:1453",
+      "line": 1876,
+      "citation": "scripts/paper_numbers.py:1876",
       "text": "_all = len([f for f in _g.glob(\"results/step5_arm*.json\")",
       "classification": "open population",
       "reason": "GUARDED: _width(f) == _released_w in the comprehension"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1592,
-      "citation": "scripts/paper_numbers.py:1592",
+      "line": 2585,
+      "citation": "scripts/paper_numbers.py:2585",
       "text": "for f in sorted(_g2.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
-      "reason": "the run inventory is deliberately every run; run_total is 31 and matches Appendix B. NOTE: width is not part of the row key, so M-49's width-124 runs share a row with released-width runs of the same shape. That is a presentation gap, not a stale set -- no number it produces is wrong -- and it is logged rather than changed, per A.3's 'fix only what affects a published number'"
+      "reason": "the run inventory is deliberately every run, and run_total matches Appendix B. NOTE: width is not part of the row key, so M-49's width-124 runs share a row with released-width runs of the same shape. That is a presentation gap, not a stale set -- no number it produces is wrong -- and it is logged rather than changed, per A.3's 'fix only what affects a published number'"
     },
     {
       "file": "scripts/part_f_gate.py",
-      "line": 75,
-      "citation": "scripts/part_f_gate.py:75",
+      "line": 88,
+      "citation": "scripts/part_f_gate.py:88",
       "text": "for f in sorted(os.listdir(R.FIGURES)):",
       "classification": "open population",
       "reason": "figures present, for the gate"
     },
     {
       "file": "scripts/part_f_gate.py",
-      "line": 86,
-      "citation": "scripts/part_f_gate.py:86",
+      "line": 99,
+      "citation": "scripts/part_f_gate.py:99",
       "text": "f\"{len(os.listdir(R.FIGURES))} figures {figbad or 'clean'}\")",
       "classification": "open population",
       "reason": "figures present, for the gate"
@@ -156,12 +164,36 @@
       "reason": "figures present"
     },
     {
-      "file": "scripts/task_d3_ens5.py",
-      "line": 299,
-      "citation": "scripts/task_d3_ens5.py:299",
-      "text": "for f in sorted(glob.glob(\"results/step5_armA_seed?.json\"))]",
-      "classification": "frozen at write time",
-      "reason": "A-01. Unguarded glob over results/step5_armA_seed?.json for the ensemble-size-1 collapse comparison. Matched three files when the artifact was written and five now; seeds 3 and 4 arrived in d88a106, section 6.10's independent-ensemble work. The same defect Appendix B records, in a script the fix never reached. Two published values move: paper_numbers.py:715-716"
+      "file": "scripts/training_tail_slopes.py",
+      "line": 43,
+      "citation": "scripts/training_tail_slopes.py:43",
+      "text": "\"sweep\": sorted(glob.glob(os.path.join(res, \"mn_sweep_run_M*_N*_seed[012].json\"))),",
+      "classification": "open population",
+      "reason": "GUARDED: the pattern pins seeds 0-2, and the group sizes are asserted (24, 18, 6, 6), so a new run matching it fails the build rather than entering the slope population"
+    },
+    {
+      "file": "scripts/training_tail_slopes.py",
+      "line": 44,
+      "citation": "scripts/training_tail_slopes.py:44",
+      "text": "\"baseline\": sorted(glob.glob(os.path.join(res, \"baseline_run_*_s7_seed[012].json\"))),",
+      "classification": "open population",
+      "reason": "GUARDED: spec s7 and seeds 0-2 only (X1's x1v1/x1v2 runs do not match), with the group sizes asserted"
+    },
+    {
+      "file": "scripts/training_tail_slopes.py",
+      "line": 45,
+      "citation": "scripts/training_tail_slopes.py:45",
+      "text": "\"arm_2500\": sorted(glob.glob(os.path.join(res, \"step5_arm[AB]_seed[012].json\"))),",
+      "classification": "open population",
+      "reason": "GUARDED: Arms A and B at seeds 0-2, 2,500-iteration runs only, with the group sizes asserted"
+    },
+    {
+      "file": "scripts/training_tail_slopes.py",
+      "line": 46,
+      "citation": "scripts/training_tail_slopes.py:46",
+      "text": "\"arm_10000\": sorted(glob.glob(os.path.join(res, \"step5_arm[AB]_seed[012]_10k.json\"))),",
+      "classification": "open population",
+      "reason": "GUARDED: Arms A and B at seeds 0-2, the _10k runs only, with the group sizes asserted"
     },
     {
       "file": "scripts/verify_reproduction.py",
@@ -173,16 +205,30 @@
     },
     {
       "file": "scripts/verify_reproduction.py",
-      "line": 78,
-      "citation": "scripts/verify_reproduction.py:78",
+      "line": 82,
+      "citation": "scripts/verify_reproduction.py:82",
       "text": "for fn in sorted(os.listdir(B)):",
       "classification": "open population",
       "reason": "compares whatever a clean clone regenerated; open by definition"
+    },
+    {
+      "file": "scripts/xref_sweep.py",
+      "line": 94,
+      "citation": "scripts/xref_sweep.py:94",
+      "text": "for root, _, names in os.walk(up):",
+      "classification": "open population",
+      "reason": "walks the pinned upstream trees to resolve the paper's file:line pointers; whatever the pinned commit holds is the population"
     }
   ],
-  "frozen_citations": [
-    "scripts/task_d3_ens5.py:299"
+  "frozen_citations": [],
+  "retired": [
+    {
+      "file": "scripts/task_d3_ens5.py",
+      "id": "A-01",
+      "note": "frozen at write time, then fixed: the unguarded glob over results/step5_armA_seed?.json is now an explicit seed list (ENS1_SEEDS), so no pattern remains to classify; the script's own comment records it"
+    }
   ],
+  "keyed_by": "(file, the line's source text); line numbers are reported, not matched",
   "self_exclusion": "scripts/input_set_audit.py is excluded from its own scan. It is the instrument rather than the subject: it discovers whatever source files exist, which is an open population by definition, and it writes no published number. Recorded here rather than left silent.",
   "no_new_check_kind": "Deliberate, per A.4. Session 5 is removing build machinery. The durable guard is that artifacts record the input file list they were computed over, so a stale set shows up in a reproduce.sh diff on its own."
 }

@@ -166,9 +166,32 @@ if [ $QUICK -eq 0 ]; then
         results/step5_armA_seed2_dup.json ./run_control.sh
   stage 11c "TRAINING — ensemble-5 arms (M-43)" "13 h" \
         results/step5_armA_seed2_ens5.json ./run_ens5.sh
+  # Round 2, T8: the drivers round 1 found undriven, and the pre-submission queues. Each
+  # driver skips a run whose artifact exists, so a re-run trains only what is missing.
+  stage 11d "TRAINING — 10,000-iteration runs of seeds 0 and 2 (R-60)" "16 h" \
+        results/step5_armB_seed2_10k.json ./run_10k_d1.sh
+  stage 11e "TRAINING — Arm A seeds 3 and 4 for the independent ensemble (M-44)" "2.5 h" \
+        results/step5_armA_seed4.json ./run_indep_ens.sh
+  stage 11f "TRAINING — the capacity-matched arm at width 124 (M-49)" "6 h" \
+        results/step5_armA_seed4_m49h124.json ./run_m49_matched.sh
+  # run_tasks45.sh (stage 11) trains the same three gaussian_nll runs, so this stage
+  # skips after it unless forced; it is driven so the script that writes them is in the
+  # pipeline either way.
+  stage 11g "TRAINING — corrected-objective arm, seeds 0-2" "3 h" \
+        results/step5_armA_seed2_nll.json ./run_nll.sh
+  stage 11h "TRAINING — corrected-objective seeds 3 and 4 for the combined arm (M-68)" "2.5 h" \
+        results/step5_armA_seed4_nll.json ./run_nll_indep_ens.sh
+  # The pre-submission queue, generated as it was: the sweep's probe writes its 24 lines,
+  # then the baselines' 18 are appended from the committed probe record under the user's
+  # recorded cap (no re-probe), and the queue runner trains them one at a time.
+  stage 11i "TRAINING — the M/N sweep (M-74) and the Table S7 baselines (M-75, M-76)" "60 h" \
+        results/baseline_run_transformer_ar_s7_seed2.json bash -c "$PY scripts/mn_sweep_timing.py --write-queue && $PY scripts/baselines_timing.py --from-record-cap 23 --ruling docs/presubmission/DECISIONS_FOR_USER.md#S2b-baseline-cap && bash scripts/queue_runner.sh runs/queue.txt"
+  # Round 2's queue: rule X1's Part C variants, seed 0 (M-80), within its 10-hour cap.
+  stage 11j "TRAINING — X1 Part C retraining variants, seed 0 (M-80)" "4.5 h" \
+        results/baseline_run_rssm_tf_x1v2_seed0.json bash -c "$PY scripts/x1_partc_timing.py --write-queue && bash scripts/queue_runner.sh runs/queue_round2.txt"
 else
   echo ""
-  echo " STAGES 9-11 (training, ~20 h) SKIPPED in --quick mode."
+  echo " STAGES 9-11j (training) SKIPPED in --quick mode."
   echo "   Their outputs are committed as results/step5_*.json and are consumed below."
 fi
 
@@ -345,10 +368,14 @@ REPORT=r2_combined_arm_report.txt stage 20r3 "M-68 — the combined arm, and its
 # whose weights live under runs/. The MDE it is scored against is
 # results/p4_transfer_power.json, whose own writer has no stage here
 # (docs/DEFERRED.md, 2026-09-05), for the same reason p3's does not.
+# P4: the MDE M-69 is scored against. It was written before task_d3_cross_model.json
+# existed and the M-69 stage below reads it, so it runs first (round 2, T8; it had no stage).
+stage 20r3a "P4 — power for M-69, before the cross-model comparison" "2 min" \
+      results/p4_transfer_power.json $PY scripts/p4_transfer_power.py
 REPORT=task_d3_cross_model_report.txt stage 20r4 "M-69 — cross-model transfer of the per-horizon multiplier" "12 min" \
       results/task_d3_cross_model.json NEEDS_WEIGHTS $PY scripts/task_d3_cross_model.py
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
-      "" $PY scripts/ledger_check.py
+      results/claims_to_evidence.json $PY scripts/ledger_check.py
 # Appendix G, generated from the ledger. It feeds six paper keys and its writer
 # was in no stage: paper_numbers.py read the artifact unconditionally, so stage
 # 23 only ever succeeded because a clean clone carries results/ in. That is the
@@ -388,6 +415,41 @@ REPORT=input_set_audit_report.txt stage 20n8 "M-66 — input discovery by patter
 
 stage 20n9 "5 — head-to-head absolute accuracy, from stored rollouts only" "20 s" \
       results/head_to_head_accuracy.json NEEDS_WEIGHTS $PY scripts/head_to_head_accuracy.py
+
+# The pre-submission rules (M-74, M-75, M-76) and round 2's analyses (R-76, R-77, R-78,
+# X1). Each writes an artifact the paper reads, and none had a stage: pipeline_coverage
+# listed fourteen. In input order: each power check before the verdict that reads it, the
+# evaluators before the verdicts, both before the pooled rescore that reproduces them.
+# Round 2, T8.
+stage 20t1 "P5 — power for M-74, before the sweep's verdict" "5 min" \
+      results/p5_sweep_power.json NEEDS_WEIGHTS $PY scripts/p5_sweep_power.py
+stage 20t2 "M-74 — evaluate the M/N sweep" "10 min" \
+      results/mn_sweep_eval.json NEEDS_WEIGHTS $PY scripts/mn_sweep_eval.py
+stage 20t3 "M-74 — the sweep's verdict" "1 min" \
+      results/mn_sweep_verdict.json $PY scripts/verdict_mn_sweep.py
+stage 20t4 "P6 — power for M-75 and M-76, before the baselines' verdicts" "5 min" \
+      results/p6_baseline_power.json NEEDS_WEIGHTS $PY scripts/p6_baseline_power.py
+stage 20t5 "M-75, M-76 — evaluate the Table S7 baselines" "10 min" \
+      results/baselines_eval.json NEEDS_WEIGHTS $PY scripts/baselines_eval.py
+stage 20t6 "M-75, M-76 — the baselines' verdicts" "1 min" \
+      results/baselines_verdict.json $PY scripts/verdict_baselines.py
+# Reads runs/queue.txt and runs/queue.log, which are gitignored: hence the guard.
+stage 20t7 "Appendix B — the pre-submission runs' runtime" "5 s" \
+      results/presubmission_runtime.json NEEDS_WEIGHTS $PY scripts/s8_runtime.py
+stage 20t8 "7.2 — the alignment defect on independent trajectories (S-20)" "2 min" \
+      results/alignment_defect_ci.json $PY scripts/alignment_defect_ci.py
+stage 20t9 "N1 — the alignment cost by horizon, and our arms' sensitivity (R-76)" "5 min" \
+      results/alignment_by_horizon.json NEEDS_WEIGHTS $PY scripts/alignment_by_horizon.py
+stage 20t10 "N2 — nRMSE pooled as section 3.1 defines it (R-77)" "10 min" \
+      results/pooled_nrmse_rescore.json NEEDS_WEIGHTS $PY scripts/pooled_nrmse_rescore.py
+stage 20t11 "N3 — the sweep at equal training compute (R-78)" "15 min" \
+      results/mn_compute_matched.json NEEDS_WEIGHTS $PY scripts/mn_compute_matched.py
+stage 20t12 "N3 part 4 — training-loss slopes at the end of every run" "5 s" \
+      results/training_tail_slopes.json $PY scripts/training_tail_slopes.py
+# X1 (M-80): Parts A and B on the Table S7 RSSMs, then Part C on the retraining variants
+# (stage 11j). --part ab rewrites the artifact and --part c adds to it, so they run in order.
+stage 20t13 "X1 — the RSSM diagnostic, Parts A to C (M-81, M-83)" "3 min" \
+      results/rssm_diagnostics.json NEEDS_WEIGHTS bash -c "$PY scripts/rssm_diagnostics.py --part ab && $PY scripts/rssm_diagnostics.py --part c"
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them

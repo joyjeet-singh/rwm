@@ -12,6 +12,10 @@ be tagged CONTRIB. A retraction that only exists in the retracting entry is invi
 to anyone reading the claim it retracts.
 """
 import os, re, sys, json
+
+# The artifact this check writes, as a module constant so scripts/pipeline_coverage.py can see the
+# write (it resolves constants; a "results/..." literal it does not). Round 2, T8.
+CLAIMS_OUT = "claims_to_evidence.json"
 LEDGER="FINDINGS_LEDGER.md"
 txt=open(LEDGER).read()
 blocks=re.split(r'\n### ', txt)
@@ -151,7 +155,7 @@ for pfx,said,real in stale:
     print(f"    !! {pfx}- : RESULTS.md says {said}, ledger has {real}")
 json.dump({"entries":rows,"counts_by_prefix":dict(sorted(counts.items())),
            "retraction_classes":{**classes,"n_superseded":n_sup,"reclassified":reclassified}},
-          open("results/claims_to_evidence.json","w"),indent=2)
+          open(os.path.join("results", CLAIMS_OUT),"w"),indent=2)
 with open("results/claims_to_evidence.md","w") as f:
     f.write("# Claims-to-evidence map\n\nOne row per CONTRIB ledger entry.\n\n")
     f.write("| ID | Claim | Evidence | Status | Artifacts |\n|---|---|---|---|---|\n")
