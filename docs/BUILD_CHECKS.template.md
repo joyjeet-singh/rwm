@@ -210,12 +210,12 @@ motivated it:
 - **a bare numeral opening a list under an unfinished equation** — section 6.2 wrapped as
   "at n_independent =" then "20." on its own line; the converter read the numeral as an
   ordered-list marker and ate it, so the PDF gave the sentence no sample size at all.
-- **an ordered-list marker interrupting a paragraph** — the same damage in section 6.7, where
+- **an ordered-list marker interrupting a paragraph** — the same damage in the ranking section (now 6.6), where
   "M-43's own" then "4." lost the horizon count. There is no equals sign to spot it by, so the
   rule is the general one: a marker opens a list only after a blank line, or where a numbered
   item is already open in the same block.
 - **a Markdown footnote token surviving into the LaTeX** — `[^stepcount]` set as literal text
-  in a table cell of section 6.7 and its definition as a literal paragraph, because the
+  in a table cell of the ranking section (now 6.6) and its definition as a literal paragraph, because the
   converter had no footnote rule. It now renders the reference as a superscript number and
   leaves the definition's wording untouched; `\footnote` is not usable at that site, which is
   inside a `tabular` inside a `\resizebox`.

@@ -14,7 +14,7 @@ E.ITEMS.clear()
 ITEMS = E.ITEMS
 
 # ---- §6.7: the robustness checks of the ranking claim -> Appendix N --------------------------------------
-_N = "## Appendix N — section 6.7's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control"
+_N = "## Appendix N — section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control"
 ITEMS["s67_robust"] = [
     ("move", "**What survives removing each confound.**", "**Per horizon, on the same",
      """**What survives removing each confound** (Appendix N). Across {{d2r_ncontrols}} models of how far

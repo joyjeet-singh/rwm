@@ -20,3 +20,4 @@ Body words by FILE_MAP §13's rule (`round2/t6_words.py`, from `PAPER.md` after 
 | T7 | s11 | §11, rewritten to the limitations not stated where they bite, each verdict kept (M-43, M-70, M-49) with its governing figure and the policy caveat | Appendix R (the original §11, verbatim) | 21,955 | 20,696 | −1,259 |
 | T7 | s12 | §12, the asymmetry and per-dimension paragraphs condensed into one | Appendix S | 20,696 | 20,315 | −381 |
 | T7 | s67_m69 | §6.7 (the per-horizon multiplier), rule M-69's cross-model transfer test and the note on the different-model column | Appendix T; the body keeps the verdict, the cell counts and the multiplier ratio | 20,315 | 20,041 | −274 |
+| T7 | s67_m69 review | qualifiers restored in summaries (R3–R7, R11–R13, R16), renumbering misses (R1, R2, R10, R15), pointers (R8, R9, R14) | — | 20,041 | 20,166 | +125 |

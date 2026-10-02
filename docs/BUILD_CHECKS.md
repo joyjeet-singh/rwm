@@ -50,7 +50,7 @@ tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 9,717 values, or 0.59% of the 1,659,161 numeric values under `results/` that the comparison counts. The other 1,649,444 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 171-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 843 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **62 comparative claims** across 29 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 62 of 62 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 171-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 845 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **62 comparative claims** across 29 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 62 of 62 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -230,12 +230,12 @@ motivated it:
 - **a bare numeral opening a list under an unfinished equation** — section 6.2 wrapped as
   "at n_independent =" then "20." on its own line; the converter read the numeral as an
   ordered-list marker and ate it, so the PDF gave the sentence no sample size at all.
-- **an ordered-list marker interrupting a paragraph** — the same damage in section 6.7, where
+- **an ordered-list marker interrupting a paragraph** — the same damage in the ranking section (now 6.6), where
   "M-43's own" then "4." lost the horizon count. There is no equals sign to spot it by, so the
   rule is the general one: a marker opens a list only after a blank line, or where a numbered
   item is already open in the same block.
 - **a Markdown footnote token surviving into the LaTeX** — `[^stepcount]` set as literal text
-  in a table cell of section 6.7 and its definition as a literal paragraph, because the
+  in a table cell of the ranking section (now 6.6) and its definition as a literal paragraph, because the
   converter had no footnote rule. It now renders the reference as a superscript number and
   leaves the definition's wording untouched; `\footnote` is not usable at that site, which is
   inside a `tabular` inside a `\resizebox`.

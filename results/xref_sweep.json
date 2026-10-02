@@ -61,10 +61,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a712 quotes the larger arena",
+      "pointer": "Appendix S quotes the larger arena",
       "ok": true,
-      "detail": "target 12; nouns ['larger', 'arena']; absent ['larger']",
-      "context": "\u00a712 quotes the larger arena"
+      "detail": "target Appendix S; nouns ['larger', 'arena']; absent ['larger']",
+      "context": "Appendix S quotes the larger arena"
     },
     {
       "class": "semantic",
