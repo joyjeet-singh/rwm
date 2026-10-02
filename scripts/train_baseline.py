@@ -88,12 +88,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--arch", choices=["mlp", "transformer", "rssm"], required=True)
     ap.add_argument("--regime", choices=["tf", "ar"], required=True)
-    ap.add_argument("--spec", choices=["s7", "matched"], required=True)
+    ap.add_argument("--spec", choices=["s7", "matched", "x1v1", "x1v2"], required=True)
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--iters", type=int, default=2500)
     ap.add_argument("--batch", type=int, default=256)
     ap.add_argument("--out-dir", default=None, help="timing probe: write here instead")
     args = ap.parse_args()
+    if args.spec in ("x1v1", "x1v2"):
+        assert args.arch == "rssm" and args.regime == "tf", "rule X1's variants are teacher-forced RSSMs (ledger M-80)"
 
     cfg, data, episode_id, split, ds, model, opt, gen, paths = build_everything(
         args.arch, args.spec, args.seed, args.batch)

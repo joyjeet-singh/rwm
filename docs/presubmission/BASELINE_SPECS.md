@@ -83,6 +83,15 @@ RWM's ensemble-1 state pathway has **714,164** parameters, recounted by the ladd
 | 36 | Matched RSSM settings | ReLU; 3 free nats; no KL scaling (weight 1.0); no balancing | match | PlaNet (p. 12). Balancing did not exist before DreamerV2 |
 | 37 | Matched RSSM size | 1 GRU layer, width 256 | deviation | parameter-matched (PLAN S2b) |
 | 38 | Matched RSSM std | softplus + 0.1 | deviation | not stated in PlaNet's paper. Our choice |
+| 39 | X1 V1: KL weight | 1.0 | match | PlaNet (p. 12), as row 36. Round 2 rule X1, Part C (ledger M-80) |
+| 40 | X1 V1: free nats | 3, clamped per sample and step | match | PlaNet (p. 12), as row 36; the same code path as the matched RSSM's |
+| 41 | X1 V1: KL balancing | none: the plain KL, with gradients to both prior and posterior | match | balancing did not exist before DreamerV2 (row 36) |
+| 42 | X1 V1: everything else | the Table S7 RSSM of rows 21-32: categorical 64 x 32 latent, ELU, a 2-layer GRU of 256 | deviation | rule X1 changes the KL settings only; PlaNet's own latent is a Gaussian (row 35) |
+| 43 | X1 V2: GRU cell | DreamerV2's layer-normalised cell: a dense layer with bias on [input, state] to 3 x size, layer normalisation over the 3 x size parts, the reset gate multiplying the candidate inside tanh, update-gate bias -1 | match | danijar/dreamerv2 `common/nets.py:317-347` at 07d906e9; its RSSM builds the cell with `norm=True` (`nets.py:27`). Checked against a NumPy transcription of `nets.py:334-347` by `docs/presubmission/round2/t2_verify_variants.py` (max difference 5.6e-16) |
+| 44 | X1 V2: layer-norm epsilon and parameters | 1e-3; learned scale and centre | match | Keras's defaults, `keras/layers/normalization/layer_normalization.py:151-155` (v2.6.0); DreamerV2 calls it with no arguments (`nets.py:327`) |
+| 45 | X1 V2: layers and width | two stacked cells of 256 | deviation | Table S7's 2-layer GRU of 256 (row 21) is kept; DreamerV2 uses one cell (`nets.py:27`) |
+| 46 | X1 V2: initialisation | PyTorch's defaults | deviation | as every other layer of our RSSM; DreamerV2's dense layer uses Keras's defaults (glorot-uniform kernel, zero bias) |
+| 47 | X1 V2: everything else | rows 23-32: the categorical latent, ELU, KL balancing 0.8, no free nats, KL scale 0.1 | match / deviation as there | rule X1 changes the GRU cell only |
 
 ## 4. Sources
 

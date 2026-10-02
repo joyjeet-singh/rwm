@@ -41,10 +41,50 @@ import torch.nn.functional as Fn
 from baselines.common import ACTION_DIM, STATE_DIM, bound_loss, regression_loss, state_head
 
 
+class LNGRUCell(nn.Module):
+    """DreamerV2's layer-normalised GRU cell (rule X1, variant V2), transcribed from danijar/dreamerv2
+    common/nets.py:317-347 at 07d906e9: one dense layer with bias on [input, state] to 3 x size; layer
+    normalisation over all 3 x size parts with Keras's defaults (epsilon 1e-3, learned scale and centre;
+    keras v2.6.0 layer_normalization.py:151-155); split into reset, candidate, update; reset = sigmoid;
+    candidate = tanh(reset * candidate); update = sigmoid(update - 1); h' = update * candidate +
+    (1 - update) * h. Initialised with PyTorch's defaults, like every other layer of this RSSM."""
+
+    def __init__(self, inp, size, update_bias=-1.0):
+        super().__init__()
+        self.size, self.update_bias = size, update_bias
+        self.layer = nn.Linear(inp + size, 3 * size, bias=True)
+        self.norm = nn.LayerNorm(3 * size, eps=1e-3)
+
+    def forward(self, x, h):
+        parts = self.norm(self.layer(torch.cat([x, h], -1)))
+        reset, cand, update = parts.split(self.size, -1)
+        reset = torch.sigmoid(reset)
+        cand = torch.tanh(reset * cand)
+        update = torch.sigmoid(update + self.update_bias)
+        return update * cand + (1 - update) * h
+
+
+class LNGRU(nn.Module):
+    """A stack of LNGRUCells behind nn.GRU's batch_first single-step interface: input (B, 1, in), state
+    (layers, B, size) -> (output (B, 1, size), new state). Layer l+1 reads layer l's new state, as in
+    nn.GRU without dropout."""
+
+    def __init__(self, inp, size, num_layers):
+        super().__init__()
+        self.cells = nn.ModuleList([LNGRUCell(inp if i == 0 else size, size) for i in range(num_layers)])
+
+    def forward(self, x, hstate):
+        h_in, new = x[:, 0], []
+        for i, cell in enumerate(self.cells):
+            h_in = cell(h_in, hstate[i])
+            new.append(h_in)
+        return h_in.unsqueeze(1), torch.stack(new)
+
+
 class RSSMBaseline(nn.Module):
     def __init__(self, history, cfg, latent="categorical", deter=256, hidden=256,
                  gru_layers=2, n_vars=64, n_classes=32, stoch=30, act="elu",
-                 kl_balance=0.8, free_nats=0.0, kl_scale=0.1, min_std=0.1):
+                 kl_balance=0.8, free_nats=0.0, kl_scale=0.1, min_std=0.1, gru_norm=False):
         super().__init__()
         self.history, self.latent = history, latent
         self.kl_balance, self.free_nats, self.kl_scale, self.min_std = \
@@ -61,7 +101,9 @@ class RSSMBaseline(nn.Module):
             raise ValueError(latent)
         self.encoder = nn.Sequential(nn.Linear(STATE_DIM, hidden), A())
         self.img_in = nn.Sequential(nn.Linear(self.z_dim + ACTION_DIM, hidden), A())
-        self.gru = nn.GRU(hidden, deter, num_layers=gru_layers, batch_first=True)
+        # gru_norm: rule X1's variant V2, DreamerV2's layer-normalised GRU cell; off for every rule-M-75/M-76 model
+        self.gru = (LNGRU(hidden, deter, gru_layers) if gru_norm
+                    else nn.GRU(hidden, deter, num_layers=gru_layers, batch_first=True))
         self.prior_net = nn.Sequential(nn.Linear(deter, hidden), A(), nn.Linear(hidden, n_stats))
         self.post_net = nn.Sequential(nn.Linear(deter + hidden, hidden), A(),
                                       nn.Linear(hidden, n_stats))
@@ -69,7 +111,7 @@ class RSSMBaseline(nn.Module):
         self.gru_layers, self.deter = gru_layers, deter
         self.spec = {"latent": latent, "deter": deter, "hidden": hidden, "gru_layers": gru_layers,
                      "z_dim": self.z_dim, "activation": act, "kl_balance": kl_balance,
-                     "free_nats": free_nats, "kl_scale": kl_scale,
+                     "free_nats": free_nats, "kl_scale": kl_scale, **({"gru_norm": True} if gru_norm else {}),
                      **({"n_vars": n_vars, "n_classes": n_classes} if latent == "categorical"
                         else {"stoch": stoch, "min_std": min_std})}
 
@@ -102,7 +144,10 @@ class RSSMBaseline(nn.Module):
                 p = torch.softmax(lp, -1)
                 return (p * (torch.log_softmax(lp, -1) - torch.log_softmax(lq, -1))).sum((-1, -2))
             a = self.kl_balance
-            k = a * kl(post.detach(), prior) + (1 - a) * kl(post, prior.detach())
+            if a is None:     # no balancing (rule X1, variant V1): the plain KL, gradients to both sides
+                k = kl(post, prior)
+            else:
+                k = a * kl(post.detach(), prior) + (1 - a) * kl(post, prior.detach())
         else:
             (m1, s1), (m2, s2) = post, prior
             k = (torch.log(s2 / s1) + (s1 ** 2 + (m1 - m2) ** 2) / (2 * s2 ** 2) - 0.5).sum(-1)

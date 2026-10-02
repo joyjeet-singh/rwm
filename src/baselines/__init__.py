@@ -36,6 +36,14 @@ def build(arch, spec, cfg):
             return RSSMBaseline(HISTORY, cfg, latent="categorical", deter=256, hidden=256,
                                 gru_layers=2, n_vars=64, n_classes=32, act="elu",
                                 kl_balance=0.8, free_nats=0.0, kl_scale=0.1)
+        if spec in ("x1v1", "x1v2"):
+            # rule X1's Part C (ledger M-80): the Table S7 RSSM with one setting changed.
+            # V1, PlaNet's KL settings: weight 1.0, 3 free nats, no balancing (BASELINE_SPECS row 36).
+            # V2, DreamerV2's layer-normalised GRU (BASELINE_SPECS row 22).
+            kw = dict(latent="categorical", deter=256, hidden=256, gru_layers=2, n_vars=64, n_classes=32,
+                      act="elu", kl_balance=0.8, free_nats=0.0, kl_scale=0.1)
+            kw.update(dict(kl_balance=None, free_nats=3.0, kl_scale=1.0) if spec == "x1v1" else dict(gru_norm=True))
+            return RSSMBaseline(HISTORY, cfg, **kw)
         w = MATCHED["rssm"]["width"]
         return RSSMBaseline(HISTORY, cfg, latent="gaussian", deter=w, hidden=w, gru_layers=1,
                             stoch=30, act="relu", kl_balance=None, free_nats=3.0,
