@@ -19,10 +19,10 @@
   "pointers": [
     {
       "class": "semantic",
-      "pointer": "Appendix E gives every pre-registered rule with its lead time and its\nverdict",
+      "pointer": "\u00a79 gives the lessons in a form\na practitioner can use without reading",
       "ok": true,
-      "detail": "target Appendix E; nouns ['pre-registered', 'rule', 'lead', 'time', 'verdict', 'gives', 'lessons', 'form', 'practitioner', 'without', 'reading', 'rest']; absent ['gives', 'lessons', 'practitioner']",
-      "context": "Appendix E gives every pre-registered rule with its lead time and its\nverdict, and \u00a79 gives the lessons in a form a practitioner can use without reading the rest"
+      "detail": "target 9; nouns ['lessons', 'form', 'practitioner', 'without', 'reading', 'rest']; absent []",
+      "context": "\u00a79 gives the lessons in a form\na practitioner can use without reading the rest"
     },
     {
       "class": "semantic",
@@ -47,16 +47,16 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.6 explains why a binomial null is inadmissible here",
+      "pointer": "Appendix J lists the runs, the capacity-matched arm excluded from\nevery rate,",
       "ok": true,
-      "detail": "target 6.6; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
-      "context": "\u00a76.6 explains why a binomial null is inadmissible here"
+      "detail": "target Appendix J; nouns ['runs', 'capacity-matched', 'excluded', 'rate', 'rate', 'fitted']; absent []",
+      "context": "Appendix J lists the runs, the capacity-matched arm excluded from\nevery rate, and the 22 the rate is fitted on"
     },
     {
       "class": "semantic",
       "pointer": "\u00a76.3 explains the aleatoric column and leaves the epistemic one open",
       "ok": true,
-      "detail": "target 6.3; nouns ['aleatoric', 'column', 'leaves', 'epistemic', 'open']; absent ['leaves', 'epistemic']",
+      "detail": "target 6.3; nouns ['aleatoric', 'column', 'leaves', 'epistemic', 'open']; absent []",
       "context": "\u00a76.3 explains the aleatoric column and leaves the epistemic one open"
     },
     {
@@ -75,13 +75,6 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a76.6 spends a page correcting for the 45 coupled state dimensions",
-      "ok": true,
-      "detail": "target 6.6; nouns ['page', 'correcting', 'coupled', 'state', 'dimensions']; absent ['page', 'correcting']",
-      "context": "\u00a76.6 spends a page correcting for the 45 coupled state dimensions"
-    },
-    {
-      "class": "semantic",
       "pointer": "Appendix B gives for all of \u00a75\u2013\u00a77's runs",
       "ok": true,
       "detail": "target Appendix B; nouns ['runs']; absent []",
@@ -93,6 +86,13 @@
       "ok": true,
       "detail": "target Appendix H; nouns ['ledger', 'confirmed', 'contributions', 'body', 'does', 'state', 'among', 'them', 'defects', 'released', 'data', 'pipeline', 'departures', 'releas']; absent ['among', 'departures']",
       "context": "Appendix H lists the ledger's other confirmed contributions that the body does not state, among\nthem defects in the released data pipeline and departures of the releas"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a76.6 explains why a binomial null is inadmissible here",
+      "ok": true,
+      "detail": "target 6.6; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
+      "context": "\u00a76.6 explains why a binomial null is inadmissible here"
     },
     {
       "class": "artifact",

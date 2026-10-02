@@ -41,27 +41,24 @@ and the title gives the answer: it gets the order of the model's errors right an
 wrong.
 
 We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
-check it against the released implementation, and test the central training claim. The claim
-holds. The rebuild then made a second question cheap to ask: *is the predicted σ calibrated?*
-Neither of the two the checkpoint emits is. On data it trained on, the per-member σ is too small
-by 1,827× at h = 1 to 20,669× at h = 368, and the
-ensemble disagreement the method actually uses by 8.3× to 34.4×
-over the same horizons; the first failure is structural rather than incidental. The disagreement
-still ranks realised error, which is the use the method makes of it (§6.7); what is wrong is its
-size.
+check it against the released implementation, and test the central training claim, which holds.
+The rebuild made a second question cheap to ask: *is the predicted σ calibrated?* Neither of the
+two the checkpoint emits is. On data it trained on, the per-member σ is too small by
+1,827× at h = 1 to 20,669× at h = 368, by construction
+(§6.3), and the ensemble disagreement the method uses by 8.3× to
+34.4×; the disagreement still ranks realised error, the use the method makes of it
+(§6.7).
 
-This is a reproduction in the stronger sense: the contribution is not that the numbers came out
-the same, but what re-measuring the method reveals about where it is robust and where it is not.
-Three things distinguish it from a re-run of the authors' code. **We rebuilt rather than
-imported**, and matched the rebuild to the reference before any training (Appendix A), so a
-discrepancy found later belongs to the method, not to our wiring. **Decision rules were committed
-to git before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot
-be settled", and we report it. **We keep our withdrawn findings in the record.** The ledger keeps
+Three things distinguish this from a re-run of the authors' code. **We rebuilt rather than
+imported**, and matched the rebuild to the reference before any training (Appendix A), so a later
+discrepancy belongs to the method, not to our wiring. **Decision rules were committed to git
+before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot be
+settled", and we report it. **We keep our withdrawn findings in the record.** The ledger keeps
 20 superseded entries, each beside the evidence that withdrew it:
 seven claims withdrawn on evidence, six framings withdrawn,
 and the rest early hypotheses closed as housekeeping (§8 and the supplementary
-`docs/BUILD_CHECKS.md`). Appendix E gives every pre-registered rule with its lead time and its
-verdict, and §9 gives the lessons in a form a practitioner can use without reading the rest.
+`docs/BUILD_CHECKS.md`; every pre-registered rule is in Appendix E). §9 gives the lessons in a form
+a practitioner can use without reading the rest.
 
 ![Pre-registration lead time for each decision rule, from git commit timestamps. Positive is a rule committed before the data that tested it existed; negative is a rule written afterwards. The one negative bar is the Task 3 duplication rule, retracted as a pre-registration in this paper.](figures/paper_fig4_prereg_timeline.png)
 
@@ -70,12 +67,12 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
 - **The uncertainty gets the order right and the size wrong, in the first calibration
   measurement we are aware of for this released checkpoint** (Lu et al. (2022) measure this family
   of penalties on models they train themselves; §2). Ensemble disagreement ranks realised error,
-  and still correlates +0.419 with it with the rollout and forecast depth held fixed, yet on
-  data the checkpoint trained on it is 8.3× smaller than that error at h = 1 and
+  correlating +0.419 with it with rollout and forecast depth held fixed, yet on data the
+  checkpoint trained on it is 8.3× smaller than that error at h = 1 and
   33.4× at h = 100 (§6.2, §6.7). It beats 1 of the
   2 free baselines added here; the model's own predicted step size ranks error at
-  +0.4697 against its +0.6053, a margin that 25 independent trajectories would
-  resolve if it is real, against the 20 here (§11).
+  +0.4697 against its +0.6053, a margin 25 independent trajectories would
+  resolve, against the 20 here (§11).
 - **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before
   the runs, run on one seed per arm, found autoregressive training ahead by 4.43× at
   h = 368; over 3 seeds the factor is 4.61×, and 2.58× at
@@ -94,8 +91,8 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   twice as long (post hoc);
   the original chose the centre as a trade-off with training time, which we do not test (§5.2).
 - **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
-  σ = 0, so the per-member σ the method discards collapses by construction: derived rather than
-  observed, and demonstrated against known noise (§6.3).
+  σ = 0, so the per-member σ the method discards collapses by construction: derived, and
+  demonstrated against known noise (§6.3).
 - **Trunk-sharing, tested.** The five members share one trunk, one recurrent state and
   89.15% of each member's parameters, so their spread can express only uncertainty the
   trunk already carries (§6.4). Under a rule committed before the runs, 5
@@ -104,10 +101,9 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   still 5.2× overconfident at h = 100 (§6.10).
 - **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one
   episode and scored on the other, brings every released-checkpoint coverage estimate near nominal
-  where a global multiplier does not, though no single cell is resolvable (§6.8). Those cells are
-  unseen by the multiplier only, because the checkpoint trained on both episodes; on Arm A, whose
-  model never saw them, its own multipliers manage 17 of 36
-  disagreement cells.
+  where a global one does not, though no single cell is resolvable and the checkpoint trained on
+  both episodes (§6.8); on Arm A, which never saw them, its own multipliers manage
+  17 of 36 disagreement cells.
 - **The released evaluation is misaligned by one step; the cost is concentrated at short horizons, and at
   h = 368 it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
   training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
@@ -149,52 +145,15 @@ reimplementation against the reference at the gradient level before any training
 §6.3 derives the σ = 0 optimum for the objective the released code *substitutes*, squared error on
 a reparameterised sample, rather than for the likelihood the parameterisation was built around.
 
-**Where the parameterisation comes from.** The bounded log-σ head that §6.3 shows has its optimum
-at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the
-probabilistic ensembles of Chua, Calandra, McAllister and Levine (PETS, NeurIPS 2018). PETS's
-Appendix A.1 gives
-
-```
-logvar = max_logvar - softplus(max_logvar - logvar)
-logvar = min_logvar + softplus(logvar - min_logvar)
-```
-
-and `architectures/mlp.py:92-93` is those two lines in log-standard-deviation rather than
-log-variance, with `system_dynamics.py:302` supplying PETS's regulariser on the bounds.
-
-What is **not** inherited is the objective, and one line of the bounds. PETS uses "the negative
-log prediction probability as our loss function", and that likelihood's log-σ term opposes
-σ → 0; `system_dynamics.py:283` substitutes squared error on a reparameterised sample, which has no
-such term. And `architectures/mlp.py:91` builds the upper bound as the floor plus a learned positive
-gap, where PETS keeps the two bounds independent. §6.3 needs both changes: the substitution removes
-the log-σ term, and the tie is why the bound regulariser does not take its place, since the floor
-cancels out of it. In a descendant that kept PETS's independent bounds, the same regulariser pushes
-the floor up while the objective pulls σ down onto it, a case §6.3 does not derive and we have not
-tested (ledger `M-72`). So **a descendant of this lineage that replaced the likelihood with a
-sampled squared error, and left nothing pushing its variance floor back up, would inherit the same
-optimum.** That is a hypothesis about mechanism, untested in any other descendant (§11).
-
-**How often the substitution is made, which narrows the hypothesis.** Of 10 public
-repositories examined on 20 September 2026 under the protocol in `results/q1_search_protocol.md`,
-10 carry the construction and 1 of those trains it against a sampled
-squared error, and that one only in an optional value-aware mode; the other 9 keep
-PETS's likelihood (`results/q1_pets_descendants.json`). The protocol counts a repository only if
-it has the bounded head, learnable bounds, and a loss that squares the error of a *sampled*
-prediction; squaring the error of the predicted *mean*, an option several of these repositories
-offer, leaves σ untrained rather than driving it to zero, and does not count. We read "learnable"
-as "trainable by the code, by default or not", a reading settled after the survey, because in
-`mbrl-lib` and in `va_mbpo`, the one repository that inherits, the bounds train only when a caller
-switches that on (ledger `M-73`). The survey did not check how each repository treats its variance
-floor, so 1 of 10 is an upper bound on how often both conditions
-hold. A further 3 repositories lack the construction, among them mainline `rsl_rl`:
-the bounded head exists in the fork this paper pins, not in the library it forks, and we do not
-count the fork, since counting what §6.3 measured as evidence that the result travels would be
-circular. The protocol capped the survey at 25 repositories; it stopped at
-10, and its notes give no reason. We wrote the protocol before the search, but
-neither it nor its hash reached git before the results did, so that order rests on our own record;
-it is a search protocol, not one of Appendix E's decision rules. Search engines rank and truncate,
-so this is a sample of convenience, but on it the substitution is rare, and a reader who takes the
-hypothesis to reach widely infers more than the evidence supports.
+**Where the parameterisation comes from.** The bounded log-σ head whose optimum §6.3 shows is
+σ = 0 is inherited, line for line, from the probabilistic ensembles of Chua, Calandra, McAllister
+and Levine (PETS, NeurIPS 2018), but the objective is not: the released code replaces PETS's
+likelihood with squared error on a sampled prediction and ties the upper bound to the floor, so
+**a descendant of this lineage that made the same substitution, and left nothing pushing its
+variance floor back up, would inherit the same optimum**, a hypothesis about mechanism untested in
+any other descendant (§11). Of 10 public repositories examined, 10 carry
+the construction and 1 of those trains it against a sampled squared error, only in
+an optional mode, so on this sample of convenience the substitution is rare (Appendix I).
 
 **The method's family.** MOPO (Yu, Thomas, Yu, Ermon, Zou, Levine, Finn and Ma, NeurIPS 2020)
 penalises the reward by an ensemble uncertainty estimate to solve a pessimistic MDP; MOReL
@@ -295,12 +254,7 @@ from training, and *in-sample*, the eight used for it. The released evaluation d
 trajectories from training data, and the original does not distinguish the two. **The released
 checkpoint trained on all ten episodes, so it has no held-out arena in this dataset**, and every
 figure for it is in-sample; later sections refer back to this as the in-sample caveat of §3. More
-data cannot be generated from either repository this reproduction pins. Neither contains code that
-writes a dataset: the only code that touches the file reads it (`train.py:44` in the lite release),
-and the lite release's environment rolls the learned model forward rather than physics. Its readme
-sends anyone wanting simulator-based collection to the authors' Isaac Lab extension
-(`readme.md:13`), which we do not pin and which would need Isaac Lab and an RTX-class GPU
-(Appendix C).
+data cannot be generated from either repository this reproduction pins (Appendix C).
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
@@ -471,7 +425,7 @@ horizon is h = 100, so the comparison is reported there too, and the two differ 
 **Result.** Every condition holds. We give the evidence in order of how little it depends
 on the small held-out sample.
 
-*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **10 of 10** episodes, an exact two-sided binomial test with p = **0.0020**. At h = 100 it is **10 of 10**, p = **0.0020**, and at h = 1 it is 3 of 10, the same story the interval tells. It is one test on ten paired episodes, with no bootstrap and no multiplicity correction, and unlike §6's per-dimension counts, episodes are separable units, so a binomial null is admissible. **Its scope is narrower than the arena labels suggest**: 8 of the 10 episodes are training data for *both* arms. The test is a valid **paired** comparison, since both arms saw identical data and an episode-level difference is due to the training rule rather than to memorisation, but it is not ten out-of-sample episodes and does not measure generalisation. The out-of-sample effect size below carries that burden, on 4 independent trajectories.
+*The sign test, which does not depend on n.* At h = 368 the per-episode gap favours autoregressive training on **10 of 10** episodes, an exact two-sided binomial test with p = **0.0020**. At h = 100 it is **10 of 10**, p = **0.0020**, and at h = 1 it is 3 of 10, the same story the interval tells. It needs no bootstrap or multiplicity correction, and episodes, unlike §6's state dimensions, are separable units, so a binomial null is admissible. **Its scope is narrower than the arena labels suggest**: 8 of the 10 episodes are training data for *both* arms. The test is a valid **paired** comparison, since both arms saw identical data and an episode-level difference is due to the training rule rather than to memorisation, but it is not ten out-of-sample episodes and does not measure generalisation. The out-of-sample effect size below carries that burden, on 4 independent trajectories.
 
 *The in-sample arena, where the sample is larger.* The same comparison on the eight training
 episodes has 16 independent 400-step trajectories against the held-out arena's
@@ -512,12 +466,12 @@ none carries a pre-registration's weight, the same treatment §6.7 gives the exp
 counter-baseline, and nothing in the table discharges or re-opens the rule.
 
 **At h = 1 the table understates the evidence, and the correction runs against us.** The row
-rests on 4 independent 400-step trajectories. A 400-step unit is required only by the
-longest horizon. Under a rule committed before the index was built (rule M-64, Appendix E), we
-rebuilt it at 33 rows, 32 of history and one forecast step, non-overlapping within an
-episode, which yields 60 units on the same two episodes. The gap is -0.0194
+rests on 4 independent 400-step trajectories, a unit only the longest horizon needs.
+Rebuilt under a rule committed before the index was built (rule M-64, Appendix E) at
+33 rows, 32 of history and one forecast step, non-overlapping within an episode, the
+same two episodes yield 60 units. The gap is -0.0194
 [-0.0310, -0.0093]: it **excludes zero, in favour of teacher forcing** (0.85×). Both
-readings are true at their own unit and both are reported: the 400-step unit is the one the rule above was discharged on, and the short unit resolves the sign. At one step **autoregressive
+readings are reported: the rule above was discharged on the 400-step unit, and the short unit resolves the sign. At one step **autoregressive
 training is worse**, the direction the sign test and the hold-last floor already pointed.
 
 *Against a baseline, because neither number means anything without one.* The hold-last
@@ -544,10 +498,7 @@ seeds pooled, at h = 368) are **+2.8705, +0.8949, +0.7445, +0.6562**. All
 4 of 4 are positive, which is the sign test,
 but one trajectory carries +2.8705 against a smallest of
 +0.6562, which no interval on four units shows. At h = 100 the four
-are +1.0925, +0.8170, +0.2800, +0.1549. §6.10's and §11's paired contrasts at the same n store their four
-per-trajectory values in `results/r2_independent_ensemble.json` and
-`results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = 4,
-give intervals only, coarse for the same reason.
+are +1.0925, +0.8170, +0.2800, +0.1549.
 
 **What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
 advantage is small, and it resolves only with the longer training and all 3 seeds. The table
@@ -560,51 +511,13 @@ trajectory lengths crossed with both checkpoints). An earlier rule of ours, anch
 evaluated at those same checkpoints (rule M-16, Appendix E), returned "cannot be settled".
 **The advantage is small at the training horizon and large beyond it.**
 
-At long horizons the pattern is consistent across the design. Under the cluster bootstrap, the
-out-of-sample gap excludes zero in **4 of 4** long-horizon cells,
-both trajectory lengths crossed with the 500 and 2,500-iteration checkpoints. These figures are
-relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
-
-**Multiplicity.** Those 4 cells sit in a family of 8 out-of-sample
-comparisons. All 4 of 4 still exclude zero at a Bonferroni level of
-0.05/8, and Holm–Bonferroni rejects **4 of 4**. The sign
-test above is unaffected either way.
-
-**How good the reimplementation is as a model, next to the artifact it reimplements.**
-The tables above compare two training rules with each other and §6.2's compares calibration, so
-neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
-aggregations, for these models and for §5.3's architecture baselines, on one arena:
-
-| model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = 100 | rel-L1 h = 100 | nRMSE h = 368 | rel-L1 h = 368 |
-|---|---|---|---|---|---|---|---|---|
-| released checkpoint | 0.0544 | 0.0563 | 0.0697 | 0.0808 | 0.5028 | 0.3304 | 0.9051 | 0.6041 |
-| Arm A — autoregressive, faithful MSE | 0.1262 | 0.1232 | 0.3029 | 0.3289 | 0.4913 | 0.4798 | 0.5425 | 0.5856 |
-| Arm A — autoregressive, `gaussian_nll` | 0.1204 | 0.1195 | 0.2867 | 0.3154 | 0.4603 | 0.4413 | 0.5245 | 0.5608 |
-| Arm B — teacher-forced | 0.0879 | 0.0929 | 0.3064 | 0.3392 | 1.0363 | 1.0849 | 3.7927 | 4.5684 |
-| MLP, teacher-forced (§5.3) † | 0.1393 | 0.1539 | 0.3624 | 0.4086 | 1.1399 | 1.2057 | 112.5344 | 145.1650 |
-| MLP, autoregressive (§5.3) | 0.1364 | 0.1470 | 0.3016 | 0.3492 | 0.5452 | 0.5400 | 1.4383 | 1.4628 |
-| RSSM, teacher-forced (§5.3) | 0.0707 | 0.0761 | 0.3393 | 0.3686 | 2.0376 | 2.2128 | 5.3890 | 6.3718 |
-| RSSM, autoregressive (§5.3) † | 0.1223 | 0.1354 | 0.6004 | 0.6211 | 3.1128 | 3.2660 | 9.2508 | 10.6405 |
-| transformer, teacher-forced (§5.3) † | 0.1202 | 0.1239 | 0.3773 | 0.3969 | 2.0195 | 2.0607 | 13.4730 | 15.1548 |
-| transformer, autoregressive (§5.3) | 0.1329 | 0.1384 | 0.2562 | 0.3025 | 0.5821 | 0.5821 | 2.0110 | 1.8771 |
-| hold-last floor | 0.0989 | 0.0796 | 0.4117 | 0.3298 | 0.9537 | 0.7558 | 1.0897 | 0.9930 |
-
-**Arena, stated once for the whole table: out-of-sample held-out pair, episodes 1 and 8,
-4 non-overlapping 400-step trajectories, n_independent = 4.**
-Arm rows are the mean over 3 seeds at 2,500 training iterations (the `weights_2500.pt` checkpoint), with
-per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1), and both metrics
-are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
-calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
-their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
-exactly; their nRMSE is pooled as §3.1 defines it, recomputed afterwards with the same evaluator
-(post hoc, `results/pooled_nrmse_rescore.json`), and † marks a diverged row (§5.3). **This table is at 2,500 iterations and §5's by-horizon table at 10,000**, which is why Arm A's relative-L1 at h = 368 reads 0.5856 here and 0.3582 there: the same arm, trained longer.
-
-Both metrics put the released checkpoint first at h = 1 and h = 8, they name
-different leaders at h = 100, and at h = 368 both put an Arm A variant
-ahead of it: the reimplementation is behind the artifact it reimplements at short horizons and
-ahead of it at the longest horizon we measure. That reading flatters the released checkpoint, because the split is ours: the arena is
-out-of-sample for our arms and in-sample for it, which trained on all
-ten episodes (the in-sample caveat of §3).
+At long horizons the out-of-sample gap excludes zero in **4 of 4**
+cells, both trajectory lengths crossed with the 500 and 2,500-iteration checkpoints, and Holm–Bonferroni
+over the family of 8 out-of-sample comparisons still rejects **4 of
+4** (Appendix L). Beside the artifact it reimplements, at 2,500 iterations, both
+metrics put the released checkpoint first at h = 1 and h = 8 and an Arm A variant ahead of
+it at h = 368, on an arena that is out-of-sample for our arms and in-sample for the
+checkpoint (Appendix L).
 
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
 
@@ -880,9 +793,10 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 **The larger sample changes one thing materially.** At n_independent = 4 the epistemic ordering looked like chance at short horizon, 23 of 45 dimensions at h=1. At n_independent = 20 it is 44 of 45 at h=1, with mean r = +0.662, the *strongest* mean correlation of any horizon, and the in-sample permutation test agrees (§6.6). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model.
 
-**Two pre-registered checks on how these numbers are read.** The first (rule M-62, Appendix E) asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **NO MOVE**: in the one arena with power at that level, all ten episodes (n = 20 falling to 10), the pooled correlation's interval widens by 27% and the double-demeaned one's width changes by a factor of 0.98, and neither crosses zero. The other 4 cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance, and they are reported as uninformative rather than as intervals.
-
-**The second (rule M-63, Appendix E) asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **UNIFORM**: the interquartile range across dimensions is 10.0 points against a 15-point threshold committed in advance, and the five worst dimensions carry well under half of the shortfall. **No channel is exempt**, which is what §6.3's mechanism predicts: an objective whose optimum is σ = 0 has no reason to spare any dimension. The reading is coarse by construction: at h = 1 on 20 trajectories a per-dimension coverage moves in 5-point steps, a limit the rule fixed before the run.
+**Two rules committed in advance check how these numbers are read** (Appendix M). Resampling whole
+episodes rather than 400-step trajectories changes no verdict (rule M-62: **NO MOVE**), and the
+one-step failure is spread across the 45 state dimensions rather than carried by a few
+(rule M-63: **UNIFORM**), which is what §6.3's mechanism predicts.
 
 **The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (§6.7, 3 seeds, out-of-sample, n_independent = 4 400-step trajectories, 2,500 training iterations) give, averaged over seeds:
 
@@ -897,14 +811,16 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 Our arms are **better calibrated than the released checkpoint and fail the same way**: 10.5× overconfident at h = 100 against its 33.4×, with 8.19% coverage where a calibrated Gaussian gives 68.27%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being closer to calibrated is not being calibrated.
 
-The last column of the released checkpoint's table gives permutation P-values over whole trajectories, not binomial ones, on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here. h = 100 is tested too, because it carries the abstract's headline figure. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells: the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
+The last column of the released checkpoint's table gives permutation P-values over whole
+trajectories; none survives Holm–Bonferroni across the arena's 30 cells, so it is a
+consistency check on direction (Appendix M).
 
 The scalar penalty as actually applied, `means.std(0).sum(-1)` at `envs/base.py:166`, correlates **+0.605** with total absolute error over the rollout, 95% CI [+0.545, +0.694] from a bootstrap over whole trajectories, n_independent = 20 (7,360 pooled trajectory-step points). The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
 
 ### 6.3 Why the aleatoric head collapses: the optimum is σ = 0
 
-This subsection explains the aleatoric column and only that column; ensemble disagreement is not
-shaped by the mechanism below, and why *it* is miscalibrated is not established here. It also
+This subsection explains the aleatoric column and only that column, and leaves the epistemic one
+open: ensemble disagreement is not shaped by the mechanism below, and why *it* is miscalibrated is not established here. It also
 supplies the alternative explanation promised in §6.1. The follow-up reads the low aleatoric value
 as reflecting "small stochasticity in the environment". The observation is correct and the reading
 is not: σ is low because σ = 0 is the optimum of the loss that trains it, and it would be low on
@@ -923,115 +839,27 @@ $$\overline{\log\sigma_{\max}} - \overline{\log\sigma_{\min}} \;=\; \overline{\e
 and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
-**The derivation above covers two terms, and the objective has 7.** Its completeness
-rests on the other 5 being inert with respect to σ, so each term is computed alone on
-one real batch (64 windows from the training episodes, at freshly initialised weights of
-the released architecture) and back-propagated alone, and the gradient reaching the log-σ tower,
-`state_log_delta_logstd` and `state_min_logstd` is recorded. A term that cannot move σ produces
-exactly zero on all three.
+**The derivation above covers two terms, and the objective has 7.** Each term,
+back-propagated alone on one real batch, confirms it: 4 are live under the released
+configuration, exactly 2 reach σ (`state` and `bound`), and the other 5 give a
+gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
 
-| loss term | live? | weight | where the reference computes it | ∂/∂ log-σ tower | ∂/∂ `log_delta_logstd` | ∂/∂ `min_logstd` |
-|---|---|---|---|---|---|---|
-| `state` | live | 1.00 | `system_dynamics.py:270-289` | 0.000325 | 0.0509 | 0.0703 |
-| `sequence` | **dead** | 1.00 | `system_dynamics.py:274-277` | 0 | 0 | 0 |
-| `bound` | live | 1.00 | `system_dynamics.py:301-302` | 0 | 0.2 | 0 |
-| `kl` | **dead** | 0.10 | `system_dynamics.py:223` | 0 | 0 | 0 |
-| `extension` | **dead** | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
-| `contact` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
-| `termination` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
+**The derivation says the collapse happens on any dataset, and that is testable.** On the
+released data, "small stochasticity in the environment" and our reading are observationally
+identical, so under a rule committed before the runs (rule M-50, Appendix E) we trained the released
+head, unmodified, on synthetic data whose known noise varies 25× across the input range.
+**Under the implemented objective σ sits 21.7× below the true noise and does not track
+it at all**, while under the authors' unused likelihood branch, same data and same head, it recovers
+the true level to a median ratio of 0.9779, seed-variably. The rule returns
+**OBJECTIVE-DRIVEN**: the experiment establishes the contrast, not the size of the recovery
+(Appendix J).
 
-4 of the 7 configured terms are live at all under the released
-configuration: `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
-`"single"` on both paths, and `kl` and `extension` are zero because their dimensions are. Of the
-7, exactly 2 reach σ: `state` and `bound`. The remaining 5
-produce a gradient of exactly zero, not merely a term the code suggests is irrelevant
-(`results/e4_sigma_gradients.json`).
-
-**The derivation says the collapse happens on any dataset, and that is testable.** It matters
-because it is what answers the follow-up's own explanation: on the released CSV, "small
-stochasticity in the environment" and our reading are observationally identical, since the data may
-simply be nearly deterministic. So under a rule committed before the runs (rule M-50, Appendix E)
-we built data where it is not.
-
-Synthetic data whose true noise level is **known** and varies by a factor of 25 across
-the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
-model — `MLPStateHead` unmodified, including the double-softplus clamp, the learnable
-`state_min_logstd` and `state_log_delta_logstd`, and the bound loss at its configured weight —
-trained under each objective in turn on 4,000 points for 12,000 iterations at
-3 seeds. Nothing else differs between the arms.
-
-*Two ways this is not the released setting.* The head is built here over a **one-dimensional**
-state with no recurrent trunk in front of it, where the released one predicts 45
-dimensions from a GRU. The trunk's absence is deliberate: the question is about the head's
-objective, and a GRU would add a confound. The dimensionality matters because the state loss sums
-over state dimensions, so at one dimension it is roughly 45× smaller relative to the
-bound term than in the released path. That makes this setting *more* favourable to σ surviving, and
-the collapse happens anyway.
-
-| objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
-|---|---|---|---|
-| `mse` — the implemented branch | **0.0460** | 1.002–1.003× | +0.000493 |
-| `gaussian_nll` — the authors' unused branch | 0.9779 | 1.02–3.67× | +0.1330 |
-
-*Ratios and slopes are means over 3 seeds; spreads are the range across them, because
-the mean of a spread hides which seeds recovered.*
-
-**Under the implemented objective σ sits 21.7× below the true noise and does not
-track it at all**: a spread of 1.003× where the truth spans 25×, and a
-slope below the 0.00309 the design can detect. Under the authors' own branch, same data
-and same head, σ recovers the true level to a median ratio of 0.9779, and every one of
-the 3 seeds the rule was discharged over clears the slope threshold. **Twenty seeds
-show that clearance is not general**: 11 of 20 clear it, so
-the all-seeds criterion would not have held at that sample. The rule's verdict stands as returned
-over its own 3 and is not re-opened by more seeds (§8); what twenty establish is that
-the hedge below was necessary. **The recovering arm is seed-variable, and the rule said so before
-the runs**: its slopes span 0.0078–0.3537, a factor of
-45, and two of 3 seeds recover a σ spread of only
-1.02× against the truth's 25×. So what this experiment establishes is
-the **contrast**, that one objective tracks the noise at all and the other does not, and not the
-magnitude of the recovery, which this training budget does not pin down. **OBJECTIVE-DRIVEN**, which is the verdict the rule names for that pattern.
-
-*The statistic is the slope, not the correlation, because a correlation is scale-free: a σ̂ that is
-essentially constant still returns a large one off its own numerical noise. Under a permutation
-null, the same data with the input-to-noise pairing destroyed, a head whose σ spanned
-1.0004× returned correlations as large as ±0.24, while its slope was
-2e-05. The detection threshold is set at the slope corresponding to a
-1.01× spread rather than at that noise floor, and the measured false-positive rate at
-zero signal is 0%.*
-
-**What this does that the derivation alone could not.** It removes the competing explanation
-rather than arguing against it: the stochasticity here is large, known and input-dependent, and the
-collapse happens anyway. The design's limit, stated in the rule, holds: the dilution ladder detects
-the signal at full strength and at no dilution below it, so this establishes that σ does not track
-the noise **at all**, not the magnitude of how badly.
-
-We predicted the collapse from this algebra before training, then observed it. Three run counts
-appear below and they are not the same set. This project trained 33 runs for §5–§7, besides the 42 of §5.2 and §5.3
-(Appendix B), of
-which 28 are at the released `rnn_hidden_size` of 256 and form the collapse
-family; the remaining 5 are the capacity-matched arm of rule M-49 (Appendix E) at
-width 124, a different architecture, excluded from every rate quoted here (Appendix B).
-Across all 28 runs of that family the collapse is linear in iteration count and its rate is
-nearly identical (Figure 4a). Rates are fitted on 22 of those 28: the
-6 10,000-iteration runs continue seeds already counted at 2,500 and would
-double-weight them. Figure 4(a) shows all 28 runs of the collapse family and Figure 4(b)
-only the 22 the rate is fitted on, so the scatter and the quoted statistic describe
-the same set. The 33 runs, with the width column separating the collapse family from the
-capacity-matched arm:
+We predicted the collapse from this algebra before training, then observed it: across all
+28 runs at the released width the collapse is linear in iteration count and its rate is
+nearly identical (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
+every rate, and the 22 the rate is fitted on.
 
 ![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 28 runs of the collapse family, which is every run of §5–§7 at the released width. The runs are drawn individually but are visually coincident within each objective, so the 28 read as two lines, one falling and one rising -- which is the point: the trajectory does not vary visibly from run to run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
-
-| arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
-|---|---|---|---|---|---|---|---|
-| Arm A | 2,500 | 1 | gaussian_nll | clean | 256 | 5 | 0, 1, 2, 3, 4 |
-| Arm A | 2,500 | 1 | mse | clean | 124 | 5 | 0, 1, 2, 3, 4 |
-| Arm A | 2,500 | 1 | mse | clean | 256 | 5 | 0, 1, 2, 3, 4 |
-| Arm A | 2,500 | 1 | mse | contaminated | 256 | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 1 | mse | duplicated | 256 | 3 | 0, 1, 2 |
-| Arm A | 2,500 | 5 | mse | clean | 256 | 3 | 0, 1, 2 |
-| Arm A | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
-| Arm B | 2,500 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
-| Arm B | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
 
 **Two different things are being explained here, and §6.6 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all 17 sampled-MSE runs at a rate of
@@ -1112,9 +940,10 @@ Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms a
 
 Arm B's σ is 15.6× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = 0.257). It is still 315× overconfident.
 
-**The P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to these counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
-
-We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which keeps both marginal distributions and the entire cross-dimension dependence structure and destroys only the association under test. The correction is large, and largest exactly where we leaned hardest. The worst-affected cell is teacher-forced armB at h=368, in the in-sample arena. At h = 368 it moves from 5.68e-14 to 0.5565, a factor of about 10^13, because under a null that keeps the dependence a random re-pairing already yields 43.8 of 45 dimensions positive on average, so observing 45 of 45 is close to unremarkable. A fair coin centres the count at 22.5 of 45; the dependence-preserving null centres it between 5.1 and 43.8 depending on model, horizon and arena.
+**The P column is a permutation P**, which pairs each trajectory's σ with a different trajectory's
+realised error and so keeps the coupling between dimensions and the growth of error with depth that
+every trajectory shares. The binomial P-values an earlier draft attached to these counts are
+withdrawn (`S-15`), and the correction is large (Appendix K).
 
 So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not.
 The teacher-forced arm collapses in magnitude exactly like the autoregressive ones — same
@@ -1127,13 +956,11 @@ variation to key on.
 
 **The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **45 of 45** dimensions, matching the best aleatoric head here on the sign count, while being 39.7× overconfident at h = 368. **Figures in this paragraph are the held-out arena (n_independent = 4) unless labelled otherwise**, so the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes 34.4× for the same ratio at h = 368 and n_independent = 20, and the abstract and §12 use 33.4× at h = 100 on those 20 trajectories. Nor does it beat Arm B's head on strength: its mean correlation at h=368 is +0.151 against 0.257. The two rank comparably, and neither is close to an interval. Under the permutation null that count gives P = 0.0435 out of sample and 0.0775 in sample, against 5.68e-14 from the independent-trials test. It still fails the horizon test the same way: σ grows 1.59× from h=1 to h=368 while error grows 13.33×.
 
-**The larger arenas agree with each other against the smallest.** At n_independent = 4 400-step trajectories out of sample, the epistemic ordering looks strongest at long horizon (0.0417 at h=128, 0.0435 at h=368) and unremarkable at short (0.4348 at h=1). Both larger arenas invert that. In sample (n_independent = 16): 0.0052 at h=1, 0.0070 at h=8, against 0.3794 at h=128. Over all ten episodes (n_independent = 20): 0.0056, 0.0069 and 0.3762, with h = 100 at 0.2769, between h=32's 0.0344 and h=128's 0.3762. Two larger arenas at four and five times the sample say the effect is strongest at *short*
-horizon, though they are not independent: all 16 in-sample trajectories are among
-the 20.
-
-The null means explain why, and the explanation is the one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to 41.6 of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near 15.4 and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at 4 trajectories its smallest attainable P-value is 0.04167, so it cannot tell a strong effect from a marginal one at any horizon. **That blindness belongs to the 400-step unit, not to the arena**: a 33-row unit gives 60 independent units on the same two episodes, and 14 at h = 100 (rule M-64, Appendix E). We did not recompute this permutation family at the shorter unit, so what the short units change is the scope of the design claim, not any verdict: the arena is underpowered at h = 368, which needs the full 400 rows, and is no longer demonstrably so at h = 128 and below. Running it there is one pass over stored rollouts, and we did not do it. The small arena's numbers are reported because it is the only arena out-of-sample for our own arms, not because it is the better measurement.
-
-**Nothing here survives multiplicity correction, in any of the three arenas.** Holm–Bonferroni over each arena's 30 model × horizon cells at α = 0.05 rejects 0 out of sample, 0 in sample and 0 over all ten episodes. Out of sample that is a property of the design: with 4 independent trajectories the smallest attainable P-value is 0.04167, which already exceeds the smallest Holm threshold 0.001667, so no effect of any size could have been rejected there. In sample the miss is real: the smallest P in the family is teacher-forced armB h=128 at 0.0027 against a threshold of 0.001667.
+**Across arenas, and after correction for multiplicity.** The two larger arenas put the epistemic
+ordering's strength at *short* horizon. At long horizon the forecast-depth trend every trajectory
+shares lifts the null until a full count is close to chance, which is what motivates §6.7's index
+control, and the out-of-sample arena, at 4 trajectories, cannot reach significance
+at any horizon. Nothing here survives Holm–Bonferroni in any of the three arenas (Appendix K).
 
 So this section's claim is: **the magnitude failure is established and large; the ordering is directionally consistent across every model and horizon we measured, and is not established at conventional significance once the dependence between dimensions is respected.**
 
@@ -1186,7 +1013,7 @@ much depth explains.
 | everything within a trajectory — the 20 trajectory means alone | +0.878 | [+0.817, +0.956] | do harder rollouts disagree more? |
 | **both, additively (r_dd)** | **+0.419** | **[+0.318, +0.576]** | **at a given depth, in a given rollout, does disagreement know?** |
 
-[^stepcount]: Adjacent forecast steps on the same 20 trajectories are heavily dependent — structurally the same problem §6.6 spends a page correcting for the 45 coupled state dimensions. The count is descriptive; the interval [+0.711, +0.852] is the statistic, and no P-value attaches to 368/368.
+[^stepcount]: Adjacent forecast steps on the same 20 trajectories are heavily dependent — structurally the same problem that §6.6's permutation null corrects for across the 45 coupled state dimensions (Appendix K). The count is descriptive; the interval [+0.711, +0.852] is the statistic, and no P-value attaches to 368/368.
 
 The weakest figure across the 5 depth controls is +0.582, so disagreement
 is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong. But
@@ -2010,6 +1837,12 @@ miscalibration we document costs anything downstream, where §11's policy-free p
 whether the per-horizon correction reorders the penalty component and measures no cost — and it
 needs no robot.
 
+*Why more data cannot be generated.* No repository this reproduction pins can generate data. Neither contains code that
+writes a dataset: the only code that touches the file reads it (`train.py:44` in the lite release),
+and the lite release's environment rolls the learned model forward rather than physics. Its readme
+sends anyone wanting simulator-based collection to the authors' Isaac Lab extension
+(`readme.md:13`), which we do not pin and which would need Isaac Lab and an RTX-class GPU.
+
 ---
 
 ## Appendix D — every claim of the originals, and what we did with it
@@ -2175,5 +2008,249 @@ released checkpoint.
 | The A/B relative-L1 gap at h = 368 (teacher forcing's error minus autoregressive training's, over 2 independent trajectories per episode) is positive on all ten episodes, from +0.73 up; episode 1, one of the held-out pair, gives +6.97, 2.5× the next largest, so the pair's +3.98 is 3.0× the other eight episodes' +1.33 | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
 | Per state dimension, over the whole 368-step forecast, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = 368 (R-45). One seed (seed 1, §11) |
 | Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair +3.33 to +1.20, in-sample +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, §11) |
+
+---
+
+## Appendix I — the PETS lineage of the bounded σ head, and how often its descendants substitute the objective
+
+**Where the parameterisation comes from.** The bounded log-σ head that §6.3 shows has its optimum
+at σ = 0 is largely not this codebase's invention: its clamp is inherited, line for line, from the
+probabilistic ensembles of Chua, Calandra, McAllister and Levine (PETS, NeurIPS 2018). PETS's
+Appendix A.1 gives
+
+```
+logvar = max_logvar - softplus(max_logvar - logvar)
+logvar = min_logvar + softplus(logvar - min_logvar)
+```
+
+and `architectures/mlp.py:92-93` is those two lines in log-standard-deviation rather than
+log-variance, with `system_dynamics.py:302` supplying PETS's regulariser on the bounds.
+
+What is **not** inherited is the objective, and one line of the bounds. PETS uses "the negative
+log prediction probability as our loss function", and that likelihood's log-σ term opposes
+σ → 0; `system_dynamics.py:283` substitutes squared error on a reparameterised sample, which has no
+such term. And `architectures/mlp.py:91` builds the upper bound as the floor plus a learned positive
+gap, where PETS keeps the two bounds independent. §6.3 needs both changes: the substitution removes
+the log-σ term, and the tie is why the bound regulariser does not take its place, since the floor
+cancels out of it. In a descendant that kept PETS's independent bounds, the same regulariser pushes
+the floor up while the objective pulls σ down onto it, a case §6.3 does not derive and we have not
+tested (ledger `M-72`). So **a descendant of this lineage that replaced the likelihood with a
+sampled squared error, and left nothing pushing its variance floor back up, would inherit the same
+optimum.** That is a hypothesis about mechanism, untested in any other descendant (§11).
+
+**How often the substitution is made, which narrows the hypothesis.** Of 10 public
+repositories examined on 20 September 2026 under the protocol in `results/q1_search_protocol.md`,
+10 carry the construction and 1 of those trains it against a sampled
+squared error, and that one only in an optional value-aware mode; the other 9 keep
+PETS's likelihood (`results/q1_pets_descendants.json`). The protocol counts a repository only if
+it has the bounded head, learnable bounds, and a loss that squares the error of a *sampled*
+prediction; squaring the error of the predicted *mean*, an option several of these repositories
+offer, leaves σ untrained rather than driving it to zero, and does not count. We read "learnable"
+as "trainable by the code, by default or not", a reading settled after the survey, because in
+`mbrl-lib` and in `va_mbpo`, the one repository that inherits, the bounds train only when a caller
+switches that on (ledger `M-73`). The survey did not check how each repository treats its variance
+floor, so 1 of 10 is an upper bound on how often both conditions
+hold. A further 3 repositories lack the construction, among them mainline `rsl_rl`:
+the bounded head exists in the fork this paper pins, not in the library it forks, and we do not
+count the fork, since counting what §6.3 measured as evidence that the result travels would be
+circular. The protocol capped the survey at 25 repositories; it stopped at
+10, and its notes give no reason. We wrote the protocol before the search, but
+neither it nor its hash reached git before the results did, so that order rests on our own record;
+it is a search protocol, not one of Appendix E's decision rules. Search engines rank and truncate,
+so this is a sample of convenience, but on it the substitution is rare, and a reader who takes the
+hypothesis to reach widely infers more than the evidence supports.
+
+---
+
+## Appendix J — the σ = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate
+
+**The derivation says the collapse happens on any dataset, and that is testable.** It matters
+because it is what answers the follow-up's own explanation: on the released CSV, "small
+stochasticity in the environment" and our reading are observationally identical, since the data may
+simply be nearly deterministic. So under a rule committed before the runs (rule M-50, Appendix E)
+we built data where it is not.
+
+Synthetic data whose true noise level is **known** and varies by a factor of 25 across
+the input range, with a non-constant true mean; the **same** bounded log-σ head as the released
+model — `MLPStateHead` unmodified, including the double-softplus clamp, the learnable
+`state_min_logstd` and `state_log_delta_logstd`, and the bound loss at its configured weight —
+trained under each objective in turn on 4,000 points for 12,000 iterations at
+3 seeds. Nothing else differs between the arms.
+
+*Two ways this is not the released setting.* The head is built here over a **one-dimensional**
+state with no recurrent trunk in front of it, where the released one predicts 45
+dimensions from a GRU. The trunk's absence is deliberate: the question is about the head's
+objective, and a GRU would add a confound. The dimensionality matters because the state loss sums
+over state dimensions, so at one dimension it is roughly 45× smaller relative to the
+bound term than in the released path. That makes this setting *more* favourable to σ surviving, and
+the collapse happens anyway.
+
+| objective | median σ̂ / σ_true | σ̂ spread across the input range | slope of log σ̂ on log σ_true |
+|---|---|---|---|
+| `mse` — the implemented branch | **0.0460** | 1.002–1.003× | +0.000493 |
+| `gaussian_nll` — the authors' unused branch | 0.9779 | 1.02–3.67× | +0.1330 |
+
+*Ratios and slopes are means over 3 seeds; spreads are the range across them, because
+the mean of a spread hides which seeds recovered.*
+
+**Under the implemented objective σ sits 21.7× below the true noise and does not
+track it at all**: a spread of 1.003× where the truth spans 25×, and a
+slope below the 0.00309 the design can detect. Under the authors' own branch, same data
+and same head, σ recovers the true level to a median ratio of 0.9779, and every one of
+the 3 seeds the rule was discharged over clears the slope threshold. **Twenty seeds
+show that clearance is not general**: 11 of 20 clear it, so
+the all-seeds criterion would not have held at that sample. The rule's verdict stands as returned
+over its own 3 and is not re-opened by more seeds (§8); what twenty establish is that
+the hedge below was necessary. **The recovering arm is seed-variable, and the rule said so before
+the runs**: its slopes span 0.0078–0.3537, a factor of
+45, and two of 3 seeds recover a σ spread of only
+1.02× against the truth's 25×. So what this experiment establishes is
+the **contrast**, that one objective tracks the noise at all and the other does not, and not the
+magnitude of the recovery, which this training budget does not pin down. **OBJECTIVE-DRIVEN**, which is the verdict the rule names for that pattern.
+
+*The statistic is the slope, not the correlation, because a correlation is scale-free: a σ̂ that is
+essentially constant still returns a large one off its own numerical noise. Under a permutation
+null, the same data with the input-to-noise pairing destroyed, a head whose σ spanned
+1.0004× returned correlations as large as ±0.24, while its slope was
+2e-05. The detection threshold is set at the slope corresponding to a
+1.01× spread rather than at that noise floor, and the measured false-positive rate at
+zero signal is 0%.*
+
+**What this does that the derivation alone could not.** It removes the competing explanation
+rather than arguing against it: the stochasticity here is large, known and input-dependent, and the
+collapse happens anyway. The design's limit, stated in the rule, holds: the dilution ladder detects
+the signal at full strength and at no dilution below it, so this establishes that σ does not track
+the noise **at all**, not the magnitude of how badly.
+
+**§6.3's derivation covers two terms, and the objective has 7.** Its completeness
+rests on the other 5 being inert with respect to σ, so each term is computed alone on
+one real batch (64 windows from the training episodes, at freshly initialised weights of
+the released architecture) and back-propagated alone, and the gradient reaching the log-σ tower,
+`state_log_delta_logstd` and `state_min_logstd` is recorded. A term that cannot move σ produces
+exactly zero on all three.
+
+| loss term | live? | weight | where the reference computes it | ∂/∂ log-σ tower | ∂/∂ `log_delta_logstd` | ∂/∂ `min_logstd` |
+|---|---|---|---|---|---|---|
+| `state` | live | 1.00 | `system_dynamics.py:270-289` | 0.000325 | 0.0509 | 0.0703 |
+| `sequence` | **dead** | 1.00 | `system_dynamics.py:274-277` | 0 | 0 | 0 |
+| `bound` | live | 1.00 | `system_dynamics.py:301-302` | 0 | 0.2 | 0 |
+| `kl` | **dead** | 0.10 | `system_dynamics.py:223` | 0 | 0 | 0 |
+| `extension` | **dead** | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
+| `contact` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
+| `termination` | live | 1.00 | `system_dynamics.py:233-268` | 0 | 0 | 0 |
+
+4 of the 7 configured terms are live at all under the released
+configuration: `sequence_loss` is dead code, guarded by a `prediction_type` the reference sets to
+`"single"` on both paths, and `kl` and `extension` are zero because their dimensions are. Of the
+7, exactly 2 reach σ: `state` and `bound`. The remaining 5
+produce a gradient of exactly zero, not merely a term the code suggests is irrelevant
+(`results/e4_sigma_gradients.json`).
+
+We predicted the collapse from this algebra before training, then observed it. Three run counts
+appear below and they are not the same set. This project trained 33 runs for §5–§7, besides the 42 of §5.2 and §5.3
+(Appendix B), of
+which 28 are at the released `rnn_hidden_size` of 256 and form the collapse
+family; the remaining 5 are the capacity-matched arm of rule M-49 (Appendix E) at
+width 124, a different architecture, excluded from every rate quoted here (Appendix B).
+Across all 28 runs of that family the collapse is linear in iteration count and its rate is
+nearly identical (Figure 4a). Rates are fitted on 22 of those 28: the
+6 10,000-iteration runs continue seeds already counted at 2,500 and would
+double-weight them. Figure 4(a) shows all 28 runs of the collapse family and Figure 4(b)
+only the 22 the rate is fitted on, so the scatter and the quoted statistic describe
+the same set. The 33 runs, with the width column separating the collapse family from the
+capacity-matched arm:
+
+| arm | iterations | ensemble | objective | dataset | width | seeds | seed ids |
+|---|---|---|---|---|---|---|---|
+| Arm A | 2,500 | 1 | gaussian_nll | clean | 256 | 5 | 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | clean | 124 | 5 | 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | clean | 256 | 5 | 0, 1, 2, 3, 4 |
+| Arm A | 2,500 | 1 | mse | contaminated | 256 | 3 | 0, 1, 2 |
+| Arm A | 2,500 | 1 | mse | duplicated | 256 | 3 | 0, 1, 2 |
+| Arm A | 2,500 | 5 | mse | clean | 256 | 3 | 0, 1, 2 |
+| Arm A | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
+| Arm B | 2,500 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
+| Arm B | 10,000 | 1 | mse | clean | 256 | 3 | 0, 1, 2 |
+
+---
+
+## Appendix K — the per-dimension permutation tests behind §6.6
+
+**§6.6's P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to its counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
+
+We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which keeps both marginal distributions and the entire cross-dimension dependence structure and destroys only the association under test. The correction is large, and largest exactly where we leaned hardest. The worst-affected cell is teacher-forced armB at h=368, in the in-sample arena. At h = 368 it moves from 5.68e-14 to 0.5565, a factor of about 10^13, because under a null that keeps the dependence a random re-pairing already yields 43.8 of 45 dimensions positive on average, so observing 45 of 45 is close to unremarkable. A fair coin centres the count at 22.5 of 45; the dependence-preserving null centres it between 5.1 and 43.8 depending on model, horizon and arena.
+
+**The larger arenas agree with each other against the smallest.** At n_independent = 4 400-step trajectories out of sample, the epistemic ordering looks strongest at long horizon (0.0417 at h=128, 0.0435 at h=368) and unremarkable at short (0.4348 at h=1). Both larger arenas invert that. In sample (n_independent = 16): 0.0052 at h=1, 0.0070 at h=8, against 0.3794 at h=128. Over all ten episodes (n_independent = 20): 0.0056, 0.0069 and 0.3762, with h = 100 at 0.2769, between h=32's 0.0344 and h=128's 0.3762. Two larger arenas at four and five times the sample say the effect is strongest at *short*
+horizon, though they are not independent: all 16 in-sample trajectories are among
+the 20.
+
+The null means explain why, and the explanation is the one that motivates §6.7. At long horizon the shared forecast-depth trend lifts the null to 41.6 of 45 at h = 128, so a count of 45 is close to what chance alone delivers; at h = 1 the null sits near 15.4 and the same count is genuinely surprising. The out-of-sample arena is not wrong so much as blind: at 4 trajectories its smallest attainable P-value is 0.04167, so it cannot tell a strong effect from a marginal one at any horizon. **That blindness belongs to the 400-step unit, not to the arena**: a 33-row unit gives 60 independent units on the same two episodes, and 14 at h = 100 (rule M-64, Appendix E). We did not recompute this permutation family at the shorter unit, so what the short units change is the scope of the design claim, not any verdict: the arena is underpowered at h = 368, which needs the full 400 rows, and is no longer demonstrably so at h = 128 and below. Running it there is one pass over stored rollouts, and we did not do it. The small arena's numbers are reported because it is the only arena out-of-sample for our own arms, not because it is the better measurement.
+
+**Nothing here survives multiplicity correction, in any of the three arenas.** Holm–Bonferroni over each arena's 30 model × horizon cells at α = 0.05 rejects 0 out of sample, 0 in sample and 0 over all ten episodes. Out of sample that is a property of the design: with 4 independent trajectories the smallest attainable P-value is 0.04167, which already exceeds the smallest Holm threshold 0.001667, so no effect of any size could have been rejected there. In sample the miss is real: the smallest P in the family is teacher-forced armB h=128 at 0.0027 against a threshold of 0.001667.
+
+---
+
+## Appendix L — section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint
+
+At long horizons the pattern is consistent across the design. Under the cluster bootstrap, the
+out-of-sample gap excludes zero in **4 of 4** long-horizon cells,
+both trajectory lengths crossed with the 500 and 2,500-iteration checkpoints. These figures are
+relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
+
+**Multiplicity.** Those 4 cells sit in a family of 8 out-of-sample
+comparisons. All 4 of 4 still exclude zero at a Bonferroni level of
+0.05/8, and Holm–Bonferroni rejects **4 of 4**. §5's sign
+test is unaffected either way.
+
+**How good the reimplementation is as a model, next to the artifact it reimplements.**
+§5's tables compare two training rules with each other and §6.2's compares calibration, so
+neither puts the released checkpoint and our arms side by side on absolute accuracy. Both
+aggregations, for these models and for §5.3's architecture baselines, on one arena:
+
+| model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = 100 | rel-L1 h = 100 | nRMSE h = 368 | rel-L1 h = 368 |
+|---|---|---|---|---|---|---|---|---|
+| released checkpoint | 0.0544 | 0.0563 | 0.0697 | 0.0808 | 0.5028 | 0.3304 | 0.9051 | 0.6041 |
+| Arm A — autoregressive, faithful MSE | 0.1262 | 0.1232 | 0.3029 | 0.3289 | 0.4913 | 0.4798 | 0.5425 | 0.5856 |
+| Arm A — autoregressive, `gaussian_nll` | 0.1204 | 0.1195 | 0.2867 | 0.3154 | 0.4603 | 0.4413 | 0.5245 | 0.5608 |
+| Arm B — teacher-forced | 0.0879 | 0.0929 | 0.3064 | 0.3392 | 1.0363 | 1.0849 | 3.7927 | 4.5684 |
+| MLP, teacher-forced (§5.3) † | 0.1393 | 0.1539 | 0.3624 | 0.4086 | 1.1399 | 1.2057 | 112.5344 | 145.1650 |
+| MLP, autoregressive (§5.3) | 0.1364 | 0.1470 | 0.3016 | 0.3492 | 0.5452 | 0.5400 | 1.4383 | 1.4628 |
+| RSSM, teacher-forced (§5.3) | 0.0707 | 0.0761 | 0.3393 | 0.3686 | 2.0376 | 2.2128 | 5.3890 | 6.3718 |
+| RSSM, autoregressive (§5.3) † | 0.1223 | 0.1354 | 0.6004 | 0.6211 | 3.1128 | 3.2660 | 9.2508 | 10.6405 |
+| transformer, teacher-forced (§5.3) † | 0.1202 | 0.1239 | 0.3773 | 0.3969 | 2.0195 | 2.0607 | 13.4730 | 15.1548 |
+| transformer, autoregressive (§5.3) | 0.1329 | 0.1384 | 0.2562 | 0.3025 | 0.5821 | 0.5821 | 2.0110 | 1.8771 |
+| hold-last floor | 0.0989 | 0.0796 | 0.4117 | 0.3298 | 0.9537 | 0.7558 | 1.0897 | 0.9930 |
+
+**Arena, stated once for the whole table: out-of-sample held-out pair, episodes 1 and 8,
+4 non-overlapping 400-step trajectories, n_independent = 4.**
+Arm rows are the mean over 3 seeds at 2,500 training iterations (the `weights_2500.pt` checkpoint), with
+per-seed values in `results/head_to_head_accuracy.json`; nRMSE is form 1 (§3.1), and both metrics
+are cumulative over forecast steps 1..h. Every RWM row is read from the stored rollouts behind §6.2's
+calibration tables, so no model is run to build it. The architecture-baseline rows (§5.3) come from
+their own evaluator on the same four trajectories, whose relative-L1 reproduces the Arm A row
+exactly; their nRMSE is pooled as §3.1 defines it, recomputed afterwards with the same evaluator
+(post hoc, `results/pooled_nrmse_rescore.json`), and † marks a diverged row (§5.3). **This table is at 2,500 iterations and §5's by-horizon table at 10,000**, which is why Arm A's relative-L1 at h = 368 reads 0.5856 here and 0.3582 there: the same arm, trained longer.
+
+Both metrics put the released checkpoint first at h = 1 and h = 8, they name
+different leaders at h = 100, and at h = 368 both put an Arm A variant
+ahead of it: the reimplementation is behind the artifact it reimplements at short horizons and
+ahead of it at the longest horizon we measure. That reading flatters the released checkpoint, because the split is ours: the arena is
+out-of-sample for our arms and in-sample for it, which trained on all
+ten episodes (the in-sample caveat of §3).
+
+*Stored per-trajectory values elsewhere.* §6.10's and §11's paired contrasts at the same n store their four
+per-trajectory values in `results/r2_independent_ensemble.json` and
+`results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = 4,
+give intervals only, coarse for the same reason.
+
+---
+
+## Appendix M — section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column
+
+**Two pre-registered checks on how §6.2's numbers are read.** The first (rule M-62, Appendix E) asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **NO MOVE**: in the one arena with power at that level, all ten episodes (n = 20 falling to 10), the pooled correlation's interval widens by 27% and the double-demeaned one's width changes by a factor of 0.98, and neither crosses zero. The other 4 cells it names are out-of-sample, where an episode bootstrap has n = 2 and three distinct resamples; the rule said so in advance, and they are reported as uninformative rather than as intervals.
+
+**The second (rule M-63, Appendix E) asks whether the one-step failure is a few bad channels or all of them**, since a pooled coverage is the unweighted mean of 45 per-dimension ones. It returns **UNIFORM**: the interquartile range across dimensions is 10.0 points against a 15-point threshold committed in advance, and the five worst dimensions carry well under half of the shortfall. **No channel is exempt**, which is what §6.3's mechanism predicts: an objective whose optimum is σ = 0 has no reason to spare any dimension. The reading is coarse by construction: at h = 1 on 20 trajectories a per-dimension coverage moves in 5-point steps, a limit the rule fixed before the run.
+
+The last column of §6.2's released-checkpoint table gives permutation P-values over whole trajectories, not binomial ones, on the same 20 trajectories as the counts beside them; §6.6 explains why a binomial null is inadmissible here. h = 100 is tested too, because it carries the abstract's headline figure. These are six tests on one family and none survives Holm–Bonferroni across the arena's 30 cells: the smallest is faithful (mse) h=368 at 0.0037 against a threshold of 0.001667. Read the column as a consistency check on direction, not as six independent findings.
 
 ---
