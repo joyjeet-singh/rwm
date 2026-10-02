@@ -62,6 +62,12 @@ SCOPE = {
         "searches PAPER.md for the frequency wording -- 'every', 'none', 'all'"),
     "scope-consistency": ("whole-file",
         "searches PAPER.md for universal quantifiers against an enumerated set"),
+    "rule-seed-scope": ("whole-file",
+        "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, "
+        "README.template.md) for the rule-horizon figures near 'rule' or 'pre-register'"),
+    "overstat-reversal": ("whole-file",
+        "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, "
+        "README.template.md), paragraph by paragraph, for 'overstat' beside an alignment figure"),
     "interval-required": ("whole-file",
         "searches PAPER.md for quoted quantities and requires each to carry its interval"),
     "arithmetic": ("whole-file", "searches PAPER.md for the sentence stating the sum"),

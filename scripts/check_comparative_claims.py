@@ -781,6 +781,25 @@ CLAIMS = [
     {"id": "C24.1", "kind": "arena_consistency", "where": "3.2",
      # S10 re-anchor (user ruling D2 added the checkpoint column and reworded this sentence)
      "says": "so no arena label, sample size or checkpoint in it is typed by hand"},
+
+    # ---- C25 (round 2, T3 item 7) -------------------------------------------------------------
+    # C25.1: rule M-23 was run on ONE seed (seed m23_seed); the three-seed d1_ratio and the a1_*_h368
+    # table cells extend it and carry none of its weight (Annex 2, E4). A sentence quoting them within
+    # two lines of "rule" or "pre-register" must therefore name the seed or the three-seed extension, in
+    # its own paragraph or the next one (a table's caption sentence follows the table).
+    {"id": "C25.1", "kind": "rule-seed-scope", "where": "abstract / contributions / 5 / 11",
+     "says": "the rule's horizon",
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "README.template.md"],
+     "keys_regex": r"d1_ratio|a1_[A-Za-z_]*h368", "trigger_regex": r"\brules?\b|pre-regist",
+     "window_lines": 2,
+     "marker_regex": r"\{\{m23_seed\}\}|three-seed|three seeds|\{\{d1_seeds\}\} seeds"},
+    # C25.2: the alignment defect's cost is small and not consistent in sign at h = 368 (S-20, R-76). No
+    # sentence may pair "overstat..." with an alignment figure unless its paragraph names the reversal.
+    {"id": "C25.2", "kind": "overstat-reversal", "where": "7.2 / abstract / contributions",
+     "says": "overstates the released checkpoint's error",
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "README.template.md"],
+     "figure_regex": r"ad(?:20|h)?_[A-Za-z0-9_]+|stale_[A-Za-z0-9_]+",
+     "reversal_regex": r"revers|not consistent in sign"},
 ]
 
 
@@ -1351,6 +1370,43 @@ def evaluate(c, paper, override=None):
         return ok, (f'{len(E["rows"])} claims; arena confirmed against its own section '
                     f'in {conf_a}, n_independent in {conf_n}'
                     + (f'; {len(bad)} mismatch(es), first: {bad[0]}' if bad else ''))
+    if k == "rule-seed-scope":
+        keys = re.compile(r"\{\{(?:" + exp["keys_regex"] + r")\}\}")
+        trig, mark, W = re.compile(exp["trigger_regex"], re.I), re.compile(exp["marker_regex"], re.I), exp["window_lines"]
+        bad, n = [], 0
+        for f in exp["files"]:
+            L = open(f).read().split("\n")
+            blk, b_i = [], 0                       # paragraph index of every line
+            for ln in L:
+                if not ln.strip():
+                    b_i += 1
+                blk.append(b_i)
+            for i, ln in enumerate(L):
+                if not keys.search(ln):
+                    continue
+                if not any(trig.search(L[j]) for j in range(max(0, i - W), min(len(L), i + W + 1))):
+                    continue
+                n += 1
+                cur = blk[i]              # this paragraph, and the next non-empty one (a table's caption sentence)
+                follow = next((blk[j] for j in range(i + 1, len(L)) if blk[j] > cur and L[j].strip()), None)
+                region = "\n".join(x for j, x in enumerate(L) if blk[j] == cur or blk[j] == follow)
+                if not mark.search(region):
+                    bad.append(f"{f}:{i + 1}")
+        return n > 0 and not bad, (f"{n} lines quote the rule-horizon figures near 'rule'/'pre-register'; "
+                                   f"{n - len(bad)} name the seed or the three-seed extension"
+                                   + (f"; missing at {bad}" if bad else ""))
+    if k == "overstat-reversal":
+        fig, rev = re.compile(r"\{\{(?:" + exp["figure_regex"] + r")\}\}"), re.compile(exp["reversal_regex"], re.I)
+        bad, n = [], 0
+        for f in exp["files"]:
+            for para in re.split(r"\n\s*\n", open(f).read()):
+                sents = re.split(r"(?<=[.;])\s+", para)
+                if any(re.search(r"overstat", s, re.I) and fig.search(s) for s in sents):
+                    n += 1
+                    if not rev.search(para):
+                        bad.append(f"{f}: {para.strip()[:70]!r}")
+        return not bad, (f"{n} paragraphs pair 'overstat' with an alignment figure; "
+                         f"{n - len(bad)} name the reversal" + (f"; missing in {bad}" if bad else ""))
     raise ValueError(k)
 
 
@@ -1512,6 +1568,10 @@ def corruption_for(c):
         if runner_up.startswith("h=") and runner_up[2:].isdigit():
             return {"named": {"h": runner_up[2:]}}
         return {"named": {"label": runner_up}}
+    if k == "rule-seed-scope":
+        return {"marker_regex": "@@never@@"}       # no sentence can name the seed: every quoted one fails
+    if k == "overstat-reversal":
+        return {"reversal_regex": "@@never@@"}     # no paragraph can name the reversal
     raise ValueError(k)
 
 

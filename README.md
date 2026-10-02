@@ -188,10 +188,10 @@ everything else horizon-indexed in its own paragraph. It runs on every build as 
 ## The build checks its own prose
 
 Verifying that every numeral came from an artifact says nothing about the sentence built around
-it. The build therefore also verifies **60 comparative claims** across 27 kinds,
+it. The build therefore also verifies **62 comparative claims** across 29 kinds,
 each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts.
 Every one is run against a deliberately corrupted expectation on each build and must fail:
-60 of 60 caught.
+62 of 62 caught.
 
 ```bash
 python scripts/check_comparative_claims.py --self-test

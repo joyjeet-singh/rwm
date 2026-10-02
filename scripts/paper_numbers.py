@@ -742,6 +742,11 @@ def main():
         "restatement": "no sentence restates a quantity another section owns -- no numeral is "
                        "typed into the slot a substituted one fills elsewhere, and no section "
                        "prints two different quantities as the same numeral",
+        "rule-seed-scope": "a sentence quoting the three-seed headline or its rule-horizon cells near "
+                           "the word rule or pre-register names the one seed the rule ran on, or the "
+                           "three-seed extension",
+        "overstat-reversal": "no sentence says the released evaluation overstates its error beside an "
+                             "alignment figure unless its paragraph names the reversal of sign",
     }
     _missing = [k for k in _kinds if k not in _blurb]
     assert not _missing, f"check kinds with no appendix D description: {_missing}"

@@ -15,8 +15,8 @@
     "RESULTS.md",
     "docs/EXTERNAL_READ_BRIEF.md"
   ],
-  "n_kinds": 27,
-  "n_whole_file": 18,
+  "n_kinds": 29,
+  "n_whole_file": 20,
   "n_named_region": 4,
   "n_artifact_only": 5,
   "n_unclassified": 0,
@@ -166,6 +166,20 @@
       "surface_named_by_claims": []
     },
     {
+      "kind": "overstat-reversal",
+      "input_selection": "whole-file",
+      "reason": "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, README.template.md), paragraph by paragraph, for 'overstat' beside an alignment figure",
+      "files_named_by_claims": [
+        "PAPER.template.md",
+        "README.template.md",
+        "docs/BUILD_CHECKS.template.md"
+      ],
+      "surface_named_by_claims": [],
+      "tier": "template",
+      "requires": "docs/BUILD_CHECKS.template.md",
+      "covers_moved_text": true
+    },
+    {
       "kind": "population_partition",
       "input_selection": "artifact-only",
       "reason": "sums the run table's row counts and the collapse family against totals read from results/*.json and paper_numbers.json; the prose sentence is only its anchor",
@@ -217,6 +231,20 @@
       "surface_named_by_claims": [],
       "tier": "built",
       "requires": "docs/BUILD_CHECKS.md",
+      "covers_moved_text": true
+    },
+    {
+      "kind": "rule-seed-scope",
+      "input_selection": "whole-file",
+      "reason": "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, README.template.md) for the rule-horizon figures near 'rule' or 'pre-register'",
+      "files_named_by_claims": [
+        "PAPER.template.md",
+        "README.template.md",
+        "docs/BUILD_CHECKS.template.md"
+      ],
+      "surface_named_by_claims": [],
+      "tier": "template",
+      "requires": "docs/BUILD_CHECKS.template.md",
       "covers_moved_text": true
     },
     {

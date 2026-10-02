@@ -1,6 +1,6 @@
 {
-  "n_claims": 60,
-  "n_pass": 60,
+  "n_claims": 62,
+  "n_pass": 62,
   "claims": [
     {
       "id": "C1.1",
@@ -400,7 +400,7 @@
       "where": "BUILD_CHECKS",
       "says": "comparative claims** across",
       "pass": true,
-      "detail": "registered 27, the accounting claims 27, docs/BUILD_CHECKS.md enumerates 27"
+      "detail": "registered 29, the accounting claims 29, docs/BUILD_CHECKS.md enumerates 29"
     },
     {
       "id": "C20.1",
@@ -481,6 +481,22 @@
       "says": "so no arena label, sample size or checkpoint in it is typed by hand",
       "pass": true,
       "detail": "16 claims; arena confirmed against its own section in 16, n_independent in 16"
+    },
+    {
+      "id": "C25.1",
+      "kind": "rule-seed-scope",
+      "where": "abstract / contributions / 5 / 11",
+      "says": "the rule's horizon",
+      "pass": true,
+      "detail": "5 lines quote the rule-horizon figures near 'rule'/'pre-register'; 5 name the seed or the three-seed extension"
+    },
+    {
+      "id": "C25.2",
+      "kind": "overstat-reversal",
+      "where": "7.2 / abstract / contributions",
+      "says": "overstates the released checkpoint's error",
+      "pass": true,
+      "detail": "1 paragraphs pair 'overstat' with an alignment figure; 1 name the reversal"
     }
   ],
   "checker_defects": [
@@ -508,19 +524,21 @@
     "kind-count",
     "orders",
     "overlap",
+    "overstat-reversal",
     "population_partition",
     "relvar",
     "restatement",
     "retraction-consistency",
     "retraction_class_consistency",
+    "rule-seed-scope",
     "scope-consistency",
     "sign",
     "table_renders",
     "unit-consistency"
   ],
   "self_test": {
-    "n": 60,
-    "caught": 60,
+    "n": 62,
+    "caught": 62,
     "detail": [
       {
         "id": "C1.1",
@@ -769,7 +787,7 @@
       },
       {
         "id": "C16.1",
-        "corruption": "{'_forced': 28}",
+        "corruption": "{'_forced': 30}",
         "caught": true
       },
       {
@@ -820,6 +838,16 @@
       {
         "id": "C24.1",
         "corruption": "{'_forced_arena_swap': True}",
+        "caught": true
+      },
+      {
+        "id": "C25.1",
+        "corruption": "{'marker_regex': '@@never@@'}",
+        "caught": true
+      },
+      {
+        "id": "C25.2",
+        "corruption": "{'reversal_regex': '@@never@@'}",
         "caught": true
       }
     ]
