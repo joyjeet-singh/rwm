@@ -383,7 +383,8 @@ def main():
     N_COLLAPSE = str(N["n_runs"]["value"])
     CAPS = {
         "paper_fig1_calibration.png":
-            "Calibration of all four models on the held-out arena. "
+            "Calibration of all four models on the held-out arena. The released checkpoint trained "
+            "on these episodes, so for it this arena is in-sample (\\S3). "
             "(a) reliability: observed against predicted coverage, with the calibrated diagonal; "
             "the inset repeats the same points with observed coverage on a log scale, where the "
             "four models separate. "
