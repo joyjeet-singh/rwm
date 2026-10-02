@@ -20,10 +20,7 @@ ranks error nearly as well ({{e7_step_r}}), by an unresolved margin. The members
 confirmed on data with known noise. A per-horizon rescaling brings the released checkpoint's
 coverage within {{d3_tol}} points of nominal on its training episodes, though no cell is
 resolvable. On episodes our ensembles never saw, it does so in only {{d3x_own_epi_ok}} of
-{{d3x_own_epi_cells}} disagreement cells: a recipe to refit, not a demonstrated fix. Separately,
-the released evaluation pairs each prediction with the previous action, overstating the
-checkpoint's error on the same trajectories at {{v2_diag_h}} steps by {{ad_nrmse}}%
-{{ad_nrmse_ci}} in nRMSE and {{ad_rel}}% {{ad_rel_ci}} in relative-L1; across its ten training episodes the sign reverses. We train no policy, so we bound what the uncertainty reports, not what its
+{{d3x_own_epi_cells}} disagreement cells: a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action; this inflates the checkpoint's error most at short horizons, and at the longest horizon the cost is small and not consistent in sign. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---
@@ -98,11 +95,14 @@ verdict, and §9 gives the lessons in a form a practitioner can use without read
   unseen by the multiplier only, because the checkpoint trained on both episodes; on Arm A, whose
   model never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}}
   disagreement cells.
-- **The released evaluation is misaligned by one step, and what that costs is small.** Evaluation
-  feeds the action from *t−1* where training pairs states and actions index-for-index. On
-  {{ad_nind}} independent trajectories this overstates the checkpoint's error at h = {{v2_diag_h}}
-  by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, and over
-  all ten episodes the sign reverses (§7.2); shifting evaluation's action index by one step fixes it.
+- **The released evaluation is misaligned by one step; the cost is concentrated at short horizons, and at
+  h = {{v2_diag_h}} it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
+  training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
+  the held-out pair's {{ad_nind}} independent trajectories, which this checkpoint trained on, the stale
+  action raises its error by
+  {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on
+  relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE; over all ten episodes the sign at h = {{v2_diag_h}}
+  reverses (§7.2).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise, and losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss
   terms and {{diff_n_params}} parameter tensors, before any training (Appendix A).
@@ -295,7 +295,10 @@ spans overlap are not independent evidence, and the out-of-sample arena contains
 that size has {{c3_resamples}} distinct resamples, so its intervals are quantised at that
 resolution. Every long-horizon verdict in this paper survives a bootstrap over independent
 trajectories, every table reports that count, and §8 reports both resampling units where they
-differ. Later sections refer back to this as the n = {{m23_nind}} caveat of §3.
+differ. Later sections refer back to this as the n = {{m23_nind}} caveat of §3. One trajectory can carry
+much of a long-horizon effect: a one-step shift of the action moves single trajectories' {{v2_diag_h}}-step
+error by anywhere from {{ad20_traj_lo}}% to {{ad20_traj_hi}}% (§7.2), which is why {{m23_nind}} trajectories
+bound every long-horizon claim.
 
 ### 3.1 Metrics
 
@@ -359,9 +362,9 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ.
 The ranking claims (§6.7) are Pearson correlations between the applied scalar penalty and total
 absolute error, because a ranking claim is about order rather than scale. Every headline number in
-the abstract names its metric. §7.2's alignment defect is given in both metrics side by side, each
-at h = {{v2_diag_h}} on the same {{ad_nind}} independent trajectories: {{ad_rel}}% {{ad_rel_ci}} on
-relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE.
+the abstract names its metric. §7.2's alignment defect is given in both metrics side by side at h = {{v2_diag_h}}, on the same
+{{ad_nind}} independent trajectories: {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}%
+{{ad_nrmse_ci}} in nRMSE; its larger cost at short horizons is given on relative-L1, at h = 1.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,{{v2_deploy_h}},\,128,\,{{v2_diag_h}}\}$.
 Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's
@@ -1435,7 +1438,8 @@ so those zeros mark the absence of a producing action — the reset produced tha
 step. The training path pairs states and actions index-for-index, which is causally correct; the
 evaluation path feeds the action from *t−1* to predict state *t*, stale by one step.
 
-What the stale pairing costs is small, and its sign is not consistent. On the held-out pair's
+What the stale pairing costs is concentrated at short horizons; at h = {{v2_diag_h}} it is small, and its
+sign is not consistent. On the held-out pair's
 {{ad_nind}} independent trajectories it overstates the released checkpoint's error at
 h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relative-L1** and **{{ad_nrmse}}%
 {{ad_nrmse_ci}} in nRMSE** (each a 95% interval from a cluster bootstrap over whole trajectories, both pairings
@@ -1445,10 +1449,11 @@ does this with `action_offset = 1` (`src/score_reference.py:180-190`). The four 
 on relative-L1 and {{ad_nrmse_traj}} in nRMSE. Over all ten episodes, {{ad20_nind}} independent
 trajectories, the sign reverses: {{ad20_rel}}% {{ad20_rel_ci}} on relative-L1 and {{ad20_nrmse}}%
 {{ad20_nrmse_ci}} in nRMSE, with single trajectories from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%.
-Every arena here is in-sample for this checkpoint, which trained on all ten episodes. The
-{{stale_pct}}% (nRMSE) and {{stale_pct_rel}}% (relative-L1) this paper reported before came from
-{{ad_pa_n}} overlapping windows sampled as the upstream samples them, one of which (starting at
-row {{ad_pa_out_row}}) carries most of the effect; they are withdrawn (S-20).
+Every arena here is in-sample for this checkpoint, which trained on all ten episodes. One step ahead, where a
+stale action should matter most, it changes the checkpoint's error by {{adh_rel_h1}}% {{adh_rel_ci_h1}} on the
+same {{ad_nind}} trajectories (`results/alignment_by_horizon.json`). Our own Arm A checkpoints at {{iters_long}}
+iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}% at h = 1 and
+{{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one.
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).

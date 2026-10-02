@@ -127,7 +127,10 @@ def main():
     put("m23_A", f'{g["A"]:.4f}', "results/task5_analysis.json")
     put("m23_B", f'{g["B"]:.4f}', "results/task5_analysis.json")
     put("m23_gap", round(g["gap"], 4), "results/task5_analysis.json")
-    put("m23_ratio", f'{g["B"] / g["A"]:.1f}', "results/task5_analysis.json")
+    put("m23_ratio", f'{g["B"] / g["A"]:.2f}', "results/task5_analysis.json")
+    # Round 2, T3 (E4): what rule M-23 actually ran on -- seed 1 of each arm, named as such.
+    put("m23_A_s1", f'{g["A"]:.4f}', "results/task5_analysis.json")
+    put("m23_B_s1", f'{g["B"]:.4f}', "results/task5_analysis.json")
     put("m23_nind", g["n_ind"], "results/task5_analysis.json")
     if "ci" in g:
         put("m23_ci_lo", round(g["ci"][0], 2), "results/task5_analysis.json")
@@ -149,6 +152,14 @@ def main():
     # records its iteration count, and the two families are asserted uniform.
     assert t5["provenance"]["n_seeds"] == 1 and len(t5["provenance"]["seeds"]) == 1
     put("m23_seed", t5["provenance"]["seeds"][0], "results/task5_analysis.json")
+    # Round 2, T3 (E4): the seeds trained after M-23's verdict, and when (R-60's commit).
+    _d1seeds = sorted(J("task_d1_threeseed.json")["aggregate"]["A"]["per_seed"], key=int)
+    _other = [s for s in _d1seeds if int(s) != int(t5["provenance"]["seeds"][0])]
+    put("m23_other_seeds", " and ".join(_other), "results/task_d1_threeseed.json + task5_analysis.json")
+    _r60 = subprocess.run(["git", "log", "--format=%cs", "-S", "### R-60 \u2014", "--", "FINDINGS_LEDGER.md"],
+                          capture_output=True, text=True).stdout.split()
+    assert _r60, "no commit introduces ledger R-60"
+    put("r60_date", _r60[-1], "git log -S '### R-60' FINDINGS_LEDGER.md (the commit that entered R-60)")
     _iters = {}
     for _f in sorted(glob.glob("results/step5_arm*.json")):
         _iters.setdefault("long" if _f.endswith("_10k.json") else "main", set()).add(
@@ -1785,6 +1796,17 @@ def main():
     _k = max(range(len(_pn)), key=lambda i: _pn[i])
     put("ad_pa_n", _pa["n_trajectories"], _src)
     put("ad_pa_out_row", f'{_pa["starts"][_k]:,}', _src)
+
+    # Round 2, T3 (E1, ruling A; ledger R-76): the defect at h = 1 on the held-out pair, and our
+    # Arm A's sensitivity to the stale pairing (10,000 iterations, 3-seed mean, relative-L1).
+    _ah = J("alignment_by_horizon.json")
+    _src2 = "results/alignment_by_horizon.json"
+    _r1 = _ah["released"]["summary"]["held_out_n4"]["1"]["rel_l1"]
+    put("adh_rel_h1", f'{_r1["pct"]:.1f}', _src2)
+    put("adh_rel_ci_h1", _ci(_r1["ci95_pct"]), _src2)
+    _am = _ah["arm_a"]["10000"]["summary_three_seed_mean_pct"]
+    put("stale_armA_rel_h1", f'{_am["1"]["rel_l1"]:+.2f}', _src2)
+    put("stale_armA_rel_h368", f'{_am["368"]["rel_l1"]:+.2f}', _src2)
 
     # D3: the hold-last floor. Section 3 quoted 0.3509 against 1.5540 with no
     # baseline, so a reader could not judge whether 0.3509 was good.

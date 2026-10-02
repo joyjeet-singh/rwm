@@ -414,6 +414,9 @@ claims stayed, and only their history moved.
   horizons, which do not span it: the weakest gain lies at another horizon, below the stated floor.
   The horizon sweep found it, flagging the sentence for carrying two horizons' figures while naming
   two others.
+- **[§7.2]** The {{stale_pct}}% (nRMSE) and {{stale_pct_rel}}% (relative-L1) this paper reported before came
+  from {{ad_pa_n}} overlapping windows sampled as the upstream samples them, one of which (starting at row
+  {{ad_pa_out_row}}) carries most of the effect; they are withdrawn (S-20).
 - **[§7.4]** The duplication control was run only because the first version of the splice finding
   inferred the mechanism (content rather than count) without it.
 - **[§8]** The duplication-control rule's lead time is dated from the commit that introduced the
