@@ -1263,7 +1263,7 @@ training) rewrites 0.91% of the numeric values under `results/` that the compari
 and prove nothing about reproduction. **The number of regenerated values that differ and are
 themselves a measurement, a statistic or the verdict of a test is 0.** One of the
 build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ
-at all; 7 do, so it fails, and it is published as failing rather than given a
+at all; 5 do, so it fails, and it is published as failing rather than given a
 tolerance. The accounting behind these figures, the registry of checks the build runs on this
 paper's own prose, and the paper's record of verifying its own claims are in `docs/BUILD_CHECKS.md`,
 shipped as supplementary.

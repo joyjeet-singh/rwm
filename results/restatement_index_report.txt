@@ -665,7 +665,7 @@ C1 — RESTATEMENT INDEX
                 §Appendix R — the limitations in fu L2170  TYPED                      ...endent 400-step trajectories (the n = ␀ caveat of §3). That is the bin
                 §Appendix R — the limitations in fu L2191  TYPED                      ...endent 400-step trajectories, where all ten episodes provide ␀**, ␀× t
                 §Appendix R — the limitations in fu L2229  TYPED                      ...re the 400-step unit gives ␀ (Appendix K), and we did not rerun this p
-             5  keys ['None', 'a1_n_excl', 'b2_members', 'bound_both_train', 'd2b_n_horizons_tested', 'd2p_n_horizons', 'd2p_n_separating', 'd2r_ncontrols', 'd3x_ens', 'e2_nll_runs', 'e4_n_inert', 'm49_n_conditions_met', 'm63_quant', 'm68_n_conditions', 'm68_n_conditions_met', 'm68_n_indep', 'n_runs_offwidth', 'r2_n_indep', 'rt_runs_m49']
+             5  keys ['None', 'a1_n_excl', 'b2_members', 'bound_both_train', 'd2b_n_horizons_tested', 'd2p_n_horizons', 'd2p_n_separating', 'd2r_ncontrols', 'd3x_ens', 'e2_nll_runs', 'e4_n_inert', 'm49_n_conditions_met', 'm63_quant', 'm68_n_conditions', 'm68_n_conditions_met', 'm68_n_indep', 'n_runs_offwidth', 'r2_n_indep', 'rt_runs_m49', 'ver_differing']
                 §1. Introduction                    L80    r2_n_indep                 ...t trajectories, {{r2_n_indep}} independently initialised full models a
                 §5. The base paper's central claim  L423   a1_n_excl                  ...excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans
                 §6.2 The measurement                L696   b2_members                 ...On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} 
@@ -680,6 +680,7 @@ C1 — RESTATEMENT INDEX
                 §6.8 Testing the mechanism: an ense L1083  r2_n_indep                 ...ze 1 trained at {{r2_n_indep}} seeds, together as an ensemble at evalu
                 §6.8 Testing the mechanism: an ense L1123  m68_n_conditions_met       ...: all {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions 
                 §6.8 Testing the mechanism: an ense L1123  m68_n_conditions           ...}} of its {{m68_n_conditions}} conditions hold, a **{{m68_ratio_gain}}
+                §8. Method                          L1219  ver_differing              ...ffer at all; {{ver_differing}} do, so it fails, and it is published as
                 §9. Actionable lessons              L1230  d2p_n_separating           ...s zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons wher
                 §9. Actionable lessons              L1230  d2p_n_horizons             ...ng}} of the {{d2p_n_horizons}} horizons where the index is defined, an
                 §Appendix B — reproducing           L1471  rt_runs_m49                ...n estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m

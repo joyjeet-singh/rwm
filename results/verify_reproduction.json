@@ -57,15 +57,15 @@
     "v2_deployment_horizon.json",
     "v3_metric_definitions.json"
   ],
-  "values_compared": 15515,
-  "bitwise_identical": 15508,
+  "values_compared": 15521,
+  "bitwise_identical": 15516,
   "identical_to_1e-9": 0,
-  "differing": 7,
+  "differing": 5,
   "timing_excluded": 11983,
   "nan_in_both": 4,
   "copied_file_values": 1685466,
-  "copied_identical": 1685463,
-  "copied_differing": 3,
+  "copied_identical": 1685450,
+  "copied_differing": 16,
   "machine_file_values_excluded": 706,
   "keys_lost": 1,
   "keys_lost_files": [
@@ -180,10 +180,8 @@
     },
     "anon_bundle.json": {
       "regenerated": true,
-      "differing": 3,
+      "differing": 1,
       "differing_keys": [
-        ".cited_files_checked",
-        ".n_files_content_scrubbed",
         ".n_files_staged"
       ],
       "keys_lost": 1,
@@ -1539,10 +1537,43 @@
     },
     "verify_reproduction.json": {
       "regenerated": false,
-      "differing": 0,
-      "differing_keys": [],
-      "keys_lost": 0,
-      "keys_lost_paths": []
+      "differing": 13,
+      "differing_keys": [
+        ".values_compared",
+        ".bitwise_identical",
+        ".differing",
+        ".timing_excluded",
+        ".copied_file_values",
+        ".copied_identical",
+        ".copied_differing",
+        ".per_file.anon_bundle.json.differing",
+        ".per_file.input_set_audit.json.differing",
+        ".per_file.input_set_audit.json.keys_lost",
+        ".per_file.paper_numbers.json.differing",
+        ".per_file.t5_anon_transcript.json.differing",
+        ".per_file.task_c1_claims_audit.json.differing"
+      ],
+      "keys_lost": 18,
+      "keys_lost_paths": [
+        ".per_file.alignment_by_horizon.json.differing",
+        ".per_file.alignment_by_horizon.json.keys_lost",
+        ".per_file.baseline_run_rssm_tf_x1v1_seed0.json.differing",
+        ".per_file.baseline_run_rssm_tf_x1v1_seed0.json.keys_lost",
+        ".per_file.baseline_run_rssm_tf_x1v2_seed0.json.differing",
+        ".per_file.baseline_run_rssm_tf_x1v2_seed0.json.keys_lost",
+        ".per_file.mn_compute_matched.json.differing",
+        ".per_file.mn_compute_matched.json.keys_lost",
+        ".per_file.pooled_nrmse_alongside.json.differing",
+        ".per_file.pooled_nrmse_alongside.json.keys_lost",
+        ".per_file.pooled_nrmse_rescore.json.differing",
+        ".per_file.pooled_nrmse_rescore.json.keys_lost",
+        ".per_file.rssm_diagnostics.json.differing",
+        ".per_file.rssm_diagnostics.json.keys_lost",
+        ".per_file.training_tail_slopes.json.differing",
+        ".per_file.training_tail_slopes.json.keys_lost",
+        ".per_file.x1_partc_timing.json.differing",
+        ".per_file.x1_partc_timing.json.keys_lost"
+      ]
     },
     "x1_partc_timing.json": {
       "regenerated": false,

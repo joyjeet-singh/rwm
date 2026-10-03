@@ -6997,11 +6997,11 @@
     },
     {
       "value": "5",
-      "n_locations": 41,
+      "n_locations": 42,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 7,
-      "n_substituted": 34,
+      "n_substituted": 35,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e4_sigma_gradients.json",
@@ -7015,7 +7015,8 @@
         "results/task_b2_epistemic.json",
         "results/task_d2b_robustness.json",
         "results/task_d3_cross_model.json",
-        "results/task_d_nind20.json"
+        "results/task_d_nind20.json",
+        "results/verify_reproduction.json"
       ],
       "keys": [
         "None",
@@ -7036,7 +7037,8 @@
         "m68_n_indep",
         "n_runs_offwidth",
         "r2_n_indep",
-        "rt_runs_m49"
+        "rt_runs_m49",
+        "ver_differing"
       ],
       "locations": [
         {
@@ -7122,6 +7124,12 @@
           "line": 1123,
           "key": "m68_n_conditions",
           "ctx": "our it names: all {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, a **{{m68_ratio_gain}}"
+        },
+        {
+          "section": "8. Method",
+          "line": 1219,
+          "key": "ver_differing",
+          "ctx": "`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as"
         },
         {
           "section": "9. Actionable lessons",
@@ -7774,26 +7782,24 @@
     },
     {
       "value": "7",
-      "n_locations": 13,
+      "n_locations": 12,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 13,
+      "n_substituted": 12,
       "sources": [
         "results/e4_sigma_gradients.json",
         "results/paper_figures.json",
         "results/r2_combined_arm.json",
         "results/step0_regimes.json",
-        "results/step4_3_differential.json",
-        "results/verify_reproduction.json"
+        "results/step4_3_differential.json"
       ],
       "keys": [
         "d10_extra_ep",
         "diff_terms",
         "e4_n_terms",
         "f4_n_positive",
-        "m68_from_acc_h8",
-        "ver_differing"
+        "m68_from_acc_h8"
       ],
       "locations": [
         {
@@ -7825,12 +7831,6 @@
           "line": 1207,
           "key": "f4_n_positive",
           "ctx": "s}} of them and Appendix E for all {{appG_n_rules}}; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_n"
-        },
-        {
-          "section": "8. Method",
-          "line": 1219,
-          "key": "ver_differing",
-          "ctx": "`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as"
         },
         {
           "section": "9. Actionable lessons",

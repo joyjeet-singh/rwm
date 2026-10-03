@@ -9077,11 +9077,11 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "1,700,981"
+    "value": "1,700,987"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
-    "value": "1 in `results/anon_bundle.json` (how many of the anonymised bundle's files the scrubber rewrote); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `cited_files_checked`); 1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`)"
+    "value": "1 in `results/anon_bundle.json` (the anonymised bundle's file count `n_files_staged`); 1 in `results/supplementary_manifest.json` (how many commits the archive's anonymised git log carries); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `bytes`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `files`); 1 in `results/supplementary_manifest.json` (the supplementary archive's own size and file count `uncompressed`)"
   },
   "ver_claim_pct": {
     "source": "results/verify_reproduction.json",
@@ -9097,7 +9097,7 @@
   },
   "ver_diff_by_file": {
     "source": "results/verify_reproduction.json",
-    "value": "`results/supplementary_manifest.json` (4), `results/anon_bundle.json` (3)"
+    "value": "`results/supplementary_manifest.json` (4), `results/anon_bundle.json` (1)"
   },
   "ver_diff_nfiles": {
     "source": "results/verify_reproduction.json",
@@ -9105,7 +9105,7 @@
   },
   "ver_differing": {
     "source": "results/verify_reproduction.json",
-    "value": 7
+    "value": 5
   },
   "ver_files": {
     "source": "results/verify_reproduction.json",
@@ -9117,7 +9117,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "15,508"
+    "value": "15,516"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
@@ -9149,7 +9149,7 @@
   },
   "ver_part_else": {
     "source": "results/verify_reproduction.json",
-    "value": 7
+    "value": 5
   },
   "ver_part_index": {
     "source": "results/verify_reproduction.json",
@@ -9161,7 +9161,7 @@
   },
   "ver_pct": {
     "source": "results/verify_reproduction.json",
-    "value": "99.95"
+    "value": "99.97"
   },
   "ver_selfref": {
     "source": "results/verify_reproduction.json",
@@ -9193,7 +9193,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "15,515"
+    "value": "15,521"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",
