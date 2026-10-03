@@ -1,6 +1,6 @@
 {
   "n_artifacts": 82,
-  "n_paper_keys": 2266,
+  "n_paper_keys": 2269,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -190,7 +190,7 @@
     },
     {
       "artifact": "verify_reproduction.json",
-      "n_paper_keys": 25,
+      "n_paper_keys": 27,
       "writers": [
         "part_f_gate",
         "pipeline_coverage",
@@ -915,6 +915,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "input_set_audit.json",
+      "n_paper_keys": 3,
+      "writers": [
+        "input_set_audit"
+      ],
+      "invoked_writers": [
+        "input_set_audit"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "step4_3_differential.json",
       "n_paper_keys": 3,
       "writers": [
@@ -988,18 +1000,6 @@
       "invoked_writers": [
         "pipeline_coverage",
         "step4_4_overfit"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "input_set_audit.json",
-      "n_paper_keys": 2,
-      "writers": [
-        "input_set_audit"
-      ],
-      "invoked_writers": [
-        "input_set_audit"
       ],
       "covered": true,
       "exempt_reason": null

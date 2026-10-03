@@ -17,6 +17,8 @@ reading, and only if the committed runs' measured hours plus theirs stay within 
 
   python scripts/x1_partc_timing.py               # probe and project
   python scripts/x1_partc_timing.py --write-queue # and append the seed-0 runs to runs/queue_round2.txt
+  python scripts/x1_partc_timing.py --queue-from-record  # append the committed record's queued runs;
+                                                         # no probe, no rewrite (reproduce.sh, round 2 T8)
 
 Writes results/x1_partc_timing.json; probe runs under runs/round2_x1probe/ (gitignored).
 """
@@ -42,7 +44,18 @@ QUEUE = os.path.join(R.REPO_ROOT, "runs", "queue_round2.txt")
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-queue", action="store_true")
+    ap.add_argument("--queue-from-record", action="store_true")
     a = ap.parse_args()
+    if a.queue_from_record:
+        t = json.load(open(os.path.join(R.RESULTS, "x1_partc_timing.json")))
+        assert t["committed_within_cap"] and t["queued"], "the record is BLOCKED or queues nothing"
+        existing = open(QUEUE).read().split("\n") if os.path.exists(QUEUE) else []
+        with open(QUEUE, "a") as f:
+            for ln in t["queued"]:
+                if ln not in existing:
+                    f.write(ln + "\n")
+        print(f"  appended to {R.rel(QUEUE)} from the record: {t['queued']}")
+        return
     if os.path.isdir(PROBE_DIR):
         shutil.rmtree(PROBE_DIR)
     os.makedirs(PROBE_DIR)

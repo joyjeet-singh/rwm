@@ -166,8 +166,12 @@ if [ $QUICK -eq 0 ]; then
         results/step5_armA_seed2_dup.json ./run_control.sh
   stage 11c "TRAINING — ensemble-5 arms (M-43)" "13 h" \
         results/step5_armA_seed2_ens5.json ./run_ens5.sh
-  # Round 2, T8: the drivers round 1 found undriven, and the pre-submission queues. Each
-  # driver skips a run whose artifact exists, so a re-run trains only what is missing.
+  # Round 2, T8: the drivers round 1 found undriven, and the pre-submission queues.
+  # run_10k_d1.sh, run_indep_ens.sh, run_m49_matched.sh and run_nll_indep_ens.sh skip a
+  # run whose artifact exists; run_nll.sh does not, and retrains its three seeds. The
+  # drivers exit 0 whatever training does, so these stages report OK on a failed run
+  # (round 2's OUT_OF_SCOPE). The queue runner's runs refuse to overwrite a finished
+  # artifact and are listed as failed, which fails stages 11i and 11j.
   stage 11d "TRAINING — 10,000-iteration runs of seeds 0 and 2 (R-60)" "16 h" \
         results/step5_armB_seed2_10k.json ./run_10k_d1.sh
   stage 11e "TRAINING — Arm A seeds 3 and 4 for the independent ensemble (M-44)" "2.5 h" \
@@ -181,14 +185,19 @@ if [ $QUICK -eq 0 ]; then
         results/step5_armA_seed2_nll.json ./run_nll.sh
   stage 11h "TRAINING — corrected-objective seeds 3 and 4 for the combined arm (M-68)" "2.5 h" \
         results/step5_armA_seed4_nll.json ./run_nll_indep_ens.sh
-  # The pre-submission queue, generated as it was: the sweep's probe writes its 24 lines,
-  # then the baselines' 18 are appended from the committed probe record under the user's
-  # recorded cap (no re-probe), and the queue runner trains them one at a time.
+  # The pre-submission queue, written from the committed timing records with no re-probe
+  # (the records are the measurement; a re-probe measures whatever machine runs it and
+  # rewrites a file the paper reads): the sweep's 24 lines, then the baselines' 18 as the
+  # user's cap ruling left them (results/baselines_timing.json, cap_ruling). Both queue
+  # files were checked to come out byte-identical to the ones that ran (round 2, T8). The
+  # runner gets this script's PY, logs where scripts/s8_runtime.py reads, and the stage
+  # fails if any run failed.
   stage 11i "TRAINING — the M/N sweep (M-74) and the Table S7 baselines (M-75, M-76)" "60 h" \
-        results/baseline_run_transformer_ar_s7_seed2.json bash -c "$PY scripts/mn_sweep_timing.py --write-queue && $PY scripts/baselines_timing.py --from-record-cap 23 --ruling docs/presubmission/DECISIONS_FOR_USER.md#S2b-baseline-cap && bash scripts/queue_runner.sh runs/queue.txt"
-  # Round 2's queue: rule X1's Part C variants, seed 0 (M-80), within its 10-hour cap.
+        results/baseline_run_transformer_ar_s7_seed2.json bash -c "$PY scripts/mn_sweep_timing.py --queue-from-record && $PY scripts/baselines_timing.py --queue-from-record && PY=$PY bash scripts/queue_runner.sh runs/queue.txt > runs/queue.log 2>&1 && [ ! -s runs/queue_failed.txt ]"
+  # Round 2's queue: rule X1's Part C variants, seed 0 (M-80), within its 10-hour cap,
+  # likewise from the committed record.
   stage 11j "TRAINING — X1 Part C retraining variants, seed 0 (M-80)" "4.5 h" \
-        results/baseline_run_rssm_tf_x1v2_seed0.json bash -c "$PY scripts/x1_partc_timing.py --write-queue && bash scripts/queue_runner.sh runs/queue_round2.txt"
+        results/baseline_run_rssm_tf_x1v2_seed0.json bash -c "$PY scripts/x1_partc_timing.py --queue-from-record && PY=$PY bash scripts/queue_runner.sh runs/queue_round2.txt > runs/queue_round2.log 2>&1 && [ ! -s runs/queue_round2_failed.txt ]"
 else
   echo ""
   echo " STAGES 9-11j (training) SKIPPED in --quick mode."
@@ -374,8 +383,12 @@ stage 20r3a "P4 — power for M-69, before the cross-model comparison" "2 min" \
       results/p4_transfer_power.json $PY scripts/p4_transfer_power.py
 REPORT=task_d3_cross_model_report.txt stage 20r4 "M-69 — cross-model transfer of the per-horizon multiplier" "12 min" \
       results/task_d3_cross_model.json NEEDS_WEIGHTS $PY scripts/task_d3_cross_model.py
+# An empty output-check, as M12 above: this is a gate, and a declared output that is
+# committed would skip it on every run without --force. Round 2's T8 declared
+# results/claims_to_evidence.json here and its review caught exactly that; the write
+# is visible to pipeline_coverage through ledger_check.py's CLAIMS_OUT constant.
 stage 21 "Ledger consistency check and claims-to-evidence map" "5 s" \
-      results/claims_to_evidence.json $PY scripts/ledger_check.py
+      "" $PY scripts/ledger_check.py
 # Appendix G, generated from the ledger. It feeds six paper keys and its writer
 # was in no stage: paper_numbers.py read the artifact unconditionally, so stage
 # 23 only ever succeeded because a clean clone carries results/ in. That is the

@@ -20,6 +20,10 @@ this script refuses to write the queue while a drop is unrecorded.
 
 Writes results/mn_sweep_timing.json and, with --write-queue, runs/queue.txt: one line per
 run, whole configurations in priority order, seeds 0, 1, 2 within each.
+
+--queue-from-record writes the same runs/queue.txt from the committed record alone: no probe,
+and results/mn_sweep_timing.json is not rewritten. reproduce.sh's training block uses it (round 2,
+T8), because the record is the measurement and a re-probe measures whatever machine runs it.
 """
 import argparse
 import json
@@ -59,6 +63,26 @@ def probe(m, n):
             "n_train_windows": a["hyperparameters"]["n_train_windows"]}
 
 
+def write_queue(pairs, seeds, iters):
+    qp = os.path.join(R.REPO_ROOT, "runs", "queue.txt")
+    assert not os.path.exists(qp), f"{R.rel(qp)} exists; the queue is written once"
+    with open(qp, "w") as f:
+        f.write("# PRE-SUBMISSION training queue (PLAN S2a/S2b). One run per line:\n"
+                "# id arch M N seed iterations. Written by scripts/mn_sweep_timing.py;\n"
+                "# S2b appends its baselines after these lines.\n"
+                "# --- rule M-74: the M/N sweep, whole configurations in priority order\n")
+        for m, n in pairs:
+            for s in seeds:
+                f.write(f"mn_M{m}_N{n}_s{s} rwm {m} {n} {s} {iters}\n")
+    print(f"  wrote {R.rel(qp)}: {len(pairs) * len(seeds)} runs")
+
+
+def queue_from_record():
+    t = json.load(open(os.path.join(R.RESULTS, "mn_sweep_timing.json")))
+    assert not t["dropped_configs"] or t["drop_recorded_in"], "the record has an unrecorded drop"
+    write_queue(t["queued_configs"], t["seeds"], t["iterations"])
+
+
 def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import p5_sweep_power as P5
@@ -67,7 +91,11 @@ def main():
     ap.add_argument("--write-queue", action="store_true")
     ap.add_argument("--drop-recorded-in", default=None,
                     help="ledger ID recording a drop, required when the grid exceeds the cap")
+    ap.add_argument("--queue-from-record", action="store_true",
+                    help="write runs/queue.txt from the committed record; no probe, no rewrite")
     args = ap.parse_args()
+    if args.queue_from_record:
+        return queue_from_record()
     if os.path.isdir(PROBE_DIR):
         shutil.rmtree(PROBE_DIR)
     os.makedirs(PROBE_DIR)
@@ -119,17 +147,7 @@ def main():
         assert not dropped or args.drop_recorded_in, \
             "configurations were dropped: record the drop in the ledger first (M-74), then " \
             "pass --drop-recorded-in <ID>"
-        qp = os.path.join(R.REPO_ROOT, "runs", "queue.txt")
-        assert not os.path.exists(qp), f"{R.rel(qp)} exists; the queue is written once"
-        with open(qp, "w") as f:
-            f.write("# PRE-SUBMISSION training queue (PLAN S2a/S2b). One run per line:\n"
-                    "# id arch M N seed iterations. Written by scripts/mn_sweep_timing.py;\n"
-                    "# S2b appends its baselines after these lines.\n"
-                    "# --- rule M-74: the M/N sweep, whole configurations in priority order\n")
-            for r in kept:
-                for s in SEEDS:
-                    f.write(f"mn_M{r['M']}_N{r['N']}_s{s} rwm {r['M']} {r['N']} {s} {ITERS}\n")
-        print(f"  wrote {R.rel(qp)}: {len(kept) * len(SEEDS)} runs")
+        write_queue([(r["M"], r["N"]) for r in kept], SEEDS, ITERS)
 
 
 if __name__ == "__main__":

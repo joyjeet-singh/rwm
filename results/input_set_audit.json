@@ -61,16 +61,16 @@
     },
     {
       "file": "scripts/make_anon_bundle.py",
-      "line": 590,
-      "citation": "scripts/make_anon_bundle.py:590",
+      "line": 594,
+      "citation": "scripts/make_anon_bundle.py:594",
       "text": "for root, _, names in os.walk(staging):",
       "classification": "open population",
       "reason": "walks staging to verify"
     },
     {
       "file": "scripts/paper_figures.py",
-      "line": 208,
-      "citation": "scripts/paper_figures.py:208",
+      "line": 233,
+      "citation": "scripts/paper_figures.py:233",
       "text": "for f in sorted(glob.glob(os.path.join(R.RESULTS, \"step5_arm*.json\"))):",
       "classification": "open population",
       "reason": "GUARDED: the loop skips any run whose recorded rnn_hidden_size is not the released width, the Appendix B fix"
@@ -85,40 +85,40 @@
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 785,
-      "citation": "scripts/paper_numbers.py:785",
+      "line": 795,
+      "citation": "scripts/paper_numbers.py:795",
       "text": "runs_all = sorted(glob.glob(\"results/step5_arm*.json\"))",
       "classification": "open population",
       "reason": "GUARDED: the _width predicate defined beside it filters to the released width, the Appendix B fix itself"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1307,
-      "citation": "scripts/paper_numbers.py:1307",
+      "line": 1317,
+      "citation": "scripts/paper_numbers.py:1317",
       "text": "for _f in sorted(_glob.glob(\"results/step5_*.json\")):",
       "classification": "open population",
       "reason": "the CPU budget deliberately includes every run, M-49's arm included, and Appendix B states how many of them are that arm"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1858,
-      "citation": "scripts/paper_numbers.py:1858",
+      "line": 1868,
+      "citation": "scripts/paper_numbers.py:1868",
       "text": "for _f in sorted(_g.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
       "reason": "GUARDED: _width(_f) != _released_w continues, inside the loop"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 1876,
-      "citation": "scripts/paper_numbers.py:1876",
+      "line": 1886,
+      "citation": "scripts/paper_numbers.py:1886",
       "text": "_all = len([f for f in _g.glob(\"results/step5_arm*.json\")",
       "classification": "open population",
       "reason": "GUARDED: _width(f) == _released_w in the comprehension"
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 2585,
-      "citation": "scripts/paper_numbers.py:2585",
+      "line": 2609,
+      "citation": "scripts/paper_numbers.py:2609",
       "text": "for f in sorted(_g2.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
       "reason": "the run inventory is deliberately every run, and run_total matches Appendix B. NOTE: width is not part of the row key, so M-49's width-124 runs share a row with released-width runs of the same shape. That is a presentation gap, not a stale set -- no number it produces is wrong -- and it is logged rather than changed, per A.3's 'fix only what affects a published number'"

@@ -115,7 +115,7 @@ RETIRED = {
 }
 
 def main():
-    hits, unclassified = [], []
+    hits, unclassified, seen = [], [], set()
     for d in ("scripts", "src"):
         for fn in sorted(os.listdir(d)):
             if not fn.endswith(".py"):
@@ -135,6 +135,14 @@ def main():
                 if key not in CLASSIFICATION:
                     unclassified.append({"file": p, "line": i, "text": line.strip()[:120]})
                     continue
+                # A classification covers one line. Keyed by text, a second line with the same
+                # text in the same file would otherwise inherit it unread; it is a new discovery
+                # until someone reads it (round 2, T8 review).
+                if key in seen:
+                    unclassified.append({"file": p, "line": i, "text": line.strip()[:120],
+                                         "why": "same text as a classified line in this file"})
+                    continue
+                seen.add(key)
                 cls, why = CLASSIFICATION[key]
                 hits.append({"file": p, "line": i, "citation": f"{p}:{i}",
                              "text": line.strip()[:120], "classification": cls,

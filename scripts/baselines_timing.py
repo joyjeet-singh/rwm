@@ -86,13 +86,29 @@ def from_record(cap, ruling):
     write_queue(queued)
 
 
+def queue_from_record():
+    """Append the queued baselines from the committed record alone: no probe, no rewrite.
+
+    For reproduce.sh's training block (round 2, T8). from_record() is the step that applied the
+    user's cap to a recorded block, once, and it refuses a record that has already been ruled on;
+    this reads the ruled record as it stands.
+    """
+    t = json.load(open(os.path.join(R.RESULTS, "baselines_timing.json")))
+    assert not t["blocked"] and t["queued"], "the record is blocked or queues nothing"
+    write_queue(t["queued"])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-queue", action="store_true")
+    ap.add_argument("--queue-from-record", action="store_true",
+                    help="append the record's queued baselines to runs/queue.txt; no probe, no rewrite")
     ap.add_argument("--from-record-cap", type=float, default=None,
                     help="after a recorded block: queue under this cap, set by the user's ruling")
     ap.add_argument("--ruling", default=None, help="where the user's ruling is recorded")
     args = ap.parse_args()
+    if args.queue_from_record:
+        return queue_from_record()
     if args.from_record_cap is not None:
         assert args.ruling, "--from-record-cap needs --ruling"
         return from_record(args.from_record_cap, args.ruling)
