@@ -32,7 +32,10 @@ assert not subprocess.run(["git", "status", "--porcelain", "--", "PAPER.pdf", "s
 pdf_pages = len(PdfReader("PAPER.pdf").pages)
 assert pdf_pages == int(v("pdf_pages")), (pdf_pages, v("pdf_pages"))
 A, S = zipfile.ZipFile("supplementary_anon.zip"), zipfile.ZipFile("supplementary.zip")
-an, sn = set(A.namelist()), set(S.namelist())
+# supplementary.zip stores every member under a top-level supplementary/ folder; compare the paths below it.
+SP = {(x.split("/", 1)[1] if x.startswith("supplementary/") else x): x for x in S.namelist()}
+assert len(SP) == len(S.namelist())
+an, sn = set(A.namelist()), set(SP)
 only_anon, only_supp = sorted(an - sn), sorted(sn - an)
 assert sn < an and not only_supp, "supplementary.zip is no longer a strict subset of the anonymised bundle"
 figs = [f for f in only_anon if re.fullmatch(r"figures/[^/]+\.png", f)]
@@ -42,7 +45,7 @@ tex_figs = sorted(set(re.findall(r"figures/([\w.-]+\.png)", open("PAPER.tex").re
 assert all(f"figures/{f}" in figs for f in tex_figs), tex_figs
 top = ["README.md", "LICENSE", "MODEL_CARD.md", "CITATION.cff", "NOTICE"]
 assert all(t in only_anon for t in top), [t for t in top if t not in only_anon]
-shared_diff = sorted(m for m in sn if A.getinfo(m).CRC != S.getinfo(m).CRC)
+shared_diff = sorted(m for m in sn if A.getinfo(m).CRC != S.getinfo(SP[m]).CRC)
 mc = A.read("MODEL_CARD.md").decode()
 mc_sha = sorted(set(re.findall(r"\b[0-9a-f]{64}\b", mc)))
 
@@ -54,7 +57,7 @@ ab_words = abstract.split()
 
 # ---- the evidence --------------------------------------------------------------------------------
 sweep = open(SWEEP).read()
-m = re.search(r"TOTAL[^\n]*?(\d+)\s*hits?", sweep)
+m = re.search(r"TOTAL HITS ACROSS ALL TARGETS:\s*(\d+)", sweep)
 assert m and int(m.group(1)) == 0, "the independent sweep did not report 0 hits"
 gate = open(GATE).read()
 g = re.search(r"(\d+)/(\d+) checks pass", gate)
@@ -137,8 +140,8 @@ print(" ".join(re.search(r"##\\s*Abstract\\s*\\n+(.+?)\\n\\s*---", md, re.S).gro
 EOF
 ```
 
-At `{HEAD}` it is {len(ab_words)} words by a whitespace split (the paper's own check, C12.1, counts
-{v('ab_words') if 'ab_words' in N else 'within its 370-word cap'}). It begins "{' '.join(ab_words[:10])}" and ends
+At `{HEAD}` it is {len(ab_words)} words by a whitespace split, within the 370-word cap the paper's own
+check C12.1 enforces. It begins "{' '.join(ab_words[:10])}" and ends
 "...{' '.join(ab_words[-10:])}". It is not retyped anywhere.
 
 ## 4. Keywords and one-sentence summary
