@@ -525,7 +525,7 @@ alongside the rules here and in §5.3 are pooled, recomputed afterwards (post ho
 {{n2_n_changed_word}} in-sample readings of §5.3's rules (which configurations a reading resolves can
 shift; the artifact lists each): {{n2_changed_list}}.
 
-**Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre, {{mn_worse_list}} are worse, and
+**Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre ({{mn_better_kinds}}), {{mn_worse_list}} are worse, and
 {{mn_unres_list}} cannot be told apart from it. At h = {{v2_diag_h}} the lowest error is {{mn_best_config}}'s,
 {{mn_best_l1_h368}} against the centre's {{mn_centre_l1_h368}}, a difference of {{mn_best_D}}
 {{mn_best_ci}}. The verdict does not rest on the anchor: on the in-sample arena's {{mn_nind_ins}} independent {{h2h_unit}}-step trajectories, {{mn_insample_clause}}, and among the held-out readings the rule
