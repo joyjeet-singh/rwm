@@ -1,6 +1,6 @@
 {
   "n_artifacts": 82,
-  "n_paper_keys": 2269,
+  "n_paper_keys": 2273,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -355,6 +355,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "m64_short_units.json",
+      "n_paper_keys": 18,
+      "writers": [
+        "m64_short_units"
+      ],
+      "invoked_writers": [
+        "m64_short_units"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "v1_ensemble_topology.json",
       "n_paper_keys": 18,
       "writers": [
@@ -412,18 +424,6 @@
       ],
       "invoked_writers": [
         "task4_arenas_and_difficulty"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "m64_short_units.json",
-      "n_paper_keys": 14,
-      "writers": [
-        "m64_short_units"
-      ],
-      "invoked_writers": [
-        "m64_short_units"
       ],
       "covered": true,
       "exempt_reason": null

@@ -117,8 +117,8 @@
     },
     {
       "file": "scripts/paper_numbers.py",
-      "line": 2609,
-      "citation": "scripts/paper_numbers.py:2609",
+      "line": 2611,
+      "citation": "scripts/paper_numbers.py:2611",
       "text": "for f in sorted(_g2.glob(\"results/step5_arm*.json\")):",
       "classification": "open population",
       "reason": "the run inventory is deliberately every run, and run_total matches Appendix B. NOTE: width is not part of the row key, so M-49's width-124 runs share a row with released-width runs of the same shape. That is a presentation gap, not a stale set -- no number it produces is wrong -- and it is logged rather than changed, per A.3's 'fix only what affects a published number'"

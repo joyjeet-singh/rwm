@@ -11,7 +11,7 @@
   ],
   "n_quotations": 5,
   "n_quotations_present_in_transcript": 5,
-  "n_quotations_used_in_paper": 5,
+  "n_quotations_used_in_paper": 3,
   "output": "docs/SUPPLEMENTARY_CORRESPONDENCE.md",
   "output_note": "written outside the repository tree and copied into the anonymised bundle at this path; see M-48"
 }
