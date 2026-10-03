@@ -241,7 +241,9 @@ one episode's end onto the next one's start. The usable, episode-respecting coun
 
 **Model.** A GRU-based ensemble predicting the next proprioceptive state, with a mean head and a
 bounded log-σ head, plus auxiliary heads for contact and termination. The paper describes two loss
-terms; the implementation has {{diff_terms}}.
+terms; the implementation has {{diff_terms}}. Before any training, our rebuild's outputs match the
+released module's bitwise, and its losses and gradients match to {{diff_grad_max}} across those
+{{diff_terms}} terms and {{diff_n_params}} parameter tensors (Appendix A).
 
 **Evaluation.** Two arenas, kept separate throughout: *out-of-sample*, the two episodes withheld
 from training, and *in-sample*, the eight used for it. The released evaluation draws its
@@ -1026,7 +1028,8 @@ magnitude of the model's own predicted state change ranks realised error at {{e7
 {{e7_r_dis}} for the five-member ensemble disagreement the method is built on. The margin between
 them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve, so at
 n_independent = {{e7_nind}} 400-step trajectories we cannot say the ensemble ranks better than a
-subtraction.
+subtraction. If the observed margin is the true one, settling it needs {{q2_n_req}} of them, an
+estimate under an assumed effect (§11, Appendix R).
 
 **Disagreement does still carry information the subtraction does not.** With `step-size`
 partialled out it retains {{e7_step_partial}}, far above the {{e7_mde_partial}} MDE for that test,
