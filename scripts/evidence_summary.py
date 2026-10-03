@@ -224,7 +224,7 @@ def build_rows():
     mn_arena = arena_of_episodes(ME["arenas"]["held_out"]["episodes"])
     _better = MV["governing"]["conditions"]["configs_excluding_zero_in_their_favour"]
     rows.append({
-        "claim": "(M, N) = (32, 8) is the optimal configuration (the accuracy half of the trade-off)",
+        "claim": "(M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off)",
         "section": "5.2",
         "arena": mn_arena,
         "n_independent": ME["arenas"]["held_out"]["n_independent"],
@@ -236,12 +236,17 @@ def build_rows():
         "model": "our arms",
         "artifacts": ["results/mn_sweep_verdict.json", "results/mn_sweep_eval.json"],
     })
+    # Round 2, T9: section 5.3 ends "the architecture claim rests on the MLP and the transformer",
+    # because rule X1 found no read-out or retraining that rescues our RSSM. The rows carry that
+    # qualifier only while X1's reading is the one that makes the RSSM uninformative.
+    assert J("rssm_diagnostics.json")["final_reading"] == "NOT RESCUED BY THE SETTINGS TRIED"
     for _rule, _how in (("M-75", "teacher-forced, as the original trains them"),
                         ("M-76", "trained autoregressively: architecture at one training regime, "
                                  "not the original's claim")):
         _R = BV["rules"][_rule]
         rows.append({
-            "claim": f"RWM beats MLP, RSSM and transformer baselines ({_how})",
+            "claim": f"RWM beats MLP, RSSM and transformer baselines ({_how}; the RSSM comparison "
+                     f"uninformative, rule X1)",
             "section": "5.3",
             "arena": mn_arena,
             "n_independent": ME["arenas"]["held_out"]["n_independent"],
@@ -299,7 +304,8 @@ def build_rows():
         "arena": e7_arena,
         "n_independent": E7["design"]["n_independent"],
         "in_sample": in_sample(e7_model, e7_arena),
-        "verdict": ("the partial survives; the margin is below the minimum detectable effect"
+        "verdict": (f"{E7['verdict']}: step size not beaten, the margin below the minimum detectable "
+                    f"effect; the partial survives"
                     if step["partial_beats_mde"] and not step["margin_beats_mde"]
                     else "beats it on both the margin and the partial"
                     if step["margin_beats_mde"] and step["partial_beats_mde"]
@@ -349,10 +355,11 @@ def build_rows():
         # S4: the released checkpoint trained on both held-out episodes, so its cells are
         # unseen by the multiplier only; Arm A's own multipliers are the same test on a model
         # that never saw them (results/task_d3_cross_model.json).
-        "verdict": (("every point estimate unseen by the multiplier within tolerance"
+        "verdict": (("every released-checkpoint point estimate unseen by the multiplier within tolerance"
                      if d3v["per_horizon_restores_calibration"]
-                     else "not every point estimate unseen by the multiplier within tolerance")
-                    + f"; unseen by the model too (Arm A's own), {d3x_own['cells_within_tolerance']}"
+                     else "not every released-checkpoint point estimate unseen by the multiplier within tolerance")
+                    + f"; on Arm A at {J('task_d3_cross_model.json')['design']['iterations']:,} iterations, "
+                      f"unseen by its model too, {d3x_own['cells_within_tolerance']}"
                       f" of {d3x_own['n_cells']} epistemic cells"
                     + ("" if all(d3_res) else "; tolerance not resolvable at this arena")),
         "multiplicity": multiplicity(mde_met=all(d3_res)),
