@@ -1662,7 +1662,7 @@ existed. This is the same computation Figure 1 plots.
 | `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED — reproduces at long horizon |
 | `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |
 | `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |
-| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | SUPPORTED |
+| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION |
 | `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | — | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED — favours the matched ensemble by less than the MDE |
 | `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | — | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |
 | `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | — | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |
