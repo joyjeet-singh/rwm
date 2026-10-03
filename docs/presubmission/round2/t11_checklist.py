@@ -46,8 +46,7 @@ SEC = f"""## Round 2, over `{HEAD}` — the known items now
 
 *[{subprocess.run(['date', '+%Y-%m-%d'], capture_output=True, text=True).stdout.strip()}, pre-submission round 2, T11]
 The passes below describe round 1's commits and are kept as dated records. This section is the current
-list, written by `docs/presubmission/round2/t11_checklist.py` from the files it names; section 8's
-figures come from {MLABEL}, a clean clone of the commit that prints them.*
+list, written by `docs/presubmission/round2/t11_checklist.py` from the files it names; section 8's figures come from {MLABEL}, a clean clone of `5e7969c`; the commits after it carry M3's own verification record, so a clean clone of them is predicted to measure the printed figures on all 17 reproduction keys. That is a prediction, not a measurement; round 2's T12 measures it.*
 
 ### Open items
 

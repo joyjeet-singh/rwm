@@ -46,6 +46,16 @@ assert all(f"figures/{f}" in figs for f in tex_figs), tex_figs
 top = ["README.md", "LICENSE", "MODEL_CARD.md", "CITATION.cff", "NOTICE"]
 assert all(t in only_anon for t in top), [t for t in top if t not in only_anon]
 shared_diff = sorted(m for m in sn if A.getinfo(m).CRC != S.getinfo(SP[m]).CRC)
+assert shared_diff == ["GIT_LOG_ANONYMISED.txt"], shared_diff
+_la = [l for l in A.read("GIT_LOG_ANONYMISED.txt").decode().splitlines() if l and not l.startswith("#")]
+_ls = [l for l in S.read(SP["GIT_LOG_ANONYMISED.txt"]).decode().splitlines() if l and not l.startswith("#")]
+assert len(_la) == len(_ls), (len(_la), len(_ls))     # the same commits; only the headers' lengths differ
+_subj_diff = sum(1 for a, b in zip(_la, _ls) if a != b)
+assert _subj_diff >= 1 and all("the first author" in a for a, b in zip(_la, _ls) if a != b)
+shipped_pre = sorted(x for x in an if x.startswith("docs/presubmission/"))
+assert shipped_pre and all(x in sn for x in shipped_pre), shipped_pre
+SWH = json.load(open("results/swh_visit_check.json"))
+swh_last = max(v["date_utc"] for v in SWH["visits"])[:10]
 mc = A.read("MODEL_CARD.md").decode()
 mc_sha = sorted(set(re.findall(r"\b[0-9a-f]{64}\b", mc)))
 
@@ -82,8 +92,21 @@ browser.** Every figure here was read from the file it describes, at commit `{HE
 bundles before writing it; the checksums were computed for this document rather than copied from an
 earlier session. This replaces the round-1 version, which predated the pre-submission edit.
 
-**Nothing blocks the upload.** Every item that needed a ruling has one; the items that remain under
-"Open items" below are recorded, and none of them changes what is uploaded.
+**Before uploading, two things must be done, in this order.** Nothing in "Open items" (§8) blocks the
+upload, but these do:
+
+1. **The clean-clone verification (round 2, T12) must pass.** The reproduction figures §8 of the paper
+   prints come from a clean clone of an earlier commit, and a clone of this one is predicted to measure
+   them exactly; T12 measures it. If T12 stops, do not upload.
+2. **The user's steps in `docs/presubmission/round2/PLAN.md` §0.4, steps 1-4:** bring the GitHub default
+   branch up to date with `presubmission2`; re-upload `MODEL_CARD.md` to the Hugging Face model
+   repository; **trigger a Software Heritage archive of the final pushed commit**; send the author
+   query if it has not gone. The archive is not optional: the paper says the repository was archived
+   by a third-party archive before submission, and the only recorded visit
+   (`results/swh_visit_check.json`) is of {swh_last}, before round 2's pre-registrations existed. These
+   pushes must happen before the upload, because §9 forbids pushing once the paper is under review.
+
+Then upload the two files in §1, checking their checksums first.
 
 ---
 
@@ -101,9 +124,10 @@ narrower. It is gitignored, so unlike the two files above it is not tracked at a
 {len(sn)} members are a strict subset of the anonymised bundle's {len(an)}, with {len(only_supp)} files
 unique to it; and the {len(only_anon)} the anonymised bundle alone carries include all {len(figs)}
 figures — among them the {len(tex_figs)} the paper's LaTeX names ({fig_list}) — plus `README.md`,
-`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. {len(shared_diff)} shared members differ in
-content ({', '.join(f'`{x}`' for x in shared_diff) or 'none'}), each a record of the build that wrote
-it, and none identifying. Uploading it would therefore ship less, not more, and the checksum table
+`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. One shared member differs in content,
+`GIT_LOG_ANONYMISED.txt`: in its header, and in {_subj_diff} commit subjects where the anonymised builder
+replaces the name of the original paper's correspondent with "the first author". Neither copy
+identifies the submitting author. Uploading it would therefore ship less, not more, and the checksum table
 above covers the anonymised bundle.
 
 **One linkage ships with the bundle that is uploaded, knowingly.** `MODEL_CARD.md` is in the
@@ -156,9 +180,10 @@ uncertainty it penalises with miscalibrated as a scale that worsens with rollout
 
 ## 5. Anonymity confirmation
 
-Swept at commit `{HEAD}`, twice and independently: by the builders' own scans, whose planted probe
-fired on every run (the anonymised bundle's probe now plants a full commit hash, round 2 T8), and by
-sweep code written separately for verification. The channels covered were member paths, member text
+Swept at commit `{HEAD}`, twice and independently: by the builders' own scans (the anonymised
+bundle's builder also plants a probe, now a full commit hash since round 2, T8, which fired on every
+run; the supplementary builder's scan has no probe), and by sweep code written separately for
+verification. The channels covered were member paths, member text
 in several encodings, archive and member comments, extra fields, nested archives, PNG text chunks,
 PDF text, the Info dictionary, XMP, link annotations and inflated PDF streams. Terms: the author's
 name and its variants, the GitHub handle, the git-log e-mail, both repository URLs, the Hugging Face
@@ -174,7 +199,7 @@ A reviewer should meet these in the paper rather than discover them:
 - **A build gate is published as failing.** `part_f_gate` requires that no regenerated value differ
   between the repository and a clean clone. {v('ver_differing')} of {v('ver_values')} do, so it fails,
   and §8 says so. None of them is a measurement, a statistic or the verdict of a test; all are
-  bookkeeping, and §8 names each kind. With the identity strings supplied from outside the archive
+  bookkeeping, and the build-checks supplementary (`docs/BUILD_CHECKS.md`) names each kind. With the identity strings supplied from outside the archive
   and a clean clone's results, {g.group(1)} of {g.group(2)} checks pass, check 4 alone failing. A
   reviewer who runs it in a pristine clone without those inputs will see fewer pass: check 2 needs
   the identity strings, and check 4b needs the gitignored `supplementary.zip`.
@@ -220,8 +245,9 @@ the request flow change between cycles, and nothing here has been checked agains
 
 - **Nothing is pushed to the remote while this is under double-blind review.** The repository has a
   public origin under the author's account; a push during review would de-anonymise the submission.
-- `docs/SUBMISSION_CHECKLIST.md`, `docs/DEFERRED.md`, `docs/COMMIT_LABEL_MAP.json` and
-  `docs/presubmission/` are internal and appear in no bundle.
+- `docs/SUBMISSION_CHECKLIST.md`, `docs/DEFERRED.md` and `docs/COMMIT_LABEL_MAP.json` are internal and
+  appear in no bundle. `docs/presubmission/` is internal too, except the {len(shipped_pre)} records the
+  paper cites, which both bundles ship deliberately ({', '.join(f'`{x.split("/")[-1]}`' for x in shipped_pre)}).
 - The commit identifiers in the bundles are rendered as labels, not real hashes. Do not replace them
   by hand.
 

@@ -1,13 +1,26 @@
 # Submission package
 
 Everything needed to upload this submission, and nothing else. **Written for a person at a
-browser.** Every figure here was read from the file it describes, at commit `c35c62e`, by
+browser.** Every figure here was read from the file it describes, at commit `5d2b681`, by
 `docs/presubmission/round2/t11_package.py`, which also asserts each statement below about the two
 bundles before writing it; the checksums were computed for this document rather than copied from an
 earlier session. This replaces the round-1 version, which predated the pre-submission edit.
 
-**Nothing blocks the upload.** Every item that needed a ruling has one; the items that remain under
-"Open items" below are recorded, and none of them changes what is uploaded.
+**Before uploading, two things must be done, in this order.** Nothing in "Open items" (§8) blocks the
+upload, but these do:
+
+1. **The clean-clone verification (round 2, T12) must pass.** The reproduction figures §8 of the paper
+   prints come from a clean clone of an earlier commit, and a clone of this one is predicted to measure
+   them exactly; T12 measures it. If T12 stops, do not upload.
+2. **The user's steps in `docs/presubmission/round2/PLAN.md` §0.4, steps 1-4:** bring the GitHub default
+   branch up to date with `presubmission2`; re-upload `MODEL_CARD.md` to the Hugging Face model
+   repository; **trigger a Software Heritage archive of the final pushed commit**; send the author
+   query if it has not gone. The archive is not optional: the paper says the repository was archived
+   by a third-party archive before submission, and the only recorded visit
+   (`results/swh_visit_check.json`) is of 2026-08-21, before round 2's pre-registrations existed. These
+   pushes must happen before the upload, because §9 forbids pushing once the paper is under review.
+
+Then upload the two files in §1, checking their checksums first.
 
 ---
 
@@ -25,9 +38,10 @@ narrower. It is gitignored, so unlike the two files above it is not tracked at a
 491 members are a strict subset of the anonymised bundle's 515, with 0 files
 unique to it; and the 24 the anonymised bundle alone carries include all 13
 figures — among them the 6 the paper's LaTeX names (`paper_fig1_calibration`, `paper_fig2_sigma_profile`, `paper_fig3_collapse`, `paper_fig4_prereg_timeline`, `paper_fig5_three_way`, `paper_fig6_ab_by_horizon`) — plus `README.md`,
-`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. 1 shared members differ in
-content (`GIT_LOG_ANONYMISED.txt`), each a record of the build that wrote
-it, and none identifying. Uploading it would therefore ship less, not more, and the checksum table
+`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. One shared member differs in content,
+`GIT_LOG_ANONYMISED.txt`: in its header, and in 2 commit subjects where the anonymised builder
+replaces the name of the original paper's correspondent with "the first author". Neither copy
+identifies the submitting author. Uploading it would therefore ship less, not more, and the checksum table
 above covers the anonymised bundle.
 
 **One linkage ships with the bundle that is uploaded, knowingly.** `MODEL_CARD.md` is in the
@@ -45,7 +59,7 @@ shasum -a 256 PAPER.pdf supplementary_anon.zip
 ```
 
 and confirm the two lines match the table above. If they do not, something has rebuilt one of them
-since `c35c62e`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
+since `5d2b681`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
 and ID, so a rebuild alone changes its checksum.
 
 ## 2. Title
@@ -64,7 +78,7 @@ print(" ".join(re.search(r"##\s*Abstract\s*\n+(.+?)\n\s*---", md, re.S).group(1)
 EOF
 ```
 
-At `c35c62e` it is 370 words by a whitespace split, within the 370-word cap the paper's own
+At `5d2b681` it is 370 words by a whitespace split, within the 370-word cap the paper's own
 check C12.1 enforces. It begins "We rebuild the proprioceptive dynamics model of the *Robotic World" and ends
 "...bound what the uncertainty reports, not what its miscalibration costs.". It is not retyped anywhere.
 
@@ -80,9 +94,10 @@ uncertainty it penalises with miscalibrated as a scale that worsens with rollout
 
 ## 5. Anonymity confirmation
 
-Swept at commit `c35c62e`, twice and independently: by the builders' own scans, whose planted probe
-fired on every run (the anonymised bundle's probe now plants a full commit hash, round 2 T8), and by
-sweep code written separately for verification. The channels covered were member paths, member text
+Swept at commit `5d2b681`, twice and independently: by the builders' own scans (the anonymised
+bundle's builder also plants a probe, now a full commit hash since round 2, T8, which fired on every
+run; the supplementary builder's scan has no probe), and by sweep code written separately for
+verification. The channels covered were member paths, member text
 in several encodings, archive and member comments, extra fields, nested archives, PNG text chunks,
 PDF text, the Info dictionary, XMP, link annotations and inflated PDF streams. Terms: the author's
 name and its variants, the GitHub handle, the git-log e-mail, both repository URLs, the Hugging Face
@@ -98,7 +113,7 @@ A reviewer should meet these in the paper rather than discover them:
 - **A build gate is published as failing.** `part_f_gate` requires that no regenerated value differ
   between the repository and a clean clone. 5 of 15,521 do, so it fails,
   and §8 says so. None of them is a measurement, a statistic or the verdict of a test; all are
-  bookkeeping, and §8 names each kind. With the identity strings supplied from outside the archive
+  bookkeeping, and the build-checks supplementary (`docs/BUILD_CHECKS.md`) names each kind. With the identity strings supplied from outside the archive
   and a clean clone's results, 7 of 8 checks pass, check 4 alone failing. A
   reviewer who runs it in a pristine clone without those inputs will see fewer pass: check 2 needs
   the identity strings, and check 4b needs the gitignored `supplementary.zip`.
@@ -144,8 +159,9 @@ the request flow change between cycles, and nothing here has been checked agains
 
 - **Nothing is pushed to the remote while this is under double-blind review.** The repository has a
   public origin under the author's account; a push during review would de-anonymise the submission.
-- `docs/SUBMISSION_CHECKLIST.md`, `docs/DEFERRED.md`, `docs/COMMIT_LABEL_MAP.json` and
-  `docs/presubmission/` are internal and appear in no bundle.
+- `docs/SUBMISSION_CHECKLIST.md`, `docs/DEFERRED.md` and `docs/COMMIT_LABEL_MAP.json` are internal and
+  appear in no bundle. `docs/presubmission/` is internal too, except the 3 records the
+  paper cites, which both bundles ship deliberately (`BASELINE_SPECS.md`, `ORIGINAL_SPECS.md`, `verify_original_specs.py`).
 - The commit identifiers in the bundles are rendered as labels, not real hashes. Do not replace them
   by hand.
 

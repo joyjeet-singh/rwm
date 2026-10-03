@@ -13,8 +13,7 @@ it is the level of its "Open items" heading.
 
 *[2026-10-04, pre-submission round 2, T11]
 The passes below describe round 1's commits and are kept as dated records. This section is the current
-list, written by `docs/presubmission/round2/t11_checklist.py` from the files it names; section 8's
-figures come from M3, a clean clone of the commit that prints them.*
+list, written by `docs/presubmission/round2/t11_checklist.py` from the files it names; section 8's figures come from M3, a clean clone of `5e7969c`. The commits after it carry M3's own verification record, which has the same 411 values as the record M3 carried in, so a clean clone of them is predicted to measure the printed figures on all 17 reproduction keys (`evidence/R2T11/predict_final`). That is a prediction, not a measurement; round 2's T12 measures it.*
 
 ### Open items
 

@@ -20,7 +20,7 @@ file on disk. Concretely:
   reference at the gradient level — losses and gradients match to `0.000e+00` across 7 terms and 106 tensors — before any training run is scored. Shapes, wiring, action indexing and the
   hold-last residual are each verified separately, and every later step inherits all five.
 
-- **22 pre-registered decision rules, with git lead times.** Each names its conditions and thresholds before its data existed, and Appendix E gives all 22 with the lead time computed from git. 21 have a positive lead and are a difference of two commit timestamps; the remaining one is negative and is not, because its data side is a line in a run log rather than a
+- **22 pre-registered decision rules, with git lead times.** All but one name their conditions and thresholds before their data existed, and Appendix E gives all 22 with the lead time computed from git. 21 have a positive lead and are a difference of two commit timestamps; the remaining one is negative and is not, because its data side is a line in a run log rather than a
   commit — it is the rule this paper withdraws as a pre-registration, and Appendix E says so. The
   full committed text of every rule ships in the supplementary material, unabridged.
 
@@ -56,8 +56,7 @@ description.
 The finding a practitioner can act on is that the uncertainty a deployed robotic world model
 penalises with is miscalibrated **as a scale, by a factor that grows with rollout depth** — so it
 is not a units problem a tuned coefficient absorbs. The best constant rescale, fitted and scored
-on the same data and therefore an upper bound on what any constant achieves, grows by a factor of 4 across the rollout. One repair is given, with its limit stated: a per-horizon
-multiplier, fitted on one held-out episode and scored on the other, brings every coverage estimate of the released checkpoint within 10 points of nominal, though no single cell is resolvable at this arena and those cells are unseen only by the multiplier, since the checkpoint trained on both episodes; on Arm A, whose model never saw them, its own multipliers manage 17 of 36 epistemic cells.
+on the same data and therefore an upper bound on what any constant achieves, grows by a factor of 4 across the rollout. One candidate repair is given, a recipe to refit rather than a demonstrated fix: a per-horizon multiplier, fitted on one held-out episode and scored on the other, brings every coverage estimate of the released checkpoint within 10 points of nominal, though no single cell is resolvable at this arena and those cells are unseen only by the multiplier, since the checkpoint trained on both episodes; on Arm A, whose model never saw them, its own multipliers manage 17 of 36 epistemic cells, and the cells are not independent trials.
 
 The lessons in §9 generalise past this checkpoint: do not convert per-dimension sign counts into
 P-values when the dimensions are physically coupled; count independent trajectories rather than
