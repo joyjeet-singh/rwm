@@ -9,6 +9,46 @@ it is the level of its "Open items" heading.
 
 *[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
+## Round 2, over `c35c62e` — the known items now
+
+*[2026-10-04, pre-submission round 2, T11]
+The passes below describe round 1's commits and are kept as dated records. This section is the current
+list, written by `docs/presubmission/round2/t11_checklist.py` from the files it names; section 8's
+figures come from M3, a clean clone of the commit that prints them.*
+
+### Open items
+
+- **The bare `swh:1:` prefix — ruled 2026-09-20, closed.** No occurrence is followed by an object name.
+- **`submission_check` returns 21 of 22** in the working tree. The one pending
+  criterion is C1: the claims audit, regenerated on the frozen text by ruling U5, extracts
+  526 claims, 59 supported and
+  467 unreviewed; the ruling leaves them unreviewed and records it.
+  **E7 passes**: fixed in round 2, T8, the check reads the build-checks supplementary as well as the
+  template. A3 needs the gitignored `supplementary.zip`, which a pristine clone does not carry.
+- **`part_f_gate` fails, and the paper publishes it as failing.** 7 of 8 checks
+  pass with the identity strings supplied and a clean clone's results; check 4 alone fails because
+  5 of 15,521 regenerated values differ, all of them bookkeeping in
+  2 bundle records (`results/supplementary_manifest.json` (4), `results/anon_bundle.json` (1)), none of them a measurement, a
+  statistic or a verdict.
+- **The claims audit is current.** It was regenerated in round 2, T11, so it no longer accounts for
+  any differing value (round 1's 355 of 364).
+- **`results/supplementary_manifest.json` is still off by one in two counts:** it records
+  490 files for an archive of 491 members, and 392 commits
+  for a log of 391, the builder arithmetic recorded below. No number the paper prints comes from
+  it.
+- **4 reports `reproduce.sh` writes are neither committed nor gitignored**
+  (`evidence_summary_report.txt`, `input_set_audit_report.txt`, `insample_framing_report.txt`, `m62_episode_clustering_report.txt`). They are why a clone's archive holds more files than the
+  tree's, and so part of the bundle bookkeeping above.
+- **Figure-internal label overlaps — fixed in round 2, T8** (rendered Figures 2(a), 5 and 6; no plotted
+  value changed). The PDF still prints the step-size quantity as the literal text `‖µ_t − µ_{t−1}‖`;
+  cosmetic.
+- **`results/p4_transfer_power.json` now has a stage** (20r3a, round 2, T8), and stage 28a3 passes.
+- **Clean-clone runs share one private folder by default** (`scripts/t5_anon_transcript.py`); set
+  `RWM_PRIVATE_DIR` per clone. **`results/v3_metric_definitions.json` embeds the checkout folder's
+  name** in its citation strings; text only, ignored by the verifier.
+- **What the reproduction evidence covers.** Repeatability on one host, one interpreter and one set
+  of hash-verified inputs, not portability: no second machine has produced these figures.
+
 ## This pass, over `c16267c`
 
 1. [2026-09-27] Clean clone, `./reproduce.sh --quick --force` — PASS: two independent clones of this
