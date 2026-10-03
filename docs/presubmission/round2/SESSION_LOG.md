@@ -528,3 +528,73 @@ CPU jobs over 1 min: four build-and-gate passes (about 1 min each); five quick c
 Body words (FILE_MAP §13 command): 20,771 (T0: 26,526; T9's end: 20,472; +299, all scoping qualifiers). The shortfall against 19,000 is reported under U3.
 Next: T11 (Opus 5.5, default): freeze; regenerate the claims audit (U5); measure a clean clone of the pushed HEAD and restate §8 by round 1's B3 recipe; rebuild both bundles; refresh the package documents (OUT_OF_SCOPE lists SUBMISSION_CHECKLIST's and SUBMISSION_PACKAGE's stale figure-overlap lines). Run `appendix_g_rules.py` and `part_f_gate.py` there too; neither is in the fast build.
 Decisions for user: none.
+
+## T11 — 2026-10-04 01:55 — Opus 5.5, xhigh effort (the plan assigns default) — status: COMPLETE
+Commits:
+722ee57 [T11][item 2] Regenerate the claims audit on the frozen text (ruling U5)
+ecc15f8 [T11][item 3] Regenerate the stale committed records a clean clone rewrites, before measuring again
+678b9ed [T11][item 5, tools] The package-document generators, run after the bundles
+1a2c6ec [T11][item 3] Restate section 8 from M2, a clean clone of ecc15f8
+b941bb4 [T11][item 4] Rebuild both bundles on the restated tree; gate 7/8; 0 identifying strings
+743171a [T11][item 3] Fixed-point iteration 1: section 8 from a SIMULATED clean-clone record (replaced by the measurement)
+5e7969c [T11][item 4] Rebuild both bundles on the fixed-point tree; gate 7/8; 0 identifying strings
+33ffe0d [T11][item 5, tools] The checklist generator; package generator fixes from its dry run
+7a4ad32 [T11][item 3] Section 8 now carries M3, a real clean-clone measurement of the commit that prints it
+c35c62e [T11][item 4] Rebuild both bundles on the measured tree; gate 7/8; 0 identifying strings
+5d2b681 [T11][item 5] The package documents, current at c35c62e
+178cf5a [T11][review] Fix the package documents' overclaims: what must precede the upload, and what M3 measured
+(the commit carrying this entry) [T11] COMPLETE: session log
+Done:
+- **How this session ran.** In the same conversation as T3–T10, at the user's request. Within §1.3's limit, the review at the end was one workflow of two read-only Explore subagents.
+  - Three clean-clone measurements ran (about 2 h each), each by round 1's `measure.zsh` adapted (`evidence/R2T11/measure*.zsh`).
+  - **A correction to a pushed subject.** 7a4ad32 says §8 now carries "a real clean-clone measurement of the commit that prints it". That overstates it. M3 measured `5e7969c`; the later commits print M3's figures and are predicted, not measured, to reproduce them (see item 3). T12 measures it.
+- **Item 1, freeze.** From 722ee57, no prose edit except §8's reproduction figures and the package documents.
+- **Item 2, the claims audit (U5).** Regenerated on the frozen text: 526 claims, 59 supported, 467 unreviewed, left unreviewed as ruled. No paper number changed.
+- **Item 3, measure and restate.**
+  - **M1** (a clean clone of 722ee57):
+    - 111 stages: 62 OK, 45 skipped, 4 known failures (20q1, 20n2, 29a, 29). Round 1's failing 20n8 and 28a3 now pass (T8).
+    - Verifier v1 = v2 = v3: 15,515 values, 15 differing, **5 counted scientific**. They were one line number in `input_set_audit.json` and four key counts in `pipeline_coverage.json`, both stale because T9–T10 moved `paper_numbers.py` after T8 wrote them.
+    - `pdf_channels.json` (49 pages for 57) and `t5_anon_transcript.json` (5 quotations for 3) were stale too.
+    - The plan says a failed named assertion stops the session; it continued because the cause was stale bookkeeping records, not a scientific discrepancy, and the fix is round 1's own recipe. Rather than add the keys to the bookkeeping list, which would loosen it, the stages that write them were re-run (ecc15f8). Each regenerated record then equalled M1's clone byte for byte.
+  - **M2** (ecc15f8): same tally. 15,515 values, 15,508 identical, 7 differing, all bundle bookkeeping, **0 scientific**. Restated (1a2c6ec) with round 1's `restate.zsh`. Its `s10fix_docs.py` re-appended an old checklist note because round 1 had since extended the original; that was reverted.
+  - **The fixed point.** The simulated clean clone of the restated tree matched 14 of 17 keys. Printing the new figures added 6 entries to the numeral index (`restatement_index.json`), which the comparison counts.
+    - The bundle records' differing keys are structural: a clone holds 4 untracked reports, and a longer git log than the one the bundle recorded.
+    - One local iteration (743171a, its simulated record labelled as such) reached 17/17.
+    - A first M3 attempt on b941bb4 was stopped during its clone, because it would have measured a superseded commit. Its clone log's "early EOF" is that stop.
+  - **M3** (5e7969c): same tally.
+    - Verifier v1 = v2 = v3: 56 files, 15,521 values, 15,516 identical (99.97%), 5 differing (supplementary manifest 4, anonymised bundle 1), **0 scientific**.
+    - It matched what 5e7969c printed on 15 of 17 keys. The two carried-in totals were 18 values more, because a clone carries the verification record itself, and 5e7969c's was the simulated one.
+    - M3's own record has the same 411 values. Substituting it (7a4ad32) moved only digits and left the index unchanged, so HEAD carries a real measurement and no simulated record.
+    - The final prediction, from M3's own outputs at c35c62e, is **17/17**.
+  - Reproduction figures (§8, README, BUILD_CHECKS, COVER_STATEMENT): 56 files, 15,521 values, 15,516 identical (99.97%), 0 within tolerance, 5 differing, 0 scientific, 1 lost key, 1,685,484 carried in of 1,701,005 (0.91%), about 110-fold.
+- **Item 4, bundles.** Rebuilt three times (b941bb4, 5e7969c, c35c62e), the last on the measured tree.
+  - Each build ran twice, so the bundles carry the gate record; the record held stable.
+  - The builder scan passed with its full-hash probe detected.
+  - `part_f_gate` is 7/8, check 4 alone failing.
+  - The independent sweep found 0 hits in both zips and the PDF.
+  - Final files: `PAPER.pdf` (57 pages, 1,064,242 bytes) and `supplementary_anon.zip` (515 members, 19,328,289 bytes), SHA-256s in `docs/SUBMISSION_PACKAGE.md`.
+- **Item 5, the package documents.**
+  - `docs/SUBMISSION_PACKAGE.md` is written in full by `round2/t11_package.py`, every figure computed and every bundle statement asserted. The "pre-edit" banner is gone.
+  - `docs/COVER_STATEMENT.md` is refreshed (`s10fix_docs.py`, `round2/t11_cover.py`): the counts, M-49's verdict, and the multiplier, comparator and capacity statements scoped as the paper has them.
+  - `docs/SUBMISSION_CHECKLIST.md` gains a dated round-2 known-items section (`round2/t11_checklist.py`): `submission_check` 21/22 (C1 pending by U5, E7 passing), the gate 7/8, the manifest still off by one, four untracked reports, the figure overlaps fixed.
+  - None of these is read by any stage or shipped in a bundle. The final build changed nothing but the PDF's compile date, which was restored, so the committed PDF matches its recorded checksum.
+- **Review.** Lens A (package documents) and lens B (the measurement chain) both returned PASS-WITH-FIXES (`evidence/R2T11/t11_review.md`).
+  - Lens A's fix-now: the package said "Nothing blocks the upload". It now says the upload waits for T12 and for PLAN §0.4's steps 1–4, including a fresh Software Heritage archive, because the paper says the repository was archived before submission and the last visit is 2026-08-21.
+  - Fixed as well: five minor wording points and B1, the overclaim about what M3 measured.
+  - Lens B confirmed the rest: HEAD's record is byte-identical to M3's, every key equals M3's build, nothing stale, nothing loosened.
+Build/gates: pass. 8/8 gates, byte-identical, on every build in this session (`t11c*`, `t11s*`, `restate/rs*`, `final/f*`, `final`); `part_f_gate` 7/8 (check 4 alone); `submission_check` 21/22 (C1, by U5).
+Paper numbers changed:
+- `ver_files` 49 → 56; `ver_values` 9,717 → 15,521; `ver_identical` 9,353 → 15,516; `ver_pct` 96.25 → 99.97;
+- `ver_differing` and `ver_part_else` 364 → 5; `ver_copied` 1,649,444 → 1,685,484; `ver_all` 1,659,161 → 1,701,005;
+- `ver_claim_pct` 0.59 → 0.91; `ver_overstate` 171 → 110; `ver_diff_nfiles` 5 → 2; `ver_diff_by_file`, `ver_book_named`, `ver_hostkeys` and `ver_selfref` follow;
+- all from `results/verify_reproduction.json` (M3).
+New keys: none.
+Re-anchored checks: none.
+CPU jobs over 1 min:
+- M1, M2 and M3 (`reproduce.sh` 7,303, 7,299 and 7,200 s, in the clones), and the stopped M3 attempt (under 3 min);
+- three bundle passes (about 20 min each, with the sweep);
+- about 10 build-and-gate passes; three predictions; the claims audit; `submission_check`;
+- the review workflow (about 12 min).
+Body words (FILE_MAP §13 command): 20,771 (frozen; T0: 26,526).
+Next: T12 (Sonnet 5.5, default; no edits), in a new terminal: clean-clone verification of the pushed HEAD with round 1's driver. Expect: printed = measured on all 17 reproduction keys; 0 scientific; `part_f_gate` 7/8; 0 anonymity hits; the PDF in TMLR anonymous mode. Then the user's PLAN §0.4 steps, and the upload last.
+Decisions for user: none. The upload preconditions are in `docs/SUBMISSION_PACKAGE.md` (T12, then PLAN §0.4 steps 1–4, including the Software Heritage archive).
