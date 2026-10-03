@@ -353,3 +353,78 @@ CPU jobs over 1 min: 6 build-and-gate passes, about 3-4 min each, and about 12 q
 Body words (FILE_MAP §13 command): 20,166 (T0: 26,526; T6's end: 24,719).
 Next: T8 (Sonnet 5.5): the retraining gate and X1 Part C's scoring (`rssm_diagnostics.py --part c` on the two finished seed-0 runs), pipeline hygiene and figure labels. The §6.8 and §5.3 numbers and section references T8 or T9 touch are now in the renumbered scheme.
 Decisions for user: none (the shortfall is reported under U3, not raised as a decision).
+
+## T8 — 2026-10-03 12:02 — Opus 5.5, xhigh effort (the plan assigns Sonnet 5.5, default) — status: COMPLETE
+Commits:
+18f9818 [T8][item 1] Retraining gate passed; X1 Part C scored: NOT RESCUED BY THE SETTINGS TRIED (ledger M-83)
+a65e981 [T8][item 2] reproduce.sh drives every writer the paper reads; 0 uncovered, 0 unclassified
+82d34e2 [T8][item 3] The E7 check reads BUILD_CHECKS as well as the template (round 1's S25F patch)
+44c95d8 [T8][item 4] The bundle self-test plants the newest commit's full hash, not its 7-character prefix
+1482df9 [T8][item 5] Untrack the two committed template backups; ignore and skip the four backup suffixes
+942e68a [T8][item 6] README names the file that lost a value separately from the file that records the count
+c89e5a5 [T8][item 7] Model card: the stale-action sentence quotes N1's measurement instead of 'materially worse'
+00cbd93 [T8][item 8] Figures: clear the label and legend collisions round 1 left open; no plotted value changes
+24f478a [T8][item 2-fix] BUILD_CHECKS no longer reads the retired glob as 'the sweep found none'
+b6030bb [T8] Rebuild after items 1-8 (fast build, gates, fast build: byte-identical, twice)
+fe16247 [T8][review A] Part C's sentence states the registered test; the pending-X1 prose is rewritten for its discharge
+ba14bcf [T8][review B] Stage 21's gate runs again; the training queues come from the committed records
+1aceee3 [T8][review] Rebuild after the review fixes (fast build, gates, fast build: byte-identical, twice)
+(the commit carrying this entry) [T8] COMPLETE: session log
+Done:
+- **How this session ran.** In the same conversation as T3–T7, at the user's request, on Opus 5.5 at xhigh effort where the plan assigns Sonnet 5.5. Ultracode was on; within the plan's §1.3 limit, the review was one workflow of two read-only Explore subagents, and every edit was made in session.
+- **Item 1, the retraining gate and X1 Part C.**
+  - Gate passed: both queued runs done, the failures file empty, 2,500 iterations at seed 0 under specs x1v1 and x1v2, finite curves, weights present.
+  - `rssm_diagnostics.py --part c`, as committed in 2433f44, returns **NOT RESCUED BY THE SETTINGS TRIED**. Neither variant meets the criterion on seed 0: at h = 32, three of V1's four trajectories and two of V2's are above the hold-last floor. So no further seeds ran. Part C used 4.2 measured CPU-hours of the 10-hour cap (U2).
+  - Ledger `M-83` records it from the artifact; `M-80`'s Status line changed at discharge; RESULTS.md's M count is 83.
+  - **This session wrote T9's item 1.** T4's guard fails the build once Part C has a reading and the placeholder still stands, so §5.3's sentence had to be replaced here to keep the build passing.
+    - It is generated from the artifact (key `rssm_partc_sentence`, final reading verbatim), and the build asserts the no-rescue case it describes.
+    - The review (A1) caught the first wording stating M-80's test wrongly. It now reads: the variants score 1.2588 and 1.4685 at h = 32 against the floor's 0.5950, with 3 and 2 of the 4 trajectories above their own floor value; a rescue needs the mean below the floor's and every trajectory below its own.
+    - The pending-X1 prose after it, and Appendix D's row, are rewritten for the discharge (A2).
+    - T9 owns this wording, and should read it with the front matter, since the abstract, §1 and §12 speak of the RSSM comparison.
+  - Appendix E: `M-80` now has a lead time of +3 min. Rule commit 2433f44 is at 12:17:08; acf5eec, the first commit holding `results/rssm_diagnostics.json` (Parts A and B), is at 12:20:28. Appendix E counts 22 rules with a lead and 21 positive.
+- **Item 2, reproduce.sh.**
+  - New stages: 11d–11j (the five remaining training drivers and both queues), 20r3a (P4) and 20t1–20t13. Stage 21 declares `claims_to_evidence.json`.
+  - `s8_runtime.py` moved to `scripts/`, with a stub at its old path.
+  - `pipeline_coverage`: 0 uncovered (it listed 14). `input_set_audit`, keyed by each line's source text rather than its line number: 26 discoveries, 0 unclassified (it listed 20), and A-01 recorded as retired.
+  - Verified in a runs-free worktree (`evidence/R2T8/item2_dry_runs.md`): every weight-free new stage regenerates its artifact byte-identically.
+  - **The audit change broke a BUILD_CHECKS sentence**, which then said "0 was frozen" after telling how the sweep found the ensemble-5 glob. Fixed in 24f478a with a bound `audit_n_retired` and a dated not-verbatim note; the review (A3) corrected the note's quotation.
+  - **Two defects the review caught (B1, B2), both fixed in ba14bcf:**
+    - Stage 21's new declared output is committed, so the ledger gate skipped without `--force`. That was a loosened check, now back to M12's empty output-check.
+    - Stage 11i could not have completed: `--from-record-cap` refuses the ruled record, and the sweep's `--write-queue` re-probed and rewrote a record the paper reads. The training block now writes both queues with a new `--queue-from-record` in all three timing scripts; checked byte-identical to the queues that ran, with the records unchanged.
+    - The runner also gets PY and logs where `s8_runtime.py` reads.
+  - The text-keyed audit now lets a classification cover one line (B5); a duplicate is unclassified, shown to fire.
+- **Item 3.** Round 1's `e7_fix.patch` applied: E7 reads the template plus `docs/BUILD_CHECKS.template.md`.
+- **Item 4.** The self-test plants the full 40-character hash.
+  - Run at HEAD 82d34e2, it PASSES: the probe was detected (9 hits) and no identifying strings were found (`evidence/R2T8/item4_selftest.log`).
+  - On round 1's float-shaped 5e30429, the detector misses the 7-character prefix and catches the full hash.
+  - The run rewrote `results/anon_bundle.json` and `docs/COMMIT_LABEL_MAP.json`. Both were restored to their committed versions with `git checkout`, for T11's bundle rebuild.
+  - 44c95d8's message gives the wrong reason, "the run was without --zip": the script rewrites the record on every run (review B10).
+- **Item 5.** `git rm --cached PAPER.template.md.appbak`, and also `.d1bak`, committed with it in d6fe07d: a `.gitignore` line does nothing for a tracked file. Both stay on disk. `*.appbak` and `*.d1bak` are now ignored, and the four suffixes are in both builders' SKIP_SUFFIX.
+- **Item 6.** README: "A further 1 value is in the committed artifacts and absent after regeneration: `results/anon_bundle.json` (key `.zip_bytes`). All of these counts are recorded in `results/verify_reproduction.json`." The file and key are bound from the artifact (new keys `ver_keys_lost_noun`, `ver_keys_lost_where`).
+- **Item 7.** The model card now quotes N1: fed the stale action, the three `autoregressive-10k` checkpoints' relative-L1 error changes by -0.22% at h = 1 and +0.15% at h = 368. That is their mean on the two held-out episodes' 4 trajectories (`results/alignment_by_horizon.json`), and the card says the figure covers those three only. The numbers come from the keys §7.2 prints.
+  - c89e5a5's message says seven autoregressive checkpoints ship; it is nine (review A5).
+  - The card's pre-existing "The 10k checkpoints are one seed per arm" is now "3 seeds per arm", counted from CKPTS (review A4).
+- **Item 8, figures.**
+  - Placement only, in `paper_figures.py`:
+    - rendered Figure 2(a): value labels and "no difference";
+    - Figure 5(a): the legend off the dashed line;
+    - Figure 6: both legends off the bars.
+  - Figure 6 is not in the plan's "1, 2 and 5", but it is the fourth figure DEFERRED.md recorded as open, and that file itself said the "1, 2 and 5" list was short by one.
+  - With unchanged code, regeneration was byte-identical. After the edit, `results/paper_figures.json` is byte-identical and only the three PNGs differ.
+  - That file records summaries, so the claim that no plotted value changed rests on the code diff: placement, legends, limits and ticks only. DEFERRED.md carries a correction (review B7).
+  - Every figure was viewed before and after (`evidence/R2T8/figs_before`, `figs_after`).
+  - R5's two items, fixed in round 1's B1, hold.
+  - DEFERRED.md gains a RESOLVED line. The checklist's stale overlap lines go to T11 (OUT_OF_SCOPE).
+- **Review.** One workflow of two Explore subagents (`evidence/R2T8/t8_review.md`). Lens A (claims and wording) and lens B (pipeline, hygiene, figures) both returned PASS-WITH-FIXES.
+  - Every finding was verified before acting.
+  - Fixed: A1–A4 and B1–B7.
+  - Recorded in OUT_OF_SCOPE: B8, B9 and B11. The drivers exit 0 whatever training does; ten float-shaped short hashes are left to the scrub; cache readers carry NEEDS_WEIGHTS.
+  - Corrected here: A5 and B10, the commit-message errors.
+Build/gates: pass. After the review: 8/8 gates on two consecutive passes (`t8rev1`, `t8rev2`), each build pair byte-identical and the passes identical; 57 pages; 62/62 comparative claims, 62/62 corruptions caught. Before it: the same on `t8p1`–`t8p4`.
+Paper numbers changed: `rssm_partc_sentence` (the Part C reading); `n_entries` 267 → 268 and `ledger_kb` 570 → 571 (M-83); `appG_n_lead` 21 → 22, `appG_n_positive` 20 → 21 and `appG_table` (M-80's row); `audit_n_hits` 21 → 26 and `audit_n_frozen` 1 → 0 (BUILD_CHECKS only).
+New keys: `x1_final_reading`, `ver_keys_lost_noun`, `ver_keys_lost_where`, `audit_n_retired`.
+Re-anchored checks: `input_set_audit`'s classification key changed from line number to line text (item 2), with a one-line-per-classification guard added (review B5). Stage 21's gate was briefly loosened by item 2 and restored (review B1).
+CPU jobs over 1 min: `rssm_diagnostics.py --part c`; the item 2 worktree dry runs; the bundle self-test; six build-and-gate passes (about 1 min each); four quick checks; the review workflow (two read-only agents, about 10 min). The Part C training itself (4.2 CPU-hours) ran before T8.
+Body words (FILE_MAP §13 command): 20,240 (T7's end: 20,166; +74, the Part C sentence and the discharged-X1 wording).
+Next: T9 (Opus 5.5, high): its item 1 is already in place (above) and needs only reading. Then front-matter consistency, including how the abstract, contributions, §11 and §12 describe the RSSM comparison now that X1 has its final reading.
+Decisions for user: none.
