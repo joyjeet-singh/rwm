@@ -49,7 +49,7 @@ that no regenerated value differ; 5 do, and it is published as failing, with no
 tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: 15,521 values, or 0.91% of the 1,700,987 numeric values under `results/` that the comparison counts. The other 1,685,466 are carried in, prove
+honest test is the subset the run actually rewrites: 15,521 values, or 0.91% of the 1,701,005 numeric values under `results/` that the comparison counts. The other 1,685,484 are carried in, prove
 nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 110-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 862 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **62 comparative claims** across 29 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 62 of 62 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
@@ -141,7 +141,7 @@ during this revision — two calibration figures that named no horizon, and one 
 three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this record: of the 1,700,987 numeric values under `results/` that the comparison counts, a clean clone regenerates 15,521 and carries in 1,685,466. The reproducibility claim covers 0.91% of that counted set and is silent about the rest. We state that fraction because a
+bounds everything in this record: of the 1,701,005 numeric values under `results/` that the comparison counts, a clean clone regenerates 15,521 and carries in 1,685,484. The reproducibility claim covers 0.91% of that counted set and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
 *The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected
