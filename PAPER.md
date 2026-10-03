@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1257 values substituted from 97 artifacts. -->
+     1258 values substituted from 97 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -674,10 +674,10 @@ the prior's expected or sampled latent in place of its most likely one: the erro
 (M-81). Its Part B is descriptive: over the history, the teacher-forced RSSM's one-step error from its
 prior is 1.16 to 1.27× its error from its posterior at the same
 recurrent state (the autoregressive one's at most 1.02×), with 16.4 to
-20.0 nats of KL divergence between them per step. Its two retraining variants, PlaNet's KL settings and DreamerV2's layer-normalised recurrent cell (X1 Part C, seed 0), each miss the rule's criterion at h = 32, a mean below the hold-last floor with every trajectory below it, so rule X1 returns **NOT RESCUED BY THE SETTINGS TRIED** (ledger M-83). The failure may be
-our RSSM rather than the architecture: Table S7's latent is ambiguous, and we read it in DreamerV2's
-naming, without its layer-normalised recurrent cell (`BASELINE_SPECS.md`, the RSSM rows). Until X1
-says otherwise, the architecture claim rests on the MLP and the transformer.
+20.0 nats of KL divergence between them per step. Its Part C retrains the teacher-forced RSSM at seed 0 for 2,500 iterations, once with PlaNet's KL settings and once with DreamerV2's layer-normalised recurrent cell. Neither rescues it: read from its most likely latent at h = 32, they score 1.2588 and 1.4685 against the floor's 0.5950, with 3 and 2 of the 4 trajectories above their own floor value; a rescue needs the mean below the floor's and every trajectory below its own. So rule X1 returns **NOT RESCUED BY THE SETTINGS TRIED** (ledger M-83). The failure may
+still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in
+DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on
+one seed. So the architecture claim rests on the MLP and the transformer.
 
 **Limits.** One robot on flat ground; the original has several environments. The baselines
 are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and
@@ -1654,7 +1654,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 | RWM-AR consistently outperforms RWM-TF (2501.10100 §IV-D) | **yes** | **no quantitative figure.** "significantly outperforms"; the gap is plotted in Fig. 7 and stated nowhere in text, caption or table | **reproduces** at long horizon (§5) |
 | Teacher forcing gives "poor autoregressive performance" (§IV-C) | **yes** | **quantitative**: Fig. 6 prints e for the teacher-forced N=1 row, 3.99 at (32, 1) against 0.47 at the centre, on unstated data and horizon; the passage itself gives no number | reproduces, and more strongly: Arm B is worse than the hold-last floor, and §5.2's (32, 1) is 6.35× the centre's error at h = 368 |
 | M=32, N=8 gives the optimal trade-off between accuracy and training time (§IV-C) | **yes** | **quantitative**: Fig. 6 prints the error and the training hours of every cell of its grid, and the centre's error is the tied-lowest (`docs/presubmission/ORIGINAL_SPECS.md` a.5) | **NOT OPTIMAL AT OUR BUDGET** on the accuracy half (§5.2): (32, 32), (32, 16), (8, 8) and (2, 8) beat it at our budget, the best of them even when the centre trains twice as long (post hoc, §5.2). The trade-off with training time is not tested |
-| Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **REPRODUCES** with the baselines teacher-forced, as the original trains them, and **RWM AHEAD OF ALL THREE** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§5.3). The baselines are built to our reading of Table S7 and trained with RWM's settings; at h = 368 every one is worse than predicting no change, and until rule X1 says otherwise the RSSM comparison is uninformative, so the claim rests on the MLP and the transformer. One robot where the original has several |
+| Beats MLP, RSSM and transformer baselines (§IV-D) | **yes** | **no quantitative figure.** "consistently achieves the lowest prediction errors across all environments"; plotted in Fig. 7, with no number in text, caption or table | **REPRODUCES** with the baselines teacher-forced, as the original trains them, and **RWM AHEAD OF ALL THREE** with them trained autoregressively, which compares architectures at one training regime rather than testing this claim (§5.3). The baselines are built to our reading of Table S7 and trained with RWM's settings; at h = 368 every one is worse than predicting no change, and rule X1's other read-outs and retraining variants did not rescue our RSSM (**NOT RESCUED BY THE SETTINGS TRIED**), so the RSSM comparison stays uninformative and the claim rests on the MLP and the transformer. One robot where the original has several |
 | Zero-shot hardware transfer (§IV-E) | no | — | `[hardware: zero-shot transfer]` no hardware; this is a dynamics-model reproduction |
 | Policies transfer to hardware from ~6M state transitions against ~250M for the model-free baseline (§IV-E) — the paper's headline sample-efficiency result | no | **6M against 250M state transitions** at equal real tracking reward (0.90 +- 0.04 against 0.90 +- 0.03), Table I — the only table of numbers in either paper | `[policy, hardware: the sample-efficiency result]` **not tested.** It is a claim about policy learning and hardware deployment, and requires the RL loop, a simulator and an ANYmal. We reproduce the dynamics model only; no policy is trained anywhere in this work, so no transition count of ours is comparable |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | no | — | `[policy: the comparisons against SHAC and Dreamer]` no policy learning reproduced |

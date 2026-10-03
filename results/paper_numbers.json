@@ -8561,7 +8561,7 @@
   },
   "rssm_partc_sentence": {
     "source": "results/rssm_diagnostics.json",
-    "value": "Its two retraining variants, PlaNet's KL settings and DreamerV2's layer-normalised recurrent cell (X1 Part C, seed 0), each miss the rule's criterion at h = 32, a mean below the hold-last floor with every trajectory below it, so rule X1 returns **NOT RESCUED BY THE SETTINGS TRIED** (ledger M-83)."
+    "value": "Its Part C retrains the teacher-forced RSSM at seed 0 for 2,500 iterations, once with PlaNet's KL settings and once with DreamerV2's layer-normalised recurrent cell. Neither rescues it: read from its most likely latent at h = 32, they score 1.2588 and 1.4685 against the floor's 0.5950, with 3 and 2 of the 4 trajectories above their own floor value; a rescue needs the mean below the floor's and every trajectory below its own. So rule X1 returns **NOT RESCUED BY THE SETTINGS TRIED** (ledger M-83)."
   },
   "rt_bl_ar_hours": {
     "source": "results/presubmission_runtime.json",

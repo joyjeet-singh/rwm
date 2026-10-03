@@ -264,7 +264,7 @@ Reproduction, verification and further study of the claims in the two papers abo
 - **Most of these run at ensemble size 1**, against the reference's 5. On those the epistemic term is identically zero and the σ discussed above is aleatoric. The `ens5` arms and the five-seed independent ensemble cover the epistemic term.
 - **One gait, one terrain, one command distribution.** Generalisation here means across velocity commands only.
 - **Long-horizon claims rest on 4 independent 400-step trajectories** in the held-out arena. That is the binding statistical constraint.
-- **The 10k checkpoints are one seed per arm.** Recorded in the artifacts.
+- **The 10k checkpoints are 3 seeds per arm.** The headline's ± is a standard deviation over 3 values.
 - **No policy learning.** Dynamics model only.
 
 ## Licence and attribution

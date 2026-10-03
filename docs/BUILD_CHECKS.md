@@ -368,8 +368,8 @@ of the 26 discoveries in the code now, 0 are frozen. Artifacts that
 discover their inputs now record the file list they were computed over.
 
 *Round 2, T8: from "A sweep" to "frozen." this is no longer verbatim. It read "A sweep of all
-26 … 0 was frozen" once the audit began retiring fixed discoveries
-(`results/input_set_audit.json`, `retired`), as if the sweep had found none.*
+N … M was frozen", filled from the audit's live counts, so once the audit began retiring fixed
+discoveries (`results/input_set_audit.json`, `retired`) it read as if the sweep had found none.*
 
 ---
 
