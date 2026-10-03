@@ -124,7 +124,11 @@ def fig2_sigma_profile(rec):
         a.axhline(1.0, color="k", ls="--", lw=1)
         a.set(xlabel="forecast step (training horizon is 8)", title=t)
     ax[0].set_ylabel(r"$\sigma_h/\sigma_1$"); ax[1].set_ylabel(r"$|e_h|/|e_1|$")
-    ax[0].legend(fontsize=6.5, loc="upper left")
+    # Lower left, which the data leave empty: the curves all start at 1.00 and only the
+    # faithful arm falls, to the right. At upper left the dashed 1.00 line struck through
+    # the "teacher-forced Arm B" entry and the legend covered the first four steps
+    # (round 2, T8; docs/DEFERRED.md, session 28).
+    ax[0].legend(fontsize=6.5, loc="lower left")
     rec["fig2"] = {k: {"sigma_growth_1_to_8": d[k]["sigma_growth_1_to_8"],
                        "err_growth_1_to_8": d[k]["err_growth_1_to_8"]} for k, _, _ in order}
     fig.tight_layout()
@@ -149,10 +153,31 @@ def fig6_ab_by_horizon(rec):
     r = [d["by_horizon"][str(h)]["ratio_B_over_A"] for h in hs]
     ax[0].plot(hs, r, "o-", ms=4, lw=1.6, color=C["armB"])
     ax[0].axhline(1.0, color="k", ls="--", lw=1)
-    ax[0].text(hs[0], 1.06, "no difference", fontsize=6.5, color="#555555")
-    for h, y in zip(hs, r):
-        ax[0].annotate(f"{y:.2f}x", (h, y), textcoords="offset points",
-                       xytext=(0, 6), ha="center", fontsize=6.5)
+    # Placement only; no plotted value depends on any of it (round 2, T8; docs/DEFERRED.md,
+    # block B1). "no difference" sat above the line at h = 1, where the h = 1 value label
+    # overprinted it and the curve ran through it; it now sits under the line at the
+    # horizons' geometric mean, between the h = 10 gridline and the h = 100 reference,
+    # where every ratio is well above 1. The floor drops by a tenth of the range so the
+    # labels under the line clear the axis.
+    _lo = min(min(r), 1.0)
+    ax[0].set_ylim(bottom=_lo - 0.1 * (max(r) - _lo))
+    ax[0].annotate("no difference", (float(np.exp(np.mean(np.log(hs)))), 1.0),
+                   textcoords="offset points", xytext=(0, -3), ha="center", va="top",
+                   fontsize=6.5, color="#555555")
+    for i, (h, y) in enumerate(zip(hs, r)):
+        crowd_next = i + 1 < len(hs) and hs[i + 1] / h < 1.5
+        crowd_prev = i > 0 and h / hs[i - 1] < 1.5
+        if y < 1.0:                   # below the line: label below-right, away from it
+            kw = dict(xytext=(5, -3), ha="left", va="top")
+        elif crowd_next:              # two horizons this close (h = 100, 128) split left...
+            kw = dict(xytext=(-4, 2), ha="right", va="bottom")
+        elif crowd_prev:              # ...and right, instead of both centred above
+            kw = dict(xytext=(4, -2), ha="left", va="top")
+        elif i == len(hs) - 1:        # the last point is the highest: left, off the top edge
+            kw = dict(xytext=(-6, 0), ha="right", va="center")
+        else:
+            kw = dict(xytext=(0, 6), ha="center", va="bottom")
+        ax[0].annotate(f"{y:.2f}x", (h, y), textcoords="offset points", fontsize=6.5, **kw)
     ax[0].set(xscale="log", xlabel="forecast horizon (steps)",
               ylabel="teacher forcing / autoregressive",
               title="(a) the advantage grows with horizon")
@@ -456,17 +481,26 @@ def fig5_three_way(rec):
     ax[0].set_xticks(np.arange(len(pairs)))
     ax[0].set_xticklabels([l for _, l in pairs], fontsize=7)
     ax[0].set(ylabel="cells (of 32)", title="(a) three-way outcome\nleft bar naive, right bar cluster")
-    ax[0].legend(fontsize=7)
+    # Headroom above the bars for a one-row legend. Inside the bars' range it sat on the
+    # grey "no effect" bar, which hid that entry's own grey swatch (round 2, T8;
+    # docs/DEFERRED.md, session 28). The ticks stop at the bars' height.
+    _top = max(S[p][unit]["hurt"] + S[p][unit]["helped"] + S[p][unit]["no_effect"]
+               for p, _ in pairs for unit in ("naive", "cluster"))
+    ax[0].set_ylim(0, _top * 1.3)
+    ax[0].set_yticks(np.arange(0, _top + 1, 5))
+    ax[0].legend(fontsize=7, ncol=3, loc="upper center")
     u = J("review_bootstrap_unit.json")
     cells = {k: v for k, v in u.items() if k != "_summary"}
     ratios = [v["width_ratio_cluster_over_naive"] for v in cells.values()]
-    ax[1].hist(ratios, bins=10, color="#1f77b4", alpha=0.85)
+    _n, _, _ = ax[1].hist(ratios, bins=10, color="#1f77b4", alpha=0.85)
     ax[1].axvline(1.0, color="k", ls="--", lw=1)
     ax[1].axvline(float(np.mean(ratios)), color="#d62728", lw=1.4,
                   label=f"mean {np.mean(ratios):.2f}×")
     ax[1].set(xlabel="CI width, cluster ÷ naive", ylabel="cells",
               title=f"(b) the wrong unit narrows\n{sum(1 for r in ratios if r > 1)} of {len(ratios)} intervals")
-    ax[1].legend(fontsize=7)
+    # Headroom, so the legend clears the tallest bar it used to sit on (same entry).
+    ax[1].set_ylim(0, _n.max() * 1.25)
+    ax[1].legend(fontsize=7, loc="upper right")
     rec["fig5"] = {"summary": S, "width_ratio_mean": float(np.mean(ratios))}
     fig.tight_layout()
     p = os.path.join(R.FIGURES, "paper_fig5_three_way.png")
