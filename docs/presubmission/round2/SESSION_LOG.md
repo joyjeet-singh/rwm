@@ -598,3 +598,54 @@ CPU jobs over 1 min:
 Body words (FILE_MAP §13 command): 20,771 (frozen; T0: 26,526).
 Next: T12 (Sonnet 5.5, default; no edits), in a new terminal: clean-clone verification of the pushed HEAD with round 1's driver. Expect: printed = measured on all 17 reproduction keys; 0 scientific; `part_f_gate` 7/8; 0 anonymity hits; the PDF in TMLR anonymous mode. Then the user's PLAN §0.4 steps, and the upload last.
 Decisions for user: none. The upload preconditions are in `docs/SUBMISSION_PACKAGE.md` (T12, then PLAN §0.4 steps 1–4, including the Software Heritage archive).
+
+## T12 — 2026-10-04 04:51 — Opus 5.5, xhigh effort (the plan assigns Sonnet 5.5, default) — status: COMPLETE
+Commits:
+(the commit carrying this entry) [T12] COMPLETE: FINAL_REPORT.md and session log
+Done:
+- **How this session ran.** In the same conversation as T3–T11, at the user's request; the plan assigns a new terminal and Sonnet 5.5.
+  - **No edits.** The repository's status and HEAD were checked unchanged by the driver. T12 writes only `round2/FINAL_REPORT.md` and this entry.
+  - **The driver** is round 1's verification driver copied to `evidence/R2T12/t12_driver.zsh`, adapted for branch, paths, the stage-tally reference (T11's M3) and the word-count baseline (6bee218).
+  - **The report was audited.** One read-only Explore agent audited `FINAL_REPORT.md` adversarially against the evidence before it was committed.
+- **Items 1–2.** Two fresh clones of the pushed `presubmission2` HEAD (8c2c903) and a fresh venv from `requirements.txt`. Then, in order:
+  - `setup.sh` (pinned hashes);
+  - `reproduce.sh --quick --force` (7,305 s): 111 stages, 62 OK, 45 skipped, the 4 known failures, as T11's M3;
+  - the verifier three times against a pristine reference;
+  - the full paper build and every gate;
+  - both bundles and the independent deny-list sweep;
+  - the PDF comparison.
+- **Item 3, criteria: all six PASS.**
+  - **Scientific differing values: 0.** v1 = v2 = v3: 15,521 values, 15,516 identical, 5 differing, all bundle bookkeeping.
+  - **`part_f_gate` fails as §8 publishes:** 7/8, check 4 alone.
+  - **Printed = measured on 17 of 17 reproduction keys, and on all 2,320 `paper_numbers` keys.** This measures the commit T11 could only predict.
+  - **The PDF is byte-identical to the committed one** after blanking dates and ID: 57 pages.
+  - **0 deny-list hits:** in the clone's rebuilt bundles and PDF, and in the committed upload files themselves (`evidence/R2T12/sweep_committed.log`).
+  - **`submission_check` 21/22**, with only C1 pending (U5), as the checklist records.
+- **Item 4, `round2/FINAL_REPORT.md`.**
+  - 57 pages (T0: 49).
+  - The body is 20,771 words to "Data and code" (T0: 26,526; −21.7%, a shortfall of 1,771 against U3's 19,000, reported).
+  - Every gate against T0: equal or better. Comparative claims are 62/62 (T0: 60/60), and `submission_check` is 21/22 (T0: 20/22).
+  - The audit returned PASS-WITH-FIXES. Each fix was made before commit:
+    - the word narrative now adds up;
+    - the page and appendix attributions are corrected;
+    - Appendix H's coverage is stated exactly;
+    - the evidence files are named for what they show;
+    - the committed zip is swept directly.
+- **The files to upload**, verified here as the committed ones at 8c2c903:
+  - `PAPER.pdf`, SHA-256 50df8761…;
+  - `supplementary_anon.zip`, SHA-256 a712eddf…;
+  - both match `docs/SUBMISSION_PACKAGE.md`.
+Build/gates: pass, in the clean clone. Two builds byte-identical; every gate as in FINAL_REPORT.md.
+Paper numbers changed: none.
+New keys: none.
+Re-anchored checks: none.
+CPU jobs over 1 min: the driver (about 2.5 h: `reproduce.sh` 7,305 s, the bundles 475 s, the sweep 836 s); the committed-zip sweep; the audit workflow (about 8 min).
+Body words (FILE_MAP §13 command): 20,771 (T0: 26,526).
+Next: none in the plan. Round 2 is complete.
+Reminders, PLAN §0.4 (only the user can do these, in this order):
+1. **Update GitHub's default branch:** fast-forward or merge `presubmission2` into `main`. `main` still prints the withdrawn 75% sentence.
+2. **Re-upload `MODEL_CARD.md`** to the Hugging Face model repository. The live card has the unscoped multiplier claim and the unmeasured "materially worse" sentence.
+3. **Trigger a Software Heritage archive of the final pushed commit.** The paper says the repository was archived before submission, and the only recorded visit is 2026-08-21.
+4. **Send the author query** (`docs/presubmission/AUTHOR_QUERY_ALIGNMENT.md`) if it has not gone.
+5. **Upload `PAPER.pdf` and `supplementary_anon.zip`**, checking them against the SHA-256s in `docs/SUBMISSION_PACKAGE.md`. Do not rebuild first, because every build re-stamps the PDF.
+Decisions for user: none.
