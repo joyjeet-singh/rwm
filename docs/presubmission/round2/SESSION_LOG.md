@@ -428,3 +428,53 @@ CPU jobs over 1 min: `rssm_diagnostics.py --part c`; the item 2 worktree dry run
 Body words (FILE_MAP §13 command): 20,240 (T7's end: 20,166; +74, the Part C sentence and the discharged-X1 wording).
 Next: T9 (Opus 5.5, high): its item 1 is already in place (above) and needs only reading. Then front-matter consistency, including how the abstract, contributions, §11 and §12 describe the RSSM comparison now that X1 has its final reading.
 Decisions for user: none.
+
+## T9 — 2026-10-03 12:40 — Opus 5.5, xhigh effort (the plan assigns high) — status: COMPLETE
+Commits:
+347892d [T9][item 2, numbers] Every number in the contributions now appears in the body
+6561e14 [T9][item 1] The RSSM sentence: in place since T8; an artifact without Part C now stops the build
+e36a68e [T9][item 2, wording] Front matter no stronger than the body: horizons, arenas, comparators, X1's final reading
+2f0b987 [T9][item 2, check 6] The abstract's phrase for the four winners is stated in section 5.2
+5e5d5d6 [T9] Rebuild after items 1-3 (fast build, gates, fast build: byte-identical, twice)
+(the commit carrying this entry) [T9] COMPLETE: session log
+Done:
+- **How this session ran.** In the same conversation as T3–T8, at the user's request. §1.3's checkpoint rule asks a compacted conversation to stop with PARTIAL; this one was compacted once, before T8, and continued because the user asked for T9 here. Ultracode was on. Within §1.3's limit, the audit was one workflow of two read-only Explore subagents, and every edit was made in session. No subagent review followed the fixes, since the cap was spent; T10 is the fresh-eyes review.
+- **Item 1, the RSSM sentence.** It was installed in T8, forced by T4's build guard, and reworded after T8's review. Read again here: §5.3 states X1's final reading verbatim.
+  - The pre-discharge branch that would print "Retraining variants are running" whenever the artifact lacks Part C is now an assertion, so a stale artifact stops the build.
+  - The placeholder survives only in the plan and the log.
+- **Item 2, the numbers.** `round2/t9_frontmatter.py` (read-only) checks every key and rendered numeral of the abstract, contributions, §3.2, §4, §9, §11 and §12 against the body (§2, §3, §3.1, §5–§8, §10, Data and code), then the appendices.
+  - Two of the contributions' numbers were not in the body:
+    - the verification figures, only in Appendix A, now in §3's Model paragraph;
+    - the required sample size, only in §11 and Appendix R, now in §6.6.
+  - What remains are phrase keys read off §5.2's explicit list and its 5,000 / 2,500 iteration counts.
+  - **`part_f_gate` check 6** (not in the fast build) had failed since T4 on `mn_better_kinds`, the abstract's phrase for the four winners. §5.2's result now states it, and check 6 PASSES with its exemption list unchanged. `results/part_f_gate.json` was restored after each run, for T11.
+- **Item 2, the wording.** The audit (`evidence/R2T9/t9_audit.md`) returned PASS-WITH-FIXES on both lenses. 25 edits are in `round2/t9_patch.py`, plus four rows of `evidence_summary.py`. The substantive ones:
+  - **The equal-compute reading holds at h = 368 only.** At h = 100 it is unresolved held out (−0.0918 [−0.1901, +0.0065]), and in-sample the centre is ahead (+0.0454). It now carries its horizon in the abstract, contribution 3 and Appendix D.
+  - **The abstract's 2.03× had no comparator.** It is now "than our shared-trunk ones", quoting M-44's own statistic; `r2_total_x_h100` was a different statistic equal to two decimals.
+  - **Contribution 3 now reports X1's final reading** (Parts A and C), not Part A alone.
+  - **§11's M-70 summary** regained its arena, its in-sample status and its degenerate interval.
+  - **§3.2:**
+    - the intro now names the arenas §3 defines and gives units;
+    - the step-size row quotes M-51's verdict verbatim;
+    - the multiplier row names Arm A at 2,500 iterations;
+    - both architecture rows carry "the RSSM comparison uninformative, rule X1".
+  - **Smaller fixes:**
+    - arenas, iterations and seed 1 in contributions 2, 3 and 5, and contribution 5's bounding qualifier;
+    - the lead's horizon and the in-sample scope in §12;
+    - M-16's verdict verbatim in §5 and §9;
+    - §9's epistemic-only figures labelled as such;
+    - two stale Appendix R pointers, one of them T7's out-of-scope M-49 pointer.
+  - **Not changed:**
+    - The title, which was the user's S4 ruling.
+    - The abstract's RSSM caveat, which would exceed C12.1; the caveat is in contribution 3, §3.2, §5.3 and Appendix D.
+    - The abstract still says "one seed per arm" (Annex 3's wording), not "seed 1", for the same reason. Contribution 2, §5, Figure 2's caption and §11 name seed 1.
+- **Item 3, budgets.** The abstract is 370 of 370 words and 22 of 26 numerals (C12.1 PASS, with no word to spare). The contributions are 8 bullets of 2–3 sentences each.
+- **No key left the template**, checked by diffing key sets against c385c60. `{{m16_verdict}}` is newly used in the text.
+Build/gates: pass. 8/8 gates on two consecutive passes (`t9p3`, `t9p4`), each build pair byte-identical and the passes identical; 57 pages; 62/62 comparative claims, 62/62 corruptions caught; `part_f_gate` check 6 PASS.
+Paper numbers changed: `evidence_table` (the four §3.2 rows above); `tn_typed` 845 → 849 (typed section numbers in the new pointers; its gate passes).
+New keys: none.
+Re-anchored checks: none. `paper_numbers.py`'s Part C branch became an assertion, which makes it stricter.
+CPU jobs over 1 min: four build-and-gate passes (about 1 min each); three quick checks; `part_f_gate` twice; the audit workflow (two read-only agents, about 13 min).
+Body words (FILE_MAP §13 command): 20,472 (T0: 26,526; T8's end: 20,240; +232, almost all restored qualifiers).
+Next: T10 (Opus 5.5, high), **in a new terminal**, as the plan says: a fresh-eyes review against Annex 4's checklist. This conversation has carried T3–T9 and is not fresh eyes. Note for T10: Annex 4 item 1's §3.2 alignment anchor predates ruling A (DECISIONS.md#T3-alignment-framing); the row follows the ruling.
+Decisions for user: none.
