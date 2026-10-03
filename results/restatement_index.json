@@ -4094,15 +4094,14 @@
     },
     {
       "value": "20",
-      "n_locations": 44,
+      "n_locations": 43,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 2,
-      "n_substituted": 42,
+      "n_substituted": 41,
       "sources": [
         "results/a2_trajectory_level_control.json",
         "results/alignment_defect_ci.json",
-        "results/appendix_g_rules.json",
         "results/claims_to_evidence.json (scripts/ledger_check.py)",
         "results/e5_synthetic_sigma.json",
         "results/e7_free_baselines.json",
@@ -4119,7 +4118,6 @@
         "a2_h1_npoints",
         "a2_nind",
         "ad20_nind",
-        "appG_n_positive",
         "cal_rel_npos",
         "d1n_nind",
         "d4_nind",
@@ -4278,12 +4276,6 @@
           "line": 1585,
           "key": "d4_nind",
           "ctx": " {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at ev"
-        },
-        {
-          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1616,
-          "key": "appG_n_positive",
-          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
@@ -4445,7 +4437,7 @@
         "results/task_d2_recalibration.json"
       ],
       "keys": [
-        "appG_n_lead",
+        "appG_n_positive",
         "cal_nll_npos",
         "d10_n_regimes",
         "d2_epi_cov368_hi"
@@ -4471,9 +4463,9 @@
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1615,
-          "key": "appG_n_lead",
-          "ctx": "ead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
+          "line": 1616,
+          "key": "appG_n_positive",
+          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
@@ -4485,16 +4477,17 @@
     },
     {
       "value": "22",
-      "n_locations": 8,
+      "n_locations": 9,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 8,
+      "n_substituted": 9,
       "sources": [
         "results/appendix_g_rules.json",
         "results/step5_arm*.json"
       ],
       "keys": [
+        "appG_n_lead",
         "appG_n_rules",
         "e2_fitted_runs"
       ],
@@ -4522,6 +4515,12 @@
           "line": 1615,
           "key": "appG_n_rules",
           "ctx": " one, which is what a lead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
+        },
+        {
+          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1615,
+          "key": "appG_n_lead",
+          "ctx": "ead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",

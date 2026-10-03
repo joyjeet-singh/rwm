@@ -674,7 +674,7 @@ the prior's expected or sampled latent in place of its most likely one: the erro
 (M-81). Its Part B is descriptive: over the history, the teacher-forced RSSM's one-step error from its
 prior is 1.16 to 1.27× its error from its posterior at the same
 recurrent state (the autoregressive one's at most 1.02×), with 16.4 to
-20.0 nats of KL divergence between them per step. Retraining variants are running (X1 Part C): both have trained, and neither is scored yet. The failure may be
+20.0 nats of KL divergence between them per step. Its two retraining variants, PlaNet's KL settings and DreamerV2's layer-normalised recurrent cell (X1 Part C, seed 0), each miss the rule's criterion at h = 32, a mean below the hold-last floor with every trajectory below it, so rule X1 returns **NOT RESCUED BY THE SETTINGS TRIED** (ledger M-83). The failure may be
 our RSSM rather than the architecture: Table S7's latent is ambiguous, and we read it in DreamerV2's
 naming, without its layer-normalised recurrent cell (`BASELINE_SPECS.md`, the RSSM rows). Until X1
 says otherwise, the architecture claim rests on the MLP and the transformer.
@@ -1266,7 +1266,7 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (267 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (268 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix E for all 22; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over; Appendix E adds every rule since. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1669,7 +1669,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 570 KB ledger, so here is the table. It is generated from
+or an instruction to open a 571 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1699,7 +1699,7 @@ existed. This is the same computation Figure 1 plots.
 | `M-74` | The configuration claim: is (M, N) = (32, 8) optimal? | — | +29.4 h | results/mn_sweep_verdict.json | NOT OPTIMAL AT OUR BUDGET |
 | `M-75` | The architecture claim, baselines teacher-forced, as the original trains them | — | +29.4 h | results/baselines_verdict.json | REPRODUCES |
 | `M-76` | The architecture claim, baselines trained autoregressively, as RWM is | — | +29.4 h | results/baselines_verdict.json | RWM AHEAD OF ALL THREE |
-| `M-80` | X1: is our RSSM's long-horizon failure a matter of how its forecast is read, of its training settings, or of neither? | — | not computed | — | not yet discharged |
+| `M-80` | X1: is our RSSM's long-horizon failure a matter of how its forecast is read, of its training settings, or of neither? | — | +3 min | results/rssm_diagnostics.json | NOT RESCUED BY THE SETTINGS TRIED |
 | `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
 
 `M-69`'s discharge commit was amended 2 minutes after it was created, so the
@@ -1710,8 +1710,8 @@ store either reading. Both readings are
 positive, so the rule reached git before the data that tested it existed on either one, which is
 what a lead time is here to establish.
 
-22 rules, 21 with a computed lead time, of which
-20 are positive and 1 negative. **The negative one is
+22 rules, 22 with a computed lead time, of which
+21 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.

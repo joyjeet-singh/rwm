@@ -19,7 +19,7 @@ way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean 
 57 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 267 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 268 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
 are never edited in place: the ledger keeps 20 superseded entries.
 Of those, seven claims withdrawn on evidence are our own **numbered claims**,
@@ -157,9 +157,9 @@ byte-identical between them.
 A clean-clone run of `reproduce.sh --quick --force` regenerates **49 artifact files and
 9,717 numeric values: 9,353 bitwise identical (96.25%),
 0 equal within floating-point tolerance, and 364 differing** — the three account for
-the total exactly. A further 1 values are in the committed artifacts and absent
-after regeneration, across 1 files
-(`results/verify_reproduction.json`).
+the total exactly. A further 1 value is in the committed artifacts and absent
+after regeneration: `results/anon_bundle.json` (key `.zip_bytes`). All of these counts are recorded in
+`results/verify_reproduction.json`.
 
 **How big the claim is.** 9,717 values is 0.59% of the 1,659,161 numeric values under `results/` that the comparison counts. The other 1,649,444 are carried in by the clone rather than
 regenerated, and are held out of the figure entirely.

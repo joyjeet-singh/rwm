@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 80,
-  "n_ok": 80,
+  "n_pointers": 81,
+  "n_ok": 81,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -291,6 +291,12 @@
     {
       "class": "artifact",
       "pointer": "results/review_bootstrap_unit.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/rssm_diagnostics.json",
       "ok": true,
       "detail": "exists"
     },
