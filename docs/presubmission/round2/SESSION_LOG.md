@@ -478,3 +478,53 @@ CPU jobs over 1 min: four build-and-gate passes (about 1 min each); three quick 
 Body words (FILE_MAP §13 command): 20,472 (T0: 26,526; T8's end: 20,240; +232, almost all restored qualifiers).
 Next: T10 (Opus 5.5, high), **in a new terminal**, as the plan says: a fresh-eyes review against Annex 4's checklist. This conversation has carried T3–T9 and is not fresh eyes. Note for T10: Annex 4 item 1's §3.2 alignment anchor predates ruling A (DECISIONS.md#T3-alignment-framing); the row follows the ruling.
 Decisions for user: none.
+
+## T10 — 2026-10-03 17:10 — Opus 5.5, xhigh effort (the plan assigns high, in a new terminal) — status: COMPLETE
+Commits:
+d50bdc6 [T10][item 1] REVIEW.md: pass/fail for every Annex 4 item, with file:line
+a74ea62 [T10][item 4] Fix the review's small items: checklist failures and the agents' 19 findings
+a5ff351 [T10] Rebuild after the review fixes (fast build, gates, fast build: byte-identical, twice)
+59dc1d2 [T10][item 4] Appendix E carries M-45's verdict verbatim too; rebuild
+(the commit carrying this entry) [T10] COMPLETE: session log
+Done:
+- **How this session ran.** The plan asks for a new terminal, for fresh eyes. The user chose to run T10 in this conversation after being told so; this conversation has carried T3–T9.
+  - The fresh eyes are the two Explore agents, which started cold.
+  - Their first run failed on the account's session limit, returning nothing. They re-ran after the reset, reading the committed `ff7b845` through `git show`.
+  - Every finding was verified in session before any edit.
+- **Item 1, `round2/REVIEW.md`**, pass/fail for every Annex 4 point, with file:line.
+  - **As found at ff7b845:**
+    - items 5, 6, 8, 9 and 10 passed;
+    - item 1 passed, with §3.2's alignment row following ruling A rather than the older anchor;
+    - items 2, 3, 4, 7, 11 and 12 had failing points.
+  - **Item 9's removed keys, justified here as the item requires.** `ad_pa_n`, `ad_pa_out_row`, `stale_pct` and `stale_pct_rel` left the template in T3's `e1e8e0a`. That commit moved §7.2's withdrawn-figures sentence (S-20) to BUILD_CHECKS' moved-from-body list, where the keys still render (`docs/BUILD_CHECKS.template.md:430-432`). No other key has left since `6bee218`.
+- **Item 2, two Explore agents.** Agent 1 (§5 and the front matter) returned 7 mismatches; agent 2 (§6, §7 and Appendices H–T) returned 12. The raw return is in `evidence/R2T10/t10_agents_raw.txt`.
+- **Item 3, every finding verified.** All 19 were real.
+  - Agent 1 marked one large: §5's floor sentences hold only on the 400-step unit. On M-64's short units, at the same `weights_10000.pt` and episodes, both arms beat the floor at h = 1, and teacher forcing beats it at h = 1, 8, 32 and 100.
+  - The fix is three sentences, so it is small by the plan's measure and the session did not stop. §5's headline floor comparison is at h = 368, which the short unit does not reach.
+- **Item 4, fixes**, each three sentences or fewer (`round2/t10_patch.py`, plus the generators).
+  - **Checklist:**
+    - item 3: §3.2's architecture rows give the settings and the h = 368 floor fact (asserted);
+    - item 4: the abstract names seed 1, word-neutrally; §5.1 says its 4.61× is over three seeds;
+    - item 7: released-checkpoint held-out rows are labelled, in §6.2, the §6.5 tables and Appendix L;
+    - item 11: six table captions and Figures 2, 3 and 6 give arena, n_independent and checkpoint;
+    - item 12: README's "restores nominal coverage on every cell" is scoped, and the model card gains the same clause.
+  - **Agents:**
+    - verdicts verbatim: M-45 (DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION, which Appendix E now prints too) and M-49 in full;
+    - arena fixes: §6.2's like-with-like comparison now uses 25.7× on the same held-out pair; "out of sample" corrected for the released checkpoint; §6.7's transfer column;
+    - §6.5's "every model" replaced by the models Appendix S names;
+    - counts corrected: Holm over 4, Bonferroni over 8; the sign test's 10 episodes; the three-seed gaps; Appendix J's seed spreads as a range; Appendix O's 33 runs; Appendix M's cell with no interval; the collapse family "outside §5.2's sweep"; the 2,500-iteration draws;
+    - §3.2 row 1's multiplicity cell names its checkpoints;
+    - Figure 6's panel (b) is named as §5's A/B gap.
+  - **Two gate failures on the way, both fixed at the cause:**
+    - C19.1: a new key carried a bare horizon that restated a typed one, so the clause now names no horizon (with an assertion);
+    - C20.1: two captions gave n_independent without its unit.
+  - **One pipeline gap:** `appendix_g_rules.py` is not in the fast build, so Appendix E lagged the M-45 key until it was re-run.
+- **Out of scope:** `a1_ab_by_horizon.json`'s stale `trend.reading` note, which the paper does not print.
+Build/gates: pass. 8/8 gates on two consecutive passes (`t10p3`, `t10p4`), each build pair byte-identical and the passes identical; 57 pages; 62/62 comparative claims, 62/62 corruptions caught; C12.1 370 words (max 370), 23 numerals (max 26); `part_f_gate` check 6 PASS, its record restored for T11.
+Paper numbers changed: `m45_verdict` SUPPORTED → DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION (`results/a2_trajectory_level_control.json`); `evidence_table` (§3.2 rows 1, 4, 5); `tn_typed` 849 → 862.
+New keys: `m64_floor_h1`, `m64_A_h1`, `m64_B_h1`, `m64_B_beats_floor_at` (`results/m64_short_units.json`).
+Re-anchored checks: none.
+CPU jobs over 1 min: four build-and-gate passes (about 1 min each); five quick checks; `part_f_gate` once; `appendix_g_rules.py` once; the agents' workflow twice (the first failed on the session limit, about 3 min; the second about 16 min).
+Body words (FILE_MAP §13 command): 20,771 (T0: 26,526; T9's end: 20,472; +299, all scoping qualifiers). The shortfall against 19,000 is reported under U3.
+Next: T11 (Opus 5.5, default): freeze; regenerate the claims audit (U5); measure a clean clone of the pushed HEAD and restate §8 by round 1's B3 recipe; rebuild both bundles; refresh the package documents (OUT_OF_SCOPE lists SUBMISSION_CHECKLIST's and SUBMISSION_PACKAGE's stale figure-overlap lines). Run `appendix_g_rules.py` and `part_f_gate.py` there too; neither is in the fast build.
+Decisions for user: none.
