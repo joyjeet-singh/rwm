@@ -2845,8 +2845,9 @@ def main():
         "results/a2_trajectory_level_control.json")
     put("a2_n_excl", len(_hd["r_dd_excludes_zero_at"]),
         "results/a2_trajectory_level_control.json")
-    put("m45_verdict", "SUPPORTED" if A2["m45"]["supported"] else "NOT SUPPORTED",
-        "results/a2_trajectory_level_control.json")
+    # Round 2, T10 review: the rule's own returned case, verbatim, not a word made from its boolean.
+    assert A2["m45"]["supported"] == (A2["m45"]["verdict"] == "DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION")
+    put("m45_verdict", A2["m45"]["verdict"], "results/a2_trajectory_level_control.json")
     # the per-horizon partial on trajectory level, for the 6.7 table
     for h in (8, 32, 100, 128, 368):
         _p = A2["partial_by_horizon"][str(h)]
@@ -3153,6 +3154,21 @@ def main():
         f'[{_c["gap_ci_unit_level"][0]:+.4f}, {_c["gap_ci_unit_level"][1]:+.4f}]',
         "results/m64_short_units.json")
     put("m64_h1_ratio", f'{_c["ratio_B_over_A"]:.2f}', "results/m64_short_units.json")
+    # Round 2, T10 review: section 5's floor sentences hold on the 400-step unit only. On M-64's short
+    # units (same arms, seeds, 10,000-iteration checkpoint and episodes) the floor is met differently,
+    # and section 5 now says so, from these keys.
+    _cs = M64["cells"]["C_section_5_ab_gap"]["out-of-sample held-out pair"]
+    _hs = sorted(_cs, key=int)
+    _bb = [h for h in _hs if _cs[h]["B_mean"] < _cs[h]["hold_last_floor"]]
+    _bl = [h for h in _hs if _cs[h]["B_mean"] >= _cs[h]["hold_last_floor"]]
+    assert _c["A_mean"] < _c["hold_last_floor"] and _c["B_mean"] < _c["hold_last_floor"], _c
+    # "loses to it only at the longest horizon those units reach": no key carries that horizon,
+    # which would restate a typed one (C19.1).
+    assert len(_bb) >= 2 and _bl == [_hs[-1]], (_bb, _bl)
+    put("m64_floor_h1", f'{_c["hold_last_floor"]:.4f}', "results/m64_short_units.json")
+    put("m64_A_h1", f'{_c["A_mean"]:.4f}', "results/m64_short_units.json")
+    put("m64_B_h1", f'{_c["B_mean"]:.4f}', "results/m64_short_units.json")
+    put("m64_B_beats_floor_at", ", ".join(_bb[:-1]) + " and " + _bb[-1], "results/m64_short_units.json")
     put("m64_h128_n", _b["n_independent_unit_level"], "results/m64_short_units.json")
     put("m64_h128_lo", f'{_b["paired_diff_ci_unit_level"][0]:+.3f}',
         "results/m64_short_units.json")

@@ -383,7 +383,9 @@ def main():
     N_COLLAPSE = str(N["n_runs"]["value"])
     CAPS = {
         "paper_fig1_calibration.png":
-            "Calibration of all four models on the held-out arena. The released checkpoint trained "
+            "Calibration of all four models on the held-out pair's " + str(N["b2_nind"]["value"])
+            + " independent 400-step trajectories, our arms at " + str(N["iters_main"]["value"])
+            + " training iterations. The released checkpoint trained "
             "on these episodes, so for it this arena is in-sample (\\S3). "
             "(a) reliability: observed against predicted coverage, with the calibrated diagonal; "
             "the inset repeats the same points with observed coverage on a log scale, where the "
@@ -407,7 +409,7 @@ def main():
             "The variance collapse is objective-driven. (a) mean "
             "$\\log\\Delta_{\\log\\sigma}$ against training iteration for each of the "
             + N_COLLAPSE + " runs of the collapse family, which is every run of §5–§7 at the released "
-            "width. The runs are drawn individually but are visually coincident within each "
+            "width outside §5.2's sweep (Appendix J). The runs are drawn individually but are visually coincident within each "
             "objective, so the " + N_COLLAPSE + " read as two lines, one falling and one rising "
             "-- which is the point: the trajectory does not vary visibly from run to run. "
             "(b) the fitted per-iteration slope for each run, grouped by objective: negative and "
@@ -422,7 +424,8 @@ def main():
         "paper_fig6_ab_by_horizon.png":
             "The autoregressive-versus-teacher-forcing advantage as a function of forecast "
             "horizon, out-of-sample over three seeds at " + str(N["iters_long"]["value"])
-            + " training iterations. (a) the ratio, which grows monotonically "
+            + " training iterations, on the held-out pair's " + str(N["a1_nind"]["value"])
+            + " independent 400-step trajectories. (a) the ratio, which grows monotonically "
             "with depth: h = 368 is the end of a trend rather than a selected point, and the "
             "method's own rollout length of h = 100 sits partway along it. (b) the same "
             "comparison as a gap with its 95\\% cluster-bootstrap interval over whole "
@@ -431,9 +434,12 @@ def main():
             "(\\S5, M-64). Rule M-23 was run at h = 368 on seed " + str(N["m23_seed"]["value"])
             + " of each arm; these three-seed values, and every other horizon, were computed afterwards.",
         "paper_fig5_three_way.png":
-            "The contamination control. (a) outcome across 32 cells for each arm pair, naive "
+            "The contamination control. (a) outcome across " + str(N["tw_cells"]["value"])
+            + " cells for each arm pair (" + str(N["tw_design"]["value"]).replace("_", "\\_") + "), naive "
             "bootstrap on the left of each position and cluster bootstrap on the right; the "
-            "duplication control is inert. (b) distribution of the ratio of cluster to naive "
+            "duplication control is inert. (b) a different family, the " + str(N["bu_cells"]["value"])
+            + " cells of \\S5's A/B gap at the " + str(N["bu_ckpts"]["value"])
+            + "-iteration checkpoints (\\S8): distribution of the ratio of cluster to naive "
             "confidence-interval width, with the mean marked. Resampling pooled seed × trajectory "
             "values rather than whole trajectories narrows " + str(N["bu_n_narrowed"]["value"])
             + " of the " + str(N["bu_cells"]["value"]) + " intervals.",

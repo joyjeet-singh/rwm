@@ -193,7 +193,12 @@ def build_rows():
         "n_independent": g368["n_independent"],
         "in_sample": in_sample(a1_model, a1_arena),
         "verdict": gap_verdict(g368["gap"], g368["gap_excludes_zero"]),
-        "multiplicity": multiplicity(family_rejected=ab_family),
+        # Round 2, T10 review: the multiplicity family was corrected at the 500- and 2,500-iteration
+        # checkpoints (results/task_c3_multiplicity.json), not at this row's 10,000.
+        "multiplicity": (multiplicity(family_rejected=ab_family) + ", at the "
+                         + " and ".join(f"{int(c):,}" for c in sorted({x["cell"].split("|")[2]
+                                        for x in C3["holm_bonferroni"]["steps"]}, key=int))
+                         + "-iteration checkpoints"),
         "model": a1_model,
         "artifacts": ["results/a1_ab_by_horizon.json", "results/task_c3_multiplicity.json"],
     })
@@ -240,18 +245,28 @@ def build_rows():
     # because rule X1 found no read-out or retraining that rescues our RSSM. The rows carry that
     # qualifier only while X1's reading is the one that makes the RSSM uninformative.
     assert J("rssm_diagnostics.json")["final_reading"] == "NOT RESCUED BY THE SETTINGS TRIED"
+    # Round 2, T10 (Annex 4 item 3): every statement of this verdict says the baselines were
+    # trained with RWM's settings and that, at the rule's horizon, each is worse than predicting
+    # no change. The second half is asserted as paper_numbers.py asserts it for section 5.3.
+    import numpy as _np
+    _BE = J("baselines_eval.json")
+    _m3 = lambda cfg, h: float(_np.mean([_np.mean(cfg["seeds"][s]["held_out"][str(h)]["l1"])
+                                         for s in cfg["seeds"]]))
+    _fl = BV["hold_last_floor_l1"]["held_out"][str(diag)]
+    assert all(_m3(_BE["configs"][f"{b}_{g}_s7"], diag) > _fl
+               for b in BV["priority_order"] for g in ("tf", "ar"))
     for _rule, _how in (("M-75", "teacher-forced, as the original trains them"),
                         ("M-76", "trained autoregressively: architecture at one training regime, "
                                  "not the original's claim")):
         _R = BV["rules"][_rule]
         rows.append({
-            "claim": f"RWM beats MLP, RSSM and transformer baselines ({_how}; the RSSM comparison "
-                     f"uninformative, rule X1)",
+            "claim": f"RWM beats MLP, RSSM and transformer baselines trained with RWM's settings ({_how}; "
+                     f"the RSSM comparison uninformative, rule X1)",
             "section": "5.3",
             "arena": mn_arena,
             "n_independent": ME["arenas"]["held_out"]["n_independent"],
             "in_sample": in_sample("our arms", mn_arena),
-            "verdict": _R["verdict"],
+            "verdict": f"{_R['verdict']}; at h = {diag} every baseline is worse than predicting no change",
             "multiplicity": "yes",
             "model": "our arms",
             "artifacts": ["results/baselines_verdict.json", "results/baselines_eval.json"],

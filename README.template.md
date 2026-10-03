@@ -60,8 +60,8 @@ the rollout and the forecast depth held constant it still correlates **{{a2_rdd}
 
 **4 — The interval may be repairable per horizon, with mixed evidence.** On the released
 checkpoint, one multiplier per forecast horizon, fitted on one held-out episode and scored on the
-other, restores nominal coverage on every cell, where a single global multiplier manages
-{{d3_epi_const_ok}} of them. But that checkpoint trained on both episodes, so those cells are unseen
+other, brings every cell within {{d3_tol}} points of nominal, though at two episodes no single cell is
+resolvable, where a single global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic ones. But that checkpoint trained on both episodes, so those cells are unseen
 by the multiplier only; on Arm A, whose model never saw them, its own multipliers manage
 {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells.
 
