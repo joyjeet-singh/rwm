@@ -341,10 +341,15 @@ it did neither until the first
 capacity-matched run walked into the family through a glob. **That fix reached
 `paper_numbers.py` and `paper_figures.py` and not every script**: a second unguarded glob
 survived in the ensemble-5 comparison until this revision found it, moving two published
-values (`M-66`). A sweep of all {{audit_n_hits}} pattern-based input discoveries in
-`scripts/` and `src/` now classifies each as an open population or frozen at write time;
-{{audit_n_frozen}} was frozen, and artifacts that discover their inputs now record the
-file list they were computed over.
+values (`M-66`). A sweep of the pattern-based input discoveries in `scripts/` and `src/`
+classifies each as an open population or frozen at write time. It found {{audit_n_retired}}
+frozen, the ensemble-5 glob, since replaced by an explicit seed list and retired from the sweep;
+of the {{audit_n_hits}} discoveries in the code now, {{audit_n_frozen}} are frozen. Artifacts that
+discover their inputs now record the file list they were computed over.
+
+*Round 2, T8: from "A sweep" to "frozen." this is no longer verbatim. It read "A sweep of all
+{{audit_n_hits}} … {{audit_n_frozen}} was frozen" once the audit began retiring fixed discoveries
+(`results/input_set_audit.json`, `retired`), as if the sweep had found none.*
 
 ---
 

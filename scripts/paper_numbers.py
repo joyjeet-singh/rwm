@@ -317,7 +317,7 @@ def main():
          "how many commits the archive's anonymised git log carries"),
         ("appendix_g_rules.json", r"\.rules\[(\d+)\]\.lead_hours",
          "the lead time of rule {rule}, a gap between two git commit timestamps"),
-        ("paper_numbers.json", r"\.(audit_n_hits|audit_n_frozen)\.value",
+        ("paper_numbers.json", r"\.(audit_n_hits|audit_n_frozen|audit_n_retired)\.value",
          "the build's input-audit count `{key}`"),
         ("pdf_channels.json", r"\.scanned\.text",
          "the amount of PDF text the anonymity scan read"),
@@ -3169,6 +3169,12 @@ def main():
     AUD = J("input_set_audit.json")
     put("audit_n_hits", AUD["n_hits"], "results/input_set_audit.json")
     put("audit_n_frozen", AUD["n_frozen"], "results/input_set_audit.json")
+    # Round 2, T8: the audit now retires a frozen discovery once its script is fixed, so the
+    # one the sweep found (the ensemble-5 glob, M-66) left n_frozen. BUILD_CHECKS names it
+    # as that glob, so check that it is.
+    _ret = AUD["retired"]
+    assert [x["file"] for x in _ret] == ["scripts/task_d3_ens5.py"], _ret
+    put("audit_n_retired", len(_ret), "results/input_set_audit.json")
 
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
