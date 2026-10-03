@@ -2436,11 +2436,25 @@ def main():
         assert X1["final_reading"] == "NOT RESCUED BY THE SETTINGS TRIED", X1["final_reading"]
         _rh = X1["arena"]["horizons"][2]
         put("x1_final_reading", X1["final_reading"], _x1s)
+        # The T8 review (A1): the first wording put the criterion where it read as the outcome, and
+        # measured every trajectory against the floor's mean. The rule (M-80) and below_floor() test
+        # each trajectory against its own floor value, and the mean against the floor's mean.
+        _n = X1["arena"]["n_independent"]
+        _its = {J(f"baseline_run_rssm_tf_{r['spec']}_seed0.json")["hyperparameters"]["iterations"]
+                for r in _pc.values()}
+        assert len(_its) == 1, _its
+        _m = {v: _pc[v]["per_seed_mean_l1"]["0"][_rh] for v in ("V1", "V2")}
+        _up = {v: sum(1 for x in _pc[v]["seed0_per_traj_minus_floor"] if x > 0) for v in ("V1", "V2")}
+        assert all(len(_pc[v]["seed0_per_traj_minus_floor"]) == _n for v in _pc), _pc
+        assert all(_m[v] > X1["floor_mean"][_rh] and _up[v] > 0 for v in _m), (_m, _up)
         put("rssm_partc_sentence",
-            f"Its two retraining variants, PlaNet's KL settings and DreamerV2's layer-normalised recurrent "
-            f"cell (X1 Part C, seed 0), each miss the rule's criterion at h = {_rh}, a mean below the "
-            f"hold-last floor with every trajectory below it, so rule X1 returns **{X1['final_reading']}** "
-            f"(ledger M-83).", _x1s)
+            f"Its Part C retrains the teacher-forced RSSM at seed 0 for {next(iter(_its)):,} iterations, "
+            f"once with PlaNet's KL settings and once with DreamerV2's layer-normalised recurrent cell. "
+            f"Neither rescues it: read from its most likely latent at h = {_rh}, they score "
+            f"{_m['V1']:.4f} and {_m['V2']:.4f} against the floor's {X1['floor_mean'][_rh]:.4f}, with "
+            f"{_up['V1']} and {_up['V2']} of the {_n} trajectories above their own floor value; a rescue "
+            f"needs the mean below the floor's and every trajectory below its own. So rule X1 returns "
+            f"**{X1['final_reading']}** (ledger M-83).", _x1s)
 
     # --- Round 2, T5: Appendix H, the confirmed findings the body does not state ---------------
     # Each row's claim is asserted where its key is made. Rows with no artifact (source-code facts)

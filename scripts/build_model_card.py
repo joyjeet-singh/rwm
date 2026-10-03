@@ -355,7 +355,14 @@ def main():
       "velocity commands only.")
     A(f"- **Long-horizon claims rest on {v('m23_nind')} independent 400-step trajectories** in the "
       "held-out arena. That is the binding statistical constraint.")
-    A("- **The 10k checkpoints are one seed per arm.** Recorded in the artifacts.")
+    # Round 2, T8 review (A4): this said "one seed per arm", true before the three-seed runs and
+    # false since; the card ships every 10k seed of both arms. Counted from CKPTS, not typed.
+    _n10 = {arm: sum(1 for _, n, _, _ in CKPTS if n.startswith(f"{arm}-10k-seed"))
+            for arm in ("autoregressive", "teacher-forced")}
+    assert len(set(_n10.values())) == 1, _n10
+    _n10 = next(iter(_n10.values()))
+    A(f"- **The 10k checkpoints are {_n10} seeds per arm.** The headline's ± is a standard "
+      f"deviation over {_n10} values.")
     A("- **No policy learning.** Dynamics model only.")
     A("")
     A("## Licence and attribution")

@@ -348,8 +348,8 @@ of the {{audit_n_hits}} discoveries in the code now, {{audit_n_frozen}} are froz
 discover their inputs now record the file list they were computed over.
 
 *Round 2, T8: from "A sweep" to "frozen." this is no longer verbatim. It read "A sweep of all
-{{audit_n_hits}} … {{audit_n_frozen}} was frozen" once the audit began retiring fixed discoveries
-(`results/input_set_audit.json`, `retired`), as if the sweep had found none.*
+N … M was frozen", filled from the audit's live counts, so once the audit began retiring fixed
+discoveries (`results/input_set_audit.json`, `retired`) it read as if the sweep had found none.*
 
 ---
 
