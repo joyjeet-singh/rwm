@@ -103,10 +103,10 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix B gives for all of \u00a75\u2013\u00a77's runs",
+      "pointer": "Appendix B gives for the 33 runs of \u00a75\u2013\u00a77 it times (\u00a75",
       "ok": true,
-      "detail": "target Appendix B; nouns ['runs']; absent []",
-      "context": "Appendix B gives for all of \u00a75\u2013\u00a77's runs"
+      "detail": "target Appendix B; nouns ['runs', 'times']; absent []",
+      "context": "Appendix B gives for the 33 runs of \u00a75\u2013\u00a77 it times (\u00a75"
     },
     {
       "class": "artifact",

@@ -54,7 +54,8 @@ safety margins, or anything that treats σ as a scale.
 multiplier does not work, because the miscalibration grows with forecast horizon. One
 multiplier *per horizon*, fitted on one episode and scored on the other, restored ±1σ
 coverage on the released reference checkpoint to within 10 points of nominal on
-12 of 12 cells, where a single global multiplier managed
+12 of 12 epistemic cells, though at two episodes no single cell is
+resolvable, where a single global multiplier managed
 2; but that checkpoint trained on both episodes. On these ensemble-5
 checkpoints, which never saw them, their own multipliers manage 17 of
 36 epistemic cells, on two episodes only. Refit it on your own data and
