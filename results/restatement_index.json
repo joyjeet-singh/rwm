@@ -2,9 +2,9 @@
   "scanned": "PAPER.template.md",
   "n_substituted": 1745,
   "n_typed": 249,
-  "n_restatements": 121,
+  "n_restatements": 122,
   "n_same_quantity_candidates": 64,
-  "n_lower_signal": 57,
+  "n_lower_signal": 58,
   "restatements": [
     {
       "value": "+0.419",
@@ -1149,6 +1149,36 @@
           "line": 305,
           "key": "v3_rho_calibrated",
           "ctx": " Gaussian has mean|error| / \u03c3 = $\\sqrt{2/\\pi}$ = {{v3_rho_calibrated}}. So $\\rho$ is reported as a magnitude o"
+        }
+      ]
+    },
+    {
+      "value": "0.91",
+      "n_locations": 2,
+      "same_quantity_candidate": false,
+      "fails_build": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/a1_ab_by_horizon.json",
+        "results/verify_reproduction.json"
+      ],
+      "keys": [
+        "a1_ratio_h1",
+        "ver_claim_pct"
+      ],
+      "locations": [
+        {
+          "section": "5. The base paper's central claim reproduces",
+          "line": 415,
+          "key": "a1_ratio_h1",
+          "ctx": "h1}} \u00b1 {{a1_A_sd_h1}} | {{a1_B_h1}} \u00b1 {{a1_B_sd_h1}} | {{a1_ratio_h1}}\u00d7 | {{a1_gap_h1}} {{a1_gap_ci_h1}} | **{"
+        },
+        {
+          "section": "8. Method",
+          "line": 1215,
+          "key": "ver_claim_pct",
+          "ctx": ".sh --quick --force`, which skips training) rewrites {{ver_claim_pct}}% of the numeric values under `results/`"
         }
       ]
     },
@@ -7744,24 +7774,26 @@
     },
     {
       "value": "7",
-      "n_locations": 12,
+      "n_locations": 13,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 12,
+      "n_substituted": 13,
       "sources": [
         "results/e4_sigma_gradients.json",
         "results/paper_figures.json",
         "results/r2_combined_arm.json",
         "results/step0_regimes.json",
-        "results/step4_3_differential.json"
+        "results/step4_3_differential.json",
+        "results/verify_reproduction.json"
       ],
       "keys": [
         "d10_extra_ep",
         "diff_terms",
         "e4_n_terms",
         "f4_n_positive",
-        "m68_from_acc_h8"
+        "m68_from_acc_h8",
+        "ver_differing"
       ],
       "locations": [
         {
@@ -7793,6 +7825,12 @@
           "line": 1207,
           "key": "f4_n_positive",
           "ctx": "s}} of them and Appendix E for all {{appG_n_rules}}; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_n"
+        },
+        {
+          "section": "8. Method",
+          "line": 1219,
+          "key": "ver_differing",
+          "ctx": "`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as"
         },
         {
           "section": "9. Actionable lessons",

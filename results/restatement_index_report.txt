@@ -17,9 +17,9 @@ C1 — RESTATEMENT INDEX
   typed numerals kept : 249  (addresses and declared constants excluded)
   registered coincidences: 8
 
-  121 value(s) appear at more than one location from more than one key:
+  122 value(s) appear at more than one location from more than one key:
     64 same-quantity candidates — a distinctive value shared across artifacts, or a typed copy of a derived one
-    57 lower-signal — a short value, or two cells of one table
+    58 lower-signal — a short value, or two cells of one table
     none of these fails the build; they are the C1 review's Tier 0 queue
 
         +0.589  keys ['a2_step_only', 'd2r_log']

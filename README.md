@@ -154,14 +154,14 @@ Training is bitwise reproducible under a fixed seed: the 10,000-iteration run re
 existing 2,500-iteration run exactly at every logged iteration, and `weights_2500.pt` is
 byte-identical between them.
 
-A clean-clone run of `reproduce.sh --quick --force` regenerates **49 artifact files and
-9,717 numeric values: 9,353 bitwise identical (96.25%),
-0 equal within floating-point tolerance, and 364 differing** — the three account for
+A clean-clone run of `reproduce.sh --quick --force` regenerates **56 artifact files and
+15,515 numeric values: 15,508 bitwise identical (99.95%),
+0 equal within floating-point tolerance, and 7 differing** — the three account for
 the total exactly. A further 1 value is in the committed artifacts and absent
 after regeneration: `results/anon_bundle.json` (key `.zip_bytes`). All of these counts are recorded in
 `results/verify_reproduction.json`.
 
-**How big the claim is.** 9,717 values is 0.59% of the 1,659,161 numeric values under `results/` that the comparison counts. The other 1,649,444 are carried in by the clone rather than
+**How big the claim is.** 15,515 values is 0.91% of the 1,700,981 numeric values under `results/` that the comparison counts. The other 1,685,466 are carried in by the clone rather than
 regenerated, and are held out of the figure entirely.
 
 **A note on what that number is not.** An earlier version of this section counted every numeric

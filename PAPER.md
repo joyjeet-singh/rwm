@@ -1259,11 +1259,11 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 **Reproducibility, and a build that checks its own prose.** Every measured number in this paper is
 substituted from an artifact on each build, and a quick run on a clean clone (`./reproduce.sh --quick --force`, which skips
-training) rewrites 0.59% of the numeric values under `results/` that the comparison counts; the rest are carried in
+training) rewrites 0.91% of the numeric values under `results/` that the comparison counts; the rest are carried in
 and prove nothing about reproduction. **The number of regenerated values that differ and are
 themselves a measurement, a statistic or the verdict of a test is 0.** One of the
 build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ
-at all; 364 do, so it fails, and it is published as failing rather than given a
+at all; 7 do, so it fails, and it is published as failing rather than given a
 tolerance. The accounting behind these figures, the registry of checks the build runs on this
 paper's own prose, and the paper's record of verifying its own claims are in `docs/BUILD_CHECKS.md`,
 shipped as supplementary.
