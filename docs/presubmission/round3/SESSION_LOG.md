@@ -239,3 +239,54 @@ Done:
 Next: **R3 item 5, the rule-10 audit** of A7, A8, A10, A13, the §3.2 row, the §7.2 paragraph and A9 against every reading; then R3's COMPLETE entry. After that, R4 to R9.
 Body words: not re-measured this entry (R2 ended at 21,075). Abstract: 369 / 23.
 Decisions for user: none.
+
+## R3 — 2026-10-09 17:50 — Opus 5.5 (the plan assigns high effort) — status: COMPLETE
+Commits:
+254adca [R3][E2] Action timing on all ten episodes: contribution 7 (A7), §3.1 (A8), the §3.2 row, §7.2 leads with the all-ten curve in both metrics
+b6eab4b [R3][E3+abstract] X2 into the paper (case R): §7.2, Appendix H row, Appendix V, model card; abstract A10 and A13; §12 pair; resample counts bound
+fb61777 [R3][G2-G3] Guards C27.1 (alignment-arena) and C27.2 (action-response), each catching round 2's planted wording
+3ad7779 [R3][build] Fast build, gates, fast build: byte-identical; 65/65 claims, 32 kinds; 61 pages
+f74cba4 [R3] PARTIAL: session log (usage limit)
+20a9dde [R3][audit] Contribution 7's lead names relative-L1: over all ten episodes nRMSE does not resolve the rise at h = 1
+(the commit carrying this entry)
+Done:
+- **Items 1-4.** As in the PARTIAL entry above.
+- **Item 5, rule-10 audit.** The readings are from `alignment_by_horizon.json` (released checkpoint, both arenas, both metrics, h = 1-368), `action_sensitivity.json` (X2, every model and arena) and `e7_free_baselines.json`.
+  - **Abstract, A10.** "Over all ten episodes this raises the checkpoint's short-horizon error, and from 100 steps the change is unresolved":
+    - all ten episodes: relative-L1 resolves a rise at h = 1, 8 and 32; nRMSE at h = 8 and 32, while at h = 1 it is +7.4% [−14.8, 87.8], unresolved, not reversed;
+    - from h = 100 neither metric resolves at h = 100, 128 or 368;
+    - the held-out pair resolves a rise at every horizon in both metrics, but the clause names its arena.
+    - Agrees, with one gap left for R6: the abstract does not name the nRMSE h = 1 exception. It has one word of room (369/370), and its wording is ruling V4's.
+  - **Abstract, A13.** +0.470 (step size) beside +0.605 (disagreement), "margin unresolved". `paper_numbers.py` asserts that d4_r equals e7's own disagreement figure at three decimals, and the margin is below e7's MDE (§6.7). Agrees.
+  - **Contribution 7, A7.**
+    - The lead now names relative-L1 (this session's fix), because nRMSE does not resolve the rise at h = 1.
+    - Its figures are the relative-L1 curve over all ten episodes.
+    - "On the held-out pair's 4 it raises it at every horizon reported" holds in both metrics at all six horizons.
+    - Agrees.
+  - **§3.2's row.** "Raises error up to h = 32 on relative-L1; not resolved from h = 100", computed from the curve and asserted unbroken. Agrees; it moves to Appendix D in R6.
+  - **§12.** "+0.470 against disagreement's +0.605, by a margin this sample cannot resolve". Agrees.
+  - **Body sentences.**
+    - A8 states both metrics, including the h = 1 difference.
+    - §7.2's figures are each bound and asserted.
+    - A9 and the model card: "they respond to the action". X2's swap at h = 8 resolves a rise for Arm A and Arm B at both checkpoints in both arenas (held-out included: Arm A +114.3% [54.8, 351.6] at 2,500 and +179.4% [78.7, 729.4] at 10,000), and for the released checkpoint in both of its arenas. Every reading agrees.
+    - "The stale action itself raises their error at h = 1" is the in-sample arena, as it says. The held-out −0.99% is in the sentence before it.
+Build/gates: pass. Fast build, then gates, then fast build: byte-identical. 65/65 claims and 65/65 caught; 32 kinds, 0 unclassified; xref 0 suspect; ledger PASS; horizon sweep 0 findings; restatement CLEAN; typed numerals 0 unclassified; render PASS; 61 pages. `part_f_gate` 6/7: check 6 passes, check 4b fails on bundles that predate Appendices U and V (R8 rebuilds them).
+Paper numbers changed:
+- cc_n, cc_pass, cc_st_n, cc_st_caught: 63 → 65; cc_kinds: 30 → 32; cc_kind_list gains alignment-arena and action-response;
+- pdf_pages: 59 → 61;
+- tn_typed moves with the new prose (results/typed_numerals.json).
+New keys:
+- results/alignment_by_horizon.json: adh20_{rel,nrmse}_h{1,8,32,100} and adh20_{rel,nrmse}_ci_h{1,8,32,100}; boot_n_exact4, boot_n_mc;
+- results/action_sensitivity.json: x2_reading, x2_E_swap_{2500,10k}, x2_ci_swap_{2500,10k}, x2_n_ins, x2_ctx_stale, x2_ctx_swap, x2_E_stale_10k_ins_h1, x2_ci_stale_10k_ins_h1, x2_appV_own, x2_appV_ho, x2_appV_delta, x2_ctx_{ins,ho,ten}_{frac,stale,swap}, x2_k_lo, x2_k_hi;
+- e7_step_r3 existed and is now printed (abstract, §12).
+Keys removed from the template: none.
+Re-anchored checks: C25.2, "overstates the released checkpoint's error" → "What the stale pairing costs depends on the horizon"; its figure pattern is widened to adh20_*.
+CPU jobs over 1 min: none; each build cycle was about 45 s.
+Body words (round2/t6_words.py): 21,280 (R0: 20,771). R6 moves text.
+Abstract words / numerals (C12.1): 369 / 23. The 340-word aim (R3 item 3) is not met; nothing could be cut without a finding or a scope.
+Next: R4 (S1-S17, including Figure 1).
+For R6:
+- the abstract's A10 does not name the nRMSE h = 1 exception;
+- A4/A5/A6 do not name M-74's held-out nRMSE h = 1 exception (R2's log);
+- both are unresolved readings, not reversals.
+Decisions for user: none.
