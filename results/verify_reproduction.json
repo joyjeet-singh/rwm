@@ -63,9 +63,9 @@
   "differing": 6,
   "timing_excluded": 11988,
   "nan_in_both": 4,
-  "copied_file_values": 1693621,
-  "copied_identical": 1693610,
-  "copied_differing": 11,
+  "copied_file_values": 1693623,
+  "copied_identical": 1693620,
+  "copied_differing": 3,
   "machine_file_values_excluded": 706,
   "keys_lost": 1,
   "keys_lost_files": [
@@ -1545,22 +1545,10 @@
     },
     "verify_reproduction.json": {
       "regenerated": false,
-      "differing": 8,
-      "differing_keys": [
-        ".values_compared",
-        ".bitwise_identical",
-        ".differing",
-        ".timing_excluded",
-        ".copied_file_values",
-        ".copied_identical",
-        ".per_file.anon_bundle.json.differing",
-        ".per_file.supplementary_manifest.json.differing"
-      ],
-      "keys_lost": 2,
-      "keys_lost_paths": [
-        ".per_file.action_sensitivity.json.differing",
-        ".per_file.action_sensitivity.json.keys_lost"
-      ]
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
     },
     "x1_partc_timing.json": {
       "regenerated": false,
