@@ -758,6 +758,10 @@ def main():
                            "three-seed extension",
         "overstat-reversal": "no sentence says the released evaluation overstates its error beside an "
                              "alignment figure unless its paragraph names the reversal of sign",
+        "alignment-arena": "a sentence naming the action-alignment defect and a short-horizon cost has the "
+                           "all-ten-episodes figures, or those words, in its paragraph",
+        "action-response": "a paragraph quoting our arms' stale-pairing sensitivity also carries rule X2's figure "
+                           "for how they respond to the action",
         "compute-claim": "no rendered file says a setting won even when its rival trained longer, and every "
                          "front-matter sentence that names compute or longer training says the ranking depends "
                          "on it or names the split",
@@ -1910,6 +1914,19 @@ def main():
             _drows.append(f"| {_lab} | {_al} | " + " | ".join(
                 f'{X2["results"][_k][_arn]["8"][_i]["delta"]:.3f}' for _i, _ in _INTV) + " |")
     put("x2_appV_delta", "\n".join(_drows), _x2s)
+    # the bootstrap's resample counts, printed in Appendices U and V: N1's own counts, which both artifacts' interval
+    # descriptions must state
+    _nex = _ah["released"]["full"]["held_out_n4"]["1"]["n_resamples"]
+    _nmc = _ah["released"]["full"]["all_ten_n20"]["1"]["n_resamples"]
+    assert (_nex, _nmc) == (4 ** 4, 20000), (_nex, _nmc)
+    for _desc in (X2["interval"], J("mn_compute_matched.json")["part3_readings"]["interval"]):
+        assert f"exact {_nex}" in _desc and f"{_nmc:,}" in _desc, _desc
+    put("boot_n_exact4", f"{_nex:,}", _src2)
+    put("boot_n_mc", f"{_nmc:,}", _src2)
+    _ks = sorted(float(k.split("_k")[1]) for k in X2["interventions"] if k.startswith("I4_noise_k"))
+    assert len(_ks) == 2, _ks
+    put("x2_k_lo", f"{_ks[0]:g}", _x2s)
+    put("x2_k_hi", f"{_ks[1]:g}", _x2s)
     for _arn, _tg in (("in_sample_n16", "ins"), ("held_out_n4", "ho"), ("all_ten_n20", "ten")):
         _c = X2["context"][_arn]
         put(f"x2_ctx_{_tg}_frac", f'{100 * _c["fraction_of_steps_with_changed_action"]:.0f}', _x2s)

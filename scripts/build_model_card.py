@@ -329,6 +329,8 @@ def main():
     # numbers", with no measurement behind it. N1 measured Arm A at 10,000 iterations: the
     # sentence now quotes that, at the paper's two horizons, in the arena it was measured in.
     # The key name carries its horizon, so the horizon printed beside it is checked against it.
+    # Round 3: those figures are R-79's re-measurement (S-21 withdrew the round-2 ones, which scored one
+    # trajectory's forecast against four), and rule X2's swap figure follows them (case R, PLAN Annex 3).
     assert str(v("v2_diag_h")) == "368", v("v2_diag_h")
     A("- **Action convention.** Row *t* holds the action that *produced* state *t*. These models "
       "are trained and evaluated under that causal pairing. The reference's *evaluation* path "
@@ -337,7 +339,10 @@ def main():
       f"{v('stale_armA_rel_h1')}% at h = 1 and by {v('stale_armA_rel_h368')}% at "
       f"h = {v('v2_diag_h')} (their mean, on the two held-out episodes' {v('ad_nind')} "
       "trajectories; `results/alignment_by_horizon.json`). The figure covers those three "
-      "checkpoints only.")
+      "checkpoints only. Given another trajectory's actions instead, their error at 8 steps on their "
+      f"training episodes' {v('x2_n_ins')} trajectories rises by {v('x2_E_swap_10k')}% "
+      f"{v('x2_ci_swap_10k')}, so they do respond to the action (rule X2, pre-registered: "
+      f"{v('x2_reading')}; `results/action_sensitivity.json`).")
     A("- **Normalisation.** States are normalised with the reference's stored mean and std. "
       "Actions are not normalised, matching the reference.")
     A("")

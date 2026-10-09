@@ -99,9 +99,9 @@ Rule X2 was committed and pushed before any of its readings existed (ledger M-84
 is discharged in M-85. It is exploratory and re-opens no rule. It asks whether our trained models condition their
 forecasts on the action they are given. Only the actions the forecast steps read are changed, so the history and the
 recurrent state that meets the first forecast action are untouched. E is the change in relative-L1 error, cumulative
-over forecast steps 1..h, against the true actions, err(I) / err(true) − 1 in percent: for our arms, the mean over
+over forecast steps 1..h, against the true actions: the ratio err(I) / err(true), less one, in percent; for our arms, the mean over
 three seeds of each seed's E. Its 95% interval resamples whole trajectories, one resample for all seeds and both
-interventions in each draw: exact over all 256 on the held-out pair, 20,000 Monte Carlo draws (seed 0) otherwise. The
+interventions in each draw: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair, {{boot_n_mc}} Monte Carlo resamples (seed 0) otherwise. The
 interventions are the stale action (the released evaluation's offset), another trajectory's actions (a swap, each
 trajectory taking the next one's), each action dimension's mean over the model's training rows, and the true actions
 plus Gaussian noise at k times each dimension's training standard deviation (eight draws). **The readings** are Arm
@@ -127,17 +127,19 @@ with its 95% interval; bold, the two readings. Arm B and the released checkpoint
 n_independent = {{ad_nind}}), out-of-sample for our arms and in-sample for the released checkpoint. Checkpoints as in
 the first table.** No reading is made on this arena; every row is alongside.
 
-| model, checkpoint | arena | stale action | another trajectory's actions | training mean | noise, k = 0.1 | noise, k = 0.5 |
+| model, checkpoint | arena | stale action | another trajectory's actions | training mean | noise, k = {{x2_k_lo}} | noise, k = {{x2_k_hi}} |
 |---|---|---|---|---|---|---|
 {{x2_appV_delta}}
 
 **Δ at h = 8, the relative-L1 of the forecast made with the changed actions measured against the forecast made with
-the true ones (`rollout_eval.relative_error`), which is 0 for a model that ignores its actions. Arenas and checkpoints
-as in the tables above; descriptive, no reading.** How far the interventions move the actions: on the forecast rows,
+the true ones (`rollout_eval.relative_error`), which is zero for a model that ignores its actions. Arenas: each model's
+own training data ({{x2_n_ins}} trajectories for our arms, {{ad20_nind}} for the released checkpoint) and the held-out
+pair ({{ad_nind}}). Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the
+released checkpoint. Descriptive, no reading.** How far the interventions move the actions: on the forecast rows,
 the action changes from one step to the next on {{x2_ctx_ins_frac}}% of steps on the in-sample arena,
 {{x2_ctx_ho_frac}}% on the held-out pair and {{x2_ctx_ten_frac}}% over all ten episodes. A one-step shift moves the
-action by {{x2_ctx_ins_stale}}, {{x2_ctx_ho_stale}} and {{x2_ctx_ten_stale}} of its spread (mean |a_t − a_(t−1)|
-over mean |a_t − ā|), and the swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and {{x2_ctx_ten_swap}}
+action by {{x2_ctx_ins_stale}}, {{x2_ctx_ho_stale}} and {{x2_ctx_ten_stale}} of its spread (the mean absolute change from one step to the next over the mean absolute deviation from
+the action's mean), and the swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and {{x2_ctx_ten_swap}}
 (`results/action_sensitivity.json`).
 """
 

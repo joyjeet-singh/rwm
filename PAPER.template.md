@@ -13,11 +13,11 @@ world-model data, one robot, gait and terrain, and {{nind_oos_400}} independent 
 Ensemble disagreement, the method's reward penalty, correlates {{d4_r}} with
 realised error ({{a2_rdd}} with rollout and depth held fixed), yet on the checkpoint's training data is {{d1n_epi_ratio_h1}}× smaller than that error at one step and
 {{d1n_epi_ratio_h100}}× at the method's {{v2_deploy_h}}-step horizon. A free signal, the model's predicted step size,
-ranks error nearly as well ({{e7_step_r}}; margin unresolved). The members share {{v1_shared_pct}}% of their parameters; at {{v2_deploy_h}} steps, independent models are {{m44_ratio_gain}}× better calibrated than our shared-trunk ones, still {{r2_indep_ratio_h100}}× overconfident. The implemented loss provably drives the per-member σ the method discards to zero, as data
+ranks error nearly as well ({{e7_step_r3}}; margin unresolved). The members share {{v1_shared_pct}}% of their parameters; at {{v2_deploy_h}} steps, independent models are {{m44_ratio_gain}}× better calibrated than our shared-trunk ones, still {{r2_indep_ratio_h100}}× overconfident. The implemented loss provably drives the per-member σ the method discards to zero, as data
 with known noise confirm. A per-horizon rescaling brings the released checkpoint's
 coverage within {{d3_tol}} points of nominal on its training episodes (no cell resolvable), and
 only {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells on episodes our ensembles never saw:
-a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action, inflating error mainly at short horizons; at the longest the cost is small and not consistent in sign. We train no policy, so we bound what the uncertainty reports, not what its
+a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action; over all ten episodes this raises the checkpoint's short-horizon error, and from {{v2_deploy_h}} steps the change is unresolved. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---
@@ -1128,7 +1128,7 @@ so those zeros mark the absence of a producing action — the reset produced tha
 step. The training path pairs states and actions index-for-index, which is causally correct; the
 evaluation path feeds the action from *t−1* to predict state *t*, stale by one step.
 
-What the stale pairing costs depends on the horizon. All ten episodes are this checkpoint's training data, so the held-out pair is not more honest here, only smaller, and the larger arena leads. Over all ten episodes' {{ad20_nind}} independent trajectories the stale action raises the released checkpoint's relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1, {{adh20_rel_h8}}% {{adh20_rel_ci_h8}} at h = 8 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and from h = {{v2_deploy_h}} the change is not resolved: {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} there and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}, where single trajectories run from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%. In nRMSE the rise is resolved at h = 8 and 32 ({{adh20_nrmse_h8}}% {{adh20_nrmse_ci_h8}} and {{adh20_nrmse_h32}}% {{adh20_nrmse_ci_h32}}) but not at h = 1 ({{adh20_nrmse_h1}}% {{adh20_nrmse_ci_h1}}), and from h = {{v2_deploy_h}} it is not resolved either ({{adh20_nrmse_h100}}% {{adh20_nrmse_ci_h100}} there, {{ad20_nrmse}}% {{ad20_nrmse_ci}} at h = {{v2_diag_h}}). Each is a 95% interval from a cluster bootstrap over whole trajectories, both pairings inside each draw (`results/alignment_by_horizon.json`, `results/alignment_defect_ci.json`). On the held-out pair's {{ad_nind}} independent trajectories the stale action raises the error at every horizon reported: by {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, by {{adh_rel_h100}}% {{adh_rel_ci_h100}} at h = {{v2_deploy_h}}, where the larger arena resolves no change, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}. Shifting the evaluation loop's two action slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness does this with `action_offset = 1` (`src/score_reference.py:180-190`). Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}% at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one (three-seed mean, relative-L1, held-out pair; ledger R-79, which replaces R-76's void figures).
+What the stale pairing costs depends on the horizon. All ten episodes are this checkpoint's training data, so the held-out pair is not more honest here, only smaller, and the larger arena leads. Over all ten episodes' {{ad20_nind}} independent trajectories the stale action raises the released checkpoint's relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1, {{adh20_rel_h8}}% {{adh20_rel_ci_h8}} at h = 8 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and from h = {{v2_deploy_h}} the change is not resolved: {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} there and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}, where single trajectories run from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%. In nRMSE the rise is resolved at h = 8 and 32 ({{adh20_nrmse_h8}}% {{adh20_nrmse_ci_h8}} and {{adh20_nrmse_h32}}% {{adh20_nrmse_ci_h32}}) but not at h = 1 ({{adh20_nrmse_h1}}% {{adh20_nrmse_ci_h1}}), and from h = {{v2_deploy_h}} it is not resolved either ({{adh20_nrmse_h100}}% {{adh20_nrmse_ci_h100}} there, {{ad20_nrmse}}% {{ad20_nrmse_ci}} at h = {{v2_diag_h}}). Each is a 95% interval from a cluster bootstrap over whole trajectories, both pairings inside each draw (`results/alignment_by_horizon.json`, `results/alignment_defect_ci.json`). On the held-out pair's {{ad_nind}} independent trajectories the stale action raises the error at every horizon reported: by {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, by {{adh_rel_h100}}% {{adh_rel_ci_h100}} at h = {{v2_deploy_h}}, where the larger arena resolves no change, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}. Shifting the evaluation loop's two action slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness does this with `action_offset = 1` (`src/score_reference.py:180-190`). Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}% at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one (three-seed mean, relative-L1, held-out pair; ledger R-79, which replaces R-76's void figures). They respond to the action. Given another trajectory's actions, their error at h = 8 on their {{x2_n_ins}} in-sample trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}}, and at {{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before its readings existed (ledger M-84), returns **{{x2_reading}}** at both checkpoints (Appendix V). On those trajectories the stale action itself raises their error at h = 1 by {{x2_E_stale_10k_ins_h1}}% {{x2_ci_stale_10k_ins_h1}}; a one-step shift moves the action by {{x2_ctx_stale}} of its spread there, and a swap by {{x2_ctx_swap}}.
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
@@ -1299,7 +1299,7 @@ At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to
 
 The ranking use the follow-up claims survives a real test. On the released checkpoint, ensemble disagreement beats the forecast step index at every horizon and, with both the rollout and the depth held constant, still correlates
 {{a2_rdd}} {{a2_rdd_ci}} with realised error (§6.6), though a free subtraction, the model's own
-predicted step size, ranks error nearly as well, by a margin this sample cannot resolve
+predicted step size, ranks error nearly as well, {{e7_step_r3}} against disagreement's {{d4_r}}, by a margin this sample cannot resolve
 ({{e7_verdict}}). The scale may be repairable per
 horizon on the released checkpoint, but on a model that never saw the test episodes the evidence is
 mixed (§6.7), and per dimension no ordering reaches significance after multiplicity correction once the
@@ -1638,6 +1638,7 @@ released checkpoint.
 | The A/B relative-L1 gap at h = {{v2_diag_h}} (teacher forcing's error minus autoregressive training's, over {{r39_n_per_ep}} independent trajectories per episode) is positive on all {{r39_n_eps_word}} episodes, from {{r39_gap_lo}} up; episode {{r39_ep}}, one of the held-out pair, gives {{r39_ep_gap}}, {{r39_ep_over_next}}× the next largest, so the pair's {{r39_gap_holdout}} is {{r39_ho_over_other}}× the other {{r39_n_other_word}} episodes' {{r39_gap_other}} | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
 | Per state dimension, over the whole {{v2_diag_h}}-step forecast, the released checkpoint loses to the hold-last floor on {{r45_rel_all}} of {{r45_n_dims}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}} on the held-out pair ({{r45_nind_ho}}), including all three components of the gravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each, {{r45_A_dim}} | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, §11) |
 | Over {{r46_n_ck_word}} checkpoints up to {{iters_long}} iterations, the absolute A/B gap at h = {{v2_diag_h}} narrows as both arms improve (held-out pair {{r46_o_gap0}} to {{r46_o_gap1}}, in-sample {{r46_i_gap0}} to {{r46_i_gap1}}), while the ratio does not shrink ({{r46_o_ratio0}}× to {{r46_o_ratio1}}×, in-sample {{r46_i_ratio0}}× to {{r46_i_ratio1}}×). The held-out values are not monotone: both peak at the {{r46_pk_ord}} checkpoint ({{r46_o_gap_pk}}, {{r46_o_ratio_pk}}×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}, §11) |
+| Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena rises by {{x2_E_swap_2500}}% at {{iters_main}} iterations and {{x2_E_swap_10k}}% at {{iters_long}} (rule X2, pre-registered: {{x2_reading}}) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though no policy is trained here (§7.2, Appendix V) |
 
 ---
 
@@ -2265,9 +2266,58 @@ n_independent = {{mn_nind}}) and the in-sample arena (the training episodes' {{m
 {{h2h_unit}}-step trajectories, n_independent = {{mn_nind_ins}}). Checkpoints: each configuration at {{iters_main}}
 iterations, the centre at the iterations in the second column; three seeds each.** Each cell is D, the configuration's
 relative-L1 minus the centre's, the mean over trajectories of the three-seed means, with its 95% interval: exact over
-all 256 ordered resamples on the held-out pair, 20,000 Monte Carlo resamples (seed 0) in-sample. Negative favours the
+all {{boot_n_exact4}} ordered resamples on the held-out pair, {{boot_n_mc}} Monte Carlo resamples (seed 0) in-sample. Negative favours the
 configuration, so every reading here is signed as in §5.2's table; bold where the interval excludes zero. Cost per
 iteration is steady training time per iteration, timed
 without contention; the compute ratio is the centre's total training computation over the configuration's.
+
+## Appendix V — rule X2: whether our models respond to the action they are given
+
+Rule X2 was committed and pushed before any of its readings existed (ledger M-84; Appendix E gives its lead time) and
+is discharged in M-85. It is exploratory and re-opens no rule. It asks whether our trained models condition their
+forecasts on the action they are given. Only the actions the forecast steps read are changed, so the history and the
+recurrent state that meets the first forecast action are untouched. E is the change in relative-L1 error, cumulative
+over forecast steps 1..h, against the true actions: the ratio err(I) / err(true), less one, in percent; for our arms, the mean over
+three seeds of each seed's E. Its 95% interval resamples whole trajectories, one resample for all seeds and both
+interventions in each draw: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair, {{boot_n_mc}} Monte Carlo resamples (seed 0) otherwise. The
+interventions are the stale action (the released evaluation's offset), another trajectory's actions (a swap, each
+trajectory taking the next one's), each action dimension's mean over the model's training rows, and the true actions
+plus Gaussian noise at k times each dimension's training standard deviation (eight draws). **The readings** are Arm
+A's, under the swap at h = 8 on its in-sample arena: **{{x2_reading}}** at {{iters_main}} iterations
+({{x2_E_swap_2500}}% {{x2_ci_swap_2500}}) and at {{iters_long}} ({{x2_E_swap_10k}}% {{x2_ci_swap_10k}}). Arm B and the
+released checkpoint get the same statistic, alongside and not as readings.
+
+| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = {{v2_deploy_h}} |
+|---|---|---|---|---|---|
+{{x2_appV_own}}
+
+**Arena: each model's own training data. For Arm A and Arm B, the in-sample arena: the training episodes'
+{{x2_n_ins}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{x2_n_ins}}. For the released checkpoint,
+all ten episodes: {{ad20_nind}} trajectories, n_independent = {{ad20_nind}}. Checkpoints: Arm A and Arm B at
+{{iters_main}} and {{iters_long}} iterations, three seeds each; the released checkpoint.** Each cell is E in percent
+with its 95% interval; bold, the two readings. Arm B and the released checkpoint are alongside, not readings.
+
+| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = {{v2_deploy_h}} |
+|---|---|---|---|---|---|
+{{x2_appV_ho}}
+
+**Arena: the held-out pair (episodes {{h2h_episodes}}, {{ad_nind}} non-overlapping {{h2h_unit}}-step trajectories,
+n_independent = {{ad_nind}}), out-of-sample for our arms and in-sample for the released checkpoint. Checkpoints as in
+the first table.** No reading is made on this arena; every row is alongside.
+
+| model, checkpoint | arena | stale action | another trajectory's actions | training mean | noise, k = {{x2_k_lo}} | noise, k = {{x2_k_hi}} |
+|---|---|---|---|---|---|---|
+{{x2_appV_delta}}
+
+**Δ at h = 8, the relative-L1 of the forecast made with the changed actions measured against the forecast made with
+the true ones (`rollout_eval.relative_error`), which is zero for a model that ignores its actions. Arenas: each model's
+own training data ({{x2_n_ins}} trajectories for our arms, {{ad20_nind}} for the released checkpoint) and the held-out
+pair ({{ad_nind}}). Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the
+released checkpoint. Descriptive, no reading.** How far the interventions move the actions: on the forecast rows,
+the action changes from one step to the next on {{x2_ctx_ins_frac}}% of steps on the in-sample arena,
+{{x2_ctx_ho_frac}}% on the held-out pair and {{x2_ctx_ten_frac}}% over all ten episodes. A one-step shift moves the
+action by {{x2_ctx_ins_stale}}, {{x2_ctx_ho_stale}} and {{x2_ctx_ten_stale}} of its spread (the mean absolute change from one step to the next over the mean absolute deviation from
+the action's mean), and the swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and {{x2_ctx_ten_swap}}
+(`results/action_sensitivity.json`).
 
 ---
