@@ -804,7 +804,37 @@ CLAIMS = [
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "README.template.md"],
      "figure_regex": r"ad(?:20|h)?_[A-Za-z0-9_]+|stale_[A-Za-z0-9_]+",
      "reversal_regex": r"revers|not consistent in sign"},
+
+    # ---- C26 (round 3, R2: guard G1) ----------------------------------------------------------
+    # The 4 Oct draft's abstract, contribution 3 and Appendix D said the best longer forecast beat the original's
+    # setting "even when that setting trains twice as long". The body's equal-compute readings split (Appendix U):
+    # trained longer, the centre passes each winner on at least one reading. Round 2's plan had chosen that wording
+    # from one held-out reading. G1 has two halves. No rendered file may carry that phrasing ("trains twice as long",
+    # or "even when" within twelve words of "centre" or "setting"). And a front-matter sentence (abstract,
+    # contributions, Appendix D, section 12) that names compute or longer training must say the ranking depends on
+    # it or name the split.
+    {"id": "C26.1", "kind": "compute-claim", "where": "abstract / contributions / Appendix D / 12",
+     "says": "so the ranking depends on training budget",
+     "files": ["PAPER.md", "README.md", "MODEL_CARD.md", "docs/BUILD_CHECKS.md",
+               "docs/APPENDIX_G_VARIANCE_ARITHMETIC.md"],
+     "forbidden_regex": r"trains\s+twice\s+as\s+long|\beven\s+when\b(?:\W+\w+){0,12}?\W+(?:centre|center|setting)\b",
+     "compute_regex": r"\bcompute\b|\btrain(?:ed|s)\s+longer\b",
+     "qualifier_regex": r"\bdepends\b|\bchanges\b|\bsome\s+reading\b|\bat\s+least\s+one\s+reading\b|\bsplit\b"},
 ]
+
+
+def _front_matter_regions(paper):
+    """The front matter rule 10 of round 3's plan names: the abstract, the contributions list, Appendix D and
+    section 12, each as one string, from the rendered PAPER.md."""
+    out = {"abstract": paper.split("## Abstract", 1)[1].split("\n## 1.", 1)[0]}
+    i = paper.index("**Contributions.**")
+    m = re.search(r"\n\n(?![-\s])", paper[i:])
+    out["contributions"] = paper[i:i + m.start()]
+    for name, head in (("appendix_d", "## Appendix D"), ("conclusion", "## 12. Conclusion")):
+        j = paper.index(head)
+        k = paper.find("\n## ", j + len(head))
+        out[name] = paper[j:k if k > 0 else len(paper)]
+    return out
 
 
 # ------------------------------------------------------------------ helpers
@@ -1433,7 +1463,47 @@ def evaluate(c, paper, override=None):
             return True, f"planted old wording NOT caught in {missed_plant}"
         return not bad, (f"{n} paragraphs pair 'overstat' with an alignment figure; "
                          f"{n - len(bad)} name the reversal" + (f"; missing in {bad}" if bad else ""))
+    if k == "compute-claim":
+        forb, comp, qual = (re.compile(exp[x], re.I) for x in ("forbidden_regex", "compute_regex", "qualifier_regex"))
+        plant = exp.get("_plant", {})
+        bad, n_front, per_region = [], 0, {}
+        for f in exp["files"]:
+            if not os.path.exists(f):
+                bad.append(f"{f}: missing")
+                continue
+            txt = open(f).read() + ("\n\n" + plant["forbidden"] if f == "PAPER.md" and "forbidden" in plant else "")
+            bad += [f"{f}: {m.group(0)[:60]!r}" for m in forb.finditer(txt)]
+        n_forb = len(bad)
+        regions = _front_matter_regions(open("PAPER.md").read())
+        if "front" in plant:
+            regions["abstract"] += "\n" + plant["front"]
+        for name, reg in regions.items():
+            assert reg.strip(), f"front-matter region {name} is empty"
+            per_region[name] = 0
+            for s in re.split(r"(?<=[.;])\s+", reg.replace("\n", " ")):
+                if comp.search(s):
+                    n_front += 1
+                    per_region[name] += 1
+                    if not qual.search(s):
+                        bad.append(f"{name}: {s.strip()[:80]!r}")
+        if plant:                                  # --self-test: each planted sentence must be among the failures
+            missed = [p for p in plant.values() if not any(p.strip()[:40] in b or forb.search(p) and
+                                                           any(forb.search(p).group(0)[:40] in b for b in bad) for b in bad)]
+            if missed:
+                return True, f"planted wording NOT caught: {[m[:50] for m in missed]}"
+        return not bad and n_front > 0, (f"{n_forb} forbidden phrasings in {len(exp['files'])} rendered files; {n_front} front-matter "
+                                         f"sentences name compute or longer training ({per_region}), "
+                                         f"{n_front - len([b for b in bad if b.split(':')[0] in regions])} with the "
+                                         f"qualifier" + (f"; failures {bad}" if bad else ""))
     raise ValueError(k)
+
+
+# Round 3, R2 (G1): the abstract's sentence as the 4 Oct draft rendered it (commit 8c2c903), verbatim, and a
+# front-matter sentence that names longer training with no qualifier, which the second half must catch.
+_OLD_COMPUTE_ABSTRACT = ("On accuracy alone, two shorter histories and both longer training forecasts beat the original's "
+                         "setting at our budget, the best, at 368 steps, even when that setting trains twice as long (post "
+                         "hoc); it was chosen as a trade-off with training time, untested here.")
+_BARE_COMPUTE_FRONT = "Trained longer, the original's setting still trails the best longer forecast on the held-out pair."
 
 
 # The real wording the C25 checks exist to catch, verbatim from git history (see corruption_for).
@@ -1618,6 +1688,10 @@ def corruption_for(c):
         # Plant S-20's original sentence (section 7.2 before commit 798a362): an overstatement figure
         # with no reversal anywhere in its paragraph.
         return {"_plant": {"PAPER.template.md": _OLD_OVERSTAT_PAPER}}
+    if k == "compute-claim":
+        # Plant the 4 Oct abstract sentence (the first half must catch it) and a bare front-matter sentence naming
+        # longer training (the second half must catch it); either one missed leaves the check passing, which fails.
+        return {"_plant": {"forbidden": _OLD_COMPUTE_ABSTRACT, "front": _BARE_COMPUTE_FRONT}}
     raise ValueError(k)
 
 

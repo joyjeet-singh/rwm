@@ -757,6 +757,9 @@ def main():
                            "three-seed extension",
         "overstat-reversal": "no sentence says the released evaluation overstates its error beside an "
                              "alignment figure unless its paragraph names the reversal of sign",
+        "compute-claim": "no rendered file says a setting won even when its rival trained longer, and every "
+                         "front-matter sentence that names compute or longer training says the ranking depends "
+                         "on it or names the split",
     }
     _missing = [k for k in _kinds if k not in _blurb]
     assert not _missing, f"check kinds with no appendix D description: {_missing}"

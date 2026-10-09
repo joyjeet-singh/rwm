@@ -65,6 +65,9 @@ SCOPE = {
     "rule-seed-scope": ("whole-file",
         "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, "
         "README.template.md) for the rule-horizon figures near 'rule' or 'pre-register'"),
+    "compute-claim": ("whole-file",
+        "scans the rendered files in its own `files` list for the forbidden equal-compute phrasing, and the "
+        "front matter of PAPER.md (abstract, contributions, Appendix D, section 12) sentence by sentence"),
     "overstat-reversal": ("whole-file",
         "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, "
         "README.template.md), paragraph by paragraph, for 'overstat' beside an alignment figure"),
