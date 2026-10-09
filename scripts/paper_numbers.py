@@ -2076,6 +2076,11 @@ def main():
             "results/a1_ab_by_horizon.json")
         put(f"a1_B_over_floor_h{_h}", f'{_r["B_over_floor"]:.2f}',
             "results/a1_ab_by_horizon.json")
+        # Round 3, R4 (S12): the table states both arms as error / floor (below 1 beats the floor)
+        assert abs(_r["A"]["mean"] / _r["floor"] - 1 / _r["floor_over_A"]) < 1e-6, _h  # float32 in the artifact
+        assert abs(_r["B"]["mean"] / _r["floor"] - _r["B_over_floor"]) < 1e-6, _h
+        put(f"a1_A_over_floor_h{_h}", f'{_r["A"]["mean"] / _r["floor"]:.2f}',
+            "results/a1_ab_by_horizon.json")
         _sg = A1["sign_test"][str(_h)]
         put(f"a1_sign_pos_h{_h}", _sg["n_positive"], "results/a1_ab_by_horizon.json")
         put(f"a1_sign_n_h{_h}", _sg["n_episodes"], "results/a1_ab_by_horizon.json")

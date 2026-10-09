@@ -384,16 +384,16 @@ At h = {{v2_deploy_h}}, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **{{d1_ratio_h100}}×**.
 Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
 same {{d1_seeds}} seeds at {{iters_long}} training iterations, same held-out arena,
-n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories:
+n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories; the two floor columns are each arm's error divided by the hold-last floor's, so below 1 beats the floor:
 
-| h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A vs floor | B vs floor | episodes A leads |
+| h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A ÷ floor | B ÷ floor | episodes A leads |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | {{a1_A_h1}} ± {{a1_A_sd_h1}} | {{a1_B_h1}} ± {{a1_B_sd_h1}} | {{a1_ratio_h1}}× | {{a1_gap_h1}} {{a1_gap_ci_h1}} | **{{a1_excl_h1}}** | {{a1_floor_h1}} | {{a1_floor_over_A_h1}}× | {{a1_B_over_floor_h1}}× | {{a1_sign_pos_h1}}/{{a1_sign_n_h1}} |
-| 8 | {{a1_A_h8}} ± {{a1_A_sd_h8}} | {{a1_B_h8}} ± {{a1_B_sd_h8}} | {{a1_ratio_h8}}× | {{a1_gap_h8}} {{a1_gap_ci_h8}} | {{a1_excl_h8}} | {{a1_floor_h8}} | {{a1_floor_over_A_h8}}× | {{a1_B_over_floor_h8}}× | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} |
-| 32 | {{a1_A_h32}} ± {{a1_A_sd_h32}} | {{a1_B_h32}} ± {{a1_B_sd_h32}} | {{a1_ratio_h32}}× | {{a1_gap_h32}} {{a1_gap_ci_h32}} | {{a1_excl_h32}} | {{a1_floor_h32}} | {{a1_floor_over_A_h32}}× | {{a1_B_over_floor_h32}}× | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} |
-| **{{v2_deploy_h}}** | **{{a1_A_h100}} ± {{a1_A_sd_h100}}** | **{{a1_B_h100}} ± {{a1_B_sd_h100}}** | **{{a1_ratio_h100}}×** | **{{a1_gap_h100}} {{a1_gap_ci_h100}}** | **{{a1_excl_h100}}** | {{a1_floor_h100}} | **{{a1_floor_over_A_h100}}×** | **{{a1_B_over_floor_h100}}×** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** |
-| 128 | {{a1_A_h128}} ± {{a1_A_sd_h128}} | {{a1_B_h128}} ± {{a1_B_sd_h128}} | {{a1_ratio_h128}}× | {{a1_gap_h128}} {{a1_gap_ci_h128}} | {{a1_excl_h128}} | {{a1_floor_h128}} | {{a1_floor_over_A_h128}}× | {{a1_B_over_floor_h128}}× | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} |
-| **{{v2_diag_h}}** *(the rule's horizon)* | **{{a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap_h368}} {{a1_gap_ci_h368}}** | **{{a1_excl_h368}}** | {{a1_floor_h368}} | **{{a1_floor_over_A_h368}}×** | **{{a1_B_over_floor_h368}}×** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** |
+| 1 | {{a1_A_h1}} ± {{a1_A_sd_h1}} | {{a1_B_h1}} ± {{a1_B_sd_h1}} | {{a1_ratio_h1}}× | {{a1_gap_h1}} {{a1_gap_ci_h1}} | **{{a1_excl_h1}}** | {{a1_floor_h1}} | {{a1_A_over_floor_h1}}× | {{a1_B_over_floor_h1}}× | {{a1_sign_pos_h1}}/{{a1_sign_n_h1}} |
+| 8 | {{a1_A_h8}} ± {{a1_A_sd_h8}} | {{a1_B_h8}} ± {{a1_B_sd_h8}} | {{a1_ratio_h8}}× | {{a1_gap_h8}} {{a1_gap_ci_h8}} | {{a1_excl_h8}} | {{a1_floor_h8}} | {{a1_A_over_floor_h8}}× | {{a1_B_over_floor_h8}}× | {{a1_sign_pos_h8}}/{{a1_sign_n_h8}} |
+| 32 | {{a1_A_h32}} ± {{a1_A_sd_h32}} | {{a1_B_h32}} ± {{a1_B_sd_h32}} | {{a1_ratio_h32}}× | {{a1_gap_h32}} {{a1_gap_ci_h32}} | {{a1_excl_h32}} | {{a1_floor_h32}} | {{a1_A_over_floor_h32}}× | {{a1_B_over_floor_h32}}× | {{a1_sign_pos_h32}}/{{a1_sign_n_h32}} |
+| **{{v2_deploy_h}}** | **{{a1_A_h100}} ± {{a1_A_sd_h100}}** | **{{a1_B_h100}} ± {{a1_B_sd_h100}}** | **{{a1_ratio_h100}}×** | **{{a1_gap_h100}} {{a1_gap_ci_h100}}** | **{{a1_excl_h100}}** | {{a1_floor_h100}} | **{{a1_A_over_floor_h100}}×** | **{{a1_B_over_floor_h100}}×** | **{{a1_sign_pos_h100}}/{{a1_sign_n_h100}}** |
+| 128 | {{a1_A_h128}} ± {{a1_A_sd_h128}} | {{a1_B_h128}} ± {{a1_B_sd_h128}} | {{a1_ratio_h128}}× | {{a1_gap_h128}} {{a1_gap_ci_h128}} | {{a1_excl_h128}} | {{a1_floor_h128}} | {{a1_A_over_floor_h128}}× | {{a1_B_over_floor_h128}}× | {{a1_sign_pos_h128}}/{{a1_sign_n_h128}} |
+| **{{v2_diag_h}}** *(the rule's horizon)* | **{{a1_A_h368}} ± {{a1_A_sd_h368}}** | **{{a1_B_h368}} ± {{a1_B_sd_h368}}** | **{{a1_ratio_h368}}×** | **{{a1_gap_h368}} {{a1_gap_ci_h368}}** | **{{a1_excl_h368}}** | {{a1_floor_h368}} | **{{a1_A_over_floor_h368}}×** | **{{a1_B_over_floor_h368}}×** | **{{a1_sign_pos_h368}}/{{a1_sign_n_h368}}** |
 
 **The advantage {{a1_monotone}} grow monotonically with forecast depth.** Over 400-step
 trajectories the gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and
