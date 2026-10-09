@@ -4,7 +4,7 @@
       "n": 1,
       "name": "rebuild, TMLR style, submission mode",
       "pass": true,
-      "detail": "57 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
+      "detail": "62 pages, 0 errors, 0 overfull; \\usepackage{tmlr} with no options (anonymous)"
     },
     {
       "n": 2,
@@ -16,31 +16,31 @@
       "n": 3,
       "name": "no hand-typed numbers",
       "pass": true,
-      "detail": "69 distinct numerals typed, 55 section numbers derived from the headings; unexplained: none"
+      "detail": "71 distinct numerals typed, 55 section numbers derived from the headings; unexplained: none"
     },
     {
       "n": 4,
       "name": "clean clone ./reproduce.sh --quick --force",
       "pass": false,
-      "detail": "verify_reproduction.json vs the clone run at clone: 56 files regenerated, 15,521 values, 15,516 identical, 5 differing; carried-in partition present (1,685,484 copied values held out); artifact post-dates the regeneration marker"
+      "detail": "verify_reproduction.json vs the clone run at clone: 56 files regenerated, 15,657 values, 15,651 identical, 6 differing; carried-in partition present (1,693,621 copied values held out); artifact post-dates the regeneration marker"
     },
     {
       "n": "4b",
       "name": "shipped bundles carry the current paper's structure",
-      "pass": true,
-      "detail": "2 bundles x 3 files, appendix order and reference list compared; all match"
+      "pass": false,
+      "detail": "2 bundles x 3 files, appendix order and reference list compared; supplementary_anon.zip (the reviewer's copy) ships a different appendix order in PAPER.md (ABCDEFGHIJKL vs ABCDEFGHIJKL)"
     },
     {
       "n": "5b",
       "name": "appendix letters match document order",
       "pass": true,
-      "detail": "document order ABCDEFGHIJKLMNOPQRST; LaTeX letters them ABCDEFGHIJKLMNOPQRST"
+      "detail": "document order ABCDEFGHIJKLMNOPQRSTUV; LaTeX letters them ABCDEFGHIJKLMNOPQRSTUV"
     },
     {
       "n": 5,
       "name": "cross-references resolve (sections and figures)",
       "pass": true,
-      "detail": "375 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6'], dangling none"
+      "detail": "385 section refs, unresolved none; 0 historical ref(s) inside quoted rule text exempt ; figures ['1', '2', '3', '4', '5', '6'], dangling none"
     },
     {
       "n": 6,
@@ -49,7 +49,7 @@
       "detail": "21 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
-  "n_pass": 7,
+  "n_pass": 6,
   "n_run": 8,
   "n_not_run": 0,
   "n": 8

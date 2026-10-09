@@ -17,9 +17,9 @@ C1 — RESTATEMENT INDEX
   typed numerals kept : 279  (addresses and declared constants excluded)
   registered coincidences: 8
 
-  129 value(s) appear at more than one location from more than one key:
+  128 value(s) appear at more than one location from more than one key:
     67 same-quantity candidates — a distinctive value shared across artifacts, or a typed copy of a derived one
-    62 lower-signal — a short value, or two cells of one table
+    61 lower-signal — a short value, or two cells of one table
     none of these fails the build; they are the C1 review's Tier 0 queue
 
         +0.470  keys ['a2_r_within', 'e7_step_r3']
@@ -713,7 +713,7 @@ C1 — RESTATEMENT INDEX
                 §Appendix R — the limitations in fu L2069  TYPED                      ...endent 400-step trajectories (the n = ␀ caveat of §3). That is the bin
                 §Appendix R — the limitations in fu L2090  TYPED                      ...endent 400-step trajectories, where all ten episodes provide ␀**, ␀× t
                 §Appendix R — the limitations in fu L2128  TYPED                      ...re the 400-step unit gives ␀ (Appendix K), and we did not rerun this p
-             5  keys ['None', 'a1_n_excl', 'b2_members', 'bound_both_train', 'd2b_n_horizons_tested', 'd2p_n_horizons', 'd2p_n_separating', 'd2r_ncontrols', 'd3x_ens', 'e2_nll_runs', 'e4_n_inert', 'm49_n_conditions_met', 'm63_quant', 'm68_n_conditions', 'm68_n_conditions_met', 'm68_n_indep', 'n_runs_offwidth', 'r2_n_indep', 'rt_runs_m49', 'ver_differing']
+             5  keys ['None', 'a1_n_excl', 'b2_members', 'bound_both_train', 'd2b_n_horizons_tested', 'd2p_n_horizons', 'd2p_n_separating', 'd2r_ncontrols', 'd3x_ens', 'e2_nll_runs', 'e4_n_inert', 'm49_n_conditions_met', 'm63_quant', 'm68_n_conditions', 'm68_n_conditions_met', 'm68_n_indep', 'n_runs_offwidth', 'r2_n_indep', 'rt_runs_m49']
                 §1. Introduction                    L73    r2_n_indep                 ...t trajectories, {{r2_n_indep}} independently initialised full models a
                 §5. The base paper's central claim  L392   a1_n_excl                  ...excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans
                 §6.2 The measurement                L648   b2_members                 ...On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} 
@@ -728,7 +728,6 @@ C1 — RESTATEMENT INDEX
                 §6.8 Testing the mechanism: an ense L1029  r2_n_indep                 ...ze 1 trained at {{r2_n_indep}} seeds, together as an ensemble at evalu
                 §6.8 Testing the mechanism: an ense L1069  m68_n_conditions_met       ...: all {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions 
                 §6.8 Testing the mechanism: an ense L1069  m68_n_conditions           ...}} of its {{m68_n_conditions}} conditions hold, a **{{m68_ratio_gain}}
-                §8. Method                          L1148  ver_differing              ...ffer at all; {{ver_differing}} do, so it fails, and it is published as
                 §9. Actionable lessons              L1159  d2p_n_separating           ...s zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons wher
                 §9. Actionable lessons              L1159  d2p_n_horizons             ...ng}} of the {{d2p_n_horizons}} horizons where the index is defined, an
                 §Appendix B — reproducing           L1383  rt_runs_m49                ...n estimated. **{{rt_runs_m49}} of those {{rt_runs}} runs, {{rt_hours_m

@@ -57,14 +57,14 @@
     "v2_deployment_horizon.json",
     "v3_metric_definitions.json"
   ],
-  "values_compared": 15521,
-  "bitwise_identical": 15516,
+  "values_compared": 15657,
+  "bitwise_identical": 15651,
   "identical_to_1e-9": 0,
-  "differing": 5,
-  "timing_excluded": 11983,
+  "differing": 6,
+  "timing_excluded": 11988,
   "nan_in_both": 4,
-  "copied_file_values": 1685484,
-  "copied_identical": 1685481,
+  "copied_file_values": 1693621,
+  "copied_identical": 1693618,
   "copied_differing": 3,
   "machine_file_values_excluded": 706,
   "keys_lost": 1,
@@ -164,6 +164,13 @@
       "keys_lost": 0,
       "keys_lost_paths": []
     },
+    "action_sensitivity.json": {
+      "regenerated": false,
+      "differing": 0,
+      "differing_keys": [],
+      "keys_lost": 0,
+      "keys_lost_paths": []
+    },
     "alignment_by_horizon.json": {
       "regenerated": false,
       "differing": 0,
@@ -180,8 +187,10 @@
     },
     "anon_bundle.json": {
       "regenerated": true,
-      "differing": 1,
+      "differing": 3,
       "differing_keys": [
+        ".cited_files_checked",
+        ".n_files_content_scrubbed",
         ".n_files_staged"
       ],
       "keys_lost": 1,
@@ -1238,9 +1247,8 @@
     },
     "supplementary_manifest.json": {
       "regenerated": true,
-      "differing": 4,
+      "differing": 3,
       "differing_keys": [
-        ".files",
         ".bytes",
         ".uncompressed",
         ".commits_in_log"

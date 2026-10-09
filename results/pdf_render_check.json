@@ -26,7 +26,7 @@
     {
       "check": "4. every numeral the source states survives into the PDF",
       "pass": true,
-      "detail": "1672 distinct numerals in the source, 1662 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
+      "detail": "1673 distinct numerals in the source, 1663 tokenised in the PDF; lost in rendering none. The converse -- that the PDF invents none -- is not measurable from extracted text, which concatenates across table cells"
     },
     {
       "check": "5. section cross-references resolve in the PDF",

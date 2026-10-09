@@ -2,9 +2,9 @@
   "scanned": "PAPER.template.md",
   "n_substituted": 1845,
   "n_typed": 279,
-  "n_restatements": 129,
+  "n_restatements": 128,
   "n_same_quantity_candidates": 67,
-  "n_lower_signal": 62,
+  "n_lower_signal": 61,
   "restatements": [
     {
       "value": "+0.419",
@@ -1267,36 +1267,6 @@
           "line": 282,
           "key": "v3_rho_calibrated",
           "ctx": " Gaussian has mean|error| / \u03c3 = $\\sqrt{2/\\pi}$ = {{v3_rho_calibrated}}. So $\\rho$ is reported as a magnitude o"
-        }
-      ]
-    },
-    {
-      "value": "0.91",
-      "n_locations": 2,
-      "same_quantity_candidate": false,
-      "fails_build": false,
-      "n_typed": 0,
-      "n_substituted": 2,
-      "sources": [
-        "results/a1_ab_by_horizon.json",
-        "results/verify_reproduction.json"
-      ],
-      "keys": [
-        "a1_ratio_h1",
-        "ver_claim_pct"
-      ],
-      "locations": [
-        {
-          "section": "5. The base paper's central claim reproduces",
-          "line": 384,
-          "key": "a1_ratio_h1",
-          "ctx": "h1}} \u00b1 {{a1_A_sd_h1}} | {{a1_B_h1}} \u00b1 {{a1_B_sd_h1}} | {{a1_ratio_h1}}\u00d7 | {{a1_gap_h1}} {{a1_gap_ci_h1}} | **{"
-        },
-        {
-          "section": "8. Method",
-          "line": 1144,
-          "key": "ver_claim_pct",
-          "ctx": ".sh --quick --force`, which skips training) rewrites {{ver_claim_pct}}% of the numeric values under `results/`"
         }
       ]
     },
@@ -7512,11 +7482,11 @@
     },
     {
       "value": "5",
-      "n_locations": 42,
+      "n_locations": 41,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 7,
-      "n_substituted": 35,
+      "n_substituted": 34,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e4_sigma_gradients.json",
@@ -7530,8 +7500,7 @@
         "results/task_b2_epistemic.json",
         "results/task_d2b_robustness.json",
         "results/task_d3_cross_model.json",
-        "results/task_d_nind20.json",
-        "results/verify_reproduction.json"
+        "results/task_d_nind20.json"
       ],
       "keys": [
         "None",
@@ -7552,8 +7521,7 @@
         "m68_n_indep",
         "n_runs_offwidth",
         "r2_n_indep",
-        "rt_runs_m49",
-        "ver_differing"
+        "rt_runs_m49"
       ],
       "locations": [
         {
@@ -7639,12 +7607,6 @@
           "line": 1069,
           "key": "m68_n_conditions",
           "ctx": "our it names: all {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, a **{{m68_ratio_gain}}"
-        },
-        {
-          "section": "8. Method",
-          "line": 1148,
-          "key": "ver_differing",
-          "ctx": "`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as"
         },
         {
           "section": "9. Actionable lessons",
@@ -7967,11 +7929,11 @@
     },
     {
       "value": "6",
-      "n_locations": 18,
+      "n_locations": 19,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 18,
+      "n_substituted": 19,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/m49_capacity_matched.json",
@@ -7982,7 +7944,8 @@
         "results/step5_*.json",
         "results/step5_arm*.json",
         "results/task_b2_epistemic.json + task_d_nind20.json",
-        "results/task_d3_perhorizon.json"
+        "results/task_d3_perhorizon.json",
+        "results/verify_reproduction.json"
       ],
       "keys": [
         "a1_n_horizons",
@@ -7997,7 +7960,8 @@
         "m68_n_horizons",
         "orig_n_tested",
         "q3_n_pairs",
-        "rt_runs_10k"
+        "rt_runs_10k",
+        "ver_differing"
       ],
       "locations": [
         {
@@ -8041,6 +8005,12 @@
           "line": 1047,
           "key": "m44_n_conditions",
           "ctx": "_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions hold against every one of th"
+        },
+        {
+          "section": "8. Method",
+          "line": 1148,
+          "key": "ver_differing",
+          "ctx": "`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as"
         },
         {
           "section": "11. Limitations",

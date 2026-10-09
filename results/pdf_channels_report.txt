@@ -14,10 +14,10 @@ F5.4 — SUBMISSION PDF, THREE CHANNELS
   1 text layer      : 241,374 characters extracted
   2 metadata        : 10 keys ['/Author', '/CreationDate', '/Creator', '/Keywords', '/ModDate', '/PTEX.Fullbanner', '/Producer', '/Subject', '/Title', '/Trapped'], XMP absent
       /Author                ''
-      /CreationDate          "D:20261009231738+05'30'"
+      /CreationDate          "D:20261010015055+05'30'"
       /Creator               'LaTeX with hyperref'
       /Keywords              ''
-      /ModDate               "D:20261009231738+05'30'"
+      /ModDate               "D:20261010015055+05'30'"
       /PTEX.Fullbanner       'This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) kpaths'
       /Producer              'pdfTeX-1.40.29'
       /Subject               ''

@@ -155,13 +155,13 @@ existing 2,500-iteration run exactly at every logged iteration, and `weights_250
 byte-identical between them.
 
 A clean-clone run of `reproduce.sh --quick --force` regenerates **56 artifact files and
-15,521 numeric values: 15,516 bitwise identical (99.97%),
-0 equal within floating-point tolerance, and 5 differing** — the three account for
+15,657 numeric values: 15,651 bitwise identical (99.96%),
+0 equal within floating-point tolerance, and 6 differing** — the three account for
 the total exactly. A further 1 value is in the committed artifacts and absent
 after regeneration: `results/anon_bundle.json` (key `.zip_bytes`). All of these counts are recorded in
 `results/verify_reproduction.json`.
 
-**How big the claim is.** 15,521 values is 0.91% of the 1,701,005 numeric values under `results/` that the comparison counts. The other 1,685,484 are carried in by the clone rather than
+**How big the claim is.** 15,657 values is 0.92% of the 1,709,278 numeric values under `results/` that the comparison counts. The other 1,693,621 are carried in by the clone rather than
 regenerated, and are held out of the figure entirely.
 
 **A note on what that number is not.** An earlier version of this section counted every numeric
