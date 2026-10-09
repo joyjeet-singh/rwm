@@ -8,11 +8,14 @@
 # (M-30).
 #
 # Skips a run whose JSON already exists, so this is safe to relaunch.
+# Round 3, R5 (H1): a failed training run makes this driver exit 1, after the remaining runs, so the
+# reproduce.sh stage that drives it reports the failure rather than OK.
 set -u
 cd "$(dirname "${BASH_SOURCE[0]}")"
 V="${PY:-$(command -v python3.11 || command -v python3)}"
 LOG=results/d1_driver.log
 : > "$LOG"
+fail=0
 for spec in "A 0" "A 2" "B 0" "B 2"; do
   set -- $spec; arm=$1; seed=$2
   out="results/step5_arm${arm}_seed${seed}_10k.json"
@@ -25,5 +28,7 @@ for spec in "A 0" "A 2" "B 0" "B 2"; do
      > "results/step5_arm${arm}_seed${seed}_10k_report.txt" 2>&1
   rc=$?
   echo "=== $(date +%H:%M:%S) finished arm${arm} seed${seed} 10k (exit $rc) ===" | tee -a "$LOG"
+  [ "$rc" -eq 0 ] || fail=1
 done
+if [ "$fail" -ne 0 ]; then echo "D1: A 10K RUN FAILED" | tee -a "$LOG"; exit 1; fi
 echo "D1: ALL FOUR 10K RUNS COMPLETE" | tee -a "$LOG"

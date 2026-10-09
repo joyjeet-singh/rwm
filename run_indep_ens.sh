@@ -15,10 +15,13 @@
 # reading it by byte offset.
 #
 # Governed by M-44, committed before this file was run.
+# Round 3, R5 (H1): a failed training run makes this driver exit 1, after the remaining runs, so the
+# reproduce.sh stage that drives it reports the failure rather than OK.
 set -u
 cd "$(dirname "${BASH_SOURCE[0]}")"
 V="${PY:-$(command -v python3.11 || command -v python3)}"
 SEEDS="${SEEDS:-3 4}"
+fail=0
 for seed in $SEEDS; do
   out="results/step5_armA_seed${seed}_report.txt"
   if [ -e "results/step5_armA_seed${seed}.json" ]; then
@@ -27,6 +30,9 @@ for seed in $SEEDS; do
   fi
   echo "=== $(date +%H:%M:%S) starting armA seed ${seed} ens1 ==="
   $V -u scripts/step5_train.py --arm A --seed "$seed" > "$out" 2>&1
-  echo "=== $(date +%H:%M:%S) finished armA seed ${seed} ens1 (exit $?) ==="
+  rc=$?
+  echo "=== $(date +%H:%M:%S) finished armA seed ${seed} ens1 (exit $rc) ==="
+  [ "$rc" -eq 0 ] || fail=1
 done
+if [ "$fail" -ne 0 ]; then echo "INDEPENDENT-INIT RUNS FAILED"; exit 1; fi
 echo "INDEPENDENT-INIT RUNS COMPLETE"

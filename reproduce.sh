@@ -167,11 +167,11 @@ if [ $QUICK -eq 0 ]; then
   stage 11c "TRAINING — ensemble-5 arms (M-43)" "13 h" \
         results/step5_armA_seed2_ens5.json ./run_ens5.sh
   # Round 2, T8: the drivers round 1 found undriven, and the pre-submission queues.
-  # run_10k_d1.sh, run_indep_ens.sh, run_m49_matched.sh and run_nll_indep_ens.sh skip a
-  # run whose artifact exists; run_nll.sh does not, and retrains its three seeds. The
-  # drivers exit 0 whatever training does, so these stages report OK on a failed run
-  # (round 2's OUT_OF_SCOPE). The queue runner's runs refuse to overwrite a finished
-  # artifact and are listed as failed, which fails stages 11i and 11j.
+  # All five drivers (stages 11d-11h) skip a run whose artifact exists, and exit 1 when a
+  # training run fails, so these stages report FAILED rather than OK on a failed run
+  # (round 3, R5, H1; round 2's OUT_OF_SCOPE recorded the earlier exit 0). The queue
+  # runner's runs refuse to overwrite a finished artifact and are listed as failed,
+  # which fails stages 11i and 11j.
   stage 11d "TRAINING — 10,000-iteration runs of seeds 0 and 2 (R-60)" "16 h" \
         results/step5_armB_seed2_10k.json ./run_10k_d1.sh
   stage 11e "TRAINING — Arm A seeds 3 and 4 for the independent ensemble (M-44)" "2.5 h" \
