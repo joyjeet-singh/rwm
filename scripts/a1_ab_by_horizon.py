@@ -7,8 +7,9 @@ measured there. The same comparison at h=100 -- the method's own imagination
 rollout length, which everything in §6 is anchored to -- is 2.58x rather than
 4.61x. Reported as a line item beside the headline, that reads like horizon
 shopping. Reported as a curve it is a finding: the advantage GROWS with horizon,
-h=8's gap spans zero, and h=368 is the end of a trend rather than a point
-someone picked.
+and h=368 is the end of a trend rather than a point someone picked. Which
+horizons' gaps span zero is read from the table: `trend.reading` is computed
+from it, not written (round 3, R5, H2: the written sentence had gone stale).
 
 WHAT IT COMPUTES, all on the SAME rollouts, out-of-sample, three seeds:
 
@@ -57,6 +58,29 @@ def horizons():
     """The reporting grid, from V2 and the n=20 table rather than typed here."""
     D = json.load(open(os.path.join(R.RESULTS, "task_d_nind20.json")))
     return sorted(int(h) for h in D["d1_by_horizon"])
+
+
+def trend_reading(by_h, hs, train_h):
+    """The trend's one-sentence reading, computed from the table so it cannot disagree with it.
+
+    Round 3, R5 (H2): this was a written sentence that said h=8's gap was where the advantage was not
+    established; the table it summarised says h=8's gap excludes zero and h=1's spans it.
+    """
+    r = [by_h[str(h)]["ratio_B_over_A"] for h in hs]
+    mono = all(x < y for x, y in zip(r, r[1:]))
+    hl = lambda xs: ", ".join(f"h={h}" for h in xs) or "no horizon"
+    excl = [h for h in hs if by_h[str(h)]["gap_excludes_zero"]]
+    spans = [h for h in hs if not by_h[str(h)]["gap_excludes_zero"]]
+    below = [h for h in hs if by_h[str(h)]["ratio_B_over_A"] < 1]
+    s = (f"the ratio B/A {'rises' if mono else 'does not rise'} at every step of the horizon grid, so "
+         f"h={hs[-1]} is {'the end of a trend rather than a selected point' if mono else 'not the end of a rising trend'}; "
+         f"the gap excludes zero at {hl(excl)} and spans zero at {hl(spans)}")
+    if train_h in hs:
+        s += (f"; at h={train_h}, the horizon the model is trained on, the gap "
+              f"{'excludes' if by_h[str(train_h)]['gap_excludes_zero'] else 'spans'} zero")
+    if below:
+        s += f"; the ratio is below one at {hl(below)}"
+    return s
 
 
 def rel_l1_per_traj(model, starts, hs):
@@ -208,9 +232,7 @@ def main():
         "trend": {
             "ratios": {str(h): by_h[str(h)]["ratio_B_over_A"] for h in hs},
             "monotone_increasing": bool(all(x < y for x, y in zip(trend, trend[1:]))),
-            "reading": ("the advantage grows with forecast horizon; h=368 is the end of a trend "
-                        "rather than a selected point, and h=8 -- the horizon the model is "
-                        "trained on -- is where it is not established"),
+            "reading": trend_reading(by_h, hs, int(R.CFG["forecast_horizon"])),
             "n_excluding_zero": sum(1 for h in hs if by_h[str(h)]["gap_excludes_zero"]),
             "n_horizons": len(hs),
             "excludes_zero_at": [h for h in hs if by_h[str(h)]["gap_excludes_zero"]],

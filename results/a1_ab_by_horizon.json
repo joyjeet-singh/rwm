@@ -455,7 +455,7 @@
       "368": 4.606099605560303
     },
     "monotone_increasing": true,
-    "reading": "the advantage grows with forecast horizon; h=368 is the end of a trend rather than a selected point, and h=8 -- the horizon the model is trained on -- is where it is not established",
+    "reading": "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=8, h=32, h=100, h=128, h=368 and spans zero at h=1; at h=8, the horizon the model is trained on, the gap excludes zero; the ratio is below one at h=1",
     "n_excluding_zero": 5,
     "n_horizons": 6,
     "excludes_zero_at": [
