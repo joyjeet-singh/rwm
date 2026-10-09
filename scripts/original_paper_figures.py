@@ -82,6 +82,13 @@ CLAIMS = [
         "original_states": "an optimal trade-off emerges ... balance prediction accuracy and training efficiency",
         "form": "quantitative: every heatmap cell prints its value",
         "numeral_in_text": True,
+        # Round 3, R2 (PLAN Annex 2 E1): transcribed from v1 Fig. 6's printed cells, p. 7
+        # (docs/presubmission/ORIGINAL_SPECS.md a.5): the left heatmap's e and the right heatmap's
+        # training hours, for the centre and the neighbour it ties with. main() asserts that both
+        # transcriptions, this one and ORIGINAL_SPECS a.5's, agree.
+        "printed_e": {"M32_N8": 0.47, "M32_N32": 0.47},
+        "printed_hours": {"M32_N8": 1.07, "M32_N32": 2.27},
+        "printed_where": "v1 Fig. 6, p. 7: e in the left heatmap, training hours in the right",
         "note": ("The numerals are printed inside Figure 6's cells rather than in the running text; no "
                  "value is read off an axis. (32, 8) prints the tied-lowest e with (32, 32) "
                  "(docs/presubmission/ORIGINAL_SPECS.md a.5). The claim is a trade-off between accuracy "
@@ -257,7 +264,23 @@ FOLLOWUP_VERSIONS = {
 }
 
 
+def check_against_specs():
+    """The Fig. 6 values entered above must equal ORIGINAL_SPECS.md a.5's transcription of the same cells."""
+    import re
+    spec = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir,
+                        "docs", "presubmission", "ORIGINAL_SPECS.md")
+    row = next(l for l in open(spec, encoding="utf-8") if l.startswith("| a.5 "))
+    e_m32 = dict(re.findall(r"(\d+) → (\d+\.\d+)", row.split("M = 32:")[1].split("**(32, 8)")[0]))
+    hrs = dict(re.findall(r"(\d+) → (\d+\.\d+)", row.split("training hours (right heatmap), M = 32:**")[1]))
+    for c in CLAIMS:
+        for field, table in (("printed_e", e_m32), ("printed_hours", hrs)):
+            for cfg, v in c.get(field, {}).items():
+                assert cfg.startswith("M32_N"), cfg
+                assert float(table[cfg.split("_N")[1]]) == v, (c["key"], field, cfg, v, table)
+
+
 def main():
+    check_against_specs()
     out = {"read_on": READ_ON,
            "sources": ["arXiv:2501.10100v1 (17 Jan 2025)",
                        "arXiv:2501.10100v2 (23 Apr 2025)",

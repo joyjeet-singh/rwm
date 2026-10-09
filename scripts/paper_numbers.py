@@ -2298,6 +2298,69 @@ def main():
         put(f"n3_sh_ci_long_{_c}", _sci(_r["ci95"]), _n3s)
     put("n3_sh_long_clause", _eng([f'{_cfgname(c)} by {_sd(_rd[f"{c}|centre@{_k_long}"]["h368"]["held_out"]["D"])} '
                                    f'{_sci(_rd[f"{c}|centre@{_k_long}"]["h368"]["held_out"]["ci95"])}' for c in _sh]), _n3s)
+    # --- Round 3, R2 (Annex 2 E1; Annex 3 A1-A3, A6): the settings sweep at equal compute, every reading ---------
+    # D = configuration's error minus the centre's; negative favours the configuration, positive the centre.
+    _CC = (("h100", "held_out"), ("h100", "in_sample"), ("h368", "held_out"), ("h368", "in_sample"))
+    _res = lambda x: x["ci95"][0] > 0 or x["ci95"][1] < 0
+    _cen_ahead = lambda x: x["ci95"][0] > 0
+    _cfg_ahead = lambda x: x["ci95"][1] < 0
+    _im = int(N["iters_main"]["value"].replace(",", ""))
+    put("n3_long_factor_word", {2: "twice", 3: "three times", 4: "four times"}[_k_long // _im], _n3s)
+    assert _k_long % _im == 0
+    put("n3_n_readings_word", WORDS[len(_CC)].lower(), _n3s)
+    # "the shorter histories win on all four readings at 2,500 iterations, at well under half the centre's cost"
+    for _c in _sh:
+        assert all(_cfg_ahead(_rd[f"{_c}|centre@{_im}"][h][a]) for h, a in _CC), _c
+        assert _cost["sweep"][_c]["relative_to_centre"] < 0.5, _c
+        put(f"n3_sh_label_{_c}", _cfgname(_c), _n3s)
+    # the best longer forecast against the centre at the mid budget: one reading each way, the other two unresolved
+    _bm = _rd[f"{_best}|centre@{_k_mid}"]
+    assert _cfg_ahead(_bm["h368"]["held_out"]) and _cen_ahead(_bm["h100"]["in_sample"])
+    assert not _res(_bm["h100"]["held_out"]) and not _res(_bm["h368"]["in_sample"])
+    put("n3_best_ins_D_mid_h100", _sd(_bm["h100"]["in_sample"]["D"]), _n3s)
+    put("n3_best_ins_ci_mid_h100", _sci(_bm["h100"]["in_sample"]["ci95"]), _n3s)
+    # ...at the long budget: the centre ahead on both in-sample readings, neither held-out reading resolved
+    _bl = _rd[f"{_best}|centre@{_k_long}"]
+    assert _cen_ahead(_bl["h100"]["in_sample"]) and _cen_ahead(_bl["h368"]["in_sample"])
+    assert not _res(_bl["h100"]["held_out"]) and not _res(_bl["h368"]["held_out"])
+    # the shorter histories against the centre at the long budget: the centre ahead on three of the four readings,
+    # and not resolved on the held-out pair at h = 100
+    _nsh = set()
+    for _c in _sh:
+        _r = _rd[f"{_c}|centre@{_k_long}"]
+        _nsh.add(sum(_cen_ahead(_r[h][a]) for h, a in _CC))
+        assert not _res(_r["h100"]["held_out"]) and all(_cen_ahead(_r[h][a]) for h, a in _CC if (h, a) != ("h100", "held_out"))
+        put(f"n3_sh_over_long_{_c}", f'{1 / _r["compute_ratios"]["config_total_compute_over_centre_at_k"]:.0f}', _n3s)
+    assert len(_nsh) == 1, _nsh
+    put("n3_sh_long_nread_word", WORDS[_nsh.pop()].lower(), _n3s)
+    # "trained longer, the centre passes each of them on at least one reading": every configuration that beat it
+    for _c in _better:
+        assert any(_cen_ahead(_rd[f"{_c}|centre@{k}"][h][a]) for k in (_k_mid, _k_long) for h, a in _CC), _c
+    # Appendix U: every reading of part 3, generated
+    _corder = sorted({v["config"] for v in _rd.values()}, key=lambda c: _order.index(c))
+    _cell = lambda x: (f"**{_sd(x['D'])} {_sci(x['ci95'])}**" if _res(x) else f"{_sd(x['D'])} {_sci(x['ci95'])}")
+    _urows = []
+    for _c in _corder:
+        for _k in sorted(v["centre_iterations"] for v in _rd.values() if v["config"] == _c):
+            _r = _rd[f"{_c}|centre@{_k}"]
+            _urows.append(f"| {_cfgname(_c)} ({_r['compute_ratios']['config_cost_per_iter_over_centre']:.2f}) | {_k:,} | "
+                          f"{1 / _r['compute_ratios']['config_total_compute_over_centre_at_k']:.2f} | "
+                          + " | ".join(_cell(_r[h][a]) for h, a in _CC) + " |")
+    assert len(_urows) == len(_rd)
+    put("n3_appU_table", "\n".join(_urows), _n3s)
+    put("n3_appU_nrows_word", WORDS.get(len(_urows), str(len(_urows))).lower(), _n3s)
+    # A1: the original's own Fig. 6 figures for the centre and the neighbour it ties with (EXT, transcribed)
+    _mo = next(c for c in J("original_paper_figures.json")["claims"] if c["key"] == "mn_optimal")
+    _pe, _ph = _mo["printed_e"], _mo["printed_hours"]
+    assert _pe["M32_N8"] == _pe["M32_N32"], "A1 says the centre matches the neighbour's error"
+    assert _ph["M32_N8"] / _ph["M32_N32"] < 0.5, "A1 says the centre takes under half the time"
+    put("orig_tied_label", _cfgname("M32_N32"), "results/original_paper_figures.json")
+    assert _cfgname("M32_N32") == _cfgname(_best), "A1 compares the original's tie with our best neighbour"
+    put("orig_e_32_8", f'{_pe["M32_N8"]:.2f}', "results/original_paper_figures.json")
+    put("orig_e_32_32", f'{_pe["M32_N32"]:.2f}', "results/original_paper_figures.json")
+    put("orig_h_32_8", f'{_ph["M32_N8"]:.2f}', "results/original_paper_figures.json")
+    put("orig_h_32_32", f'{_ph["M32_N32"]:.2f}', "results/original_paper_figures.json")
+    put("orig_h_ratio", f'{_ph["M32_N32"] / _ph["M32_N8"]:.2f}', "results/original_paper_figures.json")
     # E2 / N3 part 4: every run at 2,500 iterations is still learning.
     _ts = J("training_tail_slopes.json")
     _t25 = _ts["summary"]["at_2500_all"]

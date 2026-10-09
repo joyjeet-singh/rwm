@@ -494,7 +494,7 @@ A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces
 next N steps from its own predictions. The base paper sweeps both and says that moderate values give
 an optimal trade-off between accuracy and training time, with {{mn_centre_label}} as the instance
 (§IV-C). Its heatmap prints the error of every cell, and the centre's is the tied-lowest, level with
-its longest-forecast neighbour (`docs/presubmission/ORIGINAL_SPECS.md` a.5).
+its longest-forecast neighbour (`docs/presubmission/ORIGINAL_SPECS.md` a.5). Its second heatmap prints training hours: {{orig_h_32_8}} for the centre and {{orig_h_32_32}} for {{orig_tied_label}}, {{orig_h_ratio}}×, so on the original's own figures the centre matches that neighbour's printed error, {{orig_e_32_8}}, in under half the time. Our measured cost per iteration for the same pair is {{n3_cost_M32_N32}}× (the table's last column).
 
 **Rule, committed in advance** (rule M-74, Appendix E). It tests the accuracy half only: whether the centre has the lowest error among its {{mn_n_configs_word}} one-factor neighbours in the original's
 grid, M of {{mn_grid_M}} at the centre's N and N of {{mn_grid_N}} at its M. Each is trained as Arm A
@@ -527,27 +527,15 @@ shift; the artifact lists each): {{n2_changed_list}}.
 {{mn_best_ci}}. The verdict does not rest on the anchor: on the in-sample arena's {{mn_nind_ins}} independent {{h2h_unit}}-step trajectories, {{mn_insample_clause}}, and among the held-out readings the rule
 reports alongside, {{mn_alongside_clause}}.
 
-**The history length departs furthest from the original.** The original's error falls steeply
+**At our budget, shorter histories win.** The original's error falls steeply
 from M = 1 to M = 8 and then flattens (`ORIGINAL_SPECS.md` a.5). On the governing reading ours does
 not fall steeply: {{mn_mvar_better_list}}, histories shorter than the centre's, beat it, and no
 shorter history is resolvably worse, though other readings the rule reports put shorter histories
-behind it: {{mn_mvar_other_worse}}. The original's direction on N holds: the shortest forecasts
+behind it: {{mn_mvar_other_worse}}. That is a statement about learning speed at this budget, not about converged accuracy: trained {{n3_long_factor_word}} as long, the centre passes both winning shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings (below), so it does not contradict the original's steep fall to M = 8, whose training budget the original does not state. The original's direction on N holds: the shortest forecasts
 are far worse, which is §5's teacher-forcing result again, and the longest are better, so the
 centre's tie with its longest-forecast neighbour becomes a loss.
 
-**Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per
-iteration, {{n3_cost_M32_N16}}× the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}× for {{mn_best_config}}, so at
-a given iteration count those also had more computation; the shorter histories that win cost less,
-{{n3_cost_M8_N8}}× and {{n3_cost_M2_N8}}×. Training the centre longer controls for this
-(`results/mn_compute_matched.json`; differences signed as in the table). At {{n3_k_mid}} iterations
-the centre has had {{n3_best_over_mid}}× the computation of {{mn_best_config}} at {{iters_main}}, and
-{{mn_best_config}} is still ahead at h = {{v2_diag_h}}, a difference of {{n3_best_D_mid}}
-{{n3_best_ci_mid}}, so its advantage is not an artefact of extra computation per iteration. That is
-as far as it goes. At {{iters_long}} iterations, {{n3_best_over_long}}× the computation, the
-difference is {{n3_best_D_long}} {{n3_best_ci_long}}, not resolved; on the in-sample arena the centre
-at {{n3_k_mid}} already draws level with {{mn_best_config}} ({{n3_best_ins_D_mid}} {{n3_best_ins_ci_mid}})
-and passes {{n3_lf_label}} ({{n3_lf_ins_D_mid}} {{n3_lf_ins_ci_mid}}); and at {{iters_long}}, on the held-out pair, it passes
-both shorter histories, {{n3_sh_long_clause}}. None of this re-opens rule M-74.
+**Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, {{n3_cost_M32_N16}}× the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}× for {{mn_best_config}}; the shorter histories that win cost less, {{n3_cost_M8_N8}}× for {{n3_sh_label_M8_N8}} and {{n3_cost_M2_N8}}× for {{n3_sh_label_M2_N8}} (`results/mn_compute_matched.json`; Appendix U gives every reading, signed as in the table). The shorter histories win on all {{n3_n_readings_word}} readings at {{iters_main}} iterations while using well under half the centre's computation, so that part of the verdict needs no compute correction. The longer forecasts' wins do. Trained to {{n3_k_mid}} iterations, the centre has had {{n3_best_over_mid}}× the computation of {{mn_best_config}}, and the readings split: {{mn_best_config}} is still ahead on the held-out pair at h = {{v2_diag_h}} ({{n3_best_D_mid}} {{n3_best_ci_mid}}), the centre is ahead on the in-sample arena at h = {{v2_deploy_h}} ({{n3_best_ins_D_mid_h100}} {{n3_best_ins_ci_mid_h100}}), and the other two are not resolved. At {{iters_long}} iterations, {{n3_best_over_long}}× the computation, the centre is ahead on both in-sample readings and neither held-out difference is resolved. Trained that long, it also passes both shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings: on the held-out pair at h = {{v2_diag_h}}, {{n3_sh_label_M2_N8}} by {{n3_sh_D_long_M2_N8}} {{n3_sh_ci_long_M2_N8}} and {{n3_sh_label_M8_N8}} by {{n3_sh_D_long_M8_N8}} {{n3_sh_ci_long_M8_N8}}, with {{n3_sh_over_long_M2_N8}}× and {{n3_sh_over_long_M8_N8}}× their computation, and on both in-sample readings; on the held-out pair at h = {{v2_deploy_h}} neither difference is resolved. Which setting is most accurate therefore depends on how long each is trained. None of this re-opens rule M-74.
 
 **Limits.** One factor is varied at a time, so no interaction between M and N is tested. Our data
 budget is {{c2_pct}}% of the reference's (§5.1), and the original states neither the ablation's
@@ -555,7 +543,7 @@ budget, its evaluation data nor the horizon behind its error, so the verdict hol
 no further: a larger one may favour a longer history. All {{tail_n}} runs at {{iters_main}} iterations,
 the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes
 from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`,
-post hoc), so the ranking is at this budget, not at convergence. With {{mn_nind}} independent trajectories, the rule's minimum detectable effect at h = {{v2_diag_h}},
+post hoc), so the ranking is at this budget, not at convergence, and it changes with training length (Appendix U). With {{mn_nind}} independent trajectories, the rule's minimum detectable effect at h = {{v2_diag_h}},
 the difference its first Holm step would usually detect, is about {{mn_mde_h368}}% of the centre's
 error.
 
@@ -2294,5 +2282,27 @@ What does not survive is the per-dimension form of the ordering evidence. Three 
 **The fourth column: the table is a property of the model, not of the horizon.** Everything else in §6.7 is established across *episodes*, on one model. Whether the same lookup table works on a *different* model is a separate claim, and rule M-69 (Appendix E) fixed what an answer would look like — criterion, arena, horizons and minimum detectable effect — before any cross-model multiplier was computed. Multipliers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on the released checkpoint, then the reverse, over the same {{d3x_nind}} held-out trajectories and {{d3_nhoriz}} horizons. The statistic the rule governs on is the **paired** change in held-out coverage, coverage under the other model's multiplier minus coverage under the same model's, on the same trajectories, because this arena can resolve that (largest minimum detectable effect {{d3x_pmde_hi}} points against the ±{{d3x_band}}-point band) and cannot resolve the absolute one. The verdict is **{{d3x_verdict}}**: of {{d3x_ncells}} governing cells, {{d3x_n_out}} have a 95% interval on the paired change lying entirely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} straddling an edge, and the largest paired change has magnitude {{d3x_worst_delta}} points. That is branch {{d3x_branch}} of the rule's three. Per direction the verdict is the same: fitting on Arm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the band); fitting on the released checkpoint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest statement of the gap is the multipliers themselves: Arm A's are {{d3x_ratio_lo}}× to {{d3x_ratio_hi}}× the released checkpoint's at the same horizon.
 
 **The *different model* column is the absolute test, and it is unpowered for the reason §6.7 gives**, so a cell inside its band is not evidence the multiplier transferred. It is reported because dropping it would hide that this arena cannot resolve it; it is not the verdict and cannot move it. §6.7's caution applies here unchanged and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} Arm A seeds share their training data and differ only in initialisation and ordering, and no P-value attaches to any count here. The two models also differ on several axes at once, so this bounds transfer between these two models rather than attributing it to any one difference.
+
+## Appendix U — the settings sweep at equal training compute
+
+Post hoc (ledger R-78; `results/mn_compute_matched.json`); it re-opens no rule, and rule M-74's verdict,
+{{mn_verdict}}, stands as a statement about the {{iters_main}}-iteration budget (§5.2). Each row sets one of the
+{{mn_n_better_word}} configurations that beat the centre at {{iters_main}} iterations against the centre trained to
+{{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterations: {{n3_appU_nrows_word}} rows of {{n3_n_readings_word}}
+readings each. A longer forecast costs more per iteration than the centre, a shorter history less, so the centre's
+longer runs ask whether a configuration's win survives giving the centre at least as much training computation.
+
+| configuration (cost per iteration ÷ the centre's) | centre trained to (iterations) | compute ratio (centre's total ÷ configuration's) | h = {{v2_deploy_h}}, held-out pair ({{mn_nind}}) | h = {{v2_deploy_h}}, in-sample ({{mn_nind_ins}}) | h = {{v2_diag_h}}, held-out pair ({{mn_nind}}) | h = {{v2_diag_h}}, in-sample ({{mn_nind_ins}}) |
+|---|---|---|---|---|---|---|
+{{n3_appU_table}}
+
+**Arenas: the held-out pair (episodes {{h2h_episodes}}, {{mn_nind}} non-overlapping {{h2h_unit}}-step trajectories,
+n_independent = {{mn_nind}}) and the in-sample arena (the training episodes' {{mn_nind_ins}} non-overlapping
+{{h2h_unit}}-step trajectories, n_independent = {{mn_nind_ins}}). Checkpoints: each configuration at {{iters_main}}
+iterations, the centre at the iterations in the second column; three seeds each.** Each cell is D, the configuration's
+relative-L1 minus the centre's, the mean over trajectories of the three-seed means, with its 95% interval: exact over
+all 256 ordered resamples on the held-out pair, 20,000 Monte Carlo resamples (seed 0) in-sample. Negative favours the
+configuration; bold where the interval excludes zero. Cost per iteration is steady training time per iteration, timed
+without contention; the compute ratio is the centre's total training computation over the configuration's.
 
 ---

@@ -157,6 +157,15 @@
       "original_states": "an optimal trade-off emerges ... balance prediction accuracy and training efficiency",
       "form": "quantitative: every heatmap cell prints its value",
       "numeral_in_text": true,
+      "printed_e": {
+        "M32_N8": 0.47,
+        "M32_N32": 0.47
+      },
+      "printed_hours": {
+        "M32_N8": 1.07,
+        "M32_N32": 2.27
+      },
+      "printed_where": "v1 Fig. 6, p. 7: e in the left heatmap, training hours in the right",
       "note": "The numerals are printed inside Figure 6's cells rather than in the running text; no value is read off an axis. (32, 8) prints the tied-lowest e with (32, 32) (docs/presubmission/ORIGINAL_SPECS.md a.5). The claim is a trade-off between accuracy and training time; rule M-74 tests the accuracy half and reports training time beside it."
     },
     {
