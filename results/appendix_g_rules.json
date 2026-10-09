@@ -91,8 +91,8 @@
       "lead_hours": 9.356666666666667,
       "lead_source": "this appendix, from git",
       "tested_by": "results/m49_capacity_matched.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "bd60cc6",
+      "commit_subject": "M-49: pre-register the capacity-matched test, with the MDE that bounds it"
     },
     {
       "id": "M-50",
@@ -104,8 +104,8 @@
       "lead_hours": 0.08833333333333333,
       "lead_source": "this appendix, from git",
       "tested_by": "results/e5_synthetic_sigma.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "ef3575f",
+      "commit_subject": "M-50 pre-registered, and a different-architecture run stopped contaminating \u00a76.3"
     },
     {
       "id": "M-51",
@@ -117,8 +117,8 @@
       "lead_hours": 0.19666666666666666,
       "lead_source": "this appendix, from git",
       "tested_by": "results/e7_free_baselines.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "e16b4a9",
+      "commit_subject": "M-51 pre-registered: two more free adversaries for the ranking claim"
     },
     {
       "id": "M-52",
@@ -130,8 +130,8 @@
       "lead_hours": 0.15222222222222223,
       "lead_source": "this appendix, from git",
       "tested_by": "results/e7_free_baselines.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "e5f07da",
+      "commit_subject": "M-52: M-51 named a quantity that does not exist, corrected before it ran"
     },
     {
       "id": "M-62",
@@ -143,8 +143,8 @@
       "lead_hours": 5.117222222222222,
       "lead_source": "this appendix, from git",
       "tested_by": "results/m62_episode_clustering.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "c322418",
+      "commit_subject": "M-62 to M-65: four rules committed before the data that will test them"
     },
     {
       "id": "M-63",
@@ -156,8 +156,8 @@
       "lead_hours": 5.117222222222222,
       "lead_source": "this appendix, from git",
       "tested_by": "results/m63_per_dimension_coverage.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "c322418",
+      "commit_subject": "M-62 to M-65: four rules committed before the data that will test them"
     },
     {
       "id": "M-64",
@@ -169,8 +169,8 @@
       "lead_hours": 5.9816666666666665,
       "lead_source": "this appendix, from git",
       "tested_by": "results/m64_short_units.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "c322418",
+      "commit_subject": "M-62 to M-65: four rules committed before the data that will test them"
     },
     {
       "id": "M-65",
@@ -182,8 +182,8 @@
       "lead_hours": 5.117222222222222,
       "lead_source": "this appendix, from git",
       "tested_by": "results/m65_gaussian_nominal.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "c322418",
+      "commit_subject": "M-62 to M-65: four rules committed before the data that will test them"
     },
     {
       "id": "M-68",
@@ -195,8 +195,8 @@
       "lead_hours": 5.147777777777778,
       "lead_source": "this appendix, from git",
       "tested_by": "results/r2_combined_arm.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "68bb683",
+      "commit_subject": "Pre-register M-68: the combined arm's rule, its verdict branches and its minimum detectable effect"
     },
     {
       "id": "M-69",
@@ -208,8 +208,8 @@
       "lead_hours": 0.38555555555555554,
       "lead_source": "this appendix, from git",
       "tested_by": "results/task_d3_cross_model.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "fad7db7",
+      "commit_subject": "Pre-register M-69: the cross-model transfer rule, its criterion and its minimum detectable effect"
     },
     {
       "id": "M-70",
@@ -221,8 +221,8 @@
       "lead_hours": 115.18777777777778,
       "lead_source": "this appendix, from git",
       "tested_by": "results/q3_penalty_reordering.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "6b87e32",
+      "commit_subject": "Pre-register M-70: whether the per-horizon correction reorders cumulative penalties"
     },
     {
       "id": "M-74",
@@ -234,8 +234,8 @@
       "lead_hours": 29.378611111111113,
       "lead_source": "this appendix, from git",
       "tested_by": "results/mn_sweep_verdict.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "3df0e55",
+      "commit_subject": "PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist"
     },
     {
       "id": "M-75",
@@ -247,8 +247,8 @@
       "lead_hours": 29.378611111111113,
       "lead_source": "this appendix, from git",
       "tested_by": "results/baselines_verdict.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "3df0e55",
+      "commit_subject": "PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist"
     },
     {
       "id": "M-76",
@@ -260,8 +260,8 @@
       "lead_hours": 29.378611111111113,
       "lead_source": "this appendix, from git",
       "tested_by": "results/baselines_verdict.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "3df0e55",
+      "commit_subject": "PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist"
     },
     {
       "id": "M-80",
@@ -273,8 +273,8 @@
       "lead_hours": 0.05555555555555555,
       "lead_source": "this appendix, from git",
       "tested_by": "results/rssm_diagnostics.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "2433f44",
+      "commit_subject": "PRE-REGISTER RSSM diagnostic X1, before its readings exist"
     },
     {
       "id": "M-84",
@@ -286,8 +286,8 @@
       "lead_hours": 0.11666666666666667,
       "lead_source": "this appendix, from git",
       "tested_by": "results/action_sensitivity.json",
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "738bc91",
+      "commit_subject": "PRE-REGISTER action-sensitivity rule X2, before its readings exist"
     },
     {
       "id": "S-12",

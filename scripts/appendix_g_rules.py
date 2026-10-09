@@ -206,6 +206,7 @@ def main():
         # and it generalises to every future rule without an edit.
         _self_lead = None
         _art = None
+        _self_commit = None
         if key is None:
             # Two forms name the discharging artifact. The older rules carry their
             # own `**Discharged** by` line; M-70 was discharged by setting only its
@@ -215,14 +216,20 @@ def main():
             _art = (re.search(r"^\*\*Discharged\*\* by `([^`]+)`", blk, re.M)
                     or re.search(r"^\*\*Status\*\*[^\n]*?DISCHARGED by `([^`]+)`", blk, re.M))
             if _art:
-                _rc = subprocess.run(
-                    ["git", "log", "--format=%ct", "-S", f"### {eid} ",
-                     "--", LEDGER], capture_output=True, text=True).stdout.split()
+                # Round 3, R4 (S6): the commit that introduced the rule's heading is kept, not just its
+                # timestamp, so Appendix E's commit column is filled for every rule; the submitted PDF
+                # and bundles print its anonymous label, as for the rest.
+                _rcl = subprocess.run(
+                    ["git", "log", "--format=%h %ct", "--abbrev=7", "-S", f"### {eid} ",
+                     "--", LEDGER], capture_output=True, text=True).stdout.split("\n")
+                _rcl = [x.split() for x in _rcl if x.strip()]
+                _rc = [ct for _, ct in _rcl]
                 _dc = subprocess.run(
                     ["git", "log", "--diff-filter=A", "--format=%ct", "--",
                      _art.group(1)], capture_output=True, text=True).stdout.split()
                 if _rc and _dc:
                     _self_lead = (int(_dc[-1]) - int(_rc[-1])) / 3600.0
+                    _self_commit = _rcl[-1][0]
         if key is None and eid == "S-12":
             # S-12 withdraws the Task 3 rule, which Figure 4 labels by its subject
             # rather than by an identifier -- because at the time it was written it
@@ -238,7 +245,7 @@ def main():
                              else None)),
             "tested_by": (lead[key]["tested_by"] if key else
                           (_art.group(1) if _art else None)),
-            "rule_commit": commits.get(key, {}).get("rule_commit"),
+            "rule_commit": commits.get(key, {}).get("rule_commit") or _self_commit,
             "commit_subject": None,
         })
 
