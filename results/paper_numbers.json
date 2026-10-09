@@ -9349,7 +9349,7 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "1,709,278"
+    "value": "1,709,273"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
@@ -9389,7 +9389,7 @@
   },
   "ver_identical": {
     "source": "results/verify_reproduction.json",
-    "value": "15,651"
+    "value": "15,646"
   },
   "ver_keys_lost": {
     "source": "results/verify_reproduction.json",
@@ -9465,7 +9465,7 @@
   },
   "ver_values": {
     "source": "results/verify_reproduction.json",
-    "value": "15,657"
+    "value": "15,652"
   },
   "win_cross": {
     "source": "results/step0_regimes.json",
