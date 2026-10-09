@@ -1,0 +1,2024 @@
+
+===== page 1 =====
+UnderreviewassubmissiontoTMLR
+
+
+RightOrder,WrongSize: AVerifiedReproductionofthe
+RoboticWorldModelandtheUncertaintyItReports
+
+
+
+Anonymousauthors
+Paperunderdouble-blindreview
+
+
+                                                 Abstract
+
+
+        WerebuildthedynamicsmodeloftheRoboticWorldModel(RWM;arXiv:2501.10100v1)
+        anditsuncertainty-awarefollow-up(arXiv:2504.16680v1)onCPU,matchingthereleased
+        implementation’soutputs,lossesandgradientsexactlybeforetraining. Thebasepaper’s
+        centraltrainingclaimreproducesunderarulecommittedinadvance,runonseed1ofeach
+        arm;3seedsextendit: trainingonthemodel’sownrolloutsbeatsteacherforcing4.61×
+        at368stepsand2.58×at100,thoughonshortwindowsteacherforcingleadsatonestep.
+        At368stepsRWMbeatsMLP,RSSMandtransformerbaselinesbuilttoourreadingof
+        theoriginalandtrainedwithRWM’ssettings,thougheachdoesworsethanpredictingno
+        change.Onaccuracyalone,twoshorterhistoriesandbothlongertrainingforecastsbeatthe
+        original’ssettingatourbudget(onereadingunresolved);trainedlonger,itpasseseachon
+        somereading(posthoc):therankingdependsontrainingbudget.Itstrade-offwithtraining
+        timeisuntested.Thesereston0.133%ofthereference’sworld-modeldata,onerobot,gait
+        andterrain,and4independentheld-outtrajectories. Thefollow-up’suncertaintygetsthe
+        orderrightandthesizewrong. Ensembledisagreement, themethod’srewardpenalty,
+        correlates+0.605withrealisederror(+0.419withrolloutanddepthheldfixed),yetonthe
+        checkpoint’strainingdatais8.3×smallerthanthaterroratonestepand33.4×atthe
+        method’s100-stephorizon.Afreesignal,themodel’spredictedstepsize,rankserrornearly
+        aswell(+0.470;marginunresolved). Themembersshare89.15%oftheirparameters;at
+        100steps,independentmodelsare2.03×bettercalibratedthanourshared-trunkones,still
+        5.2×overconfident. Theimplementedlossprovablydrivestheper-memberσthemethod
+        discardstozero,asdatawithknownnoiseconfirm. Aper-horizonrescalingbringsthe
+        releasedcheckpoint’scoveragewithin10pointsofnominalonitstrainingepisodes(nocell
+        resolvable),andonly17of36disagreementcellsonepisodesourensemblesneversaw: a
+        recipetorefit,notademonstratedfix. Thereleasedevaluationpairseachpredictionwith
+        thepreviousstep’saction;overalltenepisodesthisraisesthecheckpoint’sshort-horizon
+        relative-L1error,andfrom100stepsthechangeisunresolved. Wetrainnopolicy,sowe
+        boundwhattheuncertaintyreports,notwhatitsmiscalibrationcosts.
+
+
+
+1  Introduction
+
+Aworldmodelthatreportsitsownuncertaintyismoreusefulthanonethatdoesnot,andtheuncertainty-
+awareRoboticWorldModelreportsone.Thispaperaskswhatthatnumbermeans,andthetitlegivesthe
+answer:itgetstheorderofthemodel’serrorsrightandtheirsizewrong.
+Wesetouttoreproducethebasepaper:rebuildtheproprioceptivedynamicsmodelfromscratch,checkit
+againstthereleasedimplementation,andtestthecentraltrainingclaim,whichholds. Therebuildmade
+asecondquestioncheaptoask:isthepredictedσcalibrated?Neitherofthetwothecheckpointemits
+is. Ondataittrainedon,theper-memberσistoosmallby1,827×ath=1to20,669×ath=368,by
+construction(§6.3),andtheensembledisagreementthemethodusesby8.3×to34.4×;thedisagreement
+stillranksrealisederror,theusethemethodmakesofit(§6.6).
+
+
+                                                      1
+===== page 2 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+Thisisareproductioninthestrongersense:thecontributionisnotthatthenumberscameoutthesame,but
+whatre-measuringthemethodrevealsaboutwhereitisrobustandwhereitisnot.Threethingsdistinguish
+itfromare-runoftheauthors’code.Werebuiltratherthanimported,andmatchedtherebuildtothe
+referencebeforeanytraining(AppendixA),soalaterdiscrepancybelongstothemethod,nottoourwiring.
+Decisionruleswerecommittedtogitbeforethedata,withtimestampsareadercancheck(§8,
+Figure1);severalreturnedverdictsagainsttheoriginalorcouldnotsettlethequestion,andwereporteach
+(AppendixE).Wekeepourwithdrawnfindingsintherecord.Theledgerkeeps21supersededentries,
+eachbesidetheevidencethatwithdrewit: eightclaimswithdrawnonevidence,sixframingswithdrawn,
+andtherestearlyhypothesesclosedashousekeeping(§8andthesupplementarydocs/BUILD_CHECKS.md;
+everypre-registeredrule,withitsleadtimeandverdict,isinAppendixE).§9givesthelessonsinaforma
+practitionercanusewithoutreadingtherest.
+Contributions.
+
+     •Theuncertaintygetstheorderrightandthesizewrong,inthefirstcalibrationmea-
+        surementweareawareofforthisreleasedcheckpoint(Luetal.(2022)measurethisfamily
+        ofpenaltiesonmodelstheytrainthemselves;§2).Ensembledisagreementranksrealisederror,cor-
+        relating+0.419withitwithrolloutandforecastdepthheldfixed,yetondatathecheckpointtrained
+        onitis8.3×smallerthanthaterrorath=1and33.4×ath=100(§6.2,§6.6). Itbeats1ofthe
+        2freebaselinesaddedhere;themodel’sownpredictedstepsizerankserrorat+0.4697againstits
+        +0.6053,amargin25independenttrajectorieswouldresolveifitisaslargeasobserved,againstthe
+        20here(§6.6,§11).
+
+     •Thebasepaper’scentraltrainingclaimreproduces,andreversesatonestep.Arule
+        committedbeforetheruns,runonseed1ofeacharm,foundautoregressivetrainingaheadby4.43×
+        ath=368;3seedsat10,000iterationsextendit:thefactoris4.61×,and2.58×ath=100,onthe
+        held-outpair’s4independent400-steptrajectories(§5).Atonestepasecondpre-registeredrule,on
+        60independent33-rowunits,findsagapof-0.0194[-0.0310,-0.0093]infavourofteacherforcing
+        (§5).
+
+     •Twomoreofthebasepaper’sclaims,testedunderrulescommittedbeforetheruns.
+        RWMisaheadath=368ofMLP,RSSMandtransformerbaselinesbuilttoourreadingofits
+        specificationandtrainedwithRWM’ssettings,whetherteacher-forcedastheoriginaltrainsthemor
+        autoregressively,ontheheld-outpair’s4independenttrajectoriesat2,500iterations,thoughevery
+        baselineisworsetherethanpredictingnochange,andneitherreadingourRSSM’sforecastfromits
+        prior’sexpectedorsampledlatentnorretrainingitwithtwoothersettingsononeseedremovesits
+        open-loopcollapse(ruleX1,exploratory:NOTRESCUEDBYTHESETTINGSTRIED;
+        §5.3). Onaccuracyaloneatourbudget,fouroftheeightone-factorneighboursoftheoriginal’s
+        (M,N)=(32,8)beatit,twoshorterhistoriesatunderhalfitscostperiterationandbothlonger
+        trainingforecastsatmore(therule’sverdictholdsoneveryreadingitreportsbutheld-outnRMSE
+        ath=1,whichisunresolved),buttrainedlongerthecentrepasseseachofthemonatleastone
+        reading(posthoc),sotherankingdependsonthetrainingbudget;theoriginalchosethecentreas
+        atrade-offwithtrainingtime,whichitsownprintedhoursareconsistentwithandwedonottest
+        (§5.2).
+
+     •Theσ=0optimumoftheimplementedobjective.Theimplementedstatelossismin-
+        imisedatσ=0,sotheper-memberσthemethoddiscardscollapsesbyconstruction:derived,and
+        demonstratedagainstknownnoise(§6.3).
+
+     •Trunk-sharing,tested.Thefivemembersshareonetrunk,onerecurrentstateand89.15%of
+        eachmember’sparameters,sotheirspreadcanexpressonlyuncertaintythetrunkalreadycarries
+        (§6.4).Underarulecommittedbeforetheruns,ontheheld-outpair’s4independenttrajectories,5
+        independentlyinitialisedfullmodelsare2.03×bettercalibratedthantheshared-trunkarms,against
+        apre-registeredminimumdetectableeffectof1.45×,andstill5.2×overconfidentath=100;they
+        alsodifferincapacityanddataorder,sothisboundsthesharingeffectratherthanisolatingit(§6.8).
+
+
+                                                       2
+===== page 3 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure1: Pre-registrationleadtimeforeverypre-registeredrule(AppendixE),withM-16’sannotation
+besideitsrule,fromgitcommittimestampsonasymmetric-logarithmicaxis. Positiveisarulecommitted
+beforethedatathattesteditexisted;negativeisarulewrittenafterwards.TheonenegativebaristheTask
+3duplicationrule(S-12),retractedasapre-registrationinthispaper.
+
+
+     •Per-horizonrecalibration,withmixedevidence.Onemultiplierperhorizon,fittedonone
+        episodeandscoredontheother,bringseveryreleased-checkpointcoverageestimatenearnominal
+        whereaglobalonedoesnot,thoughnosinglecellisresolvableandthecellsareunseenonlybythe
+        multiplier,sincethecheckpointtrainedonbothepisodes(§6.7);onArmA,whichneversawthem,
+        itsownmultipliersmanage17of36disagreementcells.
+
+     •Thereleasedevaluationismisalignedbyonestep;overalltenepisodesitraisesthe
+        checkpoint’srelative-L1erroruptoh=32,andfromh=100thechangeisnotresolved.
+        Evaluationfeedstheactionfromt−1wheretrainingpairsstatesandactionsindex-for-index,and
+
+
+                                                      3
+===== page 4 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+        shiftingitsactionindexbyonestepfixesit.Onalltenepisodes’20independenttrajectories,allof
+        themtrainingdataforthischeckpoint,thestaleactionraisesitsrelative-L1errorby55.0%[26.3,
+        92.7]ath=1and37.4%[21.3,65.4]ath=32,andchangesitby8.2%[-10.4,24.9]ath=100and
+        -4.6%[-13.4,3.2]ath=368;ontheheld-outpair’s4itraisesitateveryhorizonreported,by7.9%
+        [3.1,13.0]ath=368(§7.2).
+
+     •Afrom-scratchreimplementationverifiedatthegradientlevel.Outputsmatchthereleased
+        modulebitwise,andlossesandgradientsmatchto0.000e+00across7losstermsand106parameter
+        tensors,beforeanytraining(AppendixA).
+
+2  Relatedwork
+
+Thispaperaskswhetheranensemble-disagreementpenaltyiscalibrated,andseparatesitsuseasaranking
+fromitsuseasascale.Bothquestionshavealiterature,andonepaperaskedalmostexactlyoursfouryears
+earlier;belowwesaywhichpartsofwhatfollowsarenew.
+Thedirectprecedent.Lu,Ball,Parker-Holder,OsborneandRoberts(RevisitingDesignChoicesinOffline
+Model-BasedReinforcementLearning,ICLR2022)compareuncertaintyheuristicsinofflinemodel-basedRL
+underprotocolsbuilt,intheirwords,to"capturethespecificcovariateshiftinducedbymodel-basedRL",in
+ordertoassesscalibration.TheyreportSpearmanrankandPearsonbivariatecorrelationagainsttruemodel
+errorseparately,andobservethat"despitethesimilarrankcorrelationsρ,thebivariatecorrelationsrcan
+varyconsiderably":aconfigurationcankeeptheorderingwhilethepenalty’ssizerelativetotheerrorchanges.
+Thatisourranking-versus-scaledistinction,onthesamefamilyofpenalties. Theyalsofindtheensemble
+standarddeviation,theexactquantitysystem_dynamics.py:126computesandenvs/base.py:166applies,
+totrackmodelerrorbetterthanthepenaltiesofMOPOandMOReL,being"strikinglysimilar"tothelatter
+butbetterbehaved;§6.6findsthesamequantityausablerankingsignal.
+Whatisnewhereisfourthings.Luetal.measuremodelstheytrainthemselves,onsimulatedbench-
+marks,andtheirstatisticsdescribeorderingandshape,notcoverage.Wemeasureareleasedcheckpoint
+fromapipelineitsauthorsdeployedonhardware,wherereadingthepenaltyasanintervalhasconsequences;
+wemeasurecoverageagainstanominal;weverifyourreimplementationagainstthereferenceatthegra-
+dientlevelbeforeanytraining(AppendixA);and§6.3derivestheσ=0optimumfortheobjectivethe
+releasedcodesubstitutes,squarederroronareparameterisedsample, ratherthanforthelikelihoodthe
+parameterisationwasbuiltaround.
+Wheretheparameterisationcomesfrom.Theclampoftheboundedlog-σheadwhoseoptimum§6.3
+showsisσ=0isinherited,lineforline,fromtheprobabilisticensemblesofChua,Calandra,McAllister
+andLevine(PETS,NeurIPS2018),buttheobjectiveisnot: thereleasedcodereplacesPETS’slikelihood
+withsquarederroronasampledpredictionandtiestheupperboundtothefloor,soadescendantof
+thislineagethatmadethesamesubstitution,andleftnothingpushingitsvariancefloorback
+up,wouldinheritthesameoptimum,ahypothesisaboutmechanismuntestedinanyotherdescendant
+(§11).Of13publicrepositoriesthesurveylookedat,10carrytheconstruction,theonesitsprotocolcounts
+asexamined,and1ofthosetrainsitagainstasampledsquarederror,onlyinanoptionalmode,soonthis
+sampleofconveniencethesubstitutionisrare(AppendixI).
+Themethod’sfamily.MOPO(Yu,Thomas,Yu,Ermon,Zou,Levine,FinnandMa,NeurIPS2020)
+penalisestherewardbyanensembleuncertaintyestimatetosolveapessimisticMDP;MOReL(Kidambi,
+Rajeswaran,NetrapalliandJoachims,NeurIPS2020)buildsanunknown-statedetectorfrompairwiseen-
+sembledisagreementinstead;andbothbranchshortmodelrolloutsfromrealstatesinthemannerofMBPO
+(Janner,Fu,ZhangandLevine,NeurIPS2019). Thefollow-upwereproduceadaptsMOPO’spenaltyinto
+MBPO’sloop,whichiswhat"MOPO-PPO"names,andits100-stepimaginationhorizonsitsinsideMBPO’s
+tradebetweenrolloutlengthandmodelerror(§6.2).
+What"ensemble"issupposedtomean.Deepensembles(Lakshminarayanan,PritzelandBlundell,
+NeurIPS2017)areseveralnetworkstrainedfromdifferentrandominitialisationsanddifferentdataorderings,
+andtheirspreadistheuncertaintyestimate.Thereleasedcheckpoint’sfivemembersshareoneGRUtrunk,
+
+
+                                                       4
+===== page 5 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+onerecurrenthiddenstate,and89.15%ofeachmember’sstate-predictionparameters,sowhatevertheir
+spreadmeasures,itisnotwhatadeepensemblemeasures(§6.4).
+Threesourcesofuncertainty,andtheonenobodyhereestimates.Abbas,Sokota,Talvitieand
+White(ICML2020)separatepredictiveuncertaintyinmodel-basedRLintoaleatoricnoise,parameterun-
+certainty,andmodelinadequacy,andobservethatselective-planningworkattendsalmostentirelytothe
+second.Thecheckpointwemeasureemitsanaleatorictermandaparameter-uncertaintyterm,discardsthe
+firstbeforeuse(§6.1),andhasnoestimateofthethird,whichispreciselythecomponentthatcompounds
+withrolloutdepth:theshape§6.5reports.
+Whymiscalibrationistheexpectedfinding.Modernnetworksaresystematicallymiscalibrated(Guo,
+Pleiss,SunandWeinberger,ICML2017),andcalibrationdegradesfurtherundercovariateshift,worsening
+withdistancefromthetrainingdistribution(Ovadia,Fertig,Ren,Nado,Sculley,Nowozin,Dillon,Laksh-
+minarayananandSnoek,NeurIPS2019). Anautoregressiverolloutmanufacturesitsowncovariateshift,
+increasingwithdepth,sohorizon-dependentcalibrationfailureiswhatoneshouldexpect;ourcontribution
+onthisaxisisthemagnitudeandthemechanism,notthedirection.§6.7’sper-horizonmultiplierisacoarse
+instanceofcalibratedregression(Kuleshov,FennerandErmon,ICML2018),apost-hocmapfittedonone
+episodeandscoredonanother,appliedtoahorizonindex;wedonotpresentitasanewidea.
+Theclosestpublishedworktoouroneconstructiveresult.Malik,Kuleshov,Song,Nemer,Seymour
+andErmon(ICML2019)recalibrateadynamicsmodel’suncertaintyinsidemodel-basedRL,andarguethat
+"gooduncertaintiesmustbecalibrated"ratherthanmerelywellranked,thedistinction§6.2and§6.6draw.
+§6.7isahorizon-indexedinstance: asingleglobalmultiplierfails,itsfittedvaluevaryingacrosshorizons,
+whereaper-horizononeputseveryreleased-checkpointestimatewithinitstoleranceband,thoughthose
+cellsareunseenbythemultiplierbutnotbythemodelandnosinglecellisresolvable(§6.7).Anopen-loop
+rollout’serroraccumulateswithdepth,soahorizon-blindrecalibrationcannotfollowit.
+§6.4’smechanismisknown,andwesayso.Thatheadssharingatrunkunder-reportdisagreement
+relativetoindependentlyinitialisednetworksisestablished: Lee,Purushwalkam,Cogswell,Crandalland
+Batra(arXiv:1511.06314)treatensemblediversityassomethingtoengineerratherthanassume;Fort,Huand
+Lakshminarayanan(arXiv:1912.02757)showthatindependentinitialisationbuysadecorrelationsubspace
+methodsdonotmatch;andBatchEnsemble(Wen,TranandBa,ICLR2020)andMIMO(Havasi,Jenatton,
+Fort,Liu,Snoek,Lakshminarayanan,DaiandTran,ICLR2021)sharedeliberatelyandstatewhattheytrade
+away.Whatisoursisfindingitinareleasedroboticscheckpoint,withthesharingquantified
+at89.15%ofeachmemberandthecostmeasuredat2.03×(§6.8).Theproblemisnotsharing;it
+issharingandthenreadingthespreadasthoughthememberswereindependent.
+Andtheobjectivein§6.3hasaneighbour.Seitzer,Tavakoli,AnticandMartius(ICLR2022)identify
+failuremodesofheteroscedasticσheadstrainedbymaximisinglog-likelihood. Thereleasedmodel’sstate
+lossisnotalog-likelihoodatall(asampleentersasquarederror),sothefailure§6.3derivesismorebasic
+thantheirsanddoesnotdependontheoptimiser.§6.3derivesitanddemonstratesitagainstknownnoise.
+
+
+3  Setup
+
+
+Data.Thereleaseddatasetis10,000rowsofANYmalDproprioceptivestateandpolicyactionsat50Hz:
+tenconcatenated20-secondepisodes,withaterminationcolumnthatisidenticallyzero,sonothinginthe
+filemarkstheboundaries.
+Thesegmentsarenotallthesamelength.Thefirstepisodeis999rowsandtheothernineare1,000
+each,witharesetatrows999,1,999... 9,999and1orphanrowattheendofthefilethatbeginsaneleventh
+episodeandendsimmediately: 999+9×1,000+1. Werecovertheboundariesfromthedata: atevery
+resetrowthetwelvejointvelocities,thefourHAAjointpositionsandalltwelveactionsareexactlyzero,and
+nootherrowhasthatfingerprint. Tenequalsegmentsof1,000wouldgiveonefewercrossingwindowand
+onemoreusableone,sothecountsbelowdifferbyonefromthatreading;results/step0_regimes.json
+re-derivesthecrossingcountfromthesegmentlengthsalone,andthetwoagree.
+
+
+                                                       5
+===== page 6 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+Awindowis40rows,32ofhistoryand8offorecast,andthereferencewindowbuildermarksall9,961
+windowsvalid,including352thatspliceoneepisode’sendontothenextone’sstart. Theusable,episode-
+respectingcountis9,609:10,000rows,less39thatcannotstartafullwindow,less352thatcrossaboundary.
+Thecontaminationrateis3.53%.
+Model.AGRU-basedensemblepredictingthenextproprioceptivestate,withameanheadandabounded
+log-σhead, plusauxiliaryheadsforcontactandtermination. Thepaperdescribestwolossterms; the
+implementationhas7.Beforeanytraining,ourrebuild’soutputsmatchthereleasedmodule’sbitwise,and
+itslossesandgradientsmatchto0.000e+00acrossthose7termsand106parametertensors(AppendixA).
+Evaluation.Twoarenas,keptseparatethroughout:out-of-sample,thetwoepisodeswithheldfromtraining,
+andin-sample,theeightusedforit. Thereleasedevaluationdrawsitstrajectoriesfromtrainingdata,and
+theoriginaldoesnotdistinguishthetwo.Thereleasedcheckpointtrainedonalltenepisodes,soit
+hasnoheld-outarenainthisdataset,andeveryfigureforitisin-sample;latersectionsreferbackto
+thisasthein-samplecaveatof§3.Moredatacannotbegeneratedfromeitherrepositorythisreproduction
+pins(AppendixC).
+Effectivesamplesize.Trajectorycountisnotsamplesize.Two400-steptrajectorieswhosespansoverlap
+arenotindependentevidence,andtheout-of-samplearenacontainsonly4mutuallynon-overlapping400-
+steptrajectories.Abootstrapoverwholetrajectoriesatthatsizehas256distinctresamples,soitsintervals
+arequantisedatthatresolution. Everylong-horizonverdictinthispaperiscomputedwithabootstrap
+overindependenttrajectories,everytablereportsthatcount,and§8reportsbothresamplingunitswhere
+theydiffer. Latersectionsreferbacktothisasthen=4caveatof§3. Onetrajectorycancarrymuch
+ofalong-horizoneffect: aone-stepshiftoftheactionmovesthereleasedcheckpoint’s368-steprelative-L1
+erroronsingletrajectoriesofitsowntrainingepisodesbyanywherefrom-47.4%to+35.2%(§7.2),which
+illustrateswhy4trajectoriesboundeverylong-horizonclaim.
+
+3.1  Metrics
+
+Eachmetricisstatedasimplemented,withthefile:lineofitsimplementation,becauseareaderwho
+cannotseethedenominatorcannotchecktheheadline.
+Relative-L1isthereference’sownmetric,reproducedinbehaviour(model_training.py:203)sothatour
+numbersarecomparabletotheupstream’sprintedone.Onconfig-normalisedstates,perforecaststep,
+
+                                                   ∑45    ⏐⏐ˆst,d−s t,d⏐⏐
+                                             rt  =    d=1∑45 ⏐⏐st,d⏐⏐
+
+                                                         d=1
+
+andthereportedfigureistheflatmeanovertrajectoriesandsteps,
+
+
+                                                            B∑   T∑
+                                         e=           1B(T−t           0)r(b)t
+                                                           b=1 t=t     0+1
+
+witht        0=history_horizon=32: thefirst32stepsareteacher-forcedandexcluded. Thedenominatoris
+recomputedateverystepasa45-termsuminnormalisedspace,soitcanpassthroughzero,whichiswhy
+thismetricgoesnon-finiteonlow-dimensionalstategroupsandwhyasecondoneexists.
+NormalisedRMSEfixesthedenominatoronce,overthetrainingepisodesonly:
+
+                                  √1   ∑45
+
+                                          d=1  MSEt,d                          B∑(ˆs  (b)    )2
+                   nRMSEt  =        45                   withMSE   t,d = 1
+                                      1  ∑45                               B        t,d−s   (b)t,d
+                                           d=1σtrd                            b=1
+                                     45
+
+wherethescaleconstantis
+
+
+                                                         6
+===== page 7 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+
+                                     σtrd   =  sd({˜s i,d  :  episode(i)∈E         train})
+
+computedonce,storedinresults/step4_0a_results.json,andneverrecomputedpersteporderivedfrom
+held-outdata.Avalueof1.0meansnobetterthanpredictingthetrainingmean.Theaggregationisform
+1: pooltheper-dimensionmeansquarederrors,thendivide,aratioofmeans. Ameanofper-dimension
+ratiosgiveswhicheverdimensionhasthesmallestscaleunboundedleverage;AppendixGgivesbothforms
+andthecomparisonthesecondoneinverts.
+Coverageat±kσisthefractionofscalar(trajectory,forecaststep,statedimension)tripleswhoseabsolute
+realisederrorfallswithinktimestheσpredictedforthatsametriple:
+
+
+                                                    B∑  t0+h∑  45∑  [⏐⏐ˆs  (b)    ⏐⏐      ]
+                           cov±kσ  (h)  =         1               1     t,d−s   (b)t,d≤k
+                                           Bh45    b=1 t=t     0+1d=1     σ(b)t,d
+
+Itispooledoverallthreeaxeswithequalweightpertriple.Itiscumulativeoversteps1..h:coverage"ath"
+averagesthewholerolloutuptohandisnotthevalueatsteph,andeveryhorizon-indexedquantityinthis
+paperfollowsthesameconvention.Becauseitisbuiltfromanabsoluteerror,z≤kisthetwo-sidedevent,
+sothecalibratedtargetsareerf(k/ √2):68.27%at±1σand95.45%at±2σ.Thatnominalischecked
+ratherthanassumed.Rescalingeachmodel’sσbythesingleconstantthatmakesmean|error|/meanσ
+equalacalibratedGaussian’s0.7979landscoverageatorabove68.27%ineveryoneof48model×horizon
+cells,with0belowit(M-65),sotheshortfallsreportedbelowareapropertyofthescaleandnotofthetail.
+Theoverconfidencefactorishowmanytimeslargerthetypicalrealisederroristhanthetypicalpredicted
+σ:
+
+                                                                ⏐⏐ˆs  (b)  ⏐⏐
+                                         ρ(h)  =       meanb,t≤h,dt,d−s   (b)t,d
+                                                       meanb,t≤h,d   σ(b)t,d
+
+Ittooisaratioofmeans,becauseameanofratiosisunboundedwheneverasingleσapproacheszero,
+whichisexactlytheregime§6.3putsthesemodelsin.ρ= 1isnotcalibration: acalibratedGaussianhas
+mean|error|/σ=        √2/π=0.7979. Soρisreportedasamagnitudeofmiscalibrationandcoverageasthe
+calibratedreading,andbothappeareverywhere.
+Whichmetriceachheadlineuses.TheA/Btrainingclaim(§5)isrelative-L1,becausetheclaimisabout
+reproducingtheupstream’scomparisonandthatistheupstream’smetric.Thecalibrationclaims(§6.2)are
+theoverconfidencefactorandcoverage,becauseneithererrormetricinvolvesσ. Therankingclaims(§6.6)
+arePearsoncorrelationsbetweentheappliedscalarpenaltyandtotalabsoluteerror,becausearankingclaim
+isaboutorderratherthanscale.Everyheadlinenumberintheabstractnamesitsmetric.§7.2’salignment
+defectisgiveninbothmetrics,overalltenepisodesandontheheld-outpair.Overalltenepisodesthetwo
+metricsagreethatthestaleactionraiseserrorath=8and32andthatfromh=100thechangeisnot
+resolved,andtheydifferath=1,whererelative-L1resolvestheriseandnRMSEdoesnot.
+Horizons.Curvesarereportedath∈{1,8,32,100,128,368}. Twoofthoseareload-bearingandthe
+restarelandmarks.h=100isthemethod’sownimaginationrolloutlength,thehorizonoverwhichthe
+uncertainty-penalisedpolicyloopactuallyrunsthismodel(arXiv:2504.16680TableS9inv1andTableS11
+inv3,withthesamevalue).h=368istheupstream’sopen-loopdiagnosticlength:len_eval_trajectory
+=400minusthe32-stepteacher-forcedprefix,thecurvethefollow-upplotsasitsuncertaintyfigure. Itis
+3.68×themethod’sownrolloutlengthandisnotadeploymenthorizon. Everytablekeepsboth:h=368
+makesournumberscomparabletotheoriginal’sfigure,andh=100toitsmethod.
+
+3.2  Whateachclaimrestson
+
+Everyheadlineclaiminthispaperismeasuredontheout-of-sampleorin-samplearenaabove,oronall
+tenepisodestogether,atastatednumberofindependentunits(400-steptrajectoriesunlesstherowsays
+
+
+                                                          7
+===== page 8 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+otherwise),andatastatedcheckpoint:thereleasedone,oroursatastatednumberoftrainingiterations.
+AppendixD’ssecondtable,"Whateachtestedclaimrestson",giveseachclaim’sarena,samplesize,check-
+pointandverdict.Itisgeneratedfromtheartifactseachclaimiscomputedfrom,sonoarenalabel,sample
+sizeorcheckpointinitistypedbyhand.
+
+4  Whattheoriginalpapersclaim,andwhichclaimswetest
+
+Areproductionthatdoesnotsaywhatitleftaloneinvitesthereadertoassumeittestedeverything.Itdid
+not.
+Wetestedsixclaimsandleftsixuntested.Thesixarethebasepaper’sautoregressive-versus-teacher-
+forcingcomparisonanditsclaimthatteacherforcinggeneralisespoorly(§5),itsconfigurationclaim(§5.2)
+anditsclaimagainstMLP,RSSMandtransformerbaselines(§5.3),andthefollow-up’stwoclaimsabout
+whatitsuncertaintyoutputsreport(§6).Everyoneofthesixwedidnottestneedsasimulatoror
+hardwarewedonothave:zero-shottransfer,thesample-efficiencyresult,thecomparisonsagainstSHAC
+andDreamer,generalityacrossrobotmorphologies,offlineMBRLonrealrobotsandthecoreclaimthat
+penalisingrewardsbydisagreementimprovesthelearnedpolicy.Fiveofthemareclaimsaboutpolicy
+learningorhardware—everyonebutgeneralityacrossrobotmorphologies,whichneedsasimulatorand
+recordeddatafromotherrobotsbutisaclaimaboutthemodelratherthanaboutapolicy.Thisworktrains
+nopolicyandrunsontwoCPUcores. Thecountsandlistsaregeneratedfromtheclassificationtagsin
+AppendixD’sverdictcolumn,andtheyreplaceawithdrawnclaimthateveryuntestedclaimconcernspolicy
+learningorhardware(S-17). §11stateswhattheuntestedclaimsbound,andAppendixCwhattesting
+themwouldtake.
+Forfourofthesixclaimswetested,theoriginalreportsnoquantitativefigure.Eachisasserted
+qualitativelyandshowninaplot,withnonumberintext,captionortable;§6.6’scoefficientisthefirst
+figureattachedtothefollow-up’s"strongcorrelation"betweendisagreementanderror. Theexceptionsare
+theconfigurationclaimandtheteacher-forcingclaim,whosevaluesoneheatmapprintsineverycell(§5.2).
+Fortheteacher-forced(32,1)itprints3.99against0.47atthecentre,8.5×worse,onevaluationdataandata
+horizonitdoesnotstate;oursweep’s(32,1)is6.35×worseonrelative-L1ath=368and2,500iterations.Our
+4.61×,at10,000,usesadifferentdefinitionofteacherforcing(docs/presubmission/ORIGINAL_SPECS.md
+§2); §5relatesthetwo. Whereamagnitudeislegibleonlyfromaplottedcurvewesaysoratherthan
+estimatingitfromtheaxis.
+AppendixDgivesthefulltable,claimbyclaim,withwhattheoriginalstates,whereitstatesit,and
+ourverdict.
+
+5  Thebasepaper’scentralclaimreproduces
+
+Claimundertest.Trainingthedynamicsmodelonitsownautoregressiverolloutsbeatstrainingitwith
+teacherforcing,atlongforecasthorizons.
+Rule, committed in advance(rule M-23, Appendix E; commitC016, in the submitted paper an
+anonymisedcommitlabel; seeDataandcode), namingconditionsratherthanoutcomes. Threecondi-
+tions,allrequired: theout-of-samplegapath=368excludeszerounderabootstrapoverindependent
+trajectories;thesignisconsistentacrossepisodes;andtheeffectsurvivesat10,000iterationsratherthan
+onlyatthepaper’s2,500. Therulewasrunonseed1ofeacharm: autoregressive0.3509againstteacher
+forcing1.5540ath=368,4.43×,gapinterval[0.56,2.05].The10,000-iterationrunsofseeds0and2were
+trainedaftertheverdict(ledgerR-60,entered2026-08-22),sothethree-seedfiguresbelowextenditand
+carrynoneofitsweight.Theruleisanchoredath=368,theupstream’sopen-loopdiagnosticlengthand
+notadeploymenthorizon(§3.1),anditsverdictisreturnedthere;wedonotre-anchoradischargedrule.
+Themethod’sownhorizonish=100,sothecomparisonisreportedtheretoo,andthetwodifferinsize.
+Result.Everyconditionholds.Wegivetheevidenceinorderofhowlittleitdependsonthesmallheld-out
+sample.
+
+
+                                                       8
+===== page 9 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+Thesigntest,whichdoesnotdependonn.Ath=368theper-episodegapfavoursautoregressivetrainingon
+10of10episodes,anexacttwo-sidedbinomialtestwithp=0.0020.Ath=100itis10of10,p=0.0020,
+andath=1itis3of10,thesamestorytheintervaltells.Itusesnobootstrapormultiplicitycorrection,
+andepisodes,unlike§6’sstatedimensions,areseparableunits,soabinomialnullisadmissible.Itsscopeis
+narrowerthanthearenalabelssuggest:8ofthe10episodesaretrainingdataforbotharms.Thetest
+isavalidpairedcomparison,sincebotharmssawidenticaldataandanepisode-leveldifferenceisdueto
+thetrainingruleratherthantomemorisation,butitisnottenout-of-sampleepisodesanddoesnotmeasure
+generalisation.Theout-of-sampleeffectsizebelowcarriesthatburden,on4independenttrajectories.
+Thein-samplearena,wherethesampleislarger.Thesamecomparisonontheeighttrainingepisodeshas
+16independent400-steptrajectoriesagainsttheheld-outarena’s4,4×more,andgivesthesamedirection
+ateveryhorizonandcheckpointbutone:ath=8after500iterationsteacherforcingleadsin-sample,with
+anintervalthatexcludeszeroatbothtrajectorylengths(results/review_bootstrap_unit.json).
+Theout-of-sampleeffectsize,ateveryhorizon.Ath=368,therule’shorizon,thethree-seedextensionputs
+autoregressivetrainingat0.3582±0.0283againstteacherforcing’s1.6497±0.2858(standarddeviation
+overseeds,ddof=1),afactorof4.61×. ArmBpredictseachofthewindow’s8forecasttargetsfromtrue
+inputs,wheretheoriginal’steacherforcingisN=1;thesweep’s(32,1),trainedthatway,is6.35×worse
+thanthecentreath=368at2,500iterations(§5.2),sothedirectionholdsunderbothdefinitions.Ath=
+100,themethod’sownimaginationrolloutlengthandthehorizoneverythingin§6isanchoredto,thesame
+threeseedsgive2.58×.Quotingoneandnottheotherwouldbeachoice,sowereportthecurve(Figure2):
+samerollouts,same3seedsat10,000trainingiterations,sameheld-outarena,n_independent=4,witha
+clusterbootstrapoverwholetrajectories;thetwofloorcolumnsareeacharm’serrordividedbythehold-last
+floor’s,soavaluebelowonebeatsthefloor:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure2:Theautoregressive-versus-teacher-forcingadvantageasafunctionofforecasthorizon,out-of-sample
+overthreeseedsat10,000trainingiterations,ontheheld-outpair’s4independent400-steptrajectories.(a)
+theratio,whichgrowsmonotonicallywithdepth:h=368istheendofatrendratherthanaselectedpoint,
+andthemethod’sownrolloutlengthofh=100sitspartwayalongit. (b)thesamecomparisonasagap
+withits95%cluster-bootstrapintervaloverwholetrajectories;theintervalspanszeroonlyath=1,where
+teacherforcingisahead–aleadashorterevaluationunitresolvesasreal,notnominal(§5,M-64). Rule
+M-23wasrunath=368onseed1ofeacharm;thesethree-seedvalues,andeveryotherhorizon,were
+computedafterwards.
+
+
+
+
+
+                                                        9
+===== page 10 =====
+                 UnderreviewassubmissiontoTMLR
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 Theadvantagedoesgrowmonotonicallywithforecastdepth.Over400-steptrajectoriesthegap
+                 excludeszeroat5of6horizonsandspansitath=1:h=368istheendofatrendratherthanapointwe
+                 picked,h=100sitspartwayalongit,andtheclaimisweakestexactlywherethemodelistrained.Only
+                 theh=368rowistherule’shorizon,andtheruleranonseed1alone.Everyvalueinthetable
+                 isathree-seedmeancomputedafterthedataexisted,sobythispaper’sownstandard(§8)nonecarriesa
+                 pre-registration’sweight,thesametreatment§6.6givestheexpectationweheldaboutthecounter-baseline,
+                 andnothinginthetabledischargesorre-openstherule.
+                 Ath=1thetableunderstatestheevidence,andthecorrectionrunsagainstus.Therowrests
+                 on4independent400-steptrajectories,aunitonlythelongesthorizonneeds.Underarulecommittedbefore
+                 theindexwasbuilt(ruleM-64,AppendixE),werebuiltitat33rows,32ofhistoryandoneforecaststep,
+                 non-overlappingwithinanepisode:60unitsonthesametwoepisodes.Thegapis-0.0194[-0.0310,-0.0093]:
+                 itexcludeszero,infavourofteacherforcing(0.85×).Bothreadingsarereported:theruleabovewas
+                 dischargedonthe400-stepunit,andtheshortunitresolvesthesign.Atonestepautoregressivetraining
+                 isworse,thedirectionthesigntestand,onthe400-stepunit,thehold-lastflooralreadypointed.
+                 Againstabaseline,becauseneithernumbermeansanythingwithoutone.Thehold-lastfloor,predictingthat
+                 nothingchanges,scores0.9930intheh=368cell,andautoregressivetrainingbeatsitby2.8×thereand
+                 by2.0×ath=100.Teacherforcingis1.66×worsethanassumingnothingchangesatallath=
+                 368,and1.27×worseath=100:thearmthatreachesalowertraininglosspredictsthefutureworsethana
+                 modelthatmakesnoprediction,ateveryhorizonwemeasuredonthe400-stepunit,thesharperstatement
+                 ofwhatexposurebiascostshere;butonM-64’sshorterunits,each32+hrowslongandnon-overlapping
+                 (60ath=1,50ath=8,30ath=32,14ath=100and12ath=128ontheseepisodes),atthesame
+                 checkpointandonthesametwoepisodes,itbeatsthefloorath=1,8,32and100andlosestoitonlyat
+                 thelongesthorizonthoseunitsreach,sothatstatementholdsonthe400-stepunitandnotontheshorter
+                 one.Thefloorisnotaweakbaselineeverywhere: ath=1itbeatstheautoregressivearmaswell,
+                 scoring0.0796ath=1againstautoregressivetraining’s0.1447,theonlyhorizonwheretheautoregressive
+                 armlosestopredictingnochangeonthe400-stepunit;onthe33-rowunitbotharmsbeatthefloorath=1
+                 (0.1315and0.1121against0.1687).At50Hzonestepis20msandthestatebarelymoves,sothatiswhat
+                 oneshouldexpect.
+                 Seeds,andwhatfourtrajectoriescanshow.Seedspreadisnotsymmetricbetweenthearms:ArmAranges
+                 0.3341–0.3894acrossseeds(7.9%relative),ArmB1.4241–1.9710(17.3%).Teacherforcingismorethantwice
+                 asvariableacrossseedsasautoregressivetrainingatthishorizon,soasingle-seedcomparisonofthesetwo
+                 armsisunreliable.Forasingleseedthebootstrapovertrajectoriesgivesthe95%interval[0.56,2.05]onn=
+                 4independenttrajectories;bythen=4caveatof§3itstailsmoveinstepsof0.39%,soitcorroboratesthe
+                 signtestratherthanbeingtheprimaryevidence.Thefourper-trajectorygapsbehindthethree-seedtable
+                 (ArmBminusArmA,threeseedspooled,ath=368)are+2.8705,+0.8949,+0.7445,+0.6562.All4
+                 of4arepositive,thedirectionofthesigntest’s10of10episodes,butonetrajectorycarries+2.8705against
+                 asmallestof+0.6562,whichnointervalonfourunitsshows. Ath=100thefourare+1.0925,+0.8170,
+                 +0.2800,+0.1549;AppendixLnoteswhereothersectionsstoretheirs.
+                 Whatissmall,andwhereitresolves.Ath=8,thehorizonthemodelistrainedon,theadvantage
+                 issmall,anditresolvesonlywiththelongertrainingandall3seeds.Thetableabove,at10,000iterations
+                 with3seedspooled,givesanh=8gapof+0.0485[+0.0271,+0.0844],whichexcludeszero,afactorof
+                 1.16×.Thesingleseedtherulewasrunon(seed1)givesanh=8gapof0.008atthesame10,000-iteration
+                 checkpoint, anditsintervalincludeszero. Atthe500and2,500-iterationcheckpoints, withall3seeds
+                 pooled,theout-of-samplegapexcludeszeroin0of4h=8cells(bothtrajectorylengthscrossedwithboth
+                 checkpoints).Anearlierruleofours,anchoredath=8andevaluatedatthosesamecheckpoints(ruleM-16,
+
+
+                                                                            10
+h             autoregressive   teacherforcing   ratio  gap[95%CI]           excludes0 hold-lastfloor A÷floor B÷floor episodesAleads
+1             0.1447±0.0023  0.1319±0.0172  0.91×-0.0128[-0.0329,+0.0013]no    0.0796     1.82×  1.66×  3/10
+8             0.3087±0.0318  0.3572±0.0088  1.16×+0.0485[+0.0271,+0.0844]   yes     0.3298     0.94×  1.08×  10/10
+32             0.3415±0.0491  0.6555±0.0699  1.92×+0.3140[+0.1233,+0.5047]   yes     0.5950     0.57×  1.10×  10/10
+100          0.3700±0.0290 0.9561±0.0211 2.58×+0.5861[+0.2174,+0.9547] yes    0.7558 0.49×  1.27× 10/10
+128            0.3558±0.0231  0.9881±0.0376  2.78×+0.6324[+0.2716,+0.9931]   yes     0.7999     0.44×  1.24×  10/10
+368(therule’shorizon)0.3582±0.0283 1.6497±0.2858 4.61×+1.2915[+0.7004,+2.3390] yes    0.9930 0.36×  1.66× 10/10
+===== page 11 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+AppendixE),returnedCANNOTBESETTLEDATTHISBUDGET.Theadvantageissmallat
+thetraininghorizonandlargebeyondit.
+Atlonghorizonstheout-of-samplegapexcludeszeroin4of4cells,bothtrajectorylengthscrossedwith
+the500and2,500-iterationcheckpoints,andeachstillexcludeszeroataBonferronilevelof0.05/8overthe
+familyof8out-of-samplecomparisons,whereHolm–Bonferronioverthe4long-horizoncellsrejects4of4
+(AppendixL).Besidetheartifactitreimplements,on4independenttrajectorieswithourarmsat2,500
+iterationsover3seeds,relative-L1andnRMSEbothputthereleasedcheckpointfirstath=1andh=
+8andanArmAvariantaheadofitath=368,areadingthatflattersthecheckpoint,sincethearenais
+out-of-sampleforourarmsandin-sampleforit(AppendixL).
+
+
+5.1  Thedatabudget,whichistheonepartofthesample-efficiencyclaimwecanmeasure
+
+Thebasepaper’sheadlineisasample-efficiencyresult: policiestransfertohardwarefrom6,000,000state
+transitionsofworld-modelpretrainingagainst~250Mforthemodel-freebaseline(TableI).Thatisaclaim
+aboutpolicylearningandhardware,whichwecannottest,butitsworld-modelhalfisaquantitywecan
+countexactly.
+Ourarmsconsume7,991distinctstatetransitions:the7,999rowsoftheeighttrainingepisodesless
+oneperepisode(8ofthem),sinceanepisode’sfirstrowhasnopredecessor,atransitionbeingaconsecutive
+pairofrowsinsideoneepisode. Itisdeliberatelynotthe7,687trainingwindows,whichoverlapalmost
+completely(consecutive40-rowwindowsstartonerowapart),northe640,000windowdrawsa2,500-iteration
+runmakes,whichresamplethesamedatawithreplacement.Againstthereference’s6,000,000,thatis751×
+lessdata,0.133%ofitsworld-modelbudget.
+Adynamicsmodeltrainedon0.133%ofthereference’sdatastillreproducesthetrainingresult,4.61×ath
+=368and2.58×ath=100over3seeds(theruleranonseed1),andstillbeatsthehold-lastfloor,by2.8×
+and2.0×atthosetwohorizons.Thatiswhatthispapercanaddtothesample-efficiencyquestionwithout
+trainingapolicy.
+Threelimits.Itisnotareproductionofthe6,000,000-against-250Mcomparison,whichisaboutpolicy
+learning. Itsaysnothingaboutwhetherapolicytrainedinsideourmodelwouldtransfertohardware,or
+anywhere. Andourmodelisevaluatedonthenarrowdistributionittrainedon(onerobot,onegait,one
+terrain,velocitycommandsfromasingleboundedbox),wherethereference’s6,000,000transitionsspan
+considerablymore; asmallerdatabudgetbuyslessthanitappearstowhentheevaluationdistribution
+shrinkswithit.
+
+
+5.2  Theconfigurationclaim:historyandforecasthorizons
+
+Claimundertest.ThemodelreadsahistoryofMpaststepsand,intraining,forecaststhenextN
+stepsfromitsownpredictions.Thebasepapersweepsbothandsaysthatmoderatevaluesgiveanoptimal
+trade-offbetweenaccuracyandtrainingtime,with(M,N)=(32,8)astheinstance(§IV-C).Itsheatmap
+printstheerrorofeverycell,andthecentre’sisthetied-lowest,levelwithitslongest-forecastneighbour
+(docs/presubmission/ORIGINAL_SPECS.mda.5). Itssecondheatmapprintstraininghours: 1.07forthe
+centreand2.27for(32,32),2.12×,soontheoriginal’sownfiguresthecentrematchesthatneighbour’s
+printederror,0.47,inunderhalfthetime.Ourmeasuredcostperiterationforthesamepairis1.81×(the
+table’slastcolumn).
+Rule,committedinadvance(ruleM-74,AppendixE).Itteststheaccuracyhalfonly:whetherthecentre
+hasthelowesterroramongitseightone-factorneighboursintheoriginal’sgrid,Mof1,2,8and16atthe
+centre’sNandNof1,2,16and32atitsM.EachistrainedasArmAis,for2,500iterationsonthree
+seeds.Thestatisticisaconfiguration’srelative-L1ath=368minusthecentre’s,averagedovertrajectories
+andtestedbyanexactbootstrapovertrajectories,withHolm’scorrectionholdingthechanceofanyfalse
+"better"inthefamilyatα=0.05.Trainingtimeisreportedandgovernsnothing:hoursontwoCPUcores
+arenotwhattheoriginaltimedonaGPU.
+
+
+                                                      11
+===== page 12 =====
+                 UnderreviewassubmissiontoTMLR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 Arena: out-of-sample held-out pair, episodes 1 and 8, 4 non-overlapping 400-step tra-
+                 jectories, n_independent = 4. Each row is the mean over three seeds at 2,500 iterations
+                 (results/mn_sweep_eval.json). Adifferenceispositivewhenthecentreisbetter,and"result"isafter
+                 Holm(results/mn_sweep_verdict.json). Thelastcolumnisaconfiguration’ssteadytrainingtimeper
+                 iterationoverthecentre’s,timedwithoutcontention(results/mn_compute_matched.json);hoursperrun,
+                 andthe8of24sweeprunsthatoverlappedotherloggedCPUwork,areinAppendixB.Thehold-lastfloor
+                 is0.7558ath=100and0.9930ath=368. Therules’evaluatoraveragednRMSEpertrajectory,where
+                 §3.1poolsit. ThenRMSEreadingsquotedalongsidetheruleshereandin§5.3arepooled,recomputed
+                 afterwards(posthoc;ledgerR-77,results/pooled_nrmse_alongside.json),and,forthissection’srule
+                 (M-74),returnthesameverdictsastheaveragedones(§5.3givesthetworeadingsofitsrulesthatdiffer).
+                 Result:NOTOPTIMALATOURBUDGET.(32,32),(32,16),(8,8)and(2,8)beatthecentre(two
+                 shorterhistoriesandbothlongertrainingforecasts),(32,2)and(32,1)areworse,and(1,8)and(16,8)
+                 cannotbetoldapartfromit.Ath=368thelowesterroris(32,32)’s,0.2987againstthecentre’s0.5856,a
+                 differenceof-0.2869[-0.5951,-0.1005].Theverdictdoesnotrestontheanchor:onthein-samplearena’s16
+                 independent400-steptrajectories,allfourreadingstherereturnthesameverdict,andamongtheheld-out
+                 readingstherulereportsalongside,everyoneagreesexceptnRMSEath=1,whichreturnsCANNOTBE
+                 DISTINGUISHED.
+                 Atourbudget,shorterhistorieswin.Theoriginal’serrorfallssteeplyfromM=1toM=8andthen
+                 flattens(ORIGINAL_SPECS.mda.5). Onthegoverningreadingoursdoesnotfallsteeply: (2,8)and(8,8),
+                 historiesshorterthanthecentre’s,beatit,andnoshorterhistoryisresolvablyworse,thoughotherreadings
+                 therulereportsputshorterhistoriesbehindit:(1,8)onin-samplerelative-L1andnRMSEath=368,and
+                 (16,8)onheld-outnRMSEath=368.Thatisastatementaboutlearningspeedatthisbudget,notabout
+                 convergedaccuracy:trainedfourtimesaslong,thecentrepassesbothwinningshorterhistoriesonthreeof
+                 thefourreadings(below),soitdoesnotcontradicttheoriginal’ssteepfalltoM=8,whosetrainingbudget
+                 theoriginaldoesnotstate. Theoriginal’sdirectiononNholds:theshortestforecastsarefarworse,which
+                 is§5’steacher-forcingresultagain,andthelongestarebetter,sothecentre’stiewithitslongest-forecast
+                 neighbourbecomesaloss.
+                 Accuracyatequalcompute(posthoc; ledgerR-78).Alongertrainingforecastcostsmoreper
+                 iteration,1.35×thecentre’sfor(32,16)and1.81×for(32,32);theshorterhistoriesthatwincostless,
+                 0.40×for(8,8)and0.26×for(2,8)(results/mn_compute_matched.json;AppendixUgiveseveryreading,
+                 signedasinthetable). Theshorterhistorieswinonallfourreadingsat2,500iterationswhileusingwell
+                 underhalfthecentre’scomputation,sothatpartoftheverdictneedsnocomputecorrection. Thelonger
+                 forecasts’winsdo. Trainedto5,000iterations,thecentrehashad1.11×thecomputationof(32,32),and
+                 thereadingssplit: (32,32)isstillaheadontheheld-outpairath=368(-0.2031[-0.5033,-0.0275]),the
+                 centreisaheadonthein-samplearenaath=100(+0.0454[+0.0356,+0.0563]),andtheothertwoarenot
+                 resolved. At10,000iterations,2.21×thecomputation,thecentreisaheadonbothin-samplereadingsand
+                 neitherheld-outdifferenceisresolved.Trainedthatlong,italsopassesbothshorterhistoriesonthreeofthe
+                 fourreadings:ontheheld-outpairath=368,(2,8)by+0.1135[+0.0983,+0.1357]and(8,8)by+0.1270
+                 [+0.0987,+0.1589],with15×and10×theircomputation,andonbothin-samplereadings;ontheheld-out
+                 pairath=100neitherdifferenceisresolved.Whichsettingismostaccuratethereforedependsonhowlong
+                 eachistrained.Noneofthisre-opensruleM-74.
+                 Limits.Onefactorisvariedatatime,sonointeractionbetweenMandNistested. Ourdatabudget
+                 is0.133%ofthereference’s(§5.1), andtheoriginalstatesneithertheablation’sbudget, itsevaluation
+                 datanorthehorizonbehinditserror, sotheverdictholdsatourbudgetandnofurther: alargerone
+
+
+
+
+(M,N)        relative-L1,h=100 relative-L1,h=368 differencefromthecentre[95%interval] result           costperiteration,relativetothecentre12
+(32,8),thecentre 0.4798     0.5856    —                       —             1.00
+(1,8)         0.3796         0.5340         -0.0516[-0.1835,+0.0400]         notresolved       0.23
+(2,8)         0.3524         0.4717         -0.1139[-0.2988,-0.0088]     configurationbetter0.26
+(8,8)         0.4043         0.4852         -0.1004[-0.2449,-0.0167]     configurationbetter0.40
+(16,8)        0.4467         0.6161         +0.0305[-0.0008,+0.0720]         notresolved       0.60
+(32,1)        1.0903         3.7198         +3.1342[+1.3012,+6.5096]        centrebetter       0.81
+(32,2)        0.8886         2.0374         +1.4518[+0.6250,+2.6933]        centrebetter       0.95
+(32,16)        0.3544         0.3347         -0.2509[-0.5218,-0.0956]     configurationbetter1.35
+(32,32)        0.3348         0.2987         -0.2869[-0.5951,-0.1005]     configurationbetter1.81
+===== page 13 =====
+                 UnderreviewassubmissiontoTMLR
+
+
+
+
+                 mayfavouralongerhistory. All48runsat2,500iterations,thesweep’s,thebaselines’andbotharms’,
+                 arestillloweringtheirtraininglossattheend, withslopesfrom-1.99to-0.09perthousanditerations
+                 (results/training_tail_slopes.json,posthoc),sotherankingisatthisbudget,notatconvergence,
+                 anditchangeswithtraininglength(AppendixU).With4independenttrajectories,therule’sminimum
+                 detectableeffectath=368,thedifferenceitsfirstHolmstepwouldusuallydetect,isabout14.5%ofthe
+                 centre’serror.
+
+                 5.3  Thearchitectureclaim:MLP,RSSMandtransformerbaselines
+
+                 Claimundertest.ThebasepapercomparesRWMwiththreearchitecturebaselines: othernetwork
+                 designstrainedonthesamedatatomakethesamepredictions. Theyareamultilayerperceptron(MLP)
+                 overaflattenedwindowofhistory;arecurrentstate-spacemodel(RSSM;Hafneretal.,ICML2019),in
+                 theformDreamerV2refined(Hafneretal.,ICLR2021);andadecoder-onlytransformer. ItsaysRWM
+                 "consistentlyachievesthelowestpredictionerrorsacrossallenvironments"(§IV-D),givesnonumber(Fig.
+                 7),andtrainsthebaselinesteacher-forced.
+                 Whatwebuilt.ThepinnedupstreamcodehasanMLPbutnoRSSMortransformer, soallthree
+                 areours,theMLPfollowingtheupstreamone. Theyfollowtheshapesintheoriginal’sTableS7aswe
+                 read it, with 610,484 (MLP), 3,180,468 (RSSM) and 132,148 (transformer) parameters against RWM’s
+                 714,164. WherethetableissilenttheytakeRWM’sdata,windows,objective,optimiser,iterationsand
+                 seeds,andtheRSSMtakesitslatent,activationandKLsettingsfromDreamerV2.Eachchoiceisarowof
+                 docs/presubmission/BASELINE_SPECS.md.Onlythepredictedstateiscompared.
+                 Tworules,committedinadvance(M-75andM-76,AppendixE).M-75trainsthebaselinesteacher-
+                 forced, astheoriginaldoes. M-76trainsthemautoregressively, asRWMis, sothattrainingruleand
+                 architecturearenotconfounded. BothtakeArmAat2,500iterationsasRWMandtesteachbaseline’s
+                 relative-L1ath=368againstit,on§5.2’sarenawith§5.2’sbootstrapandHolmcorrection.
+
+
+
+
+
+
+
+
+                 Arena as in §5.2:  out-of-sample held-out pair, 4 non-overlapping 400-step trajec-
+                 tories, n_independent = 4. Each row is the mean over three seeds at 2,500 iterations
+                 (results/baselines_eval.json).   A difference is positive when RWM is better, and "result" is
+                 after Holm (results/baselines_verdict.json).   The last column is timed beside RWM in one
+                 sitting (results/mn_compute_matched.json); hours per run are in Appendix B.†marks a di-
+                 verged row, one where any seed’s mean relative-L1 at h = 368 exceeds 10×the hold-last floor’s
+                 (results/pooled_nrmse_rescore.json,posthoc). Run-awayrolloutsdominatethosethreerows’means;
+                 perseedtheyareMLP,teacher-forced:182,16.0and238;transformer,teacher-forced:11.2,10.4and23.9;
+                 RSSM,autoregressive: 9.87,10.8and11.3. Noverdictdependsonthatmagnitude,onlyonthesign: each
+                 suchrow’s4per-trajectorydifferencesfromRWMareallpositive,soeverybootstrapresamplefavoursRWM
+                 whatevertheirsize.
+                 Result: REPRODUCES with the baselines teacher-forced, and RWM AHEAD OF ALL
+                 THREEwiththemtrainedautoregressively. RWMisaheadofbaselinesbuilttoourreadingof
+                 TableS7andtrainedwithRWM’ssettingsfor2,500iterations:allsixcomparisonsfavourit,withintervals
+                 thatexcludezero. Thatsayslessthanitseemsath=368,whereeverybaselinerow,inbothregimes,is
+                 abovethehold-lastfloorandRWMisbelowit:nobaselinebeatspredictingnochange.Thesecondverdict
+                 comparesarchitecturesatonetrainingregimeandisnotaverdictontheoriginal’sclaim,whichthefirst
+                 carries.Theleadisalong-horizonone,andtherules’relative-L1readingsatotherhorizonsontheheld-out
+                 pairsaywhereitstarts. Teacher-forced,thebaselinesfallresolvablybehindfromh=32(thetransformer
+                 fromh=8).Trainedautoregressively,theRSSMfallsbehindfromh=8,buttheMLPandthetransformer
+                 onlyfromh=100,themethod’sownhorizon,wheretheytrailby0.060[0.024,0.096],about12.5%ofRWM’s
+
+
+                                                                           13
+model               parameters relative-L1,h=100 relative-L1,h=368 differencefromRWM[95%interval] result     costperiteration,relativetoRWM
+RWM(ArmA,autoregressive) 714,164   0.4798    0.5856    —                   —       1.00
+MLP,teacher-forced†      610,484   1.2057         145.1650       +144.5794[+14.8420,+373.9553]  RWMbetter 0.07
+RSSM,teacher-forced       3,180,468  2.2128         6.3718         +5.7862[+2.6251,+10.8616]     RWMbetter 2.37
+transformer,teacher-forced†  132,148   2.0607         15.1548        +14.5692[+8.7931,+24.0102]    RWMbetter 0.91
+MLP,autoregressive       610,484   0.5400         1.4628         +0.8772[+0.4248,+1.5662]      RWMbetter 0.08
+RSSM,autoregressive†     3,180,468  3.2660         10.6405        +10.0549[+5.7436,+18.1659]    RWMbetter 1.99
+transformer,autoregressive    132,148   0.5821         1.8771         +1.2915[+0.7258,+1.8079]      RWMbetter 0.97
+===== page 14 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+0.4798,and0.102[0.034,0.185].Beforethosehorizons,ontheheld-outpair,abaselinecannotbetoldapart
+fromRWM:ath=1bothrulesreturnCANNOTBESETTLED,andath=8bothreturnPARTIAL.On
+thein-samplearena’s16trajectories,withnRMSEpooledas§3.1definesit(computedafterwards,posthoc;
+ledgerR-77),tworeadingsdifferfromtheper-trajectoryaveragetherules’evaluatorused. Teacher-forced,
+ath=1allthreebaselinesareaheadofRWM:D,signedastherulessignit(positivefavoursRWM),is
+-0.160[-0.286,-0.002]fortheMLP,-0.186[-0.328,-0.013]fortheRSSMand-0.052[-0.089,-0.005]forthe
+transformer,soM-75’sreadingthereisDOESNOTREPRODUCEwheretheaveragegaveCANNOTBE
+SETTLED:thesameone-stepleadforteacherforcingas§5’s. Trainedautoregressively,theMLP’sdeficit
+ath=100isnolongerresolved(+0.017[-0.017,+0.044]),soM-76’sreadingthereisPARTIALwherethe
+averagegaveRWMAHEADOFALLTHREE.Neitherchangesaverdict;bothrulesgovernath=368on
+relative-L1.
+OurRSSMisnotaninformativecomparison.Teacher-forced,itisthemostaccurateofthissection’s
+modelsonestepahead,0.0761againstRWM’s0.1232andthefloor’s0.0796,thoughnotresolvably,andit
+hascollapsedopen-loopbyh=32,whereits1.0182isabovethefloor’s0.5950. Theoriginaladdsthat
+anRSSMtrainedautoregressivelyperformscomparablytoRWM;oursdoesnot,10.6405againstRWM’s
+0.5856ath=368. Adiagnosticcommittedbeforeitsreadingsexisted(ruleX1,ledgerM-80;exploratory,
+itre-opensneitherrule)askswhy. ItsPartAreadstheforecastdifferently,feedingtheprior’sexpectedor
+sampledlatentinplaceofitsmostlikelyone: theerrorath=32fallsto0.7165and0.6914,stillabove
+thefloor,soitreturnsNOTEVALUATION-LIMITED(M-81). ItsPartBisdescriptive: overthe
+history,theteacher-forcedRSSM’sone-steperrorfromitsprioris1.16to1.27×itserrorfromitsposterior
+atthesamerecurrentstate(theautoregressiveone’satmost1.02×),with16.4to20.0natsofKLdivergence
+betweenthemperstep. ItsPartCretrainstheteacher-forcedRSSMatseed0for2,500iterations,once
+withPlaNet’sKLsettingsandoncewithDreamerV2’slayer-normalisedrecurrentcell. Neitherrescuesit:
+readfromitsmostlikelylatentath=32,theyscore1.2588and1.4685againstthefloor’s0.5950,with3
+and2ofthe4trajectoriesabovetheirownfloorvalue;arescueneedsthemeanbelowthefloor’sandevery
+trajectorybelowitsown.SoruleX1returnsNOTRESCUEDBYTHESETTINGSTRIED(ledger
+M-83).ThefailuremaystillbeourRSSMratherthanthearchitecture:TableS7’slatentisambiguous,we
+readitinDreamerV2’snaming(BASELINE_SPECS.md,theRSSMrows),andX1triedonlythetwosettings
+above,ononeseed,neitherofthemPlaNet’slatentovershooting(Hafneretal.,ICML2019),whichtrains
+theprior’smulti-steppredictionsinlatentspaceandwhichPlaNet’sownfinalRSSMagentdidnotneed.
+SothearchitectureclaimrestsontheMLPandthetransformer.
+Limits.Onerobotonflatground;theoriginalhasseveralenvironments. Thebaselinesareourreadingof
+atablethatfixestheirshapesandnothingelse. Theirloss,optimiserandbudgetareRWM’s,nottuned
+forthem. TheirsizesareTableS7’s,notmatchedtoRWM’s;parameter-matchedvariantswerespecified
+butnotrun.With4independenttrajectories,theminimumdetectableeffectath=368isabout12.0%of
+RWM’serror,wellbeloweverydifferencehere.
+
+6  Neitherofthecheckpoint’suncertaintyoutputsisusableasaninterval
+
+Howthissectionruns.§6.1–§6.2settlewhichquantitythemethodusesandmeasureit;§6.3–§6.4examine
+whyeachoutputfails;§6.5–§6.6separatethemagnitudeofthefailurefromitsordering,andtesttheordering
+againstfreebaselines;§6.7–§6.8askwhatwouldfixit.
+
+6.1  Whichquantitythemethodactuallyuses
+
+Thereleasedcheckpointemitstwouncertaintyquantities,andthemethodconsumesonlyoneofthem.This
+hastobesettledbeforeanycalibrationnumbermeansanything.
+system_dynamics.py:125computesanaleatoricterm,themeanoverensemblemembersofeachmember’s
+predictedσ. system_dynamics.py:126computesanepistemicterm,thestandarddeviationacrossthe
+members’meanpredictions. Inenvs/base.py:142thealeatorictermisboundtoalocalvariablethatis
+neverreadagain;theepistemictermisstored,returnedtothepolicyloopat:158,andappliedat:166as
+arewardpenaltywithweight−1.0.
+
+
+                                                      14
+===== page 15 =====
+                UnderreviewassubmissiontoTMLR
+
+
+
+
+                Thepaperagreeswithitscode. arXiv:2504.16680v1Eq. 4definesthepenalisedquantityasu= Var                   b[µb],
+                thevarianceacrossensemblemembers(thenumberingisunchangedinthecurrentv3),andEq.5appliesit
+                as˜r=r−λu.Theper-memberpredictedvarianceentersthetrainingobjectiveandnothingdownstream.
+                Eq. 4specifiesavariancewhilesystem_dynamics.py:126computesastandarddeviation,whichwith
+                λ= 1differbyasquare.Weasked,andthefirstauthorconfirmsthecodeisoperative:thepenaltyisapplied
+                tothestandarddeviationasintended,andEq.4is"moreofahigh-levelexplanation"(personalcommunica-
+                tion,21August2026,quotedwiththefirstauthor’spermission;theexchangeisreproduced,anonymised,in
+                thesupplementarySUPPLEMENTARY_CORRESPONDENCE.md,andseeDataandcode). Wemeasurethecode’s
+                quantitythroughout,whichistheintendedone.
+                The same correspondence confirms the discard directly:  "the aleatoric term is not used in down-
+                stream training.  It is reported in Fig.  3 (right) as an analysis of the model behavior." (The fig-
+                ure number follows arXiv:2504.16680v1; in the current v3 it is Fig.  4, and the crosswalk is in
+                results/original_paper_figures.json.) Sothediscardistheintendeddesign,notanimplementation
+                slip:thealeatorichead,theonethestatelossandtheboundlossshapeand§6.3explains,iscomputedon
+                everyimaginationsteptoshapetrainingandbeinspected,andisneverconsumed.Wereportbothquantities
+                below. Ourownarmsareensemblesize1,wheretheepistemictermisidenticallyzerobyconstruction,so
+                theepistemicmeasurementispossibleonlyonthereleasedcheckpoint.
+                Whatthefollow-updoesanddoesnotclaim.Itdoesnotclaimitsuncertaintyisacalibratedinterval.
+                Its§5.1claimstheepistemicterm"closelyfollowsthetrendofthepredictionerror"andthatthis"justifies
+                itsroleasatrustmetric",andofthealeatorictermitobservesonlythatit"remainslow,reflectingsmall
+                stochasticityintheenvironment". Ourmeasurementsupportsthefirstclaim:theepistemicorderingis
+                realandstrong. Whatfollowsisthereforenotarefutationofacalibrationclaimnobodymade,butthree
+                thingsthepapersdonotaddress: thatthealeatoricheadisdiscardedbeforeuse,thatneitherquantityis
+                usableasascale,andthatthelowaleatoricvaluehasadifferentcausethantheoneoffered.
+
+                6.2  Themeasurement
+
+                Foreachmodelwecomputethemeanpredictedσ,themeanabsoluterealisederror,andthefractionof
+                realisederrorsfallinginside±1σ.AcalibratedGaussianputs68.27%inside±1σ(§3.1).
+
+
+
+
+
+
+
+
+                Ourarmsareat2,500trainingiterations;thereleasedcheckpointisasreleased. Everycellcarriesa95%
+                intervalfromaclusterbootstrapoverwholetrajectories,n_independent=4,quantisedasthen=4caveat
+                of§3describes;wherethreeseedscontribute,seedsarepooledinsideeachdrawratherthanresampled,because
+                seedsarenottrajectories(§8).
+                Allfourrowsaretheheld-outpair—thetwoepisodeswithheldfromourownarms,n_independent
+                =4400-steptrajectories—becausethatistheonlyarenaonwhichourarmscanbescoredfairly.Onthe
+                aleatoricheadeverymodelisoverconfidentbybetweenoneandfourordersofmagnitude(Figure3);thatis
+                thequantity§6.1showsthemethoddiscards.Thereleasedcheckpoint’s7,878×isitswhole368-steprollout
+                onthosesame4trajectories,forcomparabilitywiththearms;itsbest-sampledfigureisthe11,683×below,
+                cumulativetoh=100atn_independent=20.Botharecorrect,onadifferentarenaandadifferent
+                horizon,andneitherisout-of-sampleforthatcheckpoint(thein-samplecaveatof§3).
+                Thequantitythemethoddoesuseisalsouncalibrated.Onthereleased5-membercheckpointover
+                all10episodes,n_independent=20non-overlapping400-steptrajectories. Thecheckpointtrainedonall
+                ten,sorestrictingittotheheld-outpairwouldbuynoindependenceandcostfourfifthsofthesample;that
+                version,atn_independent=4,isinthesupplementarymaterial(results/task_b2_epistemic.json).Its
+                epistemiccolumnagreesindirectionwiththisoneatall6of6horizons;itsaleatoriccolumnagreesat4of
+
+
+                                                                          15
+model                      mean|error|/meanσ,whole368-steprollout  coverageat±1σ,h=1  coverageat±1σ,h=100
+faithfulArmA(sampledMSE)   52.2×[39.6,69.7]                       11.67%[7.96,15.19]   2.17%[1.59,2.75]
+correctedArmA(gaussian_nll)  10.9×[7.8,14.7]                        42.78%[24.44,62.04]  9.8%[6.80,12.81]
+teacher-forcedArmB          315×[177,509]                        12.96%[7.04,20.93]   1.22%[0.84,1.61]
+releasedcheckpoint            7,878×[5,410,9,934]                    0.56%[0.00,1.67]     0.08%[0.06,0.11]
+===== page 16 =====
+                 UnderreviewassubmissiontoTMLR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 Figure3: Calibrationofallfourmodelsontheheld-outpair’s4independent400-steptrajectories,our
+                 armsat2,500trainingiterations. Thereleasedcheckpointtrainedontheseepisodes,soforitthisarenais
+                 in-sample(§3). (a)reliability: observedagainstpredictedcoverage,withthecalibrateddiagonal;theinset
+                 repeatsthesamepointswithobservedcoverageonalogscale,wherethefourmodelsseparate.(b)coverage
+                 at±1σagainstforecasthorizon,logscale,againstthe68.27%acalibratedGaussiangives.Everycurvesits
+                 farbelowthediagonalandfallsfurtherwithhorizon. (c)theoverconfidencefactorforeachmodel: mean
+                 absoluteerrordividedbymeanpredictedσ,logscale,withthedashedlinewhereerrorequalsσ.
+
+
+                 6,flippingsignath=8andh=100,wherebothreadingssitclosetochanceandthealeatoricσisinanycase
+                 1,827×(h=1)to20,669×(h=368)toosmallforitsorderingtobetheinterestingquantity.
+
+
+
+
+
+
+
+
+                 Readtheh=1rowfirst.Atonestepthedisagreementthemethodpenalisesrewardswithisalready
+                 8.3×[6.1,9.7]smallerthanrealisederror,with±1σcoverageof16.22%[13.44,18.89]againstacalibrated
+                 68.27%.Thediscardedper-memberσis1,827×outath=1aswell.Everythingfurtherdownthetableis
+                 deteriorationfromastartingpointthatisalreadybroken.
+                 Whythatrow,andnotthedeepones.Theobviousobjectionisthataper-stepσisaconditional
+                 quantity: itsayshowuncertainthenextstateisgiventhisinput,andinanopen-looprollouttheinput
+                 isthemodel’sownpreviousoutput,wrongbyanamountσneverclaimedtodescribe. Comparingitwith
+                 accumulatedrollouterrorwouldthenmakethe368-stepfigureanartifactofthatmismatch.(§6.5answersa
+                 differentobjection,thatamodeltrainedon8stepscannotbeexpectedtospeakabout368.)h=1answers
+                 itatnoextracost.Atonestepthereisnoaccumulation: theinputisthetruestate,andσisasked
+                 exactlythequestionitwastrainedtoanswer.Ath=1itisoutby8.3×,and16.22%ofoutcomesfallinside
+                 anintervalthatshouldhold68.27%.Whatevercompoundingdoesatdepth,itdidnotdothat.
+                 Andthatrowismeasuredondatathecheckpointtrainedon: alltenepisodes,10of10ofthem
+                 (results/insample_framing.json).In-samplemeasurementbiasestowardbettercalibration,sothe8.3×
+                 ath=1isifanythingflattering:anupperboundonhowwellthischeckpointiscalibrated.Sothehorizon
+                 curveisnottheclaim;itistheshapeofthedeterioration,andtheclaimistheh=1row.Wekeeph=100
+                 becauseitiswherethemethodactuallydeploys,andh=368becauseitistheupstream’sowndiagnostic
+                 length.
+                 Ath=100,themethod’sownimaginationrolloutlength,epistemicis349×betterthanaleatoricandstill
+                 wrongby33.4×[28.7,39.0],with±1σcoverageof4.61%[4.12,5.09]whereacalibratedGaussiangives
+                 68.27%.Atonestepitis8.3×outand220×betterthanaleatoric;ath=368thetwo-termratiois600×.
+                 Thegapbetweenthetwouncertaintytermsisitselfhorizon-dependent,whichiswhyeach
+
+
+
+h   aleatoricerr/σ[95%CI]  aleatoric±1σ epistemicerr/σ[95%CI] epistemic±1σ[95%CI] epistemic±2σ dimsr>0 permutationP16
+
+1   1,827×[915,3,110]     0.11%  8.3×[6.1,9.7]        16.22%[13.44,18.89]   30.11%      44/45    0.0056
+8   3,034×[1,638,4,849]    0.08%       15.1×[10.3,19.2]      9.99%[8.60,11.32]     19.76%      45/45    0.0069
+32   4,525×[2,492,7,196]    0.07%       22.6×[15.5,28.7]      6.95%[5.99,7.85]      13.68%      45/45    0.0344
+10011,683×[7,970,15,846]  0.04%  33.4×[28.7,39.0]      4.61%[4.12,5.09]      9.27%       45/45    0.2769
+128  14,934×[10,564,19,700] 0.03%       34.2×[30.6,38.2]      4.37%[3.96,4.81]      8.75%       45/45    0.3762
+368  20,669×[15,666,25,688] 0.02%       34.4×[29.8,40.3]      3.59%[3.27,3.92]      7.19%       45/45    0.0804
+===== page 17 =====
+                UnderreviewassubmissiontoTMLR
+
+
+
+
+                figureabovenamesitshorizon.Attheopen-loopdiagnostichorizonofh=368itis34.4×[29.8,40.3]
+                with3.59%coverage,barelydifferentfromh=100.Totaluncertainty,sqrt(aleatoric                     2  +  epistemic2),
+                equalstheepistemicvaluetofoursignificantfiguresateveryhorizon,becausethealeatorictermistoosmall
+                tomoveit.
+                Aconstantscaleerrorwouldnotmatter,andthisoneisnotconstant.Thepenaltyentersas
+                ˜r  =  r−λu,soauuniformlyctimestoosmallisarithmeticallyidenticaltorunningwithλ/c,andλis
+                tuned. Rescalingσbythesingleconstantthatbestcalibratesit,fittedandscoredonthesamedataand
+                soanupperboundonwhatanyconstantachieves,needs10.4ath=1and43.2ath=368,afactorof4
+                acrosstherollout(ruleM-65,AppendixE).Nosingleλisbothofthose.Themechanismis§6.5’s:σgrows
+                farmoreslowlythanerror,whichgrowsbyanorderofmagnitude,sotheratioruns8.3×ath=1,33.4×at
+                h=100and34.4×ath=368.Thepenaltyisappliedateverystepofa100-stepimaginationrollout,soits
+                profileacrosstherolloutiswronginawaynorescalingcancorrect:deep-rolloutstatesareunder-penalised
+                relativetotheirrealisedrisk.Thisboundswhatthequantityreportsacrossdepth,notwhatthedistortion
+                costsatrainedpolicy(thepolicycaveatof§11).
+                Thelargersamplechangesonethingmaterially.Atn_independent=4theepistemicorderinglooked
+                likechanceatshorthorizon,23of45dimensionsath=1.Atn_independent=20itis44of45ath=1,with
+                meanr=+0.662,thestrongestmeancorrelationofanyhorizon,andthein-samplepermutationtestagrees
+                (AppendixK).Theshort-horizon"chance"resultwasanartifactoffourtrajectories,notapropertyofthe
+                model.
+                Tworulescommittedinadvancecheckhowthesenumbersareread(AppendixM).Resampling
+                wholeepisodesratherthan400-steptrajectorieschangesnoverdictintheonearenawiththepowertoshow
+                it,theout-of-samplecellsbeinguninformativebydesign(ruleM-62:NOMOVE),andtheepistemicterm’s
+                one-stepcoveragefailureisspreadacrossthe45statedimensionsratherthancarriedbyafew(ruleM-63:
+                UNIFORM).
+                Thereleasedcheckpointisnolongertheonlyensemblemeasured.ThreeArmAarmsatensemble
+                size5(§6.6,3seeds,out-of-sample,n_independent=4400-steptrajectories,2,500trainingiterations)give,
+                averagedoverseeds:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                Ourarmsarebettercalibratedthanthereleasedcheckpointandfailthesameway:10.5×over-
+                confidentath=100againstits25.7×onthesameheld-outpair(33.4×overalltenepisodes),with8.19%
+                coveragewhereacalibratedGaussiangives68.27%.§6.4establishesthatthetwoarethesamearchitecture
+                intherespectthatmattershere,sothisisacomparisonoflikewithlike. Beingclosertocalibratedisnot
+                beingcalibrated.
+                Thelastcolumnofthereleasedcheckpoint’stablegivespermutationP-valuesoverwholetrajectories;none
+                survivesHolm–Bonferroniacrossthearena’s30cells,soitisaconsistencycheckondirection(AppendixM).
+                Thescalarpenaltyasactuallyapplied,means.std(0).sum(-1)atenvs/base.py:166,correlates+0.605
+                withtotalabsoluteerrorovertherollout,95%CI[+0.545,+0.694]fromabootstrapoverwholetrajectories,
+                n_independent=20(7,360pooledtrajectory-steppoints). Theintervalresampleswholetrajectories,not
+                trajectory-steppairs,whichwouldnarrowitbyaboutthesquarerootoftherolloutlength.
+
+
+h    epistemicerr/σ[95%CI]±1σ[95%CI]   ±2σ   dimsr>0                      17
+1    2.1×[1.7,2.5]            35.93%[29.63,42.22]  60.37%  35.0/45
+8    6.3×[4.4,7.5]            14.10%[11.02,17.18]  26.62%  37.3/45
+32   8.0×[5.9,9.8]            10.79%[8.53,13.71]   20.50%  34.3/45
+10010.5×[9.0,11.5]         8.19%[6.80,9.59]     16.11%  44.0/45
+128  11.0×[9.5,11.9]          7.79%[6.81,8.77]     15.34%  44.0/45
+36813.0×[11.9,13.9]        6.30%[5.84,6.77]     12.51%  40.7/45
+===== page 18 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+6.3  Whythealeatoricheadcollapses:theoptimumisσ=0
+
+Thissubsectionexplainsthealeatoriccolumnandonlythatcolumn,andleavestheepistemiconeopen:
+ensembledisagreementisnotshapedbythemechanismbelow,andwhyitismiscalibratedisnotestablished
+here. Italsosuppliesthealternativeexplanationpromisedin§6.1. Thefollow-upreadsthelowaleatoric
+valueasreflecting"smallstochasticityintheenvironment". Theobservationiscorrectandthereadingis
+not:σislowbecauseσ=0istheoptimumofthelossthattrainsit,anditwouldbelowonanydataset,
+stochasticornot.
+ThestatelossissquarederroronasampledrawnfromthepredictedGaussian,notalikelihood:
+
+
+                                   L=E [(µ+σε−y)                2]=  (µ−y)          2+σ   2
+
+whichisminimisedatσ=0foranyµ.Thereisnolog-σtermtoopposeit.Theboundtermthatappearsto
+opposeitdoesnot,becausemax_logstdisnotanindependentparameter—itisconstructedasmin_logstd
++  exp(log_delta_logstd),so
+
+
+                                     logσ     max−logσ     min  =exp(log∆logσ   )
+
+andmin_logstdcancelsalgebraically,takingnogradientfromthatterm.Thefloortheintervalclosesonto
+thereforefreezeswhiletheintervalcloses:aone-wayratchet.
+Thederivationabovecoverstwoterms,andtheobjectivehas7.Eachterm,back-propagatedalone
+ononerealbatch,confirmsit: 4areliveunderthereleasedconfiguration,exactly2reachσ(stateand
+bound),andtheother5giveagradientofexactlyzero(results/e4_sigma_gradients.json,AppendixJ).
+Thederivationsaysthecollapsehappensonanydataset,andthatistestable.Underarule
+committedbeforetheruns(ruleM-50,AppendixE)wetrainedthereleasedhead,unmodifiedbutovera
+one-dimensionalstatewithnorecurrenttrunk,onsyntheticdatawhoseknownnoisevaries25×acrossthe
+inputrange:undertheimplementedobjectiveσsits21.7×belowthetruenoiseanddoesnot
+trackitatall,whileundertheauthors’unusedlikelihoodbranchitrecoversthetrueleveltoamedian
+ratioof0.9779,seed-variably. TherulereturnsOBJECTIVE-DRIVEN,whichestablishesthecontrast
+andnotthesizeoftherecovery(AppendixJ).
+Wepredictedthecollapsefromthisalgebrabeforetraining,thenobservedit: acrossall28runsatthe
+releasedwidthoutside§5.2’ssweepthecollapseislineariniterationcountanditsrateisnearlyidentical
+(Figure4a).AppendixJliststheruns,thecapacity-matchedarmexcludedfromeveryrate,andthe22the
+rateisfittedon.
+Twodifferentthingsarebeingexplainedhere,and§6.5separatesthem.Magnitudecollapseis
+objective-driven.Itoccursinall17sampled-MSErunsatarateof-9.3857e-05periterationwithastandard
+deviationof6.0e-07,includingtheteacher-forcedarm, whichsharestheobjective, andreversesto
++3.2296e-05inthe5runsthatchangeit.Input-independenceisnot.Itvariesbyafactorof15.6between
+twoarmstrainedunderthesameobjective,sotheobjectivecannotbewhatproducesit.
+Underthecorrectedobjectivethesignflips(Figure4b),thestrongestevidencethatthemechanismisthe
+objectiveandnottheoptimiser,thedataorthearchitecture.
+The correction fails differently rather than succeeding.The reference contains an unused
+gaussian_nllbranch. Runningitreversesthecollapseandimprovesthemagnitudefrom52.2×to10.9×
+overconfident. Itdoesnotproduceausableestimate,anditdestroyssomethingthefaithfularmhad: the
+σ-versus-errororderingfallsfrom39/45dimensionspositivelycorrelatedto21/45,whichischance. Under
+thetrajectorypermutationtestof§6.5,ath=368,thosecountsgiveP=0.0417and1.0000outofsample,
+0.0240and0.8746insample.Thefaithfularm’sorderingistheoneresultinthisfamilythatpointsthesame
+wayinbotharenas;itisalsotheweakesteffectofthethree,anditdoesnotsurvivemultiplicitycorrection
+either.
+
+
+                                                        18
+===== page 19 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure4: Thevariancecollapseisobjective-driven. (a)meanlog∆          logσ  againsttrainingiterationforeach
+ofthe28runsofthecollapsefamily,whichiseveryrunof§5–§7atthereleasedwidthoutside§5.2’ssweep
+(AppendixJ).Therunsaredrawnindividuallybutarevisuallycoincidentwithineachobjective,sothe28
+readastwolines,onefallingandonerising–whichisthepoint:thetrajectorydoesnotvaryvisiblyfromrun
+torun. (b)thefittedper-iterationslopeforeachrun,groupedbyobjective:negativeandtightlyclustered
+undersampledMSE,positiveundergaussian_nll.Thesignflipistheevidencethattheobjective,notthe
+optimiserorthedata,producesit.
+
+
+6.4  Whytheepistemictermmaybemiscalibrated:themembersarenotindependentmodels
+
+§6.3explainsthealeatoriccolumnandleavestheepistemiconeopen.Thissubsectionsuppliesacandidate,
+structurallysymmetricto§6.3’s,fromsourceandfromthecheckpoint’sowntensors;nothinghereistrained
+andnothingisinferredfromameasurement.Theeffectisknown(§2).Whatisoursisfindingitinareleased
+roboticscheckpoint,withthesharingquantifiedat89.15%ofeachmemberandthecostmeasuredat2.03×
+ontheoverconfidencefactor(§6.8).
+The released five-member ensemble is not five models.system_dynamics.py:34buildsone
+state_base. system_dynamics.py:35-41replicatestheheadsensemble_sizetimes,andonlytheheads.
+Intheforwardpasssystem_dynamics.py:87evaluatesthetrunkonceand:90handstheidenticalfeature
+vectortoeveryhead;system_dynamics.py:126thencomputestheepistemictermasthestandarddeviation
+acrossthoseheads.
+Theparametercountsmakethescaleofthesharingconcrete. Thestatepathwayisa636,672-parameter
+two-layerGRUtrunkplusfiveheadsof77,492parameterseach.Permember,636,672of714,164parameters
+—89.15%—arenumericallyidenticaltoeveryothermember’s. Only10.85%differ. Acrossthewhole
+releasedobject,thetwosharedtrunksare63.81%of1,995,569parameters.
+The sharing is stronger than the parameter count suggests.The trunk owns asinglerecur-
+rent hidden state (rnn.py:40), and an autoregressive rollout feeds the ensemblemeanback into it
+(system_dynamics.py:115;src/rwm_model.py:223inourreimplementation).Sothefivemembersdonot
+rolloutindependentlyatall.Thereisexactlyonehidden-statetrajectorybetweenthem,anddisagreement
+atsteptisthespreadoffivetwo-layerMLPsreadoffasingle256-dimensionalvector.
+Memberswhichshareafeatureextractorhavecorrelatederrorsbyconstruction,andtheir
+spreadcannotexpressuncertaintythesharedtrunkdoesnotalreadycarry. Whereadeep
+ensemblevariesinitialisationanddataorderingacrosswholemodels,hereonlytheoutputheadsdiffer,so
+thequantitythemethodpenalisesrewardswithisalowerboundonepistemicuncertaintybyconstruction.
+Itisthesameshapeoffindingas§6.3:notatrainingfailure,astructuralone.
+
+
+                                                       19
+===== page 20 =====
+                 UnderreviewassubmissiontoTMLR
+
+
+
+
+                 Thisappliestoourownarmsidentically,whichiswhy§6.2’scomparisonisfair.Ourensemble-5
+                 armsbuildonetrunkthesameway(src/rwm_model.py:164-167),evaluateitonce(:182),handthesame
+                 vectortoeveryhead(:185)andcomputethesamespread(:200).Theirtensornamesandparametercounts
+                 matchthereleasedcheckpointexactly—636,672shared,77,492perhead,1,995,569intotal,onall3arms
+                 checked(results/v1_ensemble_topology.json). So§6.2’s"ourarmsfailthesamewayat10.5×ath=
+                 100"comparestwoinstancesofonearchitecture,nottwoarchitectures.
+                 Whatthisisandisnot.Itisacandidatemechanism,establishedstructurally. Itdoesnotshowthat
+                 trunk-sharingistheexplanationfor§6.2’smiscalibration;architecturecouldbeaminorcontributortoa
+                 failuredominatedbysomethingelse. Thatneedsanensemblewhichsharesnothing,pre-registeredasrule
+                 M-44(AppendixE)andreportedin§6.8.Thetopologyisafactaboutthereleasedartifact;themechanism
+                 isahypothesisaboutthatfact.
+
+                 6.5  Thefailureisoneofmagnitude;theorderingisweakerthanitlooks
+
+                 Addingtheteacher-forcedarm,trainedfor§5,sharpensthefinding(ourarmsat2,500trainingiterations;
+                 thereleasedcheckpointasreleased):
+
+
+
+
+
+
+
+                 TheCoVcolumnisthealeatoricσineveryrow,theonlyσtheensemble-size-1armshave. Our
+                 ensemble-5arms(§6.6)haveboth:theiraleatoricCoViscomparabletotheotherarms’,andtheirepistemic
+                 termisfarmoreinput-dependentthananyaleatoricheadhere,at0.379–0.395againstthereleasedcheck-
+                 point’s0.0177.Thecountcolumnistheout-of-samplearena(n_independent=4),sothatallfour
+                 modelsarecomparedontrajectoriesnoneofourarmstrainedon. Forthereleasedcheckpoint’saleatoric
+                 headitisnotthemostinformativearena: ath=368andn_independent=20overalltenepisodesthat
+                 headis0/45,negativelycorrelatedwitherroroneverydimension,against20/45here;AppendixSquotes
+                 thelargerarena.
+                 ArmB’sσis15.6×moreinput-dependentthanthefaithfularm’s,andithasthelargestmeancorrelation
+                 ofthefour(r=0.257).Itisstill315×overconfident.
+                 ThePcolumnisapermutationP,whichpairseachtrajectory’sσwithadifferenttrajectory’srealised
+                 errorandsokeepsthecouplingbetweendimensionsandthegrowthoferrorwithdepththateverytrajectory
+                 shares. ThebinomialP-valuesanearlierdraftattachedtothesecountsarewithdrawn(S-15),andthe
+                 correctionislarge(AppendixK).
+                 Soσcollapsinginmagnitudeisobjective-driven,andσbecominginput-independentisnot. Theteacher-
+                 forcedarmcollapsesinmagnitudeexactlyliketheautoregressiveones—sameobjective,samerate—while
+                 retaining15.6×morevariationacrossinputs. Input-independenceisapropertyoftheautoregressivearms
+                 andthereleasedcheckpoint,andinput-dependenceandcorrectrankingarebothachievablewithoutthe
+                 intervalbecomingmeaningful.Onecandidatemechanism,statedasanuntestedhypothesis:autoregressive
+                 feedbacknarrowstheinputdistributiontowardthemodel’sownmanifold,leavingaheteroscedastichead
+                 lessvariationtokeyon.
+                 Thesamepatternholdsforthequantitythemethoduses,andthisiswherethecorrection
+                 biteshardest.Ath=128andh=368theepistemictermcorrelatespositivelywithrealisederroron45of
+                 45dimensions,matchingthebestaleatoricheadhereonthesigncount,whilebeing39.7×overconfidentat
+                 h=368.Figuresinthisparagrapharetheheld-outarena(n_independent=4)unlesslabelled
+                 otherwise,sotheepistemictermandthefouraleatoricheadsarecomparedonidenticaltrajectories;§6.2
+                 quotes34.4×forthesameratioath=368andn_independent=20,andtheabstractand§12use33.4×
+                 ath=100onthose20trajectories. NordoesitbeatArmB’sheadonstrength: itsmeancorrelationat
+                 h=368is+0.151against0.257. Thetworankcomparably,andneitherisclosetoaninterval. Underthe
+                 permutationnullthatcountgivesP=0.0435ontheheld-outpairand0.0775onthetrainingepisodes,both
+
+
+                                                                          20
+
+
+model        σvariationacrossinputs(CoV) dimswithr(σ,error)>0ath=368,held-outpair permPath=368,held-outpair permPath=368,trainingepisodes
+faithfulArmA       0.0076               39/45                         0.0417               0.0240
+correctedArmA      0.0059               21/45                         1.0000               0.8746
+teacher-forcedArmB 0.1188            45/45                     0.2609            0.5565
+releasedcheckpoint    0.0177               20/45                         0.6957               0.9753
+===== page 21 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+in-sampleforthecheckpoint,against5.68e-14fromtheindependent-trialstest.Itstillfailsthehorizontest
+thesameway:σgrows1.59×fromh=1toh=368whileerrorgrows13.33×.
+Acrossarenas,andaftercorrectionformultiplicity.Thetwolargerarenas,whicharenested(every
+in-sampletrajectoryisamongtheall-tenones), puttheepistemicordering’sstrengthatshorthorizon,
+becauseatlonghorizontheforecast-depthtrendeverytrajectorysharesliftsthenulluntilafullcountis
+closetochance,whichiswhatmotivates§6.6’sindexcontrol. NothingheresurvivesHolm–Bonferroniin
+anyofthethreearenas,andoutofsampleatthe400-stepunitnothingcould,sinceitssmallestattainable
+PalreadyexceedsthesmallestHolmthreshold(AppendixK).
+Sothissection’sclaimis:themagnitudefailureisestablishedandlarge;theorderingpointsthe
+rightwayfortheepistemictermandthefaithfulandteacher-forcedarms,notforthecor-
+rectedarmorthereleasedaleatorichead(AppendixS),andisnotestablishedatconventional
+significanceoncethedependencebetweendimensionsisrespected. Thefailureisspecifically
+magnitudecalibration,inbothcomponents.
+Thestructuralexcusedoesnotsurvive.Onecouldarguethatamodeltrainedonan8-stephorizon
+cannotbeexpectedtoreportcalibrateduncertaintyaboutstep368.Itcannotreportitaboutstep8either.
+Insidethetrainedhorizon,σisflatwhileerrorgrows(Figure5;out-of-sampleheld-outpair,n_independent
+=4400-steptrajectories,in-sampleforthereleasedcheckpoint;ourarmsat2,500trainingiterations,the
+releasedcheckpointasreleased):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure5:Whythecoveragecollapseisahorizoneffect.Bothpanelsarenormalisedtoforecaststep1,onthe
+out-of-sampleheld-outpair,n_independent=4400-steptrajectories;ourarmsat2,500trainingiterations,
+thereleasedcheckpointasreleased;ittrainedontheseepisodes,soforitthisarenaisin-sample(§3). (a)
+predictedσbarelymoves,andforthefaithfularmitdeclines.(b)realisederrorgrows1.79×to6.11×over
+thesamesteps,acrossthefourmodels.Thegapbetweenthepanelsisthecollapse.
+
+
+
+                     model          σgrowth,step1→8  errorgrowth,step1→8
+                     faithfulArmA        0.9241×            3.49×
+                     correctedArmA      1.0003×            3.41×
+                     teacher-forcedArmB  1.0096×            6.11×
+                     releasedcheckpoint    1.0007×            1.79×
+
+Thefaithfularm’sσdeclines(0.9241×)whileitserrorgrows3.49×.ThecoveragecollapseinFigure3(b)is
+thereforedrivenentirelybygrowingerroragainstafixedσ.
+
+
+                                                         21
+===== page 22 =====
+                 UnderreviewassubmissiontoTMLR
+
+
+
+
+                 6.6  Ensembledisagreementbeatsthetrivialbaseline
+
+                 Thefollow-upjustifiesensembledisagreementasatrustmetriconthegroundsthatit"closelyfollows
+                 thetrendofthepredictionerror". §6.5showstheper-dimensionversionofthatclaimisweakerthanit
+                 looks; thissectionfindsthatthescalarthemethodappliestrackserrorwell, whichcoexistswith§6.5
+                 withoutcontradiction,andasksthequestionthatmattersmoretoapractitioner:doesdisagreement
+                 beatsomethingfree?Thequantityisausablerankingsignalandisstillnotaninterval.
+                 Error in an autoregressive rollout grows with depth, so the trivial competitor to any trust metric is
+                 theforecaststepindex—acounter. Itneedsnoensemble, nosecondforwardpassandnomodel. If
+                 a counter ranks error as well as disagreement does, the ensemble is not earning its cost. Neither pa-
+                 perrunsthiscomparison,sowedo. Allthreecorrelationsbelowareonthescalarthemethodapplies,
+                 means.std(0).sum(-1)atenvs/base.py:166,againsttotalabsoluteerror,onthereleasedcheckpointover
+                 alltenepisodes,n_independent=20trajectories,with95%intervalsfromabootstrapoverwholetrajecto-
+                 ries.
+
+
+
+
+
+
+
+
+
+
+                 (h=1hasasingleforecaststep,sotheindexisconstantanditscorrelation—andthereforethepartialand
+                 thedifference—undefined.Theepistemiccorrelationisnot,anditisthelargestanywhereinthiswork:at
+                 onestep,ensembledisagreementisverynearlyaperfectrankingofrealisederror.)
+                 Disagreementwinsateveryhorizontested.Overthefullh=368rolloutthecounterreaches+0.269
+                 againstdisagreement’s+0.605,andtheindexleadsin0of5horizons.
+                 Thelastcolumnisthetestofwhetherdisagreementbeatsthecounter.Comparingthetwo
+                 marginalintervalsforoverlapisthewrongcomparison:bothcorrelationsaremeasuredonthesametrajec-
+                 tories,sotheirsamplingerrorsmovetogetherandthemarginalintervalsareneedlesslyconservative. The
+                 paireddifference,resamplingwholetrajectoriesandrecomputingbothcorrelationsinsideeachdraw,isthe
+                 appropriateandmorepowerfultest. Itexcludeszeroat5of5horizons. Thedistinctionmattersat2of
+                 them: ath=100andh=128themarginalintervalsdooverlap. h=128iswherethecounterisstrongest
+                 (+0.526)andthemarginnarrowest:thepaireddifferencethereis+0.145[+0.011,+0.324],whichexcludes
+                 zeroonlyjust:+0.011isthesmallestlowerboundinthetable,atthe400-stepunit.Attheshorterunitof
+                 ruleM-64(AppendixE),60non-overlappingunitsoverthesametenepisodesgive[+0.148,+0.351]forthe
+                 samepaireddifference,sothathorizoncarriesmoreweightthanitdid.Ath=100thepaireddifferenceis
+                 +0.138[+0.034,+0.362],whichalsoexcludeszero.
+                 Thethirdcolumnaskswhetherdisagreementmerelyre-encodestheclock.Partiallingthestep
+                 indexoutofbothvariableslowersdisagreement’scorrelationby0.010,from+0.605to+0.596.Almostnone
+                 ofwhatdisagreementknowsisexplainedbyhowdeepintotherolloutyouare: itcarriesrealinformation
+                 aboutthisrollout.
+                 Whatsurvivesremovingeachconfound(AppendixN).Across5modelsofhowfarintotherolloutastep
+                 is,theweakestfigureis+0.582,sodisagreementisnotre-encodingtheclock;butthepooledfigureisinlarge
+                 partabetween-rollouteffect,sothestatisticthatmattersholdsboththerolloutandthedepthconstant.Pre-
+                 registeredasruleM-45,itgives+0.419[+0.318,+0.576]atn_independent=20400-steptrajectories,andthe
+                 rulereturnsDISAGREEMENTCARRIESWITHIN-ROLLOUTINFORMATION:disagreement
+                 stilltrackserrorratherthanmerelyreportingwhichepisodeishard.
+                 Perhorizon,onthesame20trajectories(thereleasedcheckpointoveralltenepisodes)and
+                 thesamekindofclusterbootstrap:itisaseparaterun,soitsh=368intervaldiffersfromtheone
+                 aboveinthethirddecimal,asAppendixN’spooledintervaldoesfrom§6.2’s[+0.545,+0.694].
+
+
+
+h   r(stepindex,|error|)    r(disagreement,|error|)   partialr(disagreement,|error|·index)  paireddifference,disagreement−index22
+
+1  —             +0.994[+0.918,+0.999]  —                           —
+8   +0.181[+0.108,+0.349]+0.738[+0.537,+0.807]  +0.757[+0.540,+0.822]            +0.556[+0.241,+0.679]
+32   +0.174[+0.131,+0.336]+0.735[+0.577,+0.823]  +0.756[+0.604,+0.841]            +0.561[+0.298,+0.674]
+100+0.490[+0.394,+0.604]+0.628[+0.574,+0.839]  +0.584[+0.516,+0.815]            +0.138[+0.034,+0.362]
+128  +0.526[+0.421,+0.643]+0.671[+0.604,+0.846]  +0.617[+0.534,+0.812]            +0.145[+0.011,+0.324]
+368  +0.269[+0.106,+0.431]+0.605[+0.545,+0.694]  +0.596[+0.526,+0.687]            +0.337[+0.147,+0.544]
+===== page 23 =====
+                UnderreviewassubmissiontoTMLR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                (h=1hasoneforecaststeppertrajectory,sothereisnothingwithinarollouttodemeanagainstandr_dd
+                isundefinedratherthanzero.)
+                Thewithin-rollouteffectismateriallysmallerthanthepooledfigureandnotestablishedatshorthorizon;
+                ath=1thecorrelationrankswholerollouts,on20trajectory-levelpoints(AppendixN).
+                Doesitholdonamodelwetrained?ThreeArmAarmsatensemblesize5,underarulecommitted
+                beforetheruns(ruleM-43,AppendixE),leadtheindexin12of12seed-horizoncells,butthepaired
+                differenceexcludeszeroatonly1of4horizons,sotherulereturnsDOESNOTGENERALISE.At
+                n_independent=4400-steptrajectoriesitwasunder-powered,whichwemeasuredafterthefactandshould
+                havecheckedbeforecommittingit(AppendixN).
+                Weranthebaselinetestexpectingittogotheotherway.Acountermatchingdisagreementwould
+                havebeenthemoreconsequentialresult,makingthetrustmetricclosetovacuous,sinceacounterisfree.We
+                recordthatasanexpectationonly:itwasnotcommittedtogitbeforethedataexisted,sobythispaper’s
+                ownstandard(§8)itisnotapre-registration.Itdidnotgothatwayagainstthecounter.Itwentthatway
+                againstsomethingelse.
+                Oneadversaryisone,soweaddedtwomore,andtherankingclaimsurvivesonlyoneofthem.
+                Aclaimthatbeatsexactlyonecompetitorisaclaimaboutthatcompetitor.Underarulecommittedbefore
+                eitherwascomputed(ruleM-51,AppendixE,correctedbyruleM-52),weaddedtwobaselinesneeding
+                noensembleandnosecondmodel:step-size,themagnitudeofthemodel’sownpredictedstatechange
+                ∥µt−µ t−1∥,whichcostsnothingbecausetherollouthasalreadymadethosepredictions;andentry-res,its
+                one-steperroratthestepbeforetheforecastwindowopens,whichcostsoneextrarolloutinthisharness
+                andnothingindeployment,whereamodelconsumesthehistorytobuilditsrecurrentstateanyway. The
+                firstrulecalledbothfreewithoutdistinguishingthose,andthesecondrecordsthecorrection.
+
+
+
+
+
+
+
+                r(disagreement,error)=+0.6053onthereleasedcheckpointoveralltenepisodes,n_independent=20400-
+                steptrajectories. Minimumdetectableeffect,estimatedbeforeeitherbaselineexisted: 0.2891onamargin,
+                0.1131onapartial.
+                TheverdictisSURVIVESentry-resONLY,andthereasonistherowareadershouldlookat
+                twice.Disagreementbeats1ofthe2freebaselinesaddedhere.Themagnitudeofthemodel’sownpredicted
+                statechangeranksrealisederrorat+0.4697,against+0.6053forthefive-memberensembledisagreementthe
+                methodisbuilton.Themarginbetweenthem,+0.1357,isbelowthe0.2891thissamplesizecanresolve,so
+                atn_independent=20400-steptrajectorieswecannotsaytheensembleranksbetterthanasubtraction.If
+                theobservedmarginisthetrueone,settlingitneeds25ofthem,anestimateunderanassumedeffect(§11,
+                AppendixR).
+                Disagreementdoesstillcarryinformationthesubtractiondoesnot.Withstep-sizepartialled
+                outitretains+0.5430,farabovethe0.1131MDEforthattest,andholdingtheforecaststepexactlyfixed
+                itkeeps+0.7392againststep-size’s+0.5196. Itisnotre-encodingpredictedstepsize. Whatisnot
+                establishedisthatitaddsenoughtobeworthfivemodels. Therulefixedthisreadinginadvance: the
+                partialistheload-bearingtestandthemarginiscorroboration,soabaselinepassingthepartialwhilefailing
+
+
+h    r_dd,double-demeaned  95%CI            excludeszero                23
+1     —                     —                 —
+baseline                                r(baseline,error)  margin   partialr(disagreementgivenbaseline)  beaten?
+8     +0.306                 [-0.387,+0.713]     no
+forecaststepindex(the existing adversary)+0.2686        +0.3368  +0.5957                        —
+32    +0.186                 [-0.032,+0.636]     no
+step-size—∥µ                                  t−µ    t−1∥               +0.4697+0.1357  +0.5430                no
+100  +0.385              [+0.283,+0.701]  yes
+entry-res—one-steperrorbeforethewindow  +0.1471        +0.4582  +0.5948                        yes
+128   +0.453                 [+0.359,+0.713]    yes
+368   +0.419                 [+0.315,+0.573]    yes
+===== page 24 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+themargindoesnotrefutetherankingclaim.Itdoesrefuteaframing."Disagreementrankserrorwell"
+issupported."Youneedtheensembletorankerror"isnot.
+Onthisaxisthefollow-up’sclaimsurvivesadversarialtestingagainstarealbaseline,andthatis
+thestrongestformofsupportthispaperoffersanyclaimofeitheroriginalwork—nowwiththequalification
+thatafreebaselinecomesclosertoitthanthecounterdid.
+
+6.7  Oneconstantscalardoesnotfixit;aper-horizononelandswithintheband,thoughnosingle
+      cellisresolvableatthisarena
+
+Recalibratingadynamicsmodel’suncertaintyinsidemodel-basedRLisnotnew(§2).Whatis
+newhereistheconditioningvariable,theforecasthorizon,andonenegativeresult:asingleglobalmultiplier
+failswhereaper-horizononeshowsnosignoffailing.Anopen-looprollout’serroraccumulateswithdepth
+whileitspredictedσdoesnot(§6.5),soahorizon-blindrecalibrationcannotfollowthethingitistryingto
+correct,andthissectionmeasuresthat.
+Ifσhadtherightshapeandthewrongscale,asinglemultiplierwouldrepairit,andthefindingwouldbe
+aunitsproblemwithaone-lineremedy. Wetestedthat. Ascalarwasfittedononeheld-outepisodeand
+evaluatedontheother,inbothdirections,soitisneverfittedonitsowntestset.
+Twosensesof"unseen",keptapartfromhereon.Acellisunseenbythemultiplierwhenthemultiplier
+scoringitwasfittedontheotherepisode,andunseenbythemodelwhenthemodelnevertrainedonthat
+episode.Thetwoheld-outepisodesareunseenbyourarms’models,whichtrainedontheother8,butnotby
+thereleasedcheckpoint,whichtrainedonallten(§3).Everyreleased-checkpointcellinthissection
+isthereforeunseenbythemultiplieronly.
+Fittingatonestepworksatonestepandnowhereelse.Ontheepistemicterm—thequantitythemethod
+uses—ascalarof5.08–5.82bringsh=1coverageto63–74%,essentiallycalibratedagainstthe68.27%target,
+andleavesh=368at17–21%.Onthealeatorictermascalarof593–611gives64–70%ath=1and11–15%at
+h=368.Fittingoverthewholerolloutinsteaddrivesone-stepcoverageto100%,anintervalwideenoughto
+bevacuouswherethemodelisaccurate,whilestillfallingshortatthefarend.Aconstantmultipliercannot
+trackanerrorthatgrowswhileσdoesnot(§6.5),soforaconstantscale"rightshape,wrongscale"doesnot
+survive.
+Onthereleasedcheckpointaper-horizonscalarlandsneartarget,andthisistheoneconcrete
+remedyinthispaper;onamodelthathasnotseenthetestepisodestheevidenceismixed.
+Onemultiplierperhorizonisfittedononeheld-outepisodeandevaluatedontheother,inbothdirections,
+sonomultiplieriseverscoredontheepisodethatproducedit. Thetwoheld-outepisodescontribute4
+non-overlapping400-steptrajectoriesbetweenthem,soeachdirectionfitsonn_independent=2andis
+scoredontheother2.ThelastcolumnrepeatsthetestonArmAatensemblesize5and2,500iterations(3
+seeds),whosemodelneversaweitherepisode:
+
+ quantity    releasedcheckpoint:cells         same,        per-horizonc         rangeof     ArmA,itsown
+               unseenbythemultiplier          constant     fittedontheother     fittedc     per-horizonc:cells
+               within10pointsof68.27%,        c            model,both                       withintheband,
+               per-horizonc(unpowered)                     modelsscored                     unseenbythe
+                                                           (unpowered)                      modeltoo
+ aleatoric12/12                  2/12     0/72             592.6–                           10/36
+                                                                                7782
+                                                                                (13.1×)
+ epistemic12/12                  2/12     12/72            5.082–                           17/36
+                                                                                47.33
+                                                                                (9.31×)
+
+
+On the released checkpoint every point estimate lands within 10 points of the 68.27% target for both
+quantities.That absolute test is UNPOWERED here, as in thedifferent modelcolumn:
+
+
+                                                       24
+===== page 25 =====
+               UnderreviewassubmissiontoTMLR
+
+
+
+
+               results/p4_transfer_power.jsonscoredthismodelundertheseverymultipliersandfoundthe10-point
+               bandresolvableat0of12quantity-by-horizonpairs,withabindingminimumdetectableeffectof12.55–
+               40.62points.Soacellinsidethebandiscompatiblewithatruecoveragewelloutsideit,andnothinghere
+               showsanycellisoutsideiteither. Thelargestdeviationoverall24held-outcellsisaleatoricath=100,
+               fittedonepisode8andscoredontheother,at77.48%,9.21pointsofftarget. Thetwolargestdeviations
+               arebothonthealeatorictermandbothabovetarget—77.48%ath=100and76.55%ath=128—sothe
+               fittedmultiplierismildlyconservativeatthelonghorizonsratherthanunstableinbothdirections. The
+               constantscalarmanages2of12,andthosearetheh=1cellsitwasfittedat.OnArmA,wherethe
+               episodesareunseenbythemodelaswell,itsownmultipliersmanage17of36epistemicand
+               10of36aleatoriccells,sotherecipethatlandseveryreleased-checkpointcelldoesnotcarryoverintact
+               toamodelthathasnotseenthetestepisodes.
+               Threecautions.Theper-horizonscalarhasonefreeparameterperhorizonagainsttheconstantone’s
+               one,soitmustfitbetterinsample;onlycellsunseenbythemultiplierareevidence,andthosearethecells
+               reported.Thatcolumnisthinnerthanitscountsuggests:the12cellsare6horizons×twofold
+               directionsonthesame4trajectories,eachmultiplierfittedonn_independent=2andscoredontheother2.
+               Theyarenot12independentsuccessesandnoP-valueattachestothecount,whichisreportedsoareader
+               canseehowthintheevidenceis;latersectionsreferbacktothisasthe§6.7caution.Andthecorrectionis
+               acalibrationpatch,notafix: itleavesσcarryingnomoreinformationthanbeforeandrescalesitbyhow
+               faraheadyouarelooking. Onthereleasedcheckpointitneverthelessbringseveryestimateunseenbythe
+               multipliernearwhattheintervalclaims,whichiswhatadownstreamuserneeds,anditcostsonelookup
+               table.
+               Thefourthcolumn: thetableisapropertyofthemodel,notofthehorizon.UnderruleM-69
+               (AppendixE),multipliersfittedonArmAandscoredonthereleasedcheckpoint,andthereverse,onthe
+               same4held-outtrajectories,returnDOESNOTTRANSFER—APROPERTYOFTHEMODEL
+               onthepairedchangeincoveragethearenacanresolve:52of72governingcells,whicharenotindependent
+               tests,haveanintervalwhollyoutsidethe±10-pointband,andArmA’smultipliersare0.0069×to1.36×the
+               releasedcheckpoint’satthesamehorizon(AppendixT).Thedifferentmodelcolumnistheabsolutetest,
+               unpoweredforthereasonabove,soitisreportedandcannotmovethatverdict.
+               Sotheaccurateformofthissectionis:aconstantscalardoesnotrepairtheinterval;onthereleased
+               checkpointaper-horizononebringseveryestimateunseenbythemultiplierwithintheband,
+               thoughnosinglecellisresolvableatthisarena,anddoessoacrossepisodesbutnotacross
+               models.Onepisodesunseenbythemodelaswell,ArmA’sownmultipliersmanage17of36
+               epistemiccells,sotheretheevidenceismixed.
+
+
+               6.8  Testingthemechanism:anensemblethatsharesnothing,aloneandwiththecorrectedobjective
+
+               §6.4establishesthetopologyasafactandthemechanismasahypothesis. Tworulescommittedtogit
+               beforeanyoftheirartifactsexistedtestit,eachwithaminimumdetectableeffectestimatedinadvance
+               (AppendixE).RuleM-44scores5independentlyinitialisedfullmodels,ArmAatensemblesize1trained
+               at5seeds,togetherasanensembleatevaluationtime: eachmemberkeepsitsownrecurrenthiddenstate
+               andtheensemblemeanisfedbacktoallofthem,sotherolloutdiffersfromtheshared-trunkoneonlyin
+               whatisundertest.RuleM-68repeatsitwitheverymembertrainedundergaussian_nll,sothetwofixes
+               aremeasuredonthesamemodels. Botharescoredontheheld-outpairagainsteachoftheshared-trunk
+               seedsseparately.
+
+
+
+
+
+
+
+
+
+
+
+
+
+h    independenterr/σ shared-trunkerr/σ independent±1σ shared-trunk±1σ25
+1     1.4×            2.1×             50.00%           35.93%
+8     3.4×            6.3×             22.64%           14.10%
+32    4.4×            8.0×             17.92%           10.79%
+100  5.2×          10.5×          15.31%         8.19%
+128   5.3×            11.0×            15.03%           7.79%
+368   5.1×            13.0×            15.00%           6.30%
+===== page 26 =====
+                UnderreviewassubmissiontoTMLR
+
+
+
+
+                Sametrajectories(theheld-outpair), sameharness, n_independent=4, everymodelat2,500training
+                iterations. Theshared-trunkcolumnisthemeanover3seeds;thecomparisonbelowispairedagainsteach
+                ofthemseparately.
+                RuleM-44returnsMECHANISMSUPPORTED.All6ofits6conditionsholdagainsteveryoneof
+                the3shared-trunkseeds:ath=100theoverconfidencefactorimproves2.03×againstaminimumdetectable
+                effectof1.45×,coveragerisesameanof+7.12pointsagainst2.26,andeverypairedintervalexcludeszero.
+                σitselfgrows1.65×there,71%oftheimprovement,sothetrunk-sharingmechanismisthelargerpartof
+                theeffectwherethemethodoperates;ath=368,57%istheensemblesimplypredictingbetter(Appendix
+                O).
+
+
+
+
+
+
+
+
+
+
+
+                Sametrajectories(theheld-outpair,n_independent=4400-steptrajectories),sameharness,samebootstrap
+                unitasthetableabove,everymodelat2,500trainingiterations. Theshared-trunkcolumnsarethemean
+                over3seeds;thecomparisonbelowispairedagainsteachofthemseparately.
+                RuleM-68returnsTHECOMBINATIONIMPROVESCALIBRATION,branch2ofthefourit
+                names:all5ofits5conditionshold,a1.94×improvementagainstaminimumdetectableeffectof1.218×.
+                Thatisessentiallywhatindependencegavealone. Againsttheindependentarm,whichdiffersintheloss
+                andnothingelse,switchingtogaussian_nllmultipliestheoverconfidencefactorby1.044×[1.029,1.054],
+                slightlythewrongwayandbelowwhatthedesigncanresolve(AppendixP).Thetwofixesdonotadd:
+                theobjective’sseparatecontributionisatmostsmall,whichthedesigncanboundbutnotestablishaszero.
+                Oncestatedthatisnosurprise:theobjectivegovernsthealeatorichead,andtheepistemictermisaspread
+                acrossmembersthelossneversees.
+                Whatthearmsbound,andwhattheydonotrepair.Independentlyseededrunsdifferindata
+                orderingaswellasinitialisation,andtheindependentmemberscarry3.49×theshared-trunkarms’state-
+                pathwayparameters,sothesecomparisonsboundthearchitecturaleffectratherthanisolatingit;atmatched
+                capacitytheimprovementfallsto1.79×againstaminimumdetectableeffectof2.00×,sothatrulereturns
+                UNDER-POWERED—favoursthematchedensemblebylessthantheMDE(ruleM-49,§11).
+                Neitherarmisaninterval:ath=100theindependentensembleis5.2×overconfidentwith15.31%coverage
+                andthecombinedarm5.4×with15.53%,whereacalibratedGaussiangives68.27%. §6.7’sper-horizon
+                multiplierremainstheonlycorrectioninthispaperwhoseestimatesalllandwithintheband,thoughonly
+                onthereleasedcheckpointandwithnosinglecellresolvableatthisarena.
+
+                7  Defectsinthereleasedpipeline
+
+                AppendixHliststheledger’sotherconfirmedcontributionsthatthebodydoesnotstate,amongthemdefects
+                inthereleaseddatapipelineanddeparturesofthereleasedcodefromthepaper’sdescription.
+                7.1Tenunmarkedepisodeboundaries.§3. Thewindowbuilderreadsaterminationcolumnthatis
+                identicallyzero,soitmarksall9,961windowsvalid.
+                7.2Trainingandevaluationdisagreeonactionalignment,andevaluationisthebrokenone.
+                Rowtholdstheactionthatproducedstatet.Thedatasaysodirectly:ateveryresetrowalltwelveactions
+                areexactlyzero(§3),andapolicynetworkwithbiasescannotemitexactzeros,sothosezerosmarkthe
+                absenceofaproducingaction—theresetproducedthatstate,notapolicystep. Thetrainingpathpairs
+                statesandactionsindex-for-index,whichiscausallycorrect;theevaluationpathfeedstheactionfromt−1
+                topredictstatet,stalebyonestep.
+
+
+h    combinederr/σ shared-trunkerr/σ combined±1σ shared±1σ combined±2σ shared±2σ26
+1     1.4×          2.1×             51.11%         35.93%      78.89%         60.37%
+8     3.5×          6.3×             20.62%         14.10%      39.72%         26.62%
+32    4.4×          8.0×             17.97%         10.79%      32.66%         20.50%
+100  5.4×        10.5×          15.53%       8.19%28.27%         16.11%
+128   5.5×          11.0×            15.39%         7.79%       27.97%         15.34%
+368   5.4×          13.0×            14.44%         6.30%       27.63%         12.51%
+===== page 27 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+Whatthestalepairingcostsdependsonthehorizon. Alltenepisodesarethischeckpoint’strainingdata,
+sotheheld-outpairisnotmorehonesthere,onlysmaller,andthelargerarenaleads.Overalltenepisodes’
+20independenttrajectoriesthestaleactionraisesthereleasedcheckpoint’srelative-L1errorby55.0%[26.3,
+92.7]ath=1,54.4%[37.5,82.3]ath=8and37.4%[21.3,65.4]ath=32,andfromh=100thechange
+isnotresolved:8.2%[-10.4,24.9]thereand-4.6%[-13.4,3.2]ath=368,wheresingletrajectoriesrunfrom
+-47.4%to+35.2%.InnRMSEtheriseisresolvedath=8and32(31.5%[24.7,68.2]and17.4%[7.7,47.4])
+butnotath=1(7.4%[-14.8,87.8]),andfromh=100itisnotresolvedeither(7.9%[-18.9,32.9]there,
+-2.1%[-10.0,3.9]ath=368).Eachisa95%intervalfromaclusterbootstrapoverwholetrajectories,both
+pairingsinsideeachdraw(results/alignment_by_horizon.json,results/alignment_defect_ci.json).
+Ontheheld-outpair’s4independenttrajectoriesthestaleactionraisestheerrorateveryhorizonreported:
+by34.2%[10.6,75.0]ath=1,by22.5%[6.3,41.7]ath=100,wherethelargerarenaresolvesnochange,
+andath=368by7.9%[3.1,13.0]onrelative-L1and6.6%[1.0,8.0]innRMSE,withper-trajectoryvalues
++0.8%, +9.8%, +14.8%, +6.5%and+2.4%, +5.8%, +8.3%, -0.3%. Shiftingtheevaluationloop’stwo
+actionslicesbyonestep(model_training.py:129and:132)alignsitwithtraining;ourharnessdoesthis
+withaction_offset  =  1(src/score_reference.py:180-190). OurownArmAcheckpointsat10,000
+iterations,trainedunderthecausalpairing,changeby-0.99%ath=1and+22.67%ath=368whenfed
+thestaleone(three-seedmean,relative-L1,held-outpair;ledgerR-79,whichreplacesR-76’svoidfigures).
+Theyrespondtotheaction. Givenanothertrajectory’sactions,theirerrorath=8ontheir16in-sample
+trajectoriesrisesby+676.3%[+454.8,+1060.0],andat2,500iterationsby+227.8%[+131.6,+398.2],so
+ruleX2,committedbeforeitsreadingsexisted(ledgerM-84),returnsRESPONDSTOTHEACTION
+atbothcheckpoints(AppendixV).Onthosetrajectoriesthestaleactionitselfraisestheirerrorath=1by
++124.6%[+75.8,+201.9];aone-stepshiftmovestheactionby0.32ofitsspreadthere,andaswapby1.44.
+7.3Noheld-outevaluation.Evaluationtrajectoriesaredrawnfromtrainingdata. Forthereleased
+checkpoint,trainedontheentirefile,noheld-outmeasurementispossibleatall,andneitherpinnedrepository
+cangeneratethedatathatwouldmakeonepossible(§3).
+7.4Whatthesplicedwindowscost:nothingmeasurableinrollout.Acontaminatedarmtrained
+with195splicedwindowsadded,at2.47%contamination(belowthepipeline’s3.53%,bydesign,sothatno
+held-outrowleaks),raisestraininglossby21.57%whereaduplicationcontroladdingthesamenumberof
+exactcopiesraisesitby0.90%,andinrollout,over32cells(theheld-outpairandthetrainingepisodes,200
+and400-steptrajectories,the500and2,500-iterationcheckpoints,n_independent4to39),itishurtin0
+andhelpedin9(Figure6a),thesignatureofregularisation.Atthisratethesplicesdonotharmrollout;the
+unmarkedboundariesremainarealdefectonleakagegrounds(AppendixQ).
+7.5Thereleasedartifactsdonotreproducethereleasedcheckpoint’svariancestate.Readas
+aclock,§6.3’scollapserateputsthecheckpoint’svariancestateoutofreachofaconstant-raterunfrom
+thereleasedinitialisationattheconfiguredlearningrate,ateveryiterationcounttherelease,thepaper
+andthecheckpointtagstate. Thefirstauthor’saccount, thatthereleaseisseveralrevisionsremoved
+fromthesetupthattrainedit, suppliesamechanism, awarmstartoradifferentinitialisation, sothis
+isadocumentationgapbetweenareleaseandarunratherthananinconsistency(AppendixFandthe
+supplementarydocs/APPENDIX_G_VARIANCE_ARITHMETIC.md).
+
+8  Method
+
+Anappend-onlyledger.Everyclaimherehasapermanentidentifier,anevidenceclass(source,data,
+run,external,inference)andastatus,inFINDINGS_LEDGER.md(274entries). Claimsarenevereditedin
+place:onethatturnsouttobewrongismarkedsuperseded,pointedatwhatreplacedit,andkept.
+Pre-registration,andonefailureofit.Decisionruleswerecommittedtogitbeforethedatathat
+testedthem,withoneexception. Figure1andAppendixEgivetheleadtimeforall23;22arepositive
+and1isnot. Everypositivebarisadifferenceoftwocommittimestamps.Thenegativeoneisnot:
+itistheduplication-controlrule(§7.4),whosedatasideisthemomentthecontrolrunsfinished,alinein
+results/control_driver.logratherthanacommit,datedfromthecommitthatintroducedthatline.
+Therulewasstatedinconversationbeforetherunsandreachedgit2.9hoursaftertheyfinished,andwe
+founditonlybyauditingourowngit  log. Themeasurementstands,becausethearmwasbuiltwithout
+
+
+                                                      27
+===== page 28 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure6:Thecontaminationcontrol.(a)outcomeacross32cellsforeacharmpair(theheld-outpairandthe
+trainingepisodes,200and400-steptrajectories,the500and2,500-iterationcheckpoints,n_independent4
+to39),naivebootstrapontheleftofeachpositionandclusterbootstrapontheright;theduplicationcontrol
+isinert.(b)adifferentfamily,the16cellsof§5’sA/Bgapatthe500and2,500-iterationcheckpoints(§8):
+distributionoftheratioofclustertonaiveconfidence-intervalwidth,withthemeanmarked. Resampling
+pooledseed×trajectoryvaluesratherthanwholetrajectoriesnarrows15ofthe16intervals.
+
+
+referencetoitsoutcome,buttheclaimthatitwaspre-registereddoesnot,anditiswithdrawn(S-12). A
+disciplinethatisonlycheckedwhenitsucceedsisnotadiscipline.
+Eightclaimswithdrawnonevidence, andsixframingswithdrawnratherthannumbers, outof21
+supersededentrieskeptintherecord(thesupplementarydocs/BUILD_CHECKS.mdliststhem). Themost
+consequentialoftheframingswithdrawnisS-15:theinferencefromper-dimensionsigncountstoabinomial
+P-value,whichassumedanindependencethe45statedimensionsdonothave(§6.5). Foundbyourown
+pre-submissionaudit,itwithdrawsthestrengthofevidencebehindwhatanearlierdraftcalleditsstrongest
+result.
+Astatisticthatwasresamplingthewrongunit.Ourbootstrappooledthreeseedsoverashared
+trajectorysetandresampledthepooledvectorwhilereportingtheindependent-trajectorycount,soeach
+trajectoryappearedthreetimes. Resamplingtrajectoriesinsteadwidensintervalsbyamean1.42×and
+changes1of16verdicts,intheout-of-sampleh=8cellat200-steptrajectoriesand2,500iterations,already
+recordedasunresolvable.Everylong-horizonverdictsurvives;bothunitsarereported.
+Reproducibility,andabuildthatchecksitsownprose.Everymeasurednumberinthispaperis
+substitutedfromanartifactoneachbuild,andaquickrunonacleanclone(./reproduce.sh  --quick
+--force,whichskipstraining)rewrites0.91%ofthenumericvaluesunderresults/thatthecomparison
+counts;therestarecarriedinandprovenothingaboutreproduction.Thenumberofregeneratedvalues
+thatdifferandarethemselvesameasurement,astatisticortheverdictofatestis0.Oneof
+thebuild’sowngates,theclean-clonecheckinpart_f_gate,requiresthatnoregeneratedvaluedifferatall;
+5do,soitfails,anditispublishedasfailingratherthangivenatolerance. Theaccountingbehindthese
+figures,theregistryofchecksthebuildrunsonthispaper’sownprose,andthepaper’srecordofverifying
+itsownclaimsareindocs/BUILD_CHECKS.md,shippedassupplementary.
+
+9  Actionablelessons
+
+Sixthingsapractitionercanapplywithoutreadingtherestofthispaper.
+Useensembledisagreementasarankingsignal,butpriceitagainstthefreealternativesfirst.
+Donotreaditasadistance.Andexpectittodegradewithhorizon.Onthereleasedcheckpoint’s
+
+
+                                                      28
+===== page 29 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+owntrainingepisodes,atoneforecaststepitrankswholerolloutsalmostperfectly,+0.994[+0.918,+0.999]
+acrossthe20trajectories,arankingofrolloutsratherthanofmomentswithinone,becauseath=1thereis
+onlyonemoment.Overthefullrolloutitfallsto+0.605[+0.545,+0.694]:excellentwhereyoucancheckit
+cheaplyandmerelygoodwhereyoumostneedit.Itbeatstheforecaststepindexateveryhorizonwetested,
+onapairedtestthatexcludeszeroat5ofthe5horizonswheretheindexisdefined,andretains+0.596
+oncethatindexispartialledout(§6.6).Whatitdoesnotclearlybeatisthemodel’sownpredicted
+stepsize,whichcostsnothingandneedsnoensemble:thatrankserrorat+0.4697againstdisagreement’s
++0.6053,amarginof+0.1357,belowthe0.2891thissamplecanresolve. Disagreementcarriesinformation
+thesubtractiondoesnot,retaining+0.5430oncestepsizeispartialledout,andwithboththeforecastdepth
+andtherolloutheldconstantitstillcorrelates+0.419[+0.318,+0.576]witherror(§6.6);butapractitioner
+abouttopayforfivemembersshouldpricethesubtractionfirst.Anditistoosmalltobeanintervalbya
+widemargin:ath=100,thehorizonthemethodrollsoutover,33.4×[28.7,39.0]onthereleasedcheckpoint
+overalltenepisodes,andontheheld-outpair10.5×[9.0,11.5]ontheensemble-5armswetrained,against
+thereleasedcheckpoint’s25.7×there.Ariskgateorsafetymarginthatreadsσasadistanceisnotsupported
+atanyhorizon,oneither.
+Ifyouneedtheinterval,rescaleperhorizon,notglobally,andrefitonyourownmodel.One
+multiplierperforecasthorizon,fittedononeepisodeandscoredonanother,bringseveryreleased-checkpoint
+coverageestimatewithin10pointsofnominal,thoughthisarenacannotresolveanysinglecelltothatband;a
+singleglobalmultipliermanages2ofthe12epistemicones(§6.7).Thatcheckpointtrainedonbothepisodes;
+onArmA,whosemodelneversawthem,itsownmultipliersmanage17of36epistemiccells.Thecellsare
+notindependenttrials(the§6.7caution),soreadthesweepasconsistencyandtheper-celldeviationsasthe
+evidence. Thefittedepistemicmultipliersspan9.31×acrosshorizons,whichispreciselywhyonenumber
+cannotserve.
+Donotconvertper-dimensionsigncountsintoP-values.Statedimensionsinarobotarephysically
+coupledandshareaforecast-depthtrend,soanindependent-trialsnullisbadlywrong,inourtablesbyup
+to1013×(§6.5,AppendixK).Permutewholetrajectoriesinstead. Anearlierdraftofthispaperusedthe
+binomialversion,anditmadeourweakestevidencelooklikeourstrongest(S-15).
+Countindependenttrajectories,nottrajectories.Two400-stepwindowsthatoverlapatallareone
+pieceofevidence,nottwo. Theheld-outarenaherecontains4independent400-steptrajectorieshowever
+manywindowsaredrawnfromit,andthatnumberboundseverylong-horizonclaim(§3);reportinganinter-
+valbesideatrajectorycountratherthananindependent-trajectorycountoverstatesprecision.Resampling
+pooledseed×trajectoryvaluesinsteadoftrajectoriesnarrowsintervalsbyafurther1.42×(§8).
+Anchoradecisionruletothehorizontheclaimisabout.Ourfirstpre-registeredrulewasanchored
+ath=8,thetrainingforecasthorizon,andreturnedCANNOTBESETTLEDATTHISBUDGET;
+theclaimwasaboutdeploymenthorizons.Therulewascorrectinformandpointedatthewrongregime,a
+failuremodepre-registrationdoesnotprotectagainstonitsown.
+Checkthattheimplementedlossisthedescribedlossbeforereproducinganynumberfromit.
+Thepaperdescribestwolossterms;theimplementationhas7. Thepredictedvariancehasanoptimumat
+zeroundertheimplementedone,whichiswhythereleasedcheckpoint’sσis11,683×smallerthanitsown
+errorath=100,and20,669×ath=368.Readingthelosstookanafternoonandexplainedaresultthat
+wouldotherwisehavelookedlikeatrainingbug.
+
+10  Broaderimpact
+
+Thisisareproductionofadynamicsmodelonpublicsimulationdata.Itcreatesnonewcapability,usesno
+personaldataanddeploysnothing.
+Thefindingsbearononepractice,anditisnottheonetheoriginalmethoduses. Thefollow-upapplies
+ensembledisagreementasarewardpenalty.Forthatuse,ourmeasurementssupportitsordering(§6.6),with
+thequalificationthatafreesignalrankserrornearlyaswell.Adifferentuseisreadingthesamenumberas
+anerrorbar,asafetymargin,oratriggerforhandingcontroltoafallbackcontroller. Theoriginalpapers
+neithermakenorrecommendthatuse,anditistheuseourmeasurementsruleout. Atthemethod’sown
+
+
+                                                       29
+===== page 30 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+100-stephorizon,thedisagreementis33.4×smallerthanrealisederrorandcovers4.61%ofoutcomeswhere
+68.27%isexpected.Wesaythisbecausethereleasedcheckpointexposesthequantity,anditiseasytoread
+asaninterval.
+Wedonotclaimtheoriginalmethodisunsafe. Nopolicyistrainedhere. Theonepolicy-freetestweran
+foundthatcorrectingthescaleperhorizonleaveseverypairwiseorderingofaccumulatedpenaltyunchanged
+ontheavailabletrajectories(§11).
+
+11  Limitations
+
+Limitsthatbelongtooneresultarestatedbesideit: thebudgetandourreadingofTableS7(§5.2,§5.3),
+themechanismof§6.4asahypothesis,andtherecalibration’stwoepisodes(§6.7).AppendixRgivesevery
+limitationbelowinfull.
+Effectivesamplesizeboundseverylong-horizonclaim.Theout-of-samplearenahas4independent
+400-steptrajectories(then=4caveatof§3),thebindingconstrainton§5,andalargerdatasetcannotbe
+generatedhere(AppendixC),sothereleasedcheckpoint’slackofaheld-outarenaisaconstraint,nota
+choice.
+Onedataset,onegait,oneterrain.Allcommandsaredrawnfromoneboundedboxandthegaitisa
+singletrot,so"generalisation"heremeansacrossvelocitycommandsonly.
+Singleseeds.Thelong-horizontrendfitandtheper-dimensionmatchedcomparisonrestonseed1alone
+(AppendixH),andtheheadlineA/Bverdictonseed1,theoneitsruleranon;themagnitudesbesideitare
+three-seedmeanswithper-seedvalues(§5).
+Ensemblesize: supported,notestablished.Ourensemble-5armsreproducethedirectionof§6.6’s
+rankingfindingandthecalibrationfailure,butruleM-43returnsDOESNOTGENERALISEontheir
+4held-out400-steptrajectories,whereitwasunder-powered(§6.6). Sothatfindingisestablishedonthe
+releasedcheckpointandsupportedbutnotestablishedonamodelwetrained.
+Therankingclaimisnotestablishedasneedinganensemble.Themodel’sownpredictedstep
+sizerankserrornearlyaswell,byamarginthissamplecannotresolve(§6.6). Iftheobservedmarginis
+thetrueone,settlingitneeds25independent400-steptrajectorieswherealltenepisodesprovide20,a
+required-sample-sizeestimateunderanassumedeffect(AppendixR).
+Wedidnotmeasurewhatthemiscalibrationcosts.Thepenaltythefollow-upappliesismiscalibrated
+asascale,33.4×overconfidentath=100,thehorizonitsownimaginationrolloutsrunto,butthemethod’s
+onlyuseofthatquantityistoshapepolicylearning,andwedidnottrainapolicy.Thefindingbounds
+whatthequantityreports,notwhatitcosts,andtheratioisnotameasureofharm.Othersections
+referbacktothisasthepolicycaveatof§11. Aproxythatneedsnopolicy,theorderingofthepenalty
+accumulatedalongwholerolloutsbeforeandaftertheper-horizoncorrection, findsnoneofthe6pairs
+amongtheheld-outpair’s4trajectoriesreordered(in-sampleforthecheckpoint;ruleM-70:DOESNOT
+REORDER),butitordersthepenaltyalone,notthepenalisedreturn,itsnullispartlystructural,andits
+intervalisdegenerate(AppendixR).
+Theper-dimensionorderingtestsareunderpoweredateverysamplesizewecanreachath=
+368(§6.5,AppendixK);ath=128andbelowashorterunitwouldraisethecount,arerunwedidnot
+do. Thislimitstheper-dimensionevidenceonly;theaggregatescalarthemethodappliesisonetest,not
+forty-fivecoupledones(§6.6).
+Nofamily-widecorrectionisappliedacrossourownpre-registeredrules.Thereare23ofthem
+withper-ruleverdicts(AppendixE),eachreportedagainstthethresholdsitwascommittedwith(one,S-12,
+iswithdrawnasapre-registrationbecauseitreachedgitafteritsdata,§8);areaderwhoprefersacorrected
+familythresholdcanapplyitfromthatcount.
+Theindependent-ensemblecomparisonboundsthetrunk-sharingeffectratherthanisolating
+it.Independentmembersdifferfromshared-trunkheadsindataorderingandincapacityaswellasin
+sharing. RuleM-49(AppendixE)holdscapacityfixed,at1,023,880state-pathwayparameters,aratioof
+
+
+                                                      30
+===== page 31 =====
+UnderreviewassubmissiontoTMLR
+
+
+
+
+0.9998:theindependentensembleisstillbettercalibratedoneveryshared-trunkseed,everypairedinterval
+excludeszeroanditscoveragegainof+6.42pointsclearsitsownMDE,buttheoverconfidenceimprovement
+fallsfrom2.03×to1.79×againstanMDEof2.00×,sotherulereturnsUNDER-POWERED—favours
+thematchedensemblebylessthantheMDE.Capacitydoesnotexplaintheeffectaway;howmuch
+ofitcapacityaccountsfor,thisdesigncannotsay(AppendixR).
+Deliberatelyoutofscope.Nopolicy-learningresultofeitherpaperisreproducedortested,thesample-
+efficiencycomparisonisnottestedforthesamereason,andnothinghereusesaGPU.Wedidnottest
+whethertheσ=0optimumaffectsotherdescendantsofthePETSparameterisation: thehypothesisis
+well-foundedonlyforonethatmakesthesamesubstitutionandleavesnothingpushingitsfloorbackup,
+andisuntestedforany(§2,AppendixI).
+
+
+12  Conclusion
+
+
+TheRoboticWorldModel’scentraltrainingclaimreproducesatlonghorizons,andthemarginislargethere,
+thoughteacherforcingleadsatonestepontheshortwindowsbuiltforit. RWMisaheadath=368of
+thebaselineswebuilttoourreadingofitandtrainedwithitssettings,thoughtherenoneofthembeats
+predictingnochange,andonaccuracyalonefourotherhistoryandforecastlengthsbeatitschosenonesat
+ourbudget,averdicteveryreadingtherulereportsreturnsbutone,whichisunresolved,andarankingthat
+changeswhenthechosensettingtrainslonger;itchosethemasatrade-offwithtrainingtime(§5.2,§5.3).
+Neitheruncertaintyoutputofthefollow-upthataddsthemreportswhatareaderwouldtakeittoreport.
+Ath=100,thehorizonthemethod’sownimaginationrolloutsrunto,thealeatoricσis11,683×smaller
+thanitsownerror,becausetheobjective’soptimumisσ=0andthetermthatshouldpreventthiscancels
+outofthegradient.Theepistemictermthemethodactuallypenaliseswithisbetterbyafactorof349and
+still33.4×[28.7,39.0]overconfident,bothfiguresath=100onthe20trajectoriesofthecheckpoint’sown
+trainingepisodes.
+Therankingusethefollow-upclaimssurvivesarealtest.Onthereleasedcheckpoint,ensembledisagreement
+beatstheforecaststepindexateveryhorizonand,withboththerolloutandthedepthheldconstant,still
+correlates+0.419[+0.318,+0.576]withrealisederror(§6.6),thoughafreesubtraction,themodel’sown
+predictedstepsize,rankserrornearlyaswell,+0.470againstdisagreement’s+0.605,byamarginthissample
+cannotresolve(SURVIVESentry-resONLY:disagreementbeatstheone-steperrorbeforethewindow,but
+notthemodel’spredictedstepsize). Thescalemayberepairableperhorizononthereleasedcheckpoint,
+butonamodelthatneversawthetestepisodestheevidenceismixed(§6.7),andperdimensionnoordering
+reachessignificanceaftermultiplicitycorrectiononcethecouplingbetweendimensionsisrespected(§6.5).As
+thescalarthemethodapplies,ensembledisagreementgetstheorderrightandthesizewrong:itshouldnot
+bereadasascale,andarankingusedeservesitsownvalidationonthedeploymentdistribution(Appendix
+S).
+Whatshouldtravelfromthispaper,andwhatshouldnot.Thefindingsareofthreekinds.Properties
+oftheobjectiveandofhowitsboundsarebuiltaretheonestoexpectelsewhere,andonlywherebothare
+presenttogether: §6.3derivestheσ=0optimumfromsquarederroronasampledpredictionthrough
+aboundedheadwhosefloornothingpushesbackup, soitshouldholdwhereverbotharepresent, the
+hypothesis§2statesandleavesuntestedoutsidethiscodebase.On§2’scountthesubstitutionispresentin
+1ofthe10descendantsexamined,andthereonlyinanon-defaultmode;thesurveydidnotexaminethe
+floor,sothatisanupperboundonhowoftenbothare.Propertiesofthisreleasedartifactshouldbechecked
+ratherthanassumedinanyother:theone-stepmisalignmentinitsevaluationharness(§7.2),thetrunkits
+fivemembersshare(§6.4),anditsspecificoverconfidencefactors,11,683×forthealeatoricσand33.4×for
+theepistemictermath=100(§6.2),aremeasurementsofonecheckpoint.Propertiesofthisdatasetandits
+arenasarelimitsonwhatcouldberesolved,notfindingsineitherdirection,andneitherpinnedrepository
+canliftthem(§3):ourarms’held-outarenaholds4independent400-steptrajectoriesandalltenepisodes
+hold20,whichiswhy§11leavesthereplicationatensemblesize5,thefree-baselinemarginandcapacity’s
+shareofthetrunk-sharingeffectopenratherthansettled. §5.2’sconfigurationverdictshouldnottravel
+either:itisresolved,butatourdatabudget,andsaysnothingabouttheoriginal’s.
+
+
+                                                       31
