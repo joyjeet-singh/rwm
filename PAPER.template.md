@@ -116,8 +116,7 @@ and Levine (PETS, NeurIPS 2018), but the objective is not: the released code rep
 likelihood with squared error on a sampled prediction and ties the upper bound to the floor, so
 **a descendant of this lineage that made the same substitution, and left nothing pushing its
 variance floor back up, would inherit the same optimum**, a hypothesis about mechanism untested in
-any other descendant (§11). Of {{q1_n_examined}} public repositories examined, {{q1_n_carry}} carry
-the construction and {{q1_n_inherit}} of those trains it against a sampled squared error, only in
+any other descendant (§11). Of {{q1_n_looked}} public repositories the survey looked at, {{q1_n_carry}} carry the construction, the ones its protocol counts as examined, and {{q1_n_inherit}} of those trains it against a sampled squared error, only in
 an optional mode, so on this sample of convenience the substitution is rare (Appendix I).
 
 **The method's family.** MOPO (Yu, Thomas, Yu, Ermon, Zou, Levine, Finn and Ma, NeurIPS 2020)
@@ -1658,11 +1657,10 @@ as "trainable by the code, by default or not", a reading settled after the surve
 `mbrl-lib` and in `va_mbpo`, the one repository that inherits, the bounds train only when a caller
 switches that on (ledger `M-73`). The survey did not check how each repository treats its variance
 floor, so {{q1_n_inherit}} of {{q1_n_examined}} is an upper bound on how often both conditions
-hold. A further {{q1_n_absent}} repositories lack the construction, among them mainline `rsl_rl`:
+hold. The survey looked at {{q1_n_looked}} in all; the other {{q1_n_absent}} lack the construction, so the protocol does not count them as examined, among them mainline `rsl_rl`:
 the bounded head exists in the fork this paper pins, not in the library it forks, and we do not
 count the fork, since counting what §6.3 measured as evidence that the result travels would be
-circular. The protocol capped the survey at {{q1_cap}} repositories; it stopped at
-{{q1_n_examined}}, and its notes give no reason. We wrote the protocol before the search, but
+circular. The protocol capped the survey at {{q1_cap}} repositories; it stopped at {{q1_n_examined}} examined, {{q1_n_looked}} looked at, and its notes give no reason. We wrote the protocol before the search, but
 neither it nor its hash reached git before the results did, so that order rests on our own record;
 it is a search protocol, not one of Appendix E's decision rules. Search engines rank and truncate,
 so this is a sample of convenience, but on it the substitution is rare, and a reader who takes the

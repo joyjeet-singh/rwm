@@ -569,6 +569,10 @@ def main():
     assert "leggedrobotics/rsl_rl" in [r["repo"] for r in Q1["construction_absent"]], \
         "§2 names mainline rsl_rl among the repositories set aside"
     put("q1_n_examined", _c["examined"], "results/q1_pets_descendants.json")
+    # Round 3, R4 (S14): every repository the survey looked at. The protocol counts as "examined" only those with the
+    # construction (results/q1_search_protocol.md, section 3), so all examined ones carry it, and the rest are set aside.
+    assert _c["examined"] == len(Q1["examined"]) == _c["carry_the_construction"], _c
+    put("q1_n_looked", _c["examined"] + _c["construction_absent_and_so_out_of_scope"], "results/q1_pets_descendants.json")
     put("q1_n_absent", _c["construction_absent_and_so_out_of_scope"],
         "results/q1_pets_descendants.json")
     put("q1_cap", _c["cap"], "results/q1_pets_descendants.json")

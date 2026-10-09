@@ -73,6 +73,20 @@ ITEMS = {
     "s5": {"edits": [("(rule M-23, Appendix E; commit `efc35b8`)",
                       "(rule M-23, Appendix E; commit `efc35b8`, in the submitted paper an anonymised commit label; "
                       "see Data and code)")]},
+    # S14: 13 repositories looked at, 10 carry the construction, 1 of those trains it against a sampled squared error.
+    # The frozen protocol (results/q1_search_protocol.md, section 3) counts only repositories with the construction
+    # as "examined" and prescribes the form "Of N repositories examined", so the 13 are "looked at", not "examined".
+    "s14": {"edits": [
+        ("Of {{q1_n_examined}} public repositories examined, {{q1_n_carry}} carry the construction and "
+         "{{q1_n_inherit}} of those trains it",
+         "Of {{q1_n_looked}} public repositories the survey looked at, {{q1_n_carry}} carry the construction, the "
+         "ones its protocol counts as examined, and {{q1_n_inherit}} of those trains it"),
+        ("A further {{q1_n_absent}} repositories lack the construction, among them mainline `rsl_rl`:",
+         "The survey looked at {{q1_n_looked}} in all; the other {{q1_n_absent}} lack the construction, so the "
+         "protocol does not count them as examined, among them mainline `rsl_rl`:"),
+        ("it stopped at {{q1_n_examined}}, and its notes give no reason.",
+         "it stopped at {{q1_n_examined}} examined, {{q1_n_looked}} looked at, and its notes give no reason."),
+    ]},
 }
 
 
