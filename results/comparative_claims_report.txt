@@ -19,9 +19,9 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C3.4   compare   §6.5                0.150935 vs 0.256859 -> lt, text says lt
   PASS  C3.5   compare   §6.5                0.0416667 vs 0.00166667 -> gt, text says gt
   PASS  C3.6   compare   §9                  0.993913 vs 0.605338 -> gt, text says gt
-  PASS  C7.1   count-consistency §8 / BUILD_CHECKS   claims withdrawn on evidence = 7 (7/Seven/seven); 3/3 sites agree
+  PASS  C7.1   count-consistency §8 / BUILD_CHECKS   claims withdrawn on evidence = 8 (8/Eight/eight); 3/3 sites agree
   PASS  C7.2   count-consistency §8 / BUILD_CHECKS   framings withdrawn = 6 (6/Six/six); 3/3 sites agree
-  PASS  C7.5   count-consistency §1 / 8              superseded entries = 20 (20); 2/2 sites agree
+  PASS  C7.5   count-consistency §1 / 8              superseded entries = 21 (21); 2/2 sites agree
   PASS  C6.1   relvar    §5                  relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 2.0x
   PASS  C8.1   horizon-label §6.2                horizon 100; expected "33.4" within 120 chars after "the method's own imagination rollout len"; found
   PASS  C8.2   horizon-label §3.1                horizon 100; expected "100" within 420 chars of "is the method's own imagination rollout "; found
@@ -31,12 +31,12 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C10.2  retraction-consistency §6.5 / README       retracted assertion "sign test on 45 dimensions" absent from all 5 files
   PASS  C10.3  retraction-consistency §6.7                retracted assertion "deviations are both at h=100 on the aleatori" absent from all 5 files
   PASS  C10.4  retraction-consistency §4                  retracted assertion "without exception" absent from all 5 files
-  PASS  C10.5  retraction_class_consistency §8 / BUILD_CHECKS   34 namings of 20 ledger retractions, each resolving to the ledger's class
+  PASS  C10.5  retraction_class_consistency §8 / BUILD_CHECKS   37 namings of 21 ledger retractions, each resolving to the ledger's class
   PASS  C11.1  cross-artifact-sync §README             7/7 headline values present in README.md
   PASS  C11.3  cross-artifact-sync §EXTERNAL_READ_BRIEF 23/23 headline values present in docs/EXTERNAL_READ_BRIEF.md
   PASS  C11.2  cross-artifact-sync §MODEL_CARD         4/4 headline values present in MODEL_CARD.md
   PASS  C11.4  cross-artifact-sync §BUILD_CHECKS       4/4 headline values present in docs/BUILD_CHECKS.md
-  PASS  C12.1  abstract-budget §abstract           370 words (max 370), 23 numerals (max 26) ['1', '3', '4.61', '368', '2.58', '100,', '368', '368', '0.133', '4', '0.605', '0.419', '8.3', '33.4', '100', '0.4697', '89.15', '100', '2.03', '5.2', '10', '17', '36']
+  PASS  C12.1  abstract-budget §abstract           370 words (max 370), 23 numerals (max 26) ['1', '3', '4.61', '368', '2.58', '100,', '368', '0.133', '4', '0.605', '0.419', '8.3', '33.4', '100', '0.470', '89.15', '100', '2.03', '5.2', '10', '17', '36', '100']
   PASS  C13.1  interval-required §6.2                4/4 quoted quantities carry their interval
   PASS  C13.2  interval-required §6.2                3/3 quoted quantities carry their interval
   PASS  C7.3   count-consistency §3.1 / 6.7 / Figure 1 nominal coverage at ±1σ: canonical 68.27; 3 near-miss spellings checked across 5 files; none present
@@ -49,7 +49,7 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C15.3  arithmetic §4 / Appendix D     appF_n_claims=12 vs orig_n_tested=6 + n_untested=6 = 12 (tol 0)
   PASS  C15.4  arithmetic §4 / Appendix C     n_untested=6 vs appE_n_sim=6 + appE_n_cpu=0 = 6 (tol 0)
   PASS  C15.5  arithmetic §Appendix B         rt_hours=49.8 vs rt_hours_m49=1.9 + rt_hours_released=47.9 = 49.8 (tol 0.05)
-  PASS  C16.1  kind-count §BUILD_CHECKS       registered 29, the accounting claims 29, docs/BUILD_CHECKS.md enumerates 29
+  PASS  C16.1  kind-count §BUILD_CHECKS       registered 32, the accounting claims 32, docs/BUILD_CHECKS.md enumerates 32
   PASS  C20.1  unit-consistency §whole paper        0 n_independent figure(s) naming no unit
   PASS  C18.1  frequency-consistency §9                  5 of 5 -> "all", text claims "all"; wording ['every']
   PASS  C18.2  frequency-consistency §6.6                0 of 5 -> "none", text claims "none"; wording ['in 0 of', '0 of']
@@ -58,12 +58,15 @@ PART C — COMPARATIVE CLAIM CHECK
   PASS  C17.1  scope-consistency §4 / Appendix C     6 universal quantifiers checked against the enumerated set; none present
   PASS  C21.1  figure_reference §whole paper        6 figures, 6 distinct numbers cited [1, 2, 3, 4, 5, 6]
   PASS  C22.1  population_partition §6.3 / Appendix B   n_runs=28 + n_runs_offwidth=5 = 33 vs run_total=33; e2_fitted_runs=22 + e2_excluded_10k=6 = 28 vs 28; table 9 rows sum 33, widths ['124', '256'], seed-id lengths match; figure plots 28
-  PASS  C23.1  table_renders §Appendix C / D / E 28 source tables, 28 rendered; source rows [17, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 3, 7, 7, 7, 15, 7, 13, 23, 17, 3, 8, 10, 12, 11, 7, 7] vs row separators [18, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 4, 7, 7, 7, 15, 8, 14, 24, 18, 3, 8, 10, 12, 11, 7, 7]
-  PASS  C24.1  arena_consistency §3.2                16 claims; arena confirmed against its own section in 16, n_independent in 16
+  PASS  C23.1  table_renders §Appendix C / D / E 32 source tables, 32 rendered; source rows [7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 3, 7, 7, 7, 17, 7, 13, 17, 24, 18, 3, 8, 10, 12, 11, 7, 7, 13, 26, 26, 11] vs row separators [7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 4, 7, 7, 7, 17, 8, 14, 18, 25, 19, 3, 8, 10, 12, 11, 7, 7, 14, 26, 26, 11]
+  PASS  C24.1  arena_consistency §3.2 / Appendix D   16 claims; arena confirmed against its own section in 16, n_independent in 16
   PASS  C25.1  rule-seed-scope §abstract / contributions / 5 / 11 6 lines quote the rule-horizon figures near 'rule'/'pre-register'; 6 name the seed or the three-seed extension
-  PASS  C25.2  overstat-reversal §7.2 / abstract / contributions 1 paragraphs pair 'overstat' with an alignment figure; 1 name the reversal
+  PASS  C25.2  overstat-reversal §7.2 / abstract / contributions 0 paragraphs pair 'overstat' with an alignment figure; 0 name the reversal
+  PASS  C26.1  compute-claim §abstract / contributions / Appendix D / 12 0 forbidden phrasings in 5 rendered files; 4 front-matter sentences name compute or longer training ({'abstract': 1, 'contributions': 1, 'appendix_d': 1, 'conclusion': 1}), 4 with the qualifier
+  PASS  C27.1  alignment-arena §abstract / contributions / 3.1 / 7.2 8 sentences pair the alignment defect with a short-horizon cost; 8 have the all-ten-episodes figures or words in their paragraph
+  PASS  C27.2  action-response §7.2 / model card   2 paragraphs cite Arm A's stale-pairing figures; 2 carry an X2 key
 ========================================================================================================
-  62/62 comparative claims verified
+  65/65 comparative claims verified
 
   SELF-TEST — every check must FAIL when its expectation is corrupted
   ----------------------------------------------------------------------------------------------------
@@ -86,9 +89,9 @@ PART C — COMPARATIVE CLAIM CHECK
   caught C3.4   0.150935 vs 0.256859 -> lt, text says gt
   caught C3.5   0.0416667 vs 0.00166667 -> gt, text says lt
   caught C3.6   0.993913 vs 0.605338 -> gt, text says lt
-  caught C7.1   claims withdrawn on evidence = 8 (8/Eight/eight); 0/3 sites agree; disagreeing: ['each beside the evidence that withdrew it:', 'claims withdrawn on evidence**, and', 'claims withdrawn on evidence, in order']
-  caught C7.2   framings withdrawn = 7 (7/Seven/seven); 2/3 sites agree; disagreeing: ['framings withdrawn**, as stated claims']
-  caught C7.5   superseded entries = 21 (21); 0/2 sites agree; disagreeing: ['superseded entries, each beside the evidence', 'superseded entries kept in the record']
+  caught C7.1   claims withdrawn on evidence = 9 (9/Nine/nine); 0/3 sites agree; disagreeing: ['each beside the evidence that withdrew it:', 'claims withdrawn on evidence**, and', 'claims withdrawn on evidence, in order']
+  caught C7.2   framings withdrawn = 7 (7/Seven/seven); 0/3 sites agree; disagreeing: ['framings withdrawn, and the rest early hypotheses', 'framings withdrawn rather than numbers', 'framings withdrawn**, as stated claims']
+  caught C7.5   superseded entries = 22 (22); 0/2 sites agree; disagreeing: ['superseded entries, each beside the evidence', 'superseded entries kept in the record']
   caught C6.1   relative sd 0.1732 vs 0.0791 -> 2.189x, text implies at least 200.0x
   caught C8.1   horizon 100; expected "34.4" within 120 chars after "the method's own imagination rollout len"; ABSENT
   caught C8.2   horizon 100; expected "100.0000" within 420 chars of "is the method's own imagination rollout "; ABSENT
@@ -103,21 +106,21 @@ PART C — COMPARATIVE CLAIM CHECK
   caught C11.3  0/24 headline values present in requirements.txt; missing ['rt_hours', 'rt_runs', 'd1_ratio', 'd1n_epi_ratio_h1', 'd1n_epi_cov1_h1', 'v3_cov_nominal1', 'a2_rdd', 'stale_pct', 'v1_shared_pct', 'm44_ratio_gain', 'm49_ratio_gain', 'e7_step_r', 'e7_r_dis', 'e5s_span', 'e5s_mse_under', 'ad_nrmse', 'ad_nrmse_ci', 'ad_rel', 'ad_rel_ci', 'd3x_own_epi_ok', 'n_retractions_lower', 'n_retract_framing_word', 'n_superseded', 'd1_ratio']
   caught C11.2  0/5 headline values present in requirements.txt; missing ['d1n_epi_ratio_h100', 'e5_ratio_h100', 'm44_ratio_gain', 'r2_indep_ratio_h100', 'd1_ratio']
   caught C11.4  0/5 headline values present in requirements.txt; missing ['cc_n', 'cc_kinds', 'cc_st_caught', 'cc_selfdefects_word', 'd1_ratio']
-  caught C12.1  370 words (max 10), 23 numerals (max 0) ['1', '3', '4.61', '368', '2.58', '100,', '368', '368', '0.133', '4', '0.605', '0.419', '8.3', '33.4', '100', '0.4697', '89.15', '100', '2.03', '5.2', '10', '17', '36']
+  caught C12.1  370 words (max 10), 23 numerals (max 0) ['1', '3', '4.61', '368', '2.58', '100,', '368', '0.133', '4', '0.605', '0.419', '8.3', '33.4', '100', '0.470', '89.15', '100', '2.03', '5.2', '10', '17', '36', '100']
   caught C13.1  4/5 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
   caught C13.2  3/4 quoted quantities carry their interval; ['planted: no interval key no_such_interval_key']
   caught C7.3   nominal coverage at ±1σ: canonical 68.27; 4 near-miss spellings checked across 5 files; PRESENT: ["'68.27' in PAPER.md", "'68.27' in PAPER.tex", "'68.27' in README.md", "'68.27' in MODEL_CARD.md"]
   caught C7.4   the h=1 disagreement interval: canonical [+0.918, +0.999]; 2 near-miss spellings checked across 4 files; PRESENT: ["'[+0.918, +0.999]' in PAPER.md"]
   caught C3.7   0.68270 -> 0.77480 is a rise of 0.09210, text says fall
   caught C3.8   0.68270 -> 0.76550 is a rise of 0.08280, text says fall
-  caught C14.1  1 horizon-unscoped figures (1 calibration, 0 other); first: L2301 ['d1n_alea_ratio_h368'] The released checkpoint is {{d1n_alea_ratio_h368}} times overconfident
+  caught C14.1  1 horizon-unscoped figures (1 calibration, 0 other); first: L2266 ['d1n_alea_ratio_h368'] The released checkpoint is {{d1n_alea_ratio_h368}} times overconfident
   caught C15.1  rt_hours=49.8 vs rt_hours_10k=19.7 + rt_hours=49.8 = 69.5 (tol 0.05)
   caught C15.2  rt_runs=33 vs rt_runs_10k=6 + rt_runs=33 = 39 (tol 0)
   caught C15.3  appF_n_claims=12 vs orig_n_tested=6 + appF_n_claims=12 = 18 (tol 0)
   caught C15.4  n_untested=6 vs appE_n_sim=6 + n_untested=6 = 12 (tol 0)
   caught C15.5  rt_hours=49.8 vs rt_hours_m49=1.9 + rt_hours=49.8 = 51.7 (tol 0.05)
-  caught C16.1  registered 29, the accounting claims 30, docs/BUILD_CHECKS.md enumerates 29
-  caught C20.1  41 n_independent figure(s) naming no unit; first: "n_independent = 4, with a cluster bootstrap over whole trajectories:  "
+  caught C16.1  registered 32, the accounting claims 33, docs/BUILD_CHECKS.md enumerates 32
+  caught C20.1  45 n_independent figure(s) naming no unit; first: "n_independent = 4, with a cluster bootstrap over whole trajectories; t"
   caught C18.1  1 of 5 -> "one", text claims "all"; wording ['every']
   caught C18.2  1 of 5 -> "one", text claims "none"; wording ['in 0 of', '0 of']
   caught C18.3  1 of 6 -> "one", text claims "all"; wording ['every', 'all ']
@@ -125,9 +128,12 @@ PART C — COMPARATIVE CLAIM CHECK
   caught C17.1  7 universal quantifiers checked against the enumerated set; PRESENT: ['we did not test']
   caught C21.1  5 figures, 6 distinct numbers cited [1, 2, 3, 4, 5, 6]; dangling [6]
   caught C22.1  n_runs=28 + n_runs_offwidth=5 = 33 vs run_total=34; e2_fitted_runs=22 + e2_excluded_10k=6 = 28 vs 28; table 9 rows sum 33, widths ['124', '256'], seed-id lengths match; figure plots 28
-  caught C23.1  28 source tables, 28 rendered; source rows [17, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 3, 7, 7, 7, 15, 7, 13, 23, 17, 3, 8, 10, 12, 11, 7, 7] vs row separators [18, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 4, 7, 7, 7, 15, 8, 14, 24, 18, 3, 8, 10, 12, 11, 7, 7]; short [(1, 7, 7), (2, 10, 10), (3, 8, 8), (4, 5, 5), (5, 7, 7), (6, 7, 7), (7, 5, 5), (8, 5, 5), (9, 7, 7), (10, 7, 7), (11, 4, 4), (13, 7, 7), (14, 7, 7), (15, 7, 7), (16, 15, 15), (21, 3, 3), (22, 8, 8), (23, 10, 10), (24, 12, 12), (25, 11, 11), (26, 7, 7), (27, 7, 7)]
+  caught C23.1  32 source tables, 32 rendered; source rows [7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 3, 7, 7, 7, 17, 7, 13, 17, 24, 18, 3, 8, 10, 12, 11, 7, 7, 13, 26, 26, 11] vs row separators [7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 4, 7, 7, 7, 17, 8, 14, 18, 25, 19, 3, 8, 10, 12, 11, 7, 7, 14, 26, 26, 11]; short [(0, 7, 7), (1, 10, 10), (2, 8, 8), (3, 5, 5), (4, 7, 7), (5, 7, 7), (6, 5, 5), (7, 5, 5), (8, 7, 7), (9, 7, 7), (10, 4, 4), (12, 7, 7), (13, 7, 7), (14, 7, 7), (15, 17, 17), (21, 3, 3), (22, 8, 8), (23, 10, 10), (24, 12, 12), (25, 11, 11), (26, 7, 7), (27, 7, 7), (29, 26, 26), (30, 26, 26), (31, 11, 11)]
   caught C24.1  16 claims; arena confirmed against its own section in 5, n_independent in 16; 11 mismatch(es), first: 5: table says all ten episodes, section names ['out-of-sample', 'in-sample']
-  caught C25.1  8 lines quote the rule-horizon figures near 'rule'/'pre-register'; 6 name the seed or the three-seed extension; missing at ['PAPER.template.md:2303', 'README.template.md:218']
-  caught C25.2  2 paragraphs pair 'overstat' with an alignment figure; 1 name the reversal; missing in ["PAPER.template.md: 'predict state *t* — stale by one step. Scored correctly the released c'"]
+  caught C25.1  8 lines quote the rule-horizon figures near 'rule'/'pre-register'; 6 name the seed or the three-seed extension; missing at ['PAPER.template.md:2268', 'README.template.md:218']
+  caught C25.2  1 paragraphs pair 'overstat' with an alignment figure; 0 name the reversal; missing in ["PAPER.template.md: 'predict state *t* — stale by one step. Scored correctly the released c'"]
+  caught C26.1  2 forbidden phrasings in 5 rendered files; 5 front-matter sentences name compute or longer training ({'abstract': 2, 'contributions': 1, 'appendix_d': 1, 'conclusion': 1}), 4 with the qualifier; failures ["PAPER.md: 'even when that setting'", "PAPER.md: 'trains twice as long'", 'abstract: "---  Trained longer, the original\'s setting still trails the best longer forecas"']
+  caught C27.1  9 sentences pair the alignment defect with a short-horizon cost; 8 have the all-ten-episodes figures or words in their paragraph; missing in ["PAPER.template.md: 'Separately, the released evaluation pairs each prediction with the previous step'"]
+  caught C27.2  3 paragraphs cite Arm A's stale-pairing figures; 2 carry an X2 key; missing in ["PAPER.template.md: 'Our own Arm A checkpoints at {{iters_long}} iterations, trained under '"]
   ----------------------------------------------------------------------------------------------------
-  62/62 corruptions caught
+  65/65 corruptions caught

@@ -1,6 +1,6 @@
 {
   "n_artifacts": 83,
-  "n_paper_keys": 2360,
+  "n_paper_keys": 2369,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -229,6 +229,18 @@
       "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
     },
     {
+      "artifact": "mn_sweep_verdict.json",
+      "n_paper_keys": 26,
+      "writers": [
+        "verdict_mn_sweep"
+      ],
+      "invoked_writers": [
+        "verdict_mn_sweep"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "alignment_by_horizon.json",
       "n_paper_keys": 24,
       "writers": [
@@ -265,13 +277,13 @@
       "exempt_reason": null
     },
     {
-      "artifact": "mn_sweep_verdict.json",
-      "n_paper_keys": 23,
+      "artifact": "baselines_verdict.json",
+      "n_paper_keys": 22,
       "writers": [
-        "verdict_mn_sweep"
+        "verdict_baselines"
       ],
       "invoked_writers": [
-        "verdict_mn_sweep"
+        "verdict_baselines"
       ],
       "covered": true,
       "exempt_reason": null
@@ -315,6 +327,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "pooled_nrmse_alongside.json",
+      "n_paper_keys": 21,
+      "writers": [
+        "pooled_nrmse_rescore"
+      ],
+      "invoked_writers": [
+        "pooled_nrmse_rescore"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "step0_regimes.json",
       "n_paper_keys": 21,
       "writers": [
@@ -326,18 +350,6 @@
         "step0_velocity_regimes",
         "task1c_policy_test",
         "task1d_reset_argument"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "baselines_verdict.json",
-      "n_paper_keys": 20,
-      "writers": [
-        "verdict_baselines"
-      ],
-      "invoked_writers": [
-        "verdict_baselines"
       ],
       "covered": true,
       "exempt_reason": null
@@ -398,18 +410,6 @@
       ],
       "invoked_writers": [
         "v1_ensemble_topology"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "pooled_nrmse_alongside.json",
-      "n_paper_keys": 17,
-      "writers": [
-        "pooled_nrmse_rescore"
-      ],
-      "invoked_writers": [
-        "pooled_nrmse_rescore"
       ],
       "covered": true,
       "exempt_reason": null
