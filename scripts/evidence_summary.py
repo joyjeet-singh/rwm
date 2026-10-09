@@ -157,6 +157,19 @@ def multiplicity(family_rejected=None, mde_met=None):
     return "not applicable"
 
 
+def _ab_multiplicity(A1, C3, ab_family):
+    """S1: the Holm family covers the checkpoints in task_c3_multiplicity.json's cells. A row at another checkpoint
+    is not in it, and says so, then where the corrected cells are and whether they all survive."""
+    fam = sorted({int(x["cell"].split("|")[2]) for x in C3["holm_bonferroni"]["steps"]})
+    m = re.search(r"(\d[\d,]*)", A1["design"]["checkpoint"].replace("weights_", ""))
+    row_it = int(m.group(1).replace(",", ""))
+    cells = "".join(f"{c:,}-, " for c in fam[:-2]) + "".join(f"{c:,}- and " for c in fam[-2:-1]) + f"{fam[-1]:,}"
+    if row_it in fam:
+        return multiplicity(family_rejected=ab_family)
+    return (f"not applicable at {row_it:,}; the {cells}-iteration cells "
+            + ("survive Holm" if ab_family else "do not all survive Holm") + " (Appendix L)")
+
+
 # ---------------------------------------------------------------------- rows
 def build_rows():
     A1 = J("a1_ab_by_horizon.json")
@@ -194,11 +207,9 @@ def build_rows():
         "in_sample": in_sample(a1_model, a1_arena),
         "verdict": gap_verdict(g368["gap"], g368["gap_excludes_zero"]),
         # Round 2, T10 review: the multiplicity family was corrected at the 500- and 2,500-iteration
-        # checkpoints (results/task_c3_multiplicity.json), not at this row's 10,000.
-        "multiplicity": (multiplicity(family_rejected=ab_family) + ", at the "
-                         + " and ".join(f"{int(c):,}" for c in sorted({x["cell"].split("|")[2]
-                                        for x in C3["holm_bonferroni"]["steps"]}, key=int))
-                         + "-iteration checkpoints"),
+        # checkpoints (results/task_c3_multiplicity.json), not at this row's 10,000. Round 3, R4 (S1): the column
+        # says what applies to the row's own checkpoint, and where the corrected cells are.
+        "multiplicity": _ab_multiplicity(A1, C3, ab_family),
         "model": a1_model,
         "artifacts": ["results/a1_ab_by_horizon.json", "results/task_c3_multiplicity.json"],
     })
