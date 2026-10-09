@@ -384,7 +384,7 @@ At h = {{v2_deploy_h}}, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **{{d1_ratio_h100}}×**.
 Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
 same {{d1_seeds}} seeds at {{iters_long}} training iterations, same held-out arena,
-n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories; the two floor columns are each arm's error divided by the hold-last floor's, so below 1 beats the floor:
+n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories; the two floor columns are each arm's error divided by the hold-last floor's, so a value below one beats the floor:
 
 | h | autoregressive | teacher forcing | ratio | gap [95% CI] | excludes 0 | hold-last floor | A ÷ floor | B ÷ floor | episodes A leads |
 |---|---|---|---|---|---|---|---|---|---|
