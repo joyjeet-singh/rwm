@@ -67,6 +67,12 @@ ITEMS = {
                        "magnitude calibration, in both components.**",
                        "once the dependence between dimensions is respected. The failure is specifically magnitude "
                        "calibration, in both components.**")]},
+    # S5: the main text's one commit identifier (rule M-23's), glossed where it appears. PAPER.md keeps the real hash
+    # and the submitted PDF prints its anonymous label, so the gloss is worded to be true in both renderings, and points
+    # to the unnumbered "Data and code" section by name.
+    "s5": {"edits": [("(rule M-23, Appendix E; commit `efc35b8`)",
+                      "(rule M-23, Appendix E; commit `efc35b8`, in the submitted paper an anonymised commit label; "
+                      "see Data and code)")]},
 }
 
 

@@ -358,7 +358,7 @@ states it, and our verdict.
 
 **Claim under test.** Training the dynamics model on its own autoregressive rollouts beats training it with teacher forcing, at long forecast horizons.
 
-**Rule, committed in advance** (rule M-23, Appendix E; commit `efc35b8`), naming conditions rather
+**Rule, committed in advance** (rule M-23, Appendix E; commit `efc35b8`, in the submitted paper an anonymised commit label; see Data and code), naming conditions rather
 than outcomes. Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule was run on
 seed {{m23_seed}} of each arm: autoregressive {{m23_A_s1}} against teacher forcing {{m23_B_s1}} at
