@@ -17,8 +17,8 @@ BAK = "/Users/Shared/rwm_verify/evidence/R3R3"
 ITEMS = {}
 
 # --------------------------------------------------------------------------------------------- E2 (item 1)
-A7 = ("- **The released evaluation is misaligned by one step; over all ten episodes it raises the checkpoint's error up "
-      "to h = 32, and from h = {{v2_deploy_h}} the change is not resolved.** Evaluation feeds the action from *t−1* "
+A7 = ("- **The released evaluation is misaligned by one step; over all ten episodes it raises the checkpoint's relative-L1 error "
+      "up to h = 32, and from h = {{v2_deploy_h}} the change is not resolved.** Evaluation feeds the action from *t−1* "
       "where training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On "
       "all ten episodes' {{ad20_nind}} independent trajectories, all of them training data for this checkpoint, the "
       "stale action raises its relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1 and "
