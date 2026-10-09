@@ -43,8 +43,7 @@ the same, but what re-measuring the method reveals about where it is robust and 
 Three things distinguish it from a re-run of the authors' code. **We rebuilt rather than
 imported**, and matched the rebuild to the reference before any training (Appendix A), so a later
 discrepancy belongs to the method, not to our wiring. **Decision rules were committed to git
-before the data**, with timestamps a reader can check (§8, Figure 1); one returned "cannot be
-settled", and we report it. **We keep our withdrawn findings in the record.** The ledger keeps
+before the data**, with timestamps a reader can check (§8, Figure 1); several returned verdicts against the original or could not settle the question, and we report each (Appendix E). **We keep our withdrawn findings in the record.** The ledger keeps
 {{n_superseded}} superseded entries, each beside the evidence that withdrew it:
 {{n_retractions_lower}} claims withdrawn on evidence, {{n_retract_framing_word}} framings withdrawn,
 and the rest early hypotheses closed as housekeeping (§8 and the supplementary
