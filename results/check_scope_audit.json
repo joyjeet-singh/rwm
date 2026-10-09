@@ -15,8 +15,8 @@
     "RESULTS.md",
     "docs/EXTERNAL_READ_BRIEF.md"
   ],
-  "n_kinds": 29,
-  "n_whole_file": 20,
+  "n_kinds": 30,
+  "n_whole_file": 21,
   "n_named_region": 4,
   "n_artifact_only": 5,
   "n_unclassified": 0,
@@ -57,6 +57,22 @@
       "reason": "compares two artifact values",
       "files_named_by_claims": [],
       "surface_named_by_claims": []
+    },
+    {
+      "kind": "compute-claim",
+      "input_selection": "whole-file",
+      "reason": "scans the rendered files in its own `files` list for the forbidden equal-compute phrasing, and the front matter of PAPER.md (abstract, contributions, Appendix D, section 12) sentence by sentence",
+      "files_named_by_claims": [
+        "MODEL_CARD.md",
+        "PAPER.md",
+        "README.md",
+        "docs/APPENDIX_G_VARIANCE_ARITHMETIC.md",
+        "docs/BUILD_CHECKS.md"
+      ],
+      "surface_named_by_claims": [],
+      "tier": "built",
+      "requires": "docs/BUILD_CHECKS.md",
+      "covers_moved_text": true
     },
     {
       "kind": "count-consistency",

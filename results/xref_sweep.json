@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 82,
-  "n_ok": 82,
+  "n_pointers": 84,
+  "n_ok": 84,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -44,6 +44,20 @@
       "ok": true,
       "detail": "target 6.6; nouns ['expectation', 'held', 'about', 'counter-baseline', 'nothing', 'table', 'discharges', 're-opens', 'rule']; absent ['held', 'counter-baseline', 'discharges', 're-opens']",
       "context": "\u00a76.6 gives the expectation we held about the\ncounter-baseline, and nothing in the table discharges or re-opens the rule"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a75.3 gives the two readings of its rules that differ)",
+      "ok": true,
+      "detail": "target 5.3; nouns ['readings', 'rules', 'differ']; absent []",
+      "context": "\u00a75.3 gives the two readings of its rules that differ)"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix U gives every reading, signed as in the table)",
+      "ok": true,
+      "detail": "target Appendix U; nouns ['reading', 'signed', 'table']; absent []",
+      "context": "Appendix U gives every reading, signed as in the table)"
     },
     {
       "class": "semantic",

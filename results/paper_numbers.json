@@ -1825,19 +1825,19 @@
   },
   "cc_kind_list": {
     "source": "results/comparative_claims.json",
-    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arena_consistency* (every row of section 3.2's evidence table names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds the build accounting claims, this file enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *overstat-reversal* (no sentence says the released evaluation overstates its error beside an alignment figure unless its paragraph names the reversal of sign), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *rule-seed-scope* (a sentence quoting the three-seed headline or its rule-horizon cells near the word rule or pre-register names the one seed the rule ran on, or the three-seed extension), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
+    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arena_consistency* (every row of section 3.2's evidence table names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *compute-claim* (no rendered file says a setting won even when its rival trained longer, and every front-matter sentence that names compute or longer training says the ranking depends on it or names the split), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds the build accounting claims, this file enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *overstat-reversal* (no sentence says the released evaluation overstates its error beside an alignment figure unless its paragraph names the reversal of sign), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *rule-seed-scope* (a sentence quoting the three-seed headline or its rule-horizon cells near the word rule or pre-register names the one seed the rule ran on, or the three-seed extension), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
   },
   "cc_kinds": {
     "source": "results/comparative_claims.json",
-    "value": 29
+    "value": 30
   },
   "cc_n": {
     "source": "results/comparative_claims.json",
-    "value": 62
+    "value": 63
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 62
+    "value": 63
   },
   "cc_selfdefect_list": {
     "source": "results/comparative_claims.json",
@@ -1857,11 +1857,11 @@
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 62
+    "value": 63
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 62
+    "value": 63
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -5339,9 +5339,65 @@
     "source": "results/pooled_nrmse_alongside.json",
     "value": "with the baselines teacher-forced, in-sample nRMSE at h = 1 returns DOES NOT REPRODUCE pooled against CANNOT BE SETTLED averaged; with the baselines autoregressive, in-sample nRMSE at h = 100 returns PARTIAL pooled against RWM AHEAD OF ALL THREE averaged"
   },
+  "n2_m75_D_mlp": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "-0.160"
+  },
+  "n2_m75_D_rssm": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "-0.186"
+  },
+  "n2_m75_D_transformer": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "-0.052"
+  },
+  "n2_m75_ci_mlp": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "[-0.286, -0.002]"
+  },
+  "n2_m75_ci_rssm": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "[-0.328, -0.013]"
+  },
+  "n2_m75_ci_transformer": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "[-0.089, -0.005]"
+  },
+  "n2_m75_committed": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "CANNOT BE SETTLED"
+  },
+  "n2_m75_pooled": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "DOES NOT REPRODUCE"
+  },
+  "n2_m76_D_mlp": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "+0.017"
+  },
+  "n2_m76_ci_mlp": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "[-0.017, +0.044]"
+  },
+  "n2_m76_committed": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "RWM AHEAD OF ALL THREE"
+  },
+  "n2_m76_pooled": {
+    "source": "results/pooled_nrmse_alongside.json",
+    "value": "PARTIAL"
+  },
   "n2_n_changed_word": {
     "source": "results/pooled_nrmse_alongside.json",
     "value": "two"
+  },
+  "n3_appU_nrows_word": {
+    "source": "results/mn_compute_matched.json",
+    "value": "twelve"
+  },
+  "n3_appU_table": {
+    "source": "results/mn_compute_matched.json",
+    "value": "| (2, 8) (0.26) | 2,500 | 3.78 | **-0.1274 [-0.2175, -0.0373]** | **-0.0219 [-0.0341, -0.0107]** | **-0.1139 [-0.2988, -0.0088]** | **-0.0219 [-0.0364, -0.0081]** |\n| (2, 8) (0.26) | 5,000 | 7.55 | -0.0742 [-0.1586, +0.0101] | **+0.0619 [+0.0448, +0.0813]** | -0.0301 [-0.1976, +0.0711] | **+0.0927 [+0.0681, +0.1230]** |\n| (2, 8) (0.26) | 10,000 | 15.11 | -0.0176 [-0.0921, +0.0475] | **+0.1085 [+0.0846, +0.1367]** | **+0.1135 [+0.0983, +0.1357]** | **+0.1403 [+0.1075, +0.1802]** |\n| (8, 8) (0.40) | 2,500 | 2.50 | **-0.0755 [-0.1410, -0.0269]** | **-0.0142 [-0.0239, -0.0053]** | **-0.1004 [-0.2449, -0.0167]** | **-0.0208 [-0.0462, -0.0009]** |\n| (8, 8) (0.40) | 5,000 | 4.99 | -0.0223 [-0.0782, +0.0244] | **+0.0696 [+0.0538, +0.0870]** | -0.0166 [-0.1434, +0.0719] | **+0.0937 [+0.0762, +0.1123]** |\n| (8, 8) (0.40) | 10,000 | 9.99 | +0.0343 [-0.0198, +0.0719] | **+0.1162 [+0.0924, +0.1436]** | **+0.1270 [+0.0987, +0.1589]** | **+0.1414 [+0.1163, +0.1710]** |\n| (32, 16) (1.35) | 2,500 | 0.74 | **-0.1254 [-0.2054, -0.0454]** | **-0.0438 [-0.0675, -0.0258]** | **-0.2509 [-0.5218, -0.0956]** | **-0.1003 [-0.1355, -0.0719]** |\n| (32, 16) (1.35) | 5,000 | 1.48 | -0.0723 [-0.1466, +0.0020] | **+0.0400 [+0.0326, +0.0481]** | **-0.1671 [-0.4301, -0.0117]** | **+0.0142 [+0.0068, +0.0205]** |\n| (32, 16) (1.35) | 10,000 | 2.96 | -0.0157 [-0.0707, +0.0393] | **+0.0866 [+0.0729, +0.1005]** | -0.0235 [-0.1158, +0.0388] | **+0.0618 [+0.0531, +0.0706]** |\n| (32, 32) (1.81) | 2,500 | 0.55 | **-0.1450 [-0.2490, -0.0409]** | **-0.0384 [-0.0637, -0.0186]** | **-0.2869 [-0.5951, -0.1005]** | **-0.1062 [-0.1422, -0.0768]** |\n| (32, 32) (1.81) | 5,000 | 1.11 | -0.0918 [-0.1901, +0.0065] | **+0.0454 [+0.0356, +0.0563]** | **-0.2031 [-0.5033, -0.0275]** | +0.0084 [-0.0006, +0.0161] |\n| (32, 32) (1.81) | 10,000 | 2.21 | -0.0352 [-0.1142, +0.0438] | **+0.0920 [+0.0770, +0.1068]** | -0.0594 [-0.1903, +0.0340] | **+0.0560 [+0.0483, +0.0639]** |"
   },
   "n3_best_D_long": {
     "source": "results/mn_compute_matched.json",
@@ -5363,9 +5419,17 @@
     "source": "results/mn_compute_matched.json",
     "value": "+0.0084"
   },
+  "n3_best_ins_D_mid_h100": {
+    "source": "results/mn_compute_matched.json",
+    "value": "+0.0454"
+  },
   "n3_best_ins_ci_mid": {
     "source": "results/mn_compute_matched.json",
     "value": "[-0.0006, +0.0161]"
+  },
+  "n3_best_ins_ci_mid_h100": {
+    "source": "results/mn_compute_matched.json",
+    "value": "[+0.0356, +0.0563]"
   },
   "n3_best_over_long": {
     "source": "results/mn_compute_matched.json",
@@ -5407,9 +5471,17 @@
     "source": "results/mn_compute_matched.json",
     "value": "(32, 16)"
   },
+  "n3_long_factor_word": {
+    "source": "results/mn_compute_matched.json",
+    "value": "four times"
+  },
   "n3_mid_factor_word": {
     "source": "results/mn_compute_matched.json",
     "value": "twice"
+  },
+  "n3_n_readings_word": {
+    "source": "results/mn_compute_matched.json",
+    "value": "four"
   },
   "n3_sh_D_long_M2_N8": {
     "source": "results/mn_compute_matched.json",
@@ -5427,9 +5499,29 @@
     "source": "results/mn_compute_matched.json",
     "value": "[+0.0987, +0.1589]"
   },
+  "n3_sh_label_M2_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "(2, 8)"
+  },
+  "n3_sh_label_M8_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "(8, 8)"
+  },
   "n3_sh_long_clause": {
     "source": "results/mn_compute_matched.json",
     "value": "(2, 8) by +0.1135 [+0.0983, +0.1357] and (8, 8) by +0.1270 [+0.0987, +0.1589]"
+  },
+  "n3_sh_long_nread_word": {
+    "source": "results/mn_compute_matched.json",
+    "value": "three"
+  },
+  "n3_sh_over_long_M2_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "15"
+  },
+  "n3_sh_over_long_M8_N8": {
+    "source": "results/mn_compute_matched.json",
+    "value": "10"
   },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
@@ -5567,6 +5659,26 @@
     "source": "results/step6_3_min_logstd.json",
     "value": "5.2"
   },
+  "orig_e_32_32": {
+    "source": "results/original_paper_figures.json",
+    "value": "0.47"
+  },
+  "orig_e_32_8": {
+    "source": "results/original_paper_figures.json",
+    "value": "0.47"
+  },
+  "orig_h_32_32": {
+    "source": "results/original_paper_figures.json",
+    "value": "2.27"
+  },
+  "orig_h_32_8": {
+    "source": "results/original_paper_figures.json",
+    "value": "1.07"
+  },
+  "orig_h_ratio": {
+    "source": "results/original_paper_figures.json",
+    "value": "2.12"
+  },
   "orig_n_tested": {
     "source": "results/original_paper_figures.json",
     "value": 6
@@ -5614,6 +5726,10 @@
   "orig_tf_ratio": {
     "source": "results/original_paper_figures.json",
     "value": "8.5"
+  },
+  "orig_tied_label": {
+    "source": "results/original_paper_figures.json",
+    "value": "(32, 32)"
   },
   "orphan_rows": {
     "source": "results/step0_regimes.json",
@@ -5665,7 +5781,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 57
+    "value": 59
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -8721,11 +8837,11 @@
   },
   "t1_n_frag": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 17
+    "value": 19
   },
   "t1_n_frag_ok": {
     "source": "results/t1_bibliography_verified.json",
-    "value": 17
+    "value": 19
   },
   "t1_n_frag_oneword": {
     "source": "results/t1_bibliography_verified.json",
@@ -8793,7 +8909,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 862
+    "value": 878
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
