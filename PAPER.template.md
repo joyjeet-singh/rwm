@@ -945,7 +945,7 @@ checked before committing it (Appendix N).
 A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
 before either was computed (rule M-51, Appendix E, corrected by rule M-52), we added two baselines
 needing no ensemble and no second model: `step-size`, the magnitude of the model's own predicted
-state change ‖µ_t − µ_{t−1}‖, which costs nothing because the rollout has already made those
+state change $\lVert \mu_t - \mu_{t-1} \rVert$, which costs nothing because the rollout has already made those
 predictions; and `entry-res`, its one-step error at the step *before* the forecast window opens,
 which costs **one extra rollout in this harness** and nothing in deployment, where a model consumes
 the history to build its recurrent state anyway. The first rule called both free without
@@ -954,7 +954,7 @@ distinguishing those, and the second records the correction.
 | baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? |
 |---|---|---|---|---|
 | forecast step index *(the existing adversary)* | {{e7_index_r}} | {{e7_index_margin}} | {{e7_index_partial}} | — |
-| `step-size` — ‖µ_t − µ_{t−1}‖ | **{{e7_step_r}}** | {{e7_step_margin}} | {{e7_step_partial}} | **{{e7_step_beaten}}** |
+| `step-size` — $\lVert \mu_t - \mu_{t-1} \rVert$ | **{{e7_step_r}}** | {{e7_step_margin}} | {{e7_step_partial}} | **{{e7_step_beaten}}** |
 | `entry-res` — one-step error before the window | {{e7_entry_r}} | {{e7_entry_margin}} | {{e7_entry_partial}} | {{e7_entry_beaten}} |
 
 *r(disagreement, error) = {{e7_r_dis}} on the released checkpoint over all ten episodes, n_independent = {{e7_nind}} 400-step trajectories.

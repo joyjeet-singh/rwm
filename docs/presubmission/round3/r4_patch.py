@@ -143,6 +143,11 @@ ITEMS = {
          "first rules' commits by subject and the later ones by the commit that introduced their ledger heading, never "
          "by a stored hash alone."),
     ]},
+    # S17: the step-size quantity printed its braces literally in the PDF; it is LaTeX math now, in prose and table
+    "s17": {"edits": [
+        ("state change ‖µ_t − µ_{t−1}‖, which costs nothing", "state change $\\lVert \\mu_t - \\mu_{t-1} \\rVert$, which costs nothing"),
+        ("| `step-size` — ‖µ_t − µ_{t−1}‖ |", "| `step-size` — $\\lVert \\mu_t - \\mu_{t-1} \\rVert$ |"),
+    ]},
 }
 
 
