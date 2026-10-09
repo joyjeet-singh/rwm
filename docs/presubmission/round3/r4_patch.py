@@ -87,6 +87,10 @@ ITEMS = {
         ("it stopped at {{q1_n_examined}}, and its notes give no reason.",
          "it stopped at {{q1_n_examined}} examined, {{q1_n_looked}} looked at, and its notes give no reason."),
     ]},
+    # S13: a "shorter unit" is defined where the text first relies on it, with its counts bound
+    "s13": {"edits": [("but on M-64's shorter units, at the same checkpoint and on the same two episodes,",
+                       "but on M-64's shorter units, each {{m64_hist_rows}} + h rows long and non-overlapping "
+                       "({{m64_units_list}} on these episodes), at the same checkpoint and on the same two episodes,")]},
 }
 
 

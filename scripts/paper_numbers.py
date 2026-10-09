@@ -3364,6 +3364,13 @@ def main():
     put("m64_A_h1", f'{_c["A_mean"]:.4f}', "results/m64_short_units.json")
     put("m64_B_h1", f'{_c["B_mean"]:.4f}', "results/m64_short_units.json")
     put("m64_B_beats_floor_at", ", ".join(_bb[:-1]) + " and " + _bb[-1], "results/m64_short_units.json")
+    # Round 3, R4 (S13): what a "shorter unit" is at each horizon, and how many the held-out pair holds
+    _ix = M64["index"]["out-of-sample held-out pair"]
+    _hist = {_ix[h]["unit_length"] - int(h) for h in _ix}
+    assert len(_hist) == 1 and all(_ix[h]["counts_agree"] for h in _ix), (_hist, _ix)
+    put("m64_hist_rows", _hist.pop(), "results/m64_short_units.json")
+    _ul = [f'{_ix[h]["n_independent_unit_level"]} at h = {h}' for h in sorted(_ix, key=int)]
+    put("m64_units_list", ", ".join(_ul[:-1]) + " and " + _ul[-1], "results/m64_short_units.json")
     put("m64_h128_n", _b["n_independent_unit_level"], "results/m64_short_units.json")
     put("m64_h128_lo", f'{_b["paired_diff_ci_unit_level"][0]:+.3f}',
         "results/m64_short_units.json")
