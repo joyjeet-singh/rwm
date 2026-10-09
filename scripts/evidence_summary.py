@@ -263,8 +263,8 @@ def build_rows():
         "in_sample": in_sample("our arms", mn_arena),
         # Round 2, T3 item 4(c): a returned verdict is printed verbatim, in the case the rule returned it.
         "verdict": (MV["verdict"] + f"; {len(_better)} of {MV['governing']['m']} "
-                    f"neighbours beat the centre; every other reading the rule reports agrees but {_mn_exc[0]}, "
-                    "which is unresolved"),
+                    f"neighbours beat the centre; every other reading the rule reports returns the same verdict but "
+                    f"{_mn_exc[0]}, which is unresolved; the ranking depends on training length (Appendix U)"),
         "multiplicity": "yes",
         "model": "our arms",
         "artifacts": ["results/mn_sweep_verdict.json", "results/mn_sweep_eval.json"],

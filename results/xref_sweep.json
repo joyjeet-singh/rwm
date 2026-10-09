@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 86,
-  "n_ok": 86,
+  "n_pointers": 85,
+  "n_ok": 85,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -30,13 +30,6 @@
       "ok": true,
       "detail": "target Appendix G; nouns ['forms', 'comparison', 'second', 'inverts']; absent ['second']",
       "context": "Appendix G gives both forms and the comparison the second one inverts"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix D gives the full table**, claim by claim, with what the original sta",
-      "ok": true,
-      "detail": "target Appendix D; nouns ['full', 'table', 'claim', 'claim', 'original', 'states', 'where', 'states', 'verdict']; absent []",
-      "context": "Appendix D gives the full table**, claim by claim, with what the original states, where it\nstates it, and our verdict"
     },
     {
       "class": "semantic",

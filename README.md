@@ -32,7 +32,7 @@ already narrowed in the paper while the ledger and this README went on asserting
 
 ## What this found
 
-**1 — The base paper's central training claim reproduces, and the advantage grows with horizon.**
+**1 — The base paper's central training claim reproduces at long horizons, grows with horizon, and reverses at one step.**
 Under a decision rule committed to git before the runs that tested it existed, and run on one
 seed per arm (seed 1), autoregressive training beats teacher forcing by 4.43× on
 the reference's own relative-L1 error at the 368-step open-loop horizon, on held-out
@@ -41,7 +41,7 @@ episodes. The 10,000-iteration runs of seeds 0 and 2 were trained after that ver
 extension that carries none of the rule's weight. Across the whole horizon grid the ratio rises
 monotonically to that figure — **2.58×** at h = 100, the horizon the
 method deploys at — and the gap excludes zero at 5 of 6 horizons,
-spanning it only at h=1. Only the rule's one-seed verdict is pre-registered;
+spanning it only at h=1; there, on 60 short windows, a second pre-registered rule finds teacher forcing ahead (-0.0194 [-0.0310, -0.0093]). Only the rule's one-seed verdict is pre-registered;
 the three-seed figures and every other horizon were computed after the data existed, and are
 marked as such.
 
@@ -56,7 +56,7 @@ implemented objective is squared error on a sampled prediction, whose optimum is
 **3 — As a ranking it survives adversarial testing.** Ensemble disagreement beats the forecast
 step index — a free counter neither original paper compared against — at every horizon. With both
 the rollout and the forecast depth held constant it still correlates **+0.419
-[+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard.
+[+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard. But the model's own predicted step size, which needs no ensemble, ranks error nearly as well (+0.4697 against +0.6053), by a margin this sample cannot resolve (§6.6).
 
 **4 — The interval may be repairable per horizon, with mixed evidence.** On the released
 checkpoint, one multiplier per forecast horizon, fitted on one held-out episode and scored on the
@@ -71,14 +71,14 @@ across members — measured from the checkpoint's own tensors and from source (�
 share a feature extractor have correlated errors by construction, so their spread is a lower bound
 on epistemic uncertainty by design rather than by accident.
 
-**6 — That mechanism is tested, not merely asserted, and it holds.** Five independently
+**6 — That mechanism is tested, not merely asserted, and is supported.** Five independently
 initialised full models, sharing nothing, scored together as an ensemble are
 **2.03×** better calibrated than the shared-trunk arms at h = 100 —
 against a minimum detectable effect of 1.45× fixed before the runs existed. σ is
 larger by 1.65×, which is 71% of the improvement there, and the
 split reverses at the 368-step diagnostic horizon. The rule (M-44) returns
 **MECHANISM SUPPORTED**. It is still 5.2× overconfident: building the ensemble
-properly is worth doing and is not sufficient (§6.8).
+properly is worth doing and is not sufficient (§6.8). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is 1.79×, below its minimum detectable effect of 2.00× (rule M-49, §11).
 
 **And five defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count

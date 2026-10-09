@@ -295,7 +295,7 @@ def main():
         A("")
     A("## The result these support")
     A("")
-    A(f"Normalised error at a {v('v2_diag_h')}-step horizon on held-out episodes, over three "
+    A(f"Relative-L1 error, the reference's own metric, at a {v('v2_diag_h')}-step horizon on held-out episodes, over three "
       "training seeds (standard deviation with `ddof=1`). That is the horizon the paper's "
       f"pre-registered rule names; at h={DEPLOY_H}, the method's own rollout length, the same "
       f"comparison gives {v('d1_ratio_h100')}\u00d7.")

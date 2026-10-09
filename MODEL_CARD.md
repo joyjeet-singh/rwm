@@ -238,7 +238,7 @@ Arm A at ensemble size 1, seed 4. The second of the two seeds added for the inde
 
 ## The result these support
 
-Normalised error at a 368-step horizon on held-out episodes, over three training seeds (standard deviation with `ddof=1`). That is the horizon the paper's pre-registered rule names; at h=100, the method's own rollout length, the same comparison gives 2.58×.
+Relative-L1 error, the reference's own metric, at a 368-step horizon on held-out episodes, over three training seeds (standard deviation with `ddof=1`). That is the horizon the paper's pre-registered rule names; at h=100, the method's own rollout length, the same comparison gives 2.58×.
 
 | arm | seed 0 | seed 1 | seed 2 | mean ± sd |
 |---|---|---|---|---|

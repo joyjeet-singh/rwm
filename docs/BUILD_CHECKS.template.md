@@ -458,6 +458,7 @@ claims stayed, and only their history moved.
   names none, from the paper's own first page, and every sentence attributed matched verbatim against
   the paper's text; {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}}
   fragments, {{t1_n_frag_oneword}} of them single common words. The References note now says the same once.
+- **[Data and code]** The anonymity paragraph said that a reviewer who chooses to look can identify the author, and argued that making the repository private would remove the identifying link and also the checkability §8 depends on, the worse trade. Ruling V7 (round 3) cut it to two sentences; the reasoning is in `docs/DOUBLE_BLIND_DECISION.md`.
 - **[References]** The bibliography is generated from `results/t1_bibliography_verified.json` rather
   than listed by hand because a hand-maintained list of what a paper cites drifts exactly as a
   hand-typed count does, and this one had: six entries cited in §2's prose appeared in no reference

@@ -36,7 +36,7 @@ and the title gives the answer: it gets the order of the model's errors right an
 wrong.
 
 We set out to reproduce the base paper: rebuild the proprioceptive dynamics model from scratch,
-check it against the released implementation, and test the central training claim, which holds.
+check it against the released implementation, and test the central training claim, which holds at long horizons.
 The rebuild made a second question cheap to ask: *is the predicted σ calibrated?* Neither of the
 two the checkpoint emits is. On data it trained on, the per-member σ is too small by
 1,827× at h = 1 to 20,669× at h = 368, by construction
@@ -175,8 +175,7 @@ assume; Fort, Hu and Lakshminarayanan (arXiv:1912.02757) show that independent i
 a decorrelation subspace methods do not match; and BatchEnsemble (Wen, Tran and Ba, ICLR 2020) and
 MIMO (Havasi, Jenatton, Fort, Liu, Snoek, Lakshminarayanan, Dai and Tran, ICLR 2021) share
 deliberately and state what they trade away. **What is ours is finding it in a released robotics
-checkpoint, with the sharing quantified at 89.15% of each member and the cost measured
-at 2.03× (§6.8).** The problem is not sharing; it is sharing and then reading the
+checkpoint, with the sharing quantified at 89.15% of each member and its cost bounded by the 2.03× an independent ensemble gains (§6.8).** The problem is not sharing; it is sharing and then reading the
 spread as though the members were independent.
 
 **And the objective in §6.3 has a neighbour.** Seitzer, Tavakoli, Antic and Martius (ICLR 2022)
@@ -329,8 +328,7 @@ baselines (§5.3), and the follow-up's two claims about what its uncertainty out
 **Five of them are claims about policy learning or hardware** — every one but
 generality across robot morphologies, which needs a simulator and recorded data from other robots but is a claim
 about the model rather than about a policy. This work trains no policy and runs on two CPU cores.
-The counts and lists are generated from the classification tags in Appendix D's verdict
-column, and they replace a withdrawn claim that every untested claim concerns policy learning or
+The counts and lists are generated from the classification tags in the verdict column of Appendix D's first table, and they replace a withdrawn claim that every untested claim concerns policy learning or
 hardware (`S-17`). §11 states what the untested claims bound, and Appendix C what testing them
 would take.
 
@@ -345,7 +343,7 @@ evaluation data and at a horizon it does not state; our sweep's (32, 1) is
 (`docs/presubmission/ORIGINAL_SPECS.md` §2); §5 relates the two. Where a magnitude is legible only from a plotted curve we say so rather
 than estimating it from the axis.
 
-**Appendix D gives the full table**, claim by claim, with what the original states, where it
+**Appendix D's first table gives it in full**, claim by claim, with what the original states, where it
 states it, and our verdict.
 
 ---
@@ -403,8 +401,7 @@ n_independent = 4, with a cluster bootstrap over whole trajectories; the two flo
 **The advantage does grow monotonically with forecast depth.** Over 400-step
 trajectories the gap excludes zero at 5 of 6 horizons and
 spans it at h=1: h = 368 is the end of a trend rather than a point we
-picked, h = 100 sits partway along it, and the claim is weakest exactly where the
-model is trained. **Only the h = 368 row is the rule's horizon, and the rule ran on seed 1 alone.** Every
+picked, h = 100 sits partway along it, and the claim is weakest inside the horizon the model is trained on. **Only the h = 368 row is the rule's horizon, and the rule ran on seed 1 alone.** Every
 value in the table is a three-seed mean computed after the data existed, so by this paper's own standard (§8)
 none carries a pre-registration's weight, the same treatment §6.6 gives the expectation we held about the
 counter-baseline, and nothing in the table discharges or re-opens the rule.
@@ -651,8 +648,7 @@ on the released checkpoint.
 **What the follow-up does and does not claim.** It does not claim its uncertainty is a calibrated
 interval. Its §5.1 claims the epistemic term "closely follows the trend of the prediction error"
 and that this "justifies its role as a trust metric", and of the aleatoric term it observes only
-that it "remains low, reflecting small stochasticity in the environment". Our measurement
-**supports the first claim**: the epistemic ordering is real and strong. What follows is therefore
+that it "remains low, reflecting small stochasticity in the environment". Our measurement **supports the first claim**: the epistemic ordering is real (§6.6), though weaker per dimension than it looks (§6.5). What follows is therefore
 not a refutation of a calibration claim nobody made, but three things the papers do not address:
 that the aleatoric head is discarded before use, that neither quantity is usable as a scale, and
 that the low aleatoric value has a different cause than the one offered.
@@ -778,9 +774,7 @@ the true noise and does not track it at all**, while under the authors' unused l
 recovers the true level to a median ratio of 0.9779, seed-variably. The rule returns
 **OBJECTIVE-DRIVEN**, which establishes the contrast and not the size of the recovery (Appendix J).
 
-We predicted the collapse from this algebra before training, then observed it: across all
-28 runs at the released width outside §5.2's sweep the collapse is linear in iteration count and its rate is
-nearly identical (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
+We predicted the collapse from this algebra before training, then observed it: across all 28 runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
 every rate, and the 22 the rate is fitted on.
 
 ![The variance collapse is objective-driven. (a) mean $\log\Delta_{\log\sigma}$ against training iteration for each of the 28 runs of the collapse family, which is every run of §5–§7 at the released width outside §5.2's sweep (Appendix J). The runs are drawn individually but are visually coincident within each objective, so the 28 read as two lines, one falling and one rising -- which is the point: the trajectory does not vary visibly from run to run. (b) the fitted per-iteration slope for each run, grouped by objective: negative and tightly clustered under sampled MSE, positive under \texttt{gaussian\_nll}. The sign flip is the evidence that the objective, not the optimiser or the data, produces it.](figures/paper_fig3_collapse.png)
@@ -804,9 +798,7 @@ improves the magnitude from 52.2× to 10.9× overconfident. It does not produce 
 §6.3 explains the aleatoric column and leaves the epistemic one open. This subsection supplies a
 candidate, structurally symmetric to §6.3's, from source and from the checkpoint's own tensors;
 nothing here is trained and nothing is inferred from a measurement. The effect is known (§2). What
-is ours is finding it in a released robotics checkpoint, with the sharing quantified at
-89.15% of each member and the cost measured at 2.03× on the
-overconfidence factor (§6.8).
+is ours is finding it in a released robotics checkpoint, with the sharing quantified at 89.15% of each member and its cost bounded by the 2.03× an independent ensemble gains on the overconfidence factor (§6.8).
 
 **The released five-member ensemble is not five models.** `system_dynamics.py:34` builds **one**
 `state_base`. `system_dynamics.py:35-41` replicates the *heads* `ensemble_size` times, and only
@@ -1236,8 +1228,7 @@ outcomes where 68.27% is expected. We say this because the released checkpoint
 exposes the quantity, and it is easy to read as an interval.
 
 We do not claim the original method is unsafe. No policy is trained here. The one policy-free
-test we ran found that correcting the scale per horizon leaves every pairwise ordering of
-accumulated penalty unchanged on the available trajectories (§11).
+test we ran found that correcting the scale per horizon leaves every pairwise ordering of accumulated penalty unchanged on the available trajectories, a test whose null is partly structural (§11).
 
 ---
 
@@ -1377,13 +1368,7 @@ moment, as recorded by a third party with no interest in the claim — so nothin
 have been back-dated afterwards. That bounds §8 rather than proving it, and a reviewer should
 read it as such.
 
-**On anonymity, stated rather than implied.** The code and data for this work are public, as they
-are for most reproducibility work, and a reviewer who chooses to look can identify the author.
-The submission is anonymised — the bundle is scrubbed and asserted clean of a deny-list, and the
-files that carry identity are excluded from it — but that is anonymity of the *submission*, not
-unfindability of the work. Making the repository private would remove the identifying link and
-also remove the checkability §8 depends on, which is the worse trade. The decision and its
-reasoning are recorded in `docs/DOUBLE_BLIND_DECISION.md`.
+**On anonymity.** The code and data for this work are public, as they are for most reproducibility work, and the submission is anonymised: its bundle is scrubbed, asserted clean of a deny-list, and excludes the files that carry identity. Why the repository stays public, which §8's checkability depends on, is recorded in `docs/DOUBLE_BLIND_DECISION.md`.
 
 ## References
 
@@ -1448,9 +1433,7 @@ What every downstream number rests on. Each level was passed before the next was
 arm at `rnn_hidden_size` 124** rather than the released 256. They are part
 of this project's CPU spend and are counted in the total above — the other 47.9
 hours are the 28 runs at the released width, and the two parts are asserted to make the
-total rather than stated beside it. They are **not** part of the
-28 runs §6.3 fits the σ-collapse rate over, because that rate is a property of one
-architecture and mixing widths into it would make "nearly identical across runs" a claim about two
+total rather than stated beside it. They are **not** part of the 28 runs of §6.3's σ-collapse family, because §6.3's rate is a property of one architecture and mixing widths into it would make "nearly identical across runs" a claim about two
 different models. Every run artifact records the width it trained at, and `paper_numbers.py`
 selects the collapse family by that field rather than by filename; `docs/BUILD_CHECKS.md`, shipped as supplementary, records how that selection came to be made.
 
@@ -1483,7 +1466,7 @@ which inflates their wall clock and changes no weight; the artifact lists each o
 
 ## Appendix C — what testing the untested claims would require
 
-Appendix D's table marks 6 claims tested and the rest not. "Not tested" is an apology
+Appendix D's first table marks 6 claims tested and the rest not. "Not tested" is an apology
 unless it comes with a price, so here is what each would cost. We give compute orders where we
 can estimate them honestly from this project's own measurements and say so where we cannot.
 
@@ -1504,7 +1487,7 @@ an RTX-class GPU (ledger `D-36`).
 | Sample efficiency, 6,000,000 against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports 6,000,000 pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
 | MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
 | Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus one world-model training run each at our 49.8 h scale; the model training is the cheap half and the data is not |
+| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus a world-model training campaign each on the scale of ours, 33 runs in 49.8 h; the model training is the cheap half and the data is not |
 | Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
 | Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the rows that need a simulator, and the one that would bound §11's open question about what the miscalibration costs |
 
@@ -1528,7 +1511,7 @@ needs no robot.
 
 The body's §4 summarises the first table. It is here in full because the third column — what the
 original actually reports — is the answer to a question a reader of any reproduction should ask,
-and because "no quantitative figure" is itself a finding that deserves to be checkable row by row.
+and because "no quantitative figure" is itself a finding that deserves to be checkable row by row. Its verdict cells quote figures from the sections they cite, each on that section's arena, n_independent and checkpoint; the second table gives them claim by claim.
 
 *Section references follow arXiv:2501.10100**v1**, which uses Roman-numeral sectioning. v2
 renumbered to Arabic and moved IV-C's material into Appendix A.4.1. References to
@@ -1561,7 +1544,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 |---|---|---|---|---|---|
 | Autoregressive training beats teacher forcing at h = 368 (§5) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |
 | The same comparison reverses at h = 1, at the short unit M-64 built (§5) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |
-| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre; every other reading the rule reports agrees but held-out nRMSE at h = 1, which is unresolved | yes |
+| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre; every other reading the rule reports returns the same verdict but held-out nRMSE at h = 1, which is unresolved; the ranking depends on training length (Appendix U) | yes |
 | RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; every reading the rule reports returns it from h = 32, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |
 | RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; every reading the rule reports returns it from h = 128, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |
 | Ensemble disagreement is smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
@@ -1585,8 +1568,7 @@ or an instruction to open a 593 KB ledger, so here is the table. It is generated
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
-it tested, resolved by commit *subject* rather than by hash — the history was rewritten once and
-hashes did not survive it, while subjects did. Positive means the rule was in git before the data
+it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and two of the commits Figure 1 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading. Positive means the rule was in git before the data
 existed. This is the same computation Figure 1 plots.
 
 | rule | what it governs | commit | lead time | tested by | verdict |
@@ -1679,8 +1661,7 @@ form 2.
 The ledger tags some of its entries as contributions of this project. These are the confirmed ones the
 body does not state, or uses without stating the finding itself, each checked against its ledger entry.
 Code facts are cited by file and line at the pinned upstream commits; every measurement is read from
-the artifact named. Measurements are at 2,500 training iterations unless a row says otherwise or concerns the
-released checkpoint.
+the artifact named. Measurements are at 2,500 training iterations unless a row says otherwise or concerns the released checkpoint, and each row names its arena.
 
 | finding | evidence (ledger ID, artifact) | bearing on the paper |
 |---|---|---|
@@ -1700,7 +1681,7 @@ released checkpoint.
 | The A/B relative-L1 gap at h = 368 (teacher forcing's error minus autoregressive training's, over 2 independent trajectories per episode) is positive on all ten episodes, from +0.73 up; episode 1, one of the held-out pair, gives +6.97, 2.5× the next largest, so the pair's +3.98 is 3.0× the other eight episodes' +1.33 | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
 | Per state dimension, over the whole 368-step forecast, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = 368 (R-45). One seed (seed 1, §11) |
 | Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair +3.33 to +1.20, in-sample +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, §11) |
-| Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena rises by +227.8% at 2,500 iterations and +676.3% at 10,000 (rule X2, pre-registered: RESPONDS TO THE ACTION) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though no policy is trained here (§7.2, Appendix V) |
+| Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena's 16 trajectories rises by +227.8% at 2,500 iterations and +676.3% at 10,000 (rule X2, pre-registered: RESPONDS TO THE ACTION) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though no policy is trained here (§7.2, Appendix V) |
 
 ---
 
@@ -1843,8 +1824,7 @@ appear below and they are not the same set. This project trained 33 runs for §5
 which 28 are at the released `rnn_hidden_size` of 256 and form the collapse
 family; the remaining 5 are the capacity-matched arm of rule M-49 (Appendix E) at
 width 124, a different architecture, excluded from every rate §6.3 quotes (Appendix B).
-Across all 28 runs of that family the collapse is linear in iteration count and its rate is
-nearly identical (Figure 4a). Rates are fitted on 22 of those 28: the
+Across all 28 runs of that family the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Rates are fitted on 22 of those 28: the
 6 10,000-iteration runs continue seeds already counted at 2,500 and would
 double-weight them. Figure 4(a) shows all 28 runs of the collapse family and Figure 4(b)
 only the 22 the rate is fitted on, so the scatter and §6.3's quoted statistic describe
