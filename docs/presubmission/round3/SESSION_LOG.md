@@ -290,3 +290,41 @@ For R6:
 - A4/A5/A6 do not name M-74's held-out nRMSE h = 1 exception (R2's log);
 - both are unresolved readings, not reversals.
 Decisions for user: none.
+
+## R4 — 2026-10-09 18:00 — Opus 5.5 (the plan assigns default effort) — status: COMPLETE
+Commits: 4a26506 (tools), 6c0d688 S4, a39a960 S7, efc8923 S9, 3a90029 S10, 81d1ffb S11, 665dd20 S16, 99f4839 S5, 93d08e7 S14, eca5607 S13, 03d8fd0 S8, 7998e9e S2, 3dd82a7 S1, 4339600 S6, 2499f38 S3, 4aab69a S12, 2e7b6c3 S17, the S12 wording fix, 80f37be (build); then the commit carrying this entry.
+Done:
+- **S1.** §3.2's multiplicity column is computed per row from the Holm family's own checkpoints. The 10,000-iteration A/B row reads "not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L)". Every other row's column applies to its own checkpoint.
+- **S2.** "SURVIVES entry-res ONLY" is glossed at its first appearance in the §3.2 row, §12, Appendix D and Appendix S: "disagreement beats the one-step error before the window, but not the model's predicted step size". It is a key asserted against `e7_free_baselines.json` (entry-res beaten, step size not).
+- **S3, ruling V6.** Figure 1 now plots every rule in `appendix_g_rules.json` (23, X2 included).
+  - It also keeps M-16's annotation as a bar, so that lead time (+4.8 h) is not lost.
+  - The axis is symmetric-logarithmic and each bar prints its exact value. The caption reads "for every pre-registered rule (Appendix E)".
+  - Plotted lead times equal Appendix E's, asserted against the figure's own eight-row record or recomputed from the same commits; that record is unchanged.
+  - §8's sentence now comes from Appendix E's keys: "all 23; 22 are positive and 1 is not".
+  - §13's count was redone by round 1's method, using the M-48 rewrite window recorded with the figure: 33 of the 35 commits Figure 1 cites keep their identifiers, and the same two do not. The window runs from the introducing commit's counterpart `2eccc1f` (old `7859309`, named in the post-purge commit `b89d0cd`) to the last commit before the purge.
+  - PNG viewed before and after; the other five figures are byte-identical.
+- **S4.** The introduction now says several rules returned verdicts against the original or could not settle the question, and we report each (Appendix E).
+- **S5.** The main text cites one commit identifier, rule M-23's in §5. Its gloss reads "in the submitted paper an anonymised commit label; see Data and code" rather than the plan's "(an anonymised commit label; §13)": PAPER.md prints the real hash, so the plan's words would be false there, and the template never cites "§13".
+- **S6.** Appendix E's commit column is filled for every rule with the commit that introduced its ledger heading, which `appendix_g_rules.py` already found to compute lead times and discarded. The PDF prints anonymous labels (C225, C409, …). Every other field is unchanged, and there are 0 overfull boxes.
+- **S7.** Appendix F's two duplicate paragraphs are one; nothing dropped.
+- **S8.** One bibliography note remains, in the References: what was checked and the counts (D-35). §2's note and the "hand-maintained list … drifts" history moved to BUILD_CHECKS' moved list.
+- **S9.** The M-69 note is two sentences: the amendment, both timestamps, and that both are positive.
+- **S10, S11, S16.** As written in the plan.
+- **S12.** Both floor columns are error ÷ floor (new keys `a1_A_over_floor_h*`), and the caption says a value below one beats the floor. The prose's "beats it by N×" keeps its key.
+- **S13.** M-64's shorter unit is defined where §5 relies on it: 32 + h rows, with the counts at each horizon bound (`m64_hist_rows`, `m64_units_list`).
+- **S14.** "13 looked at, 10 carry the construction, 1 of those trains it against a sampled squared error", all bound (`q1_n_looked` is new). The 13 are worded as "looked at", not "examined", because the frozen protocol (`results/q1_search_protocol.md` §3) counts only repositories with the construction as examined and prescribes "Of N repositories examined". "It stopped at 10" became "10 examined, 13 looked at".
+- **S15.** Checked: contribution 1 pairs +0.4697 with +0.6053, both at four decimals. No change.
+- **S17.** ‖µ_t − µ_{t−1}‖ is LaTeX math in §6.6's prose and table. The PDF text has no literal braces on any page, and `pdf_render_check` gives 5/5.
+Build/gates: pass. Fast build, then gates, then fast build: byte-identical. 65/65 claims and 65/65 caught; xref 0 suspect; scope 0 unclassified; typed numerals 0 unclassified (one "1" in S12's caption became "one"); 61 pages. `part_f_gate` 6/7: 4b fails on the stale bundles (R8).
+Paper numbers changed: appG_table (S6's commit column), evidence_table (S1, S2), tn_typed 910 → 906.
+New keys: a1_A_over_floor_h{1,8,32,100,128,368}, e7_verdict_gloss, f1_n_cited, f1_n_kept, f1_n_moved_word, m64_hist_rows, m64_units_list, q1_n_looked.
+Template keys removed (Annex 4 item 7):
+- a1_floor_over_A_h{1,8,32,128}: the same quantities, inverted, are now a1_A_over_floor_h*; h100 and h368 still print in the prose;
+- f4_n_rules, f4_n_positive, f4_n_negative, f4_n_commits: counts of the old eight-bar figure, replaced by appG_* and f1_*;
+- m69_lead_pub: equal to one of the two readings S9 prints, and Appendix E's table renders it.
+Re-anchored checks: none.
+CPU jobs over 1 min: none.
+Body words (round2/t6_words.py): 21,322 (R0: 20,771). R6 moves text.
+Abstract words / numerals (C12.1): 369 / 23.
+Next: R5 (pipeline hygiene H1-H7).
+Decisions for user: none.
