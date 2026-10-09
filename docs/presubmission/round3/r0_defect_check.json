@@ -1,0 +1,300 @@
+{
+ "purpose": "R0 preflight P2, the defect check: does alignment_defect_ci.rollout score our own (Arm A) models correctly?",
+ "pairing": "action_offset = 1 only",
+ "rows": [
+  {
+   "iterations": 2500,
+   "arena": "held_out",
+   "n": 4,
+   "h": 1,
+   "committed": 0.12315276497974992,
+   "as_is": 0.9168682544784268,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.12315276425726253,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 2500,
+   "arena": "held_out",
+   "n": 4,
+   "h": 8,
+   "committed": 0.3288748090465864,
+   "as_is": 1.0309637950095127,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.3288748021225356,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 2500,
+   "arena": "held_out",
+   "n": 4,
+   "h": 32,
+   "committed": 0.41696360583106673,
+   "as_is": 1.0005045623410387,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.41696361030671425,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 2500,
+   "arena": "held_out",
+   "n": 4,
+   "h": 100,
+   "committed": 0.47977914288640017,
+   "as_is": 0.982847409712117,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.4797791537707243,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 2500,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 1,
+   "committed": 0.09696276722631106,
+   "as_is": 1.3960976033476937,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.09696276209761007,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 2500,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 8,
+   "committed": 0.1767973283616205,
+   "as_is": 1.2174005808652792,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.1767973276354906,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 2500,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 32,
+   "committed": 0.17627767551069456,
+   "as_is": 1.1656579832989025,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.17627767732071734,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 2500,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 100,
+   "committed": 0.2162010371685028,
+   "as_is": 1.1457158572998782,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.21620103609969643,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "held_out",
+   "n": 4,
+   "h": 1,
+   "committed": 0.1447449846503635,
+   "as_is": 0.9364621266860009,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.14474497765337213,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "held_out",
+   "n": 4,
+   "h": 8,
+   "committed": 0.30868193320930004,
+   "as_is": 1.0351610807805935,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.30868192951058915,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "held_out",
+   "n": 4,
+   "h": 32,
+   "committed": 0.3415007429818312,
+   "as_is": 1.004413672060387,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.34150074226889976,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "held_out",
+   "n": 4,
+   "h": 100,
+   "committed": 0.37001769927640754,
+   "as_is": 0.9535031923556465,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.37001770346821633,
+   "unpacked_pred_shape": [
+    4,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 1,
+   "committed": 0.05732593825086951,
+   "as_is": 1.370727561552915,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.05732593785847231,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 8,
+   "committed": 0.08644504135008901,
+   "as_is": 1.2080165312253839,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.0864450423648417,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 32,
+   "committed": 0.08155775582417846,
+   "as_is": 1.164800365394492,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.08155775893122917,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  },
+  {
+   "iterations": 10000,
+   "arena": "in_sample",
+   "n": 16,
+   "h": 100,
+   "committed": 0.08578839114246269,
+   "as_is": 1.1502062546432663,
+   "as_is_pred_shape": [
+    400,
+    45
+   ],
+   "unpacked": 0.08578839227179391,
+   "unpacked_pred_shape": [
+    16,
+    400,
+    45
+   ]
+  }
+ ],
+ "max_abs_diff_from_committed": {
+  "as_is": 1.3134016233020456,
+  "unpacked": 1.0884324108673127e-08
+ },
+ "as_is_reproduces_alignment_by_horizon_arm_a_offset1_h1_per_trajectory": true,
+ "verdict": "DEFECT CONFIRMED"
+}
