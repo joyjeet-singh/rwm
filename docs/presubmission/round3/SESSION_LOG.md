@@ -379,3 +379,40 @@ Next:
 - For R8: `docs/SUBMISSION_CHECKLIST.md`'s known items on the manifest's off-by-one and the four unignored reports (lines 34-40) are now resolved, and its refresh is R8's.
 - H1's commit `685696e` has the digits-plus-`e` shape. It is not a pushed HEAD, and the self-test plants full hashes.
 Decisions for user: none required by this session. OUT_OF_SCOPE's R5 line raises one for later: §6.7 partials out per-episode difficulty averaged over the stale and causal action offsets. Using the causal offset alone would change §6.7's figures.
+
+## R6 — 2026-10-09 19:30 — Opus 5.5 (the plan assigns default effort) — status: COMPLETE
+Commits: 3b7838c item 1, dbacee1 item 3; items 2 and 4 changed nothing, so they have no commit; then the commit carrying this entry.
+Done:
+- **Item 1, ruling V5.** §3.2 keeps its opening paragraph. Its last sentence now points to Appendix D's second table, "What each tested claim rests on", which follows the claims table with a lead saying what each row carries.
+  - The table is still generated from `results/evidence_summary.json`, and no key was added or removed.
+  - `paper_numbers.py`'s `_table_rows` read every table line in a section, so the second table's header became a row of the claims table. It now stops at the first table's end, with identical rows on the pre-move template (Appendix D 12, Appendix C 6).
+  - Re-anchored (labels only; C24.1's anchor sentence stays in §3.2): C24.1 where "3.2" → "3.2 / Appendix D"; `check_scope_audit`'s arena_consistency description; the BUILD_CHECKS blurb; `evidence_summary.py`'s labels and `what` field (only that field changed); and stage 21b's name.
+  - `xref_sweep`: 0 suspect.
+- **Item 2.** `round2/t6_words.py` gives 20,643 after item 1 and 20,697 after item 3, at or below ruling V8's 20,771. The list's moves are conditional on exceeding it, so none was made. The 20,000 aim is not met: the shortfall is 697 words.
+- **Item 3, rule 10.** `round3/CONSISTENCY.md` has one row per restating sentence: abstract 13, contributions 10, Appendix D 6 + 16, §9 9, §11 8, §12 9. Each row gives the body anchor, every reading the body reports, and agrees or fixed. Eleven were fixed, wording only:
+  - **The one-step reversal (abstract, §12):** it is resolved on M-64's short units; the 400-step unit's h = 1 reading is unresolved.
+  - **The configuration verdict (abstract, contribution 3, §12, both Appendix D tables):** it holds on every reading rule M-74 reports but held-out nRMSE at h = 1, which is unresolved. The abstract's "(one reading unresolved)" attaches to the verdict, as §5.2 does.
+  - **The alignment cost (abstract):** "short-horizon relative-L1 error", since nRMSE does not resolve the rise at h = 1. This closes R3's flagged gap.
+  - **The baselines (both Appendix D tables):** the rules' verdicts at h = 368. Every reading gives them from h = 32 (M-75) and h = 128 (M-76), and they split below; in-sample pooled nRMSE at h = 1 reverses M-75's.
+  - **Arm B and the hold-last floor (Appendix D):** worse at every horizon on the 400-step unit, not on M-64's shorter units.
+  - **§9:** names the arena of each overconfidence factor it sets side by side.
+  - New keys, each asserting the reading pattern its sentence describes; `evidence_summary.py` computes the same for its rows.
+  - Abstract: 370 / 23 (C12.1 passes at its word cap). Cut to make room: "proprioceptive", "from scratch", "here", "Separately", and "so" (now a colon). None is a result.
+  - OUT_OF_SCOPE: §5.2 gives M-74's alongside readings at verdict level only. Per configuration, the four winners are unresolved at h = 1 (and the longer forecasts at h = 8) and on three long-horizon readings, and no reading reverses any of them.
+- **Item 4.** C12.1 passes, 370 words (cap 370) and 23 numerals (cap 26). The contributions are 8 bullets of at most 3 sentences each, counting each bold lead as one.
+- **Subagents.** The two permitted read-only Explore agents were launched together for item 3's sentence inventory. The session restarted while they ran (one failed, one never returned), so nothing from them was used and the whole inventory was done inline.
+Build/gates: pass. Item 1's and item 3's first cycles differed, as expected, while new gate outputs reached README and BUILD_CHECKS; each second cycle, and the closing cycle, were byte-identical.
+- 65/65 claims and 65/65 caught (32 kinds, 0 unclassified); ledger PASS; restatement CLEAN; typed numerals 0 unclassified; horizon sweep 0 findings; xref 0 suspect; render PASS; 62 pages.
+- `part_f_gate`, run by hand after the abstract edits: 6/7. Check 6 passes; 4b fails on `supplementary_anon.zip` (4 Oct), which R8 rebuilds.
+Paper numbers changed: evidence_table (item 1's labels, item 3's rows); pdf_pages 61 → 62 (the table moved to the appendix); tn_typed 907 → 910; cc_kind_list (arena_consistency's blurb).
+New keys: mn_fm_exception, mn_fm_n_unres_word, mn_fm_n_readings (`results/mn_sweep_verdict.json`, `results/pooled_nrmse_alongside.json`); bl_tf_from_h, bl_ar_from_h (`results/baselines_verdict.json`, `results/pooled_nrmse_alongside.json`).
+Template keys removed: none. Against R0's list, the removals are R2's and R4's, each logged there.
+Re-anchored checks:
+- C24.1, where "3.2" → "3.2 / Appendix D";
+- C26.1, "so the ranking depends on training budget" → "the ranking depends on training budget";
+- C27.1, "…short-horizon error" → "…short-horizon relative-L1 error".
+CPU jobs over 1 min: six build-and-gate cycles (about 4 min each); `part_f_gate` (about 2 min).
+Body words (round2/t6_words.py): 20,697 (R0: 20,771).
+Abstract words / numerals (C12.1): 370 / 23.
+Next: R7 (fresh-eyes review, Annex 4), in a new terminal.
+Decisions for user: none required by this session. The OUT_OF_SCOPE lines from R5 (A2's offset averaging, §6.7) and R6 (M-74's per-configuration readings) are for later.
