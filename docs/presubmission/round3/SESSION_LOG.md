@@ -416,3 +416,48 @@ Body words (round2/t6_words.py): 20,697 (R0: 20,771).
 Abstract words / numerals (C12.1): 370 / 23.
 Next: R7 (fresh-eyes review, Annex 4), in a new terminal.
 Decisions for user: none required by this session. The OUT_OF_SCOPE lines from R5 (A2's offset averaging, §6.7) and R6 (M-74's per-configuration readings) are for later.
+
+## R7 — 2026-10-09 23:30 — Opus 5.5 (the plan assigns high effort, in a new terminal) — status: COMPLETE
+Commits: 65878a3 step 5 (the fixes), faa4080 steps 1–4 (the review record); then the commit carrying this entry.
+Done:
+- **How it ran.** In the same session as R0–R6, at the user's instruction ("Start R7"), not in a new terminal. The reviewer had written R6's edits, so the plan's fresh eyes were only partly kept:
+  - step 1 read the main text from the PDF's extracted text, not from memory of the source;
+  - step 2's two agents had no earlier context.
+- **Step 1, the whole read.**
+  - `pdftotext` is not installed, so `pypdf` in layout mode extracted pages 1–31 of the committed `PAPER.pdf` (References begin on page 32) into `round3/body.txt`, read in chunks of about 300 lines.
+  - Six summaries were stronger than their sections, all verified and fixed:
+    - §1, "which holds" (now "at long horizons");
+    - §2 and §6.4, "the cost measured at 2.03×" (now bounded);
+    - §6.1, "real and strong" (now "real, though weaker per dimension");
+    - §5, "weakest exactly where the model is trained" (the training horizon resolves; h = 1 does not);
+    - §10, the M-70 proxy without its partly structural null.
+- **Step 2, two read-only Explore agents**, launched first and waited on.
+  - Agent 2 (Appendices M–V): 7 tables, 72 citing sentences, 0 mismatches.
+  - Agent 1 (Appendices A–L): 11 tables, about 120 sentences, 7 findings, all of which held on checking:
+    - Appendix B's "28 runs §6.3 fits";
+    - §6.3 and Appendix J calling the collapse identical across all 28, though 5 rise;
+    - Appendix C's 49.8 h as one run's scale;
+    - Appendix E's caption on hashes, against Data and code;
+    - Appendix H's caption, and the n of rows R-46 and M-84;
+    - Appendix D's first table without a caption arena.
+  - Agent 1 also noted three pointers made ambiguous by Appendix D's second table.
+  - Every finding was fixed except R-46's n, which its artifact does not record (OUT_OF_SCOPE).
+- **Step 3, `round3/REVIEW.md`.** Annex 4's eleven items, each pass or pass after fix, with file:line.
+  - **Item 1:** the second-table configuration row now says the ranking depends on training length. Appendix E's verdict column prints the returned string verbatim and is left as a record.
+  - **Item 10:** README findings 1, 3 and 6 were stronger than the paper (the one-step reversal, the step-size signal, the bound on sharing), and the model card called relative-L1 "normalised error"; all fixed. `docs/COVER_STATEMENT.md`'s counts are stale (57 pages, 22 rules, seven claims withdrawn on evidence); PLAN R8 item 5 refreshes them.
+  - **Item 11:** §13's anonymity paragraph had never been cut to ruling V7's two sentences. Now it is, and the cut sentence is in BUILD_CHECKS' moved list.
+  - **Round 2's OUT_OF_SCOPE:** all ten lines are closed or carried forward with a reason.
+- **Steps 4 and 5.** Every finding was verified against the template, the scripts or the artifact before any edit, and every fix is wording only, three sentences or fewer (`round3/r7_patch.py`; `evidence_summary.py`).
+  - Nothing reached BLOCKED.
+  - One of my R6 records was wrong: CONSISTENCY.md's E3 quoted "returns the same verdict" while the row said "agrees". The row now says what the record quotes.
+Build/gates: pass. Each fix round's first cycle differed, as expected; the second, and the closing cycle, were byte-identical.
+- 65/65 claims and 65/65 caught; restatement CLEAN; typed numerals 0 unclassified; xref 0 suspect; 62 pages.
+- `part_f_gate` 6/7: checks 2 (anonymisation) and 6 pass; 4b fails on `supplementary_anon.zip` (4 Oct), which R8 rebuilds.
+Paper numbers changed: evidence_table (the configuration row); tn_typed 910 → 914.
+New keys: none. Template keys removed: none.
+Re-anchored checks: none.
+CPU jobs over 1 min: six build-and-gate cycles (about 4 min each); `part_f_gate` (about 2 min); the two agents (about 9 min, read-only).
+Body words (round2/t6_words.py): 20,745 (R0: 20,771).
+Abstract words / numerals (C12.1): 370 / 23.
+Next: R8 (freeze, restatement, bundles, package documents, including COVER_STATEMENT's counts).
+Decisions for user: none required by this session. OUT_OF_SCOPE now holds three lines for later: R5's A2 offset averaging (§6.7), R6's M-74 per-configuration readings, and R7's R-46 n.
