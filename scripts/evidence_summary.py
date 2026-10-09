@@ -319,7 +319,9 @@ def build_rows():
         "arena": e7_arena,
         "n_independent": E7["design"]["n_independent"],
         "in_sample": in_sample(e7_model, e7_arena),
-        "verdict": (f"{E7['verdict']}: step size not beaten, the margin below the minimum detectable "
+        # Round 3, R4 (S2): the label glossed where it first appears outside section 6.6 and Appendices E and K
+        "verdict": (f"{E7['verdict']} (disagreement beats the one-step error before the window, but not the "
+                    f"model's predicted step size): step size not beaten, the margin below the minimum detectable "
                     f"effect; the partial survives"
                     if step["partial_beats_mde"] and not step["margin_beats_mde"]
                     else "beats it on both the margin and the partial"

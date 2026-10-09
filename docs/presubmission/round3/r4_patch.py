@@ -118,6 +118,14 @@ ITEMS = {
          "whose match verifies nothing about the attribution (ledger `D-35`). No entry was added that was not "
          "verified.*"),
     ]},
+    # S2: the verdict's label glossed at its first appearance in section 12, Appendix D and Appendix S (section 6.6
+    # and Appendices E and K define it; section 3.2's row is glossed in evidence_summary.py)
+    "s2": {"edits": [
+        ("({{e7_verdict}}). The scale may be repairable per", "({{e7_verdict}}: {{e7_verdict_gloss}}). The scale may be repairable per"),
+    ], "regex": [(r"(\| Epistemic \"closely follows the trend of the prediction error\".*?)\(\{\{e7_verdict\}\}\)",
+                  r"\1({{e7_verdict}}: {{e7_verdict_gloss}})"),
+                 (r"(The more useful finding is asymmetric.*?so the verdict is )\{\{e7_verdict\}\}\.",
+                  r"\1{{e7_verdict}} ({{e7_verdict_gloss}}).")]},
 }
 
 
@@ -125,6 +133,9 @@ def run(item):
     spec = ITEMS[item]
     text = open(T, encoding="utf-8").read()
     new = apply(text, spec.get("edits", []))
+    for rx, repl in spec.get("regex", []):
+        new, k = re.subn(rx, repl, new, count=1, flags=re.S)
+        assert k == 1, (item, rx[:60])
     for anchor, add in spec.get("inserts", []):
         new = insert_after(new, anchor, add)
     if spec.get("append_before_final_rule"):

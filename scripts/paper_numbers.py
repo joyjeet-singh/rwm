@@ -482,6 +482,12 @@ def main():
     E7 = J("e7_free_baselines.json")
     _bl = {r["baseline"]: r for r in E7["baselines"]}
     put("e7_verdict", E7["verdict"], "results/e7_free_baselines.json")
+    # Round 3, R4 (S2): what the verdict's label means, for places outside section 6.6 and Appendices E and K.
+    _e7b = {b["baseline"]: b for b in J("e7_free_baselines.json")["baselines"]}
+    assert E7["verdict"] == "SURVIVES entry-res ONLY", E7["verdict"]
+    assert _e7b["entry-res"]["margin_beats_mde"] and not _e7b["step-size"]["margin_beats_mde"]
+    put("e7_verdict_gloss", "disagreement beats the one-step error before the window, but not the model's "
+                            "predicted step size", "results/e7_free_baselines.json")
     put("e7_nind", E7["design"]["n_independent"], "results/e7_free_baselines.json")
     put("e7_r_dis", f'{_bl["step-size"]["r_disagreement_error"]:+.4f}',
         "results/e7_free_baselines.json")
