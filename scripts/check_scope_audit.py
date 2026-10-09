@@ -65,6 +65,12 @@ SCOPE = {
     "rule-seed-scope": ("whole-file",
         "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, "
         "README.template.md) for the rule-horizon figures near 'rule' or 'pre-register'"),
+    "alignment-arena": ("whole-file",
+        "scans each file in its own `files` list, paragraph by paragraph, for the alignment defect beside a "
+        "short-horizon cost, and requires the all-ten-episodes figures or words in the paragraph"),
+    "action-response": ("whole-file",
+        "scans each file in its own `files` list (and the model card builder's A() calls) for Arm A's stale-pairing "
+        "figures, and requires an X2 key in the same paragraph"),
     "compute-claim": ("whole-file",
         "scans the rendered files in its own `files` list for the forbidden equal-compute phrasing, and the "
         "front matter of PAPER.md (abstract, contributions, Appendix D, section 12) sentence by sentence"),

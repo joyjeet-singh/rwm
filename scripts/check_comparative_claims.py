@@ -825,6 +825,23 @@ CLAIMS = [
      "forbidden_regex": r"trains\s+twice\s+as\s+long|\beven\s+when\b(?:\W+\w+){0,12}?\W+(?:centre|center|setting)\b",
      "compute_regex": r"\bcompute\b|\btrain(?:ed|s)\s+longer\b",
      "qualifier_regex": r"\bdepends\b|\bchanges\b|\bsome\s+reading\b|\bat\s+least\s+one\s+reading\b|\bsplit\b"},
+
+    # ---- C27 (round 3, R3: guards G2 and G3) ---------------------------------------------------
+    # G2: the 4 Oct draft described the alignment defect's cost from the held-out pair's 4 trajectories ("inflating
+    # error mainly at short horizons"), when all ten episodes' 20 describe this checkpoint better (Annex 2 E2). A
+    # sentence that names the defect and a short-horizon cost must have the all-ten-episodes figures, or the words, in
+    # its paragraph. Sentences end at full stops only, so a clause joined by a semicolon is tested with its neighbour.
+    {"id": "C27.1", "kind": "alignment-arena", "where": "abstract / contributions / 3.1 / 7.2",
+     "says": "over all ten episodes this raises the checkpoint's short-horizon error",
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md"],
+     "defect_regex": r"\bstale\b|misaligned|previous step's action|\balignment\b",
+     "short_regex": r"short[\s-]horizons?|\bup to\b|\bh = 1\b",
+     "all_ten_regex": r"\{\{(?:adh20|ad20)_\w+\}\}|all ten episodes"},
+    # G3: round 2 quoted Arm A's stale-pairing sensitivity as evidence our models barely respond to the action; the
+    # figure was void (S-21) and rule X2 measured the response. A paragraph citing stale_armA_* must carry an X2 key.
+    {"id": "C27.2", "kind": "action-response", "where": "7.2 / model card",
+     "says": "They respond to the action",
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
 ]
 
 
@@ -1500,7 +1517,49 @@ def evaluate(c, paper, override=None):
                                          f"sentences name compute or longer training ({per_region}), "
                                          f"{n_front - len([b for b in bad if b.split(':')[0] in regions])} with the "
                                          f"qualifier" + (f"; failures {bad}" if bad else ""))
+    if k == "alignment-arena":
+        dre, sre, tre = (re.compile(exp[x], re.I) for x in ("defect_regex", "short_regex", "all_ten_regex"))
+        plant = exp.get("_plant", {})
+        bad, n = [], 0
+        for f in exp["files"]:
+            txt = open(f).read() + ("\n\n" + plant[f] if f in plant else "")
+            for para in re.split(r"\n\s*\n", txt):
+                for s in re.split(r"(?<=\.)\s+", para.replace("\n", " ")):
+                    if dre.search(s) and sre.search(s):
+                        n += 1
+                        if not tre.search(para):
+                            bad.append(f"{f}: {s.strip()[:80]!r}")
+        if plant and not any(any(p.strip()[:40] in b.replace("\n", " ") or p.split(".")[0].strip()[:40] in b
+                                 for b in bad) for p in plant.values()):
+            return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
+        return n > 0 and not bad, (f"{n} sentences pair the alignment defect with a short-horizon cost; "
+                                   f"{n - len(bad)} have the all-ten-episodes figures or words in their paragraph"
+                                   + (f"; missing in {bad}" if bad else ""))
+    if k == "action-response":
+        plant = exp.get("_plant", {})
+        bad, n = [], 0
+        for f in exp["files"]:
+            txt = open(f).read() + ("\n\n" + plant[f] if f in plant else "")
+            # a paragraph is a blank-line block in the templates, and one A(...) call in the model card's builder
+            paras = re.split(r"\n\s+A\(", txt) if f.endswith(".py") else re.split(r"\n\s*\n", txt)
+            for para in paras:
+                if re.search(r"\{\{stale_armA_|v\('stale_armA_", para):
+                    n += 1
+                    if not re.search(r"\{\{x2_|v\('x2_", para):
+                        bad.append(f"{f}: {para.strip()[:70]!r}")
+        if plant and not any(p.strip()[:40] in b for p in plant.values() for b in bad):
+            return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
+        return n > 0 and not bad, (f"{n} paragraphs cite Arm A's stale-pairing figures; {n - len(bad)} carry an X2 key"
+                                   + (f"; missing in {bad}" if bad else ""))
     raise ValueError(k)
+
+
+# Round 3, R3 (G2, G3): round 2's wording, verbatim from the template at 8c2c903.
+_OLD_ALIGN_ABSTRACT = ("Separately, the released evaluation pairs each prediction with the previous step's action, inflating "
+                       "error mainly at short horizons; at the longest the cost is small and not consistent in sign.")
+_OLD_ARMA_STALE = ("Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by "
+                   "{{stale_armA_rel_h1}}% at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the "
+                   "stale one (three-seed mean, relative-L1, held-out pair).")
 
 
 # Round 3, R2 (G1): the abstract's sentence as the 4 Oct draft rendered it (commit 8c2c903), verbatim, and a
@@ -1693,6 +1752,10 @@ def corruption_for(c):
         # Plant S-20's original sentence (section 7.2 before commit 798a362): an overstatement figure
         # with no reversal anywhere in its paragraph.
         return {"_plant": {"PAPER.template.md": _OLD_OVERSTAT_PAPER}}
+    if k == "alignment-arena":
+        return {"_plant": {"PAPER.template.md": _OLD_ALIGN_ABSTRACT}}
+    if k == "action-response":
+        return {"_plant": {"PAPER.template.md": _OLD_ARMA_STALE}}
     if k == "compute-claim":
         # Plant the 4 Oct abstract sentence (the first half must catch it) and a bare front-matter sentence naming
         # longer training (the second half must catch it); either one missed leaves the check passing, which fails.
