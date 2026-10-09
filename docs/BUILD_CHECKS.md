@@ -50,7 +50,7 @@ tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
 honest test is the subset the run actually rewrites: 15,521 values, or 0.91% of the 1,701,005 numeric values under `results/` that the comparison counts. The other 1,685,484 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 110-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 910 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **65 comparative claims** across 32 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 65 of 65 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 110-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 906 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **65 comparative claims** across 32 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 65 of 65 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -473,3 +473,12 @@ claims stayed, and only their history moved.
   its rows against Appendix D's was written, it listed two fewer, and the two it omitted were the
   two whose cost was hardest to state honestly. Those two (the configuration sweep and the
   architecture baselines) have since been run (§5.2, §5.3).
+- **[§2]** §2 closed with a note: every entry cited there and in §5.3 was checked against the paper
+  itself, title, full author list and year from the arXiv record, venue from the record or, where it
+  names none, from the paper's own first page, and every sentence attributed matched verbatim against
+  the paper's text; 18 of 18 entries and 19 of 19
+  fragments, 3 of them single common words. The References note now says the same once.
+- **[References]** The bibliography is generated from `results/t1_bibliography_verified.json` rather
+  than listed by hand because a hand-maintained list of what a paper cites drifts exactly as a
+  hand-typed count does, and this one had: six entries cited in §2's prose appeared in no reference
+  entry while the note claimed all of them verified.
