@@ -2396,6 +2396,28 @@ def main():
                         f'{_v["committed"]["result"]} averaged')
     put("n2_n_changed_word", WORDS[len(_chg)].lower(), _n2as)
     put("n2_changed_list", "; ".join(_chg_txt), _n2as)
+    # Round 3, R2 (Annex 2 E4, Annex 3 A5b): the two changed in-sample readings, in section 5.3, D signed as
+    # verdict_baselines.py signs it (positive favours RWM)
+    assert _chg == ["M-75 in_sample|nrmse_h1", "M-76 in_sample|nrmse_h100"], _chg
+    _sd3 = lambda x: f"{x:+.3f}"
+    _sci3 = lambda c: f"[{c[0]:+.3f}, {c[1]:+.3f}]"
+    _r75 = N2A["readings"]["M-75"]["in_sample|nrmse_h1"]
+    for _a in ("mlp", "rssm", "transformer"):
+        _p = _r75["pooled"]["per_key"][f"{_a}_tf_s7"]
+        assert _p["rejected"] and _p["D"] < 0, (_a, _p)          # "all three baselines are ahead of RWM"
+        put(f"n2_m75_D_{_a}", _sd3(_p["D"]), _n2as)
+        put(f"n2_m75_ci_{_a}", _sci3(_p["ci95"]), _n2as)
+    put("n2_m75_pooled", _r75["pooled"]["result"], _n2as)
+    put("n2_m75_committed", _r75["committed"]["result"], _n2as)
+    _r76 = N2A["readings"]["M-76"]["in_sample|nrmse_h100"]
+    _p = _r76["pooled"]["per_key"]["mlp_ar_s7"]
+    assert not _p["rejected"] and _p["ci95"][0] < 0 < _p["ci95"][1] and _p["D"] > 0   # "no longer resolved"
+    assert _r76["committed"]["per_key"]["mlp_ar_s7"]["rejected"]
+    assert _r76["keys_whose_direction_or_rejection_changed"] == ["mlp_ar_s7"]
+    put("n2_m76_D_mlp", _sd3(_p["D"]), _n2as)
+    put("n2_m76_ci_mlp", _sci3(_p["ci95"]), _n2as)
+    put("n2_m76_pooled", _r76["pooled"]["result"], _n2as)
+    put("n2_m76_committed", _r76["committed"]["result"], _n2as)
     # E7: the diverged flag, as N2 defines it.
     _dr = N2R["diverged_flag"]["rows"]
     _fac = {round(v["threshold"] / v["floor_l1_h368"], 6) for v in _dr.values()}

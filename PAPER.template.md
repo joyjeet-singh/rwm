@@ -511,9 +511,7 @@ run, and the {{mn_n_overlapped}} of {{rt_sweep_runs}} sweep runs that overlapped
 are in Appendix B. The hold-last floor is {{mn_floor_h100}} at h = {{v2_deploy_h}} and {{mn_floor_h368}} at h = {{v2_diag_h}}.
 The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
 alongside the rules here and in §5.3 are pooled, recomputed afterwards (post hoc; ledger R-77,
-`results/pooled_nrmse_alongside.json`), and return the same verdict as the averaged ones everywhere except
-{{n2_n_changed_word}} in-sample readings of §5.3's rules (which configurations a reading resolves can
-shift; the artifact lists each): {{n2_changed_list}}.
+`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§5.3 gives the {{n2_n_changed_word}} readings of its rules that differ).
 
 **Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre ({{mn_better_kinds}}), {{mn_worse_list}} are worse, and
 {{mn_unres_list}} cannot be told apart from it. At h = {{v2_diag_h}} the lowest error is {{mn_best_config}}'s,
@@ -585,7 +583,7 @@ Trained autoregressively, the RSSM falls behind from {{bl_ar_rssm_lead_from}}, b
 {{bl_ar_mlp_D_h100}} {{bl_ar_mlp_ci_h100}}, about {{bl_ar_mlp_pct_h100}}% of RWM's
 {{h2h_armA_l1_h100}}, and {{bl_ar_tr_D_h100}} {{bl_ar_tr_ci_h100}}. Before those horizons, on the held-out pair, a baseline
 cannot be told apart from RWM: at h = 1 both rules return {{bl_tf_h1}}, and at h = 8 both return
-{{bl_tf_h8}}.
+{{bl_tf_h8}}. On the in-sample arena's {{mn_nind_ins}} trajectories, with nRMSE pooled as §3.1 defines it (computed afterwards, post hoc; ledger R-77), {{n2_n_changed_word}} readings differ from the per-trajectory average the rules' evaluator used. Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is {{n2_m75_D_mlp}} {{n2_m75_ci_mlp}} for the MLP, {{n2_m75_D_rssm}} {{n2_m75_ci_rssm}} for the RSSM and {{n2_m75_D_transformer}} {{n2_m75_ci_transformer}} for the transformer, so M-75's reading there is {{n2_m75_pooled}} where the average gave {{n2_m75_committed}}: the same one-step lead for teacher forcing as §5's. Trained autoregressively, the MLP's deficit at h = {{v2_deploy_h}} is no longer resolved ({{n2_m76_D_mlp}} {{n2_m76_ci_mlp}}), so M-76's reading there is {{n2_m76_pooled}} where the average gave {{n2_m76_committed}}. Neither changes a verdict; both rules govern at h = {{v2_diag_h}} on relative-L1.
 
 **Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate of this section's models one
 step ahead, {{h2h_bl_rssm_tf_l1_h1}} against RWM's {{h2h_armA_l1_h1}} and the floor's {{x1_floor_h1}},
