@@ -123,8 +123,8 @@ SCOPE = {
         "compares every table in the built PAPER.md, found with the converter's own "
         "table detector, with PAPER.tex; the supplementary files are not typeset"),
     "arena_consistency": ("named-region",
-        "reads section 3.2's evidence table and each section it names; a missing section "
-        "fails the check"),
+        "reads the evidence table (Appendix D's second, which section 3.2 points to; round 3, R6) "
+        "and each section it names; a missing section fails the check"),
 }
 
 

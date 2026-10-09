@@ -61,7 +61,7 @@
     {
       "kind": "arena_consistency",
       "input_selection": "named-region",
-      "reason": "reads section 3.2's evidence table and each section it names; a missing section fails the check",
+      "reason": "reads the evidence table (Appendix D's second, which section 3.2 points to; round 3, R6) and each section it names; a missing section fails the check",
       "files_named_by_claims": [],
       "surface_named_by_claims": []
     },

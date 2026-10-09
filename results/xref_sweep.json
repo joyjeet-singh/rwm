@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 85,
-  "n_ok": 85,
+  "n_pointers": 86,
+  "n_ok": 86,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -180,6 +180,12 @@
     {
       "class": "artifact",
       "pointer": "results/e7_free_baselines.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/evidence_summary.json",
       "ok": true,
       "detail": "exists"
     },

@@ -312,27 +312,7 @@ original's *figure*, and h = 100 to its *method*.
 ### 3.2 What each claim rests on
 
 Every headline claim in this paper is measured on the out-of-sample or in-sample arena above, or on all ten episodes together, at a stated number of independent units (400-step trajectories unless the row says otherwise), and at a stated checkpoint: the released one, or ours at a stated
-number of training iterations. The table is generated from the artifacts each claim is computed
-from, so no arena label, sample size or checkpoint in it is typed by hand.
-
-| claim (§) | arena (n_independent) | checkpoint | in-sample for the model measured? | verdict | survives multiplicity correction? |
-|---|---|---|---|---|---|
-| Autoregressive training beats teacher forcing at h = 368 (§5) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |
-| The same comparison reverses at h = 1, at the short unit M-64 built (§5) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |
-| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre | yes |
-| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; at h = 368 every baseline is worse than predicting no change | yes |
-| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; at h = 368 every baseline is worse than predicting no change | yes |
-| Ensemble disagreement is smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
-| Ensemble disagreement is smaller than realised error, at h = 100 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
-| The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
-| Disagreement ranks realised error better than the forecast step index, at h = 100 (§6.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |
-| Disagreement ranks realised error better than the model's own predicted step size (§6.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY (disagreement beats the one-step error before the window, but not the model's predicted step size): step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |
-| With both the rollout and the depth held constant, disagreement still tracks error (§6.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |
-| A per-horizon multiplier brings coverage near nominal where a constant one does not (§6.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |
-| An ensemble that shares no trunk is better calibrated than the released topology (§6.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |
-| The same contrast at matched capacity (§11) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
-| Independence and the corrected objective together improve on the released topology (§6.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
-| The released evaluation pairs states and actions one step stale (§7.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |
+number of training iterations. Appendix D's second table, "What each tested claim rests on", gives each claim's arena, sample size, checkpoint and verdict. It is generated from the artifacts each claim is computed from, so no arena label, sample size or checkpoint in it is typed by hand.
 
 ---
 
@@ -1546,7 +1526,7 @@ needs no robot.
 
 ## Appendix D — every claim of the originals, and what we did with it
 
-The body's §4 summarises this table. It is here in full because the third column — what the
+The body's §4 summarises the first table. It is here in full because the third column — what the
 original actually reports — is the answer to a question a reader of any reproduction should ask,
 and because "no quantitative figure" is itself a finding that deserves to be checkable row by row.
 
@@ -1574,6 +1554,27 @@ names. All locations, and the occurrence counts that establish that, are recorde
 | Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§6.3) |
 | Offline MBRL on real robots (2504.16680v1) | no | — | `[policy, hardware: offline MBRL on real robots]` not tested |
 | Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.6), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
+
+**What each tested claim rests on.** The second table is §3.2's: one row per headline claim of this paper, with the section that owns it. Each row gives its own arena and number of independent units, its checkpoint, whether that arena is in-sample for the model measured, the verdict as its rule or analysis returned it, and whether it survives multiplicity correction. It is generated from the artifacts each claim is computed from (`results/evidence_summary.json`).
+
+| claim (§) | arena (n_independent) | checkpoint | in-sample for the model measured? | verdict | survives multiplicity correction? |
+|---|---|---|---|---|---|
+| Autoregressive training beats teacher forcing at h = 368 (§5) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |
+| The same comparison reverses at h = 1, at the short unit M-64 built (§5) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |
+| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (§5.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre | yes |
+| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; at h = 368 every baseline is worse than predicting no change | yes |
+| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (§5.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; at h = 368 every baseline is worse than predicting no change | yes |
+| Ensemble disagreement is smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| Ensemble disagreement is smaller than realised error, at h = 100 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| The aleatoric σ head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (§6.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |
+| Disagreement ranks realised error better than the forecast step index, at h = 100 (§6.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |
+| Disagreement ranks realised error better than the model's own predicted step size (§6.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY (disagreement beats the one-step error before the window, but not the model's predicted step size): step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |
+| With both the rollout and the depth held constant, disagreement still tracks error (§6.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |
+| A per-horizon multiplier brings coverage near nominal where a constant one does not (§6.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |
+| An ensemble that shares no trunk is better calibrated than the released topology (§6.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |
+| The same contrast at matched capacity (§11) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
+| Independence and the corrected objective together improve on the released topology (§6.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
+| The released evaluation pairs states and actions one step stale (§7.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |
 
 ---
 ## Appendix E — every pre-registered rule, its lead time and its verdict

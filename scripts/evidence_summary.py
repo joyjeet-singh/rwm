@@ -1,4 +1,4 @@
-"""3.2 -- the evidence summary table. NO NEW MEASUREMENT.
+"""The evidence summary table: Appendix D's second, which 3.2 points to (round 3, R6). NO NEW MEASUREMENT.
 
 One row per headline claim, so a reader can hold the three evaluation arenas in
 their head before meeting any of them. Every cell is READ from an artifact under
@@ -523,7 +523,7 @@ def main():
     for r in rows:
         r["checkpoint"] = checkpoint_of(r)
     out = {
-        "what": "one row per headline claim, for section 3.2",
+        "what": "one row per headline claim, for Appendix D's second table (section 3.2 points to it)",
         "computation": "none; every cell is read from an artifact or derived from one",
         "arena_registry": ARENA,
         "arena_surface_forms": {k: list(v) for k, v in LABEL_FORMS.items()},
@@ -533,7 +533,7 @@ def main():
     }
 
     print("=" * 96)
-    print("3.2 — EVIDENCE SUMMARY TABLE (no new measurement)")
+    print("APPENDIX D, SECOND TABLE — EVIDENCE SUMMARY (no new measurement)")
     print("=" * 96)
     for k, v in ARENA.items():
         print(f"  arena {k:<18s} episodes {v['episodes']}  n_independent {v['n_independent']}")

@@ -778,7 +778,9 @@ CLAIMS = [
     # must be one the section states. Sections that name neither (6.10 and 7.2
     # state no arena at all) are reported as unconfirmed rather than silently
     # counted as passing.
-    {"id": "C24.1", "kind": "arena_consistency", "where": "3.2",
+    # Round 3, R6 (ruling V5): the table moved to Appendix D as its second table; §3.2 keeps the
+    # paragraph that points to it, and the anchor sentence with it. Label "3.2" -> "3.2 / Appendix D".
+    {"id": "C24.1", "kind": "arena_consistency", "where": "3.2 / Appendix D",
      # S10 re-anchor (user ruling D2 added the checkpoint column and reworded this sentence)
      "says": "so no arena label, sample size or checkpoint in it is typed by hand"},
 

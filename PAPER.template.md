@@ -304,12 +304,7 @@ original's *figure*, and h = {{v2_deploy_h}} to its *method*.
 ### 3.2 What each claim rests on
 
 Every headline claim in this paper is measured on the out-of-sample or in-sample arena above, or on all ten episodes together, at a stated number of independent units (400-step trajectories unless the row says otherwise), and at a stated checkpoint: the released one, or ours at a stated
-number of training iterations. The table is generated from the artifacts each claim is computed
-from, so no arena label, sample size or checkpoint in it is typed by hand.
-
-| claim (§) | arena (n_independent) | checkpoint | in-sample for the model measured? | verdict | survives multiplicity correction? |
-|---|---|---|---|---|---|
-{{evidence_table}}
+number of training iterations. Appendix D's second table, "What each tested claim rests on", gives each claim's arena, sample size, checkpoint and verdict. It is generated from the artifacts each claim is computed from, so no arena label, sample size or checkpoint in it is typed by hand.
 
 ---
 
@@ -1467,7 +1462,7 @@ needs no robot.
 
 ## Appendix D — every claim of the originals, and what we did with it
 
-The body's §4 summarises this table. It is here in full because the third column — what the
+The body's §4 summarises the first table. It is here in full because the third column — what the
 original actually reports — is the answer to a question a reader of any reproduction should ask,
 and because "no quantitative figure" is itself a finding that deserves to be checkable row by row.
 
@@ -1495,6 +1490,12 @@ names. All locations, and the occurrence counts that establish that, are recorde
 | Aleatoric "remains low, reflecting small stochasticity" (2504.16680v1 §5.1) | **yes** | **no quantitative figure.** "Low" is relative to the epistemic curve on the same axes of Fig. 2 (right); no absolute value, and no comparison against realised error | the observation holds; the explanation does not (§6.3) |
 | Offline MBRL on real robots (2504.16680v1) | no | — | `[policy, hardware: offline MBRL on real robots]` not tested |
 | Penalising rewards by ensemble disagreement improves the learned policy (2504.16680v1 Eq. 4–5, §5) — the follow-up's core method claim | no | Fig. 3 (right) plots epistemic uncertainty under three penalty weights during training; no numbers | `[policy: the core claim that penalising rewards by disagreement improves the learned policy]` **not tested.** We measure the penalty quantity itself — what it is (§6.1), how well it ranks error (§6.6), whether it is calibrated (§6.2) — but never train a policy with or without it. Our findings bound what the quantity *reports*, not what it *costs* (§11) |
+
+**What each tested claim rests on.** The second table is §3.2's: one row per headline claim of this paper, with the section that owns it. Each row gives its own arena and number of independent units, its checkpoint, whether that arena is in-sample for the model measured, the verdict as its rule or analysis returned it, and whether it survives multiplicity correction. It is generated from the artifacts each claim is computed from (`results/evidence_summary.json`).
+
+| claim (§) | arena (n_independent) | checkpoint | in-sample for the model measured? | verdict | survives multiplicity correction? |
+|---|---|---|---|---|---|
+{{evidence_table}}
 
 ---
 ## Appendix E — every pre-registered rule, its lead time and its verdict

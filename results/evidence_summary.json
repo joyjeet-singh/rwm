@@ -1,5 +1,5 @@
 {
-  "what": "one row per headline claim, for section 3.2",
+  "what": "one row per headline claim, for Appendix D's second table (section 3.2 points to it)",
   "computation": "none; every cell is read from an artifact or derived from one",
   "arena_registry": {
     "out-of-sample": {

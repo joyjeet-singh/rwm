@@ -488,7 +488,7 @@ stage 20s3 "Q3 — whether the per-horizon correction reorders penalties (M-70)"
 REPORT=appendix_g_rules_report.txt stage 21a "Appendix G — every pre-registered rule, from the ledger" "10 s" \
       results/appendix_g_rules.json $PY scripts/appendix_g_rules.py
 
-REPORT=evidence_summary_report.txt stage 21b "3.2 — the evidence summary table (no new measurement)" "5 s" \
+REPORT=evidence_summary_report.txt stage 21b "Appendix D (§3.2 points to it) — the evidence summary table (no new measurement)" "5 s" \
       results/evidence_summary.json $PY scripts/evidence_summary.py
 
 # The paper is generated, not written by hand: paper_numbers.py collects every value
