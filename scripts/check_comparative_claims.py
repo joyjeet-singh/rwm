@@ -799,10 +799,15 @@ CLAIMS = [
      "marker_regex": r"\{\{m23_seed\}\}|one\s+seed\s+per\s+arm|three-seed\s+extension|extends?\s+(it|the\s+rule)"},
     # C25.2: the alignment defect's cost is small and not consistent in sign at h = 368 (S-20, R-76). No
     # sentence may pair "overstat..." with an alignment figure unless its paragraph names the reversal.
+    # Round 3, R3 re-anchor (PLAN 1.2 rule 8): section 7.2 no longer says the evaluation "overstates" the checkpoint's
+    # error; it leads with the all-ten-episodes curve (Annex 2 E2). Old anchor "overstates the released checkpoint's
+    # error" -> new anchor "What the stale pairing costs depends on the horizon", the paragraph the check guards. The
+    # files and the rule are unchanged, and figure_regex now also covers the new all-ten keys (adh20_*), so a sentence
+    # pairing "overstat" with one of them is caught too: coverage grows, it does not shrink.
     {"id": "C25.2", "kind": "overstat-reversal", "where": "7.2 / abstract / contributions",
-     "says": "overstates the released checkpoint's error",
+     "says": "What the stale pairing costs depends on the horizon",
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "README.template.md"],
-     "figure_regex": r"ad(?:20|h)?_[A-Za-z0-9_]+|stale_[A-Za-z0-9_]+",
+     "figure_regex": r"ad(?:20|h20|h)?_[A-Za-z0-9_]+|stale_[A-Za-z0-9_]+",
      "reversal_regex": r"revers|not consistent in sign"},
 
     # ---- C26 (round 3, R2: guard G1) ----------------------------------------------------------

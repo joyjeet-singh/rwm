@@ -428,7 +428,9 @@ def build_rows():
     })
 
     # --- 12: the action-alignment defect -------------------------------------
-    s4_arena = arena_of_episodes(S4["split"]["holdout_episodes"])
+    # Round 3, R3 (Annex 2 E2): described over all ten episodes, the larger arena and this checkpoint's own
+    # training data; the held-out pair is not more honest here, only smaller.
+    s4_arena = arena_of_episodes(range(10))
     s4_model = measured_model(T("step3_report.txt"))
     stale = S4["protocols"]["A_off0"]["nrmse"][str(diag)]
     causal = S4["protocols"]["A_off1"]["nrmse"][str(diag)]
@@ -436,18 +438,19 @@ def build_rows():
     # Concentrated at short horizons if the held-out pair's largest relative-L1 overstatement lies at
     # h < diag and exceeds the h = diag one; not consistent in sign at h = diag if the held-out pair and
     # all ten episodes disagree in sign there.
+    # Round 3, R3: the verdict reads the all-ten-episodes curve on relative-L1. The rise must run unbroken from
+    # h = 1 to the last horizon whose interval excludes zero, and no later horizon may be resolved either way.
     AH = J("alignment_by_horizon.json")["released"]["summary"]
-    _ho = {int(h): v["rel_l1"]["pct"] for h, v in AH["held_out_n4"].items()}
-    _ten = AH["all_ten_n20"][str(diag)]["rel_l1"]["pct"]
-    _hmax = max(_ho, key=_ho.get)
-    _short = _hmax < diag and _ho[_hmax] > _ho[diag]
-    _flip = (_ho[diag] > 0) != (_ten > 0)
-    _cost = ("its cost is concentrated at short horizons, and at h = " + str(diag)
-             + (" is small and not consistent in sign" if _flip else " is small")) if _short else (
-             "its cost is not concentrated at short horizons")
+    _t20 = {int(h): v["rel_l1"]["ci95_pct"] for h, v in AH["all_ten_n20"].items()}
+    _hs = sorted(_t20)
+    _rise = [h for h in _hs if _t20[h][0] > 0]
+    assert _rise and _rise == _hs[:len(_rise)], f"the rise is not unbroken from h = {_hs[0]}: {_rise}"
+    _upto = _rise[-1]
+    assert all(_t20[h][0] <= 0 <= _t20[h][1] for h in _hs[len(_rise):]), "a later horizon is resolved"
+    _cost = (f"raises error up to h = {_upto} on relative-L1; not resolved from h = {_hs[len(_rise)]}"
+             if len(_rise) < len(_hs) else "raises error at every horizon on relative-L1")
     rows.append({
-        "claim": ("The released evaluation pairs states and actions one step "
-                  "stale and overstates its own model's error"),
+        "claim": "The released evaluation pairs states and actions one step stale",
         "section": "7.2",
         "arena": s4_arena,
         "n_independent": ARENA[s4_arena]["n_independent"],

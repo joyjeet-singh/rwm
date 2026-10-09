@@ -77,14 +77,7 @@ a practitioner can use without reading the rest.
   where a global one does not, though no single cell is resolvable and the cells are unseen only by
   the multiplier, since the checkpoint trained on both episodes (§6.7); on Arm A, which never saw them, its own multipliers manage
   {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells.
-- **The released evaluation is misaligned by one step; the cost is concentrated at short horizons, and at
-  h = {{v2_diag_h}} it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
-  training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
-  the held-out pair's {{ad_nind}} independent trajectories, which this checkpoint trained on, the stale
-  action raises its relative-L1 error by
-  {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on
-  relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE; over all ten episodes the sign at h = {{v2_diag_h}}
-  reverses (§7.2).
+- **The released evaluation is misaligned by one step; over all ten episodes it raises the checkpoint's error up to h = 32, and from h = {{v2_deploy_h}} the change is not resolved.** Evaluation feeds the action from *t−1* where training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On all ten episodes' {{ad20_nind}} independent trajectories, all of them training data for this checkpoint, the stale action raises its relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and changes it by {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} at h = {{v2_deploy_h}} and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}; on the held-out pair's {{ad_nind}} it raises it at every horizon reported, by {{ad_rel}}% {{ad_rel_ci}} at h = {{v2_diag_h}} (§7.2).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise, and losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss
   terms and {{diff_n_params}} parameter tensors, before any training (Appendix A).
@@ -305,9 +298,7 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ.
 The ranking claims (§6.6) are Pearson correlations between the applied scalar penalty and total
 absolute error, because a ranking claim is about order rather than scale. Every headline number in
-the abstract names its metric. §7.2's alignment defect is given in both metrics side by side at h = {{v2_diag_h}}, on the same
-{{ad_nind}} independent trajectories: {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}%
-{{ad_nrmse_ci}} in nRMSE; its larger cost at short horizons is given on relative-L1, at h = 1.
+the abstract names its metric. §7.2's alignment defect is given in both metrics, over all ten episodes and on the held-out pair. Over all ten episodes the two metrics agree that the stale action raises error at h = 8 and 32 and that from h = {{v2_deploy_h}} the change is not resolved, and they differ at h = 1, where relative-L1 resolves the rise and nRMSE does not.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,{{v2_deploy_h}},\,128,\,{{v2_diag_h}}\}$.
 Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's
@@ -1137,24 +1128,7 @@ so those zeros mark the absence of a producing action — the reset produced tha
 step. The training path pairs states and actions index-for-index, which is causally correct; the
 evaluation path feeds the action from *t−1* to predict state *t*, stale by one step.
 
-What the stale pairing costs is concentrated at short horizons; at h = {{v2_diag_h}} it is small, and its
-sign is not consistent. On the held-out pair's
-{{ad_nind}} independent trajectories it overstates the released checkpoint's error at
-h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relative-L1** and **{{ad_nrmse}}%
-{{ad_nrmse_ci}} in nRMSE** (each a 95% interval from a cluster bootstrap over whole trajectories, both pairings
-inside each draw; `results/alignment_defect_ci.json`). Shifting the evaluation loop's two action
-slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness
-does this with `action_offset = 1` (`src/score_reference.py:180-190`). The four per-trajectory values are {{ad_rel_traj}}
-on relative-L1 and {{ad_nrmse_traj}} in nRMSE. Over all ten episodes, {{ad20_nind}} independent
-trajectories, the sign reverses: {{ad20_rel}}% {{ad20_rel_ci}} on relative-L1 and {{ad20_nrmse}}%
-{{ad20_nrmse_ci}} in nRMSE, with single trajectories from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%.
-Every arena here is in-sample for this checkpoint, which trained on all ten episodes. One step ahead, where a
-stale action should matter most, it changes the checkpoint's relative-L1 error by {{adh_rel_h1}}%
-{{adh_rel_ci_h1}} on the held-out pair's {{ad_nind}} trajectories, and by {{adh_rel_h100}}% {{adh_rel_ci_h100}}
-at h = {{v2_deploy_h}}, the method's own horizon (`results/alignment_by_horizon.json`). Our own Arm A
-checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}%
-at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one (three-seed mean,
-relative-L1, held-out pair).
+What the stale pairing costs depends on the horizon. All ten episodes are this checkpoint's training data, so the held-out pair is not more honest here, only smaller, and the larger arena leads. Over all ten episodes' {{ad20_nind}} independent trajectories the stale action raises the released checkpoint's relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1, {{adh20_rel_h8}}% {{adh20_rel_ci_h8}} at h = 8 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and from h = {{v2_deploy_h}} the change is not resolved: {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} there and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}, where single trajectories run from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%. In nRMSE the rise is resolved at h = 8 and 32 ({{adh20_nrmse_h8}}% {{adh20_nrmse_ci_h8}} and {{adh20_nrmse_h32}}% {{adh20_nrmse_ci_h32}}) but not at h = 1 ({{adh20_nrmse_h1}}% {{adh20_nrmse_ci_h1}}), and from h = {{v2_deploy_h}} it is not resolved either ({{adh20_nrmse_h100}}% {{adh20_nrmse_ci_h100}} there, {{ad20_nrmse}}% {{ad20_nrmse_ci}} at h = {{v2_diag_h}}). Each is a 95% interval from a cluster bootstrap over whole trajectories, both pairings inside each draw (`results/alignment_by_horizon.json`, `results/alignment_defect_ci.json`). On the held-out pair's {{ad_nind}} independent trajectories the stale action raises the error at every horizon reported: by {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, by {{adh_rel_h100}}% {{adh_rel_ci_h100}} at h = {{v2_deploy_h}}, where the larger arena resolves no change, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}. Shifting the evaluation loop's two action slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness does this with `action_offset = 1` (`src/score_reference.py:180-190`). Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}% at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one (three-seed mean, relative-L1, held-out pair; ledger R-79, which replaces R-76's void figures).
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).

@@ -492,6 +492,7 @@ def main():
     # The abstract prints the step-size correlation at the three decimals its neighbours use.
     put("e7_step_r3", f'{_bl["step-size"]["r_baseline_error"]:+.3f}',
         "results/e7_free_baselines.json")
+
     for _k, _tag in (("step-size", "step"), ("entry-res", "entry"),
                      ("forecast-index", "index")):
         _r = _bl[_k]
@@ -1173,6 +1174,9 @@ def main():
     # D4 -- the penalty correlation, with an interval and an n at last
     _p4 = D["d4_penalty"]
     put("d4_r", f'{_p4["corr_with_total_abs_error"]:+.3f}', "results/task_d_nind20.json")
+    # Round 3 (A13): the abstract and section 12 set e7_step_r3 beside d4_r; e7's own figure for disagreement
+    # (e7_r_dis) must be d4_r's number at three decimals, or the pair compares two different quantities.
+    assert f'{float(N["e7_r_dis"]["value"]):+.3f}' == N["d4_r"]["value"], (N["e7_r_dis"]["value"], N["d4_r"]["value"])
     put("d4_ci", f'[{_p4["ci_lo"]:+.3f}, {_p4["ci_hi"]:+.3f}]', "results/task_d_nind20.json")
     put("d4_nind", _p4["n_independent"], "results/task_d_nind20.json")
     put("d4_npoints", f'{_p4["n_points"]:,}', "results/task_d_nind20.json")
@@ -1831,6 +1835,86 @@ def main():
     _am =_ah["arm_a"]["10000"]["summary_three_seed_mean_pct"]
     put("stale_armA_rel_h1", f'{_am["1"]["rel_l1"]:+.2f}', _src2)
     put("stale_armA_rel_h368", f'{_am["368"]["rel_l1"]:+.2f}', _src2)
+
+    # --- Round 3, R3 (Annex 2 E2): the released checkpoint's stale-action cost over all ten episodes ----------------
+    # The h = 368 cells stay ad20_* / ad_* (alignment_defect_ci.json, which N1 reproduces to 1e-9); h = 1..100 are N1's.
+    _t20, _h4s = _ah["released"]["summary"]["all_ten_n20"], _ah["released"]["summary"]["held_out_n4"]
+    assert _ah["released"]["reproduces_alignment_defect_ci_at_h368"]["all_ten_n20"]["reproduced"]
+    assert _hd == "100"
+    for _h in ("1", "8", "32", "100"):
+        for _m, _tg in (("rel_l1", "rel"), ("nrmse_form1", "nrmse")):
+            put(f"adh20_{_tg}_h{_h}", f'{_t20[_h][_m]["pct"]:.1f}', _src2)
+            put(f"adh20_{_tg}_ci_h{_h}", _ci(_t20[_h][_m]["ci95_pct"]), _src2)
+    # What contribution 7, section 3.1 (A8), section 7.2 and the 3.2 row say, asserted: over all ten episodes
+    # relative-L1 resolves a rise at h = 1, 8 and 32 and nothing from h = 100; nRMSE resolves a rise at 8 and 32, not
+    # at 1, and nothing from 100; on the held-out pair both metrics resolve a rise at every horizon.
+    _exz = lambda c: c[0] > 0 or c[1] < 0
+    for _h in map(str, _ah["horizons"]):
+        _r, _n = _t20[_h]["rel_l1"]["ci95_pct"], _t20[_h]["nrmse_form1"]["ci95_pct"]
+        if int(_h) <= 32:
+            assert _r[0] > 0 and (_n[0] > 0) == (_h != "1") and not (_h == "1" and _exz(_n)), _h
+        else:
+            assert not _exz(_r) and not _exz(_n), _h
+        assert all(_h4s[_h][_m]["ci95_pct"][0] > 0 for _m in ("rel_l1", "nrmse_form1")), _h
+
+    # --- Round 3, R3 (Annex 2 E3): rule X2 (M-84, discharged in M-85) -----------------------------------------------
+    X2 = J("action_sensitivity.json")
+    _x2s = "results/action_sensitivity.json"
+    _rdx = X2["readings"]
+    assert {v["reading"] for v in _rdx.values()} == {"RESPONDS TO THE ACTION"}, "the text installed is case R"
+    put("x2_reading", _rdx["arm_a_10000"]["reading"], _x2s)
+    _pc = lambda x: f"{x:+.1f}"
+    _pci = lambda c: f"[{c[0]:+.1f}, {c[1]:+.1f}]"
+    for _it, _tg in (("2500", "2500"), ("10000", "10k")):
+        put(f"x2_E_swap_{_tg}", _pc(_rdx[f"arm_a_{_it}"]["E_pct"]), _x2s)
+        put(f"x2_ci_swap_{_tg}", _pci(_rdx[f"arm_a_{_it}"]["ci95_pct"]), _x2s)
+    put("x2_n_ins", X2["arenas"]["in_sample_n16"]["n_independent"], _x2s)
+    assert X2["arenas"]["held_out_n4"]["starts"] == list(J("alignment_defect_ci.json")["arenas"]["held_out_n4"]["starts"])
+    _cx = X2["context"]["in_sample_n16"]
+    put("x2_ctx_stale", f'{_cx["one_step_shift_over_spread"]:.2f}', _x2s)
+    put("x2_ctx_swap", f'{_cx["swap_over_spread"]:.2f}', _x2s)
+    _s1 = X2["results"]["arm_a_10000"]["in_sample_n16"]["1"]["I1_stale"]
+    assert _s1["ci95_pct"][0] > 0, "section 7.2 says the in-sample stale cost at h = 1 is a resolved rise"
+    put("x2_E_stale_10k_ins_h1", _pc(_s1["E_pct"]), _x2s)
+    put("x2_ci_stale_10k_ins_h1", _pci(_s1["ci95_pct"]), _x2s)
+    # X2's held-out I1 figures are N1's, re-measured (R-79): the same numbers stale_armA_* print
+    assert abs(X2["results"]["arm_a_10000"]["held_out_n4"]["1"]["I1_stale"]["E_pct"] - _am["1"]["rel_l1"]) < 1e-6
+    # Appendix V: every cell, generated
+    _MODELS = (("arm_a_2500", "Arm A, {}".format(N["iters_main"]["value"])), ("arm_a_10000", "Arm A, {}".format(N["iters_long"]["value"])),
+               ("arm_b_2500", "Arm B, {} (alongside)".format(N["iters_main"]["value"])),
+               ("arm_b_10000", "Arm B, {} (alongside)".format(N["iters_long"]["value"])),
+               ("released", "released checkpoint (alongside)"))
+    _INTV = (("I1_stale", "stale action"), ("I2_swap", "another trajectory's actions"), ("I3_mean", "training mean"),
+             ("I4_noise_k0.1", "noise, k = 0.1"), ("I4_noise_k0.5", "noise, k = 0.5"))
+    _XH = ("1", "8", "32", "100")
+    _own = {"arm_a_2500": "in_sample_n16", "arm_a_10000": "in_sample_n16", "arm_b_2500": "in_sample_n16",
+            "arm_b_10000": "in_sample_n16", "released": "all_ten_n20"}
+
+    def _x2tab(arena_of):
+        rows = []
+        for _k, _lab in _MODELS:
+            for _i, _il in _INTV:
+                cells = []
+                for _h in _XH:
+                    _c = X2["results"][_k][arena_of(_k)][_h][_i]
+                    _s = f'{_pc(_c["E_pct"])} {_pci(_c["ci95_pct"])}'
+                    cells.append(f"**{_s}**" if (_k in X2["readings"] and _i == "I2_swap" and _h == "8"
+                                                 and arena_of(_k) == "in_sample_n16") else _s)
+                rows.append(f"| {_lab} | {_il} | " + " | ".join(cells) + " |")
+        return "\n".join(rows)
+    put("x2_appV_own", _x2tab(lambda k: _own[k]), _x2s)
+    put("x2_appV_ho", _x2tab(lambda k: "held_out_n4"), _x2s)
+    _drows = []
+    for _k, _lab in _MODELS:
+        for _arn, _al in ((_own[_k], "own training data"), ("held_out_n4", "held-out pair")):
+            _drows.append(f"| {_lab} | {_al} | " + " | ".join(
+                f'{X2["results"][_k][_arn]["8"][_i]["delta"]:.3f}' for _i, _ in _INTV) + " |")
+    put("x2_appV_delta", "\n".join(_drows), _x2s)
+    for _arn, _tg in (("in_sample_n16", "ins"), ("held_out_n4", "ho"), ("all_ten_n20", "ten")):
+        _c = X2["context"][_arn]
+        put(f"x2_ctx_{_tg}_frac", f'{100 * _c["fraction_of_steps_with_changed_action"]:.0f}', _x2s)
+        put(f"x2_ctx_{_tg}_stale", f'{_c["one_step_shift_over_spread"]:.2f}', _x2s)
+        put(f"x2_ctx_{_tg}_swap", f'{_c["swap_over_spread"]:.2f}', _x2s)
 
     # D3: the hold-last floor. Section 3 quoted 0.3509 against 1.5540 with no
     # baseline, so a reader could not judge whether 0.3509 was good.
