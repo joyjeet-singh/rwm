@@ -58,3 +58,9 @@ PLAN.md §0.2, copied verbatim. **Defaults accepted by launching R0, 2026-10-04*
   - Stronger on pre-registration, but it amends V1's design, and until R1 runs, §7.2 and the model card keep printing the void figures (already public).
 
 Either way, the live Hugging Face card carries the void figures until §0.4 step 2 re-uploads `MODEL_CARD.md` after R9, unless you want that done sooner.
+
+**Answer, 2026-10-09**, asked in chat: "Fix, re-measure, then X2 (Recommended)", option (A). R0 resumes and carries out steps 1–5 before R1.
+
+**The ledger's class, fixed before the corrected figures exist** (committed in this commit, before `alignment_by_horizon.json` is regenerated). R-76's claim is that "every 3-seed mean, in both metrics and at both checkpoints, is within 0.93% of zero: our checkpoints are almost insensitive to the stale pairing", and round 2's T3 ruling restated it as "under 1% at every horizon". The test applies R-76's own standard to the corrected artifact:
+- **The claim stands** if every corrected three-seed mean overstatement on the held-out pair (relative-L1 and nRMSE form 1, at 2,500 and 10,000 iterations, at all six horizons) lies within ±1.00% of zero. Then one new R- entry restates R-76 on the correct measurement and names it. No retraction.
+- **Otherwise the claim is withdrawn on evidence.** An S- entry retracts R-76's Arm A claim. R-76's Status line becomes SUPERSEDED IN PART, which `ledger_check.py` requires (its released-checkpoint half stands), and this ruling authorises that in-place edit. A new R- entry restates R-76 on the correct measurement.
