@@ -8830,4 +8830,32 @@ exactly as the script returns it, with the alongside values, in a new ledger ent
 line. Not: change the models, arenas, horizons, interventions, draws, seeds, statistic, interval, threshold or reading;
 add an intervention; or read any number here as bearing on M-23, M-64 or M-74-M-76.
 **Evidence** `SRC` `scripts/action_sensitivity.py`; `RUN` `results/action_sensitivity.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/action_sensitivity.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/action_sensitivity.json`. **It returns RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations.** Recorded in `M-85`. · **Relevance** METHOD
+
+### M-85 — Rule X2 (M-84): `results/action_sensitivity.json` returns RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations · **NEW**
+**Records** M-84's two readings exactly as `scripts/action_sensitivity.py` returned them, as committed before any reading
+existed (commit `738bc91`). The artifact records the script's SHA-256, which equals M-84's, and the commit it ran at
+(`738bc91`). Discharges M-84. Exploratory; M-23, M-64 and M-74-M-76 are unchanged.
+
+**Assertions, before any reading:**
+- (a) passed, 63 comparisons;
+- (b) passed in all 26 model × arena cases;
+- (c) passed in all 130 cases.
+
+CPU: 10.8 min against the cap of 30. The projections after the first
+model were 10.7 (phase 1) and
+10.7 (phase 2) CPU-min.
+
+**The readings:** E under I2 (swap), h = 8, in-sample arena (n = 16), Arm A three-seed mean, 95% interval:
+- Arm A, 2,500 iterations: E = +227.85% [+131.60, +398.16], which returns **RESPONDS TO THE ACTION**;
+- Arm A, 10,000 iterations: E = +676.30% [+454.83, +1060.04], which returns **RESPONDS TO THE ACTION**.
+
+**Alongside, not readings** (the same statistic, and the label it would carry):
+- Arm B, 2,500 iterations (in-sample arena, n = 16): E = +128.81% [+67.49, +241.84], would carry RESPONDS TO THE ACTION;
+- Arm B, 10,000 iterations (in-sample arena, n = 16): E = +358.22% [+220.94, +618.10], would carry RESPONDS TO THE ACTION;
+- the released checkpoint (all ten episodes, n = 20): E = +500.94% [+314.57, +824.22], would carry RESPONDS TO THE ACTION.
+
+Every other cell (interventions I1-I4, horizons 1, 8, 32 and 100, both arenas, with Δ and the context figures) is in the
+artifact's `results`, `per_seed` and `context`.
+**Evidence** `RUN` `results/action_sensitivity.json`; `SRC` `scripts/action_sensitivity.py`.
+**Status** CONFIRMED · **Relevance** METHOD
