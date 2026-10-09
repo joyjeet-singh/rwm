@@ -135,3 +135,88 @@ Annex 3 A9's R text says their "indifference to the one-step shift reflects how 
 
 So R3 must word A9 from the readings and drop the indifference clause (rule 10). X2's context gives the one-step shift as about 0.27–0.32 of the action's spread and the swap as about 1.43.
 Decisions for user: none.
+
+## R2 — 2026-10-09 13:45 — Opus 5.5 (the plan assigns high effort) — status: COMPLETE
+Commits:
+e0797a5 [R2][E1] The configuration claim at equal compute: A1-A3 in §5.2, the Limits clause, Appendix U generated, the original's hours bound
+81e137f [R2][restate] A4 abstract, A5 contribution 3, A6 Appendix D row and §12: the ranking depends on training budget
+94ccebc [R2][E4] The nRMSE note: §5.2's caption speaks for M-74 only; §5.3 gives the two changed in-sample readings, D signed as the rules sign it
+fc78c7e [R2][E5] The RSSM clause: X1 tried no latent overshooting, which PlaNet's own final RSSM agent did not need
+2110e75 [R2][E1] Appendix U states the sign convention its §5.2 pointer promises (xref_sweep: 0 suspect)
+8d3f9df [R2][G1] Guard G1 (C26.1, kind compute-claim): no 'trains twice as long', and front-matter compute claims must say the ranking depends
+52d6021 [R2][build] Fast build, gates, fast build: byte-identical; 63/63 claims, 30 kinds; 59 pages
+(the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as R0 and R1, at the user's request; the plan assigns a fresh terminal at high effort. Template edits go through `round3/r2_patch.py`, which uses the whitespace-tolerant matcher, asserts each anchor matches exactly once, and writes a `.bak` first.
+- **Item 1, E1.**
+  - §5.2: A1 after the claim paragraph; A2's heading, "At our budget, shorter histories win.", and its closing sentence; A3 replaces the equal-compute paragraph; the Limits clause.
+  - A new generated **Appendix U** gives all 12 rows of `part3_readings`, four cells each, with the compute ratio, labelled post hoc. Its caption names the arenas, both n and the checkpoints.
+  - The original's printed Fig. 6 figures (e 0.47 and 0.47; hours 1.07 and 2.27) were added to `results/original_paper_figures.json`'s `mn_optimal` through its generator, as EXT with the page. `original_paper_figures.py` now asserts that they equal ORIGINAL_SPECS a.5's transcription.
+  - Every new key asserts the sentence it fills (`paper_numbers.py`, the "Round 3, R2" block), for example:
+    - "three of the four readings" for both shorter histories at 10,000;
+    - the centre passing each winner on at least one reading;
+    - the shorter histories under half the centre's cost and the longer forecasts above it.
+- **Item 2, restatements.**
+  - A4 is in the abstract, tightened to keep C12.1 (369/370 words): the same claims, no finding dropped; "Its trade-off with training time is untested here" replaces "it was chosen as a trade-off with training time, untested here".
+  - A5 is in contribution 3; A6 is in Appendix D's row and §12.
+  - The grep of README, the model card's builder, `docs/COVER_STATEMENT.md` and `docs/*.template.md` for "twice as long", "equal compute", "trains longer" and "even when" found nothing to change.
+- **Item 3, E4.** §5.2's caption now speaks for M-74 only. A5b is in §5.3, with D signed as `verdict_baselines.py` signs it (negative favours the baseline): M-75's pooled h = 1 reading (all three baselines ahead) and M-76's pooled h = 100 reading (MLP unresolved).
+- **Item 4, E5** (ruling V9).
+  - PlaNet's text supports the attribution, verbatim: latent overshooting "trains all multi-step predictions in latent space".
+  - It also says "our final agent using the RSSM model does not require it", and that it "slightly reduces performance of our RSSM". The clause would mislead without that, so it carries the caveat: "…, neither of them PlaNet's latent overshooting (Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which PlaNet's own final RSSM agent did not need."
+  - Both fragments were added to `hafner2019` in `t1_bibliography.py`, and a live `--verify` re-checked every entry: 18/18 entries, 19/19 fragments.
+  - Only `hafner2019`'s pinned record changed (fingerprint and fragment counts), and `CHECKED_ON_FULL` is 2026-10-09. Stage 20p regenerated the record and its report.
+- **Item 5, G1.** Claim C26.1, new kind `compute-claim`:
+  - **forbidden phrasing** in every rendered file (PAPER.md, README.md, MODEL_CARD.md, docs/BUILD_CHECKS.md, docs/APPENDIX_G_VARIANCE_ARITHMETIC.md): "trains twice as long", or "even when" within 12 words of "centre"/"setting";
+  - **front matter** (abstract, contributions, Appendix D, §12): a sentence naming "compute", "trained longer" or "trains longer" must carry "depends", "changes", "some reading", "at least one reading" or "split";
+  - its self-test plants the 4 Oct abstract sentence verbatim and a bare longer-training sentence, and catches both;
+  - it is registered in `check_scope_audit.py` and given its description in `paper_numbers.py`;
+  - no narrowing was needed: nothing else in the rendered files matches.
+- **Item 6, rule-10 audit of every sentence installed:**
+  - **Abstract (A4)**, "two shorter histories and both longer training forecasts beat the original's setting at our budget":
+    - every Appendix U reading at 2,500 resolves for each winner (16 of 16 cells: both arenas, h = 100 and 368);
+    - M-74's governing reading (held-out, h = 368, relative-L1, Holm) rejects for all four;
+    - M-74's Holm-corrected alongside readings, 12 held-out and 4 in-sample, return its verdict on every reading except held-out nRMSE at h = 1, which returns CANNOT BE DISTINGUISHED (unresolved, not reversed);
+    - no reading resolves the centre ahead of any of the four. Agrees.
+  - **Abstract (A4)**, "trained longer, it passes each on some reading … so the ranking depends on training budget":
+    - (32, 32) at 5,000: in-sample h = 100;
+    - (32, 16) at 5,000: in-sample h = 100 and h = 368;
+    - (8, 8) and (2, 8) at 10,000: three of four each. Agrees (asserted).
+  - **Contribution 3 (A5).** The same readings, plus cost per iteration: 0.40× and 0.26× (under half), 1.35× and 1.81× (more); asserted. The original's hours, 1.07 against 2.27 at equal printed e, are consistent with its trade-off. Agrees.
+  - **Appendix D's row and §12 (A6).** The same readings as A4's second half. Agrees.
+  - **The body's new sentences:**
+    - A1: the tie and the hours ratio under one half are asserted;
+    - A2: "three of the four readings" is asserted;
+    - A3: every clause is asserted: the split at 5,000 (one reading each way, two unresolved); at 10,000, both in-sample readings for the centre and neither held-out reading resolved; the shorter histories passed on three of four, held-out h = 100 unresolved;
+    - E4's clauses and A5b's are asserted against `pooled_nrmse_alongside.json`;
+    - E5 is verified against PlaNet's text.
+  - **For R6:** A4, A5 and the A6 row state the configuration result without naming the one exception among M-74's alongside readings (held-out nRMSE at h = 1, unresolved). Whether front matter should name it is R6's consistency pass (CONSISTENCY.md).
+Build/gates: pass. Fast build, then gates, then fast build: byte-identical on the second cycle; the first differed, as expected, while the new kind reached §8 and BUILD_CHECKS.
+- 63/63 claims and 63/63 corruptions caught across 30 kinds.
+- xref 0 suspect, after Appendix U was made to state the sign convention its pointer promised (the input changed, not the gate).
+- scope audit 30 kinds, 0 unclassified.
+- `part_f_gate` 6/7 with 1 not run. Check 6 (abstract keys in the body) passes. Check 4b fails because the committed bundles predate Appendix U; R8 rebuilds them.
+- `submission_check` not run.
+- 59 pages (R0: 57).
+Paper numbers changed:
+- cc_n, cc_pass, cc_st_n, cc_st_caught: 62 → 63; cc_kinds: 29 → 30; cc_kind_list gains compute-claim (results/comparative_claims.json);
+- pdf_pages: 57 → 59 (results/compile_paper.json);
+- t1_n_frag and t1_n_frag_ok: 17 → 19 (results/t1_bibliography_verified.json);
+- tn_typed: 862 → 878 (results/typed_numerals.json).
+New keys:
+- from results/mn_compute_matched.json: n3_long_factor_word, n3_n_readings_word, n3_sh_label_M2_N8, n3_sh_label_M8_N8, n3_best_ins_D_mid_h100, n3_best_ins_ci_mid_h100, n3_sh_over_long_M2_N8, n3_sh_over_long_M8_N8, n3_sh_long_nread_word, n3_appU_table, n3_appU_nrows_word;
+- from results/original_paper_figures.json: orig_e_32_8, orig_e_32_32, orig_h_32_8, orig_h_32_32, orig_h_ratio, orig_tied_label;
+- from results/pooled_nrmse_alongside.json: n2_m75_D_{mlp,rssm,transformer}, n2_m75_ci_{…}, n2_m75_pooled, n2_m75_committed, n2_m76_D_mlp, n2_m76_ci_mlp, n2_m76_pooled, n2_m76_committed.
+Keys removed from the template (Annex 4 item 7). No result is lost; every figure survives:
+- n3_best_D_long and n3_best_ci_long: Appendix U, (32, 32) at 10,000, h = 368, held-out;
+- n3_best_ins_D_mid and n3_best_ins_ci_mid: Appendix U, (32, 32) at 5,000, h = 368, in-sample;
+- n3_lf_ins_D_mid and n3_lf_ins_ci_mid: Appendix U, (32, 16) at 5,000, h = 368, in-sample;
+- n3_sh_long_clause: the same figures through n3_sh_D_long_* and n3_sh_ci_long_*;
+- n3_mid_factor_word: "twice", the retired claim; the 5,000-iteration comparison is A3's;
+- n2_changed_list: the same two readings, now in §5.3 through the n2_m75_* and n2_m76_* keys.
+Re-anchored checks: none.
+CPU jobs over 1 min: none; each build cycle was about 45 s. The live bibliography verify used the network for 11 s.
+Body words (round2/t6_words.py): 21,075 (R0: 20,771). Above ruling V8's 20,771 by 304; R6 moves text.
+Abstract words / numerals (C12.1): 369 / 22.
+Next: R3. The abstract has one word of room under C12.1. R3's A10 clause is longer than the clause it replaces, so R3 must trim the abstract's wording, never its findings. X2 selected case R (R1's log).
+Decisions for user: none.
