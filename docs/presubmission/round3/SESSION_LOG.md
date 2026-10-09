@@ -74,3 +74,64 @@ Body words (round2/t6_words.py): 20,771 (R0: 20,771).
 Abstract words / numerals (C12.1): 370 / 23.
 Next: R1. Annex 1's motivation figures are void (S-21). Under ruling (A) step 5, X2's pre-registration cites R-79's corrected figures from the artifact instead. Assertion (a) reproduces `alignment_by_horizon.json` (now corrected) and `mn_compute_matched.json`, which now agree. The plan's premise that our models "hardly notice" the shift no longer holds. At h = 1 and 8 the corrected effect is not resolved, and from h = 100 it is. X2's design is unchanged (V1). Annex 3 A9's wording must follow X2's reading without the "indifference to the one-step shift" clause; that is R3's.
 Decisions for user: none.
+
+## R1 — 2026-10-09 13:25 — Opus 5.5 (the plan assigns high effort) — status: COMPLETE
+Commits:
+738bc91 PRE-REGISTER action-sensitivity rule X2, before its readings exist
+104a8e6 [R1][3] Rule X2 run: results/action_sensitivity.json (assertions a, b, c pass; 10.8 CPU-min)
+ba29cc0 [R1][4] Discharge rule X2: M-85 records RESPONDS TO THE ACTION at 2,500 and at 10,000; M-84's Status line
+91d9402 [R1][5] Build and gates: Appendix E regenerated with rule X2 (22 -> 23 rules; X2's lead time +0.12 h); no paper edits
+(the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as R0, at the user's request. The plan assigns a fresh terminal at high effort.
+- **Item 1.** `scripts/action_sensitivity.py`, to Annex 1. It imports `alignment_defect_ci.rollout`/`stats`/`MC_N`/`MC_SEED`, `mn_sweep_eval.arena` and `rollout_eval.relative_error`. The forecast rows read under offset 1 are 32..399 (`src/rwm_model.py:242,245`, `src/score_reference.py:202,205`), recorded in the artifact and checked by assertion (c).
+  - **One Sonnet Explore agent reviewed the script adversarially before the freeze.** Verdict FIX-FIRST: no defect changed a reading. All its fixes were applied before pre-registration:
+    - the statistic check now covers the runs that carry the readings;
+    - Annex 1's file:line is recorded;
+    - (b) tests the offset rows against the data;
+    - (c) tests each transform against an independently built expectation and catches a no-op and a reversed swap;
+    - the ledger-hash match is looser and self-tested;
+    - every BLOCKED path writes a record;
+    - the self-test block is flagged synthetic;
+    - module hashes and HEAD are recorded.
+  - **Tested before the freeze without any reading:**
+    - the synthetic self-test;
+    - `--assert-only` (cases committed artifacts hold; assertion (a) 63/63);
+    - a dry run of the whole pipeline on synthetic data with untrained weights, from a scratch harness outside the repository (kept in the session evidence folder `R3R1/`).
+- **Item 2.** Ledger `M-84`, PRE-REGISTERED.
+  - Contents: Annex 1's design, plus the motivation ruling (A) requires, which cites R-76's released figures and R-79's corrected Arm A figures, not the void ones.
+  - Scope note: exploratory; never re-opens M-23, M-64 or M-74–M-76.
+  - It records the script's path and SHA-256 `585fa6a8…`, and states its deviations from Annex 1.
+  - Committed as `738bc91` with the plan's subject and pushed before the run. The script refuses to compute the rule unless M-84 records its hash.
+- **Item 3.** Run under `caffeinate -i`: 10.8 CPU-min (5.8 min wall); projections 10.7 and 10.7 CPU-min against a cap of 30. Assertions (a) 63/63, (b) 26/26 and (c) 130/130 passed before any reading.
+- **Item 4.** Ledger `M-85` records the readings exactly as returned, with the alongside values and no interpretation, and M-84's Status line is set (the sanctioned edit):
+  - **Arm A, 2,500: E = +227.85% [+131.60, +398.16], RESPONDS TO THE ACTION.**
+  - **Arm A, 10,000: E = +676.30% [+454.83, +1060.04], RESPONDS TO THE ACTION.**
+  - Alongside: Arm B +128.81% and +358.22%, the released checkpoint +500.94%; every one would carry RESPONDS.
+- **Item 5.** No paper edits. `appendix_g_rules.py` was regenerated through its stage (21a, report included):
+  - rules 22 → 23; only M-84's row was added, and every other row is unchanged;
+  - X2's lead time is +0.12 h, from the pre-registration `738bc91` to the artifact's commit `104a8e6`;
+  - Appendix E's commit column shows "—" for M-84, like the other rules after M-49; S6 owns that column.
+Build/gates: pass. Fast build, then gates, then fast build: byte-identical. 62/62 claims and 62/62 corruptions caught. `part_f_gate` 7/7 with 1 not run. 57 pages.
+Paper numbers changed:
+- appG_n_rules 22 → 23; appG_n_lead 22 → 23; appG_n_positive 21 → 22; appG_table gains M-84's row (results/appendix_g_rules.json);
+- n_entries 270 → 272; ledger_kb 578 → 590 (FINDINGS_LEDGER.md).
+New keys: none.
+Re-anchored checks: none.
+CPU jobs over 1 min:
+- the X2 run (10.8 CPU-min);
+- the synthetic dry run (about 11 CPU-min);
+- `--assert-only`, twice (about 1.5 CPU-min each);
+- the review agent (about 10 min).
+Body words (round2/t6_words.py): 20,771 (R0: 20,771).
+Abstract words / numerals (C12.1): 370 / 23.
+Next: R2. For R3 (E3), X2's readings select **case R** (RESPONDS TO THE ACTION at both checkpoints), which brings:
+- Appendix V, §7.2's A9 (R) continuation, Appendix H's row, and the model card's one-sentence (R) figure;
+- no abstract X2 clause, no §5 Limits, §11 or §9 sentence (those are for D and D-2.5k).
+
+Annex 3 A9's R text says their "indifference to the one-step shift reflects how little the action changes in one step". That premise no longer holds:
+- R-79: Arm A's error rises with the stale action on the held-out pair from h = 100.
+- X2's own I1 cells: on the in-sample arena, Arm A at 10,000 rises by +124.63% at h = 1 under the stale action.
+
+So R3 must word A9 from the readings and drop the indifference clause (rule 10). X2's context gives the one-step shift as about 0.27–0.32 of the action's spread and the swap as about 1.43.
+Decisions for user: none.
