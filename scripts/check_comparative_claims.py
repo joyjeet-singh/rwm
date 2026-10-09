@@ -821,7 +821,8 @@ CLAIMS = [
     # contributions, Appendix D, section 12) that names compute or longer training must say the ranking depends on
     # it or name the split.
     {"id": "C26.1", "kind": "compute-claim", "where": "abstract / contributions / Appendix D / 12",
-     "says": "so the ranking depends on training budget",
+     # Round 3, R6 re-anchor: the abstract's "so" became a colon to fit rule 10's wording in C12.1's budget.
+     "says": "the ranking depends on training budget",
      "files": ["PAPER.md", "README.md", "MODEL_CARD.md", "docs/BUILD_CHECKS.md",
                "docs/APPENDIX_G_VARIANCE_ARITHMETIC.md"],
      "forbidden_regex": r"trains\s+twice\s+as\s+long|\beven\s+when\b(?:\W+\w+){0,12}?\W+(?:centre|center|setting)\b",
@@ -834,7 +835,8 @@ CLAIMS = [
     # sentence that names the defect and a short-horizon cost must have the all-ten-episodes figures, or the words, in
     # its paragraph. Sentences end at full stops only, so a clause joined by a semicolon is tested with its neighbour.
     {"id": "C27.1", "kind": "alignment-arena", "where": "abstract / contributions / 3.1 / 7.2",
-     "says": "over all ten episodes this raises the checkpoint's short-horizon error",
+     # Round 3, R6 re-anchor (rule 10): the abstract names the metric whose rise resolves at h = 1.
+     "says": "over all ten episodes this raises the checkpoint's short-horizon relative-L1 error",
      "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md"],
      "defect_regex": r"\bstale\b|misaligned|previous step's action|\balignment\b",
      "short_regex": r"short[\s-]horizons?|\bup to\b|\bh = 1\b",

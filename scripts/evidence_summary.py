@@ -239,6 +239,22 @@ def build_rows():
     MV, BV, ME = J("mn_sweep_verdict.json"), J("baselines_verdict.json"), J("mn_sweep_eval.json")
     mn_arena = arena_of_episodes(ME["arenas"]["held_out"]["episodes"])
     _better = MV["governing"]["conditions"]["configs_excluding_zero_in_their_favour"]
+    # Round 3, R6 (rule 10): a row states a verdict only with every reading the body reports for it. Each
+    # rule's readings are taken as section 5.2 and 5.3 quote them: relative-L1 as committed, nRMSE pooled as
+    # N2 recomputed it (results/pooled_nrmse_alongside.json).
+    N2A = J("pooled_nrmse_alongside.json")["readings"]
+    _lab = lambda k: ("relative-L1" if k.startswith("l1") else "nRMSE") + " at h = " + k.split("_h")[1]
+
+    def _readings(rule, R, field):
+        out = []
+        for a, src in (("held_out", "alongside"), ("in_sample", "in_sample")):
+            for k, v in R[src].items():
+                res = v[field] if k.startswith("l1") else N2A[rule][f"{a}|{k}"]["pooled"]["result"]
+                out.append((a, k, res))
+        return out
+    _mn_exc = [("held-out " if a == "held_out" else "in-sample ") + _lab(k)
+               for a, k, res in _readings("M-74", MV, "branch") if res != MV["verdict"]]
+    assert len(_mn_exc) == 1, _mn_exc
     rows.append({
         "claim": "(M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off)",
         "section": "5.2",
@@ -247,7 +263,8 @@ def build_rows():
         "in_sample": in_sample("our arms", mn_arena),
         # Round 2, T3 item 4(c): a returned verdict is printed verbatim, in the case the rule returned it.
         "verdict": (MV["verdict"] + f"; {len(_better)} of {MV['governing']['m']} "
-                    "neighbours beat the centre"),
+                    f"neighbours beat the centre; every other reading the rule reports agrees but {_mn_exc[0]}, "
+                    "which is unresolved"),
         "multiplicity": "yes",
         "model": "our arms",
         "artifacts": ["results/mn_sweep_verdict.json", "results/mn_sweep_eval.json"],
@@ -270,14 +287,21 @@ def build_rows():
                         ("M-76", "trained autoregressively: architecture at one training regime, "
                                  "not the original's claim")):
         _R = BV["rules"][_rule]
+        _rd = {}
+        for _a, _k, _res in _readings(_rule, _R, "verdict"):
+            _rd.setdefault(int(_k.split("_h")[1]), []).append(_res)
+        _hs = sorted(_rd)
+        _from = next(h for h in _hs if all(x == _R["verdict"] for hh in _hs if hh >= h for x in _rd[hh]))
+        assert _hs[0] < _from < _hs[-1] == diag, (_rule, _from)
         rows.append({
-            "claim": f"RWM beats MLP, RSSM and transformer baselines trained with RWM's settings ({_how}; "
-                     f"the RSSM comparison uninformative, rule X1)",
+            "claim": f"RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = {diag} "
+                     f"({_how}; the RSSM comparison uninformative, rule X1)",
             "section": "5.3",
             "arena": mn_arena,
             "n_independent": ME["arenas"]["held_out"]["n_independent"],
             "in_sample": in_sample("our arms", mn_arena),
-            "verdict": f"{_R['verdict']}; at h = {diag} every baseline is worse than predicting no change",
+            "verdict": (f"{_R['verdict']}; every reading the rule reports returns it from h = {_from}, and below "
+                        f"that the readings split; at h = {diag} every baseline is worse than predicting no change"),
             "multiplicity": "yes",
             "model": "our arms",
             "artifacts": ["results/baselines_verdict.json", "results/baselines_eval.json"],

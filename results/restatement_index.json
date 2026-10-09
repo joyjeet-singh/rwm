@@ -1,7 +1,7 @@
 {
   "scanned": "PAPER.template.md",
-  "n_substituted": 1839,
-  "n_typed": 278,
+  "n_substituted": 1843,
+  "n_typed": 279,
   "n_restatements": 129,
   "n_same_quantity_candidates": 67,
   "n_lower_signal": 62,
@@ -3015,7 +3015,7 @@
           "section": "9. Actionable lessons",
           "line": 1167,
           "key": "e5_ratio_h100",
-          "ctx": "_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}\u00d7 [{{e5_ratio_ci_h100}}] on the ensemble"
+          "ctx": "oint over all ten episodes, and on the held-out pair {{e5_ratio_h100}}\u00d7 [{{e5_ratio_ci_h100}}] on the ensemble"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
@@ -3339,16 +3339,18 @@
     },
     {
       "value": "128",
-      "n_locations": 6,
+      "n_locations": 7,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 5,
-      "n_substituted": 1,
+      "n_substituted": 2,
       "sources": [
+        "results/baselines_verdict.json + results/pooled_nrmse_alongside.json",
         "results/task_d3_perhorizon.json"
       ],
       "keys": [
         "None",
+        "bl_ar_from_h",
         "d3_second_h"
       ],
       "locations": [
@@ -3357,6 +3359,12 @@
           "line": 1018,
           "key": "d3_second_h",
           "ctx": "cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} \u2014 so the fitted multiplier is mildly **"
+        },
+        {
+          "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
+          "line": 1484,
+          "key": "bl_ar_from_h",
+          "ctx": " h = {{v2_diag_h}}; from h = {{bl_tf_from_h}} and h = {{bl_ar_from_h}} respectively, every reading the rules r"
         },
         {
           "section": "6.5 The failure is one of magnitude; the ordering is weaker than it looks",
@@ -4525,7 +4533,7 @@
           "section": "Abstract",
           "line": 10,
           "key": "d1_ratio_h100",
-          "ctx": "her forcing {{d1_ratio}}\u00d7 at {{v2_diag_h}} steps and {{d1_ratio_h100}}\u00d7 at {{v2_deploy_h}}, though teacher for"
+          "ctx": "her forcing {{d1_ratio}}\u00d7 at {{v2_diag_h}} steps and {{d1_ratio_h100}}\u00d7 at {{v2_deploy_h}}, though on short wi"
         },
         {
           "section": "1. Introduction",
@@ -5717,12 +5725,13 @@
     },
     {
       "value": "32",
-      "n_locations": 16,
+      "n_locations": 17,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 7,
-      "n_substituted": 9,
+      "n_substituted": 10,
       "sources": [
+        "results/baselines_verdict.json + results/pooled_nrmse_alongside.json",
         "results/m64_short_units.json",
         "results/step0_regimes.json",
         "results/task3_three_way.json",
@@ -5730,6 +5739,7 @@
       ],
       "keys": [
         "None",
+        "bl_tf_from_h",
         "m64_hist_rows",
         "tw_cells",
         "v2_history",
@@ -5771,6 +5781,12 @@
           "line": 1124,
           "key": "tw_cells",
           "ctx": "pies raises it by {{dup_cost_pct}}%, and in rollout, over {{tw_cells}} cells ({{tw_design}}), it is hurt in {{"
+        },
+        {
+          "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
+          "line": 1484,
+          "key": "bl_tf_from_h",
+          "ctx": "re the rules' verdicts at h = {{v2_diag_h}}; from h = {{bl_tf_from_h}} and h = {{bl_ar_from_h}} respectively, "
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
@@ -6160,11 +6176,11 @@
     },
     {
       "value": "368",
-      "n_locations": 105,
+      "n_locations": 106,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 6,
-      "n_substituted": 99,
+      "n_substituted": 100,
       "sources": [
         "results/q3_penalty_reordering.json",
         "results/r2_independent_ensemble.json",
@@ -6193,7 +6209,7 @@
           "section": "Abstract",
           "line": 10,
           "key": "v2_diag_h",
-          "ctx": "deploy_h}}, though teacher forcing leads at one step. At {{v2_diag_h}} steps RWM beats MLP, RSSM and transform"
+          "ctx": "h on short windows teacher forcing leads at one step. At {{v2_diag_h}} steps RWM beats MLP, RSSM and transform"
         },
         {
           "section": "1. Introduction",
@@ -6589,13 +6605,19 @@
           "section": "12. Conclusion",
           "line": 1280,
           "key": "v2_diag_h",
-          "ctx": "h teacher forcing leads at one step. RWM is ahead at h = {{v2_diag_h}} of the baselines we built to our readin"
+          "ctx": "p on the short windows built for it. RWM is ahead at h = {{v2_diag_h}} of the baselines we built to our readin"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
           "line": 1482,
           "key": "v2_diag_h",
           "ctx": "n1_label}} is {{mn_tf_ratio}}\u00d7 the centre's error at h = {{v2_diag_h}} | | M=32, N=8 gives the optimal trade-o"
+        },
+        {
+          "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
+          "line": 1484,
+          "key": "v2_diag_h",
+          "ctx": "g this claim (\u00a75.3). Both are the rules' verdicts at h = {{v2_diag_h}}; from h = {{bl_tf_from_h}} and h = {{bl"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
@@ -7051,10 +7073,10 @@
     },
     {
       "value": "400",
-      "n_locations": 52,
+      "n_locations": 53,
       "same_quantity_candidate": true,
       "fails_build": false,
-      "n_typed": 41,
+      "n_typed": 42,
       "n_substituted": 11,
       "sources": [
         "results/head_to_head_accuracy.json",
@@ -7319,6 +7341,12 @@
           "line": 1305,
           "key": null,
           "ctx": ": our arms' held-out arena holds \u2400 independent 400-step trajectories and all ten episodes hold \u2400, which is why"
+        },
+        {
+          "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
+          "line": 1465,
+          "key": null,
+          "ctx": "number | reproduces, and more strongly: on the 400-step unit Arm B is worse than the hold-last floor at every "
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
@@ -7748,7 +7776,7 @@
           "section": "9. Actionable lessons",
           "line": 1167,
           "key": null,
-          "ctx": "e released checkpoint and \u2400\u00d7 [\u2400] on the ensemble-5 arms we trained. A risk gate or safety margin that reads \u03c3 "
+          "ctx": " and on the held-out pair \u2400\u00d7 [\u2400] on the ensemble-5 arms we trained, against the released checkpoint's \u2400\u00d7 there"
         },
         {
           "section": "11. Limitations",

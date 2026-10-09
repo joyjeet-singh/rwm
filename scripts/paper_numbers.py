@@ -2259,6 +2259,17 @@ def main():
     _lab = lambda k: ("relative-L1" if k.split("_h")[0] == "l1" else "nRMSE") + " at h = " + k.split("_h")[1]
     _other = [f"{_lab(k)}, which returns {v['branch']}" for k, v in _al74.items() if v["branch"] != MV["verdict"]]
     put("mn_alongside_other", _eng(_other), _mvs + " + " + _n2as)
+    # Round 3, R6 (rule 10): the front matter's statements of this verdict name the one reading that does
+    # not return it. Asserted: across both arenas exactly one reading departs, and it is unresolved, not
+    # reversed, so "on every reading but one, which is unresolved" is what the readings say.
+    _fm_exc = [("held-out " if a == "held_out" else "in-sample ") + _lab(k)
+               for a, d in (("held_out", _al74), ("in_sample", _in74)) for k, v in d.items() if v["branch"] != MV["verdict"]]
+    assert len(_fm_exc) == 1, _fm_exc
+    assert [v["branch"] for d in (_al74, _in74) for v in d.values() if v["branch"] != MV["verdict"]] == \
+        ["CANNOT BE DISTINGUISHED"], "the front matter calls the one departing reading unresolved"
+    put("mn_fm_exception", _fm_exc[0], _mvs + " + " + _n2as)
+    put("mn_fm_n_unres_word", WORDS[len(_fm_exc)].lower(), _mvs + " + " + _n2as)
+    put("mn_fm_n_readings", len(_al74) + len(_in74) + 1, _mvs)       # the governing reading, and every one alongside
     put("mn_n_alongside", len(MV["alongside"]), _mvs)
     _ins_other = [f"{_lab(k)} ({v['branch']})" for k, v in _in74.items() if v["branch"] != MV["verdict"]]
     put("mn_insample_clause",
@@ -2335,6 +2346,22 @@ def main():
     put("bl_table", "\n".join(_brows), "results/baselines_eval.json + " + _bvs + " + " + _n3s + " + " + _n2s)
     put("bl_tf_verdict", BV["rules"]["M-75"]["verdict"], _bvs)
     put("bl_ar_verdict", BV["rules"]["M-76"]["verdict"], _bvs)
+    # Round 3, R6 (rule 10): Appendix D's rows give these verdicts at the rules' horizon, h = 368, and say
+    # from which horizon every reading the rules report (both arenas, relative-L1 as committed, nRMSE pooled
+    # as N2 recomputed it) returns them; below it the readings split.
+    for _r, _tag in (("M-75", "tf"), ("M-76", "ar")):
+        _R = BV["rules"][_r]
+        _rd = {}
+        for _a, _src in (("held_out", "alongside"), ("in_sample", "in_sample")):
+            for _k, _v in _R[_src].items():
+                _hh = int(_k.split("_h")[1])
+                _res = (_v["verdict"] if _k.startswith("l1")
+                        else N2A["readings"][_r][f"{_a}|{_k}"]["pooled"]["result"])
+                _rd.setdefault(_hh, []).append(_res)
+        _hs = sorted(_rd)
+        _from = next(h for h in _hs if all(x == _R["verdict"] for hh in _hs if hh >= h for x in _rd[hh]))
+        assert _hs[0] < _from < _hs[-1] and _hs[-1] == 368, (_r, _from, _hs)   # the readings split below it
+        put(f"bl_{_tag}_from_h", _from, _bvs + " + " + _n2as)
     put("bl_rwm_l1_h368", f"{_m3(_rwm, 368):.4f}", "results/baselines_eval.json")
     put("bl_mde_h368", f'{BV["mde_pct_of_rwm_holm_step_1"]["M-75"]["l1_h368"]:.1f}', _bvs)
     for _rule, _tag in (("M-75", "tf"), ("M-76", "ar")):
