@@ -599,8 +599,7 @@ prior is {{x1b_tf_ratio_lo}} to {{x1b_tf_ratio_hi}}× its error from its posteri
 recurrent state (the autoregressive one's at most {{x1b_ar_ratio_hi}}×), with {{x1b_kl_lo}} to
 {{x1b_kl_hi}} nats of KL divergence between them per step. {{rssm_partc_sentence}} The failure may
 still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in
-DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on
-one seed. So the architecture claim rests on the MLP and the transformer.
+DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on one seed, neither of them PlaNet's latent overshooting (Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which PlaNet's own final RSSM agent did not need. So the architecture claim rests on the MLP and the transformer.
 
 **Limits.** One robot on flat ground; the original has several environments. The baselines
 are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and

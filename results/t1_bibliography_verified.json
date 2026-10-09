@@ -306,11 +306,14 @@
         "James Davidson"
       ],
       "establishes": "the recurrent state-space model (RSSM): a latent dynamics model whose state has a deterministic recurrent part and a stochastic part",
-      "fragments": [],
+      "fragments": [
+        "which trains all multi-step predictions in latent space",
+        "our final agent using the RSSM model does not require it"
+      ],
       "key": "hafner2019",
       "title": "Learning Latent Dynamics for Planning from Pixels",
       "venue": "ICML 2019 (PMLR 97)",
-      "why_we_engage": "The base paper's RSSM baseline is this architecture, and 5.3 builds one. It is cited as the architecture's origin; the settings 5.3 takes come from DreamerV2, which replaces PlaNet's free nats with KL balancing.",
+      "why_we_engage": "The base paper's RSSM baseline is this architecture, and 5.3 builds one. It is cited as the architecture's origin; the settings 5.3 takes come from DreamerV2, which replaces PlaNet's free nats with KL balancing. Round 3 (R2, ruling V9): 5.3 also says that rule X1 did not try PlaNet's latent overshooting, what that objective trains, and that PlaNet's own final RSSM agent did not need it; the two fragments below are those assertions, matched verbatim against the paper's HTML.",
       "year": 2019
     },
     {
@@ -342,13 +345,13 @@
     "status": "NOT TESTED outside this repository. Flagged in 2 and 11 as a hypothesis and deliberately out of scope."
   },
   "verification": {
-    "checked_on": "2026-09-25",
+    "checked_on": "2026-10-09",
     "method": "arXiv API metadata for title, author list and venue comment; for any entry whose 'why_we_engage' asserts what the paper SAYS, the asserted fragments were additionally matched as substrings of that paper's own arXiv HTML rendering after tag-stripping and whitespace collapse",
     "n_entries": 18,
-    "n_fragments_checked": 17,
-    "n_fragments_verbatim": 17,
+    "n_fragments_checked": 19,
+    "n_fragments_verbatim": 19,
     "n_metadata_verified": 18,
-    "n_with_fragment_checks": 8,
+    "n_with_fragment_checks": 9,
     "per_entry": [
       {
         "arxiv_version": "2110.04135v2",
@@ -515,8 +518,10 @@
         "arxiv_version": "1811.04551v5",
         "authors_match": true,
         "comment": "20 pages, 12 figures, 1 table",
-        "entry_fingerprint": "8aeb2cfad4f82bdb",
+        "entry_fingerprint": "4c583f97c5835982",
         "key": "hafner2019",
+        "n_fragments": 2,
+        "n_fragments_found": 2,
         "published": "2018-11-12",
         "title_matches": true
       },

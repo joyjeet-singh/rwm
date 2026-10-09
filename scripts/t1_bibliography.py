@@ -385,8 +385,8 @@ ENTRIES = [
     },
     # ------------------------------------------------------------------
     # Added in pre-submission S9, for §5.3's RSSM baseline. Metadata from the arXiv API on
-    # CHECKED_ON_S9. No fragment is recorded because §5.3 asserts nothing a paper SAYS in
-    # prose: the settings taken from DreamerV2 (and the PlaNet settings deliberately not
+    # CHECKED_ON_S9. Until round 3 no fragment was recorded because §5.3 asserted nothing a paper SAYS
+    # in prose (round 3's R2 added two for hafner2019, below): the settings taken from DreamerV2 (and the PlaNet settings deliberately not
     # taken) are each checked against a page of the paper's PDF in
     # results/baseline_citations_verified.json, and cited row by row in
     # docs/presubmission/BASELINE_SPECS.md.
@@ -407,8 +407,14 @@ ENTRIES = [
         "why_we_engage":
             "The base paper's RSSM baseline is this architecture, and 5.3 builds one. It is "
             "cited as the architecture's origin; the settings 5.3 takes come from DreamerV2, "
-            "which replaces PlaNet's free nats with KL balancing.",
-        "fragments": [],
+            "which replaces PlaNet's free nats with KL balancing. Round 3 (R2, ruling V9): 5.3 also "
+            "says that rule X1 did not try PlaNet's latent overshooting, what that objective trains, "
+            "and that PlaNet's own final RSSM agent did not need it; the two fragments below are "
+            "those assertions, matched verbatim against the paper's HTML.",
+        "fragments": [
+            "which trains all multi-step predictions in latent space",
+            "our final agent using the RSSM model does not require it",
+        ],
     },
     {
         "key": "hafner2021",
@@ -488,7 +494,9 @@ def verify():
 # network-free and the record is reviewable in a diff. Refresh it by running --verify and
 # pasting the per-entry results here; EVERY COUNT BELOW IS COMPUTED from _PER_ENTRY, never
 # typed, so a stale count cannot survive a refreshed list.
-CHECKED_ON_FULL = "2026-09-25"   # all sixteen entries re-verified against arXiv. They had been
+CHECKED_ON_FULL = "2026-10-09"   # round 3, R2: all eighteen entries re-verified live after two fragments
+# were added to hafner2019 (ruling V9); every pinned field agreed except that entry's fingerprint and its
+# new fragments. Before that, on 2026-09-25, all sixteen entries were re-verified against arXiv. They had been
 # verified once before, in commit e094c3b on CHECKED_ON_REV3, which committed a --verify
 # artifact reading 16 / 17 / 17; commit 614dddf then overwrote it with this script's plain
 # output, 10 / 9 / 9, because RECORDED had not been refreshed and reproduce.sh runs the plain
@@ -641,7 +649,9 @@ _PER_ENTRY = [   {   'key': 'lu2022',
         'published': '2018-11-12',
         'arxiv_version': '1811.04551v5',
         'comment': '20 pages, 12 figures, 1 table',
-        'entry_fingerprint': '8aeb2cfad4f82bdb'},
+        'entry_fingerprint': '4c583f97c5835982',
+        'n_fragments': 2,
+        'n_fragments_found': 2},
     {   'key': 'hafner2021',
         'title_matches': True,
         'authors_match': True,

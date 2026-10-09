@@ -173,6 +173,18 @@ ITEMS["e4"] = {
     ],
 }
 
+# --------------------------------------------------------------------------------------------- E5 (item 4)
+# Ruling V9. The attribution is verified verbatim against PlaNet's HTML through scripts/t1_bibliography.py (hafner2019's
+# two fragments); PlaNet's own caveat, that its final RSSM agent did not need the objective, travels with it.
+ITEMS["e5"] = {
+    "edits": [
+        ("and X1 tried only the two settings above, on one seed.",
+         "and X1 tried only the two settings above, on one seed, neither of them PlaNet's latent overshooting "
+         "(Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which "
+         "PlaNet's own final RSSM agent did not need."),
+    ],
+}
+
 
 def run(item):
     spec = ITEMS[item]
