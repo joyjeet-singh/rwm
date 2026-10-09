@@ -2292,7 +2292,8 @@ n_independent = {{mn_nind}}) and the in-sample arena (the training episodes' {{m
 iterations, the centre at the iterations in the second column; three seeds each.** Each cell is D, the configuration's
 relative-L1 minus the centre's, the mean over trajectories of the three-seed means, with its 95% interval: exact over
 all 256 ordered resamples on the held-out pair, 20,000 Monte Carlo resamples (seed 0) in-sample. Negative favours the
-configuration; bold where the interval excludes zero. Cost per iteration is steady training time per iteration, timed
+configuration, so every reading here is signed as in §5.2's table; bold where the interval excludes zero. Cost per
+iteration is steady training time per iteration, timed
 without contention; the compute ratio is the centre's total training computation over the configuration's.
 
 ---
