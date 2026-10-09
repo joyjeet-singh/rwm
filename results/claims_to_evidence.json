@@ -3528,13 +3528,36 @@
         "scripts/alignment_defect_ci.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-84",
+      "claim": "PRE-REGISTERED rule X2: do our trained models condition their forecasts on the action th",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/action_sensitivity.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json",
+        "results/alignment_by_horizon.json",
+        "results/head_to_head_accuracy.json",
+        "results/mn_compute_matched.json",
+        "results/task_d1_threeseed.json",
+        "scripts/action_sensitivity.py",
+        "src/rollout_eval.py",
+        "src/rwm_metrics.py",
+        "src/rwm_model.py",
+        "src/score_reference.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 15,
     "D": 36,
-    "M": 83,
+    "M": 84,
     "O": 14,
     "R": 79,
     "S": 21,
