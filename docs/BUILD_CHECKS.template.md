@@ -453,3 +453,12 @@ claims stayed, and only their history moved.
   its rows against Appendix D's was written, it listed two fewer, and the two it omitted were the
   two whose cost was hardest to state honestly. Those two (the configuration sweep and the
   architecture baselines) have since been run (§5.2, §5.3).
+- **[§2]** §2 closed with a note: every entry cited there and in §5.3 was checked against the paper
+  itself, title, full author list and year from the arXiv record, venue from the record or, where it
+  names none, from the paper's own first page, and every sentence attributed matched verbatim against
+  the paper's text; {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}}
+  fragments, {{t1_n_frag_oneword}} of them single common words. The References note now says the same once.
+- **[References]** The bibliography is generated from `results/t1_bibliography_verified.json` rather
+  than listed by hand because a hand-maintained list of what a paper cites drifts exactly as a
+  hand-typed count does, and this one had: six entries cited in §2's prose appeared in no reference
+  entry while the note claimed all of them verified.

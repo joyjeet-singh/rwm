@@ -91,6 +91,33 @@ ITEMS = {
     "s13": {"edits": [("but on M-64's shorter units, at the same checkpoint and on the same two episodes,",
                        "but on M-64's shorter units, each {{m64_hist_rows}} + h rows long and non-overlapping "
                        "({{m64_units_list}} on these episodes), at the same checkpoint and on the same two episodes,")]},
+    # S8: one bibliography note, in the References, reduced to what was checked and the counts (ledger D-35); §2's
+    # note and the drafting history of the generated list move to BUILD_CHECKS' moved list (item "s8_moved")
+    "s8": {"edits": [
+        ("*Every entry cited here and in §5.3 was checked against the paper itself: title, full author list and year "
+         "from the arXiv record, venue from the record or, where it names none, from the paper's own first page, and "
+         "every sentence we attribute matched verbatim against the paper's text. {{t1_n_verified}} of {{t1_n_refs}} "
+         "entries are verified and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments match verbatim, though "
+         "{{t1_n_frag_oneword}} of those are single common words whose match verifies nothing about the attribution "
+         "(`results/t1_bibliography_verified.json`). No entry was added that was not verified.*", ""),
+        ("*Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are the bibliography of §2 and §5.3, generated from "
+         "`results/t1_bibliography_verified.json` rather than listed here — a hand-maintained list of what a paper "
+         "cites drifts exactly as a hand-typed count does, and this one had: six entries cited in §2's prose appeared "
+         "in no reference entry while the note below claimed all of them verified. Each was checked against the paper "
+         "itself: title and full author list from the arXiv record, venue from the record or the paper's first page, "
+         "and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text — "
+         "{{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, "
+         "{{t1_n_frag_oneword}} of them single common words whose presence the cited paper's subject guarantees, so "
+         "their match could not have failed and verifies nothing about the attribution "
+         "(`results/t1_bibliography_verified.json`, ledger `D-35`).*",
+         "*Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are the bibliography of §2 and §5.3, generated from "
+         "`results/t1_bibliography_verified.json`. Each was checked against the paper itself: title and full author "
+         "list from the arXiv record, venue from the record or the paper's first page, and every sentence this paper "
+         "attributes matched verbatim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and "
+         "{{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_oneword}} of them single common words "
+         "whose match verifies nothing about the attribution (ledger `D-35`). No entry was added that was not "
+         "verified.*"),
+    ]},
 }
 
 
