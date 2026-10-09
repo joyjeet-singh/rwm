@@ -2333,6 +2333,8 @@ def main():
         put(f"n3_sh_over_long_{_c}", f'{1 / _r["compute_ratios"]["config_total_compute_over_centre_at_k"]:.0f}', _n3s)
     assert len(_nsh) == 1, _nsh
     put("n3_sh_long_nread_word", WORDS[_nsh.pop()].lower(), _n3s)
+    # contribution 3: the shorter histories cost under half the centre's per iteration, the longer forecasts more
+    assert all(_cost["sweep"][c]["relative_to_centre"] > 1 for c in _blf), _blf
     # "trained longer, the centre passes each of them on at least one reading": every configuration that beat it
     for _c in _better:
         assert any(_cen_ahead(_rd[f"{_c}|centre@{k}"][h][a]) for k in (_k_mid, _k_long) for h, a in _CC), _c

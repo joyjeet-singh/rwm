@@ -111,6 +111,43 @@ ITEMS["e1"] = {
     "append_before_final_rule": APP_U,
 }
 
+# --------------------------------------------------------------------------------------------- restatements (item 2)
+ITEMS["restate"] = {
+    "edits": [
+        # A4, the abstract (ruling V3), tightened to keep C12.1's word cap: the same claims, no finding dropped
+        ("On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget, the best, at {{v2_diag_h}} "
+         "steps, even when that setting trains {{n3_mid_factor_word}} as long (post hoc); it was chosen as a trade-off "
+         "with training time, untested here.",
+         "On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget; trained longer, it passes "
+         "each on some reading (post hoc), so the ranking depends on training budget. Its trade-off with training time "
+         "is untested here."),
+        # A5, contribution 3's configuration half
+        ("On accuracy alone, {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor neighbours of the original's "
+         "{{mn_centre_label}} beat it at our budget — {{mn_better_long_phrase}}, and the {{mn_n_short_better_word}} "
+         "shorter histories {{mn_mvar_better_list}}, although the original's error falls steeply as the history grows "
+         "to M = 8 — the best of them, at h = {{v2_diag_h}} on the held-out pair, even when the centre trains "
+         "{{n3_mid_factor_word}} as long (post hoc); the original chose the centre as a trade-off with training time, "
+         "which we do not test (§5.2).",
+         "On accuracy alone at our budget, {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor neighbours of "
+         "the original's {{mn_centre_label}} beat it, {{mn_n_short_better_word}} shorter histories at under half its "
+         "cost per iteration and {{mn_better_long_phrase}} at more, but trained longer the centre passes each of them "
+         "on at least one reading (post hoc), so the ranking depends on the training budget; the original chose the "
+         "centre as a trade-off with training time, which its own printed hours are consistent with and we do not "
+         "test (§5.2)."),
+        # A6, Appendix D's configuration row
+        ("{{mn_better_list}} beat it at our budget, the best of them, at h = {{v2_diag_h}} on the held-out pair, even "
+         "when the centre trains {{n3_mid_factor_word}} as long (post hoc, §5.2). The trade-off with training time is "
+         "not tested |",
+         "{{mn_better_list}} beat it at our budget, but the ranking depends on training length: trained longer, the "
+         "centre passes each of them on at least one reading (post hoc, §5.2, Appendix U). The trade-off with training "
+         "time is not tested; the original's printed hours are consistent with it |"),
+        # A6, section 12
+        ("beat its chosen ones at our budget, which it chose as a trade-off with training time (§5.2, §5.3).",
+         "beat its chosen ones at our budget, a ranking that changes when the chosen setting trains longer; it chose "
+         "them as a trade-off with training time (§5.2, §5.3)."),
+    ],
+}
+
 
 def run(item):
     spec = ITEMS[item]
