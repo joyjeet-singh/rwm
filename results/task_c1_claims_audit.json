@@ -1,14 +1,14 @@
 {
-  "n_claims": 526,
+  "n_claims": 550,
   "by_verdict": {
-    "UNREVIEWED": 467,
-    "SUPPORTED": 59
+    "UNREVIEWED": 492,
+    "SUPPORTED": 58
   },
   "claims": [
     {
-      "id": "f9d4fd2d2dfa",
+      "id": "90a1188fc5dc",
       "section": "Abstract",
-      "claim": "The base paper's central training claim reproduces under a rule committed in advance, run on seed {{m23_seed}} of each arm; {{d1_seeds}} seeds extend it: training on the model's own rollouts beats teacher forcing {{d1_ratio}}\u00d7 at {{v2_diag_h}} steps and {{d1_ratio_h100}}\u00d7 at {{v2_deploy_h}}, though teacher forcing leads at one step.",
+      "claim": "The base paper's central training claim reproduces under a rule committed in advance, run on seed {{m23_seed}} of each arm; {{d1_seeds}} seeds extend it: training on the model's own rollouts beats teacher forcing {{d1_ratio}}\u00d7 at {{v2_diag_h}} steps and {{d1_ratio_h100}}\u00d7 at {{v2_deploy_h}}, though on short windows teacher forcing leads at one step.",
       "keys": [
         "m23_seed",
         "d1_seeds",
@@ -45,20 +45,18 @@
       "note": ""
     },
     {
-      "id": "c62fabd147f3",
+      "id": "f94627e44664",
       "section": "Abstract",
-      "claim": "On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget, the best, at {{v2_diag_h}} steps, even when that setting trains {{n3_mid_factor_word}} as long (post hoc); it was chosen as a trade-off with training time, untested here.",
+      "claim": "On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget ({{mn_fm_n_unres_word}} reading unresolved); trained longer, it passes each on some reading (post hoc): the ranking depends on training budget.",
       "keys": [
         "mn_better_kinds",
-        "v2_diag_h",
-        "n3_mid_factor_word"
+        "mn_fm_n_unres_word"
       ],
       "artifacts": [
-        "results/mn_compute_matched.json",
         "results/mn_sweep_verdict.json",
-        "results/v2_deployment_horizon.json"
+        "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json"
       ],
-      "n_keys": 3,
+      "n_keys": 2,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -105,11 +103,11 @@
       "note": ""
     },
     {
-      "id": "02197bde70e8",
+      "id": "8909697edbf1",
       "section": "Abstract",
-      "claim": "A free signal, the model's predicted step size, ranks error nearly as well ({{e7_step_r}}; margin unresolved).",
+      "claim": "A free signal, the model's predicted step size, ranks error nearly as well ({{e7_step_r3}}; margin unresolved).",
       "keys": [
-        "e7_step_r"
+        "e7_step_r3"
       ],
       "artifacts": [
         "results/e7_free_baselines.json"
@@ -155,6 +153,22 @@
         "results/task_d3_perhorizon.json"
       ],
       "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "c1f19155c815",
+      "section": "Abstract",
+      "claim": "The released evaluation pairs each prediction with the previous step's action; over all ten episodes this raises the checkpoint's short-horizon relative-L1 error, and from {{v2_deploy_h}} steps the change is unresolved.",
+      "keys": [
+        "v2_deploy_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 1,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -296,37 +310,34 @@
       "note": ""
     },
     {
-      "id": "3b61c5bcc30c",
+      "id": "a1731cf7251a",
       "section": "1. Introduction",
-      "claim": "On accuracy alone, {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor neighbours of the original's {{mn_centre_label}} beat it at our budget \u2014 {{mn_better_long_phrase}}, and the {{mn_n_short_better_word}} shorter histories {{mn_mvar_better_list}}, although the original's error falls steeply as the history grows to M = 8 \u2014 the best of them, at h = {{v2_diag_h}} on the held-out pair, even when the centre trains {{n3_mid_factor_word}} as long (post hoc); the original chose the centre as a trade-off with training time, which we do not test (\u00a75.2). - **The \u03c3 = 0 optimum of the implemented objective.** The implemented state loss is minimised at \u03c3 = 0, so the per-member \u03c3 the method discards collapses by construction: derived, and demonstrated against known noise (\u00a76.3). - **Trunk-sharing, tested.** The five members share one trunk, one recurrent state and {{v1_shared_pct}}% of each member's parameters, so their spread can express only uncertainty the trunk already carries (\u00a76.4).",
+      "claim": "On accuracy alone at our budget, {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor neighbours of the original's {{mn_centre_label}} beat it, {{mn_n_short_better_word}} shorter histories at under half its cost per iteration and {{mn_better_long_phrase}} at more (the rule's verdict holds on every reading it reports but {{mn_fm_exception}}, which is unresolved), but trained longer the centre passes each of them on at least one reading (post hoc), so the ranking depends on the training budget; the original chose the centre as a trade-off with training time, which its own printed hours are consistent with and we do not test (\u00a75.2). - **The \u03c3 = 0 optimum of the implemented objective.** The implemented state loss is minimised at \u03c3 = 0, so the per-member \u03c3 the method discards collapses by construction: derived, and demonstrated against known noise (\u00a76.3). - **Trunk-sharing, tested.** The five members share one trunk, one recurrent state and {{v1_shared_pct}}% of each member's parameters, so their spread can express only uncertainty the trunk already carries (\u00a76.4).",
       "keys": [
         "mn_n_better_word",
         "mn_n_configs_word",
         "mn_centre_label",
-        "mn_better_long_phrase",
         "mn_n_short_better_word",
-        "mn_mvar_better_list",
-        "v2_diag_h",
-        "n3_mid_factor_word",
+        "mn_better_long_phrase",
+        "mn_fm_exception",
         "v1_shared_pct"
       ],
       "artifacts": [
-        "results/mn_compute_matched.json",
         "results/mn_sweep_eval.json",
         "results/mn_sweep_verdict.json",
-        "results/v1_ensemble_topology.json",
-        "results/v2_deployment_horizon.json"
+        "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json",
+        "results/v1_ensemble_topology.json"
       ],
-      "n_keys": 9,
+      "n_keys": 7,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "db43af89e9dd",
+      "id": "e7bbe3d52867",
       "section": "1. Introduction",
-      "claim": "Under a rule committed before the runs, on the held-out pair's {{r2_nind}} independent trajectories, {{r2_n_indep}} independently initialised full models are {{m44_ratio_gain}}\u00d7 better calibrated than the shared-trunk arms, against a pre-registered minimum detectable effect of {{m44_mde_ratio}}\u00d7, and still {{r2_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}}; they also differ in capacity and data order, so this bounds the sharing effect rather than isolating it (\u00a76.8). - **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one episode and scored on the other, brings every released-checkpoint coverage estimate near nominal where a global one does not, though no single cell is resolvable and the cells are unseen only by the multiplier, since the checkpoint trained on both episodes (\u00a76.7); on Arm A, which never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells. - **The released evaluation is misaligned by one step; the cost is concentrated at short horizons, and at h = {{v2_diag_h}} it is small and not consistent in sign.** Evaluation feeds the action from *t\u22121* where training pairs states and actions index-for-index, and shifting its action index by one step fixes it.",
+      "claim": "Under a rule committed before the runs, on the held-out pair's {{r2_nind}} independent trajectories, {{r2_n_indep}} independently initialised full models are {{m44_ratio_gain}}\u00d7 better calibrated than the shared-trunk arms, against a pre-registered minimum detectable effect of {{m44_mde_ratio}}\u00d7, and still {{r2_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}}; they also differ in capacity and data order, so this bounds the sharing effect rather than isolating it (\u00a76.8). - **Per-horizon recalibration, with mixed evidence.** One multiplier per horizon, fitted on one episode and scored on the other, brings every released-checkpoint coverage estimate near nominal where a global one does not, though no single cell is resolvable and the cells are unseen only by the multiplier, since the checkpoint trained on both episodes (\u00a76.7); on Arm A, which never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells. - **The released evaluation is misaligned by one step; over all ten episodes it raises the checkpoint's relative-L1 error up to h = 32, and from h = {{v2_deploy_h}} the change is not resolved.** Evaluation feeds the action from *t\u22121* where training pairs states and actions index-for-index, and shifting its action index by one step fixes it.",
       "keys": [
         "r2_nind",
         "r2_n_indep",
@@ -336,7 +347,7 @@
         "v2_deploy_h",
         "d3x_own_epi_ok",
         "d3x_own_epi_cells",
-        "v2_diag_h"
+        "v2_deploy_h"
       ],
       "artifacts": [
         "results/r2_independent_ensemble.json",
@@ -350,18 +361,24 @@
       "note": ""
     },
     {
-      "id": "c1cd6bd6d309",
+      "id": "4ee2dd72c9c3",
       "section": "1. Introduction",
-      "claim": "On the held-out pair's {{ad_nind}} independent trajectories, which this checkpoint trained on, the stale action raises its relative-L1 error by {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE; over all ten episodes the sign at h = {{v2_diag_h}} reverses (\u00a77.2). - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released module bitwise, and losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training (Appendix A).",
+      "claim": "On all ten episodes' {{ad20_nind}} independent trajectories, all of them training data for this checkpoint, the stale action raises its relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and changes it by {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} at h = {{v2_deploy_h}} and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}; on the held-out pair's {{ad_nind}} it raises it at every horizon reported, by {{ad_rel}}% {{ad_rel_ci}} at h = {{v2_diag_h}} (\u00a77.2). - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released module bitwise, and losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss terms and {{diff_n_params}} parameter tensors, before any training (Appendix A).",
       "keys": [
-        "ad_nind",
-        "adh_rel_h1",
-        "adh_rel_ci_h1",
+        "ad20_nind",
+        "adh20_rel_h1",
+        "adh20_rel_ci_h1",
+        "adh20_rel_h32",
+        "adh20_rel_ci_h32",
+        "adh20_rel_h100",
+        "adh20_rel_ci_h100",
+        "v2_deploy_h",
+        "ad20_rel",
+        "ad20_rel_ci",
         "v2_diag_h",
+        "ad_nind",
         "ad_rel",
         "ad_rel_ci",
-        "ad_nrmse",
-        "ad_nrmse_ci",
         "v2_diag_h",
         "diff_grad_max",
         "diff_terms",
@@ -373,7 +390,7 @@
         "results/step4_3_differential.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 12,
+      "n_keys": 18,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -392,11 +409,11 @@
       "note": ""
     },
     {
-      "id": "29446dded6f9",
+      "id": "0b86e9c2fa0f",
       "section": "2. Related work",
-      "claim": "Of {{q1_n_examined}} public repositories examined, {{q1_n_carry}} carry the construction and {{q1_n_inherit}} of those trains it against a sampled squared error, only in an optional mode, so on this sample of convenience the substitution is rare (Appendix I).",
+      "claim": "Of {{q1_n_looked}} public repositories the survey looked at, {{q1_n_carry}} carry the construction, the ones its protocol counts as examined, and {{q1_n_inherit}} of those trains it against a sampled squared error, only in an optional mode, so on this sample of convenience the substitution is rare (Appendix I).",
       "keys": [
-        "q1_n_examined",
+        "q1_n_looked",
         "q1_n_carry",
         "q1_n_inherit"
       ],
@@ -450,9 +467,9 @@
       "note": ""
     },
     {
-      "id": "39aa73650fbb",
+      "id": "4ec5c1a62eb9",
       "section": "2. Related work",
-      "claim": "What is ours is finding it in a released robotics checkpoint, with the sharing quantified at {{v1_shared_pct}}% of each member and the cost measured at {{m44_ratio_gain}}\u00d7 (\u00a76.8).** The problem is not sharing; it is sharing and then reading the spread as though the members were independent.",
+      "claim": "What is ours is finding it in a released robotics checkpoint, with the sharing quantified at {{v1_shared_pct}}% of each member and its cost bounded by the {{m44_ratio_gain}}\u00d7 an independent ensemble gains (\u00a76.8).** The problem is not sharing; it is sharing and then reading the spread as though the members were independent.",
       "keys": [
         "v1_shared_pct",
         "m44_ratio_gain"
@@ -475,26 +492,6 @@
       "artifacts": [],
       "n_keys": 0,
       "generated": false,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "c6487d3d18b3",
-      "section": "2. Related work",
-      "claim": "Every entry cited here and in \u00a75.3 was checked against the paper itself: title, full author list and year from the arXiv record, venue from the record or, where it names none, from the paper's own first page, and every sentence we attribute matched verbatim against the paper's text. {{t1_n_verified}} of {{t1_n_refs}} entries are verified and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments match verbatim, though {{t1_n_frag_oneword}} of those are single common words whose match verifies nothing about the attribution (`results/t1_bibliography_verified.json`).",
-      "keys": [
-        "t1_n_verified",
-        "t1_n_refs",
-        "t1_n_frag_ok",
-        "t1_n_frag",
-        "t1_n_frag_oneword"
-      ],
-      "artifacts": [
-        "results/t1_bibliography_verified.json"
-      ],
-      "n_keys": 5,
-      "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
@@ -831,22 +828,16 @@
       "note": ""
     },
     {
-      "id": "8685e94f4211",
+      "id": "5b356d011868",
       "section": "3.1 Metrics",
-      "claim": "Every headline number in the abstract names its metric. \u00a77.2's alignment defect is given in both metrics side by side at h = {{v2_diag_h}}, on the same {{ad_nind}} independent trajectories: {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE; its larger cost at short horizons is given on relative-L1, at h = 1.",
+      "claim": "Over all ten episodes the two metrics agree that the stale action raises error at h = 8 and 32 and that from h = {{v2_deploy_h}} the change is not resolved, and they differ at h = 1, where relative-L1 resolves the rise and nRMSE does not.",
       "keys": [
-        "v2_diag_h",
-        "ad_nind",
-        "ad_rel",
-        "ad_rel_ci",
-        "ad_nrmse",
-        "ad_nrmse_ci"
+        "v2_deploy_h"
       ],
       "artifacts": [
-        "results/alignment_defect_ci.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 6,
+      "n_keys": 1,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -1336,9 +1327,9 @@
       "note": ""
     },
     {
-      "id": "8b69dfc24668",
+      "id": "764ff22be8bc",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts, same {{d1_seeds}} seeds at {{iters_long}} training iterations, same held-out arena, n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories:",
+      "claim": "Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts, same {{d1_seeds}} seeds at {{iters_long}} training iterations, same held-out arena, n_independent = {{a1_nind}}, with a cluster bootstrap over whole trajectories; the two floor columns are each arm's error divided by the hold-last floor's, so a value below one beats the floor:",
       "keys": [
         "d1_seeds",
         "iters_long",
@@ -1356,9 +1347,9 @@
       "note": ""
     },
     {
-      "id": "88f9fb53ef50",
+      "id": "86973c7263b0",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "The advantage {{a1_monotone}} grow monotonically with forecast depth.** Over 400-step trajectories the gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}: h = {{v2_diag_h}} is the end of a trend rather than a point we picked, h = {{v2_deploy_h}} sits partway along it, and the claim is weakest exactly where the model is trained.",
+      "claim": "The advantage {{a1_monotone}} grow monotonically with forecast depth.** Over 400-step trajectories the gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons and spans it at {{a1_spans_zero_at}}: h = {{v2_diag_h}} is the end of a trend rather than a point we picked, h = {{v2_deploy_h}} sits partway along it, and the claim is weakest inside the horizon the model is trained on.",
       "keys": [
         "a1_monotone",
         "a1_n_excl",
@@ -1480,15 +1471,17 @@
       "note": ""
     },
     {
-      "id": "b200f9ff401f",
+      "id": "c7652a14338a",
       "section": "5. The base paper's central claim reproduces",
-      "claim": "Teacher forcing is {{a1_B_over_floor_h368}}\u00d7 worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and {{a1_B_over_floor_h100}}\u00d7 worse at h = {{v2_deploy_h}}: the arm that reaches a lower training loss predicts the future worse than a model that makes no prediction, at {{a1_B_worse_than_floor_at}} we measured on the 400-step unit, the sharper statement of what exposure bias costs here; but on M-64's shorter units, at the same checkpoint and on the same two episodes, it beats the floor at h = {{m64_B_beats_floor_at}} and loses to it only at the longest horizon those units reach, so that statement holds on the 400-step unit and not on the shorter one.",
+      "claim": "Teacher forcing is {{a1_B_over_floor_h368}}\u00d7 worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and {{a1_B_over_floor_h100}}\u00d7 worse at h = {{v2_deploy_h}}: the arm that reaches a lower training loss predicts the future worse than a model that makes no prediction, at {{a1_B_worse_than_floor_at}} we measured on the 400-step unit, the sharper statement of what exposure bias costs here; but on M-64's shorter units, each {{m64_hist_rows}} + h rows long and non-overlapping ({{m64_units_list}} on these episodes), at the same checkpoint and on the same two episodes, it beats the floor at h = {{m64_B_beats_floor_at}} and loses to it only at the longest horizon those units reach, so that statement holds on the 400-step unit and not on the shorter one.",
       "keys": [
         "a1_B_over_floor_h368",
         "v2_diag_h",
         "a1_B_over_floor_h100",
         "v2_deploy_h",
         "a1_B_worse_than_floor_at",
+        "m64_hist_rows",
+        "m64_units_list",
         "m64_B_beats_floor_at"
       ],
       "artifacts": [
@@ -1496,7 +1489,7 @@
         "results/m64_short_units.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 6,
+      "n_keys": 8,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -1793,9 +1786,9 @@
       "note": "Part C: results/task_c2_data_budget.json computes distinct transitions as rows less one per episode boundary; the reference figure is arXiv:2501.10100v1 Table I"
     },
     {
-      "id": "d02736a6b8e8",
+      "id": "304fc060a78b",
       "section": "5.1 The data budget, which is the one part of the sample-efficiency claim we can measure",
-      "claim": "Our arms consume {{c2_trans}} distinct state transitions**: the {{c2_rows}} rows of the eight training episodes less one per episode boundary ({{c2_bounds}} of them), a transition being a consecutive pair of rows inside one episode.",
+      "claim": "Our arms consume {{c2_trans}} distinct state transitions**: the {{c2_rows}} rows of the eight training episodes less one per episode ({{c2_bounds}} of them), since an episode's first row has no predecessor, a transition being a consecutive pair of rows inside one episode.",
       "keys": [
         "c2_trans",
         "c2_rows",
@@ -1919,6 +1912,42 @@
       ],
       "artifacts": [
         "results/mn_sweep_eval.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "a5799f988a3e",
+      "section": "5.2 The configuration claim: history and forecast horizons",
+      "claim": "Its second heatmap prints training hours: {{orig_h_32_8}} for the centre and {{orig_h_32_32}} for {{orig_tied_label}}, {{orig_h_ratio}}\u00d7, so on the original's own figures the centre matches that neighbour's printed error, {{orig_e_32_8}}, in under half the time.",
+      "keys": [
+        "orig_h_32_8",
+        "orig_h_32_32",
+        "orig_tied_label",
+        "orig_h_ratio",
+        "orig_e_32_8"
+      ],
+      "artifacts": [
+        "results/original_paper_figures.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "92994decf64f",
+      "section": "5.2 The configuration claim: history and forecast horizons",
+      "claim": "Our measured cost per iteration for the same pair is {{n3_cost_M32_N32}}\u00d7 (the table's last column).",
+      "keys": [
+        "n3_cost_M32_N32"
+      ],
+      "artifacts": [
+        "results/mn_compute_matched.json"
       ],
       "n_keys": 1,
       "generated": true,
@@ -2053,17 +2082,16 @@
       "note": ""
     },
     {
-      "id": "39cf5e3e9b35",
+      "id": "887555341a20",
       "section": "5.2 The configuration claim: history and forecast horizons",
-      "claim": "The nRMSE readings quoted alongside the rules here and in \u00a75.3 are pooled, recomputed afterwards (post hoc; ledger R-77, `results/pooled_nrmse_alongside.json`), and return the same verdict as the averaged ones everywhere except {{n2_n_changed_word}} in-sample readings of \u00a75.3's rules (which configurations a reading resolves can shift; the artifact lists each): {{n2_changed_list}}.",
+      "claim": "The nRMSE readings quoted alongside the rules here and in \u00a75.3 are pooled, recomputed afterwards (post hoc; ledger R-77, `results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (\u00a75.3 gives the {{n2_n_changed_word}} readings of its rules that differ).",
       "keys": [
-        "n2_n_changed_word",
-        "n2_changed_list"
+        "n2_n_changed_word"
       ],
       "artifacts": [
         "results/pooled_nrmse_alongside.json"
       ],
-      "n_keys": 2,
+      "n_keys": 1,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -2151,6 +2179,24 @@
       "note": ""
     },
     {
+      "id": "b7ae5051d9dd",
+      "section": "5.2 The configuration claim: history and forecast horizons",
+      "claim": "That is a statement about learning speed at this budget, not about converged accuracy: trained {{n3_long_factor_word}} as long, the centre passes both winning shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings (below), so it does not contradict the original's steep fall to M = 8, whose training budget the original does not state.",
+      "keys": [
+        "n3_long_factor_word",
+        "n3_sh_long_nread_word",
+        "n3_n_readings_word"
+      ],
+      "artifacts": [
+        "results/mn_compute_matched.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "1c731b02c9b6",
       "section": "5.2 The configuration claim: history and forecast horizons",
       "claim": "The original's direction on N holds: the shortest forecasts are far worse, which is \u00a75's teacher-forcing result again, and the longest are better, so the centre's tie with its longest-forecast neighbour becomes a loss.",
@@ -2163,46 +2209,22 @@
       "note": ""
     },
     {
-      "id": "16d98c271bc7",
+      "id": "3a7b37def836",
       "section": "5.2 The configuration claim: history and forecast horizons",
-      "claim": "Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, {{n3_cost_M32_N16}}\u00d7 the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}\u00d7 for {{mn_best_config}}, so at a given iteration count those also had more computation; the shorter histories that win cost less, {{n3_cost_M8_N8}}\u00d7 and {{n3_cost_M2_N8}}\u00d7.",
+      "claim": "Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, {{n3_cost_M32_N16}}\u00d7 the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}\u00d7 for {{mn_best_config}}; the shorter histories that win cost less, {{n3_cost_M8_N8}}\u00d7 for {{n3_sh_label_M8_N8}} and {{n3_cost_M2_N8}}\u00d7 for {{n3_sh_label_M2_N8}} (`results/mn_compute_matched.json`; Appendix U gives every reading, signed as in the table).",
       "keys": [
         "n3_cost_M32_N16",
         "n3_lf_label",
         "n3_cost_M32_N32",
         "mn_best_config",
         "n3_cost_M8_N8",
-        "n3_cost_M2_N8"
+        "n3_sh_label_M8_N8",
+        "n3_cost_M2_N8",
+        "n3_sh_label_M2_N8"
       ],
       "artifacts": [
         "results/mn_compute_matched.json",
         "results/mn_sweep_eval.json"
-      ],
-      "n_keys": 6,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "2ab3f4987135",
-      "section": "5.2 The configuration claim: history and forecast horizons",
-      "claim": "At {{n3_k_mid}} iterations the centre has had {{n3_best_over_mid}}\u00d7 the computation of {{mn_best_config}} at {{iters_main}}, and {{mn_best_config}} is still ahead at h = {{v2_diag_h}}, a difference of {{n3_best_D_mid}} {{n3_best_ci_mid}}, so its advantage is not an artefact of extra computation per iteration.",
-      "keys": [
-        "n3_k_mid",
-        "n3_best_over_mid",
-        "mn_best_config",
-        "iters_main",
-        "mn_best_config",
-        "v2_diag_h",
-        "n3_best_D_mid",
-        "n3_best_ci_mid"
-      ],
-      "artifacts": [
-        "results/mn_compute_matched.json",
-        "results/mn_sweep_eval.json",
-        "results/step5_arm*.json (every run but the _10k runs)",
-        "results/v2_deployment_horizon.json"
       ],
       "n_keys": 8,
       "generated": true,
@@ -2211,30 +2233,91 @@
       "note": ""
     },
     {
-      "id": "c8294fe0f6da",
+      "id": "bfc39f894e5b",
       "section": "5.2 The configuration claim: history and forecast horizons",
-      "claim": "At {{iters_long}} iterations, {{n3_best_over_long}}\u00d7 the computation, the difference is {{n3_best_D_long}} {{n3_best_ci_long}}, not resolved; on the in-sample arena the centre at {{n3_k_mid}} already draws level with {{mn_best_config}} ({{n3_best_ins_D_mid}} {{n3_best_ins_ci_mid}}) and passes {{n3_lf_label}} ({{n3_lf_ins_D_mid}} {{n3_lf_ins_ci_mid}}); and at {{iters_long}}, on the held-out pair, it passes both shorter histories, {{n3_sh_long_clause}}.",
+      "claim": "The shorter histories win on all {{n3_n_readings_word}} readings at {{iters_main}} iterations while using well under half the centre's computation, so that part of the verdict needs no compute correction.",
       "keys": [
-        "iters_long",
-        "n3_best_over_long",
-        "n3_best_D_long",
-        "n3_best_ci_long",
+        "n3_n_readings_word",
+        "iters_main"
+      ],
+      "artifacts": [
+        "results/mn_compute_matched.json",
+        "results/step5_arm*.json (every run but the _10k runs)"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "3cff5a314b5b",
+      "section": "5.2 The configuration claim: history and forecast horizons",
+      "claim": "Trained to {{n3_k_mid}} iterations, the centre has had {{n3_best_over_mid}}\u00d7 the computation of {{mn_best_config}}, and the readings split: {{mn_best_config}} is still ahead on the held-out pair at h = {{v2_diag_h}} ({{n3_best_D_mid}} {{n3_best_ci_mid}}), the centre is ahead on the in-sample arena at h = {{v2_deploy_h}} ({{n3_best_ins_D_mid_h100}} {{n3_best_ins_ci_mid_h100}}), and the other two are not resolved.",
+      "keys": [
         "n3_k_mid",
+        "n3_best_over_mid",
         "mn_best_config",
-        "n3_best_ins_D_mid",
-        "n3_best_ins_ci_mid",
-        "n3_lf_label",
-        "n3_lf_ins_D_mid",
-        "n3_lf_ins_ci_mid",
-        "iters_long",
-        "n3_sh_long_clause"
+        "mn_best_config",
+        "v2_diag_h",
+        "n3_best_D_mid",
+        "n3_best_ci_mid",
+        "v2_deploy_h",
+        "n3_best_ins_D_mid_h100",
+        "n3_best_ins_ci_mid_h100"
       ],
       "artifacts": [
         "results/mn_compute_matched.json",
         "results/mn_sweep_eval.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 10,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "8ab10a78a1c7",
+      "section": "5.2 The configuration claim: history and forecast horizons",
+      "claim": "At {{iters_long}} iterations, {{n3_best_over_long}}\u00d7 the computation, the centre is ahead on both in-sample readings and neither held-out difference is resolved.",
+      "keys": [
+        "iters_long",
+        "n3_best_over_long"
+      ],
+      "artifacts": [
+        "results/mn_compute_matched.json",
         "results/step5_arm*_10k.json"
       ],
-      "n_keys": 13,
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "03b5f5674297",
+      "section": "5.2 The configuration claim: history and forecast horizons",
+      "claim": "Trained that long, it also passes both shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings: on the held-out pair at h = {{v2_diag_h}}, {{n3_sh_label_M2_N8}} by {{n3_sh_D_long_M2_N8}} {{n3_sh_ci_long_M2_N8}} and {{n3_sh_label_M8_N8}} by {{n3_sh_D_long_M8_N8}} {{n3_sh_ci_long_M8_N8}}, with {{n3_sh_over_long_M2_N8}}\u00d7 and {{n3_sh_over_long_M8_N8}}\u00d7 their computation, and on both in-sample readings; on the held-out pair at h = {{v2_deploy_h}} neither difference is resolved.",
+      "keys": [
+        "n3_sh_long_nread_word",
+        "n3_n_readings_word",
+        "v2_diag_h",
+        "n3_sh_label_M2_N8",
+        "n3_sh_D_long_M2_N8",
+        "n3_sh_ci_long_M2_N8",
+        "n3_sh_label_M8_N8",
+        "n3_sh_D_long_M8_N8",
+        "n3_sh_ci_long_M8_N8",
+        "n3_sh_over_long_M2_N8",
+        "n3_sh_over_long_M8_N8",
+        "v2_deploy_h"
+      ],
+      "artifacts": [
+        "results/mn_compute_matched.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 12,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -2257,9 +2340,9 @@
       "note": ""
     },
     {
-      "id": "2617b85dbda9",
+      "id": "d4cc2b25732c",
       "section": "5.2 The configuration claim: history and forecast horizons",
-      "claim": "All {{tail_n}} runs at {{iters_main}} iterations, the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`, post hoc), so the ranking is at this budget, not at convergence.",
+      "claim": "All {{tail_n}} runs at {{iters_main}} iterations, the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`, post hoc), so the ranking is at this budget, not at convergence, and it changes with training length (Appendix U).",
       "keys": [
         "tail_n",
         "iters_main",
@@ -2513,6 +2596,84 @@
       "note": ""
     },
     {
+      "id": "d7f9bd34d561",
+      "section": "5.3 The architecture claim: MLP, RSSM and transformer baselines",
+      "claim": "On the in-sample arena's {{mn_nind_ins}} trajectories, with nRMSE pooled as \u00a73.1 defines it (computed afterwards, post hoc; ledger R-77), {{n2_n_changed_word}} readings differ from the per-trajectory average the rules' evaluator used.",
+      "keys": [
+        "mn_nind_ins",
+        "n2_n_changed_word"
+      ],
+      "artifacts": [
+        "results/mn_sweep_eval.json",
+        "results/pooled_nrmse_alongside.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "5c4d6d67da6f",
+      "section": "5.3 The architecture claim: MLP, RSSM and transformer baselines",
+      "claim": "Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is {{n2_m75_D_mlp}} {{n2_m75_ci_mlp}} for the MLP, {{n2_m75_D_rssm}} {{n2_m75_ci_rssm}} for the RSSM and {{n2_m75_D_transformer}} {{n2_m75_ci_transformer}} for the transformer, so M-75's reading there is {{n2_m75_pooled}} where the average gave {{n2_m75_committed}}: the same one-step lead for teacher forcing as \u00a75's.",
+      "keys": [
+        "n2_m75_D_mlp",
+        "n2_m75_ci_mlp",
+        "n2_m75_D_rssm",
+        "n2_m75_ci_rssm",
+        "n2_m75_D_transformer",
+        "n2_m75_ci_transformer",
+        "n2_m75_pooled",
+        "n2_m75_committed"
+      ],
+      "artifacts": [
+        "results/pooled_nrmse_alongside.json"
+      ],
+      "n_keys": 8,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "2158d730a188",
+      "section": "5.3 The architecture claim: MLP, RSSM and transformer baselines",
+      "claim": "Trained autoregressively, the MLP's deficit at h = {{v2_deploy_h}} is no longer resolved ({{n2_m76_D_mlp}} {{n2_m76_ci_mlp}}), so M-76's reading there is {{n2_m76_pooled}} where the average gave {{n2_m76_committed}}.",
+      "keys": [
+        "v2_deploy_h",
+        "n2_m76_D_mlp",
+        "n2_m76_ci_mlp",
+        "n2_m76_pooled",
+        "n2_m76_committed"
+      ],
+      "artifacts": [
+        "results/pooled_nrmse_alongside.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 5,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "b5a1b8123146",
+      "section": "5.3 The architecture claim: MLP, RSSM and transformer baselines",
+      "claim": "Neither changes a verdict; both rules govern at h = {{v2_diag_h}} on relative-L1.",
+      "keys": [
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "71b4af9dbf27",
       "section": "5.3 The architecture claim: MLP, RSSM and transformer baselines",
       "claim": "Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate of this section's models one step ahead, {{h2h_bl_rssm_tf_l1_h1}} against RWM's {{h2h_armA_l1_h1}} and the floor's {{x1_floor_h1}}, though not resolvably, and it has collapsed open-loop by h = 32, where its {{x1_tf_mode_h32}} is above the floor's {{x1_floor_h32}}.",
@@ -2572,9 +2733,9 @@
       "note": ""
     },
     {
-      "id": "98ca3fb89fee",
+      "id": "71e49ae9f02c",
       "section": "5.3 The architecture claim: MLP, RSSM and transformer baselines",
-      "claim": "Its Part B is descriptive: over the history, the teacher-forced RSSM's one-step error from its prior is {{x1b_tf_ratio_lo}} to {{x1b_tf_ratio_hi}}\u00d7 its error from its posterior at the same recurrent state (the autoregressive one's at most {{x1b_ar_ratio_hi}}\u00d7), with {{x1b_kl_lo}} to {{x1b_kl_hi}} nats of KL divergence between them per step. {{rssm_partc_sentence}} The failure may still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on one seed.",
+      "claim": "Its Part B is descriptive: over the history, the teacher-forced RSSM's one-step error from its prior is {{x1b_tf_ratio_lo}} to {{x1b_tf_ratio_hi}}\u00d7 its error from its posterior at the same recurrent state (the autoregressive one's at most {{x1b_ar_ratio_hi}}\u00d7), with {{x1b_kl_lo}} to {{x1b_kl_hi}} nats of KL divergence between them per step. {{rssm_partc_sentence}} The failure may still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on one seed, neither of them PlaNet's latent overshooting (Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which PlaNet's own final RSSM agent did not need.",
       "keys": [
         "x1b_tf_ratio_lo",
         "x1b_tf_ratio_hi",
@@ -2652,6 +2813,18 @@
       ],
       "n_keys": 1,
       "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "3dfe93572dc6",
+      "section": "6.1 Which quantity the method actually uses",
+      "claim": "Our measurement **supports the first claim**: the epistemic ordering is real (\u00a76.6), though weaker per dimension than it looks (\u00a76.5).",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
@@ -3267,9 +3440,9 @@
       "note": ""
     },
     {
-      "id": "a12917dd517d",
+      "id": "4d805c6da483",
       "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
-      "claim": "We predicted the collapse from this algebra before training, then observed it: across all {{n_runs}} runs at the released width outside \u00a75.2's sweep the collapse is linear in iteration count and its rate is nearly identical (Figure 4a).",
+      "claim": "We predicted the collapse from this algebra before training, then observed it: across all {{n_runs}} runs at the released width outside \u00a75.2's sweep the log-\u03c3 range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a).",
       "keys": [
         "n_runs"
       ],
@@ -3404,9 +3577,9 @@
       "note": ""
     },
     {
-      "id": "17221682dee1",
+      "id": "cb41c2b9289a",
       "section": "6.4 Why the epistemic term may be miscalibrated: the members are not independent models",
-      "claim": "What is ours is finding it in a released robotics checkpoint, with the sharing quantified at {{v1_shared_pct}}% of each member and the cost measured at {{m44_ratio_gain}}\u00d7 on the overconfidence factor (\u00a76.8).",
+      "claim": "What is ours is finding it in a released robotics checkpoint, with the sharing quantified at {{v1_shared_pct}}% of each member and its cost bounded by the {{m44_ratio_gain}}\u00d7 an independent ensemble gains on the overconfidence factor (\u00a76.8).",
       "keys": [
         "v1_shared_pct",
         "m44_ratio_gain"
@@ -4812,109 +4985,112 @@
       "note": "Quantitative, substituted from the named artifact by the build."
     },
     {
-      "id": "9c2d5c7c1244",
+      "id": "66029d36dc1a",
       "section": "7. Defects in the released pipeline",
-      "claim": "What the stale pairing costs is concentrated at short horizons; at h = {{v2_diag_h}} it is small, and its sign is not consistent.",
-      "keys": [
-        "v2_diag_h"
-      ],
-      "artifacts": [
-        "results/v2_deployment_horizon.json"
-      ],
-      "n_keys": 1,
-      "generated": true,
+      "claim": "All ten episodes are this checkpoint's training data, so the held-out pair is not more honest here, only smaller, and the larger arena leads.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "6010a92998e1",
+      "id": "82e586336eea",
       "section": "7. Defects in the released pipeline",
-      "claim": "On the held-out pair's {{ad_nind}} independent trajectories it overstates the released checkpoint's error at h = {{v2_diag_h}} by **{{ad_rel}}% {{ad_rel_ci}} on relative-L1** and **{{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE** (each a 95% interval from a cluster bootstrap over whole trajectories, both pairings inside each draw; `results/alignment_defect_ci.json`).",
-      "keys": [
-        "ad_nind",
-        "v2_diag_h",
-        "ad_rel",
-        "ad_rel_ci",
-        "ad_nrmse",
-        "ad_nrmse_ci"
-      ],
-      "artifacts": [
-        "results/alignment_defect_ci.json",
-        "results/v2_deployment_horizon.json"
-      ],
-      "n_keys": 6,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "1fe82774057e",
-      "section": "7. Defects in the released pipeline",
-      "claim": "The four per-trajectory values are {{ad_rel_traj}} on relative-L1 and {{ad_nrmse_traj}} in nRMSE.",
-      "keys": [
-        "ad_rel_traj",
-        "ad_nrmse_traj"
-      ],
-      "artifacts": [
-        "results/alignment_defect_ci.json"
-      ],
-      "n_keys": 2,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "386db110c1f5",
-      "section": "7. Defects in the released pipeline",
-      "claim": "Over all ten episodes, {{ad20_nind}} independent trajectories, the sign reverses: {{ad20_rel}}% {{ad20_rel_ci}} on relative-L1 and {{ad20_nrmse}}% {{ad20_nrmse_ci}} in nRMSE, with single trajectories from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%.",
+      "claim": "Over all ten episodes' {{ad20_nind}} independent trajectories the stale action raises the released checkpoint's relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1, {{adh20_rel_h8}}% {{adh20_rel_ci_h8}} at h = 8 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and from h = {{v2_deploy_h}} the change is not resolved: {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} there and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}, where single trajectories run from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%.",
       "keys": [
         "ad20_nind",
+        "adh20_rel_h1",
+        "adh20_rel_ci_h1",
+        "adh20_rel_h8",
+        "adh20_rel_ci_h8",
+        "adh20_rel_h32",
+        "adh20_rel_ci_h32",
+        "v2_deploy_h",
+        "adh20_rel_h100",
+        "adh20_rel_ci_h100",
         "ad20_rel",
         "ad20_rel_ci",
-        "ad20_nrmse",
-        "ad20_nrmse_ci",
+        "v2_diag_h",
         "ad20_traj_lo",
         "ad20_traj_hi"
-      ],
-      "artifacts": [
-        "results/alignment_defect_ci.json"
-      ],
-      "n_keys": 7,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "8cfe44c1a8d1",
-      "section": "7. Defects in the released pipeline",
-      "claim": "One step ahead, where a stale action should matter most, it changes the checkpoint's relative-L1 error by {{adh_rel_h1}}% {{adh_rel_ci_h1}} on the held-out pair's {{ad_nind}} trajectories, and by {{adh_rel_h100}}% {{adh_rel_ci_h100}} at h = {{v2_deploy_h}}, the method's own horizon (`results/alignment_by_horizon.json`).",
-      "keys": [
-        "adh_rel_h1",
-        "adh_rel_ci_h1",
-        "ad_nind",
-        "adh_rel_h100",
-        "adh_rel_ci_h100",
-        "v2_deploy_h"
       ],
       "artifacts": [
         "results/alignment_by_horizon.json",
         "results/alignment_defect_ci.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 6,
+      "n_keys": 15,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "0fb895ee9069",
+      "id": "cbbdb5985b8c",
       "section": "7. Defects in the released pipeline",
-      "claim": "Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}% at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one (three-seed mean, relative-L1, held-out pair).",
+      "claim": "In nRMSE the rise is resolved at h = 8 and 32 ({{adh20_nrmse_h8}}% {{adh20_nrmse_ci_h8}} and {{adh20_nrmse_h32}}% {{adh20_nrmse_ci_h32}}) but not at h = 1 ({{adh20_nrmse_h1}}% {{adh20_nrmse_ci_h1}}), and from h = {{v2_deploy_h}} it is not resolved either ({{adh20_nrmse_h100}}% {{adh20_nrmse_ci_h100}} there, {{ad20_nrmse}}% {{ad20_nrmse_ci}} at h = {{v2_diag_h}}).",
+      "keys": [
+        "adh20_nrmse_h8",
+        "adh20_nrmse_ci_h8",
+        "adh20_nrmse_h32",
+        "adh20_nrmse_ci_h32",
+        "adh20_nrmse_h1",
+        "adh20_nrmse_ci_h1",
+        "v2_deploy_h",
+        "adh20_nrmse_h100",
+        "adh20_nrmse_ci_h100",
+        "ad20_nrmse",
+        "ad20_nrmse_ci",
+        "v2_diag_h"
+      ],
+      "artifacts": [
+        "results/alignment_by_horizon.json",
+        "results/alignment_defect_ci.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 12,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "01058c0de4b6",
+      "section": "7. Defects in the released pipeline",
+      "claim": "On the held-out pair's {{ad_nind}} independent trajectories the stale action raises the error at every horizon reported: by {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, by {{adh_rel_h100}}% {{adh_rel_ci_h100}} at h = {{v2_deploy_h}}, where the larger arena resolves no change, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}.",
+      "keys": [
+        "ad_nind",
+        "adh_rel_h1",
+        "adh_rel_ci_h1",
+        "adh_rel_h100",
+        "adh_rel_ci_h100",
+        "v2_deploy_h",
+        "v2_diag_h",
+        "ad_rel",
+        "ad_rel_ci",
+        "ad_nrmse",
+        "ad_nrmse_ci",
+        "ad_rel_traj",
+        "ad_nrmse_traj"
+      ],
+      "artifacts": [
+        "results/alignment_by_horizon.json",
+        "results/alignment_defect_ci.json",
+        "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 13,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "d68d493fd6e4",
+      "section": "7. Defects in the released pipeline",
+      "claim": "Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by {{stale_armA_rel_h1}}% at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the stale one (three-seed mean, relative-L1, held-out pair; ledger R-79, which replaces R-76's void figures).",
       "keys": [
         "iters_long",
         "stale_armA_rel_h1",
@@ -4925,6 +5101,48 @@
         "results/alignment_by_horizon.json",
         "results/step5_arm*_10k.json",
         "results/v2_deployment_horizon.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "0776bbef9a81",
+      "section": "7. Defects in the released pipeline",
+      "claim": "Given another trajectory's actions, their error at h = 8 on their {{x2_n_ins}} in-sample trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}}, and at {{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before its readings existed (ledger M-84), returns **{{x2_reading}}** at both checkpoints (Appendix V).",
+      "keys": [
+        "x2_n_ins",
+        "x2_E_swap_10k",
+        "x2_ci_swap_10k",
+        "iters_main",
+        "x2_E_swap_2500",
+        "x2_ci_swap_2500",
+        "x2_reading"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json",
+        "results/step5_arm*.json (every run but the _10k runs)"
+      ],
+      "n_keys": 7,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "ef6948a97811",
+      "section": "7. Defects in the released pipeline",
+      "claim": "On those trajectories the stale action itself raises their error at h = 1 by {{x2_E_stale_10k_ins_h1}}% {{x2_ci_stale_10k_ins_h1}}; a one-step shift moves the action by {{x2_ctx_stale}} of its spread there, and a swap by {{x2_ctx_swap}}.",
+      "keys": [
+        "x2_E_stale_10k_ins_h1",
+        "x2_ci_stale_10k_ins_h1",
+        "x2_ctx_stale",
+        "x2_ctx_swap"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json"
       ],
       "n_keys": 4,
       "generated": true,
@@ -4988,20 +5206,18 @@
       "note": "Part B restructuring: text moved verbatim between section 8 and Appendix D, or compressed without changing any figure; every number still resolves from the same artifact key it did before the move"
     },
     {
-      "id": "c5a7a308c6e4",
+      "id": "16548f616ec2",
       "section": "8. Method",
-      "claim": "Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix E for all {{appG_n_rules}}; {{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not.",
+      "claim": "Figure 1 and Appendix E give the lead time for all {{appG_n_rules}}; {{appG_n_positive}} are positive and {{appG_n_negative}} is not.",
       "keys": [
-        "f4_n_rules",
         "appG_n_rules",
-        "f4_n_positive",
-        "f4_n_negative"
+        "appG_n_positive",
+        "appG_n_negative"
       ],
       "artifacts": [
-        "results/appendix_g_rules.json",
-        "results/paper_figures.json"
+        "results/appendix_g_rules.json"
       ],
-      "n_keys": 4,
+      "n_keys": 3,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -5215,22 +5431,24 @@
       "note": ""
     },
     {
-      "id": "a2c6248a9d2f",
+      "id": "1651a87efdef",
       "section": "9. Actionable lessons",
-      "claim": "And it is too small to be an interval by a wide margin: at h = {{v2_deploy_h}}, the horizon the method rolls out over, {{d1n_epi_ratio_h100}}\u00d7 [{{d1n_epi_ratio_ci_h100}}] on the released checkpoint and {{e5_ratio_h100}}\u00d7 [{{e5_ratio_ci_h100}}] on the ensemble-5 arms we trained.",
+      "claim": "And it is too small to be an interval by a wide margin: at h = {{v2_deploy_h}}, the horizon the method rolls out over, {{d1n_epi_ratio_h100}}\u00d7 [{{d1n_epi_ratio_ci_h100}}] on the released checkpoint over all ten episodes, and on the held-out pair {{e5_ratio_h100}}\u00d7 [{{e5_ratio_ci_h100}}] on the ensemble-5 arms we trained, against the released checkpoint's {{b2_epi_ratio_h100}}\u00d7 there.",
       "keys": [
         "v2_deploy_h",
         "d1n_epi_ratio_h100",
         "d1n_epi_ratio_ci_h100",
         "e5_ratio_h100",
-        "e5_ratio_ci_h100"
+        "e5_ratio_ci_h100",
+        "b2_epi_ratio_h100"
       ],
       "artifacts": [
+        "results/task_b2_epistemic.json",
         "results/task_d3_ens5.json",
         "results/task_d_nind20.json",
         "results/v2_deployment_horizon.json"
       ],
-      "n_keys": 5,
+      "n_keys": 6,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -5569,9 +5787,9 @@
       "note": ""
     },
     {
-      "id": "b8ef6cb8d149",
+      "id": "9e531d802e44",
       "section": "12. Conclusion",
-      "claim": "RWM is ahead at h = {{v2_diag_h}} of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change, and on accuracy alone {{mn_n_better_word}} other history and forecast lengths beat its chosen ones at our budget, which it chose as a trade-off with training time (\u00a75.2, \u00a75.3).",
+      "claim": "RWM is ahead at h = {{v2_diag_h}} of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change, and on accuracy alone {{mn_n_better_word}} other history and forecast lengths beat its chosen ones at our budget, a verdict every reading the rule reports returns but one, which is unresolved, and a ranking that changes when the chosen setting trains longer; it chose them as a trade-off with training time (\u00a75.2, \u00a75.3).",
       "keys": [
         "v2_diag_h",
         "mn_n_better_word"
@@ -5626,19 +5844,23 @@
       "note": ""
     },
     {
-      "id": "7d5f616989b2",
+      "id": "6fe600367519",
       "section": "12. Conclusion",
-      "claim": "On the released checkpoint, ensemble disagreement beats the forecast step index at every horizon and, with both the rollout and the depth held constant, still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.6), though a free subtraction, the model's own predicted step size, ranks error nearly as well, by a margin this sample cannot resolve ({{e7_verdict}}).",
+      "claim": "On the released checkpoint, ensemble disagreement beats the forecast step index at every horizon and, with both the rollout and the depth held constant, still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.6), though a free subtraction, the model's own predicted step size, ranks error nearly as well, {{e7_step_r3}} against disagreement's {{d4_r}}, by a margin this sample cannot resolve ({{e7_verdict}}: {{e7_verdict_gloss}}).",
       "keys": [
         "a2_rdd",
         "a2_rdd_ci",
-        "e7_verdict"
+        "e7_step_r3",
+        "d4_r",
+        "e7_verdict",
+        "e7_verdict_gloss"
       ],
       "artifacts": [
         "results/a2_trajectory_level_control.json",
-        "results/e7_free_baselines.json"
+        "results/e7_free_baselines.json",
+        "results/task_d_nind20.json"
       ],
-      "n_keys": 3,
+      "n_keys": 6,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -5711,16 +5933,19 @@
       "note": ""
     },
     {
-      "id": "b01d833bf02a",
+      "id": "fe6fa29bec80",
       "section": "Data and code",
-      "claim": "Purging a path rewrites every commit from the one that introduced it onward, so **{{f4_n_commits}} of the commits Figure 1 cites keep their identifiers and two do not** \u2014 the two whose data post-dates that file.",
+      "claim": "Purging a path rewrites every commit from the one that introduced it onward, so **{{f1_n_kept}} of the {{f1_n_cited}} commits Figure 1 cites keep their identifiers and {{f1_n_moved_word}} do not**: the {{f1_n_moved_word}} made between that file's introduction and the purge.",
       "keys": [
-        "f4_n_commits"
+        "f1_n_kept",
+        "f1_n_cited",
+        "f1_n_moved_word",
+        "f1_n_moved_word"
       ],
       "artifacts": [
         "results/paper_figures.json"
       ],
-      "n_keys": 1,
+      "n_keys": 4,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -5737,30 +5962,6 @@
       "verdict": "SUPPORTED",
       "sample_size": "-",
       "note": "Verified against the Software Heritage API on 2026-08-21; identifiers held outside the anonymous archive."
-    },
-    {
-      "id": "04a256e0f145",
-      "section": "Data and code",
-      "claim": "On anonymity, stated rather than implied.** The code and data for this work are public, as they are for most reproducibility work, and a reviewer who chooses to look can identify the author.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "fad5a266e37a",
-      "section": "Data and code",
-      "claim": "Making the repository private would remove the identifying link and also remove the checkability \u00a78 depends on, which is the worse trade.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
     },
     {
       "id": "73f3e03edc1f",
@@ -5818,9 +6019,9 @@
       "note": ""
     },
     {
-      "id": "1f70881a747b",
+      "id": "401c17882f1a",
       "section": "References",
-      "claim": "Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the bibliography of \u00a72 and \u00a75.3, generated from `results/t1_bibliography_verified.json` rather than listed here \u2014 a hand-maintained list of what a paper cites drifts exactly as a hand-typed count does, and this one had: six entries cited in \u00a72's prose appeared in no reference entry while the note below claimed all of them verified.",
+      "claim": "Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the bibliography of \u00a72 and \u00a75.3, generated from `results/t1_bibliography_verified.json`.",
       "keys": [
         "t1_first_entry_n",
         "t1_last_entry_n"
@@ -5835,9 +6036,9 @@
       "note": ""
     },
     {
-      "id": "6ea7a83af826",
+      "id": "ef135ca0c110",
       "section": "References",
-      "claim": "Each was checked against the paper itself: title and full author list from the arXiv record, venue from the record or the paper's first page, and for any sentence this paper attributes, the sentence matched verbatim against that paper's own text \u2014 {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_oneword}} of them single common words whose presence the cited paper's subject guarantees, so their match could not have failed and verifies nothing about the attribution (`results/t1_bibliography_verified.json`, ledger `D-35`).",
+      "claim": "Each was checked against the paper itself: title and full author list from the arXiv record, venue from the record or the paper's first page, and every sentence this paper attributes matched verbatim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_oneword}} of them single common words whose match verifies nothing about the attribution (ledger `D-35`).",
       "keys": [
         "t1_n_verified",
         "t1_n_refs",
@@ -5944,9 +6145,9 @@
       "note": ""
     },
     {
-      "id": "b2d4efad4b77",
+      "id": "3d476547681b",
       "section": "Appendix B \u2014 reproducing",
-      "claim": "They are **not** part of the {{n_runs}} runs \u00a76.3 fits the \u03c3-collapse rate over, because that rate is a property of one architecture and mixing widths into it would make \"nearly identical across runs\" a claim about two different models.",
+      "claim": "They are **not** part of the {{n_runs}} runs of \u00a76.3's \u03c3-collapse family, because \u00a76.3's rate is a property of one architecture and mixing widths into it would make \"nearly identical across runs\" a claim about two different models.",
       "keys": [
         "n_runs"
       ],
@@ -6011,6 +6212,24 @@
       "note": ""
     },
     {
+      "id": "d9e810b3453b",
+      "section": "Appendix B \u2014 reproducing",
+      "claim": "Rule X1's Part C (\u00a75.3) ran {{rt_x1c_runs}} more teacher-forced RSSM runs from a second queue, {{rt_x1c_hours}} hours, which are in neither total; {{rt_x1c_overlapped}} of them overlapped CPU work a session logged.",
+      "keys": [
+        "rt_x1c_runs",
+        "rt_x1c_hours",
+        "rt_x1c_overlapped"
+      ],
+      "artifacts": [
+        "results/presubmission_runtime.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
       "id": "28607b6c87b2",
       "section": "Appendix B \u2014 reproducing",
       "claim": "Per run family, every run at {{iters_main}} iterations (the sweep's centre is \u00a75's Arm A, whose runs are counted above):",
@@ -6027,9 +6246,9 @@
       "note": ""
     },
     {
-      "id": "1ebdc70c07f3",
+      "id": "3bddddb7fa5f",
       "section": "Appendix C \u2014 what testing the untested claims would require",
-      "claim": "Appendix D's table marks {{orig_n_tested}} claims tested and the rest not. \"Not tested\" is an apology unless it comes with a price, so here is what each would cost.",
+      "claim": "Appendix D's first table marks {{orig_n_tested}} claims tested and the rest not. \"Not tested\" is an apology unless it comes with a price, so here is what each would cost.",
       "keys": [
         "orig_n_tested"
       ],
@@ -6140,21 +6359,25 @@
       "note": ""
     },
     {
-      "id": "d07598460d1a",
+      "id": "4b5894848c71",
       "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-      "claim": "Lead time** is the rule's commit timestamp subtracted from the commit that first held the data it tested, resolved by commit *subject* rather than by hash \u2014 the history was rewritten once and hashes did not survive it, while subjects did.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
+      "claim": "Lead time** is the rule's commit timestamp subtracted from the commit that first held the data it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and {{f1_n_moved_word}} of the commits Figure 1 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading.",
+      "keys": [
+        "f1_n_moved_word"
+      ],
+      "artifacts": [
+        "results/paper_figures.json"
+      ],
+      "n_keys": 1,
+      "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "92c74f49f64f",
+      "id": "3821838eea27",
       "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-      "claim": "`M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so the rule's lead time depends on which timestamp is read: {{m69_lead_author}} by that commit's author time, {{m69_lead_regen}} by its committer time.",
+      "claim": "`M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so its lead time is {{m69_lead_author}} by that commit's author time and {{m69_lead_regen}} by its committer time.",
       "keys": [
         "m69_amend_min",
         "m69_lead_author",
@@ -6164,22 +6387,6 @@
         "results/appendix_g_rules.json + git log"
       ],
       "n_keys": 3,
-      "generated": true,
-      "verdict": "UNREVIEWED",
-      "sample_size": "",
-      "note": ""
-    },
-    {
-      "id": "c750cd285887",
-      "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-      "claim": "The table above renders {{m69_lead_pub}}, the value `results/appendix_g_rules.json` holds; a clean rebuild regenerates that file from git and may store either reading.",
-      "keys": [
-        "m69_lead_pub"
-      ],
-      "artifacts": [
-        "results/appendix_g_rules.json + git log"
-      ],
-      "n_keys": 1,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -6233,21 +6440,9 @@
       "note": ""
     },
     {
-      "id": "bfa02cae679c",
+      "id": "383607bc5e55",
       "section": "Appendix F \u2014 the variance-state arithmetic behind \u00a77.5",
-      "claim": "It is that **the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repository is not the one that trained it.** That is a documentation gap between a release and a run \u2014 common, worth recording, and much less interesting than an inconsistency.",
-      "keys": [],
-      "artifacts": [],
-      "n_keys": 0,
-      "generated": false,
-      "verdict": "SUPPORTED",
-      "sample_size": "-",
-      "note": "Author's own words, quoted from personal communication of 21 August 2026 and recorded in X-10; permission to quote has been requested."
-    },
-    {
-      "id": "578de91e53c1",
-      "section": "Appendix F \u2014 the variance-state arithmetic behind \u00a77.5",
-      "claim": "So this is a **documentation gap between a release and a run**: common, worth recording, and much less interesting than an inconsistency.",
+      "claim": "It is that **the released artifacts do not reproduce the released checkpoint's variance state, and the author's account is that the released repository is not the one that trained it.** That is a **documentation gap between a release and a run**: common, worth recording, and much less interesting than an inconsistency.",
       "keys": [],
       "artifacts": [],
       "n_keys": 0,
@@ -6273,9 +6468,9 @@
       "note": ""
     },
     {
-      "id": "934491596214",
+      "id": "d6a7c6858d3c",
       "section": "Appendix H \u2014 findings not in the main text",
-      "claim": "Measurements are at {{iters_main}} training iterations unless a row says otherwise or concerns the released checkpoint.",
+      "claim": "Measurements are at {{iters_main}} training iterations unless a row says otherwise or concerns the released checkpoint, and each row names its arena.",
       "keys": [
         "iters_main"
       ],
@@ -6350,33 +6545,35 @@
       "note": ""
     },
     {
-      "id": "714942deae52",
+      "id": "26dc18f3555c",
       "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-      "claim": "A further {{q1_n_absent}} repositories lack the construction, among them mainline `rsl_rl`: the bounded head exists in the fork this paper pins, not in the library it forks, and we do not count the fork, since counting what \u00a76.3 measured as evidence that the result travels would be circular.",
+      "claim": "The survey looked at {{q1_n_looked}} in all; the other {{q1_n_absent}} lack the construction, so the protocol does not count them as examined, among them mainline `rsl_rl`: the bounded head exists in the fork this paper pins, not in the library it forks, and we do not count the fork, since counting what \u00a76.3 measured as evidence that the result travels would be circular.",
       "keys": [
+        "q1_n_looked",
         "q1_n_absent"
       ],
       "artifacts": [
         "results/q1_pets_descendants.json"
       ],
-      "n_keys": 1,
+      "n_keys": 2,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
       "note": ""
     },
     {
-      "id": "05120811ccbb",
+      "id": "c14e95ef4a66",
       "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-      "claim": "The protocol capped the survey at {{q1_cap}} repositories; it stopped at {{q1_n_examined}}, and its notes give no reason.",
+      "claim": "The protocol capped the survey at {{q1_cap}} repositories; it stopped at {{q1_n_examined}} examined, {{q1_n_looked}} looked at, and its notes give no reason.",
       "keys": [
         "q1_cap",
-        "q1_n_examined"
+        "q1_n_examined",
+        "q1_n_looked"
       ],
       "artifacts": [
         "results/q1_pets_descendants.json"
       ],
-      "n_keys": 2,
+      "n_keys": 3,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -6708,9 +6905,9 @@
       "note": ""
     },
     {
-      "id": "147dfda05db2",
+      "id": "43907fb9faab",
       "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-      "claim": "Across all {{n_runs}} runs of that family the collapse is linear in iteration count and its rate is nearly identical (Figure 4a).",
+      "claim": "Across all {{n_runs}} runs of that family the log-\u03c3 range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a).",
       "keys": [
         "n_runs"
       ],
@@ -9114,18 +9311,19 @@
       "note": "revision review: assertion re-checked at h=100, the deployment horizon V2 establishes, including arena and the interval now reported beside it"
     },
     {
-      "id": "00276caf0bee",
+      "id": "7ff7bb41a768",
       "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-      "claim": "Against a second free baseline it does less well: the model's own predicted step size ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, a margin this sample cannot resolve, so the verdict is {{e7_verdict}}.",
+      "claim": "Against a second free baseline it does less well: the model's own predicted step size ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, a margin this sample cannot resolve, so the verdict is {{e7_verdict}} ({{e7_verdict_gloss}}).",
       "keys": [
         "e7_step_r",
         "e7_r_dis",
-        "e7_verdict"
+        "e7_verdict",
+        "e7_verdict_gloss"
       ],
       "artifacts": [
         "results/e7_free_baselines.json"
       ],
-      "n_keys": 3,
+      "n_keys": 4,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
@@ -9354,6 +9552,306 @@
         "results/task_d3_cross_model.json"
       ],
       "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "10699951eb67",
+      "section": "Appendix U \u2014 the settings sweep at equal training compute",
+      "claim": "Post hoc (ledger R-78; `results/mn_compute_matched.json`); it re-opens no rule, and rule M-74's verdict, {{mn_verdict}}, stands as a statement about the {{iters_main}}-iteration budget (\u00a75.2).",
+      "keys": [
+        "mn_verdict",
+        "iters_main"
+      ],
+      "artifacts": [
+        "results/mn_sweep_verdict.json",
+        "results/step5_arm*.json (every run but the _10k runs)"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "0c745a22b375",
+      "section": "Appendix U \u2014 the settings sweep at equal training compute",
+      "claim": "Each row sets one of the {{mn_n_better_word}} configurations that beat the centre at {{iters_main}} iterations against the centre trained to {{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterations: {{n3_appU_nrows_word}} rows of {{n3_n_readings_word}} readings each.",
+      "keys": [
+        "mn_n_better_word",
+        "iters_main",
+        "iters_main",
+        "n3_k_mid",
+        "iters_long",
+        "n3_appU_nrows_word",
+        "n3_n_readings_word"
+      ],
+      "artifacts": [
+        "results/mn_compute_matched.json",
+        "results/mn_sweep_verdict.json",
+        "results/step5_arm*.json (every run but the _10k runs)",
+        "results/step5_arm*_10k.json"
+      ],
+      "n_keys": 7,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "d42ecb27fad7",
+      "section": "Appendix U \u2014 the settings sweep at equal training compute",
+      "claim": "A longer forecast costs more per iteration than the centre, a shorter history less, so the centre's longer runs ask whether a configuration's win survives giving the centre at least as much training computation.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "9ddd6d7028d7",
+      "section": "Appendix U \u2014 the settings sweep at equal training compute",
+      "claim": "Arenas: the held-out pair (episodes {{h2h_episodes}}, {{mn_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind}}) and the in-sample arena (the training episodes' {{mn_nind_ins}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind_ins}}).",
+      "keys": [
+        "h2h_episodes",
+        "mn_nind",
+        "h2h_unit",
+        "mn_nind",
+        "mn_nind_ins",
+        "h2h_unit",
+        "mn_nind_ins"
+      ],
+      "artifacts": [
+        "results/head_to_head_accuracy.json",
+        "results/mn_sweep_eval.json"
+      ],
+      "n_keys": 7,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "f3241024be42",
+      "section": "Appendix U \u2014 the settings sweep at equal training compute",
+      "claim": "Checkpoints: each configuration at {{iters_main}} iterations, the centre at the iterations in the second column; three seeds each.** Each cell is D, the configuration's relative-L1 minus the centre's, the mean over trajectories of the three-seed means, with its 95% interval: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair, {{boot_n_mc}} Monte Carlo resamples (seed 0) in-sample.",
+      "keys": [
+        "iters_main",
+        "boot_n_exact4",
+        "boot_n_mc"
+      ],
+      "artifacts": [
+        "results/alignment_by_horizon.json",
+        "results/step5_arm*.json (every run but the _10k runs)"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "6a56efde35c4",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "E is the change in relative-L1 error, cumulative over forecast steps 1..h, against the true actions: the ratio err(I) / err(true), less one, in percent; for our arms, the mean over three seeds of each seed's E.",
+      "keys": [],
+      "artifacts": [],
+      "n_keys": 0,
+      "generated": false,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "686737181484",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "Its 95% interval resamples whole trajectories, one resample for all seeds and both interventions in each draw: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair, {{boot_n_mc}} Monte Carlo resamples (seed 0) otherwise.",
+      "keys": [
+        "boot_n_exact4",
+        "boot_n_mc"
+      ],
+      "artifacts": [
+        "results/alignment_by_horizon.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "2e4fdb6a2972",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "The readings** are Arm A's, under the swap at h = 8 on its in-sample arena: **{{x2_reading}}** at {{iters_main}} iterations ({{x2_E_swap_2500}}% {{x2_ci_swap_2500}}) and at {{iters_long}} ({{x2_E_swap_10k}}% {{x2_ci_swap_10k}}).",
+      "keys": [
+        "x2_reading",
+        "iters_main",
+        "x2_E_swap_2500",
+        "x2_ci_swap_2500",
+        "iters_long",
+        "x2_E_swap_10k",
+        "x2_ci_swap_10k"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json",
+        "results/step5_arm*.json (every run but the _10k runs)",
+        "results/step5_arm*_10k.json"
+      ],
+      "n_keys": 7,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "0eaa033649b6",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "For Arm A and Arm B, the in-sample arena: the training episodes' {{x2_n_ins}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{x2_n_ins}}.",
+      "keys": [
+        "x2_n_ins",
+        "h2h_unit",
+        "x2_n_ins"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json",
+        "results/head_to_head_accuracy.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "7e9d1f9a5555",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "For the released checkpoint, all ten episodes: {{ad20_nind}} trajectories, n_independent = {{ad20_nind}}.",
+      "keys": [
+        "ad20_nind",
+        "ad20_nind"
+      ],
+      "artifacts": [
+        "results/alignment_defect_ci.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "0553e53693ac",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the released checkpoint.** Each cell is E in percent with its 95% interval; bold, the two readings.",
+      "keys": [
+        "iters_main",
+        "iters_long"
+      ],
+      "artifacts": [
+        "results/step5_arm*.json (every run but the _10k runs)",
+        "results/step5_arm*_10k.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "b761e0d2b05d",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "Arena: the held-out pair (episodes {{h2h_episodes}}, {{ad_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{ad_nind}}), out-of-sample for our arms and in-sample for the released checkpoint.",
+      "keys": [
+        "h2h_episodes",
+        "ad_nind",
+        "h2h_unit",
+        "ad_nind"
+      ],
+      "artifacts": [
+        "results/alignment_defect_ci.json",
+        "results/head_to_head_accuracy.json"
+      ],
+      "n_keys": 4,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "03ff5d166295",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "Arenas: each model's own training data ({{x2_n_ins}} trajectories for our arms, {{ad20_nind}} for the released checkpoint) and the held-out pair ({{ad_nind}}).",
+      "keys": [
+        "x2_n_ins",
+        "ad20_nind",
+        "ad_nind"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json",
+        "results/alignment_defect_ci.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "eac6ca5ffa75",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the released checkpoint.",
+      "keys": [
+        "iters_main",
+        "iters_long"
+      ],
+      "artifacts": [
+        "results/step5_arm*.json (every run but the _10k runs)",
+        "results/step5_arm*_10k.json"
+      ],
+      "n_keys": 2,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "700e8b805d70",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "Descriptive, no reading.** How far the interventions move the actions: on the forecast rows, the action changes from one step to the next on {{x2_ctx_ins_frac}}% of steps on the in-sample arena, {{x2_ctx_ho_frac}}% on the held-out pair and {{x2_ctx_ten_frac}}% over all ten episodes.",
+      "keys": [
+        "x2_ctx_ins_frac",
+        "x2_ctx_ho_frac",
+        "x2_ctx_ten_frac"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json"
+      ],
+      "n_keys": 3,
+      "generated": true,
+      "verdict": "UNREVIEWED",
+      "sample_size": "",
+      "note": ""
+    },
+    {
+      "id": "b9ab12c109df",
+      "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
+      "claim": "A one-step shift moves the action by {{x2_ctx_ins_stale}}, {{x2_ctx_ho_stale}} and {{x2_ctx_ten_stale}} of its spread (the mean absolute change from one step to the next over the mean absolute deviation from the action's mean), and the swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and {{x2_ctx_ten_swap}} (`results/action_sensitivity.json`).",
+      "keys": [
+        "x2_ctx_ins_stale",
+        "x2_ctx_ho_stale",
+        "x2_ctx_ten_stale",
+        "x2_ctx_ins_swap",
+        "x2_ctx_ho_swap",
+        "x2_ctx_ten_swap"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json"
+      ],
+      "n_keys": 6,
       "generated": true,
       "verdict": "UNREVIEWED",
       "sample_size": "",
