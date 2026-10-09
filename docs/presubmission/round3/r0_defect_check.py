@@ -15,6 +15,10 @@ compares the three-seed mean relative-L1 at h = 1, 8, 32, 100 three ways:
 It also checks that "as is" reproduces alignment_by_horizon.json's committed Arm A offset-1 errors on the
 held-out pair, i.e. that the committed artifact carries the defect.
 Run from the repository root:  $PY docs/presubmission/round3/r0_defect_check.py
+
+Its committed output, round3/r0_defect_check.json, was produced at commit a2724f9, before the fix
+(ruling (A), DECISIONS.md#R0-arm-a-rollout-defect). After the fix, alignment_defect_ci.rollout takes the
+tensor whole, so "as is" equals "unpacked" and a re-run reports NOT CONFIRMED; that is the fix working.
 """
 import json, os, sys
 

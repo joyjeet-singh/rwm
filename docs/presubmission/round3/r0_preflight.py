@@ -127,27 +127,35 @@ for it in ("2500", "10000"):
                       + f" | {blk['summary_three_seed_mean_pct'][str(h)][m]:+.2f} |")
 a10 = A["arm_a"]["10000"]["summary_three_seed_mean_pct"]
 plan_a = {"1": -0.22, "368": 0.15}
-for h, v in plan_a.items():
-    if round(a10[h]["rel_l1"], 2) != v:
-        diffs2.append(f"Arm A 10,000, h = {h}, relative-L1 three-seed mean: artifact {a10[h]['rel_l1']:+.2f}, Annex 1 {v:+.2f}")
+superseded2 = [f"h = {h}: Annex 1 {v:+.2f}%, artifact {a10[h]['rel_l1']:+.2f}%" for h, v in plan_a.items()
+               if round(a10[h]["rel_l1"], 2) != v]
 maxabs = max(abs(A["arm_a"][it]["summary_three_seed_mean_pct"][str(h)][m]) for it in ("2500", "10000") for h in HS for m in ("rel_l1", "nrmse_form1"))
 md += ["",
        f"Annex 1 quotes Arm A at 10,000 as −0.22% at h = 1 and +0.15% at h = 368 (relative-L1, three-seed mean); the artifact "
        f"gives {a10['1']['rel_l1']:+.2f}% and {a10['368']['rel_l1']:+.2f}%. The largest three-seed mean |change| over both checkpoints, "
        f"every horizon and both metrics is {maxabs:.2f}%. Arm A has no all-ten-episodes arena in this artifact.\n",
+       ("Annex 1's two figures were the void ones (below). Under ruling (A) they are superseded by the corrected artifact, "
+        "not a difference to resolve: " + "; ".join(superseded2) + ".\n") if superseded2 else "",
        f"Differences from the plan: {'; '.join(diffs2) if diffs2 else 'none'}.\n"]
 p2_released = not diffs2 and A["released"]["reproduces_alignment_defect_ci_at_h368"]["held_out_n4"]["reproduced"] \
     and A["released"]["reproduces_alignment_defect_ci_at_h368"]["all_ten_n20"]["reproduced"]
 # The Arm A half: r0_defect_check.py, run before this script, tests whether alignment_defect_ci.rollout
 # scored our own models correctly (causal pairing only; no stale-pairing figure and no X2 reading).
 DC = J("docs/presubmission/round3/r0_defect_check.json")
-l_unpack = grep_line("scripts/alignment_defect_ci.py", r"pred, \*_ = model\.rollout\(st, ac, E\.START_STEP, action_offset=offset\)")
+# the unpacking line as it stood when R0 found it (commit a2724f9, before the fix)
+_old = subprocess.run(["git", "show", "a2724f9:scripts/alignment_defect_ci.py"], capture_output=True, text=True, check=True).stdout
+l_unpack = next(i + 1 for i, l in enumerate(_old.splitlines())
+                if re.search(r"pred, \*_ = model\.rollout\(st, ac, E\.START_STEP, action_offset=offset\)", l))
 l_rwm_ret = grep_line("src/rwm_model.py", r"^\s+return pred$")
 l_ref_ret = grep_line("src/score_reference.py", r"^\s+return pred, alea, epis, contacts, terms$")
 r1 = next(r for r in DC["rows"] if r["iterations"] == 10000 and r["arena"] == "held_out" and r["h"] == 1)
 defect = DC["verdict"] == "DEFECT CONFIRMED"
-md += ["### P2, the Arm A half: the committed figures come from a defective rollout\n",
-       f"`scripts/alignment_defect_ci.py:{l_unpack}` unpacks `pred, *_ = model.rollout(...)`. The released checkpoint's "
+guard = A.get("arm_a_offset1_reproduces_mn_compute_matched", {})
+fixed = bool(guard) and all(v["reproduced"] for v in guard.values())
+md += ["### P2, the Arm A half: the figures first found came from a defective rollout\n",
+       "Found at commit `a2724f9`, before the fix; `round3/r0_defect_check.json` is that state's record. The table above "
+       "shows the artifact as it now stands, after the fix.\n",
+       f"`scripts/alignment_defect_ci.py:{l_unpack}` (at `a2724f9`) unpacked `pred, *_ = model.rollout(...)`. The released checkpoint's "
        f"`ReferenceRWM.rollout` returns a tuple (`src/score_reference.py:{l_ref_ret}`), so that takes the prediction. Our models' "
        f"`RWMEnsemble.rollout` returns the prediction tensor itself (`src/rwm_model.py:{l_rwm_ret}`), shape (n, 400, 45), so the "
        f"same line takes its first trajectory, shape {tuple(DC['rows'][0]['as_is_pred_shape'])}, and numpy broadcasts that one "
@@ -169,12 +177,16 @@ md += ["### P2, the Arm A half: the committed figures come from a defective roll
        "h = 368\", ledger R-76's \"our own checkpoints barely feel it\", §7.2's sentence (keys `stale_armA_rel_h1`, "
        "`stale_armA_rel_h368`) and the model card's action-convention line all rest on it. The released checkpoint's figures "
        "are unaffected. How Arm A responds to the stale action is unknown.\n"]
-p2 = p2_released and not defect
+p2 = p2_released and fixed
 verdicts["P2"] = p2
 md += [f"**P2: {'PASS' if p2 else 'FAIL'}.** The released checkpoint's half: {'PASS' if p2_released else 'FAIL'} (it matches "
        "Annex 2 E2, and the artifact records that it reproduces `alignment_defect_ci.json` at h = 368 in both arenas to 1e-9). "
-       f"The Arm A half: {'FAIL, the defect above' if defect else 'PASS'}. R0 stops BLOCKED "
-       "(`DECISIONS.md#R0-arm-a-rollout-defect`).\n"]
+       f"The Arm A half: the defect above was found ({'confirmed' if defect else 'not confirmed'}), and R0 stopped BLOCKED "
+       "(`DECISIONS.md#R0-arm-a-rollout-defect`). Under ruling (A), `scripts/alignment_defect_ci.py` now takes a returned "
+       "tensor whole, and `alignment_by_horizon.json` was regenerated. Its new guard `arm_a_offset1_reproduces_mn_compute_matched` "
+       + ("holds at both checkpoints (max |difference| " + ", ".join(f"{k}: {v['max_abs_diff']:.1e}" for k, v in guard.items())
+          + "), so the Arm A half now PASSES" if fixed else "is absent or fails, so the Arm A half FAILS")
+       + ". Ledger S-21 withdraws R-76's Arm A claim, and R-79 re-measures it.\n"]
 
 # ---------------------------------------------------------------- P3 equal compute
 MC = J("results/mn_compute_matched.json")

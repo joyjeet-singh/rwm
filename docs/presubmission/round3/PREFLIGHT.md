@@ -31,38 +31,42 @@ Resolved (interval excludes zero), read from the intervals above: all_ten_n20: h
 
 | checkpoint | h | metric | seed 0 | seed 1 | seed 2 | three-seed mean |
 |---|---:|---|---|---|---|---:|
-| 2,500 | 1 | relative-L1 | -0.21 [-0.88, -0.01] | -0.25 [-1.25, +0.03] | +0.06 [-1.33, +0.42] | -0.13 |
-| 2,500 | 1 | nRMSE | -0.09 [-0.31, -0.01] | -0.16 [-0.46, -0.05] | +0.04 [-0.21, +0.23] | -0.07 |
-| 2,500 | 8 | relative-L1 | -0.18 [-0.94, +0.13] | -0.31 [-1.23, +0.11] | -0.34 [-1.38, +0.16] | -0.28 |
-| 2,500 | 8 | nRMSE | -0.18 [-0.63, +0.07] | -0.30 [-0.83, -0.09] | -0.33 [-0.81, -0.09] | -0.27 |
-| 2,500 | 32 | relative-L1 | +1.00 [+0.32, +1.44] | +0.90 [+0.52, +1.14] | +0.50 [-0.17, +0.70] | +0.80 |
-| 2,500 | 32 | nRMSE | +0.79 [+0.51, +1.12] | +0.83 [+0.49, +1.14] | +0.54 [+0.13, +0.66] | +0.72 |
-| 2,500 | 100 | relative-L1 | +1.12 [+0.61, +1.86] | +0.59 [+0.29, +1.13] | +1.08 [+0.61, +1.98] | +0.93 |
-| 2,500 | 100 | nRMSE | +0.69 [+0.53, +1.05] | +0.31 [+0.21, +0.64] | +0.62 [+0.39, +1.07] | +0.54 |
-| 2,500 | 128 | relative-L1 | +1.07 [+0.55, +1.94] | +0.56 [+0.28, +1.07] | +0.84 [+0.51, +1.44] | +0.82 |
-| 2,500 | 128 | nRMSE | +0.63 [+0.50, +1.08] | +0.29 [+0.20, +0.65] | +0.47 [+0.35, +0.74] | +0.46 |
-| 2,500 | 368 | relative-L1 | +0.28 [+0.09, +0.44] | +0.09 [-0.07, +0.20] | +0.10 [-0.01, +0.25] | +0.16 |
-| 2,500 | 368 | nRMSE | +0.15 [+0.07, +0.26] | +0.02 [-0.05, +0.16] | +0.06 [+0.00, +0.10] | +0.08 |
-| 10,000 | 1 | relative-L1 | -0.33 [-1.76, +0.02] | -0.11 [-1.46, +0.26] | -0.22 [-1.88, +0.26] | -0.22 |
-| 10,000 | 1 | nRMSE | -0.08 [-0.38, +0.00] | -0.08 [-0.79, +0.13] | -0.01 [-0.63, +0.19] | -0.05 |
-| 10,000 | 8 | relative-L1 | -0.21 [-1.83, +0.52] | +0.56 [-0.11, +0.97] | +0.64 [-0.52, +1.45] | +0.33 |
-| 10,000 | 8 | nRMSE | -0.28 [-1.13, +0.03] | +0.17 [-0.10, +0.31] | +0.24 [-0.15, +0.41] | +0.04 |
-| 10,000 | 32 | relative-L1 | +1.04 [+0.25, +1.49] | +0.17 [-0.36, +0.89] | +0.87 [+0.54, +1.08] | +0.69 |
-| 10,000 | 32 | nRMSE | +1.05 [+0.70, +1.35] | +0.17 [-0.61, +0.67] | +0.87 [+0.68, +1.15] | +0.70 |
-| 10,000 | 100 | relative-L1 | +1.13 [+0.71, +1.96] | +0.27 [-0.15, +0.50] | +0.89 [+0.68, +1.31] | +0.76 |
-| 10,000 | 100 | nRMSE | +0.76 [+0.55, +1.42] | +0.16 [-0.38, +0.28] | +0.62 [+0.46, +1.04] | +0.51 |
-| 10,000 | 128 | relative-L1 | +0.92 [+0.61, +1.50] | +0.24 [-0.01, +0.43] | +0.80 [+0.60, +1.28] | +0.65 |
-| 10,000 | 128 | nRMSE | +0.62 [+0.45, +1.06] | +0.14 [-0.24, +0.29] | +0.53 [+0.39, +0.96] | +0.43 |
-| 10,000 | 368 | relative-L1 | +0.22 [+0.13, +0.30] | +0.03 [-0.30, +0.23] | +0.19 [+0.08, +0.29] | +0.15 |
-| 10,000 | 368 | nRMSE | +0.10 [+0.06, +0.19] | +0.06 [-0.21, +0.15] | +0.15 [+0.07, +0.26] | +0.10 |
+| 2,500 | 1 | relative-L1 | +1.92 [-3.60, +21.83] | +1.81 [-2.55, +8.81] | +1.73 [-2.40, +7.71] | +1.82 |
+| 2,500 | 1 | nRMSE | +2.18 [-2.12, +25.23] | -0.51 [-1.82, +10.38] | +0.27 [-1.71, +13.47] | +0.64 |
+| 2,500 | 8 | relative-L1 | +4.53 [-0.65, +30.30] | +2.68 [-1.00, +14.11] | +3.46 [-0.99, +21.27] | +3.56 |
+| 2,500 | 8 | nRMSE | +2.61 [-1.14, +31.80] | +0.57 [-1.32, +14.00] | +0.83 [-1.37, +15.72] | +1.34 |
+| 2,500 | 32 | relative-L1 | +8.48 [+0.15, +42.81] | +5.15 [+0.32, +29.20] | +3.24 [-0.97, +20.48] | +5.62 |
+| 2,500 | 32 | nRMSE | +10.50 [+0.29, +43.00] | +6.26 [+0.41, +27.55] | +4.20 [-1.26, +23.56] | +6.99 |
+| 2,500 | 100 | relative-L1 | +11.75 [+3.71, +35.86] | +5.36 [+2.05, +16.19] | +3.60 [+0.28, +10.92] | +6.90 |
+| 2,500 | 100 | nRMSE | +14.48 [+5.77, +31.79] | +6.87 [+1.50, +15.10] | +5.61 [-0.13, +12.43] | +8.99 |
+| 2,500 | 128 | relative-L1 | +13.33 [+5.09, +36.01] | +6.48 [+2.42, +16.39] | +4.17 [+0.07, +10.94] | +8.00 |
+| 2,500 | 128 | nRMSE | +16.51 [+6.84, +32.98] | +8.33 [+1.38, +16.38] | +6.56 [-1.00, +13.69] | +10.47 |
+| 2,500 | 368 | relative-L1 | +12.27 [+2.66, +34.34] | +5.65 [+1.02, +15.55] | +5.91 [+0.88, +16.13] | +7.94 |
+| 2,500 | 368 | nRMSE | +17.29 [+4.19, +37.81] | +7.19 [+0.78, +19.67] | +8.56 [+1.61, +20.57] | +11.02 |
+| 10,000 | 1 | relative-L1 | +1.90 [-4.95, +42.41] | +1.26 [-2.49, +17.36] | -6.13 [-19.48, +27.39] | -0.99 |
+| 10,000 | 1 | nRMSE | +0.79 [-4.42, +41.32] | -2.81 [-3.68, +12.29] | -4.13 [-18.93, +26.30] | -2.05 |
+| 10,000 | 8 | relative-L1 | +6.14 [-4.09, +81.02] | +3.57 [-2.34, +49.07] | +4.39 [-11.08, +90.73] | +4.70 |
+| 10,000 | 8 | nRMSE | +2.32 [-3.09, +64.35] | +0.93 [-2.63, +30.85] | +3.06 [-5.56, +71.42] | +2.10 |
+| 10,000 | 32 | relative-L1 | +14.08 [-1.92, +105.09] | +11.62 [-1.25, +92.58] | +16.14 [-3.95, +114.75] | +13.94 |
+| 10,000 | 32 | nRMSE | +20.32 [-0.51, +103.12] | +14.50 [-1.96, +81.78] | +28.39 [-1.96, +112.12] | +21.07 |
+| 10,000 | 100 | relative-L1 | +15.89 [+2.61, +68.23] | +16.60 [+2.15, +76.20] | +17.38 [+0.80, +73.33] | +16.62 |
+| 10,000 | 100 | nRMSE | +20.00 [+5.70, +59.79] | +21.58 [+5.27, +66.23] | +27.16 [+6.44, +66.79] | +22.91 |
+| 10,000 | 128 | relative-L1 | +16.76 [+3.06, +66.98] | +18.60 [+3.92, +75.16] | +18.58 [+2.33, +73.22] | +17.98 |
+| 10,000 | 128 | nRMSE | +20.58 [+6.02, +60.29] | +24.39 [+8.24, +67.28] | +27.29 [+7.91, +70.02] | +24.09 |
+| 10,000 | 368 | relative-L1 | +20.99 [+3.95, +72.45] | +23.87 [+3.96, +86.27] | +23.15 [+3.81, +76.69] | +22.67 |
+| 10,000 | 368 | nRMSE | +28.04 [+6.49, +77.45] | +35.08 [+7.66, +88.96] | +33.83 [+8.06, +89.99] | +32.32 |
 
-Annex 1 quotes Arm A at 10,000 as −0.22% at h = 1 and +0.15% at h = 368 (relative-L1, three-seed mean); the artifact gives -0.22% and +0.15%. The largest three-seed mean |change| over both checkpoints, every horizon and both metrics is 0.93%. Arm A has no all-ten-episodes arena in this artifact.
+Annex 1 quotes Arm A at 10,000 as −0.22% at h = 1 and +0.15% at h = 368 (relative-L1, three-seed mean); the artifact gives -0.99% and +22.67%. The largest three-seed mean |change| over both checkpoints, every horizon and both metrics is 32.32%. Arm A has no all-ten-episodes arena in this artifact.
+
+Annex 1's two figures were the void ones (below). Under ruling (A) they are superseded by the corrected artifact, not a difference to resolve: h = 1: Annex 1 -0.22%, artifact -0.99%; h = 368: Annex 1 +0.15%, artifact +22.67%.
 
 Differences from the plan: none.
 
-### P2, the Arm A half: the committed figures come from a defective rollout
+### P2, the Arm A half: the figures first found came from a defective rollout
 
-`scripts/alignment_defect_ci.py:66` unpacks `pred, *_ = model.rollout(...)`. The released checkpoint's `ReferenceRWM.rollout` returns a tuple (`src/score_reference.py:214`), so that takes the prediction. Our models' `RWMEnsemble.rollout` returns the prediction tensor itself (`src/rwm_model.py:250`), shape (n, 400, 45), so the same line takes its first trajectory, shape (400, 45), and numpy broadcasts that one forecast against every trajectory's truth. `scripts/alignment_by_horizon.py` scored Arm A through exactly this path.
+Found at commit `a2724f9`, before the fix; `round3/r0_defect_check.json` is that state's record. The table above shows the artifact as it now stands, after the fix.
+
+`scripts/alignment_defect_ci.py:66` (at `a2724f9`) unpacked `pred, *_ = model.rollout(...)`. The released checkpoint's `ReferenceRWM.rollout` returns a tuple (`src/score_reference.py:214`), so that takes the prediction. Our models' `RWMEnsemble.rollout` returns the prediction tensor itself (`src/rwm_model.py:250`), shape (n, 400, 45), so the same line takes its first trajectory, shape (400, 45), and numpy broadcasts that one forecast against every trajectory's truth. `scripts/alignment_by_horizon.py` scored Arm A through exactly this path.
 
 `docs/presubmission/round3/r0_defect_check.py` (output `round3/r0_defect_check.json`) tests it on the causal pairing only, so it computes no stale-pairing figure and no rule-X2 reading. Arm A seeds 0-2, at 2,500 and 10,000, both arenas, h = 1, 8, 32, 100, three-seed mean relative-L1:
 - through the committed path, the error is 0.917 to 1.396 at every cell, against `mn_compute_matched.json`'s 0.057 to 0.480 (largest difference 1.313); for example 10,000 iterations, held-out pair, h = 1: 0.9365 against 0.1447;
@@ -71,7 +75,7 @@ Differences from the plan: none.
 
 Verdict: **DEFECT CONFIRMED**. Every Arm A figure in `alignment_by_horizon.json` (`arm_a`, both checkpoints, all horizons, both metrics) compares one trajectory's forecast with four trajectories' truths, so three of the four units are unrelated pairs and any effect of the action is diluted by the mismatch. Annex 1's "−0.22% at h = 1 and +0.15% at h = 368", ledger R-76's "our own checkpoints barely feel it", §7.2's sentence (keys `stale_armA_rel_h1`, `stale_armA_rel_h368`) and the model card's action-convention line all rest on it. The released checkpoint's figures are unaffected. How Arm A responds to the stale action is unknown.
 
-**P2: FAIL.** The released checkpoint's half: PASS (it matches Annex 2 E2, and the artifact records that it reproduces `alignment_defect_ci.json` at h = 368 in both arenas to 1e-9). The Arm A half: FAIL, the defect above. R0 stops BLOCKED (`DECISIONS.md#R0-arm-a-rollout-defect`).
+**P2: PASS.** The released checkpoint's half: PASS (it matches Annex 2 E2, and the artifact records that it reproduces `alignment_defect_ci.json` at h = 368 in both arenas to 1e-9). The Arm A half: the defect above was found (confirmed), and R0 stopped BLOCKED (`DECISIONS.md#R0-arm-a-rollout-defect`). Under ruling (A), `scripts/alignment_defect_ci.py` now takes a returned tensor whole, and `alignment_by_horizon.json` was regenerated. Its new guard `arm_a_offset1_reproduces_mn_compute_matched` holds at both checkpoints (max |difference| 2500: 1.1e-08, 10000: 7.2e-09), so the Arm A half now PASSES. Ledger S-21 withdraws R-76's Arm A claim, and R-79 re-measures it.
 
 ## P3 — the equal-compute readings
 
@@ -138,8 +142,8 @@ Annex 2 E4's figures (teacher-forced h = 1: MLP −0.160 [−0.286, −0.002], R
 
 ## P7 — action pairing in code
 
-- `scripts/alignment_by_horizon.py` never names `action_offset` itself. It calls `alignment_defect_ci.arena()` through `at_horizon()` (`scripts/alignment_by_horizon.py:57`): for the released checkpoint at `:95` (held-out pair) and `:96` (all ten episodes), and for Arm A at `:119` (held-out pair only).
-- `alignment_defect_ci.arena()` runs both pairings, `for o in (0, 1)` (`scripts/alignment_defect_ci.py:88`), and `alignment_defect_ci.rollout()` passes the offset to the model, `model.rollout(st, ac, E.START_STEP, action_offset=offset)` (`scripts/alignment_defect_ci.py:66`). This is where the offset is applied, for both models.
+- `scripts/alignment_by_horizon.py` never names `action_offset` itself. It calls `alignment_defect_ci.arena()` through `at_horizon()` (`scripts/alignment_by_horizon.py:62`): for the released checkpoint at `:100` (held-out pair) and `:101` (all ten episodes), and for Arm A at `:124` (held-out pair only).
+- `alignment_defect_ci.arena()` runs both pairings, `for o in (0, 1)` (`scripts/alignment_defect_ci.py:95`), and `alignment_defect_ci.rollout()` passes the offset to the model, `model.rollout(st, ac, E.START_STEP, action_offset=offset)` (`scripts/alignment_defect_ci.py:66`). This is where the offset is applied, for both models.
 - The slicing itself: the released checkpoint's `ReferenceRWM.rollout` (`src/score_reference.py:180`; default offset 0) at `:205` (first forecast step, the whole history window) and `:202` (later steps); Arm A's `RWMEnsemble.rollout` (`src/rwm_model.py:228`; default offset 1) at `:245` and `:242`. Both use the same expressions: the first forecast step i = start_step reads `action[:, i − start_step + offset : i + offset]`, later steps read `action[:, i − 1 + offset : i + offset]`. (R1 decides from these which rows the forecast steps read; not recorded as a finding here.)
 - `scripts/mn_sweep_eval.py` imports cleanly with `scripts/` and `src/` on the path; its in-sample arena builder is `arena(ep, episodes, m_max)` at `scripts/mn_sweep_eval.py:74`.
 
@@ -147,5 +151,5 @@ Annex 2 E4's figures (teacher-forced h = 1: MLP −0.160 [−0.286, −0.002], R
 
 ## Summary
 
-P1: PASS. P2: FAIL. P3: PASS. P4: PASS. P5: PASS. P6: PASS. P7: PASS. (P5 and P6 are records.)
+P1: PASS. P2: PASS. P3: PASS. P4: PASS. P5: PASS. P6: PASS. P7: PASS. (P5 and P6 are records.)
 
