@@ -870,9 +870,7 @@ here survives Holm–Bonferroni in any of the three arenas, and out of sample at
 nothing could, since its smallest attainable P already exceeds the smallest Holm threshold
 (Appendix K).
 
-So this section's claim is: **the magnitude failure is established and large; the ordering points the right way for the epistemic term and the faithful and teacher-forced arms, not for the corrected arm or the released aleatoric head (Appendix S), and is not established at conventional significance once the dependence between dimensions is respected.**
-
-**The failure is specifically magnitude calibration, in both components.**
+So this section's claim is: **the magnitude failure is established and large; the ordering points the right way for the epistemic term and the faithful and teacher-forced arms, not for the corrected arm or the released aleatoric head (Appendix S), and is not established at conventional significance once the dependence between dimensions is respected. The failure is specifically magnitude calibration, in both components.**
 
 **The structural excuse does not survive.** One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
