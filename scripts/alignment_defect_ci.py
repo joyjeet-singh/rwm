@@ -63,7 +63,14 @@ def rollout(model, data, cfg, idx, offset):
                          dtype=torch.float32)
     ac = torch.as_tensor(raw[:, :, R.ACTION_COLS], dtype=torch.float32)
     with torch.no_grad():
-        pred, *_ = model.rollout(st, ac, E.START_STEP, action_offset=offset)
+        out = model.rollout(st, ac, E.START_STEP, action_offset=offset)
+    # The released checkpoint's ReferenceRWM.rollout returns (pred, alea, epis, contacts, terms);
+    # our models' RWMEnsemble.rollout returns pred itself. `pred, *_ = <tensor>` takes the tensor's
+    # FIRST TRAJECTORY, which numpy then broadcasts against every trajectory's truth, and round 2's
+    # N1 scored our Arm A exactly that way (ledger R-79). A tensor is taken whole, and the shape is
+    # asserted so that neither return type can be misread again.
+    pred = out[0] if isinstance(out, tuple) else out
+    assert pred.shape == st.shape, f"rollout returned {tuple(pred.shape)} for states {tuple(st.shape)}"
     return pred.double().numpy(), st.double().numpy()
 
 

@@ -24,6 +24,11 @@ TWO PARTS:
              centre use) and at 10,000 (runs/armA_seed{s}_10k/weights_10000.pt): the same ratio
              on the held-out arena at the same six horizons, per seed with the exact n = 4
              interval, and the 3-seed mean of the per-seed overstatement.
+             ASSERTED (round 3, ledger R-79): the 3-seed mean relative-L1 under the causal
+             pairing equals results/mn_compute_matched.json's three_seed_mean_l1 on the same
+             held-out arena, at every horizon and both checkpoints, to 1e-6. Round 2 had no such
+             check, and alignment_defect_ci.rollout then took only the first trajectory of our
+             models' rollout, so the Arm A figures it wrote were void.
 
 Per-trajectory values are stored for every arena, model and horizon.
 
@@ -123,6 +128,21 @@ def main():
                 for h in HORIZONS}
         arm_a[it] = {"per_seed": per_seed, "three_seed_mean_overstatement_pct": mean}
 
+    # Round 3 (ledger R-79): Arm A under the causal pairing must score what the sweep evaluator
+    # scored on the same trajectories (mn_sweep_eval.score, results/mn_compute_matched.json), or
+    # no Arm A figure is written. Its 2,500 entry uses the 10k runs' 2,500-iteration checkpoints,
+    # byte-identical to the runs ARM_A names (round 3 PREFLIGHT P1).
+    mcm = json.load(open(os.path.join(R.RESULTS, "mn_compute_matched.json")))
+    mcm = mcm["part2_centre_at_more_compute"]["three_seed_mean_l1"]
+    arm_a_check = {}
+    for it in arm_a:
+        worst = max(abs(float(np.mean([arm_a[it]["per_seed"][str(s)][str(h)]["pooled"]["offset1"]["rel_l1"]
+                                       for s in SEEDS])) - mcm[it]["held_out"][str(h)])
+                    for h in HORIZONS)
+        assert worst <= 1e-6, (f"Arm A at {it} under the causal pairing does not reproduce "
+                               f"mn_compute_matched.json (max |difference| {worst:.3e})")
+        arm_a_check[it] = {"max_abs_diff": worst, "tolerance": 1e-6, "reproduced": True}
+
     def summary(rec):
         return {k: {"pct": rec["overstatement_pct"][k],
                     "ci95_pct": rec.get("ci95_pct", {}).get(k)} for k in STATS}
@@ -143,6 +163,7 @@ def main():
            "released": {"summary": {a: {h: summary(released[a][h]) for h in released[a]} for a in released},
                         "full": released,
                         "reproduces_alignment_defect_ci_at_h368": repro},
+           "arm_a_offset1_reproduces_mn_compute_matched": arm_a_check,
            "arm_a": {it: {"summary_three_seed_mean_pct": v["three_seed_mean_overstatement_pct"],
                           "summary_per_seed": {s: {h: summary(v["per_seed"][s][h]) for h in map(str, HORIZONS)}
                                                for s in v["per_seed"]},
