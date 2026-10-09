@@ -126,6 +126,23 @@ ITEMS = {
                   r"\1({{e7_verdict}}: {{e7_verdict_gloss}})"),
                  (r"(The more useful finding is asymmetric.*?so the verdict is )\{\{e7_verdict\}\}\.",
                   r"\1{{e7_verdict}} ({{e7_verdict_gloss}}).")]},
+    # S3: Figure 1 now plots every rule (paper_figures.py), so section 8 states the counts once, from Appendix E's keys,
+    # and section 13 counts the commits the new figure cites, by the M-48 rewrite window the figure records
+    "s3": {"edits": [
+        ("Figure 1 gives the lead time for {{f4_n_rules}} of them and Appendix E for all {{appG_n_rules}}; "
+         "{{f4_n_positive}} of Figure 1's are positive and {{f4_n_negative}} is not. Figure 1 plots the set it was "
+         "drawn over; Appendix E adds every rule since.",
+         "Figure 1 and Appendix E give the lead time for all {{appG_n_rules}}; {{appG_n_positive}} are positive and "
+         "{{appG_n_negative}} is not."),
+        ("so **{{f4_n_commits}} of the commits Figure 1 cites keep their identifiers and two do not** — the two whose "
+         "data post-dates that file. Timestamps, content and ordering are unchanged; only the hashes moved, and Figure 1 "
+         "resolves each rule by its commit subject for that reason.",
+         "so **{{f1_n_kept}} of the {{f1_n_cited}} commits Figure 1 cites keep their identifiers and "
+         "{{f1_n_moved_word}} do not**: the {{f1_n_moved_word}} made between that file's introduction and the purge. "
+         "Timestamps, content and ordering are unchanged; only the hashes moved, and for that reason Figure 1 finds its "
+         "first rules' commits by subject and the later ones by the commit that introduced their ledger heading, never "
+         "by a stored hash alone."),
+    ]},
 }
 
 

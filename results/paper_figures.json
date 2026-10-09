@@ -184,6 +184,276 @@
       "tested_by": "control runs finished 21:37:51"
     }
   },
+  "fig1_bars": [
+    {
+      "id": "M-16",
+      "label": "M-16",
+      "lead_hours": 1.3322222222222222,
+      "tested_by": "first main-run data",
+      "rule_commit": "84ff01b",
+      "data_commit": "f25e656",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-16 annotation",
+      "label": "M-16 annotation",
+      "lead_hours": 4.778888888888889,
+      "tested_by": "all six main runs",
+      "rule_commit": "0fe2bca",
+      "data_commit": "e5aee6f",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-22",
+      "label": "M-22",
+      "lead_hours": 0.08861111111111111,
+      "tested_by": "M-16 re-evaluated",
+      "rule_commit": "0648a32",
+      "data_commit": "d88e9ff",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-23",
+      "label": "M-23",
+      "lead_hours": 0.03638888888888889,
+      "tested_by": "10k runs launched",
+      "rule_commit": "efc35b8",
+      "data_commit": "d9f7bba",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-43",
+      "label": "M-43",
+      "lead_hours": 13.290555555555555,
+      "tested_by": "ens5 result committed",
+      "rule_commit": "b17f1b5",
+      "data_commit": "cdac035",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-44",
+      "label": "M-44",
+      "lead_hours": 6.3741666666666665,
+      "tested_by": "R2 result committed",
+      "rule_commit": "81b49f7",
+      "data_commit": "d88a106",
+      "rewritten_by_purge": [
+        "d88a106"
+      ]
+    },
+    {
+      "id": "M-45",
+      "label": "M-45",
+      "lead_hours": 4.4494444444444445,
+      "tested_by": "A2 result committed",
+      "rule_commit": "81b49f7",
+      "data_commit": "2eccc1f",
+      "rewritten_by_purge": [
+        "2eccc1f"
+      ]
+    },
+    {
+      "id": "M-49",
+      "label": "M-49",
+      "lead_hours": 9.356666666666667,
+      "tested_by": "m49_capacity_matched",
+      "rule_commit": "bd60cc6",
+      "data_commit": "278a1a2",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-50",
+      "label": "M-50",
+      "lead_hours": 0.08833333333333333,
+      "tested_by": "e5_synthetic_sigma",
+      "rule_commit": "ef3575f",
+      "data_commit": "e5f07da",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-51",
+      "label": "M-51",
+      "lead_hours": 0.19666666666666666,
+      "tested_by": "e7_free_baselines",
+      "rule_commit": "e16b4a9",
+      "data_commit": "f93bd7f",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-52",
+      "label": "M-52",
+      "lead_hours": 0.15222222222222223,
+      "tested_by": "e7_free_baselines",
+      "rule_commit": "e5f07da",
+      "data_commit": "f93bd7f",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-62",
+      "label": "M-62",
+      "lead_hours": 5.117222222222222,
+      "tested_by": "m62_episode_clustering",
+      "rule_commit": "c322418",
+      "data_commit": "bdeae94",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-63",
+      "label": "M-63",
+      "lead_hours": 5.117222222222222,
+      "tested_by": "m63_per_dimension_coverage",
+      "rule_commit": "c322418",
+      "data_commit": "bdeae94",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-64",
+      "label": "M-64",
+      "lead_hours": 5.9816666666666665,
+      "tested_by": "m64_short_units",
+      "rule_commit": "c322418",
+      "data_commit": "a4dc10d",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-65",
+      "label": "M-65",
+      "lead_hours": 5.117222222222222,
+      "tested_by": "m65_gaussian_nominal",
+      "rule_commit": "c322418",
+      "data_commit": "bdeae94",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-68",
+      "label": "M-68",
+      "lead_hours": 5.147777777777778,
+      "tested_by": "r2_combined_arm",
+      "rule_commit": "68bb683",
+      "data_commit": "668eb31",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-69",
+      "label": "M-69",
+      "lead_hours": 0.38555555555555554,
+      "tested_by": "task_d3_cross_model",
+      "rule_commit": "fad7db7",
+      "data_commit": "05e9563",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-70",
+      "label": "M-70",
+      "lead_hours": 115.18777777777778,
+      "tested_by": "q3_penalty_reordering",
+      "rule_commit": "6b87e32",
+      "data_commit": "51e9c31",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-74",
+      "label": "M-74",
+      "lead_hours": 29.378611111111113,
+      "tested_by": "mn_sweep_verdict",
+      "rule_commit": "3df0e55",
+      "data_commit": "5d9e28d",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-75",
+      "label": "M-75",
+      "lead_hours": 29.378611111111113,
+      "tested_by": "baselines_verdict",
+      "rule_commit": "3df0e55",
+      "data_commit": "5d9e28d",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-76",
+      "label": "M-76",
+      "lead_hours": 29.378611111111113,
+      "tested_by": "baselines_verdict",
+      "rule_commit": "3df0e55",
+      "data_commit": "5d9e28d",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-80",
+      "label": "M-80",
+      "lead_hours": 0.05555555555555555,
+      "tested_by": "rssm_diagnostics",
+      "rule_commit": "2433f44",
+      "data_commit": "acf5eec",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-84",
+      "label": "M-84",
+      "lead_hours": 0.11666666666666667,
+      "tested_by": "action_sensitivity",
+      "rule_commit": "738bc91",
+      "data_commit": "104a8e6",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "S-12",
+      "label": "S-12 (withdrawn)",
+      "lead_hours": -2.9366666666666665,
+      "tested_by": "control runs finished 21:37:51",
+      "rule_commit": "3ee9d97",
+      "data_commit": "3ee9d97",
+      "rewritten_by_purge": []
+    }
+  ],
+  "fig1_commits": {
+    "cited": [
+      "05e9563",
+      "0648a32",
+      "0fe2bca",
+      "104a8e6",
+      "2433f44",
+      "278a1a2",
+      "2eccc1f",
+      "3df0e55",
+      "3ee9d97",
+      "51e9c31",
+      "5d9e28d",
+      "668eb31",
+      "68bb683",
+      "6b87e32",
+      "738bc91",
+      "81b49f7",
+      "84ff01b",
+      "a4dc10d",
+      "acf5eec",
+      "b17f1b5",
+      "bd60cc6",
+      "bdeae94",
+      "c322418",
+      "cdac035",
+      "d88a106",
+      "d88e9ff",
+      "d9f7bba",
+      "e16b4a9",
+      "e5aee6f",
+      "e5f07da",
+      "ef3575f",
+      "efc35b8",
+      "f25e656",
+      "f93bd7f",
+      "fad7db7"
+    ],
+    "rewritten_by_purge": [
+      "2eccc1f",
+      "d88a106"
+    ],
+    "window_ct": [
+      1787493824,
+      1787915645
+    ],
+    "method": "a cited commit is rewritten if its committer time lies between the rewritten counterpart of the commit that introduced the transcript (M-48: 7859309, M-45's data commit) and the parent of the commit that re-pointed this figure after the purge"
+  },
   "fig5": {
     "summary": {
       "duplicated_minus_clean": {

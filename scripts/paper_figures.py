@@ -426,35 +426,100 @@ def fig4_timeline(rec):
                      "data_side": "results/control_driver.log, parsed; date and UTC "
                                   "offset from the commit that introduced it"})
 
-    fig, ax = plt.subplots(figsize=(7.8, 3.4))
-    labs = [r[0] for r in rows]
-    vals = [r[1] for r in rows]
-    cols = ["#2ca02c" if v > 0 else "#d62728" for v in vals]
-    y = np.arange(len(rows))
-    ax.barh(y, vals, color=cols, height=0.55)
-    ax.axvline(0, color="k", lw=1.2)
-    ax.set_yticks(y); ax.set_yticklabels(labs, fontsize=7.5)
-    ax.invert_yaxis()
-    def fmt(v):
-        # sub-hour leads are real and must not render as "+0.0 h"
-        return f"{v*60:+.0f} min" if abs(v) < 1 else f"{v:+.1f} h"
-    for i, (lab, v, dlab) in enumerate(rows):
-        # A positive bar's label sits just past its tip. A negative bar's tip is on the
-        # LEFT, and its label used to be placed at v + 0.25 like the others -- which put
-        # the text inside its own bar and across the zero line (both branches of the old
-        # offset were +0.25). It now sits just outside the bar on the zero side, the same
-        # 0.25 clear of the bar that every other label keeps, so no label touches a bar.
-        x = v + 0.25 if v > 0 else 0.25
-        ax.text(x, i, f"{fmt(v)}  ({dlab})", va="center", ha="left", fontsize=7)
-    ax.set(xlabel="hours the rule preceded the data it tested  (negative = written afterwards)",
-           title="Pre-registration lead time, from git commit timestamps")
-    ax.set_xlim(min(vals) * 1.25, max(vals) * 1.85)
-    ax.text(0.99, 0.04, "green: rule in git before the data existed\n"
-                        "red: rule written once the answer was known (S-12)",
-            transform=ax.transAxes, ha="right", fontsize=6.5, color="#555555")
+    # The eight lead times above are this figure's own record ("fig4"), which Appendix E reads for the rules it
+    # covers; they are kept, unchanged, below.
     rec["fig4_commits"] = resolved
     rec["fig4"] = {lab.replace("\n", " "): {"lead_hours": v, "tested_by": dlab}
                    for lab, v, dlab in rows}
+
+    # Round 3, R4 (S3, ruling V6): the figure plots EVERY pre-registered rule Appendix E lists
+    # (results/appendix_g_rules.json), not the eight it was first drawn over, plus M-16's annotation, a bar of the
+    # original set that is not a rule of its own. Appendix E's lead time is the one plotted; for the rules the
+    # eight-row record covers it must equal that record's, and for the others it is recomputed here from the same two
+    # commits (the rule's ledger heading, the artifact that discharged it) and must agree.
+    AG = json.load(open(os.path.join(R.RESULTS, "appendix_g_rules.json")))
+    rec_by_lab = {r["rule"]: r for r in resolved}
+
+    def ct(h):
+        return int(subprocess.run(["git", "show", "-s", "--format=%ct", h], capture_output=True, text=True,
+                                  cwd=here).stdout.strip())
+
+    def first_add(path):
+        out = subprocess.run(["git", "log", "--diff-filter=A", "--format=%h", "--abbrev=7", "--", path],
+                             capture_output=True, text=True, cwd=here).stdout.split()
+        return out[-1] if out else None
+
+    # The history rewrite (ledger M-48): every commit from the one that introduced the correspondence transcript to
+    # the force-push got a new identifier. The introducing commit was 7859309 (M-48), M-45's data commit; the commit
+    # that re-pointed this figure after the purge records that it became the commit with that row's data subject, and
+    # the purge's last rewritten commit is that commit's parent. A cited commit inside the window does not keep the
+    # identifier it had when first cited.
+    import make_anon_bundle as _AB
+    assert _AB.PREPURGE_COMMITS[0].startswith("7859309")
+    _repoint = resolve("b89d0cd", "Figure 4 resolves its commits by subject, because two hashes moved")
+    _w0 = ct(rec_by_lab["M-45 within-trajectory control"]["data_commit"])
+    _w1 = ct(_repoint + "^")
+    rewritten = lambda h: _w0 <= ct(h) <= _w1
+
+    bars = []
+    for r in AG["rules"]:
+        lab = next((k for k in rec_by_lab if k.split(" ")[0] == r["id"]), None)
+        if r["id"] == "S-12":
+            lab = "Task 3 duplication rule"
+        if lab is not None:
+            v = next(vv for kk, vv, _ in rows if kk.replace("\n", " ") == lab)
+            assert abs(v - float(r["lead_hours"])) < 1e-9, (r["id"], v, r["lead_hours"])
+            rc, dc = rec_by_lab[lab]["rule_commit"], rec_by_lab[lab]["data_commit"]
+            tested = rec_by_lab[lab]["tested_by"]
+        else:
+            rc, dc = r["rule_commit"], first_add(r["tested_by"])
+            v = (ct(dc) - ct(rc)) / 3600.0
+            assert abs(v - float(r["lead_hours"])) < 1e-9, (r["id"], v, r["lead_hours"])
+            tested = os.path.splitext(os.path.basename(r["tested_by"]))[0]
+        bars.append({"id": r["id"], "label": r["id"] + (" (withdrawn)" if r["id"] == "S-12" else ""),
+                     "lead_hours": v, "tested_by": tested, "rule_commit": rc, "data_commit": dc})
+        if r["id"] == "M-16":                     # the annotation, kept beside its rule
+            a = rec_by_lab["flip pattern interpretation"]
+            av = next(vv for kk, vv, _ in rows if kk.startswith("flip pattern"))
+            bars.append({"id": "M-16 annotation", "label": "M-16 annotation", "lead_hours": av,
+                         "tested_by": a["tested_by"], "rule_commit": a["rule_commit"], "data_commit": a["data_commit"]})
+    assert len(bars) == AG["n_rules"] + 1
+    for b in bars:
+        b["rewritten_by_purge"] = [h for h in (b["rule_commit"], b["data_commit"]) if rewritten(h)]
+    cited = sorted({h for b in bars for h in (b["rule_commit"], b["data_commit"])})
+    moved = sorted({h for b in bars for h in b["rewritten_by_purge"]})
+    rec["fig1_bars"] = bars
+    rec["fig1_commits"] = {"cited": cited, "rewritten_by_purge": moved, "window_ct": [_w0, _w1],
+                           "method": "a cited commit is rewritten if its committer time lies between the rewritten "
+                                     "counterpart of the commit that introduced the transcript (M-48: 7859309, M-45's "
+                                     "data commit) and the parent of the commit that re-pointed this figure after "
+                                     "the purge"}
+
+    fig, ax = plt.subplots(figsize=(7.8, 0.27 * len(bars) + 1.2))
+    vals = [b["lead_hours"] for b in bars]
+    cols = ["#2ca02c" if v > 0 else "#d62728" for v in vals]
+    y = np.arange(len(bars))
+    ax.barh(y, vals, color=cols, height=0.6)
+    ax.axvline(0, color="k", lw=1.2)
+    ax.set_yticks(y); ax.set_yticklabels([b["label"] for b in bars], fontsize=7)
+    ax.invert_yaxis()
+    # Lead times run from minutes to days, so the axis is symmetric-logarithmic beyond one hour; every bar's exact
+    # value is printed beside it.
+    ax.set_xscale("symlog", linthresh=1.0)
+
+    def fmt(v):
+        # sub-hour leads are real and must not render as "+0.0 h"
+        return f"{v*60:+.0f} min" if abs(v) < 1 else f"{v:+.1f} h"
+    for i, b in enumerate(bars):
+        v = b["lead_hours"]
+        x = v * 1.15 + 0.1 if v > 0 else 0.15
+        ax.text(x, i, f"{fmt(v)}  ({b['tested_by']})", va="center", ha="left", fontsize=6.3)
+    ax.set(xlabel="hours the rule preceded the data it tested  (symmetric log scale; negative = written afterwards)",
+           title="Pre-registration lead time for every pre-registered rule, from git")
+    ax.set_xlim(min(vals) * 1.6, max(vals) * 60)
+    ax.text(0.99, 0.02, "green: rule in git before the data existed\n"
+                        "red: rule written once the answer was known (S-12)",
+            transform=ax.transAxes, ha="right", fontsize=6.3, color="#555555")
     fig.tight_layout()
     p = os.path.join(R.FIGURES, "paper_fig4_prereg_timeline.png")
     fig.savefig(p); plt.close(fig)

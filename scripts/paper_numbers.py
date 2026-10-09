@@ -3090,6 +3090,16 @@ def main():
                             | {c["data_commit"] for c in _f4c}),
         "results/paper_figures.json")
     put("f4_n_rules", len(_f4), "results/paper_figures.json")
+    # Round 3, R4 (S3): Figure 1 now plots every rule Appendix E lists (and M-16's annotation); section 13 counts the
+    # commits it cites that kept their identifiers through the M-48 history rewrite, by the figure's own record.
+    _f1 = J("paper_figures.json")
+    _AGr = J("appendix_g_rules.json")
+    assert sorted(b["id"] for b in _f1["fig1_bars"] if b["id"] != "M-16 annotation") == sorted(r["id"] for r in _AGr["rules"])
+    _cit, _mov = _f1["fig1_commits"]["cited"], _f1["fig1_commits"]["rewritten_by_purge"]
+    assert set(_mov) <= set(_cit) and len(_mov) >= 1
+    put("f1_n_cited", len(_cit), "results/paper_figures.json")
+    put("f1_n_kept", len(_cit) - len(_mov), "results/paper_figures.json")
+    put("f1_n_moved_word", WORDS[len(_mov)].lower(), "results/paper_figures.json")
     put("f4_n_positive", sum(1 for v in _f4.values() if v["lead_hours"] > 0),
         "results/paper_figures.json")
     put("f4_n_negative", sum(1 for v in _f4.values() if v["lead_hours"] <= 0),
