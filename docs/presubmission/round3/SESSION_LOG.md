@@ -328,3 +328,54 @@ Body words (round2/t6_words.py): 21,322 (R0: 20,771). R6 moves text.
 Abstract words / numerals (C12.1): 369 / 23.
 Next: R5 (pipeline hygiene H1-H7).
 Decisions for user: none.
+
+## R5 — 2026-10-09 18:31 — Opus 5.5 (the plan assigns Sonnet 5.5) — status: COMPLETE
+Commits: 685696e H1, d769f32 H2, c071101 H3, ad3d16b H4, c88a60d H5, f997626 H6, 1846db3 (build); H7 changed nothing, so it has no commit; then the commit carrying this entry.
+Done:
+- **H1.** All five drivers behind stages 11d–11h now record each training run's exit status and exit 1 after the remaining runs if any failed. `run_nll.sh` gains the existence check the other four have, and honours `SEEDS`. Tested from scratch copies with stub interpreters (`round3/r5_driver_exit_test.sh`, 17 cases): failing training gives exit 1, succeeding gives 0, all artifacts present gives 0 with no training, and `run_nll.sh` skips a present seed. Negative control: the pre-change drivers exit 0 on failing training. `reproduce.sh`'s comment is updated. No training was run.
+- **H2.** `trend.reading` is now built by `trend_reading()` from the table: the ratio's monotonicity, where the gap excludes and spans zero, the training horizon (read from the reference config, h = 8), and where the ratio is below one. The old sentence said h = 8 was where the advantage was not established; the table says h = 8's gap excludes zero and h = 1's spans it. Regenerated through stage 20j2 (about 5 CPU-min). All 299 numeric fields are unchanged to 1e-12 against HEAD (`round3/r5_h2_compare.py`), the report is byte-identical, and only `trend.reading` differs. The docstring's matching clause is corrected.
+- **H3.** New entries, with the corrected ones unedited:
+  - **C-16 corrects C-13.** The 2,500 is Table S9's "max iterations" (source text line 827), not Table S7 (baseline architectures). The same wrong table is named in C-12, O-12 and R-26 (the 2,500), C-08 (the forecast decay, also Table S9) and C-03 (the RWM's single base, which is Table S6). C-16 lists all five.
+  - **D-37 corrects D-12.** The two ranges come from the same per-episode loop on the released checkpoint (20 trajectories per episode, sampling seed 7) at different action alignments:
+    - D-12's 0.601–1.674 is Step 3's (`src/score_reference.py`), at offset 0, the stale pairing.
+    - The paper's 0.562–1.591 is A2's per-episode mean of `step4_0a_results.json`'s `per_episode_e["0"]` and `["1"]`, which A2's comment and `difficulty_source` call seeds. They are the two action offsets.
+    - The paper uses A2's. At the causal offset alone the range is 0.523–1.585. D-12's conclusions hold at either offset (2.78- and 3.03-fold spread; correlation with speed +0.004 and +0.088).
+  - `paper_numbers.py`'s comment, which said D-12 was the range over (seed, episode) cells, now states the definitions. A2's averaging is logged in OUT_OF_SCOPE and not changed (see below).
+  - RESULTS.md C- 15 → 16 and D- 36 → 37; `ledger_check` PASS. Writer: `round3/r5_write_corrections.py`, which reads every figure from its artifact.
+- **H4.** X1's Part C ran from a second queue (`runs/queue_round2.*`) that `s8_runtime.py` never read.
+  - `s8_runtime.py` now writes it under a new `x1_part_c` key. Every existing key of `presubmission_runtime.json` is unchanged (asserted against HEAD).
+  - Overlaps are measured against `docs/presubmission/x1_partc_cpu_jobs.json`: round 2's 13 build-and-check passes in the queue's window, dated by their step logs' modification times (`round3/r5_partc_cpu_jobs.py`). Two aborted one-step passes are left out, as S8 left out jobs under a minute. V1 overlapped all 13 passes and V2 none; between 13:01 and 16:51 there is no pass and no commit.
+  - Appendix B's table gains two rows, PlaNet's KL settings (2.11 h, 1 overlapped) and DreamerV2's layer-normalised cell (2.10 h, 0). One sentence says they are in neither total.
+- **H5.** Stage 20t14 runs `action_sensitivity.py` behind `NEEDS_WEIGHTS`.
+  - Tested from a scratch tree with no `runs/`: it skips when the artifact is present and fails when it is absent. Here it skips because the artifact exists. It was not re-run: that would rewrite the `git_head` M-85 cites.
+  - R2's equal-compute table is built inside `paper_numbers.py`, so it needs no stage.
+  - `pipeline_coverage`: 0 uncovered. Stage 20n8, regenerated: 26 hits, 0 unclassified (only line numbers refreshed).
+- **H6.** What was done for each:
+  - **Manifest.** `build_supplementary.py` now counts zip members and non-header log rows, asserted against `len(files) + 2` and `git rev-list --count HEAD`. Regenerated: 493 files = 493 members, and 453 commits = the rev-list count.
+  - **The nine reports** (the four of `SUBMISSION_CHECKLIST.md:38-39` and R0's five `NEEDS_WEIGHTS` ones) are each read by no script, no artifact under `results/`, and not `paper_numbers.py`, so each is gitignored:
+    - `evidence_summary_report.txt`: gitignored;
+    - `input_set_audit_report.txt`: gitignored;
+    - `insample_framing_report.txt`: gitignored;
+    - `m62_episode_clustering_report.txt`: gitignored;
+    - `m62_65_cache_gate_report.txt`: gitignored;
+    - `m63_per_dimension_coverage_report.txt`: gitignored;
+    - `m65_gaussian_nominal_report.txt`: gitignored;
+    - `m64_free_gate_report.txt`: gitignored;
+    - `m64_short_units_report.txt`: gitignored.
+  - Both bundlers assert that no staged file is ignored, so both now exclude the nine through one list (`make_anon_bundle.UNTRACKED_REPORTS`, which `build_supplementary.py` reuses), and `collect()` asserts `.gitignore` covers it. A sweep of all 59 `REPORT=` names in `reproduce.sh` finds no other report that is neither committed nor ignored.
+- **H7.** `make_anon_bundle.py` at HEAD `f997626` passed with exit 0. The probe was detected (9 hits), including the planted full commit hash (the assertion on `DETECT[-1]`). 517 files staged, 0 residual hits. `results/anon_bundle.json` and `docs/COMMIT_LABEL_MAP.json` were restored with `git checkout`.
+Build/gates: pass.
+- H4's first cycle differed only in `docs/BUILD_CHECKS.md` (the new numerals' build-order lag); its second cycle and the closing cycle are byte-identical. 65/65 claims and 65/65 caught; xref 0 suspect; scope 0 unclassified; typed numerals clean; 61 pages.
+- Stages 21a and 21b were re-run with no change.
+- `part_f_gate` was run by hand: 6/7. Check 4b now fails only on `supplementary_anon.zip`, which is from 4 Oct; `supplementary.zip`, rebuilt in H6, passes. R8 rebuilds both.
+Paper numbers changed: rt_pre_table (two rows, `results/presubmission_runtime.json`); n_entries 272 → 274 and ledger_kb 590 → 593 (C-16, D-37); tn_typed 906 → 907.
+New keys: rt_x1c_runs, rt_x1c_hours, rt_x1c_overlapped (`results/presubmission_runtime.json`).
+Re-anchored checks: none.
+CPU jobs over 1 min: H2's regeneration, stage 20j2 (about 5 CPU-min); `build_supplementary.py` (about 3 min); `make_anon_bundle.py` (about 2 min); three build-and-gate cycles (about 4 min each); `part_f_gate` (about 2 min).
+Body words (round2/t6_words.py): 21,322 (R0: 20,771). Unchanged: H4's sentence is in Appendix B.
+Abstract words / numerals (C12.1): 369 / 23.
+Next:
+- R6 (length and front matter).
+- For R8: `docs/SUBMISSION_CHECKLIST.md`'s known items on the manifest's off-by-one and the four unignored reports (lines 34-40) are now resolved, and its refresh is R8's.
+- H1's commit `685696e` has the digits-plus-`e` shape. It is not a pushed HEAD, and the self-test plants full hashes.
+Decisions for user: none required by this session. OUT_OF_SCOPE's R5 line raises one for later: §6.7 partials out per-episode difficulty averaged over the stale and causal action offsets. Using the causal offset alone would change §6.7's figures.
