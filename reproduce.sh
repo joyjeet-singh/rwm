@@ -463,6 +463,11 @@ stage 20t12 "N3 part 4 — training-loss slopes at the end of every run" "5 s" \
 # (stage 11j). --part ab rewrites the artifact and --part c adds to it, so they run in order.
 stage 20t13 "X1 — the RSSM diagnostic, Parts A to C (M-81, M-83)" "3 min" \
       results/rssm_diagnostics.json NEEDS_WEIGHTS bash -c "$PY scripts/rssm_diagnostics.py --part ab && $PY scripts/rssm_diagnostics.py --part c"
+# Rule X2 (M-84, discharged by M-85): inference on the 10,000-iteration runs' checkpoints and the
+# released one. Round 3, R5 (H5): the paper reads its artifact, and pipeline_coverage listed it as
+# written by no stage. The script refuses to run unless its SHA-256 is the one M-84 registered.
+stage 20t14 "X2 — do our models condition their forecasts on the action? (M-84, M-85)" "11 min" \
+      results/action_sensitivity.json NEEDS_WEIGHTS $PY scripts/action_sensitivity.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them

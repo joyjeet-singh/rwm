@@ -1,6 +1,6 @@
 {
-  "n_artifacts": 82,
-  "n_paper_keys": 2273,
+  "n_artifacts": 83,
+  "n_paper_keys": 2360,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -52,7 +52,7 @@
     },
     {
       "artifact": "a1_ab_by_horizon.json",
-      "n_paper_keys": 122,
+      "n_paper_keys": 128,
       "writers": [
         "a1_ab_by_horizon"
       ],
@@ -137,6 +137,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "mn_compute_matched.json",
+      "n_paper_keys": 35,
+      "writers": [
+        "mn_compute_matched"
+      ],
+      "invoked_writers": [
+        "mn_compute_matched"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task_d3_perhorizon.json",
       "n_paper_keys": 35,
       "writers": [
@@ -158,6 +170,19 @@
       ],
       "invoked_writers": [
         "pooled_nrmse_rescore"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "original_paper_figures.json",
+      "n_paper_keys": 30,
+      "writers": [
+        "original_paper_figures",
+        "verify_original_quotes"
+      ],
+      "invoked_writers": [
+        "original_paper_figures"
       ],
       "covered": true,
       "exempt_reason": null
@@ -204,26 +229,37 @@
       "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
     },
     {
-      "artifact": "mn_compute_matched.json",
+      "artifact": "alignment_by_horizon.json",
       "n_paper_keys": 24,
       "writers": [
-        "mn_compute_matched"
+        "alignment_by_horizon"
       ],
       "invoked_writers": [
-        "mn_compute_matched"
+        "alignment_by_horizon"
       ],
       "covered": true,
       "exempt_reason": null
     },
     {
-      "artifact": "original_paper_figures.json",
+      "artifact": "action_sensitivity.json",
       "n_paper_keys": 24,
       "writers": [
-        "original_paper_figures",
-        "verify_original_quotes"
+        "action_sensitivity"
       ],
       "invoked_writers": [
-        "original_paper_figures"
+        "action_sensitivity"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "e7_free_baselines.json",
+      "n_paper_keys": 23,
+      "writers": [
+        "e7_free_baselines"
+      ],
+      "invoked_writers": [
+        "e7_free_baselines"
       ],
       "covered": true,
       "exempt_reason": null
@@ -262,18 +298,6 @@
       ],
       "invoked_writers": [
         "e5_synthetic_sigma"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "e7_free_baselines.json",
-      "n_paper_keys": 22,
-      "writers": [
-        "e7_free_baselines"
-      ],
-      "invoked_writers": [
-        "e7_free_baselines"
       ],
       "covered": true,
       "exempt_reason": null
@@ -319,6 +343,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "m64_short_units.json",
+      "n_paper_keys": 20,
+      "writers": [
+        "m64_short_units"
+      ],
+      "invoked_writers": [
+        "m64_short_units"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task3_three_way.json",
       "n_paper_keys": 20,
       "writers": [
@@ -355,18 +391,6 @@
       "exempt_reason": null
     },
     {
-      "artifact": "m64_short_units.json",
-      "n_paper_keys": 18,
-      "writers": [
-        "m64_short_units"
-      ],
-      "invoked_writers": [
-        "m64_short_units"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
       "artifact": "v1_ensemble_topology.json",
       "n_paper_keys": 18,
       "writers": [
@@ -374,6 +398,18 @@
       ],
       "invoked_writers": [
         "v1_ensemble_topology"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "pooled_nrmse_alongside.json",
+      "n_paper_keys": 17,
+      "writers": [
+        "pooled_nrmse_rescore"
+      ],
+      "invoked_writers": [
+        "pooled_nrmse_rescore"
       ],
       "covered": true,
       "exempt_reason": null
@@ -429,6 +465,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "presubmission_runtime.json",
+      "n_paper_keys": 14,
+      "writers": [
+        "s8_runtime"
+      ],
+      "invoked_writers": [
+        "s8_runtime"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "rssm_diagnostics.json",
       "n_paper_keys": 13,
       "writers": [
@@ -448,6 +496,22 @@
       ],
       "invoked_writers": [
         "task2_sigma_profile"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "paper_figures.json",
+      "n_paper_keys": 12,
+      "writers": [
+        "check_comparative_claims",
+        "paper_figures",
+        "paper_numbers"
+      ],
+      "invoked_writers": [
+        "check_comparative_claims",
+        "paper_figures",
+        "paper_numbers"
       ],
       "covered": true,
       "exempt_reason": null
@@ -474,18 +538,6 @@
       ],
       "invoked_writers": [
         "v3_metric_definitions"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "presubmission_runtime.json",
-      "n_paper_keys": 11,
-      "writers": [
-        "s8_runtime"
-      ],
-      "invoked_writers": [
-        "s8_runtime"
       ],
       "covered": true,
       "exempt_reason": null
@@ -581,22 +633,6 @@
       "exempt_reason": null
     },
     {
-      "artifact": "paper_figures.json",
-      "n_paper_keys": 9,
-      "writers": [
-        "check_comparative_claims",
-        "paper_figures",
-        "paper_numbers"
-      ],
-      "invoked_writers": [
-        "check_comparative_claims",
-        "paper_figures",
-        "paper_numbers"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
       "artifact": "p1_power_check.json",
       "n_paper_keys": 9,
       "writers": [
@@ -628,6 +664,18 @@
       ],
       "invoked_writers": [
         "task_c2_data_budget"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "q1_pets_descendants.json",
+      "n_paper_keys": 8,
+      "writers": [
+        "q1_pets_descendants"
+      ],
+      "invoked_writers": [
+        "q1_pets_descendants"
       ],
       "covered": true,
       "exempt_reason": null
@@ -692,30 +740,6 @@
       ],
       "invoked_writers": [
         "m62_episode_clustering"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "q1_pets_descendants.json",
-      "n_paper_keys": 7,
-      "writers": [
-        "q1_pets_descendants"
-      ],
-      "invoked_writers": [
-        "q1_pets_descendants"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "alignment_by_horizon.json",
-      "n_paper_keys": 6,
-      "writers": [
-        "alignment_by_horizon"
-      ],
-      "invoked_writers": [
-        "alignment_by_horizon"
       ],
       "covered": true,
       "exempt_reason": null
@@ -802,18 +826,6 @@
       "invoked_writers": [
         "p2_capacity_power",
         "r2_independent_ensemble"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "pooled_nrmse_alongside.json",
-      "n_paper_keys": 5,
-      "writers": [
-        "pooled_nrmse_rescore"
-      ],
-      "invoked_writers": [
-        "pooled_nrmse_rescore"
       ],
       "covered": true,
       "exempt_reason": null
