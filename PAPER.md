@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1286 values substituted from 97 artifacts. -->
+     1329 values substituted from 98 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -19,11 +19,11 @@ world-model data, one robot, gait and terrain, and 4 independent held-out trajec
 Ensemble disagreement, the method's reward penalty, correlates +0.605 with
 realised error (+0.419 with rollout and depth held fixed), yet on the checkpoint's training data is 8.3× smaller than that error at one step and
 33.4× at the method's 100-step horizon. A free signal, the model's predicted step size,
-ranks error nearly as well (+0.4697; margin unresolved). The members share 89.15% of their parameters; at 100 steps, independent models are 2.03× better calibrated than our shared-trunk ones, still 5.2× overconfident. The implemented loss provably drives the per-member σ the method discards to zero, as data
+ranks error nearly as well (+0.470; margin unresolved). The members share 89.15% of their parameters; at 100 steps, independent models are 2.03× better calibrated than our shared-trunk ones, still 5.2× overconfident. The implemented loss provably drives the per-member σ the method discards to zero, as data
 with known noise confirm. A per-horizon rescaling brings the released checkpoint's
 coverage within 10 points of nominal on its training episodes (no cell resolvable), and
 only 17 of 36 disagreement cells on episodes our ensembles never saw:
-a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action, inflating error mainly at short horizons; at the longest the cost is small and not consistent in sign. We train no policy, so we bound what the uncertainty reports, not what its
+a recipe to refit, not a demonstrated fix. Separately, the released evaluation pairs each prediction with the previous step's action; over all ten episodes this raises the checkpoint's short-horizon error, and from 100 steps the change is unresolved. We train no policy, so we bound what the uncertainty reports, not what its
 miscalibration costs.
 
 ---
@@ -85,14 +85,7 @@ a practitioner can use without reading the rest.
   where a global one does not, though no single cell is resolvable and the cells are unseen only by
   the multiplier, since the checkpoint trained on both episodes (§6.7); on Arm A, which never saw them, its own multipliers manage
   17 of 36 disagreement cells.
-- **The released evaluation is misaligned by one step; the cost is concentrated at short horizons, and at
-  h = 368 it is small and not consistent in sign.** Evaluation feeds the action from *t−1* where
-  training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On
-  the held-out pair's 4 independent trajectories, which this checkpoint trained on, the stale
-  action raises its relative-L1 error by
-  34.2% [10.6, 75.0] at h = 1, and at h = 368 by 7.9% [3.1, 13.0] on
-  relative-L1 and 6.6% [1.0, 8.0] in nRMSE; over all ten episodes the sign at h = 368
-  reverses (§7.2).
+- **The released evaluation is misaligned by one step; over all ten episodes it raises the checkpoint's error up to h = 32, and from h = 100 the change is not resolved.** Evaluation feeds the action from *t−1* where training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On all ten episodes' 20 independent trajectories, all of them training data for this checkpoint, the stale action raises its relative-L1 error by 55.0% [26.3, 92.7] at h = 1 and 37.4% [21.3, 65.4] at h = 32, and changes it by 8.2% [-10.4, 24.9] at h = 100 and -4.6% [-13.4, 3.2] at h = 368; on the held-out pair's 4 it raises it at every horizon reported, by 7.9% [3.1, 13.0] at h = 368 (§7.2).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise, and losses and gradients match to 0.000e+00 across 7 loss
   terms and 106 parameter tensors, before any training (Appendix A).
@@ -313,9 +306,7 @@ is about reproducing the upstream's comparison and that is the upstream's metric
 claims (§6.2) are the overconfidence factor and coverage, because neither error metric involves σ.
 The ranking claims (§6.6) are Pearson correlations between the applied scalar penalty and total
 absolute error, because a ranking claim is about order rather than scale. Every headline number in
-the abstract names its metric. §7.2's alignment defect is given in both metrics side by side at h = 368, on the same
-4 independent trajectories: 7.9% [3.1, 13.0] on relative-L1 and 6.6%
-[1.0, 8.0] in nRMSE; its larger cost at short horizons is given on relative-L1, at h = 1.
+the abstract names its metric. §7.2's alignment defect is given in both metrics, over all ten episodes and on the held-out pair. Over all ten episodes the two metrics agree that the stale action raises error at h = 8 and 32 and that from h = 100 the change is not resolved, and they differ at h = 1, where relative-L1 resolves the rise and nRMSE does not.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,100,\,128,\,368\}$.
 Two of those are load-bearing and the rest are landmarks. **h = 100** is the method's
@@ -350,7 +341,7 @@ from, so no arena label, sample size or checkpoint in it is typed by hand.
 | An ensemble that shares no trunk is better calibrated than the released topology (§6.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |
 | The same contrast at matched capacity (§11) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED — favours the matched ensemble by less than the MDE | could not at this n |
 | Independence and the corrected objective together improve on the released topology (§6.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |
-| The released evaluation pairs states and actions one step stale and overstates its own model's error (§7.2) | held-out pair (4) | released | yes | defect confirmed in the code; its cost is concentrated at short horizons, and at h = 368 is small and not consistent in sign | not applicable |
+| The released evaluation pairs states and actions one step stale (§7.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |
 
 ---
 
@@ -1182,24 +1173,7 @@ so those zeros mark the absence of a producing action — the reset produced tha
 step. The training path pairs states and actions index-for-index, which is causally correct; the
 evaluation path feeds the action from *t−1* to predict state *t*, stale by one step.
 
-What the stale pairing costs is concentrated at short horizons; at h = 368 it is small, and its
-sign is not consistent. On the held-out pair's
-4 independent trajectories it overstates the released checkpoint's error at
-h = 368 by **7.9% [3.1, 13.0] on relative-L1** and **6.6%
-[1.0, 8.0] in nRMSE** (each a 95% interval from a cluster bootstrap over whole trajectories, both pairings
-inside each draw; `results/alignment_defect_ci.json`). Shifting the evaluation loop's two action
-slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness
-does this with `action_offset = 1` (`src/score_reference.py:180-190`). The four per-trajectory values are +0.8%, +9.8%, +14.8%, +6.5%
-on relative-L1 and +2.4%, +5.8%, +8.3%, -0.3% in nRMSE. Over all ten episodes, 20 independent
-trajectories, the sign reverses: -4.6% [-13.4, 3.2] on relative-L1 and -2.1%
-[-10.0, 3.9] in nRMSE, with single trajectories from -47.4% to +35.2%.
-Every arena here is in-sample for this checkpoint, which trained on all ten episodes. One step ahead, where a
-stale action should matter most, it changes the checkpoint's relative-L1 error by 34.2%
-[10.6, 75.0] on the held-out pair's 4 trajectories, and by 22.5% [6.3, 41.7]
-at h = 100, the method's own horizon (`results/alignment_by_horizon.json`). Our own Arm A
-checkpoints at 10,000 iterations, trained under the causal pairing, change by -0.99%
-at h = 1 and +22.67% at h = 368 when fed the stale one (three-seed mean,
-relative-L1, held-out pair).
+What the stale pairing costs depends on the horizon. All ten episodes are this checkpoint's training data, so the held-out pair is not more honest here, only smaller, and the larger arena leads. Over all ten episodes' 20 independent trajectories the stale action raises the released checkpoint's relative-L1 error by 55.0% [26.3, 92.7] at h = 1, 54.4% [37.5, 82.3] at h = 8 and 37.4% [21.3, 65.4] at h = 32, and from h = 100 the change is not resolved: 8.2% [-10.4, 24.9] there and -4.6% [-13.4, 3.2] at h = 368, where single trajectories run from -47.4% to +35.2%. In nRMSE the rise is resolved at h = 8 and 32 (31.5% [24.7, 68.2] and 17.4% [7.7, 47.4]) but not at h = 1 (7.4% [-14.8, 87.8]), and from h = 100 it is not resolved either (7.9% [-18.9, 32.9] there, -2.1% [-10.0, 3.9] at h = 368). Each is a 95% interval from a cluster bootstrap over whole trajectories, both pairings inside each draw (`results/alignment_by_horizon.json`, `results/alignment_defect_ci.json`). On the held-out pair's 4 independent trajectories the stale action raises the error at every horizon reported: by 34.2% [10.6, 75.0] at h = 1, by 22.5% [6.3, 41.7] at h = 100, where the larger arena resolves no change, and at h = 368 by 7.9% [3.1, 13.0] on relative-L1 and 6.6% [1.0, 8.0] in nRMSE, with per-trajectory values +0.8%, +9.8%, +14.8%, +6.5% and +2.4%, +5.8%, +8.3%, -0.3%. Shifting the evaluation loop's two action slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness does this with `action_offset = 1` (`src/score_reference.py:180-190`). Our own Arm A checkpoints at 10,000 iterations, trained under the causal pairing, change by -0.99% at h = 1 and +22.67% at h = 368 when fed the stale one (three-seed mean, relative-L1, held-out pair; ledger R-79, which replaces R-76's void figures). They respond to the action. Given another trajectory's actions, their error at h = 8 on their 16 in-sample trajectories rises by +676.3% [+454.8, +1060.0], and at 2,500 iterations by +227.8% [+131.6, +398.2], so rule X2, committed before its readings existed (ledger M-84), returns **RESPONDS TO THE ACTION** at both checkpoints (Appendix V). On those trajectories the stale action itself raises their error at h = 1 by +124.6% [+75.8, +201.9]; a one-step shift moves the action by 0.32 of its spread there, and a swap by 1.44.
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
@@ -1372,7 +1346,7 @@ At h = 100, the horizon the method's own imagination rollouts run to, the aleato
 
 The ranking use the follow-up claims survives a real test. On the released checkpoint, ensemble disagreement beats the forecast step index at every horizon and, with both the rollout and the depth held constant, still correlates
 +0.419 [+0.318, +0.576] with realised error (§6.6), though a free subtraction, the model's own
-predicted step size, ranks error nearly as well, by a margin this sample cannot resolve
+predicted step size, ranks error nearly as well, +0.470 against disagreement's +0.605, by a margin this sample cannot resolve
 (SURVIVES entry-res ONLY). The scale may be repairable per
 horizon on the released checkpoint, but on a model that never saw the test episodes the evidence is
 mixed (§6.7), and per dimension no ordering reaches significance after multiplicity correction once the
@@ -1763,6 +1737,7 @@ released checkpoint.
 | The A/B relative-L1 gap at h = 368 (teacher forcing's error minus autoregressive training's, over 2 independent trajectories per episode) is positive on all ten episodes, from +0.73 up; episode 1, one of the held-out pair, gives +6.97, 2.5× the next largest, so the pair's +3.98 is 3.0× the other eight episodes' +1.33 | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
 | Per state dimension, over the whole 368-step forecast, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = 368 (R-45). One seed (seed 1, §11) |
 | Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair +3.33 to +1.20, in-sample +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, §11) |
+| Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena rises by +227.8% at 2,500 iterations and +676.3% at 10,000 (rule X2, pre-registered: RESPONDS TO THE ACTION) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though no policy is trained here (§7.2, Appendix V) |
 
 ---
 
@@ -2419,5 +2394,111 @@ all 256 ordered resamples on the held-out pair, 20,000 Monte Carlo resamples (se
 configuration, so every reading here is signed as in §5.2's table; bold where the interval excludes zero. Cost per
 iteration is steady training time per iteration, timed
 without contention; the compute ratio is the centre's total training computation over the configuration's.
+
+## Appendix V — rule X2: whether our models respond to the action they are given
+
+Rule X2 was committed and pushed before any of its readings existed (ledger M-84; Appendix E gives its lead time) and
+is discharged in M-85. It is exploratory and re-opens no rule. It asks whether our trained models condition their
+forecasts on the action they are given. Only the actions the forecast steps read are changed, so the history and the
+recurrent state that meets the first forecast action are untouched. E is the change in relative-L1 error, cumulative
+over forecast steps 1..h, against the true actions: the ratio err(I) / err(true), less one, in percent; for our arms, the mean over
+three seeds of each seed's E. Its 95% interval resamples whole trajectories, one resample for all seeds and both
+interventions in each draw: exact over all 256 ordered resamples on the held-out pair, 20,000 Monte Carlo resamples (seed 0) otherwise. The
+interventions are the stale action (the released evaluation's offset), another trajectory's actions (a swap, each
+trajectory taking the next one's), each action dimension's mean over the model's training rows, and the true actions
+plus Gaussian noise at k times each dimension's training standard deviation (eight draws). **The readings** are Arm
+A's, under the swap at h = 8 on its in-sample arena: **RESPONDS TO THE ACTION** at 2,500 iterations
+(+227.8% [+131.6, +398.2]) and at 10,000 (+676.3% [+454.8, +1060.0]). Arm B and the
+released checkpoint get the same statistic, alongside and not as readings.
+
+| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = 100 |
+|---|---|---|---|---|---|
+| Arm A, 2,500 | stale action | +27.8 [+15.6, +49.4] | +31.5 [+19.2, +53.0] | +53.8 [+34.6, +83.5] | +48.7 [+34.8, +65.7] |
+| Arm A, 2,500 | another trajectory's actions | +73.2 [+33.7, +162.7] | **+227.8 [+131.6, +398.2]** | +376.0 [+248.7, +578.8] | +349.3 [+264.7, +454.0] |
+| Arm A, 2,500 | training mean | +49.6 [+25.5, +101.3] | +169.5 [+104.6, +278.0] | +309.6 [+215.5, +450.5] | +300.5 [+234.8, +380.6] |
+| Arm A, 2,500 | noise, k = 0.1 | +0.5 [+0.2, +1.1] | +0.6 [+0.4, +1.1] | +1.3 [+0.7, +2.2] | +1.3 [+0.8, +1.8] |
+| Arm A, 2,500 | noise, k = 0.5 | +8.2 [+3.9, +17.9] | +12.3 [+7.1, +21.6] | +24.7 [+14.4, +41.4] | +23.6 [+16.6, +32.3] |
+| Arm A, 10,000 | stale action | +124.6 [+75.8, +201.9] | +161.8 [+121.3, +231.1] | +205.9 [+156.7, +275.9] | +209.3 [+167.3, +257.6] |
+| Arm A, 10,000 | another trajectory's actions | +278.9 [+145.8, +548.3] | **+676.3 [+454.8, +1060.0]** | +986.6 [+723.5, +1381.1] | +1081.0 [+896.2, +1301.0] |
+| Arm A, 10,000 | training mean | +207.1 [+114.5, +385.7] | +531.7 [+380.0, +781.9] | +841.6 [+657.6, +1100.7] | +899.9 [+761.2, +1058.4] |
+| Arm A, 10,000 | noise, k = 0.1 | +3.9 [+1.7, +8.6] | +6.0 [+3.3, +10.5] | +10.4 [+6.6, +16.1] | +11.4 [+8.6, +14.8] |
+| Arm A, 10,000 | noise, k = 0.5 | +53.3 [+27.2, +106.9] | +74.8 [+47.5, +122.0] | +126.3 [+87.8, +181.8] | +141.2 [+115.1, +172.0] |
+| Arm B, 2,500 (alongside) | stale action | +18.7 [+8.9, +36.1] | +15.9 [+7.9, +29.5] | +20.3 [+10.3, +36.8] | +9.3 [+5.1, +14.9] |
+| Arm B, 2,500 (alongside) | another trajectory's actions | +63.6 [+31.1, +131.4] | +128.8 [+67.5, +241.8] | +173.4 [+101.6, +289.0] | +111.0 [+78.3, +155.4] |
+| Arm B, 2,500 (alongside) | training mean | +41.4 [+22.7, +77.7] | +94.7 [+54.1, +164.4] | +145.9 [+89.1, +233.8] | +149.3 [+113.0, +195.4] |
+| Arm B, 2,500 (alongside) | noise, k = 0.1 | +0.4 [+0.1, +0.8] | +0.3 [+0.1, +0.6] | +0.5 [+0.3, +1.0] | +0.4 [-0.2, +1.2] |
+| Arm B, 2,500 (alongside) | noise, k = 0.5 | +7.2 [+3.7, +14.5] | +5.9 [+3.2, +11.4] | +9.8 [+5.2, +17.7] | +7.6 [+4.5, +11.5] |
+| Arm B, 10,000 (alongside) | stale action | +75.1 [+44.2, +118.9] | +68.6 [+45.9, +105.2] | +60.0 [+39.9, +98.7] | +32.5 [+20.1, +50.3] |
+| Arm B, 10,000 (alongside) | another trajectory's actions | +239.5 [+133.3, +439.8] | +358.2 [+220.9, +618.1] | +319.0 [+189.0, +556.8] | +218.4 [+154.0, +311.4] |
+| Arm B, 10,000 (alongside) | training mean | +161.1 [+99.6, +272.2] | +295.7 [+193.3, +477.5] | +290.9 [+178.3, +485.9] | +242.2 [+172.3, +338.6] |
+| Arm B, 10,000 (alongside) | noise, k = 0.1 | +2.6 [+1.3, +4.9] | +2.1 [+1.0, +4.3] | +2.5 [+1.1, +5.2] | +2.3 [+0.1, +4.7] |
+| Arm B, 10,000 (alongside) | noise, k = 0.5 | +37.3 [+20.3, +69.3] | +30.8 [+18.0, +55.9] | +36.9 [+19.7, +69.5] | +34.7 [+21.4, +54.5] |
+| released checkpoint (alongside) | stale action | +55.0 [+26.3, +92.7] | +54.4 [+37.5, +82.3] | +37.4 [+21.3, +65.4] | +8.2 [-10.4, +24.9] |
+| released checkpoint (alongside) | another trajectory's actions | +515.3 [+295.2, +883.1] | +500.9 [+314.6, +824.2] | +363.5 [+219.0, +607.8] | +111.0 [+59.4, +192.7] |
+| released checkpoint (alongside) | training mean | +296.3 [+176.8, +487.4] | +334.9 [+215.9, +538.9] | +267.3 [+168.0, +436.2] | +73.1 [+29.7, +141.7] |
+| released checkpoint (alongside) | noise, k = 0.1 | +15.0 [+7.7, +27.1] | +14.7 [+8.0, +26.5] | +10.2 [+5.5, +18.2] | +2.6 [+0.5, +5.9] |
+| released checkpoint (alongside) | noise, k = 0.5 | +143.0 [+80.7, +245.2] | +147.1 [+86.3, +251.7] | +109.9 [+61.2, +193.0] | +22.8 [+3.0, +51.8] |
+
+**Arena: each model's own training data. For Arm A and Arm B, the in-sample arena: the training episodes'
+16 non-overlapping 400-step trajectories, n_independent = 16. For the released checkpoint,
+all ten episodes: 20 trajectories, n_independent = 20. Checkpoints: Arm A and Arm B at
+2,500 and 10,000 iterations, three seeds each; the released checkpoint.** Each cell is E in percent
+with its 95% interval; bold, the two readings. Arm B and the released checkpoint are alongside, not readings.
+
+| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = 100 |
+|---|---|---|---|---|---|
+| Arm A, 2,500 | stale action | +1.8 [-1.6, +11.6] | +3.6 [-0.6, +21.9] | +5.6 [-0.2, +30.8] | +6.9 [+2.6, +20.0] |
+| Arm A, 2,500 | another trajectory's actions | +63.3 [+43.4, +125.0] | +114.3 [+54.8, +351.6] | +141.9 [+59.0, +348.3] | +154.5 [+114.0, +265.0] |
+| Arm A, 2,500 | training mean | +44.4 [+36.6, +67.3] | +70.3 [+24.4, +208.9] | +88.5 [+31.5, +267.3] | +99.5 [+60.7, +218.1] |
+| Arm A, 2,500 | noise, k = 0.1 | +0.6 [-0.2, +1.5] | +0.6 [+0.3, +1.5] | +0.7 [+0.2, +1.9] | +0.4 [+0.1, +1.0] |
+| Arm A, 2,500 | noise, k = 0.5 | +9.3 [+5.3, +27.9] | +8.9 [+4.4, +28.3] | +11.5 [+5.1, +27.7] | +9.8 [+7.2, +17.6] |
+| Arm A, 10,000 | stale action | -1.0 [-6.1, +27.7] | +4.7 [-5.0, +73.6] | +13.9 [-2.4, +104.1] | +16.6 [+1.9, +72.6] |
+| Arm A, 10,000 | another trajectory's actions | +135.5 [+91.3, +448.8] | +179.4 [+78.7, +729.4] | +227.0 [+104.9, +660.2] | +242.7 [+176.8, +494.7] |
+| Arm A, 10,000 | training mean | +82.4 [+57.0, +264.6] | +115.7 [+39.5, +459.8] | +152.0 [+63.9, +537.0] | +151.9 [+83.7, +411.1] |
+| Arm A, 10,000 | noise, k = 0.1 | +2.0 [+0.7, +10.2] | +1.1 [+0.2, +6.4] | +2.1 [+0.9, +6.1] | +1.9 [+1.2, +4.5] |
+| Arm A, 10,000 | noise, k = 0.5 | +25.6 [+9.1, +121.4] | +22.6 [+9.5, +93.3] | +35.1 [+15.8, +91.3] | +29.2 [+20.1, +63.9] |
+| Arm B, 2,500 (alongside) | stale action | +1.1 [-0.8, +8.3] | +0.3 [-0.8, +4.5] | +3.4 [+0.4, +14.6] | +0.7 [-1.2, +5.4] |
+| Arm B, 2,500 (alongside) | another trajectory's actions | +67.4 [+30.6, +124.8] | +77.3 [+41.9, +187.0] | +64.6 [+31.4, +140.4] | +43.2 [+20.6, +131.4] |
+| Arm B, 2,500 (alongside) | training mean | +34.8 [+20.8, +57.8] | +39.9 [+15.8, +100.8] | +43.4 [+14.5, +149.5] | +43.3 [+20.5, +127.4] |
+| Arm B, 2,500 (alongside) | noise, k = 0.1 | +0.6 [+0.2, +1.6] | +0.2 [-0.1, +0.8] | +0.0 [-0.5, +0.5] | -0.7 [-1.1, -0.2] |
+| Arm B, 2,500 (alongside) | noise, k = 0.5 | +8.4 [+4.8, +22.2] | +4.4 [+2.6, +11.9] | +6.2 [+0.3, +11.3] | -1.8 [-3.5, +4.5] |
+| Arm B, 10,000 (alongside) | stale action | -1.0 [-2.7, +9.3] | +1.4 [-0.5, +12.4] | +6.1 [+2.5, +25.5] | +6.2 [+3.8, +17.3] |
+| Arm B, 10,000 (alongside) | another trajectory's actions | +79.7 [+56.8, +218.8] | +113.2 [+36.4, +405.8] | +83.6 [+27.8, +247.9] | +61.4 [+13.1, +215.3] |
+| Arm B, 10,000 (alongside) | training mean | +51.8 [+32.2, +134.0] | +65.1 [+11.7, +215.3] | +64.6 [+17.1, +239.8] | +51.1 [+13.5, +212.4] |
+| Arm B, 10,000 (alongside) | noise, k = 0.1 | +0.6 [-0.1, +4.3] | +0.4 [+0.0, +1.9] | -1.0 [-1.8, +0.1] | +2.0 [-2.0, +6.1] |
+| Arm B, 10,000 (alongside) | noise, k = 0.5 | +11.3 [+3.6, +56.9] | +9.5 [+4.1, +32.0] | +8.6 [+2.6, +25.6] | +5.3 [-2.8, +31.0] |
+| released checkpoint (alongside) | stale action | +34.2 [+10.6, +75.0] | +37.2 [+7.9, +95.6] | +47.7 [+5.8, +131.8] | +22.5 [+6.3, +41.7] |
+| released checkpoint (alongside) | another trajectory's actions | +940.5 [+707.2, +1183.7] | +1196.9 [+1042.5, +1459.9] | +807.4 [+696.6, +868.5] | +355.7 [+218.5, +487.3] |
+| released checkpoint (alongside) | training mean | +600.7 [+447.0, +710.2] | +784.0 [+704.1, +924.9] | +530.9 [+420.1, +752.8] | +302.6 [+176.3, +452.5] |
+| released checkpoint (alongside) | noise, k = 0.1 | +44.0 [+30.6, +56.3] | +56.9 [+45.8, +76.5] | +29.7 [+25.1, +37.4] | +13.9 [+6.7, +23.0] |
+| released checkpoint (alongside) | noise, k = 0.5 | +377.7 [+299.5, +445.6] | +483.1 [+428.7, +586.0] | +295.7 [+265.0, +351.2] | +116.1 [+79.6, +182.6] |
+
+**Arena: the held-out pair (episodes 1 and 8, 4 non-overlapping 400-step trajectories,
+n_independent = 4), out-of-sample for our arms and in-sample for the released checkpoint. Checkpoints as in
+the first table.** No reading is made on this arena; every row is alongside.
+
+| model, checkpoint | arena | stale action | another trajectory's actions | training mean | noise, k = 0.1 | noise, k = 0.5 |
+|---|---|---|---|---|---|---|
+| Arm A, 2,500 | own training data | 0.139 | 0.525 | 0.417 | 0.014 | 0.071 |
+| Arm A, 2,500 | held-out pair | 0.060 | 0.623 | 0.431 | 0.026 | 0.128 |
+| Arm A, 10,000 | own training data | 0.200 | 0.654 | 0.528 | 0.023 | 0.110 |
+| Arm A, 10,000 | held-out pair | 0.084 | 0.801 | 0.584 | 0.044 | 0.215 |
+| Arm B, 2,500 (alongside) | own training data | 0.109 | 0.386 | 0.303 | 0.011 | 0.055 |
+| Arm B, 2,500 (alongside) | held-out pair | 0.040 | 0.481 | 0.336 | 0.021 | 0.098 |
+| Arm B, 10,000 (alongside) | own training data | 0.161 | 0.545 | 0.465 | 0.018 | 0.088 |
+| Arm B, 10,000 (alongside) | held-out pair | 0.052 | 0.629 | 0.451 | 0.030 | 0.140 |
+| released checkpoint (alongside) | own training data | 0.204 | 0.930 | 0.666 | 0.066 | 0.327 |
+| released checkpoint (alongside) | held-out pair | 0.078 | 1.042 | 0.712 | 0.093 | 0.461 |
+
+**Δ at h = 8, the relative-L1 of the forecast made with the changed actions measured against the forecast made with
+the true ones (`rollout_eval.relative_error`), which is zero for a model that ignores its actions. Arenas: each model's
+own training data (16 trajectories for our arms, 20 for the released checkpoint) and the held-out
+pair (4). Checkpoints: Arm A and Arm B at 2,500 and 10,000 iterations, three seeds each; the
+released checkpoint. Descriptive, no reading.** How far the interventions move the actions: on the forecast rows,
+the action changes from one step to the next on 100% of steps on the in-sample arena,
+100% on the held-out pair and 100% over all ten episodes. A one-step shift moves the
+action by 0.32, 0.27 and 0.31 of its spread (the mean absolute change from one step to the next over the mean absolute deviation from
+the action's mean), and the swap by 1.44, 1.43 and 1.42
+(`results/action_sensitivity.json`).
 
 ---

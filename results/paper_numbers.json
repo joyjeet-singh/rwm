@@ -739,6 +739,70 @@
     "source": "results/alignment_defect_ci.json",
     "value": "+0.8%, +9.8%, +14.8%, +6.5%"
   },
+  "adh20_nrmse_ci_h1": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[-14.8, 87.8]"
+  },
+  "adh20_nrmse_ci_h100": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[-18.9, 32.9]"
+  },
+  "adh20_nrmse_ci_h32": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[7.7, 47.4]"
+  },
+  "adh20_nrmse_ci_h8": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[24.7, 68.2]"
+  },
+  "adh20_nrmse_h1": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "7.4"
+  },
+  "adh20_nrmse_h100": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "7.9"
+  },
+  "adh20_nrmse_h32": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "17.4"
+  },
+  "adh20_nrmse_h8": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "31.5"
+  },
+  "adh20_rel_ci_h1": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[26.3, 92.7]"
+  },
+  "adh20_rel_ci_h100": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[-10.4, 24.9]"
+  },
+  "adh20_rel_ci_h32": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[21.3, 65.4]"
+  },
+  "adh20_rel_ci_h8": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "[37.5, 82.3]"
+  },
+  "adh20_rel_h1": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "55.0"
+  },
+  "adh20_rel_h100": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "8.2"
+  },
+  "adh20_rel_h32": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "37.4"
+  },
+  "adh20_rel_h8": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "54.4"
+  },
   "adh_rel_ci_h1": {
     "source": "results/alignment_by_horizon.json",
     "value": "[10.6, 75.0]"
@@ -1495,6 +1559,14 @@
     "source": "results/baselines_verdict.json",
     "value": "REPRODUCES"
   },
+  "boot_n_exact4": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "256"
+  },
+  "boot_n_mc": {
+    "source": "results/alignment_by_horizon.json",
+    "value": "20,000"
+  },
   "bound_both_train": {
     "source": "results/step5_armA_seed0.json (split)",
     "value": 5
@@ -1825,19 +1897,19 @@
   },
   "cc_kind_list": {
     "source": "results/comparative_claims.json",
-    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *arena_consistency* (every row of section 3.2's evidence table names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *compute-claim* (no rendered file says a setting won even when its rival trained longer, and every front-matter sentence that names compute or longer training says the ranking depends on it or names the split), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds the build accounting claims, this file enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *overstat-reversal* (no sentence says the released evaluation overstates its error beside an alignment figure unless its paragraph names the reversal of sign), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *rule-seed-scope* (a sentence quoting the three-seed headline or its rule-horizon cells near the word rule or pre-register names the one seed the rule ran on, or the three-seed extension), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
+    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *action-response* (a paragraph quoting our arms' stale-pairing sensitivity also carries rule X2's figure for how they respond to the action), *alignment-arena* (a sentence naming the action-alignment defect and a short-horizon cost has the all-ten-episodes figures, or those words, in its paragraph), *arena_consistency* (every row of section 3.2's evidence table names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *compute-claim* (no rendered file says a setting won even when its rival trained longer, and every front-matter sentence that names compute or longer training says the ranking depends on it or names the split), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds the build accounting claims, this file enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *overstat-reversal* (no sentence says the released evaluation overstates its error beside an alignment figure unless its paragraph names the reversal of sign), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *rule-seed-scope* (a sentence quoting the three-seed headline or its rule-horizon cells near the word rule or pre-register names the one seed the rule ran on, or the three-seed extension), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
   },
   "cc_kinds": {
     "source": "results/comparative_claims.json",
-    "value": 30
+    "value": 32
   },
   "cc_n": {
     "source": "results/comparative_claims.json",
-    "value": 63
+    "value": 65
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 63
+    "value": 65
   },
   "cc_selfdefect_list": {
     "source": "results/comparative_claims.json",
@@ -1857,11 +1929,11 @@
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 63
+    "value": 65
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 63
+    "value": 65
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -3985,7 +4057,7 @@
   },
   "evidence_table": {
     "source": "results/evidence_summary.json",
-    "value": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes, at the 500 and 2,500-iteration checkpoints |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; at h = 368 every baseline is worse than predicting no change | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; at h = 368 every baseline is worse than predicting no change | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY: step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale and overstates its own model's error (\u00a77.2) | held-out pair (4) | released | yes | defect confirmed in the code; its cost is concentrated at short horizons, and at h = 368 is small and not consistent in sign | not applicable |"
+    "value": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | yes, at the 500 and 2,500-iteration checkpoints |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; at h = 368 every baseline is worse than predicting no change | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; at h = 368 every baseline is worse than predicting no change | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY: step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale (\u00a77.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |"
   },
   "f4_n_commits": {
     "source": "results/paper_figures.json",
@@ -5781,7 +5853,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 59
+    "value": 61
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -8909,7 +8981,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 878
+    "value": 910
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -9390,6 +9462,102 @@
   "x1b_tf_ratio_lo": {
     "source": "results/rssm_diagnostics.json",
     "value": "1.16"
+  },
+  "x2_E_stale_10k_ins_h1": {
+    "source": "results/action_sensitivity.json",
+    "value": "+124.6"
+  },
+  "x2_E_swap_10k": {
+    "source": "results/action_sensitivity.json",
+    "value": "+676.3"
+  },
+  "x2_E_swap_2500": {
+    "source": "results/action_sensitivity.json",
+    "value": "+227.8"
+  },
+  "x2_appV_delta": {
+    "source": "results/action_sensitivity.json",
+    "value": "| Arm A, 2,500 | own training data | 0.139 | 0.525 | 0.417 | 0.014 | 0.071 |\n| Arm A, 2,500 | held-out pair | 0.060 | 0.623 | 0.431 | 0.026 | 0.128 |\n| Arm A, 10,000 | own training data | 0.200 | 0.654 | 0.528 | 0.023 | 0.110 |\n| Arm A, 10,000 | held-out pair | 0.084 | 0.801 | 0.584 | 0.044 | 0.215 |\n| Arm B, 2,500 (alongside) | own training data | 0.109 | 0.386 | 0.303 | 0.011 | 0.055 |\n| Arm B, 2,500 (alongside) | held-out pair | 0.040 | 0.481 | 0.336 | 0.021 | 0.098 |\n| Arm B, 10,000 (alongside) | own training data | 0.161 | 0.545 | 0.465 | 0.018 | 0.088 |\n| Arm B, 10,000 (alongside) | held-out pair | 0.052 | 0.629 | 0.451 | 0.030 | 0.140 |\n| released checkpoint (alongside) | own training data | 0.204 | 0.930 | 0.666 | 0.066 | 0.327 |\n| released checkpoint (alongside) | held-out pair | 0.078 | 1.042 | 0.712 | 0.093 | 0.461 |"
+  },
+  "x2_appV_ho": {
+    "source": "results/action_sensitivity.json",
+    "value": "| Arm A, 2,500 | stale action | +1.8 [-1.6, +11.6] | +3.6 [-0.6, +21.9] | +5.6 [-0.2, +30.8] | +6.9 [+2.6, +20.0] |\n| Arm A, 2,500 | another trajectory's actions | +63.3 [+43.4, +125.0] | +114.3 [+54.8, +351.6] | +141.9 [+59.0, +348.3] | +154.5 [+114.0, +265.0] |\n| Arm A, 2,500 | training mean | +44.4 [+36.6, +67.3] | +70.3 [+24.4, +208.9] | +88.5 [+31.5, +267.3] | +99.5 [+60.7, +218.1] |\n| Arm A, 2,500 | noise, k = 0.1 | +0.6 [-0.2, +1.5] | +0.6 [+0.3, +1.5] | +0.7 [+0.2, +1.9] | +0.4 [+0.1, +1.0] |\n| Arm A, 2,500 | noise, k = 0.5 | +9.3 [+5.3, +27.9] | +8.9 [+4.4, +28.3] | +11.5 [+5.1, +27.7] | +9.8 [+7.2, +17.6] |\n| Arm A, 10,000 | stale action | -1.0 [-6.1, +27.7] | +4.7 [-5.0, +73.6] | +13.9 [-2.4, +104.1] | +16.6 [+1.9, +72.6] |\n| Arm A, 10,000 | another trajectory's actions | +135.5 [+91.3, +448.8] | +179.4 [+78.7, +729.4] | +227.0 [+104.9, +660.2] | +242.7 [+176.8, +494.7] |\n| Arm A, 10,000 | training mean | +82.4 [+57.0, +264.6] | +115.7 [+39.5, +459.8] | +152.0 [+63.9, +537.0] | +151.9 [+83.7, +411.1] |\n| Arm A, 10,000 | noise, k = 0.1 | +2.0 [+0.7, +10.2] | +1.1 [+0.2, +6.4] | +2.1 [+0.9, +6.1] | +1.9 [+1.2, +4.5] |\n| Arm A, 10,000 | noise, k = 0.5 | +25.6 [+9.1, +121.4] | +22.6 [+9.5, +93.3] | +35.1 [+15.8, +91.3] | +29.2 [+20.1, +63.9] |\n| Arm B, 2,500 (alongside) | stale action | +1.1 [-0.8, +8.3] | +0.3 [-0.8, +4.5] | +3.4 [+0.4, +14.6] | +0.7 [-1.2, +5.4] |\n| Arm B, 2,500 (alongside) | another trajectory's actions | +67.4 [+30.6, +124.8] | +77.3 [+41.9, +187.0] | +64.6 [+31.4, +140.4] | +43.2 [+20.6, +131.4] |\n| Arm B, 2,500 (alongside) | training mean | +34.8 [+20.8, +57.8] | +39.9 [+15.8, +100.8] | +43.4 [+14.5, +149.5] | +43.3 [+20.5, +127.4] |\n| Arm B, 2,500 (alongside) | noise, k = 0.1 | +0.6 [+0.2, +1.6] | +0.2 [-0.1, +0.8] | +0.0 [-0.5, +0.5] | -0.7 [-1.1, -0.2] |\n| Arm B, 2,500 (alongside) | noise, k = 0.5 | +8.4 [+4.8, +22.2] | +4.4 [+2.6, +11.9] | +6.2 [+0.3, +11.3] | -1.8 [-3.5, +4.5] |\n| Arm B, 10,000 (alongside) | stale action | -1.0 [-2.7, +9.3] | +1.4 [-0.5, +12.4] | +6.1 [+2.5, +25.5] | +6.2 [+3.8, +17.3] |\n| Arm B, 10,000 (alongside) | another trajectory's actions | +79.7 [+56.8, +218.8] | +113.2 [+36.4, +405.8] | +83.6 [+27.8, +247.9] | +61.4 [+13.1, +215.3] |\n| Arm B, 10,000 (alongside) | training mean | +51.8 [+32.2, +134.0] | +65.1 [+11.7, +215.3] | +64.6 [+17.1, +239.8] | +51.1 [+13.5, +212.4] |\n| Arm B, 10,000 (alongside) | noise, k = 0.1 | +0.6 [-0.1, +4.3] | +0.4 [+0.0, +1.9] | -1.0 [-1.8, +0.1] | +2.0 [-2.0, +6.1] |\n| Arm B, 10,000 (alongside) | noise, k = 0.5 | +11.3 [+3.6, +56.9] | +9.5 [+4.1, +32.0] | +8.6 [+2.6, +25.6] | +5.3 [-2.8, +31.0] |\n| released checkpoint (alongside) | stale action | +34.2 [+10.6, +75.0] | +37.2 [+7.9, +95.6] | +47.7 [+5.8, +131.8] | +22.5 [+6.3, +41.7] |\n| released checkpoint (alongside) | another trajectory's actions | +940.5 [+707.2, +1183.7] | +1196.9 [+1042.5, +1459.9] | +807.4 [+696.6, +868.5] | +355.7 [+218.5, +487.3] |\n| released checkpoint (alongside) | training mean | +600.7 [+447.0, +710.2] | +784.0 [+704.1, +924.9] | +530.9 [+420.1, +752.8] | +302.6 [+176.3, +452.5] |\n| released checkpoint (alongside) | noise, k = 0.1 | +44.0 [+30.6, +56.3] | +56.9 [+45.8, +76.5] | +29.7 [+25.1, +37.4] | +13.9 [+6.7, +23.0] |\n| released checkpoint (alongside) | noise, k = 0.5 | +377.7 [+299.5, +445.6] | +483.1 [+428.7, +586.0] | +295.7 [+265.0, +351.2] | +116.1 [+79.6, +182.6] |"
+  },
+  "x2_appV_own": {
+    "source": "results/action_sensitivity.json",
+    "value": "| Arm A, 2,500 | stale action | +27.8 [+15.6, +49.4] | +31.5 [+19.2, +53.0] | +53.8 [+34.6, +83.5] | +48.7 [+34.8, +65.7] |\n| Arm A, 2,500 | another trajectory's actions | +73.2 [+33.7, +162.7] | **+227.8 [+131.6, +398.2]** | +376.0 [+248.7, +578.8] | +349.3 [+264.7, +454.0] |\n| Arm A, 2,500 | training mean | +49.6 [+25.5, +101.3] | +169.5 [+104.6, +278.0] | +309.6 [+215.5, +450.5] | +300.5 [+234.8, +380.6] |\n| Arm A, 2,500 | noise, k = 0.1 | +0.5 [+0.2, +1.1] | +0.6 [+0.4, +1.1] | +1.3 [+0.7, +2.2] | +1.3 [+0.8, +1.8] |\n| Arm A, 2,500 | noise, k = 0.5 | +8.2 [+3.9, +17.9] | +12.3 [+7.1, +21.6] | +24.7 [+14.4, +41.4] | +23.6 [+16.6, +32.3] |\n| Arm A, 10,000 | stale action | +124.6 [+75.8, +201.9] | +161.8 [+121.3, +231.1] | +205.9 [+156.7, +275.9] | +209.3 [+167.3, +257.6] |\n| Arm A, 10,000 | another trajectory's actions | +278.9 [+145.8, +548.3] | **+676.3 [+454.8, +1060.0]** | +986.6 [+723.5, +1381.1] | +1081.0 [+896.2, +1301.0] |\n| Arm A, 10,000 | training mean | +207.1 [+114.5, +385.7] | +531.7 [+380.0, +781.9] | +841.6 [+657.6, +1100.7] | +899.9 [+761.2, +1058.4] |\n| Arm A, 10,000 | noise, k = 0.1 | +3.9 [+1.7, +8.6] | +6.0 [+3.3, +10.5] | +10.4 [+6.6, +16.1] | +11.4 [+8.6, +14.8] |\n| Arm A, 10,000 | noise, k = 0.5 | +53.3 [+27.2, +106.9] | +74.8 [+47.5, +122.0] | +126.3 [+87.8, +181.8] | +141.2 [+115.1, +172.0] |\n| Arm B, 2,500 (alongside) | stale action | +18.7 [+8.9, +36.1] | +15.9 [+7.9, +29.5] | +20.3 [+10.3, +36.8] | +9.3 [+5.1, +14.9] |\n| Arm B, 2,500 (alongside) | another trajectory's actions | +63.6 [+31.1, +131.4] | +128.8 [+67.5, +241.8] | +173.4 [+101.6, +289.0] | +111.0 [+78.3, +155.4] |\n| Arm B, 2,500 (alongside) | training mean | +41.4 [+22.7, +77.7] | +94.7 [+54.1, +164.4] | +145.9 [+89.1, +233.8] | +149.3 [+113.0, +195.4] |\n| Arm B, 2,500 (alongside) | noise, k = 0.1 | +0.4 [+0.1, +0.8] | +0.3 [+0.1, +0.6] | +0.5 [+0.3, +1.0] | +0.4 [-0.2, +1.2] |\n| Arm B, 2,500 (alongside) | noise, k = 0.5 | +7.2 [+3.7, +14.5] | +5.9 [+3.2, +11.4] | +9.8 [+5.2, +17.7] | +7.6 [+4.5, +11.5] |\n| Arm B, 10,000 (alongside) | stale action | +75.1 [+44.2, +118.9] | +68.6 [+45.9, +105.2] | +60.0 [+39.9, +98.7] | +32.5 [+20.1, +50.3] |\n| Arm B, 10,000 (alongside) | another trajectory's actions | +239.5 [+133.3, +439.8] | +358.2 [+220.9, +618.1] | +319.0 [+189.0, +556.8] | +218.4 [+154.0, +311.4] |\n| Arm B, 10,000 (alongside) | training mean | +161.1 [+99.6, +272.2] | +295.7 [+193.3, +477.5] | +290.9 [+178.3, +485.9] | +242.2 [+172.3, +338.6] |\n| Arm B, 10,000 (alongside) | noise, k = 0.1 | +2.6 [+1.3, +4.9] | +2.1 [+1.0, +4.3] | +2.5 [+1.1, +5.2] | +2.3 [+0.1, +4.7] |\n| Arm B, 10,000 (alongside) | noise, k = 0.5 | +37.3 [+20.3, +69.3] | +30.8 [+18.0, +55.9] | +36.9 [+19.7, +69.5] | +34.7 [+21.4, +54.5] |\n| released checkpoint (alongside) | stale action | +55.0 [+26.3, +92.7] | +54.4 [+37.5, +82.3] | +37.4 [+21.3, +65.4] | +8.2 [-10.4, +24.9] |\n| released checkpoint (alongside) | another trajectory's actions | +515.3 [+295.2, +883.1] | +500.9 [+314.6, +824.2] | +363.5 [+219.0, +607.8] | +111.0 [+59.4, +192.7] |\n| released checkpoint (alongside) | training mean | +296.3 [+176.8, +487.4] | +334.9 [+215.9, +538.9] | +267.3 [+168.0, +436.2] | +73.1 [+29.7, +141.7] |\n| released checkpoint (alongside) | noise, k = 0.1 | +15.0 [+7.7, +27.1] | +14.7 [+8.0, +26.5] | +10.2 [+5.5, +18.2] | +2.6 [+0.5, +5.9] |\n| released checkpoint (alongside) | noise, k = 0.5 | +143.0 [+80.7, +245.2] | +147.1 [+86.3, +251.7] | +109.9 [+61.2, +193.0] | +22.8 [+3.0, +51.8] |"
+  },
+  "x2_ci_stale_10k_ins_h1": {
+    "source": "results/action_sensitivity.json",
+    "value": "[+75.8, +201.9]"
+  },
+  "x2_ci_swap_10k": {
+    "source": "results/action_sensitivity.json",
+    "value": "[+454.8, +1060.0]"
+  },
+  "x2_ci_swap_2500": {
+    "source": "results/action_sensitivity.json",
+    "value": "[+131.6, +398.2]"
+  },
+  "x2_ctx_ho_frac": {
+    "source": "results/action_sensitivity.json",
+    "value": "100"
+  },
+  "x2_ctx_ho_stale": {
+    "source": "results/action_sensitivity.json",
+    "value": "0.27"
+  },
+  "x2_ctx_ho_swap": {
+    "source": "results/action_sensitivity.json",
+    "value": "1.43"
+  },
+  "x2_ctx_ins_frac": {
+    "source": "results/action_sensitivity.json",
+    "value": "100"
+  },
+  "x2_ctx_ins_stale": {
+    "source": "results/action_sensitivity.json",
+    "value": "0.32"
+  },
+  "x2_ctx_ins_swap": {
+    "source": "results/action_sensitivity.json",
+    "value": "1.44"
+  },
+  "x2_ctx_stale": {
+    "source": "results/action_sensitivity.json",
+    "value": "0.32"
+  },
+  "x2_ctx_swap": {
+    "source": "results/action_sensitivity.json",
+    "value": "1.44"
+  },
+  "x2_ctx_ten_frac": {
+    "source": "results/action_sensitivity.json",
+    "value": "100"
+  },
+  "x2_ctx_ten_stale": {
+    "source": "results/action_sensitivity.json",
+    "value": "0.31"
+  },
+  "x2_ctx_ten_swap": {
+    "source": "results/action_sensitivity.json",
+    "value": "1.42"
+  },
+  "x2_k_hi": {
+    "source": "results/action_sensitivity.json",
+    "value": "0.5"
+  },
+  "x2_k_lo": {
+    "source": "results/action_sensitivity.json",
+    "value": "0.1"
+  },
+  "x2_n_ins": {
+    "source": "results/action_sensitivity.json",
+    "value": 16
+  },
+  "x2_reading": {
+    "source": "results/action_sensitivity.json",
+    "value": "RESPONDS TO THE ACTION"
   },
   "zero_delta_resid": {
     "source": "results/task3_hardening.json",

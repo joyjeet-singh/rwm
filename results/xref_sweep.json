@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 84,
-  "n_ok": 84,
+  "n_pointers": 85,
+  "n_ok": 85,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -121,6 +121,13 @@
       "ok": true,
       "detail": "target Appendix B; nouns ['runs', 'times']; absent []",
       "context": "Appendix B gives for the 33 runs of \u00a75\u2013\u00a77 it times (\u00a75"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix E gives its lead time) and\nis discharged in M-85",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
+      "context": "Appendix E gives its lead time) and\nis discharged in M-85"
     },
     {
       "class": "artifact",

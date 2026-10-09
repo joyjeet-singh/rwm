@@ -15,8 +15,8 @@
     "RESULTS.md",
     "docs/EXTERNAL_READ_BRIEF.md"
   ],
-  "n_kinds": 30,
-  "n_whole_file": 21,
+  "n_kinds": 32,
+  "n_whole_file": 23,
   "n_named_region": 4,
   "n_artifact_only": 5,
   "n_unclassified": 0,
@@ -29,6 +29,34 @@
       "reason": "splits PAPER.md on '## Abstract' and the next section heading. Breaks loudly if the heading is renamed; unaffected by text moving elsewhere",
       "files_named_by_claims": [],
       "surface_named_by_claims": []
+    },
+    {
+      "kind": "action-response",
+      "input_selection": "whole-file",
+      "reason": "scans each file in its own `files` list (and the model card builder's A() calls) for Arm A's stale-pairing figures, and requires an X2 key in the same paragraph",
+      "files_named_by_claims": [
+        "PAPER.template.md",
+        "README.template.md",
+        "docs/BUILD_CHECKS.template.md"
+      ],
+      "surface_named_by_claims": [],
+      "tier": "template",
+      "requires": "docs/BUILD_CHECKS.template.md",
+      "covers_moved_text": true
+    },
+    {
+      "kind": "alignment-arena",
+      "input_selection": "whole-file",
+      "reason": "scans each file in its own `files` list, paragraph by paragraph, for the alignment defect beside a short-horizon cost, and requires the all-ten-episodes figures or words in the paragraph",
+      "files_named_by_claims": [
+        "PAPER.template.md",
+        "README.template.md",
+        "docs/BUILD_CHECKS.template.md"
+      ],
+      "surface_named_by_claims": [],
+      "tier": "template",
+      "requires": "docs/BUILD_CHECKS.template.md",
+      "covers_moved_text": true
     },
     {
       "kind": "arena_consistency",
