@@ -1570,21 +1570,8 @@ with the author's own reply is not what a reader needs in the body of a reproduc
 
 So the finding is not that the release is internally inconsistent. It is that **the released
 artifacts do not reproduce the released checkpoint's variance state, and the author's account is
-that the released repository is not the one that trained it.** That is a documentation gap between
-a release and a run — common, worth recording, and much less interesting than an inconsistency.
-We report the arithmetic because it is what let us detect the gap at all, not as a charge against
-the work.
-
-**§7.5's argument in full.** The σ collapse is linear in iteration count and its rate is nearly identical across our runs
-(§6.3), which makes it a clock, and read as a clock it puts the checkpoint's variance state out
-of reach of a constant-rate run from the released initialisation at the configured learning rate,
-at every iteration count the release, the paper and the checkpoint tag state. The first author's
-account is that the released repository is several revisions removed from the setup that trained
-the checkpoint, which supplies a mechanism, a warm start or a different `log_delta_logstd`
-initialisation, that would explain it with no inconsistency at all. So this is a **documentation
-gap between a release and a run**: common, worth recording, and much less interesting than an
-inconsistency. `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`, shipped as supplementary, gives the
-arithmetic and the five assumptions it rests on.
+that the released repository is not the one that trained it.** That is a **documentation gap between a release and a run**: common, worth recording, and much less interesting than an inconsistency.
+The σ collapse is linear in iteration count and its rate is nearly identical across our runs (§6.3), which makes it a clock, and read as a clock it puts the checkpoint's variance state out of reach of a constant-rate run from the released initialisation at the configured learning rate, at every iteration count the release, the paper and the checkpoint tag state. The first author's account is that the released repository is several revisions removed from the setup that trained the checkpoint, which supplies a mechanism, a warm start or a different `log_delta_logstd` initialisation, that would explain it with no inconsistency at all. We report the arithmetic because it is what let us detect the gap at all, not as a charge against the work.
 
 ---
 
