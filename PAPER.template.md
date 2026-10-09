@@ -227,8 +227,7 @@ data cannot be generated from either repository this reproduction pins (Appendix
 spans overlap are not independent evidence, and the out-of-sample arena contains only
 {{m23_nind}} mutually non-overlapping 400-step trajectories. A bootstrap over whole trajectories at
 that size has {{c3_resamples}} distinct resamples, so its intervals are quantised at that
-resolution. Every long-horizon verdict in this paper survives a bootstrap over independent
-trajectories, every table reports that count, and §8 reports both resampling units where they
+resolution. Every long-horizon verdict in this paper is computed with a bootstrap over independent trajectories, every table reports that count, and §8 reports both resampling units where they
 differ. Later sections refer back to this as the n = {{m23_nind}} caveat of §3. One trajectory can carry
 much of a long-horizon effect: a one-step shift of the action moves the released checkpoint's
 {{v2_diag_h}}-step relative-L1 error on single trajectories of its own training episodes by anywhere from
