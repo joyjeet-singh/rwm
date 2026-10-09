@@ -1416,8 +1416,7 @@ then {{rt_bl_tf_runs}} teacher-forced and {{rt_bl_ar_runs}} autoregressive basel
 ({{rt_bl_tf_hours}} h and {{rt_bl_ar_hours}} h), read from `results/presubmission_runtime.json`. They
 are outside the total above, whose remainder that paragraph describes as released-width runs, which
 the baselines are not. Of these, {{rt_pre_overlapped}} overlapped other CPU work a session logged,
-which inflates their wall clock and changes no weight; the artifact lists each overlap. Per run family,
-every run at {{iters_main}} iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
+which inflates their wall clock and changes no weight; the artifact lists each overlap. Rule X1's Part C (§5.3) ran {{rt_x1c_runs}} more teacher-forced RSSM runs from a second queue, {{rt_x1c_hours}} hours, which are in neither total; {{rt_x1c_overlapped}} of them overlapped CPU work a session logged. They are the table's last rows. Per run family, every run at {{iters_main}} iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
 
 | run family | runs | hours per run, mean | runs that overlapped other CPU work |
 |---|---|---|---|

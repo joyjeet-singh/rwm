@@ -4601,7 +4601,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "590"
+    "value": "593"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5649,7 +5649,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 272
+    "value": 274
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -8873,7 +8873,7 @@
   },
   "rt_pre_table": {
     "source": "results/presubmission_runtime.json",
-    "value": "| (1, 8) (\u00a75.2) | 3 | 0.15 | 0 |\n| (2, 8) (\u00a75.2) | 3 | 0.16 | 0 |\n| (8, 8) (\u00a75.2) | 3 | 0.30 | 1 |\n| (16, 8) (\u00a75.2) | 3 | 0.51 | 2 |\n| (32, 1) (\u00a75.2) | 3 | 0.51 | 0 |\n| (32, 2) (\u00a75.2) | 3 | 0.74 | 3 |\n| (32, 16) (\u00a75.2) | 3 | 0.78 | 1 |\n| (32, 32) (\u00a75.2) | 3 | 1.32 | 1 |\n| MLP, teacher-forced (\u00a75.3) | 3 | 0.04 | 0 |\n| RSSM, teacher-forced (\u00a75.3) | 3 | 1.88 | 0 |\n| transformer, teacher-forced (\u00a75.3) | 3 | 0.71 | 0 |\n| MLP, autoregressive (\u00a75.3) | 3 | 0.06 | 0 |\n| RSSM, autoregressive (\u00a75.3) | 3 | 1.53 | 0 |\n| transformer, autoregressive (\u00a75.3) | 3 | 0.74 | 0 |"
+    "value": "| (1, 8) (\u00a75.2) | 3 | 0.15 | 0 |\n| (2, 8) (\u00a75.2) | 3 | 0.16 | 0 |\n| (8, 8) (\u00a75.2) | 3 | 0.30 | 1 |\n| (16, 8) (\u00a75.2) | 3 | 0.51 | 2 |\n| (32, 1) (\u00a75.2) | 3 | 0.51 | 0 |\n| (32, 2) (\u00a75.2) | 3 | 0.74 | 3 |\n| (32, 16) (\u00a75.2) | 3 | 0.78 | 1 |\n| (32, 32) (\u00a75.2) | 3 | 1.32 | 1 |\n| MLP, teacher-forced (\u00a75.3) | 3 | 0.04 | 0 |\n| RSSM, teacher-forced (\u00a75.3) | 3 | 1.88 | 0 |\n| transformer, teacher-forced (\u00a75.3) | 3 | 0.71 | 0 |\n| MLP, autoregressive (\u00a75.3) | 3 | 0.06 | 0 |\n| RSSM, autoregressive (\u00a75.3) | 3 | 1.53 | 0 |\n| transformer, autoregressive (\u00a75.3) | 3 | 0.74 | 0 |\n| RSSM, teacher-forced, PlaNet's KL settings (rule X1, \u00a75.3) | 1 | 2.11 | 1 |\n| RSSM, teacher-forced, DreamerV2's layer-normalised cell (rule X1, \u00a75.3) | 1 | 2.10 | 0 |"
   },
   "rt_runs": {
     "source": "results/step5_*.json",
@@ -8898,6 +8898,18 @@
   "rt_sweep_runs": {
     "source": "results/presubmission_runtime.json",
     "value": 24
+  },
+  "rt_x1c_hours": {
+    "source": "results/presubmission_runtime.json",
+    "value": "4.2"
+  },
+  "rt_x1c_overlapped": {
+    "source": "results/presubmission_runtime.json",
+    "value": 1
+  },
+  "rt_x1c_runs": {
+    "source": "results/presubmission_runtime.json",
+    "value": 2
   },
   "run_table": {
     "source": "results/step5_arm*.json",
@@ -9033,7 +9045,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 906
+    "value": 907
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

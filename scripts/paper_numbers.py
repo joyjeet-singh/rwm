@@ -2630,6 +2630,25 @@ def main():
             _rt.append(f'| {_nm[_a]}, {_regname} (§5.3) | {_f["n_runs"]} | {_f["mean_s"] / 3600:.2f} | '
                        f'{_ovf[f"{_rule} {_a}_{_reg}_s7"]} |')
     assert len(_rt) == len(PR["by_family"]) and sum(_ovf.values()) == PR["n_runs_overlapped"]
+    # Round 3, R5 (H4): rule X1's Part C ran from a second queue and was missing from this table. Its
+    # runs are the last rows, outside the totals Appendix B's prose gives for the sweep and the
+    # baselines; the prose counts them separately.
+    _XC = PR["x1_part_c"]
+    _xcn = {"x1v1": "PlaNet's KL settings", "x1v2": "DreamerV2's layer-normalised cell"}
+    assert set(_XC["by_family"]) == {f"rssm_tf_{_v}" for _v in _xcn}, _XC["by_family"]
+    _xov = {}
+    for _r in _XC["runs"]:
+        assert J(_r["artifact"].split("/", 1)[1])["hyperparameters"]["iterations"] == \
+            int(N["iters_main"]["value"].replace(",", "")), _r["artifact"]      # "every run at" iters_main
+        _xov[_r["family"]] = _xov.get(_r["family"], 0) + (_r["overlap_s"] > 0)
+    for _v, _vn in _xcn.items():
+        _f = _XC["by_family"][f"rssm_tf_{_v}"]
+        _rt.append(f'| {_nm["rssm"]}, teacher-forced, {_vn} (rule X1, §5.3) | {_f["n_runs"]} | '
+                   f'{_f["mean_s"] / 3600:.2f} | {_xov[f"rssm_tf_{_v}"]} |')
+    assert sum(_xov.values()) == _XC["n_runs_overlapped"]
+    put("rt_x1c_runs", _XC["n_runs"], "results/presubmission_runtime.json")
+    put("rt_x1c_hours", f'{_XC["wall_clock_s"] / 3600:.1f}', "results/presubmission_runtime.json")
+    put("rt_x1c_overlapped", _XC["n_runs_overlapped"], "results/presubmission_runtime.json")
     put("rt_pre_table", "\n".join(_rt), "results/presubmission_runtime.json")
     # Round 2, T9: X1 was discharged in T8 (ledger M-83), so an artifact without Part C is stale (for
     # example, rssm_diagnostics.py re-run with --part ab alone). It stops the build rather than putting

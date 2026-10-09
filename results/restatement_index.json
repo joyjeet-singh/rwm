@@ -1,9 +1,9 @@
 {
   "scanned": "PAPER.template.md",
-  "n_substituted": 1836,
+  "n_substituted": 1839,
   "n_typed": 278,
-  "n_restatements": 128,
-  "n_same_quantity_candidates": 66,
+  "n_restatements": 129,
+  "n_same_quantity_candidates": 67,
   "n_lower_signal": 62,
   "restatements": [
     {
@@ -59,31 +59,31 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "a2_rdd",
           "ctx": "s \u2014 plus a sixth on trajectory difficulty \u2014 the last giving {{a2_rdd}} {{a2_rdd_ci}} with both the rollout and"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1856,
+          "line": 1855,
           "key": "a2_rdd",
           "ctx": "rollouts disagree more? | | **both, additively (r_dd)** | **{{a2_rdd}}** | **{{a2_rdd_ci}}** | **at a given de"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1875,
+          "line": 1874,
           "key": "a2_rdd",
           "ctx": "sive statistic is the double-demeaned one, and it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_n"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1882,
+          "line": 1881,
           "key": "a2_rdd",
           "ctx": "ut effect is **materially smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitio"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2199,
+          "line": 2198,
           "key": "a2_rdd",
           "ctx": " and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.6"
         }
@@ -119,7 +119,7 @@
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1854,
+          "line": 1853,
           "key": "a2_r_within",
           "ctx": "ithin-step control, pooled | | trajectory means only | {{a2_r_within}} | {{a2_r_within_ci}} | \u2014 | | everything"
         }
@@ -148,13 +148,13 @@
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1850,
+          "line": 1849,
           "key": "d2r_cub",
           "ctx": "} | a non-linear model of depth | | a cubic in the index | {{d2r_cub}} | {{d2r_cub_ci}} | any polynomial trend"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1860,
+          "line": 1859,
           "key": "d2r_weakest",
           "ctx": " figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so disagreement is not re-encoding the"
         }
@@ -178,13 +178,13 @@
       "locations": [
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1849,
+          "line": 1848,
           "key": "d2r_log",
           "ctx": "all_abs}} of it, from {{d2b_epi_all}} | | log(1 + index) | {{d2r_log}} | {{d2r_log_ci}} | a non-linear model o"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1853,
+          "line": 1852,
           "key": "a2_step_only",
           "ctx": "_win_med}}[^stepcount] | | forecast-step means only | {{a2_step_only}} | \u2014 | the within-step control, pooled |"
         }
@@ -225,19 +225,19 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "d2b_par_all",
           "ctx": "rols on forecast depth \u2014 the linear partial that keeps {{d2b_par_all}}, and four harder ones \u2014 plus a sixth on"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1848,
+          "line": 1847,
           "key": "d2b_par_all",
           "ctx": " {{a2_r_pooled_ci}} | \u2014 | | the step index, linearly | {{d2b_par_all}} | \u2014 | depth explains {{d2b_shrink_all_a"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2199,
+          "line": 2198,
           "key": "d2b_par_all",
           "ctx": " ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. Again"
         }
@@ -305,37 +305,37 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "d4_r",
           "ctx": "ng, against a real baseline** \u2014 the applied scalar correlates {{d4_r}} {{d4_ci}} with realised error at n_inde"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1847,
+          "line": 1846,
           "key": "a2_r_pooled",
           "ctx": "t survives it | |---|---|---|---| | nothing (pooled) | {{a2_r_pooled}} | {{a2_r_pooled_ci}} | \u2014 | | the step i"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1848,
+          "line": 1847,
           "key": "d2b_epi_all",
           "ctx": " \u2014 | depth explains {{d2b_shrink_all_abs}} of it, from {{d2b_epi_all}} | | log(1 + index) | {{d2r_log}} | {{d2"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1874,
+          "line": 1873,
           "key": "a2_r_pooled",
           "ctx": ", which is why it reads {{d2r_win}} against the pooled {{a2_r_pooled}} rather than below it. The decisive stat"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1882,
+          "line": 1881,
           "key": "a2_r_pooled",
           "ctx": "y smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitioner should expect disagr"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2199,
+          "line": 2198,
           "key": "a2_r_pooled",
           "ctx": "} with realised error (\u00a76.6). That is smaller than the {{a2_r_pooled}} pooled figure, and it is the one that m"
         }
@@ -371,13 +371,13 @@
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1866,
+          "line": 1865,
           "key": "a2_h1_r",
           "ctx": "pointed there: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine pe"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1885,
+          "line": 1884,
           "key": "a2_h1_r",
           "ctx": "at it looked like.** At h = 1 the panel has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}}"
         }
@@ -469,37 +469,37 @@
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1707,
+          "line": 1706,
           "key": "e5s_fp_rate",
           "ctx": " and the measured false-positive rate at zero signal is {{e5s_fp_rate}}%.* **What this does that \u00a76.3's deriva"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1765,
+          "line": 1764,
           "key": "perm_oos_holm_rej",
           "ctx": "lm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1765,
+          "line": 1764,
           "key": "perm_ins_holm_rej",
           "ctx": ".05 rejects {{perm_oos_holm_rej}} out of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} ove"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1765,
+          "line": 1764,
           "key": "perm_all_holm_rej",
           "ctx": "t of sample, {{perm_ins_holm_rej}} in sample and {{perm_all_holm_rej}} over all ten episodes. Out of sample th"
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2092,
+          "line": 2091,
           "key": "tw_cc_cluster_hurt",
           "ctx": "izons on two metrics), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2153,
+          "line": 2152,
           "key": "q3_n_reorder",
           "ctx": " by the checkpoint (\u00a73). Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order and the rule returns **{{q"
         },
@@ -583,37 +583,37 @@
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1592,
+          "line": 1591,
           "key": null,
           "ctx": "og-\u03c3 head that \u00a76.3 shows has its optimum at \u03c3 = 0 is largely not this codebase's invention: its clamp is inhe"
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1603,
+          "line": 1602,
           "key": null,
           "ctx": "n\", and that likelihood's log-\u03c3 term opposes \u03c3 \u2192 0; `system_dynamics.py:283` substitutes squared error on a re"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1636,
+          "line": 1635,
           "key": null,
           "ctx": "e evidence supports. --- ## Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2167,
+          "line": 2166,
           "key": null,
           "ctx": "ses a GPU. And **we did not test whether the \u03c3 = 0 optimum affects other descendants of the PETS parameterisat"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2209,
+          "line": 2208,
           "key": null,
           "ctx": "the held-out pair, \u2400 Monte Carlo resamples (seed 0) in-sample. Negative favours the configuration, so every re"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2222,
+          "line": 2221,
           "key": null,
           "ctx": "the held-out pair, \u2400 Monte Carlo resamples (seed 0) otherwise. The interventions are the stale action (the rel"
         }
@@ -637,25 +637,25 @@
       "locations": [
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1765,
+          "line": 1764,
           "key": "perm_oos_holm_thr",
           "ctx": "hich already exceeds the smallest Holm threshold {{perm_oos_holm_thr}}, so no effect of any size could have be"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1765,
+          "line": 1764,
           "key": "perm_ins_holm_thr",
           "ctx": " at {{perm_ins_holm_min_p}} against a threshold of {{perm_ins_holm_thr}}. --- ## Appendix L \u2014 section 5's long"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1830,
+          "line": 1829,
           "key": "perm_all_holm_thr",
           "ctx": "t {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Read the column as a consistency check"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2168,
+          "line": 2167,
           "key": "perm_all_holm_thr",
           "ctx": "s {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} need"
         }
@@ -721,13 +721,13 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1759,
+          "line": 1758,
           "key": "perm_all_epi_p_h8",
           "ctx": "ent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi_p_h8}} and {{perm_all_epi_p_h128}}, with h = {"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_ratio_lo",
           "ctx": "of the gap is the multipliers themselves: Arm A's are {{d3x_ratio_lo}}\u00d7 to {{d3x_ratio_hi}}\u00d7 the released chec"
         }
@@ -792,7 +792,7 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1759,
+          "line": 1758,
           "key": "perm_oos_epi_p_h128",
           "ctx": "emic ordering looks strongest at long horizon ({{perm_oos_epi_p_h128}} at h=128, {{perm_oos_epi_p_h368}} at h="
         }
@@ -836,7 +836,7 @@
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1798,
+          "line": 1797,
           "key": "h2h_floor_l1_h1",
           "ctx": "8}} | | hold-last floor | {{h2h_floor_nrmse_h1}} | {{h2h_floor_l1_h1}} | {{h2h_floor_nrmse_h8}} | {{h2h_floor_"
         }
@@ -890,13 +890,13 @@
       "locations": [
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1704,
+          "line": 1703,
           "key": "e5s_null_r_max",
           "ctx": "s_null_spread}}\u00d7 returned correlations as large as \u00b1{{e5s_null_r_max}}, while its slope was {{e5s_null_slope_p"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2174,
+          "line": 2173,
           "key": "m49_shrink",
           "ctx": "sign does not answer: the point estimates fall by about {{m49_shrink}}, a difference no artifact here tests an"
         }
@@ -955,7 +955,7 @@
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2279,
+          "line": 2278,
           "key": "x2_ctx_ins_stale",
           "ctx": "en episodes. A one-step shift moves the action by {{x2_ctx_ins_stale}}, {{x2_ctx_ho_stale}} and {{x2_ctx_ten_s"
         }
@@ -985,7 +985,7 @@
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1798,
+          "line": 1797,
           "key": "h2h_floor_l1_h8",
           "ctx": "} | {{h2h_floor_l1_h1}} | {{h2h_floor_nrmse_h8}} | {{h2h_floor_l1_h8}} | {{h2h_floor_nrmse_h100}} | {{h2h_floo"
         }
@@ -1021,7 +1021,7 @@
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1808,
+          "line": 1807,
           "key": "a1_A_h368",
           "ctx": " at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same arm, trained longer. B"
         }
@@ -1056,7 +1056,7 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1488,
+          "line": 1487,
           "key": "orig_tf_e_centre",
           "ctx": " row, {{orig_tf_e_n1}} at {{mn_n1_label}} against {{orig_tf_e_centre}} at the centre, on unstated data and hor"
         }
@@ -1116,13 +1116,13 @@
       "locations": [
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1797,
+          "line": 1796,
           "key": "h2h_bl_transformer_ar_nrmse_h100",
           "ctx": "{{h2h_bl_transformer_ar_l1_h8}} | {{h2h_bl_transformer_ar_nrmse_h100}} | {{h2h_bl_transformer_ar_l1_h100}} | {"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1797,
+          "line": 1796,
           "key": "h2h_bl_transformer_ar_l1_h100",
           "ctx": "h2h_bl_transformer_ar_nrmse_h100}} | {{h2h_bl_transformer_ar_l1_h100}} | {{h2h_bl_transformer_ar_nrmse_h368}} "
         }
@@ -1160,13 +1160,13 @@
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1789,
+          "line": 1788,
           "key": "h2h_armA_l1_h368",
           "ctx": " {{h2h_armA_l1_h100}} | {{h2h_armA_nrmse_h368}} | {{h2h_armA_l1_h368}} | | Arm A \u2014 autoregressive, `gaussian_n"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1808,
+          "line": 1807,
           "key": "h2h_armA_l1_h368",
           "ctx": "hy Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a1_A_h368}} there: the same "
         }
@@ -1234,7 +1234,7 @@
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1798,
+          "line": 1797,
           "key": "h2h_floor_l1_h100",
           "ctx": "{{h2h_floor_l1_h8}} | {{h2h_floor_nrmse_h100}} | {{h2h_floor_l1_h100}} | {{h2h_floor_nrmse_h368}} | {{h2h_floo"
         }
@@ -1338,7 +1338,7 @@
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1798,
+          "line": 1797,
           "key": "h2h_floor_l1_h368",
           "ctx": "{h2h_floor_l1_h100}} | {{h2h_floor_nrmse_h368}} | {{h2h_floor_l1_h368}} | **Arena, stated once for the whole t"
         }
@@ -1346,14 +1346,15 @@
     },
     {
       "value": "1",
-      "n_locations": 89,
+      "n_locations": 90,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 63,
-      "n_substituted": 26,
+      "n_substituted": 27,
       "sources": [
         "results/appendix_g_rules.json",
         "results/e7_free_baselines.json",
+        "results/presubmission_runtime.json",
         "results/q1_pets_descendants.json",
         "results/review_bootstrap_unit.json",
         "results/step0_regimes.json",
@@ -1375,7 +1376,8 @@
         "q1_n_inherit",
         "r39_ep",
         "r45_A_n",
-        "r45_seed"
+        "r45_seed",
+        "rt_x1c_overlapped"
       ],
       "locations": [
         {
@@ -1469,68 +1471,74 @@
           "ctx": "odebase. On \u00a72's count the substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants ex"
         },
         {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1419,
+          "key": "rt_x1c_overlapped",
+          "ctx": "t_x1c_hours}} hours, which are in neither total; {{rt_x1c_overlapped}} of them overlapped CPU work a session l"
+        },
+        {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1520,
+          "line": 1519,
           "key": "appG_n_negative",
           "ctx": "ime, of which {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is kept de"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1599,
+          "line": 1598,
           "key": "r39_ep",
           "ctx": "{r39_n_eps_word}} episodes, from {{r39_gap_lo}} up; episode {{r39_ep}}, one of the held-out pair, gives {{r39_"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "r45_A_n",
           "ctx": "ravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each, {{r45_A_dim}} | R-45, and R-29"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "r45_seed",
           "ctx": "= 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, \u00a711) | | Over {{r46_n_ck_word}} checkp"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1601,
+          "line": 1600,
           "key": "r45_seed",
           "ctx": "ports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}, \u00a711) | | Our trained models respond to"
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1635,
+          "line": 1634,
           "key": "q1_n_inherit",
           "ctx": "otocol.md`, {{q1_n_carry}} carry the construction and {{q1_n_inherit}} of those trains it against a sampled sq"
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1644,
+          "line": 1643,
           "key": "q1_n_inherit",
           "ctx": "eck how each repository treats its variance floor, so {{q1_n_inherit}} of {{q1_n_examined}} is an upper bound "
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1897,
+          "line": 1896,
           "key": "e5_n_excl",
           "ctx": "The second fails: the paired difference excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a ma"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2115,
+          "line": 2114,
           "key": "e5_n_excl",
           "ctx": "o exclude zero at a majority of horizons, and it does at {{e5_n_excl}} of {{e5_n_horizons}}. Our arms have a h"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2123,
+          "line": 2122,
           "key": "m23_seed",
           "ctx": "ord. The headline A/B verdict rests on one seed too, seed {{m23_seed}}, the one its rule ran on; the magnitude"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_branch",
           "ctx": "as magnitude {{d3x_worst_delta}} points. That is branch {{d3x_branch}} of the rule's three. Per direction the "
         },
@@ -1788,127 +1796,127 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1471,
+          "line": 1470,
           "key": null,
           "ctx": "tive**: Fig. 6 prints e for the teacher-forced N=1 row, \u2400 at \u2400 against \u2400 at the centre, on unstated data and h"
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1538,
+          "line": 1537,
           "key": null,
           "ctx": "inverted \u00a73.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the \u2400 "
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1544,
+          "line": 1543,
           "key": null,
           "ctx": "ning episodes has a very small denominator. Form 1 has no such lever: a dimension contributes in proportion to"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1739,
+          "line": 1738,
           "key": null,
           "ctx": "8, \u2400 at h=368) and unremarkable at short (\u2400 at h=1). Both larger arenas invert that. In sample (n_independent "
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1743,
+          "line": 1742,
           "key": null,
           "ctx": "5 is close to what chance alone delivers; at h = 1 the null sits near \u2400 and the same count is genuinely surpri"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1766,
+          "line": 1765,
           "key": null,
           "ctx": "ure baselines, on one arena: | model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = \u2400 |"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1766,
+          "line": 1765,
           "key": null,
           "ctx": "on one arena: | model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = \u2400 | rel-L1 h = \u2400 |"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1783,
+          "line": 1782,
           "key": null,
           "ctx": "sults/head_to_head_accuracy.json`; nRMSE is form 1 (\u00a73.1), and both metrics are cumulative over forecast steps"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1808,
+          "line": 1807,
           "key": null,
           "ctx": "** The reading is coarse by construction: at h = 1 on \u2400 trajectories a per-dimension coverage moves in \u2400-point"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1829,
+          "line": 1828,
           "key": null,
           "ctx": "| \u2400 | \u2014 | depth explains \u2400 of it, from \u2400 | | log(1 + index) | \u2400 | \u2400 | a non-linear model of depth | | a cubic "
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1846,
+          "line": 1845,
           "key": null,
           "ctx": "t all. Two things pointed there: the \u2400-point h = 1 figure of \u2400, which is not the shape of a genuine per-step s"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1864,
+          "line": 1863,
           "key": null,
           "ctx": "t. At h = \u2400 it is established, at \u2400 \u2400. **The h = 1 figure survives the same test, but it is not what it looked"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1864,
+          "line": 1863,
           "key": null,
           "ctx": "est, but it is not what it looked like.** At h = 1 the panel has one column, so \u2400 is a correlation over \u2400 *tra"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1872,
+          "line": 1871,
           "key": null,
           "ctx": "oint, because our main arms run at ensemble size 1 where the epistemic term is identically zero. We therefore "
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1905,
+          "line": 1904,
           "key": null,
           "ctx": "lines are counted apart). Arm A at ensemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at abo"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1906,
+          "line": 1905,
           "key": null,
           "ctx": "A at ensemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at about \u2400 h each, \u2400 h in total, and"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1937,
+          "line": 1936,
           "key": null,
           "ctx": "nt, so they add to 100%. A share above 100% at h=1 means the independent ensemble is very slightly the **worse"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 1976,
+          "line": 1975,
           "key": null,
           "ctx": "xcept the loss type. Three of the five, seeds 0, 1 and 2, already existed under that objective; two more were "
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2103,
+          "line": 2102,
           "key": null,
           "ctx": "e per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B verdict "
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2230,
+          "line": 2229,
           "key": null,
           "ctx": "adings. | model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **A"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2240,
+          "line": 2239,
           "key": null,
           "ctx": "adings. | model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **A"
         }
@@ -1938,7 +1946,7 @@
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1951,
+          "line": 1950,
           "key": "r2_acc_x_h8",
           "ctx": "}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sigma_x_h8}}\u00d7 | {{r2_acc_x_h8}}\u00d7 | {{r2_total_x_h8}}\u00d7 | {{r2_from_sigma"
         }
@@ -1968,7 +1976,7 @@
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1952,
+          "line": 1951,
           "key": "r2_acc_x_h32",
           "ctx": " | {{r2_from_acc_h8}}% | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_acc_x_h32}}\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigm"
         }
@@ -1998,7 +2006,7 @@
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2027,
+          "line": 2026,
           "key": "m68_acc_x_h32",
           "ctx": "{{m68_from_acc_h8}}% | | 32 | {{m68_sigma_x_h32}}\u00d7 | {{m68_acc_x_h32}}\u00d7 | {{m68_total_x_h32}}\u00d7 | {{m68_from_si"
         }
@@ -2058,13 +2066,13 @@
       "locations": [
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2028,
+          "line": 2027,
           "key": "m68_acc_x_h100",
           "ctx": "| **{{v2_deploy_h}}** | **{{m68_sigma_x_h100}}\u00d7** | {{m68_acc_x_h100}}\u00d7 | {{m68_total_x_h100}}\u00d7 | **{{m68_from"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2131,
+          "line": 2130,
           "key": "q2_factor",
           "ctx": "jectories, where all ten episodes provide {{e7_nind}}**, {{q2_factor}}\u00d7 the present sample, by the rule's own "
         }
@@ -2130,7 +2138,7 @@
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2030,
+          "line": 2029,
           "key": "m68_sigma_x_h368",
           "ctx": "8}}% | {{m68_from_acc_h128}}% | | {{v2_diag_h}} | {{m68_sigma_x_h368}}\u00d7 | {{m68_acc_x_h368}}\u00d7 | {{m68_total_x_"
         }
@@ -2196,7 +2204,7 @@
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2280,
+          "line": 2279,
           "key": "x2_ctx_ten_swap",
           "ctx": "swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and {{x2_ctx_ten_swap}} (`results/action_sensitivity.json`). -"
         }
@@ -2225,7 +2233,7 @@
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2280,
+          "line": 2279,
           "key": "x2_ctx_ins_swap",
           "ctx": "deviation from the action's mean), and the swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and {{x2_ctx_ten_sw"
         }
@@ -2248,13 +2256,13 @@
       "locations": [
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1955,
+          "line": 1954,
           "key": "r2_sigma_x_h368",
           "ctx": "128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}}\u00d7 | {{r2_acc_x_h368}}\u00d7 | {{r2_total_x_h3"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1962,
+          "line": 1961,
           "key": "r2_sigma_x_lo",
           "ctx": "e is stated over.** \u03c3 is larger at every horizon, by {{r2_sigma_x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}"
         }
@@ -2278,19 +2286,19 @@
       "locations": [
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2025,
+          "line": 2024,
           "key": "m68_sigma_x_h1",
           "ctx": "are from accuracy | |---|---|---|---|---|---| | 1 | {{m68_sigma_x_h1}}\u00d7 | {{m68_acc_x_h1}}\u00d7 | {{m68_total_x_h1"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2025,
+          "line": 2024,
           "key": "m68_total_x_h1",
           "ctx": "--| | 1 | {{m68_sigma_x_h1}}\u00d7 | {{m68_acc_x_h1}}\u00d7 | {{m68_total_x_h1}}\u00d7 | {{m68_from_sigma_h1}}% | {{m68_from_"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2029,
+          "line": 2028,
           "key": "m68_sigma_x_h128",
           "ctx": "igma_h100}}%** | {{m68_from_acc_h100}}% | | 128 | {{m68_sigma_x_h128}}\u00d7 | {{m68_acc_x_h128}}\u00d7 | {{m68_total_x_"
         }
@@ -2362,7 +2370,7 @@
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2174,
+          "line": 2173,
           "key": "m49_ratio_gain",
           "ctx": "ement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde"
         }
@@ -2401,19 +2409,19 @@
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1951,
+          "line": 1950,
           "key": "r2_sigma_x_h8",
           "ctx": " {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sigma_x_h8}}\u00d7 | {{r2_acc_x_h8}}\u00d7 | {{r2_total_x_h8}}"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1962,
+          "line": 1961,
           "key": "r2_sigma_x_hi",
           "ctx": "x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}\u00d7 at its strongest (h = {{r2_sigma_x_hi_"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2027,
+          "line": 2026,
           "key": "m68_total_x_h32",
           "ctx": "| 32 | {{m68_sigma_x_h32}}\u00d7 | {{m68_acc_x_h32}}\u00d7 | {{m68_total_x_h32}}\u00d7 | {{m68_from_sigma_h32}}% | {{m68_from"
         }
@@ -2437,13 +2445,13 @@
       "locations": [
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1952,
+          "line": 1951,
           "key": "r2_total_x_h32",
           "ctx": " | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_acc_x_h32}}\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigma_h32}}% | {{r2_from_a"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2026,
+          "line": 2025,
           "key": "m68_total_x_h8",
           "ctx": "% | | 8 | {{m68_sigma_x_h8}}\u00d7 | {{m68_acc_x_h8}}\u00d7 | {{m68_total_x_h8}}\u00d7 | {{m68_from_sigma_h8}}% | {{m68_from_"
         }
@@ -2474,25 +2482,25 @@
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2010,
+          "line": 2009,
           "key": "m68_ratio_gain",
           "ctx": "_lo}}\u2013{{m68_ratio_hi}}\u00d7 the shared-trunk arms', a **{{m68_ratio_gain}}\u00d7** improvement against a minimum detect"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2028,
+          "line": 2027,
           "key": "m68_total_x_h100",
           "ctx": "**{{m68_sigma_x_h100}}\u00d7** | {{m68_acc_x_h100}}\u00d7 | {{m68_total_x_h100}}\u00d7 | **{{m68_from_sigma_h100}}%** | {{m68"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2052,
+          "line": 2051,
           "key": "m68_ratio_gain",
           "ctx": " for independence alone ({{m44_ratio_gain}}\u00d7 there, {{m68_ratio_gain}}\u00d7 here). **The two fixes do not add. A r"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2140,
+          "line": 2139,
           "key": "q2_se_ratio",
           "ctx": "rom the forecast-index margin, whose standard error is {{q2_se_ratio}}\u00d7 the step-size margin's. The observed m"
         }
@@ -2750,55 +2758,55 @@
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1633,
+          "line": 1632,
           "key": "q1_n_examined",
           "ctx": "titution is made, which narrows the hypothesis.** Of {{q1_n_examined}} public repositories examined on {{q1_da"
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1635,
+          "line": 1634,
           "key": "q1_n_carry",
           "ctx": " under the protocol in `results/q1_search_protocol.md`, {{q1_n_carry}} carry the construction and {{q1_n_inher"
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1644,
+          "line": 1643,
           "key": "q1_n_examined",
           "ctx": "ry treats its variance floor, so {{q1_n_inherit}} of {{q1_n_examined}} is an upper bound on how often both con"
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1648,
+          "line": 1647,
           "key": "q1_n_examined",
           "ctx": "the survey at {{q1_cap}} repositories; it stopped at {{q1_n_examined}} examined, {{q1_n_looked}} looked at, an"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1826,
+          "line": 1825,
           "key": "m62_n_ep",
           "ctx": "at level, all ten episodes (n = {{m62_n_traj}} falling to {{m62_n_ep}}), the pooled correlation's interval wid"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2121,
+          "line": 2120,
           "key": "d3x_own_ale_ok",
           "ctx": "own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cell"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2192,
+          "line": 2191,
           "key": "q1_n_examined",
           "ctx": "counted how often the substitution is made among the {{q1_n_examined}} repositories we examined (\u00a72), which be"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2199,
+          "line": 2198,
           "key": "d3_tol",
           "ctx": "nd scored on another, brings every coverage estimate within {{d3_tol}} points of nominal, though no single cel"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_band",
           "ctx": "mum detectable effect {{d3x_pmde_hi}} points against the \u00b1{{d3x_band}}-point band) and cannot resolve the abso"
         }
@@ -2883,55 +2891,55 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "iters_long",
           "ctx": "ng all three components of the gravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1601,
+          "line": 1600,
           "key": "iters_long",
           "ctx": "ed}}, \u00a711) | | Over {{r46_n_ck_word}} checkpoints up to {{iters_long}} iterations, the absolute A/B gap at h ="
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1601,
+          "line": 1600,
           "key": "iters_long",
           "ctx": "hat remains, a ratio does not, and \u00a75 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1602,
+          "line": 1601,
           "key": "iters_long",
           "ctx": " at {{iters_main}} iterations and {{x2_E_swap_10k}}% at {{iters_long}} (rule X2, pre-registered: {{x2_reading}"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1808,
+          "line": 1807,
           "key": "iters_long",
           "ctx": " {{iters_main}} iterations and \u00a75's by-horizon table at {{iters_long}}**, which is why Arm A's relative-L1 at "
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2216,
+          "line": 2215,
           "key": "iters_long",
           "ctx": "t the centre trained to {{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterations: {{n3_appU_nrows_word}} rows"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2247,
+          "line": 2246,
           "key": "iters_long",
           "ctx": "ations ({{x2_E_swap_2500}}% {{x2_ci_swap_2500}}) and at {{iters_long}} ({{x2_E_swap_10k}}% {{x2_ci_swap_10k}})"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2257,
+          "line": 2256,
           "key": "iters_long",
           "ctx": "d}}. Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the relea"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2275,
+          "line": 2274,
           "key": "iters_long",
           "ctx": "}}). Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the relea"
         },
@@ -2949,7 +2957,7 @@
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1721,
+          "line": 1720,
           "key": null,
           "ctx": "a). Rates are fitted on \u2400 of those \u2400: the \u2400 10,000-iteration runs continue seeds already counted at 2,500 and "
         }
@@ -3011,7 +3019,7 @@
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2115,
+          "line": 2114,
           "key": "e5_ratio_h100",
           "ctx": "}} seed-horizon cells and the *calibration* failure, {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, but the pre-re"
         }
@@ -3091,7 +3099,7 @@
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1950,
+          "line": 1949,
           "key": "r2_from_sigma_h1",
           "ctx": "x_h1}}\u00d7 | {{r2_acc_x_h1}}\u00d7 | {{r2_total_x_h1}}\u00d7 | {{r2_from_sigma_h1}}% | {{r2_from_acc_h1}}% | | 8 | {{r2_sig"
         }
@@ -3121,7 +3129,7 @@
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1692,
+          "line": 1691,
           "key": "e5s_corrob_clearing",
           "ctx": "ty seeds show that clearance is not general**: {{e5s_corrob_clearing}} of {{e5s_corrob_seeds}} clear it, so th"
         }
@@ -3275,25 +3283,25 @@
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1895,
+          "line": 1894,
           "key": "e5_lead_cells",
           "ctx": "passes completely: disagreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon ce"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1895,
+          "line": 1894,
           "key": "e5_total_cells",
           "ctx": "agreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired esti"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2115,
+          "line": 2114,
           "key": "e5_lead_cells",
           "ctx": "\u00a76.6) reproduce the *direction* of \u00a76.6's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cell"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2115,
+          "line": 2114,
           "key": "e5_total_cells",
           "ctx": "irection* of \u00a76.6's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration"
         }
@@ -3364,19 +3372,19 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1739,
+          "line": 1738,
           "key": null,
           "ctx": "and \u2400, with h = \u2400 at \u2400, between h=32's \u2400 and h=128's \u2400. Two larger arenas at four and five times the sample sa"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1743,
+          "line": 1742,
           "key": null,
           "ctx": " rows, and is no longer demonstrably so at h = 128 and below. Running it there is one pass over stored rollout"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2148,
+          "line": 2147,
           "key": null,
           "ctx": "ed dataset contains, not a better test. At h = 128 and below that is no longer true: a shorter unit gives \u2400 in"
         }
@@ -3406,19 +3414,19 @@
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1645,
+          "line": 1644,
           "key": "q1_n_looked",
           "ctx": "n how often both conditions hold. The survey looked at {{q1_n_looked}} in all; the other {{q1_n_absent}} lack "
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1648,
+          "line": 1647,
           "key": "q1_n_looked",
           "ctx": "epositories; it stopped at {{q1_n_examined}} examined, {{q1_n_looked}} looked at, and its notes give no reason"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1952,
+          "line": 1951,
           "key": "r2_from_acc_h32",
           "ctx": "\u00d7 | {{r2_total_x_h32}}\u00d7 | {{r2_from_sigma_h32}}% | {{r2_from_acc_h32}}% | | **{{v2_deploy_h}}** | **{{r2_sigma"
         }
@@ -3532,7 +3540,7 @@
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1828,
+          "line": 1827,
           "key": "m63_iqr_thr",
           "ctx": "ange across dimensions is {{m63_iqr}} points against a {{m63_iqr_thr}}-point threshold committed in advance, a"
         }
@@ -3621,55 +3629,55 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1759,
+          "line": 1758,
           "key": "perm_ins_nind",
           "ctx": "arger arenas invert that. In sample (n_independent = {{perm_ins_nind}}): {{perm_ins_epi_p_h1}} at h=1, {{perm_"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1760,
+          "line": 1759,
           "key": "perm_ins_nind",
           "ctx": "short* horizon, though they are not independent: all {{perm_ins_nind}} in-sample trajectories are among the {{"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2220,
+          "line": 2219,
           "key": "mn_nind_ins",
           "ctx": "t pair ({{mn_nind}}) | h = {{v2_deploy_h}}, in-sample ({{mn_nind_ins}}) | h = {{v2_diag_h}}, held-out pair ({{"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2220,
+          "line": 2219,
           "key": "mn_nind_ins",
           "ctx": "out pair ({{mn_nind}}) | h = {{v2_diag_h}}, in-sample ({{mn_nind_ins}}) | |---|---|---|---|---|---|---| {{n3_a"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2225,
+          "line": 2224,
           "key": "mn_nind_ins",
           "ctx": "ind}}) and the in-sample arena (the training episodes' {{mn_nind_ins}} non-overlapping {{h2h_unit}}-step traje"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2226,
+          "line": 2225,
           "key": "mn_nind_ins",
           "ctx": "apping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind_ins}}). Checkpoints: each configuration at {{"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2255,
+          "line": 2254,
           "key": "x2_n_ins",
           "ctx": " A and Arm B, the in-sample arena: the training episodes' {{x2_n_ins}} non-overlapping {{h2h_unit}}-step traje"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2255,
+          "line": 2254,
           "key": "x2_n_ins",
           "ctx": "erlapping {{h2h_unit}}-step trajectories, n_independent = {{x2_n_ins}}. For the released checkpoint, all ten e"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2274,
+          "line": 2273,
           "key": "x2_n_ins",
           "ctx": "ores its actions. Arenas: each model's own training data ({{x2_n_ins}} trajectories for our arms, {{ad20_nind}"
         }
@@ -3774,37 +3782,37 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "d3x_own_epi_ok",
           "ctx": "t has not seen the test episodes it does so in only {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} cells (\u00a76.7) |"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1981,
+          "line": 1980,
           "key": "d3x_own_epi_ok",
           "ctx": "whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2060,
+          "line": 2059,
           "key": "d3x_own_epi_ok",
           "ctx": "whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2121,
+          "line": 2120,
           "key": "d3x_own_epi_ok",
           "ctx": "whose model never saw them, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and "
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2199,
+          "line": 2198,
           "key": "d3x_own_epi_ok",
           "ctx": "ever saw those episodes, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_n_strad",
           "ctx": "ely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} straddling an edge, and the largest pai"
         }
@@ -3843,13 +3851,13 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "r45_rel_all",
           "ctx": "he released checkpoint loses to the hold-last floor on {{r45_rel_all}} of {{r45_n_dims}} across all ten episod"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2027,
+          "line": 2026,
           "key": "m68_from_acc_h32",
           "ctx": " {{m68_total_x_h32}}\u00d7 | {{m68_from_sigma_h32}}% | {{m68_from_acc_h32}}% | | **{{v2_deploy_h}}** | **{{m68_sigm"
         }
@@ -3886,16 +3894,17 @@
     },
     {
       "value": "2",
-      "n_locations": 28,
+      "n_locations": 29,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 8,
-      "n_substituted": 20,
+      "n_substituted": 21,
       "sources": [
         "results/appendix_g_rules.json + git log",
         "results/e4_sigma_gradients.json",
         "results/e7_free_baselines.json",
         "results/m62_episode_clustering.json",
+        "results/presubmission_runtime.json",
         "results/r2_combined_arm.json",
         "results/task3_three_way.json",
         "results/task4_arenas.json",
@@ -3914,6 +3923,7 @@
         "m68_branch",
         "m69_amend_min",
         "r39_n_per_ep",
+        "rt_x1c_runs",
         "tw_dc_cluster_helped"
       ],
       "locations": [
@@ -3996,44 +4006,50 @@
           "ctx": "l to that band; a single global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic ones "
         },
         {
+          "section": "Appendix B \u2014 reproducing",
+          "line": 1419,
+          "key": "rt_x1c_runs",
+          "ctx": "tifact lists each overlap. Rule X1's Part C (\u00a75.3) ran {{rt_x1c_runs}} more teacher-forced RSSM runs from a se"
+        },
+        {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1517,
+          "line": 1516,
           "key": "m69_amend_min",
           "ctx": "{{appG_table}} `M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so its le"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1599,
+          "line": 1598,
           "key": "r39_n_per_ep",
           "ctx": "forcing's error minus autoregressive training's, over {{r39_n_per_ep}} independent trajectories per episode) i"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1729,
+          "line": 1728,
           "key": "e4_n_touch",
           "ctx": "se their dimensions are. Of the {{e4_n_terms}}, exactly {{e4_n_touch}} reach \u03c3: {{e4_touching}}. The remaining"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1826,
+          "line": 1825,
           "key": "m62_n_ep_oos",
           "ctx": "are out-of-sample, where an episode bootstrap has n = {{m62_n_ep_oos}} and three distinct resamples, or, for t"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2007,
+          "line": 2006,
           "key": "m68_branch",
           "ctx": "nter here. **The rule returns {{m68_verdict}}**, branch {{m68_branch}} of the four it names. All {{m68_n_condi"
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2094,
+          "line": 2093,
           "key": "tw_dc_cluster_helped",
           "ctx": " The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells. **So \"costs nothing\" is too str"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2199,
+          "line": 2198,
           "key": "d3_epi_const_ok",
           "ctx": "t trials (\u00a76.7), where a global multiplier manages {{d3_epi_const_ok}} of them. On Arm A, whose model never sa"
         },
@@ -4069,19 +4085,19 @@
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1539,
+          "line": 1538,
           "key": null,
           "ctx": "de by the pooled scale \u2014 a ratio of means. **Form 2** is the mean of per-dimension ratios. The two differ beca"
         },
         {
           "section": "Appendix G \u2014 the two nRMSE aggregations, and the comparison one of them inverted",
-          "line": 1542,
+          "line": 1541,
           "key": null,
           "ctx": "he state dimensions differ widely in scale. Form 2 gives whichever dimension has the smallest denominator unbo"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1906,
+          "line": 1905,
           "key": null,
           "ctx": "nsemble size 1 already existed at seeds 0, 1 and 2; we added \u2400 more at about \u2400 h each, \u2400 h in total, and score"
         }
@@ -4224,97 +4240,97 @@
         },
         {
           "section": "Appendix B \u2014 reproducing",
-          "line": 1420,
+          "line": 1419,
           "key": "iters_main",
-          "ctx": "tifact lists each overlap. Per run family, every run at {{iters_main}} iterations (the sweep's centre is \u00a75's "
+          "ctx": "are the table's last rows. Per run family, every run at {{iters_main}} iterations (the sweep's centre is \u00a75's "
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1581,
+          "line": 1580,
           "key": "iters_main",
           "ctx": "nt is read from the artifact named. Measurements are at {{iters_main}} training iterations unless a row says o"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1591,
+          "line": 1590,
           "key": "iters_main",
           "ctx": "r | | The release's configuration, the paper (Table S9, {{iters_main}}) and the checkpoint's own tag state thr"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1602,
+          "line": 1601,
           "key": "iters_main",
           "ctx": " on its in-sample arena rises by {{x2_E_swap_2500}}% at {{iters_main}} iterations and {{x2_E_swap_10k}}% at {{"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1802,
+          "line": 1801,
           "key": "iters_main",
           "ctx": "t.** Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterations (the `{{h2h_arm_ckp"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1808,
+          "line": 1807,
           "key": "iters_main",
           "ctx": ", and \u2020 marks a diverged row (\u00a75.3). **This table is at {{iters_main}} iterations and \u00a75's by-horizon table at"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1957,
+          "line": 1956,
           "key": "iters_main",
           "ctx": "ies, independent against shared-trunk ensembles, all at {{iters_main}} iterations. Shares are of the log impro"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2032,
+          "line": 2031,
           "key": "iters_main",
           "ctx": "nt = {{m68_nind}} 400-step trajectories, every model at {{iters_main}} iterations: the same \u03c3-versus-accuracy "
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2214,
+          "line": 2213,
           "key": "iters_main",
           "ctx": "erdict, {{mn_verdict}}, stands as a statement about the {{iters_main}}-iteration budget (\u00a75.2). Each row sets "
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2215,
+          "line": 2214,
           "key": "iters_main",
           "ctx": "_n_better_word}} configurations that beat the centre at {{iters_main}} iterations against the centre trained t"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2216,
+          "line": 2215,
           "key": "iters_main",
           "ctx": "{{iters_main}} iterations against the centre trained to {{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterati"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2226,
+          "line": 2225,
           "key": "iters_main",
           "ctx": " = {{mn_nind_ins}}). Checkpoints: each configuration at {{iters_main}} iterations, the centre at the iteration"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2246,
+          "line": 2245,
           "key": "iters_main",
           "ctx": " at h = 8 on its in-sample arena: **{{x2_reading}}** at {{iters_main}} iterations ({{x2_E_swap_2500}}% {{x2_ci"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2257,
+          "line": 2256,
           "key": "iters_main",
           "ctx": "endent = {{ad20_nind}}. Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three se"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2275,
+          "line": 2274,
           "key": "iters_main",
           "ctx": "out pair ({{ad_nind}}). Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three se"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1721,
+          "line": 1720,
           "key": null,
           "ctx": "ation runs continue seeds already counted at 2,500 and would double-weight them. Figure 4(a) shows all \u2400 runs "
         }
@@ -4350,19 +4366,19 @@
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2029,
+          "line": 2028,
           "key": "m68_total_x_h128",
           "ctx": "8 | {{m68_sigma_x_h128}}\u00d7 | {{m68_acc_x_h128}}\u00d7 | {{m68_total_x_h128}}\u00d7 | {{m68_from_sigma_h128}}% | {{m68_fro"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2174,
+          "line": 2173,
           "key": "m49_mde_ratio",
           "ctx": "o **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde_ratio}}\u00d7, so the rule returns **{{m49_verdict}}"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2174,
+          "line": 2173,
           "key": "m49_mde_ratio",
           "ctx": " difference no artifact here tests and far below the {{m49_mde_ratio}}\u00d7 this comparison can resolve, and closi"
         }
@@ -4421,31 +4437,31 @@
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1937,
+          "line": 1936,
           "key": "m44_ratio_gain",
           "ctx": "o_lo}}\u2013{{r2_ratio_hi}}\u00d7 the shared-trunk arms', a **{{m44_ratio_gain}}\u00d7** improvement against a pre-registered"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1953,
+          "line": 1952,
           "key": "r2_total_x_h100",
           "ctx": " | **{{r2_sigma_x_h100}}\u00d7** | {{r2_acc_x_h100}}\u00d7 | {{r2_total_x_h100}}\u00d7 | **{{r2_from_sigma_h100}}%** | {{r2_f"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1980,
+          "line": 1979,
           "key": "m44_ratio_gain",
           "ctx": "n gives {{v3_cov_nominal1}}%. Better by a factor of {{m44_ratio_gain}}, and still not an interval. Building th"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2052,
+          "line": 2051,
           "key": "m44_ratio_gain",
           "ctx": "ly the amount \u00a76.8 measured for independence alone ({{m44_ratio_gain}}\u00d7 there, {{m68_ratio_gain}}\u00d7 here). **Th"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2174,
+          "line": 2173,
           "key": "m44_ratio_gain",
           "ctx": "esolve.** The overconfidence improvement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 mat"
         }
@@ -4716,133 +4732,133 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "d4_nind",
           "ctx": " {{d4_r}} {{d4_ci}} with realised error at n_independent = {{d4_nind}}, beats the forecast-index counter at ev"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "r45_nind_all",
           "ctx": "_rel_all}} of {{r45_n_dims}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajector"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1692,
+          "line": 1691,
           "key": "e5s_corrob_seeds",
           "ctx": "ance is not general**: {{e5s_corrob_clearing}} of {{e5s_corrob_seeds}} clear it, so the all-seeds criterion wo"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1759,
+          "line": 1758,
           "key": "perm_all_nind",
           "ctx": "8}} at h=128. Over all ten episodes (n_independent = {{perm_all_nind}}): {{perm_all_epi_p_h1}}, {{perm_all_epi"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1761,
+          "line": 1760,
           "key": "perm_all_nind",
           "ctx": "{perm_ins_nind}} in-sample trajectories are among the {{perm_all_nind}}. The null means explain why, and the e"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1826,
+          "line": 1825,
           "key": "m62_n_traj",
           "ctx": "e arena with power at that level, all ten episodes (n = {{m62_n_traj}} falling to {{m62_n_ep}}), the pooled co"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1828,
+          "line": 1827,
           "key": "d1n_nind",
           "ctx": "mpt.** The reading is coarse by construction: at h = 1 on {{d1n_nind}} trajectories a per-dimension coverage m"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1830,
+          "line": 1829,
           "key": "perm_all_nind",
           "ctx": "r whole trajectories, not binomial ones, on the same {{perm_all_nind}} trajectories as the counts beside them;"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1843,
+          "line": 1842,
           "key": "a2_nind",
           "ctx": " released checkpoint over all ten episodes, n_independent = {{a2_nind}} 400-step trajectories. | what is remov"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1855,
+          "line": 1854,
           "key": "a2_nind",
           "ctx": "r_within_ci}} | \u2014 | | everything within a trajectory \u2014 the {{a2_nind}} trajectory means alone | {{a2_r_between"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1858,
+          "line": 1857,
           "key": "a2_nind",
           "ctx": "now?** | [^stepcount]: Adjacent forecast steps on the same {{a2_nind}} trajectories are heavily dependent \u2014 st"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1866,
+          "line": 1865,
           "key": "a2_h1_npoints",
           "ctx": "ut information at all. Two things pointed there: the {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, whic"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1875,
+          "line": 1874,
           "key": "a2_nind",
           "ctx": "d it survives: {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}}, against the rule's pre-committed thres"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1885,
+          "line": 1884,
           "key": "a2_h1_npoints",
           "ctx": "has one column, so {{a2_h1_r}} is a correlation over {{a2_h1_npoints}} *trajectory-level* points and nothing w"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1890,
+          "line": 1889,
           "key": "a2_h1_npoints",
           "ctx": "bout **ranking whole rollouts at one step ahead**, on {{a2_h1_npoints}} points, and \u00a79 states it that way. **D"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1903,
+          "line": 1902,
           "key": "d1n_nind",
           "ctx": "{{e5_nind}}, where the released checkpoint's finding used {{d1n_nind}}. Subsampling four trajectories at a tim"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1905,
+          "line": 1904,
           "key": "e5_comp_nind",
           "ctx": "as a discharge:* on all ten episodes (n_independent = {{e5_comp_nind}} 400-step trajectories, **in-sample** fo"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1905,
+          "line": 1904,
           "key": "d1n_nind",
           "ctx": "d it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like. *Why the within-step"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2131,
+          "line": 2130,
           "key": "e7_nind",
           "ctx": "dent 400-step trajectories, where all ten episodes provide {{e7_nind}}**, {{q2_factor}}\u00d7 the present sample, b"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2256,
+          "line": 2255,
           "key": "ad20_nind",
           "ctx": "_n_ins}}. For the released checkpoint, all ten episodes: {{ad20_nind}} trajectories, n_independent = {{ad20_ni"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2256,
+          "line": 2255,
           "key": "ad20_nind",
           "ctx": "en episodes: {{ad20_nind}} trajectories, n_independent = {{ad20_nind}}. Checkpoints: Arm A and Arm B at {{iter"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2274,
+          "line": 2273,
           "key": "ad20_nind",
           "ctx": "n training data ({{x2_n_ins}} trajectories for our arms, {{ad20_nind}} for the released checkpoint) and the he"
         },
@@ -4942,7 +4958,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1596,
+          "line": 1595,
           "key": "d10_n_regimes",
           "ctx": "s split | | ***Measurements*** | | | | The data hold {{d10_n_regimes}} plateaus of achieved base velocity, {{d"
         }
@@ -4978,19 +4994,19 @@
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1520,
+          "line": 1519,
           "key": "appG_n_positive",
           "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1740,
+          "line": 1739,
           "key": "e2_fitted_runs",
           "ctx": "s nearly identical (Figure 4a). Rates are fitted on {{e2_fitted_runs}} of those {{n_runs}}: the {{e2_excluded_"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1743,
+          "line": 1742,
           "key": "e2_fitted_runs",
           "ctx": "uns of the collapse family and Figure 4(b) only the {{e2_fitted_runs}} the rate is fitted on, so the scatter a"
         }
@@ -5020,7 +5036,7 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1757,
+          "line": 1756,
           "key": "perm_faircoin",
           "ctx": "se to unremarkable. A fair coin centres the count at {{perm_faircoin}} of {{perm_ins_armB_ndim_h368}}; the dep"
         }
@@ -5065,31 +5081,31 @@
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1519,
+          "line": 1518,
           "key": "appG_n_rules",
           "ctx": "e rule reached git before its data on either reading. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1519,
+          "line": 1518,
           "key": "appG_n_lead",
           "ctx": "re its data on either reading. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1533,
+          "line": 1532,
           "key": "appG_n_rules",
           "ctx": "he same script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an appe"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2170,
+          "line": 2169,
           "key": "appG_n_rules",
           "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendi"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_n_out_r2a",
           "ctx": "on the released checkpoint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest st"
         }
@@ -5133,7 +5149,7 @@
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1903,
+          "line": 1902,
           "key": "e5_power_worst",
           "ctx": " {{e5_power_mean}}% of draws on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estima"
         }
@@ -5183,31 +5199,31 @@
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1648,
+          "line": 1647,
           "key": "q1_cap",
           "ctx": "ravels would be circular. The protocol capped the survey at {{q1_cap}} repositories; it stopped at {{q1_n_exam"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1664,
+          "line": 1663,
           "key": "e5s_span",
           "ctx": "e true noise level is **known** and varies by a factor of {{e5s_span}} across the input range, with a non-cons"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1688,
+          "line": 1687,
           "key": "e5s_span",
           "ctx": "**: a spread of {{e5s_mse_spread}}\u00d7 where the truth spans {{e5s_span}}\u00d7, and a slope below the {{e5s_slope_thr"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1697,
+          "line": 1696,
           "key": "e5s_span",
           "ctx": "ads of only {{e5s_nll_spread_range}}\u00d7 against the truth's {{e5s_span}}\u00d7. So what this experiment establishes i"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2130,
+          "line": 2129,
           "key": "q2_n_req",
           "ctx": "If the observed margin is the true one, settling it needs {{q2_n_req}} independent 400-step trajectories, wher"
         }
@@ -5246,25 +5262,25 @@
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1736,
+          "line": 1735,
           "key": "released_width",
           "ctx": "{{n_runs}} are at the released `rnn_hidden_size` of {{released_width}} and form the collapse family; the remai"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2172,
+          "line": 2171,
           "key": "released_width",
           "ctx": "rnn_hidden_size` {{m49_width}} against the released {{released_width}}, giving {{m49_matched_params}} state-pa"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2229,
+          "line": 2228,
           "key": "boot_n_exact4",
           "ctx": "ee-seed means, with its 95% interval: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair,"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2242,
+          "line": 2241,
           "key": "boot_n_exact4",
           "ctx": " and both interventions in each draw: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair,"
         },
@@ -5336,7 +5352,7 @@
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1826,
+          "line": 1825,
           "key": "m62_width_pct",
           "ctx": "n_ep}}), the pooled correlation's interval widens by {{m62_width_pct}}% and the double-demeaned one's width ch"
         }
@@ -5360,13 +5376,13 @@
       "locations": [
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1953,
+          "line": 1952,
           "key": "r2_from_acc_h100",
           "ctx": "2_total_x_h100}}\u00d7 | **{{r2_from_sigma_h100}}%** | {{r2_from_acc_h100}}% | | 128 | {{r2_sigma_x_h128}}\u00d7 | {{r2_"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_n_out_a2r",
           "ctx": "the same: fitting on Arm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the"
         }
@@ -5520,91 +5536,91 @@
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1645,
+          "line": 1644,
           "key": "q1_n_absent",
           "ctx": "The survey looked at {{q1_n_looked}} in all; the other {{q1_n_absent}} lack the construction, so the protocol "
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1669,
+          "line": 1668,
           "key": "e5s_seeds",
           "ctx": "n {{e5s_n_train}} points for {{e5s_iters}} iterations at {{e5s_seeds}} seeds. Nothing else differs between the"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1684,
+          "line": 1683,
           "key": "e5s_seeds",
           "ctx": " | {{e5s_nll_slope}} | *Ratios and slopes are means over {{e5s_seeds}} seeds; spreads are the range across the"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1691,
+          "line": 1690,
           "key": "e5s_seeds",
           "ctx": " median ratio of {{e5s_nll_ratio}}, and every one of the {{e5s_seeds}} seeds the rule was discharged over clea"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1694,
+          "line": 1693,
           "key": "e5s_seeds",
           "ctx": "mple. The rule's verdict stands as returned over its own {{e5s_seeds}} and is not re-opened by more seeds (\u00a78)"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1697,
+          "line": 1696,
           "key": "e5s_seeds",
           "ctx": "}}, a factor of {{e5s_nll_slope_spread_factor}}, and its {{e5s_seeds}} seeds recover \u03c3 spreads of only {{e5s_n"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1802,
+          "line": 1801,
           "key": "h2h_nseeds",
           "ctx": "r the released checkpoint.** Arm rows are the mean over {{h2h_nseeds}} seeds at {{iters_main}} training iterat"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1935,
+          "line": 1934,
           "key": "r2_n_shared",
           "ctx": "conditions}} conditions hold, against every one of the {{r2_n_shared}} shared-trunk seeds. At h = {{v2_deploy_"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1951,
+          "line": 1950,
           "key": "r2_from_acc_h8",
           "ctx": "8}}\u00d7 | {{r2_total_x_h8}}\u00d7 | {{r2_from_sigma_h8}}% | {{r2_from_acc_h8}}% | | 32 | {{r2_sigma_x_h32}}\u00d7 | {{r2_ac"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2009,
+          "line": 2008,
           "key": "m68_n_shared",
           "ctx": "onditions}} conditions hold, against every one of the {{m68_n_shared}} shared-trunk seeds. At h = {{v2_deploy_"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2115,
+          "line": 2114,
           "key": "e5_seeds",
           "ctx": "nts were first made on the released checkpoint alone. The {{e5_seeds}} ensemble-5 Arm A arms (\u00a76.6) reproduce "
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_nseeds",
           "ctx": "iers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on the released check"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_n_in",
           "ctx": "val on the paired change lying entirely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} str"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2209,
+          "line": 2208,
           "key": "d3x_nseeds",
           "ctx": "ing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} Arm A seeds share their training data a"
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1504,
+          "line": 1503,
           "key": null,
           "ctx": "tely.** `S-12` withdraws the claim that the Task 3 duplication rule was pre-registered; the control runs had f"
         }
@@ -5646,19 +5662,19 @@
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2063,
+          "line": 2062,
           "key": "v1_cap_ratio",
           "ctx": "unk sharing, the objective, and capacity (a factor of {{v1_cap_ratio}} in state-pathway parameters, as \u00a76.8's "
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2172,
+          "line": 2171,
           "key": "v1_cap_ratio",
           "ctx": "the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own tru"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2172,
+          "line": 2171,
           "key": "v1_cap_ratio",
           "ctx": "f {{m49_matched_ratio}} where \u00a76.8's contrast carried {{v1_cap_ratio}}. **With capacity held fixed the indepen"
         }
@@ -5687,13 +5703,13 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1765,
+          "line": 1764,
           "key": "perm_oos_holm_n",
           "ctx": " three arenas.** Holm\u2013Bonferroni over each arena's {{perm_oos_holm_n}} model \u00d7 horizon cells at \u03b1 = 0.05 rejec"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1830,
+          "line": 1829,
           "key": "perm_all_holm_n",
           "ctx": "d none survives Holm\u2013Bonferroni across the arena's {{perm_all_holm_n}} cells: the smallest is {{perm_all_holm_"
         }
@@ -5758,19 +5774,19 @@
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2091,
+          "line": 2090,
           "key": "tw_cells",
           "ctx": "y splice content, not by dataset size. In rollout, across {{tw_cells}} cells ({{tw_design}}, at two horizons o"
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2092,
+          "line": 2091,
           "key": "tw_cells",
           "ctx": "cs), contamination hurts in **{{tw_cc_cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} ("
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2097,
+          "line": 2096,
           "key": "tw_cells",
           "ctx": "t}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells: measured effects in opposite dir"
         },
@@ -5800,19 +5816,19 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1739,
+          "line": 1738,
           "key": null,
           "ctx": "nt = \u2400): \u2400, \u2400 and \u2400, with h = \u2400 at \u2400, between h=32's \u2400 and h=128's \u2400. Two larger arenas at four and five times"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2230,
+          "line": 2229,
           "key": null,
           "ctx": "checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: each model'"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2240,
+          "line": 2239,
           "key": null,
           "ctx": "checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: the held-ou"
         }
@@ -5876,25 +5892,25 @@
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1734,
+          "line": 1733,
           "key": "run_total",
           "ctx": "elow and they are not the same set. This project trained {{run_total}} runs for \u00a75\u2013\u00a77, besides the {{rt_pre_ru"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1744,
+          "line": 1743,
           "key": "run_total",
           "ctx": "r and \u00a76.3's quoted statistic describe the same set. The {{run_total}} runs, with the width column separating "
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1763,
+          "line": 1762,
           "key": "m64_h1_unit",
           "ctx": "ss belongs to the 400-step unit, not to the arena**: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} indepen"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1925,
+          "line": 1924,
           "key": "run_total",
           "ctx": "unt, against the {{rt_hours}} h Appendix B gives for the {{run_total}} runs of \u00a75\u2013\u00a77 it times (\u00a75.2's sweep an"
         }
@@ -5917,13 +5933,13 @@
       "locations": [
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2028,
+          "line": 2027,
           "key": "m68_from_acc_h100",
           "ctx": "total_x_h100}}\u00d7 | **{{m68_from_sigma_h100}}%** | {{m68_from_acc_h100}}% | | 128 | {{m68_sigma_x_h128}}\u00d7 | {{m6"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2030,
+          "line": 2029,
           "key": "m68_from_sigma_h368",
           "ctx": "| {{m68_acc_x_h368}}\u00d7 | {{m68_total_x_h368}}\u00d7 | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% | *On the he"
         }
@@ -5983,7 +5999,7 @@
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1954,
+          "line": 1953,
           "key": "r2_from_acc_h128",
           "ctx": " {{r2_total_x_h128}}\u00d7 | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}"
         }
@@ -6094,49 +6110,49 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "d3x_own_epi_cells",
           "ctx": "pisodes it does so in only {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} cells (\u00a76.7) | | Aleatoric \"remains low"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1981,
+          "line": 1980,
           "key": "d3x_own_epi_cells",
           "ctx": "he test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (\u00a76.7). --- ## Append"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2060,
+          "line": 2059,
           "key": "d3x_own_epi_cells",
           "ctx": "e test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (\u00a76.7). **What the arm"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2121,
+          "line": 2120,
           "key": "d3x_own_epi_cells",
           "ctx": "m, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2121,
+          "line": 2120,
           "key": "d3x_own_ale_cells",
           "ctx": "_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells, and two episodes is no"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2199,
+          "line": 2198,
           "key": "d3x_own_epi_cells",
           "ctx": "its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. And the ranking use th"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_ncells_a2r",
           "ctx": "rm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the band); fitting on the"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_ncells_r2a",
           "ctx": "oint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest statement of the gap is "
         }
@@ -6577,187 +6593,187 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1488,
+          "line": 1487,
           "key": "v2_diag_h",
           "ctx": "n1_label}} is {{mn_tf_ratio}}\u00d7 the centre's error at h = {{v2_diag_h}} | | M=32, N=8 gives the optimal trade-o"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1490,
+          "line": 1489,
           "key": "v2_diag_h",
           "ctx": "ding of Table S7 and trained with RWM's settings; at h = {{v2_diag_h}} every one is worse than predicting no c"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "v2_diag_h",
           "ctx": " constant (\u00a76.6, M-45). **Weaker per-dimension**: at h = {{v2_diag_h}} the {{d1n_epi_npos_h368}}-of-{{d1n_epi_"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "v2_diag_h",
           "ctx": "n rollout length, and {{d1n_epi_ratio_h368}}\u00d7 at the h = {{v2_diag_h}} diagnostic horizon; a per-horizon resca"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1598,
+          "line": 1597,
           "key": "v2_diag_h",
           "ctx": "th carry {{r30_tail_share}}% of its squared error at h = {{v2_diag_h}} as each dimension's own scale weights i"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1599,
+          "line": 1598,
           "key": "v2_diag_h",
           "ctx": "ectories (\u00a73) exposes | | The A/B relative-L1 gap at h = {{v2_diag_h}} (teacher forcing's error minus autoregr"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "v2_diag_h",
           "ctx": " typical episode | | Per state dimension, over the whole {{v2_diag_h}}-step forecast, the released checkpoint "
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "v2_diag_h",
           "ctx": "e released checkpoint is ahead at h = 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, \u00a71"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1601,
+          "line": 1600,
           "key": "v2_diag_h",
           "ctx": "o {{iters_long}} iterations, the absolute A/B gap at h = {{v2_diag_h}} narrows as both arms improve (held-out "
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1757,
+          "line": 1756,
           "key": "perm_worst_h",
           "ctx": " The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At "
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1757,
+          "line": 1756,
           "key": "v2_diag_h",
           "ctx": "erm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h36"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1763,
+          "line": 1762,
           "key": "v2_diag_h",
           "ctx": "claim, not any verdict: the arena is underpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1786,
+          "line": 1785,
           "key": "v2_diag_h",
           "ctx": "{{v2_deploy_h}} | rel-L1 h = {{v2_deploy_h}} | nRMSE h = {{v2_diag_h}} | rel-L1 h = {{v2_diag_h}} | |---|---|-"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1786,
+          "line": 1785,
           "key": "v2_diag_h",
           "ctx": "= {{v2_deploy_h}} | nRMSE h = {{v2_diag_h}} | rel-L1 h = {{v2_diag_h}} | |---|---|---|---|---|---|---|---|---|"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1808,
+          "line": 1807,
           "key": "v2_diag_h",
           "ctx": "{iters_long}}**, which is why Arm A's relative-L1 at h = {{v2_diag_h}} reads {{h2h_armA_l1_h368}} here and {{a"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1852,
+          "line": 1851,
           "key": "d2r_win_pos",
           "ctx": " step | **{{d2r_win}}** | {{d2r_win_ci}} | positive at {{d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_wi"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1852,
+          "line": 1851,
           "key": "d2r_win_n",
           "ctx": "in}}** | {{d2r_win_ci}} | positive at {{d2r_win_pos}} of {{d2r_win_n}} steps, median {{d2r_win_med}}[^stepcoun"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1858,
+          "line": 1857,
           "key": "d2r_win_pos",
           "ctx": "r_win_ci}} is the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}. The weakest figure acro"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1858,
+          "line": 1857,
           "key": "d2r_win_n",
           "ctx": "the statistic, and no P-value attaches to {{d2r_win_pos}}/{{d2r_win_n}}. The weakest figure across the {{d2r_n"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1873,
+          "line": 1872,
           "key": "d2r_win_n",
           "ctx": "at reinterprets the within-step control: it is a mean of {{d2r_win_n}} between-trajectory correlations, which "
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1955,
+          "line": 1954,
           "key": "v2_diag_h",
           "ctx": "}\u00d7 | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}}\u00d7 | {{r2_acc_x_h36"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1962,
+          "line": 1961,
           "key": "r2_sigma_x_lo_h",
           "ctx": "horizon, by {{r2_sigma_x_lo}}\u00d7 at its weakest (h = {{r2_sigma_x_lo_h}}) and {{r2_sigma_x_hi}}\u00d7 at its stronges"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1966,
+          "line": 1965,
           "key": "v2_diag_h",
           "ctx": "hod operates. At the open-loop diagnostic horizon of h = {{v2_diag_h}} the split reverses: {{r2_from_acc_h368}"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2030,
+          "line": 2029,
           "key": "v2_diag_h",
           "ctx": " | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag_h}} | {{m68_sigma_x_h368}}\u00d7 | {{m68_acc_x_h"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2162,
+          "line": 2161,
           "key": "q3_dom_h",
           "ctx": "ic computed after the verdict: the last horizon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_ste"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2163,
+          "line": 2162,
           "key": "q3_steps",
           "ctx": "zon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_steps}} steps and {{q3_dom_share}}% of the corr"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2168,
+          "line": 2167,
           "key": "v2_diag_h",
           "ctx": " threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released d"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2201,
+          "line": 2200,
           "key": "v2_diag_h",
           "ctx": "ry one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar"
         },
         {
           "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale and the per-dimension evidence (\u00a712)",
-          "line": 2201,
+          "line": 2200,
           "key": "v2_diag_h",
           "ctx": "* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2220,
+          "line": 2219,
           "key": "v2_diag_h",
           "ctx": "| h = {{v2_deploy_h}}, in-sample ({{mn_nind_ins}}) | h = {{v2_diag_h}}, held-out pair ({{mn_nind}}) | h = {{v2"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2220,
+          "line": 2219,
           "key": "v2_diag_h",
           "ctx": ") | h = {{v2_diag_h}}, held-out pair ({{mn_nind}}) | h = {{v2_diag_h}}, in-sample ({{mn_nind_ins}}) | |---|---"
         },
@@ -6793,7 +6809,7 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1739,
+          "line": 1738,
           "key": null,
           "ctx": " strongest at long horizon (\u2400 at h=128, \u2400 at h=368) and unremarkable at short (\u2400 at h=1). Both larger arenas i"
         }
@@ -6911,7 +6927,7 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1601,
+          "line": 1600,
           "key": "r46_o_ratio1",
           "ctx": "while the ratio does not shrink ({{r46_o_ratio0}}\u00d7 to {{r46_o_ratio1}}\u00d7, in-sample {{r46_i_ratio0}}\u00d7 to {{r46_"
         }
@@ -7021,13 +7037,13 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1594,
+          "line": 1593,
           "key": "win_len",
           "ctx": "at random, and adjacent windows share all but one of their {{win_len}} rows, so the released test loss is not "
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2029,
+          "line": 2028,
           "key": "m68_from_acc_h128",
           "ctx": "m68_total_x_h128}}\u00d7 | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag_h}} | {{m68_sigma_x_h368"
         }
@@ -7078,43 +7094,43 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "h2h_unit",
           "ctx": "s}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1763,
+          "line": 1762,
           "key": "long_unit_rows",
           "ctx": "rpowered at h = {{v2_diag_h}}, which needs the full {{long_unit_rows}} rows, and is no longer demonstrably so "
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1801,
+          "line": 1800,
           "key": "h2h_unit",
           "ctx": " episodes {{h2h_episodes}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{h2"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2224,
+          "line": 2223,
           "key": "h2h_unit",
           "ctx": "r (episodes {{h2h_episodes}}, {{mn_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2226,
+          "line": 2225,
           "key": "h2h_unit",
           "ctx": "a (the training episodes' {{mn_nind_ins}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2255,
+          "line": 2254,
           "key": "h2h_unit",
           "ctx": "rena: the training episodes' {{x2_n_ins}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{x2"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2264,
+          "line": 2263,
           "key": "h2h_unit",
           "ctx": "r (episodes {{h2h_episodes}}, {{ad_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{ad"
         },
@@ -7306,61 +7322,61 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1739,
+          "line": 1738,
           "key": null,
           "ctx": "r against the smallest.** At n_independent = \u2400 400-step trajectories on the held-out pair, in-sample for the c"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1743,
+          "line": 1742,
           "key": null,
           "ctx": "t any horizon. **That blindness belongs to the 400-step unit, not to the arena**: a \u2400-row unit gives \u2400 indepen"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1806,
+          "line": 1805,
           "key": null,
           "ctx": "asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two tra"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1823,
+          "line": 1822,
           "key": null,
           "ctx": "kpoint over all ten episodes, n_independent = \u2400 400-step trajectories. | what is removed | correlation | 95% C"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1885,
+          "line": 1884,
           "key": null,
           "ctx": "harge:* on all ten episodes (n_independent = \u2400 400-step trajectories, **in-sample** for these arms, which trai"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 1978,
+          "line": 1977,
           "key": null,
           "ctx": " on the same held-out arena of non-overlapping 400-step trajectories at n_independent = \u2400, over the same six h"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2012,
+          "line": 2011,
           "key": null,
           "ctx": " \u2400% | *On the held-out pair, n_independent = \u2400 400-step trajectories, every model at \u2400 iterations: the same \u03c3-"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2089,
+          "line": 2088,
           "key": null,
           "ctx": "m.** The out-of-sample arena has \u2400 independent 400-step trajectories (the n = \u2400 caveat of \u00a73). That is the bin"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2110,
+          "line": 2109,
           "key": null,
           "ctx": " the true one, settling it needs \u2400 independent 400-step trajectories, where all ten episodes provide \u2400**, \u2400\u00d7 t"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2148,
+          "line": 2147,
           "key": null,
           "ctx": "t gives \u2400 independent units at h = \u2400 where the 400-step unit gives \u2400 (Appendix K), and we did not rerun this p"
         }
@@ -7383,13 +7399,13 @@
       "locations": [
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1757,
+          "line": 1756,
           "key": "perm_worst_null",
           "ctx": " the dependence a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensio"
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1757,
+          "line": 1756,
           "key": "perm_null_hi",
           "ctx": "eserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena. "
         }
@@ -7610,103 +7626,103 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1495,
+          "line": 1494,
           "key": "d2r_ncontrols",
           "ctx": "{{e7_verdict}}: {{e7_verdict_gloss}}) \u2014 and survives {{d2r_ncontrols}} controls on forecast depth \u2014 the linear"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1716,
+          "line": 1715,
           "key": "e4_n_inert",
           "ctx": "s {{e4_n_terms}}.** Its completeness rests on the other {{e4_n_inert}} being inert with respect to \u03c3, so each "
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1729,
+          "line": 1728,
           "key": "e4_n_inert",
           "ctx": " {{e4_n_touch}} reach \u03c3: {{e4_touching}}. The remaining {{e4_n_inert}} produce a gradient of exactly zero, not"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1737,
+          "line": 1736,
           "key": "n_runs_offwidth",
           "ctx": "idth}} and form the collapse family; the remaining {{n_runs_offwidth}} are the capacity-matched arm of rule M-"
         },
         {
           "section": "Appendix M \u2014 section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column",
-          "line": 1828,
+          "line": 1827,
           "key": "m63_quant",
           "ctx": "1n_nind}} trajectories a per-dimension coverage moves in {{m63_quant}}-point steps, a limit the rule fixed bef"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1860,
+          "line": 1859,
           "key": "d2r_ncontrols",
           "ctx": "n_pos}}/{{d2r_win_n}}. The weakest figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so d"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1923,
+          "line": 1922,
           "key": "r2_n_indep",
           "ctx": "e. **The contrast, and why it is affordable.** Training {{r2_n_indep}} genuinely independent models from scrat"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1927,
+          "line": 1926,
           "key": "r2_n_indep",
           "ctx": "h each, {{r2_added_h_total}} h in total, and scored the {{r2_n_indep}} together as an ensemble **at evaluation"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1929,
+          "line": 1928,
           "key": "r2_n_indep",
           "ctx": "de and no new architecture, and the disagreement across {{r2_n_indep}} independently initialised *full models*"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 1994,
+          "line": 1993,
           "key": "m68_n_indep",
           "ctx": "able effect estimated in advance as well. **The arm.** {{m68_n_indep}} independently initialised full models, "
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 1997,
+          "line": 1996,
           "key": "m68_n_indep",
           "ctx": "d under that objective; two more were trained, and the {{m68_n_indep}} are scored together as an ensemble at e"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2008,
+          "line": 2007,
           "key": "m68_n_conditions_met",
           "ctx": "anch {{m68_branch}} of the four it names. All {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions "
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2008,
+          "line": 2007,
           "key": "m68_n_conditions",
           "ctx": "our it names. All {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, against every one of t"
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2080,
+          "line": 2079,
           "key": "bound_both_train",
           "ctx": "}}%. It is deliberately lower: we splice only the {{bound_both_train}} boundaries whose *both* sides are train"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2172,
+          "line": 2171,
           "key": "r2_n_indep",
           "ctx": "ectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2174,
+          "line": 2173,
           "key": "m49_n_conditions_met",
           "ctx": "}}\u00d7, so the rule returns **{{m49_verdict}}**: {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions "
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_ens",
           "ctx": "omputed. Multipliers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on th"
         },
@@ -7742,13 +7758,13 @@
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1872,
+          "line": 1871,
           "key": null,
           "ctx": "fore trained three Arm A arms at **ensemble size 5**, identical in every other setting, under a rule committed"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2095,
+          "line": 2094,
           "key": null,
           "ctx": "on the released checkpoint alone. The \u2400 ensemble-5 Arm A arms (\u00a76.6) reproduce the *direction* of \u00a76.6's findi"
         }
@@ -7778,7 +7794,7 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1757,
+          "line": 1756,
           "key": "perm_null_lo",
           "ctx": "}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model"
         }
@@ -7826,13 +7842,13 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1597,
+          "line": 1596,
           "key": "o12_rate_ratio",
           "ctx": "on the slower gradient path C-11 identifies, drifts {{o12_rate_ratio}}\u00d7 slower than `log_delta_logstd`; extrap"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1978,
+          "line": 1977,
           "key": "r2_indep_ratio_h100",
           "ctx": "ir the interval.** The independent ensemble is {{r2_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} w"
         }
@@ -7873,9 +7889,39 @@
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2057,
+          "line": 2056,
           "key": "m68_indep_ratio_h100",
           "ctx": "ot repair the interval.** The combined arm is {{m68_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} w"
+        }
+      ]
+    },
+    {
+      "value": "593",
+      "n_locations": 2,
+      "same_quantity_candidate": true,
+      "fails_build": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "FINDINGS_LEDGER.md, on disk",
+        "results/task_d2_recalibration.json"
+      ],
+      "keys": [
+        "d2_ale_c_lo",
+        "ledger_kb"
+      ],
+      "locations": [
+        {
+          "section": "6.7 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
+          "line": 1009,
+          "key": "d2_ale_c_lo",
+          "ctx": "d2_epi_cov368_hi}}%. On the aleatoric term a scalar of {{d2_ale_c_lo}}\u2013{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}"
+        },
+        {
+          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1504,
+          "key": "ledger_kb",
+          "ctx": "hind it is either decoration or an instruction to open a {{ledger_kb}} KB ledger, so here is the table. It is "
         }
       ]
     },
@@ -7970,55 +8016,55 @@
         },
         {
           "section": "Appendix C \u2014 what testing the untested claims would require",
-          "line": 1428,
+          "line": 1427,
           "key": "orig_n_tested",
           "ctx": "tested claims would require Appendix D's table marks {{orig_n_tested}} claims tested and the rest not. \"Not te"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1741,
+          "line": 1740,
           "key": "e2_excluded_10k",
           "ctx": "ted on {{e2_fitted_runs}} of those {{n_runs}}: the {{e2_excluded_10k}} 10,000-iteration runs continue seeds al"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1934,
+          "line": 1933,
           "key": "m44_n_conditions_met",
           "ctx": "em. **The rule returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions "
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1935,
+          "line": 1934,
           "key": "m44_n_conditions",
           "ctx": "_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions hold, against every one of t"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2019,
+          "line": 2018,
           "key": "m68_n_dir",
           "ctx": "s improve there against **all three** seeds. It holds at {{m68_n_dir}} of {{m68_n_horizons}} horizons, so the "
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2019,
+          "line": 2018,
           "key": "m68_n_horizons",
           "ctx": "t **all three** seeds. It holds at {{m68_n_dir}} of {{m68_n_horizons}} horizons, so the looser per-seed readin"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2153,
+          "line": 2152,
           "key": "q3_n_pairs",
           "ctx": " applied to them but not by the checkpoint (\u00a73). Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order an"
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2174,
+          "line": 2173,
           "key": "m49_n_conditions",
           "ctx": "{m49_verdict}}**: {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions hold, and the ratio threshol"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3_nhoriz",
           "ctx": "se, over the same {{d3x_nind}} held-out trajectories and {{d3_nhoriz}} horizons. The statistic the rule govern"
         }
@@ -8138,13 +8184,13 @@
         },
         {
           "section": "Appendix K \u2014 the per-dimension permutation tests behind \u00a76.5",
-          "line": 1763,
+          "line": 1762,
           "key": "m64_oos_n_h1",
           "ctx": " not to the arena**: a {{m64_h1_unit}}-row unit gives {{m64_oos_n_h1}} independent units on the same two episo"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2029,
+          "line": 2028,
           "key": "m68_from_sigma_h128",
           "ctx": " {{m68_acc_x_h128}}\u00d7 | {{m68_total_x_h128}}\u00d7 | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag"
         }
@@ -8204,7 +8250,7 @@
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1717,
+          "line": 1716,
           "key": "e4_batch",
           "ctx": "t to \u03c3, so each term is computed alone on one real batch ({{e4_batch}} windows from the training episodes, at "
         }
@@ -8227,13 +8273,13 @@
       "locations": [
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2028,
+          "line": 2027,
           "key": "m68_from_sigma_h100",
           "ctx": "{m68_acc_x_h100}}\u00d7 | {{m68_total_x_h100}}\u00d7 | **{{m68_from_sigma_h100}}%** | {{m68_from_acc_h100}}% | | 128 | {"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2030,
+          "line": 2029,
           "key": "m68_from_acc_h368",
           "ctx": "{m68_total_x_h368}}\u00d7 | {{m68_from_sigma_h368}}% | {{m68_from_acc_h368}}% | *On the held-out pair, n_independen"
         }
@@ -8297,31 +8343,31 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1596,
+          "line": 1595,
           "key": "d10_extra_ep",
           "ctx": "d10_per_ep_word}} per episode with a third in episode {{d10_extra_ep}}; the command itself is not recorded, an"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1715,
+          "line": 1714,
           "key": "e4_n_terms",
           "ctx": ".3's derivation covers two terms, and the objective has {{e4_n_terms}}.** Its completeness rests on the other "
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1726,
+          "line": 1725,
           "key": "e4_n_terms",
           "ctx": "|---|---|---|---|---| {{e4_table}} {{e4_n_live}} of the {{e4_n_terms}} configured terms are live at all under "
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
-          "line": 1729,
+          "line": 1728,
           "key": "e4_n_terms",
           "ctx": "xtension` are zero because their dimensions are. Of the {{e4_n_terms}}, exactly {{e4_n_touch}} reach \u03c3: {{e4_t"
         },
         {
           "section": "Appendix P \u2014 rule M-68 in full: both fixes on the same models",
-          "line": 2026,
+          "line": 2025,
           "key": "m68_from_acc_h8",
           "ctx": "\u00d7 | {{m68_total_x_h8}}\u00d7 | {{m68_from_sigma_h8}}% | {{m68_from_acc_h8}}% | | 32 | {{m68_sigma_x_h32}}\u00d7 | {{m68_"
         }
@@ -8351,7 +8397,7 @@
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2075,
+          "line": 2074,
           "key": "arm_clean_windows",
           "ctx": "arm on {{arm_contam_windows}} windows, the clean {{arm_clean_windows}} plus {{arm_splices}} splices, and, beca"
         }
@@ -8513,19 +8559,19 @@
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2207,
+          "line": 2206,
           "key": "d3x_ncells",
           "ctx": "he absolute one. The verdict is **{{d3x_verdict}}**: of {{d3x_ncells}} governing cells, {{d3x_n_out}} have a 9"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2209,
+          "line": 2208,
           "key": "d3x_ncells",
           "ctx": ". \u00a76.7's caution applies here unchanged and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} "
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",
-          "line": 2209,
+          "line": 2208,
           "key": "d3x_ncells",
           "ctx": " and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} A"
         }
@@ -8631,31 +8677,31 @@
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1600,
+          "line": 1599,
           "key": "r45_rel_ho",
           "ctx": "ll}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}} on the held-out pair ({{r45_nind_ho}}),"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1776,
+          "line": 1775,
           "key": "c3_family",
           "ctx": "city.** Those {{ab_long_cells}} cells sit in a family of {{c3_family}} out-of-sample comparisons. All {{c3_bon"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1778,
+          "line": 1777,
           "key": "c3_family",
           "ctx": "_long}} still exclude zero at a Bonferroni level of 0.05/{{c3_family}}, and Holm\u2013Bonferroni rejects **{{c3_hol"
         },
         {
           "section": "Appendix N \u2014 section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control",
-          "line": 1903,
+          "line": 1902,
           "key": "e5_power_worst_h",
           "ctx": "s on average and on only {{e5_power_worst}}% at h={{e5_power_worst_h}}. That estimate is an **upper bound**, b"
         },
         {
           "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
-          "line": 1963,
+          "line": 1962,
           "key": "r2_sigma_x_hi_h",
           "ctx": "_h}}) and {{r2_sigma_x_hi}}\u00d7 at its strongest (h = {{r2_sigma_x_hi_h}}), the direction trunk-sharing predicts,"
         },
@@ -8751,49 +8797,49 @@
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
-          "line": 1472,
+          "line": 1471,
           "key": null,
           "ctx": " \u2400 is \u2400\u00d7 the centre's error at h = \u2400 | | M=32, N=8 gives the optimal trade-off between accuracy and training t"
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1583,
+          "line": 1582,
           "key": null,
           "ctx": "out pair the released checkpoint is ahead at h = 8 and level at h = \u2400 (R-45). One seed (seed \u2400, \u00a711) | | Over "
         },
         {
           "section": "Appendix H \u2014 findings not in the main text",
-          "line": 1585,
+          "line": 1584,
           "key": null,
           "ctx": "other trajectory's actions, Arm A's error at h = 8 on its in-sample arena rises by \u2400% at \u2400 iterations and \u2400% a"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1766,
+          "line": 1765,
           "key": null,
           "ctx": "| model | nRMSE h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = \u2400 | rel-L1 h = \u2400 | nRMSE h = \u2400 |"
         },
         {
           "section": "Appendix L \u2014 section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint",
-          "line": 1766,
+          "line": 1765,
           "key": null,
           "ctx": " h = 1 | rel-L1 h = 1 | nRMSE h = 8 | rel-L1 h = 8 | nRMSE h = \u2400 | rel-L1 h = \u2400 | nRMSE h = \u2400 | rel-L1 h = \u2400 |"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2226,
+          "line": 2225,
           "key": null,
           "ctx": "he readings** are Arm A's, under the swap at h = 8 on its in-sample arena: **\u2400** at \u2400 iterations (\u2400% \u2400) and at"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2230,
+          "line": 2229,
           "key": null,
           "ctx": "| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: ea"
         },
         {
           "section": "Appendix V \u2014 rule X2: whether our models respond to the action they are given",
-          "line": 2240,
+          "line": 2239,
           "key": null,
           "ctx": "| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: th"
         }
@@ -8922,25 +8968,25 @@
         },
         {
           "section": "Appendix I \u2014 the PETS lineage of the bounded \u03c3 head, and how often its descendants substitute the objective",
-          "line": 1636,
+          "line": 1635,
           "key": "q1_n_keep",
           "ctx": "that one only in an optional value-aware mode; the other {{q1_n_keep}} keep PETS's likelihood (`results/q1_pet"
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2081,
+          "line": 2080,
           "key": "bound_total",
           "ctx": "ining episodes, because {{bound_touch_holdout}} of the {{bound_total}} between the ten full episodes put held-"
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2093,
+          "line": 2092,
           "key": "tw_cc_cluster_helped",
           "ctx": "cluster_hurt}}** of {{tw_cells}} and helps in {{tw_cc_cluster_helped}} (Figure 6a). The control is inert, diff"
         },
         {
           "section": "Appendix Q \u2014 what the spliced windows cost: the contaminated arm and the duplication control (\u00a77.4)",
-          "line": 2097,
+          "line": 2096,
           "key": "tw_cc_cluster_helped",
           "ctx": "'s {{dup_cost_pct}}%, and improves rollout in {{tw_cc_cluster_helped}} of {{tw_cells}} cells: measured effects"
         }
@@ -8976,7 +9022,7 @@
         },
         {
           "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2156,
+          "line": 2155,
           "key": "q3_c_ratio",
           "ctx": "ch rollout is penalised more. The multipliers differ by {{q3_c_ratio}}\u00d7 across horizons, so the design could h"
         }

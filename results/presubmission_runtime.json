@@ -978,5 +978,121 @@
    "overlapping_logged_jobs": [],
    "overlap_s": 0
   }
- ]
+ ],
+ "x1_part_c": {
+  "what": "rule X1's Part C runs (runs/queue_round2.txt), outside n_runs and wall_clock_s above",
+  "sources": [
+   "runs/queue_round2.txt",
+   "runs/queue_round2.log (gitignored; times copied here)",
+   "results/baseline_run_rssm_tf_x1v*_seed0.json",
+   "docs/presubmission/x1_partc_cpu_jobs.json"
+  ],
+  "n_runs": 2,
+  "wall_clock_s": 15170.464580034999,
+  "by_family": {
+   "rssm_tf_x1v1": {
+    "n_runs": 1,
+    "wall_clock_s": 7592.927243058,
+    "mean_s": 7592.927243058
+   },
+   "rssm_tf_x1v2": {
+    "n_runs": 1,
+    "wall_clock_s": 7577.537336976999,
+    "mean_s": 7577.537336976999
+   }
+  },
+  "n_runs_overlapped": 1,
+  "runs": [
+   {
+    "run": "x1_x1v1_s0",
+    "rule": "X1",
+    "family": "rssm_tf_x1v1",
+    "seed": 0,
+    "start": "2026-10-02T12:27:21+05:30",
+    "end": "2026-10-02T14:34:02+05:30",
+    "wall_clock_s": 7592.927243058,
+    "artifact": "results/baseline_run_rssm_tf_x1v1_seed0.json",
+    "overlapping_logged_jobs": [
+     {
+      "job": "build-and-check pass (t2end)",
+      "overlap_s": 66,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3e1)",
+      "overlap_s": 64,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3e1b)",
+      "overlap_s": 63,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3e45_1)",
+      "overlap_s": 62,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3e45_2)",
+      "overlap_s": 61,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i4_1)",
+      "overlap_s": 61,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i4_2)",
+      "overlap_s": 60,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i5_1)",
+      "overlap_s": 61,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i5_2)",
+      "overlap_s": 60,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i6_1)",
+      "overlap_s": 60,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i6_2)",
+      "overlap_s": 60,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i7b_1)",
+      "overlap_s": 61,
+      "basis": "exact end, late start"
+     },
+     {
+      "job": "build-and-check pass (t3i7b_2)",
+      "overlap_s": 60,
+      "basis": "exact end, late start"
+     }
+    ],
+    "overlap_s": 799
+   },
+   {
+    "run": "x1_x1v2_s0",
+    "rule": "X1",
+    "family": "rssm_tf_x1v2",
+    "seed": 0,
+    "start": "2026-10-02T14:34:02+05:30",
+    "end": "2026-10-02T16:40:27+05:30",
+    "wall_clock_s": 7577.537336976999,
+    "artifact": "results/baseline_run_rssm_tf_x1v2_seed0.json",
+    "overlapping_logged_jobs": [],
+    "overlap_s": 0
+   }
+  ]
+ }
 }

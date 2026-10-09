@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1333 values substituted from 98 artifacts. -->
+     1336 values substituted from 98 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -1191,7 +1191,7 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (272 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (274 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 and Appendix E give the lead time for all 23; 22 are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1480,8 +1480,7 @@ then 9 teacher-forced and 9 autoregressive baseline runs
 (7.9 h and 7.0 h), read from `results/presubmission_runtime.json`. They
 are outside the total above, whose remainder that paragraph describes as released-width runs, which
 the baselines are not. Of these, 8 overlapped other CPU work a session logged,
-which inflates their wall clock and changes no weight; the artifact lists each overlap. Per run family,
-every run at 2,500 iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
+which inflates their wall clock and changes no weight; the artifact lists each overlap. Rule X1's Part C (§5.3) ran 2 more teacher-forced RSSM runs from a second queue, 4.2 hours, which are in neither total; 1 of them overlapped CPU work a session logged. They are the table's last rows. Per run family, every run at 2,500 iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
 
 | run family | runs | hours per run, mean | runs that overlapped other CPU work |
 |---|---|---|---|
@@ -1499,6 +1498,8 @@ every run at 2,500 iterations (the sweep's centre is §5's Arm A, whose runs are
 | MLP, autoregressive (§5.3) | 3 | 0.06 | 0 |
 | RSSM, autoregressive (§5.3) | 3 | 1.53 | 0 |
 | transformer, autoregressive (§5.3) | 3 | 0.74 | 0 |
+| RSSM, teacher-forced, PlaNet's KL settings (rule X1, §5.3) | 1 | 2.11 | 1 |
+| RSSM, teacher-forced, DreamerV2's layer-normalised cell (rule X1, §5.3) | 1 | 2.10 | 0 |
 
 ## Appendix C — what testing the untested claims would require
 
@@ -1579,7 +1580,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 590 KB ledger, so here is the table. It is generated from
+or an instruction to open a 593 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
