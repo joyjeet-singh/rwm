@@ -27,8 +27,8 @@
     {
       "n": "4b",
       "name": "shipped bundles carry the current paper's structure",
-      "pass": false,
-      "detail": "2 bundles x 3 files, appendix order and reference list compared; supplementary_anon.zip (the reviewer's copy) ships a different appendix order in PAPER.md (ABCDEFGHIJKL vs ABCDEFGHIJKL)"
+      "pass": true,
+      "detail": "2 bundles x 3 files, appendix order and reference list compared; all match"
     },
     {
       "n": "5b",
@@ -49,7 +49,7 @@
       "detail": "21 abstract keys; asserted-but-absent-from-body none; same quantity at two aggregations in the abstract none"
     }
   ],
-  "n_pass": 6,
+  "n_pass": 7,
   "n_run": 8,
   "n_not_run": 0,
   "n": 8
