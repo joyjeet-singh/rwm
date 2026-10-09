@@ -8419,7 +8419,7 @@ Every 3-seed mean, in both metrics and at both checkpoints, is within 0.93% of z
 almost insensitive to the stale pairing, so the model card's untested sentence that a consumer feeding
 actions the other way "will get materially worse numbers" is not borne out for these checkpoints.
 **Evidence** `RUN` `results/alignment_by_horizon.json`; `SRC` `scripts/alignment_by_horizon.py`, `scripts/alignment_defect_ci.py`.
-**Status** CONFIRMED · **Relevance** CONTRIB
+**Status** SUPERSEDED IN PART by S-21 and R-79 — the released checkpoint's half stands as measured; the Arm A half was computed through a rollout that scored one trajectory's forecast against four trajectories' truths, and is withdrawn and re-measured · **Relevance** CONTRIB
 
 ### R-77 — The sweep and baseline evaluators averaged nRMSE per trajectory where section 3.1 pools it; pooled, no held-out alongside reading changes (post hoc) · **NEW**
 **Post hoc** (round 2, analysis N2). Not pre-registered; no discharged rule is re-opened and no committed
@@ -8627,3 +8627,82 @@ h = 32.
 **Final reading: NOT RESCUED BY THE SETTINGS TRIED.**
 **Evidence** `RUN` `results/rssm_diagnostics.json`, `results/baseline_run_rssm_tf_x1v1_seed0.json`, `results/baseline_run_rssm_tf_x1v2_seed0.json`; `SRC` `scripts/rssm_diagnostics.py`.
 **Status** CONFIRMED · **Relevance** METHOD
+
+### S-21 — "Our own checkpoints barely feel the stale pairing" · **NEW**
+**Retracts** `R-76`, its Arm A half: the claim that our checkpoints are almost insensitive to the stale pairing, and the conclusion it drew about the model card
+**What is retracted:** R-76's title clause "our own checkpoints barely feel it", and its paragraph saying that every
+3-seed mean, in both metrics and at both checkpoints, is within 0.93% of zero, "so the model card's untested sentence that
+a consumer feeding actions the other way 'will get materially worse numbers' is not borne out for these checkpoints".
+§7.2 and the model card printed two of those figures, at h = 1 and h = 368 for the 10,000-iteration checkpoints.
+
+**Why: they were never a measurement of our models.** `scripts/alignment_defect_ci.py`'s `rollout()` unpacked
+`pred, *_ = model.rollout(...)`. The released checkpoint's rollout returns a tuple, so that took its prediction. Our
+models' `RWMEnsemble.rollout` returns the prediction tensor itself, so the same line took the tensor's **first
+trajectory**, and numpy compared that one forecast with all four held-out trajectories' truths. Three of the four
+units were unrelated pairs, whose mismatch swamped any effect of the action. Under the causal pairing that path
+gave Arm A a relative-L1 error of 0.92 to 1.40 at every checkpoint, arena and horizon tested, where the
+sweep evaluator gives 0.06 to 0.48 for the same checkpoints and trajectories (at 10,000 iterations, held-out
+pair, h = 1: 0.9365 against 0.1447). Taking the tensor whole reproduces the sweep evaluator to
+1.1e-08 (`docs/presubmission/round3/r0_defect_check.py`, causal pairing only).
+
+**What replaces it:** `R-79`, the same comparison measured correctly. Before any corrected figure existed, the
+criterion for keeping the claim was fixed and committed: every corrected 3-seed mean within ±1.00% of zero, in both
+metrics, at both checkpoints and all six horizons (`docs/presubmission/round3/DECISIONS.md`,
+`R0-arm-a-rollout-defect`). It is not met: 22 of 24 means lie outside it, the largest
++32.32% (nRMSE form 1, 10,000 iterations, h = 368).
+
+**What is not retracted:** R-76's half on the released checkpoint. `alignment_defect_ci.json` regenerates
+byte-identical after the fix, and every field of `alignment_by_horizon.json` outside its Arm A block is unchanged.
+S-20 and everything it rests on are unaffected, since they concern the released checkpoint only.
+
+**Who found it:** round 3's preflight (R0, P2). It found Arm A's h = 1 error in `alignment_by_horizon.json` far above
+the sweep evaluator's for the same checkpoints and trajectories. The user ruled "Fix, re-measure, then X2"
+on 2026-10-09 (`docs/presubmission/round3/DECISIONS.md`).
+**Evidence** `RUN` `results/alignment_by_horizon.json` (`scripts/alignment_by_horizon.py`, `scripts/alignment_defect_ci.py`).
+**Status** RETRACTED · **Relevance** METHOD
+
+### R-79 — Our own checkpoints do feel the stale pairing, from h = 100 on, where the released checkpoint's cost is concentrated at short horizons (post hoc; corrects R-76) · **NEW**
+**Post hoc** (round 3, R0; a correction of round 2's N1). Not pre-registered; it re-opens no rule and changes no verdict.
+It replaces R-76's Arm A half, which `S-21` withdraws; R-76's released-checkpoint half stands.
+
+**What was measured.** R-76's comparison on our Arm A, now measured correctly. It is the overstatement
+err(offset 0) / err(offset 1) − 1, where offset 0 is the stale pairing and offset 1 the causal one. The trajectories
+are the held-out pair's 4 non-overlapping 400-step trajectories, and the horizons are cumulative over steps 1..h.
+The statistic, rollout and exact 256-resample cluster bootstrap are `scripts/alignment_defect_ci.py`'s, imported.
+`rollout()` now takes a returned tensor whole and asserts its shape. `scripts/alignment_by_horizon.py` now asserts,
+before writing any Arm A figure, that Arm A under the causal pairing reproduces `results/mn_compute_matched.json`'s
+3-seed mean relative-L1 at every horizon (max difference 1.1e-08 at 2,500 iterations and
+7.2e-09 at 10,000). Seeds 0-2; at 2,500 the checkpoints are
+`runs/armA_seed{s}/weights_2500.pt`, at 10,000 `runs/armA_seed{s}_10k/weights_10000.pt`.
+
+**Arm A, held-out pair:** 3-seed mean (relative-L1 / nRMSE form 1), then each seed's relative-L1 with its exact interval:
+
+| h | 2,500: 3-seed mean | 2,500: seeds 0, 1, 2 | 10,000: 3-seed mean | 10,000: seeds 0, 1, 2 |
+|---|---|---|---|---|
+| 1 | +1.82% / +0.64% | +1.92% [-3.60, +21.83], +1.81% [-2.55, +8.81], +1.73% [-2.40, +7.71] | -0.99% / -2.05% | +1.90% [-4.95, +42.41], +1.26% [-2.49, +17.36], -6.13% [-19.48, +27.39] |
+| 8 | +3.56% / +1.34% | +4.53% [-0.65, +30.30], +2.68% [-1.00, +14.11], +3.46% [-0.99, +21.27] | +4.70% / +2.10% | +6.14% [-4.09, +81.02], +3.57% [-2.34, +49.07], +4.39% [-11.08, +90.73] |
+| 32 | +5.62% / +6.99% | +8.48% [+0.15, +42.81], +5.15% [+0.32, +29.20], +3.24% [-0.97, +20.48] | +13.94% / +21.07% | +14.08% [-1.92, +105.09], +11.62% [-1.25, +92.58], +16.14% [-3.95, +114.75] |
+| 100 | +6.90% / +8.99% | +11.75% [+3.71, +35.86], +5.36% [+2.05, +16.19], +3.60% [+0.28, +10.92] | +16.62% / +22.91% | +15.89% [+2.61, +68.23], +16.60% [+2.15, +76.20], +17.38% [+0.80, +73.33] |
+| 128 | +8.00% / +10.47% | +13.33% [+5.09, +36.01], +6.48% [+2.42, +16.39], +4.17% [+0.07, +10.94] | +17.98% / +24.09% | +16.76% [+3.06, +66.98], +18.60% [+3.92, +75.16], +18.58% [+2.33, +73.22] |
+| 368 | +7.94% / +11.02% | +12.27% [+2.66, +34.34], +5.65% [+1.02, +15.55], +5.91% [+0.88, +16.13] | +22.67% / +32.32% | +20.99% [+3.95, +72.45], +23.87% [+3.96, +86.27], +23.15% [+3.81, +76.69] |
+
+**Reading.**
+- Every seed's relative-L1 interval excludes zero from h = 100 at 10,000 iterations and from
+  h = 100 at 2,500, and is positive there.
+- At h = 1 and 8 no seed's interval lies above zero.
+- At 10,000 iterations the 3-seed mean rises from -0.99% at h = 1 to
+  +22.67% at h = 368, its largest, and is +16.62% at h = 100.
+- At 2,500 it is +1.82% at h = 1 and +7.94% at h = 368.
+- The shape is the reverse of the released checkpoint's on the same trajectories (R-76): its cost is largest at
+  h = 32 (+47.72%) and smallest at h = 368
+  (+7.88%).
+- These are 4 independent trajectories, and the 3-seed mean carries no interval of its own here.
+
+**What it changes.**
+- §7.2 and the model card print this artifact's 10,000-iteration figures at h = 1 and h = 368 through keys
+  `stale_armA_rel_h1` and `stale_armA_rel_h368`, so they now print the measured values.
+- R-76's inference about the model card's earlier sentence goes with `S-21`.
+- Round 3's rule X2 was planned on the premise that our models barely notice the shift. It keeps its design
+  (ruling V1), and its motivation cites this entry instead.
+**Evidence** `RUN` `results/alignment_by_horizon.json`; `SRC` `scripts/alignment_by_horizon.py`, `scripts/alignment_defect_ci.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

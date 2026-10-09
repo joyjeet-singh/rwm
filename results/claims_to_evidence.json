@@ -3379,7 +3379,7 @@
       "id": "R-76",
       "claim": "The alignment defect's cost depends on the horizon, and our own checkpoints barely feel ",
       "relevance": "CONTRIB",
-      "status": "CONFIRMED",
+      "status": "SUPERSEDED IN PART by S-21 and R-79 \u2014 the released checkpoint's half stands as measured; the Arm A half was computed through a rollout that scored one trajectory's forecast against four trajectories' truths, and is withdrawn and re-measured",
       "evidence": [
         "RUN",
         "SRC"
@@ -3494,6 +3494,40 @@
         "scripts/rssm_diagnostics.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "S-21",
+      "claim": "\"Our own checkpoints barely feel the stale pairing\"",
+      "relevance": "METHOD",
+      "status": "RETRACTED",
+      "evidence": [
+        "RUN"
+      ],
+      "artifacts": [
+        "results/alignment_by_horizon.json",
+        "scripts/alignment_by_horizon.py",
+        "scripts/alignment_defect_ci.py"
+      ],
+      "retracts": [
+        "R-76"
+      ]
+    },
+    {
+      "id": "R-79",
+      "claim": "Our own checkpoints do feel the stale pairing, from h = 100 on, where the released check",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/alignment_by_horizon.json",
+        "results/mn_compute_matched.json",
+        "scripts/alignment_by_horizon.py",
+        "scripts/alignment_defect_ci.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -3502,8 +3536,8 @@
     "D": 36,
     "M": 83,
     "O": 14,
-    "R": 78,
-    "S": 20,
+    "R": 79,
+    "S": 21,
     "X": 17
   },
   "retraction_classes": {
@@ -3514,6 +3548,7 @@
       "S-11",
       "S-13",
       "S-14",
+      "S-21",
       "S-20"
     ],
     "framing": [
@@ -3533,7 +3568,7 @@
       "S-06",
       "S-07"
     ],
-    "n_superseded": 20,
+    "n_superseded": 21,
     "reclassified": [
       {
         "target": "S-20",
