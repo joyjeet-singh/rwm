@@ -126,6 +126,8 @@ EXCLUDE = {"scripts/build_model_card.py", "scripts/build_supplementary.py",
            "docs/SUBMISSION_CHECKLIST.md", "docs/DEFERRED.md",
            # The real-hash map behind the submission's commit labels (D1).
            AB.MAP_FILE}
+# Round 3, R5 (H6): the gitignored reports reproduce.sh writes; make_anon_bundle.py holds the list.
+EXCLUDE |= set(AB.UNTRACKED_REPORTS)
 INCLUDE_FILES = ["FINDINGS_LEDGER.md", "LOSS_ASSEMBLY.md", "reproduce.sh", "setup.sh",
                  "requirements.txt", "run_remaining.sh", "run_10k.sh", "run_10k_d1.sh",
                  "run_control.sh", "run_nll.sh", "PAPER.md", "PAPER.tex", "PAPER.template.md"]
@@ -212,6 +214,12 @@ def main():
         "cannot reproduce: " + ", ".join(sorted(_ignored)))
 
     log = anon_git_log()
+    # Round 3, R5 (H6): counted, not derived from the header's length. "len(lines) - 7" against an
+    # eight-line header reported one commit too many, and "len(files) + 1" left out one of the two
+    # members added below the file list (the transcript and this log), one entry too few.
+    n_commits = sum(1 for l in log.splitlines() if l and not l.startswith("#"))
+    assert n_commits == int(subprocess.run(["git", "rev-list", "--count", "HEAD"], capture_output=True,
+                                           text=True, check=True).stdout), n_commits
     problems, total = [], 0
     for f in files:
         try:
@@ -229,7 +237,7 @@ def main():
     print("=" * 78)
     print(f"  candidate files      : {len(files)}")
     print(f"  scanned for identity : {total}")
-    print(f"  anonymised git log   : {len(log.splitlines()) - 7} commits, "
+    print(f"  anonymised git log   : {n_commits} commits, "
           f"{'CLEAN' if not log_hits else 'HITS: ' + str(log_hits)}")
     if problems:
         print(f"\n  !! {len(problems)} file(s) carry identifying material; ZIP NOT written:\n")
@@ -268,13 +276,15 @@ def main():
         z.write(TRANSCRIPT_SRC, arcname=os.path.join("supplementary", TRANSCRIPT_DST))
         size += os.path.getsize(TRANSCRIPT_SRC)
         z.writestr("supplementary/GIT_LOG_ANONYMISED.txt", log)
+        n_entries = len(z.namelist())
+    assert n_entries == len(files) + 2, (n_entries, len(files))     # the files, the transcript, the log
     open(OUT, "wb").write(buf.getvalue())
     zb = os.path.getsize(OUT)
-    print(f"\n  wrote {OUT}: {len(files) + 1} entries, "
+    print(f"\n  wrote {OUT}: {n_entries} entries, "
           f"{zb / 1e6:.1f} MB compressed from {size / 1e6:.1f} MB")
     print(f"  TMLR limit is 100 MB: {'OK' if zb < 100e6 else 'OVER LIMIT'}")
-    json.dump({"files": len(files) + 1, "bytes": zb, "uncompressed": size,
-               "identifying_hits": 0, "commits_in_log": len(log.splitlines()) - 7},
+    json.dump({"files": n_entries, "bytes": zb, "uncompressed": size,
+               "identifying_hits": 0, "commits_in_log": n_commits},
               open(os.path.join(R.RESULTS, "supplementary_manifest.json"), "w"), indent=2)
     return 0
 

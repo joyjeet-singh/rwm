@@ -69,3 +69,16 @@ cache/
 # pre-submission programme: local copies of the original papers (plan S1). Not ours to
 # redistribute, so never committed.
 docs/presubmission/sources/
+
+# Round 3, R5 (H6): the reports reproduce.sh stages write that nothing reads -- no script, no
+# artifact under results/, not paper_numbers.py. Both bundlers exclude the same list
+# (scripts/make_anon_bundle.py, UNTRACKED_REPORTS), and it asserts this block covers it.
+results/evidence_summary_report.txt
+results/input_set_audit_report.txt
+results/insample_framing_report.txt
+results/m62_episode_clustering_report.txt
+results/m62_65_cache_gate_report.txt
+results/m63_per_dimension_coverage_report.txt
+results/m65_gaussian_nominal_report.txt
+results/m64_free_gate_report.txt
+results/m64_short_units_report.txt

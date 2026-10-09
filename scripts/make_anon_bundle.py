@@ -288,6 +288,16 @@ SHIP_FROM_EXCLUDED = ("docs/presubmission/ORIGINAL_SPECS.md",
                       "docs/presubmission/verify_original_specs.py")
 
 
+# Round 3, R5 (H6): the reports reproduce.sh stages write that nothing reads -- no script, no artifact
+# under results/, not paper_numbers.py. They are gitignored rather than committed, so a tree that has
+# run the pipeline holds them and a clean clone does not; staged, they made a clone's bundle larger
+# than the tree's, as results/_regenerated.txt once did. build_supplementary.py excludes the same
+# list, and collect() asserts that .gitignore covers every name in it.
+UNTRACKED_REPORTS = tuple(f"results/{n}_report.txt" for n in (
+    "evidence_summary", "input_set_audit", "insample_framing", "m62_episode_clustering",
+    "m62_65_cache_gate", "m63_per_dimension_coverage", "m65_gaussian_nominal", "m64_free_gate",
+    "m64_short_units"))
+
 # This file and its sibling carry the very patterns they search for.
 EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            # The cover statement is addressed to the action editor, not to a
@@ -347,7 +357,7 @@ EXCLUDE = {"scripts/make_anon_bundle.py", "scripts/build_supplementary.py",
            "docs/E4_AUTHOR_CONTACT.md", "docs/E4_REPLY_DRAFT.md",
            "docs/E6_ARCHIVAL.md", "scripts/e4_reply_draft.py",
            # The real-hash map behind the submission's commit labels (D1).
-           MAP_FILE}
+           MAP_FILE} | set(UNTRACKED_REPORTS)
 SKIP_SUFFIX = (".pt", ".pyc", ".bak", ".prebak", ".t2bak", ".t3bak", ".t4bak",
                ".tmpbak", ".appbak", ".c2bak", ".d1bak", ".rev2bak", ".zip", ".pdf")
 BINARY_SUFFIX = (".png", ".jpg", ".gz")
@@ -432,6 +442,13 @@ def collect():
     assert not ignored, (
         "these staged files are gitignored, so a clean clone does not have them and "
         "the bundle is not reproducible from one: " + ", ".join(sorted(ignored)))
+    # The converse, for the reports excluded above: each must be gitignored, or a run leaves it
+    # untracked and unignored again (round 3, R5, H6).
+    ig = subprocess.run(["git", "check-ignore", "--stdin"], input="\n".join(UNTRACKED_REPORTS),
+                        capture_output=True, text=True)
+    assert set(ig.stdout.split()) == set(UNTRACKED_REPORTS), (
+        "UNTRACKED_REPORTS names a report .gitignore does not cover: "
+        + ", ".join(sorted(set(UNTRACKED_REPORTS) - set(ig.stdout.split()))))
     return files
 
 
