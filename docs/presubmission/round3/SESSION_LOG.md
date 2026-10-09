@@ -220,3 +220,22 @@ Body words (round2/t6_words.py): 21,075 (R0: 20,771). Above ruling V8's 20,771 b
 Abstract words / numerals (C12.1): 369 / 22.
 Next: R3. The abstract has one word of room under C12.1. R3's A10 clause is longer than the clause it replaces, so R3 must trim the abstract's wording, never its findings. X2 selected case R (R1's log).
 Decisions for user: none.
+
+## R3 — 2026-10-09 14:20 — Opus 5.5 (the plan assigns high effort) — status: PARTIAL
+Commits: 254adca [R3][E2]; then [R3][E3+abstract], [R3][G2-G3], [R3][build] (this push).
+Done:
+- **Item 1, E2.** A7 (contribution 7), A8 (§3.1), §3.2's row (all ten episodes (20); its verdict is computed from the curve), and §7.2 leads with the all-ten curve in both metrics. The new keys adh20_* assert every pattern the sentences state. Re-anchored: C25.2 "overstates the released checkpoint's error" → "What the stale pairing costs depends on the horizon"; its figure pattern now also covers adh20_*.
+- **Item 2, E3, case R.**
+  - §7.2's A9 is written without the "indifference" premise R-79 disproved.
+  - Appendix H gains one row, and Appendix V gives three generated tables plus the context figures. Appendix V's captions bind arena, n and checkpoints.
+  - The model card gives X2's figure in one sentence. The README needed no change.
+- **Item 3, the abstract.**
+  - A10 is tightened: "short-horizon error", "from 100 steps … unresolved".
+  - A13 prints e7_step_r3 (+0.470). §12 now pairs +0.470 with d4_r, asserted to equal e7_r_dis at three decimals.
+  - C12.1: 369/370 words and 23/26 numerals. The 340-word aim is NOT met.
+- **Item 4, guards.** C27.1 (G2, alignment-arena) and C27.2 (G3, action-response) are registered with self-tests and scope entries; both pass and catch their plants.
+- **Gates.** Two builds byte-identical; 65/65 claims and 65/65 caught; 32 kinds, 0 unclassified; xref 0 suspect; 61 pages. `part_f_gate` 6/7: check 6 passes, check 4b fails on the stale bundles (R8).
+- **Typed numerals in Appendix V** were bound (x2_k_lo, x2_k_hi, boot_n_exact4, boot_n_mc) or reworded. Appendix U's "256" and "20,000" now use the same keys.
+Next: **R3 item 5, the rule-10 audit** of A7, A8, A10, A13, the §3.2 row, the §7.2 paragraph and A9 against every reading; then R3's COMPLETE entry. After that, R4 to R9.
+Body words: not re-measured this entry (R2 ended at 21,075). Abstract: 369 / 23.
+Decisions for user: none.
