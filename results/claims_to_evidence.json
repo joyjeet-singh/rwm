@@ -3566,12 +3566,43 @@
         "scripts/action_sensitivity.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "C-16",
+      "claim": "C-13 names the wrong table: the paper's 2,500 iterations are in Table S9, not Table S7 (",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "EXT"
+      ],
+      "artifacts": [],
+      "retracts": []
+    },
+    {
+      "id": "D-37",
+      "claim": "D-12's range and the paper's are the same measurement at different action alignments; th",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/a2_trajectory_level_control.json",
+        "results/step3_report.txt",
+        "results/step4_0a_results.json",
+        "scripts/a2_trajectory_level_control.py",
+        "scripts/paper_numbers.py",
+        "scripts/step4_0a_restate.py",
+        "src/score_reference.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
-    "C": 15,
-    "D": 36,
+    "C": 16,
+    "D": 37,
     "M": 85,
     "O": 14,
     "R": 79,

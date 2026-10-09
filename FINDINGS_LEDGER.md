@@ -8859,3 +8859,48 @@ Every other cell (interventions I1-I4, horizons 1, 8, 32 and 100, both arenas, w
 artifact's `results`, `per_seed` and `context`.
 **Evidence** `RUN` `results/action_sensitivity.json`; `SRC` `scripts/action_sensitivity.py`.
 **Status** CONFIRMED · **Relevance** METHOD
+
+### C-16 — C-13 names the wrong table: the paper's 2,500 iterations are in Table S9, not Table S7 (corrects C-13) · **NEW**
+**Corrects** C-13, whose table row and evidence line name "Table S7". C-13's claim is unchanged: the release
+states three training lengths, 500, 2,500 and 5,000. Only the table number was wrong.
+
+In arXiv:2501.10100v1, Table S7 is "Baseline architecture", the MLP, RSSM and transformer baselines (Appendix A-B2).
+The 2,500 is the "max iterations" row of Table S9, "RWM training parameters" (Appendix A-C1), which also holds the
+forecast horizon and the forecast decay α. The text extraction this was checked against is `docs/presubmission/sources/2501.10100v1.txt`
+(Table S9 at line 818, the 2,500 at line 827); like the other source texts it is gitignored.
+
+The same table number appears in five other entries, for things Table S7 does not hold:
+- C-12's table, O-12's table and R-26 name Table S7 for the 2,500 count. It is Table S9's.
+- C-08's evidence line reads the forecast decay from "Table S7". It is in Table S9. C-08 is already
+  superseded by C-09.
+- C-03 says "Table S7 of the paper describes a single base". The RWM's own architecture, a single GRU base
+  with MLP heads, is Table S6, "RWM architecture". C-03's claim stands with Table S6 in place of Table S7.
+
+None of these entries is edited. The paper cites Table S9 for the iteration count.
+**Evidence** `EXT` arXiv:2501.10100v1, Appendix A-C1, Table S9; Appendix A-B, Tables S6 and S7.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### D-37 — D-12's range and the paper's are the same measurement at different action alignments; the paper uses their mean (corrects D-12) · **NEW**
+**Corrects** D-12, which gives per-episode difficulty as 0.601 to 1.674 citing `step3_report.txt` without
+naming its action alignment, where §6.7 gives 0.562 to 1.591. Both score the released checkpoint the same way, and differ
+only in the action alignment (D-13):
+- **D-12's range** (`results/step3_report.txt`, Step 3, written by `src/score_reference.py`). For each episode,
+  20 trajectories of 400 steps drawn inside it (sampling seed 7), rolled out from step 32. The score is relative-L1
+  per trajectory over the remaining steps, averaged over the 20. The rollout uses `action_offset=0`, the stale
+  alignment the released evaluation code uses (B-05). `scripts/step4_0a_restate.py` reruns the same loop at both
+  alignments; its offset-0 column, `per_episode_e["0"]` in `results/step4_0a_results.json`, reproduces Step 3's
+  ten values.
+- **The paper's range** (`results/a2_trajectory_level_control.json`, `h1_diagnostic.episode_difficulty_range`,
+  written by `scripts/a2_trajectory_level_control.py`). For each episode, the mean of `per_episode_e["0"]` and
+  `per_episode_e["1"]`: the same measurement at the stale alignment and at the causal one, averaged. The script's
+  comment (`scripts/a2_trajectory_level_control.py:265`) and the artifact's `difficulty_source` call the two
+  keys "seeds". They are the two action offsets.
+
+**The paper uses the second.** `scripts/paper_numbers.py` reads `d12_lo` and `d12_hi` from the A2 artifact, and
+§6.7 partials that per-episode quantity out at h = 1. At the causal alignment alone (`per_episode_e["1"]`) the range
+is 0.523 to 1.585. D-12's two conclusions hold at either alignment
+(`results/step4_0a_results.json`, `d12_retest`): the spread is 2.78-fold at the stale alignment and
+3.03-fold at the causal one, and the correlation with commanded speed is +0.004 and
++0.088. D-12 is not edited.
+**Evidence** `RUN` `results/step3_report.txt`, `results/step4_0a_results.json`, `results/a2_trajectory_level_control.json`; `SRC` `src/score_reference.py`, `scripts/step4_0a_restate.py`, `scripts/a2_trajectory_level_control.py`, `scripts/paper_numbers.py`.
+**Status** CONFIRMED · **Relevance** METHOD

@@ -86,9 +86,9 @@ Two headline claims were formed, promoted and then **retracted on this project's
 
 | kind | count | with measured cost |
 |---|---|---|
-| `C-` paper says one thing, code does another | 15 | see the variance collapse (`C-10`, `C-11`) and the absent decay factor (`C-09`) |
+| `C-` paper says one thing, code does another | 16 | see the variance collapse (`C-10`, `C-11`) and the absent decay factor (`C-09`) |
 | `B-` defects in the released pipeline | 5 | `B-01`'s cost measured by the contamination arm and its duplication control (`R-56`) |
-| `D-` dataset properties and paper-verification findings | 36 | `D-14`'s four defects, all one class; `D-15`'s three typed measurements |
+| `D-` dataset properties and paper-verification findings | 37 | `D-14`'s four defects, all one class; `D-15`'s three typed measurements |
 | `M-` methodological findings | 85 | `M-49` pre-registers the capacity-matched test of §6.10, with the MDE that says what it can and cannot resolve |
 | `R-` measured results | 79 | — |
 | `O-` open questions | 14 | — |
