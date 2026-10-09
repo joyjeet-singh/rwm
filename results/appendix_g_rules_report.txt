@@ -21,8 +21,9 @@ APPENDIX G — PRE-REGISTERED RULES
   M-75         +29.38 h  REPRODUCES                   The architecture claim, baselines teacher-fo
   M-76         +29.38 h  RWM AHEAD OF ALL THREE       The architecture claim, baselines trained au
   M-80          +0.06 h  NOT RESCUED BY THE SETTINGS  X1: is our RSSM's long-horizon failure a mat
+  M-84          +0.12 h  RESPONDS TO THE ACTION at 2, X2: do our trained models condition their fo
   S-12          -2.94 h  RETRACTED                    "Task 3's duplication rule was pre-registere
 ====================================================================================================
-  22 rules, 22 with a computed lead time
+  23 rules, 23 with a computed lead time
   wrote results/appendix_g_rules.json
-  wrote docs/APPENDIX_G_RULES.md (22 rules, each its ledger block verbatim)
+  wrote docs/APPENDIX_G_RULES.md (23 rules, each its ledger block verbatim)

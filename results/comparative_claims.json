@@ -472,7 +472,7 @@
       "where": "Appendix C / D / E",
       "says": "checkable row by row",
       "pass": true,
-      "detail": "28 source tables, 28 rendered; source rows [17, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 3, 7, 7, 7, 15, 7, 13, 23, 17, 3, 8, 10, 12, 11, 7, 7] vs row separators [18, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 4, 7, 7, 7, 15, 8, 14, 24, 18, 3, 8, 10, 12, 11, 7, 7]"
+      "detail": "28 source tables, 28 rendered; source rows [17, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 3, 7, 7, 7, 15, 7, 13, 24, 17, 3, 8, 10, 12, 11, 7, 7] vs row separators [18, 7, 10, 8, 5, 7, 7, 5, 5, 7, 7, 4, 4, 7, 7, 7, 15, 8, 14, 25, 18, 3, 8, 10, 12, 11, 7, 7]"
     },
     {
       "id": "C24.1",

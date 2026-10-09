@@ -4535,20 +4535,18 @@
     },
     {
       "value": "21",
-      "n_locations": 7,
+      "n_locations": 6,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 7,
+      "n_substituted": 6,
       "sources": [
-        "results/appendix_g_rules.json",
         "results/claims_to_evidence.json (scripts/ledger_check.py)",
         "results/step0_regimes.json",
         "results/task1_calibration.json",
         "results/task_d2_recalibration.json"
       ],
       "keys": [
-        "appG_n_positive",
         "cal_nll_npos",
         "d10_n_regimes",
         "d2_epi_cov368_hi",
@@ -4586,12 +4584,6 @@
           "ctx": "word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record ("
         },
         {
-          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1594,
-          "key": "appG_n_positive",
-          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
-        },
-        {
           "section": "Appendix H \u2014 findings not in the main text",
           "line": 1683,
           "key": "d10_n_regimes",
@@ -4601,18 +4593,17 @@
     },
     {
       "value": "22",
-      "n_locations": 9,
+      "n_locations": 4,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 9,
+      "n_substituted": 4,
       "sources": [
         "results/appendix_g_rules.json",
         "results/step5_arm*.json"
       ],
       "keys": [
-        "appG_n_lead",
-        "appG_n_rules",
+        "appG_n_positive",
         "e2_fitted_runs"
       ],
       "locations": [
@@ -4623,34 +4614,10 @@
           "ctx": "pacity-matched arm excluded from every rate, and the {{e2_fitted_runs}} the rate is fitted on. **Two different"
         },
         {
-          "section": "8. Method",
-          "line": 1207,
-          "key": "appG_n_rules",
-          "ctx": "ime for {{f4_n_rules}} of them and Appendix E for all {{appG_n_rules}}; {{f4_n_positive}} of Figure 1's are po"
-        },
-        {
-          "section": "11. Limitations",
-          "line": 1316,
-          "key": "appG_n_rules",
-          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendi"
-        },
-        {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1593,
-          "key": "appG_n_rules",
-          "ctx": " one, which is what a lead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
-        },
-        {
-          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1593,
-          "key": "appG_n_lead",
-          "ctx": "ead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
-        },
-        {
-          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1607,
-          "key": "appG_n_rules",
-          "ctx": "he same script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an appe"
+          "line": 1594,
+          "key": "appG_n_positive",
+          "ctx": "{appG_n_lead}} with a computed lead time, of which {{appG_n_positive}} are positive and {{appG_n_negative}} ne"
         },
         {
           "section": "Appendix J \u2014 the \u03c3 = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate",
@@ -4663,12 +4630,6 @@
           "line": 1830,
           "key": "e2_fitted_runs",
           "ctx": "uns of the collapse family and Figure 4(b) only the {{e2_fitted_runs}} the rate is fitted on, so the scatter a"
-        },
-        {
-          "section": "Appendix R \u2014 the limitations in full (\u00a711)",
-          "line": 2257,
-          "key": "appG_n_rules",
-          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendi"
         }
       ]
     },
@@ -4704,16 +4665,19 @@
     },
     {
       "value": "23",
-      "n_locations": 2,
+      "n_locations": 8,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 2,
+      "n_substituted": 8,
       "sources": [
+        "results/appendix_g_rules.json",
         "results/task_b2_epistemic.json",
         "results/task_d3_cross_model.json"
       ],
       "keys": [
+        "appG_n_lead",
+        "appG_n_rules",
         "b2_epi_npos_h1",
         "d3x_n_out_r2a"
       ],
@@ -4723,6 +4687,42 @@
           "line": 737,
           "key": "b2_epi_npos_h1",
           "ctx": "temic ordering looked like chance at short horizon, {{b2_epi_npos_h1}} of {{b2_epi_ndim_h1}} dimensions at h=1"
+        },
+        {
+          "section": "8. Method",
+          "line": 1207,
+          "key": "appG_n_rules",
+          "ctx": "ime for {{f4_n_rules}} of them and Appendix E for all {{appG_n_rules}}; {{f4_n_positive}} of Figure 1's are po"
+        },
+        {
+          "section": "11. Limitations",
+          "line": 1316,
+          "key": "appG_n_rules",
+          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendi"
+        },
+        {
+          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1593,
+          "key": "appG_n_rules",
+          "ctx": " one, which is what a lead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed "
+        },
+        {
+          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1593,
+          "key": "appG_n_lead",
+          "ctx": "ead time is here to establish. {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which {{a"
+        },
+        {
+          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
+          "line": 1607,
+          "key": "appG_n_rules",
+          "ctx": "he same script that generates this table. Quoting all {{appG_n_rules}} in full here would add pages to an appe"
+        },
+        {
+          "section": "Appendix R \u2014 the limitations in full (\u00a711)",
+          "line": 2257,
+          "key": "appG_n_rules",
+          "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendi"
         },
         {
           "section": "Appendix T \u2014 whether the per-horizon multipliers transfer between models (rule M-69, \u00a76.7)",

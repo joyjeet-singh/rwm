@@ -1249,9 +1249,9 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (270 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (272 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix E for all 22; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over; Appendix E adds every rule since. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 gives the lead time for 8 of them and Appendix E for all 23; 7 of Figure 1's are positive and 1 is not. Figure 1 plots the set it was drawn over; Appendix E adds every rule since. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
 
 **Eight claims withdrawn on evidence**, and six framings withdrawn rather than numbers, out of 21 superseded entries kept in the record (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framings withdrawn is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.5). Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called its strongest result.
 
@@ -1360,7 +1360,7 @@ rerun we did not do. This limits the per-dimension evidence only; the aggregate 
 one test, not forty-five coupled ones (§6.6).
 
 **No family-wide correction is applied across our own pre-registered rules.** There are
-22 of them with per-rule verdicts (Appendix E), each reported against the thresholds it was committed with (one, `S-12`, is withdrawn as a
+23 of them with per-rule verdicts (Appendix E), each reported against the thresholds it was committed with (one, `S-12`, is withdrawn as a
 pre-registration because it reached git after its data, §8); a reader who prefers a corrected family threshold can apply it
 from that count.
 
@@ -1647,7 +1647,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 578 KB ledger, so here is the table. It is generated from
+or an instruction to open a 590 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1678,6 +1678,7 @@ existed. This is the same computation Figure 1 plots.
 | `M-75` | The architecture claim, baselines teacher-forced, as the original trains them | — | +29.4 h | results/baselines_verdict.json | REPRODUCES |
 | `M-76` | The architecture claim, baselines trained autoregressively, as RWM is | — | +29.4 h | results/baselines_verdict.json | RWM AHEAD OF ALL THREE |
 | `M-80` | X1: is our RSSM's long-horizon failure a matter of how its forecast is read, of its training settings, or of neither? | — | +3 min | results/rssm_diagnostics.json | NOT RESCUED BY THE SETTINGS TRIED |
+| `M-84` | X2: do our trained models condition their forecasts on the action they are given? | — | +7 min | results/action_sensitivity.json | RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations |
 | `S-12` | "Task 3's duplication rule was pre-registered" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |
 
 `M-69`'s discharge commit was amended 2 minutes after it was created, so the
@@ -1688,8 +1689,8 @@ store either reading. Both readings are
 positive, so the rule reached git before the data that tested it existed on either one, which is
 what a lead time is here to establish.
 
-22 rules, 22 with a computed lead time, of which
-21 are positive and 1 negative. **The negative one is
+23 rules, 23 with a computed lead time, of which
+22 are positive and 1 negative. **The negative one is
 kept deliberately.** `S-12` withdraws the claim that the Task 3 duplication rule was
 pre-registered; the control runs had finished before any threshold reached git. A table that
 dropped it would be asserting exactly what the ledger retracts.
@@ -1702,7 +1703,7 @@ the replacement, committed before the replacement's statistic was computed. A ta
 
 **What each rule says, in its own committed words** is in the supplementary material, as
 `docs/APPENDIX_G_RULES.md` — every rule's text unabridged, generated from the ledger by the same
-script that generates this table. Quoting all 22 in full here would add pages to an
+script that generates this table. Quoting all 23 in full here would add pages to an
 appendix whose job is to be checkable at a glance, and quoting them in part would ship
 quotations ending mid-sentence. The table is the claim; the supplementary is the evidence.
 
@@ -2366,7 +2367,7 @@ degenerate by construction (`M-71`).
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.5), the out-of-sample arena's 4 independent trajectories cannot reject at any effect size, and the larger arenas can and do not: over all ten episodes the smallest P in the family is 0.0037 against a threshold of 0.001667. Resolving it at h = 368 needs more episodes than the released dataset contains, not a better test. At h = 128 and below that is no longer true: a shorter unit gives 14 independent units at h = 100 where the 400-step unit gives 4 (Appendix K), and we did not rerun this permutation family there. This limits the *per-dimension* evidence only; the aggregate scalar the method applies is one test rather than forty-five coupled ones, and more strongly supported (§6.6).
 
-**No family-wide correction is applied across our own pre-registered rules.** There are 22 of them with per-rule verdicts (Appendix E), each reported against the thresholds it was committed with. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers a corrected family threshold can apply it from that count.
+**No family-wide correction is applied across our own pre-registered rules.** There are 23 of them with per-rule verdicts (Appendix E), each reported against the thresholds it was committed with. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers a corrected family threshold can apply it from that count.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it.** §6.8's contrast trains five models at five seeds and scores them together. Independently seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk, and greater capacity can inflate σ as well as shrink error. **Capacity is controlled separately.** Rule M-49 (Appendix E), committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132, a ratio of 0.9998 where §6.8's contrast carried 3.49. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
