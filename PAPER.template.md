@@ -1533,13 +1533,7 @@ existed. This is the same computation Figure 1 plots.
 |---|---|---|---|---|---|
 {{appG_table}}
 
-`M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so the
-rule's lead time depends on which timestamp is read: {{m69_lead_author}} by that commit's author
-time, {{m69_lead_regen}} by its committer time. The table above renders {{m69_lead_pub}}, the value
-`results/appendix_g_rules.json` holds; a clean rebuild regenerates that file from git and may
-store either reading. Both readings are
-positive, so the rule reached git before the data that tested it existed on either one, which is
-what a lead time is here to establish.
+`M-69`'s discharge commit was amended {{m69_amend_min}} minutes after it was created, so its lead time is {{m69_lead_author}} by that commit's author time and {{m69_lead_regen}} by its committer time. Both are positive, so the rule reached git before its data on either reading.
 
 {{appG_n_rules}} rules, {{appG_n_lead}} with a computed lead time, of which
 {{appG_n_positive}} are positive and {{appG_n_negative}} negative. **The negative one is
