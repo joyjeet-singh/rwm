@@ -253,7 +253,7 @@ Every 10,000-iteration checkpoint was cross-checked against the 2,500-iteration 
 
 - **Architecture.** GRU trunk, ensemble size 1, mean head plus bounded log-σ head, auxiliary contact and termination heads. Rebuilt from scratch, verified against the reference at 0.000e+00 on losses and gradients across 7 terms and 106 parameter tensors before training.
 - **Data.** The released ANYmal D dataset: 10,000 rows at 50 Hz, ten 20-second episodes. Trained on 7,687 episode-respecting windows from eight episodes; two held out.
-- **Action convention.** Row *t* holds the action that *produced* state *t*. These models are trained and evaluated under that causal pairing. The reference's *evaluation* path uses a stale action; ours does not. Fed the stale action instead, the three `autoregressive-10k` checkpoints' relative-L1 error changes by -0.22% at h = 1 and by +0.15% at h = 368 (their mean, on the two held-out episodes' 4 trajectories; `results/alignment_by_horizon.json`). The figure covers those three checkpoints only.
+- **Action convention.** Row *t* holds the action that *produced* state *t*. These models are trained and evaluated under that causal pairing. The reference's *evaluation* path uses a stale action; ours does not. Fed the stale action instead, the three `autoregressive-10k` checkpoints' relative-L1 error changes by -0.99% at h = 1 and by +22.67% at h = 368 (their mean, on the two held-out episodes' 4 trajectories; `results/alignment_by_horizon.json`). The figure covers those three checkpoints only.
 - **Normalisation.** States are normalised with the reference's stored mean and std. Actions are not normalised, matching the reference.
 
 ## Intended use

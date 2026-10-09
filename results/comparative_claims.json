@@ -160,7 +160,7 @@
       "where": "8 / BUILD_CHECKS",
       "says": "claims withdrawn on evidence**, and",
       "pass": true,
-      "detail": "claims withdrawn on evidence = 7 (7/Seven/seven); 3/3 sites agree"
+      "detail": "claims withdrawn on evidence = 8 (8/Eight/eight); 3/3 sites agree"
     },
     {
       "id": "C7.2",
@@ -176,7 +176,7 @@
       "where": "1 / 8",
       "says": "superseded entries, each beside the evidence",
       "pass": true,
-      "detail": "superseded entries = 20 (20); 2/2 sites agree"
+      "detail": "superseded entries = 21 (21); 2/2 sites agree"
     },
     {
       "id": "C6.1",
@@ -256,7 +256,7 @@
       "where": "8 / BUILD_CHECKS",
       "says": "The most consequential of the framings withdrawn",
       "pass": true,
-      "detail": "34 namings of 20 ledger retractions, each resolving to the ledger's class"
+      "detail": "36 namings of 21 ledger retractions, each resolving to the ledger's class"
     },
     {
       "id": "C11.1",
@@ -637,7 +637,7 @@
       },
       {
         "id": "C7.1",
-        "corruption": "{'_forced': 8}",
+        "corruption": "{'_forced': 9}",
         "caught": true
       },
       {
@@ -647,7 +647,7 @@
       },
       {
         "id": "C7.5",
-        "corruption": "{'_forced': 21}",
+        "corruption": "{'_forced': 22}",
         "caught": true
       },
       {

@@ -4206,15 +4206,14 @@
     },
     {
       "value": "20",
-      "n_locations": 45,
+      "n_locations": 43,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 2,
-      "n_substituted": 43,
+      "n_substituted": 41,
       "sources": [
         "results/a2_trajectory_level_control.json",
         "results/alignment_defect_ci.json",
-        "results/claims_to_evidence.json (scripts/ledger_check.py)",
         "results/e5_synthetic_sigma.json",
         "results/e7_free_baselines.json",
         "results/m62_episode_clustering.json",
@@ -4237,7 +4236,6 @@
         "e5s_corrob_seeds",
         "e7_nind",
         "m62_n_traj",
-        "n_superseded",
         "perm_all_nind",
         "r45_nind_all",
         "relale_all_nind",
@@ -4245,12 +4243,6 @@
         "t1_last_entry_n"
       ],
       "locations": [
-        {
-          "section": "1. Introduction",
-          "line": 49,
-          "key": "n_superseded",
-          "ctx": " withdrawn findings in the record.** The ledger keeps {{n_superseded}} superseded entries, each beside the evi"
-        },
         {
           "section": "1. Introduction",
           "line": 64,
@@ -4352,12 +4344,6 @@
           "line": 1169,
           "key": "ad20_nind",
           "ctx": "1 and {{ad_nrmse_traj}} in nRMSE. Over all ten episodes, {{ad20_nind}} independent trajectories, the sign reve"
-        },
-        {
-          "section": "8. Method",
-          "line": 1209,
-          "key": "n_superseded",
-          "ctx": "word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record ("
         },
         {
           "section": "9. Actionable lessons",
@@ -4549,13 +4535,14 @@
     },
     {
       "value": "21",
-      "n_locations": 5,
+      "n_locations": 7,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 5,
+      "n_substituted": 7,
       "sources": [
         "results/appendix_g_rules.json",
+        "results/claims_to_evidence.json (scripts/ledger_check.py)",
         "results/step0_regimes.json",
         "results/task1_calibration.json",
         "results/task_d2_recalibration.json"
@@ -4564,9 +4551,16 @@
         "appG_n_positive",
         "cal_nll_npos",
         "d10_n_regimes",
-        "d2_epi_cov368_hi"
+        "d2_epi_cov368_hi",
+        "n_superseded"
       ],
       "locations": [
+        {
+          "section": "1. Introduction",
+          "line": 49,
+          "key": "n_superseded",
+          "ctx": " withdrawn findings in the record.** The ledger keeps {{n_superseded}} superseded entries, each beside the evi"
+        },
         {
           "section": "6.3 Why the aleatoric head collapses: the optimum is \u03c3 = 0",
           "line": 816,
@@ -4584,6 +4578,12 @@
           "line": 1049,
           "key": "d2_epi_cov368_hi",
           "ctx": " target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%. On the aleatoric term a scalar of {{d"
+        },
+        {
+          "section": "8. Method",
+          "line": 1209,
+          "key": "n_superseded",
+          "ctx": "word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record ("
         },
         {
           "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",

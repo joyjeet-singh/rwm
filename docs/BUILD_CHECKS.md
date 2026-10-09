@@ -59,7 +59,7 @@ nothing about reproduction, and are never folded into the figure; counting them 
 *Formerly the paper's Appendix C, moved here in the referee revision. The text is as it stood
 there; only headings and cross-references that now point the other way were changed.*
 
-**The seven claims withdrawn on evidence, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards; and the size of the released evaluation's one-step action misalignment, measured on overlapping windows one of which carried most of the effect, withdrawn when intervals over independent trajectories made it small and its sign reversed across the ten episodes (S-20, reclassified by M-82 as withdrawn on evidence). **The six framings withdrawn**, as stated claims rather
+**The eight claims withdrawn on evidence, in order.** In order: a premise about forecast decay that turned out not to exist in the code; a framing of the released checkpoint as "clearly informative" that rested on an n=10 estimate we ourselves showed to be biased low; an aggregation artifact that inverted a published-model comparison in our favour, withdrawn when the gating checks we had written refuted it; a per-dimension comparison that turned out to be unmatched; the claim that σ is input-independent "in all four models", made against a table holding three; the phrase "the released checkpoint's uncertainty output", singular, when the checkpoint emits two and we had measured the one the method discards; the size of the released evaluation's one-step action misalignment, measured on overlapping windows one of which carried most of the effect, withdrawn when intervals over independent trajectories made it small and its sign reversed across the ten episodes (S-20, reclassified by M-82 as withdrawn on evidence); and the claim that our own checkpoints barely feel that misalignment, computed through a rollout that scored one trajectory's forecast against every trajectory's truth, withdrawn when the corrected measurement showed their error rising with the stale action at long horizons (S-21, withdrawn on evidence). **The six framings withdrawn**, as stated claims rather
 than as numbers, and generated from the ledger rather than listed here — a typed
 enumeration beside a generated count is the same defect as a typed count. This one was typed
 with two entries at a time when the ledger held
@@ -280,9 +280,9 @@ two vocabularies, so a reader comparing them could not tell whether the paper ha
 claims or thirteen.
 
 There is now one vocabulary and one source:
-- **claims withdrawn on evidence** (7);
+- **claims withdrawn on evidence** (8);
 - **framings withdrawn** (6);
-- **superseded entries** (20), which also include the early hypotheses closed as
+- **superseded entries** (21), which also include the early hypotheses closed as
   housekeeping.
 
 `scripts/ledger_check.py` classifies every S- entry into exactly one class and refuses to pass if

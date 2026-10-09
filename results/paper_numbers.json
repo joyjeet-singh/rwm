@@ -4489,7 +4489,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "571"
+    "value": "578"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5437,7 +5437,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 268
+    "value": 270
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -5509,23 +5509,23 @@
   },
   "n_retract_total": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": 13
+    "value": 14
   },
   "n_retractions": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": 7
+    "value": 8
   },
   "n_retractions_lower": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "seven"
+    "value": "eight"
   },
   "n_retractions_word": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "Seven"
+    "value": "Eight"
   },
   "n_retractions_word_lower": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": "seven"
+    "value": "eight"
   },
   "n_runs": {
     "source": "results/step5_arm*.json",
@@ -5537,7 +5537,7 @@
   },
   "n_superseded": {
     "source": "results/claims_to_evidence.json (scripts/ledger_check.py)",
-    "value": 20
+    "value": 21
   },
   "n_train_eps": {
     "source": "results/step5_armA_seed0.json (split)",
@@ -8693,11 +8693,11 @@
   },
   "stale_armA_rel_h1": {
     "source": "results/alignment_by_horizon.json",
-    "value": "-0.22"
+    "value": "-0.99"
   },
   "stale_armA_rel_h368": {
     "source": "results/alignment_by_horizon.json",
-    "value": "+0.15"
+    "value": "+22.67"
   },
   "stale_nrmse": {
     "source": "results/step4_0a_results.json",
