@@ -65,7 +65,25 @@ def baseline(arch, regime, spec):
     return trainer
 
 
+def x3(arm, fold):
+    """Round 4, rule X3: Arm A or Arm B at 2,500 iterations with another episode pair held out."""
+    def trainer(run_id, m, n, seed, iters):
+        assert (m, n) == (32, 8), "X3 changes the held-out episodes only; M and N stay (32, 8)"
+        cmd = [sys.executable, os.path.join(ROOT, "scripts", "step5_train.py"), "--arm", arm,
+               "--seed", str(seed), "--iters", str(iters), "--holdout", ",".join(fold)]
+        artifact = os.path.join(ROOT, "results", f"x3_run_arm{arm}_ho{''.join(fold)}_seed{seed}.json")
+        weights = os.path.join(ROOT, "runs", f"x3_arm{arm}_ho{''.join(fold)}_seed{seed}", f"weights_{iters}.pt")
+        expect = {"iterations": iters, "seed": seed, "rnn_hidden_size (width)": 256,
+                  "holdout_episodes": sorted(int(e) for e in fold), "arm": arm}
+        return cmd, artifact, weights, expect
+    return trainer
+
+
 TRAINERS = {"rwm": rwm}
+# Round 4, rule X3: 'x3-A-02' is Arm A with episodes 0 and 2 held out (four folds, two arms).
+for _arm in ("A", "B"):
+    for _fold in (("0", "2"), ("3", "4"), ("5", "6"), ("7", "9")):
+        TRAINERS[f"x3-{_arm}-{''.join(_fold)}"] = x3(_arm, _fold)
 for _a in ("mlp", "rssm", "transformer"):
     for _r in ("tf", "ar"):
         for _s in ("s7", "matched"):
@@ -80,7 +98,9 @@ FIELDS = {"iterations": lambda a, hp: hp.get("iterations"),
           "arch": lambda a, hp: a.get("arch"), "regime": lambda a, hp: a.get("regime"),
           "spec": lambda a, hp: a.get("spec"), "seed": lambda a, hp: a.get("seed"),
           "rnn_hidden_size (width)": lambda a, hp: hp.get("rnn_hidden_size"),
-          "n_params (width)": lambda a, hp: hp.get("n_params")}
+          "n_params (width)": lambda a, hp: hp.get("n_params"),
+          "holdout_episodes": lambda a, hp: hp.get("holdout_episodes"),
+          "arm": lambda a, hp: a.get("arm")}
 
 
 def check(artifact, weights, expect):

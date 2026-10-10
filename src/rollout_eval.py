@@ -444,5 +444,30 @@ def main():
     return results
 
 
+# --------------------------------------------------------------------------
+# rule X3's fixed folds (round 4). Appended at the end of the file so that no line
+# the ledger, docs/APPENDIX_G_RULES.md or a results/ artifact cites moves.
+# --------------------------------------------------------------------------
+def fold_split(holdout, strat_path=None):
+    """
+    The split for one of rule X3's folds: the given episodes held out as listed, nothing
+    drawn, every other episode trained on. Same dict as make_split(); make_split(seed=0)
+    stays the split of every run outside X3 ({1, 8}).
+    """
+    ho = sorted(int(e) for e in holdout)
+    assert len(ho) == 2 and len(set(ho)) == 2 and all(0 <= e < R.N_EPISODES for e in ho), \
+        f"bad fold {holdout}"
+    split = {"seed": 0, "method": "fixed fold (rule X3), not drawn",
+             "train_episodes": [e for e in range(R.N_EPISODES) if e not in ho],
+             "holdout_episodes": ho}
+    if strat_path and os.path.exists(strat_path):
+        with open(strat_path) as f:
+            strat = json.load(f)
+        split["episode_mean_speeds"] = {e: float(strat[str(e)]["mean_speed"])
+                                        for e in range(R.N_EPISODES)}
+        split["holdout_speeds"] = {e: split["episode_mean_speeds"][e] for e in ho}
+    return split
+
+
 if __name__ == "__main__":
     main()

@@ -17,6 +17,7 @@ instead.
 Usage:
   python scripts/step5_train.py --arm A --seed 0
   python scripts/step5_train.py --arm A --seed 0 --sweep --history 16 --forecast 8   # M-74
+  python scripts/step5_train.py --arm B --seed 0 --holdout 0,2                        # X3
 """
 
 import argparse
@@ -147,8 +148,20 @@ def main():
     ap.add_argument("--out-dir", default=None,
                     help="write the artifact and weights under this directory "
                          "(timing probe, differential test); default results/ and runs/")
+    # Rule X3 (round 4): the same Arm A / Arm B run with another pair of episodes held out.
+    # Default None is make_split(seed=0)'s {1, 8}, so every existing run is unchanged. The
+    # run and its artifact are named x3_..., outside every results/step5_*.json glob that
+    # paper_numbers.py and paper_figures.py read (the M-49 defect, as for the sweep).
+    ap.add_argument("--holdout", default=None,
+                    help="rule X3: hold out these two episodes (e.g. 0,2) instead of {1, 8}")
     args = ap.parse_args()
     teacher_forcing = args.arm == "B"
+    holdout = None
+    if args.holdout is not None:
+        holdout = sorted(int(x) for x in args.holdout.split(","))
+        assert not (args.sweep or args.contaminated or args.duplicated or args.tag
+                    or args.hidden is not None or args.loss_type != "mse" or args.ensemble != 1), \
+            "X3 changes the held-out episodes only: Arm A or B, faithful MSE, ensemble 1, released width, no tag"
     if args.sweep or args.history is not None or args.forecast is not None:
         assert args.sweep and args.history and args.forecast, \
             "--history and --forecast go together, and only with --sweep"
@@ -170,14 +183,18 @@ def main():
                           "same arm and seed")
         cfg["architecture_config"]["rnn_hidden_size"] = args.hidden
     data, episode_id = R.load_data(paths["csv"], verbose=False)
-    split = E.make_split(seed=0, strat_path=os.path.join(R.RESULTS, "step0_strat.json"),
-                         verbose=False)
+    split = (E.fold_split(holdout, strat_path=os.path.join(R.RESULTS, "step0_strat.json"))
+             if holdout is not None else
+             E.make_split(seed=0, strat_path=os.path.join(R.RESULTS, "step0_strat.json"),
+                          verbose=False))
     base_cfg = E.build_base_config(cfg, seed=0)
     weights = cfg["loss_weights"]
     scale = MET.training_scale(data, episode_id, split["train_episodes"],
                               cfg["state_data_mean"], cfg["state_data_std"])
 
+    fold = "".join(map(str, holdout)) if holdout is not None else None
     run = (f"mn_M{args.history}_N{args.forecast}_seed{args.seed}" if args.sweep
+           else f"x3_arm{args.arm}_ho{fold}_seed{args.seed}" if holdout is not None
            else f"arm{args.arm}_seed{args.seed}{args.tag}")
     rundir = os.path.join(args.out_dir or os.path.join(R.REPO_ROOT, "runs"), run)
     os.makedirs(rundir, exist_ok=True)
@@ -377,9 +394,13 @@ def main():
                                        "forecast_horizon": args.forecast,
                                        "window": window,
                                        "n_train_windows_expected": n_expected})
+    if holdout is not None:
+        out["rule"] = "X3"
+        out["hyperparameters"]["holdout_fold"] = holdout
     jp = os.path.join(args.out_dir or R.RESULTS,
                       (f"mn_sweep_run_M{args.history}_N{args.forecast}_seed{args.seed}.json"
-                       if args.sweep else f"step5_{run}.json"))
+                       if args.sweep else f"x3_run_arm{args.arm}_ho{fold}_seed{args.seed}.json"
+                       if holdout is not None else f"step5_{run}.json"))
     with open(jp, "w") as f:
         json.dump(out, f, indent=2)
     print(f"\n  wrote {R.rel(jp)}")
