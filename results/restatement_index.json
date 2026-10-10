@@ -5374,11 +5374,11 @@
     },
     {
       "value": "3",
-      "n_locations": 33,
+      "n_locations": 34,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 1,
-      "n_substituted": 32,
+      "n_substituted": 33,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/e5_synthetic_sigma.json",
@@ -5390,7 +5390,8 @@
         "results/task_d1_threeseed.json",
         "results/task_d3_cross_model.json",
         "results/task_d3_ens5.json",
-        "results/v1_ensemble_topology.json"
+        "results/v1_ensemble_topology.json",
+        "results/verify_reproduction.json"
       ],
       "keys": [
         "None",
@@ -5407,7 +5408,8 @@
         "r2_n_shared",
         "t1_first_entry_n",
         "t1_n_frag_oneword",
-        "v1_n_arms_checked"
+        "v1_n_arms_checked",
+        "ver_differing"
       ],
       "locations": [
         {
@@ -5505,6 +5507,12 @@
           "line": 1066,
           "key": "m68_n_shared",
           "ctx": "terations. The shared-trunk columns are the mean over {{m68_n_shared}} seeds; the comparison below is paired a"
+        },
+        {
+          "section": "8. Method",
+          "line": 1148,
+          "key": "ver_differing",
+          "ctx": "`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as"
         },
         {
           "section": "References",
@@ -7929,11 +7937,11 @@
     },
     {
       "value": "6",
-      "n_locations": 19,
+      "n_locations": 18,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 19,
+      "n_substituted": 18,
       "sources": [
         "results/a1_ab_by_horizon.json",
         "results/m49_capacity_matched.json",
@@ -7944,8 +7952,7 @@
         "results/step5_*.json",
         "results/step5_arm*.json",
         "results/task_b2_epistemic.json + task_d_nind20.json",
-        "results/task_d3_perhorizon.json",
-        "results/verify_reproduction.json"
+        "results/task_d3_perhorizon.json"
       ],
       "keys": [
         "a1_n_horizons",
@@ -7960,8 +7967,7 @@
         "m68_n_horizons",
         "orig_n_tested",
         "q3_n_pairs",
-        "rt_runs_10k",
-        "ver_differing"
+        "rt_runs_10k"
       ],
       "locations": [
         {
@@ -8005,12 +8011,6 @@
           "line": 1047,
           "key": "m44_n_conditions",
           "ctx": "_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}} conditions hold against every one of th"
-        },
-        {
-          "section": "8. Method",
-          "line": 1148,
-          "key": "ver_differing",
-          "ctx": "`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as"
         },
         {
           "section": "11. Limitations",

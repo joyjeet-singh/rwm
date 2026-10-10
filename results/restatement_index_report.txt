@@ -472,7 +472,7 @@ C1 — RESTATEMENT INDEX
          26.62  keys ['e5_cov2_h8', 'm68_shared_cov2_h8']
                 §6.2 The measurement                L702   e5_cov2_h8                 ...cov1_ci_h8}}] | {{e5_cov2_h8}}% | {{e5_npos_h8}}/45 | | 32 | {{e5_rati
                 §6.8 Testing the mechanism: an ense L1059  m68_shared_cov2_h8         ...h8}}% | {{m68_shared_cov2_h8}}% | | 32 | {{m68_indep_ratio_h32}}× | {{
-             3  keys ['None', 'a1_sign_pos_h1', 'd1_seeds', 'd3x_n_in', 'd3x_nseeds', 'e5_seeds', 'e5s_seeds', 'h2h_nseeds', 'm68_n_shared', 'q1_n_absent', 'r2_from_acc_h8', 'r2_n_shared', 't1_first_entry_n', 't1_n_frag_oneword', 'v1_n_arms_checked']
+             3  keys ['None', 'a1_sign_pos_h1', 'd1_seeds', 'd3x_n_in', 'd3x_nseeds', 'e5_seeds', 'e5s_seeds', 'h2h_nseeds', 'm68_n_shared', 'q1_n_absent', 'r2_from_acc_h8', 'r2_n_shared', 't1_first_entry_n', 't1_n_frag_oneword', 'v1_n_arms_checked', 'ver_differing']
                 §Abstract                           L9     d1_seeds                   ...ed}} of each arm; {{d1_seeds}} seeds extend it: training on the model'
                 §1. Introduction                    L63    d1_seeds                   ... = {{v2_diag_h}}; {{d1_seeds}} seeds at {{iters_long}} iterations exte
                 §5. The base paper's central claim  L362   a1_sign_pos_h1             ...h = 1 it is {{a1_sign_pos_h1}} of {{a1_sign_n_h1}}, the same story the
@@ -489,6 +489,7 @@ C1 — RESTATEMENT INDEX
                 §6.8 Testing the mechanism: an ense L1045  r2_n_shared                ... the mean over {{r2_n_shared}} seeds; the comparison below is paired a
                 §6.8 Testing the mechanism: an ense L1048  r2_n_shared                ...ery one of the {{r2_n_shared}} shared-trunk seeds: at h = {{v2_deploy_
                 §6.8 Testing the mechanism: an ense L1066  m68_n_shared               ...the mean over {{m68_n_shared}} seeds; the comparison below is paired a
+                §8. Method                          L1148  ver_differing              ...ffer at all; {{ver_differing}} do, so it fails, and it is published as
                 §References                         L1357  t1_first_entry_n           ... *Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are the bibliograph
                 §References                         L1357  t1_n_frag_oneword          ...agments, {{t1_n_frag_oneword}} of them single common words whose match
                 §Appendix I — the PETS lineage of t L1626  q1_n_absent                ...all; the other {{q1_n_absent}} lack the construction, so the protocol 
