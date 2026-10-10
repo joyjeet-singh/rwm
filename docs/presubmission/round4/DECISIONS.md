@@ -46,3 +46,11 @@ F0 is otherwise complete: every other check passes or records as designed. When 
 3. names that artifact as "PF1's artifact" in X3's assertion, which then runs at every horizon, as Annex 2 words it.
 
 The stored rollouts are git-ignored, so F9 gives the new stage the same `NEEDS_WEIGHTS` marking as `head_to_head_accuracy.py`'s. F0 re-ran `f0_preflight.py` after this ruling; PF1 passes on it.
+
+## F1-x3-cap
+
+**Raised by F1, 2026-10-11, before X3's pre-registration.** Evidence: the first run of `scripts/round4_queue_timing.py` (about 01:17 IST). Its record was overwritten by the re-probe below, so its figures are transcribed from its printed output into the session evidence folder (`R4F1/first_probe_output.txt`).
+
+**What F1 found.** The timing probe, calibrated as `scripts/mn_sweep_timing.py` calibrates (the finished runs' mean wall clock), projects X3 at 23.83 CPU-hours with seeds 0-2, over F1 item 3's 22-hour cap, so Annex 2 X3's fallback (seeds 0-1, 15.88 h) would apply. X4 projects 7.82 h at three seeds (cap 10). Three-seed X3 plus X4 is 31.65 h, inside the 32-hour total (ruling W10). Ruling W1 asked for three seeds "about 18 CPU-hours"; the 22-hour cap came from that estimate.
+
+**Ruling, 2026-10-11 (asked in chat): raise X3's cap from 22 to 24 hours and run seeds 0-2.** The user chose "Raise X3's cap: 3 seeds" over the plan's fallback. The total cap stays 32 hours. X3's fallback text stays in its pre-registration but does not apply. `scripts/round4_queue_timing.py` carries the cap of 24 hours with this anchor, and the record was re-probed under it: X3 23.83 h at seeds 0-2, X4 6.75 h at seeds 0-2, 30.58 h in all (`results/round4_queue_timing.json`). X3's projection is the finished runs' mean wall clock whatever the probe reads, so it did not move.

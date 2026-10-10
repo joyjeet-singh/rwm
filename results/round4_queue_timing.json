@@ -1,0 +1,226 @@
+{
+  "rules": [
+    "X3",
+    "X4"
+  ],
+  "probe_iterations": 20,
+  "iterations": 2500,
+  "probes": {
+    "x3_armA": {
+      "kind": "x3_armA",
+      "fold": [
+        0,
+        2
+      ],
+      "steady_s_per_iter": 1.1586679023158037,
+      "probe_wall_clock_s": 23.151687646999562,
+      "n_train_windows": 7688,
+      "losses_finite": true
+    },
+    "x3_armB": {
+      "kind": "x3_armB",
+      "fold": [
+        0,
+        2
+      ],
+      "steady_s_per_iter": 1.1722373475263579,
+      "probe_wall_clock_s": 23.36370537899893,
+      "n_train_windows": 7688,
+      "losses_finite": true
+    },
+    "mlp_ar_matched": {
+      "kind": "mlp_ar_matched",
+      "steady_s_per_iter": 0.1255100361579121,
+      "probe_wall_clock_s": 2.606005980000191,
+      "n_params": 713171,
+      "losses_finite": true
+    },
+    "mlp_ar_s7": {
+      "kind": "mlp_ar_s7",
+      "steady_s_per_iter": 0.10801085568422614,
+      "probe_wall_clock_s": 2.190841815998283,
+      "n_params": 610484,
+      "losses_finite": true
+    },
+    "transformer_ar_matched": {
+      "kind": "transformer_ar_matched",
+      "steady_s_per_iter": 3.957011280789486,
+      "probe_wall_clock_s": 80.16801132900036,
+      "n_params": 686196,
+      "losses_finite": true
+    },
+    "transformer_ar_s7": {
+      "kind": "transformer_ar_s7",
+      "steady_s_per_iter": 1.3439141980526121,
+      "probe_wall_clock_s": 26.76130389300124,
+      "n_params": 132148,
+      "losses_finite": true
+    }
+  },
+  "calibration": {
+    "x3_armA": {
+      "finished_runs": [
+        "results/step5_armA_seed0.json",
+        "results/step5_armA_seed1.json",
+        "results/step5_armA_seed2.json"
+      ],
+      "finished_wall_clock_s": [
+        4625.6387873310005,
+        2912.892670175,
+        3418.2364349269997
+      ],
+      "probe_steady_s_per_iter": 1.1586679023158037,
+      "factor": 1.260846514120103
+    },
+    "x3_armB": {
+      "finished_runs": [
+        "results/step5_armB_seed0.json",
+        "results/step5_armB_seed1.json",
+        "results/step5_armB_seed2.json"
+      ],
+      "finished_wall_clock_s": [
+        3448.3390727839997,
+        3363.2757004390005,
+        3674.197728886
+      ],
+      "probe_steady_s_per_iter": 1.1722373475263579,
+      "factor": 1.1926836630523723
+    },
+    "mlp_ar_matched": {
+      "finished_runs": [
+        "results/baseline_run_mlp_ar_s7_seed0.json",
+        "results/baseline_run_mlp_ar_s7_seed1.json",
+        "results/baseline_run_mlp_ar_s7_seed2.json"
+      ],
+      "finished_wall_clock_s": [
+        235.4755394419917,
+        233.6790853739949,
+        231.29896066601214
+      ],
+      "calibration_probe": "mlp_ar_s7",
+      "probe_steady_s_per_iter": 0.10801085568422614,
+      "factor": 0.8646706000611663
+    },
+    "transformer_ar_matched": {
+      "finished_runs": [
+        "results/baseline_run_transformer_ar_s7_seed0.json",
+        "results/baseline_run_transformer_ar_s7_seed1.json",
+        "results/baseline_run_transformer_ar_s7_seed2.json"
+      ],
+      "finished_wall_clock_s": [
+        2686.690016830995,
+        2642.5664288209955,
+        2652.3120284010074
+      ],
+      "calibration_probe": "transformer_ar_s7",
+      "probe_steady_s_per_iter": 1.3439141980526121,
+      "factor": 0.7918728229940696
+    }
+  },
+  "calibration_what": "factor = mean wall_clock_s of finished 2,500-iteration runs of the same kind / (2,500 x today's probe of that kind); projected per run = factor x probe x 2,500",
+  "projected_h_per_run": {
+    "x3_armA": 1.014515545595648,
+    "x3_armB": 0.9709085650100925,
+    "mlp_ar_matched": 0.07536447102663925,
+    "transformer_ar_matched": 2.1760067316237146
+  },
+  "x3": {
+    "cap_h": 24.0,
+    "projected_h_three_seeds": 23.825089327268888,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "fallback_applied": false,
+    "projected_h": 23.825089327268888,
+    "folds": [
+      [
+        0,
+        2
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        7,
+        9
+      ]
+    ],
+    "n_runs": 24
+  },
+  "x4": {
+    "cap_h": 10.0,
+    "projected_h_three_seeds": 6.754113607951062,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "fallback_applied": false,
+    "projected_h": 6.754113607951062,
+    "archs": [
+      "mlp",
+      "transformer"
+    ],
+    "n_runs": 6
+  },
+  "cap_total_h": 32.0,
+  "projected_total_h": 30.57920293521995,
+  "blocked": [],
+  "queue": [
+    "# --- rule X3, seed 0: Arm A and Arm B, each fold held out in turn",
+    "x3_A_02_s0 x3-A-02 32 8 0 2500",
+    "x3_B_02_s0 x3-B-02 32 8 0 2500",
+    "x3_A_34_s0 x3-A-34 32 8 0 2500",
+    "x3_B_34_s0 x3-B-34 32 8 0 2500",
+    "x3_A_56_s0 x3-A-56 32 8 0 2500",
+    "x3_B_56_s0 x3-B-56 32 8 0 2500",
+    "x3_A_79_s0 x3-A-79 32 8 0 2500",
+    "x3_B_79_s0 x3-B-79 32 8 0 2500",
+    "# --- rule X4, seed 0: the parameter-matched baselines, autoregressive",
+    "x4_mlp_s0 mlp-ar-matched 32 8 0 2500",
+    "x4_transformer_s0 transformer-ar-matched 32 8 0 2500",
+    "# --- rule X3, seed 1: Arm A and Arm B, each fold held out in turn",
+    "x3_A_02_s1 x3-A-02 32 8 1 2500",
+    "x3_B_02_s1 x3-B-02 32 8 1 2500",
+    "x3_A_34_s1 x3-A-34 32 8 1 2500",
+    "x3_B_34_s1 x3-B-34 32 8 1 2500",
+    "x3_A_56_s1 x3-A-56 32 8 1 2500",
+    "x3_B_56_s1 x3-B-56 32 8 1 2500",
+    "x3_A_79_s1 x3-A-79 32 8 1 2500",
+    "x3_B_79_s1 x3-B-79 32 8 1 2500",
+    "# --- rule X4, seed 1: the parameter-matched baselines, autoregressive",
+    "x4_mlp_s1 mlp-ar-matched 32 8 1 2500",
+    "x4_transformer_s1 transformer-ar-matched 32 8 1 2500",
+    "# --- rule X3, seed 2: Arm A and Arm B, each fold held out in turn",
+    "x3_A_02_s2 x3-A-02 32 8 2 2500",
+    "x3_B_02_s2 x3-B-02 32 8 2 2500",
+    "x3_A_34_s2 x3-A-34 32 8 2 2500",
+    "x3_B_34_s2 x3-B-34 32 8 2 2500",
+    "x3_A_56_s2 x3-A-56 32 8 2 2500",
+    "x3_B_56_s2 x3-B-56 32 8 2 2500",
+    "x3_A_79_s2 x3-A-79 32 8 2 2500",
+    "x3_B_79_s2 x3-B-79 32 8 2 2500",
+    "# --- rule X4, seed 2: the parameter-matched baselines, autoregressive",
+    "x4_mlp_s2 mlp-ar-matched 32 8 2 2500",
+    "x4_transformer_s2 transformer-ar-matched 32 8 2 2500"
+  ],
+  "probe_wall_minutes": 3.076257014274597,
+  "loadavg_before": [
+    1.89990234375,
+    2.9091796875,
+    3.11962890625
+  ],
+  "loadavg_after": [
+    4.66552734375,
+    3.69384765625,
+    3.39990234375
+  ],
+  "threads": "none set, as every existing run (FILE_MAP.md \u00a75)"
+}
