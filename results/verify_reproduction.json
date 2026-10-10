@@ -64,8 +64,8 @@
   "timing_excluded": 11988,
   "nan_in_both": 4,
   "copied_file_values": 1693623,
-  "copied_identical": 1693615,
-  "copied_differing": 8,
+  "copied_identical": 1693620,
+  "copied_differing": 3,
   "machine_file_values_excluded": 706,
   "keys_lost": 1,
   "keys_lost_files": [
@@ -1541,14 +1541,8 @@
     },
     "verify_reproduction.json": {
       "regenerated": false,
-      "differing": 5,
-      "differing_keys": [
-        ".copied_file_values",
-        ".copied_identical",
-        ".copied_differing",
-        ".per_file.verify_reproduction.json.differing",
-        ".per_file.verify_reproduction.json.keys_lost"
-      ],
+      "differing": 0,
+      "differing_keys": [],
       "keys_lost": 0,
       "keys_lost_paths": []
     },
