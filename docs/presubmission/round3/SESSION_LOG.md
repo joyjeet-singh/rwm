@@ -461,3 +461,57 @@ Body words (round2/t6_words.py): 20,745 (R0: 20,771).
 Abstract words / numerals (C12.1): 370 / 23.
 Next: R8 (freeze, restatement, bundles, package documents, including COVER_STATEMENT's counts).
 Decisions for user: none required by this session. OUT_OF_SCOPE now holds three lines for later: R5's A2 offset averaging (§6.7), R6's M-74 per-configuration readings, and R7's R-46 n.
+
+## R8 — 2026-10-10 05:50 — Opus 5.5 (the plan assigns default effort) — status: COMPLETE
+Commits: 7b49144 step 2, f997469 step 3 (stale records), 84d40c1 step 3 (restated from M1), a699341 step 3 (fixed-point iteration, simulated), 7cb2fc9 step 3 (M2's real record), 0a29cfa step 4, 4281ae4 step 4 (manifest fixed point), 565ceca step 5; then the commit carrying this entry.
+Done:
+- **Step 1, freeze.** From 7b49144, no prose edit except §8's reproduction figures and the package documents.
+- **Step 2, the claims audit (ruling U5).** Stage 27 regenerated it: 550 claims, 58 supported, 492 unreviewed, left unreviewed as ruled. No paper number changed.
+- **Step 3, measure and restate (round 1's B3 recipe).**
+  - **Before measuring,** ten cheap stages a clean clone rewrites were re-run (20n8, 20q, 21a, 21b, 28a, 28a1, 28a2, 28a3, 28c, 28b1). Eight records had drifted since round 3's script edits: the comparative-claims, typed-numeral, restatement and pipeline-coverage reports, `input_set_audit.json`, `pipeline_coverage.json`, and the PDF channel record and report. A second pass left them identical (f997469). Round 2 lost a measurement to exactly these records.
+  - **M1**, a clean clone of the pushed f997469 with a fresh venv from `requirements.txt` (`r3/M1`; evidence `R3R8/M1`):
+    - `reproduce.sh --quick --force` took 7,236 s: 112 stages, 62 OK, 46 skipped and 4 failed. These are round 2 T12's four (20q1, 20n2, 29a, 29); the new 20t14 skips without weights.
+    - Verifier v1 = v2 = v3, byte-identical: 56 files, 15,657 values, 15,651 identical, 6 differing, all bundle bookkeeping (`anon_bundle.json` 3, `supplementary_manifest.json` 3), **0 scientific**.
+  - **Restated from M1** (84d40c1, `R3R8/restate.zsh`):
+    - builds byte-identical, and the report stages twice, stable;
+    - COVER_STATEMENT's §8 copies refreshed by `s10fix_docs.py`, whose re-appended round-1 checklist note was reverted, as in round 2;
+    - the PDF channel and gate records refreshed.
+  - **The fixed point.** The prediction for the restated commit matched 14 of 17 keys. Printing the new figures changed the restatement index, so a clone compares 5 fewer values.
+    - One local iteration (a699341), its record labelled SIMULATED in the commit, reached 17/17, and was pushed.
+    - **M2**, a clean clone of a699341, then measured it: 7,450 s and the same tally. Verifier v1 = v2 = v3: 15,652 values, 15,646 identical (99.96%), 6 differing, 0 scientific.
+    - M2 matched a699341's printed figures on 15 of 17 keys. The carried-in and total counts were each 2 higher, because a clone carries the verification record and a699341's was the simulated one.
+    - M2's own record was substituted (7cb2fc9), so HEAD carries a real measurement. The prediction from M2 for 7cb2fc9 is **17/17**, and it was pushed.
+- **Step 4, bundles.**
+  - **Built twice on 7cb2fc9** (0a29cfa):
+    - the anonymised builder's self-test detected its planted probe (9 hits), and its scan found 0 residual hits;
+    - `part_f_gate` against M2's clone: 7/8, check 4 alone, as §8 publishes it. Check 4b now passes;
+    - the independent sweep found 0 hits in both zips and the PDF.
+  - **A shared member differed.** `r8_package.py` refused to write, because the two bundles carried different copies of the supplementary manifest: the gate record changed between passes.
+    - `build_supplementary.py` was re-run until two consecutive passes agreed (the third), and the anonymised bundle was rebuilt (4281ae4).
+    - Now both bundles carry the committed manifest (493 files, 468 commits). The gate record is unchanged at 7/8, and the sweep again found 0 hits.
+- **Step 5, package documents** (565ceca), each from a round-3 generator:
+  - `COVER_STATEMENT.md`: 62 pages, 23 rules with 22 positive leads, fourteen withdrawals (eight on evidence, six framings);
+  - `SUBMISSION_CHECKLIST.md`: a dated round-3 known-items section. The earlier passes' four figure-overlap lines are marked fixed in round 2, T8, with the step-size text credited to round 3, R4 where an item names it;
+  - `SUBMISSION_PACKAGE.md` in full: `PAPER.pdf` 62 pages, 1,137,677 bytes, sha256 `f964d6b3…`; `supplementary_anon.zip` 517 members, 19,545,474 bytes, sha256 `5ba21134…`; preconditions R9 and §0.4 steps 1–4.
+  - No "pre-edit" banner was present.
+Build/gates: pass. Every build in this session was byte-identical (`R3R8/s2`, `s3a`, `restate_M1/*`, `fp1/*`, `restate_M2/*`, `end`).
+- `submission_check` 21/22 (C1, by ruling U5).
+- `part_f_gate` 7/8 (check 4 alone).
+- The closing cycle changed only the PDF's compile date, and the committed PDF was restored, so its checksum is the package's.
+Paper numbers changed: from `results/verify_reproduction.json` (round 2's M3 → round 3's M2):
+- ver_values 15,521 → 15,652; ver_identical 15,516 → 15,646; ver_pct 99.97 → 99.96;
+- ver_differing and ver_part_else 5 → 6; ver_copied 1,685,484 → 1,693,623; ver_all 1,701,005 → 1,709,275;
+- ver_claim_pct 0.91 → 0.92; ver_overstate 110 → 109; ver_timing 11,983 → 11,988;
+- ver_diff_by_file and ver_book_named follow.
+New keys: none. Template keys removed: none.
+Re-anchored checks: none.
+CPU jobs over 1 min:
+- M1 and M2: 7,236 and 7,450 s of `reproduce.sh` in the clones, about 2 h 10 min each with setup;
+- the restatements (about 25 min each);
+- three predictions;
+- the bundle passes and two independent sweeps (about 10 min each);
+- about 15 build-and-gate cycles.
+Body words (round2/t6_words.py): 20,745 (frozen; R0: 20,771).
+Abstract words / numerals (C12.1): 370 / 23.
+Next: R9 (clean-clone verification of the pushed HEAD; no edits). Expect: printed = measured on all 17 reproduction keys, 0 scientific, `part_f_gate` 7/8, 0 anonymity hits. Then the user's §0.4 steps, and the upload last, without rebuilding.
+Decisions for user: none required by this session. OUT_OF_SCOPE holds four items for later.
