@@ -39,3 +39,23 @@ Body words (round2/t6_words.py): 20,745 (F0: 20,745)
 Abstract words / numerals (C12.1): 370 / 23
 Next: the user rules on `DECISIONS.md#F0-armB-2500-h128`; then F0 records the ruling, re-runs `f0_preflight.py` and writes COMPLETE; then F1 (Opus 5.5, high effort, fresh terminal, idle machine for its timing probes).
 Decisions for user: DECISIONS.md#F0-armB-2500-h128
+
+## F0 — 2026-10-11 01:00 — Opus 5.5 (the plan assigns Sonnet 5.5, default effort) — status: COMPLETE
+Commits (resumed in the same conversation after the ruling):
+b5ff8e7 [F0] BLOCKED: session log; decision F0-armB-2500-h128 (X3's Arm B reference at h = 128); one out-of-scope line
+c1634b3 [F0][fix] Ruling (B) recorded: F1 builds X3's Arm B reference from the stored rollouts; preflight re-run, PF1-PF9 pass (PF4 records)
+(the commit carrying this entry)
+Done:
+- **The ruling.** Asked in chat, answered 2026-10-11: option (B) of `DECISIONS.md#F0-armB-2500-h128`. Before X3's pre-registration, F1 builds a six-horizon reference for Arm B at 2,500 iterations from the stored rollouts behind `head_to_head_accuracy.json`. It first asserts that a new horizons argument's default reproduces that artifact byte-identically, and that the reference equals it at h = 1, 8, 100 and 368 and `action_sensitivity.json` at h = 32. X3's assertion then runs at every horizon, as Annex 2 words it.
+- **Preflight re-run** (`f0_preflight.py` reads the ruling from `DECISIONS.md`): PF1, PF2, PF3, PF5, PF6, PF7, PF8 and PF9 PASS; PF4 recorded. PF1 passes because the stored rollouts exist, match their recorded SHA-256s and hold all 368 steps. Nothing else in `PREFLIGHT.md` changed.
+- Everything else is as in the BLOCKED entry above.
+Build/gates: pass (unchanged since the BLOCKED entry; no source, template or artifact was touched after it).
+Paper numbers changed: none
+New keys: none
+Re-anchored checks: none
+CPU jobs over 1 min: none since the BLOCKED entry.
+Queue status: not launched
+Body words (round2/t6_words.py): 20,745 (F0: 20,745)
+Abstract words / numerals (C12.1): 370 / 23
+Next: F1 (Opus 5.5, high effort), in a fresh terminal on an idle machine. Its timing probes run before the queue launches. Beyond PLAN F1, it carries out ruling (B) before X3's pre-registration. It reads `PREFLIGHT.md`'s notes for F1: the driver has no held-out argument; the matched baselines were ladder-verified teacher-forced only; `review_bootstrap_unit.boot_cluster` is the importable three-seed bootstrap, Monte Carlo at n = 4, so per-fold exact intervals need `action_sensitivity.draws_for`.
+Decisions for user: none
