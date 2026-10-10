@@ -515,3 +515,47 @@ Body words (round2/t6_words.py): 20,745 (frozen; R0: 20,771).
 Abstract words / numerals (C12.1): 370 / 23.
 Next: R9 (clean-clone verification of the pushed HEAD; no edits). Expect: printed = measured on all 17 reproduction keys, 0 scientific, `part_f_gate` 7/8, 0 anonymity hits. Then the user's §0.4 steps, and the upload last, without rebuilding.
 Decisions for user: none required by this session. OUT_OF_SCOPE holds four items for later.
+
+## R8 (continued) — 2026-10-10 08:40 — Opus 5.5 (the plan assigns default effort) — status: COMPLETE
+Commits: fd279d7 step 3 (fixed-point iteration b1, simulated), 11a5c4f step 3 (M3's real record), 6e98860 step 4 (final bundles), 2b83200 step 5 (final package documents); then the commit carrying this entry. The entry above (378423b) closed R8 too early. This one records why, and supersedes its "Next" line.
+Done:
+- **What the earlier entry missed.**
+  - Its 17/17 prediction was for 7cb2fc9, before the bundles were rebuilt. Re-predicted for 378423b, it was 12/17: a clean clone would find 3 differing values where §8 printed 6.
+  - The cause: M2 had measured a699341, whose committed bundle records were stale. Rebuilding the bundles made `anon_bundle.json` agree with what a clone regenerates, leaving only the supplementary manifest's 3 values, which a clone's longer git log always changes.
+  - R9 would have found printed ≠ measured on 5 keys.
+- **Step 3, completed.**
+  - **fd279d7**, one fixed-point iteration predicted from M2's outputs, its record labelled SIMULATED, reached 17/17 and was pushed.
+  - **M3**, a clean clone of fd279d7 (evidence `R3R8/M3`): 7,308 s, 112 stages, the same tally.
+    - Verifier v1 = v2 = v3: 56 files, 15,652 values, 15,649 identical (99.98%), 3 differing (`supplementary_manifest.json`: bytes, uncompressed, commits_in_log), **0 scientific**, 1 lost key.
+    - It matched what fd279d7 printed on **all 17 keys**.
+  - **11a5c4f** substitutes M3's own record. No printed figure changed, and HEAD carries a real measurement and no simulated record. Prediction from M3: 17/17.
+- **Step 4, completed** (6e98860, `R3R8/bundles_final.zsh`):
+  - both bundles rebuilt, so they carry the paper printing M3's figures;
+  - the anonymised builder's self-test detected its probe, with 0 residual hits;
+  - gate 7/8, check 4 alone, the record unchanged;
+  - the independent sweep found 0 hits in both zips and the PDF.
+  - **The manifest had no fixed point.** Its byte count alternated between 17,631,058 and 17,631,059, because writing either number into the manifest changes the deflated size of the archive holding it by one byte.
+    - The committed manifest and the anonymised bundle's copy are exact for `supplementary.zip` on disk.
+    - The copy inside `supplementary.zip` records the previous pass and differs in that field alone.
+    - `r8_package.py` now admits exactly that difference and states it. It still asserts that the uploaded copy equals the committed manifest, and that this equals the zip's size.
+- **Step 5, completed** (2b83200):
+  - `SUBMISSION_PACKAGE.md`: `PAPER.pdf` 1,137,677 bytes, sha256 `df9a1288…`; `supplementary_anon.zip` 517 members, 19,545,482 bytes, sha256 `bee2f6ef…`;
+  - the checklist's round-3 section, re-inserted over the final state;
+  - COVER_STATEMENT printing 3 of 15,652.
+- **Final prediction** for 2b83200, from M3's outputs: **17/17**.
+- **Hash shape.** 6e98860 has the digits-plus-`e` shape. It is not a pushed HEAD and is not in the bundles' git log, which were built at 11a5c4f; recorded, not rewritten.
+Build/gates: pass. Every build byte-identical (`fpb1/*`, `restate_M3/*`, `end2`).
+- The closing cycle changed only the PDF's compile date, and the committed PDF (`df9a1288…`) was restored.
+- `submission_check` 21/22 (C1, by ruling U5); `part_f_gate` 7/8.
+Paper numbers changed (since the entry above): ver_identical 15,646 → 15,649; ver_pct 99.96 → 99.98; ver_differing and ver_part_else 6 → 3; ver_diff_nfiles 2 → 1; ver_diff_by_file and ver_book_named follow (`results/verify_reproduction.json`, M3).
+New keys: none.
+Re-anchored checks: none.
+CPU jobs over 1 min:
+- M3 (7,308 s of `reproduce.sh`, about 2 h 10 min with setup);
+- one restatement (about 25 min);
+- the final bundles (seven supplementary passes, the anonymised bundle, the gate) and one sweep (about 35 min);
+- three predictions; about 6 build-and-gate cycles.
+Body words (round2/t6_words.py): 20,745 (frozen).
+Abstract words / numerals (C12.1): 370 / 23.
+Next: R9 (clean-clone verification of the pushed HEAD; no edits). Expect printed = measured on all 17 reproduction keys, 0 scientific, `part_f_gate` 7/8, and 0 anonymity hits. Then the user's §0.4 steps 1–4, and the upload last, without rebuilding, checked against `docs/SUBMISSION_PACKAGE.md`'s checksums.
+Decisions for user: none required by this session. OUT_OF_SCOPE holds four items for later.
