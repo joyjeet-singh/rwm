@@ -39,3 +39,10 @@ The assertion cannot be run as written at h = 128, so F1 would have to stop `BLO
 - **(D) Something else.**
 
 F0 is otherwise complete: every other check passes or records as designed. When the ruling is in, F0 records it here, re-runs `f0_preflight.py` and writes its `COMPLETE` entry.
+
+**Ruling, 2026-10-11: (B).** Asked in chat; the user chose "Stored rollouts (Recommended)". So F1, before X3's pre-registration:
+1. adds a horizons argument to `scripts/head_to_head_accuracy.py` and asserts that its default reproduces `results/head_to_head_accuracy.json` byte-identically;
+2. writes a separate six-horizon reference artifact for Arm B at 2,500 iterations on §5's four held-out trajectories, from the same stored rollouts. It asserts that artifact equal to `head_to_head_accuracy.json` at h = 1, 8, 100 and 368, and to `action_sensitivity.json` at h = 32, before writing it;
+3. names that artifact as "PF1's artifact" in X3's assertion, which then runs at every horizon, as Annex 2 words it.
+
+The stored rollouts are git-ignored, so F9 gives the new stage the same `NEEDS_WEIGHTS` marking as `head_to_head_accuracy.py`'s. F0 re-ran `f0_preflight.py` after this ruling; PF1 passes on it.

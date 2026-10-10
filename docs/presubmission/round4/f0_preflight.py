@@ -166,7 +166,11 @@ X1["h2h_H"] = at("scripts/head_to_head_accuracy.py", "^HORIZONS = ")
 X1["s5_eval"] = at("scripts/step5_train.py", 'idx = E.sample_trajectories(episode_id, split["holdout_episodes"], seed=0)')
 X1["ntraj"] = at("src/rollout_eval.py", "^N_TRAJ")
 X1["choice"] = at("src/rollout_eval.py", "starts = rng.choice(cand, size=n_traj, replace=len(cand) < n_traj)")
-pf1_artifact_ok = not uncovered
+dec = open("docs/presubmission/round4/DECISIONS.md", encoding="utf-8").read()
+dsec = dec.split("## F0-armB-2500-h128", 1)[1] if "## F0-armB-2500-h128" in dec else ""
+ruling_b = bool(re.search(r"^\*\*Ruling, [0-9-]+: \(B\)\.\*\*", dsec, flags=re.M))
+by_ruling = bool(uncovered) and ruling_b and cache_ok and cache_shape is not None and cache_shape[1] >= max(HS)
+pf1_artifact_ok = not uncovered or by_ruling
 fmt_h = lambda hs: ", ".join(map(str, hs))
 scan_txt = "; ".join(f"`{f}` ({', '.join(v[:4])}{' …' if len(v) > 4 else ''})" for f, v in scan.items())
 md += ["",
@@ -194,12 +198,17 @@ md += ["",
        f"`head_to_head_accuracy.json` `input_files` records: {'yes' if cache_ok else 'NO'}. That script reports h = {fmt_h(h2h_h)} only "
        f"(`scripts/head_to_head_accuracy.py:{X1['h2h_H']}`).",
        f"- So X3's assertion as Annex 2 words it (\"Arm B (PF1's artifact) at every horizon, to 1e-6\") has no committed "
-       f"reference at h = {fmt_h(uncovered)}. The question is `DECISIONS.md#F0-armB-2500-h128`.\n"]
+       f"reference at h = {fmt_h(uncovered)}. The question is `DECISIONS.md#F0-armB-2500-h128`.",
+       (f"- **Ruling (B)** (`DECISIONS.md#F0-armB-2500-h128`): F1 builds the six-horizon Arm B reference from those stored rollouts before "
+        f"X3's pre-registration, and X3 asserts against it at every horizon. The rollouts exist, match their recorded SHA-256s and hold "
+        f"{cache_shape[1] if cache_shape else 0} forecast steps (h = {max(HS)} needs {max(HS)}), so the reference X3 needs can be built: "
+        f"{'yes' if by_ruling else 'NO'}.\n") if ruling_b else
+       "- No ruling yet.\n"]
 p1_weights = not any(missing.values()) and ck_ok and not sha_bad and all(t[2] for t in twin)
 p1 = p1_weights and pf1_artifact_ok
 verdicts["PF1"] = p1
 md.append(f"**PF1: {'PASS' if p1 else 'FAIL'}** — weights: {'all present, checksums verified' if p1_weights else 'INCOMPLETE'}; "
-          f"Arm B reference: {'found' if pf1_artifact_ok else 'missing at h = ' + fmt_h(uncovered)}.\n")
+          f"Arm B reference: {'found' if not uncovered else ('to be built by F1 from the stored rollouts, under ruling (B)' if by_ruling else 'missing at h = ' + fmt_h(uncovered))}.\n")
 
 # ================================================================ PF2 the split
 import rollout_eval as E  # noqa: E402
