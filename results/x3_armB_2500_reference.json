@@ -1,0 +1,202 @@
+{
+  "what": "rule X3's reference: Arm B (teacher-forced), 2,500 iterations, seeds 0-2, on section 5's four held-out trajectories, relative-L1 and nRMSE, cumulative over forecast steps 1..h",
+  "ruling": "docs/presubmission/round4/DECISIONS.md#F0-armB-2500-h128, option (B)",
+  "producer": "scripts/x3_armB_reference.py, through scripts/head_to_head_accuracy.py's compute(horizons)",
+  "computation": "read from stored rollouts; no model is evaluated here",
+  "no_new_rollout": "every model row is a stored per-triple cache object written by scripts/task1_calibration.py STORE_PER_TRIPLE=1 and verified bitwise by scripts/gate_per_triple.py; nothing is rolled out here",
+  "arena": "out-of-sample held-out pair",
+  "arena_episodes": [
+    1,
+    8
+  ],
+  "traj_start_row": [
+    999,
+    1399,
+    7999,
+    8399
+  ],
+  "n_independent": 4,
+  "unit_length": 400,
+  "start_step": 32,
+  "arm_checkpoint": "weights_2500.pt",
+  "arm_seeds": [
+    0,
+    1,
+    2
+  ],
+  "horizons": [
+    1,
+    8,
+    32,
+    100,
+    128,
+    368
+  ],
+  "metrics": {
+    "nrmse": "form 1, pooled (src/rwm_metrics.py:nrmse_pooled); cumulative mean over forecast steps 1..h",
+    "l1": "relative-L1 (src/rollout_eval.py:143); cumulative mean over forecast steps 1..h"
+  },
+  "seed_aggregation": "mean over seeds of the per-seed value; the per-seed values are in per_model and the ddof=1 spread beside each cell",
+  "armB": {
+    "label": "Arm B \u2014 teacher-forced",
+    "n_models": 3,
+    "per_model": {
+      "armB_teacher_forced_seed0": {
+        "1": {
+          "l1": 0.09548755270600819,
+          "nrmse": 0.08124137472630863
+        },
+        "8": {
+          "l1": 0.3065616820427091,
+          "nrmse": 0.2786429320367773
+        },
+        "32": {
+          "l1": 0.5272327201899363,
+          "nrmse": 0.4579135037148122
+        },
+        "100": {
+          "l1": 0.9277628423559316,
+          "nrmse": 0.9332557565460969
+        },
+        "128": {
+          "l1": 1.0062404327265222,
+          "nrmse": 1.065764051814765
+        },
+        "368": {
+          "l1": 3.3680141830488752,
+          "nrmse": 2.8129888040890445
+        }
+      },
+      "armB_teacher_forced_seed1": {
+        "1": {
+          "l1": 0.09926838356591138,
+          "nrmse": 0.10566125400681682
+        },
+        "8": {
+          "l1": 0.3676719279339292,
+          "nrmse": 0.3361517935266286
+        },
+        "32": {
+          "l1": 0.6084851590561737,
+          "nrmse": 0.5222666187177207
+        },
+        "100": {
+          "l1": 1.0607094738515404,
+          "nrmse": 0.9918687534039696
+        },
+        "128": {
+          "l1": 1.2651728423622774,
+          "nrmse": 1.2648755978549855
+        },
+        "368": {
+          "l1": 7.332515885990447,
+          "nrmse": 6.02204912698684
+        }
+      },
+      "armB_teacher_forced_seed2": {
+        "1": {
+          "l1": 0.08406158309131742,
+          "nrmse": 0.07688348872501026
+        },
+        "8": {
+          "l1": 0.34342787325993535,
+          "nrmse": 0.3045282836951906
+        },
+        "32": {
+          "l1": 0.8282367718150427,
+          "nrmse": 0.6894544140588128
+        },
+        "100": {
+          "l1": 1.2661225547217851,
+          "nrmse": 1.183729531647681
+        },
+        "128": {
+          "l1": 1.332958261566139,
+          "nrmse": 1.3013666601558715
+        },
+        "368": {
+          "l1": 3.004581176209159,
+          "nrmse": 2.5431053259551644
+        }
+      }
+    },
+    "cells": {
+      "1": {
+        "l1": 0.09293917312107898,
+        "l1_sd_ddof1": 0.007917220096106375,
+        "nrmse": 0.08792870581937857,
+        "nrmse_sd_ddof1": 0.015510649293789825
+      },
+      "8": {
+        "l1": 0.33922049441219126,
+        "l1_sd_ddof1": 0.030771611361735337,
+        "nrmse": 0.3064410030861988,
+        "nrmse_sd_ddof1": 0.0288021033792027
+      },
+      "32": {
+        "l1": 0.6546515503537176,
+        "l1_sd_ddof1": 0.15572206503177669,
+        "nrmse": 0.5565448454971152,
+        "nrmse_sd_ddof1": 0.11951588143040584
+      },
+      "100": {
+        "l1": 1.084864956976419,
+        "l1_sd_ddof1": 0.17046829400748692,
+        "nrmse": 1.0362846805325825,
+        "nrmse_sd_ddof1": 0.13101091153194233
+      },
+      "128": {
+        "l1": 1.2014571788849795,
+        "l1_sd_ddof1": 0.17242650390726622,
+        "nrmse": 1.2106687699418741,
+        "nrmse_sd_ddof1": 0.126810616308669
+      },
+      "368": {
+        "l1": 4.5683704150828275,
+        "l1_sd_ddof1": 2.400707401136063,
+        "nrmse": 3.7927144190103497,
+        "nrmse_sd_ddof1": 1.9353705596303457
+      }
+    }
+  },
+  "input_files": [
+    {
+      "path": "cache/armB_teacher_forced_seed0__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "63c92c9beb136bd1087d80734362e28fe2fbf1a5f2657a5fc825fd6794d2951f",
+      "bytes": 505243
+    },
+    {
+      "path": "cache/armB_teacher_forced_seed1__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "f55f3834852be7144213c9e44272b778aa0024489c17b02570451dd94ac7b2b5",
+      "bytes": 515308
+    },
+    {
+      "path": "cache/armB_teacher_forced_seed2__out-of-sample_held-out_pair__u400.npz",
+      "sha256": "efa290124864821252faa2b6630730210d867cb9d8c8c57f4bfdd9b1e1cbc4f4",
+      "bytes": 500340
+    }
+  ],
+  "checks": {
+    "same_as_head_to_head_accuracy": {
+      "horizons": [
+        1,
+        8,
+        100,
+        368
+      ],
+      "max_abs_diff": 0.0,
+      "tolerance": 1e-12,
+      "rows": [
+        "armA",
+        "armAnll",
+        "armB",
+        "floor",
+        "released"
+      ]
+    },
+    "armB_h32_vs_action_sensitivity_I0": {
+      "max_abs_diff": 8.46255032715959e-09,
+      "tolerance": 1e-06
+    }
+  }
+}

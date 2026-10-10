@@ -63,7 +63,10 @@ def model_ids():
     return out
 
 
-def main():
+def compute(horizons=HORIZONS):
+    """The table at the given horizons, as a dict; main() writes it. Round 4 (ruling (B) of
+    docs/presubmission/round4/DECISIONS.md#F0-armB-2500-h128): scripts/x3_armB_reference.py calls
+    this at six horizons; the default is the committed artifact's four."""
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, ep = R.load_data(paths["csv"], verbose=False)
@@ -105,7 +108,7 @@ def main():
         sq = (err.astype(np.float64)) ** 2
         return {str(h): {"l1": float((num[:, :h] / den[:, :h]).mean()),
                          "nrmse": MET.nrmse_pooled(sq[:, :h], scale)}
-                for h in HORIZONS}
+                for h in horizons}
 
     # Provenance of every file this reads, recorded rather than assumed.
     files = []
@@ -139,7 +142,7 @@ def main():
             per_model[mid] = cells(arr["err"])
             metas.append(meta)
         agg = {}
-        for h in HORIZONS:
+        for h in horizons:
             for m in ("l1", "nrmse"):
                 v = [per_model[k][str(h)][m] for k in per_model]
                 agg.setdefault(str(h), {})[m] = float(np.mean(v))
@@ -151,13 +154,13 @@ def main():
                            "lite_commit": sorted({m["lite_commit"] for m in metas}),
                            "rsl_commit": sorted({m["rsl_commit"] for m in metas})}
 
-    hdr = "    " + f"{'row':<50s}" + "".join(f"{'h=' + str(h):>20s}" for h in HORIZONS)
+    hdr = "    " + f"{'row':<50s}" + "".join(f"{'h=' + str(h):>20s}" for h in horizons)
     print(hdr)
-    print("    " + f"{'':<50s}" + "".join(f"{'nRMSE':>10s}{'rel-L1':>10s}" for _ in HORIZONS))
-    print("    " + "-" * (50 + 20 * len(HORIZONS)))
+    print("    " + f"{'':<50s}" + "".join(f"{'nRMSE':>10s}{'rel-L1':>10s}" for _ in horizons))
+    print("    " + "-" * (50 + 20 * len(horizons)))
     for key, label, _slug, _seeds in ROWS:
         line = "    " + f"{rows[key]['label']:<50s}"
-        for h in HORIZONS:
+        for h in horizons:
             c = rows[key]["cells"][str(h)]
             line += f"{c['nrmse']:>10.4f}{c['l1']:>10.4f}"
         print(line)
@@ -166,7 +169,7 @@ def main():
     # reimplementation is ahead of or behind the released checkpoint, per horizon, per
     # metric. Derived here so the paper's sentence is read from the artifact.
     best = {}
-    for h in HORIZONS:
+    for h in horizons:
         for m in ("nrmse", "l1"):
             ranked = sorted(((rows[k]["cells"][str(h)][m], k) for k, _l, _s, _q in ROWS))
             best[f"{m}_h{h}"] = {"leader": ranked[0][1], "value": ranked[0][0],
@@ -179,11 +182,11 @@ def main():
     # aggregations have inverted a comparison against the released checkpoint before
     # (M-19, R-27, R-29, Appendix H), so a horizon where they disagree is reported as a
     # disagreement rather than resolved by picking one.
-    rel_sweep = [h for h in HORIZONS if leaders_at(h) == {"released"}]
-    armA_sweep = [h for h in HORIZONS if leaders_at(h) <= {"armA", "armAnll"}
+    rel_sweep = [h for h in horizons if leaders_at(h) == {"released"}]
+    armA_sweep = [h for h in horizons if leaders_at(h) <= {"armA", "armAnll"}
                   and len(leaders_at(h)) == 1]
-    split = [h for h in HORIZONS if len(leaders_at(h)) > 1]
-    assert len(rel_sweep) + len(armA_sweep) + len(split) <= len(HORIZONS)
+    split = [h for h in horizons if len(leaders_at(h)) > 1]
+    assert len(rel_sweep) + len(armA_sweep) + len(split) <= len(horizons)
     print(f"\n  both metrics put the released checkpoint first at h = {rel_sweep or 'none'}")
     print(f"  both metrics put an Arm A variant first at h = {armA_sweep or 'none'}")
     print(f"  the two metrics name different leaders at h = {split or 'none'}")
@@ -202,7 +205,7 @@ def main():
         "unit_length": UNIT,
         "start_step": START,
         "n_forecast_steps": int(truth.shape[1]),
-        "horizons": list(HORIZONS),
+        "horizons": list(horizons),
         "arm_checkpoint": "weights_2500.pt",
         "arm_seeds": [0, 1, 2],
         "seed_aggregation": "mean over seeds of the per-seed value; the per-seed values "
@@ -228,6 +231,11 @@ def main():
                            "scripts/task1_calibration.py STORE_PER_TRIPLE=1 and verified "
                            "bitwise by scripts/gate_per_triple.py; nothing is rolled out here"),
     }
+    return rec
+
+
+def main():
+    rec = compute()
     json.dump(rec, open(os.path.join(R.RESULTS, OUT), "w"), indent=2)
     print(f"\n  wrote results/{OUT}")
     return 0
