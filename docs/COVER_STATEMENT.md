@@ -1,7 +1,7 @@
 # Cover statement — TMLR submission
 
 *Draft. Every figure is substituted from a named artifact by the paper's own build; the
-numbers below are quoted from `results/paper_numbers.json` and are current at 57 pages, the
+numbers below are quoted from `results/paper_numbers.json` and are current at 62 pages, the
 length of the compiled submission.*
 
 ---
@@ -20,7 +20,7 @@ file on disk. Concretely:
   reference at the gradient level — losses and gradients match to `0.000e+00` across 7 terms and 106 tensors — before any training run is scored. Shapes, wiring, action indexing and the
   hold-last residual are each verified separately, and every later step inherits all five.
 
-- **22 pre-registered decision rules, with git lead times.** All but one name their conditions and thresholds before their data existed, and Appendix E gives all 22 with the lead time computed from git. 21 have a positive lead and are a difference of two commit timestamps; the remaining one is negative and is not, because its data side is a line in a run log rather than a
+- **23 pre-registered decision rules, with git lead times.** All but one name their conditions and thresholds before their data existed, and Appendix E gives all 23 with the lead time computed from git. 22 have a positive lead and are a difference of two commit timestamps; the remaining one is negative and is not, because its data side is a line in a run log rather than a
   commit — it is the rule this paper withdraws as a pre-registration, and Appendix E says so. The
   full committed text of every rule ships in the supplementary material, unabridged.
 
@@ -37,7 +37,7 @@ file on disk. Concretely:
   by a larger sample; what the wider sweep establishes is that the all-seeds criterion would not
   have held across all 20, so the hedge the rule carried was necessary rather than cautious.
 
-- **Thirteen withdrawals kept in the record** — seven claims withdrawn on evidence and six framings withdrawn — with the evidence that withdrew each, including one wrong by about a factor of 10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
+- **Fourteen withdrawals kept in the record** — eight claims withdrawn on evidence and six framings withdrawn — with the evidence that withdrew each, including one wrong by about a factor of 10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
 
 - **A build gate published as failing.** The clean-clone check requires that no regenerated value
   differ; 6 of 15,652 do, so it fails, it says where, and it is reported as failing. It was not

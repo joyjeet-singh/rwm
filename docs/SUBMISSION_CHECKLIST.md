@@ -9,6 +9,48 @@ it is the level of its "Open items" heading.
 
 *[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
+## Round 3, over `4281ae4` — the known items now
+
+*[2026-10-10, pre-submission round 3, R8]
+The sections below describe earlier commits and are kept as dated records. This section is the current
+list, written by `docs/presubmission/round3/r8_checklist.py` from the files it names. Section 8's figures
+come from M2, a clean clone of `a699341`; a clean clone of the commits after it is predicted to
+measure the printed figures on all 17 reproduction keys. That is a prediction, not a measurement; round 3's
+R9 measures it.*
+
+### Open items
+
+- **The bare `swh:1:` prefix — ruled 2026-09-20, closed.** No occurrence is followed by an object name.
+- **`submission_check` returns 21 of 22** in the working tree. The one pending
+  criterion is C1: the claims audit, regenerated on the frozen text by ruling U5 (round 3, R8), extracts
+  550 claims, 58 supported and
+  492 unreviewed; the ruling leaves them unreviewed and records it.
+  E7 passes.
+- **`part_f_gate` fails, and the paper publishes it as failing.** 7 of 8 checks
+  pass with the identity strings supplied and a clean clone's results; check 4 alone fails because
+  6 of 15,652 regenerated values differ, all of them bookkeeping in
+  2 bundle records (`results/anon_bundle.json` (3), `results/supplementary_manifest.json` (3)), none of them a measurement, a
+  statistic or a verdict.
+- **The supplementary manifest is exact — fixed in round 3, R5.** It records 493 files for an
+  archive of 493 members, and 468 commits for a log of 468; both are
+  counted, and asserted, rather than derived.
+- **No report `reproduce.sh` writes is left untracked and unignored — fixed in round 3, R5.** The nine
+  that nothing reads are gitignored and excluded by both bundlers; a clean clone's status after
+  `reproduce.sh` lists no untracked file.
+- **Figure-internal label overlaps — fixed in round 2, T8** (rendered Figures 2(a), 5 and 6; no plotted
+  value changed). The earlier passes below still list them as deferred, and each such line now says it
+  was fixed. The PDF prints the step-size quantity as LaTeX math since round 3, R4.
+- **Four items are logged, not fixed** (`docs/presubmission/round3/OUT_OF_SCOPE.md`):
+  - BUILD_CHECKS' list of claims withdrawn on evidence has no length guard (R0);
+  - §6.7's per-episode difficulty averages the stale and causal action offsets, a question for the user (R5);
+  - §5.2 gives rule M-74's alongside readings at the verdict level only (R6);
+  - Appendix H's R-46 row has no recorded n_independent (R7).
+- **Clean-clone runs share one private folder by default** (`scripts/t5_anon_transcript.py`); set
+  `RWM_PRIVATE_DIR` per clone. **`results/v3_metric_definitions.json` embeds the checkout folder's
+  name** in its citation strings; text only, ignored by the verifier.
+- **What the reproduction evidence covers.** Repeatability on one host, one interpreter and one set
+  of hash-verified inputs, not portability: no second machine has produced these figures.
+
 ## Round 2, over `c35c62e` — the known items now
 
 *[2026-10-04, pre-submission round 2, T11]
@@ -161,7 +203,7 @@ list, written by `docs/presubmission/round2/t11_checklist.py` from the files it 
    figure-internal labels overlap in Figure 2 (panel (a)'s point labels near h = 100 to 128) and
    Figure 5 (panel (a)'s legend over a line), with Figure 1's labels clear at this resolution; and
    on page 27 the step-size quantity prints as the literal text `‖µ_t − µ_{t−1}‖`, its underscores
-   and braces not typeset as subscripts, readable and unambiguous.
+   and braces not typeset as subscripts, readable and unambiguous. *[The label overlaps were fixed in round 2, T8, and the step-size quantity is typeset as math since round 3, R4; see the round-3 section.]*
 7. [2026-09-27] TMLR style — PASS: `PAPER.tex` loads `\usepackage{tmlr}` once, with no option; there
    is no system `tmlr.sty` at all — `kpsewhich` finds none — and the compile's log loads
    `./tmlr.sty`, the vendored `tex/tmlr.sty` (6,560 bytes, sha1
@@ -270,7 +312,7 @@ instruction files, or would need a change that reopens the clean-clone measureme
   the fixed point, so doing so needs a new measurement.
 - **Cosmetic, deferred:** figure-internal labels overlap in Figures 2 and 5, and page 27 prints the
   step-size quantity as the literal text `‖µ_t − µ_{t−1}‖`. Fixing either changes a figure or the
-  paper's text.
+  paper's text. *[The label overlaps were fixed in round 2, T8, and the step-size quantity is typeset as math since round 3, R4; see the round-3 section.]*
 - **Clean-clone runs share one private folder by default:** `scripts/t5_anon_transcript.py` writes
   the correspondence transcript two levels above the clone. Set `RWM_PRIVATE_DIR` per clone. It
   caused no contamination here.
@@ -384,7 +426,7 @@ been fixed or is carried in `docs/DEFERRED.md`.
    figure uses; Figure 3's caption describes panel (c) and its closing sentence about the curves
    sits after panel (b), the panels it is about; Appendix H claims only what it shows; and the §6.8
    pointer names "this section's table … its *different model* column" rather than a position.
-   DEFERRED, not a defect: figure-internal labels overlap bars or lines in Figures 1 and 2.
+   DEFERRED, not a defect: figure-internal labels overlap bars or lines in Figures 1 and 2. *[Fixed in round 2, T8; see the round-3 section.]*
 7. [2026-09-19] TMLR style — PASS: `PAPER.tex` loads `\usepackage{tmlr}` with no option;
    there is no system `tmlr.sty` at all — `kpsewhich` finds none — so the file the compile loads
    is necessarily the vendored `tex/tmlr.sty` (6,560 bytes, sha1
@@ -466,7 +508,7 @@ instruction files or needing a decision that a verification pass is the wrong pl
   finding, taking SUPPORTED from 196 to 177 and UNREVIEWED from 235 to 284 over 431 claims rising
   to 461. That belongs to a block that takes it deliberately, not to a numbers restatement.
 - **Figure-internal labels overlap** bars or lines in Figures 1, 2 and 5. Cosmetic, deferred, and
-  regenerating those figures would move artifacts that §8 counts.
+  regenerating those figures would move artifacts that §8 counts. *[Fixed in round 2, T8; see the round-3 section.]*
 - **What the reproduction evidence covers.** Two independent clean clones of this commit agree on
   every figure and every per-file count, on one host, one interpreter and one set of hash-verified
   inputs, surviving an 8% throughput difference between the runs. That is repeatability. It is not
