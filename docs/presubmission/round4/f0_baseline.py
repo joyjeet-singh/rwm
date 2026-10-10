@@ -59,7 +59,8 @@ rows = []
 for s in ("paper_numbers", "build_paper", "build_model_card", "build_readme", "compile_paper"):
     rows.append(("fast build", s + ".py", *run("build_" + s, [PY, f"scripts/{s}.py"])))
 compile_log = open(os.path.join(LOGS, "build_compile_paper.log")).read()
-built_changed = [l[3:] for l in git("status", "--porcelain").splitlines()]
+built_changed = [l[3:] for l in git("status", "--porcelain").splitlines()
+                if not l.startswith("??") and l not in status_before.splitlines()]
 built_pages, built_npages = references_page("PAPER.pdf")
 GATES = [("ledger_check.py", [], r"RESULT"), ("check_comparative_claims.py", ["--self-test"], r"claims verified|corruptions caught"),
          ("typed_numeral_audit.py", [], r"self-test|typed numerals in|unclassified"), ("restatement_index.py", [], r"\bPASS\b|\bFAIL|typed restatements|ambiguous"),
@@ -73,7 +74,8 @@ handle = re.sub(r".*github.com[:/]([^/]+)/.*", r"\1", url)
 repo_url = re.sub(r"\.git$", "", re.sub(r"^(https://|git@)", "", url).replace(":", "/", 1))
 rows.append(("outside the fast build", "part_f_gate.py (identity configured, no CLONE_RESULTS)",
              *run("gate_part_f_gate", [PY, "scripts/part_f_gate.py"], {"RWM_IDENT": f"{name},{mail},{handle}", "RWM_IDENT_REPO": repo_url})))
-rows.append(("outside the fast build", "submission_check.py", *run("gate_submission_check", [PY, "scripts/submission_check.py"])))
+rows.append(("outside the fast build", "submission_check.py",
+             *run("gate_submission_check", [PY, "scripts/submission_check.py"], rx=r"criteria met|outstanding:")))
 
 # C12.1, exactly as the gate computed it in the run above
 cc = json.load(open("results/comparative_claims.json"))
@@ -208,6 +210,9 @@ md += ["\n## Gates after one fast build\n",
        "| Kind | Script | Exit | Summary line |", "|---|---|---:|---|"]
 md += [f"| {k} | `{n}` | {rc} | {sm.replace('|', '/')} |" for k, n, rc, sm in rows]
 md += [f"\nTracked files the fast build changed: {', '.join('`'+x+'`' for x in built_changed) or 'none'}. "
+       f"`submission_check`'s outstanding criterion is C1, the claims audit, left unreviewed by round 2's ruling U5 "
+       f"(`docs/presubmission/round2/DECISIONS.md:{next(i + 1 for i, l in enumerate(open('docs/presubmission/round2/DECISIONS.md')) if l.startswith('| U5 |'))}`), "
+       f"as at R0 and in round 3's final verification. "
        f"Restored after the gates (side effects, as at S0, T0 and R0): {', '.join('`'+r+'`' for r in restored) or 'none'}. "
        f"Working tree unchanged by the run, apart from `{KEYS_OUT}`: "
        f"{'yes' if [l for l in status_before.splitlines() if KEYS_OUT not in l] == [l for l in status_after.splitlines() if KEYS_OUT not in l] else 'NO'}.\n"]
