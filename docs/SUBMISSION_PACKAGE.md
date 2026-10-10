@@ -1,7 +1,7 @@
 # Submission package
 
 Everything needed to upload this submission, and nothing else. **Written for a person at a
-browser.** Every figure here was read from the file it describes, at commit `4281ae4`, by
+browser.** Every figure here was read from the file it describes, at commit `6e98860`, by
 `docs/presubmission/round3/r8_package.py`, which also asserts each statement below about the two
 bundles before writing it; the checksums were computed for this document rather than copied from an
 earlier session. This replaces round 2's version.
@@ -29,8 +29,8 @@ Then upload the two files in §1, checking their checksums first.
 
 | file | what it is | size | SHA-256 |
 |---|---|---|---|
-| `PAPER.pdf` | the submission, 62 pages, TMLR submission mode | 1,137,677 bytes | `f964d6b3a178208214908aa6dd2df4a66011403cf96a2a262834b667973c203a` |
-| `supplementary_anon.zip` | the anonymised supplementary bundle, 517 members | 19,545,474 bytes | `5ba21134070fcfffbfdf45b7f3a47b9466891e30f65d2d8c782da7e04afbe633` |
+| `PAPER.pdf` | the submission, 62 pages, TMLR submission mode | 1,137,677 bytes | `df9a1288410c4b0d8aa8bc34e3417a34cbba754eee14cc2bb26c3c98c87d41fb` |
+| `supplementary_anon.zip` | the anonymised supplementary bundle, 517 members | 19,545,482 bytes | `bee2f6ef4639ceb22495ef718bf266108a13d281d42d15a1b3d97714c0b15b94` |
 
 **`supplementary.zip` is NOT uploaded — and not because it is unsafe.** Both bundles are anonymised:
 each is built by a script that refuses to write the archive if any staged file carries the author
@@ -39,10 +39,10 @@ narrower. It is gitignored, so unlike the two files above it is not tracked at a
 493 members are a strict subset of the anonymised bundle's 517, with 0 files
 unique to it; and the 24 the anonymised bundle alone carries include all 13
 figures — among them the 6 the paper's LaTeX names (`paper_fig1_calibration`, `paper_fig2_sigma_profile`, `paper_fig3_collapse`, `paper_fig4_prereg_timeline`, `paper_fig5_three_way`, `paper_fig6_ab_by_horizon`) — plus `README.md`,
-`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. One shared member differs in content,
-`GIT_LOG_ANONYMISED.txt`: in its header, and in 2 commit subjects where the anonymised builder
+`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. Two shared members differ in content.
+`GIT_LOG_ANONYMISED.txt` differs in its header, and in 2 commit subjects where the anonymised builder
 replaces the name of the original paper's correspondent with "the first author". Neither copy
-identifies the submitting author. Uploading it would therefore ship less, not more, and the checksum table
+identifies the submitting author. `results/supplementary_manifest.json` differs in its byte count alone, by 1 byte: it describes the archive it sits in, so the copy inside `supplementary.zip` records that archive's previous build, while the copy in the uploaded bundle, like the committed one, records it exactly. Uploading it would therefore ship less, not more, and the checksum table
 above covers the anonymised bundle.
 
 **One linkage ships with the bundle that is uploaded, knowingly.** `MODEL_CARD.md` is in the
@@ -60,7 +60,7 @@ shasum -a 256 PAPER.pdf supplementary_anon.zip
 ```
 
 and confirm the two lines match the table above. If they do not, something has rebuilt one of them
-since `4281ae4`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
+since `6e98860`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
 and ID, so a rebuild alone changes its checksum.
 
 ## 2. Title
@@ -79,7 +79,7 @@ print(" ".join(re.search(r"##\s*Abstract\s*\n+(.+?)\n\s*---", md, re.S).group(1)
 EOF
 ```
 
-At `4281ae4` it is 370 words by a whitespace split, within the 370-word cap the paper's own
+At `6e98860` it is 370 words by a whitespace split, within the 370-word cap the paper's own
 check C12.1 enforces. It begins "We rebuild the dynamics model of the *Robotic World Model*" and ends
 "...bound what the uncertainty reports, not what its miscalibration costs.". It is not retyped anywhere.
 
@@ -95,7 +95,7 @@ uncertainty it penalises with miscalibrated as a scale that worsens with rollout
 
 ## 5. Anonymity confirmation
 
-Swept at commit `4281ae4`, twice and independently: by the builders' own scans (the anonymised
+Swept at commit `6e98860`, twice and independently: by the builders' own scans (the anonymised
 bundle's builder also plants a probe, now a full commit hash since round 2, T8, which fired on every
 run; the supplementary builder's scan has no probe), and by sweep code written separately for
 verification. The channels covered were member paths, member text
@@ -112,7 +112,7 @@ this repository.
 A reviewer should meet these in the paper rather than discover them:
 
 - **A build gate is published as failing.** `part_f_gate` requires that no regenerated value differ
-  between the repository and a clean clone. 6 of 15,652 do, so it fails,
+  between the repository and a clean clone. 3 of 15,652 do, so it fails,
   and §8 says so. None of them is a measurement, a statistic or the verdict of a test; all are
   bookkeeping, and the build-checks supplementary (`docs/BUILD_CHECKS.md`) names each kind. With the identity strings supplied from outside the archive
   and a clean clone's results, 7 of 8 checks pass, check 4 alone failing. A
@@ -144,8 +144,8 @@ the request flow change between cycles, and nothing here has been checked agains
    reviewed.** It extracts 550 claims, 58 marked supported and
    492 unreviewed. The ruling records the unreviewed claims as known.
 5. **`results/supplementary_manifest.json` is now exact** (round 3, R5): it records
-   493 files for an archive of 493 members and 468 commits for
-   a log of 468, both counted rather than derived. No number the paper prints comes from it.
+   493 files for an archive of 493 members and 473 commits for
+   a log of 473, both counted rather than derived. No number the paper prints comes from it.
 6. **Figure-internal label overlaps were fixed in round 2, T8** (rendered Figures 2(a), 5 and 6; no
    plotted value changed). The PDF still prints the step-size quantity as the literal text
    `‖µ_t − µ_{t−1}‖`; cosmetic.

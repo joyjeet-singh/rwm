@@ -9,12 +9,12 @@ it is the level of its "Open items" heading.
 
 *[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
-## Round 3, over `4281ae4` — the known items now
+## Round 3, over `6e98860` — the known items now
 
 *[2026-10-10, pre-submission round 3, R8]
 The sections below describe earlier commits and are kept as dated records. This section is the current
 list, written by `docs/presubmission/round3/r8_checklist.py` from the files it names. Section 8's figures
-come from M2, a clean clone of `a699341`; a clean clone of the commits after it is predicted to
+come from M3, a clean clone of `fd279d7`; a clean clone of the commits after it is predicted to
 measure the printed figures on all 17 reproduction keys. That is a prediction, not a measurement; round 3's
 R9 measures it.*
 
@@ -28,11 +28,11 @@ R9 measures it.*
   E7 passes.
 - **`part_f_gate` fails, and the paper publishes it as failing.** 7 of 8 checks
   pass with the identity strings supplied and a clean clone's results; check 4 alone fails because
-  6 of 15,652 regenerated values differ, all of them bookkeeping in
-  2 bundle records (`results/anon_bundle.json` (3), `results/supplementary_manifest.json` (3)), none of them a measurement, a
+  3 of 15,652 regenerated values differ, all of them bookkeeping in
+  1 bundle records (`results/supplementary_manifest.json` (3)), none of them a measurement, a
   statistic or a verdict.
 - **The supplementary manifest is exact — fixed in round 3, R5.** It records 493 files for an
-  archive of 493 members, and 468 commits for a log of 468; both are
+  archive of 493 members, and 473 commits for a log of 473; both are
   counted, and asserted, rather than derived.
 - **No report `reproduce.sh` writes is left untracked and unignored — fixed in round 3, R5.** The nine
   that nothing reads are gitignored and excluded by both bundlers; a clean clone's status after

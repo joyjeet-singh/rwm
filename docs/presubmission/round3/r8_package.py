@@ -47,7 +47,16 @@ assert all(f"figures/{f}" in figs for f in tex_figs), tex_figs
 top = ["README.md", "LICENSE", "MODEL_CARD.md", "CITATION.cff", "NOTICE"]
 assert all(t in only_anon for t in top), [t for t in top if t not in only_anon]
 shared_diff = sorted(m for m in sn if A.getinfo(m).CRC != S.getinfo(SP[m]).CRC)
-assert shared_diff == ["GIT_LOG_ANONYMISED.txt"], shared_diff
+# Round 3, R8: the manifest describes the archive it sits in, so its byte count cannot always be exact inside
+# supplementary.zip (it alternated by one byte across builds). It may differ in that field alone; the uploaded
+# bundle's copy must equal the committed manifest, and that must equal supplementary.zip's size on disk.
+MAN = "results/supplementary_manifest.json"
+assert set(shared_diff) <= {"GIT_LOG_ANONYMISED.txt", MAN} and "GIT_LOG_ANONYMISED.txt" in shared_diff, shared_diff
+_ma, _ms = json.loads(A.read(MAN)), json.loads(S.read(SP[MAN]))
+_mt = json.load(open(MAN))
+assert _ma == _mt and _mt["bytes"] == os.path.getsize("supplementary.zip"), (_ma, _mt)
+man_off = abs(_ms["bytes"] - _ma["bytes"]) if MAN in shared_diff else 0
+assert MAN not in shared_diff or ([k for k in _ma if _ma[k] != _ms[k]] == ["bytes"] and man_off <= 8), (_ma, _ms)
 _la = [l for l in A.read("GIT_LOG_ANONYMISED.txt").decode().splitlines() if l and not l.startswith("#")]
 _ls = [l for l in S.read(SP["GIT_LOG_ANONYMISED.txt"]).decode().splitlines() if l and not l.startswith("#")]
 assert len(_la) == len(_ls), (len(_la), len(_ls))     # the same commits; only the headers' lengths differ
@@ -130,10 +139,10 @@ narrower. It is gitignored, so unlike the two files above it is not tracked at a
 {len(sn)} members are a strict subset of the anonymised bundle's {len(an)}, with {len(only_supp)} files
 unique to it; and the {len(only_anon)} the anonymised bundle alone carries include all {len(figs)}
 figures — among them the {len(tex_figs)} the paper's LaTeX names ({fig_list}) — plus `README.md`,
-`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. One shared member differs in content,
-`GIT_LOG_ANONYMISED.txt`: in its header, and in {_subj_diff} commit subjects where the anonymised builder
+`LICENSE`, `MODEL_CARD.md`, `CITATION.cff` and `NOTICE`. {'Two shared members differ' if man_off else 'One shared member differs'} in content.
+`GIT_LOG_ANONYMISED.txt` differs in its header, and in {_subj_diff} commit subjects where the anonymised builder
 replaces the name of the original paper's correspondent with "the first author". Neither copy
-identifies the submitting author. Uploading it would therefore ship less, not more, and the checksum table
+identifies the submitting author.{(' `results/supplementary_manifest.json` differs in its byte count alone, by ' + str(man_off) + ' byte' + ('' if man_off == 1 else 's') + ': it describes the archive it sits in, so the copy inside `supplementary.zip` records that archive' + "'" + 's previous build, while the copy in the uploaded bundle, like the committed one, records it exactly.') if man_off else ''} Uploading it would therefore ship less, not more, and the checksum table
 above covers the anonymised bundle.
 
 **One linkage ships with the bundle that is uploaded, knowingly.** `MODEL_CARD.md` is in the
@@ -269,5 +278,5 @@ the request flow change between cycles, and nothing here has been checked agains
 """
 open(OUT, "w").write(L)
 print(f"  wrote {OUT}: PDF {pdf_pages} pages; anon {len(an)} members; supp {len(sn)}; "
-      f"anon-only {len(only_anon)}; shared differing {shared_diff}; model-card sha256 {len(mc_sha)}; "
+      f"anon-only {len(only_anon)}; shared differing {shared_diff} (manifest off by {man_off}); model-card sha256 {len(mc_sha)}; "
       f"abstract {len(ab_words)} words; gate {g.group(0)}; manifest exact; untracked none")
