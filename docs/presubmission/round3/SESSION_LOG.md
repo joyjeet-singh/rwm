@@ -559,3 +559,44 @@ Body words (round2/t6_words.py): 20,745 (frozen).
 Abstract words / numerals (C12.1): 370 / 23.
 Next: R9 (clean-clone verification of the pushed HEAD; no edits). Expect printed = measured on all 17 reproduction keys, 0 scientific, `part_f_gate` 7/8, and 0 anonymity hits. Then the user's §0.4 steps 1–4, and the upload last, without rebuilding, checked against `docs/SUBMISSION_PACKAGE.md`'s checksums.
 Decisions for user: none required by this session. OUT_OF_SCOPE holds four items for later.
+
+## R9 — 2026-10-10 18:20 — Opus 5.5 (the plan assigns Sonnet 5.5) — status: COMPLETE
+Commits: the commit carrying this entry and `round3/FINAL_REPORT.md`. The repository was otherwise not edited; the verified commit is 41b73ee.
+Done:
+- **How it ran.** On Opus 5.5 in the same conversation as R0–R8, at the user's instruction.
+  - Round 2 T12's driver was copied and adapted (`evidence/R3R9/r9_driver.zsh`): branch, paths, R8's M3 as the stage reference, R0's base for words, and a sweep of the committed upload files.
+  - It ran a clean clone of the pushed `presubmission3` HEAD 41b73ee with a fresh venv from `requirements.txt`: `setup.sh`, `reproduce.sh --quick --force` (7,974 s), the verifier ×3, the full build and every gate, both bundles, the deny-list sweeps, and the PDF comparison.
+  - The repository's status and HEAD were unchanged afterwards.
+- **Every criterion passes** (`round3/FINAL_REPORT.md`):
+  - **0 scientific differences.** 15,652 values, 15,649 identical; 3 differ, all in the supplementary manifest. v1 = v2 = v3.
+  - **The gate fails as published:** `part_f_gate` 7/8, check 4 alone.
+  - **Printed = measured on 17/17 reproduction keys.**
+  - **The PDF is identical** to the committed one after blanking dates and ID; 62 pages.
+  - **0 deny-list hits** in the rebuilt bundles and PDF, and in the committed upload files.
+  - **`submission_check` 21/22** (C1 by U5), as the checklist records.
+  - **X2's stage 20t14 skips as designed.**
+- **Also checked.**
+  - The stage tally is 112 stages, 62 OK, 46 skipped and 4 known failures, identical to M1–M3.
+  - The two builds are identical, and the documents equal the committed ones. `MODEL_CARD.md` matches with `runs/` linked. `paper_numbers.json` differs only in three host-sourced keys the verifier excludes, none printed.
+  - The rebuilt anonymised bundle's 14 byte-differing members are the clone's own host and timing records and the bundle bookkeeping, the same count as round 2's T12.
+- **Upload files:**
+  - `PAPER.pdf`: 1,137,677 bytes, sha256 `df9a1288410c4b0d8aa8bc34e3417a34cbba754eee14cc2bb26c3c98c87d41fb`;
+  - `supplementary_anon.zip`: 19,545,482 bytes, 517 members, sha256 `bee2f6ef4639ceb22495ef718bf266108a13d281d42d15a1b3d97714c0b15b94`.
+  - Both equal `docs/SUBMISSION_PACKAGE.md`.
+Build/gates: pass in the clone.
+- 65/65 claims and 65/65 caught; 32 kinds, 0 unclassified; ledger PASS; restatement CLEAN; horizon sweep 0 findings; xref 0 suspect; rendered PDF PASS.
+Paper numbers changed: none.
+New keys: none.
+Re-anchored checks: none.
+CPU jobs over 1 min: the clean clone (`reproduce.sh` 7,974 s, about 3 h with the bundles and both sweeps).
+Body words (round2/t6_words.py): 20,745 (R0: 20,771).
+Abstract words / numerals (C12.1): 370 / 23.
+Next: round 3 is complete. **Only the user can do these (PLAN §0.4), in this order:**
+1. Fast-forward or merge `presubmission3` into GitHub's `main`.
+2. Re-upload `MODEL_CARD.md` to the Hugging Face model repository (it gained rule X2's result).
+3. Trigger a Software Heritage archive of the final pushed commit (the latest visit the repository records is 2026-08-21).
+4. Send the author query (`docs/presubmission/AUTHOR_QUERY_ALIGNMENT.md`) if it has not gone.
+5. Upload `PAPER.pdf` and `supplementary_anon.zip` last, checking both SHA-256s first, without rebuilding.
+
+Steps 1–3 push or publish, and nothing may be pushed once the paper is under double-blind review.
+Decisions for user: none required by this session. OUT_OF_SCOPE holds four items for later, none blocking the upload.
