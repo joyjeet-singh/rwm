@@ -2,8 +2,8 @@
   "scanned": "PAPER.template.md",
   "n_substituted": 1845,
   "n_typed": 279,
-  "n_restatements": 128,
-  "n_same_quantity_candidates": 67,
+  "n_restatements": 127,
+  "n_same_quantity_candidates": 66,
   "n_lower_signal": 61,
   "restatements": [
     {
@@ -7902,36 +7902,6 @@
           "line": 2037,
           "key": "m68_indep_ratio_h100",
           "ctx": "ot repair the interval.** The combined arm is {{m68_indep_ratio_h100}}\u00d7 overconfident at h = {{v2_deploy_h}} w"
-        }
-      ]
-    },
-    {
-      "value": "593",
-      "n_locations": 2,
-      "same_quantity_candidate": true,
-      "fails_build": false,
-      "n_typed": 0,
-      "n_substituted": 2,
-      "sources": [
-        "FINDINGS_LEDGER.md, on disk",
-        "results/task_d2_recalibration.json"
-      ],
-      "keys": [
-        "d2_ale_c_lo",
-        "ledger_kb"
-      ],
-      "locations": [
-        {
-          "section": "6.7 One constant scalar does not fix it; a per-horizon one lands within the band, though no single cell is resolvable at this arena",
-          "line": 996,
-          "key": "d2_ale_c_lo",
-          "ctx": "d2_epi_cov368_hi}}%. On the aleatoric term a scalar of {{d2_ale_c_lo}}\u2013{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}"
-        },
-        {
-          "section": "Appendix E \u2014 every pre-registered rule, its lead time and its verdict",
-          "line": 1488,
-          "key": "ledger_kb",
-          "ctx": "hind it is either decoration or an instruction to open a {{ledger_kb}} KB ledger, so here is the table. It is "
         }
       ]
     },
