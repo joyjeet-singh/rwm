@@ -3088,10 +3088,10 @@ def main():
         f'{_h1["confounders"]["episode_difficulty_D12"]["r_disagreement_vs_confounder"]:+.3f}',
         "results/a2_trajectory_level_control.json")
     put("a2_h1_npoints", _h1["n_points"], "results/a2_trajectory_level_control.json")
-    # The per-episode difficulty range as A2 uses it: per episode, the mean of
-    # step4_0a's two action offsets (A2's comment calls them seeds). D-12 quotes
-    # Step 3's range, at the stale offset alone, and is therefore wider; this is
-    # the quantity 6.7 partials out, so this is the one 6.7 quotes (D-37).
+    # The per-episode difficulty range as A2 uses it: step4_0a's causal action
+    # offset alone, per_episode_e["1"] (round 4, N6, D-39; until then the mean of
+    # offsets 0 and 1, D-37). D-12 quotes Step 3's range, at the stale offset alone;
+    # this is the quantity 6.7 partials out, so this is the one 6.7 quotes.
     put("d12_lo", f'{_h1["episode_difficulty_range"][0]:.3f}',
         "results/a2_trajectory_level_control.json")
     put("d12_hi", f'{_h1["episode_difficulty_range"][1]:.3f}',
