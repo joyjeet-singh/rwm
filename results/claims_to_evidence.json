@@ -3662,13 +3662,98 @@
         "src/rwm_data.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-88",
+      "claim": "PRE-REGISTERED rule X6: does ensemble disagreement beat the model's own predicted step s",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x6_stepsize_short_units.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/e7_free_baselines.json",
+        "results/e7_free_baselines_power.json",
+        "results/x6_stepsize_short_units.json",
+        "scripts/e7_free_baselines.py",
+        "scripts/m64_short_units.py",
+        "scripts/x6_stepsize_short_units.py",
+        "src/rollout_eval.py",
+        "src/rwm_data.py",
+        "src/rwm_metrics.py",
+        "src/score_reference.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-89",
+      "claim": "PRE-REGISTERED rule X7: \u00a76.7's per-horizon recalibration, fitted on nine episodes and sc",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x7_loeo_recalibration.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/task_d3_perhorizon.json",
+        "results/x7_loeo_recalibration.json",
+        "scripts/task_d3_cross_model.py",
+        "scripts/task_d3_perhorizon.py",
+        "scripts/x7_loeo_recalibration.py",
+        "src/rollout_eval.py",
+        "src/rwm_data.py",
+        "src/rwm_metrics.py",
+        "src/score_reference.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-90",
+      "claim": "PRE-REGISTERED rule X8: would any verdict change under the released evaluation's action ",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x8_released_pairing.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/alignment_by_horizon.json",
+        "results/baselines_eval.json",
+        "results/baselines_verdict.json",
+        "results/mn_compute_matched.json",
+        "results/mn_sweep_eval.json",
+        "results/mn_sweep_verdict.json",
+        "results/task5_analysis.json",
+        "results/x3_armB_2500_reference.json",
+        "results/x8_released_pairing.json",
+        "scripts/a1_ab_by_horizon.py",
+        "scripts/baselines_eval.py",
+        "scripts/mn_sweep_eval.py",
+        "scripts/p5_sweep_power.py",
+        "scripts/review_bootstrap_unit.py",
+        "scripts/verdict_baselines.py",
+        "scripts/verdict_mn_sweep.py",
+        "scripts/x8_released_pairing.py",
+        "src/baselines/__init__.py",
+        "src/baselines/common.py",
+        "src/baselines/mlp.py",
+        "src/baselines/rssm.py",
+        "src/baselines/transformer.py",
+        "src/rollout_eval.py",
+        "src/rwm_data.py",
+        "src/rwm_metrics.py",
+        "src/rwm_model.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
     "D": 38,
-    "M": 87,
+    "M": 90,
     "O": 14,
     "R": 79,
     "S": 21,
