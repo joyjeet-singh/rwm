@@ -1,0 +1,62 @@
+{
+ "what": "N6: the regenerated a2 artifact against the committed one",
+ "n_leaves": 194,
+ "derived_fields": [
+  "h1_diagnostic/episode_difficulty_range",
+  "h1_diagnostic/confounders/episode_difficulty_D12",
+  "h1_diagnostic/partial_on_both",
+  "h1_diagnostic/collapses",
+  "h1_diagnostic/difficulty_source"
+ ],
+ "non_derived_unchanged": true,
+ "non_derived_changed": [],
+ "derived_changes": {
+  "h1_diagnostic/confounders/episode_difficulty_D12/partial_ci[0]": [
+   0.8921267997195389,
+   0.8919461448062606
+  ],
+  "h1_diagnostic/confounders/episode_difficulty_D12/partial_ci[1]": [
+   0.9990121823905409,
+   0.9989873591752069
+  ],
+  "h1_diagnostic/confounders/episode_difficulty_D12/partial_r": [
+   0.9949174990078126,
+   0.9948850382672584
+  ],
+  "h1_diagnostic/confounders/episode_difficulty_D12/r_disagreement_vs_confounder": [
+   0.040262817055881445,
+   0.027345562198555665
+  ],
+  "h1_diagnostic/confounders/episode_difficulty_D12/r_error_vs_confounder": [
+   0.08548969637505231,
+   0.07171399642982057
+  ],
+  "h1_diagnostic/confounders/episode_difficulty_D12/shrinkage": [
+   -0.0010040838056122325,
+   -0.0009716230650580471
+  ],
+  "h1_diagnostic/difficulty_source": [
+   "D-12, results/step4_0a_results.json -> per_episode_e, averaged over the seeds that measured it",
+   "D-12, results/step4_0a_results.json -> per_episode_e['1'], the causal action timing (round 4, N6: no longer the mean over offsets 0 and 1)"
+  ],
+  "h1_diagnostic/episode_difficulty_range[0]": [
+   0.5619921982288361,
+   0.5225037336349487
+  ],
+  "h1_diagnostic/episode_difficulty_range[1]": [
+   1.5913493633270264,
+   1.585336446762085
+  ],
+  "h1_diagnostic/partial_on_both": [
+   0.9950306370527148,
+   0.9949727458231757
+  ]
+ },
+ "sign_flips": [],
+ "verdict_changes": [],
+ "reported_in_paper": {
+  "h1_diagnostic/confounders/episode_difficulty_D12/r_disagreement_vs_confounder": "a2_h1_diff_r",
+  "h1_diagnostic/partial_on_both": "a2_h1_partial_both"
+ },
+ "ruling_W5_passes": true
+}

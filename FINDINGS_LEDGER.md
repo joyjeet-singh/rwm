@@ -9524,3 +9524,52 @@ action. At h = 8, on each model's own training data, it is 0.200 for Arm A at 10
 causal error, at every horizon and arena, are in the artifact.
 **Evidence** `RUN` `results/n5_stale_armA_ci.json`; `SRC` `scripts/n5_stale_armA_ci.py`, `scripts/action_sensitivity.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### D-39 — N6 (post hoc): the paper's per-episode difficulty is now measured at the causal action timing alone (corrects D-37) · **NEW**
+**Corrects** D-37, whose last paragraph records that the paper's per-episode difficulty is the mean of two measurements of
+the released checkpoint, one at the stale action timing and one at the causal timing, and R-69 and M-62, which quote figures
+from that mean. None of the three is edited.
+
+**What changed.** `scripts/a2_trajectory_level_control.py` built each episode's difficulty as the mean of
+`per_episode_e["0"]` and `per_episode_e["1"]` in `results/step4_0a_results.json`, and its comment called the two keys seeds.
+They are the two action offsets (D-37). The script now reads `per_episode_e["1"]`, the causal timing, alone, and the
+artifact's `difficulty_source` says so. Four lines are edited, in place (265, 268, 304 and 305); the line count is
+unchanged, so no cited line moves.
+
+**Why the causal timing.** The measure is meant to describe how hard each episode is to forecast. The stale timing is the
+released evaluation code's pairing, which pairs each predicted state with the action one step before the one that produced it
+(B-05, D-13). Averaging it in mixed that evaluation defect into what should be a property of the episode. The causal timing is
+the pairing D-13 establishes as correct and the one the released checkpoint was trained under. Round 4 (PLAN objection O9)
+recomputes the measure at it; this is post hoc, re-opens no rule and changes no verdict.
+
+**What moved** (`docs/presubmission/round4/f3_n6_check.json`, the regenerated artifact against its committed predecessor,
+194 fields). Every field not built from the difficulty measure is unchanged to 1e-12. At h = 1, over
+20 trajectories:
+- the range across the ten episodes: 0.562 to 1.591 →
+  0.523 to 1.585, which is `d12_retest["1"]` in `results/step4_0a_results.json` (3.03-fold, as D-37 recorded);
+- the correlation of disagreement with difficulty: +0.040 → +0.027;
+- the correlation of error with difficulty: +0.085 → +0.072;
+- the disagreement–error correlation with difficulty partialled out: +0.99492 → +0.99489, interval
+  [+0.892, +0.999] → [+0.892, +0.999];
+- with difficulty and commanded speed both partialled out: +0.99503 → +0.99497;
+- the shrinkage from partialling difficulty: -0.00100 → -0.00097.
+
+**Ruling W5** (PLAN round 4): no verdict changes (`collapses` stays False), and no correlation or partial changes
+sign. It passes.
+
+**Entries whose figures change.**
+- D-37: "the paper uses their mean" no longer holds. The paper uses the causal range D-37 records, 0.523 to 1.585.
+- R-69: "+0.040 with per-episode difficulty (D-12)" is now +0.027. "Partialling both out
+  … leaves +0.995" is unchanged at three decimals. Its conclusion, that the h = 1 figure does not collapse, stands.
+- M-62: "spans 0.562 to 1.591 across the dataset" is now 0.523 to 1.585. The range only motivates M-62's question; its design,
+  its cells and `scripts/m62_episode_clustering.py` do not read it.
+
+**Paper keys** (`results/paper_numbers.json`, re-bound by the fast build; the template is not edited in this session). All
+four are in Appendix N:
+- `d12_lo` 0.562 → 0.523 and `d12_hi` 1.591 → 1.585 ("Per-episode difficulty spans … to …");
+- `a2_h1_diff_r` +0.040 → +0.027 ("… with per-episode difficulty");
+- `a2_h1_partial_both` +0.995 → +0.995.
+
+The partial on difficulty alone is bound to no key (`docs/presubmission/round4/PREFLIGHT.md`, PF7).
+**Evidence** `RUN` `results/a2_trajectory_level_control.json`, `results/step4_0a_results.json`, `results/paper_numbers.json`; `SRC` `scripts/a2_trajectory_level_control.py`, `scripts/paper_numbers.py`.
+**Status** CONFIRMED · **Relevance** METHOD

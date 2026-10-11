@@ -3812,12 +3812,31 @@
         "scripts/n5_stale_armA_ci.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-39",
+      "claim": "N6 (post hoc): the paper's per-episode difficulty is now measured at the causal action t",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/a2_trajectory_level_control.json",
+        "results/paper_numbers.json",
+        "results/step4_0a_results.json",
+        "scripts/a2_trajectory_level_control.py",
+        "scripts/m62_episode_clustering.py",
+        "scripts/paper_numbers.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
-    "D": 38,
+    "D": 39,
     "M": 93,
     "O": 14,
     "R": 80,

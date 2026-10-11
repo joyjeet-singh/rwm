@@ -29,9 +29,9 @@ A2 — THE TRAJECTORY-LEVEL CONTROL, AND M-45's VERDICT
       r(|error|, commanded_speed)        +0.0232
       r(disagreement, |error|) partialling commanded_speed out: +0.9941 [+0.9215, +0.9989]   (was +0.9939)
   [4] h=1 DIAGNOSTIC — episode_difficulty_D12
-      r(disagreement, episode_difficulty_D12)   +0.0403
-      r(|error|, episode_difficulty_D12)        +0.0855
-      r(disagreement, |error|) partialling episode_difficulty_D12 out: +0.9949 [+0.8921, +0.9990]   (was +0.9939)
+      r(disagreement, episode_difficulty_D12)   +0.0273
+      r(|error|, episode_difficulty_D12)        +0.0717
+      r(disagreement, |error|) partialling episode_difficulty_D12 out: +0.9949 [+0.8919, +0.9990]   (was +0.9939)
 
       partialling BOTH out: +0.9950   (was +0.9939)
 

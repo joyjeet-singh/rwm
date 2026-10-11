@@ -262,10 +262,10 @@ def main():
     # therefore free to produce it, and that is what this block tests.
     strat = json.load(open(os.path.join(R.RESULTS, "step0_strat.json")))
     per_ep = json.load(open(os.path.join(R.RESULTS, "step4_0a_results.json")))["per_episode_e"]
-    # D-12's per-episode difficulty, averaged over the seeds that measured it
+    # D-12's per-episode difficulty at the causal action timing, per_episode_e["1"] (round 4, N6; corrects D-37)
     diff_by_ep = {}
     for e in allep:
-        vals = [per_ep[s][str(e)] for s in per_ep if str(e) in per_ep[s]]
+        vals = [per_ep["1"][str(e)]]   # key "1" is the causal action offset; "0" is the stale one, not a seed
         diff_by_ep[e] = float(np.mean(vals))
     speed = np.array([strat[str(e)]["mean_speed"] for e in traj_ep])
     diff = np.array([diff_by_ep[e] for e in traj_ep])
@@ -301,8 +301,8 @@ def main():
         "n_points": int(n_traj),
         "episode_difficulty_range": [min(diff_by_ep.values()), max(diff_by_ep.values())],
         "commanded_speed_range": [float(speed.min()), float(speed.max())],
-        "difficulty_source": "D-12, results/step4_0a_results.json -> per_episode_e, "
-                             "averaged over the seeds that measured it",
+        "difficulty_source": "D-12, results/step4_0a_results.json -> per_episode_e['1'], the causal "
+                             "action timing (round 4, N6: no longer the mean over offsets 0 and 1)",
         "note": "at h=1 the panel has one column, so this correlation is over "
                 "TWENTY trajectory-level points and nothing within a rollout is "
                 "being tested at all",

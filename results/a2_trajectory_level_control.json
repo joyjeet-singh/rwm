@@ -80,23 +80,23 @@
       },
       "episode_difficulty_D12": {
         "partial_ci": [
-          0.8921267997195389,
-          0.9990121823905409
+          0.8919461448062606,
+          0.9989873591752069
         ],
-        "partial_r": 0.9949174990078126,
-        "r_disagreement_vs_confounder": 0.040262817055881445,
-        "r_error_vs_confounder": 0.08548969637505231,
-        "shrinkage": -0.0010040838056122325
+        "partial_r": 0.9948850382672584,
+        "r_disagreement_vs_confounder": 0.027345562198555665,
+        "r_error_vs_confounder": 0.07171399642982057,
+        "shrinkage": -0.0009716230650580471
       }
     },
-    "difficulty_source": "D-12, results/step4_0a_results.json -> per_episode_e, averaged over the seeds that measured it",
+    "difficulty_source": "D-12, results/step4_0a_results.json -> per_episode_e['1'], the causal action timing (round 4, N6: no longer the mean over offsets 0 and 1)",
     "episode_difficulty_range": [
-      0.5619921982288361,
-      1.5913493633270264
+      0.5225037336349487,
+      1.585336446762085
     ],
     "n_points": 20,
     "note": "at h=1 the panel has one column, so this correlation is over TWENTY trajectory-level points and nothing within a rollout is being tested at all",
-    "partial_on_both": 0.9950306370527148,
+    "partial_on_both": 0.9949727458231757,
     "r_h1": 0.9939134152022003,
     "r_h1_ci": [
       0.9169317138279357,
