@@ -520,7 +520,7 @@ def fig4_timeline(rec):
         x = v * 1.15 + 0.1 if v > 0 else 0.15
         ax.text(x, i, f"{fmt(v)}  ({b['tested_by']})", va="center", ha="left", fontsize=6.3)
     ax.set(xlabel="hours the rule preceded the data it tested  (symmetric log scale; negative = written afterwards)",
-           title="Pre-registration lead time for every pre-registered rule, from git")
+           title="Pre-registration lead time for every pre-registered rule whose data exist, from git")
     ax.set_xlim(min(vals) * 1.6, max(vals) * 60)
     ax.text(0.99, 0.02, "green: rule in git before the data existed\n"
                         "red: rule written once the answer was known (S-12)",

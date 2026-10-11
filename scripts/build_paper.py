@@ -417,11 +417,12 @@ def main():
             "sign flip is the evidence that the objective, not the optimiser or the data, "
             "produces it.",
         "paper_fig4_prereg_timeline.png":
-            "Pre-registration lead time for every pre-registered rule (Appendix E), with M-16's "
-            "annotation beside its rule, from git commit timestamps on a symmetric-logarithmic axis. "
+            "Pre-registration lead time for every pre-registered rule whose data exist (Appendix E), with "
+            "M-16's annotation beside its rule, from git commit timestamps on a symmetric-logarithmic axis. "
             "Positive is a rule committed before the data that tested it existed; negative is a "
-            "rule written afterwards. The one negative bar is the Task 3 duplication rule (S-12), "
-            "retracted as a pre-registration in this paper.",
+            "rule written afterwards. A lead of a few minutes means the rule was committed just before "
+            "its runs were launched or its readings computed. The one negative bar is the Task 3 "
+            "duplication rule (S-12), retracted as a pre-registration in this paper.",
         "paper_fig6_ab_by_horizon.png":
             "The autoregressive-versus-teacher-forcing advantage as a function of forecast "
             "horizon, out-of-sample over three seeds at " + str(N["iters_long"]["value"])
