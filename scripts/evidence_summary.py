@@ -255,6 +255,10 @@ def build_rows():
     _mn_exc = [("held-out " if a == "held_out" else "in-sample ") + _lab(k)
                for a, k, res in _readings("M-74", MV, "branch") if res != MV["verdict"]]
     assert len(_mn_exc) == 1, _mn_exc
+    for a, src in (("held_out", "alongside"), ("in_sample", "in_sample")):
+        for k, v in MV[src].items():
+            pc = v["per_config"] if k.startswith("l1") else N2A["M-74"][f"{a}|{k}"]["pooled"]["per_key"]
+            assert all(pc[w]["D"] < 0 and pc[w]["ci95"][0] <= 0 for w in _better), (a, k)
     rows.append({
         "claim": "(M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off)",
         "section": "5.2",
@@ -262,9 +266,11 @@ def build_rows():
         "n_independent": ME["arenas"]["held_out"]["n_independent"],
         "in_sample": in_sample("our arms", mn_arena),
         # Round 2, T3 item 4(c): a returned verdict is printed verbatim, in the case the rule returned it.
+        # Round 4, F4 item 4 (A4): per configuration, no reading the rule reports puts the centre ahead of any
+        # winner (asserted above the row, on every reading as section 5.2 quotes it).
         "verdict": (MV["verdict"] + f"; {len(_better)} of {MV['governing']['m']} "
-                    f"neighbours beat the centre; every other reading the rule reports returns the same verdict but "
-                    f"{_mn_exc[0]}, which is unresolved; the ranking depends on training length (Appendix U)"),
+                    f"neighbours beat the centre, and no reading the rule reports puts the centre ahead of any of them; "
+                    f"the ranking depends on training length (Appendix U)"),
         "multiplicity": "yes",
         "model": "our arms",
         "artifacts": ["results/mn_sweep_verdict.json", "results/mn_sweep_eval.json"],

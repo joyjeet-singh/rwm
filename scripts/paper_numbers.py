@@ -3549,6 +3549,60 @@ def main():
     assert len(_thr) == 1 and "lower bound > 0" in _xo[0] and "upper bound < 0" in _xo[1], _xo
     put("x2_thr_pct", _thr.pop(), "results/action_sensitivity.json")
 
+    # --- Round 4, F4 item 4 (Annex 4, A4 and A4b): the configuration wording, per configuration ----------------------
+    # Every reading rule M-74 reports, as section 5.2 quotes them: relative-L1 as committed (mn_sweep_verdict.json),
+    # nRMSE pooled as section 3.1 defines it (pooled_nrmse_alongside.json, R-77). For each configuration that beats the
+    # centre on the governing reading, asserted: no reading puts the centre ahead, neither by an interval wholly on its
+    # side nor by a point estimate (the abstract says the winners never trail it at our budget; contribution 3, section
+    # 12 and Appendix D say no reading puts the centre ahead), and the same holds on the committed per-trajectory nRMSE.
+    # The readings that leave a winner unresolved (not rejected after Holm) are listed for section 5.2 (A4b).
+    _MV4 = J("mn_sweep_verdict.json")
+    _P4 = J("pooled_nrmse_alongside.json")["readings"]["M-74"]
+    _W4 = _MV4["governing"]["conditions"]["configs_excluding_zero_in_their_favour"]
+    _gv = "l1_h" + str(N["v2_diag_h"]["value"])
+    assert all(_MV4["alongside"][_gv]["per_config"][w]["D"] == _MV4["governing"]["per_config"][w]["D"] for w in _W4)
+    _rd4 = {}
+    for _a4, _src4 in (("held_out", "alongside"), ("in_sample", "in_sample")):
+        for _k4, _v4 in _MV4[_src4].items():
+            _m4, _h4 = _k4.split("_h")
+            if _m4 == "l1":
+                _rd4[(_a4, _m4, _h4)] = _v4["per_config"]
+            else:
+                _pp = _P4[f"{_a4}|{_k4}"]
+                _rd4[(_a4, _m4, _h4)] = _pp["pooled"]["per_key"]
+                for w in _W4:       # the committed per-trajectory nRMSE never puts the centre ahead either
+                    _cw = _pp["committed"]["per_key"][w]
+                    assert _cw["D"] < 0 and _cw["ci95"][0] <= 0, (_k4, w, _cw)
+    assert len(_rd4) == 16, sorted(_rd4)
+    for (_a4, _m4, _h4), _pc4 in _rd4.items():
+        for w in _W4:
+            assert _pc4[w]["D"] < 0 and _pc4[w]["ci95"][0] <= 0, (_a4, _m4, _h4, w, _pc4[w])
+    _un4 = {(w, a, m, h) for (a, m, h), pc in _rd4.items() for w in _W4 if not pc[w]["rejected"]}
+    _MN = lambda c: tuple(int(x[1:]) for x in c.split("_"))          # "M32_N16" -> (32, 16)
+    _cM, _cN = _MN("M32_N8")
+    _kinds4 = {"longer forecasts": [w for w in _W4 if _MN(w)[0] == _cM and _MN(w)[1] > _cN],
+               "shorter histories": [w for w in _W4 if _MN(w)[1] == _cN and _MN(w)[0] < _cM]}
+    assert sorted(_kinds4["longer forecasts"] + _kinds4["shorter histories"]) == sorted(_W4)
+    _both = lambda ws, h: all((w, "held_out", m, h) in _un4 for w in ws for m in ("l1", "nrmse"))
+    _parts4, _cov4 = [], set()
+    for _h4 in sorted({h for (_, a, _, h) in _un4 if a == "held_out"}, key=int):
+        if _both(_W4, _h4):
+            _parts4.append(f"all {WORDS[len(_W4)].lower()} at h = {_h4} on the held-out pair in both metrics")
+            _cov4 |= {(w, "held_out", m, _h4) for w in _W4 for m in ("l1", "nrmse")}
+            continue
+        for _kn, _ws in _kinds4.items():
+            if len(_ws) > 1 and _both(_ws, _h4):
+                _parts4.append(f"the {WORDS[len(_ws)].lower()} {_kn}{' also' if _parts4 else ''} at h = {_h4}")
+                _cov4 |= {(w, "held_out", m, _h4) for w in _ws for m in ("l1", "nrmse")}
+    _rest4 = sorted(_un4 - _cov4, key=lambda t: (_MN(t[0]), t[1], t[2], int(t[3])))
+    _one4 = lambda t: (f"{_cfgname(t[0])} on {'held-out' if t[1] == 'held_out' else 'in-sample'} "
+                       f"{'relative-L1' if t[2] == 'l1' else 'nRMSE'} at h = {t[3]}")
+    _ru4 = [_one4(t) for t in _rest4]
+    _tail4 = (", ".join(_ru4[:-1]) + " and " + _ru4[-1]) if len(_ru4) > 1 else (_ru4[0] if _ru4 else "")
+    assert _parts4 and _tail4, (_parts4, _tail4)
+    put("mn_winner_unres_clause", ", ".join(_parts4) + ", and " + _tail4,
+        "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json")
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.
