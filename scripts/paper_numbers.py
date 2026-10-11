@@ -3541,6 +3541,14 @@ def main():
     put("n5_appV_table", "\n".join(_n5rows), _n5s)
     put("n5_appV_hdr", " | ".join(f"h = {h}" for h in _n5h), _n5s)
 
+    # --- Round 4, F4 item 3: Appendix V states rule X2's criterion, read from the rule's own record --------------------
+    _xo = X2["reading_rule"]["outcomes"]
+    assert [o.split(":")[0] for o in _xo] == ["RESPONDS TO THE ACTION", "ERROR FALLS WITH WRONG ACTIONS",
+                                              "DOES NOT RESPOND MEASURABLY", "UNRESOLVED"], _xo
+    _thr = {re.search(r"([+-]?\d+(?:\.\d+)?)%", _xo[i]).group(1) for i in (0, 2)}
+    assert len(_thr) == 1 and "lower bound > 0" in _xo[0] and "upper bound < 0" in _xo[1], _xo
+    put("x2_thr_pct", _thr.pop(), "results/action_sensitivity.json")
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

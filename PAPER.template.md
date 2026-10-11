@@ -2223,7 +2223,7 @@ interventions are the stale action (the released evaluation's offset), another t
 trajectory taking the next one's), each action dimension's mean over the model's training rows, and the true actions
 plus Gaussian noise at k times each dimension's training standard deviation (eight draws). **The readings** are Arm
 A's, under the swap at h = 8 on its in-sample arena: **{{x2_reading}}** at {{iters_main}} iterations
-({{x2_E_swap_2500}}% {{x2_ci_swap_2500}}) and at {{iters_long}} ({{x2_E_swap_10k}}% {{x2_ci_swap_10k}}). Arm B and the
+({{x2_E_swap_2500}}% {{x2_ci_swap_2500}}) and at {{iters_long}} ({{x2_E_swap_10k}}% {{x2_ci_swap_10k}}). The criterion was fixed in the rule before any reading existed (M-84), and the first outcome that matches applies: RESPONDS TO THE ACTION if the point estimate is at least {{x2_thr_pct}}% and the interval's lower bound is above zero; ERROR FALLS WITH WRONG ACTIONS if the interval's upper bound is below zero; DOES NOT RESPOND MEASURABLY if its upper bound is below {{x2_thr_pct}}%; otherwise UNRESOLVED. The bar is deliberately low: the one-step-stale action alone raises the released checkpoint's error at h = 8 by {{adh20_rel_h8}}% over all ten episodes. What the rule establishes is that our forecasts depend on the action. It does not establish that they depend on it correctly: every action in the data comes from one policy, so a forecast under an action that policy would not take has no recorded outcome to check it against. Arm B and the
 released checkpoint get the same statistic, alongside and not as readings.
 
 | model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = {{v2_deploy_h}} |
