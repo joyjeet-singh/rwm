@@ -217,15 +217,18 @@ def main():
             # computed" in the one appendix that exists to state it.
             _art = (re.search(r"^\*\*Discharged\*\* by `([^`]+)`", blk, re.M)
                     or re.search(r"^\*\*Status\*\*[^\n]*?DISCHARGED by `([^`]+)`", blk, re.M))
+            # Round 3, R4 (S6): the commit that introduced the rule's heading is kept, not just its
+            # timestamp, so Appendix E's commit column is filled for every rule; the submitted PDF
+            # and bundles print its anonymous label, as for the rest. Round 4, F4: found for a rule
+            # whose data do not exist yet too, so its pre-registration commit is printed beside it.
+            _rcl = subprocess.run(
+                ["git", "log", "--format=%h %ct", "--abbrev=7", "-S", f"### {eid} ",
+                 "--", LEDGER], capture_output=True, text=True).stdout.split("\n")
+            _rcl = [x.split() for x in _rcl if x.strip()]
+            _rc = [ct for _, ct in _rcl]
+            if _rcl and verdict == "not yet discharged":
+                _self_commit = _rcl[-1][0]
             if _art:
-                # Round 3, R4 (S6): the commit that introduced the rule's heading is kept, not just its
-                # timestamp, so Appendix E's commit column is filled for every rule; the submitted PDF
-                # and bundles print its anonymous label, as for the rest.
-                _rcl = subprocess.run(
-                    ["git", "log", "--format=%h %ct", "--abbrev=7", "-S", f"### {eid} ",
-                     "--", LEDGER], capture_output=True, text=True).stdout.split("\n")
-                _rcl = [x.split() for x in _rcl if x.strip()]
-                _rc = [ct for _, ct in _rcl]
                 _dc = subprocess.run(
                     ["git", "log", "--diff-filter=A", "--format=%ct", "--",
                      _art.group(1)], capture_output=True, text=True).stdout.split()

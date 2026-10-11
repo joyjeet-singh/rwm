@@ -259,6 +259,8 @@ def build_rows():
         for k, v in MV[src].items():
             pc = v["per_config"] if k.startswith("l1") else N2A["M-74"][f"{a}|{k}"]["pooled"]["per_key"]
             assert all(pc[w]["D"] < 0 and pc[w]["ci95"][0] <= 0 for w in _better), (a, k)
+    # F4 review: the per-episode sign M-74 reports alongside favours every winner too
+    assert all(MV["per_episode_sign"][w]["negative"] > MV["per_episode_sign"][w]["positive"] for w in _better)
     rows.append({
         "claim": "(M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off)",
         "section": "5.2",

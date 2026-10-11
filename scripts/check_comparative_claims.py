@@ -865,7 +865,7 @@ CLAIMS = [
     # contribution's "but <one reading>, which is unresolved", with a configuration list: per configuration several
     # readings leave a winner unresolved (section 5.2), so the verdict-level count misstates them (round 3's R6 item).
     {"id": "C28.3", "kind": "config-unresolved", "where": "abstract / contributions / README",
-     "says": "beat the original's setting at our budget, never trailing it",
+     "says": "beat the original's setting at our budget, no reading favouring it",
      "files": ["PAPER.template.md", "README.template.md"]},
 ]
 
@@ -1570,69 +1570,105 @@ def evaluate(c, paper, override=None):
             for para in paras:
                 if re.search(r"\{\{(?:stale_armA_|n5_(?:ins|ho)_)|v\('(?:stale_armA_|n5_(?:ins|ho)_)", para):
                     n += 1
-                    if not re.search(r"\{\{x2_|v\('x2_", para):
+                    # Round 4, F4 review: an X2 RESPONSE key (the reading or the swap figure), not any x2_ key --
+                    # the N5 sentences carry x2_n_ins as their trajectory count, which said nothing about response
+                    if not re.search(r"\{\{x2_(?:reading|E_swap_\w+|ci_swap_\w+)\}\}|v\('x2_(?:reading|E_swap_\w+|ci_swap_\w+)'\)", para):
                         bad.append(f"{f}: {para.strip()[:70]!r}")
-        if plant and not any(p.strip()[:40] in b for p in plant.values() for b in bad):
+        if plant and not _all_planted_caught(plant, bad):
             return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
-        return n > 0 and not bad, (f"{n} paragraphs cite Arm A's stale-pairing figures; {n - len(bad)} carry an X2 key"
+        return n > 0 and not bad, (f"{n} paragraphs cite Arm A's stale-pairing figures; {n - len(bad)} carry an X2 response key"
                                    + (f"; missing in {bad}" if bad else ""))
     if k == "stale-interval":
         plant = exp.get("_plant", {})
         bad, n = [], 0
+        NUMS = json.load(open("results/paper_numbers.json"))
+        hval = lambda name: str(NUMS[name]["value"]) if name in NUMS else None
         pt = re.compile(r"\{\{(stale_armA_\w+|n5_(ins|ho)_h(\d+))\}\}|v\('(stale_armA_\w+|n5_(ins|ho)_h(\d+))'\)")
-        anyci = re.compile(r"\{\{n5_(?:ins|ho)_ci_h\d+\}\}|v\('n5_(?:ins|ho)_ci_h\d+'\)")
-        words = re.compile(r"(?i)(?=.*\b(?:our|arm a|autoregressive-10k)\b)(?=.*\bstale\b)(?=.*%)")
+        # a horizon phrase: "at h = 1", "at h = {{v2_deploy_h}}", "at 1 step", "at {v('v2_deploy_h')} steps"
+        hz = re.compile(r"\bat\s+(?:h\s*=\s*)?(?:\{\{(v2_\w+_h)\}\}|\{?v\('(v2_\w+_h)'\)\}?|(\d+)\b(?!,\d))")
+        ours = re.compile(r"(?i)\b(?:our|arm a|arm b|autoregressive-10k|teacher-forced-10k)\b")
+        timing = re.compile(r"(?i)\bstale\b|\boffset\b|released evaluation's timing|released pairing|one step stale")
+        typed = re.compile(r"(?<![\w{.])[+−-]?\d+(?:\.\d+)?\s*(?:%|percent\b)(?!\s*(?:interval|cluster|confidence|CI\b))")
         for f in exp["files"]:
             txt = open(f).read() + ("\n\n" + plant[f] if f in plant else "")
+            if f.endswith(".py"):           # join the builder's implicit string concatenations
+                txt = re.sub(r'"\s*\n\s*f?"', "", txt)
             for para in re.split(r"\n\s*\n", txt):
                 for sent in re.split(r"(?<=\.)\s+", para.replace("\n", " ")):
                     hits = list(pt.finditer(sent))
-                    if not hits and not words.search(sent):
+                    lit = ours.search(sent) and timing.search(sent) and typed.search(re.sub(r"\{\{\w+\}\}|v\('\w+'\)", "", sent))
+                    if not hits and not lit:
                         continue
                     n += 1
-                    ok = bool(anyci.search(sent)) if not hits else all(
-                        m.group(2) or m.group(5) for m in hits) and all(
-                        re.search(r"(?:\{\{|v\(')n5_%s_ci_h%s(?:\}\}|'\))" % ((m.group(2) or m.group(5)), (m.group(3) or m.group(6))), sent)
-                        for m in hits)
-                    if not ok:
-                        bad.append(f"{f}: {sent.strip()[:80]!r}")
-        if plant and not any(any(p.strip()[:40] in b for b in bad) for p in plant.values()):
+                    why = "a typed percentage beside our models and the stale timing" if lit else None
+                    for q, m in enumerate(hits):
+                        ar, hh = (m.group(2) or m.group(5)), (m.group(3) or m.group(6))
+                        if not ar:
+                            why = why or "an Arm A stale-timing figure with no N5 interval"
+                            continue
+                        # its own interval key, directly after it
+                        own = rf"n5_{ar}_ci_h{hh}"
+                        if not re.match(r"[)}\s]*%?\s*\{?(?:\{\{" + own + r"\}\}|v\('" + own + r"'\))", sent[m.end():]):
+                            why = why or f"n5_{ar}_h{hh} is not followed by its own interval key"
+                            continue
+                        # and the horizon printed beside it is the key's: the first horizon phrase after it (up to
+                        # the next figure), else the last one before it (back to the previous figure)
+                        nxt = hits[q + 1].start() if q + 1 < len(hits) else len(sent)
+                        prv = hits[q - 1].end() if q > 0 else 0
+                        aft, bef = list(hz.finditer(sent, m.end(), nxt)), list(hz.finditer(sent, prv, m.start()))
+                        ph = aft[0] if aft else (bef[-1] if bef else None)
+                        got = None if ph is None else (hval(ph.group(1) or ph.group(2)) if (ph.group(1) or ph.group(2))
+                                                        else ph.group(3))
+                        if got != hh:
+                            why = why or f"n5_{ar}_h{hh} is printed beside horizon {got}"
+                    if why:
+                        bad.append(f"{f}: {sent.strip()[:80]!r} ({why})")
+        if plant and not _all_planted_caught(plant, bad):
             return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
-        return n > 0 and not bad, (f"{n} sentences print our models' stale-timing change; {n - len(bad)} carry N5's "
-                                   f"interval for each figure" + (f"; missing in {bad}" if bad else ""))
+        return n > 0 and not bad, (f"{n} sentences print our models' stale-timing change; {n - len(bad)} give each figure "
+                                   f"its own N5 interval at its own horizon" + (f"; failing: {bad}" if bad else ""))
     if k == "action-caveat":
         plant = exp.get("_plant", {})
         bad, n = [], 0
-        claim = re.compile(r"(?i)\brespond\w*\s+to\s+(?:the|their|its|an?)\s+actions?\b|\bdepend\w*\s+on\s+the\s+action\b"
-                           r"|\buse\s+the\s+action\b|\{\{x2_reading\}\}|v\('x2_reading'\)")
+        claim = re.compile(r"(?i)\brespond\w*\s+to\s+(?:\w+\s+){0,2}?actions?\b"
+                           r"|\b(?:use|uses|using)\s+(?:the\s+|their\s+|its\s+)?actions?\b"
+                           r"|\bdepend\w*\s+on\s+(?:the\s+|their\s+|its\s+)?actions?\b"
+                           r"|\bsensitiv\w*\s+to\s+(?:the\s+|their\s+|its\s+)?actions?\b"
+                           r"|\{\{x2_reading\}\}|v\('x2_reading'\)")
         caveat = re.compile(r"(?i)\bone\s+policy\b(?![-\w])")
         for f in exp["files"]:
             txt = open(f).read() + ("\n\n" + plant[f] if f in plant else "")
-            paras = re.split(r"\n\s+A\(", txt) if f.endswith(".py") else re.split(r"\n\s*\n", txt)
-            for para in paras:
-                if para.lstrip().startswith("#") or not claim.search(para):
-                    continue
-                n += 1
-                if not caveat.search(para):
-                    bad.append(f"{f}: {para.strip()[:70]!r}")
-        if plant and not any(p.strip()[:40] in b for p in plant.values() for b in bad):
+            units = re.split(r"\n\s+A\(", txt) if f.endswith(".py") else re.split(r"\n\s*\n", txt)
+            for para in units:
+                # a table is checked row by row: one caveat in one row does not cover the others
+                rows = [ln for ln in para.split("\n") if ln.lstrip().startswith("|")] if para.lstrip().startswith("|") else [para]
+                for u in rows:
+                    if u.lstrip().startswith("#") or not claim.search(u):
+                        continue
+                    n += 1
+                    if not caveat.search(u):
+                        bad.append(f"{f}: {u.strip()[:70]!r}")
+        if plant and not _all_planted_caught(plant, bad):
             return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
-        return n > 0 and not bad, (f"{n} paragraphs say our models respond to the action; {n - len(bad)} carry the "
-                                   f"one-policy caveat" + (f"; missing in {bad}" if bad else ""))
+        return n > 0 and not bad, (f"{n} paragraphs or table rows say our models respond to the action; {n - len(bad)} "
+                                   f"carry the one-policy caveat" + (f"; missing in {bad}" if bad else ""))
     if k == "config-unresolved":
         plant = exp.get("_plant", {})
         bad, n = [], 0
-        unres = re.compile(r"(?i)(?:\bone|\{\{mn_fm_n_unres_word\}\})\s+reading\s+unresolved\b"
-                           r"|\bbut\s+(?:one\b|\{\{mn_fm_exception\}\}),\s+which\s+is\s+unresolved")
+        unres = re.compile(r"(?i)(?:\bone|\bsingle|\b1|\{\{mn_fm_n_unres_word\}\})\s+(?:\w+\s+){0,2}?(?:is\s+|remains\s+)?"
+                           r"(?:unresolved|not\s+resolved)\b|\bbut\s+[^,.;]{1,80},\s+which\s+is\s+(?:unresolved|not\s+resolved)")
         cfg = re.compile(r"\{\{mn_(?:better_kinds|better_list|n_better_word|n_short_better_word|better_long_phrase)\}\}"
-                         r"|(?i:shorter histor|longer (?:training )?forecasts?|one-factor neighbours|history and forecast lengths)")
+                         r"|(?i:shorter histor|longer (?:training )?forecasts?|neighbours|configurations?"
+                         r"|history and forecast lengths)|\(\d+,\s*\d+\)")
+        # the front matter and the other summaries rule 11 names for this claim: the abstract and section 1, section
+        # 12, Appendix D's first table (and the generator of its second), and the README
+        REG = (("## Abstract", "\n## 2. "), ("## 12. Conclusion", "\n## Data and code"), ("## Appendix D ", "\n## Appendix E "))
         for f in exp["files"]:
             txt = open(f).read()
-            if f == "PAPER.template.md":               # the front matter: the abstract and section 1
-                i, j = txt.index("## Abstract"), txt.index("\n## 2. ")
-                txt = txt[i:j]
-            if "front" in plant and f == "PAPER.template.md":
-                txt += "\n\n" + plant["front"]
+            if f == "PAPER.template.md":
+                txt = "\n\n".join(txt[txt.index(a):txt.index(b, txt.index(a))] for a, b in REG)
+                if "front" in plant:
+                    txt += "\n\n" + plant["front"]
             for para in re.split(r"\n\s*\n", txt):
                 for sent in re.split(r"(?<=\.)\s+", para.replace("\n", " ")):
                     if not cfg.search(sent):
@@ -1640,10 +1676,10 @@ def evaluate(c, paper, override=None):
                     n += 1
                     if unres.search(sent):
                         bad.append(f"{f}: {sent.strip()[:80]!r}")
-        if plant and not any(plant["front"].strip()[:40] in b for b in bad):
+        if plant and not _all_planted_caught(plant, bad):
             return True, f"planted wording NOT caught: {plant['front'][:50]!r}"
-        return n > 0 and not bad, (f"{n} front-matter sentences name the configurations; {n - len(bad)} pair them with no "
-                                   f"verdict-level 'one reading unresolved'" + (f"; paired in {bad}" if bad else ""))
+        return n > 0 and not bad, (f"{n} summary sentences name the configurations; {n - len(bad)} pair them with no "
+                                   f"count of unresolved readings" + (f"; paired in {bad}" if bad else ""))
     raise ValueError(k)
 
 
@@ -1658,9 +1694,37 @@ _OLD_X2_RESPONDS = ("They respond to the action. Given another trajectory's acti
                     "{{x2_n_ins}} in-sample trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}}, and at "
                     "{{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before "
                     "its readings existed (ledger M-84), returns **{{x2_reading}}** at both checkpoints (Appendix V).")
+_N5_NO_X2 = ("On their own training episodes' {{x2_n_ins}} trajectories it raises our {{iters_long}}-iteration Arm A's "
+             "relative-L1 error by {{n5_ins_h1}}% {{n5_ins_ci_h1}} at h = 1.")
+_G7_SWAPPED = ("Our Arm A's error under the stale action rises by {{n5_ins_h1}}% {{n5_ins_ci_h100}} at h = 1 and by "
+               "{{n5_ins_h100}}% {{n5_ins_ci_h1}} at h = {{v2_deploy_h}}.")
+_G7_WRONG_H = "Fed the stale action, our Arm A's error rises by {{n5_ho_h100}}% {{n5_ho_ci_h100}} at h = {{v2_diag_h}}."
+_G7_TYPED = "Fed the stale action, our Arm A checkpoints' held-out error rises by +22.7% at h = {{v2_diag_h}}."
+_G8_PLURAL = "Our trained models respond to actions: their error rises when the actions are swapped."
+_G8_TABLE = ("| claim | evidence |\n|---|---|\n| our models respond to the action, though every action comes from one policy | X2 |\n"
+             "| the forecasts depend on the actions they are given | X2 |")
+_G9_REWORDED = ("On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget, though one reading "
+                "is unresolved.")
+
+
+def _all_planted_caught(plant, bad):
+    """Every planted paragraph (blank-line separated) must appear among the failures, not just the first."""
+    parts = [q for t in plant.values() for q in re.split(r"\n\s*\n", t) if q.strip()]
+    def hit(q):
+        if q.lstrip().startswith("|"):          # a planted table: its caveat-less row must be among the failures
+            rows = [r for r in q.split("\n") if r.startswith("|") and not set(r) <= set("|-: ")]
+            return any(r.strip()[:40] in b for r in rows[1:] for b in bad)
+        return any(q.strip()[:40] in b.replace("\n", " ") for b in bad)
+    return all(hit(q) for q in parts)
+
+
 _OLD_CONFIG_ABSTRACT = ("On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget "
                         "({{mn_fm_n_unres_word}} reading unresolved); trained longer, it passes each on some reading "
                         "(post hoc): the ranking depends on training budget.")
+_OLD_CONFIG_CONTRIB = ("On accuracy alone at our budget, {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor "
+                       "neighbours of the original's {{mn_centre_label}} beat it, {{mn_n_short_better_word}} shorter "
+                       "histories at under half its cost per iteration and {{mn_better_long_phrase}} at more (the rule's "
+                       "verdict holds on every reading it reports but {{mn_fm_exception}}, which is unresolved).")
 
 
 # Round 3, R2 (G1): the abstract's sentence as the 4 Oct draft rendered it (commit 8c2c903), verbatim, and a
@@ -1856,20 +1920,24 @@ def corruption_for(c):
     if k == "alignment-arena":
         return {"_plant": {"PAPER.template.md": _OLD_ALIGN_ABSTRACT}}
     if k == "action-response":
-        return {"_plant": {"PAPER.template.md": _OLD_ARMA_STALE}}
+        # the 10 Oct sentence, and (round 4, F4 review) an N5 paragraph whose X2 response clause was dropped
+        return {"_plant": {"PAPER.template.md": _OLD_ARMA_STALE + "\n\n" + _N5_NO_X2}}
     if k == "compute-claim":
         # Plant the 4 Oct abstract sentence (the first half must catch it) and a bare front-matter sentence naming
         # longer training (the second half must catch it); either one missed leaves the check passing, which fails.
         return {"_plant": {"forbidden": _OLD_COMPUTE_ABSTRACT, "front": _BARE_COMPUTE_FRONT}}
     if k == "stale-interval":
-        # Plant section 7.2's sentence as the 10 Oct draft printed it: Arm A's stale-timing change with no interval.
-        return {"_plant": {"PAPER.template.md": _OLD_ARMA_STALE}}
+        # Plant section 7.2's sentence as the 10 Oct draft printed it (Arm A's stale-timing change with no interval),
+        # and (F4 review) a swapped interval, a wrong horizon and a typed figure; each must be caught.
+        return {"_plant": {"PAPER.template.md": "\n\n".join((_OLD_ARMA_STALE, _G7_SWAPPED, _G7_WRONG_H, _G7_TYPED))}}
     if k == "action-caveat":
-        # Plant section 7.2's X2 sentences as the 10 Oct draft printed them: "They respond to the action", no caveat.
-        return {"_plant": {"PAPER.template.md": _OLD_X2_RESPONDS}}
+        # Plant section 7.2's X2 sentences as the 10 Oct draft printed them ("They respond to the action", no caveat),
+        # and (F4 review) a plural variant and a caveat-less table row under a row that has one.
+        return {"_plant": {"PAPER.template.md": "\n\n".join((_OLD_X2_RESPONDS, _G8_PLURAL, _G8_TABLE))}}
     if k == "config-unresolved":
-        # Plant the abstract's configuration sentence as the 10 Oct draft printed it.
-        return {"_plant": {"front": _OLD_CONFIG_ABSTRACT}}
+        # Plant the abstract's and contribution 3's configuration sentences as the 10 Oct draft printed them, and
+        # (F4 review) a reworded count.
+        return {"_plant": {"front": "\n\n".join((_OLD_CONFIG_ABSTRACT, _OLD_CONFIG_CONTRIB, _G9_REWORDED))}}
     raise ValueError(k)
 
 

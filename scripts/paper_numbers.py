@@ -3522,6 +3522,14 @@ def main():
     put("n5_err_armA_h8", f'{_a8["err_causal"]:.3f}', _n5s)
     put("n5_err_rel_h8", f'{_r8["err_causal"]:.3f}', _n5s)
     assert abs(_a8["delta"] / _r8["delta"] - 1) < 0.05, (_a8["delta"], _r8["delta"])
+    # F4 review: "about equally" holds at h = 8 only; at h = 100 the released checkpoint's forecast moves more
+    _a100, _r100 = _q5("arm_a_10000", "in_sample_n16", 100), _q5("released", "all_ten_n20", 100)
+    assert _r100["delta"] > _a100["delta"], (_r100["delta"], _a100["delta"])
+    put("n5_delta_armA_h100", f'{_a100["delta"]:.3f}', _n5s)
+    put("n5_delta_rel_h100", f'{_r100["delta"]:.3f}', _n5s)
+    # the model card: "On the two held-out episodes ... the change is smaller"
+    assert all(_q5("arm_a_10000", "held_out_n4", h)["E_pct"] < _q5("arm_a_10000", "in_sample_n16", h)["E_pct"]
+               for h in (1, 100))
     assert _a8["err_causal"] < _r8["err_causal"] and _a8["E_pct"] > _r8["E_pct"]
     # Appendix V: every model, both arenas, all six horizons (rule 10: section 7.2's h = 368 figure moves here)
     _n5h = N5["horizons"]
@@ -3602,6 +3610,19 @@ def main():
     assert _parts4 and _tail4, (_parts4, _tail4)
     put("mn_winner_unres_clause", ", ".join(_parts4) + ", and " + _tail4,
         "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json")
+    # F4 review: M-74 also reports each difference's per-episode sign. As a reading it favours every winner (more
+    # episodes favour the winner than the centre), so "no reading puts the centre ahead" holds; the episodes where the
+    # centre is ahead are listed in section 5.2.
+    _ps4 = _MV4["per_episode_sign"]
+    assert all(_ps4[w]["negative"] > _ps4[w]["positive"] and _ps4[w]["n_episodes"] == 10 for w in _W4), \
+        {w: _ps4[w] for w in _W4}
+    _ep4 = [w for w in sorted(_W4, key=_MN) if _ps4[w]["positive"] > 0]
+    assert _ep4, "the clause needs at least one episode where the centre is ahead"
+    _epl = [f"of {_cfgname(w)} on {_ps4[w]['positive']}" for w in _ep4]
+    put("mn_winner_episode_clause",
+        "the centre is ahead " + (", ".join(_epl[:-1]) + " and " + _epl[-1] if len(_epl) > 1 else _epl[0])
+        + " of the ten, and of " + ("neither other winner" if len(_W4) - len(_ep4) == 2 else "no other winner")
+        + " on any", "results/mn_sweep_verdict.json")
 
     # --- Round 4, F4 item 5 (N6, D-39): the difficulty measure is the causal action timing alone ------------------------
     # Appendix N describes it so and prints its correlation with commanded speed; BUILD_CHECKS keeps the earlier
@@ -3747,6 +3768,33 @@ def main():
     _all8 = "\n".join(N[k]["value"] for k in ("x8_tab_m74", "x8_tab_75", "x8_tab_76", "x8_tab_ab"))
     _nb = sum(1 for ln in _all8.split("\n") if ln.rstrip().endswith("** |"))
     assert _nb + 1 == sum(len(v["alongside_changes"]) for v in _rd8.values()), _nb   # + the trend reading, below
+    # F4 review: by identity, not count. Each listed change maps to one row label, and the bold rows are exactly those.
+    def _lab8(rule, k):
+        m = re.match(r"per-episode sign (M\d+_N\d+) ", k)
+        if m:
+            return f"{_cfgname(m.group(1))}: episodes where the centre is ahead, of ten"
+        m = re.match(r"(in_sample )?((?:l1|nrmse)_h\d+)$", k)
+        if m:
+            return ("in-sample arena, " if m.group(1) else "held-out pair, ") + _rl8(m.group(2))
+        m = re.match(r"M-23 conditions (h=\d+ .+)$", k)
+        if m:
+            return f"M-23's conditions at {m.group(1).replace('h=', 'h = ')}"
+        m = re.match(r"secondary (h=\d+ .+)$", k)
+        if m:
+            return f"secondary at {m.group(1).replace('h=', 'h = ')}"
+        m = re.match(r"by-horizon h=(\d+) excludes zero$", k)
+        if m:
+            return f"by-horizon gap at h = {m.group(1)}"
+        m = re.match(r"by-horizon h=(\d+) episodes positive$", k)
+        if m:
+            return f"episodes where autoregressive training is ahead at h = {m.group(1)}, of ten"
+        raise AssertionError((rule, k))
+    for _tk, _rule in (("x8_tab_m74", "M-74"), ("x8_tab_75", "M-75"), ("x8_tab_76", "M-76"),
+                       ("x8_tab_ab", "A/B (M-23's conditions, three seeds)")):
+        _ch = [k for k in _rd8[_rule]["alongside_changes"] if k != "trend reading"]
+        _bold = {ln.split(" | ")[0][2:] for ln in N[_tk]["value"].split("\n") if ln.rstrip().endswith("** |")}
+        assert _bold == {_lab8(_rule, k) for k in _ch}, (_rule, _bold ^ {_lab8(_rule, k) for k in _ch})
+    assert "trend reading" in _rd8["A/B (M-23's conditions, three seeds)"]["alongside_changes"]
     assert not any(ln.startswith("| verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
     assert not any(ln.startswith("| M-23's verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
 

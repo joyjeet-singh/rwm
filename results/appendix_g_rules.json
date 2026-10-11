@@ -299,8 +299,8 @@
       "lead_hours": null,
       "lead_source": null,
       "tested_by": null,
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "5f0acd4",
+      "commit_subject": "PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist"
     },
     {
       "id": "M-87",
@@ -312,8 +312,8 @@
       "lead_hours": null,
       "lead_source": null,
       "tested_by": null,
-      "rule_commit": null,
-      "commit_subject": null
+      "rule_commit": "5f0acd4",
+      "commit_subject": "PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist"
     },
     {
       "id": "M-88",
