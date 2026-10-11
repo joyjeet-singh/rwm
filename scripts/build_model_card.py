@@ -332,17 +332,22 @@ def main():
     # Round 3: those figures are R-79's re-measurement (S-21 withdrew the round-2 ones, which scored one
     # trajectory's forecast against four), and rule X2's swap figure follows them (case R, PLAN Annex 3).
     assert str(v("v2_diag_h")) == "368", v("v2_diag_h")
-    A("- **Action convention.** Row *t* holds the action that *produced* state *t*. These models "
-      "are trained and evaluated under that causal pairing. The reference's *evaluation* path "
-      "uses a stale action; ours does not. Fed the stale action instead, the three "
-      "`autoregressive-10k` checkpoints' relative-L1 error changes by "
-      f"{v('stale_armA_rel_h1')}% at h = 1 and by {v('stale_armA_rel_h368')}% at "
-      f"h = {v('v2_diag_h')} (their mean, on the two held-out episodes' {v('ad_nind')} "
-      "trajectories; `results/alignment_by_horizon.json`). The figure covers those three "
-      "checkpoints only. Given another trajectory's actions instead, their error at 8 steps on their "
-      f"training episodes' {v('x2_n_ins')} trajectories rises by {v('x2_E_swap_10k')}% "
-      f"{v('x2_ci_swap_10k')}, so they do respond to the action (rule X2, pre-registered: "
-      f"{v('x2_reading')}; `results/action_sensitivity.json`).")
+    # Round 4, F4 item 2 (Annex 4, A2): N5's figures (post hoc), with intervals, in both arenas, and the caveat that
+    # rule X2 shows the forecasts depend on the action, not that they are right for actions the data's one policy
+    # would not take. The keys name h = 1 and h = 100, so the horizon printed beside them is checked.
+    assert str(v("v2_deploy_h")) == "100", v("v2_deploy_h")
+    A("- **Action convention.** Row *t* holds the action that *produced* state *t*; these checkpoints "
+      "are trained and evaluated with that pairing. Do not score them with the reference evaluation "
+      "script's pairing, which is one step stale: on their own training episodes' "
+      f"{v('x2_n_ins')} trajectories it raises the `autoregressive-10k` checkpoints' error by "
+      f"{v('n5_ins_h1')}% {v('n5_ins_ci_h1')} at 1 step and {v('n5_ins_h100')}% {v('n5_ins_ci_h100')} "
+      f"at {v('v2_deploy_h')} steps (three-seed mean, relative-L1). On the two held-out episodes' "
+      f"{v('ad_nind')} trajectories the change is smaller and, at 1 step, not resolved: "
+      f"{v('n5_ho_h1')}% {v('n5_ho_ci_h1')}, and {v('n5_ho_h100')}% {v('n5_ho_ci_h100')} at "
+      f"{v('v2_deploy_h')} steps (`results/n5_stale_armA_ci.json`). The forecasts depend on the action "
+      f"(rule X2, pre-registered: {v('x2_reading')}; `results/action_sensitivity.json`), but every action "
+      "in the training data comes from one policy, so their accuracy under actions that policy would "
+      "not take is untested.")
     A("- **Normalisation.** States are normalised with the reference's stored mean and std. "
       "Actions are not normalised, matching the reference.")
     A("")
