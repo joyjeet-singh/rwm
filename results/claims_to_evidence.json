@@ -3648,12 +3648,26 @@
         "src/baselines"
       ],
       "retracts": []
+    },
+    {
+      "id": "D-38",
+      "claim": "The recorded data hold no velocity command, so the imagination reward cannot be computed",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "SRC"
+      ],
+      "artifacts": [
+        "scripts/step0_velocity_regimes.py",
+        "src/rwm_data.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
-    "D": 37,
+    "D": 38,
     "M": 87,
     "O": 14,
     "R": 79,

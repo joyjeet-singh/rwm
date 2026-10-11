@@ -9085,3 +9085,34 @@ returns it, with the alongside values, in a new ledger entry; and changes only t
 Not: change the variants, seeds, iterations, arena, horizons, statistic, test or labels; add a reading; or read any number here as bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x4_matched_baselines.py`, `scripts/train_baseline.py`, `scripts/queue_run.py`; `RUN` `results/x4_matched_baselines.json` (awaited).
 **Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x4_matched_baselines.json` · **Relevance** METHOD
+
+### D-38 — The recorded data hold no velocity command, so the imagination reward cannot be computed from them: rule X5 is NOT RUN · **NEW**
+Round 4's rule X5 (PLAN Annex 2; objection O3) would have asked whether the uncertainty penalty the released method applies
+covers the model's error in predicted reward over its 100-step imagination horizon, on recorded actions. Its gate, fixed
+before any feasibility check: X5 runs only if every term of a reward subset is computable from both the recorded data and the
+model's outputs, and the subset must include the two command-tracking terms. This entry records the gate's outcome. It defines
+no rule and computes nothing.
+
+**The finding.** The imagination environment's reward (`anymal_d_flat.py:97` in
+the lite release) has twelve terms plus the penalty (`base.py:166`).
+The two tracking terms, `track_lin_vel_xy_exp` (`anymal_d_flat.py:112`) and
+`track_ang_vel_z_exp` (`:113`), score the forecast velocity against the environment's own
+sampled command, `base_velocity`, drawn at `:19` and
+`:30`. The released CSV's 66 columns hold no command: `src/rwm_data.py`'s column map
+assigns every one of them to the state, the actions, the contact labels or termination. The command is not a model output
+either. Two more terms need it as a gate (`feet_air_time`, `stand_still`). The repository infers the commanded regimes from
+achieved base velocity (`scripts/step0_velocity_regimes.py`), but an inferred command is not recorded data. It would also make
+the recorded trajectory's tracking reward high by construction, since the command would be fitted to the very velocities the
+term scores.
+
+**So X5 is NOT RUN.** No reward subset is defined, and no script or artifact exists for it. The seven terms that are
+computable on their own carry none of the reward's purpose, which is to follow the command, and the gate does not allow a
+subset without the tracking terms. The term-by-term table, with each term's inputs, weight and dt scaling, is
+`docs/presubmission/round4/X5_FEASIBILITY.md`, written by `round4/f2_x5_feasibility.py`.
+
+**What follows.** What the miscalibration costs a policy stays unmeasured, as §11 says. Measuring it needs the commands the
+policy was trained on, and so the Isaac Lab data generator (D-36), or a policy trained in imagination, which a CPU cannot
+provide. M-70's bound on the penalty's reordering is untouched. The paper states X5's NOT RUN once, with this reason
+(PLAN round 4, Annex 6 item 2).
+**Evidence** `SRC` `src/rwm_data.py`, `scripts/step0_velocity_regimes.py`; the lite release's `envs/anymal_d_flat.py` and `envs/base.py`.
+**Status** CONFIRMED · **Relevance** METHOD
