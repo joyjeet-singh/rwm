@@ -1,0 +1,1451 @@
+{
+  "rule": "X8",
+  "ledger": "M-90",
+  "script": "scripts/x8_released_pairing.py",
+  "script_sha256": "22059a0b84facbb6664d60e3ab7ff6f097b3e736bb03fbe46252cae10b2fb3d2",
+  "exploratory": true,
+  "never_reopens": "M-23, M-74, M-75, M-76; nothing here changes their verdicts",
+  "pairing": "offset 0 = each prediction of state i with action i - 1 (the released evaluation's); offset 1 = with action i (causal, as every rule was scored)",
+  "assertions": {
+    "a": {
+      "pass": true,
+      "sweep_max_abs_diff": 0.0,
+      "sweep_n_values": 6480,
+      "baselines_max_abs_diff": 0.0,
+      "baselines_n_values": 5040,
+      "sweep_verdict_offset1": "NOT OPTIMAL AT OUR BUDGET",
+      "baselines_verdicts_offset1": {
+        "M-75": "REPRODUCES",
+        "M-76": "RWM AHEAD OF ALL THREE"
+      }
+    },
+    "b": {
+      "pass": true,
+      "max_rel_diff": 1.1920928955078125e-07,
+      "trend_reading_equal": true,
+      "m23_seed1_reproduced": true,
+      "m23_three_seeds_offset1": "REPRODUCES AT LONG HORIZON"
+    },
+    "c": {
+      "pass": true,
+      "max_abs_diff": 0.0
+    },
+    "d": {
+      "pass": true,
+      "native_max_abs_diff": 0.0,
+      "stale_ratio_max_abs_diff": 1.6274510095115602e-07,
+      "against": "results/alignment_by_horizon.json arm_a 10000 summary_per_seed rel_l1 pct, as the error ratio 1 + pct/100 (float32 rounding moves the percentage by about 1e-5 points)"
+    },
+    "d_sweep": {
+      "pass": true,
+      "max_abs_diff": 0.0,
+      "n_models": 12
+    }
+  },
+  "readings": {
+    "M-74": {
+      "committed": "NOT OPTIMAL AT OUR BUDGET",
+      "offset_0": "NOT OPTIMAL AT OUR BUDGET",
+      "reading": "SAME VERDICT",
+      "alongside_changes": {
+        "l1_h32": [
+          "NOT OPTIMAL AT OUR BUDGET",
+          "CANNOT BE DISTINGUISHED"
+        ],
+        "nrmse_h1": [
+          "CANNOT BE DISTINGUISHED",
+          "NOT OPTIMAL AT OUR BUDGET"
+        ],
+        "nrmse_h32": [
+          "NOT OPTIMAL AT OUR BUDGET",
+          "CANNOT BE DISTINGUISHED"
+        ],
+        "per-episode sign M16_N8 [positive, negative]": [
+          [
+            6,
+            4
+          ],
+          [
+            9,
+            1
+          ]
+        ],
+        "per-episode sign M8_N8 [positive, negative]": [
+          [
+            2,
+            8
+          ],
+          [
+            7,
+            3
+          ]
+        ],
+        "per-episode sign M2_N8 [positive, negative]": [
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            8
+          ]
+        ],
+        "per-episode sign M1_N8 [positive, negative]": [
+          [
+            7,
+            3
+          ],
+          [
+            9,
+            1
+          ]
+        ]
+      }
+    },
+    "M-75": {
+      "committed": "REPRODUCES",
+      "offset_0": "REPRODUCES",
+      "reading": "SAME VERDICT",
+      "alongside_changes": {
+        "in_sample l1_h1": [
+          "CANNOT BE SETTLED",
+          "DOES NOT REPRODUCE"
+        ],
+        "in_sample nrmse_h1": [
+          "CANNOT BE SETTLED",
+          "DOES NOT REPRODUCE"
+        ]
+      }
+    },
+    "M-76": {
+      "committed": "RWM AHEAD OF ALL THREE",
+      "offset_0": "RWM AHEAD OF ALL THREE",
+      "reading": "SAME VERDICT",
+      "alongside_changes": {
+        "in_sample l1_h8": [
+          "PARTIAL",
+          "A BASELINE AHEAD"
+        ],
+        "in_sample l1_h32": [
+          "PARTIAL",
+          "A BASELINE AHEAD"
+        ],
+        "in_sample nrmse_h8": [
+          "PARTIAL",
+          "A BASELINE AHEAD"
+        ],
+        "in_sample nrmse_h32": [
+          "PARTIAL",
+          "A BASELINE AHEAD"
+        ],
+        "in_sample nrmse_h100": [
+          "RWM AHEAD OF ALL THREE",
+          "PARTIAL"
+        ]
+      }
+    },
+    "A/B (M-23's conditions, three seeds)": {
+      "offset_1": "REPRODUCES AT LONG HORIZON",
+      "offset_0": "REPRODUCES AT LONG HORIZON",
+      "reading": "SAME VERDICT",
+      "alongside_changes": {
+        "M-23 conditions h=8 held-out": [
+          "REPRODUCES AT LONG HORIZON",
+          "FAILS TO REPRODUCE"
+        ],
+        "secondary h=8 held-out": [
+          "A leads, CI excludes 0",
+          "spans zero"
+        ],
+        "secondary h=8 in-sample": [
+          "A leads, CI excludes 0",
+          "spans zero"
+        ],
+        "by-horizon h=1 excludes zero": [
+          false,
+          true
+        ],
+        "by-horizon h=8 excludes zero": [
+          true,
+          false
+        ],
+        "by-horizon h=1 episodes positive": [
+          3,
+          0
+        ],
+        "by-horizon h=8 episodes positive": [
+          10,
+          4
+        ],
+        "trend reading": [
+          "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=8, h=32, h=100, h=128, h=368 and spans zero at h=1; at h=8, the horizon the model is trained on, the gap excludes zero; the ratio is below one at h=1",
+          "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=1, h=32, h=100, h=128, h=368 and spans zero at h=8; at h=8, the horizon the model is trained on, the gap spans zero; the ratio is below one at h=1"
+        ]
+      }
+    }
+  },
+  "detail": {
+    "M-74": {
+      "offset_1": {
+        "verdict": "NOT OPTIMAL AT OUR BUDGET",
+        "alongside": {
+          "l1_h1": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h8": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h32": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h128": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h368": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h1": "CANNOT BE DISTINGUISHED",
+          "nrmse_h8": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h32": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h128": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h368": "NOT OPTIMAL AT OUR BUDGET"
+        },
+        "in_sample": {
+          "l1_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h368": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h368": "NOT OPTIMAL AT OUR BUDGET"
+        },
+        "per_episode_sign": {
+          "M32_N32": [
+            0,
+            10
+          ],
+          "M16_N8": [
+            6,
+            4
+          ],
+          "M32_N16": [
+            0,
+            10
+          ],
+          "M8_N8": [
+            2,
+            8
+          ],
+          "M32_N2": [
+            10,
+            0
+          ],
+          "M32_N1": [
+            10,
+            0
+          ],
+          "M2_N8": [
+            1,
+            9
+          ],
+          "M1_N8": [
+            7,
+            3
+          ]
+        }
+      },
+      "offset_0": {
+        "verdict": "NOT OPTIMAL AT OUR BUDGET",
+        "alongside": {
+          "l1_h1": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h8": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h32": "CANNOT BE DISTINGUISHED",
+          "l1_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h128": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h368": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h1": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h8": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h32": "CANNOT BE DISTINGUISHED",
+          "nrmse_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h128": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h368": "NOT OPTIMAL AT OUR BUDGET"
+        },
+        "in_sample": {
+          "l1_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "l1_h368": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h100": "NOT OPTIMAL AT OUR BUDGET",
+          "nrmse_h368": "NOT OPTIMAL AT OUR BUDGET"
+        },
+        "per_episode_sign": {
+          "M32_N32": [
+            0,
+            10
+          ],
+          "M16_N8": [
+            9,
+            1
+          ],
+          "M32_N16": [
+            0,
+            10
+          ],
+          "M8_N8": [
+            7,
+            3
+          ],
+          "M32_N2": [
+            10,
+            0
+          ],
+          "M32_N1": [
+            10,
+            0
+          ],
+          "M2_N8": [
+            2,
+            8
+          ],
+          "M1_N8": [
+            9,
+            1
+          ]
+        }
+      }
+    },
+    "baselines": {
+      "offset_1": {
+        "M-75": {
+          "verdict": "REPRODUCES",
+          "alongside": {
+            "l1_h1": "CANNOT BE SETTLED",
+            "l1_h8": "PARTIAL",
+            "l1_h32": "REPRODUCES",
+            "l1_h100": "REPRODUCES",
+            "l1_h128": "REPRODUCES",
+            "l1_h368": "REPRODUCES",
+            "nrmse_h1": "CANNOT BE SETTLED",
+            "nrmse_h8": "PARTIAL",
+            "nrmse_h32": "REPRODUCES",
+            "nrmse_h100": "REPRODUCES",
+            "nrmse_h128": "REPRODUCES",
+            "nrmse_h368": "REPRODUCES"
+          },
+          "in_sample": {
+            "l1_h1": "CANNOT BE SETTLED",
+            "l1_h8": "PARTIAL",
+            "l1_h32": "REPRODUCES",
+            "l1_h100": "REPRODUCES",
+            "l1_h128": "REPRODUCES",
+            "l1_h368": "REPRODUCES",
+            "nrmse_h1": "CANNOT BE SETTLED",
+            "nrmse_h8": "PARTIAL",
+            "nrmse_h32": "REPRODUCES",
+            "nrmse_h100": "REPRODUCES",
+            "nrmse_h128": "REPRODUCES",
+            "nrmse_h368": "REPRODUCES"
+          },
+          "per_episode_sign": {
+            "mlp": [
+              10,
+              0
+            ],
+            "rssm": [
+              10,
+              0
+            ],
+            "transformer": [
+              10,
+              0
+            ]
+          }
+        },
+        "M-76": {
+          "verdict": "RWM AHEAD OF ALL THREE",
+          "alongside": {
+            "l1_h1": "CANNOT BE SETTLED",
+            "l1_h8": "PARTIAL",
+            "l1_h32": "PARTIAL",
+            "l1_h100": "RWM AHEAD OF ALL THREE",
+            "l1_h128": "RWM AHEAD OF ALL THREE",
+            "l1_h368": "RWM AHEAD OF ALL THREE",
+            "nrmse_h1": "CANNOT BE SETTLED",
+            "nrmse_h8": "PARTIAL",
+            "nrmse_h32": "PARTIAL",
+            "nrmse_h100": "RWM AHEAD OF ALL THREE",
+            "nrmse_h128": "RWM AHEAD OF ALL THREE",
+            "nrmse_h368": "RWM AHEAD OF ALL THREE"
+          },
+          "in_sample": {
+            "l1_h1": "PARTIAL",
+            "l1_h8": "PARTIAL",
+            "l1_h32": "PARTIAL",
+            "l1_h100": "RWM AHEAD OF ALL THREE",
+            "l1_h128": "RWM AHEAD OF ALL THREE",
+            "l1_h368": "RWM AHEAD OF ALL THREE",
+            "nrmse_h1": "PARTIAL",
+            "nrmse_h8": "PARTIAL",
+            "nrmse_h32": "PARTIAL",
+            "nrmse_h100": "RWM AHEAD OF ALL THREE",
+            "nrmse_h128": "RWM AHEAD OF ALL THREE",
+            "nrmse_h368": "RWM AHEAD OF ALL THREE"
+          },
+          "per_episode_sign": {
+            "mlp": [
+              10,
+              0
+            ],
+            "rssm": [
+              10,
+              0
+            ],
+            "transformer": [
+              10,
+              0
+            ]
+          }
+        }
+      },
+      "offset_0": {
+        "M-75": {
+          "verdict": "REPRODUCES",
+          "alongside": {
+            "l1_h1": "CANNOT BE SETTLED",
+            "l1_h8": "PARTIAL",
+            "l1_h32": "REPRODUCES",
+            "l1_h100": "REPRODUCES",
+            "l1_h128": "REPRODUCES",
+            "l1_h368": "REPRODUCES",
+            "nrmse_h1": "CANNOT BE SETTLED",
+            "nrmse_h8": "PARTIAL",
+            "nrmse_h32": "REPRODUCES",
+            "nrmse_h100": "REPRODUCES",
+            "nrmse_h128": "REPRODUCES",
+            "nrmse_h368": "REPRODUCES"
+          },
+          "in_sample": {
+            "l1_h1": "DOES NOT REPRODUCE",
+            "l1_h8": "PARTIAL",
+            "l1_h32": "REPRODUCES",
+            "l1_h100": "REPRODUCES",
+            "l1_h128": "REPRODUCES",
+            "l1_h368": "REPRODUCES",
+            "nrmse_h1": "DOES NOT REPRODUCE",
+            "nrmse_h8": "PARTIAL",
+            "nrmse_h32": "REPRODUCES",
+            "nrmse_h100": "REPRODUCES",
+            "nrmse_h128": "REPRODUCES",
+            "nrmse_h368": "REPRODUCES"
+          },
+          "per_episode_sign": {
+            "mlp": [
+              10,
+              0
+            ],
+            "rssm": [
+              10,
+              0
+            ],
+            "transformer": [
+              10,
+              0
+            ]
+          }
+        },
+        "M-76": {
+          "verdict": "RWM AHEAD OF ALL THREE",
+          "alongside": {
+            "l1_h1": "CANNOT BE SETTLED",
+            "l1_h8": "PARTIAL",
+            "l1_h32": "PARTIAL",
+            "l1_h100": "RWM AHEAD OF ALL THREE",
+            "l1_h128": "RWM AHEAD OF ALL THREE",
+            "l1_h368": "RWM AHEAD OF ALL THREE",
+            "nrmse_h1": "CANNOT BE SETTLED",
+            "nrmse_h8": "PARTIAL",
+            "nrmse_h32": "PARTIAL",
+            "nrmse_h100": "RWM AHEAD OF ALL THREE",
+            "nrmse_h128": "RWM AHEAD OF ALL THREE",
+            "nrmse_h368": "RWM AHEAD OF ALL THREE"
+          },
+          "in_sample": {
+            "l1_h1": "PARTIAL",
+            "l1_h8": "A BASELINE AHEAD",
+            "l1_h32": "A BASELINE AHEAD",
+            "l1_h100": "RWM AHEAD OF ALL THREE",
+            "l1_h128": "RWM AHEAD OF ALL THREE",
+            "l1_h368": "RWM AHEAD OF ALL THREE",
+            "nrmse_h1": "PARTIAL",
+            "nrmse_h8": "A BASELINE AHEAD",
+            "nrmse_h32": "A BASELINE AHEAD",
+            "nrmse_h100": "PARTIAL",
+            "nrmse_h128": "RWM AHEAD OF ALL THREE",
+            "nrmse_h368": "RWM AHEAD OF ALL THREE"
+          },
+          "per_episode_sign": {
+            "mlp": [
+              10,
+              0
+            ],
+            "rssm": [
+              10,
+              0
+            ],
+            "transformer": [
+              10,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "A/B": {
+      "offset_1": {
+        "m23_three_seeds": {
+          "arena": "held_out",
+          "metric": "l1",
+          "h": 368,
+          "c1": true,
+          "c2": true,
+          "c3": true,
+          "label": "REPRODUCES AT LONG HORIZON",
+          "gaps": {
+            "2500": {
+              "A": 0.5856011137366295,
+              "B": 4.568370347221692,
+              "gap": 3.982769233485063,
+              "ci": [
+                0.9906816780567169,
+                9.484769212702911
+              ]
+            },
+            "10000": {
+              "A": 0.3581521697342396,
+              "B": 1.6496845905979474,
+              "gap": 1.2915324208637078,
+              "ci": [
+                0.7003540818889936,
+                2.339022876073917
+              ]
+            }
+          },
+          "per_episode_10000": {
+            "0": 0.4386854960272709,
+            "1": 1.873094941178958,
+            "2": 0.5558815312882265,
+            "3": 0.6991943940520287,
+            "4": 1.1123383206625779,
+            "5": 0.7303677089512348,
+            "6": 0.5316941887140274,
+            "7": 1.0714628013471763,
+            "8": 0.6999221630394459,
+            "9": 0.8702461123466492
+          }
+        },
+        "m23_seed1_as_discharged": {
+          "c1": true,
+          "c2": true,
+          "c3": true,
+          "label": "REPRODUCES AT LONG HORIZON",
+          "gaps": {
+            "2500": {
+              "A": 0.5921952463686466,
+              "B": 7.3325158059597015,
+              "gap": 6.745508941211924,
+              "ci": [
+                1.1094148233532906,
+                16.902978163212538
+              ]
+            },
+            "10000": {
+              "A": 0.35089385136961937,
+              "B": 1.5539506003260612,
+              "gap": 1.2033211191706359,
+              "ci": [
+                0.5606419071555138,
+                2.0466946698725224
+              ]
+            }
+          },
+          "per_episode": {
+            "0": 0.4176494665443897,
+            "1": 1.8261908292770386,
+            "2": 0.5835930779576302,
+            "3": 0.9795944839715958,
+            "4": 1.022065106779337,
+            "5": 0.897059228271246,
+            "6": 0.5267146937549114,
+            "7": 1.5675028264522552,
+            "8": 0.5603311397135258,
+            "9": 1.029131755232811
+          }
+        },
+        "m23_conditions_alongside": {
+          "h=8 held-out": {
+            "arena": "held_out",
+            "metric": "l1",
+            "h": 8,
+            "c1": true,
+            "c2": true,
+            "c3": true,
+            "label": "REPRODUCES AT LONG HORIZON",
+            "gaps": {
+              "2500": {
+                "A": 0.32887480904658634,
+                "B": 0.339220496515433,
+                "gap": 0.010345687468846617,
+                "ci": [
+                  -0.029562287653485952,
+                  0.043383900076150894
+                ]
+              },
+              "10000": {
+                "A": 0.30868193320930004,
+                "B": 0.3572110577176015,
+                "gap": 0.04852912450830142,
+                "ci": [
+                  0.027129451433817543,
+                  0.08435485015312827
+                ]
+              }
+            },
+            "per_episode_10000": {
+              "0": 0.01416522140304248,
+              "1": 0.06710822383562731,
+              "2": 0.04497919355829558,
+              "3": 0.013619170834620796,
+              "4": 0.04145003731052081,
+              "5": 0.031614767387509346,
+              "6": 0.01823677184681098,
+              "7": 0.0744375102221966,
+              "8": 0.029950088510910675,
+              "9": 0.09235594049096107
+            }
+          },
+          "nRMSE h=368 held-out": {
+            "arena": "held_out",
+            "metric": "nrmse",
+            "h": 368,
+            "c1": true,
+            "c2": true,
+            "c3": true,
+            "label": "REPRODUCES AT LONG HORIZON",
+            "gaps": {
+              "2500": {
+                "A": 0.49108672903596484,
+                "B": 3.1077725480497933,
+                "gap": 2.6166858190138282,
+                "ci": [
+                  1.301855659847273,
+                  4.682654370931115
+                ]
+              },
+              "10000": {
+                "A": 0.30013923415550764,
+                "B": 1.4022124187777412,
+                "gap": 1.1020731846222338,
+                "ci": [
+                  0.9134966525661045,
+                  1.3833956331605743
+                ]
+              }
+            },
+            "per_episode_10000": {
+              "0": 0.6533209278564986,
+              "1": 1.2838058332111173,
+              "2": 0.727572614864873,
+              "3": 0.8692690051283366,
+              "4": 1.3761179178991119,
+              "5": 0.8970898008264847,
+              "6": 0.6518192103762264,
+              "7": 1.1013101508383931,
+              "8": 0.9134021131063759,
+              "9": 1.237924126913097
+            }
+          },
+          "h=368 in-sample": {
+            "arena": "in_sample",
+            "metric": "l1",
+            "h": 368,
+            "c1": true,
+            "c2": true,
+            "c3": true,
+            "label": "REPRODUCES AT LONG HORIZON",
+            "gaps": {
+              "2500": {
+                "A": 0.25030434721459943,
+                "B": 1.579088465621074,
+                "gap": 1.3287841184064746,
+                "ci": [
+                  1.03210434205054,
+                  1.6900418695683275
+                ]
+              },
+              "10000": {
+                "A": 0.0881087079954644,
+                "B": 0.8365580514073372,
+                "gap": 0.7484493434118729,
+                "ci": [
+                  0.6227439955614197,
+                  0.8942523501270138
+                ]
+              }
+            },
+            "per_episode_10000": {
+              "0": 0.4386854960272709,
+              "1": 1.873094941178958,
+              "2": 0.5558815312882265,
+              "3": 0.6991943940520287,
+              "4": 1.1123383206625779,
+              "5": 0.7303677089512348,
+              "6": 0.5316941887140274,
+              "7": 1.0714628013471763,
+              "8": 0.6999221630394459,
+              "9": 0.8702461123466492
+            }
+          }
+        },
+        "secondaries_three_seeds": {
+          "h=8 held-out": {
+            "gap": 0.04852912450830142,
+            "ci95": [
+              0.027129451433817543,
+              0.08435485015312827
+            ],
+            "status": "A leads, CI excludes 0"
+          },
+          "h=368 in-sample": {
+            "gap": 0.7484493434118729,
+            "ci95": [
+              0.6227439955614197,
+              0.8942523501270138
+            ],
+            "status": "A leads, CI excludes 0"
+          },
+          "h=8 in-sample": {
+            "gap": 0.04135732096619904,
+            "ci95": [
+              0.02283360149400929,
+              0.06223156687337905
+            ],
+            "status": "A leads, CI excludes 0"
+          }
+        },
+        "by_horizon": {
+          "1": {
+            "gap": -0.012796521497269476,
+            "gap_ci": [
+              -0.0328945089131594,
+              0.0012711106489102092
+            ],
+            "gap_excludes_zero": false,
+            "ratio_B_over_A": 0.9115926432395574,
+            "A_per_trajectory": [
+              0.33138445019721985,
+              0.1755698025226593,
+              0.04893932367364565,
+              0.023086362207929294
+            ],
+            "B_per_trajectory": [
+              0.2877902885278066,
+              0.16543565690517426,
+              0.0522770956158638,
+              0.02229081156353156
+            ]
+          },
+          "8": {
+            "gap": 0.04852912450830142,
+            "gap_ci": [
+              0.027129451433817543,
+              0.08435485015312827
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 1.1572140099154962,
+            "A_per_trajectory": [
+              0.643160899480184,
+              0.4489092429478963,
+              0.09822989751895268,
+              0.044427692890167236
+            ],
+            "B_per_trajectory": [
+              0.7447624405225118,
+              0.4815240204334259,
+              0.1338212639093399,
+              0.06873650600512822
+            ]
+          },
+          "32": {
+            "gap": 0.31401150673627853,
+            "gap_ci": [
+              0.12328434487183888,
+              0.5047386686007183
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 1.9195046077922728,
+            "A_per_trajectory": [
+              0.5134335358937582,
+              0.6470979253451029,
+              0.14821473260720572,
+              0.05725677808125814
+            ],
+            "B_per_trajectory": [
+              0.9134117960929871,
+              1.2565970023473103,
+              0.31655152638753253,
+              0.13548867404460907
+            ]
+          },
+          "100": {
+            "gap": 0.5860815700143576,
+            "gap_ci": [
+              0.21744049713015556,
+              0.9547226428985597
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 2.583928474666148,
+            "A_per_trajectory": [
+              0.4783124526341756,
+              0.6940518617630005,
+              0.12621819227933884,
+              0.1814882904291153
+            ],
+            "B_per_trajectory": [
+              1.5707937479019165,
+              1.5110158522923787,
+              0.40618066986401874,
+              0.3364068071047465
+            ]
+          },
+          "128": {
+            "gap": 0.6323588291803995,
+            "gap_ci": [
+              0.2716389000415802,
+              0.9930787583192189
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 2.7774502218914923,
+            "A_per_trajectory": [
+              0.5009127060572306,
+              0.6144075592358907,
+              0.12156549096107483,
+              0.18618381023406982
+            ],
+            "B_per_trajectory": [
+              1.7094589869181316,
+              1.3920187950134277,
+              0.4289902051289876,
+              0.42203689614931744
+            ]
+          },
+          "368": {
+            "gap": 1.2915324208637078,
+            "gap_ci": [
+              0.7003540818889936,
+              2.339022876073917
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 4.606099669372564,
+            "A_per_trajectory": [
+              0.8519348502159119,
+              0.2998495399951935,
+              0.10710190733273824,
+              0.17372238139311472
+            ],
+            "B_per_trajectory": [
+              3.722466548283895,
+              1.1947393616040547,
+              0.7633136610190073,
+              0.9182187914848328
+            ]
+          }
+        },
+        "sign_test": {
+          "1": {
+            "n_episodes": 10,
+            "n_positive": 3,
+            "exact_two_sided_p": 0.34375,
+            "per_episode_gap": {
+              "0": -0.018068320738772542,
+              "1": -0.02686413377523425,
+              "2": 0.0008375085890293121,
+              "3": 0.0023769683515032156,
+              "4": -0.009238797395179667,
+              "5": -0.00042774807661771774,
+              "6": -0.0053944171716769525,
+              "7": -0.06244534502426784,
+              "8": 0.001271124308307968,
+              "9": -0.0030112997628748417
+            }
+          },
+          "8": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.01416522140304248,
+              "1": 0.06710822383562731,
+              "2": 0.04497919355829558,
+              "3": 0.013619170834620796,
+              "4": 0.04145003731052081,
+              "5": 0.031614767387509346,
+              "6": 0.01823677184681098,
+              "7": 0.0744375102221966,
+              "8": 0.029950088510910675,
+              "9": 0.09235594049096107
+            }
+          },
+          "32": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.06844273768365383,
+              "1": 0.5047388871510823,
+              "2": 0.1075189933180809,
+              "3": 0.06423781005044779,
+              "4": 0.10793652633825937,
+              "5": 0.10600707183281581,
+              "6": 0.05429516608516375,
+              "7": 0.27978904296954477,
+              "8": 0.1232842014481624,
+              "9": 0.2597019001841545
+            }
+          },
+          "100": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.17932034904758137,
+              "1": 0.9547193398078282,
+              "2": 0.2266862851878007,
+              "3": 0.15655288721124333,
+              "4": 0.23028293624520302,
+              "5": 0.3120743905504545,
+              "6": 0.13336103595793247,
+              "7": 0.43492409711082775,
+              "8": 0.21743902936577797,
+              "9": 0.3822327069938183
+            }
+          },
+          "128": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.21530456903080147,
+              "1": 0.9930731356143953,
+              "2": 0.26815223942200345,
+              "3": 0.22260039548079175,
+              "4": 0.2803625874221325,
+              "5": 0.3786330570777257,
+              "6": 0.17216119170188904,
+              "7": 0.4771600191791852,
+              "8": 0.27163605143626535,
+              "9": 0.4460123814642429
+            }
+          },
+          "368": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.4386854960272709,
+              "1": 1.873094941178958,
+              "2": 0.5558815312882265,
+              "3": 0.6991943940520287,
+              "4": 1.1123383206625779,
+              "5": 0.7303677089512348,
+              "6": 0.5316941887140274,
+              "7": 1.0714628013471763,
+              "8": 0.6999221630394459,
+              "9": 0.8702461123466492
+            }
+          }
+        },
+        "trend_reading": "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=8, h=32, h=100, h=128, h=368 and spans zero at h=1; at h=8, the horizon the model is trained on, the gap excludes zero; the ratio is below one at h=1"
+      },
+      "offset_0": {
+        "m23_three_seeds": {
+          "arena": "held_out",
+          "metric": "l1",
+          "h": 368,
+          "c1": true,
+          "c2": true,
+          "c3": true,
+          "label": "REPRODUCES AT LONG HORIZON",
+          "gaps": {
+            "2500": {
+              "A": 0.6309103990594546,
+              "B": 4.2893396119276685,
+              "gap": 3.658429212868214,
+              "ci": [
+                0.8959436963001888,
+                8.845880550642807
+              ]
+            },
+            "10000": {
+              "A": 0.4391074019173781,
+              "B": 1.9983847985665004,
+              "gap": 1.5592773966491225,
+              "ci": [
+                0.563551598538955,
+                3.3564179986715312
+              ]
+            }
+          },
+          "per_episode_10000": {
+            "0": 0.3636301209529241,
+            "1": 2.528541535139084,
+            "2": 0.5068474759658177,
+            "3": 0.4597695618867874,
+            "4": 1.4198309058944383,
+            "5": 0.5671461125214895,
+            "6": 0.2988650674621264,
+            "7": 0.9218805109461148,
+            "8": 0.6104386424024899,
+            "9": 0.8234341541926067
+          }
+        },
+        "m23_seed1_as_discharged": {
+          "c1": true,
+          "c2": true,
+          "c3": true,
+          "label": "REPRODUCES AT LONG HORIZON",
+          "gaps": {
+            "2500": {
+              "A": 0.6256653666496277,
+              "B": 7.133298844099045,
+              "gap": 6.512022556138784,
+              "ci": [
+                1.0984470546245575,
+                16.82310951501131
+              ]
+            },
+            "10000": {
+              "A": 0.43465556204319,
+              "B": 1.5872000008821487,
+              "gap": 1.1527010307200254,
+              "ci": [
+                0.3730260506272316,
+                2.306689776480198
+              ]
+            }
+          },
+          "per_episode": {
+            "0": 0.2517652064561844,
+            "1": 1.9423799514770508,
+            "2": 0.37800196558237076,
+            "3": 0.5878104716539383,
+            "4": 0.8246055245399475,
+            "5": 0.8480894044041634,
+            "6": 0.26695719361305237,
+            "7": 1.2439420074224472,
+            "8": 0.44183167815208435,
+            "9": 0.9466857761144638
+          }
+        },
+        "m23_conditions_alongside": {
+          "h=8 held-out": {
+            "arena": "held_out",
+            "metric": "l1",
+            "h": 8,
+            "c1": false,
+            "c2": false,
+            "c3": false,
+            "label": "FAILS TO REPRODUCE",
+            "gaps": {
+              "2500": {
+                "A": 0.3405828656007846,
+                "B": 0.34040699402491253,
+                "gap": -0.00017587157587210453,
+                "ci": [
+                  -0.030417359123627363,
+                  0.027523957192897797
+                ]
+              },
+              "10000": {
+                "A": 0.32308967721958953,
+                "B": 0.3623417814572652,
+                "gap": 0.039252104237675674,
+                "ci": [
+                  -0.009542739639679595,
+                  0.088046948115031
+                ]
+              }
+            },
+            "per_episode_10000": {
+              "0": -0.04311147580544153,
+              "1": 0.08804687360922503,
+              "2": 0.0003518238663673401,
+              "3": -0.026516027748584747,
+              "4": -0.0034166152278582163,
+              "5": -0.029411969085534395,
+              "6": -0.06907293945550919,
+              "7": 0.05679613848527271,
+              "8": -0.009542790551980346,
+              "9": 0.02427231768767041
+            }
+          },
+          "nRMSE h=368 held-out": {
+            "arena": "held_out",
+            "metric": "nrmse",
+            "h": 368,
+            "c1": true,
+            "c2": true,
+            "c3": true,
+            "label": "REPRODUCES AT LONG HORIZON",
+            "gaps": {
+              "2500": {
+                "A": 0.5527330069898472,
+                "B": 2.955164423690467,
+                "gap": 2.40243141670062,
+                "ci": [
+                  1.2173904341159247,
+                  4.370398491560741
+                ]
+              },
+              "10000": {
+                "A": 0.4219161600064852,
+                "B": 1.5539282613285916,
+                "gap": 1.1320121013221065,
+                "ci": [
+                  0.7044308733522613,
+                  1.7981573481004762
+                ]
+              }
+            },
+            "per_episode_10000": {
+              "0": 0.501233383085413,
+              "1": 1.5222796119941067,
+              "2": 0.6395021139160961,
+              "3": 0.5440817806126006,
+              "4": 1.6768809486771163,
+              "5": 0.6768924305436401,
+              "6": 0.3428544615844754,
+              "7": 0.9022711358197468,
+              "8": 0.7750785047678175,
+              "9": 1.147701587161225
+            }
+          },
+          "h=368 in-sample": {
+            "arena": "in_sample",
+            "metric": "l1",
+            "h": 368,
+            "c1": true,
+            "c2": true,
+            "c3": true,
+            "label": "REPRODUCES AT LONG HORIZON",
+            "gaps": {
+              "2500": {
+                "A": 0.34550018919010955,
+                "B": 1.5759457536041737,
+                "gap": 1.230445564414064,
+                "ci": [
+                  0.9291646101356796,
+                  1.615429688834894
+                ]
+              },
+              "10000": {
+                "A": 0.2478195366760095,
+                "B": 0.9194823385526737,
+                "gap": 0.6716628018766642,
+                "ci": [
+                  0.4962477564501266,
+                  0.8792953146621585
+                ]
+              }
+            },
+            "per_episode_10000": {
+              "0": 0.3636301209529241,
+              "1": 2.528541535139084,
+              "2": 0.5068474759658177,
+              "3": 0.4597695618867874,
+              "4": 1.4198309058944383,
+              "5": 0.5671461125214895,
+              "6": 0.2988650674621264,
+              "7": 0.9218805109461148,
+              "8": 0.6104386424024899,
+              "9": 0.8234341541926067
+            }
+          }
+        },
+        "secondaries_three_seeds": {
+          "h=8 held-out": {
+            "gap": 0.039252104237675674,
+            "ci95": [
+              -0.009542739639679595,
+              0.088046948115031
+            ],
+            "status": "spans zero"
+          },
+          "h=368 in-sample": {
+            "gap": 0.6716628018766642,
+            "ci95": [
+              0.4962477564501266,
+              0.8792953146621585
+            ],
+            "status": "A leads, CI excludes 0"
+          },
+          "h=8 in-sample": {
+            "gap": -0.011263597446183366,
+            "ci95": [
+              -0.03696707913962504,
+              0.018837370471252734
+            ],
+            "status": "spans zero"
+          }
+        },
+        "by_horizon": {
+          "1": {
+            "gap": -0.012669775945444897,
+            "gap_ci": [
+              -0.030108478541175515,
+              -0.0021312994261582646
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 0.9116074366586657,
+            "A_per_trajectory": [
+              0.32052533825238544,
+              0.16016620894273123,
+              0.05989254762729009,
+              0.032757166773080826
+            ],
+            "B_per_trajectory": [
+              0.28168410062789917,
+              0.15981381138165793,
+              0.05598234633604685,
+              0.025181899468104046
+            ]
+          },
+          "8": {
+            "gap": 0.039252104237675674,
+            "gap_ci": [
+              -0.009542739639679595,
+              0.088046948115031
+            ],
+            "gap_excludes_zero": false,
+            "ratio_B_over_A": 1.121489812288239,
+            "A_per_trajectory": [
+              0.633821944395701,
+              0.41189829508463544,
+              0.1417604759335518,
+              0.10487799346446991
+            ],
+            "B_per_trajectory": [
+              0.7394643624623617,
+              0.4823497732480367,
+              0.1390558729569117,
+              0.0884971171617508
+            ]
+          },
+          "32": {
+            "gap": 0.3058066864808401,
+            "gap_ci": [
+              0.06904243926207224,
+              0.5425709336996077
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 1.7873655232014685,
+            "A_per_trajectory": [
+              0.5117377440134684,
+              0.6229620277881622,
+              0.22637536625067392,
+              0.1924939602613449
+            ],
+            "B_per_trajectory": [
+              0.9295636018117269,
+              1.2902780373891194,
+              0.34423669179280597,
+              0.21271751324335733
+            ]
+          },
+          "100": {
+            "gap": 0.5844631940126418,
+            "gap_ci": [
+              0.16428993145624798,
+              1.004636456569036
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 2.354855486272872,
+            "A_per_trajectory": [
+              0.4848174452781677,
+              0.7099966208140055,
+              0.21825828154881796,
+              0.31246428688367206
+            ],
+            "B_per_trajectory": [
+              1.6273159980773926,
+              1.5767709811528523,
+              0.44106021523475647,
+              0.4182422161102295
+            ]
+          },
+          "128": {
+            "gap": 0.6159015794595083,
+            "gap_ci": [
+              0.19908673067887628,
+              1.0327164282401404
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 2.467869431282269,
+            "A_per_trajectory": [
+              0.5068377951780955,
+              0.6433298389116923,
+              0.21704347928365073,
+              0.31114410360654193
+            ],
+            "B_per_trajectory": [
+              1.7753539085388184,
+              1.44024658203125,
+              0.4477258622646332,
+              0.47863518198331195
+            ]
+          },
+          "368": {
+            "gap": 1.5592773966491225,
+            "gap_ci": [
+              0.563551598538955,
+              3.3564179986715312
+            ],
+            "gap_excludes_zero": true,
+            "ratio_B_over_A": 4.551015969761571,
+            "A_per_trajectory": [
+              0.8518781065940857,
+              0.40398751695950824,
+              0.21857856214046478,
+              0.2819854219754537
+            ],
+            "B_per_trajectory": [
+              5.083504676818848,
+              1.1889204184214275,
+              0.7083363930384318,
+              1.0127777059872944
+            ]
+          }
+        },
+        "sign_test": {
+          "1": {
+            "n_episodes": 10,
+            "n_positive": 0,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": -0.0640585186580817,
+              "1": -0.0195967803398768,
+              "2": -0.026424533377091095,
+              "3": -0.04122608931114276,
+              "4": -0.022014880242447063,
+              "5": -0.03168005868792533,
+              "6": -0.07369968605538209,
+              "7": -0.08726184815168381,
+              "8": -0.005742761927346386,
+              "9": -0.048000277330478035
+            }
+          },
+          "8": {
+            "n_episodes": 10,
+            "n_positive": 4,
+            "exact_two_sided_p": 0.75390625,
+            "per_episode_gap": {
+              "0": -0.04311147580544153,
+              "1": 0.08804687360922503,
+              "2": 0.0003518238663673401,
+              "3": -0.026516027748584747,
+              "4": -0.0034166152278582163,
+              "5": -0.029411969085534395,
+              "6": -0.06907293945550919,
+              "7": 0.05679613848527271,
+              "8": -0.009542790551980346,
+              "9": 0.02427231768767041
+            }
+          },
+          "32": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.028230244914690672,
+              "1": 0.5425710280736288,
+              "2": 0.07476806888977686,
+              "3": 0.025051407516002683,
+              "4": 0.054468472798665346,
+              "5": 0.05565637101729709,
+              "6": 0.010052757958571135,
+              "7": 0.2439876024921735,
+              "8": 0.06904225299755731,
+              "9": 0.2277716447909673
+            }
+          },
+          "100": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.11225502689679467,
+              "1": 1.0046168665091195,
+              "2": 0.20493642985820767,
+              "3": 0.09774308651685715,
+              "4": 0.15177036325136822,
+              "5": 0.19935843348503113,
+              "6": 0.07512940466403964,
+              "7": 0.35296750068664556,
+              "8": 0.16428998112678528,
+              "9": 0.3090301876266797
+            }
+          },
+          "128": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.1399875332911809,
+              "1": 1.0323221981525421,
+              "2": 0.23543565720319745,
+              "3": 0.1320895105600357,
+              "4": 0.20187194893757499,
+              "5": 0.23122796167929965,
+              "6": 0.09855711708466211,
+              "7": 0.3885681430498759,
+              "8": 0.19908734907706577,
+              "9": 0.36047750711441034
+            }
+          },
+          "368": {
+            "n_episodes": 10,
+            "n_positive": 10,
+            "exact_two_sided_p": 0.001953125,
+            "per_episode_gap": {
+              "0": 0.3636301209529241,
+              "1": 2.528541535139084,
+              "2": 0.5068474759658177,
+              "3": 0.4597695618867874,
+              "4": 1.4198309058944383,
+              "5": 0.5671461125214895,
+              "6": 0.2988650674621264,
+              "7": 0.9218805109461148,
+              "8": 0.6104386424024899,
+              "9": 0.8234341541926067
+            }
+          }
+        },
+        "trend_reading": "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=1, h=32, h=100, h=128, h=368 and spans zero at h=8; at h=8, the horizon the model is trained on, the gap spans zero; the ratio is below one at h=1"
+      }
+    }
+  },
+  "outputs": [
+    "results/x8_sweep_eval_offset0.json",
+    "results/x8_baselines_eval_offset0.json"
+  ],
+  "caveats": [
+    "our models under the released pairing; it says nothing direct about the original papers' printed numbers",
+    "the RSSM reads the window's first action row at its first filtering step (the row before it is outside the window)"
+  ],
+  "code_sha256": {
+    "scripts/x8_released_pairing.py": "22059a0b84facbb6664d60e3ab7ff6f097b3e736bb03fbe46252cae10b2fb3d2",
+    "scripts/mn_sweep_eval.py": "6d717586b6527d900eae5cbef08b098d1a71fc7ecd206329467a7fb90831862a",
+    "scripts/baselines_eval.py": "9ac42025c7db404c83d63a370ce70e7ebaf68498a169dc9c4a1e47119eb666f8",
+    "scripts/verdict_mn_sweep.py": "e393f6fa32254cbb6506c0a36ab2d22ae804508d6d81b44802bb5bdb113b1708",
+    "scripts/verdict_baselines.py": "066377805746f5968e4606f85f78b82e957fb01605dc312c662b6435ac779c60",
+    "scripts/a1_ab_by_horizon.py": "be582b26ddaa7e8305afb72bd661d45e3c7c40a2e77c7e286a58b3d83691c854",
+    "scripts/review_bootstrap_unit.py": "c5cd09873bf708e9381e1db5a85dcb74f9fd472cd9f468fe2be36864fb6a734b",
+    "scripts/p5_sweep_power.py": "650d8b68bcad4b91f65a7086cc583508f11a611ae32af8fb2c2125c7c8836190",
+    "src/rwm_model.py": "f929f13562b41deae659b43399985afd387b3da5ef63e8f72c933409a26681ec",
+    "src/rollout_eval.py": "14f4426c528666a6ad43ce5fc105f1da9b47e6854023dbbb61a943b2b80fc4bd",
+    "src/rwm_data.py": "aff0a74423aa11cf6ad691b0da8aefb4be7de35b68d51fb9131245ce60b60cc9",
+    "src/rwm_metrics.py": "e420e8cbcbad3c749a9eb93724005970c772e4450d413b96ddaa6220b325bd3e",
+    "src/baselines/__init__.py": "45bf214ee198c648434e4207b68e58f65126820f357f1bf6d2d76aa6be44691b",
+    "src/baselines/common.py": "6738db186bda1d17bcaabb05ffb135ebae31a797fea16231d49a1de69e096e45",
+    "src/baselines/rssm.py": "5a829154fa77b2e22115cd57acc51cd6d5c26350672a7a7a8a7c255986cab3e2",
+    "src/baselines/mlp.py": "83706b3831cca45996f5e083238b6af57c5cf06b709a65ca16dad06fa1790622",
+    "src/baselines/transformer.py": "1bd6b03d6e35b9d48c0d3679ceb8392895b45140ca794bf6c679372fe8216a04"
+  },
+  "git_head": "df0f2fa50d6790efcce963f0014f7fe3ab51dc46"
+}

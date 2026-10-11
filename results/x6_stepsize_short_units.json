@@ -1,0 +1,173 @@
+{
+  "rule": "X6",
+  "ledger": "M-88",
+  "script": "scripts/x6_stepsize_short_units.py",
+  "script_sha256": "47f2a13f1ad797834ce5bdd0cbb4b55bcab5ecf823e517d9fc17f12955f8b7b9",
+  "exploratory": true,
+  "never_reopens": "M-51, M-52, M-64 or any discharged rule; nothing here changes a verdict",
+  "design": {
+    "model": "the released checkpoint, ensemble of 5",
+    "units": {
+      "32": {
+        "h": 32,
+        "unit_length": 64,
+        "n_units": 150,
+        "n_from_episode_lengths": 150,
+        "counts_agree": true,
+        "units_inside_episodes": true,
+        "n_independent_unit_level": 150,
+        "n_episodes": 10
+      },
+      "100": {
+        "h": 100,
+        "unit_length": 132,
+        "n_units": 70,
+        "n_from_episode_lengths": 70,
+        "counts_agree": true,
+        "units_inside_episodes": true,
+        "n_independent_unit_level": 70,
+        "n_episodes": 10
+      }
+    },
+    "horizons": [
+      32,
+      100
+    ],
+    "governing_h": 100,
+    "panel": "e7_free_baselines.load_panel(starts, length)",
+    "statistic": "r(disagreement, |error|) - r(step size, |error|), Pearson over every (unit, step) cell",
+    "interval": "20000 Monte Carlo resamples of whole units, default_rng(0), paired"
+  },
+  "assertions": {
+    "a": {
+      "pass": true,
+      "max_abs_diff": 0.0,
+      "default_starts_bitwise": true,
+      "step_size_margin": 0.13565525322403105,
+      "against": "results/e7_free_baselines.json"
+    },
+    "b": {
+      "pass": true,
+      "max_abs_diff": 0.0,
+      "settings": "4000 resamples, default_rng(20260829)"
+    },
+    "c": {
+      "pass": true,
+      "max_abs_diff": 0.0,
+      "against": "results/e7_free_baselines_power.json"
+    },
+    "d": {
+      "pass": true,
+      "units": {
+        "32": {
+          "h": 32,
+          "unit_length": 64,
+          "n_units": 150,
+          "n_from_episode_lengths": 150,
+          "counts_agree": true,
+          "units_inside_episodes": true,
+          "n_independent_unit_level": 150,
+          "n_episodes": 10
+        },
+        "100": {
+          "h": 100,
+          "unit_length": 132,
+          "n_units": 70,
+          "n_from_episode_lengths": 70,
+          "counts_agree": true,
+          "units_inside_episodes": true,
+          "n_independent_unit_level": 70,
+          "n_episodes": 10
+        }
+      }
+    }
+  },
+  "mde_recorded_before_the_reading": {
+    "32": {
+      "method": "M-51's (e7_free_baselines --power): (z_0.975 + z_0.80) x bootstrap SD, 4000 resamples, default_rng(20260829); disagreement, |error| and the forecast index only",
+      "bootstrap_se_margin_over_index": 0.07901835911215632,
+      "bootstrap_se_partial_given_index": 0.04016012383287806,
+      "mde_80pct_power": {
+        "margin": 0.22137666688664376,
+        "partial": 0.11251200930733672
+      }
+    },
+    "100": {
+      "method": "M-51's (e7_free_baselines --power): (z_0.975 + z_0.80) x bootstrap SD, 4000 resamples, default_rng(20260829); disagreement, |error| and the forecast index only",
+      "bootstrap_se_margin_over_index": 0.061151274916336394,
+      "bootstrap_se_partial_given_index": 0.05194142608240543,
+      "mde_80pct_power": {
+        "margin": 0.17132050790415299,
+        "partial": 0.14551833154547153
+      }
+    }
+  },
+  "reading": {
+    "h": 100,
+    "label": "DISAGREEMENT BEATS STEP SIZE",
+    "margin": 0.28158577473812785,
+    "ci95": [
+      0.19782706485256804,
+      0.3895575507577175
+    ],
+    "n_units": 70
+  },
+  "alongside": {
+    "h32": {
+      "margin": 0.23934185204995195,
+      "margin_ci": [
+        0.09499078216418277,
+        0.31311276620012796
+      ],
+      "r_disagreement_error": 0.7415242129821495,
+      "r_step_size_error": 0.5021823609321976
+    },
+    "h32_label_it_would_carry": "DISAGREEMENT BEATS STEP SIZE",
+    "partial_disagreement_given_step_size": {
+      "32": {
+        "value": 0.631655474266136,
+        "ci95": [
+          0.4690610013207987,
+          0.7249724550329687
+        ]
+      },
+      "100": {
+        "value": 0.6361098114968833,
+        "ci95": [
+          0.5566686674836885,
+          0.7465770337723011
+        ]
+      }
+    },
+    "h100_correlations": {
+      "r_disagreement_error": 0.6808150976026621,
+      "r_step_size_error": 0.3992293228645343
+    },
+    "step_size_margin_sd": {
+      "32": {
+        "bootstrap_se": 0.06568159227891804,
+        "mde": 0.18401257806272864
+      },
+      "100": {
+        "bootstrap_se": 0.05230752871219921,
+        "mde": 0.14654399926159237
+      }
+    },
+    "status": "alongside, not a reading"
+  },
+  "caveats": [
+    "the released checkpoint trained on all ten episodes: every unit is in its training data",
+    "units are non-overlapping within an episode but not independent across the ten episodes; the interval resamples units, not episodes",
+    "a correlation over (unit, step) cells, not a ranking of units"
+  ],
+  "code_sha256": {
+    "scripts/x6_stepsize_short_units.py": "47f2a13f1ad797834ce5bdd0cbb4b55bcab5ecf823e517d9fc17f12955f8b7b9",
+    "scripts/e7_free_baselines.py": "5383908f5854e088a1108a8393c57761e29427ed70120daf6c9959a846307416",
+    "scripts/m64_short_units.py": "9556ee0fb396152fd3f13a5a02370dc008d1b9a38be3ca6f452b8cf34b634a98",
+    "src/score_reference.py": "e79d986a2fd6bfa545a33ab30c5ef3065ff247b673b12f69a49c8017e88c21ac",
+    "src/rwm_data.py": "aff0a74423aa11cf6ad691b0da8aefb4be7de35b68d51fb9131245ce60b60cc9",
+    "src/rollout_eval.py": "14f4426c528666a6ad43ce5fc105f1da9b47e6854023dbbb61a943b2b80fc4bd",
+    "src/rwm_metrics.py": "e420e8cbcbad3c749a9eb93724005970c772e4450d413b96ddaa6220b325bd3e"
+  },
+  "git_head": "df0f2fa50d6790efcce963f0014f7fe3ab51dc46"
+}
