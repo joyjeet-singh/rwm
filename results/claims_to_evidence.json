@@ -3667,7 +3667,7 @@
       "id": "M-88",
       "claim": "PRE-REGISTERED rule X6: does ensemble disagreement beat the model's own predicted step s",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x6_stepsize_short_units.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x6_stepsize_short_units.json`. **It returns DISAGREEMENT BEATS STEP SIZE.** Recorded in `M-91`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3690,7 +3690,7 @@
       "id": "M-89",
       "claim": "PRE-REGISTERED rule X7: \u00a76.7's per-horizon recalibration, fitted on nine episodes and sc",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x7_loeo_recalibration.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x7_loeo_recalibration.json`. **It returns WITHIN BAND AT 6 OF 6 HORIZONS (epistemic).** Recorded in `M-92`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3712,7 +3712,7 @@
       "id": "M-90",
       "claim": "PRE-REGISTERED rule X8: would any verdict change under the released evaluation's action ",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x8_released_pairing.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x8_released_pairing.json`. **It returns SAME VERDICT for M-74, M-75, M-76 and the A/B comparison.** Recorded in `M-93`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3747,13 +3747,60 @@
         "src/rwm_model.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-91",
+      "claim": "Rule X6 (M-88): `results/x6_stepsize_short_units.json` returns DISAGREEMENT BEATS STEP S",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/x6_stepsize_short_units.json",
+        "scripts/x6_stepsize_short_units.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-92",
+      "claim": "Rule X7 (M-89): `results/x7_loeo_recalibration.json` returns WITHIN BAND AT 6 OF 6 HORIZ",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/x7_loeo_recalibration.json",
+        "scripts/x7_loeo_recalibration.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-93",
+      "claim": "Rule X8 (M-90): `results/x8_released_pairing.json` returns SAME VERDICT for M-74, M-75, ",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/x8_baselines_eval_offset0.json",
+        "results/x8_released_pairing.json",
+        "results/x8_sweep_eval_offset0.json",
+        "scripts/x8_released_pairing.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
     "D": 38,
-    "M": 90,
+    "M": 93,
     "O": 14,
     "R": 79,
     "S": 21,

@@ -9198,7 +9198,7 @@ equals the one recorded here; records the reading exactly as the script returns 
 ledger entry; and changes only this entry's Status line. Not: change the model, units, horizons, panel, statistic, interval, MDE method or thresholds; add a reading; or read any number here as
 bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x6_stepsize_short_units.py`; `RUN` `results/x6_stepsize_short_units.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x6_stepsize_short_units.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x6_stepsize_short_units.json`. **It returns DISAGREEMENT BEATS STEP SIZE.** Recorded in `M-91`. · **Relevance** METHOD
 
 ### M-89 — PRE-REGISTERED rule X7: §6.7's per-horizon recalibration, fitted on nine episodes and scored on the tenth · **NEW**
 **Entered before any of its readings exists.** `results/x7_loeo_recalibration.json` does not exist. The script that computes every reading
@@ -9276,7 +9276,7 @@ equals the one recorded here; records the reading exactly as the script returns 
 ledger entry; and changes only this entry's Status line. Not: change the model, trajectories, design, fitting or coverage function, interval, band or labels; add a reading; or read any number here as
 bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x7_loeo_recalibration.py`; `RUN` `results/x7_loeo_recalibration.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x7_loeo_recalibration.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x7_loeo_recalibration.json`. **It returns WITHIN BAND AT 6 OF 6 HORIZONS (epistemic).** Recorded in `M-92`. · **Relevance** METHOD
 
 ### M-90 — PRE-REGISTERED rule X8: would any verdict change under the released evaluation's action timing? · **NEW**
 **Entered before any of its readings exists.** `results/x8_released_pairing.json` does not exist, nor do its offset-0 score files. The script that computes every reading
@@ -9389,4 +9389,109 @@ equals the one recorded here; records the reading exactly as the script returns 
 ledger entry; and changes only this entry's Status line. Not: change the models, seeds, pairing, evaluators, statistics, alongside sets or labels; add a reading; or read any number here as
 bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x8_released_pairing.py`; `RUN` `results/x8_released_pairing.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x8_released_pairing.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x8_released_pairing.json`. **It returns SAME VERDICT for M-74, M-75, M-76 and the A/B comparison.** Recorded in `M-93`. · **Relevance** METHOD
+
+### M-91 — Rule X6 (M-88): `results/x6_stepsize_short_units.json` returns DISAGREEMENT BEATS STEP SIZE · **NEW**
+**Records** M-88's reading exactly as `scripts/x6_stepsize_short_units.py` returned it, as committed before any reading existed (commit `df0f2fa`). The artifact records the script's SHA-256, which equals M-88's, and the commit it ran at (`df0f2fa`). Discharges M-88. Exploratory; no discharged rule is re-opened.
+
+**Assertions, before any reading:** (a) 0.0e+00, (b) 0.0e+00 and
+(c) 0.0e+00 maximum difference, all passed; (d) passed at both horizons
+(150 units at h = 32 and 70 at h = 100, over 10 episodes, counted two ways).
+
+**MDE, computed before the reading** (M-51's method, the margin over the forecast index): 0.1713
+at h = 100 and 0.2214 at h = 32.
+
+**The reading**, released checkpoint, h = 100, 70 units: margin r(disagreement, |error|) − r(step size, |error|) =
++0.2816 [+0.1978, +0.3896], which returns **DISAGREEMENT BEATS STEP SIZE**.
+
+**Alongside, not readings:**
+- h = 32, 150 units: margin +0.2393 [+0.0950, +0.3131], would carry DISAGREEMENT BEATS STEP SIZE;
+- the correlations: at h = 100, r(disagreement, |error|) +0.6808 and r(step size, |error|)
+  +0.3992; at h = 32, +0.7415 and +0.5022;
+- the partial r(disagreement, |error| | step size): +0.6361
+  [+0.5567, +0.7466] at h = 100 and +0.6317
+  [+0.4691, +0.7250] at h = 32;
+- the step-size margin's own bootstrap SD (after the reading): 0.0523 at h = 100 and
+  0.0657 at h = 32.
+
+Caveats, as M-88 states them: every unit is in the released checkpoint's training data; the units share the ten episodes and the
+interval resamples units, not episodes; the statistic is a correlation over (unit, step) cells.
+**Evidence** `RUN` `results/x6_stepsize_short_units.json`; `SRC` `scripts/x6_stepsize_short_units.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-92 — Rule X7 (M-89): `results/x7_loeo_recalibration.json` returns WITHIN BAND AT 6 OF 6 HORIZONS (epistemic) · **NEW**
+**Records** M-89's reading exactly as `scripts/x7_loeo_recalibration.py` returned it, as committed before any reading existed (commit `df0f2fa`). The artifact records the script's SHA-256, which equals M-89's, and the commit it ran at (`df0f2fa`). Discharges M-89. Exploratory; no discharged rule is re-opened.
+
+**Assertions, before any reading:** (a) 0.0e+00 and (b) 0.0e+00 maximum
+difference, both passed; (c) passed (two 400-step trajectories in every episode, 20 in all).
+
+**The reading**, released checkpoint, epistemic term, ten folds (fit on nine episodes, score the tenth), 20
+trajectories, band [58.27%, 78.27%]: **WITHIN BAND AT 6 OF 6 HORIZONS**.
+
+| h | epistemic coverage [95%] | reading | alongside: aleatoric | alongside: constant multiplier | alongside: before any multiplier | alongside: c_h max/min over folds |
+|---:|---|---|---|---|---:|---:|
+| 1 | 68.56% [63.89, 72.89] | WITHIN BAND | 68.22% [57.44, 77.56], UNRESOLVED | 68.56%, WITHIN BAND | 16.22% | 1.083 |
+| 8 | 68.44% [61.24, 74.93] | WITHIN BAND | 68.54% [57.62, 78.31], UNRESOLVED | 50.58%, OUTSIDE BAND | 9.99% | 1.183 |
+| 32 | 68.33% [61.26, 74.62] | WITHIN BAND | 68.38% [57.23, 78.29], UNRESOLVED | 37.07%, OUTSIDE BAND | 6.95% | 1.146 |
+| 100 | 68.21% [64.47, 71.72] | WITHIN BAND | 67.91% [59.43, 75.67], WITHIN BAND | 26.47%, OUTSIDE BAND | 4.61% | 1.105 |
+| 128 | 68.21% [65.32, 70.95] | WITHIN BAND | 67.98% [60.24, 75.19], WITHIN BAND | 25.02%, OUTSIDE BAND | 4.37% | 1.074 |
+| 368 | 68.25% [65.25, 71.09] | WITHIN BAND | 68.05% [60.88, 75.28], WITHIN BAND | 21.19%, OUTSIDE BAND | 3.60% | 1.067 |
+
+Alongside summaries: the aleatoric term WITHIN BAND AT 3 OF 6 HORIZONS; the constant multiplier lands within the band at
+1 of 6 horizons (epistemic) and 0 of 6 (aleatoric).
+
+Caveat, as M-89 states it: unseen by the multiplier, not by the model; the released checkpoint trained on all ten episodes.
+**Evidence** `RUN` `results/x7_loeo_recalibration.json`; `SRC` `scripts/x7_loeo_recalibration.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-93 — Rule X8 (M-90): `results/x8_released_pairing.json` returns SAME VERDICT for M-74, M-75, M-76 and the A/B comparison · **NEW**
+**Records** M-90's reading exactly as `scripts/x8_released_pairing.py` returned it, as committed before any reading existed (commit `df0f2fa`). The artifact records the script's SHA-256, which equals M-90's, and the commit it ran at (`df0f2fa`). Discharges M-90. Exploratory; no discharged rule is re-opened.
+
+**Assertions, before any reading:** (a) passed (6,480 sweep and 5,040
+baseline values reproduced to 0.0e+00, and the
+committed verdicts, alongside branches and per-episode signs exactly); (b) passed (1.2e-07 relative);
+(c) passed (0.0e+00); (d) passed (native 0.0e+00; the stale-pairing
+ratio 1.6e-07); before the reading, the native check for the sweep configurations with M < 32
+passed (12 models, 0.0e+00).
+
+**The readings**, our models scored at the released evaluation's pairing (offset 0):
+- **M-74:** committed NOT OPTIMAL AT OUR BUDGET; at offset 0 NOT OPTIMAL AT OUR BUDGET. **SAME VERDICT.**
+- **M-75:** committed REPRODUCES; at offset 0 REPRODUCES. **SAME VERDICT.**
+- **M-76:** committed RWM AHEAD OF ALL THREE; at offset 0 RWM AHEAD OF ALL THREE. **SAME VERDICT.**
+- **The A/B comparison** (M-23's three conditions, three seeds): at offset 1 REPRODUCES AT LONG HORIZON; at offset 0 REPRODUCES AT LONG HORIZON.
+  **SAME VERDICT.**
+
+**Alongside, the readings in each rule's alongside set that change** (offset 1 → offset 0):
+- M-74:
+  - l1_h32: NOT OPTIMAL AT OUR BUDGET → CANNOT BE DISTINGUISHED;
+  - nrmse_h1: CANNOT BE DISTINGUISHED → NOT OPTIMAL AT OUR BUDGET;
+  - nrmse_h32: NOT OPTIMAL AT OUR BUDGET → CANNOT BE DISTINGUISHED;
+  - per-episode sign M16_N8 [positive, negative]: [6, 4] → [9, 1];
+  - per-episode sign M8_N8 [positive, negative]: [2, 8] → [7, 3];
+  - per-episode sign M2_N8 [positive, negative]: [1, 9] → [2, 8];
+  - per-episode sign M1_N8 [positive, negative]: [7, 3] → [9, 1];
+- M-75:
+  - in_sample l1_h1: CANNOT BE SETTLED → DOES NOT REPRODUCE;
+  - in_sample nrmse_h1: CANNOT BE SETTLED → DOES NOT REPRODUCE;
+- M-76:
+  - in_sample l1_h8: PARTIAL → A BASELINE AHEAD;
+  - in_sample l1_h32: PARTIAL → A BASELINE AHEAD;
+  - in_sample nrmse_h8: PARTIAL → A BASELINE AHEAD;
+  - in_sample nrmse_h32: PARTIAL → A BASELINE AHEAD;
+  - in_sample nrmse_h100: RWM AHEAD OF ALL THREE → PARTIAL;
+- The A/B comparison:
+  - M-23 conditions h=8 held-out: REPRODUCES AT LONG HORIZON → FAILS TO REPRODUCE;
+  - secondary h=8 held-out: A leads, CI excludes 0 → spans zero;
+  - secondary h=8 in-sample: A leads, CI excludes 0 → spans zero;
+  - by-horizon h=1 excludes zero: false → true;
+  - by-horizon h=8 excludes zero: true → false;
+  - by-horizon h=1 episodes positive: 3 → 0;
+  - by-horizon h=8 episodes positive: 10 → 4;
+  - trend reading: the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=8, h=32, h=100, h=128, h=368 and spans zero at h=1; at h=8, the horizon the model is trained on, the gap excludes zero; the ratio is below one at h=1 → the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=1, h=32, h=100, h=128, h=368 and spans zero at h=8; at h=8, the horizon the model is trained on, the gap spans zero; the ratio is below one at h=1;
+
+Every reading of every alongside set, at both offsets, is in the artifact's `detail`; the offset-0 scores are in
+`results/x8_sweep_eval_offset0.json` and `results/x8_baselines_eval_offset0.json`.
+
+Caveat, as M-90 states it: our models under the released pairing; it says nothing direct about the original papers' printed numbers.
+**Evidence** `RUN` `results/x8_released_pairing.json`, `results/x8_sweep_eval_offset0.json`, `results/x8_baselines_eval_offset0.json`; `SRC` `scripts/x8_released_pairing.py`.
+**Status** CONFIRMED · **Relevance** METHOD
