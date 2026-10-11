@@ -80,18 +80,22 @@ def _within_step(x, y):
     return float(np.mean(rs)) if rs else np.nan
 
 
-def load_panel():
+def load_panel(starts=None, length=LEN):
+    # Round 4, rule X6 (ledger M-88) builds this panel on M-64's shorter units: `starts` and `length`
+    # give the unit start rows and rows per unit. The defaults are the 20 non-overlapping 400-step
+    # trajectories of all ten episodes, so every existing caller gets exactly the panel it always got.
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, ep = R.load_data(paths["csv"], verbose=False)
     split = E.make_split(seed=0, strat_path=os.path.join(R.RESULTS, "step0_strat.json"),
                          verbose=False)
     allep = sorted(set(split["train_episodes"]) | set(split["holdout_episodes"]))
-    starts = MET.non_overlapping_starts(ep, allep, LEN)
-    n_ind, n_traj = int(MET.n_independent(starts, LEN)), len(starts)
+    if starts is None:
+        starts = MET.non_overlapping_starts(ep, allep, LEN)
+    n_ind, n_traj = int(MET.n_independent(starts, length)), len(starts)
     sd = torch.load(paths["ckpt"], map_location="cpu")["system_dynamics_state_dict"]
     model = S.ReferenceRWM(sd); model.eval()
-    idx = np.asarray(starts)[:, None] + np.arange(LEN)[None, :]
+    idx = np.asarray(starts)[:, None] + np.arange(length)[None, :]
     raw = data[idx]
     st = torch.as_tensor(R.normalise_state(raw[:, :, R.STATE_COLS],
                                            cfg["state_data_mean"], cfg["state_data_std"]),

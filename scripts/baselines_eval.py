@@ -51,7 +51,7 @@ def run_artifact(results, arch, regime, spec, s):
     return os.path.join(results, f"baseline_run_{arch}_{regime}_{spec}_seed{s}.json")
 
 
-def evaluate(queued, runs, results, iters, out_path, check_artifacts=True):
+def evaluate(queued, runs, results, iters, out_path, check_artifacts=True, action_offset=1):
     paths = R.repo_paths()
     cfg = R.load_reference_config(paths["lite"])
     data, ep = R.load_data(paths["csv"], verbose=False)
@@ -81,8 +81,8 @@ def evaluate(queued, runs, results, iters, out_path, check_artifacts=True):
             "weights": w, "weights_sha256": MN.sha256(w), "wall_clock_s": art["wall_clock_s"],
             # the state pathway only (state_base + state_heads), as p2_capacity_power counts it
             "n_params": BL.n_params(model.state_base) + BL.n_params(model.state_heads),
-            "held_out": MN.score(model, data, cfg, scale, arenas["held_out"]["starts"], 32, 32),
-            "in_sample": MN.score(model, data, cfg, scale, arenas["in_sample"]["starts"], 32, 32)}
+            "held_out": MN.score(model, data, cfg, scale, arenas["held_out"]["starts"], 32, 32, action_offset),
+            "in_sample": MN.score(model, data, cfg, scale, arenas["in_sample"]["starts"], 32, 32, action_offset)}
     out_cfg["rwm"] = rwm
 
     for arch, regime, spec in queued:
@@ -105,7 +105,7 @@ def evaluate(queued, runs, results, iters, out_path, check_artifacts=True):
                 info.update({"wall_clock_s": art["wall_clock_s"],
                              "n_train_windows": hp["n_train_windows"]})
             for a in ("held_out", "in_sample"):
-                info[a] = MN.score(model, data, cfg, scale, arenas[a]["starts"], M_HIST, M_HIST)
+                info[a] = MN.score(model, data, cfg, scale, arenas[a]["starts"], M_HIST, M_HIST, action_offset)
             rec["seeds"][str(s)] = info
         out_cfg[key(arch, regime, spec)] = rec
 
@@ -115,7 +115,7 @@ def evaluate(queued, runs, results, iters, out_path, check_artifacts=True):
     diff = max(abs(float(np.mean(rwm["seeds"][str(s)]["held_out"][str(h)]["l1"]))
                    - h2h["rows"]["armA"]["per_model"][f"armA_faithful_mse_seed{s}"][str(h)]["l1"])
                for s in SEEDS for h in h2h["horizons"])
-    assert diff < 1e-6, f"RWM does not reproduce the head-to-head table: {diff}"
+    assert action_offset != 1 or diff < 1e-6, f"RWM does not reproduce the head-to-head table: {diff}"
 
     out = {"rules": ["M-75", "M-76"], "arenas": arenas, "horizons": list(MN.HORIZONS),
            "seeds": list(SEEDS), "checkpoint_iterations": iters, "history_rows": M_HIST,

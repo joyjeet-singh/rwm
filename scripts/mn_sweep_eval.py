@@ -102,8 +102,8 @@ def window_arrays(data, cfg, starts, m, m_max):
     return st, ac
 
 
-def score(model, data, cfg, scale, starts, m, m_max):
-    st, ac = window_arrays(data, cfg, starts, m, m_max)
+def score(model, data, cfg, scale, starts, m, m_max, action_offset=1):
+    st, ac = _pairing(window_arrays(data, cfg, starts, m, m_max), action_offset)
     with torch.no_grad():
         pred = model.rollout(torch.as_tensor(st).clone(), torch.as_tensor(ac), m,
                              action_offset=1).numpy()
@@ -226,6 +226,21 @@ def main():
         print(f"  {key:<8} held-out relative-L1  h=100 {l1_100:.4f}  h=368 {l1:.4f}")
     print(f"  centre reproduces the head-to-head table: max |diff| {max(check):.2e}")
     print(f"  wrote {R.rel(op)}")
+
+
+def _pairing(arrays, action_offset):
+    """Round 4, rule X8 (ledger M-90): score()'s action pairing. 1, the default, is the causal pairing every
+    rule here was scored with, and returns the arrays untouched. 0 is the released evaluation's pairing, each
+    prediction of state i with action i - 1. It is made by moving every action one row later, the window's first
+    row repeated, and rolling out at the causal pairing, so the same definition reaches every model: RWM, whose
+    native action_offset=0 it equals (asserted in scripts/x8_released_pairing.py; RWM never reads the repeated
+    row), and the baselines, whose rollouts take the causal pairing only. Only the RSSM reads the repeated row,
+    at its first filtering step."""
+    st, ac = arrays
+    assert action_offset in (0, 1), action_offset
+    if action_offset == 1:
+        return st, ac
+    return st, np.concatenate([ac[:, :1], ac[:, :-1]], axis=1)
 
 
 if __name__ == "__main__":
