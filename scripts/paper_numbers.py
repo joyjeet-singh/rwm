@@ -3486,6 +3486,61 @@ def main():
     assert [x["file"] for x in _ret] == ["scripts/task_d3_ens5.py"], _ret
     put("audit_n_retired", len(_ret), "results/input_set_audit.json")
 
+    # --- Round 4, F4 item 1: post hoc N5 (R-80), our models under the stale action timing, with intervals ---------
+    # Section 7.2 and the model card print Arm A's figures at 10,000 iterations in both arenas; Appendix V prints every
+    # model at every horizon. Appended here, after every line of this file the ledger cites, so no citation moves.
+    N5 = J("n5_stale_armA_ci.json")
+    _n5s = "results/n5_stale_armA_ci.json"
+    assert N5["post_hoc"] and all(v["pass"] for v in N5["assertions"].values()), N5["assertions"]
+    _n5r = N5["results"]
+    _q5 = lambda key, ar, h: _n5r[key][ar]["by_horizon"][str(h)]
+    _pc5 = lambda x: f"{x:+.1f}"
+    _pci5 = lambda c: f"[{c[0]:+.1f}, {c[1]:+.1f}]"
+    assert str(N["v2_deploy_h"]["value"]) == "100", "the keys name h = 100"
+    for _ar, _tg in (("in_sample_n16", "ins"), ("held_out_n4", "ho")):
+        for _h in (1, 100):
+            _c5 = _q5("arm_a_10000", _ar, _h)
+            put(f"n5_{_tg}_h{_h}", _pc5(_c5["E_pct"]), _n5s)
+            put(f"n5_{_tg}_ci_h{_h}", _pci5(_c5["ci95_pct"]), _n5s)
+    # What section 7.2 and the model card say of those four, asserted: on the training episodes both are resolved
+    # rises; on the held-out pair h = 1 spans zero ("cannot resolve") and h = 100 is a resolved rise.
+    assert all(_q5("arm_a_10000", "in_sample_n16", _h)["ci95_pct"][0] > 0 for _h in (1, 100))
+    _c5 = _q5("arm_a_10000", "held_out_n4", 1)["ci95_pct"]
+    assert _c5[0] < 0 < _c5[1], _c5
+    assert _q5("arm_a_10000", "held_out_n4", 100)["ci95_pct"][0] > 0
+    # the arenas are X2's (the keys x2_n_ins and ad_nind print their sizes)
+    assert _n5r["arm_a_10000"]["in_sample_n16"]["n_trajectories"] == N["x2_n_ins"]["value"]
+    assert _n5r["arm_a_10000"]["held_out_n4"]["n_trajectories"] == N["ad_nind"]["value"]
+    assert _n5r["released"]["all_ten_n20"]["n_trajectories"] == N["ad20_nind"]["value"]
+    # the in-sample h = 1 figure is the one section 7.2 printed from X2 (N5's assertion (a) is to 1e-9)
+    assert _pc5(_q5("arm_a_10000", "in_sample_n16", 1)["E_pct"]) == N["x2_E_stale_10k_ins_h1"]["value"]
+    # The forecast shift at h = 8 on each model's own training data, and each model's causal error there. Section 7.2:
+    # "the two respond about equally, and our model's larger percentages reflect its smaller error there".
+    _a8, _r8 = _q5("arm_a_10000", "in_sample_n16", 8), _q5("released", "all_ten_n20", 8)
+    put("n5_delta_armA_h8", f'{_a8["delta"]:.3f}', _n5s)
+    put("n5_delta_rel_h8", f'{_r8["delta"]:.3f}', _n5s)
+    put("n5_err_armA_h8", f'{_a8["err_causal"]:.3f}', _n5s)
+    put("n5_err_rel_h8", f'{_r8["err_causal"]:.3f}', _n5s)
+    assert abs(_a8["delta"] / _r8["delta"] - 1) < 0.05, (_a8["delta"], _r8["delta"])
+    assert _a8["err_causal"] < _r8["err_causal"] and _a8["E_pct"] > _r8["E_pct"]
+    # Appendix V: every model, both arenas, all six horizons (rule 10: section 7.2's h = 368 figure moves here)
+    _n5h = N5["horizons"]
+    assert [str(h) for h in _n5h][-1] == str(N["v2_diag_h"]["value"])
+    _N5M = (("arm_a_2500", "Arm A, {}".format(N["iters_main"]["value"])),
+            ("arm_a_10000", "Arm A, {}".format(N["iters_long"]["value"])),
+            ("arm_b_2500", "Arm B, {}".format(N["iters_main"]["value"])),
+            ("arm_b_10000", "Arm B, {}".format(N["iters_long"]["value"])),
+            ("released", "released checkpoint"))
+    _n5rows = []
+    for _k, _lab in _N5M:
+        for _ar, _al in ((("all_ten_n20" if _k == "released" else "in_sample_n16"), "own training data"),
+                         ("held_out_n4", "held-out pair")):
+            _cc = [_q5(_k, _ar, _h) for _h in _n5h]
+            _n5rows.append(f"| {_lab} | {_al} ({_n5r[_k][_ar]['n_trajectories']}) | "
+                           + " | ".join(f'{_pc5(c["E_pct"])} {_pci5(c["ci95_pct"])}' for c in _cc) + " |")
+    put("n5_appV_table", "\n".join(_n5rows), _n5s)
+    put("n5_appV_hdr", " | ".join(f"h = {h}" for h in _n5h), _n5s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

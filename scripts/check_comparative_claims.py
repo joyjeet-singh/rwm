@@ -843,8 +843,11 @@ CLAIMS = [
      "all_ten_regex": r"\{\{(?:adh20|ad20)_\w+\}\}|all ten episodes"},
     # G3: round 2 quoted Arm A's stale-pairing sensitivity as evidence our models barely respond to the action; the
     # figure was void (S-21) and rule X2 measured the response. A paragraph citing stale_armA_* must carry an X2 key.
+    # Round 4, F4 re-anchor (item 1): section 7.2's "They respond to the action" became "Our models do use the action",
+    # and the Arm A figures it guards moved from stale_armA_* to N5's n5_ins_* / n5_ho_* keys, which the check now also
+    # matches (wider, never narrower: every stale_armA_* paragraph is still matched).
     {"id": "C27.2", "kind": "action-response", "where": "7.2 / model card",
-     "says": "They respond to the action",
+     "says": "Our models do use the action",
      "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
 ]
 
@@ -1547,7 +1550,7 @@ def evaluate(c, paper, override=None):
             # a paragraph is a blank-line block in the templates, and one A(...) call in the model card's builder
             paras = re.split(r"\n\s+A\(", txt) if f.endswith(".py") else re.split(r"\n\s*\n", txt)
             for para in paras:
-                if re.search(r"\{\{stale_armA_|v\('stale_armA_", para):
+                if re.search(r"\{\{(?:stale_armA_|n5_(?:ins|ho)_)|v\('(?:stale_armA_|n5_(?:ins|ho)_)", para):
                     n += 1
                     if not re.search(r"\{\{x2_|v\('x2_", para):
                         bad.append(f"{f}: {para.strip()[:70]!r}")
