@@ -1163,7 +1163,7 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 ## 8. Method
 
-**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (283 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+**An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` (285 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 **Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 and Appendix E give the lead time for all 23; 22 are positive and 1 is not. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **2.9 hours after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
 
@@ -1564,7 +1564,7 @@ names. All locations, and the occurrence counts that establish that, are recorde
 
 §8's argument rests on decision rules committed to git before the data that tested them, and the
 body names those rules by identifier. An identifier with no table behind it is either decoration
-or an instruction to open a 643 KB ledger, so here is the table. It is generated from
+or an instruction to open a 651 KB ledger, so here is the table. It is generated from
 `FINDINGS_LEDGER.md` and `results/appendix_g_rules.json`; nothing in it is typed.
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
@@ -1954,7 +1954,7 @@ of ranks rather than of values, so its being larger than the pooled figure says 
 
 The weakest figure across the 5 depth controls is +0.582, so disagreement
 is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong. But
-depth was never the only confound. Per-episode difficulty spans 0.562 to 1.591 and is
+depth was never the only confound. Per-episode difficulty spans 0.523 to 1.585 and is
 uncorrelated with commanded speed, so if harder trajectories simply have both larger error and
 larger disagreement, the pooled correlation would look exactly as it does with disagreement
 carrying no within-rollout information at all. Two things pointed there: the
@@ -1979,7 +1979,7 @@ Two qualifications go with that. The within-rollout effect is **materially small
 **The h = 1 figure survives the same test, but it is not what it looked like.** At h = 1 the panel
 has one column, so +0.994 is a correlation over 20 *trajectory-level* points
 and nothing within a rollout is being tested. Disagreement correlates +0.006 with
-commanded speed and +0.040 with per-episode difficulty, and partialling both out of the
+commanded speed and +0.027 with per-episode difficulty, and partialling both out of the
 disagreement–error correlation leaves +0.995: it does not move, so the figure is
 real and not a difficulty artifact. It is nevertheless a statement about **ranking whole rollouts
 at one step ahead**, on 20 points, and §9 states it that way.

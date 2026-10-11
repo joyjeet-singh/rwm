@@ -525,7 +525,7 @@
   },
   "a2_h1_diff_r": {
     "source": "results/a2_trajectory_level_control.json",
-    "value": "+0.040"
+    "value": "+0.027"
   },
   "a2_h1_npoints": {
     "source": "results/a2_trajectory_level_control.json",
@@ -1993,11 +1993,11 @@
   },
   "d12_hi": {
     "source": "results/a2_trajectory_level_control.json",
-    "value": "1.591"
+    "value": "1.585"
   },
   "d12_lo": {
     "source": "results/a2_trajectory_level_control.json",
-    "value": "0.562"
+    "value": "0.523"
   },
   "d1_A_hi": {
     "source": "results/task_d1_threeseed.json",
@@ -4609,7 +4609,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "643"
+    "value": "651"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5669,7 +5669,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 283
+    "value": 285
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
