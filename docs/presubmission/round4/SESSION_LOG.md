@@ -294,8 +294,8 @@ Done:
 Build/gates: pass. Evidence summary (stage 21b), fast build, every gate, `part_f_gate`, fast build again: byte-identical. `ledger_check` PASS (M-86 and M-87 pending); 68/68 claims and 68/68 corruptions; 35 kinds, 0 unclassified; xref 0 suspect; typed numerals 0 unclassified; compile 0 overfull. `part_f_gate` 6/7, 1 not run: 4b fails on the bundles, check 6 passes.
 Paper numbers changed: appG_n_rules 23 → 28; appG_n_lead 23 → 26; appG_n_positive 22 → 25 (results/appendix_g_rules.json); cc_n, cc_pass, cc_st_n, cc_st_caught 65 → 68; cc_kinds 32 → 35 (results/comparative_claims.json); f1_n_cited 35 → 37; f1_n_kept 33 → 35 (results/paper_figures.json); pdf_pages 62 → 67; tn_typed 914 → 974; appG_table, cc_kind_list and evidence_table regenerated
 New keys: 60, all from results/ —
-- `n5_*` (17), from n5_stale_armA_ci.json;
-- `x6_*` (21), `x7_*` (11) and `x8_*` (9), from the X6–X8 artifacts;
+- `n5_*` (16), from n5_stale_armA_ci.json;
+- `x6_*` (20), `x7_*` (10) and `x8_*` (8), from the X6–X8 artifacts;
 - `mn_winner_unres_clause` and `mn_winner_episode_clause`, from mn_sweep_verdict.json and pooled_nrmse_alongside.json;
 - `d12_speed_r`, `d12_mean_lo` and `d12_mean_hi`, from step4_0a_results.json;
 - `x2_thr_pct`, from action_sensitivity.json.
