@@ -126,6 +126,12 @@ def _cell_width(s):
     return len(re.sub(r"[*`]", "", s.strip()))
 
 
+# Round 4, F4: a file name may also break before its extension (results/x7_loeo_recalibration.json was an
+# 18-character run that widened its column's floor and pushed a neighbour's all-capitals verdict past its edge). Only
+# a "." followed by one of these extensions and a word boundary qualifies, so no number is ever split.
+_EXT_BREAK = r"(?<=[A-Za-z0-9])\.(?=(?:json|py|md|txt|csv|npz|pt|png|log|tex|sh)\b)"
+
+
 def _longest_token(s):
     """Longest run in the cell with no break opportunity inside it.
 
@@ -133,7 +139,7 @@ def _longest_token(s):
     \\allowbreak after each; without that, results/m63_per_dimension_coverage.json
     is 39 unbreakable characters and its column would take 40% of the line.
     """
-    return max((len(t) for t in re.split(r"[\s/_]+", re.sub(r"[*`]", "", s.strip()))),
+    return max((len(t) for t in re.split(r"[\s/_]+|" + _EXT_BREAK, re.sub(r"[*`]", "", s.strip()))),
                default=0)
 
 
@@ -158,7 +164,8 @@ def _wrap_cell(s):
     """Let file paths and underscored identifiers break inside a p{} column."""
     if "\\url{" in s or "http" in s:
         return s
-    return s.replace("/", "/\\allowbreak{}").replace("\\_", "\\_\\allowbreak{}")
+    s = s.replace("/", "/\\allowbreak{}").replace("\\_", "\\_\\allowbreak{}")
+    return re.sub(_EXT_BREAK, r"\\allowbreak{}.", s)
 
 
 def _is_table(lines, i):

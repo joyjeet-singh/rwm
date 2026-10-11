@@ -2297,14 +2297,14 @@ paired, {{boot_n_mc}} times (seed 0). The rule reads **DISAGREEMENT BEATS STEP S
 above zero, STEP SIZE BEATS DISAGREEMENT if its upper bound is below zero, and NOT RESOLVED otherwise. The minimum
 detectable effect was computed by rule M-51's method at this n before the reading, and governs nothing.
 
-| h | units (rows each) | r(disagreement, error) | r(step size, error) | margin [95% interval] | minimum detectable margin | partial r(disagreement given step size) [95% interval] | label |
-|---|---|---|---|---|---|---|---|
-| {{v2_deploy_h}} | {{x6_n_units}} ({{x6_unit_len}}) | {{x6_r_dis}} | {{x6_r_step}} | **{{x6_margin}} {{x6_ci}}** | {{x6_mde}} | {{x6_partial}} {{x6_partial_ci}} | **{{x6_reading}}** |
-| 32 | {{x6_n_units_h32}} ({{x6_unit_len_h32}}) | {{x6_r_dis_h32}} | {{x6_r_step_h32}} | {{x6_margin_h32}} {{x6_ci_h32}} | {{x6_mde_h32}} | {{x6_partial_h32}} {{x6_partial_ci_h32}} | {{x6_label_h32}} (alongside) |
+| h | units (rows each) | r(disagreement, error) | r(step size, error) | margin [95% interval] | minimum detectable margin | partial r(disagreement given step size) [95% interval] |
+|---|---|---|---|---|---|---|
+| {{v2_deploy_h}} | {{x6_n_units}} ({{x6_unit_len}}) | {{x6_r_dis}} | {{x6_r_step}} | **{{x6_margin}} {{x6_ci}}** | {{x6_mde}} | {{x6_partial}} {{x6_partial_ci}} |
+| 32 | {{x6_n_units_h32}} ({{x6_unit_len_h32}}) | {{x6_r_dis_h32}} | {{x6_r_step_h32}} | {{x6_margin_h32}} {{x6_ci_h32}} | {{x6_mde_h32}} | {{x6_partial_h32}} {{x6_partial_ci_h32}} |
 
 **Arena: all ten episodes, the released checkpoint's training data, as non-overlapping units inside each episode;
-n_independent = the unit count at each horizon. Checkpoint: the released one, ensemble of 5.** Bold, the reading; the
-h = 32 row is alongside. Units from one episode are not independent of each other, and the interval resamples units,
+n_independent = the unit count at each horizon. Checkpoint: the released one.** Bold, the reading, which
+returns **{{x6_reading}}**; the h = 32 row is alongside, and its margin would carry {{x6_label_h32}}. Units from one episode are not independent of each other, and the interval resamples units,
 not episodes; the statistic is a correlation over (unit, step) cells, not a ranking of units.
 
 ---

@@ -656,8 +656,8 @@ def main():
     put("appG_n_positive", len(_pos), "results/appendix_g_rules.json")
     put("appG_n_negative", len(_neg), "results/appendix_g_rules.json")
     def _lead(r):
-        if r["lead_hours"] is None:
-            return "not computed"
+        if r["lead_hours"] is None:      # round 4, F4: a rule whose data do not exist yet ("—", as the commit column)
+            return "—"
         v = r["lead_hours"]
         return f"{v * 60:+.0f} min" if abs(v) < 1 else f"{v:+.1f} h"
     _rows = "".join(

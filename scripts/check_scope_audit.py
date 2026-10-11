@@ -74,6 +74,16 @@ SCOPE = {
     "compute-claim": ("whole-file",
         "scans the rendered files in its own `files` list for the forbidden equal-compute phrasing, and the "
         "front matter of PAPER.md (abstract, contributions, Appendix D, section 12) sentence by sentence"),
+    # Round 4, F4: guards G7-G9.
+    "stale-interval": ("whole-file",
+        "scans each file in its own `files` list (and the model card builder's source) sentence by sentence for an "
+        "Arm A stale-timing figure, and requires N5's interval key for the same arena and horizon"),
+    "action-caveat": ("whole-file",
+        "scans each file in its own `files` list (and the model card builder's A() calls) paragraph by paragraph for "
+        "a claim that our models respond to the action, and requires the one-policy caveat in the paragraph"),
+    "config-unresolved": ("named-region",
+        "addresses PAPER.template.md's front matter by its headings (from the abstract to section 2) and scans "
+        "README.template.md whole, sentence by sentence, for a configuration list beside 'one reading unresolved'"),
     "overstat-reversal": ("whole-file",
         "scans each file in its own `files` list (PAPER.template.md, docs/BUILD_CHECKS.template.md, "
         "README.template.md), paragraph by paragraph, for 'overstat' beside an alignment figure"),
