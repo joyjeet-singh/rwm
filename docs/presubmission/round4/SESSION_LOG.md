@@ -59,3 +59,55 @@ Body words (round2/t6_words.py): 20,745 (F0: 20,745)
 Abstract words / numerals (C12.1): 370 / 23
 Next: F1 (Opus 5.5, high effort), in a fresh terminal on an idle machine. Its timing probes run before the queue launches. Beyond PLAN F1, it carries out ruling (B) before X3's pre-registration. It reads `PREFLIGHT.md`'s notes for F1: the driver has no held-out argument; the matched baselines were ladder-verified teacher-forced only; `review_bootstrap_unit.boot_cluster` is the importable three-seed bootstrap, Monte Carlo at n = 4, so per-fold exact intervals need `action_sensitivity.draws_for`.
 Decisions for user: none
+
+## F1 — 2026-10-11 10:41 — Opus 5.5 (the plan assigns high effort, fresh terminal) — status: COMPLETE
+Commits:
+7bcbf52 [F1][1] Fold support for X3: step5_train --holdout via rollout_eval.fold_split (appended; no cited line moves); queue_run's x3 trainers
+b729204 [F1][3] Timing probes on an idle machine: X3 23.83 h at three seeds (cap raised 22 -> 24 h by ruling F1-x3-cap), X4 6.75 h, 30.58 h in all (cap 32)
+a770c98 [F1][1b] Ruling (B): X3's Arm B reference at six horizons, from the stored rollouts
+5f0acd4 PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist
+d9fb4de [F1][6] Launch: 30 runs queued at 10:36 (+0530), projected 30.58 CPU-hours, finish about 2026-10-12 17:10; the first run passed 50 iterations with a finite loss
+b175e54 [F1] Build and gates after the pre-registration: n_entries 274 -> 276, ledger_kb 593 -> 609; no paper edits
+(the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as F0, at the user's request ("carry out session F1"); the plan assigns a fresh terminal at high effort. The session restarted once, between items 4 and 5 ("resume"); the tree was checked unchanged before it went on. The one permitted Explore agent ran on Opus 5.5 (its workflow record), not Sonnet 5.5.
+- **Item 1, fold support.** `scripts/step5_train.py --holdout a,b` takes its split from `src/rollout_eval.py`'s new `fold_split`. Without the flag the driver calls `make_split(seed=0)` as before. Runs and records are named `x3_…`, outside every `results/step5_*.json` glob the paper reads. `scripts/queue_run.py` gained the eight `x3-<arm>-<fold>` trainers, which check each record's held-out episodes. Assertions (`round4/f1_fold_support.json`):
+  - (a) the {1, 8} window list is byte-identical through the new path (SHA-256 both ways), and its length equals the committed `n_train_windows`;
+  - (b) a 50-iteration Arm A seed-0 run reproduces the committed first 50 values of all six loss traces **bitwise**, through `--holdout 1,8` and through the default path (the committed curves are full precision);
+  - (c) each new fold excludes exactly its two episodes, and its four held-out trajectories lie inside them.
+  - Trap caught and avoided: a first version edited `make_split` itself. That shifted every later line of `src/rollout_eval.py`, whose lines the ledger, `docs/APPENDIX_G_RULES.md` and two artifacts cite. It was reverted, and `fold_split` was appended before the main guard instead. No cited line moved (checked line by line).
+- **Item 1b, ruling (B).** `scripts/head_to_head_accuracy.py`'s `main()` is now `compute(horizons)` plus a writer, and its default rebuilds the artifact byte-identically. `scripts/x3_armB_reference.py` writes `results/x3_armB_2500_reference.json` from the stored rollouts at all six horizons. It equals `head_to_head_accuracy.json` on every shared cell (difference 0.0) and `action_sensitivity.json`'s rollout at h = 32 to 8.5e-9.
+- **Item 2.** `BASELINE_SPECS.md` rows 33-34 are complete with citations. The built models are 713,171 and 686,196 parameters (0.999 and 0.961 of 714,164), as PF3 recorded. Nothing was added. The ladder's teacher-forced-only check of the matched variants is noted in M-87.
+- **Item 3, timing.** `scripts/round4_queue_timing.py` (`results/round4_queue_timing.json`) probes 20 iterations of Arm A and Arm B on {0, 2} and of the matched MLP and transformer. To calibrate the matched models it also probes their Table S7 counterparts, which have finished runs, as `mn_sweep_timing.py` does. The first probe projected X3 at 23.83 h at three seeds, over the plan's 22 h, so the two-seed fallback would have applied. **The user ruled (chat, `DECISIONS.md#F1-x3-cap`): raise X3's cap to 24 h and run three seeds.** Re-probed under it: X3 23.83 h, X4 6.75 h, 30.58 h in all against the 32-hour cap. The first probe's output is transcribed in the evidence folder; its record was overwritten.
+- **Item 4, the reading scripts.** `scripts/x3_cross_fold.py` and `scripts/x4_matched_baselines.py`, to Annex 2. Every statistic is imported:
+  - X3: `mn_sweep_eval.arena`/`score`; `review_bootstrap_unit.boot_cluster` at a1's 20,000 draws and seed 0 (M-23's three-seed bootstrap, which is inline in a1); `a1_ab_by_horizon.sign_p`; `p5_sweep_power.boot_ci` for the exact per-fold intervals; M-64's functions for h = 1.
+  - X4: `baselines_eval.evaluate`, `verdict_baselines.differences`/`family`/`overall`.
+  - Assertions on existing artifacts, all passing: X3 (a)-(g) (Arm A to 0.0, Arm B to 8.2e-8, M-64 cell C to 0.0); X4 (a)-(c) (baselines_eval and M-76's verdict reproduced to 0.0).
+  - Dry runs of each `reading()` on untrained weights ran from harnesses outside the repository; a non-finite score stops each one.
+- **Review before the freeze.** One read-only Explore agent reviewed both scripts and the entry text. Verdict FIX-FIRST: nothing blocking, four should-fix items, six nits, all applied:
+  - a non-finite score now stops each script with a `.blocked` record;
+  - the entries now name the 20-iteration probes, where they had said nothing had trained;
+  - the claims about what ran are checked by the writer against the saved logs, which name each script's SHA-256;
+  - smaller fixes: the ratio's direction, `os.chdir` to the root, M-76's record labels, and "within 1e-6" in place of "equal".
+  - One more trap, my own: the failure clause's backticked `.blocked` path would have been parsed by `ledger_check` as an artifact the rule needs at discharge. It was reworded before the commit.
+- **Item 5, pre-registration.** Ledger **M-86 (X3)** and **M-87 (X4)**, status PRE-REGISTERED, written by `round4/f1_write_prereg.py` with every motivation figure read from artifacts.
+  - Script SHA-256s: `e8422bb6…` and `9e7ca635…`, each found by its own script's `ledger_hashes`.
+  - Committed as `5f0acd4` under the plan's subject and pushed before the queue launched; RESULTS.md M- 85 → 87.
+  - X4's labels are "A MATCHED BASELINE AHEAD" and "RWM AHEAD OF BOTH" (M-76's say "A BASELINE AHEAD" and "ALL THREE"), stated as a deviation.
+- **Item 6, launch.** `runs/queue_round4.txt` was written from the committed record (`--queue-from-record`) and launched at 10:36:10 (+0530) under `nohup caffeinate -i`, on AC power. The first run, `x3_A_02_s0`, passed 50 iterations with a finite loss on 7,688 windows from episodes 1 and 3-9; only its iteration-0, 25 and 50 lines were read. `round4/RUN_QUEUE.md` records the runs, the projection and a status command that reads no checkpoint line.
+- **Item 7.** No paper edits. The fast build after the ledger append moved only `n_entries` and `ledger_kb`.
+Build/gates: pass. Fast build, every gate, build again: byte-identical, and a third build too. ledger_check PASS (M-86 and M-87 pending); 65/65 claims and 65/65 corruptions; 0 suspect pointers.
+Paper numbers changed: n_entries 274 → 276; ledger_kb 593 → 609 (FINDINGS_LEDGER.md)
+New keys: none
+Re-anchored checks: none
+CPU jobs over 1 min:
+- the fold-support assertion (b), run twice (two 50-iteration runs each, about 2.2 min wall each time);
+- the timing probes, twice (about 3.2 min each, idle machine, before launch);
+- the review agent (about 16 min);
+- the build and gates after launch (about 1.5 min, contended with the queue's first run).
+The --assert-only runs and dry runs took under 1 min each.
+Queue status: running (0 of 30 done at 10:41; projected finish about 2026-10-12 17:10 +0530)
+Body words (round2/t6_words.py): 20,745 (F0: 20,745)
+Abstract words / numerals (C12.1): 370 / 23
+Next: F2, in a fresh terminal (Opus 5.5, high effort). It runs while the queue trains, and every job it runs is logged as contended. It must not read any per-run log line except through RUN_QUEUE.md's filtered status command. F5 starts only when RUN_QUEUE.md's status command shows 30 done and 0 failed.
+Decisions for user: none (rulings this session: DECISIONS.md#F1-x3-cap)
