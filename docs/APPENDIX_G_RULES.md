@@ -2418,6 +2418,466 @@ add an intervention; or read any number here as bearing on M-23, M-64 or M-74-M-
 **Evidence** `SRC` `scripts/action_sensitivity.py`; `RUN` `results/action_sensitivity.json` (awaited).
 **Status** PRE-REGISTERED, DISCHARGED by `results/action_sensitivity.json`. **It returns RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations.** Recorded in `M-85`. · **Relevance** METHOD
 
+## M-86 — X3: does the base claim replicate when each episode is held out in turn?
+
+**Entered before any of its data exists.** No run of X3's queue has been trained: no `results/x3_run_*.json` and no
+`runs/x3_arm*` exist, and `results/x3_cross_fold.json` does not exist. The only training on a new fold so far is F1's two 20-iteration timing
+probes on fold {0, 2} (`runs/timing_probe_round4/`: `x3_run_armA_ho02_seed0.json`, `x3_run_armB_ho02_seed0.json`), which saved no checkpoint and
+evaluated nothing. The script that computes every reading below, `scripts/x3_cross_fold.py`
+(SHA-256 `e8422bb6fc918ecc29aac634cee08dec506427d1ba8782069d93bfd145e17995`), is committed in the same commit as this text, whose subject begins `PRE-REGISTER`, and refuses to
+compute the rule unless this entry records its SHA-256. Before that commit, on these bytes, it ran only its synthetic
+self-test and its `--assert-only` mode, which loads only existing weights (fold {1, 8} at 2,500 iterations and, for
+assertion (f), Arm A and Arm B at 10,000) and computes no reading: assertions (a)-(g) passed. A dry run of `reading()`, the
+code `main()` runs after the assertions, on untrained weights, from a harness outside the repository, also ran, and showed a
+non-finite score stopping the reading. The outputs of both, each naming this SHA-256, are in the session's evidence folder. The ordering can be checked from `git log`. This is round 4's rule X3
+(PLAN Annex 2, objection O1).
+
+**Exploratory, and bounded.** It never re-opens M-23 or any discharged rule. Their verdicts are unchanged whatever it
+returns, and nothing here is read as bearing on them. At 2,500 iterations, not 10,000: §5's headline ratio,
+4.61x at h = 368 on the held-out pair at 10,000 iterations (`results/task_d1_threeseed.json`),
+is not re-read.
+
+**Known before this rule** (its motivation): §5's long-horizon figures rest on 4 independent held-out
+trajectories, and at h = 368 one of them carries 56% of the summed three-seed gap at 10,000 iterations
+(`results/a1_ab_by_horizon.json`). At h = 1 on M-64's 33-row units the gap is -0.0194 [-0.0310, -0.0093]
+(B − A at 10,000 iterations, `results/m64_short_units.json`): teacher forcing ahead.
+
+**Folds.** {1, 8} (the existing 2,500-iteration runs, `runs/arm{A,B}_seed<s>/weights_2500.pt`) and {0, 2}, {3, 4},
+{5, 6}, {7, 9}, the remaining episodes paired in index order. Every episode is out of sample in exactly one fold. {0, 2} and
+{3, 4} each hold two episodes from the same speed half, unlike `make_split`'s stratified {1, 8}; recorded, not corrected.
+
+**Runs.** For each new fold: Arm A and Arm B, seeds 0-2, 2,500 iterations, trained by `scripts/step5_train.py --holdout a,b`
+(`rollout_eval.fold_split`), otherwise identical to the existing 2,500-iteration runs: 24 runs. **Seeds:** three, by the user's
+ruling `docs/presubmission/round4/DECISIONS.md#F1-x3-cap` (X3's cap raised from 22 to 24 CPU-hours before this entry; projected
+23.83 h, `results/round4_queue_timing.json`). Annex 2's fallback (seeds 0-1, read with the same
+thresholds) is not applied; it would have applied at the plan's 22 hours.
+
+**Arena.** Each fold's held-out pair as non-overlapping 400-step trajectories (`mn_sweep_eval.arena`: 32 history rows, 368
+forecast rows; 4 per fold), pooled over the five folds: **n = 20**. Scored by `mn_sweep_eval.score`, imported: the causal
+pairing, relative-L1 cumulative over forecast steps 1..h, h ∈ {1, 8, 32, 100, 128, 368}.
+
+**Statistic.** Per trajectory, gap = (seed-mean relative-L1 of Arm B) − (seed-mean relative-L1 of Arm A) at h = 368; its
+mean over the 20 trajectories, with a 95% interval from M-23's three-seed bootstrap, imported:
+`review_bootstrap_unit.boot_cluster` (whole trajectories resampled, every seed carried, seeds pooled inside each draw) at
+`a1_ab_by_horizon`'s 20,000 Monte Carlo draws and generator seed 0. The by-horizon bootstrap itself is inline in
+`a1_ab_by_horizon.py`'s `main()`; assertion (e) shows `boot_cluster` at its settings reproduces it.
+
+**Reading**, at h = 368:
+- **REPLICATES ACROSS FOLDS** if the interval's lower bound > 0;
+- **REVERSES** if its upper bound < 0;
+- **NOT RESOLVED** otherwise.
+
+**Part of the rule, reported verbatim, with no verdict of its own:**
+- the per-episode sign test: for each of the ten episodes, the sign of its mean gap at h = 368 (the mean of its two
+  trajectories), the count positive and the exact two-sided binomial P (`a1_ab_by_horizon.sign_p`, imported);
+- each fold's gap at h = 368 with its exact interval over all 256 ordered resamples of its four trajectories
+  (`p5_sweep_power.boot_ci`, imported: M-74's and M-76's exact bootstrap).
+
+**Alongside, never governing:**
+- h = 100, the same statistic and interval, with the label it would carry;
+- h = 1 on M-64's 33-row units pooled over the five folds' held-out episodes: the gap as M-64 defines it (B − A, so
+  negative is the teacher-forcing lead), with M-64's unit-level interval and its episode-level footnote
+  (`m64_short_units.build_index`, `unit_rollout`, `rel_l1`, `boot_ci`, imported);
+- the ratio of means, Arm B's over Arm A's (`ratio_B_over_A`), at each horizon.
+
+**Assertions, before any reading of a new fold** (a failure stops the run with no reading):
+- **(a)** with {1, 8}, `rollout_eval.fold_split` gives the same training windows as `make_split(seed=0)` (SHA-256 of the index
+  list, both ways), whose length equals the committed `n_train_windows`;
+- **(b)** F1's 50-iteration run of Arm A, seed 0, reproduced the committed run's first 50 values of every loss trace **bitwise**,
+  through `--holdout 1,8` and through the default path (the committed curves are full-precision floats, so the test is
+  equality, not a tolerance). The script reads the PASS F1 recorded in `docs/presubmission/round4/f1_fold_support.json`; in a copy
+  without `docs/presubmission/` (neither bundle ships it) it records the check as not available instead;
+- **(c)** each new fold's training set excludes exactly its two episodes, no training window touches them, and its four held-out
+  trajectories lie inside them;
+- **(d)** fold {1, 8}'s readings reproduce the committed 2,500-iteration held-out relative-L1 at every horizon, to 1e-6: Arm A
+  per trajectory and seed against `results/mn_compute_matched.json`'s 2,500 block, and Arm B per seed against
+  `results/x3_armB_2500_reference.json`. That reference was built for this assertion by ruling (B) of
+  `DECISIONS.md#F0-armB-2500-h128`, from the stored rollouts behind `results/head_to_head_accuracy.json`: equal to it on every
+  shared cell, and within 1e-6 of `results/action_sensitivity.json`'s rollout at h = 32
+  (8.5e-09);
+- **(e)** `boot_cluster` at 20,000 draws and seed 0 reproduces `results/a1_ab_by_horizon.json`'s three-seed intervals at every
+  horizon, to 1e-6;
+- **(f)** M-64's imported machinery reproduces `results/m64_short_units.json` cell C (held-out pair, h = 1, 10,000 iterations),
+  to 1e-9;
+- **(g)** `p5_sweep_power.boot_ci` and `a1_ab_by_horizon.sign_p` reproduce `results/baselines_verdict.json`'s M-76 intervals and
+  `results/a1_ab_by_horizon.json`'s sign-test P values, to 1e-12;
+- **(h)** every new run's record says rule X3, 2,500 iterations, its seed, arm and fold, with finite losses, and its weights
+  exist.
+
+**Failure.** A non-finite score anywhere the reading uses, or any internal check failing, stops the run with a
+`.blocked` record beside its output and no reading (M-76's failure clause): the rule then cannot be discharged as written.
+
+**Gate.** No session evaluates a run of the round-4 queue before F5 (PLAN §1.2 rule 5). The training driver evaluates its own
+checkpoints at 500 and 2,500 iterations on Protocol A, as every 2,500-iteration run always has, and each run's log
+(`runs/queue_logs/<id>.log`) prints them: those lines are not read before F5.
+
+**Caveats, in every sentence that reports it:** 2,500 iterations, not 10,000; the seeds are not independent units (the
+interval resamples trajectories, carrying every seed); the folds are fixed, not stratified by speed.
+
+**Deviations from PLAN Annex 2, all stated above:** three seeds by ruling F1-x3-cap; the Arm B reference by ruling (B); the
+interval function's form (`boot_cluster`, asserted equal to the inline original); M-64's sign convention and interval for the
+h = 1 alongside; the exact per-fold interval's function; assertions (e)-(h) and the failure clause added.
+
+**What the discharging session may and may not do.** Session F5, after the queue has finished and its gate has passed,
+runs `scripts/x3_cross_fold.py` unchanged, having asserted its SHA-256 equals the one recorded here; records the reading exactly as the script
+returns it, with the part-of-rule and alongside values, in a new ledger entry; and changes only this entry's Status line.
+Not: change the folds, models, seeds, iterations, arena, horizons, statistic, interval, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
+**Evidence** `SRC` `scripts/x3_cross_fold.py`, `scripts/step5_train.py` (`--holdout`), `src/rollout_eval.py` (`fold_split`), `scripts/queue_run.py`;
+`RUN` `results/x3_cross_fold.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x3_cross_fold.json` · **Relevance** METHOD
+
+## M-87 — X4: is RWM still ahead of baselines matched to its size?
+
+**Entered before any of its data exists.** No run of X4's queue has been trained: no `results/baseline_run_*_matched_seed*.json`
+and no `runs/baseline_*_matched_seed*` exist, and `results/x4_matched_baselines.json` does not exist. The only training of a matched baseline so far is
+20-iteration timing probes, 8 of them, F1's and round 1's (`runs/baselines_probe/baseline_run_mlp_ar_matched_seed0.json`, `runs/baselines_probe/baseline_run_mlp_tf_matched_seed0.json`, `runs/baselines_probe/baseline_run_rssm_ar_matched_seed0.json`, `runs/baselines_probe/baseline_run_rssm_tf_matched_seed0.json`, `runs/baselines_probe/baseline_run_transformer_ar_matched_seed0.json`, `runs/baselines_probe/baseline_run_transformer_tf_matched_seed0.json`, `runs/timing_probe_round4/baseline_run_mlp_ar_matched_seed0.json`, `runs/timing_probe_round4/baseline_run_transformer_ar_matched_seed0.json`), none of which
+saved a checkpoint or was scored. The script that computes every reading below,
+`scripts/x4_matched_baselines.py` (SHA-256 `9e7ca6357579e8e591c4cd953b16efc437819b52cad8fcf3ae10e2e0bca9ad94`), is committed in the same commit as this text, whose subject begins `PRE-REGISTER`, and refuses to
+compute the rule unless this entry records its SHA-256. Before that commit, on these bytes, it ran only its synthetic
+self-test and its `--assert-only` mode, which re-scores the committed Table S7 baselines and computes no reading: assertions
+(a)-(c) passed. A dry run of `reading()` on untrained matched baselines, from a harness outside the repository, also ran, and
+showed a non-finite score raising `CannotDischarge`. The outputs of both, each naming this SHA-256, are in the session's
+evidence folder. This is round 4's rule
+X4 (PLAN Annex 2, objection O2, ruling W2).
+
+**Exploratory, and bounded.** It never re-opens M-75, M-76 or any discharged rule, and nothing here is read as bearing on them.
+M-76's own Licenses line holds for it: architecture at a fixed regime, not the original's claim.
+
+**Known before this rule** (its motivation): M-76 returned RWM AHEAD OF ALL THREE with the Table S7 sizes (`results/baselines_verdict.json`),
+whose parameter counts differ from RWM's 714,164-parameter state pathway: MLP 610,484, transformer
+132,148, RSSM 3,180,468 (`results/baseline_verification.json`).
+
+**Variants.** `docs/presubmission/BASELINE_SPECS.md` row 33 (MLP, width 295; 713,171 parameters) and row 34
+(transformer, d_model 160, learned positions; 686,196), each within ±5% of 714,164 (asserted), built by
+`src/baselines`' `build(arch, "matched", cfg)`. Trained autoregressively, otherwise exactly as M-76 (`scripts/train_baseline.py`).
+The matched RSSM is not run (ruling W2).
+
+**Runs.** Seeds 0-2, 2,500 iterations, held-out {1, 8}: 6 runs, projected 6.75 CPU-hours against X4's
+10 (`results/round4_queue_timing.json`). Annex 2's fallback (seeds 0-1) does not apply.
+
+**Statistic and test, M-76's, imported from `scripts/verdict_baselines.py`:** per baseline b, D_b = the mean over §5's four
+held-out trajectories of [3-seed mean relative-L1 of b − 3-seed mean relative-L1 of RWM] at h = 368, RWM being Arm A (32, 8) at
+2,500 iterations, seeds 0-2 (`differences`); the exact 256-resample cluster bootstrap and two-sided p, and Holm at α = 0.05 over
+the family of two, MLP before transformer (`family`). Scoring is `scripts/baselines_eval.py`'s `evaluate`, imported.
+
+**Reading:** the label `verdict_baselines.overall` returns for the family of two, first match:
+1. **A MATCHED BASELINE AHEAD:** either baseline BASELINE BETTER;
+2. **RWM AHEAD OF BOTH:** both RWM BETTER;
+3. **PARTIAL:** one RWM BETTER and the other CANNOT BE SETTLED;
+4. **CANNOT BE SETTLED:** neither resolves.
+
+M-76's own labels say "A BASELINE AHEAD" and "RWM AHEAD OF ALL THREE". For two size-matched baselines the first gains "MATCHED"
+and "ALL THREE" becomes "BOTH"; the function, the order of outcomes and the other two labels are M-76's. The self-test asserts a
+defined label for every one of the nine combinations of two per-baseline results.
+
+**Alongside, never governing:** the same test at h = 100 and h = 32 (relative-L1); the per-trajectory differences; each run's
+wall clock and seconds per iteration, the parameter counts, and F1's probe cost per iteration.
+
+**Assertions, before any reading** (a failure stops the run with no reading):
+- **(a)** `baselines_eval.evaluate`, run on the original-size autoregressive baselines (MLP, RSSM, transformer), reproduces
+  `results/baselines_eval.json` on every per-trajectory value they share, to 1e-6;
+- **(b)** `verdict_baselines.family` on that output, with M-76's names, reproduces `results/baselines_verdict.json`'s M-76
+  governing verdict and its per-baseline D, p and interval, to 1e-12;
+- **(c)** each matched model as built is within ±5% of RWM's state pathway, and `BASELINE_SPECS.md` rows 33 and 34 are not
+  UNVERIFIED;
+- **(d)** every matched run's record names its architecture, regime ar, spec matched, 2,500 iterations, its seed, held-out
+  {1, 8}, the built parameter count and finite losses, and its weights exist. The records say rule M-76, the trainer's label for
+  regime ar (`scripts/train_baseline.py`), and the evaluator's file says M-75 and M-76; they are X4's runs.
+
+**Failure.** A non-finite score (`verdict_baselines` raises `CannotDischarge`, M-76's failure clause), or any internal check
+failing, stops the run with a `.blocked` record beside its output and no reading.
+
+**Gate.** No session evaluates a run of the round-4 queue before F5 (PLAN §1.2 rule 5).
+
+**Caveat, in every sentence that reports it:** matching the parameter count is one axis; the shapes and settings stay our
+reading of Table S7.
+
+**Deviations from PLAN Annex 2, all stated above:** the two reading labels; assertions (b)-(d) and the failure clause added.
+
+**What the discharging session may and may not do.** Session F5, after the queue has finished and its gate has passed,
+runs `scripts/x4_matched_baselines.py` unchanged, having asserted its SHA-256 equals the one recorded here; records the reading exactly as the script
+returns it, with the alongside values, in a new ledger entry; and changes only this entry's Status line.
+Not: change the variants, seeds, iterations, arena, horizons, statistic, test or labels; add a reading; or read any number here as bearing on a discharged rule.
+**Evidence** `SRC` `scripts/x4_matched_baselines.py`, `scripts/train_baseline.py`, `scripts/queue_run.py`; `RUN` `results/x4_matched_baselines.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x4_matched_baselines.json` · **Relevance** METHOD
+
+## M-88 — X6: does ensemble disagreement beat the model's own predicted step size on more, shorter units?
+
+**Entered before any of its readings exists.** `results/x6_stepsize_short_units.json` does not exist. The script that computes every reading
+below, `scripts/x6_stepsize_short_units.py` (SHA-256 `47f2a13f1ad797834ce5bdd0cbb4b55bcab5ecf823e517d9fc17f12955f8b7b9`), is committed in the same commit as this text, whose subject begins `PRE-REGISTER`,
+and refuses to compute the rule unless this entry records its SHA-256. Before that commit, on these bytes, it ran only its
+synthetic self-test, its `--assert-only` mode, which computes only cases committed artifacts already hold, and a dry run
+of its whole `main()` from a harness outside the repository, with the short-unit panels replaced by synthetic arrays. Every assertion passed. The outputs of all three, each naming
+this SHA-256, are in the session's evidence folder. This is round 4's rule X6 (PLAN Annex 2, objection O4). Inference only, on
+the released checkpoint.
+
+**Exploratory, and bounded.** It never re-opens M-51, M-52, M-64 or any discharged rule, and nothing here is read as bearing on
+them.
+
+**Known before this rule** (its motivation): on the released checkpoint's 20 independent 400-step trajectories at h = 368,
+disagreement's margin over the predicted step size is +0.1357 [+0.0425, +0.2509]
+(`results/e7_free_baselines.json`). M-51 compared it with its MDE, 0.2891, not with zero, and returned
+SURVIVES entry-res ONLY. With 20 trajectories, the comparison with step size was not settled at the size M-51 asked for.
+
+**Model.** The released checkpoint, ensemble of 5, as released.
+
+**Units.** All ten episodes, non-overlapping units of 32 + h rows within each episode, built by M-64's index builder
+(`m64_short_units.build_index`, imported), at h ∈ {32, 100}: 150 units at h = 32 and 70 at h = 100, counted two ways (assertion
+(d)). **h = 100 governs**, the method's imagination horizon.
+
+**Panel.** `e7_free_baselines.load_panel(starts, length)`, imported. It is the panel M-51 read: the rollout at the causal pairing from 32
+history rows, |error| as the per-step sum over the 45 state dimensions, disagreement as the applied epistemic scalar, and
+`e7_free_baselines.baselines()`'s step size, ‖μ_t − μ_(t−1)‖. F2 gave `load_panel` the `starts` and `length` arguments.
+With its defaults it rewrites `results/e7_free_baselines.json` and its power record byte-identically.
+
+**Statistic.** M-51/M-52's margin, r(disagreement, |error|) − r(step size, |error|), each a Pearson correlation over every
+(unit, step) cell (`e7_free_baselines._corr`, imported). Paired: both correlations are recomputed on the same resampled units.
+**Interval:** 95%, over whole units, Annex 2's recipe. That is 20,000 Monte Carlo resamples of the units with replacement from
+`numpy.random.default_rng(0)`, the statistic recomputed on each, with percentiles 2.5 and 97.5. The resampling loop is
+`e7_free_baselines`' own. It is a closure inside that script's `main()`, so it is copied, not imported. Assertion (b) shows the copy, at
+e7's settings, reproduces e7's committed intervals.
+
+**MDE, computed and printed before the reading:** M-51's method (`e7_free_baselines --power`) at this n, from disagreement, |error|
+and the forecast index only, so the step size is not touched. It is the bootstrap SD of the margin over the forecast index, from
+4,000 resamples at seed 20260829, times z_0.975 + z_0.80. The same SD for the step-size margin itself is reported alongside, after
+the reading. Neither enters the reading.
+
+**Reading**, at h = 100:
+- **DISAGREEMENT BEATS STEP SIZE** if the interval's lower bound > 0;
+- **STEP SIZE BEATS DISAGREEMENT** if its upper bound < 0;
+- **NOT RESOLVED** otherwise.
+
+**Alongside, never governing:**
+- h = 32, with the label it would carry;
+- the partial r(disagreement, |error| | step size) (`e7_free_baselines._partial`) at both horizons, with the same interval;
+- both correlations, and the counts.
+
+**Assertions, before any reading** (a failure stops the run with no reading):
+- **(a)** on the 400-step unit at h = 368, the imported functions reproduce `results/e7_free_baselines.json`'s r values for every
+  baseline and the step-size margin, to 1e-9; `load_panel(starts, length)` given the default starts equals the default call
+  bitwise;
+- **(b)** the resampling loop at e7's settings (4,000 resamples, `default_rng(20260829)`, shared in e7's order) reproduces e7's
+  step-size margin and partial intervals, to 1e-9;
+- **(c)** the MDE computation at M-51's settings reproduces `results/e7_free_baselines_power.json`, to 1e-9;
+- **(d)** at each h, M-64's two unit counts agree, and every unit lies inside one episode.
+
+**Failure.** A non-finite value in the reading, or any internal check failing, stops the run with a `.blocked` record beside
+its output and no reading.
+
+**Caveats, in every sentence that reports it:**
+- every unit is in the released checkpoint's training data;
+- the units are non-overlapping within an episode, but they share the ten episodes, and the interval resamples units, not
+  episodes;
+- the statistic is a correlation over (unit, step) cells, not a ranking of units.
+
+**Deviations from PLAN Annex 2, all stated above:**
+- the resampling loop is copied, not imported, because e7's is a closure; it is asserted equal to e7's;
+- `load_panel` gained arguments whose defaults are unchanged;
+- the step-size margin's own SD and MDE (after the reading) and the partial's interval are added alongside;
+- the failure clause is added.
+
+**The code it imports, at pre-registration** (each file's SHA-256, also recorded in the output's `code_sha256`): `scripts/e7_free_baselines.py` `5383908f5854e088a1108a8393c57761e29427ed70120daf6c9959a846307416`; `scripts/m64_short_units.py` `9556ee0fb396152fd3f13a5a02370dc008d1b9a38be3ca6f452b8cf34b634a98`; `src/score_reference.py` `e79d986a2fd6bfa545a33ab30c5ef3065ff247b673b12f69a49c8017e88c21ac`; `src/rwm_data.py` `aff0a74423aa11cf6ad691b0da8aefb4be7de35b68d51fb9131245ce60b60cc9`; `src/rollout_eval.py` `14f4426c528666a6ad43ce5fc105f1da9b47e6854023dbbb61a943b2b80fc4bd`; `src/rwm_metrics.py` `e420e8cbcbad3c749a9eb93724005970c772e4450d413b96ddaa6220b325bd3e`.
+
+**What the discharging session may and may not do.** Session F2 runs `scripts/x6_stepsize_short_units.py` as committed, having asserted its SHA-256
+equals the one recorded here; records the reading exactly as the script returns it, with the MDE and alongside values, in a new
+ledger entry; and changes only this entry's Status line. Not: change the model, units, horizons, panel, statistic, interval, MDE method or thresholds; add a reading; or read any number here as
+bearing on a discharged rule.
+**Evidence** `SRC` `scripts/x6_stepsize_short_units.py`; `RUN` `results/x6_stepsize_short_units.json` (awaited).
+**Status** PRE-REGISTERED, DISCHARGED by `results/x6_stepsize_short_units.json`. **It returns DISAGREEMENT BEATS STEP SIZE.** Recorded in `M-91`. · **Relevance** METHOD
+
+## M-89 — X7: per-horizon recalibration, fitted on nine episodes and scored on the tenth
+
+**Entered before any of its readings exists.** `results/x7_loeo_recalibration.json` does not exist. The script that computes every reading
+below, `scripts/x7_loeo_recalibration.py` (SHA-256 `6f032605dcff671650ef15c4d10c17dfb8a8e00f2013009b2c7d8d064fabd7e3`), is committed in the same commit as this text, whose subject begins `PRE-REGISTER`,
+and refuses to compute the rule unless this entry records its SHA-256. Before that commit, on these bytes, it ran only its
+synthetic self-test, its `--assert-only` mode, which computes only cases committed artifacts already hold, and a dry run
+of its whole `main()` from a harness outside the repository, with the ten episodes' rollouts replaced by synthetic arrays. Every assertion passed. The outputs of all three, each
+naming this SHA-256, are in the session's evidence folder. This is round 4's rule X7 (PLAN Annex 2, objection O5). Inference
+only, on the released checkpoint.
+
+**Exploratory, and bounded.** It never re-opens M-69, M-70 or any discharged rule, and nothing here is read as bearing on them.
+
+**Known before this rule** (its motivation): §6.7's per-horizon multiplier was fitted on one held-out episode and scored on the
+other, in both directions: two folds of two trajectories each. Its epistemic multiplier landed within 10 points of 68.27% in
+12 of 12 held-out cells, against 2 for one constant multiplier
+(`results/task_d3_perhorizon.json`). Two folds of two trajectories cannot resolve a single cell.
+
+**Model.** The released checkpoint, ensemble of 5, as released. The epistemic term governs; the aleatoric is alongside.
+
+**Trajectories.** Each episode's two non-overlapping 400-step trajectories (32 history rows, 368 forecast rows), 20 in all, from
+`task_d3_perhorizon.episode_rollout`, imported.
+
+**Design.** For each episode e:
+- fit the per-horizon multiplier c_h on the other nine episodes' 18 trajectories, with §6.7's fitting function
+  (`task_d3_perhorizon.fit_scalar`, imported: the smallest c reaching 68.27% ±1σ coverage, by bisection in log space);
+- score ±1σ coverage on e's two trajectories, with §6.7's coverage (`task_d3_perhorizon.cover`): every finite, positive-σ cell over
+  forecast steps 1..h × 45 state dimensions.
+
+Each trajectory is scored once, by a multiplier not fitted on it. Per trajectory, coverage is reduced to (covered, valid) counts
+and pooled over the 20 trajectories (`task_d3_cross_model.counts` and `pooled`, imported; assertion (b) shows this is an exact
+reduction of `cover()`).
+
+**Interval.** 95%, over whole trajectories: 20,000 Monte Carlo resamples of the 20 trajectories, `numpy.random.default_rng(0)`, one
+draw shared by every horizon, quantity and variant, with percentiles 2.5 and 97.5. This is `task_d3_cross_model`'s recipe and
+Annex 2's.
+
+**Reading**, per horizon h ∈ {1, 8, 32, 100, 128, 368}, against the band 68.27% ± 10 points, [58.27%, 78.27%] (§6.7's target and
+tolerance, read from `task_d3_perhorizon.TARGET` and `task_d3_cross_model.TOL`):
+- **WITHIN BAND** if the interval lies inside the band (its edges count as inside);
+- **OUTSIDE BAND** if it lies wholly outside it;
+- **UNRESOLVED** otherwise.
+
+**Governing summary**, for the epistemic term: **"WITHIN BAND AT k OF 6 HORIZONS"**.
+
+**Alongside, never governing:**
+- the aleatoric term under the same design;
+- the constant-multiplier version of the same design (one c fitted at h = 1 on the nine episodes, §6.7's constant recipe, scored
+  at every h);
+- the coverage before any multiplier;
+- the spread of the fitted c_h across the ten folds.
+
+**Assertions, before any reading** (a failure stops the run with no reading):
+- **(a)** §6.7's own two-fold design, rerun through the imported functions, reproduces every cell of `results/task_d3_perhorizon.json`,
+  to 1e-9 (c relative to max(1, |c|)): each fit's c, its coverage after and its coverage before, per-horizon and constant, in
+  both quantities;
+- **(b)** `counts()` pooled over a fold's trajectories equals `cover()` on them, to 1e-12;
+- **(c)** every episode yields two 400-step trajectories, 20 in all.
+
+**Failure.** A non-finite value in the reading, or any internal check failing, stops the run with a `.blocked` record beside
+its output and no reading.
+
+**Caveat, in every sentence that reports it:** unseen by the multiplier, not by the model. The released checkpoint trained on all
+ten episodes, so every scored trajectory is in its training data.
+
+**Deviations from PLAN Annex 2, all stated above:**
+- the interval's two-line loop composes imported pieces with the cross-model recipe;
+- the coverage before any multiplier is added alongside;
+- the band's edges count as inside;
+- the failure clause is added.
+
+**The code it imports, at pre-registration** (each file's SHA-256, also recorded in the output's `code_sha256`): `scripts/task_d3_perhorizon.py` `7c53a806d491d91a1d83ef4b38e29f5b6f0ce70ff5fbc3f052f8e4487efbb501`; `scripts/task_d3_cross_model.py` `d9d54fd589cf9faa23d9cfeeabe0d2871739654dacdced9796916c522d203d26`; `src/score_reference.py` `e79d986a2fd6bfa545a33ab30c5ef3065ff247b673b12f69a49c8017e88c21ac`; `src/rwm_data.py` `aff0a74423aa11cf6ad691b0da8aefb4be7de35b68d51fb9131245ce60b60cc9`; `src/rwm_metrics.py` `e420e8cbcbad3c749a9eb93724005970c772e4450d413b96ddaa6220b325bd3e`; `src/rollout_eval.py` `14f4426c528666a6ad43ce5fc105f1da9b47e6854023dbbb61a943b2b80fc4bd`.
+
+**What the discharging session may and may not do.** Session F2 runs `scripts/x7_loeo_recalibration.py` as committed, having asserted its SHA-256
+equals the one recorded here; records the reading exactly as the script returns it, with the alongside values, in a new
+ledger entry; and changes only this entry's Status line. Not: change the model, trajectories, design, fitting or coverage function, interval, band or labels; add a reading; or read any number here as
+bearing on a discharged rule.
+**Evidence** `SRC` `scripts/x7_loeo_recalibration.py`; `RUN` `results/x7_loeo_recalibration.json` (awaited).
+**Status** PRE-REGISTERED, DISCHARGED by `results/x7_loeo_recalibration.json`. **It returns WITHIN BAND AT 6 OF 6 HORIZONS (epistemic).** Recorded in `M-92`. · **Relevance** METHOD
+
+## M-90 — X8: would any verdict change under the released evaluation's action timing?
+
+**Entered before any of its readings exists.** `results/x8_released_pairing.json` does not exist, nor do its offset-0 score files. The script that computes every reading
+below, `scripts/x8_released_pairing.py` (SHA-256 `22059a0b84facbb6664d60e3ab7ff6f097b3e736bb03fbe46252cae10b2fb3d2`), is committed in the same commit as this text, whose subject begins `PRE-REGISTER`,
+and refuses to compute the rule unless this entry records its SHA-256. Before that commit, on these bytes, it ran only its
+synthetic self-test, its `--assert-only` mode, which computes only cases committed artifacts already hold, and a dry run
+of its whole `main()` from a harness outside the repository. In that dry run "offset 0" was made to score at offset 1, so every value it
+computed is a committed offset-1 value. Every reading came back SAME VERDICT, with no alongside change. Every assertion passed. The
+outputs of all three, each naming this SHA-256, are in the session's evidence folder. This is round 4's rule X8 (PLAN Annex 2,
+objection O6). Inference only.
+
+**Exploratory, and bounded.** It never re-opens M-23 or M-74–M-76, and their verdicts are unchanged whatever it returns. It says
+what each would have returned had our models been scored with the released evaluation's pairing.
+
+**Known before this rule** (its motivation): the released evaluation pairs each prediction with the action one step stale, which
+raises the released checkpoint's relative-L1 error at h = 8 by +54.4% over all ten episodes
+(`results/alignment_by_horizon.json`). Every rule here was scored at the causal pairing. Their committed verdicts: M-74 NOT OPTIMAL AT OUR BUDGET
+(`results/mn_sweep_verdict.json`), M-75 REPRODUCES and M-76 RWM AHEAD OF ALL THREE (`results/baselines_verdict.json`), and M-23 REPRODUCES AT LONG HORIZON
+(`results/task5_analysis.json`, seed 1).
+
+**The pairing.** Offset 1, the causal pairing, pairs the prediction of state i with action i. Offset 0, the released evaluation's
+pairing, pairs it with action i − 1. Each rule's own evaluator scores through `scripts/mn_sweep_eval.py`'s
+`score(..., action_offset)`. F2 gave it that argument; its default, 1, rewrites `results/mn_sweep_eval.json` and
+`results/baselines_eval.json` byte-identically. Offset 0 moves every action one row later, repeats the window's first row, and
+rolls out at the causal pairing (`mn_sweep_eval._pairing`). So one definition reaches RWM and every baseline. For RWM it equals
+the native `action_offset=0` (assertion (d)), and RWM never reads the repeated row. The RSSM reads it at its first filtering step
+only.
+
+**Re-scored at offset 0, each with its rule's own evaluator and statistic, imported:**
+- **M-74's sweep:** the centre and 8 configurations, seeds 0-2, 2,500 iterations; `mn_sweep_eval`'s arena and score, then
+  `verdict_mn_sweep`'s differences and family.
+- **M-75's and M-76's baselines:** 6 families, seeds 0-2, 2,500 iterations, and RWM; `baselines_eval.evaluate`, then
+  `verdict_baselines.one_rule`.
+- **The A/B comparison:** Arm A and Arm B, seeds 0-2. Its reading is M-23's three conditions applied with three seeds, at
+  relative-L1, h = 368:
+  1. Arm A leads at 2,500 and at 10,000 iterations: the gap, seed-mean B − seed-mean A averaged over the held-out trajectories,
+     is positive;
+  2. the 95% interval of the 10,000-iteration gap has its lower bound above zero;
+  3. the per-episode gap at 10,000 is positive in all ten episodes.
+
+  The interval and the per-episode sign are the by-horizon table's: `review_bootstrap_unit.boot_cluster` at 20,000 draws, seed 0,
+  and per-episode means with each episode rolled out as its own batch, as `a1_ab_by_horizon` does. The label follows the code that
+  discharged M-23 (`task5_analyse.py`): REPRODUCES AT LONG HORIZON if all three hold, FAILS TO REPRODUCE if condition 1 fails,
+  CANNOT BE SETTLED otherwise. M-23's text says it fails only if Arm A does not lead at 10,000; the two differ only if Arm A trails
+  at 2,500 and leads at 10,000.
+
+**Reading, per rule (M-74, M-75, M-76, the A/B comparison): SAME VERDICT, or VERDICT WOULD CHANGE TO ⟨label⟩.**
+- M-74, M-75 and M-76 are compared with their committed verdicts.
+- The A/B comparison is compared with the same three-seed computation at offset 1, because M-23 itself was discharged on seed 1.
+
+**Alongside, for each rule:** every reading in its alongside set that changes between offset 1 and offset 0.
+- M-74: each held-out branch at every horizon and metric, the in-sample branches at h = 100 and 368, and each configuration's
+  per-episode sign over all ten episodes (its positive and negative counts).
+- M-75 and M-76: the same, for their alongside and in-sample families, and each baseline's per-episode sign.
+- The A/B comparison:
+  - M-23 as discharged: seed 1, with its own bootstrap of 10,000 resamples, seed 0, which assertion (c) shows is
+    `boot_cluster` on one seed;
+  - M-23's own alongside set, with three seeds: its three conditions at h = 8 (held-out), on nRMSE (h = 368, held-out) and in the
+    in-sample arena (h = 368). Its h = 168 on 200-step trajectories is not computed, because no evaluator for 200-step windows
+    takes an offset;
+  - the three gap statuses `task5_analyse.py` reported as M-23's secondaries, with three seeds at 10,000: h = 8 held-out, and h = 368
+    and h = 8 in-sample;
+  - the by-horizon table at 10,000: each horizon's interval excluding zero, each horizon's per-episode sign count, and the trend's
+    reading (`a1_ab_by_horizon.trend_reading`).
+
+**Assertions, before any reading** (a failure stops the run with no reading):
+- **(a)** offset 1 through this script reproduces every per-trajectory value of `results/mn_sweep_eval.json` and
+  `results/baselines_eval.json` to 1e-6, and the committed verdicts and alongside branches exactly.
+- **(b)** offset 1 reproduces each of these to 1e-6 relative to max(1, |value|):
+  - `results/a1_ab_by_horizon.json`: its per-trajectory means, gaps, intervals, sign tests and trend reading;
+  - `results/task5_analysis.json`'s seed-1 M-23 gaps, intervals, per-episode gaps and verdict;
+  - Arm A's 2,500- and 10,000-iteration values in `results/mn_compute_matched.json`;
+  - Arm B's 2,500-iteration values in `results/x3_armB_2500_reference.json`.
+
+  The tolerance is relative because these errors reach 7, where float32 rounding alone is about 1e-6.
+- **(c)** `boot_cluster` on one seed reproduces `task5_analyse.py`'s M-23 bootstrap exactly: the same draws.
+- **(d)** offset 0 is the released pairing. For Arm A at 10,000 on the held-out pair, `score` at offset 0 equals the model's native
+  offset-0 rollout (to 1e-12), and the ratio of the two offsets' errors reproduces `results/alignment_by_horizon.json`'s per-seed
+  stale-pairing change to 1e-6. Before the reading, the native equality is also checked for every sweep configuration with
+  M < 32, seeds 0-2, on the held-out arena.
+
+**Failure.** A non-finite score, or any internal check failing, stops the run with a `.blocked` record beside its output and no
+reading.
+
+**Caveat, in every sentence that reports it:** our models under the released pairing; it says nothing direct about the original
+papers' printed numbers.
+
+**Deviations from PLAN Annex 2, all stated above:**
+- offset 0 is made by moving the actions, for every model;
+- the A/B reading's three-seed form, and its comparison with offset 1; its condition 1 uses the point gap, as the by-horizon table
+  reports it, where `task5_analyse.py` used the bootstrap mean for seed 1;
+- some logic is copied, not imported, and each copy is asserted: `task5_analyse.py`'s M-23 label and gap-status logic (it runs on
+  import); `a1_ab_by_horizon`'s per-episode gap and by-horizon fields and `verdict_mn_sweep`'s per-episode sign (inside their
+  `main()`); and task5's bootstrap in assertion (c);
+- each rule keeps its own interval, so the A/B intervals at n = 4 are Monte Carlo (20,000 draws, 10,000 for seed 1), not Annex 2's
+  exact enumeration;
+- M-23's h = 168 on 200-step trajectories is not computed;
+- the per-episode batching;
+- the relative tolerance in (b);
+- the failure clause.
+
+**The rules already pre-registered.** M-86 (X3) imports `mn_sweep_eval`'s `score` and M-87 (X4) imports `baselines_eval`'s
+`evaluate`, both edited by F2 to take an offset. Both edits keep the defaults, and with them each producer rewrites its committed
+artifact byte-identically. M-86's and M-87's scripts call them at the defaults, so neither rule's computation changes.
+
+**The code it imports, at pre-registration** (each file's SHA-256, also recorded in the output's `code_sha256`): `scripts/mn_sweep_eval.py` `6d717586b6527d900eae5cbef08b098d1a71fc7ecd206329467a7fb90831862a`; `scripts/baselines_eval.py` `9ac42025c7db404c83d63a370ce70e7ebaf68498a169dc9c4a1e47119eb666f8`; `scripts/verdict_mn_sweep.py` `e393f6fa32254cbb6506c0a36ab2d22ae804508d6d81b44802bb5bdb113b1708`; `scripts/verdict_baselines.py` `066377805746f5968e4606f85f78b82e957fb01605dc312c662b6435ac779c60`; `scripts/a1_ab_by_horizon.py` `be582b26ddaa7e8305afb72bd661d45e3c7c40a2e77c7e286a58b3d83691c854`; `scripts/review_bootstrap_unit.py` `c5cd09873bf708e9381e1db5a85dcb74f9fd472cd9f468fe2be36864fb6a734b`; `scripts/p5_sweep_power.py` `650d8b68bcad4b91f65a7086cc583508f11a611ae32af8fb2c2125c7c8836190`; `src/rwm_model.py` `f929f13562b41deae659b43399985afd387b3da5ef63e8f72c933409a26681ec`; `src/rollout_eval.py` `14f4426c528666a6ad43ce5fc105f1da9b47e6854023dbbb61a943b2b80fc4bd`; `src/rwm_data.py` `aff0a74423aa11cf6ad691b0da8aefb4be7de35b68d51fb9131245ce60b60cc9`; `src/rwm_metrics.py` `e420e8cbcbad3c749a9eb93724005970c772e4450d413b96ddaa6220b325bd3e`; `src/baselines/__init__.py` `45bf214ee198c648434e4207b68e58f65126820f357f1bf6d2d76aa6be44691b`; `src/baselines/common.py` `6738db186bda1d17bcaabb05ffb135ebae31a797fea16231d49a1de69e096e45`; `src/baselines/rssm.py` `5a829154fa77b2e22115cd57acc51cd6d5c26350672a7a7a8a7c255986cab3e2`; `src/baselines/mlp.py` `83706b3831cca45996f5e083238b6af57c5cf06b709a65ca16dad06fa1790622`; `src/baselines/transformer.py` `1bd6b03d6e35b9d48c0d3679ceb8392895b45140ca794bf6c679372fe8216a04`.
+
+**What the discharging session may and may not do.** Session F2 runs `scripts/x8_released_pairing.py` as committed, having asserted its SHA-256
+equals the one recorded here; records the reading exactly as the script returns it, with the alongside values, in a new
+ledger entry; and changes only this entry's Status line. Not: change the models, seeds, pairing, evaluators, statistics, alongside sets or labels; add a reading; or read any number here as
+bearing on a discharged rule.
+**Evidence** `SRC` `scripts/x8_released_pairing.py`; `RUN` `results/x8_released_pairing.json` (awaited).
+**Status** PRE-REGISTERED, DISCHARGED by `results/x8_released_pairing.json`. **It returns SAME VERDICT for M-74, M-75, M-76 and the A/B comparison.** Recorded in `M-93`. · **Relevance** METHOD
+
 ## S-12 — "Task 3's duplication rule was pre-registered"
 
 **Retracts** — a framing, not a numbered claim; the wording was corrected in place

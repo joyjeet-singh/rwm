@@ -130,7 +130,9 @@ def main():
         # so a stale reference in it is simply wrong rather than historical. The
         # quoted rule TEXTS below the table keep theirs, because those are
         # quotations and renumbering them would falsify them.
-        title = re.sub(r"\s*(?:on|in|of)?\s*\u00a7\s*\d+(?:\.\d+)?\s*", " ", title).strip()
+        # Round 4, F4: and its possessive -- M-89's "X7: \u00a76.7's per-horizon recalibration" lost the reference and
+        # kept the "'s", printing "X7: 's per-horizon recalibration".
+        title = re.sub(r"\s*(?:on|in|of)?\s*\u00a7\s*\d+(?:\.\d+)?(?:['\u2019]s)?\s*", " ", title).strip()
         title = title[0].upper() + title[1:] if title else title
         st = re.search(r"^\*\*Status\*\*\s*(.+)$", blk, re.M)
         status = st.group(1).split("·")[0].strip() if st else "—"

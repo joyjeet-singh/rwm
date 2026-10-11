@@ -954,8 +954,9 @@ magnitude of the model's own predicted state change ranks realised error at {{e7
 {{e7_r_dis}} for the five-member ensemble disagreement the method is built on. The margin between
 them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size can resolve, so at
 n_independent = {{e7_nind}} 400-step trajectories we cannot say the ensemble ranks better than a
-subtraction. If the observed margin is the true one, settling it needs {{q2_n_req}} of them, an
-estimate under an assumed effect (§11, Appendix R).
+subtraction. If the observed margin is the true one, settling it needs {{q2_n_req}} of them, an estimate under an assumed effect (§11, Appendix R).
+
+**On shorter units the margin resolves.** The {{e7_nind}} whole trajectories cannot settle it, so a rule committed before its reading (rule X6, Appendix X) put the same comparison to {{x6_n_units}} non-overlapping units of {{x6_unit_len}} rows, the model's history plus h = {{v2_deploy_h}} forecast steps, cut inside the same ten episodes, on the same checkpoint. At h = {{v2_deploy_h}} the margin is {{x6_margin}} {{x6_ci}}: the interval excludes zero, the rule's criterion, so it returns **{{x6_reading}}**, and the margin also exceeds the {{x6_mde}} minimum detectable effect computed before the reading by rule M-51's method. Disagreement correlates {{x6_r_dis}} with error there against step size's {{x6_r_step}}, and keeps {{x6_partial}} {{x6_partial_ci}} with step size partialled out; alongside, on {{x6_n_units_h32}} units at h = 32 the margin is {{x6_margin_h32}} {{x6_ci_h32}}. The units are this checkpoint's training data, units from one episode are not independent of each other, and the interval resamples units, not episodes, so the margin is resolved on this checkpoint's training episodes and no further.
 
 **Disagreement does still carry information the subtraction does not.** With `step-size`
 partialled out it retains {{e7_step_partial}}, far above the {{e7_mde_partial}} MDE for that test,
@@ -1009,7 +1010,9 @@ survive.
 
 On the released checkpoint every point estimate lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities. **That absolute test is UNPOWERED here, as in the *different model* column:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the {{d3_tol}}-point band resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizon pairs, with a binding minimum detectable effect of {{d3x_umde_lo}}–{{d3x_umde_hi}} points. So a cell inside the band is compatible with a true coverage well outside it, and nothing here shows any cell is outside it either. The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_cov}}%, {{d3_worst_dev}} points off target. The two largest deviations are both on the {{d3_second_q}} term and {{d3_top2_same_side}} target — {{d3_worst_cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the h=1 cells it was fitted at. **On Arm A, where the episodes are unseen by the model as well, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells**, so the recipe that lands every released-checkpoint cell does not carry over intact to a model that has not seen the test episodes.
 
-**Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **That column is thinner than its count suggests:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, each multiplier fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.7 caution. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
+**Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **That column is thinner than its count suggests:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, each multiplier fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.7 caution, which rule X7, below, answers for the released checkpoint. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
+
+**Fitted on nine episodes and scored on the tenth (rule X7).** A rule committed before its reading (Appendix Y) repeats the design over all ten episodes: for each, the per-horizon multiplier is fitted on the other nine episodes' trajectories with the same fitting function and scored on its own, so each of the {{x7_n_traj}} trajectories is scored once, by a multiplier not fitted on it, and each horizon's coverage carries a 95% interval. On the epistemic term every one of those intervals lies inside the {{d3_tol}}-point band, all of them between {{x7_ci_min}}% and {{x7_ci_max}}%: **{{x7_summary}}**. Alongside, the aleatoric term returns {{x7_ale_summary}}, one constant multiplier lands within the band at {{x7_const_word}} of the {{x7_n_h_word}} horizons, and the fitted epistemic multipliers differ by at most {{x7_cspread}}× across the ten folds. Those trajectories are unseen by the multiplier, not by the model, which trained on all ten episodes, so this answers the caution for the released checkpoint and leaves the Arm A column as it stands.
 
 **The fourth column: the table is a property of the model, not of the horizon.** Under rule M-69
 (Appendix E), multipliers fitted on Arm A and scored on the released checkpoint, and the reverse, on
@@ -1019,7 +1022,7 @@ the ±{{d3x_band}}-point band, and Arm A's multipliers are {{d3x_ratio_lo}}× to
 released checkpoint's at the same horizon (Appendix T). The *different model* column is the absolute
 test, unpowered for the reason above, so it is reported and cannot move that verdict.
 
-So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence is mixed.**
+So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence is mixed.** Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic interval is within the band at every horizon (rule X7).
 
 ### 6.8 Testing the mechanism: an ensemble that shares nothing, alone and with the corrected objective
 
@@ -1103,7 +1106,7 @@ all twelve actions are exactly zero (§3), and a policy network with biases cann
 so those zeros mark the absence of a producing action — the reset produced that state, not a policy step. They are what Isaac Lab, in which the data were recorded, writes at a reset: `ActionManager.reset()` sets its stored actions to zero (`action_manager.py:350-365` in Isaac Lab). The training path pairs states and actions index-for-index, which is causally correct; the
 evaluation path feeds the action from *t−1* to predict state *t*, stale by one step.
 
-What the stale pairing costs depends on the horizon. All ten episodes are this checkpoint's training data, so the held-out pair is not more honest here, only smaller, and the larger arena leads. Over all ten episodes' {{ad20_nind}} independent trajectories the stale action raises the released checkpoint's relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1, {{adh20_rel_h8}}% {{adh20_rel_ci_h8}} at h = 8 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and from h = {{v2_deploy_h}} the change is not resolved: {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} there and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}, where single trajectories run from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%. In nRMSE the rise is resolved at h = 8 and 32 ({{adh20_nrmse_h8}}% {{adh20_nrmse_ci_h8}} and {{adh20_nrmse_h32}}% {{adh20_nrmse_ci_h32}}) but not at h = 1 ({{adh20_nrmse_h1}}% {{adh20_nrmse_ci_h1}}), and from h = {{v2_deploy_h}} it is not resolved either ({{adh20_nrmse_h100}}% {{adh20_nrmse_ci_h100}} there, {{ad20_nrmse}}% {{ad20_nrmse_ci}} at h = {{v2_diag_h}}). Each is a 95% interval from a cluster bootstrap over whole trajectories, both pairings inside each draw (`results/alignment_by_horizon.json`, `results/alignment_defect_ci.json`). On the held-out pair's {{ad_nind}} independent trajectories the stale action raises the error at every horizon reported: by {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, by {{adh_rel_h100}}% {{adh_rel_ci_h100}} at h = {{v2_deploy_h}}, where the larger arena resolves no change, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}. Shifting the evaluation loop's two action slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness does this with `action_offset = 1` (`src/score_reference.py:180-190`). For models trained under the causal pairing, the stale one also raises error, and how much depends on the arena. On their own training episodes' {{x2_n_ins}} trajectories it raises our {{iters_long}}-iteration Arm A's relative-L1 error by {{n5_ins_h1}}% {{n5_ins_ci_h1}} at h = 1 and {{n5_ins_h100}}% {{n5_ins_ci_h100}} at h = {{v2_deploy_h}}; on the held-out pair's {{ad_nind}} it changes it by {{n5_ho_h1}}% {{n5_ho_ci_h1}} at h = 1, which those trajectories cannot resolve, and by {{n5_ho_h100}}% {{n5_ho_ci_h100}} at h = {{v2_deploy_h}} (three-seed means, computed post hoc, `results/n5_stale_armA_ci.json`; Appendix V gives every model at every horizon). These replace figures an earlier version computed with a scoring bug, which the record keeps. A percentage change depends on how accurate the model already is as much as on how much the action matters: measured as the shift in the forecast itself, the stale action moves our model's 8-step forecast by {{n5_delta_armA_h8}} and the released checkpoint's by {{n5_delta_rel_h8}} on their own training data (Appendix V), so the two respond about equally, and our model's larger percentages reflect its smaller error there, {{n5_err_armA_h8}} against {{n5_err_rel_h8}} relative-L1 at h = 8. Our models do use the action. Given another trajectory's actions, their error at h = 8 on those {{x2_n_ins}} trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}}, and at {{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before its readings existed (rule M-84), returns **{{x2_reading}}** at both checkpoints (Appendix V). That shows the forecasts depend on the action, not that they predict a different action's consequences correctly: every action in the data comes from one policy.
+What the stale pairing costs depends on the horizon. All ten episodes are this checkpoint's training data, so the held-out pair is not more honest here, only smaller, and the larger arena leads. Over all ten episodes' {{ad20_nind}} independent trajectories the stale action raises the released checkpoint's relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1, {{adh20_rel_h8}}% {{adh20_rel_ci_h8}} at h = 8 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and from h = {{v2_deploy_h}} the change is not resolved: {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} there and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}, where single trajectories run from {{ad20_traj_lo}}% to {{ad20_traj_hi}}%. In nRMSE the rise is resolved at h = 8 and 32 ({{adh20_nrmse_h8}}% {{adh20_nrmse_ci_h8}} and {{adh20_nrmse_h32}}% {{adh20_nrmse_ci_h32}}) but not at h = 1 ({{adh20_nrmse_h1}}% {{adh20_nrmse_ci_h1}}), and from h = {{v2_deploy_h}} it is not resolved either ({{adh20_nrmse_h100}}% {{adh20_nrmse_ci_h100}} there, {{ad20_nrmse}}% {{ad20_nrmse_ci}} at h = {{v2_diag_h}}). Each is a 95% interval from a cluster bootstrap over whole trajectories, both pairings inside each draw (`results/alignment_by_horizon.json`, `results/alignment_defect_ci.json`). On the held-out pair's {{ad_nind}} independent trajectories the stale action raises the error at every horizon reported: by {{adh_rel_h1}}% {{adh_rel_ci_h1}} at h = 1, by {{adh_rel_h100}}% {{adh_rel_ci_h100}} at h = {{v2_deploy_h}}, where the larger arena resolves no change, and at h = {{v2_diag_h}} by {{ad_rel}}% {{ad_rel_ci}} on relative-L1 and {{ad_nrmse}}% {{ad_nrmse_ci}} in nRMSE, with per-trajectory values {{ad_rel_traj}} and {{ad_nrmse_traj}}. Shifting the evaluation loop's two action slices by one step (`model_training.py:129` and `:132`) aligns it with training; our harness does this with `action_offset = 1` (`src/score_reference.py:180-190`). For models trained under the causal pairing, the stale one also raises error, and how much depends on the arena. On their own training episodes' {{x2_n_ins}} trajectories it raises our {{iters_long}}-iteration Arm A's relative-L1 error by {{n5_ins_h1}}% {{n5_ins_ci_h1}} at h = 1 and {{n5_ins_h100}}% {{n5_ins_ci_h100}} at h = {{v2_deploy_h}}; on the held-out pair's {{ad_nind}} it changes it by {{n5_ho_h1}}% {{n5_ho_ci_h1}} at h = 1, which those trajectories cannot resolve, and by {{n5_ho_h100}}% {{n5_ho_ci_h100}} at h = {{v2_deploy_h}} (three-seed means, computed post hoc, `results/n5_stale_armA_ci.json`; Appendix V gives every model at every horizon). These replace figures an earlier version computed with a scoring bug, which the record keeps. A percentage change depends on how accurate the model already is as much as on how much the action matters: measured as the shift in the forecast itself, the stale action moves our model's forecast at h = 8 by {{n5_delta_armA_h8}} and the released checkpoint's by {{n5_delta_rel_h8}} on their own training data (Appendix V), so the two respond about equally, and our model's larger percentages reflect its smaller error there, {{n5_err_armA_h8}} against {{n5_err_rel_h8}} relative-L1 at h = 8. Our models do use the action. Given another trajectory's actions, their error at h = 8 on those {{x2_n_ins}} trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}}, and at {{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before its readings existed (rule M-84), returns **{{x2_reading}}** at both checkpoints (Appendix V). That shows the forecasts depend on the action, not that they predict a different action's consequences correctly: every action in the data comes from one policy. Scored instead with the released evaluation's timing, through each rule's own evaluator, our rules' verdicts do not move: for the configuration and baseline rules (M-74, M-75 and M-76, three seeds at {{iters_main}} iterations) and the A/B comparison (M-23's statistic, three seeds at {{iters_long}}), all on the held-out pair's {{mn_nind}} trajectories, rule X8 returns **{{x8_reading}}**, though {{x8_n_changed}} of their alongside readings change (Appendix Z); this concerns our models, not the original's printed numbers.
 
 **7.3 No held-out evaluation.** Evaluation trajectories are drawn from training data. For the
 released checkpoint, trained on the entire file, no held-out measurement is possible at all, and neither pinned repository can generate the data that would make one possible (§3).
@@ -1132,7 +1135,7 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 **An append-only ledger.** Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in `FINDINGS_LEDGER.md` ({{n_entries}} entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
-**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 and Appendix E give the lead time for all {{appG_n_rules}}; {{appG_n_positive}} are positive and {{appG_n_negative}} is not. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
+**Pre-registration, and one failure of it.** Decision rules were committed to git before the data that tested them, with one exception. Figure 1 and Appendix E give the lead time for each of the {{appG_n_lead}} whose data exist; {{appG_n_positive}} are positive and {{appG_n_negative}} is not. Every positive bar is a difference of two commit timestamps. **The negative one is not**: it is the duplication-control rule (§7.4), whose *data* side is the moment the control runs finished, a line in `results/control_driver.log` rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git **{{lead_task3}} after they finished**, and we found it only by auditing our own `git log`. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn (`S-12`). A discipline that is only checked when it succeeds is not a discipline.
 
 **{{n_retractions_word}} claims withdrawn on evidence**, and {{n_retract_framing_word}} framings withdrawn rather than numbers, out of {{n_superseded}} superseded entries kept in the record (the supplementary `docs/BUILD_CHECKS.md` lists them). The most consequential of the framings withdrawn is `S-15`: the inference from per-dimension sign counts to a binomial P-value, which assumed an independence the 45 state dimensions do not have (§6.5). Found by our own pre-submission audit, it withdraws the strength of evidence behind what an earlier draft called its strongest result.
 
@@ -1155,9 +1158,9 @@ shipped as supplementary.
 
 {{n_lessons_word}} things a practitioner can apply without reading the rest of this paper.
 
-**Use ensemble disagreement as a ranking signal, but price it against the free alternatives first. Do not read it as a distance. And expect it to degrade with horizon.** On the released checkpoint's own training episodes, at one forecast step it ranks whole rollouts almost perfectly, {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npoints}} trajectories, a ranking of *rollouts* rather than of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to {{d4_r}} {{d4_ci}}: excellent where you can check it cheaply and merely good where you most need it. It beats the forecast step index at every horizon we tested, on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons where the index is defined, and retains {{d2b_par_all}} once that index is partialled out (§6.6). **What it does not clearly beat is the model's own predicted step size**, which costs nothing and needs no ensemble: that ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, a margin of {{e7_step_margin}}, below the {{e7_mde_margin}} this sample can resolve. Disagreement carries information the subtraction does not, retaining {{e7_step_partial}} once step size is partialled out, and with both the forecast depth and the rollout held constant it still correlates {{a2_rdd}} {{a2_rdd_ci}} with error (§6.6); but a practitioner about to pay for five members should price the subtraction first. And it is too small to be an interval by a wide margin: at h = {{v2_deploy_h}}, the horizon the method rolls out over, {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] on the released checkpoint over all ten episodes, and on the held-out pair {{e5_ratio_h100}}× [{{e5_ratio_ci_h100}}] on the ensemble-5 arms we trained, against the released checkpoint's {{b2_epi_ratio_h100}}× there. A risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
+**Use ensemble disagreement as a ranking signal, but price it against the free alternatives first. Do not read it as a distance. And expect it to degrade with horizon.** On the released checkpoint's own training episodes, at one forecast step it ranks whole rollouts almost perfectly, {{d2_epi_h1}} {{d2_epi_ci_h1}} across the {{a2_h1_npoints}} trajectories, a ranking of *rollouts* rather than of moments within one, because at h=1 there is only one moment. Over the full rollout it falls to {{d4_r}} {{d4_ci}}: excellent where you can check it cheaply and merely good where you most need it. It beats the forecast step index at every horizon we tested, on a paired test that excludes zero at {{d2p_n_separating}} of the {{d2p_n_horizons}} horizons where the index is defined, and retains {{d2b_par_all}} once that index is partialled out (§6.6). **On whole trajectories, what it does not clearly beat is the model's own predicted step size**, which costs nothing and needs no ensemble: over the {{e7_nind}} 400-step trajectories that ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, a margin of {{e7_step_margin}}, below the {{e7_mde_margin}} that sample can resolve. On {{x6_n_units}} shorter units of the same episodes a later rule resolves the margin, {{x6_margin}} {{x6_ci}} at h = {{v2_deploy_h}} (rule X6, §6.6), on the checkpoint's training data only. Disagreement carries information the subtraction does not, retaining {{e7_step_partial}} once step size is partialled out, and with both the forecast depth and the rollout held constant it still correlates {{a2_rdd}} {{a2_rdd_ci}} with error (§6.6); but a practitioner about to pay for five members should price the subtraction first. And it is too small to be an interval by a wide margin: at h = {{v2_deploy_h}}, the horizon the method rolls out over, {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] on the released checkpoint over all ten episodes, and on the held-out pair {{e5_ratio_h100}}× [{{e5_ratio_ci_h100}}] on the ensemble-5 arms we trained, against the released checkpoint's {{b2_epi_ratio_h100}}× there. A risk gate or safety margin that reads σ as a distance is not supported at any horizon, on either.
 
-**If you need the interval, rescale per horizon, not globally, and refit on your own model.** One multiplier per forecast horizon, fitted on one episode and scored on another, brings every released-checkpoint coverage estimate within {{d3_tol}} points of nominal, though this arena cannot resolve any single cell to that band; a single global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic ones (§6.7). That checkpoint trained on both episodes; on Arm A, whose model never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. The cells are not independent trials (the §6.7 caution), so read the sweep as consistency and the per-cell deviations as the evidence. The fitted epistemic multipliers span {{d3_epi_cspread}}× across horizons, which is precisely why one number cannot serve.
+**If you need the interval, rescale per horizon, not globally, and refit on your own model.** One multiplier per forecast horizon, fitted on one episode and scored on another, brings every released-checkpoint coverage estimate within {{d3_tol}} points of nominal, though this arena cannot resolve any single cell to that band; fitted on nine episodes and scored on the tenth, every horizon's epistemic interval lies within it (rule X7, §6.7); a single global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic ones (§6.7). That checkpoint trained on both episodes; on Arm A, whose model never saw them, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. The cells are not independent trials (the §6.7 caution), so read the sweep as consistency and the per-cell deviations as the evidence. The fitted epistemic multipliers span {{d3_epi_cspread}}× across horizons, which is precisely why one number cannot serve.
 
 **Do not convert per-dimension sign counts into P-values.** State dimensions in a robot are physically coupled and share a forecast-depth trend, so an independent-trials null is badly wrong, in our tables by up to {{perm_worst_factor}}× (§6.5, Appendix K). Permute whole trajectories instead. An earlier draft of this paper used the binomial version, and it made our weakest evidence look like our strongest (`S-15`).
 
@@ -1202,7 +1205,7 @@ test we ran found that correcting the scale per horizon leaves every pairwise or
 ## 11. Limitations
 
 Limits that belong to one result are stated beside it: the budget and our reading of Table S7
-(§5.2, §5.3), the mechanism of §6.4 as a hypothesis, and the recalibration's two episodes (§6.7).
+(§5.2, §5.3), the mechanism of §6.4 as a hypothesis, and the recalibration's two episodes (§6.7), which rule X7 widens to all ten for the released checkpoint.
 Appendix R gives every limitation below in full.
 
 **Effective sample size bounds every long-horizon claim.** The out-of-sample arena has
@@ -1221,15 +1224,15 @@ magnitudes beside it are three-seed means with per-seed values (§5).
 ranking finding and the calibration failure, but rule M-43 returns **{{e5_verdict}}** on their {{e5_nind}} held-out 400-step trajectories, where it was under-powered (§6.6). So that finding is established on the released
 checkpoint and supported but not established on a model we trained.
 
-**The ranking claim is not established as needing an ensemble.** The model's own predicted step
-size ranks error nearly as well, by a margin this sample cannot resolve (§6.6). If the observed
+**On whole trajectories, the ranking claim is not established as needing an ensemble.** The model's own predicted step
+size ranks error nearly as well, by a margin those {{e7_nind}} trajectories cannot resolve (§6.6). On {{x6_n_units}} shorter units cut inside the same episodes, a rule committed before its reading finds disagreement ahead, {{x6_margin}} {{x6_ci}} at h = {{v2_deploy_h}} (rule X6: **{{x6_reading}}**), but those units are the checkpoint's training data and share its ten episodes (§6.6, Appendix X). If the observed
 margin is the true one, settling it needs {{q2_n_req}} independent 400-step trajectories where all ten
 episodes provide {{e7_nind}}, a required-sample-size estimate under an assumed effect (Appendix R).
 
 **We did not measure what the miscalibration costs.** The penalty the follow-up applies is
 miscalibrated as a scale, {{d1n_epi_ratio_h100}}× overconfident at h = {{v2_deploy_h}}, the horizon its
 own imagination rollouts run to, but the method's only use of that quantity is to shape policy
-learning, and we did not train a policy. **The finding bounds what the quantity reports, not what it
+learning, and we did not train a policy; a test of that cost needing no policy, rule X5, could not be run (Appendix W). **The finding bounds what the quantity reports, not what it
 costs**, and the ratio is not a measure of harm. Other sections refer back to this as the policy
 caveat of §11. A proxy that needs no policy, the ordering of the penalty accumulated along whole
 rollouts before and after the per-horizon correction, finds none of the {{q3_n_pairs}} pairs among the held-out pair's {{q3_nind}} trajectories reordered (in-sample for the checkpoint; rule M-70: **{{q3_verdict}}**), but it orders the penalty alone, not the penalised return, its null is partly structural, and its interval is degenerate (Appendix R).
@@ -1273,9 +1276,9 @@ At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to
 
 The ranking use the follow-up claims survives a real test. On the released checkpoint, ensemble disagreement beats the forecast step index at every horizon and, with both the rollout and the depth held constant, still correlates
 {{a2_rdd}} {{a2_rdd_ci}} with realised error (§6.6), though a free subtraction, the model's own
-predicted step size, ranks error nearly as well, {{e7_step_r3}} against disagreement's {{d4_r}}, by a margin this sample cannot resolve
-({{e7_verdict}}: {{e7_verdict_gloss}}). The scale may be repairable per
-horizon on the released checkpoint, but on a model that never saw the test episodes the evidence is
+predicted step size, ranks error nearly as well, {{e7_step_r3}} against disagreement's {{d4_r}}, by a margin {{e7_nind}} whole trajectories cannot resolve
+({{e7_verdict}}: {{e7_verdict_gloss}}), though on {{x6_n_units}} shorter units of the same episodes disagreement is ahead (rule X6, {{x6_margin}} {{x6_ci}}). The scale may be repairable per
+horizon on the released checkpoint, where a multiplier fitted on nine episodes lands within the band on the tenth at every horizon (rule X7), but on a model that never saw the test episodes the evidence is
 mixed (§6.7), and per dimension no ordering reaches significance after multiplicity correction once the
 coupling between dimensions is respected (§6.5). As the scalar the method applies, ensemble disagreement gets the
 order right and the size wrong: it should not be read as a scale, and a ranking use deserves its own
@@ -1489,7 +1492,7 @@ or an instruction to open a {{ledger_kb}} KB ledger, so here is the table. It is
 
 **Lead time** is the rule's commit timestamp subtracted from the commit that first held the data
 it tested, never by a stored hash: the first rules' commits are found by *subject*, because the history was rewritten once and {{f1_n_moved_word}} of the commits Figure 1 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading. Positive means the rule was in git before the data
-existed. This is the same computation Figure 1 plots.
+existed. This is the same computation Figure 1 plots. A rule whose data do not exist yet has neither a lead time nor a verdict, and Figure 1 leaves it out until they do.
 
 | rule | what it governs | commit | lead time | tested by | verdict |
 |---|---|---|---|---|---|
@@ -2098,12 +2101,12 @@ of a held-out arena is therefore a constraint, not a choice.
 is a single trot throughout. "Generalisation" here means across velocity commands, not across
 gaits or terrain.
 
-**The per-horizon recalibration is fitted and tested on two episodes only.** §6.7's remedy puts every released-checkpoint estimate within the band across the two held-out episodes in both directions, though at this n no single cell is resolvable, and those cells are unseen by the multiplier only, because the checkpoint trained on both episodes. On Arm A, whose model never saw them, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells, and two episodes is not a demonstration that the multipliers transfer to a new robot, gait or terrain. Treat the lookup table as a recipe to refit, not as constants to copy.
+**The per-horizon recalibration is tested on two episodes, or on episodes the model trained on.** §6.7's remedy puts every released-checkpoint estimate within the band across the two held-out episodes in both directions, though at this n no single cell is resolvable, and those cells are unseen by the multiplier only, because the checkpoint trained on both episodes. Rule X7 widens the released checkpoint's test to all ten episodes, each scored by a multiplier fitted on the other nine, and returns **{{x7_summary}}** for the epistemic term (Appendix Y); those episodes, too, are unseen by the multiplier only. On Arm A, whose model never saw them, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells, and two episodes is not a demonstration that the multipliers transfer to a new robot, gait or terrain. Treat the lookup table as a recipe to refit, not as constants to copy.
 
 **Two secondary analyses rest on a single training seed**, the long-horizon trend fit and the per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B verdict rests on one seed too, seed {{m23_seed}}, the one its rule ran on; the magnitudes
 beside it are three-seed means with per-seed values (§5).
 
-**The ranking claim is not established as needing an ensemble.** Under a rule committed before the
+**On whole trajectories, the ranking claim is not established as needing an ensemble.** Under a rule committed before the
 comparison (rule M-51, Appendix E), the model's own predicted state change, a subtraction needing no
 ensemble, ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, and the margin is
 smaller than this sample can resolve (§6.6). Disagreement retains {{e7_step_partial}} with that
@@ -2120,7 +2123,7 @@ before this baseline existed, from the forecast-index margin, whose standard err
 {{q2_se_ratio}}× the step-size margin's. The observed margin is {{q2_pct_own}}% of what its own
 statistic resolves at this sample and {{q2_pct_m51}}% of what the rule's threshold demands, and
 re-run exactly as pre-registered that protocol would need {{q2_n_req_m51}} trajectories. §6.6's
-verdict stands on either reading, because the margin is below both.
+verdict stands on either reading, because the margin is below both. On shorter units the margin resolves: rule X6, committed before its reading, cut the same ten episodes into {{x6_n_units}} non-overlapping {{x6_unit_len}}-row units and returns **{{x6_reading}}**, {{x6_margin}} {{x6_ci}} at h = {{v2_deploy_h}} against a minimum detectable effect of {{x6_mde}} (Appendix X). Those units are the checkpoint's training data and share its ten episodes, and the interval resamples units, not episodes, so this settles the margin on this checkpoint's training episodes only.
 
 **We did not measure what the miscalibration costs.** The penalty the follow-up applies is miscalibrated as a scale, {{d1n_epi_ratio_h100}}× overconfident at h = {{v2_deploy_h}}, the horizon its own imagination rollouts run to, but the method's only use of that quantity is to shape policy learning, and we did not train a policy. A miscalibrated scale that enters as a relative penalty across candidate actions may cost little or a great deal; our measurements cannot tell which. **The finding bounds what the quantity reports, not what it costs**, and the ratio is not a measure of harm. Other sections refer back to this as the policy caveat of §11.
 
@@ -2147,7 +2150,7 @@ degenerate by construction (`M-71`).
 
 **The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.5), the out-of-sample arena's {{perm_oos_nind}} independent trajectories cannot reject at any effect size, and the larger arenas can and do not: over all ten episodes the smallest P in the family is {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released dataset contains, not a better test. At h = 128 and below that is no longer true: a shorter unit gives {{m64_oos_n_h100}} independent units at h = {{v2_deploy_h}} where the 400-step unit gives {{perm_oos_nind}} (Appendix K), and we did not rerun this permutation family there. This limits the *per-dimension* evidence only; the aggregate scalar the method applies is one test rather than forty-five coupled ones, and more strongly supported (§6.6).
 
-**No family-wide correction is applied across our own pre-registered rules.** There are {{appG_n_rules}} of them with per-rule verdicts (Appendix E), each reported against the thresholds it was committed with. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers a corrected family threshold can apply it from that count.
+**No family-wide correction is applied across our own pre-registered rules.** There are {{appG_n_rules}} of them (Appendix E), each reported, once its data exist, against the thresholds it was committed with. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers a corrected family threshold can apply it from that count.
 
 **The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it.** §6.8's contrast trains five models at five seeds and scores them together. Independently seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries {{v1_cap_indep}} state-pathway parameters against the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own trunk, and greater capacity can inflate σ as well as shrink error. **Capacity is controlled separately.** Rule M-49 (Appendix E), committed with its minimum detectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size` {{m49_width}} against the released {{released_width}}, giving {{m49_matched_params}} state-pathway parameters against the shared-trunk arm's {{v1_cap_shared}}, a ratio of {{m49_matched_ratio}} where §6.8's contrast carried {{v1_cap_ratio}}. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of {{m49_cov_gain}} points still clears its own MDE.** The effect does not vanish when the confound is removed.
 
@@ -2267,5 +2270,112 @@ the action's mean), and the swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and 
 {{n5_appV_table}}
 
 **Arenas: each model's own training data (the in-sample arena's {{x2_n_ins}} trajectories for our arms, all ten episodes' {{ad20_nind}} for the released checkpoint) and the held-out pair ({{ad_nind}}), n_independent equal to the trajectory count. Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each, E the mean of each seed's; the released checkpoint.** The cells at h ≤ {{v2_deploy_h}} are the stale-action rows of the first two tables.
+
+---
+
+## Appendix W — rule X5, which could not be run: the penalty against the model's error in predicted return
+
+Rule X5 would have tested what the miscalibration costs without training a policy. On windows of the method's imagination
+length it would have compared the penalty the follow-up applies, summed along the forecast, with the model's error in
+the return it forecasts over the same steps. It was to run only if every term of a reward subset that includes the two
+command-tracking terms could be computed both from the recorded data and from the model's forecast. They cannot: both
+score the base velocity against the velocity *command*, which the released data do not record and the model does not
+output (the plateaus of achieved velocity in Appendix H are not the command; ledger D-38). Rule X5 was therefore neither
+pre-registered nor run, and §11's policy caveat stands as written.
+
+---
+
+## Appendix X — rule X6: disagreement against predicted step size on shorter units
+
+Rule X6 was committed and pushed before its readings existed (ledger M-88; Appendix E gives its lead time) and is
+discharged in M-91. It is exploratory and re-opens no rule: rules M-51 and M-52 stand. It puts §6.6's comparison to
+more units. The released checkpoint's ten episodes are cut into non-overlapping units of the model's history plus h
+forecast steps, inside each episode, by rule M-64's index builder, at h = 32 and h = {{v2_deploy_h}}, which governs. The
+statistic is rules M-51 and M-52's margin, r(disagreement, |error|) − r(step size, |error|) on the applied scalar, a
+Pearson correlation over every (unit, step) cell, imported from their script; its 95% interval resamples whole units,
+paired, {{boot_n_mc}} times (seed 0). The rule reads **DISAGREEMENT BEATS STEP SIZE** if the interval's lower bound is
+above zero, STEP SIZE BEATS DISAGREEMENT if its upper bound is below zero, and NOT RESOLVED otherwise. The minimum
+detectable effect was computed by rule M-51's method at this n before the reading, and governs nothing.
+
+| h | units (rows each) | r(disagreement, error) | r(step size, error) | margin [95% interval] | minimum detectable margin | partial r(disagreement given step size) [95% interval] | label |
+|---|---|---|---|---|---|---|---|
+| {{v2_deploy_h}} | {{x6_n_units}} ({{x6_unit_len}}) | {{x6_r_dis}} | {{x6_r_step}} | **{{x6_margin}} {{x6_ci}}** | {{x6_mde}} | {{x6_partial}} {{x6_partial_ci}} | **{{x6_reading}}** |
+| 32 | {{x6_n_units_h32}} ({{x6_unit_len_h32}}) | {{x6_r_dis_h32}} | {{x6_r_step_h32}} | {{x6_margin_h32}} {{x6_ci_h32}} | {{x6_mde_h32}} | {{x6_partial_h32}} {{x6_partial_ci_h32}} | {{x6_label_h32}} (alongside) |
+
+**Arena: all ten episodes, the released checkpoint's training data, as non-overlapping units inside each episode;
+n_independent = the unit count at each horizon. Checkpoint: the released one, ensemble of 5.** Bold, the reading; the
+h = 32 row is alongside. Units from one episode are not independent of each other, and the interval resamples units,
+not episodes; the statistic is a correlation over (unit, step) cells, not a ranking of units.
+
+---
+
+## Appendix Y — rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth
+
+Rule X7 was committed and pushed before its readings existed (ledger M-89; Appendix E gives its lead time) and is
+discharged in M-92. It is exploratory and re-opens no rule: rules M-69 and M-70 stand. For each of the ten episodes, the
+per-horizon multiplier is fitted on the other nine episodes' non-overlapping 400-step trajectories with §6.7's fitting
+function, imported, and scores ±1σ coverage on that episode's own; pooled, each of the {{x7_n_traj}} trajectories is
+scored once, by a multiplier not fitted on it. A horizon reads WITHIN BAND if the coverage's 95% interval lies within
+{{d3_tol}} points of {{d3_target}}%, OUTSIDE BAND if it lies wholly outside that band, and UNRESOLVED otherwise. The
+epistemic term governs, and the reading counts its horizons WITHIN BAND. The interval resamples the {{x7_n_traj}}
+trajectories {{boot_n_mc}} times (seed 0), one draw shared across horizons.
+
+| h | epistemic, per-horizon multiplier (the reading) | aleatoric, per-horizon multiplier | epistemic, one constant multiplier | epistemic, no multiplier | epistemic multiplier across the ten folds (smallest – largest) |
+|---|---|---|---|---|---|
+{{x7_table}}
+
+**Arena: all ten episodes' {{x7_n_traj}} non-overlapping 400-step trajectories, n_independent = {{x7_n_traj}}, each
+scored by a multiplier fitted on the other nine episodes. Checkpoint: the released one.** Each cell is ±1σ coverage in
+percent with its 95% interval and, for the multiplied columns, its label; bold, the reading, **{{x7_summary}}**. The other
+columns are alongside: the aleatoric term returns {{x7_ale_summary}}, and one constant multiplier, fitted the same way,
+lands within the band at {{x7_const_word}} of the {{x7_n_h_word}} horizons. Every trajectory is unseen by its multiplier
+but not by the model, which trained on all ten episodes, so this says nothing about a model that has not seen the test
+episodes (§6.7's Arm A column).
+
+---
+
+## Appendix Z — rule X8: our rules' verdicts under the released evaluation's timing
+
+Rule X8 was committed and pushed before its readings existed (ledger M-90; Appendix E gives its lead time) and is
+discharged in M-93. It is exploratory and re-opens no rule. It re-scores rules M-74, M-75 and M-76 (their models at
+{{iters_main}} iterations, three seeds each) and the A/B comparison at {{iters_long}} iterations (three seeds; M-23's
+statistic and the by-horizon table's) with the released evaluation's timing, which pairs the prediction of each state
+with the action before the one that produced it, through each rule's own evaluator and statistic. Every evaluator first
+reproduces its committed artifact under the causal pairing. Our models were trained under the causal pairing, so this
+asks whether any of our verdicts depends on the timing a reader of the released code would score them with; it says
+nothing direct about the original papers' printed numbers. Every rule returns **{{x8_reading}}**, and {{x8_n_changed}}
+of their alongside readings change, each in bold below. The arena is the held-out pair, episodes {{h2h_episodes}},
+{{mn_nind}} non-overlapping 400-step trajectories, n_independent = {{mn_nind}}, except where a row names the in-sample
+arena ({{mn_nind_ins}}).
+
+| reading | causal pairing, as committed | released pairing |
+|---|---|---|
+{{x8_tab_m74}}
+
+**Rule M-74, the configuration sweep: nine configurations at {{iters_main}} iterations, three seeds each; arenas as
+named in each row.** nRMSE as the rule's evaluator averages it, per trajectory. Bold, a reading that changes.
+
+| reading | causal pairing, as committed | released pairing |
+|---|---|---|
+{{x8_tab_75}}
+
+**Rule M-75, the baselines teacher-forced as the original trains them, at {{iters_main}} iterations, three seeds each;
+arenas as named in each row.** The RSSM reads the window's first action row at its first filtering step, because the row
+before it lies outside the window. Bold, a reading that changes.
+
+| reading | causal pairing, as committed | released pairing |
+|---|---|---|
+{{x8_tab_76}}
+
+**Rule M-76, the baselines trained autoregressively, at {{iters_main}} iterations, three seeds each; arenas as named in
+each row.** The RSSM caveat of the previous table applies. Bold, a reading that changes.
+
+| reading | causal pairing, as committed | released pairing |
+|---|---|---|
+{{x8_tab_ab}}
+
+**The A/B comparison, Arm A against Arm B at {{iters_long}} iterations, three seeds each; arenas as named in each row,
+the held-out pair otherwise.** Bold, a reading that changes. The by-horizon trend reading changes too, from "{{x8_trend_1}}"
+under the causal pairing to "{{x8_trend_0}}" under the released one.
 
 ---

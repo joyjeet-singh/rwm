@@ -397,6 +397,33 @@
       "rewritten_by_purge": []
     },
     {
+      "id": "M-88",
+      "label": "M-88",
+      "lead_hours": 0.18694444444444444,
+      "tested_by": "x6_stepsize_short_units",
+      "rule_commit": "df0f2fa",
+      "data_commit": "0147bd6",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-89",
+      "label": "M-89",
+      "lead_hours": 0.18694444444444444,
+      "tested_by": "x7_loeo_recalibration",
+      "rule_commit": "df0f2fa",
+      "data_commit": "0147bd6",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-90",
+      "label": "M-90",
+      "lead_hours": 0.18694444444444444,
+      "tested_by": "x8_released_pairing",
+      "rule_commit": "df0f2fa",
+      "data_commit": "0147bd6",
+      "rewritten_by_purge": []
+    },
+    {
       "id": "S-12",
       "label": "S-12 (withdrawn)",
       "lead_hours": -2.9366666666666665,
@@ -408,6 +435,7 @@
   ],
   "fig1_commits": {
     "cited": [
+      "0147bd6",
       "05e9563",
       "0648a32",
       "0fe2bca",
@@ -435,6 +463,7 @@
       "d88a106",
       "d88e9ff",
       "d9f7bba",
+      "df0f2fa",
       "e16b4a9",
       "e5aee6f",
       "e5f07da",

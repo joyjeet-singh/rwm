@@ -3153,7 +3153,7 @@ def main():
     # commits it cites that kept their identifiers through the M-48 history rewrite, by the figure's own record.
     _f1 = J("paper_figures.json")
     _AGr = J("appendix_g_rules.json")
-    assert sorted(b["id"] for b in _f1["fig1_bars"] if b["id"] != "M-16 annotation") == sorted(r["id"] for r in _AGr["rules"])
+    assert sorted(b["id"] for b in _f1["fig1_bars"] if b["id"] != "M-16 annotation") == sorted(r["id"] for r in _AGr["rules"] if r["lead_hours"] is not None) and all(r["verdict"] == "not yet discharged" for r in _AGr["rules"] if r["lead_hours"] is None)
     _cit, _mov = _f1["fig1_commits"]["cited"], _f1["fig1_commits"]["rewritten_by_purge"]
     assert set(_mov) <= set(_cit) and len(_mov) >= 1
     put("f1_n_cited", len(_cit), "results/paper_figures.json")
@@ -3616,6 +3616,139 @@ def main():
     _mean = [(_pe["0"][e] + _pe["1"][e]) / 2 for e in sorted(_pe["1"], key=int)]
     put("d12_mean_lo", f"{min(_mean):.3f}", "results/step4_0a_results.json")
     put("d12_mean_hi", f"{max(_mean):.3f}", "results/step4_0a_results.json")
+
+    # --- Round 4, F4 item 6: rules X6, X7 and X8 (M-88/M-91, M-89/M-92, M-90/M-93); X5 was not run (D-38) ----------
+    # Each verdict is printed verbatim from its artifact; every figure beside it is read here.
+    _f4d = lambda x: f"{x:+.4f}"
+    _c4d = lambda c: f"[{c[0]:+.4f}, {c[1]:+.4f}]"
+    X6 = J("x6_stepsize_short_units.json")
+    _x6s = "results/x6_stepsize_short_units.json"
+    assert X6["rule"] == "X6" and all(v["pass"] for v in X6["assertions"].values())
+    _x6r, _al6 = X6["reading"], X6["alongside"]
+    assert str(_x6r["h"]) == str(X6["design"]["governing_h"]) == str(N["v2_deploy_h"]["value"])
+    _u100, _u32 = X6["design"]["units"]["100"], X6["design"]["units"]["32"]
+    assert _x6r["n_units"] == _u100["n_units"] == _u100["n_independent_unit_level"]
+    assert _u100["units_inside_episodes"] and _u32["units_inside_episodes"] and _u100["n_episodes"] == 10
+    put("x6_reading", _x6r["label"], _x6s)
+    put("x6_margin", _f4d(_x6r["margin"]), _x6s)
+    put("x6_ci", _c4d(_x6r["ci95"]), _x6s)
+    put("x6_n_units", _x6r["n_units"], _x6s)
+    put("x6_unit_len", _u100["unit_length"], _x6s)
+    _mde6 = X6["mde_recorded_before_the_reading"]
+    put("x6_mde", f'{_mde6["100"]["mde_80pct_power"]["margin"]:.4f}', _x6s)
+    put("x6_r_dis", _f4d(_al6["h100_correlations"]["r_disagreement_error"]), _x6s)
+    put("x6_r_step", _f4d(_al6["h100_correlations"]["r_step_size_error"]), _x6s)
+    _p6 = _al6["partial_disagreement_given_step_size"]
+    put("x6_partial", _f4d(_p6["100"]["value"]), _x6s)
+    put("x6_partial_ci", _c4d(_p6["100"]["ci95"]), _x6s)
+    put("x6_margin_h32", _f4d(_al6["h32"]["margin"]), _x6s)
+    put("x6_ci_h32", _c4d(_al6["h32"]["margin_ci"]), _x6s)
+    put("x6_n_units_h32", _u32["n_units"], _x6s)
+    put("x6_unit_len_h32", _u32["unit_length"], _x6s)
+    put("x6_mde_h32", f'{_mde6["32"]["mde_80pct_power"]["margin"]:.4f}', _x6s)
+    put("x6_partial_h32", _f4d(_p6["32"]["value"]), _x6s)
+    put("x6_partial_ci_h32", _c4d(_p6["32"]["ci95"]), _x6s)
+    put("x6_label_h32", _al6["h32_label_it_would_carry"], _x6s)
+    put("x6_r_dis_h32", _f4d(_al6["h32"]["r_disagreement_error"]), _x6s)
+    put("x6_r_step_h32", _f4d(_al6["h32"]["r_step_size_error"]), _x6s)
+    # Appendices X and Y print the resample count as boot_n_mc; both designs must state that count
+    for _dz in (X6["design"]["interval"], ):
+        assert _dz.startswith(N["boot_n_mc"]["value"].replace(",", "") + " ") and "default_rng(0)" in _dz, _dz
+    # what the text says of it, asserted: the interval excludes zero, the margin exceeds the MDE fixed before the
+    # reading, and the h = 32 alongside points the same way
+    assert _x6r["label"] == "DISAGREEMENT BEATS STEP SIZE" and _x6r["ci95"][0] > 0
+    assert _x6r["margin"] > _mde6["100"]["mde_80pct_power"]["margin"] and _al6["h32"]["margin_ci"][0] > 0
+
+    X7 = J("x7_loeo_recalibration.json")
+    _x7s = "results/x7_loeo_recalibration.json"
+    assert X7["rule"] == "X7" and all(v["pass"] for v in X7["assertions"].values())
+    _x7 = X7["reading"]
+    assert _x7["quantity"] == "epistemic"
+    _tg7, _tol7 = float(N["d3_target"]["value"]), float(N["d3_tol"]["value"])
+    assert abs(100 * X7["design"]["band"][0] - (_tg7 - _tol7)) < 1e-9 and abs(100 * X7["design"]["band"][1] - (_tg7 + _tol7)) < 1e-9
+    assert abs(100 * X7["design"]["target"] - _tg7) < 1e-9
+    _H7 = [str(h) for h in X7["design"]["horizons"]]
+    assert _H7[-1] == str(N["v2_diag_h"]["value"]) and len(_H7) == 6
+    put("x7_summary", _x7["summary"], _x7s)
+    put("x7_n_traj", X7["design"]["n_trajectories"], _x7s)
+    put("x7_n_h_word", WORDS[len(_H7)].lower(), _x7s)
+    _ph7 = _x7["per_horizon"]
+    put("x7_ci_min", f'{100 * min(_ph7[h]["ci95"][0] for h in _H7):.1f}', _x7s)
+    put("x7_ci_max", f'{100 * max(_ph7[h]["ci95"][1] for h in _H7):.1f}', _x7s)
+    assert all(_ph7[h]["label"] == "WITHIN BAND" for h in _H7) and _x7["n_within"] == len(_H7)
+    _al7 = X7["alongside"]
+    put("x7_ale_summary", _al7["aleatoric"]["summary"], _x7s)
+    put("x7_const_n", _al7["epistemic_constant_multiplier"]["n_within"], _x7s)
+    put("x7_const_word", WORDS[_al7["epistemic_constant_multiplier"]["n_within"]].lower(), _x7s)
+    assert X7["design"]["interval"].startswith(N["boot_n_mc"]["value"].replace(",", "") + " ") and \
+        "default_rng(0)" in X7["design"]["interval"], X7["design"]["interval"]
+    _cs7 = _al7["epistemic_c_spread_across_folds"]
+    put("x7_cspread", f'{max(_cs7[h]["max_over_min"] for h in _H7):.2f}', _x7s)
+    _pct = lambda v: f'{100 * v["coverage"]:.1f} [{100 * v["ci95"][0]:.1f}, {100 * v["ci95"][1]:.1f}]'
+    _rows7 = []
+    for h in _H7:
+        _rows7.append(f'| {h} | **{_pct(_ph7[h])}**, {_ph7[h]["label"]} | {_pct(_al7["aleatoric"]["per_horizon"][h])}, '
+                      f'{_al7["aleatoric"]["per_horizon"][h]["label"]} | '
+                      f'{_pct(_al7["epistemic_constant_multiplier"]["per_horizon"][h])}, '
+                      f'{_al7["epistemic_constant_multiplier"]["per_horizon"][h]["label"]} | '
+                      f'{_pct(_al7["epistemic_before_any_multiplier"][h])} | '
+                      f'{_cs7[h]["min"]:.2f} – {_cs7[h]["max"]:.2f} |')
+    put("x7_table", "\n".join(_rows7), _x7s)
+
+    X8 = J("x8_released_pairing.json")
+    _x8s = "results/x8_released_pairing.json"
+    assert X8["rule"] == "X8" and all(v["pass"] for v in X8["assertions"].values())
+    _rd8 = X8["readings"]
+    assert {v["reading"] for v in _rd8.values()} == {"SAME VERDICT"}, {k: v["reading"] for k, v in _rd8.items()}
+    put("x8_reading", _rd8["M-74"]["reading"], _x8s)
+    put("x8_n_changed", sum(len(v["alongside_changes"]) for v in _rd8.values()), _x8s)
+    _d8 = X8["detail"]
+    _rl8 = lambda k: ("relative-L1" if k.split("_h")[0] == "l1" else "nRMSE") + " at h = " + k.split("_h")[1]
+    _row8 = lambda lab, a, b: f"| {lab} | {a} | {('**' + str(b) + '**') if a != b else b} |"
+
+    def _x8_family(o1, o0, verdict_lab):
+        rows = [_row8(f"verdict ({verdict_lab})", o1["verdict"], o0["verdict"])]
+        for k in o1["alongside"]:
+            rows.append(_row8(f"held-out pair, {_rl8(k)}", o1["alongside"][k], o0["alongside"][k]))
+        for k in o1["in_sample"]:
+            rows.append(_row8(f"in-sample arena, {_rl8(k)}", o1["in_sample"][k], o0["in_sample"][k]))
+        return rows
+    _gl = f"held-out pair, relative-L1 at h = {N['v2_diag_h']['value']}"
+    _m74 = _x8_family(_d8["M-74"]["offset_1"], _d8["M-74"]["offset_0"], _gl)
+    for c in _d8["M-74"]["offset_1"]["per_episode_sign"]:
+        a, b = _d8["M-74"]["offset_1"]["per_episode_sign"][c], _d8["M-74"]["offset_0"]["per_episode_sign"][c]
+        _m74.append(_row8(f"{_cfgname(c)}: episodes where the centre is ahead, of ten", a[0], b[0]))
+    put("x8_tab_m74", "\n".join(_m74), _x8s)
+    for r in ("M-75", "M-76"):
+        put(f"x8_tab_{r[2:]}", "\n".join(_x8_family(_d8["baselines"]["offset_1"][r], _d8["baselines"]["offset_0"][r], _gl)),
+            _x8s)
+    _a1, _a0 = _d8["A/B"]["offset_1"], _d8["A/B"]["offset_0"]
+    _ab = [_row8(f"M-23's verdict, three seeds ({_gl})", _a1["m23_three_seeds"]["label"], _a0["m23_three_seeds"]["label"]),
+           _row8("M-23's verdict, seed " + str(N["m23_seed"]["value"]) + " as discharged",
+                 _a1["m23_seed1_as_discharged"]["label"], _a0["m23_seed1_as_discharged"]["label"])]
+    for k in _a1["m23_conditions_alongside"]:
+        _ab.append(_row8(f"M-23's conditions at {k.replace('h=', 'h = ')}", _a1["m23_conditions_alongside"][k]["label"],
+                         _a0["m23_conditions_alongside"][k]["label"]))
+    for k in _a1["secondaries_three_seeds"]:
+        _ab.append(_row8(f"secondary at {k.replace('h=', 'h = ')}", _a1["secondaries_three_seeds"][k]["status"],
+                         _a0["secondaries_three_seeds"][k]["status"]))
+    _yn = lambda b: "excludes zero" if b else "spans zero"
+    for h in _a1["by_horizon"]:
+        _ab.append(_row8(f"by-horizon gap at h = {h}", _yn(_a1["by_horizon"][h]["gap_excludes_zero"]),
+                         _yn(_a0["by_horizon"][h]["gap_excludes_zero"])))
+    for h in _a1["sign_test"]:
+        _ab.append(_row8(f"episodes where autoregressive training is ahead at h = {h}, of ten",
+                         _a1["sign_test"][h]["n_positive"], _a0["sign_test"][h]["n_positive"]))
+    put("x8_tab_ab", "\n".join(_ab), _x8s)
+    assert _a1["trend_reading"] != _a0["trend_reading"]
+    put("x8_trend_1", _a1["trend_reading"], _x8s)
+    put("x8_trend_0", _a0["trend_reading"], _x8s)
+    # every change the artifact lists is a bold cell in these tables, and no verdict row is bold
+    _all8 = "\n".join(N[k]["value"] for k in ("x8_tab_m74", "x8_tab_75", "x8_tab_76", "x8_tab_ab"))
+    _nb = sum(1 for ln in _all8.split("\n") if ln.rstrip().endswith("** |"))
+    assert _nb + 1 == sum(len(v["alongside_changes"]) for v in _rd8.values()), _nb   # + the trend reading, below
+    assert not any(ln.startswith("| verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
+    assert not any(ln.startswith("| M-23's verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
 
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from

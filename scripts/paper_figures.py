@@ -463,6 +463,11 @@ def fig4_timeline(rec):
 
     bars = []
     for r in AG["rules"]:
+        # Round 4, F4: a pre-registered rule whose data do not exist yet (a training rule whose runs are still
+        # training) has no lead time and no verdict; it is plotted once its data exist.
+        if r["lead_hours"] is None:
+            assert r["verdict"] == "not yet discharged", r
+            continue
         lab = next((k for k in rec_by_lab if k.split(" ")[0] == r["id"]), None)
         if r["id"] == "S-12":
             lab = "Task 3 duplication rule"
@@ -483,7 +488,7 @@ def fig4_timeline(rec):
             av = next(vv for kk, vv, _ in rows if kk.startswith("flip pattern"))
             bars.append({"id": "M-16 annotation", "label": "M-16 annotation", "lead_hours": av,
                          "tested_by": a["tested_by"], "rule_commit": a["rule_commit"], "data_commit": a["data_commit"]})
-    assert len(bars) == AG["n_rules"] + 1
+    assert len(bars) == AG["n_with_lead_time"] + 1
     for b in bars:
         b["rewritten_by_purge"] = [h for h in (b["rule_commit"], b["data_commit"]) if rewritten(h)]
     cited = sorted({h for b in bars for h in (b["rule_commit"], b["data_commit"])})
