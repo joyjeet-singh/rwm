@@ -220,3 +220,92 @@ Body words (round2/t6_words.py): 20,745 (F0: 20,745)
 Abstract words / numerals (C12.1): 370 / 23
 Next: F4, items 1–5 and X5–X8 into the paper, the model card and Appendix V (Opus 5.5, high effort), in a fresh terminal. It runs while the queue trains, contended, and reads no per-run log except through RUN_QUEUE.md's status command. F5 starts only when that command shows 30 done and 0 failed.
 Decisions for user: none
+
+## F4 — 2026-10-11 16:50 — Opus 5.5 (the plan assigns high effort, fresh terminal) — status: COMPLETE
+Commits:
+595ad41 [F4][1] Section 7.2: our models' stale-timing change with intervals in both arenas, the forecast shift, the one-policy caveat (A1); Isaac Lab's ActionManager.reset() cited (PF5); N5's table in Appendix V
+05586d4 [F4][2] Model card's Action convention line (A2): N5's figures with intervals in both arenas, and the one-policy caveat
+741732b [F4][3] Appendix V: rule X2's criterion, read from M-84 and the artifact's reading_rule (threshold key x2_thr_pct), and the one-policy caveat (A3)
+dce6e2c [F4][4] Configuration wording (A4, A4b): no reading the rule reports puts the centre ahead of any winner, in the abstract, contribution 3, section 12 and both Appendix D tables; section 5.2 lists, per configuration, the readings that leave a winner unresolved
+2cfc774 [F4][5] The difficulty measure, through N6's keys: Appendix N says it is the causal timing and prints its correlation with speed (+0.088); BUILD_CHECKS keeps the earlier mean's range
+2e3890d [F4][6] X5-X8 into the paper: X6 in 6.6, X7 in 6.7, X8 in 7.2, X5 pointer in 11; Appendices W (X5, not run), X (X6), Y (X7), Z (X8, a table per rule); Appendix E and Figure 1 regenerated
+0555fda [F4][7] Figure 1's caption: a lead of a few minutes means the rule was committed just before its runs were launched or its readings computed; caption and in-figure title now say 'whose data exist'
+81fa338 [F4][8] Guards G7-G9 in check_comparative_claims.py, each with a self-test that plants the 10 Oct wording it exists to catch
+be6af66 [F4][6-fix] The paper compiles with 0 overfull lines again; the scope audit classifies G7-G9
+a526dfa [F4][review] Review fixes: A4's meaning in the abstract, X6 scoped to h = 100, X7 to pooled epistemic coverage, X8 to its four rules; guards G7-G9 and C27.2 catch the variants the review built
+b153cea [F4][review] G9 also scans evidence_summary.py, the generator of Appendix D's second table (the review's variants re-tested inline: all caught)
+36c0b03 [F4] Build and gates after items 1-8 and the review: 60 new keys; cc 65 -> 68 claims (35 kinds); Appendix E 23 -> 28 rules (26 with data); 62 -> 67 pages
+(the commit carrying this entry and two out-of-scope lines)
+Done:
+- **How this session ran.** In the same conversation as F0–F3, at the user's request ("start F4"). The plan assigns a fresh terminal at high effort, and the conversation had been compacted once, before F3 ended. The training queue ran throughout, so every job was contended. Both permitted Explore agents were used, as one two-reviewer workflow after items 1–8.
+- **Item 1, §7.2 (A1).** Our models' stale-timing change is given with intervals in both arenas, from new keys `n5_*` (`results/n5_stale_armA_ci.json`, post hoc). The paragraph adds the forecast shift Δ and the one-policy caveat. Isaac Lab's `ActionManager.reset()` is cited for the reset-zero argument (PF5).
+  - The old held-out h = 368 figure (+22.67%) moves to a new N5 table in Appendix V, which shows every model at every horizon (rule 10).
+  - The action-spread clause was already in Appendix V, as `x2_ctx_ins_*`.
+- **Item 2, model card (A2).** Installed with the N5 keys. The X2 key it needs (C27.2) is the verbatim reading.
+- **Item 3, Appendix V (A3).** M-84's thresholds equal the plan's draft, so no difference was logged. The 10% threshold is bound from the artifact's `reading_rule` (`x2_thr_pct`).
+- **Item 4, configuration wording (A4, A4b).** Re-checked against `mn_sweep_verdict.json` and `pooled_nrmse_alongside.json` first, for every winner:
+  - on all 16 metric readings no interval and no point estimate is on the centre's side;
+  - the per-episode signs favour every winner.
+
+  Both are asserted in `paper_numbers.py` and `evidence_summary.py`. A4b's list is generated (`mn_winner_unres_clause`) and equals the plan's; §5.2 also lists the episodes where the centre is ahead (`mn_winner_episode_clause`).
+  - The abstract says "no reading favouring it" for A4's "and no reading puts it ahead of them", within C12.1's 370 words. One "exactly" (outputs, losses and gradients "exactly" before training) was dropped to make room.
+- **Item 5, difficulty.** Appendix N says the measure is the causal timing and prints its correlation with commanded speed, +0.088 (`d12_speed_r`); "uncorrelated" became "barely correlated". BUILD_CHECKS keeps the earlier mean's range (`d12_mean_lo`/`hi`).
+- **Item 6, X5–X8.** Each verdict is verbatim, with its arena, n and checkpoint:
+
+  | Rule | Where | Reading | Arena and checkpoint |
+  |---|---|---|---|
+  | X6 | §6.6, Appendix X | DISAGREEMENT BEATS STEP SIZE | released checkpoint, 70 units, h = 100 |
+  | X7 | §6.7, Appendix Y | WITHIN BAND AT 6 OF 6 HORIZONS | released, 20 trajectories, epistemic |
+  | X8 | one sentence in §7.2, Appendix Z | SAME VERDICT for its four rules | held-out pair, n = 4, three seeds |
+  | X5 | Appendix W, with a §11 pointer | NOT RUN, stated once with its reason | — |
+
+  X8's tables bold all 21 changed table cells, matched to the artifact's change list by identity; the 22nd change, the trend reading, is quoted under the last table. Rule 11 required splits in §9, §11, §12, Appendix R and Appendix S (audit below).
+  - **Appendix E (stage 21a)** now has 28 rules. X3 and X4 are "not yet discharged", with their pre-registration commit and no lead time. The title stripper had turned M-89's "§6.7's" into "'s"; fixed.
+  - **Figure 1 (stage 22)** leaves out a rule with no lead time, asserting it is undischarged. §8 and §11's counts say "whose data exist" and "once its data exist".
+- **Item 7.** Figure 1's caption gains the few-minutes sentence.
+- **Item 8, guards.** G7 (C28.1, stale-interval), G8 (C28.2, action-caveat) and G9 (C28.3, config-unresolved).
+  - **Self-tests.** Each plants the 10 Oct wording plus the variants the review built (4, 3 and 3), and every planted paragraph must be caught.
+  - **C27.2** now needs an X2 *response* key, because the new N5 sentences carry `x2_n_ins` as a count. It plants a second paragraph.
+  - **Appendix D's kind descriptions** were added without moving any `paper_numbers.py` line: they are merged on line 777 from a table at the file's end.
+- **Compile.** Appendix E's new rows overran two columns by about 0.6 pt (32 overfull lines). Fixed at the input:
+  - `md_to_tex` may now break a file name before its extension (floors only fall; numbers never split);
+  - the pending rules' lead time prints "—";
+  - Appendix X's label moved to its caption.
+
+  The paper is at 0 overfull lines, 67 pages.
+- **Review.** Two read-only Explore agents in one workflow.
+  - **Honesty reviewer: 17 findings, 3 blocking.** The abstract's "never trailing it" (M-74's per-episode signs); §11's "28 of them with per-rule verdicts"; §12's "free-baseline margin … open". All fixed, as were its 7 should-fix findings: X6's margin is at h = 100 and the h = 368 one is not re-tested; "about equally" holds at h = 8 only; X8 re-scores four rules; X7 is pooled epistemic coverage; "narrows" replaces "answers"; Appendix S.
+  - **Mechanics reviewer: 12 findings.** All six guard findings are fixed, and every bypass string it built is now caught (re-run inline). Rule 10 holds: all 8 keys the template no longer uses are accounted for. No ledger citation moved.
+  - **Reconfirmation** was done inline: a workflow's agents cannot be resumed by SendMessage, and the cap of two was spent.
+- **Rule 11 audit, every sentence installed in a summary site:**
+  - abstract (A4), contribution 3, §12's configuration clause, and both Appendix D tables: every M-74 reading (16 metric readings and the per-episode signs) favours each winner → **agree**;
+  - §9 lesson 1, §11 and Appendix R's ranking paragraphs, §12's X6 clause and "open rather than settled", Appendix S: the margin is unresolved on 400-step trajectories at h = 368 and resolved on short units at h = 100; each sentence states both → **agree (split stated)**;
+  - §9 lesson 2, §11's opener, Appendix R's recalibration paragraph, §12's X7 clause, Appendix S: no cell is resolvable on the two-episode design, while X7 is within the band at 6 of 6 epistemic horizons on 20 trajectories; both stated → **agree (split stated)**;
+  - §11's X5 pointer and the §8/§11 rule counts → **agree**.
+- **Not compliant, and assigned to F6 by the plan:**
+  - the abstract's "margin unresolved" (X6) and "(no cell resolvable)" (X7);
+  - contribution 1's margin clause (X6) and the recalibration bullet (X7);
+  - Appendix D's rows for the ranking claim (template line ~1474) and the recalibration, and `evidence_summary.py`'s rows for both.
+- **Notes for F5 and F6:**
+  - After X3 and X4 are discharged, regenerate Appendix E (stage 21a) and then Figure 1 (stage 22, `paper_figures.py`), so both include them.
+  - `part_f_gate` 4b fails until F11 rebuilds the bundles.
+  - The abstract is at C12.1's cap (370 words, 23 numerals).
+- **Model card (ruling W12).** `MODEL_CARD.md` has a new Action convention line and is ready to re-upload to the model host. That is the user's step.
+Build/gates: pass. Evidence summary (stage 21b), fast build, every gate, `part_f_gate`, fast build again: byte-identical. `ledger_check` PASS (M-86 and M-87 pending); 68/68 claims and 68/68 corruptions; 35 kinds, 0 unclassified; xref 0 suspect; typed numerals 0 unclassified; compile 0 overfull. `part_f_gate` 6/7, 1 not run: 4b fails on the bundles, check 6 passes.
+Paper numbers changed: appG_n_rules 23 → 28; appG_n_lead 23 → 26; appG_n_positive 22 → 25 (results/appendix_g_rules.json); cc_n, cc_pass, cc_st_n, cc_st_caught 65 → 68; cc_kinds 32 → 35 (results/comparative_claims.json); f1_n_cited 35 → 37; f1_n_kept 33 → 35 (results/paper_figures.json); pdf_pages 62 → 67; tn_typed 914 → 974; appG_table, cc_kind_list and evidence_table regenerated
+New keys: 60, all from results/ —
+- `n5_*` (17), from n5_stale_armA_ci.json;
+- `x6_*` (21), `x7_*` (11) and `x8_*` (9), from the X6–X8 artifacts;
+- `mn_winner_unres_clause` and `mn_winner_episode_clause`, from mn_sweep_verdict.json and pooled_nrmse_alongside.json;
+- `d12_speed_r`, `d12_mean_lo` and `d12_mean_hi`, from step4_0a_results.json;
+- `x2_thr_pct`, from action_sensitivity.json.
+Re-anchored checks: C27.2 "They respond to the action" → "Our models do use the action"; its key match widened to `n5_ins_*`/`n5_ho_*`, and its X2 requirement narrowed to a response key (`x2_reading`, `x2_E_swap_*`, `x2_ci_swap_*`). Coverage is the same 2 paragraphs, with a second plant.
+CPU jobs over 1 min, all contended with the training queue:
+- the review workflow, 2 agents, 12.4 min wall;
+- about eight fast builds with gates, about 1.5 min each;
+- `paper_figures.py`, about 11 s each time, so under a minute.
+Queue status: running (7 of 30 done, 0 failed, at 16:43; the eighth, X3 Arm B fold {7, 9} seed 0, started at 15:57; RUN_QUEUE's projected finish is about 2026-10-12 17:10 +0530, which contention may push later)
+Body words (round2/t6_words.py): 21,787 (F0: 20,745)
+Abstract words / numerals (C12.1): 370 / 23
+Next: F5 (Sonnet 5.5), in a fresh terminal, only when RUN_QUEUE.md's status command shows 30 done, 0 failed and "queue empty; runner exits". Until then no session reads a run.
+Decisions for user: none
