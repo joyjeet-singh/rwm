@@ -110,3 +110,4 @@ One row per CONTRIB ledger entry.
 | `R-77` | The sweep and baseline evaluators averaged nRMSE per trajectory where section 3.1 pools  | `RUN`, `SRC` | CONFIRMED | `results/pooled_nrmse_alongside.json`, `results/pooled_nrmse_rescore.json` |
 | `R-78` | (32, 32)'s advantage over the centre survives giving the centre twice the training compu | `RUN`, `SRC` | CONFIRMED | `results/mn_compute_matched.json`, `results/mn_sweep_timing.json` |
 | `R-79` | Our own checkpoints do feel the stale pairing, from h = 100 on, where the released check | `RUN`, `SRC` | CONFIRMED | `results/alignment_by_horizon.json`, `results/mn_compute_matched.json` |
+| `R-80` | N5 (post hoc): our models' error under the stale action timing, with intervals at every  | `RUN`, `SRC` | CONFIRMED | `results/action_sensitivity.json`, `results/alignment_by_horizon.json` |
