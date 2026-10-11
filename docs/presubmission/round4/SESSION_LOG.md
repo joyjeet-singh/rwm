@@ -111,3 +111,49 @@ Body words (round2/t6_words.py): 20,745 (F0: 20,745)
 Abstract words / numerals (C12.1): 370 / 23
 Next: F2, in a fresh terminal (Opus 5.5, high effort). It runs while the queue trains, and every job it runs is logged as contended. It must not read any per-run log line except through RUN_QUEUE.md's filtered status command. F5 starts only when RUN_QUEUE.md's status command shows 30 done and 0 failed.
 Decisions for user: none (rulings this session: DECISIONS.md#F1-x3-cap)
+
+## F2 — 2026-10-11 12:31 — Opus 5.5 (the plan assigns high effort, fresh terminal) — status: COMPLETE
+Commits:
+bb3ae3a [F2][1] X5 feasibility: the tracking terms need the environment's sampled command, which the data do not hold; X5 NOT RUN (ledger D-38)
+2d6212f [F2][2a] Default-preserving arguments for X6 and X8: e7 load_panel(starts, length); mn_sweep_eval.score(action_offset); baselines_eval.evaluate(action_offset)
+df0f2fa PRE-REGISTER X5–X8, inference-only rules, before their readings exist
+0147bd6 [F2][4] Rules X6-X8 run as committed: X6 DISAGREEMENT BEATS STEP SIZE; X7 WITHIN BAND AT 6 OF 6 HORIZONS; X8 SAME VERDICT for M-74, M-75, M-76 and the A/B comparison
+40981f7 [F2][5] Discharge X6-X8: M-91 records DISAGREEMENT BEATS STEP SIZE; M-92 WITHIN BAND AT 6 OF 6 HORIZONS (epistemic); M-93 SAME VERDICT for M-74, M-75, M-76 and the A/B comparison
+868eefe [F2] Build and gates after the ledger entries: n_entries 276 -> 283, ledger_kb 609 -> 643; no paper edits
+(the commit carrying this entry and one out-of-scope line)
+Done:
+- **How this session ran.** In the same conversation as F0 and F1, at the user's request ("start F2"); the plan assigns a fresh terminal at high effort. The training queue ran throughout, so every job here was contended. One of the two permitted Explore agents was used, as the pre-freeze reviewer; its workflow record shows Opus 5.5.
+- **Item 1, X5 feasibility** (`round4/X5_FEASIBILITY.md`, `f2_x5_feasibility.py`). The imagination reward has twelve terms plus the penalty. Both command-tracking terms score the forecast against the environment's sampled command, which none of the CSV's 66 columns holds and the model does not output. **X5 is NOT RUN**, by Annex 2's gate; ledger `D-38` records why, with no rule.
+- **Item 2, scripts.** `scripts/x6_stepsize_short_units.py`, `scripts/x7_loeo_recalibration.py` and `scripts/x8_released_pairing.py`, written to Annex 2.
+  - Three producers gained default-preserving arguments (`2d6212f`), and each rewrites its committed artifact byte-identically: `e7_free_baselines.load_panel(starts, length)`, `mn_sweep_eval.score(action_offset)` and `baselines_eval.evaluate(action_offset)`.
+  - X8's offset 0 moves every action one row later, the first repeated, and rolls out causally (`mn_sweep_eval._pairing`). For RWM this equals the native offset 0 exactly, and reproduces the committed stale-pairing ratios to 1.6e-7.
+  - Trap caught before the freeze: per-episode gaps at h = 368 depend on how trajectories are batched, by up to about 1e-2 for Arm B. X8 rolls each episode as its own batch, as a1 and task5 do (OUT_OF_SCOPE).
+  - Every `--assert-only` assertion passes on the final bytes. Each script's whole `main()` was dry-run on synthetic data; for X8, "offset 0" was scored at offset 1 and returned SAME VERDICT with no alongside change.
+- **Review before the freeze.** Verdict FIX-FIRST, one blocking finding: X8's alongside sets were smaller than the rules' own, missing the per-episode signs of M-74, M-75 and M-76 and M-23's conditions at h = 8, on nRMSE and in-sample. Added; M-23's h = 168 on 200-step trajectories is stated as not computed. Every other finding was applied:
+  - X6 computes its MDE before the reading;
+  - X8 writes its offset-0 baseline file only after every check passes;
+  - the deviations are stated, the module lists completed, and each entry records its imports' SHA-256s.
+- **Item 3, pre-registration** (`df0f2fa`, pushed before any reading). M-88 (X6), M-89 (X7) and M-90 (X8), each recording its script's SHA-256: `47f2a13f…`, `6f032605…` and `22059a0b…`. M-90 states that M-86 and M-87 import the edited functions at their unchanged defaults.
+- **Item 4, the runs** (`0147bd6`), each at `df0f2fa` with its pre-registered SHA-256, every assertion passing first:
+  - **X6: DISAGREEMENT BEATS STEP SIZE.** The released checkpoint at h = 100, 70 units: margin +0.2816 [+0.1978, +0.3896], against an MDE of 0.1713 computed before the reading. Alongside, h = 32 (150 units): +0.2393 [+0.0950, +0.3131].
+  - **X7: WITHIN BAND AT 6 OF 6 HORIZONS** (epistemic, ten leave-one-episode-out folds, 20 trajectories). Every interval lies inside [58.27%, 78.27%]. Alongside: the aleatoric term is within the band at 3 of 6 horizons; a constant multiplier at 1 of 6 (epistemic) and 0 of 6 (aleatoric).
+  - **X8: SAME VERDICT** for M-74, M-75, M-76 and the A/B comparison (M-23's conditions, three seeds). The alongside changes are recorded in M-93. They are mostly short-horizon branches and per-episode signs, M-23's conditions at h = 8 (REPRODUCES → FAILS TO REPRODUCE), and the by-horizon table's h = 1 and h = 8 intervals.
+- **Item 5, discharges** (`40981f7`). M-91, M-92 and M-93 record each reading exactly as returned, with its alongside values. M-88, M-89 and M-90's Status lines are set. RESULTS.md M- 87 → 93, D- 37 → 38.
+- **Item 6.** No paper edits. `appendix_g_rules.py` (stage 21a) was not regenerated, so Appendix E still lists the 23 rules from before round 4. F4 regenerates it when X5-X8 go into the paper.
+- **Note for F4:** per Annex 4 A6, X8 appears in the abstract only if a verdict would change; none does.
+Build/gates: pass. Fast build, every gate, build again: byte-identical. ledger_check PASS (M-86 and M-87 pending); 65/65 claims and 65/65 corruptions.
+Paper numbers changed: n_entries 276 → 283; ledger_kb 609 → 643 (FINDINGS_LEDGER.md)
+New keys: none
+Re-anchored checks: none
+CPU jobs over 1 min, all contended with the training queue:
+- the producers' default re-runs (about 4 min);
+- X8's `--assert-only`, three times (about 4 min each);
+- X8's dry run, twice (about 9 min each);
+- the rules themselves: X6 3.0, X7 0.9 and X8 11.4 CPU-min, about 15 in all against F2's cap of 4 CPU-hours;
+- the review agent (about 14 min);
+- the build (about 1 min).
+Queue status: running (1 of 30 done at 12:31; the second run at about its projected length; the projected finish of about 2026-10-12 17:10 +0530 may slip by the contention)
+Body words (round2/t6_words.py): 20,745 (F0: 20,745)
+Abstract words / numerals (C12.1): 370 / 23
+Next: F3, the post hoc analyses N5 and N6 (Opus 5.5, default effort). It runs while the queue trains, contended; it reads no per-run log except through RUN_QUEUE.md's status command.
+Decisions for user: none
