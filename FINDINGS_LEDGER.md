@@ -9495,3 +9495,32 @@ Every reading of every alongside set, at both offsets, is in the artifact's `det
 Caveat, as M-90 states it: our models under the released pairing; it says nothing direct about the original papers' printed numbers.
 **Evidence** `RUN` `results/x8_released_pairing.json`, `results/x8_sweep_eval_offset0.json`, `results/x8_baselines_eval_offset0.json`; `SRC` `scripts/x8_released_pairing.py`.
 **Status** CONFIRMED · **Relevance** METHOD
+
+### R-80 — N5 (post hoc): our models' error under the stale action timing, with intervals at every horizon in both arenas, and the forecast shift · **NEW**
+**Post hoc.** Computed after the data existed, as round 4's remedy for §7.2, which set a −0.99% (held-out, unresolved) beside a
++124.6% (training episodes) with no intervals and no explanation (PLAN round 4, item 1 and Annex 3). It re-opens no rule and
+changes no verdict. Rule X2's machinery is imported from `scripts/action_sensitivity.py`: its models, arenas, rollout hook,
+per-trajectory errors, Δ and interval. N5 extends X2's horizons from h ≤ 100 to all six.
+
+**Assertions:** at h ≤ 100, every model's and arena's E, interval and Δ equal X2's stale-action cells in
+`results/action_sensitivity.json` (40 cells, maximum difference 0.0e+00).
+Arm A's three-seed E on the held-out pair, and the released checkpoint's E and interval, equal `results/alignment_by_horizon.json`
+(R-79's corrected block and the released block) at every horizon (6.6e-14).
+
+**E** = err(stale) / err(causal) − 1, relative-L1 cumulative over steps 1..h. For our arms it is the mean over seeds 0-2 of each seed's
+E. The interval is 95% over whole trajectories: exact at n = 4, 20,000 Monte Carlo draws at n = 16 and 20.
+- **Arm A, 10,000 iterations, its own training episodes (16 trajectories):** h = 1 +124.6% [+75.8, +201.9]; h = 8 +161.8% [+121.3, +231.1]; h = 32 +205.9% [+156.7, +275.9]; h = 100 +209.3% [+167.3, +257.6]; h = 128 +205.0% [+166.2, +247.5]; h = 368 +184.1% [+150.5, +218.6].
+- **Arm A, 10,000, the held-out pair (4):** h = 1 -1.0% [-6.1, +27.7]; h = 8 +4.7% [-5.0, +73.6]; h = 32 +13.9% [-2.4, +104.1]; h = 100 +16.6% [+1.9, +72.6]; h = 128 +18.0% [+3.1, +71.8]; h = 368 +22.7% [+4.0, +78.5].
+- Arm A, 2,500, training episodes: h = 1 +27.8% [+15.6, +49.4]; h = 8 +31.5% [+19.2, +53.0]; h = 32 +53.8% [+34.6, +83.5]; h = 100 +48.7% [+34.8, +65.7]; h = 128 +46.3% [+33.7, +62.0]; h = 368 +38.2% [+27.4, +51.1]; held-out pair: h = 1 +1.8% [-1.6, +11.6]; h = 8 +3.6% [-0.6, +21.9]; h = 32 +5.6% [-0.2, +30.8]; h = 100 +6.9% [+2.6, +20.0]; h = 128 +8.0% [+3.0, +19.9]; h = 368 +7.9% [+1.4, +19.1].
+- Arm B, 10,000, training episodes: h = 1 +75.1% [+44.2, +118.9]; h = 8 +68.6% [+45.9, +105.2]; h = 32 +60.0% [+39.9, +98.7]; h = 100 +32.5% [+20.1, +50.3]; h = 128 +23.6% [+13.1, +37.5]; h = 368 +10.8% [+2.0, +19.1]; held-out pair: h = 1 -1.0% [-2.7, +9.3]; h = 8 +1.4% [-0.5, +12.4]; h = 32 +6.1% [+2.5, +25.5]; h = 100 +6.2% [+3.8, +17.3]; h = 128 +4.7% [+3.5, +10.0]; h = 368 +19.0% [-3.1, +29.1].
+- Arm B, 2,500, training episodes: h = 1 +18.7% [+8.9, +36.1]; h = 8 +15.9% [+7.9, +29.5]; h = 32 +20.3% [+10.3, +36.8]; h = 100 +9.3% [+5.1, +14.9]; h = 128 +6.6% [+3.2, +11.2]; h = 368 -1.1% [-7.2, +5.3]; held-out pair: h = 1 +1.1% [-0.8, +8.3]; h = 8 +0.3% [-0.8, +4.5]; h = 32 +3.4% [+0.4, +14.6]; h = 100 +0.7% [-1.2, +5.4]; h = 128 +0.6% [-2.3, +5.3]; h = 368 -7.4% [-8.5, -3.8].
+- The released checkpoint, all ten episodes (its own training data, 20): h = 1 +55.0% [+26.3, +92.7]; h = 8 +54.4% [+37.5, +82.3]; h = 32 +37.4% [+21.3, +65.4]; h = 100 +8.2% [-10.4, +24.9]; h = 128 -8.8% [-23.8, +4.9]; h = 368 -4.6% [-13.4, +3.2]; held-out pair:
+  h = 1 +34.2% [+10.6, +75.0]; h = 8 +37.2% [+7.9, +95.6]; h = 32 +47.7% [+5.8, +131.8]; h = 100 +22.5% [+6.3, +41.7]; h = 128 +20.3% [+7.0, +35.7]; h = 368 +7.9% [+3.1, +13.0].
+
+**The forecast shift Δ** is the relative-L1 of the stale-timing forecast against the causal one, which is 0 for a model that ignores the
+action. At h = 8, on each model's own training data, it is 0.200 for Arm A at 10,000 and
+0.204 for the released checkpoint. Their errors at the causal timing there are
+0.086 and 0.158. Every model's Δ and
+causal error, at every horizon and arena, are in the artifact.
+**Evidence** `RUN` `results/n5_stale_armA_ci.json`; `SRC` `scripts/n5_stale_armA_ci.py`, `scripts/action_sensitivity.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

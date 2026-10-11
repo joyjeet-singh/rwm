@@ -3794,6 +3794,24 @@
         "scripts/x8_released_pairing.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-80",
+      "claim": "N5 (post hoc): our models' error under the stale action timing, with intervals at every ",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/action_sensitivity.json",
+        "results/alignment_by_horizon.json",
+        "results/n5_stale_armA_ci.json",
+        "scripts/action_sensitivity.py",
+        "scripts/n5_stale_armA_ci.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -3802,7 +3820,7 @@
     "D": 38,
     "M": 93,
     "O": 14,
-    "R": 79,
+    "R": 80,
     "S": 21,
     "X": 17
   },
