@@ -774,7 +774,7 @@ def main():
                            "for how they respond to the action",
         "compute-claim": "no rendered file says a setting won even when its rival trained longer, and every "
                          "front-matter sentence that names compute or longer training says the ranking depends "
-                         "on it or names the split",
+                         "on it or names the split", **_F4_BLURBS,
     }
     _missing = [k for k in _kinds if k not in _blurb]
     assert not _missing, f"check kinds with no appendix D description: {_missing}"
@@ -3787,6 +3787,18 @@ def main():
     print(f"collected {len(N)} keyed numbers -> {R.rel(op)}")
     for k in sorted(N):
         print(f"  {k:<28} {str(N[k]['value']):<16} {N[k]['source']}")
+
+
+# Round 4, F4 item 8: Appendix D's descriptions of guards G7-G9, merged into main()'s table on one existing line, so that
+# no line of this file the ledger cites moves.
+_F4_BLURBS = {
+    "stale-interval": "a sentence printing our models' stale-timing change carries N5's interval for each figure, "
+                      "for the same arena and horizon",
+    "action-caveat": "a paragraph saying our models respond to the action also says that every action in the data "
+                     "comes from one policy",
+    "config-unresolved": "no front-matter sentence naming the winning configurations pairs them with the verdict-level "
+                         "\"one reading unresolved\"",
+}
 
 
 if __name__ == "__main__":

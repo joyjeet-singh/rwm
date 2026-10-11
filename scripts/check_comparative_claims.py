@@ -849,6 +849,24 @@ CLAIMS = [
     {"id": "C27.2", "kind": "action-response", "where": "7.2 / model card",
      "says": "Our models do use the action",
      "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
+    # Round 4, F4 item 8. G7: our models' stale-timing change is printed only with its interval. Any sentence that prints
+    # an Arm A stale-timing figure (a stale_armA_* key, or N5's n5_ins_h* / n5_ho_h*) must carry N5's interval key for the
+    # same arena and horizon; a stale_armA_* figure has none, so it always fails. A sentence that names our models and
+    # the stale timing beside a percentage, with no N5 interval key, fails too (a figure typed rather than bound).
+    {"id": "C28.1", "kind": "stale-interval", "where": "7.2 / model card",
+     "says": "For models trained under the causal pairing, the stale one also raises error",
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
+    # G8: a paragraph saying our models respond to (use, depend on) the action carries the one-policy caveat: rule X2
+    # shows the forecasts depend on the action, not that they are right under actions the data's one policy never took.
+    {"id": "C28.2", "kind": "action-caveat", "where": "7.2 / Appendices H, V / model card",
+     "says": "every action in the data comes from one policy",
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
+    # G9: no front-matter sentence (the abstract, section 1 and the README) pairs "one reading unresolved", or the
+    # contribution's "but <one reading>, which is unresolved", with a configuration list: per configuration several
+    # readings leave a winner unresolved (section 5.2), so the verdict-level count misstates them (round 3's R6 item).
+    {"id": "C28.3", "kind": "config-unresolved", "where": "abstract / contributions / README",
+     "says": "beat the original's setting at our budget, never trailing it",
+     "files": ["PAPER.template.md", "README.template.md"]},
 ]
 
 
@@ -1558,6 +1576,74 @@ def evaluate(c, paper, override=None):
             return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
         return n > 0 and not bad, (f"{n} paragraphs cite Arm A's stale-pairing figures; {n - len(bad)} carry an X2 key"
                                    + (f"; missing in {bad}" if bad else ""))
+    if k == "stale-interval":
+        plant = exp.get("_plant", {})
+        bad, n = [], 0
+        pt = re.compile(r"\{\{(stale_armA_\w+|n5_(ins|ho)_h(\d+))\}\}|v\('(stale_armA_\w+|n5_(ins|ho)_h(\d+))'\)")
+        anyci = re.compile(r"\{\{n5_(?:ins|ho)_ci_h\d+\}\}|v\('n5_(?:ins|ho)_ci_h\d+'\)")
+        words = re.compile(r"(?i)(?=.*\b(?:our|arm a|autoregressive-10k)\b)(?=.*\bstale\b)(?=.*%)")
+        for f in exp["files"]:
+            txt = open(f).read() + ("\n\n" + plant[f] if f in plant else "")
+            for para in re.split(r"\n\s*\n", txt):
+                for sent in re.split(r"(?<=\.)\s+", para.replace("\n", " ")):
+                    hits = list(pt.finditer(sent))
+                    if not hits and not words.search(sent):
+                        continue
+                    n += 1
+                    ok = bool(anyci.search(sent)) if not hits else all(
+                        m.group(2) or m.group(5) for m in hits) and all(
+                        re.search(r"(?:\{\{|v\(')n5_%s_ci_h%s(?:\}\}|'\))" % ((m.group(2) or m.group(5)), (m.group(3) or m.group(6))), sent)
+                        for m in hits)
+                    if not ok:
+                        bad.append(f"{f}: {sent.strip()[:80]!r}")
+        if plant and not any(any(p.strip()[:40] in b for b in bad) for p in plant.values()):
+            return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
+        return n > 0 and not bad, (f"{n} sentences print our models' stale-timing change; {n - len(bad)} carry N5's "
+                                   f"interval for each figure" + (f"; missing in {bad}" if bad else ""))
+    if k == "action-caveat":
+        plant = exp.get("_plant", {})
+        bad, n = [], 0
+        claim = re.compile(r"(?i)\brespond\w*\s+to\s+(?:the|their|its|an?)\s+actions?\b|\bdepend\w*\s+on\s+the\s+action\b"
+                           r"|\buse\s+the\s+action\b|\{\{x2_reading\}\}|v\('x2_reading'\)")
+        caveat = re.compile(r"(?i)\bone\s+policy\b(?![-\w])")
+        for f in exp["files"]:
+            txt = open(f).read() + ("\n\n" + plant[f] if f in plant else "")
+            paras = re.split(r"\n\s+A\(", txt) if f.endswith(".py") else re.split(r"\n\s*\n", txt)
+            for para in paras:
+                if para.lstrip().startswith("#") or not claim.search(para):
+                    continue
+                n += 1
+                if not caveat.search(para):
+                    bad.append(f"{f}: {para.strip()[:70]!r}")
+        if plant and not any(p.strip()[:40] in b for p in plant.values() for b in bad):
+            return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
+        return n > 0 and not bad, (f"{n} paragraphs say our models respond to the action; {n - len(bad)} carry the "
+                                   f"one-policy caveat" + (f"; missing in {bad}" if bad else ""))
+    if k == "config-unresolved":
+        plant = exp.get("_plant", {})
+        bad, n = [], 0
+        unres = re.compile(r"(?i)(?:\bone|\{\{mn_fm_n_unres_word\}\})\s+reading\s+unresolved\b"
+                           r"|\bbut\s+(?:one\b|\{\{mn_fm_exception\}\}),\s+which\s+is\s+unresolved")
+        cfg = re.compile(r"\{\{mn_(?:better_kinds|better_list|n_better_word|n_short_better_word|better_long_phrase)\}\}"
+                         r"|(?i:shorter histor|longer (?:training )?forecasts?|one-factor neighbours|history and forecast lengths)")
+        for f in exp["files"]:
+            txt = open(f).read()
+            if f == "PAPER.template.md":               # the front matter: the abstract and section 1
+                i, j = txt.index("## Abstract"), txt.index("\n## 2. ")
+                txt = txt[i:j]
+            if "front" in plant and f == "PAPER.template.md":
+                txt += "\n\n" + plant["front"]
+            for para in re.split(r"\n\s*\n", txt):
+                for sent in re.split(r"(?<=\.)\s+", para.replace("\n", " ")):
+                    if not cfg.search(sent):
+                        continue
+                    n += 1
+                    if unres.search(sent):
+                        bad.append(f"{f}: {sent.strip()[:80]!r}")
+        if plant and not any(plant["front"].strip()[:40] in b for b in bad):
+            return True, f"planted wording NOT caught: {plant['front'][:50]!r}"
+        return n > 0 and not bad, (f"{n} front-matter sentences name the configurations; {n - len(bad)} pair them with no "
+                                   f"verdict-level 'one reading unresolved'" + (f"; paired in {bad}" if bad else ""))
     raise ValueError(k)
 
 
@@ -1567,6 +1653,14 @@ _OLD_ALIGN_ABSTRACT = ("Separately, the released evaluation pairs each predictio
 _OLD_ARMA_STALE = ("Our own Arm A checkpoints at {{iters_long}} iterations, trained under the causal pairing, change by "
                    "{{stale_armA_rel_h1}}% at h = 1 and {{stale_armA_rel_h368}}% at h = {{v2_diag_h}} when fed the "
                    "stale one (three-seed mean, relative-L1, held-out pair).")
+# Round 4, F4 (G8, G9): the 10 Oct wording, verbatim from the template at 31102a1.
+_OLD_X2_RESPONDS = ("They respond to the action. Given another trajectory's actions, their error at h = 8 on their "
+                    "{{x2_n_ins}} in-sample trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}}, and at "
+                    "{{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before "
+                    "its readings existed (ledger M-84), returns **{{x2_reading}}** at both checkpoints (Appendix V).")
+_OLD_CONFIG_ABSTRACT = ("On accuracy alone, {{mn_better_kinds}} beat the original's setting at our budget "
+                        "({{mn_fm_n_unres_word}} reading unresolved); trained longer, it passes each on some reading "
+                        "(post hoc): the ranking depends on training budget.")
 
 
 # Round 3, R2 (G1): the abstract's sentence as the 4 Oct draft rendered it (commit 8c2c903), verbatim, and a
@@ -1767,6 +1861,15 @@ def corruption_for(c):
         # Plant the 4 Oct abstract sentence (the first half must catch it) and a bare front-matter sentence naming
         # longer training (the second half must catch it); either one missed leaves the check passing, which fails.
         return {"_plant": {"forbidden": _OLD_COMPUTE_ABSTRACT, "front": _BARE_COMPUTE_FRONT}}
+    if k == "stale-interval":
+        # Plant section 7.2's sentence as the 10 Oct draft printed it: Arm A's stale-timing change with no interval.
+        return {"_plant": {"PAPER.template.md": _OLD_ARMA_STALE}}
+    if k == "action-caveat":
+        # Plant section 7.2's X2 sentences as the 10 Oct draft printed them: "They respond to the action", no caveat.
+        return {"_plant": {"PAPER.template.md": _OLD_X2_RESPONDS}}
+    if k == "config-unresolved":
+        # Plant the abstract's configuration sentence as the 10 Oct draft printed it.
+        return {"_plant": {"front": _OLD_CONFIG_ABSTRACT}}
     raise ValueError(k)
 
 
