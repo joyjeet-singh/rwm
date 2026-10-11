@@ -1838,8 +1838,9 @@ of ranks rather than of values, so its being larger than the pooled figure says 
 
 The weakest figure across the {{d2r_ncontrols}} depth controls is {{d2r_weakest}}, so disagreement
 is not re-encoding the clock: at a fixed depth it still knows which rollouts are going wrong. But
-depth was never the only confound. Per-episode difficulty spans {{d12_lo}} to {{d12_hi}} and is
-uncorrelated with commanded speed, so if harder trajectories simply have both larger error and
+depth was never the only confound. Per-episode difficulty, the released checkpoint's error on each
+episode scored with the causal action pairing (§7.2), spans {{d12_lo}} to {{d12_hi}} and is barely
+correlated with commanded speed ({{d12_speed_r}} across the ten episodes), so if harder trajectories simply have both larger error and
 larger disagreement, the pooled correlation would look exactly as it does with disagreement
 carrying no within-rollout information at all. Two things pointed there: the
 {{a2_h1_npoints}}-point h = 1 figure of {{a2_h1_r}}, which is not the shape of a genuine per-step

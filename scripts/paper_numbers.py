@@ -3603,6 +3603,20 @@ def main():
     put("mn_winner_unres_clause", ", ".join(_parts4) + ", and " + _tail4,
         "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json")
 
+    # --- Round 4, F4 item 5 (N6, D-39): the difficulty measure is the causal action timing alone ------------------------
+    # Appendix N describes it so and prints its correlation with commanded speed; BUILD_CHECKS keeps the earlier
+    # measure's range (the mean over the stale and the causal timing), recomputed here from the same file.
+    _s4 = J("step4_0a_results.json")
+    _pe = _s4["per_episode_e"]
+    _r1 = _s4["d12_retest"]["1"]
+    assert abs(_r1["min"] - _h1["episode_difficulty_range"][0]) < 1e-12 and \
+        abs(_r1["max"] - _h1["episode_difficulty_range"][1]) < 1e-12, "A2's difficulty is not the causal timing's"
+    assert "causal" in _h1["difficulty_source"], _h1["difficulty_source"]
+    put("d12_speed_r", f'{_r1["corr_with_speed"]:+.3f}', "results/step4_0a_results.json")
+    _mean = [(_pe["0"][e] + _pe["1"][e]) / 2 for e in sorted(_pe["1"], key=int)]
+    put("d12_mean_lo", f"{min(_mean):.3f}", "results/step4_0a_results.json")
+    put("d12_mean_hi", f"{max(_mean):.3f}", "results/step4_0a_results.json")
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

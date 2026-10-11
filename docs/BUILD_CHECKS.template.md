@@ -421,6 +421,10 @@ claims stayed, and only their history moved.
   the double-demeaned statistic is the decisive one.
 - **[§6.6]** §9 once called the one-step figure a ranking of realised error without qualification;
   it now says it ranks whole rollouts at one step ahead.
+- **[§6.6]** Per-episode difficulty, the covariate Appendix N partials out at h = 1, was once the mean of the
+  released checkpoint's per-episode error at the stale and at the causal action timing, because the script that
+  built it took the two timings for two seeds; that mean spans {{d12_mean_lo}} to {{d12_mean_hi}}. It is now the
+  causal timing alone (ledger D-39); no verdict and no sign changed.
 - **[§6.6]** The released checkpoint's six-horizon count and the ensemble-5 rule's five-horizon
   count are kept in separate keys, so the build cannot print one where the other belongs.
 - **[§6.8]** An earlier draft gave the range of the σ gain as its values at the two shortest
