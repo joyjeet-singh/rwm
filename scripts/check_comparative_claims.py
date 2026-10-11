@@ -866,7 +866,8 @@ CLAIMS = [
     # readings leave a winner unresolved (section 5.2), so the verdict-level count misstates them (round 3's R6 item).
     {"id": "C28.3", "kind": "config-unresolved", "where": "abstract / contributions / README",
      "says": "beat the original's setting at our budget, no reading favouring it",
-     "files": ["PAPER.template.md", "README.template.md"]},
+     # Round 4, F4 review: and the generator of Appendix D's second table
+     "files": ["PAPER.template.md", "README.template.md", "scripts/evidence_summary.py"]},
 ]
 
 
