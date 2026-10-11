@@ -16,7 +16,7 @@ gradients before anything was trained.
 typed: every number is substituted from an artifact under `results/` by `scripts/build_paper.py`,
 which refuses to emit a paper if any placeholder is unresolved. This README is generated the same
 way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean under pdfTeX —
-62 pages, 0 overfull boxes, 0 LaTeX warnings
+67 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
 **Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 285 entries, each
@@ -191,10 +191,10 @@ everything else horizon-indexed in its own paragraph. It runs on every build as 
 ## The build checks its own prose
 
 Verifying that every numeral came from an artifact says nothing about the sentence built around
-it. The build therefore also verifies **65 comparative claims** across 32 kinds,
+it. The build therefore also verifies **68 comparative claims** across 35 kinds,
 each pinning a fragment of the paper's own text *and* a relation recomputed from the artifacts.
 Every one is run against a deliberately corrupted expectation on each build and must fail:
-65 of 65 caught.
+68 of 68 caught.
 
 ```bash
 python scripts/check_comparative_claims.py --self-test

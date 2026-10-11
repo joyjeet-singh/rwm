@@ -913,7 +913,7 @@
   },
   "appG_n_lead": {
     "source": "results/appendix_g_rules.json",
-    "value": 23
+    "value": 26
   },
   "appG_n_negative": {
     "source": "results/appendix_g_rules.json",
@@ -921,15 +921,15 @@
   },
   "appG_n_positive": {
     "source": "results/appendix_g_rules.json",
-    "value": 22
+    "value": 25
   },
   "appG_n_rules": {
     "source": "results/appendix_g_rules.json",
-    "value": 23
+    "value": 28
   },
   "appG_table": {
     "source": "results/appendix_g_rules.json",
-    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | CANNOT BE SETTLED AT THIS BUDGET |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | `bd60cc6` M-49: pre-register the capacity-matched test, with the MDE that bounds it | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | `ef3575f` M-50 pre-registered, and a different-architecture run stopped contaminating \u00a76.3 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | `e16b4a9` M-51 pre-registered: two more free adversaries for the ranking claim | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | `e5f07da` M-52: M-51 named a quantity that does not exist, corrected before it ran | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `M-68` | The combined arm: independence and the corrected objective together | `68bb683` Pre-register M-68: the combined arm's rule, its verdict branches and its minimum detectable effect | +5.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |\n| `M-69` | The cross-model transfer of the per-horizon multiplier table | `fad7db7` Pre-register M-69: the cross-model transfer rule, its criterion and its minimum detectable effect | +23 min | results/task_d3_cross_model.json | DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL |\n| `M-70` | Whether the per-horizon correction reorders cumulative penalties | `6b87e32` Pre-register M-70: whether the per-horizon correction reorders cumulative penalties | +115.2 h | results/q3_penalty_reordering.json | DOES NOT REORDER |\n| `M-74` | The configuration claim: is (M, N) = (32, 8) optimal? | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/mn_sweep_verdict.json | NOT OPTIMAL AT OUR BUDGET |\n| `M-75` | The architecture claim, baselines teacher-forced, as the original trains them | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | REPRODUCES |\n| `M-76` | The architecture claim, baselines trained autoregressively, as RWM is | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | RWM AHEAD OF ALL THREE |\n| `M-80` | X1: is our RSSM's long-horizon failure a matter of how its forecast is read, of its training settings, or of neither? | `2433f44` PRE-REGISTER RSSM diagnostic X1, before its readings exist | +3 min | results/rssm_diagnostics.json | NOT RESCUED BY THE SETTINGS TRIED |\n| `M-84` | X2: do our trained models condition their forecasts on the action they are given? | `738bc91` PRE-REGISTER action-sensitivity rule X2, before its readings exist | +7 min | results/action_sensitivity.json | RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
+    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | CANNOT BE SETTLED AT THIS BUDGET |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | `bd60cc6` M-49: pre-register the capacity-matched test, with the MDE that bounds it | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | `ef3575f` M-50 pre-registered, and a different-architecture run stopped contaminating \u00a76.3 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | `e16b4a9` M-51 pre-registered: two more free adversaries for the ranking claim | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | `e5f07da` M-52: M-51 named a quantity that does not exist, corrected before it ran | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `M-68` | The combined arm: independence and the corrected objective together | `68bb683` Pre-register M-68: the combined arm's rule, its verdict branches and its minimum detectable effect | +5.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |\n| `M-69` | The cross-model transfer of the per-horizon multiplier table | `fad7db7` Pre-register M-69: the cross-model transfer rule, its criterion and its minimum detectable effect | +23 min | results/task_d3_cross_model.json | DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL |\n| `M-70` | Whether the per-horizon correction reorders cumulative penalties | `6b87e32` Pre-register M-70: whether the per-horizon correction reorders cumulative penalties | +115.2 h | results/q3_penalty_reordering.json | DOES NOT REORDER |\n| `M-74` | The configuration claim: is (M, N) = (32, 8) optimal? | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/mn_sweep_verdict.json | NOT OPTIMAL AT OUR BUDGET |\n| `M-75` | The architecture claim, baselines teacher-forced, as the original trains them | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | REPRODUCES |\n| `M-76` | The architecture claim, baselines trained autoregressively, as RWM is | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | RWM AHEAD OF ALL THREE |\n| `M-80` | X1: is our RSSM's long-horizon failure a matter of how its forecast is read, of its training settings, or of neither? | `2433f44` PRE-REGISTER RSSM diagnostic X1, before its readings exist | +3 min | results/rssm_diagnostics.json | NOT RESCUED BY THE SETTINGS TRIED |\n| `M-84` | X2: do our trained models condition their forecasts on the action they are given? | `738bc91` PRE-REGISTER action-sensitivity rule X2, before its readings exist | +7 min | results/action_sensitivity.json | RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations |\n| `M-86` | X3: does the base claim replicate when each episode is held out in turn? | `5f0acd4` PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist | \u2014 | \u2014 | not yet discharged |\n| `M-87` | X4: is RWM still ahead of baselines matched to its size? | `5f0acd4` PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist | \u2014 | \u2014 | not yet discharged |\n| `M-88` | X6: does ensemble disagreement beat the model's own predicted step size on more, shorter units? | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x6_stepsize_short_units.json | DISAGREEMENT BEATS STEP SIZE |\n| `M-89` | X7: per-horizon recalibration, fitted on nine episodes and scored on the tenth | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x7_loeo_recalibration.json | WITHIN BAND AT 6 OF 6 HORIZONS (epistemic) |\n| `M-90` | X8: would any verdict change under the released evaluation's action timing? | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x8_released_pairing.json | SAME VERDICT for M-74, M-75, M-76 and the A/B comparison |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
   },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
@@ -1929,19 +1929,19 @@
   },
   "cc_kind_list": {
     "source": "results/comparative_claims.json",
-    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *action-response* (a paragraph quoting our arms' stale-pairing sensitivity also carries rule X2's figure for how they respond to the action), *alignment-arena* (a sentence naming the action-alignment defect and a short-horizon cost has the all-ten-episodes figures, or those words, in its paragraph), *arena_consistency* (every row of the evidence table (Appendix D's second) names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *compute-claim* (no rendered file says a setting won even when its rival trained longer, and every front-matter sentence that names compute or longer training says the ranking depends on it or names the split), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds the build accounting claims, this file enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *overstat-reversal* (no sentence says the released evaluation overstates its error beside an alignment figure unless its paragraph names the reversal of sign), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *rule-seed-scope* (a sentence quoting the three-seed headline or its rule-horizon cells near the word rule or pre-register names the one seed the rule ran on, or the three-seed extension), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
+    "value": "*abstract-budget* (the abstract stays inside its word and numeral budget), *action-caveat* (a paragraph saying our models respond to the action also says that every action in the data comes from one policy), *action-response* (a paragraph quoting our arms' stale-pairing sensitivity also carries rule X2's figure for how they respond to the action), *alignment-arena* (a sentence naming the action-alignment defect and a short-horizon cost has the all-ten-episodes figures, or those words, in its paragraph), *arena_consistency* (every row of the evidence table (Appendix D's second) names an arena and an n_independent that the section owning that claim also states), *arithmetic* (a stated total equals the sum of its stated parts), *cell* (a k-of-45 count is the arena and horizon the text names), *compare* (a stated ordering between two scalars), *compute-claim* (no rendered file says a setting won even when its rival trained longer, and every front-matter sentence that names compute or longer training says the ranking depends on it or names the split), *config-unresolved* (no front-matter sentence naming the winning configurations pairs them with the verdict-level \"one reading unresolved\"), *count-consistency* (one count asserted in several places, in words, numerals or numeric-string variants, agrees everywhere), *count-dependence* (a clean k-of-k count carries an interval or a not-independent note), *cross-artifact-sync* (the README and model card carry the paper's headline values), *extremum* (a named cell is the max or min of its family), *figure_reference* (every in-text figure number names a figure that exists, and no more distinct figure numbers are cited than the document has figures), *frequency-consistency* (a frequency stated in words -- \"at every horizon\", \"at exactly one place\" -- matches a count recomputed from the artifacts), *horizon-consistency* (every horizon-indexed figure in the prose names its horizon, and names the one its artifact cell came from), *horizon-forbidden* (a withdrawn horizon label appears nowhere in the paper), *horizon-label* (a phrase naming a horizon resolves to the horizon the artifact says it is, and the numbers beside it are that horizon's), *interval-required* (a quoted ratio or coverage is accompanied by its interval), *kind-count* (the number of kinds the build accounting claims, this file enumerates and the checker registers are one number), *orders* (a stated count of orders of magnitude matches `round(log10(ratio))`, or a ratio quoted directly appears in the sentence that quotes it), *overlap* (two intervals do or do not overlap), *overstat-reversal* (no sentence says the released evaluation overstates its error beside an alignment figure unless its paragraph names the reversal of sign), *population_partition* (the run populations the paper quotes against one another partition -- the run table's row counts sum to the stated total, every row states the width it trained at, and the collapse family plus the runs excluded from it equal the total), *relvar* (a stated ratio of relative variabilities), *restatement* (no sentence restates a quantity another section owns -- no numeral is typed into the slot a substituted one fills elsewhere, and no section prints two different quantities as the same numeral), *retraction-consistency* (a claim the ledger marks superseded is asserted nowhere reader-facing), *retraction_class_consistency* (every retraction identifier a reader-facing file names resolves to exactly one class, and to the class the ledger gives it), *rule-seed-scope* (a sentence quoting the three-seed headline or its rule-horizon cells near the word rule or pre-register names the one seed the rule ran on, or the three-seed extension), *scope-consistency* (a universal quantifier is checked against the set it quantifies over), *sign* (a stated rise or fall matches the direction of the difference), *stale-interval* (a sentence printing our models' stale-timing change carries N5's interval for each figure, for the same arena and horizon), *table_renders* (every table in the source reaches the LaTeX as a table, with at least one row separator per source row), and *unit-consistency* (every n_independent figure names the evaluation unit it counts -- the revision introduced a second unit length, and 60 units of 33 rows and 4 of 400 are both \"n_independent\")"
   },
   "cc_kinds": {
     "source": "results/comparative_claims.json",
-    "value": 32
+    "value": 35
   },
   "cc_n": {
     "source": "results/comparative_claims.json",
-    "value": 65
+    "value": 68
   },
   "cc_pass": {
     "source": "results/comparative_claims.json",
-    "value": 65
+    "value": 68
   },
   "cc_selfdefect_list": {
     "source": "results/comparative_claims.json",
@@ -1961,11 +1961,11 @@
   },
   "cc_st_caught": {
     "source": "results/comparative_claims.json",
-    "value": 65
+    "value": 68
   },
   "cc_st_n": {
     "source": "results/comparative_claims.json",
-    "value": 65
+    "value": 68
   },
   "collapse_pooled_rate": {
     "source": "results/step6_analysis.json",
@@ -1998,6 +1998,18 @@
   "d12_lo": {
     "source": "results/a2_trajectory_level_control.json",
     "value": "0.523"
+  },
+  "d12_mean_hi": {
+    "source": "results/step4_0a_results.json",
+    "value": "1.591"
+  },
+  "d12_mean_lo": {
+    "source": "results/step4_0a_results.json",
+    "value": "0.562"
+  },
+  "d12_speed_r": {
+    "source": "results/step4_0a_results.json",
+    "value": "+0.088"
   },
   "d1_A_hi": {
     "source": "results/task_d1_threeseed.json",
@@ -4093,15 +4105,15 @@
   },
   "evidence_table": {
     "source": "results/evidence_summary.json",
-    "value": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre; every other reading the rule reports returns the same verdict but held-out nRMSE at h = 1, which is unresolved; the ranking depends on training length (Appendix U) | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; every reading the rule reports returns it from h = 32, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; every reading the rule reports returns it from h = 128, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY (disagreement beats the one-step error before the window, but not the model's predicted step size): step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale (\u00a77.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |"
+    "value": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre, and no reading the rule reports puts the centre ahead of any of them; the ranking depends on training length (Appendix U) | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; every reading the rule reports returns it from h = 32, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; every reading the rule reports returns it from h = 128, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY (disagreement beats the one-step error before the window, but not the model's predicted step size): step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale (\u00a77.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |"
   },
   "f1_n_cited": {
     "source": "results/paper_figures.json",
-    "value": 35
+    "value": 37
   },
   "f1_n_kept": {
     "source": "results/paper_figures.json",
-    "value": 33
+    "value": 35
   },
   "f1_n_moved_word": {
     "source": "results/paper_figures.json",
@@ -5471,6 +5483,14 @@
     "source": "results/mn_sweep_verdict.json",
     "value": "NOT OPTIMAL AT OUR BUDGET"
   },
+  "mn_winner_episode_clause": {
+    "source": "results/mn_sweep_verdict.json",
+    "value": "the centre is ahead of (2, 8) on 1 and of (8, 8) on 2 of the ten, and of neither other winner on any"
+  },
+  "mn_winner_unres_clause": {
+    "source": "results/mn_sweep_verdict.json + results/pooled_nrmse_alongside.json",
+    "value": "all four at h = 1 on the held-out pair in both metrics, the two longer forecasts also at h = 8, and (2, 8) on held-out nRMSE at h = 368, (8, 8) on in-sample relative-L1 at h = 368 and (32, 32) on in-sample nRMSE at h = 100"
+  },
   "mn_worse_list": {
     "source": "results/mn_sweep_verdict.json",
     "value": "(32, 2) and (32, 1)"
@@ -5662,6 +5682,70 @@
   "n3_sh_over_long_M8_N8": {
     "source": "results/mn_compute_matched.json",
     "value": "10"
+  },
+  "n5_appV_hdr": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "h = 1 | h = 8 | h = 32 | h = 100 | h = 128 | h = 368"
+  },
+  "n5_appV_table": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "| Arm A, 2,500 | own training data (16) | +27.8 [+15.6, +49.4] | +31.5 [+19.2, +53.0] | +53.8 [+34.6, +83.5] | +48.7 [+34.8, +65.7] | +46.3 [+33.7, +62.0] | +38.2 [+27.4, +51.1] |\n| Arm A, 2,500 | held-out pair (4) | +1.8 [-1.6, +11.6] | +3.6 [-0.6, +21.9] | +5.6 [-0.2, +30.8] | +6.9 [+2.6, +20.0] | +8.0 [+3.0, +19.9] | +7.9 [+1.4, +19.1] |\n| Arm A, 10,000 | own training data (16) | +124.6 [+75.8, +201.9] | +161.8 [+121.3, +231.1] | +205.9 [+156.7, +275.9] | +209.3 [+167.3, +257.6] | +205.0 [+166.2, +247.5] | +184.1 [+150.5, +218.6] |\n| Arm A, 10,000 | held-out pair (4) | -1.0 [-6.1, +27.7] | +4.7 [-5.0, +73.6] | +13.9 [-2.4, +104.1] | +16.6 [+1.9, +72.6] | +18.0 [+3.1, +71.8] | +22.7 [+4.0, +78.5] |\n| Arm B, 2,500 | own training data (16) | +18.7 [+8.9, +36.1] | +15.9 [+7.9, +29.5] | +20.3 [+10.3, +36.8] | +9.3 [+5.1, +14.9] | +6.6 [+3.2, +11.2] | -1.1 [-7.2, +5.3] |\n| Arm B, 2,500 | held-out pair (4) | +1.1 [-0.8, +8.3] | +0.3 [-0.8, +4.5] | +3.4 [+0.4, +14.6] | +0.7 [-1.2, +5.4] | +0.6 [-2.3, +5.3] | -7.4 [-8.5, -3.8] |\n| Arm B, 10,000 | own training data (16) | +75.1 [+44.2, +118.9] | +68.6 [+45.9, +105.2] | +60.0 [+39.9, +98.7] | +32.5 [+20.1, +50.3] | +23.6 [+13.1, +37.5] | +10.8 [+2.0, +19.1] |\n| Arm B, 10,000 | held-out pair (4) | -1.0 [-2.7, +9.3] | +1.4 [-0.5, +12.4] | +6.1 [+2.5, +25.5] | +6.2 [+3.8, +17.3] | +4.7 [+3.5, +10.0] | +19.0 [-3.1, +29.1] |\n| released checkpoint | own training data (20) | +55.0 [+26.3, +92.7] | +54.4 [+37.5, +82.3] | +37.4 [+21.3, +65.4] | +8.2 [-10.4, +24.9] | -8.8 [-23.8, +4.9] | -4.6 [-13.4, +3.2] |\n| released checkpoint | held-out pair (4) | +34.2 [+10.6, +75.0] | +37.2 [+7.9, +95.6] | +47.7 [+5.8, +131.8] | +22.5 [+6.3, +41.7] | +20.3 [+7.0, +35.7] | +7.9 [+3.1, +13.0] |"
+  },
+  "n5_delta_armA_h100": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "0.246"
+  },
+  "n5_delta_armA_h8": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "0.200"
+  },
+  "n5_delta_rel_h100": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "0.373"
+  },
+  "n5_delta_rel_h8": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "0.204"
+  },
+  "n5_err_armA_h8": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "0.086"
+  },
+  "n5_err_rel_h8": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "0.158"
+  },
+  "n5_ho_ci_h1": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "[-6.1, +27.7]"
+  },
+  "n5_ho_ci_h100": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "[+1.9, +72.6]"
+  },
+  "n5_ho_h1": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "-1.0"
+  },
+  "n5_ho_h100": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "+16.6"
+  },
+  "n5_ins_ci_h1": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "[+75.8, +201.9]"
+  },
+  "n5_ins_ci_h100": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "[+167.3, +257.6]"
+  },
+  "n5_ins_h1": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "+124.6"
+  },
+  "n5_ins_h100": {
+    "source": "results/n5_stale_armA_ci.json",
+    "value": "+209.3"
   },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
@@ -5921,7 +6005,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 62
+    "value": 67
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -9065,7 +9149,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 914
+    "value": 974
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -9642,6 +9726,162 @@
   "x2_reading": {
     "source": "results/action_sensitivity.json",
     "value": "RESPONDS TO THE ACTION"
+  },
+  "x2_thr_pct": {
+    "source": "results/action_sensitivity.json",
+    "value": "+10"
+  },
+  "x6_ci": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "[+0.1978, +0.3896]"
+  },
+  "x6_ci_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "[+0.0950, +0.3131]"
+  },
+  "x6_label_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "DISAGREEMENT BEATS STEP SIZE"
+  },
+  "x6_margin": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.2816"
+  },
+  "x6_margin_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.2393"
+  },
+  "x6_mde": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "0.1713"
+  },
+  "x6_mde_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "0.2214"
+  },
+  "x6_n_units": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": 70
+  },
+  "x6_n_units_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": 150
+  },
+  "x6_partial": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.6361"
+  },
+  "x6_partial_ci": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "[+0.5567, +0.7466]"
+  },
+  "x6_partial_ci_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "[+0.4691, +0.7250]"
+  },
+  "x6_partial_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.6317"
+  },
+  "x6_r_dis": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.6808"
+  },
+  "x6_r_dis_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.7415"
+  },
+  "x6_r_step": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.3992"
+  },
+  "x6_r_step_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "+0.5022"
+  },
+  "x6_reading": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": "DISAGREEMENT BEATS STEP SIZE"
+  },
+  "x6_unit_len": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": 132
+  },
+  "x6_unit_len_h32": {
+    "source": "results/x6_stepsize_short_units.json",
+    "value": 64
+  },
+  "x7_ale_summary": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "WITHIN BAND AT 3 OF 6 HORIZONS"
+  },
+  "x7_ci_max": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "74.9"
+  },
+  "x7_ci_min": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "61.2"
+  },
+  "x7_const_n": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": 1
+  },
+  "x7_const_word": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "one"
+  },
+  "x7_cspread": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "1.18"
+  },
+  "x7_n_h_word": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "six"
+  },
+  "x7_n_traj": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": 20
+  },
+  "x7_summary": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "WITHIN BAND AT 6 OF 6 HORIZONS"
+  },
+  "x7_table": {
+    "source": "results/x7_loeo_recalibration.json",
+    "value": "| 1 | **68.6 [63.9, 72.9]**, WITHIN BAND | 68.2 [57.4, 77.6], UNRESOLVED | 68.6 [63.9, 72.9], WITHIN BAND | 16.2 [13.4, 18.9] | 6.29 \u2013 6.81 |\n| 8 | **68.4 [61.2, 74.9]**, WITHIN BAND | 68.5 [57.6, 78.3], UNRESOLVED | 50.6 [44.7, 55.8], OUTSIDE BAND | 10.0 [8.6, 11.3] | 10.44 \u2013 12.35 |\n| 32 | **68.3 [61.3, 74.6]**, WITHIN BAND | 68.4 [57.2, 78.3], UNRESOLVED | 37.1 [32.4, 41.4], OUTSIDE BAND | 7.0 [6.0, 7.8] | 16.44 \u2013 18.84 |\n| 100 | **68.2 [64.5, 71.7]**, WITHIN BAND | 67.9 [59.4, 75.7], WITHIN BAND | 26.5 [24.0, 28.9], OUTSIDE BAND | 4.6 [4.1, 5.1] | 28.87 \u2013 31.90 |\n| 128 | **68.2 [65.3, 71.0]**, WITHIN BAND | 68.0 [60.2, 75.2], WITHIN BAND | 25.0 [23.1, 26.9], OUTSIDE BAND | 4.4 [4.0, 4.8] | 31.86 \u2013 34.20 |\n| 368 | **68.2 [65.3, 71.1]**, WITHIN BAND | 68.1 [60.9, 75.3], WITHIN BAND | 21.2 [19.7, 22.7], OUTSIDE BAND | 3.6 [3.3, 3.9] | 40.31 \u2013 43.02 |"
+  },
+  "x8_n_changed": {
+    "source": "results/x8_released_pairing.json",
+    "value": 22
+  },
+  "x8_reading": {
+    "source": "results/x8_released_pairing.json",
+    "value": "SAME VERDICT"
+  },
+  "x8_tab_75": {
+    "source": "results/x8_released_pairing.json",
+    "value": "| verdict (held-out pair, relative-L1 at h = 368) | REPRODUCES | REPRODUCES |\n| held-out pair, relative-L1 at h = 1 | CANNOT BE SETTLED | CANNOT BE SETTLED |\n| held-out pair, relative-L1 at h = 8 | PARTIAL | PARTIAL |\n| held-out pair, relative-L1 at h = 32 | REPRODUCES | REPRODUCES |\n| held-out pair, relative-L1 at h = 100 | REPRODUCES | REPRODUCES |\n| held-out pair, relative-L1 at h = 128 | REPRODUCES | REPRODUCES |\n| held-out pair, relative-L1 at h = 368 | REPRODUCES | REPRODUCES |\n| held-out pair, nRMSE at h = 1 | CANNOT BE SETTLED | CANNOT BE SETTLED |\n| held-out pair, nRMSE at h = 8 | PARTIAL | PARTIAL |\n| held-out pair, nRMSE at h = 32 | REPRODUCES | REPRODUCES |\n| held-out pair, nRMSE at h = 100 | REPRODUCES | REPRODUCES |\n| held-out pair, nRMSE at h = 128 | REPRODUCES | REPRODUCES |\n| held-out pair, nRMSE at h = 368 | REPRODUCES | REPRODUCES |\n| in-sample arena, relative-L1 at h = 1 | CANNOT BE SETTLED | **DOES NOT REPRODUCE** |\n| in-sample arena, relative-L1 at h = 8 | PARTIAL | PARTIAL |\n| in-sample arena, relative-L1 at h = 32 | REPRODUCES | REPRODUCES |\n| in-sample arena, relative-L1 at h = 100 | REPRODUCES | REPRODUCES |\n| in-sample arena, relative-L1 at h = 128 | REPRODUCES | REPRODUCES |\n| in-sample arena, relative-L1 at h = 368 | REPRODUCES | REPRODUCES |\n| in-sample arena, nRMSE at h = 1 | CANNOT BE SETTLED | **DOES NOT REPRODUCE** |\n| in-sample arena, nRMSE at h = 8 | PARTIAL | PARTIAL |\n| in-sample arena, nRMSE at h = 32 | REPRODUCES | REPRODUCES |\n| in-sample arena, nRMSE at h = 100 | REPRODUCES | REPRODUCES |\n| in-sample arena, nRMSE at h = 128 | REPRODUCES | REPRODUCES |\n| in-sample arena, nRMSE at h = 368 | REPRODUCES | REPRODUCES |"
+  },
+  "x8_tab_76": {
+    "source": "results/x8_released_pairing.json",
+    "value": "| verdict (held-out pair, relative-L1 at h = 368) | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| held-out pair, relative-L1 at h = 1 | CANNOT BE SETTLED | CANNOT BE SETTLED |\n| held-out pair, relative-L1 at h = 8 | PARTIAL | PARTIAL |\n| held-out pair, relative-L1 at h = 32 | PARTIAL | PARTIAL |\n| held-out pair, relative-L1 at h = 100 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| held-out pair, relative-L1 at h = 128 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| held-out pair, relative-L1 at h = 368 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| held-out pair, nRMSE at h = 1 | CANNOT BE SETTLED | CANNOT BE SETTLED |\n| held-out pair, nRMSE at h = 8 | PARTIAL | PARTIAL |\n| held-out pair, nRMSE at h = 32 | PARTIAL | PARTIAL |\n| held-out pair, nRMSE at h = 100 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| held-out pair, nRMSE at h = 128 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| held-out pair, nRMSE at h = 368 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| in-sample arena, relative-L1 at h = 1 | PARTIAL | PARTIAL |\n| in-sample arena, relative-L1 at h = 8 | PARTIAL | **A BASELINE AHEAD** |\n| in-sample arena, relative-L1 at h = 32 | PARTIAL | **A BASELINE AHEAD** |\n| in-sample arena, relative-L1 at h = 100 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| in-sample arena, relative-L1 at h = 128 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| in-sample arena, relative-L1 at h = 368 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| in-sample arena, nRMSE at h = 1 | PARTIAL | PARTIAL |\n| in-sample arena, nRMSE at h = 8 | PARTIAL | **A BASELINE AHEAD** |\n| in-sample arena, nRMSE at h = 32 | PARTIAL | **A BASELINE AHEAD** |\n| in-sample arena, nRMSE at h = 100 | RWM AHEAD OF ALL THREE | **PARTIAL** |\n| in-sample arena, nRMSE at h = 128 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |\n| in-sample arena, nRMSE at h = 368 | RWM AHEAD OF ALL THREE | RWM AHEAD OF ALL THREE |"
+  },
+  "x8_tab_ab": {
+    "source": "results/x8_released_pairing.json",
+    "value": "| M-23's verdict, three seeds (held-out pair, relative-L1 at h = 368) | REPRODUCES AT LONG HORIZON | REPRODUCES AT LONG HORIZON |\n| M-23's verdict, seed 1 as discharged | REPRODUCES AT LONG HORIZON | REPRODUCES AT LONG HORIZON |\n| M-23's conditions at h = 8 held-out | REPRODUCES AT LONG HORIZON | **FAILS TO REPRODUCE** |\n| M-23's conditions at nRMSE h = 368 held-out | REPRODUCES AT LONG HORIZON | REPRODUCES AT LONG HORIZON |\n| M-23's conditions at h = 368 in-sample | REPRODUCES AT LONG HORIZON | REPRODUCES AT LONG HORIZON |\n| secondary at h = 8 held-out | A leads, CI excludes 0 | **spans zero** |\n| secondary at h = 368 in-sample | A leads, CI excludes 0 | A leads, CI excludes 0 |\n| secondary at h = 8 in-sample | A leads, CI excludes 0 | **spans zero** |\n| by-horizon gap at h = 1 | spans zero | **excludes zero** |\n| by-horizon gap at h = 8 | excludes zero | **spans zero** |\n| by-horizon gap at h = 32 | excludes zero | excludes zero |\n| by-horizon gap at h = 100 | excludes zero | excludes zero |\n| by-horizon gap at h = 128 | excludes zero | excludes zero |\n| by-horizon gap at h = 368 | excludes zero | excludes zero |\n| episodes where autoregressive training is ahead at h = 1, of ten | 3 | **0** |\n| episodes where autoregressive training is ahead at h = 8, of ten | 10 | **4** |\n| episodes where autoregressive training is ahead at h = 32, of ten | 10 | 10 |\n| episodes where autoregressive training is ahead at h = 100, of ten | 10 | 10 |\n| episodes where autoregressive training is ahead at h = 128, of ten | 10 | 10 |\n| episodes where autoregressive training is ahead at h = 368, of ten | 10 | 10 |"
+  },
+  "x8_tab_m74": {
+    "source": "results/x8_released_pairing.json",
+    "value": "| verdict (held-out pair, relative-L1 at h = 368) | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, relative-L1 at h = 1 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, relative-L1 at h = 8 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, relative-L1 at h = 32 | NOT OPTIMAL AT OUR BUDGET | **CANNOT BE DISTINGUISHED** |\n| held-out pair, relative-L1 at h = 100 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, relative-L1 at h = 128 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, relative-L1 at h = 368 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, nRMSE at h = 1 | CANNOT BE DISTINGUISHED | **NOT OPTIMAL AT OUR BUDGET** |\n| held-out pair, nRMSE at h = 8 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, nRMSE at h = 32 | NOT OPTIMAL AT OUR BUDGET | **CANNOT BE DISTINGUISHED** |\n| held-out pair, nRMSE at h = 100 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, nRMSE at h = 128 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| held-out pair, nRMSE at h = 368 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| in-sample arena, relative-L1 at h = 100 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| in-sample arena, relative-L1 at h = 368 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| in-sample arena, nRMSE at h = 100 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| in-sample arena, nRMSE at h = 368 | NOT OPTIMAL AT OUR BUDGET | NOT OPTIMAL AT OUR BUDGET |\n| (32, 32): episodes where the centre is ahead, of ten | 0 | 0 |\n| (16, 8): episodes where the centre is ahead, of ten | 6 | **9** |\n| (32, 16): episodes where the centre is ahead, of ten | 0 | 0 |\n| (8, 8): episodes where the centre is ahead, of ten | 2 | **7** |\n| (32, 2): episodes where the centre is ahead, of ten | 10 | 10 |\n| (32, 1): episodes where the centre is ahead, of ten | 10 | 10 |\n| (2, 8): episodes where the centre is ahead, of ten | 1 | **2** |\n| (1, 8): episodes where the centre is ahead, of ten | 7 | **9** |"
+  },
+  "x8_trend_0": {
+    "source": "results/x8_released_pairing.json",
+    "value": "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=1, h=32, h=100, h=128, h=368 and spans zero at h=8; at h=8, the horizon the model is trained on, the gap spans zero; the ratio is below one at h=1"
+  },
+  "x8_trend_1": {
+    "source": "results/x8_released_pairing.json",
+    "value": "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=8, h=32, h=100, h=128, h=368 and spans zero at h=1; at h=8, the horizon the model is trained on, the gap excludes zero; the ratio is below one at h=1"
   },
   "zero_delta_resid": {
     "source": "results/task3_hardening.json",
