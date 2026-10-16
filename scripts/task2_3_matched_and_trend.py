@@ -88,7 +88,12 @@ for arena in ("out-of-sample","in-sample"):
         slr,icr=np.polyfit(x,ratio,1)
         r2r=1-((ratio-(slr*x+icr))**2).sum()/((ratio-ratio.mean())**2).sum()
         close=-ic/sl if sl<0 else None
-        tr[f"{arena}|h{h}"]={"gap":gap.tolist(),"ratio":ratio.tolist(),
+        # Round 4, F9 (H3; round 3's OUT_OF_SCOPE R7): the trend is read in Appendix H without its
+        # arenas' numbers of independent trajectories. Each per-checkpoint gap records its own n_ind
+        # (task5_analyse.py); they must agree across the checkpoints, and the trend now records it.
+        _ni={g[f"{arena}|{c}|h{h}"]["n_ind"] for c in CK}
+        assert len(_ni)==1,(arena,h,_ni)
+        tr[f"{arena}|h{h}"]={"gap":gap.tolist(),"ratio":ratio.tolist(),"n_independent":_ni.pop(),
                              "gap_slope":float(sl),"gap_r2":float(r2),
                              "ratio_slope":float(slr),"ratio_r2":float(r2r),
                              "gap_zero_at":float(close) if close and close>0 else None}
