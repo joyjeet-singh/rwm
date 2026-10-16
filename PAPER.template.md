@@ -282,11 +282,8 @@ would take.
 figure.** Each is asserted qualitatively and shown in a plot, with no number in text, caption or
 table; §6.6's coefficient is the first figure attached to the follow-up's "strong correlation"
 between disagreement and error. The exceptions are the configuration claim and the teacher-forcing
-claim, whose values one heatmap prints in every cell (§5.2). For the teacher-forced {{mn_n1_label}}
-it prints {{orig_tf_e_n1}} against {{orig_tf_e_centre}} at the centre, {{orig_tf_ratio}}× worse, on
-evaluation data and at a horizon it does not state; our sweep's {{mn_n1_label}} is
-{{mn_tf_ratio}}× worse on relative-L1 at h = {{v2_diag_h}} and {{iters_main}} iterations. Our {{d1_ratio}}×, at {{iters_long}}, uses a different definition of teacher forcing
-(`docs/presubmission/ORIGINAL_SPECS.md` §2); §5 relates the two. Where a magnitude is legible only from a plotted curve we say so rather
+claim, whose values one heatmap prints in every cell (§5.2). Appendix L sets its teacher-forcing cell beside
+ours, which uses a different definition of teacher forcing. Where a magnitude is legible only from a plotted curve we say so rather
 than estimating it from the axis.
 
 **Appendix D's first table gives it in full**, claim by claim, with what the original states, where it
@@ -324,9 +321,8 @@ excludes zero at both trajectory lengths (`results/review_bootstrap_unit.json`).
 *The out-of-sample effect size, at every horizon.* At h = {{v2_diag_h}}, the rule's horizon, the
 three-seed extension puts autoregressive training at **{{d1_A_mean}} ± {{d1_A_sd}}** against teacher forcing's
 **{{d1_B_mean}} ± {{d1_B_sd}}** (standard deviation over seeds, `ddof=1`), a factor of **{{d1_ratio}}×**. Arm B predicts each of the window's {{win_fore}} forecast targets from
-true inputs, where the original's teacher forcing is N = 1; the sweep's {{mn_n1_label}}, trained that way, is
-{{mn_tf_ratio}}× worse than the centre at h = {{v2_diag_h}} at {{iters_main}} iterations (§5.2), so the direction
-holds under both definitions.
+true inputs, where the original's teacher forcing is $N = 1$, and the direction holds under both
+definitions (Appendix L).
 At h = {{v2_deploy_h}}, the method's own imagination rollout length and the
 horizon everything in §6 is anchored to, the same three seeds give **{{d1_ratio_h100}}×**.
 Quoting one and not the other would be a choice, so we report the curve (Figure 2): same rollouts,
@@ -418,9 +414,8 @@ difference is positive when the centre is better, and "result" is after Holm
 iteration over the centre's, timed without contention (`results/mn_compute_matched.json`); hours per
 run, and the {{mn_n_overlapped}} of {{rt_sweep_runs}} sweep runs that overlapped other logged CPU work,
 are in Appendix B. The hold-last floor is {{mn_floor_h100}} at h = {{v2_deploy_h}} and {{mn_floor_h368}} at h = {{v2_diag_h}}.
-The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
-alongside the rules here and in §5.3 are pooled, recomputed afterwards (post hoc,
-`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§5.3 gives the {{n2_n_changed_word}} readings of its rules that differ).
+The nRMSE readings quoted alongside the rules here and in §5.3 are pooled as §3.1 defines it,
+recomputed afterwards (post hoc; Appendix U).
 
 **Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre ({{mn_better_kinds}}), {{mn_worse_list}} are worse, and
 {{mn_unres_list}} cannot be told apart from it. At h = {{v2_diag_h}} the lowest error is {{mn_best_config}}'s,
@@ -448,10 +443,9 @@ trained (Appendix U gives every reading); none of this re-opens rule M-74.
 **Limits.** One factor is varied at a time, so no interaction between M and N is tested. Our data
 budget is {{c2_pct}}% of the reference's (§5.1), and the original states neither the ablation's
 budget, its evaluation data nor the horizon behind its error, so the verdict holds at our budget and
-no further: a larger one may favour a longer history. All {{tail_n}} runs at {{iters_main}} iterations,
-the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes
-from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`,
-post hoc), so the ranking is at this budget, not at convergence, and it changes with training length (Appendix U). With {{mn_nind}} independent trajectories, the rule's minimum detectable effect at h = {{v2_diag_h}},
+no further: a larger one may favour a longer history. All {{tail_n}} runs at {{iters_main}} iterations are still lowering their training loss at the end
+(post hoc; Appendix U), so the ranking is at this budget, not at convergence, and it changes with
+training length. With {{mn_nind}} independent trajectories, the rule's minimum detectable effect at h = {{v2_diag_h}},
 the difference its first Holm step would usually detect, is about {{mn_mde_h368}}% of the centre's
 error.
 
@@ -481,11 +475,8 @@ as RWM and test each baseline's relative-L1 at h = {{v2_diag_h}} against it, on 
 {{mn_seeds_word}} seeds at {{iters_main}} iterations (`results/baselines_eval.json`). A difference is
 positive when RWM is better, and "result" is after Holm (`results/baselines_verdict.json`). The last
 column is timed beside RWM in one sitting (`results/mn_compute_matched.json`); hours per run are in
-Appendix B. † marks a diverged row, one where any seed's mean relative-L1 at h = {{v2_diag_h}} exceeds
-{{div_factor}}× the hold-last floor's (`results/pooled_nrmse_rescore.json`, post hoc). Run-away
-rollouts dominate those {{div_n_word}} rows' means; per seed they are {{div_per_seed}}. No verdict
-depends on that magnitude, only on the sign: each such row's {{mn_nind}} per-trajectory differences from
-RWM are all positive, so every bootstrap resample favours RWM whatever their size. The two size-matched rows (rule X4) are trained autoregressively for {{iters_main}} iterations on {{mn_seeds_word}} seeds and scored on the same arena (`results/x4_matched_baselines.json`); they were not timed in that sitting, so their last cell is empty.
+Appendix B. † marks a diverged row, whose mean run-away rollouts dominate; no verdict depends on that
+magnitude, only on the sign, which favours RWM on every trajectory (Appendix L). The two size-matched rows (rule X4) are trained autoregressively for {{iters_main}} iterations on {{mn_seeds_word}} seeds and scored on the same arena (`results/x4_matched_baselines.json`); they were not timed in that sitting, so their last cell is empty.
 
 **Result: {{bl_tf_verdict}} with the baselines teacher-forced, and {{bl_ar_verdict}} with them
 trained autoregressively.** RWM is ahead of baselines built to our reading of Table S7 and trained
@@ -1873,6 +1864,25 @@ recurrent state (the autoregressive one's at most {{x1b_ar_ratio_hi}}×), with {
 still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in
 DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on one seed, neither of them PlaNet's latent overshooting (Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which PlaNet's own final RSSM agent did not need. So the architecture claim rests on the MLP and the transformer.
 
+**Teacher forcing's two definitions (§4, §5).** §4 and §5 each keep a sentence of the following.
+
+From §4, on the original's heatmap: For the teacher-forced {{mn_n1_label}}
+it prints {{orig_tf_e_n1}} against {{orig_tf_e_centre}} at the centre, {{orig_tf_ratio}}× worse, on
+evaluation data and at a horizon it does not state; our sweep's {{mn_n1_label}} is
+{{mn_tf_ratio}}× worse on relative-L1 at h = {{v2_diag_h}} and {{iters_main}} iterations. Our {{d1_ratio}}×, at {{iters_long}}, uses a different definition of teacher forcing
+(`docs/presubmission/ORIGINAL_SPECS.md` §2); the next paragraph relates the two.
+
+From §5: Arm B predicts each of the window's {{win_fore}} forecast targets from
+true inputs, where the original's teacher forcing is N = 1; the sweep's {{mn_n1_label}}, trained that way, is
+{{mn_tf_ratio}}× worse than the centre at h = {{v2_diag_h}} at {{iters_main}} iterations (§5.2), so the direction
+holds under both definitions.
+
+**The diverged baseline rows (§5.3).** † marks a diverged row, one where any seed's mean relative-L1 at h = {{v2_diag_h}} exceeds
+{{div_factor}} times the hold-last floor's (`results/pooled_nrmse_rescore.json`, post hoc). Run-away
+rollouts dominate those {{div_n_word}} rows' means; per seed they are {{div_per_seed}}. No verdict
+depends on that magnitude, only on the sign: each such row's {{mn_nind}} per-trajectory differences from
+RWM are all positive, so every bootstrap resample favours RWM whatever their size.
+
 **The long-horizon cells.** At long horizons §5's pattern is consistent across the design. Under the cluster bootstrap, the
 out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells,
 both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints. These figures are
@@ -2331,6 +2341,18 @@ Post hoc (ledger R-78; `results/mn_compute_matched.json`); it re-opens no rule, 
 {{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterations: {{n3_appU_nrows_word}} rows of {{n3_n_readings_word}}
 readings each. A longer forecast costs more per iteration than the centre, a shorter history less, so the centre's
 longer runs ask whether a configuration's win survives giving the centre at least as much training computation.
+
+**How §5.2's alongside readings were computed, and how far its runs had trained.** §5.2 keeps a
+sentence of each.
+
+The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
+alongside the rules here and in §5.3 are pooled, recomputed afterwards (post hoc,
+`results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§5.3 gives the {{n2_n_changed_word}} readings of its rules that differ).
+
+All {{tail_n}} runs at {{iters_main}} iterations,
+the sweep's, the baselines' and both arms', are still lowering their training loss at the end, with slopes
+from {{tail_slope_lo}} to {{tail_slope_hi}} per thousand iterations (`results/training_tail_slopes.json`,
+post hoc), so the ranking is at this budget, not at convergence, and it changes with training length (Appendix U).
 
 **§5.2's reading, in full.** §5.2 keeps three sentences of it.
 
