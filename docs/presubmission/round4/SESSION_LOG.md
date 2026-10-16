@@ -446,3 +446,62 @@ Body words (round2/t6_words.py): 20,585 (F0: 20,745)
 Abstract words / numerals (C12.1): 300 / 19
 Next: F8 (Opus 5.5, default), §6 to §13 with the appendices only as destinations: Annex 5's rows for §6.2–§12 in full, W8 and the sentence splits in that range, then the end-of-range report (final count against 16,000, the three largest remaining sections, pages before References, the ID count against F0's). It needs ≥4,585 words from 12,849. F6's header time (13:40) is not its commit time (75ee7a9, 12:23). Commits stay local.
 Decisions for user: none
+
+## F8 — 2026-10-16 17:30 — Opus 5.5 (the plan assigns default effort, fresh terminal) — status: COMPLETE
+Commits:
+855a40f [F8][1] Section 6.2: the full released-checkpoint table, the held-out-pair comparison, the larger-sample note, the ensemble-5 arms' table and the permutation note moved verbatim to Appendix M; section 6.2 keeps the h = 1 and h = 100 rows (1,791 -> 1,433 words)
+8854338 [F8][2] Sections 6.3-6.4: the term-by-term and run-count summaries, the corrected objective's permutation detail and the two code walkthroughs moved verbatim to Appendix J; the derivation, the synthetic-noise verdict and the sharing stay
+929ef72 [F8][3] Section 6.5: both tables and their explanatory paragraphs moved verbatim to Appendix K; section 6.5 keeps the teacher-forced arm's and the epistemic term's findings, its claim and the structural-excuse result (1,001 -> 438 words)
+b422e7a [F8][4] Section 6.6: r_dd's table, rule M-43's paragraph, the expectation, the free baselines' cost and two alongside notes moved verbatim to Appendix N; the counter table, the free-baselines verdict and X6 stay (1,744 -> 1,429 words)
+b65b257 [F8][5] Sections 6.7-6.8: section 6.7's constant-scalar detail, table and M-69 detail to Appendix T, section 6.8's two tables to Appendices O and P, verbatim; every verdict, X7, the cautions and the independence factor stay (2,145 -> 1,573 words)
+13dc31e [F8][6] Section 7: 7.2's N5 figures, forecast-shift discussion and per-trajectory values to Appendix V, X8's detail to Appendix Z, its drafting-history sentence to BUILD_CHECKS; 7.2 split into paragraphs, every verdict and caveat kept (1,172 -> 1,024 words)
+99f6ad2 [F8][7] Section 11: what is stated beside its result, or in full in Appendix R, leaves; O13 is said once, plainly; S-12 to plain words; six pointers repointed to Appendix R (864 -> 628 words)
+41d3a17 [F8][8] Section 12: 'What should travel' moved verbatim to Appendix S, two sentences kept; the conclusions stay, the long baselines sentence split (754 -> 563 words)
+344b753 [F8][9] Sections 6.1, 6.2, 6.6 and 8: the correspondence passages to Appendix H, the four-model table to Appendix M, the paired-test note to Appendix N, the reproducibility detail to BUILD_CHECKS, verbatim; S-12 and S-15 out of sections 8 and 9
+63e7b1d [F8][10] Section 6.7's X7 alongside readings to Appendix Y; two in-section restatements of section 6.2's one-step figure removed (the figure stands above them)
+8229b30 [F8][W8] Sections 6-12: no R-/S-/D-/C-/B- IDs or commit labels left; rule IDs kept once per section where the verdict is reported (M-65, M-44, M-68, M-84 and three X7s to plain words)
+7020528 [F8][3] Sentences: 24 main-text sentences in sections 6-12 split at clause boundaries; qualifiers unchanged
+dc6314c [F8][review] Eight qualifiers and scopes the summaries dropped, restored from their moved originals (one read-only reviewer, every finding verified, reconfirmed); section 6.5 states its power limit
+b42ead7 [F8] Build and gates after the length moves, W8, the sentence splits and the review: body 20,585 -> 17,790 words (W6's editorial 16,000 not reached; DECISIONS.md#F8-length); References on page 27; 75 pages, 0 warnings; byte-identical rebuild
+(the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as F0–F7, at the user's request ("start F8"), with ultracode on. The workplan (§2) limits delegation outside F10 to one narrowly scoped read-only reviewer, and that limit overrides ultracode's workflow default, so the moves were made inline and one Explore agent reviewed them. All commits are local (workplan §6). Two subjects carry "[F8][3]": 929ef72 is the third move (item 1), and 7020528 is PLAN item 3.
+- **Item 1, length** (`round4/LENGTH_LOG.md`, one row per move; scripts in `/Users/Shared/rwm_verify/evidence/R4F8/move/`). Annex 5's rows for §6.2, §6.3–6.4, §6.5, §6.6, §6.7–6.8, §7, §11 and §12 are all applied. Each moved passage went verbatim to the appendix that holds its subject: H, J, K, M, N, O, P, S, T, U, V, Y or Z, as titled sections, several of them retitled. In §11, the six paragraphs that left were already stated in full in Appendix R, which a script asserted key by key, so they were not copied twice. F8 also moved passages Annex 5 does not list, from §6.1, §6.2, §6.6 and §8.
+  - **O13** is said once, plainly, in §11's new "What this study cannot address".
+  - **Kept:** §9, every verdict with its arena and horizon, every number the abstract cites, and X6/X7/X8's locked scopes.
+  - **Result: 20,585 → 17,790**, F8's range 12,849 → 10,054. **W6's ≤16,000 is not reached**, 1,790 over. The rest is what Annex 5 and the locked framing keep, plus the contributions list in F7's range: see `DECISIONS.md#F8-length`. I recommend accepting the count; the other options cut the contributions, §9's figures, or §5's per-reading clauses.
+  - **No loss:** the 350 keys that left the main text since F7's start are all printed in an appendix, and all 1,418 template keys survive.
+  - **Pointers:** `xref_sweep` 0 suspect after every move. Pointers into a §11 paragraph that left now name Appendix R.
+- **Item 2, labels (W8).** No R-, S-, D-, C- or B- IDs and no commit labels remain anywhere in the main text: `S-12` ×2 and `S-15` ×3 went with their passages, or became plain words in §8 and §9. In §6–§12 a rule ID is now kept once per section, where its verdict is reported: M-65, M-44, M-68 and M-84, and X7 three times, became words elsewhere. The main text's count is 51 (M- 26, X-rule labels 25), against F0's 59 (M- 40, R- 6, S- 7, X- 5, commit 1). Repeats left in §5–§5.3 (F7's range) are logged in `OUT_OF_SCOPE.md`.
+- **Item 3, sentences.** 24 sentences split in §6–§12, in the main text only, every qualifier kept.
+- **Gate fixes on the way, in new or moved text:**
+  - typed numerals ("ensemble size 5" kept on one line; a typed "89.15%" bound to its key);
+  - C20.1, a unit for n_independent;
+  - C24.1, §6.8's arena size;
+  - C27.1 ("all ten episodes" in the held-out-pair paragraph);
+  - C27.2 and C28.2 (Appendix V's moved N5 passage gains X2's reading and its one-policy caveat);
+  - C14.1, a horizon for the per-trajectory values;
+  - `xref_sweep` (§6.6's expectation keeps the nouns §5's pointer names);
+  - `build_paper`, a blank line under a moved table's title.
+- **Review.** One read-only Explore agent compared every F8 summary in §6–§12 with the original it replaced, checked the locked scopes and checked F8's pointers. It reported eight dropped qualifiers or scopes; I checked each against the moved original, and all eight were real. All eight are restored (LENGTH_LOG, "review (F8)"). On reconfirmation the reviewer found one only partly fixed: §6.5 now states its power limit itself.
+- **Rule 11 audit, summary sites F8 touched:**
+  - **§9:** labels only;
+  - **§11:**
+    - the ranking limit keeps both of X6's scopes;
+    - the cost paragraph keeps the policy caveat, X5 and M-70's verdict with its qualifiers;
+    - the effective-sample-size paragraph is unchanged;
+    - O13 claims no direction;
+  - **§12:**
+    - its two conclusion paragraphs are kept, with one sentence split into three;
+    - "What should travel" keeps its three kinds, and the σ = 0 optimum elsewhere is called a hypothesis untested outside this codebase;
+  → agree. The abstract, the contributions and Appendix D were not edited.
+Build/gates: pass. Evidence summary (unchanged), fast build, every gate, `part_f_gate`, fast build again: byte-identical. 68/68 claims and 68/68 corruptions; compile 75 pages, 0 overfull, 0 warnings. `part_f_gate` 6/7, 1 not run: 4b fails on the bundles (F11).
+Paper numbers changed: pdf_pages 72 → 75; tn_typed 1052 → 1141 (results/typed_numerals.json; summaries name their horizons, and moved passages keep theirs)
+New keys: none
+Re-anchored checks: none
+CPU jobs over 1 min: fast builds with gates, about 1.5 min each (about 25); two end-of-session runs, about 3 min each; the review agent, about 5.5 min and then 40 s. None contended (no training).
+Queue status: done (30 of 30)
+Body words (round2/t6_words.py): 17,790 (F0: 20,745)
+Abstract words / numerals (C12.1): 300 / 19
+Next: F9 (Sonnet 5.5): pipeline hygiene, H1–H5. Commits stay local.
+Decisions for user: DECISIONS.md#F8-length (W6's editorial target missed by 1,790 words; accept, recommended, or authorise one of three further cuts)
