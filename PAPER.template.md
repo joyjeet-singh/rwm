@@ -385,13 +385,12 @@ these cells and our arms beside the released checkpoint they reimplement.
 
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
 
-The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). That is a claim about policy learning and hardware, which we cannot test, but its *world-model* half is a quantity we can count exactly.
-
-**Our arms consume {{c2_trans}} distinct state transitions**: the {{c2_rows}} rows of the eight training episodes less one per episode ({{c2_bounds}} of them), since an episode's first row has no predecessor, a transition being a consecutive pair of rows inside one episode. It is deliberately not the {{c2_windows}} training windows, which overlap almost completely (consecutive {{win_len}}-row windows start one row apart), nor the {{c2_draws}} window draws a {{iters_main}}-iteration run makes, which resample the same data with replacement. Against the reference's {{c2_ref}}, that is **{{c2_ratio}}× less data, {{c2_pct}}% of its world-model budget**.
-
-A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the training result, {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}} over {{d1_seeds}} seeds (the rule ran on seed {{m23_seed}}), and still beats the hold-last floor, by {{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons. That is what this paper can add to the sample-efficiency question without training a policy.
-
-**Three limits.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's {{c2_ref}} transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
+The base paper's headline is a sample-efficiency result about policy learning and hardware, which
+we cannot test, but its *world-model* half is a quantity we can count exactly: **our arms consume
+{{c2_trans}} distinct state transitions, {{c2_ratio}}× less data than the reference's {{c2_ref}},
+{{c2_pct}}% of its world-model budget**, and on that budget the training result above still
+reproduces. Appendix L gives the count and its three limits, the first being that this is not the
+policy-learning comparison.
 
 ### 5.2 The configuration claim: history and forecast horizons
 
@@ -1799,7 +1798,7 @@ The null means explain why, and the explanation is the one that motivates §6.6.
 
 ---
 
-## Appendix L — section 5's floor, seeds and short horizon, its long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint
+## Appendix L — section 5 in detail: the floor, seeds, the short horizon, the data budget, the long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint
 
 **Three passages of §5 in full.** §5 keeps two sentences of each of the next three paragraphs, which
 stood there as follows.
@@ -1838,6 +1837,16 @@ pooled, the out-of-sample gap excludes zero in **{{ab_short_excl}} of {{ab_short
 trajectory lengths crossed with both checkpoints). An earlier rule of ours, anchored at h = 8 and
 evaluated at those same checkpoints (rule M-16, Appendix E), returned **{{m16_verdict}}**.
 **The advantage is small at the training horizon and large beyond it.**
+
+**The data budget (§5.1).** §5.1 keeps two sentences of the following.
+
+The base paper's headline is a sample-efficiency result: policies transfer to hardware from {{c2_ref}} state transitions of world-model pretraining against ~250M for the model-free baseline (Table I). That is a claim about policy learning and hardware, which we cannot test, but its *world-model* half is a quantity we can count exactly.
+
+**Our arms consume {{c2_trans}} distinct state transitions**: the {{c2_rows}} rows of the eight training episodes less one per episode ({{c2_bounds}} of them), since an episode's first row has no predecessor, a transition being a consecutive pair of rows inside one episode. It is deliberately not the {{c2_windows}} training windows, which overlap almost completely (consecutive {{win_len}}-row windows start one row apart), nor the {{c2_draws}} window draws a {{iters_main}}-iteration run makes, which resample the same data with replacement. Against the reference's {{c2_ref}}, that is **{{c2_ratio}}× less data, {{c2_pct}}% of its world-model budget**.
+
+A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the training result, {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}} over {{d1_seeds}} seeds (the rule ran on seed {{m23_seed}}), and still beats the hold-last floor, by {{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons. That is what this paper can add to the sample-efficiency question without training a policy.
+
+**Three limits.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's {{c2_ref}} transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
 
 **The long-horizon cells.** At long horizons §5's pattern is consistent across the design. Under the cluster bootstrap, the
 out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells,
