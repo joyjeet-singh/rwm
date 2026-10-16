@@ -911,7 +911,7 @@ the aleatoric head, and the epistemic term is a spread across members the loss n
 ordering as well as initialisation, and the independent members carry {{v1_cap_ratio}}× the
 shared-trunk arms' state-pathway parameters, so these comparisons bound the architectural effect
 rather than isolating it; at matched capacity the improvement falls to {{m49_ratio_gain}}× against a minimum detectable effect
-of {{m49_mde_ratio}}×, so that rule returns **{{m49_verdict}}** (rule M-49, §11). Neither arm is an interval: at h = {{v2_deploy_h}} the independent ensemble is
+of {{m49_mde_ratio}}×, so that rule returns **{{m49_verdict}}** (rule M-49, Appendix R). Neither arm is an interval: at h = {{v2_deploy_h}} the independent ensemble is
 {{r2_indep_ratio_h100}}× overconfident with {{r2_indep_cov1_h100}}% coverage and the combined arm
 {{m68_indep_ratio_h100}}× with {{m68_indep_cov1_h100}}%, where a calibrated Gaussian gives
 {{v3_cov_nominal1}}%. §6.7's per-horizon multiplier remains the only correction in this paper whose
@@ -1042,61 +1042,44 @@ test we ran found that correcting the scale per horizon leaves every pairwise or
 ## 11. Limitations
 
 Limits that belong to one result are stated beside it: the budget and our reading of Table S7
-(§5.2, §5.3), the mechanism of §6.4 as a hypothesis, and the recalibration's two episodes (§6.7), which rule X7 widens to all ten for the released checkpoint.
-Appendix R gives every limitation below in full.
+(§5.2, §5.3), the mechanism of §6.4 as a hypothesis, the per-dimension tests' power (§6.5), the
+ensemble-5 replication (§6.6), the recalibration's two episodes (§6.7), which rule X7 widens to all ten for the released checkpoint,
+and what the independent ensemble bounds (§6.8). Appendix R gives each of those, and every limitation below, in full.
+
+**What this study cannot address.** One robot, one gait (a trot) and one flat terrain, with every
+command drawn from one bounded box, so "generalisation" here means across velocity commands only. No
+policy is trained: no policy-learning result of either paper is reproduced or tested, the
+sample-efficiency comparison included, and nothing here uses a GPU. Our arms use {{c2_pct}}% of the
+reference's world-model data (§5.1). And the released checkpoint trained on all ten episodes, so it
+has no held-out arena, and neither pinned repository can generate the data that would give it one
+(Appendix C). None of this can be lifted on CPU, and nothing in this paper claims otherwise.
 
 **Effective sample size bounds the long-horizon magnitudes.** The headline magnitudes rest on the held-out pair, {{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3); the direction is re-tested on all ten episodes, each out of sample once on fixed folds (rule X3: **{{x3_reading}}**, {{x3_n}} trajectories at {{iters_main}} iterations, not {{iters_long}}; §5). A larger dataset cannot be generated here (Appendix C), so the released checkpoint's lack of a held-out arena is a constraint, not a choice.
 
-**One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait is
-a single trot, so "generalisation" here means across velocity commands only.
-
-**Single seeds.** The long-horizon trend fit and the per-dimension matched comparison rest on seed 1
-alone (Appendix H), and the headline A/B verdict on seed {{m23_seed}}, the one its rule ran on; the
-magnitudes beside it are three-seed means with per-seed values (§5).
-
-**Ensemble size: supported, not established.** Our ensemble-5 arms reproduce the direction of §6.6's
-ranking finding and the calibration failure, but rule M-43 returns **{{e5_verdict}}** on their {{e5_nind}} held-out 400-step trajectories, where it was under-powered (§6.6). So that finding is established on the released
-checkpoint and supported but not established on a model we trained.
-
-**On whole trajectories, the ranking claim is not established as needing an ensemble.** The model's own predicted step
-size ranks error nearly as well, by a margin those {{e7_nind}} trajectories cannot resolve at h = {{v2_diag_h}} (§6.6). On {{x6_n_units}} shorter units cut inside the same episodes, a rule committed before its reading finds disagreement ahead, {{x6_margin}} {{x6_ci}} at h = {{v2_deploy_h}} (rule X6: **{{x6_reading}}**), but those units are the checkpoint's training data and share its ten episodes, and the margin at h = {{v2_diag_h}} is not re-tested (§6.6, Appendix X). If the observed
-margin is the true one, settling it needs {{q2_n_req}} independent 400-step trajectories where all ten
-episodes provide {{e7_nind}}, a required-sample-size estimate under an assumed effect (Appendix R).
+**On whole trajectories, the ranking claim is not established as needing an ensemble.** The model's
+own predicted step size ranks error nearly as well, by a margin those {{e7_nind}} trajectories cannot
+resolve at h = {{v2_diag_h}}; if the observed margin is the true one, settling it needs {{q2_n_req}}
+independent 400-step trajectories, a required-sample-size estimate under an assumed effect (Appendix R).
+On {{x6_n_units}} shorter units cut inside the same episodes, which are the checkpoint's training data,
+a rule committed before its reading finds disagreement ahead at h = {{v2_deploy_h}}, {{x6_margin}}
+{{x6_ci}} (rule X6: **{{x6_reading}}**; §6.6, Appendix X); the margin at h = {{v2_diag_h}} is not re-tested.
 
 **We did not measure what the miscalibration costs.** The penalty the follow-up applies is
-miscalibrated as a scale, {{d1n_epi_ratio_h100}}× overconfident at h = {{v2_deploy_h}}, the horizon its
-own imagination rollouts run to, but the method's only use of that quantity is to shape policy
-learning, and we did not train a policy; a test of that cost needing no policy, rule X5, could not be run (Appendix W). **The finding bounds what the quantity reports, not what it
+{{d1n_epi_ratio_h100}}× overconfident at h = {{v2_deploy_h}}, the horizon its own imagination
+rollouts run to, but its only use is to shape policy learning, and a test of that cost needing no
+policy, rule X5, could not be run (Appendix W). **The finding bounds what the quantity reports, not what it
 costs**, and the ratio is not a measure of harm. Other sections refer back to this as the policy
 caveat of §11. A proxy that needs no policy, the ordering of the penalty accumulated along whole
 rollouts before and after the per-horizon correction, finds none of the {{q3_n_pairs}} pairs among the held-out pair's {{q3_nind}} trajectories reordered (in-sample for the checkpoint; rule M-70: **{{q3_verdict}}**), but it orders the penalty alone, not the penalised return, its null is partly structural, and its interval is degenerate (Appendix R).
 
-**The per-dimension ordering tests are underpowered at every sample size we can reach** at
-h = {{v2_diag_h}} (§6.5, Appendix K); at h = 128 and below a shorter unit would raise the count, a
-rerun we did not do. This limits the per-dimension evidence only; the aggregate scalar the method applies is
-one test, not forty-five coupled ones (§6.6).
-
 **No family-wide correction is applied across our own pre-registered rules.** There are
-{{appG_n_rules}} of them (Appendix E), each reported, once its data exist, against the thresholds it was committed with (one, `S-12`, is withdrawn as a
+{{appG_n_rules}} of them (Appendix E), each reported, once its data exist, against the thresholds it was committed with (one is withdrawn as a
 pre-registration because it reached git after its data, §8); a reader who prefers a corrected family threshold can apply it
 from that count.
 
-**The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it.**
-Independent members differ from shared-trunk heads in data ordering and in capacity as well as in
-sharing. Rule M-49 (Appendix E) holds capacity fixed, at {{m49_matched_params}} state-pathway
-parameters, a ratio of {{m49_matched_ratio}}: the independent ensemble is still better calibrated on
-every shared-trunk seed, every paired interval excludes zero and its coverage gain of
-{{m49_cov_gain}} points clears its own MDE, but the overconfidence improvement falls from
-{{m44_ratio_gain}}× to **{{m49_ratio_gain}}×** against an MDE of {{m49_mde_ratio}}×, so the rule returns
-**{{m49_verdict}}**. Capacity does not explain the effect away; how much of it capacity accounts
-for, this design cannot say (Appendix R).
-
-**Deliberately out of scope.** No policy-learning result of either paper is reproduced or tested,
-the sample-efficiency comparison is not tested for the same reason, and nothing here uses a GPU. We
-did not test whether the σ = 0 optimum affects other descendants of the PETS parameterisation: the
-hypothesis is well-founded only for one that makes the same substitution and leaves nothing pushing
-its floor back up, and is untested for any
-(§2, Appendix I).
+**Other descendants of the PETS parameterisation.** We did not test whether the σ = 0 optimum affects
+them: the hypothesis is well-founded only for one that makes the same substitution and leaves nothing
+pushing its floor back up, and is untested for any (§2, Appendix I).
 
 ---
 
@@ -1470,8 +1453,8 @@ the artifact named. Measurements are at {{iters_main}} training iterations unles
 | `state_min_logstd`, on the slower gradient path C-11 identifies, drifts {{o12_rate_ratio}}× slower than `log_delta_logstd`; extrapolated from one Arm A run's rates, the two imply about {{r25_implied_ld}} and {{r25_implied_min}} iterations for the released variance state, an order of magnitude rather than a fitted count | R-25; `results/step6_3_min_logstd.json` | §7.5's conclusion does not rest on one parameter |
 | Over overlapping trajectories on the held-out pair, which the released checkpoint trained on, its worst twentieth carry {{r30_tail_share}}% of its squared error at h = {{v2_diag_h}} as each dimension's own scale weights it (form 2, which `g_z` dominates; Appendix G), and they start within {{r30_n_regions_word}} short ranges of rows, one per episode; on the {{r30_n_nonoverlap}} non-overlapping trajectories the largest is {{r30_maxmed}}× the median | R-30; `results/taskAB_gate_r27.json` | A tail measured on overlapping trajectories can be one short stretch of data, which a count of independent trajectories (§3) exposes |
 | The A/B relative-L1 gap at h = {{v2_diag_h}} (teacher forcing's error minus autoregressive training's, over {{r39_n_per_ep}} independent trajectories per episode) is positive on all {{r39_n_eps_word}} episodes, from {{r39_gap_lo}} up; episode {{r39_ep}}, one of the held-out pair, gives {{r39_ep_gap}}, {{r39_ep_over_next}}× the next largest, so the pair's {{r39_gap_holdout}} is {{r39_ho_over_other}}× the other {{r39_n_other_word}} episodes' {{r39_gap_other}} | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
-| Per state dimension, over the whole {{v2_diag_h}}-step forecast, the released checkpoint loses to the hold-last floor on {{r45_rel_all}} of {{r45_n_dims}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}} on the held-out pair ({{r45_nind_ho}}), including all three components of the gravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each, {{r45_A_dim}} | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, §11) |
-| Over {{r46_n_ck_word}} checkpoints up to {{iters_long}} iterations, the absolute A/B gap at h = {{v2_diag_h}} narrows as both arms improve (held-out pair {{r46_o_gap0}} to {{r46_o_gap1}}, in-sample {{r46_i_gap0}} to {{r46_i_gap1}}), while the ratio does not shrink ({{r46_o_ratio0}}× to {{r46_o_ratio1}}×, in-sample {{r46_i_ratio0}}× to {{r46_i_ratio1}}×). The held-out values are not monotone: both peak at the {{r46_pk_ord}} checkpoint ({{r46_o_gap_pk}}, {{r46_o_ratio_pk}}×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}, §11) |
+| Per state dimension, over the whole {{v2_diag_h}}-step forecast, the released checkpoint loses to the hold-last floor on {{r45_rel_all}} of {{r45_n_dims}} across all ten episodes ({{r45_nind_all}} independent {{h2h_unit}}-step trajectories) and on {{r45_rel_ho}} on the held-out pair ({{r45_nind_ho}}), including all three components of the gravity vector; Arm A at {{iters_long}} iterations loses on {{r45_A_n}} in each, {{r45_A_dim}} | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = {{v2_diag_h}} (R-45). One seed (seed {{r45_seed}}, Appendix R) |
+| Over {{r46_n_ck_word}} checkpoints up to {{iters_long}} iterations, the absolute A/B gap at h = {{v2_diag_h}} narrows as both arms improve (held-out pair {{r46_o_gap0}} to {{r46_o_gap1}}, in-sample {{r46_i_gap0}} to {{r46_i_gap1}}), while the ratio does not shrink ({{r46_o_ratio0}}× to {{r46_o_ratio1}}×, in-sample {{r46_i_ratio0}}× to {{r46_i_ratio1}}×). The held-out values are not monotone: both peak at the {{r46_pk_ord}} checkpoint ({{r46_o_gap_pk}}, {{r46_o_ratio_pk}}×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at {{iters_long}} iterations; one seed (seed {{r45_seed}}, Appendix R) |
 | Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena's {{x2_n_ins}} trajectories rises by {{x2_E_swap_2500}}% at {{iters_main}} iterations and {{x2_E_swap_10k}}% at {{iters_long}} (rule X2, pre-registered: {{x2_reading}}) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though every action in the data comes from one policy and no policy is trained here (§7.2, Appendix V) |
 
 ---
@@ -1915,7 +1898,7 @@ ahead of it at the longest horizon we measure. That reading flatters the release
 out-of-sample for our arms and in-sample for it, which trained on all
 {{h2h_ckpt_neps_word}} episodes (the in-sample caveat of §3).
 
-*Stored per-trajectory values elsewhere.* §6.8's and §11's paired contrasts at §5's n = {{m23_nind}} store their four
+*Stored per-trajectory values elsewhere.* §6.8's and Appendix R's paired contrasts at §5's n = {{m23_nind}} store their four
 per-trajectory values in `results/r2_independent_ensemble.json` and
 `results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = {{b2_nind}},
 give intervals only, coarse for the same reason (the n = {{m23_nind}} caveat of §3).
@@ -2169,7 +2152,7 @@ horizon as a measure of the architectural effect would overstate it.
 disagreement understates epistemic uncertainty partly because its members are not independent
 models**, with a measured size at the horizon that matters. It does not license attributing the
 whole gap to trunk-sharing: independently seeded runs differ in *both* initialisation and data
-ordering (§11), so this comparison **bounds** the architectural effect rather than isolating it,
+ordering (Appendix R), so this comparison **bounds** the architectural effect rather than isolating it,
 and the bound is generous to the mechanism by construction.
 
 **And it does not repair the interval.** The independent ensemble is
@@ -2273,7 +2256,7 @@ alone, and still not an interval. §6.7's per-horizon multiplier remains the onl
 
 **What the arm does not separate.** It differs from the shared-trunk arms on three axes at once:
 trunk sharing, the objective, and capacity (a factor of {{v1_cap_ratio}} in state-pathway
-parameters, as §6.8's contrast also does; §11), and independently seeded runs also differ in data
+parameters, as §6.8's contrast also does; Appendix R), and independently seeded runs also differ in data
 ordering. The rule said so in advance: it bounds the combination and attributes nothing. The one
 further comparison here, the `mse`/`gaussian_nll` pair above, which holds every other axis fixed,
 sits outside the rule's governing statistics and under the design's own minimum detectable effect,
