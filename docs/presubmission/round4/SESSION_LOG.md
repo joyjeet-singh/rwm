@@ -309,3 +309,39 @@ Body words (round2/t6_words.py): 21,787 (F0: 20,745)
 Abstract words / numerals (C12.1): 370 / 23
 Next: F5 (Sonnet 5.5), in a fresh terminal, only when RUN_QUEUE.md's status command shows 30 done, 0 failed and "queue empty; runner exits". Until then no session reads a run.
 Decisions for user: none
+
+## F5 — 2026-10-16 11:55 — Opus 5.5 (the plan assigns Sonnet 5.5, fresh terminal) — status: COMPLETE
+Commits:
+669d630 [handoff] Adopt the user's TMLR completion workplan (14 Oct) for F5-F12: copied into round4/, home path removed; one out-of-scope line on the queue's restart and log overwrite
+d7cac21 [handoff] Workplan addendum (user ruling, 16 Oct): the 16,000-word target is editorial, not a TMLR cap (a 14 Oct reading of the author guidelines, rechecked at F7 and F11); the stray docs/handoff variant moved to the Trash
+3000b00 [F5][1] Training gate PASS: 30 of 30 runs done, 0 failed; iterations, seeds, arms, folds and parameter counts as queued; no NaN; weights present; one data hash
+faf56c0 [F5][2] X3 and X4 read by their frozen scripts (SHA-256 e8422bb6..., 9e7ca635... as pre-registered at 5f0acd4): X3 REPLICATES ACROSS FOLDS; X4 PARTIAL
+6aee77b [F5][3] Discharge X3 and X4: M-94 records REPLICATES ACROSS FOLDS, M-95 records PARTIAL, exactly as returned; M-86 and M-87's Status lines set; RESULTS.md M- 93 -> 95
+(the build commit after these, and the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as F0–F4, at the user's request ("start F5"); the plan assigns Sonnet 5.5 in a fresh terminal. No agent was used. The user's TMLR completion workplan (`round4/TMLR_CODEX_WORKPLAN.md`, adopted before this session, with its 16 Oct addendum) governs process from here. It forbids pushing, so every commit since `110ecd7` is local.
+- **Queue.** Finished 2026-10-15 05:04: "queue empty; runner exits", 30 done, 0 failed. Another session resumed it at 2026-10-14 22:26 and overwrote its log (OUT_OF_SCOPE); the interrupted `x3_A_79_s2` re-ran from its start with no collision. No per-run log was read.
+- **Item 1, gate** (`round4/f5_gate.py` → `f5_gate.json`). It uses `queue_run.py`'s own trainer map and `check()`, then checks independently, for all 30 runs:
+  - each is in the done list, and the failed list is empty;
+  - iterations, seed, arm and fold are the queued ones;
+  - for X3, the held-out episodes are the fold its id names; for X4, they are {1, 8}, with the parameter count within 5% of 714,164 (MLP 713,171; transformer 686,196);
+  - training and held-out episodes partition the ten;
+  - every loss trace and final term is finite, the weights exist and are not empty, and all runs share one data hash.
+
+  **PASS.** Wall-clock hours from the records: X3 17.68 of its 24, X4 8.81 of its 10, 26.48 of 32 (projected 23.83, 6.75, 30.58). The interrupted first attempt at `x3_A_79_s2` left no record, so its time is not in the sum.
+- **Item 2, the readings.** Both scripts' SHA-256 equal M-86's and M-87's, and neither file has changed since `5f0acd4`. Run unchanged, one after the other, on battery power under `caffeinate`, with no training job running; every self-test and assertion passed first.
+  - **X3: REPLICATES ACROSS FOLDS.** Gap (B − A) +2.2275 [+1.3683, +3.5053] at h = 368 over 20 trajectories, five folds, 2,500 iterations, three seeds. 10 of 10 episodes are positive (P = 0.002), and every fold's exact interval is above zero.
+  - **X4: PARTIAL.** At h = 368 on the held-out pair, n = 4: the matched MLP is RWM BETTER (D +0.8840) and the matched transformer CANNOT BE SETTLED (D +0.2055, p 0.625).
+  - Runtimes: 41 s and 35 s wall; 0.88 and 1.04 CPU-min.
+- **Item 3, ledger.** M-94 (X3) and M-95 (X4) record each reading as returned, with its part-of-rule and alongside values and caveats, and no interpretation (`round4/f5_write_discharges.py`). M-86's and M-87's Status lines are set. RESULTS.md M- 93 → 95. `ledger_check` PASS.
+- **Item 4.** No paper edits. Appendix E (stage 21a) and Figure 1 (stage 22) still show X3 and X4 as pending; F6 regenerates both, now that both rules are discharged.
+Build/gates: pass. Fast build, every gate, build again: byte-identical. `ledger_check` PASS; 68/68 claims and 68/68 corruptions. `part_f_gate` 6/7 with 1 not run; 4b fails on the bundles, as known.
+Paper numbers changed: n_entries 285 → 287; ledger_kb 651 → 657 (FINDINGS_LEDGER.md)
+New keys: none
+Re-anchored checks: none
+CPU jobs over 1 min: none (the readings, 41 s and 35 s; the build and gates, about 1.5 min, uncontended)
+Queue status: done (30 of 30, 0 failed; finished 2026-10-15 05:04 +0530)
+Body words (round2/t6_words.py): 21,787 (F0: 20,745)
+Abstract words / numerals (C12.1): 370 / 23
+Next: F6 (Opus 5.5, high), in a fresh terminal. It puts X3 into §5, an appendix table, §11 and contribution 2 (variant REPLICATES ACROSS FOLDS), and X4 into §5.3 (PARTIAL, with its caveat). It rewrites the abstract once, to at most 300 words, with C12.1's cap tightened to 320 and rule 11 applied, including F4's open items. It also covers contributions and Appendix D's rows, and regenerates Appendix E and Figure 1. Commits stay local (workplan §6).
+Decisions for user: none
