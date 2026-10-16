@@ -233,6 +233,25 @@ def build_rows():
         # a1_ab_by_horizon.json's row, so its checkpoint is that artifact's.
         "checkpoint_from": ["results/a1_ab_by_horizon.json"],
     })
+    # Round 4, F6: rule X3 (M-86, discharged in M-94). Its own row: the arena is all ten episodes, each trajectory
+    # out-of-sample for its own fold's models, so the registry's in-sample test (which pools our arms' training
+    # episodes) does not apply.
+    X3 = J("x3_cross_fold.json")
+    assert X3["rule"] == "X3" and all(v["pass"] for v in X3["assertions"].values())
+    _r3, _st3 = X3["reading"], X3["part_of_rule"]["per_episode_sign_test_h368"]
+    assert sorted(e for f in X3["design"]["folds"] for e in f) == ARENA["all ten episodes"]["episodes"]
+    rows.append({
+        "claim": f"The same comparison at h = {_r3['h']}, retrained with each episode held out in turn (rule X3)",
+        "section": "5",
+        "arena": "all ten episodes",
+        "n_independent": X3["design"]["n_independent"],
+        "in_sample": "no",
+        "verdict": (f"{_r3['label']}: gap {_r3['gap']:+.4f} [{_r3['ci95'][0]:+.4f}, {_r3['ci95'][1]:+.4f}]; "
+                    f"{_st3['n_positive']} of {_st3['n_episodes']} episodes positive"),
+        "multiplicity": multiplicity(),
+        "model": "our arms",
+        "artifacts": ["results/x3_cross_fold.json"],
+    })
 
     # --- S9: the configuration and architecture claims (rules M-74, M-75, M-76) --
     # Each rule applies Holm within its own family, so its verdict is already corrected.
@@ -315,6 +334,33 @@ def build_rows():
             "artifacts": ["results/baselines_verdict.json", "results/baselines_eval.json"],
         })
 
+    # Round 4, F6: rule X4 (M-87, discharged in M-95), the baselines matched to RWM's parameter count
+    X4 = J("x4_matched_baselines.json")
+    assert X4["rule"] == "X4" and all(v["pass"] for v in X4["assertions"].values())
+    _r4 = X4["reading"]
+    rows.append({
+        "claim": (f"RWM beats MLP and transformer baselines matched to its parameter count, at h = {_r4['h']} "
+                  f"(rule X4; size is one axis)"),
+        "section": "5.3",
+        "arena": mn_arena,
+        "n_independent": X4["design"]["n_independent"],
+        "in_sample": in_sample("our arms", mn_arena),
+        "verdict": (f"{_r4['label']}: MLP {_r4['per_baseline']['mlp']['result']}, transformer "
+                    f"{_r4['per_baseline']['transformer']['result']}"),
+        "multiplicity": "yes",
+        "model": "our arms",
+        "artifacts": ["results/x4_matched_baselines.json"],
+    })
+    # Round 4, F6: rule X8 (M-90, discharged in M-93) re-scored the A/B, configuration and baseline rules under the
+    # released evaluation's timing; its reading joins those rows' verdicts, on their own arenas
+    X8 = J("x8_released_pairing.json")
+    assert X8["rule"] == "X8" and {v["reading"] for v in X8["readings"].values()} == {"SAME VERDICT"}
+    _x8 = f" (under the released evaluation's timing, rule X8: {X8['readings']['M-74']['reading']})"
+    for _r in rows:
+        if _r["section"] in ("5", "5.2", "5.3") and "rule X3" not in _r["claim"] and "rule X4" not in _r["claim"] \
+                and "short unit" not in _r["claim"]:
+            _r["verdict"] += _x8
+
     # --- 3, 4, 5: the calibration claims -------------------------------------
     d20_arena = arena_of_text(D20["design"]["arena"])
     d20_model = measured_model(D20["design"]["checkpoint"])
@@ -357,7 +403,8 @@ def build_rows():
     e7_arena = arena_of_nind(E7["design"]["n_independent"])
     e7_model = measured_model(T("e7_free_baselines_report.txt"))
     rows.append({
-        "claim": "Disagreement ranks realised error better than the model's own predicted step size",
+        "claim": (f"Disagreement ranks realised error better than the model's own predicted step size, over whole "
+                  f"400-step trajectories at h = {diag}"),
         "section": "6.6",
         "arena": e7_arena,
         "n_independent": E7["design"]["n_independent"],
@@ -373,6 +420,22 @@ def build_rows():
         "multiplicity": multiplicity(mde_met=step["margin_beats_mde"]),
         "model": e7_model,
         "artifacts": ["results/e7_free_baselines.json"],
+    })
+    # Round 4, F6: rule X6 (M-88, discharged in M-91), the same comparison on shorter units
+    X6 = J("x6_stepsize_short_units.json")
+    assert X6["rule"] == "X6" and all(v["pass"] for v in X6["assertions"].values())
+    _r6 = X6["reading"]
+    rows.append({
+        "claim": (f"The same comparison on shorter units, at h = {_r6['h']} (rule X6)"),
+        "section": "6.6",
+        "arena": "all ten episodes",
+        "n_independent": _r6["n_units"],
+        "in_sample": in_sample("released checkpoint", "all ten episodes"),
+        "verdict": (f"{_r6['label']}: margin {_r6['margin']:+.4f} [{_r6['ci95'][0]:+.4f}, {_r6['ci95'][1]:+.4f}], against "
+                    f"a minimum detectable effect of {X6['mde_recorded_before_the_reading'][str(_r6['h'])]['mde_80pct_power']['margin']:.4f}"),
+        "multiplicity": multiplicity(),
+        "model": "released checkpoint",
+        "artifacts": ["results/x6_stepsize_short_units.json"],
     })
 
     # --- 8: the double-demeaned control --------------------------------------
@@ -426,6 +489,21 @@ def build_rows():
         "model": d3_model,
         "artifacts": ["results/task_d3_perhorizon.json", "results/p4_transfer_power.json",
                       "results/task_d3_cross_model.json"],
+    })
+    # Round 4, F6: rule X7 (M-89, discharged in M-92), the multiplier fitted on nine episodes and scored on the tenth
+    X7 = J("x7_loeo_recalibration.json")
+    assert X7["rule"] == "X7" and all(v["pass"] for v in X7["assertions"].values())
+    rows.append({
+        "claim": "A per-horizon multiplier fitted on nine episodes and scored on the tenth (rule X7)",
+        "section": "6.7",
+        "arena": "all ten episodes",
+        "n_independent": X7["design"]["n_trajectories"],
+        "in_sample": in_sample("released checkpoint", "all ten episodes"),
+        "verdict": (f"{X7['reading']['summary']} for the disagreement; the aleatoric term, alongside, "
+                    f"{X7['alongside']['aleatoric']['summary']}"),
+        "multiplicity": multiplicity(),
+        "model": "released checkpoint",
+        "artifacts": ["results/x7_loeo_recalibration.json"],
     })
 
     # --- 10, 11: the two ensemble-topology contrasts --------------------------
