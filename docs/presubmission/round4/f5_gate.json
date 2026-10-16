@@ -1,0 +1,509 @@
+{
+ "what": "F5 item 1: the training gate for X3 and X4, from each run's record; no reading is read",
+ "n_queued": 30,
+ "n_done": 30,
+ "n_failed": 0,
+ "data_sha256": [
+  "1b2e00b8a2bc10dc9b5f62840de72410adb448a57a9a2f6adbcd735be9e78921"
+ ],
+ "wall_clock_hours": {
+  "X3": 17.676,
+  "X4": 8.808,
+  "all": 26.485
+ },
+ "caps_hours": {
+  "X3": 24.0,
+  "X4": 10.0,
+  "all": 32.0
+ },
+ "projected_hours": {
+  "X3": 23.825089327268888,
+  "X4": 6.754113607951062,
+  "all": 30.57920293521995
+ },
+ "note_on_hours": "sums of each record's wall_clock_s, the runs' own timing; the first attempt at x3_A_79_s2, interrupted on 2026-10-12, left no record, so its time is not in this sum",
+ "runs": [
+  {
+   "id": "x3_A_02_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho02_seed0.json",
+   "weights": "runs/x3_armA_ho02_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    0,
+    2
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.9533024535469443,
+   "problems": []
+  },
+  {
+   "id": "x3_B_02_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho02_seed0.json",
+   "weights": "runs/x3_armB_ho02_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    0,
+    2
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.9930776810880557,
+   "problems": []
+  },
+  {
+   "id": "x3_A_34_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho34_seed0.json",
+   "weights": "runs/x3_armA_ho34_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    3,
+    4
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6334192219869444,
+   "problems": []
+  },
+  {
+   "id": "x3_B_34_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho34_seed0.json",
+   "weights": "runs/x3_armB_ho34_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    3,
+    4
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6260230755819445,
+   "problems": []
+  },
+  {
+   "id": "x3_A_56_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho56_seed0.json",
+   "weights": "runs/x3_armA_ho56_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    5,
+    6
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6211162691541666,
+   "problems": []
+  },
+  {
+   "id": "x3_B_56_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho56_seed0.json",
+   "weights": "runs/x3_armB_ho56_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    5,
+    6
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6166090017019445,
+   "problems": []
+  },
+  {
+   "id": "x3_A_79_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho79_seed0.json",
+   "weights": "runs/x3_armA_ho79_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    7,
+    9
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.9061139220033329,
+   "problems": []
+  },
+  {
+   "id": "x3_B_79_s0",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho79_seed0.json",
+   "weights": "runs/x3_armB_ho79_seed0/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    7,
+    9
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.917877908356111,
+   "problems": []
+  },
+  {
+   "id": "x4_mlp_s0",
+   "rule": "X4",
+   "artifact": "results/baseline_run_mlp_ar_matched_seed0.json",
+   "weights": "runs/baseline_mlp_ar_matched_seed0/weights_2500.pt",
+   "weights_bytes": 2857926,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    1,
+    8
+   ],
+   "n_params": 713171,
+   "wall_clock_h": 0.08265522812333277,
+   "problems": []
+  },
+  {
+   "id": "x4_transformer_s0",
+   "rule": "X4",
+   "artifact": "results/baseline_run_transformer_ar_matched_seed0.json",
+   "weights": "runs/baseline_transformer_ar_matched_seed0/weights_2500.pt",
+   "weights_bytes": 2758456,
+   "iterations": 2500,
+   "seed": 0,
+   "holdout_episodes": [
+    1,
+    8
+   ],
+   "n_params": 686196,
+   "wall_clock_h": 2.295917282241667,
+   "problems": []
+  },
+  {
+   "id": "x3_A_02_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho02_seed1.json",
+   "weights": "runs/x3_armA_ho02_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    0,
+    2
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6330574465572216,
+   "problems": []
+  },
+  {
+   "id": "x3_B_02_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho02_seed1.json",
+   "weights": "runs/x3_armB_ho02_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    0,
+    2
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.655227495411111,
+   "problems": []
+  },
+  {
+   "id": "x3_A_34_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho34_seed1.json",
+   "weights": "runs/x3_armA_ho34_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    3,
+    4
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6417655664297227,
+   "problems": []
+  },
+  {
+   "id": "x3_B_34_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho34_seed1.json",
+   "weights": "runs/x3_armB_ho34_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    3,
+    4
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6360224630472213,
+   "problems": []
+  },
+  {
+   "id": "x3_A_56_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho56_seed1.json",
+   "weights": "runs/x3_armA_ho56_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    5,
+    6
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6343584657405558,
+   "problems": []
+  },
+  {
+   "id": "x3_B_56_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho56_seed1.json",
+   "weights": "runs/x3_armB_ho56_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    5,
+    6
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6311454471519432,
+   "problems": []
+  },
+  {
+   "id": "x3_A_79_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho79_seed1.json",
+   "weights": "runs/x3_armA_ho79_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    7,
+    9
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6607324512652768,
+   "problems": []
+  },
+  {
+   "id": "x3_B_79_s1",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho79_seed1.json",
+   "weights": "runs/x3_armB_ho79_seed1/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    7,
+    9
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6618485828147217,
+   "problems": []
+  },
+  {
+   "id": "x4_mlp_s1",
+   "rule": "X4",
+   "artifact": "results/baseline_run_mlp_ar_matched_seed1.json",
+   "weights": "runs/baseline_mlp_ar_matched_seed1/weights_2500.pt",
+   "weights_bytes": 2857926,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    1,
+    8
+   ],
+   "n_params": 713171,
+   "wall_clock_h": 0.07723376435611094,
+   "problems": []
+  },
+  {
+   "id": "x4_transformer_s1",
+   "rule": "X4",
+   "artifact": "results/baseline_run_transformer_ar_matched_seed1.json",
+   "weights": "runs/baseline_transformer_ar_matched_seed1/weights_2500.pt",
+   "weights_bytes": 2758456,
+   "iterations": 2500,
+   "seed": 1,
+   "holdout_episodes": [
+    1,
+    8
+   ],
+   "n_params": 686196,
+   "wall_clock_h": 2.277593838905278,
+   "problems": []
+  },
+  {
+   "id": "x3_A_02_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho02_seed2.json",
+   "weights": "runs/x3_armA_ho02_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    0,
+    2
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6215884066058324,
+   "problems": []
+  },
+  {
+   "id": "x3_B_02_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho02_seed2.json",
+   "weights": "runs/x3_armB_ho02_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    0,
+    2
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6155067986972225,
+   "problems": []
+  },
+  {
+   "id": "x3_A_34_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho34_seed2.json",
+   "weights": "runs/x3_armA_ho34_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    3,
+    4
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6162432430813877,
+   "problems": []
+  },
+  {
+   "id": "x3_B_34_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho34_seed2.json",
+   "weights": "runs/x3_armB_ho34_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    3,
+    4
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6159670171727784,
+   "problems": []
+  },
+  {
+   "id": "x3_A_56_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho56_seed2.json",
+   "weights": "runs/x3_armA_ho56_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    5,
+    6
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6180246493994451,
+   "problems": []
+  },
+  {
+   "id": "x3_B_56_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho56_seed2.json",
+   "weights": "runs/x3_armB_ho56_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    5,
+    6
+   ],
+   "n_params": null,
+   "wall_clock_h": 0.6210899811480582,
+   "problems": []
+  },
+  {
+   "id": "x3_A_79_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armA_ho79_seed2.json",
+   "weights": "runs/x3_armA_ho79_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    7,
+    9
+   ],
+   "n_params": null,
+   "wall_clock_h": 1.321920493686111,
+   "problems": []
+  },
+  {
+   "id": "x3_B_79_s2",
+   "rule": "X3",
+   "artifact": "results/x3_run_armB_ho79_seed2.json",
+   "weights": "runs/x3_armB_ho79_seed2/weights_2500.pt",
+   "weights_bytes": 5683374,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    7,
+    9
+   ],
+   "n_params": null,
+   "wall_clock_h": 1.2242098120216667,
+   "problems": []
+  },
+  {
+   "id": "x4_mlp_s2",
+   "rule": "X4",
+   "artifact": "results/baseline_run_mlp_ar_matched_seed2.json",
+   "weights": "runs/baseline_mlp_ar_matched_seed2/weights_2500.pt",
+   "weights_bytes": 2857926,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    1,
+    8
+   ],
+   "n_params": 713171,
+   "wall_clock_h": 0.14369104952472198,
+   "problems": []
+  },
+  {
+   "id": "x4_transformer_s2",
+   "rule": "X4",
+   "artifact": "results/baseline_run_transformer_ar_matched_seed2.json",
+   "weights": "runs/baseline_transformer_ar_matched_seed2/weights_2500.pt",
+   "weights_bytes": 2758456,
+   "iterations": 2500,
+   "seed": 2,
+   "holdout_episodes": [
+    1,
+    8
+   ],
+   "n_params": 686196,
+   "wall_clock_h": 3.9313673046163893,
+   "problems": []
+  }
+ ],
+ "problems": [],
+ "gate": "PASS"
+}
