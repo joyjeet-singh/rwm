@@ -1,6 +1,6 @@
 {
-  "n_artifacts": 83,
-  "n_paper_keys": 2369,
+  "n_artifacts": 90,
+  "n_paper_keys": 2462,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -202,6 +202,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "mn_sweep_verdict.json",
+      "n_paper_keys": 28,
+      "writers": [
+        "verdict_mn_sweep"
+      ],
+      "invoked_writers": [
+        "verdict_mn_sweep"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task_d3_cross_model.json",
       "n_paper_keys": 27,
       "writers": [
@@ -229,13 +241,13 @@
       "exempt_reason": "written by the clean-clone comparison itself, which runs from the repository root against a finished clone. A stage inside the pipeline would compare a tree against itself."
     },
     {
-      "artifact": "mn_sweep_verdict.json",
-      "n_paper_keys": 26,
+      "artifact": "action_sensitivity.json",
+      "n_paper_keys": 25,
       "writers": [
-        "verdict_mn_sweep"
+        "action_sensitivity"
       ],
       "invoked_writers": [
-        "verdict_mn_sweep"
+        "action_sensitivity"
       ],
       "covered": true,
       "exempt_reason": null
@@ -248,18 +260,6 @@
       ],
       "invoked_writers": [
         "alignment_by_horizon"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "action_sensitivity.json",
-      "n_paper_keys": 24,
-      "writers": [
-        "action_sensitivity"
-      ],
-      "invoked_writers": [
-        "action_sensitivity"
       ],
       "covered": true,
       "exempt_reason": null
@@ -284,6 +284,18 @@
       ],
       "invoked_writers": [
         "verdict_baselines"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "pooled_nrmse_alongside.json",
+      "n_paper_keys": 22,
+      "writers": [
+        "pooled_nrmse_rescore"
+      ],
+      "invoked_writers": [
+        "pooled_nrmse_rescore"
       ],
       "covered": true,
       "exempt_reason": null
@@ -322,18 +334,6 @@
       ],
       "invoked_writers": [
         "task5_analyse"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "pooled_nrmse_alongside.json",
-      "n_paper_keys": 21,
-      "writers": [
-        "pooled_nrmse_rescore"
-      ],
-      "invoked_writers": [
-        "pooled_nrmse_rescore"
       ],
       "covered": true,
       "exempt_reason": null
@@ -379,6 +379,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "x6_stepsize_short_units.json",
+      "n_paper_keys": 20,
+      "writers": [
+        "x6_stepsize_short_units"
+      ],
+      "invoked_writers": [
+        "x6_stepsize_short_units"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task2_3_matched_trend.json",
       "n_paper_keys": 19,
       "writers": [
@@ -386,6 +398,18 @@
       ],
       "invoked_writers": [
         "task2_3_matched_and_trend"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "x3_cross_fold.json",
+      "n_paper_keys": 19,
+      "writers": [
+        "x3_cross_fold"
+      ],
+      "invoked_writers": [
+        "x3_cross_fold"
       ],
       "covered": true,
       "exempt_reason": null
@@ -422,6 +446,18 @@
       ],
       "invoked_writers": [
         "alignment_defect_ci"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "n5_stale_armA_ci.json",
+      "n_paper_keys": 16,
+      "writers": [
+        "n5_stale_armA_ci"
+      ],
+      "invoked_writers": [
+        "n5_stale_armA_ci"
       ],
       "covered": true,
       "exempt_reason": null
@@ -531,6 +567,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "x4_matched_baselines.json",
+      "n_paper_keys": 12,
+      "writers": [
+        "x4_matched_baselines"
+      ],
+      "invoked_writers": [
+        "x4_matched_baselines"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "v3_metric_definitions.json",
       "n_paper_keys": 11,
       "writers": [
@@ -574,6 +622,18 @@
       ],
       "invoked_writers": [
         "t1_bibliography"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "x7_loeo_recalibration.json",
+      "n_paper_keys": 10,
+      "writers": [
+        "x7_loeo_recalibration"
+      ],
+      "invoked_writers": [
+        "x7_loeo_recalibration"
       ],
       "covered": true,
       "exempt_reason": null
@@ -709,6 +769,32 @@
       "exempt_reason": null
     },
     {
+      "artifact": "x8_released_pairing.json",
+      "n_paper_keys": 8,
+      "writers": [
+        "x8_released_pairing"
+      ],
+      "invoked_writers": [
+        "x8_released_pairing"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "step4_0a_results.json",
+      "n_paper_keys": 7,
+      "writers": [
+        "head_to_head_accuracy",
+        "step4_0a_restate"
+      ],
+      "invoked_writers": [
+        "head_to_head_accuracy",
+        "step4_0a_restate"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "e4_sigma_gradients.json",
       "n_paper_keys": 7,
       "writers": [
@@ -753,6 +839,7 @@
         "mn_sweep_eval",
         "mn_sweep_timing",
         "pipeline_coverage",
+        "round4_queue_timing",
         "step5_train",
         "step6_3_min_logstd",
         "step6_analyse",
@@ -761,13 +848,15 @@
         "task3_control_arm",
         "task4_contamination_analysis",
         "task5_analyse",
-        "x1_partc_timing"
+        "x1_partc_timing",
+        "x3_cross_fold"
       ],
       "invoked_writers": [
         "baselines_timing",
         "mn_sweep_eval",
         "mn_sweep_timing",
         "pipeline_coverage",
+        "round4_queue_timing",
         "step6_3_min_logstd",
         "step6_analyse",
         "task1_calibration",
@@ -775,7 +864,8 @@
         "task3_control_arm",
         "task4_contamination_analysis",
         "task5_analyse",
-        "x1_partc_timing"
+        "x1_partc_timing",
+        "x3_cross_fold"
       ],
       "covered": true,
       "exempt_reason": null
@@ -843,20 +933,6 @@
       "exempt_reason": null
     },
     {
-      "artifact": "step4_0a_results.json",
-      "n_paper_keys": 4,
-      "writers": [
-        "head_to_head_accuracy",
-        "step4_0a_restate"
-      ],
-      "invoked_writers": [
-        "head_to_head_accuracy",
-        "step4_0a_restate"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
       "artifact": "step6_analysis.json",
       "n_paper_keys": 4,
       "writers": [
@@ -901,6 +977,7 @@
         "mn_sweep_eval",
         "mn_sweep_timing",
         "pipeline_coverage",
+        "round4_queue_timing",
         "step5_train",
         "step6_analyse",
         "task1_calibration",
@@ -908,20 +985,23 @@
         "task3_control_arm",
         "task4_contamination_analysis",
         "task5_analyse",
-        "x1_partc_timing"
+        "x1_partc_timing",
+        "x3_cross_fold"
       ],
       "invoked_writers": [
         "baselines_timing",
         "mn_sweep_eval",
         "mn_sweep_timing",
         "pipeline_coverage",
+        "round4_queue_timing",
         "step6_analyse",
         "task1_calibration",
         "task3_4_power_and_ddof",
         "task3_control_arm",
         "task4_contamination_analysis",
         "task5_analyse",
-        "x1_partc_timing"
+        "x1_partc_timing",
+        "x3_cross_fold"
       ],
       "covered": true,
       "exempt_reason": null
@@ -1086,6 +1166,18 @@
       ],
       "invoked_writers": [
         "task5_differential"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "x4_matched_baselines_eval.json",
+      "n_paper_keys": 1,
+      "writers": [
+        "x4_matched_baselines"
+      ],
+      "invoked_writers": [
+        "x4_matched_baselines"
       ],
       "covered": true,
       "exempt_reason": null

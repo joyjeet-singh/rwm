@@ -198,9 +198,14 @@ if [ $QUICK -eq 0 ]; then
   # likewise from the committed record.
   stage 11j "TRAINING — X1 Part C retraining variants, seed 0 (M-80)" "4.5 h" \
         results/baseline_run_rssm_tf_x1v2_seed0.json bash -c "$PY scripts/x1_partc_timing.py --queue-from-record && PY=$PY bash scripts/queue_runner.sh runs/queue_round2.txt > runs/queue_round2.log 2>&1 && [ ! -s runs/queue_round2_failed.txt ]"
+  # Round 4's queue (F9, H1): rule X3's four new folds, both arms at three seeds, and rule X4's size-matched MLP and
+  # transformer at three seeds (M-86, M-87), 30 runs, written from the committed record with no re-probe. The queue file
+  # it writes was checked to be byte-identical to the one that ran.
+  stage 11k "TRAINING — X3's cross-fold arms and X4's size-matched baselines (M-86, M-87)" "27 h" \
+        results/baseline_run_transformer_ar_matched_seed2.json bash -c "$PY scripts/round4_queue_timing.py --queue-from-record && PY=$PY bash scripts/queue_runner.sh runs/queue_round4.txt > runs/queue_round4.log 2>&1 && [ ! -s runs/queue_round4_failed.txt ]"
 else
   echo ""
-  echo " STAGES 9-11j (training) SKIPPED in --quick mode."
+  echo " STAGES 9-11k (training) SKIPPED in --quick mode."
   echo "   Their outputs are committed as results/step5_*.json and are consumed below."
 fi
 
@@ -468,6 +473,24 @@ stage 20t13 "X1 — the RSSM diagnostic, Parts A to C (M-81, M-83)" "3 min" \
 # written by no stage. The script refuses to run unless its SHA-256 is the one M-84 registered.
 stage 20t14 "X2 — do our models condition their forecasts on the action? (M-84, M-85)" "11 min" \
       results/action_sensitivity.json NEEDS_WEIGHTS $PY scripts/action_sensitivity.py
+# Round 4 (F9, H1): rules X3, X4 and X6-X8, and the post hoc N5. Each rule's script refuses to run unless its ledger
+# entry records the script's SHA-256, so a stage re-runs the pre-registered reading and never a revision. Each was
+# re-run once in F9 and reproduced its committed artifact in every value except the commit it ran at (`git_head`) and
+# N5's own timings. X6 and X7 load the released checkpoint alone, which setup.sh fetches, and were run with runs/ out
+# of the way to confirm it: they are NOT NEEDS_WEIGHTS. X3, X4, X8 and N5 score our own trained models, so they are.
+# X5 was not run (ledger D-38; Appendix W), so it has no stage.
+stage 20u1 "X3 — the A/B comparison with each episode held out in turn (M-86, M-94)" "1 min" \
+      results/x3_cross_fold.json NEEDS_WEIGHTS $PY scripts/x3_cross_fold.py
+stage 20u2 "X4 — size-matched MLP and transformer baselines (M-87, M-95)" "1 min" \
+      results/x4_matched_baselines.json NEEDS_WEIGHTS $PY scripts/x4_matched_baselines.py
+stage 20u3 "X6 — disagreement against predicted step size on shorter units (M-88, M-91)" "2 min" \
+      results/x6_stepsize_short_units.json $PY scripts/x6_stepsize_short_units.py
+stage 20u4 "X7 — per-horizon recalibration fitted on nine episodes, scored on the tenth (M-89, M-92)" "1 min" \
+      results/x7_loeo_recalibration.json $PY scripts/x7_loeo_recalibration.py
+stage 20u5 "X8 — our rules' verdicts under the released evaluation's timing (M-90, M-93)" "5 min" \
+      results/x8_released_pairing.json NEEDS_WEIGHTS $PY scripts/x8_released_pairing.py
+stage 20u6 "N5 — our models' stale-timing change with intervals (post hoc, R-80)" "1 min" \
+      results/n5_stale_armA_ci.json NEEDS_WEIGHTS $PY scripts/n5_stale_armA_ci.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them
