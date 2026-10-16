@@ -241,7 +241,8 @@ def build_rows():
     _r3, _st3 = X3["reading"], X3["part_of_rule"]["per_episode_sign_test_h368"]
     assert sorted(e for f in X3["design"]["folds"] for e in f) == ARENA["all ten episodes"]["episodes"]
     rows.append({
-        "claim": f"The same comparison at h = {_r3['h']}, retrained with each episode held out in turn (rule X3)",
+        "claim": (f"The same comparison at h = {_r3['h']}, retrained on fixed folds with each episode held out once, at "
+                  f"{X3['design']['iterations']:,} iterations (rule X3)"),
         "section": "5",
         "arena": "all ten episodes",
         "n_independent": X3["design"]["n_independent"],

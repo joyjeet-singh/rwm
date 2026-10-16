@@ -350,7 +350,9 @@ CLAIMS = [
      # "unseen by the multiplier / by the model" caveat and PLAN Appendix A's abstract), and
      # the old fragment went with them. The scan itself -- clean k-of-k counts in these three
      # sections -- is unchanged.
-     "says": "A per-horizon rescaling brings the released checkpoint's coverage within",
+     # Round 4, F6 re-anchor: the abstract's rewrite (W7, A6) dropped "released" to keep the clause within A6's 25 words;
+     # "A per-horizon rescaling brings the released checkpoint's coverage within" -> the phrase below. The scan is unchanged.
+     "says": "A per-horizon rescaling brings the checkpoint's coverage within",
      "sections": ["Abstract", "9. Actionable lessons", "12. Conclusion"]},
 
     # ---- C10 retraction-consistency --------------------------------------

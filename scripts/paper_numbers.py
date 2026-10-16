@@ -3811,6 +3811,9 @@ def main():
     put("x3_ci", _c3(_r3["ci95"]), _x3s)
     put("x3_n", _r3["n_trajectories"], _x3s)
     put("x3_n_folds_word", WORDS[len(X3["design"]["folds"])].lower(), _x3s)
+    # fold {1, 8} reused section 5's existing 2,500-iteration runs; the others were trained for X3 (M-86 "Folds", "Runs")
+    assert [1, 8] in X3["design"]["folds"]
+    put("x3_n_new_folds_word", WORDS[len(X3["design"]["folds"]) - 1].lower(), _x3s)
     _st3 = _p3["per_episode_sign_test_h368"]
     put("x3_eps_pos", _st3["n_positive"], _x3s)
     put("x3_n_eps", _st3["n_episodes"], _x3s)
