@@ -420,7 +420,7 @@ iteration over the centre's, timed without contention (`results/mn_compute_match
 run, and the {{mn_n_overlapped}} of {{rt_sweep_runs}} sweep runs that overlapped other logged CPU work,
 are in Appendix B. The hold-last floor is {{mn_floor_h100}} at h = {{v2_deploy_h}} and {{mn_floor_h368}} at h = {{v2_diag_h}}.
 The rules' evaluator averaged nRMSE per trajectory, where §3.1 pools it. The nRMSE readings quoted
-alongside the rules here and in §5.3 are pooled, recomputed afterwards (post hoc; ledger R-77,
+alongside the rules here and in §5.3 are pooled, recomputed afterwards (post hoc,
 `results/pooled_nrmse_alongside.json`), and, for this section's rule (M-74), return the same verdicts as the averaged ones (§5.3 gives the {{n2_n_changed_word}} readings of its rules that differ).
 
 **Result: {{mn_verdict}}.** {{mn_better_list}} beat the centre ({{mn_better_kinds}}), {{mn_worse_list}} are worse, and
@@ -433,11 +433,18 @@ reports alongside, {{mn_alongside_clause}}. Per configuration, no reading puts t
 from M = 1 to M = 8 and then flattens (`ORIGINAL_SPECS.md` a.5). On the governing reading ours does
 not fall steeply: {{mn_mvar_better_list}}, histories shorter than the centre's, beat it, and no
 shorter history is resolvably worse, though other readings the rule reports put shorter histories
-behind it: {{mn_mvar_other_worse}}. That is a statement about learning speed at this budget, not about converged accuracy: trained {{n3_long_factor_word}} as long, the centre passes both winning shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings (below), so it does not contradict the original's steep fall to M = 8, whose training budget the original does not state. The original's direction on N holds: the shortest forecasts
+behind it: {{mn_mvar_other_worse}}. That is a statement about learning speed at this budget, not about converged accuracy: trained {{n3_long_factor_word}} as long, the centre passes both winning shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings (Appendix U), so it does not contradict the original's steep fall to M = 8, whose training budget the original does not state. The original's direction on N holds: the shortest forecasts
 are far worse, which is §5's teacher-forcing result again, and the longest are better, so the
 centre's tie with its longest-forecast neighbour becomes a loss.
 
-**Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, {{n3_cost_M32_N16}}× the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}× for {{mn_best_config}}; the shorter histories that win cost less, {{n3_cost_M8_N8}}× for {{n3_sh_label_M8_N8}} and {{n3_cost_M2_N8}}× for {{n3_sh_label_M2_N8}} (`results/mn_compute_matched.json`; Appendix U gives every reading, signed as in the table). The shorter histories win on all {{n3_n_readings_word}} readings at {{iters_main}} iterations while using well under half the centre's computation, so that part of the verdict needs no compute correction. The longer forecasts' wins do. Trained to {{n3_k_mid}} iterations, the centre has had {{n3_best_over_mid}}× the computation of {{mn_best_config}}, and the readings split: {{mn_best_config}} is still ahead on the held-out pair at h = {{v2_diag_h}} ({{n3_best_D_mid}} {{n3_best_ci_mid}}), the centre is ahead on the in-sample arena at h = {{v2_deploy_h}} ({{n3_best_ins_D_mid_h100}} {{n3_best_ins_ci_mid_h100}}), and the other two are not resolved. At {{iters_long}} iterations, {{n3_best_over_long}}× the computation, the centre is ahead on both in-sample readings and neither held-out difference is resolved. Trained that long, it also passes both shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings: on the held-out pair at h = {{v2_diag_h}}, {{n3_sh_label_M2_N8}} by {{n3_sh_D_long_M2_N8}} {{n3_sh_ci_long_M2_N8}} and {{n3_sh_label_M8_N8}} by {{n3_sh_D_long_M8_N8}} {{n3_sh_ci_long_M8_N8}}, with {{n3_sh_over_long_M2_N8}}× and {{n3_sh_over_long_M8_N8}}× their computation, and on both in-sample readings; on the held-out pair at h = {{v2_deploy_h}} neither difference is resolved. Which setting is most accurate therefore depends on how long each is trained. None of this re-opens rule M-74.
+**Accuracy at equal compute (post hoc).** The shorter histories that win cost less per iteration
+than the centre, {{n3_cost_M8_N8}}× for {{n3_sh_label_M8_N8}} and {{n3_cost_M2_N8}}× for
+{{n3_sh_label_M2_N8}}, so their wins at {{iters_main}} iterations need no compute correction. The
+longer forecasts' wins do. Trained to {{n3_k_mid}} iterations, {{n3_best_over_mid}}× the computation of
+{{mn_best_config}}, the centre splits the readings with it; trained to {{iters_long}},
+{{n3_best_over_long}}× its computation, it is ahead on both in-sample readings and neither held-out
+difference is resolved. Which setting is most accurate therefore depends on how long each is
+trained (Appendix U gives every reading); none of this re-opens rule M-74.
 
 **Limits.** One factor is varied at a time, so no interaction between M and N is tested. Our data
 budget is {{c2_pct}}% of the reference's (§5.1), and the original states neither the ablation's
@@ -494,23 +501,21 @@ Trained autoregressively, the RSSM falls behind from {{bl_ar_rssm_lead_from}}, b
 {{bl_ar_mlp_D_h100}} {{bl_ar_mlp_ci_h100}}, about {{bl_ar_mlp_pct_h100}}% of RWM's
 {{h2h_armA_l1_h100}}, and {{bl_ar_tr_D_h100}} {{bl_ar_tr_ci_h100}}. Before those horizons, on the held-out pair, a baseline
 cannot be told apart from RWM: at h = 1 both rules return {{bl_tf_h1}}, and at h = 8 both return
-{{bl_tf_h8}}. On the in-sample arena's {{mn_nind_ins}} trajectories, with nRMSE pooled as §3.1 defines it (computed afterwards, post hoc; ledger R-77), {{n2_n_changed_word}} readings differ from the per-trajectory average the rules' evaluator used. Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is {{n2_m75_D_mlp}} {{n2_m75_ci_mlp}} for the MLP, {{n2_m75_D_rssm}} {{n2_m75_ci_rssm}} for the RSSM and {{n2_m75_D_transformer}} {{n2_m75_ci_transformer}} for the transformer, so M-75's reading there is {{n2_m75_pooled}} where the average gave {{n2_m75_committed}}: the same one-step lead for teacher forcing as §5's. Trained autoregressively, the MLP's deficit at h = {{v2_deploy_h}} is no longer resolved ({{n2_m76_D_mlp}} {{n2_m76_ci_mlp}}), so M-76's reading there is {{n2_m76_pooled}} where the average gave {{n2_m76_committed}}. Neither changes a verdict; both rules govern at h = {{v2_diag_h}} on relative-L1.
+{{bl_tf_h8}}. Post hoc, with nRMSE pooled as §3.1 defines it, {{n2_n_changed_word}} in-sample readings differ
+from the per-trajectory average the rules' evaluator used. Teacher-forced, all three baselines lead
+RWM at h = 1 (M-75's reading there becomes {{n2_m75_pooled}}, from {{n2_m75_committed}}), the same
+one-step lead for teacher forcing as §5's, and trained autoregressively the MLP's deficit at
+h = {{v2_deploy_h}} is no longer resolved ({{n2_m76_pooled}}, from {{n2_m76_committed}}; Appendix L).
+Neither changes a verdict; both rules govern at h = {{v2_diag_h}} on relative-L1.
 
-**Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate of this section's models one
-step ahead, {{h2h_bl_rssm_tf_l1_h1}} against RWM's {{h2h_armA_l1_h1}} and the floor's {{x1_floor_h1}},
-though not resolvably, and it has collapsed open-loop by h = 32, where its {{x1_tf_mode_h32}} is above
-the floor's {{x1_floor_h32}}. The original adds that an RSSM trained autoregressively performs
-comparably to RWM; ours does not, {{h2h_bl_rssm_ar_l1_h368}} against RWM's {{bl_rwm_l1_h368}} at
-h = {{v2_diag_h}}. A diagnostic committed before its readings existed (rule X1, ledger M-80;
-exploratory, it re-opens neither rule) asks why. Its Part A reads the forecast differently, feeding
-the prior's expected or sampled latent in place of its most likely one: the error at h = 32 falls to
-{{x1_tf_exp_h32}} and {{x1_tf_samp_h32}}, still above the floor, so it returns **{{x1_reading_a}}**
-(M-81). Its Part B is descriptive: over the history, the teacher-forced RSSM's one-step error from its
-prior is {{x1b_tf_ratio_lo}} to {{x1b_tf_ratio_hi}}× its error from its posterior at the same
-recurrent state (the autoregressive one's at most {{x1b_ar_ratio_hi}}×), with {{x1b_kl_lo}} to
-{{x1b_kl_hi}} nats of KL divergence between them per step. {{rssm_partc_sentence}} The failure may
-still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in
-DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on one seed, neither of them PlaNet's latent overshooting (Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which PlaNet's own final RSSM agent did not need. So the architecture claim rests on the MLP and the transformer.
+**Our RSSM is not an informative comparison.** Teacher-forced, it has collapsed open-loop by h = 32
+({{x1_tf_mode_h32}} against the floor's {{x1_floor_h32}}), and trained autoregressively it does not
+perform comparably to RWM, as the original says an RSSM does ({{h2h_bl_rssm_ar_l1_h368}} against
+{{bl_rwm_l1_h368}} at h = {{v2_diag_h}}). A diagnostic committed before its readings existed (rule
+X1, exploratory; it re-opens neither rule) returns **{{x1_reading_a}}** for its Part A, which reads
+the forecast from other latents, and **{{x1_final_reading}}** for its Part C, which retrains the
+model; the failure may still be our RSSM rather than the architecture (Appendix L), so the
+architecture claim rests on the MLP and the transformer.
 
 **Limits.** One robot on flat ground; the original has several environments. The baselines
 are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and
@@ -1798,7 +1803,7 @@ The null means explain why, and the explanation is the one that motivates §6.6.
 
 ---
 
-## Appendix L — section 5 in detail: the floor, seeds, the short horizon, the data budget, the long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint
+## Appendix L — section 5 in detail: the floor, seeds and short horizon, the data budget, the baselines' pooled readings and the RSSM, the long-horizon cells and multiplicity, and the reimplementation beside the released checkpoint
 
 **Three passages of §5 in full.** §5 keeps two sentences of each of the next three paragraphs, which
 stood there as follows.
@@ -1847,6 +1852,27 @@ The base paper's headline is a sample-efficiency result: policies transfer to ha
 A dynamics model trained on {{c2_pct}}% of the reference's data still reproduces the training result, {{d1_ratio}}× at h = {{v2_diag_h}} and {{d1_ratio_h100}}× at h = {{v2_deploy_h}} over {{d1_seeds}} seeds (the rule ran on seed {{m23_seed}}), and still beats the hold-last floor, by {{floor_over_A}}× and {{a1_floor_over_A_h100}}× at those two horizons. That is what this paper can add to the sample-efficiency question without training a policy.
 
 **Three limits.** It is not a reproduction of the {{c2_ref}}-against-250M comparison, which is about policy learning. It says nothing about whether a policy trained inside our model would transfer to hardware, or anywhere. And our model is evaluated on the narrow distribution it trained on (one robot, one gait, one terrain, velocity commands from a single bounded box), where the reference's {{c2_ref}} transitions span considerably more; a smaller data budget buys less than it appears to when the evaluation distribution shrinks with it.
+
+**Two passages of §5.3 in full.** §5.3 keeps a short summary of each, with every verdict; they
+stood there as follows.
+
+On the in-sample arena's {{mn_nind_ins}} trajectories, with nRMSE pooled as §3.1 defines it (computed afterwards, post hoc; ledger R-77), {{n2_n_changed_word}} readings differ from the per-trajectory average the rules' evaluator used. Teacher-forced, at h = 1 all three baselines are ahead of RWM: D, signed as the rules sign it (positive favours RWM), is {{n2_m75_D_mlp}} {{n2_m75_ci_mlp}} for the MLP, {{n2_m75_D_rssm}} {{n2_m75_ci_rssm}} for the RSSM and {{n2_m75_D_transformer}} {{n2_m75_ci_transformer}} for the transformer, so M-75's reading there is {{n2_m75_pooled}} where the average gave {{n2_m75_committed}}: the same one-step lead for teacher forcing as §5's. Trained autoregressively, the MLP's deficit at h = {{v2_deploy_h}} is no longer resolved ({{n2_m76_D_mlp}} {{n2_m76_ci_mlp}}), so M-76's reading there is {{n2_m76_pooled}} where the average gave {{n2_m76_committed}}. Neither changes a verdict; both rules govern at h = {{v2_diag_h}} on relative-L1.
+
+**Our RSSM is not an informative comparison.** Teacher-forced, it is the most accurate of this section's models one
+step ahead, {{h2h_bl_rssm_tf_l1_h1}} against RWM's {{h2h_armA_l1_h1}} and the floor's {{x1_floor_h1}},
+though not resolvably, and it has collapsed open-loop by h = 32, where its {{x1_tf_mode_h32}} is above
+the floor's {{x1_floor_h32}}. The original adds that an RSSM trained autoregressively performs
+comparably to RWM; ours does not, {{h2h_bl_rssm_ar_l1_h368}} against RWM's {{bl_rwm_l1_h368}} at
+h = {{v2_diag_h}}. A diagnostic committed before its readings existed (rule X1, ledger M-80;
+exploratory, it re-opens neither rule) asks why. Its Part A reads the forecast differently, feeding
+the prior's expected or sampled latent in place of its most likely one: the error at h = 32 falls to
+{{x1_tf_exp_h32}} and {{x1_tf_samp_h32}}, still above the floor, so it returns **{{x1_reading_a}}**
+(M-81). Its Part B is descriptive: over the history, the teacher-forced RSSM's one-step error from its
+prior is {{x1b_tf_ratio_lo}}× to {{x1b_tf_ratio_hi}}× its error from its posterior at the same
+recurrent state (the autoregressive one's at most {{x1b_ar_ratio_hi}}×), with {{x1b_kl_lo}} to
+{{x1b_kl_hi}} nats of KL divergence between them per step. {{rssm_partc_sentence}} The failure may
+still be our RSSM rather than the architecture: Table S7's latent is ambiguous, we read it in
+DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the two settings above, on one seed, neither of them PlaNet's latent overshooting (Hafner et al., ICML 2019), which trains the prior's multi-step predictions in latent space and which PlaNet's own final RSSM agent did not need. So the architecture claim rests on the MLP and the transformer.
 
 **The long-horizon cells.** At long horizons §5's pattern is consistent across the design. Under the cluster bootstrap, the
 out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells,
@@ -2306,6 +2332,10 @@ Post hoc (ledger R-78; `results/mn_compute_matched.json`); it re-opens no rule, 
 {{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterations: {{n3_appU_nrows_word}} rows of {{n3_n_readings_word}}
 readings each. A longer forecast costs more per iteration than the centre, a shorter history less, so the centre's
 longer runs ask whether a configuration's win survives giving the centre at least as much training computation.
+
+**§5.2's reading, in full.** §5.2 keeps three sentences of it.
+
+**Accuracy at equal compute (post hoc; ledger R-78).** A longer training forecast costs more per iteration, {{n3_cost_M32_N16}}× the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}× for {{mn_best_config}}; the shorter histories that win cost less, {{n3_cost_M8_N8}}× for {{n3_sh_label_M8_N8}} and {{n3_cost_M2_N8}}× for {{n3_sh_label_M2_N8}} (`results/mn_compute_matched.json`; the table below gives every reading, signed as in §5.2's table). The shorter histories win on all {{n3_n_readings_word}} readings at {{iters_main}} iterations while using well under half the centre's computation, so that part of the verdict needs no compute correction. The longer forecasts' wins do. Trained to {{n3_k_mid}} iterations, the centre has had {{n3_best_over_mid}}× the computation of {{mn_best_config}}, and the readings split: {{mn_best_config}} is still ahead on the held-out pair at h = {{v2_diag_h}} ({{n3_best_D_mid}} {{n3_best_ci_mid}}), the centre is ahead on the in-sample arena at h = {{v2_deploy_h}} ({{n3_best_ins_D_mid_h100}} {{n3_best_ins_ci_mid_h100}}), and the other two are not resolved. At {{iters_long}} iterations, {{n3_best_over_long}}× the computation, the centre is ahead on both in-sample readings and neither held-out difference is resolved. Trained that long, it also passes both shorter histories on {{n3_sh_long_nread_word}} of the {{n3_n_readings_word}} readings: on the held-out pair at h = {{v2_diag_h}}, {{n3_sh_label_M2_N8}} by {{n3_sh_D_long_M2_N8}} {{n3_sh_ci_long_M2_N8}} and {{n3_sh_label_M8_N8}} by {{n3_sh_D_long_M8_N8}} {{n3_sh_ci_long_M8_N8}}, with {{n3_sh_over_long_M2_N8}}× and {{n3_sh_over_long_M8_N8}}× their computation, and on both in-sample readings; on the held-out pair at h = {{v2_deploy_h}} neither difference is resolved. Which setting is most accurate therefore depends on how long each is trained. None of this re-opens rule M-74.
 
 | configuration (cost per iteration ÷ the centre's) | centre trained to (iterations) | compute ratio (centre's total ÷ configuration's) | h = {{v2_deploy_h}}, held-out pair ({{mn_nind}}) | h = {{v2_deploy_h}}, in-sample ({{mn_nind_ins}}) | h = {{v2_diag_h}}, held-out pair ({{mn_nind}}) | h = {{v2_diag_h}}, in-sample ({{mn_nind_ins}}) |
 |---|---|---|---|---|---|---|
