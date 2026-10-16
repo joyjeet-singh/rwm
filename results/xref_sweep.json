@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 96,
-  "n_ok": 96,
+  "n_pointers": 100,
+  "n_ok": 100,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -26,10 +26,24 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix G gives both forms and the comparison the second one inverts",
+      "pointer": "Appendix I gives the rest of this section in full",
       "ok": true,
-      "detail": "target Appendix G; nouns ['forms', 'comparison', 'second', 'inverts']; absent ['second']",
-      "context": "Appendix G gives both forms and the comparison the second one inverts"
+      "detail": "target Appendix I; nouns ['rest', 'section', 'full']; absent ['section']",
+      "context": "Appendix I\ngives the rest of this section in full"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix G gives each metric's formula and\nthe check on the coverage nominal",
+      "ok": true,
+      "detail": "target Appendix G; nouns ['metric', 'formula', 'check', 'coverage', 'nominal']; absent []",
+      "context": "Appendix G gives each metric's formula and\nthe check on the coverage nominal"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix E gives its commit and lead time), naming conditions rather\nthan out",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['commit', 'lead', 'time', 'naming', 'conditions', 'rather', 'outcomes']; absent ['naming', 'outcomes']",
+      "context": "Appendix E gives its commit and lead time), naming conditions rather\nthan outcomes"
     },
     {
       "class": "semantic",
@@ -40,17 +54,24 @@
     },
     {
       "class": "semantic",
-      "pointer": "\u00a75.3 gives the two readings of its rules that differ)",
+      "pointer": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 pos",
       "ok": true,
-      "detail": "target 5.3; nouns ['readings', 'rules', 'differ']; absent []",
-      "context": "\u00a75.3 gives the two readings of its rules that differ)"
+      "detail": "target Appendix L; nouns ['seed', 'spread', 'per-trajectory', 'gaps', 'positive']; absent []",
+      "context": "Appendix L gives the seed spread and the four\nper-trajectory gaps, 4 of 4 positive"
     },
     {
       "class": "semantic",
-      "pointer": "Appendix U gives every reading, signed as in the table)",
+      "pointer": "Appendix L gives the count and its three limits, the first being that this is",
       "ok": true,
-      "detail": "target Appendix U; nouns ['reading', 'signed', 'table']; absent []",
-      "context": "Appendix U gives every reading, signed as in the table)"
+      "detail": "target Appendix L; nouns ['count', 'limits', 'first', 'being', 'policy-learning', 'comparison']; absent ['policy-learning']",
+      "context": "Appendix L gives the count and its three limits, the first being that this is not the\npolicy-learning comparison"
+    },
+    {
+      "class": "semantic",
+      "pointer": "Appendix U gives every reading)",
+      "ok": true,
+      "detail": "target Appendix U; nouns ['reading']; absent []",
+      "context": "Appendix U gives every reading)"
     },
     {
       "class": "semantic",
@@ -128,6 +149,13 @@
       "ok": true,
       "detail": "target Appendix B; nouns ['runs', 'times']; absent []",
       "context": "Appendix B gives for the 33 runs of \u00a75\u2013\u00a77 it times (\u00a75"
+    },
+    {
+      "class": "semantic",
+      "pointer": "\u00a75.3 gives the two readings of its rules that differ)",
+      "ok": true,
+      "detail": "target 5.3; nouns ['readings', 'rules', 'differ']; absent []",
+      "context": "\u00a75.3 gives the two readings of its rules that differ)"
     },
     {
       "class": "semantic",

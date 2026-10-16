@@ -6005,7 +6005,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 69
+    "value": 72
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -9149,7 +9149,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 990
+    "value": 1052
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
