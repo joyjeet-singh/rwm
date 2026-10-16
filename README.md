@@ -19,7 +19,7 @@ way, from the same file, so the two cannot disagree. `PAPER.tex` compiles clean 
 75 pages, 0 overfull boxes, 0 LaTeX warnings
 (`results/compile_paper.json`). The checkpoints are described in [`MODEL_CARD.md`](MODEL_CARD.md).
 
-**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 287 entries, each
+**Every claim lives in [`FINDINGS_LEDGER.md`](FINDINGS_LEDGER.md)** — 288 entries, each
 with an ID, a status, an evidence class, and the `file:line` or run artifact it came from. Claims
 are never edited in place: the ledger keeps 21 superseded entries.
 Of those, eight claims withdrawn on evidence are our own **numbered claims**,
@@ -42,8 +42,7 @@ extension that carries none of the rule's weight. Across the whole horizon grid 
 monotonically to that figure — **2.58×** at h = 100, the horizon the
 method deploys at — and the gap excludes zero at 5 of 6 horizons,
 spanning it only at h=1; there, on 60 short windows, a second pre-registered rule finds teacher forcing ahead (-0.0194 [-0.0310, -0.0093]). Only the rule's one-seed verdict is pre-registered;
-the three-seed figures and every other horizon were computed after the data existed, and are
-marked as such.
+the three-seed figures and every other horizon were computed after the data existed, and are marked as such. Retrained on fixed folds with each of the ten episodes held out once (2,500 iterations, not 10,000), a second rule committed before the runs finds the direction replicating at h = 368, +2.2275 [+1.3683, +3.5053] over 20 trajectories (rule X3: **REPLICATES ACROSS FOLDS**).
 
 **2 — Neither uncertainty output of the follow-up is usable as an interval.** At
 h = 100 — the horizon the method's own imagination rollouts run to — the ensemble
@@ -56,14 +55,14 @@ implemented objective is squared error on a sampled prediction, whose optimum is
 **3 — As a ranking it survives adversarial testing.** Ensemble disagreement beats the forecast
 step index — a free counter neither original paper compared against — at every horizon. With both
 the rollout and the forecast depth held constant it still correlates **+0.419
-[+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard. But the model's own predicted step size, which needs no ensemble, ranks error nearly as well (+0.4697 against +0.6053), by a margin this sample cannot resolve (§6.6).
+[+0.318, +0.576]** with realised error, so it is not merely reporting which episode is hard. But the model's own predicted step size, which needs no ensemble, ranks error nearly as well (+0.4697 against +0.6053), by a margin the 20 whole trajectories cannot resolve at h = 368. On 70 shorter units of the same episodes, which are the checkpoint's training data, a rule committed before its reading finds disagreement ahead at h = 100, +0.2816 [+0.1978, +0.3896] (rule X6: **DISAGREEMENT BEATS STEP SIZE**; §6.6).
 
 **4 — The interval may be repairable per horizon, with mixed evidence.** On the released
 checkpoint, one multiplier per forecast horizon, fitted on one held-out episode and scored on the
 other, brings every cell within 10 points of nominal, though at two episodes no single cell is
 resolvable, where a single global multiplier manages 2 of the 12 epistemic ones. But that checkpoint trained on both episodes, so those cells are unseen
 by the multiplier only; on Arm A, whose model never saw them, its own multipliers manage
-17 of 36 epistemic cells.
+17 of 36 epistemic cells. Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic coverage over all 20 trajectories is within the band at every horizon (rule X7: **WITHIN BAND AT 6 OF 6 HORIZONS**), again on episodes it trained on (§6.7).
 
 **5 — The released five-member ensemble is not five models.** One GRU trunk, one recurrent hidden
 state, and 89.15% of each member's state-prediction parameters numerically identical
@@ -78,7 +77,7 @@ against a minimum detectable effect of 1.45× fixed before the runs existed. σ 
 larger by 1.65×, which is 71% of the improvement there, and the
 split reverses at the 368-step diagnostic horizon. The rule (M-44) returns
 **MECHANISM SUPPORTED**. It is still 5.2× overconfident: building the ensemble
-properly is worth doing and is not sufficient (§6.8). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is 1.79×, below its minimum detectable effect of 2.00× (rule M-49, §11).
+properly is worth doing and is not sufficient (§6.8). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is 1.79×, below its minimum detectable effect of 2.00× (rule M-49, §6.8).
 
 **And five defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count

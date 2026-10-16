@@ -3864,13 +3864,28 @@
         "scripts/x4_matched_baselines.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-96",
+      "claim": "Correction to M-65's discharge record: two of its in-band cells fall below the nominal",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json",
+        "scripts/appendix_g_rules.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
     "D": 39,
-    "M": 95,
+    "M": 96,
     "O": 14,
     "R": 80,
     "S": 21,
