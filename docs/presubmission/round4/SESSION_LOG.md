@@ -402,8 +402,8 @@ Done:
 Build/gates: pass. Evidence summary, fast build, every gate, `part_f_gate`, fast build again: byte-identical. 68/68 claims and 68/68 corruptions; C24.1 20/20; compile 0 overfull, 0 warnings. `part_f_gate` 6/7, 1 not run: 4b fails on the bundles (F11), check 6 passes.
 Paper numbers changed: appG_n_lead 26 → 28; appG_n_positive 25 → 27 (results/appendix_g_rules.json); f1_n_cited 37 → 39; f1_n_kept 35 → 37 (results/paper_figures.json); pdf_pages 67 → 69; tn_typed 974 → 990; appG_table and evidence_table regenerated
 New keys: 31, all from results/:
-- `x3_*` (20), from x3_cross_fold.json;
-- `x4_*` (11), from x4_matched_baselines.json and its evaluator output.
+- `x3_*` (19), from x3_cross_fold.json;
+- `x4_*` (12), from x4_matched_baselines.json and its evaluator output.
 Re-anchored checks: C9.1 "A per-horizon rescaling brings the released checkpoint's coverage within" → "A per-horizon rescaling brings the checkpoint's coverage within" (the abstract's rewrite; scan unchanged). C12.1 cap tightened, 370 → 320 words (W7).
 CPU jobs over 1 min: the review agent (about 5.5 min, then 1 min); fast builds with gates, about 1.5 min each. None contended (no training).
 Queue status: done (30 of 30, 0 failed; finished 2026-10-15 05:04 +0530)
