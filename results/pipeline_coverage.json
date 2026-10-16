@@ -1,6 +1,6 @@
 {
   "n_artifacts": 90,
-  "n_paper_keys": 2462,
+  "n_paper_keys": 2476,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -277,6 +277,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "presubmission_runtime.json",
+      "n_paper_keys": 23,
+      "writers": [
+        "s8_runtime"
+      ],
+      "invoked_writers": [
+        "s8_runtime"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "baselines_verdict.json",
       "n_paper_keys": 22,
       "writers": [
@@ -355,6 +367,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "task2_3_matched_trend.json",
+      "n_paper_keys": 21,
+      "writers": [
+        "task2_3_matched_and_trend"
+      ],
+      "invoked_writers": [
+        "task2_3_matched_and_trend"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "m64_short_units.json",
       "n_paper_keys": 20,
       "writers": [
@@ -386,18 +410,6 @@
       ],
       "invoked_writers": [
         "x6_stepsize_short_units"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "task2_3_matched_trend.json",
-      "n_paper_keys": 19,
-      "writers": [
-        "task2_3_matched_and_trend"
-      ],
-      "invoked_writers": [
-        "task2_3_matched_and_trend"
       ],
       "covered": true,
       "exempt_reason": null
@@ -496,18 +508,6 @@
       ],
       "invoked_writers": [
         "task4_arenas_and_difficulty"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "presubmission_runtime.json",
-      "n_paper_keys": 14,
-      "writers": [
-        "s8_runtime"
-      ],
-      "invoked_writers": [
-        "s8_runtime"
       ],
       "covered": true,
       "exempt_reason": null
@@ -688,6 +688,18 @@
       "invoked_writers": [
         "e5_synthetic_sigma",
         "paper_numbers"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "m65_gaussian_nominal.json",
+      "n_paper_keys": 9,
+      "writers": [
+        "m65_gaussian_nominal"
+      ],
+      "invoked_writers": [
+        "m65_gaussian_nominal"
       ],
       "covered": true,
       "exempt_reason": null
@@ -878,18 +890,6 @@
       ],
       "invoked_writers": [
         "m63_per_dimension_coverage"
-      ],
-      "covered": true,
-      "exempt_reason": null
-    },
-    {
-      "artifact": "m65_gaussian_nominal.json",
-      "n_paper_keys": 6,
-      "writers": [
-        "m65_gaussian_nominal"
-      ],
-      "invoked_writers": [
-        "m65_gaussian_nominal"
       ],
       "covered": true,
       "exempt_reason": null

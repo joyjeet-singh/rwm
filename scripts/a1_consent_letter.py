@@ -66,6 +66,13 @@ PASSAGES = [
     # paragraph merged into the one before. The passage still ends right after the
     # correspondence quotations and before §6.1's quotations of the arXiv paper itself.
     ("6.1", "Eq. 4 specifies a", "So the discard is the intended design", TEMPLATE),
+    # Added in round 4, F11 (PLAN §1.2 rule 9, a re-anchor after a legitimate move): F8 moved §6.1's
+    # two correspondence quotations into Appendix H's "§6.1 in full" passage. The entry above still
+    # matches the shortened §6.1, which no longer quotes, so the two went unguarded and the transcript
+    # record fell to 3 quotations. This entry scans the moved passage. It keeps §6.1's label because
+    # the passage is §6.1's text, and the transcript and the letter name the quotations by it.
+    ("6.1", "**§6.1 in full: the penalised quantity and the discarded term, from the first author.**",
+     "not an implementation slip: the aleatoric head", TEMPLATE),
     ("8", "**What the author says.**", "That last point reframes this section.",
      os.path.join("docs", "APPENDIX_G_VARIANCE_ARITHMETIC.template.md")),
 ]
