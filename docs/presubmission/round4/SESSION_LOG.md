@@ -505,3 +505,45 @@ Body words (round2/t6_words.py): 17,790 (F0: 20,745)
 Abstract words / numerals (C12.1): 300 / 19
 Next: F9 (Sonnet 5.5): pipeline hygiene, H1–H5. Commits stay local.
 Decisions for user: DECISIONS.md#F8-length (W6's editorial target missed by 1,790 words; accept, recommended, or authorise one of three further cuts)
+
+## F9 — 2026-10-16 23:20 — Opus 5.5 (the plan assigns Sonnet 5.5, fresh terminal) — status: COMPLETE
+Commits:
+75ac187 [F9][0] DECISIONS.md#F8-length: the user accepts 17,790 main-text words (option 1)
+9513ce3 [F9][H3a] C7.1 checks the length of BUILD_CHECKS' typed list of claims withdrawn on evidence, not only the count beside it (round 3's OUT_OF_SCOPE R0); a planted dropped item is caught
+040bf5d [F9][H1] reproduce.sh: stages 20u1-20u6 for X3, X4, X6, X7, X8 and N5 (NEEDS_WEIGHTS only where our trained models are read: X6 and X7 run without runs/), and stage 11k, round 4's training queue from its committed record; pipeline_coverage 0 uncovered, 20n8 0 unclassified
+5cddce0 [F9][H2] s8_runtime.py records round 4's queue (rules X3 and X4, 30 runs, 26.48 h) beside the other two, with its overlaps against round 4's sessions' CPU work (f9_cpu_jobs.json, from their evidence files); every field it wrote before is unchanged
+5a4d77d [F9][H3b] task2_3_matched_and_trend.py records each trend cell's n_independent (4 held-out, 16 in-sample); stage 15 regenerated, every other field and the report unchanged (round 3's OUT_OF_SCOPE R7)
+3aaf1c4 [F9][H2,H3b] Appendix B's runtime table gains round 4's runs (rt_r4_*, four rows, which runs overlapped logged work and how each was timed); Appendix H's R-46 row names its arenas' n_independent (r46_o_nind, r46_i_nind)
+9281201 [F9][H4] md_to_tex.py: a path in a code span may break after a slash or underscore and before its extension, as table cells could; stretched lines with underfull reporting on fall from 12 to 2, and none holds a path
+5ccad00 [F9] Build and gates after H1-H5: 11 new keys (rt_r4_*, r46_*_nind); body 17,790 unchanged; 75 pages, 0 warnings; byte-identical rebuild
+(the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as F0–F8, at the user's request ("Accept 17790. … start F9"). The plan assigns Sonnet 5.5 in a fresh terminal; this ran on Opus 5.5. No subagent was used. All commits are local (workplan §6). The user's ruling is recorded first: `DECISIONS.md#F8-length` is option 1, 17,790 words accepted.
+- **H1, `reproduce.sh`.**
+  - **Re-run first.** Before adding the stages, each script was re-run once, uncontended (`/Users/Shared/rwm_verify/evidence/R4F9/rerun/`). Every artifact reproduced its committed copy leaf for leaf except `git_head` and N5's own `cpu_s`/`wall_s`: X3 999 leaves, X4 160 (and its evaluator's 2,558), X6 103, X7 384, X8 907, N5 644. The committed artifacts were then restored, since the ledger cites the commits they ran at.
+  - **New stages 20u1–20u6.** X6 and X7 also ran with `runs/` moved aside and reproduced, so they are not `NEEDS_WEIGHTS`; X3, X4, X8 and N5 read our trained models and are. X5 has no stage (not run, D-38). The rule scripts refuse to run unless their ledger entries record their SHA-256, so a stage can only re-run the pre-registered reading.
+  - **New stage 11k, the full-run block.** It writes `runs/queue_round4.txt` from `results/round4_queue_timing.json` (`--queue-from-record`), byte-identical to the queue that ran (checked with the original moved aside), then runs the queue.
+  - **Wiring:** `./reproduce.sh --quick --force --stage 20u3` and `--stage 20u1` both ran through `reproduce.sh` and passed.
+  - **Targets met:** `pipeline_coverage` 0 uncovered (it was 7), and stage 20n8 0 unclassified.
+- **H2, Appendix B's runtime table.** `s8_runtime.py` gains `round4_queue`: 30 runs, 26.48 h (X3 24 runs, 17.7 h; X4 6 runs, 8.8 h), matching F5's gate. Every field it wrote before is unchanged (asserted on the regenerated JSON).
+  - **How runs are timed:** `runs/queue_round4.log` lost the first runner's lines (OUT_OF_SCOPE), so it times only 4 runs; the other 26 are timed by their weights files (end = modification time, start = end − `wall_clock_s`). Those windows abut within seconds, start at the logged 10:36 launch, and agree with the log to the minute where both exist.
+  - **Overlaps:** against `docs/presubmission/round4/f9_cpu_jobs.json` (new, from `f9_cpu_jobs.py`). It holds each session F1–F4's window, from the first to the last of its evidence files inside the queue's windows. Grouping into separate jobs was tried and dropped: it misses one-file jobs, such as X8's 9-minute dry runs.
+  - **Result:** 4 runs overlapped logged work (x3 A/B fold {0, 2} seed 0, x3 A/B fold {7, 9} seed 0). The resumed runner's runs overlap none, because that session logged nothing; Appendix B says so.
+  - **In the paper:** Appendix B's prose and four new table rows, 11 new keys.
+- **H3, round 3's leftovers.**
+  - (a) C7.1 now also counts the items of BUILD_CHECKS' typed list of claims withdrawn on evidence (8, the count). A planted dropped item is caught, and 68/68 corruptions are still caught.
+  - (b) `task2_3_matched_and_trend.py` records each trend cell's n_independent, asserted constant across checkpoints. Stage 15 was regenerated: every other field is unchanged, the report is byte-identical, and Appendix H's R-46 row now names n_independent = 4 (400-step trajectories) and 16. `r46_o_nind` is asserted equal to `m23_nind`.
+  - (c) §5.2's per-configuration readings are confirmed in place (F4, A4b): the "Per configuration … Per episode …" sentences, guarded by C28.3.
+  - Round 3's R5 (a2's difficulty mean over two action offsets) was handled in F3 (N6, D-39).
+- **H4, typesetting.** `md_to_tex.py` lets a code-span path break after "/" and "_" and before its extension, as table cells could; doubled break marks in cells are collapsed. Measured by compiling a copy with underfull reporting on (`\hbadness` lowered from the paper's 10000; `R4F9/h4/stretch.py`): stretched lines fall from 12 to 2, those holding a path from 1 to 0, and the page count stays 75. Page 53, where the one stretched path line was, was rendered before and after and looked at: the line now sets normally. `pdf_render_check` 5/5.
+- **H5, bundle self-test at HEAD** (9281201). `make_anon_bundle.py` planted its probe, including HEAD's latest full commit hash, and detected it (9 hits; its assertion on the hash pattern passed); 566 files staged, 0 residual identifying hits (`R4F9/h5_bundle.log`). The run also rewrites `docs/COMMIT_LABEL_MAP.json` (99 labels added, none changed) and `results/anon_bundle.json` (no ZIP written). Both were restored, because F11 rebuilds the bundles.
+Build/gates: pass. Evidence summary (unchanged), fast build, every gate, `part_f_gate`, fast build again: byte-identical. 68/68 claims and 68/68 corruptions; compile 75 pages, 0 overfull, 0 warnings. `part_f_gate` 6/7, 1 not run: 4b fails on the bundles (F11).
+Paper numbers changed: tn_typed 1141 → 1144 (results/typed_numerals.json)
+New keys: 11, from results/: `rt_r4_runs`, `rt_r4_hours`, `rt_r4_x3_runs`, `rt_r4_x3_hours`, `rt_r4_x4_runs`, `rt_r4_x4_hours`, `rt_r4_overlapped`, `rt_r4_by_log`, `rt_r4_table` (presubmission_runtime.json); `r46_o_nind`, `r46_i_nind` (task2_3_matched_trend.json)
+Re-anchored checks: none (C7.1 tightened: it also checks the enumeration's length)
+CPU jobs over 1 min: the six re-runs, uncontended (X3 46 s, X4 40 s, X6 92 s, X7 38 s, N5 41 s, X8 259 s), then X6 and X7 again without runs/; stage 15 (about 3 min); two diagnostic compiles; the bundle self-test (over 5 min); fast builds with gates, about 1.5 min each. None contended (no training).
+Queue status: done (30 of 30)
+Body words (round2/t6_words.py): 17,790 (F0: 20,745; accepted, DECISIONS.md#F8-length)
+Abstract words / numerals (C12.1): 300 / 19
+Next: F10 (Opus 5.5, high), the fresh-eyes review: read the main text once from `pdftotext` (References start on page 27), two read-only reviewers for Appendices A–M and N onward, REVIEW.md and CONSISTENCY.md. Note that `pdftotext` is not installed here; pypdf extracts text. Commits stay local.
+Decisions for user: none
