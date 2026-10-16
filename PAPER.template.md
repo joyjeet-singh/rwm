@@ -653,10 +653,9 @@ $$\overline{\log\sigma_{\max}} - \overline{\log\sigma_{\min}} \;=\; \overline{\e
 and `min_logstd` cancels algebraically, taking no gradient from that term. The floor the interval
 closes onto therefore freezes while the interval closes: a one-way ratchet.
 
-**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Each term,
-back-propagated alone on one real batch, confirms it: {{e4_n_live}} are live under the released
-configuration, exactly {{e4_n_touch}} reach σ ({{e4_touching}}), and the other {{e4_n_inert}} give a
-gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
+**The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Back-propagated
+one at a time, exactly {{e4_n_touch}} reach σ ({{e4_touching}}) and the other {{e4_n_inert}} give a
+gradient of exactly zero (Appendix J).
 
 **The derivation says the collapse happens on any dataset, and that is testable.** Under a rule
 committed before the runs (rule M-50, Appendix E) we trained the released head, unmodified but over a
@@ -666,8 +665,9 @@ the true noise and does not track it at all**, while under the authors' unused l
 recovers the true level to a median ratio of {{e5s_nll_ratio}}, seed-variably. The rule returns
 **{{e5s_verdict}}**, which establishes the contrast and not the size of the recovery (Appendix J).
 
-We predicted the collapse from this algebra before training, then observed it: across all {{n_runs}} runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
-every rate, and the {{e2_fitted_runs}} the rate is fitted on.
+We predicted the collapse from this algebra before training, then observed it in every run at the
+released width outside §5.2's sweep (Figure 4a; Appendix J lists the runs and which the rate is
+fitted on).
 
 **Two different things are being explained here, and §6.5 separates them.** *Magnitude collapse
 is objective-driven.* It occurs in all {{e2_mse_runs}} sampled-MSE runs at a rate of
@@ -681,7 +681,7 @@ Under the corrected objective the sign flips (Figure 4b), the strongest evidence
 is the objective and not the optimiser, the data or the architecture.
 
 **The correction fails differently rather than succeeding.** The reference contains an unused `gaussian_nll` branch. Running it reverses the collapse and
-improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overconfident. It does not produce a usable estimate, and it destroys something the faithful arm had: the σ-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positively correlated to {{cal_nll_npos}}/{{cal_nll_ndim}}, which is chance. Under the trajectory permutation test of §6.5, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample. The faithful arm's ordering is the one result in this family that points the same way in both arenas; it is also the weakest effect of the three, and it does not survive multiplicity correction either.
+improves the magnitude from {{cal_faithA_ratio}}× to {{cal_nll_ratio}}× overconfident. It does not produce a usable estimate, and it destroys something the faithful arm had: the σ-versus-error ordering falls from {{cal_faithA_npos}}/{{cal_faithA_ndim}} dimensions positively correlated to {{cal_nll_npos}}/{{cal_nll_ndim}}, which is chance. Neither ordering survives multiplicity correction (Appendix J).
 
 ### 6.4 Why the epistemic term may be miscalibrated: the members are not independent models
 
@@ -690,11 +690,9 @@ candidate, structurally symmetric to §6.3's, from source and from the checkpoin
 nothing here is trained and nothing is inferred from a measurement. The effect is known (§2). What
 is ours is finding it in a released robotics checkpoint, with the sharing quantified at {{v1_shared_pct}}% of each member and its cost bounded by the {{m44_ratio_gain}}× an independent ensemble gains on the overconfidence factor (§6.8).
 
-**The released five-member ensemble is not five models.** `system_dynamics.py:34` builds **one**
-`state_base`. `system_dynamics.py:35-41` replicates the *heads* `ensemble_size` times, and only
-the heads. In the forward pass `system_dynamics.py:87` evaluates the trunk **once** and `:90`
-hands the identical feature vector to every head; `system_dynamics.py:126` then computes the
-epistemic term as the standard deviation across those heads.
+**The released five-member ensemble is not five models.** The code builds one trunk, replicates only the heads,
+evaluates the trunk once and hands every head the same feature vector, then takes the spread across
+the heads as the epistemic term (Appendix J gives the lines).
 
 The parameter counts make the scale of the sharing concrete. The state pathway is a
 {{v1_shared_params}}-parameter two-layer GRU trunk plus {{v1_members_word}} heads of
@@ -717,11 +715,10 @@ quantity the method penalises rewards with is a lower bound on epistemic uncerta
 construction. It is the same shape of finding as §6.3: not a training failure, a structural one.
 
 **This applies to our own arms identically, which is why §6.2's comparison is fair.** Our
-ensemble-5 arms build one trunk the same way (`src/rwm_model.py:164-167`), evaluate it once
-(`:182`), hand the same vector to every head (`:185`) and compute the same spread (`:200`). Their
-tensor names and parameter counts match the released checkpoint exactly —
-{{v1_shared_params}} shared, {{v1_private_params}} per head, {{v1_total_params}} in total, on all
-{{v1_n_arms_checked}} arms checked (`results/v1_ensemble_topology.json`). So §6.2's "our arms fail the same way at {{e5_ratio_h100}}× at h = {{v2_deploy_h}}" compares two instances of one architecture, not two architectures.
+ensemble-5 arms build, evaluate and read their trunk the same way, and their tensor names and
+parameter counts match the released checkpoint's exactly on all {{v1_n_arms_checked}} arms checked
+(`results/v1_ensemble_topology.json`; Appendix J), so §6.2's comparison is of two instances of one
+architecture.
 
 **What this is and is not.** It is a *candidate* mechanism, established structurally. It does not
 show that trunk-sharing is *the* explanation for §6.2's miscalibration; architecture could be a
@@ -1668,7 +1665,32 @@ hypothesis to reach widely infers more than the evidence supports.
 
 ---
 
-## Appendix J — the σ = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, and the runs behind the collapse rate
+## Appendix J — the σ = 0 optimum: the synthetic-noise test (rule M-50), the term-by-term gradient check, the runs behind the collapse rate, and section 6.4's source walkthrough
+
+**What §6.3 and §6.4 keep, and what is here.** §6.3 keeps its derivation, the synthetic-noise verdict and the objective's two effects; §6.4 keeps the {{v1_shared_pct}}% sharing in its parameter counts and the mechanism. The passages below stood there as follows; the first two summarise sections of this appendix that state them in full.
+
+**§6.3's term-by-term summary.** **The derivation above covers two terms, and the objective has {{e4_n_terms}}.** Each term,
+back-propagated alone on one real batch, confirms it: {{e4_n_live}} are live under the released
+configuration, exactly {{e4_n_touch}} reach σ ({{e4_touching}}), and the other {{e4_n_inert}} give a
+gradient of exactly zero (`results/e4_sigma_gradients.json`, Appendix J).
+
+**§6.3's run-count summary.** We predicted the collapse from this algebra before training, then observed it: across all {{n_runs}} runs at the released width outside §5.2's sweep the log-σ range moves linearly in iteration count at a nearly identical rate within each objective, falling under sampled MSE and rising under the corrected one (Figure 4a). Appendix J lists the runs, the capacity-matched arm excluded from
+every rate, and the {{e2_fitted_runs}} the rate is fitted on.
+
+**§6.3's permutation detail on the corrected objective.** Under the trajectory permutation test of §6.5, at h = {{v2_diag_h}}, those counts give P = {{perm_oos_faithA_p_h368}} and {{perm_oos_nll_p_h368}} out of sample, {{perm_ins_faithA_p_h368}} and {{perm_ins_nll_p_h368}} in sample. The faithful arm's ordering is the one result in this family that points the same way in both arenas; it is also the weakest effect of the three, and it does not survive multiplicity correction either.
+
+**§6.4's source walkthrough.** `system_dynamics.py:34` builds **one**
+`state_base`. `system_dynamics.py:35-41` replicates the *heads* `ensemble_size` times, and only
+the heads. In the forward pass `system_dynamics.py:87` evaluates the trunk **once** and `:90`
+hands the identical feature vector to every head; `system_dynamics.py:126` then computes the
+epistemic term as the standard deviation across those heads.
+
+**§6.4 on our own arms.** **This applies to our own arms identically, which is why §6.2's comparison is fair.** Our
+ensemble-5 arms build one trunk the same way (`src/rwm_model.py:164-167`), evaluate it once
+(`:182`), hand the same vector to every head (`:185`) and compute the same spread (`:200`). Their
+tensor names and parameter counts match the released checkpoint exactly —
+{{v1_shared_params}} shared, {{v1_private_params}} per head, {{v1_total_params}} in total, on all
+{{v1_n_arms_checked}} arms checked (`results/v1_ensemble_topology.json`). So §6.2's "our arms fail the same way at {{e5_ratio_h100}}× at h = {{v2_deploy_h}}" compares two instances of one architecture, not two architectures.
 
 **§6.3's derivation says the collapse happens on any dataset, and that is testable.** It matters
 because it is what answers the follow-up's own explanation: on the released CSV, "small
