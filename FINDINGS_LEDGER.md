@@ -9635,3 +9635,15 @@ D is the baseline's error minus RWM's (positive: RWM better). Per-trajectory dif
 Caveats, as M-87 states them: matching the parameter count is one axis; the shapes and settings stay our reading of Table S7; the matched RSSM is not run (ruling W2); M-76's own Licenses line holds: architecture at a fixed regime, not the original's claim; the matched runs' records say rule M-76 (the trainer's label for regime ar); they are X4's runs.
 **Evidence** `RUN` `results/x4_matched_baselines.json`, `results/x4_matched_baselines_eval.json`; `SRC` `scripts/x4_matched_baselines.py`.
 **Status** CONFIRMED · **Relevance** METHOD
+
+### M-96 — Correction to M-65's discharge record: two of its in-band cells fall below the nominal · **NEW**
+**Corrects** M-65, whose discharge paragraph says that under an oracle rescale "coverage lands at or above 68.27%
+everywhere". In `results/m65_gaussian_nominal.json` 2 of the 48 cells fall below 68.27%: armA_ens5 [epistemic] out-of-sample held-out pair, h = 32, 67.82%; armA_ens5 [epistemic] out-of-sample held-out pair, h = 368, 66.75%. Both lie inside
+the band the rule committed in advance, [63.27%, 73.27%], so M-65's returned reading stands as it was: NOT HEAVY-TAILED in
+every one of 48 cells, 15 GAUSSIAN NOMINAL ADEQUATE and 33 OVER-DISPERSED. No verdict moves, and M-65 is not
+edited. The paper carried the same wording in the sentence round 4 moved from §3.1 to Appendix G; it now states the
+rule's heavy-tail bound and its two counts. Appendix E had printed M-65's first defined branch, GAUSSIAN NOMINAL ADEQUATE,
+because the returned phrase wraps a line and `scripts/appendix_g_rules.py` did not read past it; it now prints the
+returned reading. Found by F10's read-only review of Appendices A–M and checked against the artifact.
+**Evidence** `RUN` `results/m65_gaussian_nominal.json`; `SRC` `scripts/appendix_g_rules.py`
+**Status** CONFIRMED · **Relevance** METHOD

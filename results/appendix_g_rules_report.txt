@@ -13,7 +13,7 @@ APPENDIX G — PRE-REGISTERED RULES
   M-62          +5.12 h  NO MOVE                      Pre-registered: does any headline verdict ch
   M-63          +5.12 h  UNIFORM                      Pre-registered: is the h=1 coverage failure 
   M-64          +5.98 h  MOVES, at one cell           Pre-registered: does the horizon-scoped powe
-  M-65          +5.12 h  GAUSSIAN NOMINAL ADEQUATE    Pre-registered: is the Gaussian nominal of 6
+  M-65          +5.12 h  NOT HEAVY-TAILED, in every o Pre-registered: is the Gaussian nominal of 6
   M-68          +5.15 h  THE COMBINATION IMPROVES CAL The combined arm: independence and the corre
   M-69          +0.39 h  DOES NOT TRANSFER — A PROPER The cross-model transfer of the per-horizon 
   M-70        +115.19 h  DOES NOT REORDER             Whether the per-horizon correction reorders 

@@ -156,9 +156,12 @@ def main():
         # "**Discharged** by `artifact`. **It returns X.**" on ONE line, so a
         # ^-anchored pattern matched nothing and fell through to the branch-
         # definition scan below.
-        m_ret = re.search(r"\*\*It returns\s+(.+?)\.?\*\*", blk)
+        # Round 4, F10 (reviewer): the phrase may wrap onto a second line, as M-65's does ("**It returns NOT
+        # HEAVY-TAILED, in\nevery one of 48 model x horizon cells.**"); without re.S that matched nothing and M-65 fell
+        # through to the first branch its rule defines. A paragraph break still ends the phrase.
+        m_ret = re.search(r"\*\*It returns\s+((?:(?!\n\n).)+?)\.?\*\*", blk, re.S)
         if m_ret:
-            verdict = m_ret.group(1).strip().strip("*").strip()
+            verdict = " ".join(m_ret.group(1).split()).strip("*").strip()
         m_st = re.search(r"^\*\*Status\*\*\s*([A-Z][A-Za-z ,]*?)\s*—\s*([^·\n]+)",
                          blk, re.M)
         if m_st and not verdict:
