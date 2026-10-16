@@ -1,0 +1,259 @@
+{
+  "rule": "X4",
+  "ledger": "M-87",
+  "script": "scripts/x4_matched_baselines.py",
+  "script_sha256": "9e7ca6357579e8e591c4cd953b16efc437819b52cad8fcf3ae10e2e0bca9ad94",
+  "exploratory": true,
+  "never_reopens": "M-75, M-76 or any discharged rule; nothing here changes a verdict",
+  "design": {
+    "variants": {
+      "mlp": "BASELINE_SPECS.md row 33",
+      "transformer": "BASELINE_SPECS.md row 34"
+    },
+    "regime": "ar",
+    "spec": "matched",
+    "iterations": 2500,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "rwm": "Arm A (32, 8), 2,500 iterations",
+    "arena": "section 5's held-out pair, 4 non-overlapping 400-step trajectories",
+    "n_independent": 4,
+    "statistic": "D_b = mean over trajectories of [3-seed mean err_b - 3-seed mean err_RWM], relative-L1, h = 368",
+    "test": "exact 256-resample cluster bootstrap and two-sided p; Holm over the family of two (MLP, transformer)",
+    "names": [
+      "A MATCHED BASELINE AHEAD",
+      "RWM AHEAD OF BOTH",
+      "PARTIAL",
+      "CANNOT BE SETTLED"
+    ]
+  },
+  "assertions": {
+    "a": {
+      "pass": true,
+      "max_abs_diff": 0.0,
+      "n_values": 2880,
+      "against": "results/baselines_eval.json"
+    },
+    "b": {
+      "pass": true,
+      "verdict": "RWM AHEAD OF ALL THREE",
+      "committed_verdict": "RWM AHEAD OF ALL THREE",
+      "max_abs_diff": 0.0,
+      "against": "results/baselines_verdict.json rules.M-76.governing"
+    },
+    "c": {
+      "pass": true,
+      "n_params": {
+        "mlp": 713171,
+        "transformer": 686196
+      },
+      "rwm_state_pathway": 714164,
+      "ratio": {
+        "mlp": 0.9986095630695471,
+        "transformer": 0.9608381268168096
+      },
+      "baseline_specs_status": {
+        "33": "deviation",
+        "34": "deviation"
+      }
+    },
+    "d": {
+      "pass": true,
+      "problems": []
+    }
+  },
+  "reading": {
+    "h": 368,
+    "metric": "l1",
+    "label": "PARTIAL",
+    "per_baseline": {
+      "mlp": {
+        "result": "RWM BETTER",
+        "D": 0.8839569712678592,
+        "per_traj": [
+          2.1077038447062177,
+          1.0210200448830922,
+          0.1965538760026296,
+          0.2105501194794973
+        ],
+        "p": 0.0,
+        "ci95": [
+          0.20355199774106347,
+          1.6334154133995378
+        ],
+        "rank": 1,
+        "level": 0.025,
+        "rejected": true
+      },
+      "transformer": {
+        "result": "CANNOT BE SETTLED",
+        "D": 0.20553417876362803,
+        "per_traj": [
+          1.0107978979746501,
+          0.005131016174952208,
+          -0.1211851139863332,
+          -0.07260708510875702
+        ],
+        "p": 0.625,
+        "ci95": [
+          -0.0968960995475451,
+          0.7399466522037983
+        ],
+        "rank": 2,
+        "level": 0.05,
+        "rejected": false
+      }
+    }
+  },
+  "alongside": {
+    "l1_h100": {
+      "verdict": "PARTIAL",
+      "m": 2,
+      "per_baseline": {
+        "mlp": {
+          "result": "RWM BETTER",
+          "D": 0.10949110860625903,
+          "per_traj": [
+            0.1657126545906067,
+            0.15066419045130408,
+            0.08517762025197348,
+            0.036409969131151854
+          ],
+          "p": 0.0,
+          "ci95": [
+            0.060793794691562666,
+            0.15818842252095539
+          ],
+          "rank": 1,
+          "level": 0.025,
+          "rejected": true
+        },
+        "transformer": {
+          "result": "CANNOT BE SETTLED",
+          "D": 0.10479210441311201,
+          "per_traj": [
+            0.2568175196647644,
+            0.2749430934588115,
+            -0.05946436027685803,
+            -0.05312783519426981
+          ],
+          "p": 0.125,
+          "ci95": [
+            -0.05629609773556392,
+            0.26588030656178796
+          ],
+          "rank": 2,
+          "level": 0.05,
+          "rejected": false
+        }
+      },
+      "status": "alongside, not a reading"
+    },
+    "l1_h32": {
+      "verdict": "PARTIAL",
+      "m": 2,
+      "per_baseline": {
+        "mlp": {
+          "result": "RWM BETTER",
+          "D": 0.0567198817928632,
+          "per_traj": [
+            0.023199180761973026,
+            0.107940673828125,
+            0.09058074156443277,
+            0.005158931016921997
+          ],
+          "p": 0.0,
+          "ci95": [
+            0.014179055889447512,
+            0.09926070769627889
+          ],
+          "rank": 1,
+          "level": 0.025,
+          "rejected": true
+        },
+        "transformer": {
+          "result": "CANNOT BE SETTLED",
+          "D": 0.07733669877052306,
+          "per_traj": [
+            0.12527052561442054,
+            0.2272603313128153,
+            -0.0108279287815094,
+            -0.03235613306363423
+          ],
+          "p": 0.125,
+          "ci95": [
+            -0.021592030922571816,
+            0.17626542846361792
+          ],
+          "rank": 2,
+          "level": 0.05,
+          "rejected": false
+        }
+      },
+      "status": "alongside, not a reading"
+    }
+  },
+  "runs": {
+    "mlp_seed0": {
+      "wall_clock_s": 297.55882124399795,
+      "s_per_iter": 0.11902352849759919,
+      "n_params": 713171
+    },
+    "mlp_seed1": {
+      "wall_clock_s": 278.0415516819994,
+      "s_per_iter": 0.11121662067279976,
+      "n_params": 713171
+    },
+    "mlp_seed2": {
+      "wall_clock_s": 517.2877782889991,
+      "s_per_iter": 0.20691511131559964,
+      "n_params": 713171
+    },
+    "transformer_seed0": {
+      "wall_clock_s": 8265.302216070002,
+      "s_per_iter": 3.3061208864280007,
+      "n_params": 686196
+    },
+    "transformer_seed1": {
+      "wall_clock_s": 8199.337820059001,
+      "s_per_iter": 3.2797351280236007,
+      "n_params": 686196
+    },
+    "transformer_seed2": {
+      "wall_clock_s": 14152.922296619001,
+      "s_per_iter": 5.661168918647601,
+      "n_params": 686196
+    }
+  },
+  "probe_s_per_iter": {
+    "mlp": 0.1255100361579121,
+    "transformer": 3.957011280789486
+  },
+  "n_params": {
+    "mlp": 713171,
+    "transformer": 686196
+  },
+  "caveats": [
+    "matching the parameter count is one axis; the shapes and settings stay our reading of Table S7",
+    "the matched RSSM is not run (ruling W2)",
+    "M-76's own Licenses line holds: architecture at a fixed regime, not the original's claim",
+    "the matched runs' records say rule M-76 (the trainer's label for regime ar); they are X4's runs"
+  ],
+  "evaluator_output": "results/x4_matched_baselines_eval.json",
+  "code_sha256": {
+    "scripts/x4_matched_baselines.py": "9e7ca6357579e8e591c4cd953b16efc437819b52cad8fcf3ae10e2e0bca9ad94",
+    "scripts/baselines_eval.py": "9ac42025c7db404c83d63a370ce70e7ebaf68498a169dc9c4a1e47119eb666f8",
+    "scripts/verdict_baselines.py": "066377805746f5968e4606f85f78b82e957fb01605dc312c662b6435ac779c60",
+    "scripts/verdict_mn_sweep.py": "e393f6fa32254cbb6506c0a36ab2d22ae804508d6d81b44802bb5bdb113b1708",
+    "scripts/p5_sweep_power.py": "650d8b68bcad4b91f65a7086cc583508f11a611ae32af8fb2c2125c7c8836190",
+    "scripts/mn_sweep_eval.py": "6d717586b6527d900eae5cbef08b098d1a71fc7ecd206329467a7fb90831862a",
+    "src/baselines/__init__.py": "45bf214ee198c648434e4207b68e58f65126820f357f1bf6d2d76aa6be44691b",
+    "src/baselines/common.py": "6738db186bda1d17bcaabb05ffb135ebae31a797fea16231d49a1de69e096e45",
+    "src/baselines/mlp.py": "83706b3831cca45996f5e083238b6af57c5cf06b709a65ca16dad06fa1790622",
+    "src/baselines/transformer.py": "1bd6b03d6e35b9d48c0d3679ceb8392895b45140ca794bf6c679372fe8216a04"
+  },
+  "git_head": "3000b00d27832feb64abbe671065ac8fbccbc8e9"
+}
