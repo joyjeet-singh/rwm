@@ -349,7 +349,10 @@ spans it at {{a1_spans_zero_at}}: h = {{v2_diag_h}} is the end of a trend rather
 picked, h = {{v2_deploy_h}} sits partway along it, and the claim is weakest inside the horizon the model is trained on. **Only the h = {{v2_diag_h}} row is the rule's horizon, and the rule ran on seed {{m23_seed}} alone.** Every
 value in the table is a three-seed mean computed after the data existed, so by this paper's own standard (§8)
 none carries a pre-registration's weight, the same treatment §6.6 gives the expectation we held about the
-counter-baseline, and nothing in the table discharges or re-opens the rule.
+counter-baseline, and nothing in the table discharges or re-opens the rule. Teacher forcing is more than
+twice as variable across seeds as autoregressive training at h = {{v2_diag_h}}, so a single-seed
+comparison of these two arms is unreliable; Appendix L gives the seed spread and the four
+per-trajectory gaps, {{a1_gap_traj_n_positive_h368}} of {{a1_gap_traj_n_h368}} positive.
 
 **At h = 1 the table understates the evidence, and the correction runs against us.** The row
 rests on {{a1_nind}} independent 400-step trajectories, a unit only the longest horizon needs.
@@ -360,45 +363,23 @@ Under a rule committed before the index was built (rule M-64, Appendix E), we re
 readings are reported: the rule above was discharged on the 400-step unit, and the short unit resolves the sign. At one step **autoregressive
 training is worse**, the direction the sign test and, on the 400-step unit, the hold-last floor already pointed.
 
-*Against a baseline, because neither number means anything without one.* The hold-last
-floor, predicting that nothing changes, scores **{{a1_floor_h368}}** in the h = {{v2_diag_h}}
-cell, and autoregressive training beats it by **{{a1_floor_over_A_h368}}×** there and by
-{{a1_floor_over_A_h100}}× at h = {{v2_deploy_h}}. **Teacher forcing is
-{{a1_B_over_floor_h368}}× worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and
-{{a1_B_over_floor_h100}}× worse at h = {{v2_deploy_h}}: the arm that reaches a lower training loss
-predicts the future worse than a model that makes no prediction, at {{a1_B_worse_than_floor_at}} we measured on the 400-step unit, the sharper statement of what exposure bias costs here; but on M-64's shorter units, each {{m64_hist_rows}} + h rows long and non-overlapping ({{m64_units_list}} on these episodes), at the same checkpoint and on the same two episodes, it beats the floor at h = {{m64_B_beats_floor_at}} and loses to it only at the longest horizon those units reach, so that statement holds on the 400-step unit and not on the shorter one. **The floor is not a
-weak baseline everywhere**: at {{a1_A_worse_than_floor_at}} it beats the autoregressive arm as well,
-scoring {{a1_floor_h1}} at h = 1 against autoregressive training's {{a1_A_h1}}, the only horizon where the autoregressive arm loses to predicting no change on the 400-step unit; on the {{m64_h1_unit}}-row unit both arms beat the floor at h = 1 ({{m64_A_h1}} and {{m64_B_h1}} against {{m64_floor_h1}}). At 50 Hz one step is 20 ms and the state
-barely moves, so that is what one should expect.
-
-*Seeds, and what four trajectories can show.* Seed spread is not symmetric between the arms: Arm A
-ranges {{d1_A_lo}}–{{d1_A_hi}} across seeds ({{d1_A_relsd}}% relative), Arm B
-{{d1_B_lo}}–{{d1_B_hi}} ({{d1_B_relsd}}%). Teacher forcing is more than twice as variable across
-seeds as autoregressive training at this horizon, so a single-seed comparison of these two arms is
-unreliable. For a single seed the bootstrap over trajectories gives the 95% interval
-[{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories; by the n = {{m23_nind}}
-caveat of §3 its tails move in steps of {{c3_quant}}%, so it corroborates the sign test rather
-than being the primary evidence. The four per-trajectory gaps behind the three-seed table (Arm B minus Arm A, three seeds pooled, at h = {{v2_diag_h}}) are **{{a1_gap_traj_h368}}**. All
-{{a1_gap_traj_n_positive_h368}} of {{a1_gap_traj_n_h368}} are positive, the direction of the sign test's {{c3_sign_pos}} of {{c3_sign_n}} episodes,
-but one trajectory carries {{a1_gap_traj_max_h368}} against a smallest of
-{{a1_gap_traj_min_h368}}, which no interval on four units shows. At h = {{v2_deploy_h}} the four
-are {{a1_gap_traj_h100}}; Appendix L notes where other sections store theirs.
+*Against a baseline, because neither number means anything without one.* The hold-last floor,
+predicting that nothing changes, scores **{{a1_floor_h368}}** at h = {{v2_diag_h}}, where
+autoregressive training beats it by **{{a1_floor_over_A_h368}}×** ({{a1_floor_over_A_h100}}× at
+h = {{v2_deploy_h}}) and **teacher forcing is {{a1_B_over_floor_h368}}× worse than assuming nothing
+changes at all** ({{a1_B_over_floor_h100}}× at h = {{v2_deploy_h}}). Those are 400-step units, on
+which the floor beats teacher forcing at {{a1_B_worse_than_floor_at}} and the autoregressive arm at
+{{a1_A_worse_than_floor_at}}; on M-64's shorter units teacher forcing beats the floor at
+h = {{m64_B_beats_floor_at}}, and both arms beat it at h = 1 (Appendix L).
 
 **What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
-advantage is small, and it resolves only with the longer training and all {{d1_seeds}} seeds. The table
-above, at {{iters_long}} iterations with {{d1_seeds}} seeds pooled, gives an h = 8 gap of {{a1_gap_h8}}
-{{a1_gap_ci_h8}}, which excludes zero, a factor of {{a1_ratio_h8}}×. The single seed the rule was
-run on (seed {{m23_seed}}) gives an h = 8 gap of {{m23_h8_gap}} at the same {{iters_long}}-iteration checkpoint,
-and its interval {{m23_h8_excl}}. At the {{bu_ckpts}}-iteration checkpoints, with all {{d1_seeds}} seeds
-pooled, the out-of-sample gap excludes zero in **{{ab_short_excl}} of {{ab_short_cells}}** h = 8 cells (both
-trajectory lengths crossed with both checkpoints). An earlier rule of ours, anchored at h = 8 and
-evaluated at those same checkpoints (rule M-16, Appendix E), returned **{{m16_verdict}}**.
-**The advantage is small at the training horizon and large beyond it.**
-
-At long horizons the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}**
-cells, both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints, and each still excludes zero at a Bonferroni level of 0.05/{{c3_family}} over the family of {{c3_family}} out-of-sample comparisons, where Holm–Bonferroni over the {{c3_long}} long-horizon cells rejects **{{c3_holm_rejected}} of {{c3_long}}** (Appendix L). Beside the artifact it reimplements, on {{h2h_nind}} independent trajectories with our arms at
-{{iters_main}} iterations over {{h2h_nseeds}} seeds, relative-L1 and nRMSE both put the released checkpoint
-first at {{h2h_released_sweeps_at}} and an Arm A variant ahead of it at {{h2h_armA_sweeps_at}}, a reading that flatters the checkpoint, since the arena is out-of-sample for our arms and in-sample for it (Appendix L).
+advantage is small: the table's {{iters_long}}-iteration gap there excludes zero only with all
+{{d1_seeds}} seeds pooled, the out-of-sample gap excludes zero in **{{ab_short_excl}} of {{ab_short_cells}}** h = 8
+cells at the {{bu_ckpts}}-iteration checkpoints, and an earlier rule anchored there (rule M-16)
+returned **{{m16_verdict}}**. **The advantage is small at the training horizon and large beyond
+it**: at long horizons the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** cells at those checkpoints, each
+still excluding it after correction for the family of {{c3_family}} comparisons, and Appendix L sets
+these cells and our arms beside the released checkpoint they reimplement.
 
 **Held out in turn, every episode tests the claim out of sample once.** The {{a1_nind}} trajectories above are one fold. Training both arms on {{x3_n_new_folds_word}} more such splits, fixed in advance, so that each episode is held out in exactly one of {{x3_n_folds_word}} (rule X3, committed before the runs; {{iters_main}} iterations, {{d1_seeds}} seeds), the gap at h = {{v2_diag_h}} over the {{x3_n}} independent out-of-sample trajectories of all ten episodes is {{x3_gap}} {{x3_ci}}, favouring autoregressive training: **{{x3_reading}}**. All {{x3_eps_pos}} of the {{x3_n_eps}} episodes favour it (P = {{x3_p}}), and every fold's own interval excludes zero, its gap running from {{x3_fold_lo}} to {{x3_fold_hi}} (Appendix L). At one step teacher forcing still leads on short units, {{x3_h1_gap}} {{x3_h1_ci}} over {{x3_h1_n}} {{x3_h1_unit}}-row units. These are {{iters_main}}-iteration models, not the {{iters_long}}-iteration ones behind the factor above, which X3 does not re-read; its interval resamples trajectories, carrying every seed, and its folds pair episodes in index order rather than by speed. The {{a1_nind}} trajectories of §5's arena are no longer the only out-of-sample evidence.
 
@@ -1818,9 +1799,47 @@ The null means explain why, and the explanation is the one that motivates §6.6.
 
 ---
 
-## Appendix L — section 5's long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint
+## Appendix L — section 5's floor, seeds and short horizon, its long-horizon cells, multiplicity, and the reimplementation beside the released checkpoint
 
-At long horizons §5's pattern is consistent across the design. Under the cluster bootstrap, the
+**Three passages of §5 in full.** §5 keeps two sentences of each of the next three paragraphs, which
+stood there as follows.
+
+*Against a baseline, because neither number means anything without one.* The hold-last
+floor, predicting that nothing changes, scores **{{a1_floor_h368}}** in the h = {{v2_diag_h}}
+cell, and autoregressive training beats it by **{{a1_floor_over_A_h368}}×** there and by
+{{a1_floor_over_A_h100}}× at h = {{v2_deploy_h}}. **Teacher forcing is
+{{a1_B_over_floor_h368}}× worse than assuming nothing changes at all** at h = {{v2_diag_h}}, and
+{{a1_B_over_floor_h100}}× worse at h = {{v2_deploy_h}}: the arm that reaches a lower training loss
+predicts the future worse than a model that makes no prediction, at {{a1_B_worse_than_floor_at}} we measured on the 400-step unit, the sharper statement of what exposure bias costs here; but on M-64's shorter units, each {{m64_hist_rows}} + h rows long and non-overlapping ({{m64_units_list}} on these episodes), at the same checkpoint and on the same two episodes, it beats the floor at h = {{m64_B_beats_floor_at}} and loses to it only at the longest horizon those units reach, so that statement holds on the 400-step unit and not on the shorter one. **The floor is not a
+weak baseline everywhere**: at {{a1_A_worse_than_floor_at}} it beats the autoregressive arm as well,
+scoring {{a1_floor_h1}} at h = 1 against autoregressive training's {{a1_A_h1}}, the only horizon where the autoregressive arm loses to predicting no change on the 400-step unit; on the {{m64_h1_unit}}-row unit both arms beat the floor at h = 1 ({{m64_A_h1}} and {{m64_B_h1}} against {{m64_floor_h1}}). At 50 Hz one step is 20 ms and the state
+barely moves, so that is what one should expect.
+
+*Seeds, and what four trajectories can show.* Seed spread is not symmetric between the arms: Arm A
+ranges {{d1_A_lo}}–{{d1_A_hi}} across seeds ({{d1_A_relsd}}% relative), Arm B
+{{d1_B_lo}}–{{d1_B_hi}} ({{d1_B_relsd}}%). Teacher forcing is more than twice as variable across
+seeds as autoregressive training at this horizon, so a single-seed comparison of these two arms is
+unreliable. For a single seed the bootstrap over trajectories gives the 95% interval
+[{{m23_ci_lo}}, {{m23_ci_hi}}] on n = {{m23_nind}} independent trajectories; by the n = {{m23_nind}}
+caveat of §3 its tails move in steps of {{c3_quant}}%, so it corroborates the sign test rather
+than being the primary evidence. The four per-trajectory gaps behind the three-seed table (Arm B minus Arm A, three seeds pooled, at h = {{v2_diag_h}}) are **{{a1_gap_traj_h368}}**. All
+{{a1_gap_traj_n_positive_h368}} of {{a1_gap_traj_n_h368}} are positive, the direction of the sign test's {{c3_sign_pos}} of {{c3_sign_n}} episodes,
+but one trajectory carries {{a1_gap_traj_max_h368}} against a smallest of
+{{a1_gap_traj_min_h368}}, which no interval on four units shows. At h = {{v2_deploy_h}} the four
+are {{a1_gap_traj_h100}}; this appendix notes where other sections store theirs.
+
+**What is small, and where it resolves.** At h = 8, the horizon the model is trained on, the
+advantage is small, and it resolves only with the longer training and all {{d1_seeds}} seeds. The table
+above, at {{iters_long}} iterations with {{d1_seeds}} seeds pooled, gives an h = 8 gap of {{a1_gap_h8}}
+{{a1_gap_ci_h8}}, which excludes zero, a factor of {{a1_ratio_h8}}×. The single seed the rule was
+run on (seed {{m23_seed}}) gives an h = 8 gap of {{m23_h8_gap}} at the same {{iters_long}}-iteration checkpoint,
+and its interval {{m23_h8_excl}}. At the {{bu_ckpts}}-iteration checkpoints, with all {{d1_seeds}} seeds
+pooled, the out-of-sample gap excludes zero in **{{ab_short_excl}} of {{ab_short_cells}}** h = 8 cells (both
+trajectory lengths crossed with both checkpoints). An earlier rule of ours, anchored at h = 8 and
+evaluated at those same checkpoints (rule M-16, Appendix E), returned **{{m16_verdict}}**.
+**The advantage is small at the training horizon and large beyond it.**
+
+**The long-horizon cells.** At long horizons §5's pattern is consistent across the design. Under the cluster bootstrap, the
 out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}** long-horizon cells,
 both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints. These figures are
 relative-L1; the nRMSE aggregation is reported separately and does not change the direction.
