@@ -1087,7 +1087,7 @@ pushing its floor back up, and is untested for any (§2, Appendix I).
 
 The Robotic World Model's central training claim reproduces at long horizons, and the margin is
 large there, though teacher forcing leads at one step on the short windows built for it. RWM is
-ahead at h = {{v2_diag_h}} of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change, and matched to RWM's parameter count, size being one axis, the transformer cannot be told apart from it (rule X4: {{x4_reading}}), and on accuracy alone {{mn_n_better_word}} other history and forecast lengths beat its chosen ones at our budget, no reading the rule reports putting the chosen ones ahead of any of them, in a ranking that changes when the chosen setting trains longer; it chose them as a trade-off with training time (§5.2, §5.3). Neither
+ahead at h = {{v2_diag_h}} of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change. Matched to RWM's parameter count, size being one axis, the transformer cannot be told apart from it (rule X4: {{x4_reading}}). On accuracy alone, {{mn_n_better_word}} other history and forecast lengths beat its chosen ones at our budget, no reading the rule reports putting the chosen ones ahead of any of them, in a ranking that changes when the chosen setting trains longer; it chose them as a trade-off with training time (§5.2, §5.3). Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
 At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to, the aleatoric σ is {{d1n_alea_ratio_h100}}× smaller than its own error, because the objective's optimum is σ = 0 and the term that should prevent this cancels out of the gradient. The epistemic term the method actually penalises with is better by a factor of {{d1n_epi_over_alea_h100}} and still {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] overconfident, both figures at h = {{v2_deploy_h}} on the {{d1n_nind}} trajectories of the checkpoint's own training episodes.
 
@@ -1101,23 +1101,12 @@ coupling between dimensions is respected (§6.5). As the scalar the method appli
 order right and the size wrong: it should not be read as a scale, and a ranking use deserves its own
 validation on the deployment distribution (Appendix S).
 
-**What should travel from this paper, and what should not.** The findings are of three kinds. *Properties of the objective and of how its bounds are built* are the ones to expect elsewhere,
-and only where both are present together: §6.3 derives the σ = 0 optimum from squared
-error on a sampled prediction through a bounded head whose floor nothing pushes back up, so it
-should hold wherever both are present, the hypothesis §2 states and leaves untested outside this
-codebase. On §2's count the substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}}
-descendants examined, and there only in a non-default mode; the survey did not examine the floor,
-so that is an upper bound on how often both are. *Properties of this released artifact* should be checked
-rather than assumed in any other: the one-step misalignment in its evaluation harness (§7.2), the
-trunk its five members share (§6.4), and its specific overconfidence factors,
-{{d1n_alea_ratio_h100}}× for the aleatoric σ and {{d1n_epi_ratio_h100}}× for the epistemic term
-at h = {{v2_deploy_h}} (§6.2), are measurements of one checkpoint. *Properties of this dataset
-and its arenas* are limits on what could be resolved, not findings in either direction, and neither pinned repository can lift them (§3): our arms' held-out arena holds {{m23_nind}} independent 400-step
-trajectories and all ten episodes hold {{d1n_nind}}, which is why §11 leaves the replication at
-ensemble size 5, the free-baseline margin over whole trajectories at h = {{v2_diag_h}} and capacity's share of the
-trunk-sharing effect open rather than settled (on shorter units at h = {{v2_deploy_h}}, rule X6 settles the margin on the
-checkpoint's training episodes). §5.2's configuration verdict should not travel either: it is
-resolved, but at our data budget, and says nothing about the original's.
+**What should travel from this paper, and what should not.** *Properties of the objective and of how
+its bounds are built*, such as §6.3's σ = 0 optimum, are the ones to expect elsewhere, and only where
+both are present together. *Properties of this released artifact*, its one-step misalignment, its
+shared trunk and its specific overconfidence factors, should be checked rather than assumed in any
+other, and *properties of this dataset and its arenas* are limits on what could be resolved, not
+findings in either direction (Appendix S gives all three, and why §5.2's verdict should not travel either).
 
 ---
 
@@ -2389,7 +2378,27 @@ we tested the mechanism in none of them.
 
 ---
 
-## Appendix S — the conclusion's discussion of the ranking, the scale and the per-dimension evidence (§12)
+## Appendix S — the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (§12)
+
+**What should travel, as §12 stated it.** §12 keeps two sentences of this paragraph.
+
+**What should travel from this paper, and what should not.** The findings are of three kinds. *Properties of the objective and of how its bounds are built* are the ones to expect elsewhere,
+and only where both are present together: §6.3 derives the σ = 0 optimum from squared
+error on a sampled prediction through a bounded head whose floor nothing pushes back up, so it
+should hold wherever both are present, the hypothesis §2 states and leaves untested outside this
+codebase. On §2's count the substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}}
+descendants examined, and there only in a non-default mode; the survey did not examine the floor,
+so that is an upper bound on how often both are. *Properties of this released artifact* should be checked
+rather than assumed in any other: the one-step misalignment in its evaluation harness (§7.2), the
+trunk its five members share (§6.4), and its specific overconfidence factors,
+{{d1n_alea_ratio_h100}}× for the aleatoric σ and {{d1n_epi_ratio_h100}}× for the epistemic term
+at h = {{v2_deploy_h}} (§6.2), are measurements of one checkpoint. *Properties of this dataset
+and its arenas* are limits on what could be resolved, not findings in either direction, and neither pinned repository can lift them (§3): our arms' held-out arena holds {{m23_nind}} independent 400-step
+trajectories and all ten episodes hold {{d1n_nind}}, which is why §11 and Appendix R leave the replication at
+ensemble size 5, the free-baseline margin over whole trajectories at h = {{v2_diag_h}} and capacity's share of the
+trunk-sharing effect open rather than settled (on shorter units at h = {{v2_deploy_h}}, rule X6 settles the margin on the
+checkpoint's training episodes). §5.2's configuration verdict should not travel either: it is
+resolved, but at our data budget, and says nothing about the original's.
 
 The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large. The scale may be repairable per horizon, but on a model that has not seen the test episodes the evidence is mixed. On the released checkpoint a per-horizon multiplier, fitted on one episode and scored on another, brings every coverage estimate within {{d3_tol}} points of nominal, though no single cell is resolvable at this arena and the cells are not independent trials (§6.7), while fitted on nine episodes and scored on the tenth the epistemic coverage over all {{x7_n_traj}} trajectories is within the band at every horizon (rule X7), where a global multiplier manages {{d3_epi_const_ok}} of them. On Arm A, whose model never saw those episodes, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. Against a second free baseline it does less well: the model's own predicted step size ranks error at {{e7_step_r}} against disagreement's {{e7_r_dis}}, a margin this sample cannot resolve at h = {{v2_diag_h}}, so the verdict is {{e7_verdict}} ({{e7_verdict_gloss}}). On shorter units of the same episodes, at h = {{v2_deploy_h}}, a later rule resolves that margin in disagreement's favour (rule X6: **{{x6_reading}}**, {{x6_margin}} {{x6_ci}}), on the checkpoint's training data. **The control this rests on removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (§6.6). That is smaller than the {{a2_r_pooled}} pooled figure, and it is the one that means what a practitioner needs it to mean: not a re-encoding of the clock, and not merely a report of which episode is hard. It is the closest either original work comes to a claim this reproduction strengthens rather than qualifies, and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well over whole trajectories.
 
