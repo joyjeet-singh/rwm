@@ -9,3 +9,4 @@ Body words by `docs/presubmission/round2/t6_words.py` (Introduction to "Data and
 
 | # | Section | Moved | To | Section words | Body words |
 |---|---|---|---|---|---|
+| 1 | §2 Related work | Seven paragraphs, verbatim (the method's family, deep ensembles, the three sources of uncertainty, miscalibration, recalibration, trunk sharing, the objective's neighbour, 676 words); §2 keeps one sentence for each, the direct precedent, what is new, and the PETS lineage's two sentences | Appendix I, new titled section "Related work in full (§2)", retitled to name it. Not a new appendix: the letters end at Z | 1,123 → 821 | 22,313 → 22,011 |
