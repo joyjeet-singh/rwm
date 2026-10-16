@@ -518,8 +518,9 @@ def build_rows():
         mde_keys = [k for k in cond if k.endswith("_mde")]
         rows.append({
             "claim": claim,
-            # the matched-capacity result is reported in §11, not §6.10 (S10)
-            "section": "6.8" if name == "r2_independent_ensemble" else "11",
+            # the matched-capacity result was reported in §11 (S10); round 4's F8 moved §11's paragraph to
+            # Appendix R, and its verdict now stands in §6.8 beside the contrast it bounds (F10)
+            "section": "6.8",
             "arena": arena,
             "n_independent": art["design"]["n_independent"],
             "in_sample": in_sample(model, arena),

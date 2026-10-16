@@ -3925,6 +3925,19 @@ def main():
         put(f"r46_{_tag}_nind", _ns.pop(), "results/task2_3_matched_trend.json")
     assert N["r46_o_nind"]["value"] == N["m23_nind"]["value"], (N["r46_o_nind"], N["m23_nind"])
 
+    # --- Round 4, F10 (reviewer, Appendix G): what M-65's 48 cells return, against the rule's own bands ------------------
+    # The sentence said coverage lands "at or above" the nominal in every cell; 2 of the 15 in-band cells are below it,
+    # inside the band. It now states the heavy-tail bound the rule committed and the two counts it returned.
+    _m65 = J("m65_gaussian_nominal.json")
+    _hb = re.fullmatch(r"below (\d+\.\d+)", _m65["thresholds_committed_in_advance"]["HEAVY-TAILED"])
+    assert _hb, _m65["thresholds_committed_in_advance"]
+    _ccov = [c["coverage_pm1_oracle_pct"] for _v in _m65["cases"].values() for c in _v["by_horizon"].values()]
+    assert min(_ccov) > float(_hb.group(1)) and len(_ccov) == N["m65_n_cells"]["value"], (min(_ccov), len(_ccov))
+    put("m65_heavy_bound", _hb.group(1), "results/m65_gaussian_nominal.json")
+    put("m65_n_adequate", _m65["verdict"]["counts"]["GAUSSIAN NOMINAL ADEQUATE"], "results/m65_gaussian_nominal.json")
+    put("m65_n_over", _m65["verdict"]["counts"]["OVER-DISPERSED"], "results/m65_gaussian_nominal.json")
+    assert N["m65_n_adequate"]["value"] + N["m65_n_over"]["value"] + N["m65_n_heavy"]["value"] == N["m65_n_cells"]["value"]
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

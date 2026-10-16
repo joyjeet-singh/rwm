@@ -42,8 +42,7 @@ extension that carries none of the rule's weight. Across the whole horizon grid 
 monotonically to that figure — **{{d1_ratio_h100}}×** at h = {{v2_deploy_h}}, the horizon the
 method deploys at — and the gap excludes zero at {{a1_n_excl}} of {{a1_n_horizons}} horizons,
 spanning it only at {{a1_spans_zero_at}}; there, on {{m64_h1_n}} short windows, a second pre-registered rule finds teacher forcing ahead ({{m64_h1_gap}} {{m64_h1_ci}}). Only the rule's one-seed verdict is pre-registered;
-the three-seed figures and every other horizon were computed after the data existed, and are
-marked as such.
+the three-seed figures and every other horizon were computed after the data existed, and are marked as such. Retrained on fixed folds with each of the ten episodes held out once ({{iters_main}} iterations, not {{iters_long}}), a second rule committed before the runs finds the direction replicating at h = {{v2_diag_h}}, {{x3_gap}} {{x3_ci}} over {{x3_n}} trajectories (rule X3: **{{x3_reading}}**).
 
 **2 — Neither uncertainty output of the follow-up is usable as an interval.** At
 h = {{v2_deploy_h}} — the horizon the method's own imagination rollouts run to — the ensemble
@@ -56,14 +55,14 @@ implemented objective is squared error on a sampled prediction, whose optimum is
 **3 — As a ranking it survives adversarial testing.** Ensemble disagreement beats the forecast
 step index — a free counter neither original paper compared against — at every horizon. With both
 the rollout and the forecast depth held constant it still correlates **{{a2_rdd}}
-{{a2_rdd_ci}}** with realised error, so it is not merely reporting which episode is hard. But the model's own predicted step size, which needs no ensemble, ranks error nearly as well ({{e7_step_r}} against {{e7_r_dis}}), by a margin this sample cannot resolve (§6.6).
+{{a2_rdd_ci}}** with realised error, so it is not merely reporting which episode is hard. But the model's own predicted step size, which needs no ensemble, ranks error nearly as well ({{e7_step_r}} against {{e7_r_dis}}), by a margin the {{e7_nind}} whole trajectories cannot resolve at h = {{v2_diag_h}}. On {{x6_n_units}} shorter units of the same episodes, which are the checkpoint's training data, a rule committed before its reading finds disagreement ahead at h = {{v2_deploy_h}}, {{x6_margin}} {{x6_ci}} (rule X6: **{{x6_reading}}**; §6.6).
 
 **4 — The interval may be repairable per horizon, with mixed evidence.** On the released
 checkpoint, one multiplier per forecast horizon, fitted on one held-out episode and scored on the
 other, brings every cell within {{d3_tol}} points of nominal, though at two episodes no single cell is
 resolvable, where a single global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic ones. But that checkpoint trained on both episodes, so those cells are unseen
 by the multiplier only; on Arm A, whose model never saw them, its own multipliers manage
-{{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells.
+{{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic coverage over all {{x7_n_traj}} trajectories is within the band at every horizon (rule X7: **{{x7_summary}}**), again on episodes it trained on (§6.7).
 
 **5 — The released five-member ensemble is not five models.** One GRU trunk, one recurrent hidden
 state, and {{v1_shared_pct}}% of each member's state-prediction parameters numerically identical
@@ -78,7 +77,7 @@ against a minimum detectable effect of {{m44_mde_ratio}}× fixed before the runs
 larger by {{r2_sigma_x_h100}}×, which is {{r2_from_sigma_h100}}% of the improvement there, and the
 split reverses at the {{v2_diag_h}}-step diagnostic horizon. The rule (M-44) returns
 **{{m44_verdict}}**. It is still {{r2_indep_ratio_h100}}× overconfident: building the ensemble
-properly is worth doing and is not sufficient (§6.8). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is {{m49_ratio_gain}}×, below its minimum detectable effect of {{m49_mde_ratio}}× (rule M-49, §11).
+properly is worth doing and is not sufficient (§6.8). The independent models also differ in capacity and data order, so this bounds the sharing effect rather than isolating it; at matched capacity the gain is {{m49_ratio_gain}}×, below its minimum detectable effect of {{m49_mde_ratio}}× (rule M-49, §6.8).
 
 **And {{n_defects}} defects in the released pipeline**, plus evidence that the released
 checkpoint's variance state is not reachable from the released artifacts at the iteration count
