@@ -77,3 +77,5 @@ The three largest sections are now §5 (1,606), §6.6 (1,431) and §1 (1,337).
 4. Move §5–§5.3's per-reading clauses (the configuration result's per-winner list, the baselines' lead onset) to Appendices L and U: about −400.
 
 Options 2–4 together would reach about 16,540. Reaching 16,000 would also need cuts to a verdict's own paragraph, which W6's "no result lost" rules out.
+
+**Ruling, 2026-10-16 (the user, in chat, before F9): "Accept 17790."** Option 1. The main text stays at 17,790 words, with no further length cuts in F9 to F12. W6's ≤16,000 stands as an editorial target that this round did not reach, and that is recorded, not reopened.
