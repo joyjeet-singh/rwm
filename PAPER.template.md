@@ -576,16 +576,14 @@ of realised errors falling inside ±1σ. A calibrated Gaussian puts {{v3_cov_nom
 
 **All four rows are the held-out pair** — the two episodes withheld from our own arms, n_independent = {{b2_nind}} 400-step trajectories — because that is the only arena on which our arms can be scored fairly. On the aleatoric head every model is overconfident by between one and four orders of magnitude (Figure 3); that is the quantity §6.1 shows the method discards. The released checkpoint's {{cal_rel_ratio}}× is its whole {{v2_diag_h}}-step rollout on those same {{b2_nind}} trajectories, for comparability with the arms; its best-sampled figure is the {{d1n_alea_ratio_h100}}× below, cumulative to h = {{v2_deploy_h}} at n_independent = {{d1n_nind}}. **Both are correct, on a different arena and a different horizon**, and neither is out-of-sample for that checkpoint (the in-sample caveat of §3).
 
-**The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories. The checkpoint trained on all ten, so restricting it to the held-out pair would buy no independence and cost four fifths of the sample; that version, at n_independent = {{b2_nind}}, is in the supplementary material (`results/task_b2_epistemic.json`). Its epistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; its aleatoric column agrees at {{agree_alea}} of {{agree_nh}}, flipping sign at {{agree_alea_dis}}, where both readings sit close to chance and the aleatoric σ is in any case {{d1n_alea_ratio_h1}}× (h = 1) to {{d1n_alea_ratio_h368}}× (h = {{v2_diag_h}}) too small for its ordering to be the interesting quantity.
+**The quantity the method does use is also uncalibrated.** On the released {{b2_members}}-member checkpoint over all {{d1n_eps}} episodes, n_independent = **{{d1n_nind}}** non-overlapping 400-step trajectories. The checkpoint trained on all ten, so restricting it to the held-out pair would buy no independence and cost four fifths of the sample; Appendix M compares that version with this one.
 
 | h | aleatoric err/σ [95% CI] | aleatoric ±1σ | epistemic err/σ [95% CI] | epistemic ±1σ [95% CI] | epistemic ±2σ | dims r>0 | permutation P |
 |---|---|---|---|---|---|---|---|
 | 1 | {{d1n_alea_ratio_h1}}× [{{d1n_alea_ratio_ci_h1}}] | {{d1n_alea_cov1_h1}}% | **{{d1n_epi_ratio_h1}}×** [{{d1n_epi_ratio_ci_h1}}] | {{d1n_epi_cov1_h1}}% [{{d1n_epi_cov1_ci_h1}}] | {{d1n_epi_cov2_h1}}% | {{d1n_epi_npos_h1}}/{{d1n_epi_ndim_h1}} | {{perm_all_epi_p_h1}} |
-| 8 | {{d1n_alea_ratio_h8}}× [{{d1n_alea_ratio_ci_h8}}] | {{d1n_alea_cov1_h8}}% | {{d1n_epi_ratio_h8}}× [{{d1n_epi_ratio_ci_h8}}] | {{d1n_epi_cov1_h8}}% [{{d1n_epi_cov1_ci_h8}}] | {{d1n_epi_cov2_h8}}% | {{d1n_epi_npos_h8}}/{{d1n_epi_ndim_h8}} | {{perm_all_epi_p_h8}} |
-| 32 | {{d1n_alea_ratio_h32}}× [{{d1n_alea_ratio_ci_h32}}] | {{d1n_alea_cov1_h32}}% | {{d1n_epi_ratio_h32}}× [{{d1n_epi_ratio_ci_h32}}] | {{d1n_epi_cov1_h32}}% [{{d1n_epi_cov1_ci_h32}}] | {{d1n_epi_cov2_h32}}% | {{d1n_epi_npos_h32}}/{{d1n_epi_ndim_h32}} | {{perm_all_epi_p_h32}} |
 | **{{v2_deploy_h}}** | {{d1n_alea_ratio_h100}}× [{{d1n_alea_ratio_ci_h100}}] | {{d1n_alea_cov1_h100}}% | **{{d1n_epi_ratio_h100}}×** [{{d1n_epi_ratio_ci_h100}}] | {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi_cov2_h100}}% | {{d1n_epi_npos_h100}}/{{d1n_epi_ndim_h100}} | {{perm_all_epi_p_h100}} |
-| 128 | {{d1n_alea_ratio_h128}}× [{{d1n_alea_ratio_ci_h128}}] | {{d1n_alea_cov1_h128}}% | {{d1n_epi_ratio_h128}}× [{{d1n_epi_ratio_ci_h128}}] | {{d1n_epi_cov1_h128}}% [{{d1n_epi_cov1_ci_h128}}] | {{d1n_epi_cov2_h128}}% | {{d1n_epi_npos_h128}}/{{d1n_epi_ndim_h128}} | {{perm_all_epi_p_h128}} |
-| 368 | {{d1n_alea_ratio_h368}}× [{{d1n_alea_ratio_ci_h368}}] | {{d1n_alea_cov1_h368}}% | {{d1n_epi_ratio_h368}}× [{{d1n_epi_ratio_ci_h368}}] | {{d1n_epi_cov1_h368}}% [{{d1n_epi_cov1_ci_h368}}] | {{d1n_epi_cov2_h368}}% | {{d1n_epi_npos_h368}}/{{d1n_epi_ndim_h368}} | {{perm_all_epi_p_h368}} |
+
+*The h = 1 and h = {{v2_deploy_h}} rows; Appendix M gives every horizon. No permutation P in the arena survives Holm–Bonferroni, so that column is a consistency check on direction only.*
 
 **Read the h = 1 row first.** At one step the disagreement the method penalises rewards with is
 already **{{d1n_epi_ratio_h1}}× [{{d1n_epi_ratio_ci_h1}}]** smaller than realised error, with ±1σ
@@ -617,30 +615,19 @@ horizon-dependent, which is why each figure above names its horizon.** At the op
 
 **A constant scale error would not matter, and this one is not constant.** The penalty enters as `r̃ = r − λu`, so a `u` uniformly `c` times too small is arithmetically identical to running with `λ/c`, and λ is tuned. Rescaling σ by the single constant that best calibrates it, fitted and scored on the same data and so an upper bound on what *any* constant achieves, needs {{m65_c_h1}} at h = 1 and {{m65_c_h368}} at h = {{v2_diag_h}}, a factor of {{m65_c_growth}} across the rollout (rule M-65, Appendix E). No single λ is both of those. The mechanism is §6.5's: σ grows far more slowly than error, which grows by an order of magnitude, so the ratio runs {{d1n_epi_ratio_h1}}× at h = 1, {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} and {{d1n_epi_ratio_h368}}× at h = {{v2_diag_h}}. The penalty is applied at every step of a {{v2_deploy_h}}-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk. This bounds what the quantity reports across depth, not what the distortion costs a trained policy (the policy caveat of §11).
 
-**The larger sample changes one thing materially.** At n_independent = {{b2_nind}} the epistemic ordering looked like chance at short horizon, {{b2_epi_npos_h1}} of {{b2_epi_ndim_h1}} dimensions at h=1. At n_independent = {{d1n_nind}} it is {{d1n_epi_npos_h1}} of {{d1n_epi_ndim_h1}} at h=1, with mean r = {{d1n_epi_r_h1}}, the *strongest* mean correlation of any horizon, and the in-sample permutation test agrees (Appendix K). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model.
-
 **Two rules committed in advance check how these numbers are read** (Appendix M). Resampling whole
 episodes rather than 400-step trajectories changes no verdict in the one arena with the power to
 show it, the out-of-sample cells being uninformative by design (rule M-62: **{{m62_verdict}}**), and
 the epistemic term's one-step coverage failure is spread across the {{d1n_epi_ndim_h1}} state
 dimensions rather than carried by a few (rule M-63: **{{m63_verdict}}**).
 
-**The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (§6.6, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}} 400-step trajectories, {{iters_main}} training iterations) give, averaged over seeds:
-
-| h | epistemic err/σ [95% CI] | ±1σ [95% CI] | ±2σ | dims r>0 |
-|---|---|---|---|---|
-| 1 | {{e5_ratio_h1}}× [{{e5_ratio_ci_h1}}] | {{e5_cov1_h1}}% [{{e5_cov1_ci_h1}}] | {{e5_cov2_h1}}% | {{e5_npos_h1}}/45 |
-| 8 | {{e5_ratio_h8}}× [{{e5_ratio_ci_h8}}] | {{e5_cov1_h8}}% [{{e5_cov1_ci_h8}}] | {{e5_cov2_h8}}% | {{e5_npos_h8}}/45 |
-| 32 | {{e5_ratio_h32}}× [{{e5_ratio_ci_h32}}] | {{e5_cov1_h32}}% [{{e5_cov1_ci_h32}}] | {{e5_cov2_h32}}% | {{e5_npos_h32}}/45 |
-| 100 | **{{e5_ratio_h100}}×** [{{e5_ratio_ci_h100}}] | {{e5_cov1_h100}}% [{{e5_cov1_ci_h100}}] | {{e5_cov2_h100}}% | {{e5_npos_h100}}/45 |
-| 128 | {{e5_ratio_h128}}× [{{e5_ratio_ci_h128}}] | {{e5_cov1_h128}}% [{{e5_cov1_ci_h128}}] | {{e5_cov2_h128}}% | {{e5_npos_h128}}/45 |
-| 368 | **{{e5_ratio_h368}}×** [{{e5_ratio_ci_h368}}] | {{e5_cov1_h368}}% [{{e5_cov1_ci_h368}}] | {{e5_cov2_h368}}% | {{e5_npos_h368}}/45 |
-
-Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h100}}× overconfident at h = {{v2_deploy_h}} against its {{b2_epi_ratio_h100}}× on the same held-out pair ({{d1n_epi_ratio_h100}}× over all ten episodes), with {{e5_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being closer to calibrated is not being calibrated.
-
-The last column of the released checkpoint's table gives permutation P-values over whole
-trajectories; none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells, so it is a
-consistency check on direction (Appendix M).
+**The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5
+(§6.6; out-of-sample, n_independent = {{e5_nind}} 400-step trajectories, {{iters_main}}
+training iterations) are **better calibrated than the released checkpoint and fail the same way**:
+{{e5_ratio_h100}}× [{{e5_ratio_ci_h100}}] overconfident at h = {{v2_deploy_h}} against its
+{{b2_epi_ratio_h100}}× on the same held-out pair, with {{e5_cov1_h100}}% coverage where a calibrated
+Gaussian gives {{v3_cov_nominal1}}%. §6.4 establishes that the two are the same architecture in the
+respect that matters here, and Appendix M gives the arms' table at every horizon.
 
 The scalar penalty as actually applied, `means.std(0).sum(-1)` at `envs/base.py:166`, correlates **{{d4_r}}** with total absolute error over the rollout, 95% CI {{d4_ci}} from a bootstrap over whole trajectories, n_independent = {{d4_nind}} ({{d4_npoints}} pooled trajectory-step points). The interval resamples whole trajectories, not trajectory-step pairs, which would narrow it by about the square root of the rollout length.
 
@@ -1945,7 +1932,37 @@ give intervals only, coarse for the same reason (the n = {{m23_nind}} caveat of 
 
 ---
 
-## Appendix M — section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column
+## Appendix M — section 6.2 in detail: every horizon, the held-out-pair version, the ensemble-5 arms, and the reading checks (the resampling unit, the spread across dimensions, the permutation column)
+
+**What §6.2 keeps, and what is here.** §6.2 keeps its released-checkpoint table's h = 1 and h = {{v2_deploy_h}} rows and two sentences on the ensemble-5 arms. The rest stood there as follows; §6.2's note on the permutation column read: "The last column of the released checkpoint's table gives permutation P-values over whole trajectories; none survives Holm–Bonferroni across the arena's {{perm_all_holm_n}} cells, so it is a consistency check on direction (Appendix M)."
+
+**The held-out-pair version (§6.2).** §6.2 states that restricting the checkpoint to the held-out pair would buy no independence and cost four fifths of the sample; that version, at n_independent = {{b2_nind}} 400-step trajectories, is in the supplementary material (`results/task_b2_epistemic.json`). Its epistemic column agrees in direction with this one at all {{agree_epi}} of {{agree_nh}} horizons; its aleatoric column agrees at {{agree_alea}} of {{agree_nh}}, flipping sign at {{agree_alea_dis}}, where both readings sit close to chance and the aleatoric σ is in any case {{d1n_alea_ratio_h1}}× (h = 1) to {{d1n_alea_ratio_h368}}× (h = {{v2_diag_h}}) too small for its ordering to be the interesting quantity.
+
+**§6.2's released-checkpoint table at every horizon.** Over all {{d1n_eps}} episodes, n_independent = {{d1n_nind}} non-overlapping 400-step trajectories, the released checkpoint as released:
+
+| h | aleatoric err/σ [95% CI] | aleatoric ±1σ | epistemic err/σ [95% CI] | epistemic ±1σ [95% CI] | epistemic ±2σ | dims r>0 | permutation P |
+|---|---|---|---|---|---|---|---|
+| 1 | {{d1n_alea_ratio_h1}}× [{{d1n_alea_ratio_ci_h1}}] | {{d1n_alea_cov1_h1}}% | **{{d1n_epi_ratio_h1}}×** [{{d1n_epi_ratio_ci_h1}}] | {{d1n_epi_cov1_h1}}% [{{d1n_epi_cov1_ci_h1}}] | {{d1n_epi_cov2_h1}}% | {{d1n_epi_npos_h1}}/{{d1n_epi_ndim_h1}} | {{perm_all_epi_p_h1}} |
+| 8 | {{d1n_alea_ratio_h8}}× [{{d1n_alea_ratio_ci_h8}}] | {{d1n_alea_cov1_h8}}% | {{d1n_epi_ratio_h8}}× [{{d1n_epi_ratio_ci_h8}}] | {{d1n_epi_cov1_h8}}% [{{d1n_epi_cov1_ci_h8}}] | {{d1n_epi_cov2_h8}}% | {{d1n_epi_npos_h8}}/{{d1n_epi_ndim_h8}} | {{perm_all_epi_p_h8}} |
+| 32 | {{d1n_alea_ratio_h32}}× [{{d1n_alea_ratio_ci_h32}}] | {{d1n_alea_cov1_h32}}% | {{d1n_epi_ratio_h32}}× [{{d1n_epi_ratio_ci_h32}}] | {{d1n_epi_cov1_h32}}% [{{d1n_epi_cov1_ci_h32}}] | {{d1n_epi_cov2_h32}}% | {{d1n_epi_npos_h32}}/{{d1n_epi_ndim_h32}} | {{perm_all_epi_p_h32}} |
+| **{{v2_deploy_h}}** | {{d1n_alea_ratio_h100}}× [{{d1n_alea_ratio_ci_h100}}] | {{d1n_alea_cov1_h100}}% | **{{d1n_epi_ratio_h100}}×** [{{d1n_epi_ratio_ci_h100}}] | {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] | {{d1n_epi_cov2_h100}}% | {{d1n_epi_npos_h100}}/{{d1n_epi_ndim_h100}} | {{perm_all_epi_p_h100}} |
+| 128 | {{d1n_alea_ratio_h128}}× [{{d1n_alea_ratio_ci_h128}}] | {{d1n_alea_cov1_h128}}% | {{d1n_epi_ratio_h128}}× [{{d1n_epi_ratio_ci_h128}}] | {{d1n_epi_cov1_h128}}% [{{d1n_epi_cov1_ci_h128}}] | {{d1n_epi_cov2_h128}}% | {{d1n_epi_npos_h128}}/{{d1n_epi_ndim_h128}} | {{perm_all_epi_p_h128}} |
+| 368 | {{d1n_alea_ratio_h368}}× [{{d1n_alea_ratio_ci_h368}}] | {{d1n_alea_cov1_h368}}% | {{d1n_epi_ratio_h368}}× [{{d1n_epi_ratio_ci_h368}}] | {{d1n_epi_cov1_h368}}% [{{d1n_epi_cov1_ci_h368}}] | {{d1n_epi_cov2_h368}}% | {{d1n_epi_npos_h368}}/{{d1n_epi_ndim_h368}} | {{perm_all_epi_p_h368}} |
+
+**The larger sample changes one thing materially.** At n_independent = {{b2_nind}} the epistemic ordering looked like chance at short horizon, {{b2_epi_npos_h1}} of {{b2_epi_ndim_h1}} dimensions at h=1. At n_independent = {{d1n_nind}} it is {{d1n_epi_npos_h1}} of {{d1n_epi_ndim_h1}} at h=1, with mean r = {{d1n_epi_r_h1}}, the *strongest* mean correlation of any horizon, and the in-sample permutation test agrees (Appendix K). The short-horizon "chance" result was an artifact of four trajectories, not a property of the model.
+
+**The ensemble-5 arms (§6.2).** **The released checkpoint is no longer the only ensemble measured.** Three Arm A arms at ensemble size 5 (§6.6, {{e5_seeds}} seeds, out-of-sample, n_independent = {{e5_nind}} 400-step trajectories, {{iters_main}} training iterations) give, averaged over seeds:
+
+| h | epistemic err/σ [95% CI] | ±1σ [95% CI] | ±2σ | dims r>0 |
+|---|---|---|---|---|
+| 1 | {{e5_ratio_h1}}× [{{e5_ratio_ci_h1}}] | {{e5_cov1_h1}}% [{{e5_cov1_ci_h1}}] | {{e5_cov2_h1}}% | {{e5_npos_h1}}/45 |
+| 8 | {{e5_ratio_h8}}× [{{e5_ratio_ci_h8}}] | {{e5_cov1_h8}}% [{{e5_cov1_ci_h8}}] | {{e5_cov2_h8}}% | {{e5_npos_h8}}/45 |
+| 32 | {{e5_ratio_h32}}× [{{e5_ratio_ci_h32}}] | {{e5_cov1_h32}}% [{{e5_cov1_ci_h32}}] | {{e5_cov2_h32}}% | {{e5_npos_h32}}/45 |
+| 100 | **{{e5_ratio_h100}}×** [{{e5_ratio_ci_h100}}] | {{e5_cov1_h100}}% [{{e5_cov1_ci_h100}}] | {{e5_cov2_h100}}% | {{e5_npos_h100}}/45 |
+| 128 | {{e5_ratio_h128}}× [{{e5_ratio_ci_h128}}] | {{e5_cov1_h128}}% [{{e5_cov1_ci_h128}}] | {{e5_cov2_h128}}% | {{e5_npos_h128}}/45 |
+| 368 | **{{e5_ratio_h368}}×** [{{e5_ratio_ci_h368}}] | {{e5_cov1_h368}}% [{{e5_cov1_ci_h368}}] | {{e5_cov2_h368}}% | {{e5_npos_h368}}/45 |
+
+Our arms are **better calibrated than the released checkpoint and fail the same way**: {{e5_ratio_h100}}× overconfident at h = {{v2_deploy_h}} against its {{b2_epi_ratio_h100}}× on the same held-out pair ({{d1n_epi_ratio_h100}}× over all ten episodes), with {{e5_cov1_h100}}% coverage where a calibrated Gaussian gives {{v3_cov_nominal1}}%. §6.4 establishes that the two are the same architecture in the respect that matters here, so this is a comparison of like with like. Being closer to calibrated is not being calibrated.
 
 **Two pre-registered checks on how §6.2's numbers are read.** The first (rule M-62, Appendix E) asks whether any verdict depends on resampling 400-step trajectories rather than whole episodes, which two trajectories share. It returns **{{m62_verdict}}**: in the one arena with power at that level, all ten episodes (n = {{m62_n_traj}} falling to {{m62_n_ep}}), the pooled correlation's interval widens by {{m62_width_pct}}% and the double-demeaned one's width changes by a factor of {{m62_rdd_width_ratio}}, and neither crosses zero. The other {{m62_n_uninformative}} cells it names are out-of-sample, where an episode bootstrap has n = {{m62_n_ep_oos}} and three distinct resamples, or, for the per-horizon multiplier cell, one episode per direction and no interval at all; the rule said so in advance, and they are reported as uninformative rather than as intervals.
 

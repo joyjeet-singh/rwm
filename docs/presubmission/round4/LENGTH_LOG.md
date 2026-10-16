@@ -30,3 +30,9 @@ contributions list, about 950 words. F6 fixed it at 8 bullets of at most 3 sente
 alone. **F8 therefore needs at least 4,585 words from its range** (12,849 words at F7's end, §6 to §12) for 16,000, and
 5,585 for 15,000: 36% to 43% of it. Annex 5's F8 rows leave each section with its verdicts and key rows, which is a cut
 of about that size if all of them are applied in full.
+
+**F8 start (2026-10-16):** 20,585 body words; F8's range, §6 to §12, 12,849.
+
+| # | Section | Moved | To | Section words | Body words |
+|---|---|---|---|---|---|
+| F8-1 | §6.2 | Verbatim (569 words): the released checkpoint's table at every horizon (§6.2 keeps its h = 1 and h = 100 rows, as Annex 5 says, with a one-line note), the held-out-pair version's comparison, "The larger sample changes one thing materially", the ensemble-5 arms' table with its paragraph (§6.2 keeps two sentences and the headline figures), and the permutation note (quoted in Appendix M's opening, whose third paragraph already states it in full). Kept: why h = 1 comes first, the constant-scale paragraph, M-62 and M-63's verdicts, h = 100, the applied scalar's correlation. Two gate fixes in the new and moved text: "ensemble size 5" kept on one line (the typed-numeral class matches it only so), and the held-out-pair note gains "400-step trajectories" (C20.1: an n_independent names its unit) | Appendix M, new opening and four titled sections; retitled "section 6.2 in detail" | 1,791 → 1,433 | 20,585 → 20,227 |
