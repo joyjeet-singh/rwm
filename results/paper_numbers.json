@@ -913,7 +913,7 @@
   },
   "appG_n_lead": {
     "source": "results/appendix_g_rules.json",
-    "value": 26
+    "value": 28
   },
   "appG_n_negative": {
     "source": "results/appendix_g_rules.json",
@@ -921,7 +921,7 @@
   },
   "appG_n_positive": {
     "source": "results/appendix_g_rules.json",
-    "value": 25
+    "value": 27
   },
   "appG_n_rules": {
     "source": "results/appendix_g_rules.json",
@@ -929,7 +929,7 @@
   },
   "appG_table": {
     "source": "results/appendix_g_rules.json",
-    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | CANNOT BE SETTLED AT THIS BUDGET |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | `bd60cc6` M-49: pre-register the capacity-matched test, with the MDE that bounds it | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | `ef3575f` M-50 pre-registered, and a different-architecture run stopped contaminating \u00a76.3 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | `e16b4a9` M-51 pre-registered: two more free adversaries for the ranking claim | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | `e5f07da` M-52: M-51 named a quantity that does not exist, corrected before it ran | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `M-68` | The combined arm: independence and the corrected objective together | `68bb683` Pre-register M-68: the combined arm's rule, its verdict branches and its minimum detectable effect | +5.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |\n| `M-69` | The cross-model transfer of the per-horizon multiplier table | `fad7db7` Pre-register M-69: the cross-model transfer rule, its criterion and its minimum detectable effect | +23 min | results/task_d3_cross_model.json | DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL |\n| `M-70` | Whether the per-horizon correction reorders cumulative penalties | `6b87e32` Pre-register M-70: whether the per-horizon correction reorders cumulative penalties | +115.2 h | results/q3_penalty_reordering.json | DOES NOT REORDER |\n| `M-74` | The configuration claim: is (M, N) = (32, 8) optimal? | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/mn_sweep_verdict.json | NOT OPTIMAL AT OUR BUDGET |\n| `M-75` | The architecture claim, baselines teacher-forced, as the original trains them | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | REPRODUCES |\n| `M-76` | The architecture claim, baselines trained autoregressively, as RWM is | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | RWM AHEAD OF ALL THREE |\n| `M-80` | X1: is our RSSM's long-horizon failure a matter of how its forecast is read, of its training settings, or of neither? | `2433f44` PRE-REGISTER RSSM diagnostic X1, before its readings exist | +3 min | results/rssm_diagnostics.json | NOT RESCUED BY THE SETTINGS TRIED |\n| `M-84` | X2: do our trained models condition their forecasts on the action they are given? | `738bc91` PRE-REGISTER action-sensitivity rule X2, before its readings exist | +7 min | results/action_sensitivity.json | RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations |\n| `M-86` | X3: does the base claim replicate when each episode is held out in turn? | `5f0acd4` PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist | \u2014 | \u2014 | not yet discharged |\n| `M-87` | X4: is RWM still ahead of baselines matched to its size? | `5f0acd4` PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist | \u2014 | \u2014 | not yet discharged |\n| `M-88` | X6: does ensemble disagreement beat the model's own predicted step size on more, shorter units? | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x6_stepsize_short_units.json | DISAGREEMENT BEATS STEP SIZE |\n| `M-89` | X7: per-horizon recalibration, fitted on nine episodes and scored on the tenth | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x7_loeo_recalibration.json | WITHIN BAND AT 6 OF 6 HORIZONS (epistemic) |\n| `M-90` | X8: would any verdict change under the released evaluation's action timing? | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x8_released_pairing.json | SAME VERDICT for M-74, M-75, M-76 and the A/B comparison |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
+    "value": "| `M-16` | The Arm A / Arm B comparison | `84ff01b` Step 5: pre-register the decision rule before launching any main run | +1.3 h | first main-run data | CANNOT BE SETTLED AT THIS BUDGET |\n| `M-22` | Whether episode difficulty biases the A/B comparison | `0648a32` Pre-register the Task 4b difficulty-bias rule, and the two-arena convention | +5 min | M-16 re-evaluated | RESOLVED \u2014 branch 1, 4c not run |\n| `M-23` | The 10,000-iteration comparison | `efc35b8` 5.1: pre-register M-23, the long-horizon decision rule | +2 min | 10k runs launched | RESOLVED \u2014 reproduces at long horizon |\n| `M-43` | The ensemble-5 replication | `b17f1b5` PRE-REGISTER the ensemble-5 replication rule, before the runs exist | +13.3 h | ens5 result committed | DOES NOT GENERALISE |\n| `M-44` | The trunk-sharing mechanism | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +6.4 h | R2 result committed | MECHANISM SUPPORTED |\n| `M-45` | The within-trajectory control | `81b49f7` PRE-REGISTER M-44 and M-45, with the power check M-43 was committed without | +4.4 h | A2 result committed | DISAGREEMENT CARRIES WITHIN-ROLLOUT INFORMATION |\n| `M-49` | Pre-registered: does trunk-sharing survive capacity matching? | `bd60cc6` M-49: pre-register the capacity-matched test, with the MDE that bounds it | +9.4 h | results/m49_capacity_matched.json | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE |\n| `M-50` | Pre-registered: is the sigma collapse driven by the objective, on data whose noise is known? | `ef3575f` M-50 pre-registered, and a different-architecture run stopped contaminating \u00a76.3 | +5 min | results/e5_synthetic_sigma.json | OBJECTIVE-DRIVEN |\n| `M-51` | Pre-registered: does the ranking claim survive more than one free adversary? | `e16b4a9` M-51 pre-registered: two more free adversaries for the ranking claim | +12 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-52` | M-51 named a quantity that does not exist, and what replaced it | `e5f07da` M-52: M-51 named a quantity that does not exist, corrected before it ran | +9 min | results/e7_free_baselines.json | SURVIVES entry-res ONLY |\n| `M-62` | Pre-registered: does any headline verdict change when the bootstrap resamples episodes rather than 400-step trajectories? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m62_episode_clustering.json | NO MOVE |\n| `M-63` | Pre-registered: is the h=1 coverage failure uniform across the 45 state dimensions, or carried by a few? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m63_per_dimension_coverage.json | UNIFORM |\n| `M-64` | Pre-registered: does the horizon-scoped power increase from shorter evaluation units change any verdict at h \u2264 128? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +6.0 h | results/m64_short_units.json | MOVES, at one cell |\n| `M-65` | Pre-registered: is the Gaussian nominal of 68.27% defensible, or is the error distribution heavy-tailed? | `c322418` M-62 to M-65: four rules committed before the data that will test them | +5.1 h | results/m65_gaussian_nominal.json | GAUSSIAN NOMINAL ADEQUATE |\n| `M-68` | The combined arm: independence and the corrected objective together | `68bb683` Pre-register M-68: the combined arm's rule, its verdict branches and its minimum detectable effect | +5.1 h | results/r2_combined_arm.json | THE COMBINATION IMPROVES CALIBRATION |\n| `M-69` | The cross-model transfer of the per-horizon multiplier table | `fad7db7` Pre-register M-69: the cross-model transfer rule, its criterion and its minimum detectable effect | +23 min | results/task_d3_cross_model.json | DOES NOT TRANSFER \u2014 A PROPERTY OF THE MODEL |\n| `M-70` | Whether the per-horizon correction reorders cumulative penalties | `6b87e32` Pre-register M-70: whether the per-horizon correction reorders cumulative penalties | +115.2 h | results/q3_penalty_reordering.json | DOES NOT REORDER |\n| `M-74` | The configuration claim: is (M, N) = (32, 8) optimal? | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/mn_sweep_verdict.json | NOT OPTIMAL AT OUR BUDGET |\n| `M-75` | The architecture claim, baselines teacher-forced, as the original trains them | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | REPRODUCES |\n| `M-76` | The architecture claim, baselines trained autoregressively, as RWM is | `3df0e55` PRE-REGISTER the M/N sweep and architecture-baseline rules, before the runs exist | +29.4 h | results/baselines_verdict.json | RWM AHEAD OF ALL THREE |\n| `M-80` | X1: is our RSSM's long-horizon failure a matter of how its forecast is read, of its training settings, or of neither? | `2433f44` PRE-REGISTER RSSM diagnostic X1, before its readings exist | +3 min | results/rssm_diagnostics.json | NOT RESCUED BY THE SETTINGS TRIED |\n| `M-84` | X2: do our trained models condition their forecasts on the action they are given? | `738bc91` PRE-REGISTER action-sensitivity rule X2, before its readings exist | +7 min | results/action_sensitivity.json | RESPONDS TO THE ACTION at 2,500 and at 10,000 iterations |\n| `M-86` | X3: does the base claim replicate when each episode is held out in turn? | `5f0acd4` PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist | +121.2 h | results/x3_cross_fold.json | REPLICATES ACROSS FOLDS |\n| `M-87` | X4: is RWM still ahead of baselines matched to its size? | `5f0acd4` PRE-REGISTER X3 cross-fold replication and X4 size-matched baselines, before their runs exist | +121.2 h | results/x4_matched_baselines.json | PARTIAL |\n| `M-88` | X6: does ensemble disagreement beat the model's own predicted step size on more, shorter units? | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x6_stepsize_short_units.json | DISAGREEMENT BEATS STEP SIZE |\n| `M-89` | X7: per-horizon recalibration, fitted on nine episodes and scored on the tenth | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x7_loeo_recalibration.json | WITHIN BAND AT 6 OF 6 HORIZONS (epistemic) |\n| `M-90` | X8: would any verdict change under the released evaluation's action timing? | `df0f2fa` PRE-REGISTER X5\u2013X8, inference-only rules, before their readings exist | +11 min | results/x8_released_pairing.json | SAME VERDICT for M-74, M-75, M-76 and the A/B comparison |\n| `S-12` | \"Task 3's duplication rule was pre-registered\" | `3ee9d97` Task 3: the duplication control confirms R-47's mechanism and refutes its statistic | -2.9 h | control runs finished 21:37:51 | RETRACTED |"
   },
   "arm_clean_windows": {
     "source": "results/step5_armA_seed0.json",
@@ -4105,15 +4105,15 @@
   },
   "evidence_table": {
     "source": "results/evidence_summary.json",
-    "value": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre, and no reading the rule reports puts the centre ahead of any of them; the ranking depends on training length (Appendix U) | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; every reading the rule reports returns it from h = 32, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; every reading the rule reports returns it from h = 128, and below that the readings split; at h = 368 every baseline is worse than predicting no change | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size (\u00a76.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY (disagreement beats the one-step error before the window, but not the model's predicted step size): step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale (\u00a77.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |"
+    "value": "| Autoregressive training beats teacher forcing at h = 368 (\u00a75) | out-of-sample (4) | 10,000 iterations | no | gap excludes zero, favouring autoregressive training (under the released evaluation's timing, rule X8: SAME VERDICT) | not applicable at 10,000; the 500- and 2,500-iteration cells survive Holm (Appendix L) |\n| The same comparison reverses at h = 1, at the short unit M-64 built (\u00a75) | out-of-sample (60) | 10,000 iterations | no | gap excludes zero, favouring teacher forcing | not applicable |\n| The same comparison at h = 368, retrained on fixed folds with each episode held out once, at 2,500 iterations (rule X3) (\u00a75) | all ten episodes (20) | 2,500 iterations | no | REPLICATES ACROSS FOLDS: gap +2.2275 [+1.3683, +3.5053]; 10 of 10 episodes positive | not applicable |\n| (M, N) = (32, 8) is the optimal configuration on accuracy alone (the accuracy half of the trade-off) (\u00a75.2) | out-of-sample (4) | 2,500 iterations | no | NOT OPTIMAL AT OUR BUDGET; 4 of 8 neighbours beat the centre, and no reading the rule reports puts the centre ahead of any of them; the ranking depends on training length (Appendix U) (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (teacher-forced, as the original trains them; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | REPRODUCES; every reading the rule reports returns it from h = 32, and below that the readings split; at h = 368 every baseline is worse than predicting no change (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |\n| RWM beats MLP, RSSM and transformer baselines trained with RWM's settings, at h = 368 (trained autoregressively: architecture at one training regime, not the original's claim; the RSSM comparison uninformative, rule X1) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | RWM AHEAD OF ALL THREE; every reading the rule reports returns it from h = 128, and below that the readings split; at h = 368 every baseline is worse than predicting no change (under the released evaluation's timing, rule X8: SAME VERDICT) | yes |\n| RWM beats MLP and transformer baselines matched to its parameter count, at h = 368 (rule X4; size is one axis) (\u00a75.3) | out-of-sample (4) | 2,500 iterations | no | PARTIAL: MLP RWM BETTER, transformer CANNOT BE SETTLED | yes |\n| Ensemble disagreement is smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Ensemble disagreement is smaller than realised error, at h = 100 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| The aleatoric \u03c3 head has collapsed and is orders of magnitude smaller than realised error, at h = 1 (\u00a76.2) | all ten episodes (20) | released | yes | overconfident; the ratio interval excludes 1 | not applicable |\n| Disagreement ranks realised error better than the forecast step index, at h = 100 (\u00a76.6) | all ten episodes (20) | released | yes | paired difference excludes zero | not applicable |\n| Disagreement ranks realised error better than the model's own predicted step size, over whole 400-step trajectories at h = 368 (\u00a76.6) | all ten episodes (20) | released | yes | SURVIVES entry-res ONLY (disagreement beats the one-step error before the window, but not the model's predicted step size): step size not beaten, the margin below the minimum detectable effect; the partial survives | could not at this n |\n| The same comparison on shorter units, at h = 100 (rule X6) (\u00a76.6) | all ten episodes (70) | released | yes | DISAGREEMENT BEATS STEP SIZE: margin +0.2816 [+0.1978, +0.3896], against a minimum detectable effect of 0.1713 | not applicable |\n| With both the rollout and the depth held constant, disagreement still tracks error (\u00a76.6) | all ten episodes (20) | released | yes | interval excludes zero and clears the minimum detectable effect | not applicable |\n| A per-horizon multiplier brings coverage near nominal where a constant one does not (\u00a76.7) | held-out pair (4) | released | yes | every released-checkpoint point estimate unseen by the multiplier within tolerance; on Arm A at 2,500 iterations, unseen by its model too, 17 of 36 epistemic cells; tolerance not resolvable at this arena | could not at this n |\n| A per-horizon multiplier fitted on nine episodes and scored on the tenth (rule X7) (\u00a76.7) | all ten episodes (20) | released | yes | WITHIN BAND AT 6 OF 6 HORIZONS for the disagreement; the aleatoric term, alongside, WITHIN BAND AT 3 OF 6 HORIZONS | not applicable |\n| An ensemble that shares no trunk is better calibrated than the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | MECHANISM SUPPORTED | not applicable |\n| The same contrast at matched capacity (\u00a711) | out-of-sample (4) | 2,500 iterations | no | UNDER-POWERED \u2014 favours the matched ensemble by less than the MDE | could not at this n |\n| Independence and the corrected objective together improve on the released topology (\u00a76.8) | out-of-sample (4) | 2,500 iterations | no | THE COMBINATION IMPROVES CALIBRATION | not applicable |\n| The released evaluation pairs states and actions one step stale (\u00a77.2) | all ten episodes (20) | released | yes | defect confirmed in the code; raises error up to h = 32 on relative-L1; not resolved from h = 100 | not applicable |"
   },
   "f1_n_cited": {
     "source": "results/paper_figures.json",
-    "value": 37
+    "value": 39
   },
   "f1_n_kept": {
     "source": "results/paper_figures.json",
-    "value": 35
+    "value": 37
   },
   "f1_n_moved_word": {
     "source": "results/paper_figures.json",
@@ -6005,7 +6005,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 67
+    "value": 69
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -9149,7 +9149,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 974
+    "value": 990
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",
@@ -9730,6 +9730,130 @@
   "x2_thr_pct": {
     "source": "results/action_sensitivity.json",
     "value": "+10"
+  },
+  "x3_ci": {
+    "source": "results/x3_cross_fold.json",
+    "value": "[+1.3683, +3.5053]"
+  },
+  "x3_ci_h100": {
+    "source": "results/x3_cross_fold.json",
+    "value": "[+0.2624, +0.4678]"
+  },
+  "x3_eps_pos": {
+    "source": "results/x3_cross_fold.json",
+    "value": 10
+  },
+  "x3_fold_hi": {
+    "source": "results/x3_cross_fold.json",
+    "value": "+3.9828"
+  },
+  "x3_fold_lo": {
+    "source": "results/x3_cross_fold.json",
+    "value": "+0.6554"
+  },
+  "x3_fold_table": {
+    "source": "results/x3_cross_fold.json",
+    "value": "| {1, 8} (section 5) | 4 | +3.9828 [+0.9907, +9.4848] | 1: +6.9749, 8: +0.9907 |\n| {0, 2} | 4 | +0.6554 [+0.5172, +0.8630] | 0: +0.5512, 2: +0.7596 |\n| {3, 4} | 4 | +1.4966 [+1.0403, +1.9528] | 3: +1.0403, 4: +1.9528 |\n| {5, 6} | 4 | +1.6282 [+1.1379, +2.4999] | 5: +2.0714, 6: +1.1850 |\n| {7, 9} | 4 | +3.3743 [+3.1063, +3.5926] | 7: +3.1561, 9: +3.5926 |\n| all five, pooled | 20 | **+2.2275 [+1.3683, +3.5053]** | 10 of 10 positive, P = 0.002 |"
+  },
+  "x3_gap": {
+    "source": "results/x3_cross_fold.json",
+    "value": "+2.2275"
+  },
+  "x3_gap_h100": {
+    "source": "results/x3_cross_fold.json",
+    "value": "+0.3573"
+  },
+  "x3_h1_ci": {
+    "source": "results/x3_cross_fold.json",
+    "value": "[-0.0126, -0.0053]"
+  },
+  "x3_h1_gap": {
+    "source": "results/x3_cross_fold.json",
+    "value": "-0.0090"
+  },
+  "x3_h1_n": {
+    "source": "results/x3_cross_fold.json",
+    "value": 300
+  },
+  "x3_h1_unit": {
+    "source": "results/x3_cross_fold.json",
+    "value": 33
+  },
+  "x3_n": {
+    "source": "results/x3_cross_fold.json",
+    "value": 20
+  },
+  "x3_n_eps": {
+    "source": "results/x3_cross_fold.json",
+    "value": 10
+  },
+  "x3_n_folds_word": {
+    "source": "results/x3_cross_fold.json",
+    "value": "five"
+  },
+  "x3_n_new_folds_word": {
+    "source": "results/x3_cross_fold.json",
+    "value": "four"
+  },
+  "x3_p": {
+    "source": "results/x3_cross_fold.json",
+    "value": "0.002"
+  },
+  "x3_ratio_h368": {
+    "source": "results/x3_cross_fold.json",
+    "value": "5.85"
+  },
+  "x3_reading": {
+    "source": "results/x3_cross_fold.json",
+    "value": "REPLICATES ACROSS FOLDS"
+  },
+  "x4_D_mlp": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "0.884"
+  },
+  "x4_D_tf": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "0.206"
+  },
+  "x4_alongside_reading": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "PARTIAL"
+  },
+  "x4_ci_mlp": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "[0.204, 1.633]"
+  },
+  "x4_ci_tf": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "[-0.097, 0.740]"
+  },
+  "x4_npar_mlp": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "713,171"
+  },
+  "x4_npar_tf": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "686,196"
+  },
+  "x4_p_tf": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "0.625"
+  },
+  "x4_reading": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "PARTIAL"
+  },
+  "x4_res_mlp": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "RWM BETTER"
+  },
+  "x4_res_tf": {
+    "source": "results/x4_matched_baselines.json",
+    "value": "CANNOT BE SETTLED"
+  },
+  "x4_table_rows": {
+    "source": "results/x4_matched_baselines.json + results/x4_matched_baselines_eval.json",
+    "value": "| MLP, autoregressive, size-matched (X4) | 713,171 | 0.5893 | 1.4696 | +0.8840 [+0.2036, +1.6334] | RWM better | \u2014 |\n| transformer, autoregressive, size-matched (X4) | 686,196 | 0.5846 | 0.7911 | +0.2055 [-0.0969, +0.7399] | CANNOT BE SETTLED | \u2014 |"
   },
   "x6_ci": {
     "source": "results/x6_stepsize_short_units.json",

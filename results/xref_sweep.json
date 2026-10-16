@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 93,
-  "n_ok": 93,
+  "n_pointers": 96,
+  "n_ok": 96,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -110,6 +110,13 @@
     },
     {
       "class": "semantic",
+      "pointer": "Appendix E gives its lead time) and is discharged in M-94",
+      "ok": true,
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
+      "context": "Appendix E gives its lead time) and is discharged in M-94"
+    },
+    {
+      "class": "semantic",
       "pointer": "Appendix K explains why a binomial null is inadmissible here",
       "ok": true,
       "detail": "target Appendix K; nouns ['binomial', 'null', 'inadmissible', 'here']; absent ['inadmissible']",
@@ -126,28 +133,28 @@
       "class": "semantic",
       "pointer": "Appendix E gives its lead time) and\nis discharged in M-85",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
       "context": "Appendix E gives its lead time) and\nis discharged in M-85"
     },
     {
       "class": "semantic",
       "pointer": "Appendix E gives its lead time) and is\ndischarged in M-91",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
       "context": "Appendix E gives its lead time) and is\ndischarged in M-91"
     },
     {
       "class": "semantic",
       "pointer": "Appendix E gives its lead time) and is\ndischarged in M-92",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
       "context": "Appendix E gives its lead time) and is\ndischarged in M-92"
     },
     {
       "class": "semantic",
       "pointer": "Appendix E gives its lead time) and is\ndischarged in M-93",
       "ok": true,
-      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent []",
+      "detail": "target Appendix E; nouns ['lead', 'time', 'discharged']; absent ['discharged']",
       "context": "Appendix E gives its lead time) and is\ndischarged in M-93"
     },
     {
@@ -423,6 +430,18 @@
     {
       "class": "artifact",
       "pointer": "results/v1_ensemble_topology.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/x3_cross_fold.json",
+      "ok": true,
+      "detail": "exists"
+    },
+    {
+      "class": "artifact",
+      "pointer": "results/x4_matched_baselines.json",
       "ok": true,
       "detail": "exists"
     },
