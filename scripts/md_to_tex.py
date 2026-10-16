@@ -92,6 +92,13 @@ def esc(s):
         # "--" inside \texttt is a ligature and sets as one dash; a copied flag
         # would then be invalid. An empty group between the hyphens breaks it.
         t = re.sub(r"-(?=-)", "-{}", t)
+        # Round 4, F9 (H4): a long `results/...` path in running text could not break, so pdflatex,
+        # under \sloppy, stretched the line's spaces instead (page 50 of the 10 Oct PDF). A path may now
+        # break after a slash or an underscore and before its extension, as a table cell's already
+        # could (_wrap_cell). A span with no slash is code, not a path, and is left whole.
+        if "/" in t:
+            t = t.replace("/", "/\\allowbreak{}").replace("\\_", "\\_\\allowbreak{}")
+            t = re.sub(_EXT_BREAK, r"\\allowbreak{}.", t)
         return r"\texttt{" + t + "}"
 
     s = re.sub(r"\x00(\d+)\x00", unstash, s)
@@ -165,7 +172,9 @@ def _wrap_cell(s):
     if "\\url{" in s or "http" in s:
         return s
     s = s.replace("/", "/\\allowbreak{}").replace("\\_", "\\_\\allowbreak{}")
-    return re.sub(_EXT_BREAK, r"\\allowbreak{}.", s)
+    s = re.sub(_EXT_BREAK, r"\\allowbreak{}.", s)
+    # a code span's path already carries its breaks (unstash, F9 H4); one break point is enough
+    return s.replace("\\allowbreak{}\\allowbreak{}", "\\allowbreak{}")
 
 
 def _is_table(lines, i):
