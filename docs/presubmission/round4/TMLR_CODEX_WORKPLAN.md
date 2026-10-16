@@ -126,3 +126,10 @@ Finish only when F12 has a written `FINAL_REPORT.md`, every required gate is rec
 - [TMLR Beyond PDF instructions](https://tmlr-beyond-pdf.org/submission-instructions) — only consider if the user chooses that format; do not convert this paper without a decision.
 
 At the time of this handoff, the quota policy says all authors must have remaining quota, and its annual count includes rejected, withdrawn and desk-rejected submissions from 1 January 2026; active TMLR reviewers/action editors receive a larger budget. Verify the current rule and author state directly before submission.
+
+## Addendum: user ruling, 16 October 2026
+
+The user adopted this item from a variant of this workplan that another session wrote on 14 October. The rest of that variant, including its LLM-use footnote, was not adopted. The item is that session's reading of the venue rules, so §4C's check at F7 and F11 still applies to it:
+
+- **TMLR format check:** checked against the current official Author Guidelines on 14 October 2026. TMLR permits submissions of any length; unusually long main bodies may take longer to review, and review guidance distinguishes papers above 12 main-content pages. Thus W6's ≤16,000-word target remains an editorial target, not a hard venue cap. Use the official, unmodified TMLR style file/template, preserve double-blind anonymity, and verify the supplement is under 100 MB and in PDF/ZIP format. Recheck the live guide and OpenReview form at F11.
+- [TMLR Author Guidelines](https://www.jmlr.org/tmlr/author-guide.html) — any-length format, official template, anonymity and supplementary limits.
