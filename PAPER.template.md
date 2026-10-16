@@ -17,7 +17,7 @@ longer, it passes each on some reading (post hoc): the ranking depends on traini
 The follow-up's uncertainty gets the order right and the size wrong: ensemble disagreement correlates {{d4_r}} with error but is {{d1n_epi_ratio_h100}}× too small at {{v2_deploy_h}} steps on training data.
 Predicted step size ranks error nearly as well over whole trajectories, worse on shorter units at {{v2_deploy_h}} steps. Members share {{v1_shared_pct}}% of parameters; independent models are
 {{m44_ratio_gain}}× better calibrated, still overconfident. The implemented loss provably drives the discarded
-per-member σ to zero. A per-horizon rescaling brings the checkpoint's coverage within {{d3_tol}} points of nominal
+per-member σ to zero. Per-horizon rescaling brings the released checkpoint's coverage within {{d3_tol}} points of nominal
 for disagreement at every horizon on training episodes left out of each fit; on episodes our ensembles never saw,
 only {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} cells. The released evaluation is one step stale;
 over all ten episodes this raises the checkpoint's short-horizon relative-L1 error. We train no policy: we bound
@@ -275,8 +275,7 @@ baselines (§5.3), and the follow-up's two claims about what its uncertainty out
 **{{appF_n_polhw_word}} of them are claims about policy learning or hardware** — every one but
 {{appF_model_list}}, which needs a simulator and recorded data from other robots but is a claim
 about the model rather than about a policy. This work trains no policy and runs on two CPU cores.
-The counts and lists are generated from the classification tags in the verdict column of Appendix D's first table, and they replace a withdrawn claim that every untested claim concerns policy learning or
-hardware (`S-17`). §11 states what the untested claims bound, and Appendix C what testing them
+The counts and lists are generated from the classification tags in the verdict column of Appendix D's first table, so none of them is typed. §11 states what the untested claims bound, and Appendix C what testing them
 would take.
 
 **For {{orig_n_without_word}} of the {{orig_n_tested_word}} claims we tested, the original reports no quantitative
@@ -299,12 +298,12 @@ states it, and our verdict.
 
 **Claim under test.** Training the dynamics model on its own autoregressive rollouts beats training it with teacher forcing, at long forecast horizons.
 
-**Rule, committed in advance** (rule M-23, Appendix E; commit `efc35b8`, in the submitted paper an anonymised commit label; see Data and code), naming conditions rather
+**Rule, committed in advance** (rule M-23; Appendix E gives its commit and lead time), naming conditions rather
 than outcomes. Three conditions, all required: the out-of-sample gap at h = 368 excludes zero
 under a bootstrap over independent trajectories; the sign is consistent across episodes; and the effect survives at 10,000 iterations rather than only at the paper's 2,500. The rule was run on
 seed {{m23_seed}} of each arm: autoregressive {{m23_A_s1}} against teacher forcing {{m23_B_s1}} at
 h = {{v2_diag_h}}, {{m23_ratio}}×, gap interval [{{m23_ci_lo}}, {{m23_ci_hi}}]. The {{iters_long}}-iteration runs of seeds
-{{m23_other_seeds}} were trained after the verdict (ledger R-60, entered {{r60_date}}), so the three-seed
+{{m23_other_seeds}} were trained after the verdict (the ledger records them on {{r60_date}}), so the three-seed
 figures below extend it
 and carry none of its weight. The rule is anchored at
 h = {{v2_diag_h}}, the upstream's **open-loop diagnostic** length and not a deployment horizon

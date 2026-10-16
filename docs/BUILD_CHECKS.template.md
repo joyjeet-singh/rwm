@@ -381,6 +381,8 @@ claims stayed, and only their history moved.
   of them is not. The framing `S-17` withdrew a universal quantifier; its replacement got the arithmetic wrong
   instead, the worse failure of the two because the sentence had just been rewritten under
   scrutiny.
+- **[§4]** The generated counts and lists replace the withdrawn framing `S-17`, that every untested claim
+  concerns policy learning or hardware.
 - **[§5]** That the rule M-23 is anchored at the diagnostic horizon rather than the deployment one
   is recorded in the ledger as `M-46`; nothing in §5's by-horizon table discharges or re-opens M-23.
 - **[§5]** The hold-last floor's win at one step is stated in §5 because an earlier §5 quoted the

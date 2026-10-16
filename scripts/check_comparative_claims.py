@@ -352,7 +352,9 @@ CLAIMS = [
      # sections -- is unchanged.
      # Round 4, F6 re-anchor: the abstract's rewrite (W7, A6) dropped "released" to keep the clause within A6's 25 words;
      # "A per-horizon rescaling brings the released checkpoint's coverage within" -> the phrase below. The scan is unchanged.
-     "says": "A per-horizon rescaling brings the checkpoint's coverage within",
+     # Round 4, F7 re-anchor (the abstract's optional "released", W8 review): "A per-horizon rescaling brings the
+     # checkpoint's coverage within" -> the phrase below, the clause's word count unchanged. The scan is unchanged.
+     "says": "Per-horizon rescaling brings the released checkpoint's coverage within",
      "sections": ["Abstract", "9. Actionable lessons", "12. Conclusion"]},
 
     # ---- C10 retraction-consistency --------------------------------------
