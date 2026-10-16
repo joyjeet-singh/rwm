@@ -1,0 +1,84 @@
+{
+ "what": "every CPU job over one minute that round 4's sessions F1-F4 ran while the round-4 queue trained (runs/queue_round4.txt), for Appendix B's overlap column",
+ "timezone": "+05:30",
+ "queue_windows": [
+  {
+   "start": "2026-10-11T10:36:00+05:30",
+   "end": "2026-10-12T06:31:00+05:30"
+  },
+  {
+   "start": "2026-10-14T22:26:14+05:30",
+   "end": "2026-10-15T05:04:17+05:30"
+  }
+ ],
+ "source": "the files round 4's sessions F1-F4 wrote to their evidence directories (outside the repository); their modification times are copied here",
+ "grouping": "one job per session, its window from its first evidence file to its last inside the queue's windows",
+ "n_files": 176,
+ "n_jobs": 4,
+ "jobs": [
+  {
+   "job": "F1: the build and gates after the queue's launch (SESSION_LOG F1)",
+   "session": "R4F1",
+   "start": "2026-10-11T10:38:37+05:30",
+   "end": "2026-10-11T10:40:18+05:30",
+   "seconds": 101,
+   "n_files": 27,
+   "basis": "session window: the session's evidence files' modification times, first to last (late start)"
+  },
+  {
+   "job": "F2: X6-X8's producers' re-runs, assertions, dry runs and readings, and the build (SESSION_LOG F2)",
+   "session": "R4F2",
+   "start": "2026-10-11T10:45:38+05:30",
+   "end": "2026-10-11T12:30:16+05:30",
+   "seconds": 6278,
+   "n_files": 47,
+   "basis": "session window: the session's evidence files' modification times, first to last (late start)"
+  },
+  {
+   "job": "F3: N5, N6's stage 20o regeneration and three builds (SESSION_LOG F3)",
+   "session": "R4F3",
+   "start": "2026-10-11T15:13:17+05:30",
+   "end": "2026-10-11T15:27:50+05:30",
+   "seconds": 873,
+   "n_files": 30,
+   "basis": "session window: the session's evidence files' modification times, first to last (late start)"
+  },
+  {
+   "job": "F4: about eight builds with gates and the figures (SESSION_LOG F4)",
+   "session": "R4F4",
+   "start": "2026-10-11T15:44:48+05:30",
+   "end": "2026-10-11T16:43:05+05:30",
+   "seconds": 3498,
+   "n_files": 72,
+   "basis": "session window: the session's evidence files' modification times, first to last (late start)"
+  },
+  {
+   "job": "F1's review agent (about 16 min)",
+   "session": "R4F1",
+   "start": null,
+   "end": null,
+   "basis": "logged without times: SESSION_LOG F1"
+  },
+  {
+   "job": "F2's review agent (about 14 min)",
+   "session": "R4F2",
+   "start": null,
+   "end": null,
+   "basis": "logged without times: SESSION_LOG F2"
+  },
+  {
+   "job": "F4's review workflow, 2 agents (12.4 min wall)",
+   "session": "R4F4",
+   "start": null,
+   "end": null,
+   "basis": "logged without times: SESSION_LOG F4"
+  },
+  {
+   "job": "the session that resumed the queue on 2026-10-14 logged no CPU jobs",
+   "session": null,
+   "start": null,
+   "end": null,
+   "basis": "round4/OUT_OF_SCOPE.md: its work, if any, is unrecorded"
+  }
+ ]
+}

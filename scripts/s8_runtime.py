@@ -17,6 +17,14 @@ this script did not read, so Appendix B's table left its two runs out. They are 
 baselines' runs, which Appendix B's prose counts. Their overlaps are against the CPU jobs round 2's
 sessions logged while that queue ran (docs/presubmission/x1_partc_cpu_jobs.json).
 
+Round 4, F9 (H2): rules X3 and X4 trained from a third queue (runs/queue_round4.txt), recorded under `round4_queue`
+beside the other two, with the same overlap column against the CPU jobs round 4's sessions logged while it ran
+(docs/presubmission/round4/f9_cpu_jobs.json). Its log lost the first runner's lines when another session resumed the
+queue on 14 October (round4/OUT_OF_SCOPE.md), so a run the log does not time is timed by its weights file: the end is
+the file's modification time and the start is that minus the run record's wall_clock_s. Each run says which basis it
+has. The queue's runs are back to back, so those reconstructed windows abut within seconds, and the four the log does
+time agree with their weights files to the minute.
+
     python scripts/s8_runtime.py      -> results/presubmission_runtime.json
 (moved from docs/presubmission/ in round 2, T8; reproduce.sh stage 20t7 runs it)
 """
@@ -24,6 +32,7 @@ import datetime as D
 import json
 import os
 import re
+import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))   # scripts/ -> repo (moved in round 2, T8)
 TZ = D.timezone(D.timedelta(hours=5, minutes=30))
@@ -79,6 +88,62 @@ def x1_part_c():
             "by_family": {k: {"n_runs": len(v), "wall_clock_s": sum(v), "mean_s": sum(v) / len(v)}
                           for k, v in fams.items()},
             "n_runs_overlapped": sum(1 for r in runs if r["overlap_s"] > 0),
+            "runs": runs}
+
+
+def round4_queue():
+    """Rules X3 and X4: the round-4 queue's runs, each with its overlaps against round 4's logged CPU jobs."""
+    sys.path.insert(0, os.path.join(ROOT, "scripts"))
+    sys.path.insert(0, os.path.join(ROOT, "src"))
+    import queue_run as Q
+    queue = [l.split() for l in open(os.path.join(ROOT, "runs", "queue_round4.txt"))
+             if l.strip() and not l.startswith("#")]
+    start, end = queue_times("queue_round4.log")
+    jobs_path = "docs/presubmission/round4/f9_cpu_jobs.json"
+    jobs, timed = logged_jobs(jobs_path)
+    fam_name = {"x3-A": "Arm A, autoregressive, each episode held out in turn",
+                "x3-B": "Arm B, teacher-forced, each episode held out in turn",
+                "mlp-ar-matched": "MLP, autoregressive, size-matched",
+                "transformer-ar-matched": "transformer, autoregressive, size-matched"}
+    runs, fams = [], {}
+    for rid, arch, m, n, seed, iters in queue:
+        _, art, wts, _ = Q.TRAINERS[arch](rid, int(m), int(n), int(seed), int(iters))
+        A = json.load(open(art))
+        assert A["hyperparameters"]["iterations"] == int(iters), (art, iters)
+        if rid in start and rid in end:
+            s, e, basis = start[rid], end[rid], "runs/queue_round4.log"
+        else:
+            e = D.datetime.fromtimestamp(os.path.getmtime(wts), TZ).replace(microsecond=0)
+            s = (e - D.timedelta(seconds=A["wall_clock_s"])).replace(microsecond=0)
+            basis = "weights file: end its modification time, start that minus wall_clock_s"
+        over = []
+        for j, js, je in timed:
+            ov = (min(e, je) - max(s, js)).total_seconds()
+            if ov > 0:
+                over.append({"job": j["job"], "overlap_s": round(ov), "basis": j["basis"].split(":")[0]})
+        rule = "X3" if arch.startswith("x3-") else "X4"
+        fam = fam_name[arch[:4] if rule == "X3" else arch]
+        runs.append({"run": rid, "rule": rule, "family": fam, "seed": int(seed),
+                     "start": s.isoformat(timespec="seconds"), "end": e.isoformat(timespec="seconds"),
+                     "times_from": basis, "wall_clock_s": A["wall_clock_s"],
+                     "artifact": os.path.relpath(art, ROOT), "overlapping_logged_jobs": over,
+                     "overlap_s": sum(o["overlap_s"] for o in over)})
+        fams.setdefault(fam, []).append(A["wall_clock_s"])
+    by_rule = {}
+    for r in runs:
+        b = by_rule.setdefault(r["rule"], {"n_runs": 0, "wall_clock_s": 0.0})
+        b["n_runs"] += 1
+        b["wall_clock_s"] += r["wall_clock_s"]
+    return {"what": "rules X3 and X4's runs (runs/queue_round4.txt), outside n_runs and wall_clock_s above",
+            "sources": ["runs/queue_round4.txt", "runs/queue_round4.log (gitignored; times copied here)",
+                        "runs/*/weights_2500.pt modification times (gitignored; copied here)",
+                        "results/x3_run_*.json", "results/baseline_run_*_ar_matched_seed*.json", jobs_path],
+            "n_runs": len(runs), "wall_clock_s": sum(r["wall_clock_s"] for r in runs), "by_rule": by_rule,
+            "by_family": {k: {"n_runs": len(v), "wall_clock_s": sum(v), "mean_s": sum(v) / len(v)}
+                          for k, v in fams.items()},
+            "n_runs_overlapped": sum(1 for r in runs if r["overlap_s"] > 0),
+            "n_runs_timed_by_log": sum(1 for r in runs if r["times_from"] == "runs/queue_round4.log"),
+            "unassignable_jobs": [j["job"] for j in jobs if not j["start"]],
             "runs": runs}
 
 
@@ -138,7 +203,8 @@ def main():
            "n_runs_overlapped": sum(1 for r in runs if r["overlap_s"] > 0),
            "unassignable_jobs": [j["job"] for j in jobs if not j["start"]],
            "runs": runs,
-           "x1_part_c": x1_part_c()}
+           "x1_part_c": x1_part_c(),
+           "round4_queue": round4_queue()}
     json.dump(out, open(os.path.join(ROOT, "results", "presubmission_runtime.json"), "w"), indent=1)
     print(f"{len(runs)} runs, {out['wall_clock_s']/3600:.2f} h in all; "
           + ", ".join(f"{k} {v['n_runs']} runs {v['wall_clock_s']/3600:.2f} h" for k, v in by_rule.items()))
@@ -152,6 +218,12 @@ def main():
           f"{xc['n_runs_overlapped']} overlapped a logged CPU job")
     for r in xc["runs"]:
         print(f"  {r['run']:26} {r['overlap_s']:5d} s over {len(r['overlapping_logged_jobs'])} job(s)")
+    r4 = out["round4_queue"]
+    print(f"rules X3 and X4, outside those: {r4['n_runs']} runs, {r4['wall_clock_s']/3600:.2f} h; "
+          f"{r4['n_runs_overlapped']} overlapped a logged CPU job; {r4['n_runs_timed_by_log']} timed by the queue log")
+    for r in r4["runs"]:
+        if r["overlap_s"]:
+            print(f"  {r['run']:26} {r['overlap_s']:5d} s over {len(r['overlapping_logged_jobs'])} job(s)")
 
 
 if __name__ == "__main__":
