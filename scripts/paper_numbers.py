@@ -3884,6 +3884,47 @@ def main():
     assert not any(ln.startswith("| verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
     assert not any(ln.startswith("| M-23's verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
 
+    # --- Round 4, F9 (H2): the round-4 queue's runs in Appendix B's runtime table -------------------------------------
+    # scripts/s8_runtime.py records them under `round4_queue`, outside the two totals Appendix B's prose gives, as it
+    # does rule X1's Part C. Every run is at iters_main; X3 is two arms on each of its new folds at its seeds, and X4 is
+    # its two size-matched baselines at the same seeds.
+    _R4 = PR["round4_queue"]
+    _r4s = "results/presubmission_runtime.json"
+    _X3D = J("x3_cross_fold.json")["design"]
+    assert _R4["by_rule"]["X3"]["n_runs"] == 2 * (len(J("x3_cross_fold.json")["part_of_rule"]["per_fold_h368"]) - 1) * len(_X3D["seeds"]), _R4["by_rule"]
+    assert _R4["by_rule"]["X4"]["n_runs"] == 2 * len(J("x4_matched_baselines.json")["design"]["seeds"]), _R4["by_rule"]
+    assert _R4["n_runs"] == _R4["by_rule"]["X3"]["n_runs"] + _R4["by_rule"]["X4"]["n_runs"]
+    for _r in _R4["runs"]:
+        assert J(_r["artifact"].split("/", 1)[1])["hyperparameters"]["iterations"] == \
+            int(N["iters_main"]["value"].replace(",", "")), _r["artifact"]
+    assert abs(sum(_r["wall_clock_s"] for _r in _R4["runs"]) - _R4["wall_clock_s"]) < 1e-6
+    put("rt_r4_runs", _R4["n_runs"], _r4s)
+    put("rt_r4_hours", f'{_R4["wall_clock_s"] / 3600:.1f}', _r4s)
+    for _rule in ("X3", "X4"):
+        put(f"rt_r4_{_rule.lower()}_runs", _R4["by_rule"][_rule]["n_runs"], _r4s)
+        put(f"rt_r4_{_rule.lower()}_hours", f'{_R4["by_rule"][_rule]["wall_clock_s"] / 3600:.1f}', _r4s)
+    put("rt_r4_overlapped", _R4["n_runs_overlapped"], _r4s)
+    put("rt_r4_by_log", _R4["n_runs_timed_by_log"], _r4s)
+    _r4ov = {}
+    for _r in _R4["runs"]:
+        _r4ov[_r["family"]] = _r4ov.get(_r["family"], 0) + (_r["overlap_s"] > 0)
+    assert sum(_r4ov.values()) == _R4["n_runs_overlapped"]
+    _r4rule = {_r["family"]: _r["rule"] for _r in _R4["runs"]}
+    _r4rows = [f'| {_f} (rule {_r4rule[_f]}, §5{".3" if _r4rule[_f] == "X4" else ""}) | {_v["n_runs"]} | '
+               f'{_v["mean_s"] / 3600:.2f} | {_r4ov.get(_f, 0)} |' for _f, _v in _R4["by_family"].items()]
+    assert len(_r4rows) == 4, _r4rows
+    put("rt_r4_table", "\n".join(_r4rows), _r4s)
+
+    # --- Round 4, F9 (H3; round 3's OUT_OF_SCOPE R7): Appendix H's R-46 row names its arenas' independent trajectories --
+    # scripts/task2_3_matched_and_trend.py now records each trend cell's n_independent (asserted constant across its
+    # checkpoints); every other field it writes was checked unchanged when stage 15 was regenerated in F9.
+    _T23 = J("task2_3_matched_trend.json")["trend"]
+    for _tag, _ar in (("o", "out-of-sample"), ("i", "in-sample")):
+        _ns = {_T23[f"{_ar}|h{_h}"]["n_independent"] for _h in (8, 368)}
+        assert len(_ns) == 1, (_ar, _ns)
+        put(f"r46_{_tag}_nind", _ns.pop(), "results/task2_3_matched_trend.json")
+    assert N["r46_o_nind"]["value"] == N["m23_nind"]["value"], (N["r46_o_nind"], N["m23_nind"])
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.
