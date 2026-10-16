@@ -390,6 +390,7 @@ claims stayed, and only their history moved.
 - **[§5]** M-23 is anchored at h = {{v2_diag_h}}, where the claim is actually about, because M-16,
   anchored at the training horizon, returned "cannot be settled". That change of anchor was made
   before the runs, not after them (§8).
+- **[§7.2]** An earlier version of §7.2 printed our models' stale-pairing figures computed with a scoring bug; they are withdrawn, and the record keeps them.
 - **[§6.2]** The epistemic ratio at h = {{v2_diag_h}} ({{d1n_epi_ratio_h368}}×) barely differs
   from the one at h = {{v2_deploy_h}} ({{d1n_epi_ratio_h100}}×). That is why re-anchoring the
   paper's calibration claims from the diagnostic horizon to the deployment one changed the reading
