@@ -551,7 +551,9 @@ CLAIMS = [
      # AT the installed count, not above it, so the next addition fails the build and
      # has to be argued for as these were. The word cap is unchanged; the plan's own
      # limit, 330, is tighter and the abstract meets it.
-     "max_words": 370, "max_numerals": 26},
+     # Round 4, F6 (ruling W7): the abstract was rewritten once to at most 300 words, and the word cap is tightened from
+     # 370 to 320, as W7 directs. The numeral cap is left at 26: W7 does not tighten it.
+     "max_words": 320, "max_numerals": 26},
 
     # ---- C13 interval-required -------------------------------------------
     # 6.2's ratios and coverages were bare point estimates in a paper whose
