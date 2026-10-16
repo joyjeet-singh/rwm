@@ -210,59 +210,33 @@ long-horizon claim.
 ### 3.1 Metrics
 
 Each metric is stated as implemented, with the `file:line` of its implementation, because a reader
-who cannot see the denominator cannot check the headline.
+who cannot see the denominator cannot check the headline. Appendix G gives each metric's formula and
+the check on the coverage nominal.
 
 **Relative-L1** is the reference's own metric, reproduced in behaviour (`model_training.py:203`) so
-that our numbers are comparable to the upstream's printed one. On config-normalised states, per
-forecast step,
+that our numbers are comparable to the upstream's printed one: at each forecast step, the summed
+absolute error over the state dimensions divided by the summed absolute true state, on
+config-normalised states, averaged flat over trajectories and over the steps after the first
+{{v2_history}}, which are teacher-forced. The denominator, a 45-term sum in normalised space, is
+recomputed at every step, so it can pass through zero, which is why this metric goes non-finite on
+low-dimensional state groups and why a second one exists.
 
-$${{v3_rel_l1}}$$
+**Normalised RMSE** fixes the denominator once: the root of the squared error pooled over the state
+dimensions, divided by the dimensions' mean standard deviation over the training episodes only, a
+constant stored in `results/step4_0a_results.json` and never recomputed per step or derived from
+held-out data. A value of 1.0 means no better than predicting the training mean. **The aggregation
+is form 1**, a ratio of means; a mean of per-dimension ratios would give whichever dimension has the
+smallest scale unbounded leverage (Appendix G).
 
-and the reported figure is the flat mean over trajectories and steps,
+**Coverage at ±kσ** is the fraction of (trajectory, forecast step, state dimension) triples, pooled
+with equal weight, whose absolute error falls within k times the σ predicted for that triple. It is
+two-sided, so its calibrated targets are **{{v3_cov_nominal1}}%** at ±1σ and
+**{{v3_cov_nominal2}}%** at ±2σ.
 
-$${{v3_rel_l1_agg}}$$
-
-with $t_0$ = `history_horizon` = {{v2_history}}: the first {{v2_history}} steps are teacher-forced
-and excluded. The denominator is recomputed at every step as a 45-term sum in normalised space, so
-it can pass through zero, which is why this metric goes non-finite on low-dimensional state groups
-and why a second one exists.
-
-**Normalised RMSE** fixes the denominator once, over the training episodes only:
-
-$${{v3_nrmse}}$$
-
-where the scale constant is
-
-$${{v3_scale}}$$
-
-computed once, stored in `results/step4_0a_results.json`, and never recomputed per step or derived
-from held-out data. A value of 1.0 means no better than predicting the training mean. **The
-aggregation is form 1**: pool the per-dimension mean squared errors, then divide, a ratio of means.
-A mean of per-dimension ratios gives whichever dimension has the smallest scale unbounded leverage;
-Appendix G gives both forms and the comparison the second one inverts.
-
-**Coverage at ±kσ** is the fraction of scalar (trajectory, forecast step, state dimension) triples
-whose absolute realised error falls within k times the σ predicted for that same triple:
-
-$${{v3_coverage}}$$
-
-It is pooled over all three axes with equal weight per triple. It is **cumulative** over steps
-1..h: coverage "at h" averages the whole rollout up to h and is not the value at step h, and every
-horizon-indexed quantity in this paper follows the same convention. Because it is built from an
-*absolute* error, $z \le k$ is the two-sided event, so the calibrated targets are
-$\mathrm{erf}(k/\sqrt{2})$: **{{v3_cov_nominal1}}%** at ±1σ and **{{v3_cov_nominal2}}%** at ±2σ.
-**That nominal is checked rather than assumed.** Rescaling each model's σ by the single constant that makes mean|error| / mean σ equal a calibrated Gaussian's {{m65_calib_ratio}} lands coverage at or above {{v3_cov_nominal1}}% in every one of {{m65_n_cells}} model × horizon cells, with {{m65_n_heavy}} below it (`M-65`), so the shortfalls reported below are a property of the scale and not of the tail.
-
-**The overconfidence factor** is how many times larger the typical realised error is than the
-typical predicted σ:
-
-$${{v3_rho}}$$
-
-It too is a **ratio of means**, because a mean of ratios is unbounded whenever a single σ
-approaches zero, which is exactly the regime §6.3 puts these models in. $\rho = 1$ is *not*
-calibration: a calibrated Gaussian has mean|error| / σ = $\sqrt{2/\pi}$ = {{v3_rho_calibrated}}. So
-$\rho$ is reported as a magnitude of miscalibration and coverage as the calibrated reading, and
-both appear everywhere.
+**The overconfidence factor** $\rho$ is the mean absolute error over the mean predicted σ, a ratio
+of means. $\rho = 1$ is *not* calibration, since a calibrated Gaussian has $\rho = \sqrt{2/\pi}$ =
+{{v3_rho_calibrated}}, so $\rho$ is reported as a magnitude of miscalibration and coverage as the
+calibrated reading.
 
 **Which metric each headline uses.** The A/B training claim (§5) is relative-L1, because the claim
 is about reproducing the upstream's comparison and that is the upstream's metric. The calibration
@@ -272,7 +246,7 @@ absolute error, because a ranking claim is about order rather than scale. Every 
 the abstract names its metric. §7.2's alignment defect is given in both metrics, over all ten episodes and on the held-out pair. Over all ten episodes the two metrics agree that the stale action raises error at h = 8 and 32 and that from h = {{v2_deploy_h}} the change is not resolved, and they differ at h = 1, where relative-L1 resolves the rise and nRMSE does not.
 
 **Horizons.** Curves are reported at $h \in \{1,\,8,\,32,\,{{v2_deploy_h}},\,128,\,{{v2_diag_h}}\}$.
-Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's
+Every horizon-indexed quantity is cumulative over steps 1..h, not the value at step h. Two of those are load-bearing and the rest are landmarks. **h = {{v2_deploy_h}}** is the method's
 own imagination rollout length, the horizon over which the uncertainty-penalised policy loop
 actually runs this model (arXiv:2504.16680 Table S9 in v1 and Table S11 in v3, with the same
 value). **h = {{v2_diag_h}}** is the upstream's open-loop diagnostic length: `len_eval_trajectory` =
@@ -1514,9 +1488,64 @@ The σ collapse is linear in iteration count and its rate is nearly identical ac
 
 ---
 
-## Appendix G — the two nRMSE aggregations, and the comparison one of them inverted
+## Appendix G — the metrics' formulas, the two nRMSE aggregations, and the comparison one of them inverted
 
-§3.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the
+**The metrics' formulas (§3.1).** §3.1 states each metric in words. Its formulas, as implemented, and
+the check on the coverage nominal stood there as follows.
+
+**Relative-L1** is the reference's own metric, reproduced in behaviour (`model_training.py:203`) so
+that our numbers are comparable to the upstream's printed one. On config-normalised states, per
+forecast step,
+
+$${{v3_rel_l1}}$$
+
+and the reported figure is the flat mean over trajectories and steps,
+
+$${{v3_rel_l1_agg}}$$
+
+with $t_0$ = `history_horizon` = {{v2_history}}: the first {{v2_history}} steps are teacher-forced
+and excluded. The denominator is recomputed at every step as a 45-term sum in normalised space, so
+it can pass through zero, which is why this metric goes non-finite on low-dimensional state groups
+and why a second one exists.
+
+**Normalised RMSE** fixes the denominator once, over the training episodes only:
+
+$${{v3_nrmse}}$$
+
+where the scale constant is
+
+$${{v3_scale}}$$
+
+computed once, stored in `results/step4_0a_results.json`, and never recomputed per step or derived
+from held-out data. A value of 1.0 means no better than predicting the training mean. **The
+aggregation is form 1**: pool the per-dimension mean squared errors, then divide, a ratio of means.
+A mean of per-dimension ratios gives whichever dimension has the smallest scale unbounded leverage;
+the rest of this appendix gives both forms and the comparison the second one inverts.
+
+**Coverage at ±kσ** is the fraction of scalar (trajectory, forecast step, state dimension) triples
+whose absolute realised error falls within k times the σ predicted for that same triple:
+
+$${{v3_coverage}}$$
+
+It is pooled over all three axes with equal weight per triple. It is **cumulative** over steps
+1..h: coverage "at h" averages the whole rollout up to h and is not the value at step h, and every
+horizon-indexed quantity in this paper follows the same convention. Because it is built from an
+*absolute* error, $z \le k$ is the two-sided event, so the calibrated targets are
+$\mathrm{erf}(k/\sqrt{2})$: **{{v3_cov_nominal1}}%** at ±1σ and **{{v3_cov_nominal2}}%** at ±2σ.
+**That nominal is checked rather than assumed.** Rescaling each model's σ by the single constant that makes mean|error| / mean σ equal a calibrated Gaussian's {{m65_calib_ratio}} lands coverage at or above {{v3_cov_nominal1}}% in every one of {{m65_n_cells}} model × horizon cells, with {{m65_n_heavy}} below it (`M-65`), so the shortfalls reported below are a property of the scale and not of the tail.
+
+**The overconfidence factor** is how many times larger the typical realised error is than the
+typical predicted σ:
+
+$${{v3_rho}}$$
+
+It too is a **ratio of means**, because a mean of ratios is unbounded whenever a single σ
+approaches zero, which is exactly the regime §6.3 puts these models in. $\rho = 1$ is *not*
+calibration: a calibrated Gaussian has mean|error| / σ = $\sqrt{2/\pi}$ = {{v3_rho_calibrated}}. So
+$\rho$ is reported as a magnitude of miscalibration and coverage as the calibrated reading, and
+both appear everywhere.
+
+**The two aggregations.** §3.1 states that this paper uses **form 1**: pool the per-dimension mean squared errors across the
 {{cal_rel_ndim}} state dimensions, then divide by the pooled scale — a ratio of means. **Form 2**
 is the mean of per-dimension ratios.
 
