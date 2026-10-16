@@ -345,3 +345,69 @@ Body words (round2/t6_words.py): 21,787 (F0: 20,745)
 Abstract words / numerals (C12.1): 370 / 23
 Next: F6 (Opus 5.5, high), in a fresh terminal. It puts X3 into §5, an appendix table, §11 and contribution 2 (variant REPLICATES ACROSS FOLDS), and X4 into §5.3 (PARTIAL, with its caveat). It rewrites the abstract once, to at most 300 words, with C12.1's cap tightened to 320 and rule 11 applied, including F4's open items. It also covers contributions and Appendix D's rows, and regenerates Appendix E and Figure 1. Commits stay local (workplan §6).
 Decisions for user: none
+
+## F6 — 2026-10-16 13:40 — Opus 5.5 (the plan assigns high effort, fresh terminal) — status: COMPLETE
+Commits:
+c448d7d [F6][1] X3 into the paper: section 5 (A5, the REPLICATES ACROSS FOLDS variant), Appendix L's fold-by-fold table, section 11 and Appendix R's sample-size paragraphs narrowed to the magnitudes, contribution 2
+bc40528 [F6][2] X4 into the paper: section 5.3 (A5c) in place of 'parameter-matched variants were specified but not run', two size-matched rows in its table, contribution 3, and section 12's baseline sentence (rule 11)
+be7715a [F6][3] The abstract, rewritten once along A6's skeleton: 300 words, 18 numerals (from 370 and 23); C12.1's word cap tightened from 370 to 320 (W7)
+80555f3 [F6][4] Contributions: bullet 1 gains X6's split (unresolved over whole trajectories at h = 368, disagreement ahead on shorter units at h = 100), bullet 6 gains X7; 8 bullets of at most 3 sentences
+705b369 [F6][5] Appendix D's two tables: rows for the claims X3-X8 bear on, verdicts verbatim
+97057d0 [F6][E] Appendix E (stage 21a) and Figure 1 (stage 22) regenerated after X3 and X4's discharge: 28 rules, all 28 with a lead time and a verdict
+73271e3 [F6][rule 11] Section 9: the held-out count bounds every long-horizon magnitude, not every long-horizon claim; the direction is re-tested on all ten episodes (X3)
+ad934af [F6][review] Review fixes: every X3 and X4 sentence carries its verdict and its rule's caveats (2,500 iterations, not 10,000; fixed folds; size is one axis); the abstract keeps 'on short windows'; X3 trained four new folds beside section 5's
+ba78d5d [F6][fix] Figure 1 at 0.21 in per bar (was 0.27): with 29 bars it filled a page and LaTeX warned 'Text page 3 contains only floats', failing compile_paper; only its PNG changes
+3dcb8c6 [F6] Build and gates after items 1-5, Appendix E and Figure 1, and the review: 31 new keys; abstract 300 words / 19 numerals; 69 pages
+(the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as F0–F5, at the user's request ("start F6"); the plan assigns a fresh terminal at high effort. The workplan (`round4/TMLR_CODEX_WORKPLAN.md` §2) caps delegation outside F10 at one narrowly scoped read-only reviewer, and that cap overrides ultracode's default: one Explore agent was used, through the Agent tool so that it could be asked to reconfirm. All commits are local (workplan §6).
+- **Item 1, X3** (keys `x3_*`, `results/x3_cross_fold.json`, M-94).
+  - **§5 (A5, the REPLICATES variant).** Pooled gap, interval, all ten episodes positive, every fold's own interval above zero, and teacher forcing's one-step lead on short units. Caveats: 2,500 iterations, not 10,000; four new folds beside §5's own; fixed folds; seeds carried. All asserted in `paper_numbers.py`.
+  - **The fold-by-fold table** is a titled section of Appendix L, not a new appendix: LaTeX's appendix letters end at Z, so a 27th appendix cannot compile.
+  - **§11 and Appendix R:** "Effective sample size bounds the long-horizon magnitudes"; the direction is re-tested on all ten episodes. Contribution 2 carries X3's reading and caveats.
+- **Item 2, X4** (keys `x4_*`, M-95). §5.3's sentence that variants were "specified but not run" is replaced by A5c: **PARTIAL**; the MLP is RWM BETTER, and the transformer CANNOT BE SETTLED (p = 0.625). The same per-baseline results at h = 100 and 32 are asserted, and "size is one axis" is stated wherever it is reported.
+  - §5.3's table gains the two size-matched rows in its own format. RWM's row equals X4's evaluator to 1e-6 (asserted).
+  - Contribution 3 and §12's baseline sentence carry X4, the latter by rule 11.
+- **Item 3, the abstract** (A6 order). 370 → **300 words**, 23 → **19 numerals**, every clause within A6's 25 words. C12.1's word cap goes 370 → 320 (W7); its numeral cap is left at 26, since W7 does not tighten it.
+  - Every guard's abstract anchor is kept except C9.1, re-anchored (below). `part_f_gate` check 6 passes: every abstract key is in the body.
+  - One residual, the reviewer's optional point: with "released" dropped to hold the 25-word clause, the abstract's first "checkpoint" is unqualified. Left for F7/F10.
+- **Item 4, contributions.** Bullet 1 gains X6's split, bullet 6 X7; 2 and 3 took X3 and X4. There are 8 bullets of at most 3 sentences. X5 was not run, so no bullet changes for it.
+- **Item 5, Appendix D.**
+  - **First table:** the RWM-AR row gains X3 and X8, the baselines row X4 and X8, the configuration row X8, the epistemic row X6's split, and the penalty row X5's pointer.
+  - **Second table** (`evidence_summary.py`): new rows for X3 (all ten episodes, 20), X4 (held-out pair, 4), X6 (all ten episodes, 70 units) and X7 (all ten episodes, 20). X8's reading joins the four rows it re-scored, on their own arenas.
+  - C24.1 confirms all 20 rows' arenas and n_independent against their sections.
+- **Appendix E and Figure 1** (stages 21a, 22): 28 rules, all 28 with lead times; M-86 and M-87 at +121.16 h each, by the same computation as every rule. Figure 1 is re-drawn at 0.21 in per bar: with 29 bars at 0.27 in it filled a float-only page, and the resulting LaTeX warning failed the compile.
+- **Review.** One read-only reviewer, scoped to F6's diff, the rendered snapshot, the X3–X8 artifacts, M-86/M-87/M-94/M-95 and rule 11 / A5 / A5c / A6. It reported 10 findings, none numeric:
+  - X3 and X4 sentences lacked their verdicts and the caveats M-86 and M-87 require;
+  - the abstract had dropped "on short windows" (on 400-step units the one-step gap spans zero);
+  - "retraining … five splits" (four were new);
+  - a caption rendered as a heading.
+
+  All 10 were fixed, and the reviewer reconfirmed them, finding nothing new.
+- **Rule 11 audit, every sentence F6 installed or changed in a summary site:**
+  - **Abstract:**
+    - base claim with one-step qualifier → agrees: three-seed 368-step gap; teacher forcing ahead only on short windows;
+    - X3 → agrees: REPLICATES at h = 368; alongside, h = 100 replicates and h = 1 is teacher forcing's, as the previous clause says;
+    - baselines → agrees at 368, scoped; X4 PARTIAL stated;
+    - configuration → unchanged from F4;
+    - scope "magnitudes rest on 4" → agrees, since X3 is the direction;
+    - X6 → split stated;
+    - X7 → epistemic within the band at every horizon on training episodes left out of each fit, with Arm A's 17 of 36 → split stated;
+    - alignment → scoped to short horizons;
+    - policy.
+  - **Contributions:** 1 (X6 split stated), 2 (X3), 3 (X4, size one axis), 6 (X7 split stated) → agree.
+  - **Appendix D:** each row now carries every reading the rules bear on → agree.
+  - **§9** count paragraph (magnitudes; X3 direction), **§11** sample-size paragraph and opener, **§12** baselines (X4), margin and recalibration → agree, splits stated.
+  - **Outside rule 11's sites, for F10's public-facing check:** README's "What this found" still lacks X3, X6 and X7, though it is no stronger than the paper.
+Build/gates: pass. Evidence summary, fast build, every gate, `part_f_gate`, fast build again: byte-identical. 68/68 claims and 68/68 corruptions; C24.1 20/20; compile 0 overfull, 0 warnings. `part_f_gate` 6/7, 1 not run: 4b fails on the bundles (F11), check 6 passes.
+Paper numbers changed: appG_n_lead 26 → 28; appG_n_positive 25 → 27 (results/appendix_g_rules.json); f1_n_cited 37 → 39; f1_n_kept 35 → 37 (results/paper_figures.json); pdf_pages 67 → 69; tn_typed 974 → 990; appG_table and evidence_table regenerated
+New keys: 31, all from results/:
+- `x3_*` (20), from x3_cross_fold.json;
+- `x4_*` (11), from x4_matched_baselines.json and its evaluator output.
+Re-anchored checks: C9.1 "A per-horizon rescaling brings the released checkpoint's coverage within" → "A per-horizon rescaling brings the checkpoint's coverage within" (the abstract's rewrite; scan unchanged). C12.1 cap tightened, 370 → 320 words (W7).
+CPU jobs over 1 min: the review agent (about 5.5 min, then 1 min); fast builds with gates, about 1.5 min each. None contended (no training).
+Queue status: done (30 of 30, 0 failed; finished 2026-10-15 05:04 +0530)
+Body words (round2/t6_words.py): 22,313 (F0: 20,745)
+Abstract words / numerals (C12.1): 300 / 19
+Next: F7 (Opus 5.5, default), in a fresh terminal. Length and readability by Annex 5's moves, never deleting: the body is 22,313 words against W6's editorial ≤16,000 (aim 15,000; workplan addendum: no TMLR cap). It removes ledger IDs from the main text (W8), verifies the TMLR author instructions first (workplan §4C), and looks at the abstract's unqualified "checkpoint". Commits stay local.
+Decisions for user: none
