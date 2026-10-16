@@ -60,8 +60,7 @@ a practitioner can use without reading the rest.
   correlating {{a2_rdd}} with it with rollout and forecast depth held fixed, yet on data the
   checkpoint trained on it is {{d1n_epi_ratio_h1}}× smaller than that error at h = 1 and
   {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} (§6.2, §6.6). It beats {{e7_n_beaten}} of the
-  {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at
-  {{e7_step_r}} against its {{e7_r_dis}}, a margin {{q2_n_req}} independent trajectories would resolve if it is as large as observed, against the {{e7_nind}} here (§6.6, §11).
+  {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at {{e7_step_r}} against its {{e7_r_dis}} over the {{e7_nind}} whole trajectories, a margin they cannot resolve at h = {{v2_diag_h}}, while on {{x6_n_units}} shorter units at h = {{v2_deploy_h}} a rule committed before its reading finds disagreement ahead, {{x6_margin}} {{x6_ci}} (rule X6: **{{x6_reading}}**; §6.6, §11).
 - **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before the runs, run on seed {{m23_seed}} of each arm, found autoregressive training ahead by {{m23_ratio}}× at h = {{v2_diag_h}}; {{d1_seeds}} seeds at {{iters_long}} iterations extend it: the factor is {{d1_ratio}}×, and {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, on the held-out pair's {{a1_nind}} independent 400-step trajectories (§5); retrained with each of the ten episodes held out in turn, it replicates, {{x3_gap}} {{x3_ci}} over {{x3_n}} trajectories at {{iters_main}} iterations (rule X3: **{{x3_reading}}**). At one step a second pre-registered rule, on {{m64_h1_n}} independent
   {{m64_h1_unit}}-row units, finds a gap of {{m64_h1_gap}} {{m64_h1_ci}} in favour of **teacher forcing** (§5).
 - **Two more of the base paper's claims, tested under rules committed before the runs.** RWM is
@@ -77,7 +76,7 @@ a practitioner can use without reading the rest.
   episode and scored on the other, brings every released-checkpoint coverage estimate near nominal
   where a global one does not, though no single cell is resolvable and the cells are unseen only by
   the multiplier, since the checkpoint trained on both episodes (§6.7); on Arm A, which never saw them, its own multipliers manage
-  {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells.
+  {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} disagreement cells. Fitted on nine episodes and scored on the tenth, the disagreement's coverage over all {{x7_n_traj}} trajectories is within the band at every horizon (rule X7: **{{x7_summary}}**), again on episodes the checkpoint trained on.
 - **The released evaluation is misaligned by one step; over all ten episodes it raises the checkpoint's relative-L1 error up to h = 32, and from h = {{v2_deploy_h}} the change is not resolved.** Evaluation feeds the action from *t−1* where training pairs states and actions index-for-index, and shifting its action index by one step fixes it. On all ten episodes' {{ad20_nind}} independent trajectories, all of them training data for this checkpoint, the stale action raises its relative-L1 error by {{adh20_rel_h1}}% {{adh20_rel_ci_h1}} at h = 1 and {{adh20_rel_h32}}% {{adh20_rel_ci_h32}} at h = 32, and changes it by {{adh20_rel_h100}}% {{adh20_rel_ci_h100}} at h = {{v2_deploy_h}} and {{ad20_rel}}% {{ad20_rel_ci}} at h = {{v2_diag_h}}; on the held-out pair's {{ad_nind}} it raises it at every horizon reported, by {{ad_rel}}% {{ad_rel_ci}} at h = {{v2_diag_h}} (§7.2).
 - **A from-scratch reimplementation verified at the gradient level.** Outputs match the released
   module bitwise, and losses and gradients match to {{diff_grad_max}} across {{diff_terms}} loss
