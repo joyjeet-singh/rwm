@@ -844,37 +844,35 @@ trained on the other {{n_train_eps}}, but not by the released checkpoint, which 
 (§3). **Every released-checkpoint cell in this section is therefore unseen by the multiplier
 only.**
 
-Fitting at one step works at one step and nowhere else. On the epistemic term — the quantity the
-method uses — a scalar of {{d2_epi_c_lo}}–{{d2_epi_c_hi}} brings h=1 coverage to
-{{d2_epi_cov1_lo}}–{{d2_epi_cov1_hi}}%, essentially calibrated against the {{d2_target}}% target,
-and leaves h=368 at {{d2_epi_cov368_lo}}–{{d2_epi_cov368_hi}}%. On the aleatoric term a scalar of
-{{d2_ale_c_lo}}–{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}}–{{d2_ale_cov1_hi}}% at h=1 and
-{{d2_ale_cov368_lo}}–{{d2_ale_cov368_hi}}% at h=368. Fitting over the whole rollout instead
-drives one-step coverage to 100%, an interval wide enough to be vacuous where the model is
-accurate, while still falling short at the far end. A constant multiplier cannot track an error
-that grows while σ does not (§6.5), so for a *constant* scale "right shape, wrong scale" does not
-survive.
+Fitting at one step works at one step and nowhere else. On the epistemic term a constant scalar
+brings h = 1 coverage to {{d2_epi_cov1_lo}}–{{d2_epi_cov1_hi}}% against the {{d2_target}}% target and
+leaves h = 368 at {{d2_epi_cov368_lo}}–{{d2_epi_cov368_hi}}%, and fitted over the whole rollout it
+over-covers at one step while still falling short at the far end (Appendix T). A constant multiplier
+cannot track an error that grows while σ does not (§6.5), so for a *constant* scale "right shape,
+wrong scale" does not survive.
 
-**On the released checkpoint a per-horizon scalar lands near target, and this is the one concrete remedy in this paper; on a model that has not seen the test episodes the evidence is mixed.** One multiplier per horizon is fitted on one held-out episode and evaluated on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute {{d3_nind_tot}} non-overlapping 400-step trajectories between them, so each direction fits on n_independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fit}}. The last column repeats the test on Arm A at ensemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_nseeds}} seeds), whose model never saw either episode:
+**On the released checkpoint a per-horizon scalar lands near target, and this is the one concrete remedy in this paper; on a model that has not seen the test episodes the evidence is mixed.** One multiplier per horizon is fitted on one held-out episode and evaluated on the other, in both
+directions, so no multiplier is ever scored on the episode that produced it: each direction fits on
+n_independent = {{d3_nind_fit}} of the two episodes' {{d3_nind_tot}} non-overlapping 400-step
+trajectories and is scored on the other {{d3_nind_fit}}. On the released checkpoint every point
+estimate lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities,
+**{{d3_epi_ok}} / {{d3_epi_cells}}** epistemic and **{{d3_ale_ok}} / {{d3_ale_cells}}** aleatoric cells,
+against {{d3_epi_const_ok}} of {{d3_epi_cells}} for the constant scalar. **That absolute test is
+UNPOWERED here:** the {{d3_tol}}-point band is resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}}
+quantity-by-horizon pairs, so a cell inside the band is compatible with a true coverage well outside
+it. **On Arm A at ensemble size {{d3x_ens}}, where the episodes are unseen by the model as well, its
+own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}}
+of {{d3x_own_ale_cells}} aleatoric cells**, so the recipe does not carry over intact to a model that
+has not seen the test episodes (Appendix T gives the table and every deviation).
 
-| quantity | released checkpoint: cells unseen by the multiplier within {{d3_tol}} points of {{d3_target}}%, per-horizon c (unpowered) | same, constant c | per-horizon c fitted on the *other* model, both models scored (unpowered) | range of fitted c | Arm A, its own per-horizon c: cells within the band, unseen by the model too |
-|---|---|---|---|---|---|
-| aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | {{d3_ale_c_lo}} – {{d3_ale_c_hi}} ({{d3_ale_cspread}}×) | {{d3x_own_ale_ok}} / {{d3x_own_ale_cells}} |
-| epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | {{d3_epi_c_lo}} – {{d3_epi_c_hi}} ({{d3_epi_cspread}}×) | {{d3x_own_epi_ok}} / {{d3x_own_epi_cells}} |
+**Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **The count is thinner than it looks:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, each multiplier fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.7 caution, which rule X7, below, narrows for the released checkpoint. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
 
-On the released checkpoint every point estimate lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities. **That absolute test is UNPOWERED here, as in the *different model* column:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the {{d3_tol}}-point band resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizon pairs, with a binding minimum detectable effect of {{d3x_umde_lo}}–{{d3x_umde_hi}} points. So a cell inside the band is compatible with a true coverage well outside it, and nothing here shows any cell is outside it either. The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_cov}}%, {{d3_worst_dev}} points off target. The two largest deviations are both on the {{d3_second_q}} term and {{d3_top2_same_side}} target — {{d3_worst_cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the h=1 cells it was fitted at. **On Arm A, where the episodes are unseen by the model as well, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells**, so the recipe that lands every released-checkpoint cell does not carry over intact to a model that has not seen the test episodes.
+**Fitted on nine episodes and scored on the tenth (rule X7).** A rule committed before its reading (Appendix Y) repeats the design over all ten episodes: for each, the per-horizon multiplier is fitted on the other nine episodes' trajectories with the same fitting function and scored on its own, so each of the {{x7_n_traj}} trajectories is scored once, by a multiplier not fitted on it, and each horizon's coverage carries a 95% interval. On the epistemic term every one of those intervals lies inside the {{d3_tol}}-point band, all of them between {{x7_ci_min}}% and {{x7_ci_max}}%: **{{x7_summary}}**. Alongside, the aleatoric term returns {{x7_ale_summary}}, one constant multiplier lands within the band at {{x7_const_word}} of the {{x7_n_h_word}} horizons, and the fitted epistemic multipliers differ by at most {{x7_cspread}}× across the ten folds. Those trajectories are unseen by the multiplier, not by the model, which trained on all ten episodes, so for the released checkpoint each horizon's coverage is now resolved within the band, though the six horizons share those trajectories and are not independent tests; the Arm A result stands as it is.
 
-**Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **That column is thinner than its count suggests:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, each multiplier fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.7 caution, which rule X7, below, narrows for the released checkpoint. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
-
-**Fitted on nine episodes and scored on the tenth (rule X7).** A rule committed before its reading (Appendix Y) repeats the design over all ten episodes: for each, the per-horizon multiplier is fitted on the other nine episodes' trajectories with the same fitting function and scored on its own, so each of the {{x7_n_traj}} trajectories is scored once, by a multiplier not fitted on it, and each horizon's coverage carries a 95% interval. On the epistemic term every one of those intervals lies inside the {{d3_tol}}-point band, all of them between {{x7_ci_min}}% and {{x7_ci_max}}%: **{{x7_summary}}**. Alongside, the aleatoric term returns {{x7_ale_summary}}, one constant multiplier lands within the band at {{x7_const_word}} of the {{x7_n_h_word}} horizons, and the fitted epistemic multipliers differ by at most {{x7_cspread}}× across the ten folds. Those trajectories are unseen by the multiplier, not by the model, which trained on all ten episodes, so for the released checkpoint each horizon's coverage is now resolved within the band, though the six horizons share those trajectories and are not independent tests; the Arm A column stands as it is.
-
-**The fourth column: the table is a property of the model, not of the horizon.** Under rule M-69
-(Appendix E), multipliers fitted on Arm A and scored on the released checkpoint, and the reverse, on
-the same {{d3x_nind}} held-out trajectories, return **{{d3x_verdict}}** on the paired change in coverage
-the arena can resolve: {{d3x_n_out}} of {{d3x_ncells}} governing cells, which are not independent tests, have an interval wholly outside
-the ±{{d3x_band}}-point band, and Arm A's multipliers are {{d3x_ratio_lo}}× to {{d3x_ratio_hi}}× the
-released checkpoint's at the same horizon (Appendix T). The *different model* column is the absolute
-test, unpowered for the reason above, so it is reported and cannot move that verdict.
+**The multipliers are a property of the model, not of the horizon.** Fitted on Arm A and scored on
+the released checkpoint, and the reverse, on the same {{d3x_nind}} held-out trajectories, rule M-69
+returns **{{d3x_verdict}}**: Arm A's multipliers are {{d3x_ratio_lo}}× to {{d3x_ratio_hi}}× the
+released checkpoint's at the same horizon (Appendix T).
 
 So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence is mixed.** Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic coverage over all {{x7_n_traj}} trajectories is within the band at every horizon (rule X7).
 
@@ -887,19 +885,8 @@ ensemble size 1 trained at {{r2_n_indep}} seeds, together as an ensemble at eval
 member keeps its own recurrent hidden state and the ensemble mean is fed back to all of them, so the
 rollout differs from the shared-trunk one only in what is under test. Rule M-68 repeats it with every
 member trained under `gaussian_nll`, so the two fixes are measured on the same models. Both are scored
-on the held-out pair against each of the shared-trunk seeds separately.
-
-| h | independent err/σ | shared-trunk err/σ | independent ±1σ | shared-trunk ±1σ |
-|---|---|---|---|---|
-| 1 | {{r2_indep_ratio_h1}}× | {{r2_shared_ratio_h1}}× | {{r2_indep_cov1_h1}}% | {{r2_shared_cov1_h1}}% |
-| 8 | {{r2_indep_ratio_h8}}× | {{r2_shared_ratio_h8}}× | {{r2_indep_cov1_h8}}% | {{r2_shared_cov1_h8}}% |
-| 32 | {{r2_indep_ratio_h32}}× | {{r2_shared_ratio_h32}}× | {{r2_indep_cov1_h32}}% | {{r2_shared_cov1_h32}}% |
-| **{{v2_deploy_h}}** | **{{r2_indep_ratio_h100}}×** | **{{r2_shared_ratio_h100}}×** | **{{r2_indep_cov1_h100}}%** | **{{r2_shared_cov1_h100}}%** |
-| 128 | {{r2_indep_ratio_h128}}× | {{r2_shared_ratio_h128}}× | {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% |
-| {{v2_diag_h}} | {{r2_indep_ratio_h368}}× | {{r2_shared_ratio_h368}}× | {{r2_indep_cov1_h368}}% | {{r2_shared_cov1_h368}}% |
-
-*Same trajectories (the held-out pair), same harness, n_independent = {{r2_nind}}, every model at {{iters_main}} training iterations. The shared-trunk column is the mean
-over {{r2_n_shared}} seeds; the comparison below is paired against each of them separately.*
+on the held-out pair, n_independent = {{r2_nind}} 400-step trajectories, every model at {{iters_main}}
+training iterations, against each of the shared-trunk seeds separately (Appendices O and P give the tables).
 
 **Rule M-44 returns {{m44_verdict}}.** All {{m44_n_conditions_met}} of its {{m44_n_conditions}}
 conditions hold against every one of the {{r2_n_shared}} shared-trunk seeds: at h = {{v2_deploy_h}}
@@ -909,18 +896,6 @@ paired interval excludes zero. σ itself grows {{r2_sigma_x_h100}}× there, **{{
 of the improvement, so the trunk-sharing mechanism is the larger part of the effect where the method
 operates; at h = {{v2_diag_h}}, {{r2_from_acc_h368}}% is the ensemble simply predicting better
 (Appendix O).
-
-| h | combined err/σ | shared-trunk err/σ | combined ±1σ | shared ±1σ | combined ±2σ | shared ±2σ |
-|---|---|---|---|---|---|---|
-| 1 | {{m68_indep_ratio_h1}}× | {{m68_shared_ratio_h1}}× | {{m68_indep_cov1_h1}}% | {{m68_shared_cov1_h1}}% | {{m68_indep_cov2_h1}}% | {{m68_shared_cov2_h1}}% |
-| 8 | {{m68_indep_ratio_h8}}× | {{m68_shared_ratio_h8}}× | {{m68_indep_cov1_h8}}% | {{m68_shared_cov1_h8}}% | {{m68_indep_cov2_h8}}% | {{m68_shared_cov2_h8}}% |
-| 32 | {{m68_indep_ratio_h32}}× | {{m68_shared_ratio_h32}}× | {{m68_indep_cov1_h32}}% | {{m68_shared_cov1_h32}}% | {{m68_indep_cov2_h32}}% | {{m68_shared_cov2_h32}}% |
-| **{{v2_deploy_h}}** | **{{m68_indep_ratio_h100}}×** | **{{m68_shared_ratio_h100}}×** | **{{m68_indep_cov1_h100}}%** | **{{m68_shared_cov1_h100}}%** | {{m68_indep_cov2_h100}}% | {{m68_shared_cov2_h100}}% |
-| 128 | {{m68_indep_ratio_h128}}× | {{m68_shared_ratio_h128}}× | {{m68_indep_cov1_h128}}% | {{m68_shared_cov1_h128}}% | {{m68_indep_cov2_h128}}% | {{m68_shared_cov2_h128}}% |
-| {{v2_diag_h}} | {{m68_indep_ratio_h368}}× | {{m68_shared_ratio_h368}}× | {{m68_indep_cov1_h368}}% | {{m68_shared_cov1_h368}}% | {{m68_indep_cov2_h368}}% | {{m68_shared_cov2_h368}}% |
-
-*Same trajectories (the held-out pair, n_independent = {{m68_nind}} 400-step trajectories), same harness, same bootstrap unit as the table above, every model at {{iters_main}} training iterations. The shared-trunk columns are the
-mean over {{m68_n_shared}} seeds; the comparison below is paired against each of them separately.*
 
 **Rule M-68 returns {{m68_verdict}}**, branch {{m68_branch}} of the four it names: all
 {{m68_n_conditions_met}} of its {{m68_n_conditions}} conditions hold, a **{{m68_ratio_gain}}×**
@@ -2116,6 +2091,20 @@ opposite, and `M-54` records the correction.
 
 ## Appendix O — rule M-44 in full: an ensemble that shares nothing
 
+**§6.8's table for rule M-44.** §6.8 keeps the verdict and the h = {{v2_deploy_h}} figures; the table stood there as follows.
+
+| h | independent err/σ | shared-trunk err/σ | independent ±1σ | shared-trunk ±1σ |
+|---|---|---|---|---|
+| 1 | {{r2_indep_ratio_h1}}× | {{r2_shared_ratio_h1}}× | {{r2_indep_cov1_h1}}% | {{r2_shared_cov1_h1}}% |
+| 8 | {{r2_indep_ratio_h8}}× | {{r2_shared_ratio_h8}}× | {{r2_indep_cov1_h8}}% | {{r2_shared_cov1_h8}}% |
+| 32 | {{r2_indep_ratio_h32}}× | {{r2_shared_ratio_h32}}× | {{r2_indep_cov1_h32}}% | {{r2_shared_cov1_h32}}% |
+| **{{v2_deploy_h}}** | **{{r2_indep_ratio_h100}}×** | **{{r2_shared_ratio_h100}}×** | **{{r2_indep_cov1_h100}}%** | **{{r2_shared_cov1_h100}}%** |
+| 128 | {{r2_indep_ratio_h128}}× | {{r2_shared_ratio_h128}}× | {{r2_indep_cov1_h128}}% | {{r2_shared_cov1_h128}}% |
+| {{v2_diag_h}} | {{r2_indep_ratio_h368}}× | {{r2_shared_ratio_h368}}× | {{r2_indep_cov1_h368}}% | {{r2_shared_cov1_h368}}% |
+
+*Same trajectories (the held-out pair), same harness, n_independent = {{r2_nind}}, every model at {{iters_main}} training iterations. The shared-trunk column is the mean
+over {{r2_n_shared}} seeds; the comparison below is paired against each of them separately.*
+
 §6.4 establishes the topology as a fact and the mechanism as a hypothesis. Rule M-44 tests
 the hypothesis, under a rule committed to git before any of the artifacts below existed (rule
 M-44, Appendix E), with a power check estimating what it could detect at the sample size it would
@@ -2184,6 +2173,20 @@ doing and it is not sufficient; §6.7's per-horizon multiplier remains the only 
 ---
 
 ## Appendix P — rule M-68 in full: both fixes on the same models
+
+**§6.8's table for rule M-68.** §6.8 keeps the verdict; the table stood there as follows.
+
+| h | combined err/σ | shared-trunk err/σ | combined ±1σ | shared ±1σ | combined ±2σ | shared ±2σ |
+|---|---|---|---|---|---|---|
+| 1 | {{m68_indep_ratio_h1}}× | {{m68_shared_ratio_h1}}× | {{m68_indep_cov1_h1}}% | {{m68_shared_cov1_h1}}% | {{m68_indep_cov2_h1}}% | {{m68_shared_cov2_h1}}% |
+| 8 | {{m68_indep_ratio_h8}}× | {{m68_shared_ratio_h8}}× | {{m68_indep_cov1_h8}}% | {{m68_shared_cov1_h8}}% | {{m68_indep_cov2_h8}}% | {{m68_shared_cov2_h8}}% |
+| 32 | {{m68_indep_ratio_h32}}× | {{m68_shared_ratio_h32}}× | {{m68_indep_cov1_h32}}% | {{m68_shared_cov1_h32}}% | {{m68_indep_cov2_h32}}% | {{m68_shared_cov2_h32}}% |
+| **{{v2_deploy_h}}** | **{{m68_indep_ratio_h100}}×** | **{{m68_shared_ratio_h100}}×** | **{{m68_indep_cov1_h100}}%** | **{{m68_shared_cov1_h100}}%** | {{m68_indep_cov2_h100}}% | {{m68_shared_cov2_h100}}% |
+| 128 | {{m68_indep_ratio_h128}}× | {{m68_shared_ratio_h128}}× | {{m68_indep_cov1_h128}}% | {{m68_shared_cov1_h128}}% | {{m68_indep_cov2_h128}}% | {{m68_shared_cov2_h128}}% |
+| {{v2_diag_h}} | {{m68_indep_ratio_h368}}× | {{m68_shared_ratio_h368}}× | {{m68_indep_cov1_h368}}% | {{m68_shared_cov1_h368}}% | {{m68_indep_cov2_h368}}% | {{m68_shared_cov2_h368}}% |
+
+*Same trajectories (the held-out pair, n_independent = {{m68_nind}} 400-step trajectories), same harness, same bootstrap unit as the table above, every model at {{iters_main}} training iterations. The shared-trunk columns are the
+mean over {{m68_n_shared}} seeds; the comparison below is paired against each of them separately.*
 
 §6.8 changes the **topology** and holds the objective at `mse`; §6.3's arms change the
 **objective** and hold the topology at ensemble size 1, where disagreement is zero by construction.
@@ -2403,7 +2406,37 @@ What does not survive is the per-dimension form of the ordering evidence. Three 
 
 ---
 
-## Appendix T — whether the per-horizon multipliers transfer between models (rule M-69, §6.7)
+## Appendix T — section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)
+
+**What §6.7 keeps, and what is here.** §6.7 keeps the two senses of unseen, its verdicts, the cautions and rule X7. The passages below stood there as follows.
+
+**The constant scalar (§6.7).** Fitting at one step works at one step and nowhere else. On the epistemic term — the quantity the
+method uses — a scalar of {{d2_epi_c_lo}}–{{d2_epi_c_hi}} brings h=1 coverage to
+{{d2_epi_cov1_lo}}–{{d2_epi_cov1_hi}}%, essentially calibrated against the {{d2_target}}% target,
+and leaves h=368 at {{d2_epi_cov368_lo}}–{{d2_epi_cov368_hi}}%. On the aleatoric term a scalar of
+{{d2_ale_c_lo}}–{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}}–{{d2_ale_cov1_hi}}% at h=1 and
+{{d2_ale_cov368_lo}}–{{d2_ale_cov368_hi}}% at h=368. Fitting over the whole rollout instead
+drives one-step coverage to 100%, an interval wide enough to be vacuous where the model is
+accurate, while still falling short at the far end. A constant multiplier cannot track an error
+that grows while σ does not (§6.5), so for a *constant* scale "right shape, wrong scale" does not
+survive.
+
+**The per-horizon table and its reading (§6.7).** One multiplier per horizon is fitted on one held-out episode and evaluated on the other, in both directions, so no multiplier is ever scored on the episode that produced it. The two held-out episodes contribute {{d3_nind_tot}} non-overlapping 400-step trajectories between them, so each direction fits on n_independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fit}}. The last column repeats the test on Arm A at ensemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_nseeds}} seeds), whose model never saw either episode:
+
+| quantity | released checkpoint: cells unseen by the multiplier within {{d3_tol}} points of {{d3_target}}%, per-horizon c (unpowered) | same, constant c | per-horizon c fitted on the *other* model, both models scored (unpowered) | range of fitted c | Arm A, its own per-horizon c: cells within the band, unseen by the model too |
+|---|---|---|---|---|---|
+| aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | {{d3_ale_c_lo}} – {{d3_ale_c_hi}} ({{d3_ale_cspread}}×) | {{d3x_own_ale_ok}} / {{d3x_own_ale_cells}} |
+| epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | {{d3_epi_c_lo}} – {{d3_epi_c_hi}} ({{d3_epi_cspread}}×) | {{d3x_own_epi_ok}} / {{d3x_own_epi_cells}} |
+
+On the released checkpoint every point estimate lands within {{d3_tol}} points of the {{d3_target}}% target for both quantities. **That absolute test is UNPOWERED here, as in the *different model* column:** `results/p4_transfer_power.json` scored this model under these very multipliers and found the {{d3_tol}}-point band resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizon pairs, with a binding minimum detectable effect of {{d3x_umde_lo}}–{{d3x_umde_hi}} points. So a cell inside the band is compatible with a true coverage well outside it, and nothing here shows any cell is outside it either. The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_cov}}%, {{d3_worst_dev}} points off target. The two largest deviations are both on the {{d3_second_q}} term and {{d3_top2_same_side}} target — {{d3_worst_cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} — so the fitted multiplier is mildly **conservative** at the long horizons rather than unstable in both directions. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the h=1 cells it was fitted at. **On Arm A, where the episodes are unseen by the model as well, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells**, so the recipe that lands every released-checkpoint cell does not carry over intact to a model that has not seen the test episodes.
+
+**Rule M-69 (§6.7).** **The fourth column: the table is a property of the model, not of the horizon.** Under rule M-69
+(Appendix E), multipliers fitted on Arm A and scored on the released checkpoint, and the reverse, on
+the same {{d3x_nind}} held-out trajectories, return **{{d3x_verdict}}** on the paired change in coverage
+the arena can resolve: {{d3x_n_out}} of {{d3x_ncells}} governing cells, which are not independent tests, have an interval wholly outside
+the ±{{d3x_band}}-point band, and Arm A's multipliers are {{d3x_ratio_lo}}× to {{d3x_ratio_hi}}× the
+released checkpoint's at the same horizon (Appendix T). The *different model* column is the absolute
+test, unpowered for the reason above, so it is reported and cannot move that verdict.
 
 **The fourth column: the table is a property of the model, not of the horizon.** Everything else in §6.7 is established across *episodes*, on one model. Whether the same lookup table works on a *different* model is a separate claim, and rule M-69 (Appendix E) fixed what an answer would look like — criterion, arena, horizons and minimum detectable effect — before any cross-model multiplier was computed. Multipliers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on the released checkpoint, then the reverse, over the same {{d3x_nind}} held-out trajectories and {{d3_nhoriz}} horizons. The statistic the rule governs on is the **paired** change in held-out coverage, coverage under the other model's multiplier minus coverage under the same model's, on the same trajectories, because this arena can resolve that (largest minimum detectable effect {{d3x_pmde_hi}} points against the ±{{d3x_band}}-point band) and cannot resolve the absolute one. The verdict is **{{d3x_verdict}}**: of {{d3x_ncells}} governing cells, {{d3x_n_out}} have a 95% interval on the paired change lying entirely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} straddling an edge, and the largest paired change has magnitude {{d3x_worst_delta}} points. That is branch {{d3x_branch}} of the rule's three. Per direction the verdict is the same: fitting on Arm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the band); fitting on the released checkpoint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest statement of the gap is the multipliers themselves: Arm A's are {{d3x_ratio_lo}}× to {{d3x_ratio_hi}}× the released checkpoint's at the same horizon.
 
