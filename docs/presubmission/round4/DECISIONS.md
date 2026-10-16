@@ -54,3 +54,26 @@ The stored rollouts are git-ignored, so F9 gives the new stage the same `NEEDS_W
 **What F1 found.** The timing probe, calibrated as `scripts/mn_sweep_timing.py` calibrates (the finished runs' mean wall clock), projects X3 at 23.83 CPU-hours with seeds 0-2, over F1 item 3's 22-hour cap, so Annex 2 X3's fallback (seeds 0-1, 15.88 h) would apply. X4 projects 7.82 h at three seeds (cap 10). Three-seed X3 plus X4 is 31.65 h, inside the 32-hour total (ruling W10). Ruling W1 asked for three seeds "about 18 CPU-hours"; the 22-hour cap came from that estimate.
 
 **Ruling, 2026-10-11 (asked in chat): raise X3's cap from 22 to 24 hours and run seeds 0-2.** The user chose "Raise X3's cap: 3 seeds" over the plan's fallback. The total cap stays 32 hours. X3's fallback text stays in its pre-registration but does not apply. `scripts/round4_queue_timing.py` carries the cap of 24 hours with this anchor, and the record was re-probed under it: X3 23.83 h at seeds 0-2, X4 6.75 h at seeds 0-2, 30.58 h in all (`results/round4_queue_timing.json`). X3's projection is the finished runs' mean wall clock whatever the probe reads, so it did not move.
+
+## F8-length
+
+**Raised by F8, 2026-10-16. Not blocking: F8 is COMPLETE, and W6's target is editorial, not a TMLR limit (ruling of 16 Oct; `TMLR_CHECK.md`).** Evidence: `LENGTH_LOG.md`.
+
+**What happened.** W6 asked for at most 16,000 main-text words, aiming for 15,000, by moving text and never deleting it. F7 and F8 applied every row of Annex 5, and F8 added moves Annex 5 does not list (§6.1, §6.2's four-model table, §6.6's paired-test note, §8's reproducibility detail). The main text went from 22,313 (F7's start) to **17,790**, 1,790 above the target, after a read-only review restored eight qualifiers (+172). The PDF's References now start on page 27 (page 32 at F0, 31 at F7's end). Every key the main text printed before F7 is still printed somewhere in the paper: 350 left the main text, and all 350 are in an appendix.
+
+**Why it stops there.** Most of what remains is what Annex 5 and the locked framing keep in the main text:
+- §9 (816 words, "keep whatever the count");
+- every verdict, with its arena and horizon;
+- every number the abstract cites;
+- X3, X6 and X7's paragraphs with both their scopes;
+- the contributions list in §1 (about 950 words), a rule-11 summary fixed by F6 at 8 bullets of at most 3 sentences and scanned by five guards (C25.1, C25.2, C26.1, C27.1, C28.3).
+
+The three largest sections are now §5 (1,606), §6.6 (1,431) and §1 (1,337).
+
+**Options.**
+1. **Accept 17,790 as the result (recommended).** TMLR sets no length limit, and the paper is above 12 main-content pages either way, so its review time does not change. Nothing further moves.
+2. Condense the contributions list to about 500 words, keeping every split rule 11 requires (each bullet one or two sentences, numbers left to the sections they point to): about −450. It touches a rule-11 site, so it would go through F10's review.
+3. Relax Annex 5's keep-list for §9: the lessons stay in words, and their figures go back to the sections they cite: about −400.
+4. Move §5–§5.3's per-reading clauses (the configuration result's per-winner list, the baselines' lead onset) to Appendices L and U: about −400.
+
+Options 2–4 together would reach about 16,540. Reaching 16,000 would also need cuts to a verdict's own paragraph, which W6's "no result lost" rules out.
