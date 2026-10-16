@@ -2524,7 +2524,7 @@ returns it, with the part-of-rule and alongside values, in a new ledger entry; a
 Not: change the folds, models, seeds, iterations, arena, horizons, statistic, interval, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x3_cross_fold.py`, `scripts/step5_train.py` (`--holdout`), `src/rollout_eval.py` (`fold_split`), `scripts/queue_run.py`;
 `RUN` `results/x3_cross_fold.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x3_cross_fold.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x3_cross_fold.json`. **It returns REPLICATES ACROSS FOLDS.** Recorded in `M-94`. · **Relevance** METHOD
 
 ## M-87 — X4: is RWM still ahead of baselines matched to its size?
 
@@ -2599,7 +2599,7 @@ runs `scripts/x4_matched_baselines.py` unchanged, having asserted its SHA-256 eq
 returns it, with the alongside values, in a new ledger entry; and changes only this entry's Status line.
 Not: change the variants, seeds, iterations, arena, horizons, statistic, test or labels; add a reading; or read any number here as bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x4_matched_baselines.py`, `scripts/train_baseline.py`, `scripts/queue_run.py`; `RUN` `results/x4_matched_baselines.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x4_matched_baselines.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x4_matched_baselines.json`. **It returns PARTIAL.** Recorded in `M-95`. · **Relevance** METHOD
 
 ## M-88 — X6: does ensemble disagreement beat the model's own predicted step size on more, shorter units?
 

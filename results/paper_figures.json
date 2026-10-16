@@ -397,6 +397,24 @@
       "rewritten_by_purge": []
     },
     {
+      "id": "M-86",
+      "label": "M-86",
+      "lead_hours": 121.15861111111111,
+      "tested_by": "x3_cross_fold",
+      "rule_commit": "5f0acd4",
+      "data_commit": "faf56c0",
+      "rewritten_by_purge": []
+    },
+    {
+      "id": "M-87",
+      "label": "M-87",
+      "lead_hours": 121.15861111111111,
+      "tested_by": "x4_matched_baselines",
+      "rule_commit": "5f0acd4",
+      "data_commit": "faf56c0",
+      "rewritten_by_purge": []
+    },
+    {
       "id": "M-88",
       "label": "M-88",
       "lead_hours": 0.18694444444444444,
@@ -447,6 +465,7 @@
       "3ee9d97",
       "51e9c31",
       "5d9e28d",
+      "5f0acd4",
       "668eb31",
       "68bb683",
       "6b87e32",
@@ -471,7 +490,8 @@
       "efc35b8",
       "f25e656",
       "f93bd7f",
-      "fad7db7"
+      "fad7db7",
+      "faf56c0"
     ],
     "rewritten_by_purge": [
       "2eccc1f",

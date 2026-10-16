@@ -22,13 +22,13 @@ APPENDIX G — PRE-REGISTERED RULES
   M-76         +29.38 h  RWM AHEAD OF ALL THREE       The architecture claim, baselines trained au
   M-80          +0.06 h  NOT RESCUED BY THE SETTINGS  X1: is our RSSM's long-horizon failure a mat
   M-84          +0.12 h  RESPONDS TO THE ACTION at 2, X2: do our trained models condition their fo
-  M-86     not computed  not yet discharged           X3: does the base claim replicate when each 
-  M-87     not computed  not yet discharged           X4: is RWM still ahead of baselines matched 
+  M-86        +121.16 h  REPLICATES ACROSS FOLDS      X3: does the base claim replicate when each 
+  M-87        +121.16 h  PARTIAL                      X4: is RWM still ahead of baselines matched 
   M-88          +0.19 h  DISAGREEMENT BEATS STEP SIZE X6: does ensemble disagreement beat the mode
   M-89          +0.19 h  WITHIN BAND AT 6 OF 6 HORIZO X7: per-horizon recalibration, fitted on nin
   M-90          +0.19 h  SAME VERDICT for M-74, M-75, X8: would any verdict change under the relea
   S-12          -2.94 h  RETRACTED                    "Task 3's duplication rule was pre-registere
 ====================================================================================================
-  28 rules, 26 with a computed lead time
+  28 rules, 28 with a computed lead time
   wrote results/appendix_g_rules.json
   wrote docs/APPENDIX_G_RULES.md (28 rules, each its ledger block verbatim)
