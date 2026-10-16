@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1418 values substituted from 107 artifacts. -->
+     1429 values substituted from 107 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -1220,7 +1220,7 @@ then 9 teacher-forced and 9 autoregressive baseline runs
 (7.9 h and 7.0 h), read from `results/presubmission_runtime.json`. They
 are outside the total above, whose remainder that paragraph describes as released-width runs, which
 the baselines are not. Of these, 8 overlapped other CPU work a session logged,
-which inflates their wall clock and changes no weight; the artifact lists each overlap. Rule X1's Part C (§5.3) ran 2 more teacher-forced RSSM runs from a second queue, 4.2 hours, which are in neither total; 1 of them overlapped CPU work a session logged. They are the table's last rows. Per run family, every run at 2,500 iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
+which inflates their wall clock and changes no weight; the artifact lists each overlap. Rule X1's Part C (§5.3) ran 2 more teacher-forced RSSM runs from a second queue, 4.2 hours, which are in neither total; 1 of them overlapped CPU work a session logged. Rules X3 and X4 (§5, §5.3) ran 30 more runs from a third queue, 26.5 hours (24 for X3, 17.7 h; 6 for X4, 8.8 h), also in neither total; 4 of them overlapped CPU work a session logged while that queue ran. That queue's log lost its first runner's lines when another session resumed it, so 4 of its runs are timed by the log and the rest by their weights files, as `results/presubmission_runtime.json` records run by run; the resumed runner's runs overlap no logged work because that session logged none. X1's rows follow the baselines', and X3's and X4's close the table. Per run family, every run at 2,500 iterations (the sweep's centre is §5's Arm A, whose runs are counted above):
 
 | run family | runs | hours per run, mean | runs that overlapped other CPU work |
 |---|---|---|---|
@@ -1240,6 +1240,10 @@ which inflates their wall clock and changes no weight; the artifact lists each o
 | transformer, autoregressive (§5.3) | 3 | 0.74 | 0 |
 | RSSM, teacher-forced, PlaNet's KL settings (rule X1, §5.3) | 1 | 2.11 | 1 |
 | RSSM, teacher-forced, DreamerV2's layer-normalised cell (rule X1, §5.3) | 1 | 2.10 | 0 |
+| Arm A, autoregressive, each episode held out in turn (rule X3, §5) | 12 | 0.74 | 2 |
+| Arm B, teacher-forced, each episode held out in turn (rule X3, §5) | 12 | 0.73 | 2 |
+| MLP, autoregressive, size-matched (rule X4, §5.3) | 3 | 0.10 | 0 |
+| transformer, autoregressive, size-matched (rule X4, §5.3) | 3 | 2.83 | 0 |
 
 ## Appendix C — what testing the untested claims would require
 
@@ -1521,7 +1525,7 @@ the artifact named. Measurements are at 2,500 training iterations unless a row s
 | Over overlapping trajectories on the held-out pair, which the released checkpoint trained on, its worst twentieth carry 92.6% of its squared error at h = 368 as each dimension's own scale weights it (form 2, which `g_z` dominates; Appendix G), and they start within two short ranges of rows, one per episode; on the 4 non-overlapping trajectories the largest is 1.2× the median | R-30; `results/taskAB_gate_r27.json` | A tail measured on overlapping trajectories can be one short stretch of data, which a count of independent trajectories (§3) exposes |
 | The A/B relative-L1 gap at h = 368 (teacher forcing's error minus autoregressive training's, over 2 independent trajectories per episode) is positive on all ten episodes, from +0.73 up; episode 1, one of the held-out pair, gives +6.97, 2.5× the next largest, so the pair's +3.98 is 3.0× the other eight episodes' +1.33 | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
 | Per state dimension, over the whole 368-step forecast, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = 368 (R-45). One seed (seed 1, Appendix R) |
-| Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair +3.33 to +1.20, in-sample +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, Appendix R) |
+| Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair, n_independent = 4 400-step trajectories, +3.33 to +1.20; in-sample, n_independent = 16, +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, Appendix R) |
 | Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena's 16 trajectories rises by +227.8% at 2,500 iterations and +676.3% at 10,000 (rule X2, pre-registered: RESPONDS TO THE ACTION) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though every action in the data comes from one policy and no policy is trained here (§7.2, Appendix V) |
 
 
