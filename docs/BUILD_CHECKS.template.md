@@ -391,6 +391,7 @@ claims stayed, and only their history moved.
   anchored at the training horizon, returned "cannot be settled". That change of anchor was made
   before the runs, not after them (§8).
 - **[§7.2]** An earlier version of §7.2 printed our models' stale-pairing figures computed with a scoring bug; they are withdrawn, and the record keeps them.
+- **[§8]** §8 said: "One of the build's own gates, the clean-clone check in `part_f_gate`, requires that no regenerated value differ at all; {{ver_differing}} do, so it fails, and it is published as failing rather than given a tolerance. The accounting behind these figures, the registry of checks the build runs on this paper's own prose, and the paper's record of verifying its own claims are in `docs/BUILD_CHECKS.md`, shipped as supplementary."
 - **[§6.2]** The epistemic ratio at h = {{v2_diag_h}} ({{d1n_epi_ratio_h368}}×) barely differs
   from the one at h = {{v2_deploy_h}} ({{d1n_epi_ratio_h100}}×). That is why re-anchoring the
   paper's calibration claims from the diagnostic horizon to the deployment one changed the reading
