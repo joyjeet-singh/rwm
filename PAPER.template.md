@@ -760,7 +760,7 @@ Error in an autoregressive rollout grows with depth, so the trivial competitor t
 
 **Disagreement wins at every horizon tested.** Over the full h = {{v2_diag_h}} rollout the counter reaches {{d2b_idx_h368}} against disagreement's {{d2b_epi_h368}}, and the index leads in {{d2b_n_index_wins}} of {{d2b_n_horizons_tested}} horizons.
 
-**The last column is the test of whether disagreement beats the counter.** Comparing the two marginal intervals for overlap is the wrong comparison: both correlations are measured on the *same* trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference, resampling whole trajectories and recomputing *both* correlations inside each draw, is the appropriate and more powerful test. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The distinction matters at {{d2p_n_overlap}} of them: at {{d2p_overlap_h}} the marginal intervals *do* overlap. {{d2b_idx_strongest_h}} is where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest: the paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero only just: {{d2p_narrowest_lo}} is the smallest lower bound in the table, at the 400-step unit. At the shorter unit of rule M-64 (Appendix E), {{m64_h128_n}} non-overlapping units over the same ten episodes give {{m64_h128_ci}} for the same paired difference, so that horizon carries more weight than it did. At h = {{v2_deploy_h}} the paired difference is {{d2p_diff_h100}} {{d2p_ci_h100}}, which also excludes zero.
+**The last column is the test of whether disagreement beats the counter.** Comparing the two marginal intervals for overlap is the wrong comparison: both correlations are measured on the *same* trajectories, so their sampling errors move together and the marginal intervals are needlessly conservative. The paired difference, resampling whole trajectories and recomputing *both* correlations inside each draw, is the appropriate and more powerful test. It excludes zero at **{{d2p_n_separating}} of {{d2p_n_horizons}}** horizons. The distinction matters at {{d2p_n_overlap}} of them: at {{d2p_overlap_h}} the marginal intervals *do* overlap. {{d2b_idx_strongest_h}} is where the counter is strongest ({{d2b_idx_h128}}) and the margin narrowest: the paired difference there is {{d2p_diff_h128}} {{d2p_ci_h128}}, which excludes zero only just: {{d2p_narrowest_lo}} is the smallest lower bound in the table, at the 400-step unit. At h = {{v2_deploy_h}} the paired difference is {{d2p_diff_h100}} {{d2p_ci_h100}}, which also excludes zero.
 
 **The third column asks whether disagreement merely re-encodes the clock.** Partialling the step index out of both variables *lowers* disagreement's correlation by {{d2b_shrink_all_abs}}, from {{d2b_epi_all}} to {{d2b_par_all}}. Almost none of what disagreement knows is explained by how deep into the rollout you are: it carries real information about *this* rollout.
 
@@ -772,43 +772,25 @@ it gives {{a2_rdd}} {{a2_rdd_ci}} at n_independent = {{a2_nind}} 400-step trajec
 **{{m45_verdict}}**: disagreement still tracks error rather than merely reporting which episode is
 hard.
 
-**Per horizon, on the same {{a2_nind}} trajectories (the released checkpoint over all ten episodes) and the same kind of cluster bootstrap:** it is
-a separate run, so its h = {{v2_diag_h}} interval differs from the one above in the third
-decimal, as Appendix N's pooled interval does from §6.2's {{d4_ci}}.
+Per horizon, the within-rollout effect is materially smaller than the pooled figure and not
+established at short horizon (Appendix N gives its table).
 
-| h | r_dd, double-demeaned | 95% CI | excludes zero |
-|---|---|---|---|
-| 1 | — | — | — |
-| 8 | {{a2_rdd_h8}} | {{a2_rdd_ci_h8}} | no |
-| 32 | {{a2_rdd_h32}} | {{a2_rdd_ci_h32}} | no |
-| **{{v2_deploy_h}}** | **{{a2_rdd_h100}}** | **{{a2_rdd_ci_h100}}** | **yes** |
-| 128 | {{a2_rdd_h128}} | {{a2_rdd_ci_h128}} | yes |
-| {{v2_diag_h}} | {{a2_rdd_h368}} | {{a2_rdd_ci_h368}} | yes |
+**Does it hold on a model we trained?** Three Arm A arms at ensemble size 5 lead the index in
+**{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, but under a rule committed before the
+runs (rule M-43) the paired difference excludes zero at only {{e5_n_excl}} of {{e5_n_horizons}}
+horizons, so it returns **{{e5_verdict}}**, under-powered at n_independent = {{e5_nind}} 400-step
+trajectories (Appendix N).
 
-*(h = 1 has one forecast step per trajectory, so there is nothing within a rollout to demean against and r_dd is undefined rather than zero.)*
-
-The within-rollout effect is materially smaller than the pooled figure and not established at short
-horizon; at h = 1 the correlation ranks whole rollouts, on {{a2_h1_npoints}} trajectory-level points
-(Appendix N).
-
-**Does it hold on a model we trained?** Three Arm A arms at ensemble size 5, under a rule
-committed before the runs (rule M-43, Appendix E), lead the index in **{{e5_lead_cells}} of
-{{e5_total_cells}}** seed-horizon cells, but the paired difference excludes zero at only
-{{e5_n_excl}} of {{e5_n_horizons}} horizons, so the rule returns **{{e5_verdict}}**. At
-n_independent = {{e5_nind}} 400-step trajectories it was under-powered, which we measured after the fact and should have
-checked before committing it (Appendix N).
-
-**We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result, making the trust metric close to vacuous, since a counter is free. We record that as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration. It did not go that way against the counter. It went that way against something else.
+**We ran the baseline test expecting it to go the other way**: the expectation we held about the
+counter-baseline was that it would match disagreement. It was not committed to git before the data
+existed, so by this paper's own standard (§8) it is not a pre-registration (Appendix N). It did not go that way against the counter. It went
+that way against something else.
 
 **One adversary is one, so we added two more, and the ranking claim survives only one of them.**
-A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
-before either was computed (rule M-51, Appendix E, corrected by rule M-52), we added two baselines
-needing no ensemble and no second model: `step-size`, the magnitude of the model's own predicted
-state change $\lVert \mu_t - \mu_{t-1} \rVert$, which costs nothing because the rollout has already made those
-predictions; and `entry-res`, its one-step error at the step *before* the forecast window opens,
-which costs **one extra rollout in this harness** and nothing in deployment, where a model consumes
-the history to build its recurrent state anyway. The first rule called both free without
-distinguishing those, and the second records the correction.
+Under a rule committed before either was computed (rule M-51, corrected by rule M-52), we added two
+baselines needing no ensemble and no second model: `step-size`, the magnitude of the model's own
+predicted state change $\lVert \mu_t - \mu_{t-1} \rVert$, and `entry-res`, its one-step error just
+before the forecast window opens (Appendix N gives what each costs).
 
 | baseline | r(baseline, error) | margin | partial r(disagreement given baseline) | beaten? |
 |---|---|---|---|---|
@@ -828,7 +810,7 @@ them, {{e7_step_margin}}, is **below** the {{e7_mde_margin}} this sample size ca
 n_independent = {{e7_nind}} 400-step trajectories we cannot say the ensemble ranks better than a
 subtraction. If the observed margin is the true one, settling it needs {{q2_n_req}} of them, an estimate under an assumed effect (§11, Appendix R).
 
-**On shorter units, at h = {{v2_deploy_h}}, the margin resolves.** The {{e7_nind}} whole trajectories cannot settle it at h = {{v2_diag_h}}, so a rule committed before its reading (rule X6, Appendix X) put the same comparison to {{x6_n_units}} non-overlapping units of {{x6_unit_len}} rows, the model's history plus h = {{v2_deploy_h}} forecast steps, cut inside the same ten episodes, on the same checkpoint. At h = {{v2_deploy_h}} the margin is {{x6_margin}} {{x6_ci}}: the interval excludes zero, the rule's criterion, so it returns **{{x6_reading}}**, and the margin also exceeds the {{x6_mde}} minimum detectable effect computed before the reading by rule M-51's method. Disagreement correlates {{x6_r_dis}} with error there against step size's {{x6_r_step}}, and keeps {{x6_partial}} {{x6_partial_ci}} with step size partialled out; alongside, on {{x6_n_units_h32}} units at h = 32 the margin is {{x6_margin_h32}} {{x6_ci_h32}}. The units are this checkpoint's training data, units from one episode are not independent of each other, and the interval resamples units, not episodes, so the margin at h = {{v2_deploy_h}} is resolved on this checkpoint's training episodes and no further; the margin at h = {{v2_diag_h}} is not re-tested.
+**On shorter units, at h = {{v2_deploy_h}}, the margin resolves.** The {{e7_nind}} whole trajectories cannot settle it at h = {{v2_diag_h}}, so a rule committed before its reading (rule X6, Appendix X) put the same comparison to {{x6_n_units}} non-overlapping units of {{x6_unit_len}} rows, the model's history plus h = {{v2_deploy_h}} forecast steps, cut inside the same ten episodes, on the same checkpoint. At h = {{v2_deploy_h}} the margin is {{x6_margin}} {{x6_ci}}: the interval excludes zero, the rule's criterion, so it returns **{{x6_reading}}**. Disagreement correlates {{x6_r_dis}} with error there against step size's {{x6_r_step}}, and keeps {{x6_partial}} {{x6_partial_ci}} with step size partialled out (Appendix X). The units are this checkpoint's training data, units from one episode are not independent of each other, and the interval resamples units, not episodes, so the margin at h = {{v2_deploy_h}} is resolved on this checkpoint's training episodes and no further; the margin at h = {{v2_diag_h}} is not re-tested.
 
 **Disagreement does still carry information the subtraction does not.** With `step-size`
 partialled out it retains {{e7_step_partial}}, far above the {{e7_mde_partial}} MDE for that test,
@@ -2006,7 +1988,50 @@ The last column of §6.2's released-checkpoint table gives permutation P-values 
 
 ---
 
-## Appendix N — section 6.6's robustness checks: depth controls, the decomposition, rule M-43, and the within-step control
+## Appendix N — section 6.6 in detail and its robustness checks: r_dd per horizon, the free baselines' cost, depth controls, the decomposition, rule M-43, and the within-step control
+
+**What §6.6 keeps, and what is here.** §6.6 keeps the counter table, the paired test, the free-baselines verdict and rule X6, with every verdict. The passages below stood there as follows; rule M-43's is stated in full again later in this appendix.
+
+**§6.6's shorter-unit note at h = 128.** At the shorter unit of rule M-64 (Appendix E), {{m64_h128_n}} non-overlapping units over the same ten episodes give {{m64_h128_ci}} for the same paired difference, so that horizon carries more weight than it did.
+
+**r_dd per horizon (§6.6).** **Per horizon, on the same {{a2_nind}} trajectories (the released checkpoint over all ten episodes) and the same kind of cluster bootstrap:** it is
+a separate run, so its h = {{v2_diag_h}} interval differs from the one above in the third
+decimal, as Appendix N's pooled interval does from §6.2's {{d4_ci}}.
+
+| h | r_dd, double-demeaned | 95% CI | excludes zero |
+|---|---|---|---|
+| 1 | — | — | — |
+| 8 | {{a2_rdd_h8}} | {{a2_rdd_ci_h8}} | no |
+| 32 | {{a2_rdd_h32}} | {{a2_rdd_ci_h32}} | no |
+| **{{v2_deploy_h}}** | **{{a2_rdd_h100}}** | **{{a2_rdd_ci_h100}}** | **yes** |
+| 128 | {{a2_rdd_h128}} | {{a2_rdd_ci_h128}} | yes |
+| {{v2_diag_h}} | {{a2_rdd_h368}} | {{a2_rdd_ci_h368}} | yes |
+
+*(h = 1 has one forecast step per trajectory, so there is nothing within a rollout to demean against and r_dd is undefined rather than zero.)*
+
+The within-rollout effect is materially smaller than the pooled figure and not established at short
+horizon; at h = 1 the correlation ranks whole rollouts, on {{a2_h1_npoints}} trajectory-level points
+(Appendix N).
+
+**Rule M-43 (§6.6).** **Does it hold on a model we trained?** Three Arm A arms at ensemble size 5, under a rule
+committed before the runs (rule M-43, Appendix E), lead the index in **{{e5_lead_cells}} of
+{{e5_total_cells}}** seed-horizon cells, but the paired difference excludes zero at only
+{{e5_n_excl}} of {{e5_n_horizons}} horizons, so the rule returns **{{e5_verdict}}**. At
+n_independent = {{e5_nind}} 400-step trajectories it was under-powered, which we measured after the fact and should have
+checked before committing it (Appendix N).
+
+**The expectation (§6.6).** **We ran the baseline test expecting it to go the other way.** A counter matching disagreement would have been the more consequential result, making the trust metric close to vacuous, since a counter is free. We record that as an expectation only: it was not committed to git before the data existed, so by this paper's own standard (§8) it is not a pre-registration. It did not go that way against the counter. It went that way against something else.
+
+**The two free baselines and their cost (§6.6).** A claim that beats exactly one competitor is a claim about that competitor. Under a rule committed
+before either was computed (rule M-51, Appendix E, corrected by rule M-52), we added two baselines
+needing no ensemble and no second model: `step-size`, the magnitude of the model's own predicted
+state change $\lVert \mu_t - \mu_{t-1} \rVert$, which costs nothing because the rollout has already made those
+predictions; and `entry-res`, its one-step error at the step *before* the forecast window opens,
+which costs **one extra rollout in this harness** and nothing in deployment, where a model consumes
+the history to build its recurrent state anyway. The first rule called both free without
+distinguishing those, and the second records the correction.
+
+**X6's alongside readings (§6.6).** and the margin also exceeds the {{x6_mde}} minimum detectable effect computed before the reading by rule M-51's method. Disagreement correlates {{x6_r_dis}} with error there against step size's {{x6_r_step}}, and keeps {{x6_partial}} {{x6_partial_ci}} with step size partialled out; alongside, on {{x6_n_units_h32}} units at h = 32 the margin is {{x6_margin_h32}} {{x6_ci_h32}}.
 
 **What survives removing each confound.** A linear partial is not much of a control: error
 does not grow linearly with depth, and a control that under-fits the index leaves index-driven
