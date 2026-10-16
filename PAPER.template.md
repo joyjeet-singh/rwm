@@ -596,7 +596,7 @@ At h = {{v2_deploy_h}}, the method's own imagination rollout length, epistemic i
 {{d1n_epi_over_alea_h1}}× better than aleatoric, and at h = {{v2_diag_h}} {{d1n_epi_over_alea_h368}}×. **The gap between the two uncertainty terms is itself
 horizon-dependent, which is why each figure above names its horizon.** At the open-loop diagnostic horizon of h = {{v2_diag_h}} it is {{d1n_epi_ratio_h368}}× [{{d1n_epi_ratio_ci_h368}}] with {{d1n_epi_cov1_h368}}% coverage, barely different from h = {{v2_deploy_h}}. **Total** uncertainty, `sqrt(aleatoric² + epistemic²)`, equals the epistemic value to four significant figures at every horizon, because the aleatoric term is too small to move it.
 
-**A constant scale error would not matter, and this one is not constant.** The penalty enters as `r̃ = r − λu`, so a `u` uniformly `c` times too small is arithmetically identical to running with `λ/c`, and λ is tuned. Rescaling σ by the single constant that best calibrates it, fitted and scored on the same data and so an upper bound on what *any* constant achieves, needs {{m65_c_h1}} at h = 1 and {{m65_c_h368}} at h = {{v2_diag_h}}, a factor of {{m65_c_growth}} across the rollout (rule M-65, Appendix E). No single λ is both of those. The mechanism is §6.5's: σ grows far more slowly than error, which grows by an order of magnitude, so the ratio runs {{d1n_epi_ratio_h1}}× at h = 1, {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} and {{d1n_epi_ratio_h368}}× at h = {{v2_diag_h}}. The penalty is applied at every step of a {{v2_deploy_h}}-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk. This bounds what the quantity reports across depth, not what the distortion costs a trained policy (the policy caveat of §11).
+**A constant scale error would not matter, and this one is not constant.** The penalty enters as `r̃ = r − λu`, so a `u` uniformly `c` times too small is arithmetically identical to running with `λ/c`, and λ is tuned. Rescaling σ by the single constant that best calibrates it, fitted and scored on the same data and so an upper bound on what *any* constant achieves, needs {{m65_c_h1}} at h = 1 and {{m65_c_h368}} at h = {{v2_diag_h}}, a factor of {{m65_c_growth}} across the rollout (a rule committed in advance; Appendix E). No single λ is both of those. The mechanism is §6.5's: σ grows far more slowly than error, which grows by an order of magnitude, so the ratio runs {{d1n_epi_ratio_h1}}× at h = 1, {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} and {{d1n_epi_ratio_h368}}× at h = {{v2_diag_h}}. The penalty is applied at every step of a {{v2_deploy_h}}-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk. This bounds what the quantity reports across depth, not what the distortion costs a trained policy (the policy caveat of §11).
 
 **Two rules committed in advance check how these numbers are read** (Appendix M). Resampling whole
 episodes rather than 400-step trajectories changes no verdict in the one arena with the power to
@@ -705,8 +705,7 @@ architecture.
 
 **What this is and is not.** It is a *candidate* mechanism, established structurally. It does not
 show that trunk-sharing is *the* explanation for §6.2's miscalibration; architecture could be a
-minor contributor to a failure dominated by something else. That needs an ensemble which shares
-nothing, pre-registered as rule M-44 (Appendix E) and reported in §6.8. The topology is a fact
+minor contributor to a failure dominated by something else. That needs an ensemble which shares nothing, pre-registered and reported in §6.8. The topology is a fact
 about the released artifact; the mechanism is a hypothesis about that fact.
 
 ### 6.5 The failure is one of magnitude; the ordering is weaker than it looks
@@ -848,7 +847,7 @@ own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and
 of {{d3x_own_ale_cells}} aleatoric cells**, so the recipe does not carry over intact to a model that
 has not seen the test episodes (Appendix T gives the table and every deviation).
 
-**Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **The count is thinner than it looks:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, each multiplier fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.7 caution, which rule X7, below, narrows for the released checkpoint. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
+**Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **The count is thinner than it looks:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, each multiplier fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.7 caution, which the nine-episode fit below narrows for the released checkpoint. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
 
 **Fitted on nine episodes and scored on the tenth (rule X7).** A rule committed before its reading (Appendix Y) repeats the design over all ten episodes: for each, the per-horizon multiplier is fitted on the other nine episodes' trajectories with the same fitting function and scored on its own, so each of the {{x7_n_traj}} trajectories is scored once, by a multiplier not fitted on it, and each horizon's coverage carries a 95% interval. On the epistemic term every one of those intervals lies inside the {{d3_tol}}-point band, all of them between {{x7_ci_min}}% and {{x7_ci_max}}%: **{{x7_summary}}**. Appendix Y gives the aleatoric term and the constant multiplier alongside. Those trajectories are unseen by the multiplier, not by the model, which trained on all ten episodes, so for the released checkpoint each horizon's coverage is now resolved within the band, though the six horizons share those trajectories and are not independent tests; the Arm A result stands as it is.
 
@@ -857,17 +856,16 @@ the released checkpoint, and the reverse, on the same {{d3x_nind}} held-out traj
 returns **{{d3x_verdict}}**: Arm A's multipliers are {{d3x_ratio_lo}}× to {{d3x_ratio_hi}}× the
 released checkpoint's at the same horizon (Appendix T).
 
-So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence is mixed.** Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic coverage over all {{x7_n_traj}} trajectories is within the band at every horizon (rule X7).
+So the accurate form of this section is: **a constant scalar does not repair the interval; on the released checkpoint a per-horizon one brings every estimate unseen by the multiplier within the band, though no single cell is resolvable at this arena, and does so across episodes but not across models. On episodes unseen by the model as well, Arm A's own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells, so there the evidence is mixed.** Fitted on nine episodes and scored on the tenth, the released checkpoint's epistemic coverage over all {{x7_n_traj}} trajectories is within the band at every horizon.
 
 ### 6.8 Testing the mechanism: an ensemble that shares nothing, alone and with the corrected objective
 
 §6.4 establishes the topology as a fact and the mechanism as a hypothesis. Two rules committed to git
 before any of their artifacts existed test it, each with a minimum detectable effect estimated in
-advance (Appendix E). Rule M-44 scores {{r2_n_indep}} independently initialised full models, Arm A at
+advance (Appendix E). The first scores {{r2_n_indep}} independently initialised full models, Arm A at
 ensemble size 1 trained at {{r2_n_indep}} seeds, together as an ensemble at evaluation time: each
 member keeps its own recurrent hidden state and the ensemble mean is fed back to all of them, so the
-rollout differs from the shared-trunk one only in what is under test. Rule M-68 repeats it with every
-member trained under `gaussian_nll`, so the two fixes are measured on the same models. Both are scored
+rollout differs from the shared-trunk one only in what is under test. The second repeats it with every member trained under `gaussian_nll`, so the two fixes are measured on the same models. Both are scored
 on the held-out pair, n_independent = {{r2_nind}} 400-step trajectories, every model at {{iters_main}}
 training iterations, against each of the shared-trunk seeds separately (Appendices O and P give the tables).
 
@@ -924,7 +922,7 @@ On the held-out pair's {{ad_nind}} independent trajectories the stale action rai
 
 For models trained under the causal pairing, the stale one also raises error, and how much depends on the arena (three-seed means, computed post hoc; Appendix V gives every model at every horizon, each with its interval). A percentage change depends on how accurate the model already is as much as on how much the action matters: measured as the shift in the forecast itself, our model and the released checkpoint move about equally at h = 8, and at h = {{v2_deploy_h}} the released checkpoint's forecast moves more (Appendix V).
 
-Our models do use the action. Given another trajectory's actions, their error at h = 8 on their own training episodes' {{x2_n_ins}} trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}} at {{iters_long}} iterations, and at {{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before its readings existed (rule M-84), returns **{{x2_reading}}** at both checkpoints (Appendix V). That shows the forecasts depend on the action, not that they predict a different action's consequences correctly: every action in the data comes from one policy. 
+Our models do use the action. Given another trajectory's actions, their error at h = 8 on their own training episodes' {{x2_n_ins}} trajectories rises by {{x2_E_swap_10k}}% {{x2_ci_swap_10k}} at {{iters_long}} iterations, and at {{iters_main}} iterations by {{x2_E_swap_2500}}% {{x2_ci_swap_2500}}, so rule X2, committed before its readings existed, returns **{{x2_reading}}** at both checkpoints (Appendix V). That shows the forecasts depend on the action, not that they predict a different action's consequences correctly: every action in the data comes from one policy. 
 
 Rule X8 re-scores four of our rules with the released evaluation's timing, through each rule's own evaluator, and all four keep their verdicts, **{{x8_reading}}**, though {{x8_n_changed}} of their alongside readings change (Appendix Z); this concerns our models, not the original's printed numbers.
 
@@ -1023,7 +1021,7 @@ test we ran found that correcting the scale per horizon leaves every pairwise or
 
 Limits that belong to one result are stated beside it: the budget and our reading of Table S7
 (§5.2, §5.3), the mechanism of §6.4 as a hypothesis, the per-dimension tests' power (§6.5), the
-ensemble-5 replication (§6.6), the recalibration's two episodes (§6.7), which rule X7 widens to all ten for the released checkpoint,
+ensemble-5 replication (§6.6), the recalibration's two episodes (§6.7), which its nine-episode fit widens to all ten for the released checkpoint,
 and what the independent ensemble bounds (§6.8). Appendix R gives each of those, and every limitation below, in full.
 
 **What this study cannot address.** One robot, one gait (a trot) and one flat terrain, with every
