@@ -274,7 +274,12 @@ CLAIMS = [
      "value": ("paper_numbers.json", "n_retractions.value"),
      "sites": ["each beside the evidence that withdrew it:",
                "claims withdrawn on evidence**, and",
-               "claims withdrawn on evidence, in order"]},
+               "claims withdrawn on evidence, in order"],
+     # Round 4, F9 (H3; round 3's OUT_OF_SCOPE R0): BUILD_CHECKS enumerates these claims as typed prose
+     # beside the generated count, and the sites above check only the count. R0 added S-21's item when
+     # the count went from seven to eight, and nothing would have caught its absence. The enumeration's
+     # length is now checked too: its items, separated by semicolons, must number the count.
+     "list": {"after": "claims withdrawn on evidence, in order.** In order:", "end": " **The"}},
     {"id": "C7.2", "kind": "count-consistency", "where": "8 / BUILD_CHECKS",
      "surface": ["docs/BUILD_CHECKS.md"],
      # Re-anchored in pre-submission S5 (item 8): the introduction, section 8, the README
@@ -998,9 +1003,18 @@ def evaluate(c, paper, override=None):
         missing = [frag for frag in exp["sites"]
                    if not any(any(f in _window(paper, frag, span=90) for f in forms)
                               for _ in (0,))]
-        return not missing, (f'{exp["label"]} = {want} ({"/".join(sorted(forms))}); '
-                             f'{len(exp["sites"]) - len(missing)}/{len(exp["sites"])} sites agree'
-                             + (f'; disagreeing: {missing}' if missing else ''))
+        listed, list_ok = "", True
+        if exp.get("list"):
+            loc = _find(paper, exp["list"]["after"])
+            if loc is None:
+                return False, f'{exp["label"]}: the enumeration anchor is absent'
+            seg = paper[loc[1]:paper.index(exp["list"]["end"], loc[1])].strip().rstrip(".")
+            n_items = len(re.split(r";\s+(?:and\s+)?", seg))
+            list_ok = n_items == int(want)
+            listed = f"; the enumeration lists {n_items}" + ("" if list_ok else f", not {want}")
+        return not missing and list_ok, (f'{exp["label"]} = {want} ({"/".join(sorted(forms))}); '
+                                         f'{len(exp["sites"]) - len(missing)}/{len(exp["sites"])} sites agree' + listed
+                                         + (f'; disagreeing: {missing}' if missing else ''))
     if k == "compare":
         a, b = dig(*exp["a"]), dig(*exp["b"])
         got = "gt" if a > b else ("lt" if a < b else "eq")
