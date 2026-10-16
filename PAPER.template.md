@@ -583,9 +583,8 @@ to describe. Comparing it with *accumulated* rollout error would then make the {
 figure an artifact of that mismatch. (§6.5 answers a different objection, that a model trained on
 {{win_fore}} steps cannot be expected to speak about {{v2_diag_h}}.) **h = 1 answers it at no extra
 cost.** At one step there is no accumulation: the input *is* the true state, and σ is asked exactly
-the question it was trained to answer. At h = 1 it is out by {{d1n_epi_ratio_h1}}×, and
-{{d1n_epi_cov1_h1}}% of outcomes fall inside an interval that should hold {{v3_cov_nominal1}}%.
-Whatever compounding does at depth, it did not do that.
+the question it was trained to answer, and the row above is its answer. Whatever compounding does at
+depth, it did not do that.
 
 **And that row is measured on data the checkpoint trained on**: all ten episodes, {{insample_n_overlap}} of {{insample_n_arena}} of them (`results/insample_framing.json`). In-sample measurement biases *toward* better calibration, so the {{d1n_epi_ratio_h1}}× at h = 1 is if anything flattering: an upper bound on how well this checkpoint is calibrated. So the horizon curve is not the claim; it is the shape of the deterioration, and the claim is the h = 1 row. We keep h = {{v2_deploy_h}} because it is where the method actually deploys, and h = {{v2_diag_h}} because it is the upstream's own diagnostic length.
 
@@ -593,9 +592,8 @@ At h = {{v2_deploy_h}}, the method's own imagination rollout length, epistemic i
 {{d1n_epi_over_alea_h100}}× better than aleatoric and still wrong by
 **{{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}]**, with ±1σ coverage of
 {{d1n_epi_cov1_h100}}% [{{d1n_epi_cov1_ci_h100}}] where a calibrated Gaussian gives
-{{v3_cov_nominal1}}%. At one step it is **{{d1n_epi_ratio_h1}}×** out and
-{{d1n_epi_over_alea_h1}}× better than aleatoric; at h = {{v2_diag_h}} the two-term ratio is
-{{d1n_epi_over_alea_h368}}×. **The gap between the two uncertainty terms is itself
+{{v3_cov_nominal1}}%. At one step epistemic is
+{{d1n_epi_over_alea_h1}}× better than aleatoric, and at h = {{v2_diag_h}} {{d1n_epi_over_alea_h368}}×. **The gap between the two uncertainty terms is itself
 horizon-dependent, which is why each figure above names its horizon.** At the open-loop diagnostic horizon of h = {{v2_diag_h}} it is {{d1n_epi_ratio_h368}}× [{{d1n_epi_ratio_ci_h368}}] with {{d1n_epi_cov1_h368}}% coverage, barely different from h = {{v2_deploy_h}}. **Total** uncertainty, `sqrt(aleatoric² + epistemic²)`, equals the epistemic value to four significant figures at every horizon, because the aleatoric term is too small to move it.
 
 **A constant scale error would not matter, and this one is not constant.** The penalty enters as `r̃ = r − λu`, so a `u` uniformly `c` times too small is arithmetically identical to running with `λ/c`, and λ is tuned. Rescaling σ by the single constant that best calibrates it, fitted and scored on the same data and so an upper bound on what *any* constant achieves, needs {{m65_c_h1}} at h = 1 and {{m65_c_h368}} at h = {{v2_diag_h}}, a factor of {{m65_c_growth}} across the rollout (rule M-65, Appendix E). No single λ is both of those. The mechanism is §6.5's: σ grows far more slowly than error, which grows by an order of magnitude, so the ratio runs {{d1n_epi_ratio_h1}}× at h = 1, {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} and {{d1n_epi_ratio_h368}}× at h = {{v2_diag_h}}. The penalty is applied at every step of a {{v2_deploy_h}}-step imagination rollout, so its *profile across the rollout* is wrong in a way no rescaling can correct: deep-rollout states are under-penalised relative to their realised risk. This bounds what the quantity reports across depth, not what the distortion costs a trained policy (the policy caveat of §11).
@@ -852,7 +850,7 @@ has not seen the test episodes (Appendix T gives the table and every deviation).
 
 **Three cautions.** The per-horizon scalar has one free parameter per horizon against the constant one's one, so it *must* fit better in sample; only cells unseen by the multiplier are evidence, and those are the cells reported. **The count is thinner than it looks:** the {{d3_epi_cells}} cells are {{d3_nhoriz}} horizons × two fold directions on the same {{d3_nind_tot}} trajectories, each multiplier fitted on n_independent = {{d3_nind_fit}} and scored on the other {{d3_nind_fit}}. They are not {{d3_epi_cells}} independent successes and no P-value attaches to the count, which is reported so a reader can see how thin the evidence is; later sections refer back to this as the §6.7 caution, which rule X7, below, narrows for the released checkpoint. And the correction is a calibration patch, not a fix: it leaves σ carrying no more information than before and rescales it by how far ahead you are looking. On the released checkpoint it nevertheless brings every estimate unseen by the multiplier near what the interval claims, which is what a downstream user needs, and it costs one lookup table.
 
-**Fitted on nine episodes and scored on the tenth (rule X7).** A rule committed before its reading (Appendix Y) repeats the design over all ten episodes: for each, the per-horizon multiplier is fitted on the other nine episodes' trajectories with the same fitting function and scored on its own, so each of the {{x7_n_traj}} trajectories is scored once, by a multiplier not fitted on it, and each horizon's coverage carries a 95% interval. On the epistemic term every one of those intervals lies inside the {{d3_tol}}-point band, all of them between {{x7_ci_min}}% and {{x7_ci_max}}%: **{{x7_summary}}**. Alongside, the aleatoric term returns {{x7_ale_summary}}, one constant multiplier lands within the band at {{x7_const_word}} of the {{x7_n_h_word}} horizons, and the fitted epistemic multipliers differ by at most {{x7_cspread}}× across the ten folds. Those trajectories are unseen by the multiplier, not by the model, which trained on all ten episodes, so for the released checkpoint each horizon's coverage is now resolved within the band, though the six horizons share those trajectories and are not independent tests; the Arm A result stands as it is.
+**Fitted on nine episodes and scored on the tenth (rule X7).** A rule committed before its reading (Appendix Y) repeats the design over all ten episodes: for each, the per-horizon multiplier is fitted on the other nine episodes' trajectories with the same fitting function and scored on its own, so each of the {{x7_n_traj}} trajectories is scored once, by a multiplier not fitted on it, and each horizon's coverage carries a 95% interval. On the epistemic term every one of those intervals lies inside the {{d3_tol}}-point band, all of them between {{x7_ci_min}}% and {{x7_ci_max}}%: **{{x7_summary}}**. Appendix Y gives the aleatoric term and the constant multiplier alongside. Those trajectories are unseen by the multiplier, not by the model, which trained on all ten episodes, so for the released checkpoint each horizon's coverage is now resolved within the band, though the six horizons share those trajectories and are not independent tests; the Arm A result stands as it is.
 
 **The multipliers are a property of the model, not of the horizon.** Fitted on Arm A and scored on
 the released checkpoint, and the reverse, on the same {{d3x_nind}} held-out trajectories, rule M-69
@@ -2601,6 +2599,8 @@ not episodes; the statistic is a correlation over (unit, step) cells, not a rank
 ---
 
 ## Appendix Y — rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth
+
+**X7's alongside readings, as §6.7 stated them.** Alongside, the aleatoric term returns {{x7_ale_summary}}, one constant multiplier lands within the band at {{x7_const_word}} of the {{x7_n_h_word}} horizons, and the fitted epistemic multipliers differ by at most {{x7_cspread}}× across the ten folds.
 
 Rule X7 was committed and pushed before its readings existed (ledger M-89; Appendix E gives its lead time) and is
 discharged in M-92. It is exploratory and re-opens no rule: rules M-69 and M-70 stand. For each of the ten episodes, the
