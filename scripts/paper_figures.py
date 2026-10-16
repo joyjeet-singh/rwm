@@ -500,7 +500,7 @@ def fig4_timeline(rec):
                                      "data commit) and the parent of the commit that re-pointed this figure after "
                                      "the purge"}
 
-    fig, ax = plt.subplots(figsize=(7.8, 0.27 * len(bars) + 1.2))
+    fig, ax = plt.subplots(figsize=(7.8, 0.21 * len(bars) + 1.2))   # round 4, F6: 29 bars at 0.27 in made a float-only page
     vals = [b["lead_hours"] for b in bars]
     cols = ["#2ca02c" if v > 0 else "#d62728" for v in vals]
     y = np.arange(len(bars))
