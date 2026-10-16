@@ -3795,6 +3795,86 @@ def main():
         _bold = {ln.split(" | ")[0][2:] for ln in N[_tk]["value"].split("\n") if ln.rstrip().endswith("** |")}
         assert _bold == {_lab8(_rule, k) for k in _ch}, (_rule, _bold ^ {_lab8(_rule, k) for k in _ch})
     assert "trend reading" in _rd8["A/B (M-23's conditions, three seeds)"]["alongside_changes"]
+
+    # --- Round 4, F6: rules X3 (M-86, discharged in M-94) and X4 (M-87, discharged in M-95) ----------------------------
+    X3 = J("x3_cross_fold.json")
+    _x3s = "results/x3_cross_fold.json"
+    assert X3["rule"] == "X3" and all(v["pass"] for v in X3["assertions"].values())
+    _r3, _p3, _a3 = X3["reading"], X3["part_of_rule"], X3["alongside"]
+    assert _r3["label"] == "REPLICATES ACROSS FOLDS" and _r3["ci95"][0] > 0, "section 5 installs A5's REPLICATES variant"
+    assert str(_r3["h"]) == str(N["v2_diag_h"]["value"]) and X3["design"]["n_independent"] == _r3["n_trajectories"]
+    assert f'{X3["design"]["iterations"]:,}' == N["iters_main"]["value"] and len(X3["design"]["seeds"]) == N["d1_seeds"]["value"]
+    _f3 = lambda x: f"{x:+.4f}"
+    _c3 = lambda c: f"[{c[0]:+.4f}, {c[1]:+.4f}]"
+    put("x3_reading", _r3["label"], _x3s)
+    put("x3_gap", _f3(_r3["gap"]), _x3s)
+    put("x3_ci", _c3(_r3["ci95"]), _x3s)
+    put("x3_n", _r3["n_trajectories"], _x3s)
+    put("x3_n_folds_word", WORDS[len(X3["design"]["folds"])].lower(), _x3s)
+    _st3 = _p3["per_episode_sign_test_h368"]
+    put("x3_eps_pos", _st3["n_positive"], _x3s)
+    put("x3_n_eps", _st3["n_episodes"], _x3s)
+    put("x3_p", f'{_st3["exact_two_sided_p"]:.3f}', _x3s)
+    _pf3 = _p3["per_fold_h368"]
+    assert all(v["ci95_exact"][0] > 0 for v in _pf3.values()), "section 5: every fold's own interval excludes zero"
+    put("x3_fold_lo", _f3(min(v["gap"] for v in _pf3.values())), _x3s)
+    put("x3_fold_hi", _f3(max(v["gap"] for v in _pf3.values())), _x3s)
+    put("x3_gap_h100", _f3(_a3["h100"]["gap"]), _x3s)
+    put("x3_ci_h100", _c3(_a3["h100"]["ci95"]), _x3s)
+    _u3 = _a3["h1_m64_units"]
+    assert _u3["gap"] < 0 and _u3["gap_ci_unit_level"][1] < 0 and _u3["footnote_episode_level"]["gap_ci"][1] < 0, \
+        "section 5: teacher forcing still leads at one step on short units, at both levels"
+    put("x3_h1_gap", _f3(_u3["gap"]), _x3s)
+    put("x3_h1_ci", _c3(_u3["gap_ci_unit_level"]), _x3s)
+    put("x3_h1_n", _u3["n_units"], _x3s)
+    put("x3_h1_unit", _u3["unit_length"], _x3s)
+    put("x3_ratio_h368", f'{_a3["ratio_B_over_A"][str(_r3["h"])]:.2f}', _x3s)
+    _fn3 = lambda k: "{" + ", ".join(k) + "}"
+    _rows3 = []
+    for _k, _v in _pf3.items():
+        _eps = [int(c) for c in _k]
+        _rows3.append(f"| {_fn3(_k)}{' (section 5)' if _k == '18' else ''} | {_v['n_trajectories']} | "
+                      f"{_f3(_v['gap'])} {_c3(_v['ci95_exact'])} | "
+                      + ", ".join(f"{e}: {_f3(_st3['per_episode_mean_gap'][str(e)])}" for e in _eps) + " |")
+    _rows3.append(f"| all five, pooled | {_r3['n_trajectories']} | **{_f3(_r3['gap'])} {_c3(_r3['ci95'])}** | "
+                  f"{_st3['n_positive']} of {_st3['n_episodes']} positive, P = {_st3['exact_two_sided_p']:.3f} |")
+    put("x3_fold_table", "\n".join(_rows3), _x3s)
+
+    X4 = J("x4_matched_baselines.json")
+    _x4s = "results/x4_matched_baselines.json"
+    assert X4["rule"] == "X4" and all(v["pass"] for v in X4["assertions"].values())
+    _r4, _a4 = X4["reading"], X4["alongside"]
+    assert _r4["label"] == "PARTIAL" and str(_r4["h"]) == str(N["v2_diag_h"]["value"])
+    _m4, _t4 = _r4["per_baseline"]["mlp"], _r4["per_baseline"]["transformer"]
+    assert _m4["result"] == "RWM BETTER" and _m4["ci95"][0] > 0 and _t4["result"] == "CANNOT BE SETTLED"
+    assert _t4["ci95"][0] < 0 < _t4["ci95"][1] and _t4["D"] > 0, "section 5.3: the transformer's point trails RWM, unresolved"
+    assert X4["design"]["n_independent"] == N["mn_nind"]["value"]
+    assert f'{X4["assertions"]["c"]["rwm_state_pathway"]:,}' == N["bl_rwm_params"]["value"]
+    _f43 = lambda x: f"{x:.3f}"
+    _c43 = lambda c: f"[{c[0]:.3f}, {c[1]:.3f}]"
+    put("x4_reading", _r4["label"], _x4s)
+    for _tg, _b in (("mlp", _m4), ("tf", _t4)):
+        put(f"x4_D_{_tg}", _f43(_b["D"]), _x4s)
+        put(f"x4_ci_{_tg}", _c43(_b["ci95"]), _x4s)
+        put(f"x4_res_{_tg}", _b["result"], _x4s)
+    put("x4_p_tf", f'{_t4["p"]:.3f}', _x4s)
+    put("x4_npar_mlp", f'{X4["n_params"]["mlp"]:,}', _x4s)
+    put("x4_npar_tf", f'{X4["n_params"]["transformer"]:,}', _x4s)
+    assert _a4["l1_h100"]["verdict"] == _a4["l1_h32"]["verdict"] == _r4["label"]
+    put("x4_alongside_reading", _a4["l1_h100"]["verdict"], _x4s)
+    # rows for section 5.3's table, in its own format (_m3: three-seed mean over the held-out pair's trajectories); the
+    # evaluator's RWM is the table's RWM row, asserted
+    _ev4 = J("x4_matched_baselines_eval.json")
+    for _h in (100, 368):
+        assert abs(_m3(_ev4["configs"]["rwm"], _h) - _m3(BE["configs"]["rwm"], _h)) < 1e-6, _h
+    _rows4 = []
+    for _arch, _nm4, _b in (("mlp", "MLP, autoregressive, size-matched (X4)", _m4),
+                            ("transformer", "transformer, autoregressive, size-matched (X4)", _t4)):
+        _cf4 = _ev4["configs"][f"{_arch}_ar_matched"]
+        _rows4.append(f"| {_nm4} | {X4['n_params'][_arch]:,} | {_m3(_cf4, 100):.4f} | {_m3(_cf4, 368):.4f} | "
+                      f"{_b['D']:+.4f} [{_b['ci95'][0]:+.4f}, {_b['ci95'][1]:+.4f}] | "
+                      f"{'RWM better' if _b['result'] == 'RWM BETTER' else _b['result']} | — |")
+    put("x4_table_rows", "\n".join(_rows4), _x4s + " + results/x4_matched_baselines_eval.json")
     assert not any(ln.startswith("| verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
     assert not any(ln.startswith("| M-23's verdict") and ln.rstrip().endswith("** |") for ln in _all8.split("\n"))
 

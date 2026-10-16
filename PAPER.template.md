@@ -60,7 +60,7 @@ a practitioner can use without reading the rest.
   {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} (§6.2, §6.6). It beats {{e7_n_beaten}} of the
   {{e7_n_new}} free baselines added here; the model's own predicted step size ranks error at
   {{e7_step_r}} against its {{e7_r_dis}}, a margin {{q2_n_req}} independent trajectories would resolve if it is as large as observed, against the {{e7_nind}} here (§6.6, §11).
-- **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before the runs, run on seed {{m23_seed}} of each arm, found autoregressive training ahead by {{m23_ratio}}× at h = {{v2_diag_h}}; {{d1_seeds}} seeds at {{iters_long}} iterations extend it: the factor is {{d1_ratio}}×, and {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, on the held-out pair's {{a1_nind}} independent 400-step trajectories (§5). At one step a second pre-registered rule, on {{m64_h1_n}} independent
+- **The base paper's central training claim reproduces, and reverses at one step.** A rule committed before the runs, run on seed {{m23_seed}} of each arm, found autoregressive training ahead by {{m23_ratio}}× at h = {{v2_diag_h}}; {{d1_seeds}} seeds at {{iters_long}} iterations extend it: the factor is {{d1_ratio}}×, and {{d1_ratio_h100}}× at h = {{v2_deploy_h}}, on the held-out pair's {{a1_nind}} independent 400-step trajectories (§5); retrained with each of the ten episodes held out in turn, it replicates, {{x3_gap}} {{x3_ci}} over {{x3_n}} trajectories at {{iters_main}} iterations (rule X3: **{{x3_reading}}**). At one step a second pre-registered rule, on {{m64_h1_n}} independent
   {{m64_h1_unit}}-row units, finds a gap of {{m64_h1_gap}} {{m64_h1_ci}} in favour of **teacher forcing** (§5).
 - **Two more of the base paper's claims, tested under rules committed before the runs.** RWM is
   ahead at h = {{v2_diag_h}} of MLP, RSSM and transformer baselines built to our reading of its
@@ -443,8 +443,9 @@ evaluated at those same checkpoints (rule M-16, Appendix E), returned **{{m16_ve
 At long horizons the out-of-sample gap excludes zero in **{{ab_long_excl}} of {{ab_long_cells}}**
 cells, both trajectory lengths crossed with the {{bu_ckpts}}-iteration checkpoints, and each still excludes zero at a Bonferroni level of 0.05/{{c3_family}} over the family of {{c3_family}} out-of-sample comparisons, where Holm–Bonferroni over the {{c3_long}} long-horizon cells rejects **{{c3_holm_rejected}} of {{c3_long}}** (Appendix L). Beside the artifact it reimplements, on {{h2h_nind}} independent trajectories with our arms at
 {{iters_main}} iterations over {{h2h_nseeds}} seeds, relative-L1 and nRMSE both put the released checkpoint
-first at {{h2h_released_sweeps_at}} and an Arm A variant ahead of it at {{h2h_armA_sweeps_at}}, a reading that
-flatters the checkpoint, since the arena is out-of-sample for our arms and in-sample for it (Appendix L).
+first at {{h2h_released_sweeps_at}} and an Arm A variant ahead of it at {{h2h_armA_sweeps_at}}, a reading that flatters the checkpoint, since the arena is out-of-sample for our arms and in-sample for it (Appendix L).
+
+**Held out in turn, every episode tests the claim out of sample once.** The {{a1_nind}} trajectories above are one fold. Retraining both arms for each of {{x3_n_folds_word}} such splits, each episode held out in exactly one (rule X3, committed before the runs; {{iters_main}} iterations, {{d1_seeds}} seeds), the gap at h = {{v2_diag_h}} over all {{x3_n}} out-of-sample trajectories is {{x3_gap}} {{x3_ci}}, favouring autoregressive training: **{{x3_reading}}**. All {{x3_eps_pos}} of the {{x3_n_eps}} episodes favour it (P = {{x3_p}}), and every fold's own interval excludes zero, its gap running from {{x3_fold_lo}} to {{x3_fold_hi}} (Appendix L). At one step teacher forcing still leads on short units, {{x3_h1_gap}} {{x3_h1_ci}} over {{x3_h1_n}} {{x3_h1_unit}}-row units. These are {{iters_main}}-iteration models, not the {{iters_long}}-iteration ones behind the factor above, which X3 does not re-read; its interval resamples trajectories, carrying every seed, and its folds pair episodes in index order rather than by speed. The {{a1_nind}} trajectories of §5's arena are no longer the only out-of-sample evidence.
 
 ### 5.1 The data budget, which is the one part of the sample-efficiency claim we can measure
 
@@ -1208,10 +1209,7 @@ Limits that belong to one result are stated beside it: the budget and our readin
 (§5.2, §5.3), the mechanism of §6.4 as a hypothesis, and the recalibration's two episodes (§6.7), which rule X7 widens to all ten for the released checkpoint.
 Appendix R gives every limitation below in full.
 
-**Effective sample size bounds every long-horizon claim.** The out-of-sample arena has
-{{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3), the binding
-constraint on §5, and a larger dataset cannot be generated here (Appendix C), so the released
-checkpoint's lack of a held-out arena is a constraint, not a choice.
+**Effective sample size bounds the long-horizon magnitudes.** The headline magnitudes rest on the held-out pair, {{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3); the direction is re-tested on all ten episodes, each out of sample once (rule X3, {{x3_n}} trajectories at {{iters_main}} iterations, §5). A larger dataset cannot be generated here (Appendix C), so the released checkpoint's lack of a held-out arena is a constraint, not a choice.
 
 **One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait is
 a single trot, so "generalisation" here means across velocity commands only.
@@ -1802,6 +1800,14 @@ per-trajectory values in `results/r2_independent_ensemble.json` and
 `results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = {{b2_nind}},
 give intervals only, coarse for the same reason (the n = {{m23_nind}} caveat of §3).
 
+
+**Rule X3, fold by fold (§5).** Rule X3 was committed and pushed before any of its runs existed (ledger M-86; Appendix E gives its lead time) and is discharged in M-94. It is exploratory and re-opens no rule: rule M-23 stands. The gap is Arm B's seed-mean relative-L1 minus Arm A's at h = {{v2_diag_h}}. Each fold's interval is exact over all {{boot_n_exact4}} ordered resamples of its trajectories; the pooled one is M-23's three-seed bootstrap, {{boot_n_mc}} draws (seed 0), whole trajectories, every seed carried.
+
+| fold (episodes held out) | trajectories | gap at h = {{v2_diag_h}} [95% interval] | each episode's mean gap |
+|---|---|---|---|
+{{x3_fold_table}}
+
+**Arena: each fold's held-out pair, out-of-sample for both arms, {{a1_nind}} non-overlapping 400-step trajectories per fold and {{x3_n}} pooled (n_independent = {{x3_n}}). Checkpoints: Arm A and Arm B at {{iters_main}} iterations, {{d1_seeds}} seeds per arm per fold.** Bold, the reading, **{{x3_reading}}**. The per-episode sign test is part of the rule and carries no verdict of its own: {{x3_eps_pos}} of {{x3_n_eps}} episodes positive, exact two-sided P = {{x3_p}}. Alongside: at h = {{v2_deploy_h}} the pooled gap is {{x3_gap_h100}} {{x3_ci_h100}}, and Arm B's mean error is {{x3_ratio_h368}}× Arm A's at h = {{v2_diag_h}}. The folds are fixed, not drawn: two of the new ones hold both their episodes from the same speed half, unlike §5's stratified fold.
 ---
 
 ## Appendix M — section 6.2's reading checks: the resampling unit, the spread across dimensions, and the permutation column
@@ -2089,9 +2095,9 @@ grounds; the physically-impossible-transition component costs nothing detectable
 
 ## Appendix R — the limitations in full (§11)
 
-**Effective sample size bounds every long-horizon claim.** The out-of-sample arena has
+**Effective sample size bounds the long-horizon magnitudes.** The out-of-sample arena has
 {{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3). That is the
-binding constraint on §5, and no amount of trajectory oversampling changes it. Nor can a larger
+binding constraint on §5's magnitudes, and no amount of trajectory oversampling changes it. The direction is re-tested on all ten episodes, each held out once: rule X3 retrains both arms on {{x3_n_folds_word}} folds and returns **{{x3_reading}}** over {{x3_n}} trajectories, at {{iters_main}} iterations rather than {{iters_long}} (Appendix L). Nor can a larger
 dataset be generated here: the data generator is in neither pinned repository, and the one the lite
 release points to runs in a simulator this work did not have (Appendix C). The released checkpoint's lack
 of a held-out arena is therefore a constraint, not a choice.
