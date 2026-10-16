@@ -547,3 +547,42 @@ Body words (round2/t6_words.py): 17,790 (F0: 20,745; accepted, DECISIONS.md#F8-l
 Abstract words / numerals (C12.1): 300 / 19
 Next: F10 (Opus 5.5, high), the fresh-eyes review: read the main text once from `pdftotext` (References start on page 27), two read-only reviewers for Appendices A–M and N onward, REVIEW.md and CONSISTENCY.md. Note that `pdftotext` is not installed here; pypdf extracts text. Commits stay local.
 Decisions for user: none
+
+## F10 — 2026-10-16 23:45 — Opus 5.5 (the plan assigns high effort, new terminal) — status: COMPLETE
+Commits:
+f2997f0 [F10][4] Review fixes, each of 3 sentences or fewer: 4 in the main text (6.2's verbless sentence and its 'that', 3.1's file:line claim, 11's X5 reason), 4 in the README (X3, X6 with both scopes, X7, M-49's pointer), Appendix D's matched-capacity row points to 6.8, and 9 in Appendices G, L, N, P, R, S and T (stale pointers left by F7-F8's moves, and the arena, n or checkpoint a moved passage lost)
+1e3753d [F10][4] M-65: Appendix E printed the rule's first defined branch because its 'It returns' phrase wraps a line (parser now reads across one line break); M-96 corrects M-65's discharge wording (2 of 48 cells below 68.27%, inside the band; no verdict moves)
+7e68189 [F10] REVIEW.md (Annex 6, every item; 4 main-text findings, 11 reviewer findings, all verified and fixed), CONSISTENCY.md (71 rows covering 74 front-matter sentences and table rows, all agree), body.txt; build and gates after the fixes: 3 new keys (m65_*), 75 pages, 0 warnings, byte-identical
+(the commit carrying this entry)
+Done:
+- **How this session ran.** In the same conversation as F0–F9, at the user's request ("start F10"), not in a new terminal. The workplan's one planned multi-agent review (§2): exactly two read-only Explore reviewers, one for Appendices A–M and one for N–Z. Each got only its range and the artifacts its sentences cite, and returned mismatches only. All commits are local (workplan §6).
+- **Step 1, the main text read once:** `round4/body.txt`, 1,207 lines, pages 1–27 up to "Data and code", via `pypdf`, since `pdftotext` is not installed. Four items fixed (F1–F4 in REVIEW.md) and three observations recorded:
+  - **O1:** the 25.7× held-out-pair ratio has no interval in its artifact, and adding one would be a new measurement.
+  - **O2:** §1's summary ratios carry no interval; §6.2 has them.
+  - **O3:** the clarity read against TMLR's criterion.
+- **Step 2, the reviewers.** A–M: 3 findings. N–Z: 8. All 11 were checked against the paper and the artifacts, and all were real. Of note:
+  - **M-65, Appendix G.** The sentence round 2 wrote in §3.1, which F7 moved to Appendix G, said every rescaled cell lands at or above 68.27%. Two (67.82%, 66.75%) do not, though both are inside the rule's band. The sentence now states the 63.27% heavy-tail bound and the 15 / 33 split (new keys `m65_heavy_bound`, `m65_n_adequate`, `m65_n_over`, asserted to sum to 48). **M-96** corrects M-65's discharge record, which said the same; M-65 is not edited and no verdict moves.
+  - **M-65, Appendix E.** The verdict cell showed the rule's first defined branch, because its "It returns" line wraps. `appendix_g_rules.py` now reads across one line break. Stage 21a was regenerated, and only M-65's cell changed, to "NOT HEAVY-TAILED, in every one of 48 model x horizon cells".
+  - **The rest** were pointers F7–F8's moves left stale ("the table above", §11), or moved passages that had lost their arena, n or checkpoint. Each is fixed in one sentence or less.
+- **Also fixed:** the README (X3; X6 with both scopes, which the locked framing requires; X7; the M-49 pointer) and Appendix D's matched-capacity row (§11 → §6.8).
+- **Step 3, REVIEW.md:** every Annex 6 item passes, with two qualifications.
+  - **4a, length:** 17,804 against 16,000, reported and accepted (`DECISIONS.md#F8-length`).
+  - **7, the cover statement:** it is not stronger than the paper, but its counts are stale (23 rules, 62 pages); F11's package step owns them. It also omits round 4's results, which REVIEW.md recommends F11 add.
+  - **Pre-registration of X3–X8:** checked by script (`R4F10/prereg_check.txt`). Every SHA-256 is in its ledger entry and the artifact's, every script is unchanged since its PRE-REGISTER commit, and every artifact was committed after that commit.
+  - **Keys:** 8 have left the template since F0, all retired in F4 for keys with intervals or finer arenas, each justified in the review.
+- **Step 5, CONSISTENCY.md:** 71 rows covering 74 front-matter sentences and table rows (abstract, contributions, Appendix D's two tables, §9, §11, §12), each with its body anchor and every reading. All agree. E18 was fixed; X3–X8's locked framing holds in every row that summarises them.
+- **Rule 11 audit of F10's own edits:**
+  - **§11:** X5's reason added → agrees;
+  - **README** (not a rule-11 site, but public-facing): X6 now gives both scopes → agrees;
+  - **Appendix D, E18:** pointer only.
+- **BLOCKED?** No. Nothing larger than three sentences was found.
+Build/gates: pass. Evidence summary, fast build, every gate, `part_f_gate`, fast build again: byte-identical. 68/68 claims and 68/68 corruptions; 0 suspect pointers; compile 75 pages, 0 overfull, 0 warnings. `part_f_gate` 6/7, 1 not run: 4b fails on the bundles (F11).
+Paper numbers changed: n_entries 287 → 288 and ledger_kb 657 → 658 (M-96); tn_typed 1144 → 1149; appG_table (M-65's verdict cell); evidence_table (the §6.8 pointer)
+New keys: 3, from results/m65_gaussian_nominal.json: `m65_heavy_bound`, `m65_n_adequate`, `m65_n_over`
+Re-anchored checks: none
+CPU jobs over 1 min: the two reviewers (about 4.5 and 6 min, read-only); stage 21a; fast builds with gates, about 1.5 min each (three); the end-of-session run, about 3 min. None contended.
+Queue status: done (30 of 30)
+Body words (round2/t6_words.py): 17,804 (F0: 20,745; accepted, DECISIONS.md#F8-length)
+Abstract words / numerals (C12.1): 300 / 19
+Next: F11 (Opus 5.5, default), freeze, restatement, bundles and package. Note that its PLAN steps push (steps 2 and 3), and workplan §6 forbids pushing: F11's clone must be taken from the local HEAD, not from a push, and nothing goes to origin. The cover statement's counts are in step 5, and REVIEW.md item 7 recommends adding round 4's results there. Commits stay local.
+Decisions for user: none
