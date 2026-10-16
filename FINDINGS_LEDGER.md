@@ -9010,7 +9010,7 @@ returns it, with the part-of-rule and alongside values, in a new ledger entry; a
 Not: change the folds, models, seeds, iterations, arena, horizons, statistic, interval, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x3_cross_fold.py`, `scripts/step5_train.py` (`--holdout`), `src/rollout_eval.py` (`fold_split`), `scripts/queue_run.py`;
 `RUN` `results/x3_cross_fold.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x3_cross_fold.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x3_cross_fold.json`. **It returns REPLICATES ACROSS FOLDS.** Recorded in `M-94`. · **Relevance** METHOD
 
 ### M-87 — PRE-REGISTERED rule X4: is RWM still ahead of baselines matched to its size? · **NEW**
 **Entered before any of its data exists.** No run of X4's queue has been trained: no `results/baseline_run_*_matched_seed*.json`
@@ -9084,7 +9084,7 @@ runs `scripts/x4_matched_baselines.py` unchanged, having asserted its SHA-256 eq
 returns it, with the alongside values, in a new ledger entry; and changes only this entry's Status line.
 Not: change the variants, seeds, iterations, arena, horizons, statistic, test or labels; add a reading; or read any number here as bearing on a discharged rule.
 **Evidence** `SRC` `scripts/x4_matched_baselines.py`, `scripts/train_baseline.py`, `scripts/queue_run.py`; `RUN` `results/x4_matched_baselines.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x4_matched_baselines.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x4_matched_baselines.json`. **It returns PARTIAL.** Recorded in `M-95`. · **Relevance** METHOD
 
 ### D-38 — The recorded data hold no velocity command, so the imagination reward cannot be computed from them: rule X5 is NOT RUN · **NEW**
 Round 4's rule X5 (PLAN Annex 2; objection O3) would have asked whether the uncertainty penalty the released method applies
@@ -9572,4 +9572,66 @@ four are in Appendix N:
 
 The partial on difficulty alone is bound to no key (`docs/presubmission/round4/PREFLIGHT.md`, PF7).
 **Evidence** `RUN` `results/a2_trajectory_level_control.json`, `results/step4_0a_results.json`, `results/paper_numbers.json`; `SRC` `scripts/a2_trajectory_level_control.py`, `scripts/paper_numbers.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-94 — Rule X3 (M-86): `results/x3_cross_fold.json` returns REPLICATES ACROSS FOLDS · **NEW**
+**Records** M-86's reading exactly as `scripts/x3_cross_fold.py` returned it, as committed before any of its data existed (commit `5f0acd4`). The artifact records the script's SHA-256, which equals M-86's, and the commit it ran at (`3000b00`, after F5's training gate, `docs/presubmission/round4/f5_gate.json`). Discharges M-86. Exploratory; no discharged rule is re-opened.
+
+**Assertions, before any reading:** all passed. (a) `fold_split` on {1, 8} gives `make_split`'s 7687 training
+windows (SHA-256 both ways); (b) F1's bitwise reproduction, read from `docs/presubmission/round4/f1_fold_support.json`; (c) every new fold's training set
+excludes exactly its two episodes; (d) fold {1, 8} reproduces the committed held-out relative-L1, maximum difference
+0.0e+00 (Arm A per trajectory), 5.6e-17 (Arm A three-seed) and
+8.2e-08 (Arm B per seed), against 1.0e-06; (e) `boot_cluster` reproduces
+`results/a1_ab_by_horizon.json`'s intervals, 3.0e-08; (f) M-64's machinery reproduces its cell C,
+0.0e+00; (g) `boot_ci` and `sign_p`, 0.0e+00 and 0.0e+00;
+(h) every run's record as queued.
+
+**The reading**, h = 368, the five folds' held-out pairs pooled, 20 non-overlapping 400-step trajectories,
+Arm A and Arm B at 2,500 iterations, seeds 0, 1, 2: gap (seed-mean Arm B − seed-mean
+Arm A, relative-L1) = +2.2275 [+1.3683, +3.5053], which returns **REPLICATES ACROSS FOLDS**.
+
+**Part of the rule, reported verbatim, no verdict of its own:**
+- the per-episode sign test at h = 368: 10 of 10 episodes positive, 0 negative,
+  exact two-sided P = 0.001953125. Per-episode mean gaps: 0 +0.5512; 1 +6.9749; 2 +0.7596; 3 +1.0403; 4 +1.9528; 5 +2.0714; 6 +1.1850; 7 +3.1561; 8 +0.9907; 9 +3.5926;
+- each fold's gap at h = 368 with its exact interval over its 4 trajectories:
+  {1, 8} +3.9828 [+0.9907, +9.4848]; {0, 2} +0.6554 [+0.5172, +0.8630]; {3, 4} +1.4966 [+1.0403, +1.9528]; {5, 6} +1.6282 [+1.1379, +2.4999]; {7, 9} +3.3743 [+3.1063, +3.5926].
+
+**Alongside, never governing:**
+- h = 100: gap +0.3573 [+0.2624, +0.4678] over 20 trajectories, would carry
+  REPLICATES ACROSS FOLDS;
+- h = 1 on M-64's 33-row units, 300 units ({1, 8} 60, {0, 2} 60, {3, 4} 60, {5, 6} 60, {7, 9} 60):
+  gap (B − A, negative is teacher forcing ahead) -0.0090 [-0.0126, -0.0053] at the unit level; the
+  episode-level footnote interval is [-0.0150, -0.0019];
+- the ratio of means, Arm B's over Arm A's: h = 1 0.911; h = 8 1.096; h = 32 1.423; h = 100 1.875; h = 128 2.095; h = 368 5.855.
+
+Caveats, as M-86 states them: 2,500 iterations, not 10,000: section 5's 4.61x headline is at 10,000 on fold {1, 8} (results/task_d1_threeseed.json) and is not re-read; the new folds pair episodes in index order; {0, 2} and {3, 4} each hold two episodes from the same speed half, unlike make_split's stratified {1, 8}; the seeds are not independent units: the interval resamples trajectories, carrying every seed.
+**Evidence** `RUN` `results/x3_cross_fold.json`; `SRC` `scripts/x3_cross_fold.py`.
+**Status** CONFIRMED · **Relevance** METHOD
+
+### M-95 — Rule X4 (M-87): `results/x4_matched_baselines.json` returns PARTIAL · **NEW**
+**Records** M-87's reading exactly as `scripts/x4_matched_baselines.py` returned it, as committed before any of its data existed (commit `5f0acd4`). The artifact records the script's SHA-256, which equals M-87's, and the commit it ran at (`3000b00`, after F5's training gate, `docs/presubmission/round4/f5_gate.json`). Discharges M-87. Exploratory; no discharged rule is re-opened.
+
+**Assertions, before any reading:** all passed. (a) `baselines_eval.evaluate` on the original-size autoregressive baselines
+reproduces `results/baselines_eval.json`, 2880 values, maximum difference 0.0e+00; (b)
+`verdict_baselines.family` reproduces M-76's governing verdict (RWM AHEAD OF ALL THREE), 0.0e+00; (c) each
+matched model is within ±5% of RWM's 714,164-parameter state pathway (MLP 713,171,
+transformer 686,196); (d) every matched run's record as queued.
+
+**The reading**, h = 368, relative-L1, section 5's held-out pair, 4 non-overlapping 400-step trajectories (n_independent = 4), matched
+baselines trained autoregressively, 2,500 iterations, seeds 0, 1, 2, against
+Arm A (32, 8), 2,500 iterations: **PARTIAL**.
+- MLP (BASELINE_SPECS.md row 33): RWM BETTER, D +0.8840 [+0.2036, +1.6334], p 0, Holm rank 1 at level 0.025;
+- transformer (row 34): CANNOT BE SETTLED, D +0.2055 [-0.0969, +0.7399], p 0.625, Holm rank 2 at level 0.05.
+
+D is the baseline's error minus RWM's (positive: RWM better). Per-trajectory differences: MLP
++2.1077, +1.0210, +0.1966, +0.2106; transformer +1.0108, +0.0051, -0.1212, -0.0726.
+
+**Alongside, never governing:**
+- h = 100: PARTIAL; MLP RWM BETTER, D +0.1095 [+0.0608, +0.1582], p 0, Holm rank 1 at level 0.025; transformer CANNOT BE SETTLED, D +0.1048 [-0.0563, +0.2659], p 0.125, Holm rank 2 at level 0.05;
+- h = 32: PARTIAL; MLP RWM BETTER, D +0.0567 [+0.0142, +0.0993], p 0, Holm rank 1 at level 0.025; transformer CANNOT BE SETTLED, D +0.0773 [-0.0216, +0.1763], p 0.125, Holm rank 2 at level 0.05;
+- each run's wall clock and seconds per iteration: mlp_seed0 0.08 h, 0.119 s; mlp_seed1 0.08 h, 0.111 s; mlp_seed2 0.14 h, 0.207 s; transformer_seed0 2.30 h, 3.306 s; transformer_seed1 2.28 h, 3.280 s; transformer_seed2 3.93 h, 5.661 s;
+  F1's probes: MLP 0.126 s and transformer 3.957 s per iteration.
+
+Caveats, as M-87 states them: matching the parameter count is one axis; the shapes and settings stay our reading of Table S7; the matched RSSM is not run (ruling W2); M-76's own Licenses line holds: architecture at a fixed regime, not the original's claim; the matched runs' records say rule M-76 (the trainer's label for regime ar); they are X4's runs.
+**Evidence** `RUN` `results/x4_matched_baselines.json`, `results/x4_matched_baselines_eval.json`; `SRC` `scripts/x4_matched_baselines.py`.
 **Status** CONFIRMED · **Relevance** METHOD

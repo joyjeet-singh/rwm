@@ -3602,7 +3602,7 @@
       "id": "M-86",
       "claim": "PRE-REGISTERED rule X3: does the base claim replicate when each episode is held out in t",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x3_cross_fold.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x3_cross_fold.json`. **It returns REPLICATES ACROSS FOLDS.** Recorded in `M-94`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3629,7 +3629,7 @@
       "id": "M-87",
       "claim": "PRE-REGISTERED rule X4: is RWM still ahead of baselines matched to its size?",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x4_matched_baselines.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x4_matched_baselines.json`. **It returns PARTIAL.** Recorded in `M-95`.",
       "evidence": [
         "RUN",
         "SRC"
@@ -3831,13 +3831,46 @@
         "scripts/paper_numbers.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-94",
+      "claim": "Rule X3 (M-86): `results/x3_cross_fold.json` returns REPLICATES ACROSS FOLDS",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/x3_cross_fold.json",
+        "scripts/x3_cross_fold.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-95",
+      "claim": "Rule X4 (M-87): `results/x4_matched_baselines.json` returns PARTIAL",
+      "relevance": "METHOD",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/baselines_eval.json",
+        "results/x4_matched_baselines.json",
+        "results/x4_matched_baselines_eval.json",
+        "scripts/x4_matched_baselines.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
     "D": 39,
-    "M": 93,
+    "M": 95,
     "O": 14,
     "R": 80,
     "S": 21,
