@@ -728,58 +728,15 @@ about the released artifact; the mechanism is a hypothesis about that fact.
 
 ### 6.5 The failure is one of magnitude; the ordering is weaker than it looks
 
-Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at {{iters_main}} training iterations; the released checkpoint as released):
+Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at {{iters_main}} training iterations; the released checkpoint as released). Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = {{cal_armB_r}}). It is still {{cal_armB_ratio}}× overconfident. So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not: the teacher-forced arm collapses in magnitude exactly like the autoregressive ones, same objective and same rate, while keeping that variation across inputs. Appendix K gives the four models' table, its arenas and a candidate mechanism.
 
-| model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 at h={{v2_diag_h}}, held-out pair | perm P at h={{v2_diag_h}}, held-out pair | perm P at h={{v2_diag_h}}, training episodes |
-|---|---|---|---|---|
-| faithful Arm A | {{cal_faithA_cov}} | {{cal_faithA_npos}}/{{cal_faithA_ndim}} | {{perm_oos_faithA_p_h368}} | {{perm_ins_faithA_p_h368}} |
-| corrected Arm A | {{cal_nll_cov}} | {{cal_nll_npos}}/{{cal_nll_ndim}} | {{perm_oos_nll_p_h368}} | {{perm_ins_nll_p_h368}} |
-| **teacher-forced Arm B** | **{{cal_armB_cov}}** | **{{cal_armB_npos}}/{{cal_armB_ndim}}** | **{{perm_oos_armB_p_h368}}** | **{{perm_ins_armB_p_h368}}** |
-| released checkpoint | {{cal_rel_cov}} | {{cal_rel_npos}}/{{cal_rel_ndim}} | {{perm_oos_relale_p_h368}} | {{perm_ins_relale_p_h368}} |
-
-**The CoV column is the aleatoric σ in every row**, the only σ the ensemble-size-1 arms have. Our ensemble-5 arms (§6.6) have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at {{e5_cov_lo}}–{{e5_cov_hi}} against the released checkpoint's {{cal_rel_cov}}. **The count column is the out-of-sample arena** (n_independent = {{relale_oos_nind}}), so that all four models are compared on trajectories none of our arms trained on. For the released checkpoint's aleatoric head it is not the most informative arena: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}}, negatively correlated with error on *every* dimension, against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here; Appendix S quotes the larger arena.
-
-Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = {{cal_armB_r}}). It is still {{cal_armB_ratio}}× overconfident.
-
-**The P column is a permutation P**, which pairs each trajectory's σ with a different trajectory's
-realised error and so keeps the coupling between dimensions and the growth of error with depth that
-every trajectory shares. The binomial P-values an earlier draft attached to these counts are
-withdrawn (`S-15`), and the correction is large (Appendix K).
-
-So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not.
-The teacher-forced arm collapses in magnitude exactly like the autoregressive ones — same
-objective, same rate — while retaining {{cal_armB_over_faithA_cov}}× more variation across
-inputs. Input-independence is a property of the autoregressive arms and the released checkpoint,
-and input-dependence and correct ranking are both achievable without the interval becoming
-meaningful. One candidate mechanism, stated as an untested hypothesis: autoregressive feedback
-narrows the input distribution toward the model's own manifold, leaving a heteroscedastic head less
-variation to key on.
-
-**The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, matching the best aleatoric head here on the sign count, while being {{b2_epi_ratio_h368}}× overconfident at h = {{v2_diag_h}}. **Figures in this paragraph are the held-out arena (n_independent = {{b2_nind}}) unless labelled otherwise**, so the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes {{d1n_epi_ratio_h368}}× for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}, and the abstract and §12 use {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} on those {{d1n_nind}} trajectories. Nor does it beat Arm B's head on strength: its mean correlation at h=368 is {{b2_epi_r_h368}} against {{cal_armB_r}}. The two rank comparably, and neither is close to an interval. Under the permutation null that count gives P = {{perm_oos_epi_p_h368}} on the held-out pair and {{perm_ins_epi_p_h368}} on the training episodes, both in-sample for the checkpoint, against {{perm_oos_epi_binom_h368}} from the independent-trials test. It still fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while error grows {{b2_epi_err_growth}}×.
-
-**Across arenas, and after correction for multiplicity.** The two larger arenas, which are nested
-(every in-sample trajectory is among the all-ten ones), put the epistemic ordering's strength at
-*short* horizon, because at long horizon the forecast-depth trend every trajectory shares lifts the
-null until a full count is close to chance, which is what motivates §6.6's index control. Nothing
-here survives Holm–Bonferroni in any of the three arenas, and out of sample at the 400-step unit
-nothing could, since its smallest attainable P already exceeds the smallest Holm threshold
-(Appendix K).
+**The same pattern holds for the quantity the method uses.** On the held-out pair (n_independent = {{b2_nind}} 400-step trajectories), the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions at h = {{v2_diag_h}} while being {{b2_epi_ratio_h368}}× overconfident there, and its σ grows {{b2_epi_sigma_growth}}× from h = 1 to h = {{v2_diag_h}} while its error grows {{b2_epi_err_growth}}×. Under a permutation null that keeps the coupling between dimensions, nothing in this family survives Holm–Bonferroni in any of the three arenas (Appendix K).
 
 So this section's claim is: **the magnitude failure is established and large; the ordering points the right way for the epistemic term and the faithful and teacher-forced arms, not for the corrected arm or the released aleatoric head (Appendix S), and is not established at conventional significance once the dependence between dimensions is respected. The failure is specifically magnitude calibration, in both components.**
 
 **The structural excuse does not survive.** One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
-σ is flat while error grows (Figure 5; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories, in-sample for the released checkpoint; our arms at
-{{iters_main}} training iterations, the released checkpoint as released):
-
-| model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
-|---|---|---|
-| faithful Arm A | {{sig_faithA_growth}}× | {{err_faithA_growth}}× |
-| corrected Arm A | {{sig_nll_growth}}× | {{err_nll_growth}}× |
-| teacher-forced Arm B | {{sig_armB_growth}}× | {{err_armB_growth}}× |
-| released checkpoint | {{sig_rel_growth}}× | {{err_rel_growth}}× |
-
-The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows
+σ is flat while error grows (Figure 5; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories, in-sample for the released checkpoint; Appendix K gives all four models): the faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows
 {{err_faithA_growth}}×. The coverage collapse in Figure 3(b) is therefore driven entirely by
 growing error against a fixed σ.
 
@@ -1786,9 +1743,64 @@ capacity-matched arm:
 
 ---
 
-## Appendix K — the per-dimension permutation tests behind §6.5
+## Appendix K — section 6.5's two tables, and the per-dimension permutation tests behind them
 
-**§6.5's P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to its counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
+**What §6.5 keeps, and what is here.** §6.5 keeps the teacher-forced arm's finding, the epistemic term's, its claim and the structural-excuse result. Its two tables and the paragraphs around them stood there as follows.
+
+Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms at {{iters_main}} training iterations; the released checkpoint as released):
+
+| model | σ variation across inputs (CoV) | dims with r(σ, error) > 0 at h={{v2_diag_h}}, held-out pair | perm P at h={{v2_diag_h}}, held-out pair | perm P at h={{v2_diag_h}}, training episodes |
+|---|---|---|---|---|
+| faithful Arm A | {{cal_faithA_cov}} | {{cal_faithA_npos}}/{{cal_faithA_ndim}} | {{perm_oos_faithA_p_h368}} | {{perm_ins_faithA_p_h368}} |
+| corrected Arm A | {{cal_nll_cov}} | {{cal_nll_npos}}/{{cal_nll_ndim}} | {{perm_oos_nll_p_h368}} | {{perm_ins_nll_p_h368}} |
+| **teacher-forced Arm B** | **{{cal_armB_cov}}** | **{{cal_armB_npos}}/{{cal_armB_ndim}}** | **{{perm_oos_armB_p_h368}}** | **{{perm_ins_armB_p_h368}}** |
+| released checkpoint | {{cal_rel_cov}} | {{cal_rel_npos}}/{{cal_rel_ndim}} | {{perm_oos_relale_p_h368}} | {{perm_ins_relale_p_h368}} |
+
+**The CoV column is the aleatoric σ in every row**, the only σ the ensemble-size-1 arms have. Our ensemble-5 arms (§6.6) have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at {{e5_cov_lo}}–{{e5_cov_hi}} against the released checkpoint's {{cal_rel_cov}}. **The count column is the out-of-sample arena** (n_independent = {{relale_oos_nind}}), so that all four models are compared on trajectories none of our arms trained on. For the released checkpoint's aleatoric head it is not the most informative arena: at h = {{v2_diag_h}} and n_independent = {{relale_all_nind}} over all ten episodes that head is {{relale_all_pos_h368}}/{{perm_all_relale_ndim_h368}}, negatively correlated with error on *every* dimension, against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here; Appendix S quotes the larger arena.
+
+Arm B's σ is {{cal_armB_over_faithA_cov}}× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = {{cal_armB_r}}). It is still {{cal_armB_ratio}}× overconfident.
+
+**The P column is a permutation P**, which pairs each trajectory's σ with a different trajectory's
+realised error and so keeps the coupling between dimensions and the growth of error with depth that
+every trajectory shares. The binomial P-values an earlier draft attached to these counts are
+withdrawn (`S-15`), and the correction is large (Appendix K).
+
+So σ *collapsing in magnitude* is objective-driven, and σ *becoming input-independent* is not.
+The teacher-forced arm collapses in magnitude exactly like the autoregressive ones — same
+objective, same rate — while retaining {{cal_armB_over_faithA_cov}}× more variation across
+inputs. Input-independence is a property of the autoregressive arms and the released checkpoint,
+and input-dependence and correct ranking are both achievable without the interval becoming
+meaningful. One candidate mechanism, stated as an untested hypothesis: autoregressive feedback
+narrows the input distribution toward the model's own manifold, leaving a heteroscedastic head less
+variation to key on.
+
+**The same pattern holds for the quantity the method uses, and this is where the correction bites hardest.** At h=128 and h=368 the epistemic term correlates positively with realised error on **{{b2_epi_npos_h368}} of {{b2_epi_ndim_h368}}** dimensions, matching the best aleatoric head here on the sign count, while being {{b2_epi_ratio_h368}}× overconfident at h = {{v2_diag_h}}. **Figures in this paragraph are the held-out arena (n_independent = {{b2_nind}}) unless labelled otherwise**, so the epistemic term and the four aleatoric heads are compared on identical trajectories; §6.2 quotes {{d1n_epi_ratio_h368}}× for the same ratio at h = {{v2_diag_h}} and n_independent = {{d1n_nind}}, and the abstract and §12 use {{d1n_epi_ratio_h100}}× at h = {{v2_deploy_h}} on those {{d1n_nind}} trajectories. Nor does it beat Arm B's head on strength: its mean correlation at h=368 is {{b2_epi_r_h368}} against {{cal_armB_r}}. The two rank comparably, and neither is close to an interval. Under the permutation null that count gives P = {{perm_oos_epi_p_h368}} on the held-out pair and {{perm_ins_epi_p_h368}} on the training episodes, both in-sample for the checkpoint, against {{perm_oos_epi_binom_h368}} from the independent-trials test. It still fails the horizon test the same way: σ grows {{b2_epi_sigma_growth}}× from h=1 to h=368 while error grows {{b2_epi_err_growth}}×.
+
+**Across arenas, and after correction for multiplicity.** The two larger arenas, which are nested
+(every in-sample trajectory is among the all-ten ones), put the epistemic ordering's strength at
+*short* horizon, because at long horizon the forecast-depth trend every trajectory shares lifts the
+null until a full count is close to chance, which is what motivates §6.6's index control. Nothing
+here survives Holm–Bonferroni in any of the three arenas, and out of sample at the 400-step unit
+nothing could, since its smallest attainable P already exceeds the smallest Holm threshold
+(Appendix K).
+
+**The structural excuse, with its table.** **The structural excuse does not survive.** One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
+uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
+σ is flat while error grows (Figure 5; {{sig_arena}}, n_independent = {{sig_nind}} 400-step trajectories, in-sample for the released checkpoint; our arms at
+{{iters_main}} training iterations, the released checkpoint as released):
+
+| model | σ growth, step 1 → 8 | error growth, step 1 → 8 |
+|---|---|---|
+| faithful Arm A | {{sig_faithA_growth}}× | {{err_faithA_growth}}× |
+| corrected Arm A | {{sig_nll_growth}}× | {{err_nll_growth}}× |
+| teacher-forced Arm B | {{sig_armB_growth}}× | {{err_armB_growth}}× |
+| released checkpoint | {{sig_rel_growth}}× | {{err_rel_growth}}× |
+
+The faithful arm's σ *declines* ({{sig_faithA_growth}}×) while its error grows
+{{err_faithA_growth}}×. The coverage collapse in Figure 3(b) is therefore driven entirely by
+growing error against a fixed σ.
+
+**The permutation tests.** **§6.5's P column is a permutation P, not a binomial one**, and the binomial P-values an earlier draft attached to its counts are withdrawn (`S-15`). A binomial null treats the 45 state dimensions as independent trials, and they are not: position, velocity and torque for the same joint are physically coupled, and base linear and angular velocity are coupled through the gait. More importantly, error grows with rollout depth in every trajectory, so *any* σ that also grows with depth correlates with *any* trajectory's error, including one it was never paired with.
 
 We therefore permute whole trajectories. The null pairs each trajectory's σ with a different trajectory's realised error, which keeps both marginal distributions and the entire cross-dimension dependence structure and destroys only the association under test. The correction is large, and largest exactly where we leaned hardest. The worst-affected cell is {{perm_worst_model}} at h={{perm_worst_h}}, in the {{perm_worst_arena}} arena. At h = {{v2_diag_h}} it moves from {{perm_ins_armB_binom_h368}} to {{perm_ins_armB_p_h368}}, a factor of about {{perm_worst_factor}}, because under a null that keeps the dependence a random re-pairing already yields {{perm_worst_null}} of {{perm_ins_armB_ndim_h368}} dimensions positive on average, so observing {{perm_ins_armB_npos_h368}} of {{perm_ins_armB_ndim_h368}} is close to unremarkable. A fair coin centres the count at {{perm_faircoin}} of {{perm_ins_armB_ndim_h368}}; the dependence-preserving null centres it between {{perm_null_lo}} and {{perm_null_hi}} depending on model, horizon and arena.
 
