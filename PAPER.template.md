@@ -64,7 +64,7 @@ a practitioner can use without reading the rest.
   {{m64_h1_unit}}-row units, finds a gap of {{m64_h1_gap}} {{m64_h1_ci}} in favour of **teacher forcing** (§5).
 - **Two more of the base paper's claims, tested under rules committed before the runs.** RWM is
   ahead at h = {{v2_diag_h}} of MLP, RSSM and transformer baselines built to our reading of its
-  specification and trained with RWM's settings, whether teacher-forced as the original trains them or autoregressively, on the held-out pair's {{mn_nind}} independent trajectories at {{iters_main}} iterations, though every baseline is worse there than predicting no change, and neither reading our RSSM's forecast from its prior's expected or sampled latent nor retraining it with two other settings on one seed removes its open-loop collapse (rule X1, exploratory: **{{x1_final_reading}}**; §5.3). On accuracy alone at our budget, {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor neighbours of the original's {{mn_centre_label}} beat it, {{mn_n_short_better_word}} shorter histories at under half its cost per iteration and {{mn_better_long_phrase}} at more (no reading the rule reports puts the centre ahead of any of them), but trained longer the centre passes each of them on at least one reading (post hoc), so the ranking depends on the training budget; the original chose the centre as a trade-off with training time, which its own printed hours are consistent with and we do not test (§5.2).
+  specification and trained with RWM's settings, whether teacher-forced as the original trains them or autoregressively, on the held-out pair's {{mn_nind}} independent trajectories at {{iters_main}} iterations, though every baseline is worse there than predicting no change; matched to RWM's parameter count, the MLP stays behind and the transformer cannot be told apart (rule X4: **{{x4_reading}}**), and neither reading our RSSM's forecast from its prior's expected or sampled latent nor retraining it with two other settings on one seed removes its open-loop collapse (rule X1, exploratory: **{{x1_final_reading}}**; §5.3). On accuracy alone at our budget, {{mn_n_better_word}} of the {{mn_n_configs_word}} one-factor neighbours of the original's {{mn_centre_label}} beat it, {{mn_n_short_better_word}} shorter histories at under half its cost per iteration and {{mn_better_long_phrase}} at more (no reading the rule reports puts the centre ahead of any of them), but trained longer the centre passes each of them on at least one reading (post hoc), so the ranking depends on the training budget; the original chose the centre as a trade-off with training time, which its own printed hours are consistent with and we do not test (§5.2).
 - **The σ = 0 optimum of the implemented objective.** The implemented state loss is minimised at
   σ = 0, so the per-member σ the method discards collapses by construction: derived, and
   demonstrated against known noise (§6.3).
@@ -534,6 +534,7 @@ as RWM and test each baseline's relative-L1 at h = {{v2_diag_h}} against it, on 
 | model | parameters | relative-L1, h = {{v2_deploy_h}} | relative-L1, h = {{v2_diag_h}} | difference from RWM [95% interval] | result | cost per iteration, relative to RWM |
 |---|---|---|---|---|---|---|
 {{bl_table}}
+{{x4_table_rows}}
 
 **Arena as in §5.2: {{h2h_arena}}, {{h2h_ntraj}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind}}.** Each row is the mean over
 {{mn_seeds_word}} seeds at {{iters_main}} iterations (`results/baselines_eval.json`). A difference is
@@ -543,7 +544,7 @@ Appendix B. † marks a diverged row, one where any seed's mean relative-L1 at h
 {{div_factor}}× the hold-last floor's (`results/pooled_nrmse_rescore.json`, post hoc). Run-away
 rollouts dominate those {{div_n_word}} rows' means; per seed they are {{div_per_seed}}. No verdict
 depends on that magnitude, only on the sign: each such row's {{mn_nind}} per-trajectory differences from
-RWM are all positive, so every bootstrap resample favours RWM whatever their size.
+RWM are all positive, so every bootstrap resample favours RWM whatever their size. The two size-matched rows (rule X4) are trained autoregressively for {{iters_main}} iterations on {{mn_seeds_word}} seeds and scored on the same arena (`results/x4_matched_baselines.json`); they were not timed in that sitting, so their last cell is empty.
 
 **Result: {{bl_tf_verdict}} with the baselines teacher-forced, and {{bl_ar_verdict}} with them
 trained autoregressively.** RWM is ahead of baselines built to our reading of Table S7 and trained
@@ -578,8 +579,7 @@ DreamerV2's naming (`BASELINE_SPECS.md`, the RSSM rows), and X1 tried only the t
 
 **Limits.** One robot on flat ground; the original has several environments. The baselines
 are our reading of a table that fixes their shapes and nothing else. Their loss, optimiser and
-budget are RWM's, not tuned for them. Their sizes are Table S7's, not matched to RWM's;
-parameter-matched variants were specified but not run. With {{mn_nind}} independent trajectories, the minimum detectable effect at h = {{v2_diag_h}} is
+budget are RWM's, not tuned for them. Their sizes are Table S7's. Matched to RWM's parameter count instead (rule X4, committed before the runs; the table's last two rows), the autoregressive MLP and transformer return **{{x4_reading}}**: at h = {{v2_diag_h}} the MLP trails RWM by {{x4_D_mlp}} {{x4_ci_mlp}} ({{x4_res_mlp}}), and the transformer's {{x4_D_tf}} {{x4_ci_tf}} cannot be settled (p = {{x4_p_tf}}; {{x4_res_tf}}), as at h = {{v2_deploy_h}} and h = 32, which return {{x4_alongside_reading}} too. Matching the parameter count is one axis; the shapes and settings stay our reading of Table S7, and the size-matched RSSM was not run. With {{mn_nind}} independent trajectories, the minimum detectable effect at h = {{v2_diag_h}} is
 about {{bl_mde_h368}}% of RWM's error, well below every difference here.
 
 ---
@@ -1268,7 +1268,7 @@ its floor back up, and is untested for any
 
 The Robotic World Model's central training claim reproduces at long horizons, and the margin is
 large there, though teacher forcing leads at one step on the short windows built for it. RWM is
-ahead at h = {{v2_diag_h}} of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change, and on accuracy alone {{mn_n_better_word}} other history and forecast lengths beat its chosen ones at our budget, no reading the rule reports putting the chosen ones ahead of any of them, in a ranking that changes when the chosen setting trains longer; it chose them as a trade-off with training time (§5.2, §5.3). Neither
+ahead at h = {{v2_diag_h}} of the baselines we built to our reading of it and trained with its settings, though there none of them beats predicting no change, and matched to RWM's parameter count the transformer cannot be told apart from it (rule X4: {{x4_reading}}), and on accuracy alone {{mn_n_better_word}} other history and forecast lengths beat its chosen ones at our budget, no reading the rule reports putting the chosen ones ahead of any of them, in a ranking that changes when the chosen setting trains longer; it chose them as a trade-off with training time (§5.2, §5.3). Neither
 uncertainty output of the follow-up that adds them reports what a reader would take it to report.
 At h = {{v2_deploy_h}}, the horizon the method's own imagination rollouts run to, the aleatoric σ is {{d1n_alea_ratio_h100}}× smaller than its own error, because the objective's optimum is σ = 0 and the term that should prevent this cancels out of the gradient. The epistemic term the method actually penalises with is better by a factor of {{d1n_epi_over_alea_h100}} and still {{d1n_epi_ratio_h100}}× [{{d1n_epi_ratio_ci_h100}}] overconfident, both figures at h = {{v2_deploy_h}} on the {{d1n_nind}} trajectories of the checkpoint's own training episodes.
 

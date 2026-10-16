@@ -3861,6 +3861,9 @@ def main():
     put("x4_npar_mlp", f'{X4["n_params"]["mlp"]:,}', _x4s)
     put("x4_npar_tf", f'{X4["n_params"]["transformer"]:,}', _x4s)
     assert _a4["l1_h100"]["verdict"] == _a4["l1_h32"]["verdict"] == _r4["label"]
+    # section 5.3: "as at h = 100 and h = 32" -- the same per-baseline results there, not only the same label
+    assert all(_a4[k]["per_baseline"][b]["result"] == _r4["per_baseline"][b]["result"]
+               for k in ("l1_h100", "l1_h32") for b in ("mlp", "transformer"))
     put("x4_alongside_reading", _a4["l1_h100"]["verdict"], _x4s)
     # rows for section 5.3's table, in its own format (_m3: three-seed mean over the held-out pair's trajectories); the
     # evaluator's RWM is the table's RWM row, asserted
