@@ -1169,7 +1169,7 @@ shipped as supplementary.
 **Count independent trajectories, not trajectories.** Two 400-step windows that overlap at all
 are one piece of evidence, not two. The held-out arena here contains {{nind_oos_400}} independent
 400-step trajectories however many windows are drawn from it, and that number bounds every
-long-horizon claim (§3); reporting an interval beside a trajectory count rather than an
+long-horizon magnitude (§3), though §5's direction is re-tested on all ten episodes, each held out once (rule X3, {{x3_n}} trajectories); reporting an interval beside a trajectory count rather than an
 independent-trajectory count overstates precision. Resampling pooled seed × trajectory values instead of trajectories narrows
 intervals by a further {{bu_mean_ratio}}× (§8).
 
