@@ -160,7 +160,7 @@ the total exactly. A further 1 value is in the committed artifacts and absent
 after regeneration: `results/anon_bundle.json` (key `.zip_bytes`). All of these counts are recorded in
 `results/verify_reproduction.json`.
 
-**How big the claim is.** 16,405 values is 0.73% of the 2,251,464 numeric values under `results/` that the comparison counts. The other 2,235,059 are carried in by the clone rather than
+**How big the claim is.** 16,405 values is 0.73% of the 2,251,546 numeric values under `results/` that the comparison counts. The other 2,235,141 are carried in by the clone rather than
 regenerated, and are held out of the figure entirely.
 
 **A note on what that number is not.** An earlier version of this section counted every numeric

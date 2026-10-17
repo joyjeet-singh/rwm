@@ -9489,7 +9489,7 @@
   },
   "ver_all": {
     "source": "results/verify_reproduction.json",
-    "value": "2,251,464"
+    "value": "2,251,546"
   },
   "ver_book_named": {
     "source": "results/verify_reproduction.json",
@@ -9505,7 +9505,7 @@
   },
   "ver_copied": {
     "source": "results/verify_reproduction.json",
-    "value": "2,235,059"
+    "value": "2,235,141"
   },
   "ver_diff_by_file": {
     "source": "results/verify_reproduction.json",
