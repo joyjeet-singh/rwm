@@ -9,12 +9,12 @@ it is the level of its "Open items" heading.
 
 *[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
-## Round 4, over `391c7c3` — the known items now
+## Round 4, over `e6ca16e` — the known items now
 
 *[2026-10-17, pre-submission round 4, F11]
 The sections below describe earlier commits and are kept as dated records. This section is the current
 list, written by `docs/presubmission/round4/f11_checklist.py` from the files it names. Section 8's figures
-come from M1, a clean clone of `0c8367a`; a clean clone of the commits after it is predicted to
+come from M2, a clean clone of `0d948df`; a clean clone of the commits after it is predicted to
 measure the printed figures on all 17 reproduction keys. That is a prediction, not a measurement; round 4's
 F12 measures it. Round 4's commits are local: none had been pushed when this was written.*
 
@@ -32,7 +32,7 @@ F12 measures it. Round 4's commits are local: none had been pushed when this was
   1 bundle record (`results/supplementary_manifest.json` (3)), none of them a measurement, a
   statistic or a verdict.
 - **The supplementary manifest is exact.** It records 542 files for an archive of 542
-  members, and 583 commits for a log of 583; both are counted, and asserted.
+  members, and 587 commits for a log of 587; both are counted, and asserted.
 - **No report `reproduce.sh` writes is left untracked and unignored**: a clean clone's status after
   `reproduce.sh` lists no untracked file.
 - **Round 3's four logged items are closed** (`docs/presubmission/round3/OUT_OF_SCOPE.md`):

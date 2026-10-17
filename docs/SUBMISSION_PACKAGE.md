@@ -1,7 +1,7 @@
 # Submission package
 
 Everything needed to upload this submission, and nothing else. **Written for a person at a
-browser.** Every figure here was read from the file it describes, at commit `391c7c3`, by
+browser.** Every figure here was read from the file it describes, at commit `e6ca16e`, by
 `docs/presubmission/round4/f11_package.py`, which also asserts each statement below about the two
 bundles before writing it; the checksums were computed for this document rather than copied from an
 earlier session. This replaces round 3's version.
@@ -35,7 +35,7 @@ Then upload the two files in §1, checking their checksums first.
 | file | what it is | size | SHA-256 |
 |---|---|---|---|
 | `PAPER.pdf` | the submission, 75 pages, TMLR submission mode | 1,208,426 bytes | `4dbc6ac09ebdaf7dd2d6bd85d1e12c7257f13c26f0f188978255d2e50537633f` |
-| `supplementary_anon.zip` | the anonymised supplementary bundle, 566 members | 24,671,207 bytes | `7668635b5899642b7ef5e9d9471e56377734816db31b26bacbecf5dfbff80297` |
+| `supplementary_anon.zip` | the anonymised supplementary bundle, 566 members | 24,671,492 bytes | `9967128e593fd3d01670a9c425a712eb6c3b365f778a3022a27c70698e7989b8` |
 
 **`supplementary.zip` is NOT uploaded — and not because it is unsafe.** Both bundles are anonymised:
 each is built by a script that refuses to write the archive if any staged file carries the author
@@ -65,7 +65,7 @@ shasum -a 256 PAPER.pdf supplementary_anon.zip
 ```
 
 and confirm the two lines match the table above. If they do not, something has rebuilt one of them
-since `391c7c3`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
+since `e6ca16e`; do not upload until they match. Every build recompiles `PAPER.pdf` with a new date
 and ID, so a rebuild alone changes its checksum.
 
 ## 2. Title
@@ -84,7 +84,7 @@ print(" ".join(re.search(r"##\s*Abstract\s*\n+(.+?)\n\s*---", md, re.S).group(1)
 EOF
 ```
 
-At `391c7c3` it is 300 words by a whitespace split, within the 320-word cap the paper's own
+At `e6ca16e` it is 300 words by a whitespace split, within the 320-word cap the paper's own
 check C12.1 enforces, and 1,974 characters, within the submission form's 5,000. The
 title is 106 characters, within the form's 250. It begins "We rebuild the *Robotic World Model* (RWM; arXiv:2501.10100v1) and its" and ends
 "...policy: we bound what the uncertainty reports, not its cost.". It is not retyped anywhere.
@@ -101,7 +101,7 @@ uncertainty it penalises with miscalibrated as a scale that worsens with rollout
 
 ## 5. Anonymity confirmation
 
-Swept at commit `391c7c3`, twice and independently: by the builders' own scans (the anonymised
+Swept at commit `e6ca16e`, twice and independently: by the builders' own scans (the anonymised
 bundle's builder also plants a probe, now a full commit hash since round 2, T8, which fired on every
 run; the supplementary builder's scan has no probe), and by sweep code written separately for
 verification. The channels covered were member paths, member text
@@ -154,8 +154,8 @@ Editorial Policies say action editors nominate the Reproducibility Certification
    reviewed.** It extracts 679 claims, 57 marked supported and
    622 unreviewed. The ruling records the unreviewed claims as known.
 5. **`results/supplementary_manifest.json` is now exact** (round 3, R5): it records
-   542 files for an archive of 542 members and 583 commits for
-   a log of 583, both counted rather than derived. No number the paper prints comes from it.
+   542 files for an archive of 542 members and 587 commits for
+   a log of 587, both counted rather than derived. No number the paper prints comes from it.
 6. **Figure-internal label overlaps were fixed in round 2, T8** (rendered Figures 2(a), 5 and 6; no
    plotted value changed). The PDF prints the step-size quantity as LaTeX math since round 3, R4.
 7. **No report `reproduce.sh` writes is left untracked and unignored** (round 3, R5: the nine that
