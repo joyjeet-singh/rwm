@@ -26,11 +26,11 @@ and cross-references that now point the other way were changed.*
 
 **The number of regenerated values that differ and are themselves a measurement, a statistic or
 the verdict of a test is 0.**
-`./reproduce.sh --quick --force` regenerates 56 artifact files and 15,652
-numeric values from a clean clone: 15,649 bitwise identical (99.98%),
+`./reproduce.sh --quick --force` regenerates 58 artifact files and 16,405
+numeric values from a clean clone: 16,402 bitwise identical (99.98%),
 0 equal to within the verifier's floating-point tolerance but not bitwise, and
 3 differing. Those
-three account for the 15,652 exactly. Regeneration does not reproduce 1 of the committed values, in
+three account for the 16,405 exactly. Regeneration does not reproduce 1 of the committed values, in
 1 of the files; that count is kept separate, because a value that is not
 produced twice cannot be compared twice.
 The 3 differing values are partitioned by cause from the per-file record in
@@ -49,8 +49,8 @@ that no regenerated value differ; 3 do, and it is published as failing, with no
 tolerance added.
 **The claim is narrower than the percentage makes it sound, and we would rather state its size than
 have a reader derive it.** A clean clone already contains every committed artifact, so the only
-honest test is the subset the run actually rewrites: 15,652 values, or 0.92% of the 1,709,275 numeric values under `results/` that the comparison counts. The other 1,693,623 are carried in, prove
-nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 109-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 1149 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **68 comparative claims** across 35 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 68 of 68 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
+honest test is the subset the run actually rewrites: 16,405 values, or 0.73% of the 2,251,464 numeric values under `results/` that the comparison counts. The other 2,235,059 are carried in, prove
+nothing about reproduction, and are never folded into the figure; counting them would overstate the result by about 137-fold. **What "every numeral" means is itself checked.** A paper cannot substitute a section number or an arXiv identifier, so the claim is partitioned: every *measurement* is substituted, and each of the 1149 numerals that is not one is classified as an address, a horizon label or a declared constant — 18 classes and 23 declared exceptions, with the build failing on anything left over (`results/typed_numerals.json`). That audit exists because the abstract used to claim no number here was typed, which was false; the count was printed on every build and asserted by nothing. Verifying that every numeral came from an artifact says nothing about the sentence built around it, and defects of exactly that kind sit downstream of correct numerals. The build therefore also verifies **68 comparative claims** across 35 kinds; all pass, and each is run against a deliberately corrupted expectation on every build and must fail, 68 of 68 caught. **The next section gives the failure modes those checks exist for and the two exclusions from the numeric comparison; the sections after it give the registry, the self-test and the four defects the self-test has found in the checker itself.**
 
 ---
 
@@ -141,7 +141,7 @@ during this revision — two calibration figures that named no horizon, and one 
 three ways in a single sentence — none of which a human reader had noticed.
 **Two exclusions from the numeric comparison**, on the same principle in both cases: the number
 measures the machine, not the model. A third category is not an exclusion but a partition, and it
-bounds everything in this record: of the 1,709,275 numeric values under `results/` that the comparison counts, a clean clone regenerates 15,652 and carries in 1,693,623. The reproducibility claim covers 0.92% of that counted set and is silent about the rest. We state that fraction because a
+bounds everything in this record: of the 2,251,464 numeric values under `results/` that the comparison counts, a clean clone regenerates 16,405 and carries in 2,235,059. The reproducibility claim covers 0.73% of that counted set and is silent about the rest. We state that fraction because a
 reviewer who computes it and finds we did not will reasonably discount everything around it.
 
 *The CPU budget.* `results/step4_5_timing.json` measures the machine, not the model: projected
@@ -324,7 +324,7 @@ holding the **current** run's, so they cannot agree: writing a result into the t
 thing the next run measures. There is no fixed point to converge to, and treating it as a
 reproducibility failure would make the reported figure oscillate rather than settle. They are
 dropped by provenance like the others and counted in the output rather than hidden — the same
-discipline the 56-file figure in the reproducibility section above rests on, since a silent exclusion is exactly how an
+discipline the 58-file figure in the reproducibility section above rests on, since a silent exclusion is exactly how an
 earlier version of this claim was inflated fiftyfold.
 
 ---

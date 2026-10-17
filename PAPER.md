@@ -982,7 +982,7 @@ supplementary `docs/APPENDIX_G_VARIANCE_ARITHMETIC.md`).
 
 **Reproducibility, and a build that checks its own prose.** Every measured number in this paper is
 substituted from an artifact on each build, and a quick run on a clean clone (`./reproduce.sh --quick --force`, which skips
-training) rewrites 0.92% of the numeric values under `results/` that the comparison counts; the rest are carried in
+training) rewrites 0.73% of the numeric values under `results/` that the comparison counts; the rest are carried in
 and prove nothing about reproduction. **The number of regenerated values that differ and are
 themselves a measurement, a statistic or the verdict of a test is 0.** The clean-clone gate requires that
 none differ at all; 3 do, so it fails and is published as failing. The supplementary
