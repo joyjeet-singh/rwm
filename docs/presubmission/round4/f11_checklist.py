@@ -3,7 +3,8 @@ earlier passes (which the file keeps as dated records). Round 3's r8_checklist.p
 logged items are reported closed, each with the round-4 commit that closed it, and round 4's logged items
 are listed from docs/presubmission/round4/OUT_OF_SCOPE.md.
 
-Every figure is computed here from the files named; none is typed. Inserting twice is refused.
+Every figure is computed here from the files named; none is typed. A second run replaces the round-4 section it
+wrote (F11 restated section 8 twice, from M1 and then M2), and nothing else.
 
     usage: f11_checklist.py <submission-check-log> <gate-log> <clone-status-file> <measurement-label> <measured-commit>
 """
@@ -59,9 +60,11 @@ assert len(oos_items) == 8, len(oos_items)       # the list below names each; a 
 
 MARK = "## Round 4, over"
 s = open(F).read()
-assert MARK not in s, "the round-4 section is already present"
 anchor = "## Round 3, over `"
 assert s.count(anchor) == 1
+if MARK in s:                                   # a re-run: drop this script's own section, above round 3's
+    assert s.count(MARK) == 1 and s.index(MARK) < s.index(anchor)
+    s = s[:s.index(MARK)] + s[s.index(anchor):]
 
 SEC = f"""## Round 4, over `{HEAD}` — the known items now
 
