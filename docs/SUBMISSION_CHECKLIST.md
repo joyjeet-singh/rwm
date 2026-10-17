@@ -9,6 +9,66 @@ it is the level of its "Open items" heading.
 
 *[2026-09-30, pre-submission S10-fix] The clean-clone figures in both passes below describe the commits they name. The paper, `docs/BUILD_CHECKS.md` and `README.md` now print a later clean-clone measurement, restated after S11's findings (`docs/DEFERRED.md`, 2026-09-30). The section 8 denominator that the pass over `c16267c` records as "not fixed, by ruling" was reworded on 2026-09-30 by the user's later ruling, so that status is historical too.*
 
+## Round 4, over `391c7c3` — the known items now
+
+*[2026-10-17, pre-submission round 4, F11]
+The sections below describe earlier commits and are kept as dated records. This section is the current
+list, written by `docs/presubmission/round4/f11_checklist.py` from the files it names. Section 8's figures
+come from M1, a clean clone of `0c8367a`; a clean clone of the commits after it is predicted to
+measure the printed figures on all 17 reproduction keys. That is a prediction, not a measurement; round 4's
+F12 measures it. Round 4's commits are local: none had been pushed when this was written.*
+
+### Open items
+
+- **The bare `swh:1:` prefix — ruled 2026-09-20, closed.** No occurrence is followed by an object name.
+- **`submission_check` returns 21 of 22** in the working tree. The one pending
+  criterion is C1: the claims audit, regenerated on the frozen text by ruling U5 (round 4, F11), extracts
+  679 claims, 57 supported and
+  622 unreviewed; the ruling leaves them unreviewed and records it.
+  E7 passes.
+- **`part_f_gate` fails, and the paper publishes it as failing.** 7 of 8 checks
+  pass with the identity strings supplied and a clean clone's results; check 4 alone fails because
+  3 of 16,405 regenerated values differ, all of them bookkeeping in
+  1 bundle record (`results/supplementary_manifest.json` (3)), none of them a measurement, a
+  statistic or a verdict.
+- **The supplementary manifest is exact.** It records 542 files for an archive of 542
+  members, and 583 commits for a log of 583; both are counted, and asserted.
+- **No report `reproduce.sh` writes is left untracked and unignored**: a clean clone's status after
+  `reproduce.sh` lists no untracked file.
+- **Round 3's four logged items are closed** (`docs/presubmission/round3/OUT_OF_SCOPE.md`):
+  - R0, BUILD_CHECKS' list of claims withdrawn on evidence had no length guard: C7.1 now counts its
+    items (`9513ce3`);
+  - R5, §6.7's per-episode difficulty averaged the stale and causal action offsets: it uses the causal
+    timing alone, post hoc analysis N6, ledger `D-39` (`c8cb88b`);
+  - R6, §5.2's per-configuration readings for rule M-74: confirmed in place in round 4 (F4 and F9);
+  - R7, Appendix H's R-46 row had no n_independent: it names both arenas' counts (`5a4d77d`).
+- **Round 4's logged items** (`docs/presubmission/round4/OUT_OF_SCOPE.md`; none changes what is uploaded):
+  - the released code's `dof_acc_l2` reward term subtracts joint positions from joint velocities; neither
+    the paper nor the ledger reports it (F0);
+  - per-trajectory values at h = 368 depend on how trajectories are batched in the rollout, by up to about
+    1e-2; the workplan's optional sensitivity for X3 was not run (F2);
+  - two file:line citations in `docs/DEFERRED.md` and `docs/presubmission/OUT_OF_SCOPE.md` are stale (F4);
+  - Appendix E prints rule M-84's verdict without the one-policy caveat, which sits in §7.2, Appendix H
+    and Appendix V (F4);
+  - the resumed queue runner overwrote the first runner's log lines, and a stray workplan copy was
+    deleted before any bundle was built; neither bundle carries it (between F4 and F5);
+  - two tracked files under `docs/presubmission/`, which no bundle ships, carry a local home path, one of
+    them in a round-4 commit's history, so a push would publish it in the repository (F7);
+  - rule IDs repeat within §5's sections, where W8 keeps one per section for verdicts only (F8);
+  - the supplementary transcript heads two quotations "Quoted in §6.1", which since F8 print in
+    Appendix H's "§6.1 in full" passage; the check that compares them with the transcript was
+    re-pointed in F11 and covers all five again (F11).
+- **TMLR's live rules, read 2026-10-17** (`docs/presubmission/round4/TMLR_CHECK.md`): the style files
+  are the official, unmodified ones; any length is allowed; the submission is a long one. Every
+  author's quota and complete OpenReview profile are the authors' to confirm before submitting.
+- **Figure-internal label overlaps — fixed in round 2, T8.** The PDF prints the step-size quantity as
+  LaTeX math since round 3, R4.
+- **Clean-clone runs share one private folder by default** (`scripts/t5_anon_transcript.py`); set
+  `RWM_PRIVATE_DIR` per clone. **`results/v3_metric_definitions.json` embeds the checkout folder's
+  name** in its citation strings; text only, ignored by the verifier.
+- **What the reproduction evidence covers.** Repeatability on one host, one interpreter and one set
+  of hash-verified inputs, not portability: no second machine has produced these figures.
+
 ## Round 3, over `6e98860` — the known items now
 
 *[2026-10-10, pre-submission round 3, R8]

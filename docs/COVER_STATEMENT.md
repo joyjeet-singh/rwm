@@ -1,7 +1,7 @@
 # Cover statement — TMLR submission
 
 *Draft. Every figure is substituted from a named artifact by the paper's own build; the
-numbers below are quoted from `results/paper_numbers.json` and are current at 62 pages, the
+numbers below are quoted from `results/paper_numbers.json` and are current at 75 pages, the
 length of the compiled submission.*
 
 ---
@@ -20,7 +20,7 @@ file on disk. Concretely:
   reference at the gradient level — losses and gradients match to `0.000e+00` across 7 terms and 106 tensors — before any training run is scored. Shapes, wiring, action indexing and the
   hold-last residual are each verified separately, and every later step inherits all five.
 
-- **23 pre-registered decision rules, with git lead times.** All but one name their conditions and thresholds before their data existed, and Appendix E gives all 23 with the lead time computed from git. 22 have a positive lead and are a difference of two commit timestamps; the remaining one is negative and is not, because its data side is a line in a run log rather than a
+- **28 pre-registered decision rules, with git lead times.** All but one name their conditions and thresholds before their data existed, and Appendix E gives all 28 with the lead time computed from git. 27 have a positive lead and are a difference of two commit timestamps; the remaining one is negative and is not, because its data side is a line in a run log rather than a
   commit — it is the rule this paper withdraws as a pre-registration, and Appendix E says so. The
   full committed text of every rule ships in the supplementary material, unabridged.
 
@@ -36,6 +36,8 @@ file on disk. Concretely:
   OBJECTIVE-DRIVEN stands as returned over the 3 seeds it was discharged on and is not re-opened
   by a larger sample; what the wider sweep establishes is that the all-seeds criterion would not
   have held across all 20, so the hedge the rule carried was necessary rather than cautious.
+
+- **Five of the 28 rules test the paper's own weak points, and a sixth could not be run.** Retrained on fixed folds with each of the ten episodes held out once, the base claim's direction replicates, +2.2275 [+1.3683, +3.5053] at h = 368 over 20 trajectories at 2,500 iterations, not 10,000 (rule X3: `REPLICATES ACROSS FOLDS`). Matched to RWM's parameter count, the MLP baseline stays behind and the transformer cannot be told apart (rule X4: `PARTIAL`; size is the one axis matched). On 70 shorter units at h = 100, ensemble disagreement ranks error ahead of the model's own predicted step size, +0.2816 [+0.1978, +0.3896] (rule X6: `DISAGREEMENT BEATS STEP SIZE`); over the 20 whole trajectories the margin at h = 368 is not resolved, and X6 does not re-test it. Fitted on nine episodes and scored on the tenth, the disagreement's pooled coverage over all 20 trajectories is within the band at every horizon (rule X7: `WITHIN BAND AT 6 OF 6 HORIZONS`), on episodes the checkpoint trained on, so they are unseen only by the multiplier. Re-scored with the released evaluation's timing, four of our rules keep their verdicts, though 22 of their alongside readings change (rule X8: `SAME VERDICT`, a statement about those four rules only). The sixth, rule X5, a test of the penalty that needs no policy, was never pre-registered: its feasibility check found that the released data do not record the velocity command its reward terms score against, so it is reported as not run (ledger `D-38`). Two analyses made afterwards, section 7.2's figures for our own models and the difficulty control at the causal action timing, are labelled post hoc.
 
 - **Fourteen withdrawals kept in the record** — eight claims withdrawn on evidence and six framings withdrawn — with the evidence that withdrew each, including one wrong by about a factor of 10¹³ and one withdrawal of the paper's own claim to have pre-registered a rule it had not.
 
@@ -78,6 +80,8 @@ insights beyond reproducing the original results. This work adds:
 | six controls on the ranking claim | linear, log, cubic and rank partials on depth, a within-step control, and a pre-registered trajectory-difficulty control |
 | an independent-ensemble contrast | five separately trained models against our own shared-trunk ensembles of the released architecture, testing the mechanism rather than asserting it |
 | a capacity-matched re-test | the same contrast with parameter count held fixed: rule M-49 returns `UNDER-POWERED — favours the matched ensemble by less than the MDE`, so capacity does not explain the effect away, and how much of it capacity accounts for is not resolved |
+| a cross-fold re-test | the base claim retrained with each of the ten episodes held out once: rule X3 returns `REPLICATES ACROSS FOLDS` at 2,500 iterations, over 20 trajectories |
+| size-matched baselines | MLP and transformer baselines matched to RWM's parameter count: rule X4 returns `PARTIAL`, the MLP behind and the transformer not told apart |
 | a synthetic ground-truth experiment | data whose noise level is known, isolating the objective as the cause of the σ collapse |
 | a candidate repair, with mixed evidence | the per-horizon multiplier, fitted on one episode and scored on the other: the released checkpoint's cells within 10 points (no cell resolvable at this arena), 17 of 36 epistemic cells on Arm A |
 | two evaluation units | 400-step and short-unit figures reported side by side, each naming its unit, arena and `n_independent` |

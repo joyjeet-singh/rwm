@@ -55,7 +55,7 @@ C_R5 = commit(r"^\[F3\]\[2\] N6 \(post hoc\)")
 C_R7 = commit(r"^\[F9\]\[H3b\] task2_3_matched_and_trend\.py records")
 oos = open("docs/presubmission/round4/OUT_OF_SCOPE.md").read()
 oos_items = [l for l in oos.splitlines() if l.startswith("- ")]
-assert len(oos_items) == 7, len(oos_items)       # the list below names each; a new item must be added here
+assert len(oos_items) == 8, len(oos_items)       # the list below names each; a new item must be added here
 
 MARK = "## Round 4, over"
 s = open(F).read()
@@ -108,7 +108,10 @@ F12 measures it. Round 4's commits are local: none had been pushed when this was
     deleted before any bundle was built; neither bundle carries it (between F4 and F5);
   - two tracked files under `docs/presubmission/`, which no bundle ships, carry a local home path, one of
     them in a round-4 commit's history, so a push would publish it in the repository (F7);
-  - rule IDs repeat within §5's sections, where W8 keeps one per section for verdicts only (F8).
+  - rule IDs repeat within §5's sections, where W8 keeps one per section for verdicts only (F8);
+  - the supplementary transcript heads two quotations "Quoted in §6.1", which since F8 print in
+    Appendix H's "§6.1 in full" passage; the check that compares them with the transcript was
+    re-pointed in F11 and covers all five again (F11).
 - **TMLR's live rules, read 2026-10-17** (`docs/presubmission/round4/TMLR_CHECK.md`): the style files
   are the official, unmodified ones; any length is allowed; the submission is a long one. Every
   author's quota and complete OpenReview profile are the authors' to confirm before submitting.
