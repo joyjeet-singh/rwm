@@ -586,3 +586,117 @@ Body words (round2/t6_words.py): 17,804 (F0: 20,745; accepted, DECISIONS.md#F8-l
 Abstract words / numerals (C12.1): 300 / 19
 Next: F11 (Opus 5.5, default), freeze, restatement, bundles and package. Note that its PLAN steps push (steps 2 and 3), and workplan §6 forbids pushing: F11's clone must be taken from the local HEAD, not from a push, and nothing goes to origin. The cover statement's counts are in step 5, and REVIEW.md item 7 recommends adding round 4's results there. Commits stay local.
 Decisions for user: none
+
+## F11 — 2026-10-17 18:45 — Opus 5.5 (the plan assigns default effort) — status: COMPLETE
+Commits:
+62199fa [F11][2] Regenerate the claims audit (ruling U5: regenerate, do not review): 679 claims, 57 supported, 622 unreviewed
+2098bc2 [F11][3] Before measuring: refresh seven records a clean clone rewrites; re-anchor the correspondence-quotation extractor after F8's move
+0c8367a [F11][3] Before measuring: rebuild both bundles so their committed records match what a clone regenerates
+857384e [F11][6] TMLR recheck in a browser (workplan 8) …; [F11][5] The package-document scripts, run after the final bundles
+78199ca [F11][3] Restate section 8 from M1, a clean clone of 0c8367a: 16,402 of 16,405 values identical, 3 differing, 0 scientific
+391c7c3 [F11][4] Final bundles on the restated tree (78199ca): builder scan 0 residual hits, independent sweep 0 hits in both zips and the PDF
+0d948df [F11][5] The package documents, current at 391c7c3 …
+8961511 [F11][3] Substitute M2's real record (a clean clone of 0d948df): carried-in values 2,235,059 -> 2,235,141; every reproduction figure in the paper unchanged
+b1e84ea [F11][5] f11_checklist.py: a re-run replaces the round-4 section it wrote …
+e6ca16e [F11][4] Bundles rebuilt after M2's record (8961511): builder scan 0 residual hits, independent sweep 0 hits in both zips and the PDF
+06a2a94 [F11][5] The package documents, current at e6ca16e: the zip's new checksum; the checklist's round-4 section names M2
+(the commit carrying this entry and the F11 → F12 checkpoint)
+Done:
+- **How this session ran.** It started in the conversation that ran F0–F10, at the user's "start F11". It stopped once at the usage limit (17 Oct, about 00:25, after the pre-measurement bundles) and resumed at "resume F11" from `evidence/R4F11/RESUME.md`. No subagent and no workflow were used: the workplan's delegation limit (§2) overrides ultracode. Every commit is local, and every clone was taken from the local repository (workplan §6 overrides PLAN F11's pushes).
+- **The user's message at the start (17 Oct)** approves three things, all after F12: pushing and merging the final output, the Hugging Face model-card re-upload, and checking every author's quota. None happens in F11. The quota check needs each author's own OpenReview login, so it stays with the authors.
+- **Step 1, freeze.** From 62199fa no prose edit except §8's figures and the step-5 documents.
+- **Step 2, the claims audit (ruling U5).** Stage 27 found 679 claims, 57 supported and 622 unreviewed (round 3: 550, 58 and 492). The one reviewed claim that lost its verdict is §6.2's "the quantity the method does use is also uncalibrated"; its wording changed when F8 moved it to Appendix M, and the audit drops a verdict when wording changes. No paper number changed.
+- **Step 3, before measuring** (round 3's pre-pass, widened to the 25 cheap stages a clone runs that read documents or scripts round 4 changed; `R4F11/prestale`). Seven records had drifted, and a second pass left them identical:
+  - the comparative-claims, typed-numeral, restatement and pipeline-coverage reports;
+  - `pipeline_coverage.json`;
+  - the PDF channel record and report, which still described round 3's 62-page PDF.
+
+  X6 and X7 rewrote only their `git_head` string, which the verifier does not compare, so the pre-registered artifacts are kept as committed.
+  - **Re-anchored check (rule 9).** F8 moved §6.1's two quotations of the first author's correspondence into Appendix H's "§6.1 in full". `a1_consent_letter.PASSAGES` still matched the shortened §6.1, which no longer quotes, so stage 20q had stopped checking those two quotations against the transcript, and its record would have fallen from 5 quotations to 3.
+    - A second §6.1 entry now scans the moved passage. All five quotations are found, each matches the transcript exactly, and `t5_anon_transcript.json` equals the committed record.
+    - Stage 20q1 fails as it has since round 2.
+  - **Bundles before measuring** (0c8367a; round 3's R8-continued lesson). Both bundles were rebuilt so their committed records match what a clone regenerates. Self-test live, 0 residual hits; 4b passes.
+- **Step 3, the measurements.** Three clean clones of the local `presubmission4`, each with a fresh venv from `requirements.txt` and `reproduce.sh --quick --force`.
+  - **Every clone gave the same tally:** 118 stages, 64 OK, 50 skipped, and round 3's four known failures (20q1, 20n2, 29a, 29).
+    - Round 4's stages run or skip as designed: 20u3 (X6) and 20u4 (X7) run; 20u1, 20u2, 20u5 and 20u6 skip without weights.
+    - Stage 11k is training and `--quick` skips it.
+  - **Every comparison was the same:** the verifier ran three times, byte-identically. 58 files, 16,405 values, 16,402 identical (99.98%), 3 differing, all in `supplementary_manifest.json` (bytes, uncompressed size, commits_in_log), **0 scientific**.
+    - The lost key and the differing carried-in value are those round 3 had: `anon_bundle.json`'s zip_bytes, and the gate record's counts.
+    - The newly regenerated files are X6's and X7's artifacts.
+    - `part_f_gate` against each clone: 7/8, check 4 alone.
+  - **M1** (`R4F11/M1`), of 0c8367a: 7,718 s. §8 was restated from it (78199ca, `restate_M1`):
+    - the builds byte-identical;
+    - the report stages twice, stable;
+    - COVER_STATEMENT's §8 copies refreshed by `s10fix_docs.py`, whose checklist re-append was reverted as in rounds 2 and 3.
+
+    The prediction for 78199ca was 17/17.
+  - **M2** (`R4F11/M2`), of 0d948df: 7,570 s. It matched 0d948df's printed figures on **15 of 17**. The two misses are counts of values a clone carries in, `ver_copied` and `ver_all` (+82 each): 0d948df carries M1's verification record (495 numeric values), where M1's clone carried round 3's (413).
+    - **Why the prediction missed it.** It was a bug in round 3's `predict.zsh`, which F11 inherited. `$M1C:results/$f` applied zsh's `:r` modifier, so the script's "unchanged since its commit" test always failed and it overlaid every file the clone held (349), including the old record.
+    - **The fix, checked.** The fixed script, predicting 0d948df from M1, reproduces M2 exactly (17 files overlaid, 2,235,141, 15/17).
+    - **The substitution.** M2's record holds 495 values, as M1's does, so its record was substituted (8961511, `restate_M2`). `PAPER.md` and `PAPER.tex` were unchanged, because the two figures print in `README.md` and `docs/BUILD_CHECKS.md`. The PDF differed only in its dates and ID, so the committed PDF was kept and its channel record regenerated from it.
+  - **M3** (`R4F11/M3`), of 06a2a94: 7,988 s. It matched every printed reproduction figure, **17/17**, and its record is byte-identical to M2's: a fixed point.
+
+  Three clones is the plan's limit.
+- **Step 4, bundles.** Built three times: before measuring (0c8367a), on the restated tree (391c7c3), and after M2's record (e6ca16e, `R4F11/final2`). The last build:
+  - the manifest was stable at pass 2, and the gate record unchanged;
+  - the self-test detected its probe (9 hits), with 0 residual hits;
+  - the manifest and the gate record in both zips equal the committed ones;
+  - **the independent sweep found 0 hits in both zips and in the PDF**.
+- **Step 5, package documents** (06a2a94). Each was written by a round-4 script (`round4/f11_cover.py`, `f11_checklist.py`, `f11_package.py`), with no figure typed.
+  - **`SUBMISSION_PACKAGE.md`, in full:**
+    - `PAPER.pdf`: 75 pages, 1,208,426 bytes, sha256 `4dbc6ac0…`;
+    - `supplementary_anon.zip`: 566 members, 24,671,492 bytes, sha256 `9967128e…`;
+    - the abstract is within C12.1's 320-word cap and the form's 5,000 characters (1,974);
+    - TMLR's author rules (quota, profiles) are added to the steps before uploading.
+  - **`SUBMISSION_CHECKLIST.md`:** a dated round-4 section, naming M2 as the source of §8's figures.
+    - `submission_check` 21/22 (C1 by ruling U5); gate 7/8.
+    - The manifest is exact: 542 of 542 files, 587 of 587 commits.
+    - Round 3's four logged items are reported closed: R0 by 9513ce3, R5 by c8cb88b, R7 by 5a4d77d, and R6 confirmed in place.
+    - Round 4's eight logged items are listed.
+  - **`COVER_STATEMENT.md`:**
+    - 75 pages; 28 rules, 27 with a positive lead; fourteen withdrawals, unchanged.
+    - A bullet on X3, X4 and X6–X8 in the paper's own wording and scopes, with X5 as neither pre-registered nor run (as Appendix W and D-38 say) and N5–N6 as post hoc. A draft that called all six pre-registered was corrected before it was run.
+    - Two table rows, for X3 and X4.
+  - **`OUT_OF_SCOPE.md`:** F11's one item, the transcript's "Quoted in §6.1" heading.
+- **Step 6, TMLR recheck** (857384e, `TMLR_CHECK.md`):
+  - `tmlr.sty` and `tmlr.bst` are byte-identical to the official repository's `main`;
+  - the Author Guidelines are as F7 read them;
+  - the Editorial Policies allow LLM use and require no disclosure;
+  - the live form's limits: title 250 characters, abstract 5,000, PDF 50 MB, supplement 100 MB; this paper is a "Long submission";
+  - two posts are newer than the workplan's list (15 Oct, 16 Sep), and neither changes the format;
+  - the venue page did not load in the browser, so the form was read from its public invitation.
+Build/gates: pass. Every build-and-gate cycle in this session was byte-identical (`R4F11/s2`, `s3pre`, `restate_M1/*`, `restate_M2/*`, `end`).
+- End of session: compile 75 pages, 0 overfull, 0 warnings; 68/68 claims and 68/68 corruptions.
+- `part_f_gate` 7/7 without a clone (1 not run), and 7/8 against M3's clone, check 4 alone, as §8 publishes it.
+- `submission_check` 21/22 (C1, by ruling U5).
+- The closing cycle changed only the PDF's compile date, and the committed PDF (`4dbc6ac0…`) was restored, so its checksum is the package's.
+Paper numbers changed: from `results/verify_reproduction.json` (round 3's M3 → round 4's M1, then M2):
+- ver_files 56 → 58;
+- ver_values 15,652 → 16,405;
+- ver_identical 15,649 → 16,402;
+- ver_copied 1,693,623 → 2,235,059 → 2,235,141;
+- ver_all 1,709,275 → 2,251,464 → 2,251,546;
+- ver_claim_pct 0.92 → 0.73;
+- ver_overstate 109 → 137;
+- ver_timing 11,988 → 15,794.
+New keys: none
+Re-anchored checks: `scripts/a1_consent_letter.py` PASSAGES: §6.1's correspondence passage → also Appendix H's "§6.1 in full" (the §6.1 entry is kept, and a second entry added)
+CPU jobs over 1 min:
+- M1, M2 and M3: 7,718, 7,570 and 7,988 s of `reproduce.sh` in the clones, about 2 h 10–20 min each with setup and the verifier;
+- the pre-measurement stage passes: two, about 6 min each;
+- three bundle builds of about 45 min each, the last two with the independent sweep;
+- two restatements, about 4 min each;
+- five predictions, under 1 min each;
+- build-and-gate cycles, about 1.5 min each, nine.
+
+None was contended: no training ran, and nothing else was logged.
+Queue status: done (30 of 30)
+Body words (round2/t6_words.py): 17,804 (frozen; F0: 20,745; accepted, DECISIONS.md#F8-length)
+Abstract words / numerals (C12.1): 300 / 19
+Next: F12 (Sonnet 5.5; no edits): clean-clone verification of the final HEAD. As in F11, it clones the LOCAL repository, not a pushed one (workplan §6); the checkpoint gives the driver changes and the expected values. Then come the user's §0.4 steps:
+- the merge to `main` and the model-card re-upload, both approved on 17 Oct;
+- the Software Heritage archive;
+- the authors' quota check and profiles;
+- the author query, if it hasn't gone;
+- the upload last, checked against `SUBMISSION_PACKAGE.md`'s checksums and not rebuilt.
+Decisions for user: none. The workplan's three optional inference-only sensitivities (§5) were not run: they are exploratory, not required, and F11 is a freeze.

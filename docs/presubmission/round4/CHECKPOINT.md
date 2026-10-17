@@ -1,49 +1,54 @@
-# Round-4 checkpoint (workplan §2): F10 → F11, 2026-10-16
+# Round-4 checkpoint (workplan §2): F11 → F12, 2026-10-17
 
-**State.** Branch `presubmission4`, last log entry **F10 — COMPLETE**. All commits since `110ecd7` are local; never push, merge, upload or submit (workplan §6). The tree is clean.
-- **Text:** body 17,804 words, accepted by the user (`DECISIONS.md#F8-length`); abstract 300 words / 19 numerals.
-- **PDF:** 75 pages, 0 warnings. References start on page 27.
-- **Review:** REVIEW.md passes every Annex 6 item, with two qualifications: length (accepted) and the cover statement (F11 step 5). CONSISTENCY.md: 71 rows, all agree.
-- **Ledger:** 288 entries. M-96 is the newest; it corrects M-65's discharge wording.
+**State.** Branch `presubmission4`, last log entry **F11 — COMPLETE**. Every commit since `110ecd7` is local. The tree is clean.
+- **Upload files** (`docs/SUBMISSION_PACKAGE.md`): `PAPER.pdf` 75 pages, 1,208,426 bytes, sha256 `4dbc6ac0…`; `supplementary_anon.zip` 566 members, 24,671,492 bytes, sha256 `9967128e…`.
+- **§8** prints M2's record (a clean clone of `0d948df`). M3, a clean clone of `06a2a94`, matched all 17 reproduction keys, and its record is byte-identical to M2's.
+- **Text frozen:** body 17,804 words; abstract 300 words, 19 numerals.
+
+**User approval (17 Oct, chat).** Pushing and merging the final output, the model-card re-upload to Hugging Face, and checking every author's quota. All three come after F12 passes, as PLAN §0.4 orders them. F12 itself pushes nothing.
 
 **Read first, nothing else.**
-1. `round4/PLAN.md`: §1, the section "F11 — Freeze, restatement, bundles, package", round 3's `SESSION_LOG.md` "## R8" entry, and round 1's "## S10-fix" entry (the B3 recipe), as F11's section names them.
+1. `round4/PLAN.md`: §1 and "F12 — Clean-clone verification".
 2. The last entry of `round4/SESSION_LOG.md`.
-3. `round4/TMLR_CODEX_WORKPLAN.md` §4D, §6 and §8 (F11's TMLR check), and `../CLAUDE.md`'s round-4 section.
+3. `round4/TMLR_CODEX_WORKPLAN.md` §4D, §6 and §7.
 
-**Exact next action: F11.**
-- **No push (workplan §6 overrides PLAN F11's "push" in steps 2 and 3).** Clone the local repository at HEAD (`git clone <local path> /Users/Shared/rwm_verify/r4/M1/`), not a pushed one. The clone's `origin` then points at the local path.
-1. **Freeze.** No prose edits except §8's reproduction figures and the step-5 documents.
-2. **Regenerate the claims audit** (`task_c1_claims_audit.py`, ruling U5), then the fast build and gates, and commit.
-3. **Measure and restate** (round 3's R8). Make a fresh venv from `requirements.txt` in the clone and run `reproduce.sh --quick --force`. Run the verifier three times: the runs must be byte-identical, with 0 scientific differing values. Then:
-   - restate the `ver_*` keys;
-   - refresh the hand-written copies with `docs/presubmission/s10fix_docs.py`;
-   - re-clone until every reproduction key matches (up to three times).
-
-   Evidence goes to `R4F11/`.
-4. **Bundles.** Rebuild both (`make_anon_bundle.py --zip`, `build_supplementary.py`). The builder scan and the independent deny-list sweep must find 0 hits in both zips and the PDF. `part_f_gate` 4b should then pass.
-5. **Package documents:**
-   - `SUBMISSION_CHECKLIST.md`, round-4 section;
-   - `SUBMISSION_PACKAGE.md`, in full;
-   - `COVER_STATEMENT.md`: rule count 28, page count, retraction counts. REVIEW.md item 7 also recommends adding round 4's results: X3–X8 and N5–N6;
-   - `round4/OUT_OF_SCOPE.md`: carry forward anything open.
-6. **TMLR recheck** (workplan §8): the live Author Guidelines and the OpenReview form, in a browser; also whether `tex/tmlr.sty` is the official, unmodified file. Record it in `round4/TMLR_CHECK.md`.
+**Exact next action: F12 (no edits).**
+- **Clone the LOCAL repository's HEAD** (`file://` URL, as `evidence/R4F11/measure.zsh` does) into `/Users/Shared/rwm_verify/r4/F12/`, not a pushed one (workplan §6). Use a fresh venv.
+- **Driver.** Copy `evidence/R3R9/r9_driver.zsh` to `evidence/R4F12/` and adapt it:
+  - branch `presubmission4`;
+  - the local URL in place of `git ls-remote`;
+  - the stage reference `evidence/R4F11/M3/stages.json`;
+  - the word base: round 4's F0, `18cc54f`, body 20,745.
+- **Expect:**
+  - 118 stages: 64 OK, 50 skipped, and the four known failures (20q1, 20n2, 29a, 29);
+  - round 4's stages: 20u3 and 20u4 OK; 20u1, 20u2, 20u5 and 20u6 skipped (`NEEDS_WEIGHTS`);
+  - the verifier ×3 byte-identical: 16,405 values, 16,402 identical, 3 differing (the supplementary manifest's bytes, uncompressed size and commits_in_log), **0 scientific**;
+  - printed = measured on all 17 reproduction keys;
+  - `part_f_gate` 7/8, check 4 alone;
+  - 0 deny-list hits in the rebuilt and the committed upload files;
+  - the PDF equal to the committed one after blanking its dates and ID;
+  - `submission_check` 21/22 (C1, by ruling U5).
+- **Write** `round4/FINAL_REPORT.md`, and stop with `BLOCKED` on any failure.
 
 **Tools.**
 - Interpreter: the absolute path in `../CLAUDE.md`'s hard rule 2.
-- End of session: `/Users/Shared/rwm_verify/evidence/R4F10/build/run.sh`, copied to `R4F11/` with its paths changed by sed.
-- Stage 21a: `./reproduce.sh --quick --force --stage 21a`, then remove `results/_regenerated.txt`.
+- `evidence/R4F11/`:
+  - `pdfcmp.py`, the PDF comparison;
+  - `predict.zsh`, now fixed;
+  - `measure.zsh`, the local-clone driver.
 
 **Traps.**
-- `make_anon_bundle.py` rewrites `docs/COMMIT_LABEL_MAP.json`, adding labels for new commits and changing none. In F11 the rewrite is wanted.
-- A clean clone carries `results/` in. Partition on `results/_regenerated.txt` (M-28).
-- `pdftotext` is not installed; use `pypdf`, and `sips` to render pages.
-- `runs/` and `*.pt` are not in a clone: stages that need them skip (`NEEDS_WEIGHTS`); X6 and X7 run without them.
-- Commit labels in the PDF and bundle must be the anonymised ones (Data and code).
+- **zsh modifiers:** `$VAR:r…` applies a modifier, so write `${VAR}:results/…`. Round 3's `predict.zsh` had this bug: it overlaid every file and missed a carried-in count.
+- **M-28:** partition on `results/_regenerated.txt`.
+- **The gate** needs the identity strings derived as in `measure.zsh`.
+- **Disk:** about 12 GiB free. The clones in `r4/M1`–`M3` are about 2.5 GB each, and deleting them is the user's call.
 
 **Blockers:** none.
 
-**Open (user):**
-- Re-upload the model card to Hugging Face after F12 (ruling W12).
-- Check every author's remaining TMLR submission quota.
-- Publishing: push, merge, archive and submit.
+**Open (user, after F12 passes):** PLAN §0.4 "After F12".
+- Merge to `main` (approved).
+- Re-upload `MODEL_CARD.md` (approved; it changed since round 3).
+- Software Heritage archive of the pushed commit.
+- The author query, if it hasn't gone.
+- Every author's quota check (needs each author's OpenReview login) and complete profiles.
+- The upload last, checked against the package's checksums and not rebuilt. Two tracked internal files carry a local home path (`OUT_OF_SCOPE.md`, F7), which a push publishes in the repository.
