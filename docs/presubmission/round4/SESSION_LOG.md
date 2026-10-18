@@ -700,3 +700,45 @@ Next: F12 (Sonnet 5.5; no edits): clean-clone verification of the final HEAD. As
 - the author query, if it hasn't gone;
 - the upload last, checked against `SUBMISSION_PACKAGE.md`'s checksums and not rebuilt.
 Decisions for user: none. The workplan's three optional inference-only sensitivities (§5) were not run: they are exploratory, not required, and F11 is a freeze.
+
+## F12 — 2026-10-18 21:25 — Opus 5.5 (the plan assigns Sonnet 5.5) — status: COMPLETE
+Commits: the commit carrying this entry, `round4/FINAL_REPORT.md` and the closing checkpoint. The repository was otherwise not edited; the verified commit is 796a026.
+Done:
+- **How it ran.** On Opus 5.5, in the same conversation as F0–F11, at the user's "Start F12". Round 3's R9 driver was copied and adapted (`evidence/R4F12/f12_driver.zsh`):
+  - the branch; the local repository cloned by a `file://` URL in place of the pushed branch (workplan §6);
+  - paths, with the clone's origin path redacted in its records;
+  - F11's M3 as the stage reference; round 4's F0 base (`18cc54f`) for words.
+
+  The driver ran a clean clone of 796a026 with a fresh venv from `requirements.txt` (18:03–21:16): `setup.sh`, `reproduce.sh --quick --force` (8,017 s), the verifier three times against a pristine reference, the full build and every gate, both bundles, the deny-list sweeps of the rebuilt and the committed upload files, and the PDF comparison. The repository's status and HEAD were unchanged afterwards, and no record the driver wrote holds an identity string.
+- **Every criterion passes** (`round4/FINAL_REPORT.md`):
+  - **0 scientific differences.** 16,405 values, 16,402 identical; the 3 that differ are all in the supplementary manifest; v1 = v2 = v3.
+  - **The gate fails as published:** `part_f_gate` 7/8, check 4 alone.
+  - **Printed = measured on 17/17 reproduction keys.**
+  - **The PDF is identical** to the committed one after blanking dates and ID; 75 pages, 0 overfull boxes, 0 warnings.
+  - **0 deny-list hits** in the rebuilt bundles and PDF, and in the committed upload files.
+  - **`submission_check` 21/22** (C1, by ruling U5), as the checklist records.
+  - **Round 4's stages run or skip as designed:** 20u3 and 20u4 OK; 20u1, 20u2, 20u5 and 20u6 SKIP without weights.
+- **Also checked.**
+  - The stage tally (118 stages; 64 OK, 50 SKIP, 4 known failures) is identical to F11's M1–M3.
+  - The two builds are identical, and the documents equal the committed ones; `MODEL_CARD.md` matches with `runs/` linked. `paper_numbers.json` differs only in three host-sourced keys the verifier excludes, none of them printed.
+  - The rebuilt anonymised bundle has the same 566 members as the committed one, and 16 differ in bytes, all of them the clone's own host, timing and `git_head` records.
+  - The upload files' SHA-256s equal `SUBMISSION_PACKAGE.md`'s: `PAPER.pdf` `4dbc6ac0…` and `supplementary_anon.zip` `9967128e…`.
+- **Outside F12, at the user's request (18 Oct):** the past verification clones under `/Users/Shared/rwm_verify` were moved to the Trash: rounds 1–3, F11's `r4/M1`–`M3`, and the top-level upstream copies that only they used. That is about 42 GB, which emptying the Trash frees. Kept: `r4/F12`, `evidence/`, `JOURNAL.md`, `STATE.json` and the small `rwm_private*` folders. Nothing the repository or F12 used was moved.
+Build/gates: pass, in the clone (see above); nothing was built in the repository.
+Paper numbers changed: none
+New keys: none
+Re-anchored checks: none
+CPU jobs over 1 min: the clean clone's `reproduce.sh` (8,017 s); both bundles (about 15 min); the two deny-list sweeps (about 25 and 13 min). None contended.
+Queue status: done (30 of 30)
+Body words (round2/t6_words.py): 17,804 (F0: 20,745; accepted, DECISIONS.md#F8-length)
+Abstract words / numerals (C12.1): 300 / 19
+Next: round 4 is complete. PLAN §0.4, "After F12", is the user's, in this order:
+1. Fast-forward or merge `presubmission4` into `main`, and push (approved 17 Oct). Two tracked internal files carry a local home path (`OUT_OF_SCOPE.md`, F7).
+2. Re-upload `MODEL_CARD.md` to Hugging Face (approved 17 Oct; it changed in round 4).
+3. Trigger a Software Heritage archive of the final pushed commit.
+4. Send the author query if it has not gone.
+5. Have every author check their remaining TMLR quota (with their own OpenReview login) and complete their profile.
+6. Upload `PAPER.pdf` and `supplementary_anon.zip` last, checked against the SHA-256s and not rebuilt.
+
+Nothing is pushed once the paper is under review.
+Decisions for user: none.
