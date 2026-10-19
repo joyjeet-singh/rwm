@@ -3879,13 +3879,107 @@
         "scripts/appendix_g_rules.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-97",
+      "claim": "PRE-REGISTERED rule X11a: the ensemble-5 arms' held-out calibration at n = 20, and in-sa",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11a_fold_ens5_calibration.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/round5_queue_timing.json",
+        "results/task_d3_ens5.json",
+        "results/x11_power.json",
+        "results/x11a_fold_ens5_calibration.json",
+        "scripts/queue_run.py",
+        "scripts/queue_runner.sh",
+        "scripts/step5_train.py",
+        "scripts/x11_common.py",
+        "scripts/x11a_fold_ens5_calibration.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-98",
+      "claim": "PRE-REGISTERED rule X11b: M-43's disagreement-against-index comparison on X3's five fold",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11b_fold_m43.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/round5_queue_timing.json",
+        "results/task_d3_ens5.json",
+        "results/task_d3b_ens5_power.json",
+        "results/x11_power.json",
+        "results/x11b_fold_m43.json",
+        "scripts/queue_run.py",
+        "scripts/queue_runner.sh",
+        "scripts/step5_train.py",
+        "scripts/x11_common.py",
+        "scripts/x11a_fold_ens5_calibration.py",
+        "scripts/x11b_fold_m43.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-99",
+      "claim": "PRE-REGISTERED rule X11c: the per-horizon recalibration on episodes the ensemble-5 arms ",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11c_fold_recalibration.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/round5_queue_timing.json",
+        "results/task_d3_perhorizon.json",
+        "results/x11_power.json",
+        "results/x11c_fold_recalibration.json",
+        "results/x7_loeo_recalibration.json",
+        "scripts/queue_run.py",
+        "scripts/queue_runner.sh",
+        "scripts/step5_train.py",
+        "scripts/x11_common.py",
+        "scripts/x11c_fold_recalibration.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-100",
+      "claim": "PRE-REGISTERED rule X11d: M-44's independent-against-shared-trunk comparison on X3's fiv",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11d_fold_m44.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/p1_power_check.json",
+        "results/r2_independent_ensemble.json",
+        "results/round5_queue_timing.json",
+        "results/v2_deployment_horizon.json",
+        "results/x11_power.json",
+        "results/x11d_fold_m44.json",
+        "scripts/queue_run.py",
+        "scripts/queue_runner.sh",
+        "scripts/step5_train.py",
+        "scripts/x11_common.py",
+        "scripts/x11a_fold_ens5_calibration.py",
+        "scripts/x11d_fold_m44.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
     "D": 39,
-    "M": 96,
+    "M": 100,
     "O": 14,
     "R": 80,
     "S": 21,

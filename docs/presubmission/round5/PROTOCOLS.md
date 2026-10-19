@@ -316,41 +316,113 @@ same provenance fields as X9); stage `20v2 "X10 — in-sample against held-out c
 
 ---
 
-## 4. X11 — the ensemble experiments on X3's folds (skeleton; GT1 completes it)
+## 4. X11 — the ensemble experiments on X3's folds (completed by GT1, 2026-10-19)
 
-Y5 is **(B)** (`DECISIONS.md#G0-rulings`), so X11 runs and X12 does not. GT1 fills every `‹GT1›` and commits the
-completed rule and the queue under a `PRE-REGISTER` subject before the first run starts.
+*Training plus inference; pre-registered by GT1's `PRE-REGISTER` commit, before any X11 run exists.* Y5 is
+**(B)** (`DECISIONS.md#G0-rulings`), so X11 runs and X12 does not. The queue's cap is the user's ruling
+`DECISIONS.md#GT1-cap`. Ledger: X11a = M-97, X11b = M-98, X11c = M-99, X11d = M-100 (`PRE-REGISTERED`, each recording
+the SHA-256 of its frozen files); X11e's entry is G3's (below).
 
-**Runs (training).** Through the round-4 queue mechanism, one job at a time (PLAN §1.5), 2,500 iterations, Arm A
-configuration, on folds {0, 2}, {3, 4}, {5, 6}, {7, 9}:
-- ensemble-5, seeds 0–2: 12 runs, `runs/x3_armA_ho{fold}_seed{s}_ens5/weights_2500.pt`, records
-  `results/x3_run_armA_ho{fold}_seed{s}_ens5.json`;
-- single model, seeds 3–4: 8 runs, `runs/x3_armA_ho{fold}_seed{s}/weights_2500.pt`, records
-  `results/x3_run_armA_ho{fold}_seed{s}.json` (seeds 0–2 already exist from X3).
-With fold {1, 8}'s existing runs, every fold then has three ensemble-5 arms and five independent members.
-CPU: ‹GT1: probe one ensemble-5 and one single-model run for 50 iterations on an idle machine; project; cap 30 CPU-h
-(Y5)›. Queue file, driver, sentinel and log: ‹GT1›. Training data assertion for each run: its recorded
-`train_episodes` and `n_train_windows` equal X3's for that fold (`x3_cross_fold.json` assertions a–c).
+### 4.1 Runs
 
-**Readings** (each its own frozen script, committed before the queue finishes; statistics, thresholds and
-branches copied from the discharged rule, with only the arena changed to the five folds' 20 held-out trajectories,
-each fold's models scored on its own held-out pair; n = 20; paired bootstrap as X9 §2.4):
-- **X11a** — held-out ensemble-5 calibration by horizon (statistics of `task_d3_ens5.py` §2), and X10's Q with every
-  episode both in and out of sample (each fold's arms on its own 16 training trajectories against its own 4
-  held-out). Verdict labels: X10's. ‹GT1: script name, keys›
-- **X11b** — M-43's comparison of disagreement with the forecast-step index (`task_d3_ens5.py:160-231`): per seed,
-  horizons {8, 32, 128, 368}, "leads at every horizon" and "paired interval excludes zero at a majority", labels
-  GENERALISES / DOES NOT GENERALISE. ‹GT1›
-- **X11c** — the per-horizon recalibration on episodes the model never saw: `task_d3_perhorizon.py`'s "fit on one
-  held-out episode, score on the other" protocol, per fold and pooled over the five folds; X7's band and labels.
-  ‹GT1›
-- **X11d** — M-44's comparison of independent members with the shared trunk (`r2_independent_ensemble.py`'s `m44`
-  block): h = 100, MDE thresholds 1.45 (ratio) and 2.26 points (coverage) from `results/p1_power_check.json`, a
-  condition holds only against every shared-trunk seed. ‹GT1›
-- **X11e** — X9's per-member propagation (§2, unchanged) on the fold ensemble-5 arms, verdict as §2.5 at n = 20.
-  ‹GT1›
+Through the round-4 queue mechanism (`scripts/queue_runner.sh`, unchanged; `scripts/queue_run.py`'s new
+`x11-e5-<fold>` trainer and X3's `x3-A-<fold>` trainer), one job at a time (PLAN §1.5), 2,500 iterations, Arm A,
+faithful MSE, released width, on folds {0, 2}, {3, 4}, {5, 6}, {7, 9}:
+- **ensemble-5, seeds 0–2: 12 runs**, `scripts/step5_train.py --arm A --seed s --holdout a,b --ensemble 5` →
+  `runs/x3_armA_ho<ab>_seed<s>_ens5/weights_2500.pt`, `results/x3_run_armA_ho<ab>_seed<s>_ens5.json`;
+- **single model, seeds 3–4: 8 runs**, `scripts/step5_train.py --arm A --seed s --holdout a,b` →
+  `runs/x3_armA_ho<ab>_seed<s>/weights_2500.pt`, `results/x3_run_armA_ho<ab>_seed<s>.json` (seeds 0–2 exist from X3).
 
----
+With fold {1, 8}'s existing runs (`runs/armA_seed{0,1,2}_ens5`, `runs/armA_seed{0..4}`), every fold then has three
+ensemble-5 arms and five independent members. **Training support** (`round5/gt1_fold_support.py` →
+`round5/gt1_fold_support.json`): (a) each fold's training windows, built as the driver builds them, have the length
+every committed run of that fold records, and {1, 8}'s list has round 4's SHA-256; (b) 50-iteration runs reproduce
+the committed first 50 values of all six loss traces **bitwise** — ensemble-5 seed 0 through `--holdout 1,8
+--ensemble 5` and through the default path against `results/step5_armA_seed0_ens5.json`, and single-model seed 3
+through `--holdout 1,8` against `results/step5_armA_seed3.json`; (c) each new fold excludes exactly its two episodes
+and its four held-out trajectories lie inside them. All passed. The driver edit changed five lines in place and moved
+none, so no cited line of `scripts/step5_train.py` moved.
+
+**Projection and cap**: `scripts/round5_queue_timing.py` → `results/round5_queue_timing.json` (probe on an idle
+machine; cap = 1.10 × projection, rounded up). **Queue**: `runs/queue_round5.txt`, written from that record;
+`round5/RUN_QUEUE.md` holds the status command. No session reads a queue run's evaluation before GT2; G3 and G4 may
+check only that each run started and that its loss is finite.
+
+### 4.2 Readings
+
+Each is its own frozen script; it imports or copies (verbatim, with file:line) the discharged rule's statistics,
+thresholds and branches, and changes only the arena: **the five folds' 20 held-out trajectories** (each fold's models
+scored on that fold's own held-out pair, `x11_common.arena`, one batch of 4 per fold, pooled in X3's fold order).
+Shared loaders: `scripts/x11_common.py`. Each script runs `--assert-only` (fold {1, 8}, existing weights, no
+reading) and, in GT2, its reading; the reading refuses to run unless its ledger entry records the SHA-256 of every
+frozen file (`x11_common.require_prereg`, the pattern of `x3_cross_fold.py:323`), and every non-finite value stops it
+with a `.blocked` record.
+
+| reading | script | discharged rule it copies | verdict labels | fold-{1, 8} reproduction (assert-only) |
+|---|---|---|---|---|
+| **X11a** | `scripts/x11a_fold_ens5_calibration.py` | `task_d3_ens5.py:243-278` (calibration) and X10 (§3) | X10's: IN-SAMPLE FLATTERS / IN-SAMPLE IS WORSE / MIXED, at h = 1 | `task_d3_ens5.json` `calibration`, intervals included: max difference 0.0 |
+| **X11b** | `scripts/x11b_fold_m43.py` | M-43, `task_d3_ens5.py:160-231` | GENERALISES / DOES NOT GENERALISE | `governing` and `m43_verdict`: 0.0 |
+| **X11c** | `scripts/x11c_fold_recalibration.py` | the D3 per-horizon recalibration, `task_d3_perhorizon.py:44-56, 85-127` | PER-HORIZON SCALAR RESTORES / DOES NOT RESTORE CALIBRATION (epistemic governs) | released checkpoint: `task_d3_perhorizon.json` `quantities`: 0.0 |
+| **X11d** | `scripts/x11d_fold_m44.py` | M-44, `r2_independent_ensemble.py:211-389` | MECHANISM SUPPORTED / UNRESOLVABLE / MECHANISM NOT SUPPORTED | `r2_independent_ensemble.json`: 0.0 |
+| **X11e** | G3, inside `scripts/x9_per_member_propagation.py` | X9 (§2), unchanged | §2.5's four labels, n = 20 | X9's assertion (i)(b) on fold {1, 8} |
+
+**X11a.** Per seed, ρ, ±1σ, ±2σ coverage and the count of dimensions with r > 0, on the 20 held-out trajectories
+(seed s's 20 come from seed s's arm of each fold); pooled = mean over seeds; interval as `task_d3_ens5._ci` with
+`default_rng(0).integers(0, 20, (20000, 20))`. X10 with every episode in both roles: each fold's arms are also rolled
+out on that fold's 16 training trajectories (one batch of 16); each of the 20 trajectories is then in-sample in
+exactly four folds, and its in-sample value is the mean over those four (numerator and denominator separately).
+Q(h) = ρ_in/ρ_out per seed and pooled as X10. Verdict at h = 1; h = 100 is "the label it would carry".
+
+**X11b.** Per seed and horizon: r(index, |error|), r(disagreement, |error|), the partial, and the paired difference
+with `task_d3_ens5.cluster_boot` (default_rng(0), 20,000 draws, now over 20 trajectories). M-43's verdict exactly:
+leads in all three seeds at every h ∈ {8, 32, 128, 368}, and the paired interval excludes zero in all three seeds at
+more than 2 of the 4.
+
+**X11c.** For each fold, seed and quantity, both directions (fit on one held-out episode, score on the other), the
+per-horizon scalar and the constant, as `task_d3_perhorizon.py`, on that fold's ensemble-5 arms. A cell is calibrated
+iff its coverage is within 0.10 of 68.27%; RESTORES CALIBRATION iff all 180 epistemic cells (5 folds × 2 directions
+× 6 horizons × 3 seeds) are. Alongside, not a reading: coverage pooled over the ten test episodes (20 trajectories)
+per seed and seeds pooled, with X7's interval and band labels.
+
+**X11d.** Per fold, the five single models (seeds 0–4) as an independent ensemble (`rollout_independent`) against
+that fold's three ensemble-5 arms; at h = 100, per shared-trunk seed, the log ratio of overconfidence factors and the
+coverage difference with `cboot_paired` (default_rng(100 + s), default_rng(200 + s), 20,000 draws over 20
+trajectories); M-44's six conditions against every shared-trunk seed, with **M-44's committed MDE thresholds, 1.45×
+and 2.26 points**, unchanged. Alongside: the label under the n = 20 MDE from `results/x11_power.json`.
+
+**X11e.** X9 (§2) unchanged, on the fold ensemble-5 arms: MEAN against PER-MEMBER, arena as (d) but the shared-trunk
+arms (three seeds, pooled as (b)), n = 20, §2.4's paired bootstrap and §2.5's verdict. G3 implements it as an arena
+tag `fold_e5` in X9's script and freezes it in X9's `PRE-REGISTER` commit, before GT2 reads any queue run; X11e's
+ledger entry is G3's. Its assertion is X9's (i)(b): MEAN on fold {1, 8}'s arms reproduces `task_d3_ens5.json`.
+
+### 4.3 Minimum detectable effects at n = 20, before any run (GT1 item 1)
+
+`scripts/x11_power.py` → `results/x11_power.json`, with the code that computed them at n = 4, on the
+all-ten-episodes pool (in-sample for our arms, so every power is an upper bound and every MDE a lower bound, as the
+n = 4 originals say of themselves). Assertions: M-43's n = 4 power replayed exactly (`task_d3b_ens5_power.json`); M-44's
+n = 4 per-pair observed statistics within 1e-12 of `p1_power_check.json` and its recomputed binding MDE within 5%
+(`assertions.m44_n4_binding_mde.max_rel_diff`; p1's draws shared a generator with M-45 and cannot be replayed).
+- **M-43 (X11b)**: the criterion fires on `m43.n20` of draws at n = 20 (with replacement; at n = 4 without), against
+  `task_d3b_ens5_power.json`'s mean 75% and worst 24% at n = 4. Mean and worst over seeds and horizons:
+  `m43.n20_mean_power`, `m43.n20_worst_power`.
+- **M-44 (X11d)**: binding (cross-architecture) MDE at n = 20, `m44.n20.binding_cross_architecture`, against 1.45× and
+  2.26 points at n = 4. It barely shrinks: the released-against-ensemble-5 pairs' trajectory-level variation does not
+  fall with n as the paired statistic's does. X11d's verdict keeps M-44's committed thresholds.
+- **X11a, X11c, X11e**: the discharged rules they copy had no MDE (X10 and X9 are new; the D3 recalibration is a band
+  test), so none is recomputed; their n = 20 interval widths are what they report.
+
+### 4.4 Every change from the discharged rules
+
+1. Arena: the five folds' 20 held-out trajectories in place of the held-out pair's 4 (all four readings); bootstraps
+   draw over 20.
+2. Models: each fold's own arms; per seed, a seed's 20 trajectories come from five different models (X11a, b, c).
+3. X11a's Q interval is a **paired** bootstrap over the 20 trajectories, because both arenas now hold the same
+   trajectories; X10's resampled two disjoint arenas independently.
+4. X11c's models are ensemble-5 arms trained on the complement, where the D3 rule read the released checkpoint; its
+   cell count is 180, not 12.
+5. X11c adds a pooled coverage with X7's band labels as an alongside, not a reading.
+6. X11d adds the label under the n = 20 MDE as an alongside, not a reading; the verdict's thresholds are unchanged.
+7. X11b keeps M-43's thresholds and the all-three-seeds convention exactly.
 
 ## 5. Post hoc analyses N7–N14 (G4)
 
@@ -653,7 +725,8 @@ Intervals: trajectory bootstrap, 20,000 draws, `default_rng(0)`; descriptive.
 |---|---|---|---|---|---|---|
 | X9 | G3 | `scripts/x9_per_member_propagation.py` | `results/x9_per_member_propagation.json` | 20v1 | yes | yes (this commit) |
 | X10 | G3 | `scripts/x10_insample_vs_heldout.py` | `results/x10_insample_vs_heldout.json` | 20v2 | yes | yes (this commit) |
-| X11 | GT1, GT2 | ‹GT1› | ‹GT1› | ‹GT1› | yes (training) | in GT1 |
+| X11a–d | GT1 (rule, scripts), GT2 (reading) | `scripts/x11{a,b,c,d}_*.py`, `scripts/x11_common.py` | `results/x11{a,b,c,d}_*.json` | none yet (GT2 adds) | yes | yes (GT1, M-97–M-100) |
+| X11e | G3, GT2 | inside `scripts/x9_per_member_propagation.py` | inside `results/x9_per_member_propagation.json` | 20v1 | yes | rule text GT1; script G3 |
 | N7 | G4 | `scripts/n7_exact_tests.py` | `results/n7_exact_tests.json` | 20w7 | item 7 | post hoc |
 | N8 | G4 | `scripts/n8_tails.py` | `results/n8_tails.json` | 20w8 | cache | post hoc |
 | N9 | G4 | `scripts/n9_recalibration_scores.py` | `results/n9_recalibration_scores.json` | 20w9 | no | post hoc |

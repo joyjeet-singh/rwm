@@ -9647,3 +9647,115 @@ because the returned phrase wraps a line and `scripts/appendix_g_rules.py` did n
 returned reading. Found by F10's read-only review of Appendices A–M and checked against the artifact.
 **Evidence** `RUN` `results/m65_gaussian_nominal.json`; `SRC` `scripts/appendix_g_rules.py`
 **Status** CONFIRMED · **Relevance** METHOD
+
+### M-97 — PRE-REGISTERED rule X11a: the ensemble-5 arms' held-out calibration at n = 20, and in-sample against held-out with every episode in both roles · **NEW**
+**Entered before any of its data exists.** No X11 run has been trained: no `results/x3_run_armA_ho*_ens5.json`, no `runs/x3_armA_ho*_ens5`, no single-model seed-3 or seed-4 fold run, and no X11 reading exists. The only training on a new fold so far is GT1's two 20-iteration timing probes on fold {0, 2} (`runs/timing_probe_round5/`: `x3_run_armA_ho02_seed0_ens5.json`, `x3_run_armA_ho02_seed3.json`), which saved no checkpoint and evaluated nothing, and the training-support runs of `docs/presubmission/round5/gt1_fold_support.json`, which trained 50 iterations on fold {1, 8} only. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`; the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, each ran only its `--assert-only` mode, which loads fold {1, 8}'s existing weights and computes no reading (it passed, maximum difference 0.0), and a dry run of `reading()` from a harness outside the repository with every fold's weights replaced by fold {1, 8}'s, whose numbers are a code test and are not recorded; the logs naming these SHA-256s are in the session's evidence folder. The ordering can be checked from `git log`. Round 5's rule X11 (PLAN Annex 2; `docs/presubmission/round5/PROTOCOLS.md` §4, which governs where this text is shorter).
+
+**Runs** (shared by X11a-X11d). Arm A, 2,500 iterations, on X3's folds {0, 2}, {3, 4}, {5, 6}, {7, 9}: ensemble-5 seeds 0-2 (12 runs, `scripts/step5_train.py --holdout a,b --ensemble 5`) and single-model seeds 3-4 (8 runs, `--holdout a,b`), queued one at a time through `scripts/queue_runner.sh` (`runs/queue_round5.txt`, `docs/presubmission/round5/RUN_QUEUE.md`); with fold {1, 8}'s existing runs, every fold has three ensemble-5 arms and five single models. Cap: the user's ruling `docs/presubmission/round5/DECISIONS.md#GT1-cap`, `results/round5_queue_timing.json` (projected 55.5 CPU-hours, cap 62 h). Training support: `docs/presubmission/round5/gt1_fold_support.json` (a)-(c) passed, (b) bitwise.
+
+**Arena.** Each fold's four held-out non-overlapping 400-row trajectories, scored by that fold's models, one batch of 4 per fold, pooled over the five folds: **n = 20**, each episode's two once.
+
+**Exploratory, and bounded.** It never re-opens M-43, M-44, X10 or any discharged rule.
+
+**Known before this rule:** the ensemble-5 arms' held-out calibration rests on 4 trajectories (`results/task_d3_ens5.json`, `design.n_independent`); X10 (round 5, G3) compares in- and out-of-sample on disjoint arenas.
+
+**Statistic**, copied from `task_d3_ens5.py:243-278` with only the arena changed: per seed, ρ = mean|error| / mean σ_epistemic, ±1σ and ±2σ coverage and the count of dimensions with r > 0, pooled over (trajectory, step ≤ h, dimension), h ∈ {1, 8, 32, 100, 128, 368}; pooled = mean over seeds; interval resamples whole trajectories with the seeds pooled inside each draw (20,000 draws, `default_rng(0)`). X10's Q(h) = ρ_in/ρ_out with every episode in both roles: each fold's arms also scored on its 16 training trajectories; each trajectory's in-sample value is the mean over the four folds that trained on it; the interval is a paired bootstrap over the 20 trajectories (a change from X10, which resampled two disjoint arenas independently).
+
+**Reading**, at h = 1: **IN-SAMPLE FLATTERS** if Q < 1 for all three seeds and the pooled interval lies below 1; **IN-SAMPLE IS WORSE** if Q > 1 for all three and the interval lies above 1; **MIXED** otherwise. h = 100 carries the label it would carry, not a second verdict.
+
+**Assertions:** (a) every run record trained on its fold's complement at ensemble 5 and 2,500 iterations with finite losses; (b) on fold {1, 8} the code reproduces `results/task_d3_ens5.json` `calibration`, intervals included, within 1e-12; (c) for every arm and both arenas the harness agrees with our trainer's forward to < 1e-5.
+
+**Frozen files and their SHA-256:** `scripts/x11a_fold_ens5_calibration.py` `21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423`, `scripts/x11_common.py` `4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a`.
+
+**Gate.** No session reads a queue run's evaluation before GT2 (PLAN GT1 item 6). The training driver evaluates its own checkpoints at 500 and 2,500 iterations and each run's log prints them; those lines are not read before GT2.
+
+**What the discharging session may and may not do.** GT2, after the queue has finished and its gate has passed, runs the script unchanged, records the reading exactly as returned, with its alongside values, in a new ledger entry, and changes only this entry's Status line. Not: change the folds, models, seeds, iterations, arena, horizons, statistics, intervals, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
+
+**Evidence** `SRC` `scripts/x11a_fold_ens5_calibration.py`, `scripts/x11_common.py`, `scripts/step5_train.py` (`--ensemble 5` with `--holdout`), `scripts/queue_run.py`, `results/x11_power.json`, `results/round5_queue_timing.json`;
+`RUN` `results/x11a_fold_ens5_calibration.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x11a_fold_ens5_calibration.json` · **Relevance** METHOD
+
+### M-98 — PRE-REGISTERED rule X11b: M-43's disagreement-against-index comparison on X3's five folds · **NEW**
+**Entered before any of its data exists.** No X11 run has been trained: no `results/x3_run_armA_ho*_ens5.json`, no `runs/x3_armA_ho*_ens5`, no single-model seed-3 or seed-4 fold run, and no X11 reading exists. The only training on a new fold so far is GT1's two 20-iteration timing probes on fold {0, 2} (`runs/timing_probe_round5/`: `x3_run_armA_ho02_seed0_ens5.json`, `x3_run_armA_ho02_seed3.json`), which saved no checkpoint and evaluated nothing, and the training-support runs of `docs/presubmission/round5/gt1_fold_support.json`, which trained 50 iterations on fold {1, 8} only. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`; the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, each ran only its `--assert-only` mode, which loads fold {1, 8}'s existing weights and computes no reading (it passed, maximum difference 0.0), and a dry run of `reading()` from a harness outside the repository with every fold's weights replaced by fold {1, 8}'s, whose numbers are a code test and are not recorded; the logs naming these SHA-256s are in the session's evidence folder. The ordering can be checked from `git log`. Round 5's rule X11 (PLAN Annex 2; `docs/presubmission/round5/PROTOCOLS.md` §4, which governs where this text is shorter).
+
+**Runs** (shared by X11a-X11d). Arm A, 2,500 iterations, on X3's folds {0, 2}, {3, 4}, {5, 6}, {7, 9}: ensemble-5 seeds 0-2 (12 runs, `scripts/step5_train.py --holdout a,b --ensemble 5`) and single-model seeds 3-4 (8 runs, `--holdout a,b`), queued one at a time through `scripts/queue_runner.sh` (`runs/queue_round5.txt`, `docs/presubmission/round5/RUN_QUEUE.md`); with fold {1, 8}'s existing runs, every fold has three ensemble-5 arms and five single models. Cap: the user's ruling `docs/presubmission/round5/DECISIONS.md#GT1-cap`, `results/round5_queue_timing.json` (projected 55.5 CPU-hours, cap 62 h). Training support: `docs/presubmission/round5/gt1_fold_support.json` (a)-(c) passed, (b) bitwise.
+
+**Arena.** Each fold's four held-out non-overlapping 400-row trajectories, scored by that fold's models, one batch of 4 per fold, pooled over the five folds: **n = 20**, each episode's two once.
+
+**Exploratory, and bounded.** It never re-opens M-43, whose verdict (DOES NOT GENERALISE, at n = 4, `results/task_d3_ens5.json`) stands.
+
+**Known before this rule:** at n = 4 the criterion fired on 75% of draws on average and 24% at h = 8 (`results/task_d3b_ens5_power.json`, an upper bound). At n = 20, by the same code with draws taken with replacement (`results/x11_power.json` `m43`), it fires on 97% on average and 74% at worst over seeds and horizons, again an upper bound: the pool is in-sample for our arms.
+
+**Statistic, thresholds and branches**, copied from `task_d3_ens5.py:160-231` with only the arena changed: per seed and horizon, r(index, |error|), r(disagreement, |error|), the partial, and the paired difference with `task_d3_ens5.cluster_boot` (`default_rng(0)`, 20,000 draws over 20 trajectories).
+
+**Reading** (M-43's): **GENERALISES** if disagreement leads the index in all three seeds at every h ∈ {8, 32, 128, 368} and the paired interval excludes zero in all three seeds at more than 2 of the 4; **DOES NOT GENERALISE** otherwise.
+
+**Assertions:** (a) as M-97; (b) on fold {1, 8} the code reproduces `results/task_d3_ens5.json` `governing` and `m43_verdict` within 1e-12.
+
+**Frozen files and their SHA-256:** `scripts/x11b_fold_m43.py` `f2e977b7dd8735bc11a8729934fedd9c7fec19b1aa600705d72d51482f06aba8`, `scripts/x11a_fold_ens5_calibration.py` `21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423`, `scripts/x11_common.py` `4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a`.
+
+**Gate.** No session reads a queue run's evaluation before GT2 (PLAN GT1 item 6). The training driver evaluates its own checkpoints at 500 and 2,500 iterations and each run's log prints them; those lines are not read before GT2.
+
+**What the discharging session may and may not do.** GT2, after the queue has finished and its gate has passed, runs the script unchanged, records the reading exactly as returned, with its alongside values, in a new ledger entry, and changes only this entry's Status line. Not: change the folds, models, seeds, iterations, arena, horizons, statistics, intervals, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
+
+**Evidence** `SRC` `scripts/x11b_fold_m43.py`, `scripts/x11_common.py`, `scripts/step5_train.py` (`--ensemble 5` with `--holdout`), `scripts/queue_run.py`, `results/x11_power.json`, `results/round5_queue_timing.json`;
+`RUN` `results/x11b_fold_m43.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x11b_fold_m43.json` · **Relevance** METHOD
+
+### M-99 — PRE-REGISTERED rule X11c: the per-horizon recalibration on episodes the ensemble-5 arms never saw · **NEW**
+**Entered before any of its data exists.** No X11 run has been trained: no `results/x3_run_armA_ho*_ens5.json`, no `runs/x3_armA_ho*_ens5`, no single-model seed-3 or seed-4 fold run, and no X11 reading exists. The only training on a new fold so far is GT1's two 20-iteration timing probes on fold {0, 2} (`runs/timing_probe_round5/`: `x3_run_armA_ho02_seed0_ens5.json`, `x3_run_armA_ho02_seed3.json`), which saved no checkpoint and evaluated nothing, and the training-support runs of `docs/presubmission/round5/gt1_fold_support.json`, which trained 50 iterations on fold {1, 8} only. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`; the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, each ran only its `--assert-only` mode, which loads fold {1, 8}'s existing weights and computes no reading (it passed, maximum difference 0.0), and a dry run of `reading()` from a harness outside the repository with every fold's weights replaced by fold {1, 8}'s, whose numbers are a code test and are not recorded; the logs naming these SHA-256s are in the session's evidence folder. The ordering can be checked from `git log`. Round 5's rule X11 (PLAN Annex 2; `docs/presubmission/round5/PROTOCOLS.md` §4, which governs where this text is shorter).
+
+**Runs** (shared by X11a-X11d). Arm A, 2,500 iterations, on X3's folds {0, 2}, {3, 4}, {5, 6}, {7, 9}: ensemble-5 seeds 0-2 (12 runs, `scripts/step5_train.py --holdout a,b --ensemble 5`) and single-model seeds 3-4 (8 runs, `--holdout a,b`), queued one at a time through `scripts/queue_runner.sh` (`runs/queue_round5.txt`, `docs/presubmission/round5/RUN_QUEUE.md`); with fold {1, 8}'s existing runs, every fold has three ensemble-5 arms and five single models. Cap: the user's ruling `docs/presubmission/round5/DECISIONS.md#GT1-cap`, `results/round5_queue_timing.json` (projected 55.5 CPU-hours, cap 62 h). Training support: `docs/presubmission/round5/gt1_fold_support.json` (a)-(c) passed, (b) bitwise.
+
+**Arena.** Each fold's four held-out non-overlapping 400-row trajectories, scored by that fold's models, one batch of 4 per fold, pooled over the five folds: **n = 20**, each episode's two once.
+
+**Exploratory, and bounded.** It never re-opens M-69, M-70, M-89 or the D3 per-horizon reading.
+
+**Known before this rule:** on the released checkpoint the per-horizon scalar was calibrated in 12 of 12 held-out cells (`results/task_d3_perhorizon.json`), and fitted on nine episodes it returned WITHIN BAND AT 6 OF 6 HORIZONS (`results/x7_loeo_recalibration.json`); both on a checkpoint that may have trained on every episode it was scored on.
+
+**Statistic, thresholds and branches**, copied from `task_d3_perhorizon.py:44-56, 85-127` with only the arena and the models changed: for each fold, seed and quantity, both directions (fit on one held-out episode, score on the other), the per-horizon scalar and the constant (fitted at h = 1), on that fold's ensemble-5 arms. A cell is calibrated iff its ±1σ coverage is within 0.10 of 68.27%.
+
+**Reading** (epistemic governs): **PER-HORIZON SCALAR RESTORES CALIBRATION** iff all 180 epistemic cells (5 folds × 2 directions × 6 horizons × 3 seeds) are calibrated; **PER-HORIZON SCALAR DOES NOT RESTORE CALIBRATION** otherwise. Counts of calibrated cells for both scalars reported. Alongside, not a reading: the coverage pooled over the ten test episodes (20 trajectories), per seed and seeds pooled, with X7's interval (20,000 draws, `default_rng(0)`) and band labels.
+
+**Assertions:** (a) as M-97; (b) the released checkpoint on fold {1, 8} through this code reproduces `results/task_d3_perhorizon.json` `quantities` within 1e-9 (a scalar relative to max(1, |c|)).
+
+**Frozen files and their SHA-256:** `scripts/x11c_fold_recalibration.py` `0d1c7d0c8a1b7d51946ba6a2a4dfe55fd8b6450b40435123836b34258f7fde09`, `scripts/x11_common.py` `4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a`.
+
+**Gate.** No session reads a queue run's evaluation before GT2 (PLAN GT1 item 6). The training driver evaluates its own checkpoints at 500 and 2,500 iterations and each run's log prints them; those lines are not read before GT2.
+
+**What the discharging session may and may not do.** GT2, after the queue has finished and its gate has passed, runs the script unchanged, records the reading exactly as returned, with its alongside values, in a new ledger entry, and changes only this entry's Status line. Not: change the folds, models, seeds, iterations, arena, horizons, statistics, intervals, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
+
+**Evidence** `SRC` `scripts/x11c_fold_recalibration.py`, `scripts/x11_common.py`, `scripts/step5_train.py` (`--ensemble 5` with `--holdout`), `scripts/queue_run.py`, `results/x11_power.json`, `results/round5_queue_timing.json`;
+`RUN` `results/x11c_fold_recalibration.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x11c_fold_recalibration.json` · **Relevance** METHOD
+
+### M-100 — PRE-REGISTERED rule X11d: M-44's independent-against-shared-trunk comparison on X3's five folds · **NEW**
+**Entered before any of its data exists.** No X11 run has been trained: no `results/x3_run_armA_ho*_ens5.json`, no `runs/x3_armA_ho*_ens5`, no single-model seed-3 or seed-4 fold run, and no X11 reading exists. The only training on a new fold so far is GT1's two 20-iteration timing probes on fold {0, 2} (`runs/timing_probe_round5/`: `x3_run_armA_ho02_seed0_ens5.json`, `x3_run_armA_ho02_seed3.json`), which saved no checkpoint and evaluated nothing, and the training-support runs of `docs/presubmission/round5/gt1_fold_support.json`, which trained 50 iterations on fold {1, 8} only. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`; the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, each ran only its `--assert-only` mode, which loads fold {1, 8}'s existing weights and computes no reading (it passed, maximum difference 0.0), and a dry run of `reading()` from a harness outside the repository with every fold's weights replaced by fold {1, 8}'s, whose numbers are a code test and are not recorded; the logs naming these SHA-256s are in the session's evidence folder. The ordering can be checked from `git log`. Round 5's rule X11 (PLAN Annex 2; `docs/presubmission/round5/PROTOCOLS.md` §4, which governs where this text is shorter).
+
+**Runs** (shared by X11a-X11d). Arm A, 2,500 iterations, on X3's folds {0, 2}, {3, 4}, {5, 6}, {7, 9}: ensemble-5 seeds 0-2 (12 runs, `scripts/step5_train.py --holdout a,b --ensemble 5`) and single-model seeds 3-4 (8 runs, `--holdout a,b`), queued one at a time through `scripts/queue_runner.sh` (`runs/queue_round5.txt`, `docs/presubmission/round5/RUN_QUEUE.md`); with fold {1, 8}'s existing runs, every fold has three ensemble-5 arms and five single models. Cap: the user's ruling `docs/presubmission/round5/DECISIONS.md#GT1-cap`, `results/round5_queue_timing.json` (projected 55.5 CPU-hours, cap 62 h). Training support: `docs/presubmission/round5/gt1_fold_support.json` (a)-(c) passed, (b) bitwise.
+
+**Arena.** Each fold's four held-out non-overlapping 400-row trajectories, scored by that fold's models, one batch of 4 per fold, pooled over the five folds: **n = 20**, each episode's two once.
+
+**Exploratory, and bounded.** It never re-opens M-44 (MECHANISM SUPPORTED, at n = 4, `results/r2_independent_ensemble.json`), M-49 or M-68.
+
+**Known before this rule:** M-44's binding MDE at n = 4 was 1.45× on the overconfidence ratio and 2.26 points on coverage (`results/p1_power_check.json`). By the same code at n = 20 (`results/x11_power.json` `m44`) it is 1.40× and 1.92 points, a lower bound (in-sample pool).
+
+**Models**, per fold: the five single models (seeds 0-4) as an independent ensemble (`r2_independent_ensemble.rollout_independent`) against that fold's three ensemble-5 arms.
+
+**Statistic, thresholds and branches**, copied from `r2_independent_ensemble.py:211-389` with only the arena changed: at h = 100 (`results/v2_deployment_horizon.json`), per shared-trunk seed, the log ratio of overconfidence factors and the ±1σ coverage difference, each with `cboot_paired` (`default_rng(100 + s)`, `default_rng(200 + s)`, 20,000 draws over 20 trajectories); the decomposition into spread and accuracy.
+
+**Reading** (M-44's, every condition against every shared-trunk seed, M-44's committed thresholds 1.45× and 2.26 points unchanged): **MECHANISM SUPPORTED** iff the independent ensemble's overconfidence is lower, its interval excludes zero, the improvement is at least 1.45×, its coverage is higher, that interval excludes zero, and the shift is at least 2.26 points; **UNRESOLVABLE** if the two quantities disagree in direction; **MECHANISM NOT SUPPORTED** otherwise. Alongside, not a reading: the label under the n = 20 MDE above.
+
+**Design limitation, as M-44's:** independently seeded runs differ in initialisation and data order, the shared-trunk heads in head initialisation only; this bounds the effect rather than isolating it.
+
+**Assertions:** (a) every ensemble-5 and single-model record trained on its fold's complement with finite losses; (b) on fold {1, 8} the code reproduces `results/r2_independent_ensemble.json` within 1e-12.
+
+**Frozen files and their SHA-256:** `scripts/x11d_fold_m44.py` `2bf4c6d25040faac36ee3dc93020c4229d5400bb4acc6f5df09e127152a1127b`, `scripts/x11a_fold_ens5_calibration.py` `21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423`, `scripts/x11_common.py` `4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a`.
+
+**Gate.** No session reads a queue run's evaluation before GT2 (PLAN GT1 item 6). The training driver evaluates its own checkpoints at 500 and 2,500 iterations and each run's log prints them; those lines are not read before GT2.
+
+**What the discharging session may and may not do.** GT2, after the queue has finished and its gate has passed, runs the script unchanged, records the reading exactly as returned, with its alongside values, in a new ledger entry, and changes only this entry's Status line. Not: change the folds, models, seeds, iterations, arena, horizons, statistics, intervals, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
+
+**Evidence** `SRC` `scripts/x11d_fold_m44.py`, `scripts/x11_common.py`, `scripts/step5_train.py` (`--ensemble 5` with `--holdout`), `scripts/queue_run.py`, `results/x11_power.json`, `results/round5_queue_timing.json`;
+`RUN` `results/x11d_fold_m44.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x11d_fold_m44.json` · **Relevance** METHOD

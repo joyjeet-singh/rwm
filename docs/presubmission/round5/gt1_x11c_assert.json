@@ -1,0 +1,10 @@
+{
+ "rule": "X11c",
+ "script_sha256": "0d1c7d0c8a1b7d51946ba6a2a4dfe55fd8b6450b40435123836b34258f7fde09",
+ "b": {
+  "pass": true,
+  "max_abs_diff": 0.0,
+  "tolerance": 1e-09,
+  "against": "results/task_d3_perhorizon.json quantities (released checkpoint, fold {1, 8})"
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "rule": "X11d",
+ "script_sha256": "2bf4c6d25040faac36ee3dc93020c4229d5400bb4acc6f5df09e127152a1127b",
+ "b": {
+  "pass": true,
+  "max_abs_diff": 0.0,
+  "tolerance": 1e-12,
+  "against": "results/r2_independent_ensemble.json"
+ }
+}
