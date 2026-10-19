@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 115,
-  "n_ok": 115,
+  "n_pointers": 114,
+  "n_ok": 114,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -184,13 +184,6 @@
       "ok": true,
       "detail": "target Appendix V; nouns ['model', 'horizon', 'interval']; absent []",
       "context": "Appendix V gives every model at every horizon, each with its interval)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix R gives each of those, and every limitation below, in full",
-      "ok": true,
-      "detail": "target Appendix R; nouns ['limitation', 'below', 'full']; absent []",
-      "context": "Appendix R gives each of those, and every limitation below, in full"
     },
     {
       "class": "semantic",

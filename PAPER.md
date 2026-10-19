@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1446 values substituted from 107 artifacts. -->
+     1425 values substituted from 106 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -813,7 +813,7 @@ magnitude of the model's own predicted state change ranks realised error at +0.4
 +0.6053 for the five-member ensemble disagreement the method is built on. The margin between
 them, +0.1357, is **below** the 0.2891 this sample size can resolve, so at
 n_independent = 20 400-step trajectories we cannot say the ensemble ranks better than a
-subtraction. If the observed margin is the true one, settling it needs 25 of them, an estimate under an assumed effect (§11, Appendix R).
+subtraction. If the observed margin is the true one, settling it needs 25 of them, an estimate under an assumed effect (§11, supplementary S2).
 
 **On shorter units, at h = 100, the margin resolves.** The 20 whole trajectories cannot settle it at h = 368, so a rule committed before its reading (rule X6, Appendix X) put the same comparison to 70 non-overlapping units of 132 rows, the model's history plus h = 100 forecast steps, cut inside the same ten episodes, on the same checkpoint. At h = 100 the margin is +0.2816 [+0.1978, +0.3896]: the interval excludes zero, the rule's criterion, so it returns **DISAGREEMENT BEATS STEP SIZE**. Disagreement correlates +0.6808 with error there against step size's +0.3992, and keeps +0.6361 [+0.5567, +0.7466] with step size partialled out (Appendix X). The units are this checkpoint's training data, units from one episode are not independent of each other, and the interval resamples units, not episodes, so the margin at h = 100 is resolved on this checkpoint's training episodes and no further; the margin at h = 368 is not re-tested.
 
@@ -911,7 +911,7 @@ the aleatoric head, and the epistemic term is a spread across members the loss n
 **What the arms bound, and what they do not repair.** Independently seeded runs differ in data
 ordering as well as initialisation, and the independent members carry 3.49× the
 shared-trunk arms' state-pathway parameters, so these comparisons bound the architectural effect rather than isolating it. At matched capacity the improvement falls to 1.79× against a minimum detectable effect
-of 2.00×, so that rule returns **UNDER-POWERED — favours the matched ensemble by less than the MDE** (rule M-49, Appendix R). Neither arm is an interval: at h = 100 the independent ensemble is
+of 2.00×, so that rule returns **UNDER-POWERED — favours the matched ensemble by less than the MDE** (rule M-49, supplementary S2). Neither arm is an interval: at h = 100 the independent ensemble is
 5.2× overconfident with 15.31% coverage and the combined arm
 5.4× with 15.53%, where a calibrated Gaussian gives
 68.27%. §6.7's per-horizon multiplier remains the only correction in this paper whose
@@ -1043,7 +1043,7 @@ test we ran found that correcting the scale per horizon leaves every pairwise or
 Limits that belong to one result are stated beside it: the budget and our reading of Table S7
 (§5.2, §5.3), the mechanism of §6.4 as a hypothesis, the per-dimension tests' power (§6.5, Appendix K), the
 ensemble-5 replication (§6.6), the recalibration's two episodes (§6.7), which its nine-episode fit widens to all ten for the released checkpoint,
-and what the independent ensemble bounds (§6.8). Appendix R gives each of those, and every limitation below, in full.
+and what the independent ensemble bounds (§6.8). supplementary S2 gives each of those, and every limitation below, in full.
 
 **What this study cannot address.** One robot, one gait (a trot) and one flat terrain, with every
 command drawn from one bounded box, so "generalisation" here means across velocity commands only. No
@@ -1058,7 +1058,7 @@ has no held-out arena, and neither pinned repository can generate the data that 
 **On whole trajectories, the ranking claim is not established as needing an ensemble.** The model's
 own predicted step size ranks error nearly as well, by a margin those 20 trajectories cannot
 resolve at h = 368; if the observed margin is the true one, settling it needs 25
-independent 400-step trajectories, a required-sample-size estimate under an assumed effect (Appendix R).
+independent 400-step trajectories, a required-sample-size estimate under an assumed effect (supplementary S2).
 On 70 shorter units cut inside the same episodes, which are the checkpoint's training data,
 a rule committed before its reading finds disagreement ahead at h = 100, +0.2816
 [+0.1978, +0.3896] (rule X6: **DISAGREEMENT BEATS STEP SIZE**; §6.6, Appendix X); the margin at h = 368 is not re-tested.
@@ -1068,7 +1068,7 @@ a rule committed before its reading finds disagreement ahead at h = 100, +0.2816
 rollouts run to, but its only use is to shape policy learning, and a test of that cost needing no policy, rule X5, could not be run, because the released data do not record the velocity command its reward terms score against (Appendix W). **The finding bounds what the quantity reports, not what it
 costs**, and the ratio is not a measure of harm. Other sections refer back to this as the policy
 caveat of §11. A proxy that needs no policy, the ordering of the penalty accumulated along whole
-rollouts before and after the per-horizon correction, finds none of the 6 pairs among the held-out pair's 4 trajectories reordered (in-sample for the checkpoint; rule M-70: **DOES NOT REORDER**). That proxy orders the penalty alone, though, not the penalised return, its null is partly structural, and its interval is degenerate (Appendix R).
+rollouts before and after the per-horizon correction, finds none of the 6 pairs among the held-out pair's 4 trajectories reordered (in-sample for the checkpoint; rule M-70: **DOES NOT REORDER**). That proxy orders the penalty alone, though, not the penalised return, its null is partly structural, and its interval is degenerate (supplementary S2).
 
 **No family-wide correction is applied across our own pre-registered rules.** There are
 28 of them (Appendix E), each reported, once its data exist, against the thresholds it was committed with (one is withdrawn as a
@@ -1497,8 +1497,8 @@ the artifact named. Measurements are at 2,500 training iterations unless a row s
 | `state_min_logstd`, on the slower gradient path C-11 identifies, drifts 5.2× slower than `log_delta_logstd`; extrapolated from one Arm A run's rates, the two imply about 150,000 and 270,000 iterations for the released variance state, an order of magnitude rather than a fitted count | R-25; `results/step6_3_min_logstd.json` | §7.5's conclusion does not rest on one parameter |
 | Over overlapping trajectories on the held-out pair, which the released checkpoint trained on, its worst twentieth carry 92.6% of its squared error at h = 368 as each dimension's own scale weights it (form 2, which `g_z` dominates; Appendix G), and they start within two short ranges of rows, one per episode; on the 4 non-overlapping trajectories the largest is 1.2× the median | R-30; `results/taskAB_gate_r27.json` | A tail measured on overlapping trajectories can be one short stretch of data, which a count of independent trajectories (§3) exposes |
 | The A/B relative-L1 gap at h = 368 (teacher forcing's error minus autoregressive training's, over 2 independent trajectories per episode) is positive on all ten episodes, from +0.73 up; episode 1, one of the held-out pair, gives +6.97, 2.5× the next largest, so the pair's +3.98 is 3.0× the other eight episodes' +1.33 | R-39; `results/task4_arenas.json` | The direction is robust across episodes; a magnitude read from the held-out pair overstates the typical episode |
-| Per state dimension, over the whole 368-step forecast, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = 368 (R-45). One seed (seed 1, Appendix R) |
-| Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair, n_independent = 4 400-step trajectories, +3.33 to +1.20; in-sample, n_independent = 16, +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, Appendix R) |
+| Per state dimension, over the whole 368-step forecast, the released checkpoint loses to the hold-last floor on 18 of 45 across all ten episodes (20 independent 400-step trajectories) and on 8 on the held-out pair (4), including all three components of the gravity vector; Arm A at 10,000 iterations loses on 1 in each, `g_z` | R-45, and R-29 on overlapping trajectories; `results/task2_3_matched_trend.json` | Per dimension, a model trained from scratch fails far less often, even on the pair the checkpoint trained on and Arm A did not. In aggregate it does not: on the held-out pair the released checkpoint is ahead at h = 8 and level at h = 368 (R-45). One seed (seed 1, supplementary S2) |
+| Over five checkpoints up to 10,000 iterations, the absolute A/B gap at h = 368 narrows as both arms improve (held-out pair, n_independent = 4 400-step trajectories, +3.33 to +1.20; in-sample, n_independent = 16, +1.72 to +0.87), while the ratio does not shrink (3.34× to 4.43×, in-sample 2.33× to 9.70×). The held-out values are not monotone: both peak at the second checkpoint (+6.74, 12.38×), one anomalous Arm B value | R-46; `results/task2_3_matched_trend.json` | An absolute effect quoted early overstates what remains, a ratio does not, and §5 reports ratios at 10,000 iterations; one seed (seed 1, supplementary S2) |
 | Our trained models respond to the action they are given: fed another trajectory's actions, Arm A's error at h = 8 on its in-sample arena's 16 trajectories rises by +227.8% at 2,500 iterations and +676.3% at 10,000 (rule X2, pre-registered: RESPONDS TO THE ACTION) | M-84, M-85; `results/action_sensitivity.json` | A world model must respond to actions before it can serve policy optimisation; ours do on this test, though every action in the data comes from one policy and no policy is trained here (§7.2, Appendix V) |
 
 
@@ -1974,7 +1974,7 @@ ahead of it at the longest horizon we measure. That reading flatters the release
 out-of-sample for our arms and in-sample for it, which trained on all
 ten episodes (the in-sample caveat of §3).
 
-*Stored per-trajectory values elsewhere.* §6.8's and Appendix R's paired contrasts at §5's n = 4 store their four
+*Stored per-trajectory values elsewhere.* §6.8's and supplementary S2's paired contrasts at §5's n = 4 store their four
 per-trajectory values in `results/r2_independent_ensemble.json` and
 `results/m49_capacity_matched.json`; §6.2's two held-out tables, at n_independent = 4,
 give intervals only, coarse for the same reason (the n = 4 caveat of §3).
@@ -2247,7 +2247,7 @@ horizon as a measure of the architectural effect would overstate it.
 disagreement understates epistemic uncertainty partly because its members are not independent
 models**, with a measured size at the horizon that matters. It does not license attributing the
 whole gap to trunk-sharing: independently seeded runs differ in *both* initialisation and data
-ordering (Appendix R), so this comparison **bounds** the architectural effect rather than isolating it,
+ordering (supplementary S2), so this comparison **bounds** the architectural effect rather than isolating it,
 and the bound is generous to the mechanism by construction.
 
 **And it does not repair the interval.** The independent ensemble is
@@ -2351,7 +2351,7 @@ alone, and still not an interval. §6.7's per-horizon multiplier remains the onl
 
 **What the arm does not separate.** It differs from the shared-trunk arms on three axes at once:
 trunk sharing, the objective, and capacity (a factor of 3.49 in state-pathway
-parameters, as §6.8's contrast also does; Appendix R), and independently seeded runs also differ in data
+parameters, as §6.8's contrast also does; supplementary S2), and independently seeded runs also differ in data
 ordering. The rule said so in advance: it bounds the combination and attributes nothing. The one
 further comparison here, the `mse`/`gaussian_nll` pair above, which holds every other axis fixed,
 sits outside the rule's governing statistics and under the design's own minimum detectable effect,
@@ -2395,94 +2395,7 @@ grounds; the physically-impossible-transition component costs nothing detectable
 
 ## Appendix R — the limitations in full (§11)
 
-**Effective sample size bounds the long-horizon magnitudes.** The out-of-sample arena has
-4 independent 400-step trajectories (the n = 4 caveat of §3). That is the
-binding constraint on §5's magnitudes, and no amount of trajectory oversampling changes it. The direction is re-tested on all ten episodes, each held out once: rule X3 trains both arms on four more fixed folds beside §5's own and returns **REPLICATES ACROSS FOLDS** over 20 trajectories, at 2,500 iterations rather than 10,000 (Appendix L). Nor can a larger
-dataset be generated here: the data generator is in neither pinned repository, and the one the lite
-release points to runs in a simulator this work did not have (supplementary S1). The released checkpoint's lack
-of a held-out arena is therefore a constraint, not a choice.
-
-**Ensemble size: supported, not established.** Our main arms run at ensemble size 1, where the epistemic term is identically zero, so the epistemic measurements were first made on the released checkpoint alone. The 3 ensemble-5 Arm A arms (§6.6) reproduce the *direction* of §6.6's finding in 12 of 12 seed-horizon cells and the *calibration* failure, 10.5× at h = 100, but the pre-registered rule governing the replication returns **DOES NOT GENERALISE**: its second condition needs the paired difference to exclude zero at a majority of horizons, and it does at 1 of 4. Our arms have a held-out arena of only 4 independent trajectories, and the rule was written without checking what it could detect there. **So §6.6's finding is established on the released checkpoint and supported but not established on a model we trained.**
-
-**One dataset, one gait, one terrain.** All commands are drawn from one bounded box and the gait
-is a single trot throughout. "Generalisation" here means across velocity commands, not across
-gaits or terrain.
-
-**The per-horizon recalibration is tested on two episodes, or on episodes the model trained on.** §6.7's remedy puts every released-checkpoint estimate within the band across the two held-out episodes in both directions, though at this n no single cell is resolvable, and those cells are unseen by the multiplier only, because the checkpoint trained on both episodes. Rule X7 widens the released checkpoint's test to all ten episodes, each scored by a multiplier fitted on the other nine, and returns **WITHIN BAND AT 6 OF 6 HORIZONS** for the epistemic term (Appendix Y); those episodes, too, are unseen by the multiplier only. On Arm A, whose model never saw them, the same recipe manages 17 of 36 epistemic and 10 of 36 aleatoric cells, and two episodes is not a demonstration that the multipliers transfer to a new robot, gait or terrain. Treat the lookup table as a recipe to refit, not as constants to copy.
-
-**Two secondary analyses rest on a single training seed**, the long-horizon trend fit and the per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B verdict rests on one seed too, seed 1, the one its rule ran on; the magnitudes
-beside it are three-seed means with per-seed values (§5).
-
-**On whole trajectories, the ranking claim is not established as needing an ensemble.** Under a rule committed before the
-comparison (rule M-51, Appendix E), the model's own predicted state change, a subtraction needing no
-ensemble, ranks error at +0.4697 against disagreement's +0.6053, and the margin is
-smaller than this sample can resolve (§6.6). Disagreement retains +0.5430 with that
-baseline partialled out, so what is open is whether its increment is worth five models. **If the observed margin is the true one, settling it needs 25 independent 400-step
-trajectories, where all ten episodes provide 20**, 1.25× the present sample, by
-the rule's own construction applied to the step-size margin's standard error
-(`results/q2_free_baseline_power.json`). That is a required-sample-size estimate under an assumed
-effect: it takes the true margin to be the observed +0.1357 and new trajectories to vary
-as these do, and if the true margin is smaller the requirement rises as its inverse square, to
-45 at +0.1000. The margin is the only test left to pass, since the partial
-already clears its threshold, +0.5430 against 0.1131. And it is closer to
-resolving than §6.6's threshold of 0.2891 suggests: the rule had to fix that threshold
-before this baseline existed, from the forecast-index margin, whose standard error is
-1.94× the step-size margin's. The observed margin is 91.1% of what its own
-statistic resolves at this sample and 46.9% of what the rule's threshold demands, and
-re-run exactly as pre-registered that protocol would need 91 trajectories. §6.6's
-verdict stands on either reading, because the margin is below both. On shorter units the margin at h = 100 resolves: rule X6, committed before its reading, cut the same ten episodes into 70 non-overlapping 132-row units and returns **DISAGREEMENT BEATS STEP SIZE**, +0.2816 [+0.1978, +0.3896] at h = 100 against a minimum detectable effect of 0.1713 (Appendix X). Those units are the checkpoint's training data and share its ten episodes, and the interval resamples units, not episodes, so this settles that margin on this checkpoint's training episodes only, and does not re-test the margin at h = 368.
-
-**We did not measure what the miscalibration costs.** The penalty the follow-up applies is miscalibrated as a scale, 33.4× overconfident at h = 100, the horizon its own imagination rollouts run to, but the method's only use of that quantity is to shape policy learning, and we did not train a policy. A miscalibrated scale that enters as a relative penalty across candidate actions may cost little or a great deal; our measurements cannot tell which. **The finding bounds what the quantity reports, not what it costs**, and the ratio is not a measure of harm. Other sections refer back to this as the policy caveat of §11.
-
-**A proxy that needs no policy finds no reordering, and is worth only what its bound allows.**
-Within one horizon the per-horizon correction multiplies the penalty by a positive constant, which
-cannot change any ranking, so a rule committed before the statistic was computed (rule M-70,
-Appendix E) compares instead the penalty accumulated along each whole rollout, before and after
-correction. The penalty is the released checkpoint's own ensemble disagreement, on the 4
-independent trajectories of the held-out pair, which are unseen by the multipliers applied to them
-but not by the checkpoint (§3). Of the 6 pairs, 0 change order and the
-rule returns **DOES NOT REORDER**: the correction leaves every pairwise ordering of accumulated
-penalty unchanged, so whatever it changes downstream must act through the penalty's magnitude
-rather than through which rollout is penalised more. The multipliers differ by 9.31×
-across horizons, so the design could have produced reordering
-(`results/q3_penalty_reordering.json`). Three things limit what that shows. **It is the ordering of
-the penalty component alone, not of the penalised return**: this work has no reward function and no
-tuned penalty weight, so the result bounds what the correction could do downstream and licenses no
-statement about a policy or about the size of any downstream effect. **The null is partly
-structural**, by a diagnostic computed after the verdict: the last horizon band, h = 368,
-holds 240 of the 368 steps and 81.35% of the corrected penalty, and
-the overall ordering is exactly that band's, so the per-horizon weights had little room to act. **And the rule's bootstrap interval corroborates nothing**: resampling trajectories creates no new
-pairs, so with none reordering no resample can return anything else, and the interval is
-degenerate by construction (`M-71`).
-
-**The per-dimension ordering tests are underpowered at every sample size we can reach.** Once the coupling between state dimensions is respected (§6.5), the out-of-sample arena's 4 independent trajectories cannot reject at any effect size, and the larger arenas can and do not: over all ten episodes the smallest P in the family is 0.0037 against a threshold of 0.001667. Resolving it at h = 368 needs more episodes than the released dataset contains, not a better test. At h = 128 and below that is no longer true: a shorter unit gives 14 independent units at h = 100 where the 400-step unit gives 4 (Appendix K), and we did not rerun this permutation family there. This limits the *per-dimension* evidence only; the aggregate scalar the method applies is one test rather than forty-five coupled ones, and more strongly supported (§6.6).
-
-**No family-wide correction is applied across our own pre-registered rules.** There are 28 of them (Appendix E), each reported, once its data exist, against the thresholds it was committed with. Pre-registration is what licenses that: each rule is a separate question committed before its data, not one search over many outcomes, and a rule that fails is reported as failing. A reader who prefers a corrected family threshold can apply it from that count.
-
-**The independent-ensemble comparison bounds the trunk-sharing effect rather than isolating it.** §6.8's contrast trains five models at five seeds and scores them together. Independently seeded runs differ in **both** initialisation *and* data ordering, whereas the shared-trunk heads differ only in head initialisation. They also differ in **capacity**: the independent arm carries 3,570,820 state-pathway parameters against the shared-trunk arm's 1,024,132, a factor of 3.49, because each member brings its own trunk, and greater capacity can inflate σ as well as shrink error. **Capacity is controlled separately.** Rule M-49 (Appendix E), committed with its minimum detectable effect before any of its models existed, trains 5 independent members at `rnn_hidden_size` 124 against the released 256, giving 1,023,880 state-pathway parameters against the shared-trunk arm's 1,024,132, a ratio of 0.9998 where §6.8's contrast carried 3.49. It scores them on the held-out pair's 4 400-step trajectories, every model at 2,500 training iterations. **With capacity held fixed the independent ensemble is still better calibrated on every shared-trunk seed, every paired interval still excludes zero, and the coverage gain of +6.42 points still clears its own MDE.** The effect does not vanish when the confound is removed.
-
-**It does shrink, and by more than this design can resolve.** The overconfidence improvement falls from 2.03× unmatched to **1.79× matched**, against an MDE of 2.00×, so the rule returns **UNDER-POWERED — favours the matched ensemble by less than the MDE**: 5 of its 6 conditions hold, and the ratio threshold is the one that does not. That is the third branch the rule names, and it names it because its MDE was almost exactly the size of the effect it re-tested, as rule M-49's own text said before the runs (ledger `M-49`). So trunk-sharing is **not** explained away by capacity: the effect points the same way on every pair, with every interval excluding zero. Whether capacity accounts for *any* of it this design does not answer: the point estimates fall by about 0.24, a difference no artifact here tests and far below the 2.00× this comparison can resolve, and closing it needs more independent trajectories than the dataset contains. The comparison still conflates trunk-sharing with data-order diversity, which the rule does not address. That asymmetry is generous to the mechanism: had the factor barely moved despite the handicap, architecture would not be the explanation; since it moved, the design flaw is identified but not attributed to trunk-sharing alone. Isolating it would need an ensemble that shares data ordering and not parameters, a different experiment, as rule M-44 states in its own text.
-
-**§6.4's mechanism is a structural fact plus a hypothesis.** That the five members share a trunk, a hidden state and 89.15% of each member's parameters is measured; that this *causes* the epistemic miscalibration is the hypothesis, and only §6.8 bears on it.
-
-**The configuration and architecture verdicts hold at our budget and on our reading.** §5.2
-varies one factor at a time at 0.133% of the reference's data, so it cannot say what the
-original's budget would favour. §5.3's baselines are our reconstruction of a table that fixes only
-their shapes, tested on one robot where the original has several. Both sections state these limits
-beside their results.
-
-**Deliberately out of scope.** No policy-learning result of either paper is reproduced or tested:
-there is no simulator, no RL loop, no ANYmal, and no policy is trained anywhere in this work. The
-sample-efficiency comparison (roughly 6M against 250M transitions) is not tested for the same
-reason, and nothing here uses a GPU. And **we did not test whether the σ = 0 optimum affects other
-descendants of the PETS parameterisation** (§2): the clamp is inherited line for line, while the
-objective and the tie between the bounds are this codebase's own, so the hypothesis is well-founded
-only for a descendant that makes the substitution and leaves nothing pushing its floor back up, and
-it is untested for any. We counted how often the substitution is made among the
-10 repositories we examined (§2), which bears on how far the hypothesis reaches, but
-we tested the mechanism in none of them.
-
----
+This appendix is now section S2 of the supplementary material (`docs/SUPPLEMENT.md`).
 
 ## Appendix S — the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (§12)
 
@@ -2500,7 +2413,7 @@ trunk its five members share (§6.4), and its specific overconfidence factors,
 11,683× for the aleatoric σ and 33.4× for the epistemic term
 at h = 100 (§6.2), are measurements of one checkpoint. *Properties of this dataset
 and its arenas* are limits on what could be resolved, not findings in either direction, and neither pinned repository can lift them (§3): our arms' held-out arena holds 4 independent 400-step
-trajectories and all ten episodes hold 20, which is why §11 and Appendix R leave the replication at
+trajectories and all ten episodes hold 20, which is why §11 and supplementary S2 leave the replication at
 ensemble size 5, the free-baseline margin over whole trajectories at h = 368 and capacity's share of the
 trunk-sharing effect open rather than settled (on shorter units at h = 100, rule X6 settles the margin on the
 checkpoint's training episodes). §5.2's configuration verdict should not travel either: it is
