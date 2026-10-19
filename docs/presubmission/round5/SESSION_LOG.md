@@ -224,3 +224,75 @@ Body words / main-content pages: unchanged (17,804 / 26.9)
 Subagents: none
 Next: G4 (Sonnet 5.5, high) — post hoc N7–N14 per PROTOCOLS §5. N7 item 8 can now include X9's (a) and (d) per-trajectory values. Beside the queue.
 Decisions for user: none (ruling this session: DECISIONS.md#G3-assert-ii)
+
+## G4 — 2026-10-19 21:10 — Opus 5.5 (the plan assigns Sonnet 5.5), high — status: COMPLETE
+Commits: 302e66d [G4][N8] The tails (post hoc, R-81): 30 of 48 M-65 cells heavy-tailed, 18 mixed, 0 near-Gaussian; coverage-matching multiplier per cell; stage
+         0f049b5 [G4][N7] Exact sign-flip tests (post hoc, R-82): 260 comparisons, 228 at n = 4 (154 at the minimum p = 0.125); no Holm family can reject under
+         f880529 [G4][N9] The per-horizon recalibration scored (post hoc, R-83): +-1 sigma restored, +-2 sigma 84-86% against 95%, CRPS and NLL improve, interv
+         a54d5c5 [G4][N10] Floors script with --period and PERIODS unset (commit A, before any period or score exists); ruling G4-n10-pooled
+         be19443 [G4][N10] Fix the seasonal periods from training episodes
+         bd4c27f [G4][N10] Floors (post hoc, R-84): the training mean is a stronger floor than hold-last at long horizon on every arena; seasonal-naive no bett
+         eb21e80 [G4][N11] Rank correlations (post hoc, R-85): from h = 8 on, Spearman disagreement-error 0.82-0.92 and its lead over the index resolved at eve
+         39042d8 [G4][N12] Provenance (post hoc, R-86): the checkpoint stores no data statistic, hash or path; its one-step error shows no in-sample/held-out g
+         b87abbf [G4][N13] Adam (post hoc, R-87): default betas, collapse at a median 0.936 learning rates per iteration, variance state unreachable even at th
+         7a326c3 [G4][N14] One-step accounting (post hoc, optional, R-88): no ensemble's spread accounts for its one-step error; released R = 174, ensemble-5 7
+         3571e0f [G4] Build and gates after N7-N14: n_entries 295 -> 303; no paper edits; second build byte-identical
+         (final [G4][close] commit: this entry and the checkpoint)
+Review items closed: data for RV17, RV19, RV24, RV25, RV27, RV28, RV42; inputs to RV26 (Annex 1).
+Done:
+- **How this session ran.** In the same conversation as G2, GT1 and G3, at the user's request ("Start G4"). The plan assigns
+  Sonnet 5.5 in a fresh terminal. No subagent. Taken in the plan's order: N8, N7, N9, N10, N11, N12, N13, N14 (N14 kept by
+  PROTOCOLS). Each has its own script, artifact (`post_hoc: true`, `never_reopens`), ledger entry, stage and keys.
+  Evidence: `/Users/Shared/rwm_verify/evidence/R5G4/`.
+- **N8 (R-81).** 30 of M-65's 48 cells are heavy-tailed (±1σ over, ±2σ under), 18 mixed, 0 near-Gaussian.
+  - Every OVER-DISPERSED cell is heavy-tailed or over-covers at ±1σ only.
+  - All 15 "adequate" cells under-cover at ±2σ.
+  - The coverage-matching multiplier is per cell; at h = 1 on the released checkpoint it is 6.6 (`n8_k_rel_epi_h1`).
+- **N7 (R-82).** 260 comparisons; 228 at n = 4, of which 154 reach the minimum p = 0.125.
+  - No Holm family (sweep, M-75, M-76, X4) could reject anything under an exact test.
+  - X3's episode-level test at h = 368: p = 0.0020.
+- **N9 (R-83).** The per-horizon multiplier restores ±1σ at every horizon, but ±2σ reaches only about 84–86% against 95.45%.
+  CRPS improves and NLL falls by orders of magnitude; the intervals widen many-fold.
+- **N10 (R-84).** Periods fixed from training episodes in their own commit (`be19443`): 26–27 steps; no fallback was needed.
+  - The training-mean predictor is a stronger floor than hold-last at h = 368 on every arena and metric.
+  - **At h = 100 on the held-out pair's relative-L1, hold-last is lower (0.756 against 0.838).** R-84's "at long horizon" means
+    h = 368. The ledger is append-only, so not edited; G5's summary must state this.
+  - κ = 0.957; seasonal-naive is no better than hold-last.
+- **N11 (R-85).** The ranking findings are stronger under ranks from h = 8 on (Spearman disagreement–error 0.82–0.92), and the lead
+  over the index is resolved at every h ≥ 8.
+  - At h = 1, Pearson (0.994) is higher than Spearman (0.829).
+  - The e7 step-size margin, below M-51's MDE under Pearson, has an interval above zero under ranks. M-51's verdict stands (Y8).
+  - **A first draft of R-85 said "every horizon"; that was false at h = 1.** Caught before commit, the ledger restored from the
+    helper's backup, and re-appended correctly, with the claims now asserted in code. The draft never reached git.
+  - Runtime about 40 minutes.
+- **N12 (R-86).** The checkpoint stores no data statistic, hash or path (`iter` 5,000, `infos` None); the upstream repository has no tags.
+  - Arm A's one-step error: 0.075 in-sample against 0.117 held-out (intervals disjoint).
+  - The released checkpoint: 0.083 against 0.085 on the same episode groups (intervals overlapping). That is consistent with it
+    training on all ten episodes, or on none.
+  - 14 artifacts carry in-sample wording. A bug in the data-key filter (it matched network weights) was fixed before recording.
+- **N13 (R-87).** Adam defaults are β = (0.9, 0.999), ε = 1e-8. The collapse moves at a median 0.936 learning rates per iteration;
+  the worst-case Adam step is 3.16× the learning rate.
+  - The variance state needs 144,632 iterations at a typical step and 45,737 at the worst case, against the stated 500, 2,500 and 5,000.
+  - 342 checkpoints match their logs within one step.
+  - The typed −14.4629 is a defect (the checkpoint holds −14.463197); recorded, with a line in OUT_OF_SCOPE.
+  - The X11 queue's records are excluded, so the artifact stays fixed at the 81 records PROTOCOLS named.
+- **N14 (R-88).** At one step no ensemble's spread accounts for its error: released R = 174 [82, 255], ensemble-5 7.6, independent 2.6.
+- **Assertion failures and rulings:**
+  - N7's a1 point check (float32): ruling `DECISIONS.md#G4-n7-a1`.
+  - N10's pooled convention on the fold arena, asked before any scoring: `#G4-n10-pooled`.
+  - N10's own added floor check (float32 against float64): recorded, not a ruling, `#G4-n10-floorcheck`.
+  - N13's checkpoint constant: `#G4-n13-ckpt`.
+  - Every `.blocked` first-run record is kept in the evidence folder.
+- **Power.** The machine was on battery for about an hour mid-session (down to 51%); back on AC by N9. The queue was not interrupted.
+Build/gates: pass. Pipeline coverage, fast build, all eight gates, fast build again: PAPER.md, PAPER.tex, MODEL_CARD.md, README.md, docs/BUILD_CHECKS.md byte-identical; ledger_check PASS.
+Round-5 gates (report mode until G16): not available until G6
+Paper numbers changed: n_entries 295 → 303; ledger_kb 702 → 725 (FINDINGS_LEDGER.md)
+New keys: 618 (`n7_*`–`n14_*`, from results/n7_exact_tests.json … results/n14_one_step_accounting.json)
+Ledger: R-81 (N8), R-82 (N7), R-83 (N9), R-84 (N10), R-85 (N11), R-86 (N12), R-87 (N13), R-88 (N14), all post hoc, CONFIRMED, CONTRIB; RESULTS.md R- 80 → 88
+Re-anchored checks: none
+CPU jobs over 1 min: N7 (about 6 min, twice); N9 (about 1 min); N11 (about 40 min, background); N13 (about 1 min, three times); build and gates (95 s). All contended with the X11 queue.
+Queue (Y5): running (1 of 20 done at 21:05: `x11_e5_02_s0`; the second started 20:51; projected finish about 2026-10-22 00:15)
+Body words / main-content pages: unchanged (17,804 / 26.9)
+Subagents: none
+Next: G5 (Opus 5.5, medium) — readings into the record. It must carry R-84's h = 100 exception and X10's horizon split into READINGS.md.
+Decisions for user: none pending (rulings this session: DECISIONS.md#G4-n7-a1, #G4-n10-pooled, #G4-n13-ckpt)
