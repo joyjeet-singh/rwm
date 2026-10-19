@@ -174,9 +174,11 @@ def main():
         fbs[name] = fb
         if name == "heldout":
             fl = MN.floor(data, cfg, scale, starts, M_HIST)
-            mine = MN.metrics(preds["hold"].astype(np.float64) - truth.astype(np.float64), truth, scale)
+            # like with like: MN.floor subtracts in float32 (mn_sweep_eval.py:114-118), so the construction is checked on the
+            # float32 difference; scoring below uses float64 (DECISIONS.md#G4-n10-floorcheck)
+            mine = MN.metrics(preds["hold"] - truth, truth, scale)
             A["hold_equals_mn_floor"] = {"pass": bool(all(np.array_equal(np.asarray(fl[h]["l1"]), np.asarray(mine[h]["l1"]))
-                                                          and np.allclose(fl[h]["nrmse"], mine[h]["nrmse"], rtol=0, atol=1e-12)
+                                                          and np.array_equal(np.asarray(fl[h]["nrmse"]), np.asarray(mine[h]["nrmse"]))
                                                           for h in fl))}
     # (iii) the folds: each with its own training mean, scale and period
     fold_rows, fold_k = {}, {}

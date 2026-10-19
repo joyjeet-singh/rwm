@@ -4085,6 +4085,27 @@
         "scripts/x7_loeo_recalibration.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-84",
+      "claim": "N10 (post hoc): three floors that use no model \u2014 hold-last, the training mean and season",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/a1_ab_by_horizon.json",
+        "results/head_to_head_accuracy.json",
+        "results/mn_sweep_verdict.json",
+        "results/n10_floors.json",
+        "results/step4_0a_results.json",
+        "scripts/mn_sweep_eval.py",
+        "scripts/n10_floors.py",
+        "src/rwm_metrics.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -4093,7 +4114,7 @@
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 83,
+    "R": 84,
     "S": 21,
     "X": 17
   },

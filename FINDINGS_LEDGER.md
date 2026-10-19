@@ -10084,3 +10084,31 @@ the multiplier, not necessarily by the model (PREMISES P20).
 
 **Evidence** `RUN` `results/n9_recalibration_scores.json`; `SRC` `scripts/n9_recalibration_scores.py`, `scripts/x7_loeo_recalibration.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-84 — N10 (post hoc): three floors that use no model — hold-last, the training mean and seasonal-naive — on every long-horizon arena, and nRMSE's normaliser · **NEW**
+**Post hoc.** Computed after every model table existed (round 5, PLAN Annex 2 N10; specification
+`docs/presubmission/round5/PROTOCOLS.md` §5 N10, committed in `2d71330`; the fold arena's pooled convention by the user's ruling
+`docs/presubmission/round5/DECISIONS.md#G4-n10-pooled`, made before any scoring). It re-opens no rule and changes no verdict.
+
+**nRMSE as the paper defines it** (form 1, `src/rwm_metrics.py:115-133`): the mean over forecast steps of √(mean over dimensions
+of MSE) divided by the mean over dimensions of the training-episode standard deviation. Dividing instead by the root mean square
+of those standard deviations multiplies every value by κ = 0.9573 (default split; per fold in the artifact),
+for every predictor and model alike, so it changes no comparison.
+
+**The seasonal period**, fixed from training episodes only and committed before any held-out scoring (`be19443`): default 27 steps (0.54 s), 02 27 steps (0.54 s), 34 26 steps (0.52 s), 56 26 steps (0.52 s), 79 27 steps (0.54 s). Every
+period is shorter than the 32-row history, so no trajectory needed the fallback.
+
+**Assertions:** hold-last reproduces `results/mn_sweep_verdict.json`, `results/head_to_head_accuracy.json` and
+`results/a1_ab_by_horizon.json`'s floors within 6.0e-08 (tolerance 1e-6, float32
+provenance); the default training scale equals `results/step4_0a_results.json`.
+
+**The floors at h = 368.** Held-out pair (4 trajectories): hold-last relative-L1 0.993, nRMSE 1.090 (per-trajectory 1.046); training mean relative-L1 0.874, nRMSE 0.935 (per-trajectory 0.917); seasonal-naive relative-L1 1.004, nRMSE 1.093 (per-trajectory 1.053). X3's five folds (20): hold-last relative-L1 1.082, nRMSE 1.494 (per-trajectory 1.420); training mean relative-L1 0.800, nRMSE 1.048 (per-trajectory 1.024); seasonal-naive relative-L1 1.111, nRMSE 1.501 (per-trajectory 1.442). All ten
+episodes (20): hold-last relative-L1 1.082, nRMSE 1.497 (per-trajectory 1.387); training mean relative-L1 0.790, nRMSE 1.022 (per-trajectory 0.990); seasonal-naive relative-L1 1.106, nRMSE 1.494 (per-trajectory 1.399). At h = 100, held-out pair: hold-last relative-L1 0.756, nRMSE 0.954 (per-trajectory 0.880); training mean relative-L1 0.838, nRMSE 0.905 (per-trajectory 0.879); seasonal-naive relative-L1 0.769, nRMSE 0.897 (per-trajectory 0.827).
+
+**Against the models** (stored, `results/head_to_head_accuracy.json`, held-out pair, h = 368, pooled nRMSE): released checkpoint (as released, ensemble of 5): relative-L1 0.604, nRMSE 0.905; Arm A — autoregressive, faithful MSE: relative-L1 0.586, nRMSE 0.543; Arm B — teacher-forced: relative-L1 4.568, nRMSE 3.793. **The
+training-mean predictor is a stronger floor than holding the last state** at long horizon on every arena, on both metrics, and
+repeating the last gait cycle is no better than holding the last state. Every arena, horizon, predictor, convention and κ is in
+the artifact.
+
+**Evidence** `RUN` `results/n10_floors.json`; `SRC` `scripts/n10_floors.py`, `scripts/mn_sweep_eval.py`, `src/rwm_metrics.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

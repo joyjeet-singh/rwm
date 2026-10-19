@@ -4070,6 +4070,24 @@ def main():
             put(f"n9_epi_{_ct}_nll_h{_h}", f'{_r9["nll"]:.2f}', _n9s)
             put(f"n9_epi_{_ct}_width_h{_h}", f'{_r9["width"]:.3f}', _n9s)
 
+    # Round 5, G4: N10 (ledger R-84, post hoc). Reads the CSV only, so not NEEDS_WEIGHTS.
+    N10 = J("n10_floors.json")
+    _n10s = "results/n10_floors.json"
+    assert N10["post_hoc"] and all(v["pass"] for v in N10["assertions"].values())
+    put("n10_period_default", N10["design"]["periods"]["default"]["P"], _n10s)
+    put("n10_period_s", f'{N10["design"]["periods"]["default"]["seconds"]:.2f}', _n10s)
+    put("n10_period_min", min(v["P"] for v in N10["design"]["periods"].values()), _n10s)
+    put("n10_period_max", max(v["P"] for v in N10["design"]["periods"].values()), _n10s)
+    put("n10_kappa_heldout", f'{N10["kappa"]["heldout"]:.4f}', _n10s)
+    put("n10_n_seasonal_fallback", sum(N10["n_seasonal_fallback"].values()), _n10s)
+    for _ar in ("heldout", "insample", "fold", "all10"):
+        for _p in ("hold", "mean", "seas"):
+            for _h in ("1", "8", "32", "100", "128", "368"):
+                _c = N10["floors"][_ar][_p][_h]
+                put(f"n10_{_p}_l1_{_ar}_h{_h}", f'{_c["l1"]:.3f}', _n10s)
+                put(f"n10_{_p}_nrmse_{_ar}_h{_h}", f'{_c["nrmse_pooled"]:.3f}', _n10s)
+                put(f"n10_{_p}_nrmse_pt_{_ar}_h{_h}", f'{_c["nrmse_per_traj"]:.3f}', _n10s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

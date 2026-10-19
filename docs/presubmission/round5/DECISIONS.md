@@ -70,3 +70,12 @@ the stored list; the tolerance stays 1e-12; the interval check is unchanged (`bo
 the pooled convention on X3's five-fold arena, where each fold has its own training scale, so one pooled value over the 20
 trajectories is undefined. N10 pools within each fold with that fold's scale and averages the five fold values with equal
 weight (each fold has 4 trajectories), labelled as such; the per-trajectory convention is reported as specified.
+
+## G4-n10-floorcheck
+
+*Recorded, not a user ruling (2026-10-19).* N10's first scoring run stopped on a check that is not in PROTOCOLS but was added
+by G4: that the script's hold-last forecast equals `mn_sweep_eval.floor` exactly. Every PROTOCOLS assertion passed (stored
+floors within 6.0e-8 of 1e-6; scale exact); no N10 number was written or printed. Cause: `MN.floor` subtracts in float32
+and the check had cast to float64 first. The check now compares like with like (the float32 difference through
+`MN.metrics`) and stays exact, the same treatment as rulings G3-assert-ii and G4-n7-a1. The `.blocked` record is kept at
+`/Users/Shared/rwm_verify/evidence/R5G4/`.

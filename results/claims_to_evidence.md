@@ -114,3 +114,4 @@ One row per CONTRIB ledger entry.
 | `R-81` | N8 (post hoc): the tails of the calibration error — M-65's over-covering cells are heavy | `RUN`, `SRC` | CONFIRMED | `results/m65_gaussian_nominal.json`, `results/n8_tails.json` |
 | `R-82` | N7 (post hoc): exact sign-flip tests for every paired comparison reported at n = 4 with  | `RUN`, `SRC` | CONFIRMED | `results/n7_exact_tests.json`, `scripts/n7_exact_tests.py` |
 | `R-83` | N9 (post hoc): the per-horizon recalibration scored on ±2σ coverage, CRPS, NLL and width | `RUN`, `SRC` | CONFIRMED | `results/n9_recalibration_scores.json`, `results/x7_loeo_recalibration.json` |
+| `R-84` | N10 (post hoc): three floors that use no model — hold-last, the training mean and season | `RUN`, `SRC` | CONFIRMED | `results/a1_ab_by_horizon.json`, `results/head_to_head_accuracy.json` |
