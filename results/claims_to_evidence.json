@@ -4155,6 +4155,23 @@
         "scripts/n12_provenance.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-87",
+      "claim": "N13 (post hoc): Adam's defaults, the collapse rate against the learning rate, and the va",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/n13_adam.json",
+        "scripts/n13_adam.py",
+        "src/rwm_model.py",
+        "src/rwm_train.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -4163,7 +4180,7 @@
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 86,
+    "R": 87,
     "S": 21,
     "X": 17
   },

@@ -79,3 +79,14 @@ floors within 6.0e-8 of 1e-6; scale exact); no N10 number was written or printed
 and the check had cast to float64 first. The check now compares like with like (the float32 difference through
 `MN.metrics`) and stays exact, the same treatment as rulings G3-assert-ii and G4-n7-a1. The `.blocked` record is kept at
 `/Users/Shared/rwm_verify/evidence/R5G4/`.
+
+## G4-n13-ckpt
+
+**User ruling, 2026-10-19 (chat), on N13's first run:** "Assert vs C-10, log defect". N13's assertion that the checkpoint's
+mean `state_log_delta_logstd` equals the project constant −14.4629 within 5e-5 failed: the checkpoint holds −14.463197 (all
+225 entries in [−14.46361, −14.46255]). The constant is a typed number with no derivation, first typed in `84ff01b`
+(`scripts/step5_train.py`) and copied into `scripts/step6_analyse.py:38` and `scripts/step6_3_min_logstd.py:32`; it is off
+by 3.0e-4 (0.002%). N13 now asserts the value read from the checkpoint against ledger C-10's recorded −14.463 at C-10's own
+precision (|difference| < 5e-4), records the typed-constant defect in its artifact and ledger entry, and logs it in
+OUT_OF_SCOPE. N13's reachability uses the value read from the checkpoint, as PROTOCOLS specified. No N13 reading had been
+written (the `.blocked` record is at `/Users/Shared/rwm_verify/evidence/R5G4/`).

@@ -4144,6 +4144,30 @@ def main():
         put(f"n12_rel_l1_h1_{_k}_ci", f'[{_d12[_src]["ci_unit_level"][0]:.4f}, {_d12[_src]["ci_unit_level"][1]:.4f}]', _n12s)
     put("n12_n_artifacts_role_change", N12["role_change"]["n"], _n12s)
 
+    # Round 5, G4: N13 (ledger R-87, post hoc). NEEDS_WEIGHTS: it reloads every saved checkpoint.
+    N13 = J("n13_adam.json")
+    _n13s = "results/n13_adam.json"
+    assert N13["post_hoc"] and all(v["pass"] for v in N13["assertions"].values())
+    _ad13 = N13["facts"]["adam_defaults_read_at_run_time"]
+    put("n13_beta1", f'{_ad13["betas"][0]:g}', _n13s)
+    put("n13_beta2", f'{_ad13["betas"][1]:g}', _n13s)
+    put("n13_eps", f'{_ad13["eps"]:g}', _n13s)
+    put("n13_bound_over_lr", f'{N13["bound"]["worst_over_lr"]:.2f}', _n13s)
+    _r13 = N13["rate_over_lr"]["overall"]
+    put("n13_rate_over_lr_min", f'{_r13["min"]:.2f}', _n13s)
+    put("n13_rate_over_lr_median", f'{_r13["median"]:.3f}', _n13s)
+    put("n13_rate_over_lr_max", f'{_r13["max"]:.3f}', _n13s)
+    put("n13_n_runs", _r13["n"], _n13s)
+    for _lt, _v in N13["rate_over_lr"]["by_loss_type"].items():
+        put(f"n13_rate_over_lr_median_{_lt}", f'{_v["median"]:.3f}', _n13s)
+        put(f"n13_n_runs_{_lt}", _v["n"], _n13s)
+    _re13 = N13["reachability"]
+    put("n13_iters_typical", f'{_re13["iterations_typical"]:,.0f}', _n13s)
+    put("n13_iters_worst", f'{_re13["iterations_worst_case"]:,.0f}', _n13s)
+    put("n13_iters_measured", f'{_re13["iterations_at_measured_rate"]:,.0f}', _n13s)
+    put("n13_ckpt_log_delta", f'{N13["ckpt_log_delta"]:.4f}', _n13s)
+    put("n13_n_checkpoints_checked", N13["assertions"]["checkpoints_vs_logs"]["n_checked"], _n13s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

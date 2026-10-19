@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "721"
+    "value": "724"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -7003,6 +7003,82 @@
     "source": "results/n12_provenance.json",
     "value": "[0.0768, 0.0899]"
   },
+  "n13_beta1": {
+    "source": "results/n13_adam.json",
+    "value": "0.9"
+  },
+  "n13_beta2": {
+    "source": "results/n13_adam.json",
+    "value": "0.999"
+  },
+  "n13_bound_over_lr": {
+    "source": "results/n13_adam.json",
+    "value": "3.16"
+  },
+  "n13_ckpt_log_delta": {
+    "source": "results/n13_adam.json",
+    "value": "-14.4632"
+  },
+  "n13_eps": {
+    "source": "results/n13_adam.json",
+    "value": "1e-08"
+  },
+  "n13_iters_measured": {
+    "source": "results/n13_adam.json",
+    "value": "154,547"
+  },
+  "n13_iters_typical": {
+    "source": "results/n13_adam.json",
+    "value": "144,632"
+  },
+  "n13_iters_worst": {
+    "source": "results/n13_adam.json",
+    "value": "45,737"
+  },
+  "n13_n_checkpoints_checked": {
+    "source": "results/n13_adam.json",
+    "value": 342
+  },
+  "n13_n_runs": {
+    "source": "results/n13_adam.json",
+    "value": 81
+  },
+  "n13_n_runs_None": {
+    "source": "results/n13_adam.json",
+    "value": 8
+  },
+  "n13_n_runs_gaussian_nll": {
+    "source": "results/n13_adam.json",
+    "value": 5
+  },
+  "n13_n_runs_mse": {
+    "source": "results/n13_adam.json",
+    "value": 68
+  },
+  "n13_rate_over_lr_max": {
+    "source": "results/n13_adam.json",
+    "value": "0.951"
+  },
+  "n13_rate_over_lr_median": {
+    "source": "results/n13_adam.json",
+    "value": "0.936"
+  },
+  "n13_rate_over_lr_median_None": {
+    "source": "results/n13_adam.json",
+    "value": "0.936"
+  },
+  "n13_rate_over_lr_median_gaussian_nll": {
+    "source": "results/n13_adam.json",
+    "value": "0.324"
+  },
+  "n13_rate_over_lr_median_mse": {
+    "source": "results/n13_adam.json",
+    "value": "0.936"
+  },
+  "n13_rate_over_lr_min": {
+    "source": "results/n13_adam.json",
+    "value": "0.32"
+  },
   "n2_changed_list": {
     "source": "results/pooled_nrmse_alongside.json",
     "value": "with the baselines teacher-forced, in-sample nRMSE at h = 1 returns DOES NOT REPRODUCE pooled against CANNOT BE SETTLED averaged; with the baselines autoregressive, in-sample nRMSE at h = 100 returns PARTIAL pooled against RWM AHEAD OF ALL THREE averaged"
@@ -8129,7 +8205,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 301
+    "value": 302
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",

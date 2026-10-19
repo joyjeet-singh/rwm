@@ -10168,3 +10168,36 @@ text search of `results/*.json` for the phrases that label the released checkpoi
 
 **Evidence** `RUN` `results/n12_provenance.json`; `SRC` `scripts/n12_provenance.py`, `scripts/m64_short_units.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-87 — N13 (post hoc): Adam's defaults, the collapse rate against the learning rate, and the variance-state reachability under Kingma and Ba's step bound · **NEW**
+**Post hoc.** Round 5, PLAN Annex 2 N13; specification `docs/presubmission/round5/PROTOCOLS.md` §5 N13 (committed in
+`2d71330`). It re-opens no rule: S-19's retraction of the variance-state claim stands, and nothing here changes a verdict.
+
+**The optimiser.** Every training path calls Adam without `betas` or `eps` (`../rsl_rl_rwm/rsl_rl/algorithms/mbpo_ppo.py:54-54`; `../rsl_rl_rwm/rsl_rl/algorithms/mbpo_ppo.py:102-102`; `../robotic_world_model_lite/scripts/train.py:224-228`; `src/rwm_train.py:60-63`; `scripts/step5_train.py:244-244`), so PyTorch's defaults apply, read at run
+time from `torch.optim.Adam` (torch 2.2.2): β1 = 0.9, β2 =
+0.999, ε = 1e-08; learning rate α =
+0.0001, weight decay 1e-05 (coupled L2, not AdamW).
+
+**The bound** (Kingma and Ba 2015, §2.1): with these β's, 1 - beta1 = 0.1 > sqrt(1 - beta2) = 0.0316228, so one step is at most α(1 − β1)/√(1 − β2) =
+3.162α, and typically about α.
+
+**The measured collapse rate.** `collapse_fit.rate_over_lr` over every run record with a collapse fit: median 0.936 (min 0.318, quartiles 0.930–0.948, max 0.951; n = 81). By loss
+type: None: median 0.936 (min 0.914, quartiles 0.931–0.951, max 0.951; n = 8); gaussian_nll: median 0.324 (min 0.318, quartiles 0.320–0.326, max 0.326; n = 5); mse: median 0.936 (min 0.886, quartiles 0.934–0.948, max 0.951; n = 68). The sampled-MSE runs move log_delta_logstd by very nearly one learning rate per iteration, the "typical" Adam step.
+
+**Reachability, redone.** The checkpoint's mean `state_log_delta_logstd` is -14.463197 (asserted against C-10's −14.463 to
+its 3 decimals). The project's typed constant -14.4629 differs from it by +3.0e-04, a typed
+derived number recorded as a defect (`docs/presubmission/round5/DECISIONS.md#G4-n13-ckpt`, OUT_OF_SCOPE). From the released
+initialisation (0, asserted against the runs' iteration-0 logs) the distance is
+14.4632: **144,632 iterations at a typical step, 45,737 at Kingma and
+Ba's worst case**, and 154,547 at the measured median rate. Against the stated counts — 500: not reachable even at the worst-case step, 2500: not reachable even at the worst-case step, 5000: not reachable even at the worst-case step. So
+no constant-learning-rate Adam run from the released initialisation reaches the checkpoint's variance state within any stated
+count, even taking the largest step Adam can make.
+
+**σ's trajectory** for Figure 4 (the logged bounds exp(min_logstd) and exp(min_logstd + exp(log_delta_logstd)), every 25
+iterations, every run) is in the artifact. **Assertion:** every saved checkpoint of every run with a record (342
+checkpoints) reproduces its logged collapse statistics within one worst-case step (maximum difference
+9.7e-05); 28 directories without such a record (baselines,
+probes, the X11 queue) are listed and skipped.
+
+**Evidence** `RUN` `results/n13_adam.json`; `SRC` `scripts/n13_adam.py`, `src/rwm_train.py`, `src/rwm_model.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
