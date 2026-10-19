@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "717"
+    "value": "721"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -6943,6 +6943,66 @@
     "source": "results/n11_rank_correlations.json",
     "value": "+0.478"
   },
+  "n12_ckpt_has_data_stats": {
+    "source": "results/n12_provenance.json",
+    "value": "no"
+  },
+  "n12_ckpt_infos": {
+    "source": "results/n12_provenance.json",
+    "value": "None"
+  },
+  "n12_ckpt_iter": {
+    "source": "results/n12_provenance.json",
+    "value": "5,000"
+  },
+  "n12_n_artifacts_role_change": {
+    "source": "results/n12_provenance.json",
+    "value": 14
+  },
+  "n12_n_tags": {
+    "source": "results/n12_provenance.json",
+    "value": 0
+  },
+  "n12_rel_l1_h1_armA_in": {
+    "source": "results/n12_provenance.json",
+    "value": "0.0748"
+  },
+  "n12_rel_l1_h1_armA_in_ci": {
+    "source": "results/n12_provenance.json",
+    "value": "[0.0667, 0.0833]"
+  },
+  "n12_rel_l1_h1_armA_out": {
+    "source": "results/n12_provenance.json",
+    "value": "0.1171"
+  },
+  "n12_rel_l1_h1_armA_out_ci": {
+    "source": "results/n12_provenance.json",
+    "value": "[0.0937, 0.1417]"
+  },
+  "n12_rel_l1_h1_released": {
+    "source": "results/n12_provenance.json",
+    "value": "0.0836"
+  },
+  "n12_rel_l1_h1_released_ci": {
+    "source": "results/n12_provenance.json",
+    "value": "[0.0780, 0.0895]"
+  },
+  "n12_rel_l1_h1_released_on_heldout": {
+    "source": "results/n12_provenance.json",
+    "value": "0.0853"
+  },
+  "n12_rel_l1_h1_released_on_heldout_ci": {
+    "source": "results/n12_provenance.json",
+    "value": "[0.0740, 0.0972]"
+  },
+  "n12_rel_l1_h1_released_on_train": {
+    "source": "results/n12_provenance.json",
+    "value": "0.0832"
+  },
+  "n12_rel_l1_h1_released_on_train_ci": {
+    "source": "results/n12_provenance.json",
+    "value": "[0.0768, 0.0899]"
+  },
   "n2_changed_list": {
     "source": "results/pooled_nrmse_alongside.json",
     "value": "with the baselines teacher-forced, in-sample nRMSE at h = 1 returns DOES NOT REPRODUCE pooled against CANNOT BE SETTLED averaged; with the baselines autoregressive, in-sample nRMSE at h = 100 returns PARTIAL pooled against RWM AHEAD OF ALL THREE averaged"
@@ -8069,7 +8129,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 300
+    "value": 301
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",

@@ -4127,6 +4127,23 @@ def main():
     put("n11_npos_sp_rel_epi_h368", N11["U6_npos"]["rel_epistemic_h368"]["spearman_n_positive"], _n11s)
     put("n11_npos_sp_e5s0_epi_h368", N11["U6_npos"]["e5_seed0_h368"]["spearman_n_positive"], _n11s)
 
+    # Round 5, G4: N12 (ledger R-86, post hoc, descriptive).
+    N12 = J("n12_provenance.json")
+    _n12s = "results/n12_provenance.json"
+    assert N12["post_hoc"] and all(v["pass"] for v in N12["assertions"].values())
+    _ck12 = N12["source_evidence"]["checkpoint"]
+    put("n12_ckpt_iter", f'{_ck12["iter"]:,}', _n12s)
+    put("n12_ckpt_has_data_stats", "yes" if _ck12["has_data_statistics_or_provenance"] else "no", _n12s)
+    put("n12_ckpt_infos", str(_ck12["infos"]), _n12s)
+    put("n12_n_tags", len(N12["source_evidence"]["upstream"]["tags"]), _n12s)
+    _d12 = N12["one_step_error"]
+    for _k, _src in (("released", "released_all_ten"), ("released_on_train", "released_on_armA_training_episodes"),
+                     ("released_on_heldout", "released_on_armA_heldout_episodes"), ("armA_in", "armA_in_sample"),
+                     ("armA_out", "armA_held_out")):
+        put(f"n12_rel_l1_h1_{_k}", f'{_d12[_src]["mean"]:.4f}', _n12s)
+        put(f"n12_rel_l1_h1_{_k}_ci", f'[{_d12[_src]["ci_unit_level"][0]:.4f}, {_d12[_src]["ci_unit_level"][1]:.4f}]', _n12s)
+    put("n12_n_artifacts_role_change", N12["role_change"]["n"], _n12s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

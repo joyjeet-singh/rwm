@@ -10141,3 +10141,30 @@ counts at h = 368:** released checkpoint, epistemic, 45 of 45 positive under Pea
 
 **Evidence** `RUN` `results/n11_rank_correlations.json`; `SRC` `scripts/n11_rank_correlations.py`, `scripts/task_d_nind20.py`, `scripts/e7_free_baselines.py`, `scripts/x6_stepsize_short_units.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-86 — N12 (post hoc): the released checkpoint's provenance — what the sources record, and its one-step error beside our arms' in-sample and held-out · **NEW**
+**Post hoc and descriptive.** Round 5, PLAN Annex 2 N12; specification `docs/presubmission/round5/PROTOCOLS.md` §5 N12
+(committed in `2d71330`). No verdict; it re-opens no rule.
+
+**What the sources say.** The release configures its dataset location as `../robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py:36-37`: dataset_root: str = "assets" dataset_folder: str = "data"; `../robotic_world_model_lite/scripts/configs/base_cfg.py:33-34`: dataset_root: str = "logs/online" dataset_folder: str = "train". Its README lists the assets (line 116: [`pretrain_rnn_ens.pt`](assets/models/pretrain_rnn_ens.pt).; line 118: [`state_action_data_0.csv`](assets/data/state_action_data_0.csv).) without saying
+that the one trained the other. The checkpoint file (`../robotic_world_model_lite/assets/models/pretrain_rnn_ens.pt`, SHA-256 `2ac8686c8c7736287853c0fe1438c379320068adf97be71609b5f1afb52c6e5a`) holds the top-level keys
+`model_state_dict`, `system_dynamics_state_dict`, `optimizer_state_dict`, `system_dynamics_optimizer_state_dict`, `iter`, `infos`, with `iter` = 5000 and `infos` = None; **no data statistic, hash
+or path is stored** in it. The upstream repository has 0 tags. The first author's account is quoted only
+as the paper's Appendix F quotes it. No file in either repository records which rows trained the checkpoint (PREMISES P20).
+
+**Assertion:** `x3_cross_fold.assert_f`, unchanged, reproduces `results/m64_short_units.json` cell C (maximum difference
+0.0e+00).
+
+**One-step error** (relative-L1 at h = 1 on M-64's 33-row units, unit-level 95% intervals): the released checkpoint on all ten
+episodes 0.0836 [0.0780, 0.0895] (300 units); on our arms' eight training episodes 0.0832 [0.0768, 0.0899] (240 units) and on the
+held-out pair 0.0853 [0.0740, 0.0972] (60 units). Arm A (2,500 iterations, three-seed mean) in-sample
+0.0748 [0.0667, 0.0833] (240 units) and held-out 0.1171 [0.0937, 0.1417] (60 units). Our arm shows the in-sample advantage a model shows on its own training
+data; the released checkpoint shows no such gap between the same two groups of episodes, which is what it would show if it trained
+on all ten episodes, or on none of them. It cannot tell those two apart. Per-episode values are in the artifact.
+
+**Which artifacts change role if the CSV is a separate recording** (every released-checkpoint number in them becomes held-out): a
+text search of `results/*.json` for the phrases that label the released checkpoint's arena in-sample finds
+14: `results/alignment_by_horizon.json`, `results/appendix_g_rules.json`, `results/c1_diff_report.json`, `results/c1_review_queue.json`, `results/comparative_claims.json`, `results/head_to_head_accuracy.json`, `results/insample_framing.json`, `results/n9_recalibration_scores.json`, `results/restatement_index.json`, `results/task_c1_claims_audit.json`, `results/task_d_nind20.json`, `results/x6_stepsize_short_units.json`, `results/x7_loeo_recalibration.json`, `results/x9_per_member_propagation.json`. Several are the paper's own audit and claim indexes, which repeat the paper's wording.
+
+**Evidence** `RUN` `results/n12_provenance.json`; `SRC` `scripts/n12_provenance.py`, `scripts/m64_short_units.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

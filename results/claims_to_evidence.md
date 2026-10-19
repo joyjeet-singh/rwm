@@ -116,3 +116,4 @@ One row per CONTRIB ledger entry.
 | `R-83` | N9 (post hoc): the per-horizon recalibration scored on ±2σ coverage, CRPS, NLL and width | `RUN`, `SRC` | CONFIRMED | `results/n9_recalibration_scores.json`, `results/x7_loeo_recalibration.json` |
 | `R-84` | N10 (post hoc): three floors that use no model — hold-last, the training mean and season | `RUN`, `SRC` | CONFIRMED | `results/a1_ab_by_horizon.json`, `results/head_to_head_accuracy.json` |
 | `R-85` | N11 (post hoc): Spearman and Kendall beside every Pearson ranking statistic — from h = 8 | `RUN`, `SRC` | CONFIRMED | `results/n11_rank_correlations.json`, `scripts/e7_free_baselines.py` |
+| `R-86` | N12 (post hoc): the released checkpoint's provenance — what the sources record, and its  | `RUN`, `SRC` | CONFIRMED | `results/alignment_by_horizon.json`, `results/appendix_g_rules.json` |

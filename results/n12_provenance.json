@@ -1,0 +1,357 @@
+{
+ "analysis": "N12",
+ "post_hoc": true,
+ "descriptive": true,
+ "never_reopens": "any rule; nothing here changes a verdict",
+ "script": "scripts/n12_provenance.py",
+ "script_sha256": "b0f920dc7d62ed93df9d460aa4bef8e5c20aa44a8f94aecea1ce4465877b98e1",
+ "assertions": {
+  "m64_cell_C": {
+   "pass": true,
+   "max_abs_diff": 0.0,
+   "n_units": 60,
+   "against": "results/m64_short_units.json cells.C_section_5_ab_gap, held-out pair, h = 1"
+  }
+ },
+ "source_evidence": {
+  "dataset_location": [
+   {
+    "file": "../robotic_world_model_lite/scripts/configs/anymal_d_flat_cfg.py",
+    "lines": "36-37",
+    "text": [
+     "        dataset_root: str = \"assets\"",
+     "        dataset_folder: str = \"data\""
+    ]
+   },
+   {
+    "file": "../robotic_world_model_lite/scripts/configs/base_cfg.py",
+    "lines": "33-34",
+    "text": [
+     "        dataset_root: str = \"logs/online\"",
+     "        dataset_folder: str = \"train\""
+    ]
+   }
+  ],
+  "readme_assets": {
+   "file": "../robotic_world_model_lite/README.md",
+   "matches": [
+    {
+     "line": 116,
+     "text": "[`pretrain_rnn_ens.pt`](assets/models/pretrain_rnn_ens.pt)."
+    },
+    {
+     "line": 118,
+     "text": "[`state_action_data_0.csv`](assets/data/state_action_data_0.csv)."
+    }
+   ]
+  },
+  "checkpoint": {
+   "file": "../robotic_world_model_lite/assets/models/pretrain_rnn_ens.pt",
+   "sha256": "2ac8686c8c7736287853c0fe1438c379320068adf97be71609b5f1afb52c6e5a",
+   "top_level_keys": {
+    "model_state_dict": "OrderedDict",
+    "system_dynamics_state_dict": "OrderedDict",
+    "optimizer_state_dict": "dict",
+    "system_dynamics_optimizer_state_dict": "dict",
+    "iter": "int",
+    "infos": "NoneType"
+   },
+   "iter": 5000,
+   "infos": null,
+   "keys_that_could_hold_data_statistics_or_provenance": [],
+   "has_data_statistics_or_provenance": false
+  },
+  "upstream": {
+   "robotic_world_model_lite_head": "13a798e9d35dabf12c0e6e02977b25ec64dfb2bd",
+   "tags": []
+  },
+  "correspondence": "quoted only as the paper's Appendix F quotes it; the anonymised exchange is kept outside the repository and is not re-quoted here"
+ },
+ "one_step_error": {
+  "metric": "relative-L1 at h = 1 on M-64's 33-row units (m64_short_units.rel_l1)",
+  "per_episode": {
+   "0": {
+    "n_units": 30,
+    "released_mean": 0.09106972813606262,
+    "armA_seed_mean": 0.0797758623957634,
+    "armA_role": "in-sample"
+   },
+   "1": {
+    "n_units": 30,
+    "released_mean": 0.09865065664052963,
+    "armA_seed_mean": 0.15408363938331604,
+    "armA_role": "held-out"
+   },
+   "2": {
+    "n_units": 30,
+    "released_mean": 0.07605485618114471,
+    "armA_seed_mean": 0.06765084713697433,
+    "armA_role": "in-sample"
+   },
+   "3": {
+    "n_units": 30,
+    "released_mean": 0.08014705777168274,
+    "armA_seed_mean": 0.06972713768482208,
+    "armA_role": "in-sample"
+   },
+   "4": {
+    "n_units": 30,
+    "released_mean": 0.08358646184206009,
+    "armA_seed_mean": 0.08078337460756302,
+    "armA_role": "in-sample"
+   },
+   "5": {
+    "n_units": 30,
+    "released_mean": 0.08567134290933609,
+    "armA_seed_mean": 0.08032967895269394,
+    "armA_role": "in-sample"
+   },
+   "6": {
+    "n_units": 30,
+    "released_mean": 0.0768318623304367,
+    "armA_seed_mean": 0.06004041060805321,
+    "armA_role": "in-sample"
+   },
+   "7": {
+    "n_units": 30,
+    "released_mean": 0.0938100516796112,
+    "armA_seed_mean": 0.09449786692857742,
+    "armA_role": "in-sample"
+   },
+   "8": {
+    "n_units": 30,
+    "released_mean": 0.0719677060842514,
+    "armA_seed_mean": 0.08008785545825958,
+    "armA_role": "held-out"
+   },
+   "9": {
+    "n_units": 30,
+    "released_mean": 0.0781213715672493,
+    "armA_seed_mean": 0.06595159322023392,
+    "armA_role": "in-sample"
+   }
+  },
+  "released_all_ten": {
+   "mean": 0.08359111100435257,
+   "ci_unit_level": [
+    0.07797910409296552,
+    0.08951884359462807
+   ],
+   "ci_episode_level": [
+    0.0787446736463656,
+    0.08879041478441407
+   ],
+   "n_units": 300,
+   "episodes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "released_on_armA_training_episodes": {
+   "mean": 0.08316159248352051,
+   "ci_unit_level": [
+    0.07684357933738889,
+    0.08987834962317719
+   ],
+   "ci_episode_level": [
+    0.07915203776210547,
+    0.08760268702171743
+   ],
+   "n_units": 240,
+   "episodes": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9
+   ]
+  },
+  "released_on_armA_heldout_episodes": {
+   "mean": 0.08530917763710022,
+   "ci_unit_level": [
+    0.07403491390558581,
+    0.09723663779286046
+   ],
+   "ci_episode_level": [
+    0.0719677043457826,
+    0.09865065986911456
+   ],
+   "n_units": 60,
+   "episodes": [
+    1,
+    8
+   ]
+  },
+  "armA_in_sample": {
+   "mean": 0.0748445987701416,
+   "ci_unit_level": [
+    0.0666747064726466,
+    0.08334315883451685
+   ],
+   "ci_episode_level": [
+    0.06807043053112768,
+    0.08233116020390298
+   ],
+   "n_units": 240,
+   "episodes": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9
+   ]
+  },
+  "armA_held_out": {
+   "mean": 0.11708573997020721,
+   "ci_unit_level": [
+    0.09371380650050318,
+    0.14173362347064541
+   ],
+   "ci_episode_level": [
+    0.08008786272257566,
+    0.15408363665143648
+   ],
+   "n_units": 60,
+   "episodes": [
+    1,
+    8
+   ]
+  }
+ },
+ "role_change": {
+  "search_terms": [
+   "trained on all ten",
+   "released_ckpt_arena_is_in_sample",
+   "in-sample for the released",
+   "in-sample for the checkpoint",
+   "in_sample_for_released",
+   "in-sample for it",
+   "its own training data"
+  ],
+  "rule": "a results/*.json whose text labels the released checkpoint's arena in-sample",
+  "artifacts": [
+   {
+    "artifact": "results/alignment_by_horizon.json",
+    "terms": [
+     "in-sample for the released"
+    ]
+   },
+   {
+    "artifact": "results/appendix_g_rules.json",
+    "terms": [
+     "its own training data"
+    ]
+   },
+   {
+    "artifact": "results/c1_diff_report.json",
+    "terms": [
+     "trained on all ten"
+    ]
+   },
+   {
+    "artifact": "results/c1_review_queue.json",
+    "terms": [
+     "trained on all ten"
+    ]
+   },
+   {
+    "artifact": "results/comparative_claims.json",
+    "terms": [
+     "trained on all ten",
+     "in-sample for the released",
+     "in-sample for the checkpoint",
+     "in-sample for it"
+    ]
+   },
+   {
+    "artifact": "results/head_to_head_accuracy.json",
+    "terms": [
+     "trained on all ten",
+     "released_ckpt_arena_is_in_sample"
+    ]
+   },
+   {
+    "artifact": "results/insample_framing.json",
+    "terms": [
+     "trained on all ten"
+    ]
+   },
+   {
+    "artifact": "results/n9_recalibration_scores.json",
+    "terms": [
+     "trained on all ten"
+    ]
+   },
+   {
+    "artifact": "results/restatement_index.json",
+    "terms": [
+     "trained on all ten",
+     "in-sample for the released",
+     "in-sample for the checkpoint"
+    ]
+   },
+   {
+    "artifact": "results/task_c1_claims_audit.json",
+    "terms": [
+     "trained on all ten",
+     "in-sample for the released",
+     "in-sample for the checkpoint",
+     "in-sample for it"
+    ]
+   },
+   {
+    "artifact": "results/task_d_nind20.json",
+    "terms": [
+     "trained on all ten"
+    ]
+   },
+   {
+    "artifact": "results/x6_stepsize_short_units.json",
+    "terms": [
+     "trained on all ten"
+    ]
+   },
+   {
+    "artifact": "results/x7_loeo_recalibration.json",
+    "terms": [
+     "trained on all ten"
+    ]
+   },
+   {
+    "artifact": "results/x9_per_member_propagation.json",
+    "terms": [
+     "in-sample for the released"
+    ]
+   }
+  ],
+  "n": 14,
+  "if_separate_recording": "every released-checkpoint number in these artifacts is held-out, not in-sample"
+ },
+ "what_is_known": "no file in either repository records which rows trained the released checkpoint; the checkpoint stores no data statistic, hash or path (see source_evidence.checkpoint); the configured dataset location is the release's own assets folder, which holds the CSV this project uses",
+ "code_sha256": {
+  "scripts/n12_provenance.py": "b0f920dc7d62ed93df9d460aa4bef8e5c20aa44a8f94aecea1ce4465877b98e1",
+  "scripts/m64_short_units.py": "9556ee0fb396152fd3f13a5a02370dc008d1b9a38be3ca6f452b8cf34b634a98",
+  "scripts/x3_cross_fold.py": "e8422bb6fc918ecc29aac634cee08dec506427d1ba8782069d93bfd145e17995",
+  "scripts/x11_common.py": "4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a",
+  "src/score_reference.py": "e79d986a2fd6bfa545a33ab30c5ef3065ff247b673b12f69a49c8017e88c21ac"
+ },
+ "git_head": "eb21e807b0846db9291b59f8c412c98d5e1dd058",
+ "timing": {
+  "wall_clock_s": 9.75063257399961,
+  "cpu_count": 4
+ }
+}

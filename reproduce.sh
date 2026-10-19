@@ -512,6 +512,8 @@ stage 20w10 "N10 — floors that use no model: hold-last, training mean, seasona
       results/n10_floors.json $PY scripts/n10_floors.py
 stage 20w11 "N11 — Spearman and Kendall beside every Pearson ranking statistic (post hoc, R-85)" "40 min" \
       results/n11_rank_correlations.json NEEDS_WEIGHTS $PY scripts/n11_rank_correlations.py
+stage 20w12 "N12 — the released checkpoint's provenance and one-step error (post hoc, R-86)" "20 s" \
+      results/n12_provenance.json NEEDS_WEIGHTS $PY scripts/n12_provenance.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them
