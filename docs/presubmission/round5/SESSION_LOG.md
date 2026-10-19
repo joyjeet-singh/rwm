@@ -167,3 +167,60 @@ Subagents: none
 Next: G3 (Opus 5.5, high) — X9 (with X11e's `fold_e5` arena in the same frozen script) and X10. It runs while the queue trains;
   log every job as contended, and read no queue-run log except through RUN_QUEUE.md's filter.
 Decisions for user: none (ruling this session: DECISIONS.md#GT1-cap)
+
+## G3 — 2026-10-19 18:50 — Opus 5.5, high — status: COMPLETE
+Commits: 8a34451 [G3] PRE-REGISTER X9 and X10: ledger entries and scripts (M-101 X9, M-102 X10, M-103 X11e)
+         5b9dc56 [G3][4-5] Run and discharge X9 and X10: X9 PROPAGATION NARROWS THE GAP for all four models at h = 100 (two at n = 4, descriptive); X10 IN-SAMPLE IS WORSE at h = 1 (IN-SAMPLE FLATTERS at h = 100)
+         9ea6d42 [G3][6] Stages 20v0-20v2 (all NEEDS_WEIGHTS: X9's frozen script reads our arms with the released checkpoint), 184 keys for X9 and X10 with intervals; build and gates pass, second build byte-identical
+         (final [G3][close] commit: this entry and the checkpoint)
+Review items closed: RV15, RV16 (data) (Annex 1).
+Done:
+- **How this session ran.** In the same conversation as G2 and GT1, at the user's request ("Start G3"); the plan assigns a fresh
+  terminal (Y13). No subagent. Evidence: `/Users/Shared/rwm_verify/evidence/R5G3/`.
+- **Item 1, scripts.** `scripts/x9_per_member_propagation.py` and `scripts/x10_insample_vs_heldout.py`, to PROTOCOLS §2–§3.
+  - MEAN calls `rollout_uncertainty` and `rollout_independent` unchanged.
+  - PER-MEMBER runs one trunk pass per member at MEAN's batch shape (`step_heads` = `score_reference.py:94-105`).
+  - X11e's arena is the `--x11e` mode, written to its own artifact, `results/x11e_fold_e5_propagation.json`.
+  - Both scripts carry the ledger-hash guard.
+  - Deviation: PLAN's file name `x9_ts_inf_propagation` was not used; PROTOCOLS, committed first, names
+    `x9_per_member_propagation`.
+- **Item 2, assertions.**
+  - X9's (ii) failed on the first run (6.4e-7), then by 7.1e-15. The cause was located on step-1 values only: the members' mean and
+    the statistics were reduced on arrays of a different shape or memory layout than MEAN's, so they differed in the last place.
+    Every head output and the spread were bitwise identical, and no per-member number had been computed.
+  - **The user ruled "Fix and re-assert"** (`DECISIONS.md#G3-assert-ii`). The mean and spread are now taken per step with MEAN's own
+    `torch.stack(...).mean(0)`, on C-contiguous arrays. The tolerance stayed 0.0.
+  - Then all passed: X9 (i) 0.0 relative on all three artifacts, (ii) 0.0, (iii) predictions 0.0 and relative-L1 1.2e-7, (iv) pass;
+    X10 (1) 0.0, (2)–(3) pass, (4) 0.0.
+  - Dry runs of both readings on **untrained random weights** (code test only; numbers meaningless and not recorded).
+- **Item 3, ledger.** M-101 (X9), M-102 (X10), M-103 (X11e), with rule text verbatim from PROTOCOLS. Two mechanical changes: bold
+  subheadings, and one `.blocked` path split. Written by `round5/g3_write_prereg.py`. RESULTS.md M- 100 → 103.
+- **Item 4, readings** (contended with the queue: X10 21 s, X9 91 s). Per-trajectory timing was not probed separately, since the
+  untrained dry runs showed minutes.
+  - **X9, h = 100: PROPAGATION NARROWS THE GAP for rel, e5, ind and fold** (e5 and ind at n = 4, descriptive, p = 0.125).
+  - Fraction of the gap closed, f: rel 0.75 [0.69, 0.82]; fold 0.71 [0.67, 0.76]; e5 0.80; ind 0.88. Per-member ±1σ coverage is 33–60%,
+    still below X7's band. CRPS and NLL improve as well. At h = 368 the n = 4 ensembles overshoot (f > 1, ρ below √(2/π)).
+    The per-member aleatoric σ is at most 0.12 of the error (`x9_alea_over_err_max`).
+  - **X10: IN-SAMPLE IS WORSE at h = 1**: Q = 1.79 [1.06, 2.65], all three seeds above 1. **At h = 100 and h = 368 the label it would carry
+    is IN-SAMPLE FLATTERS** (Q 0.72 and 0.73, intervals below 1).
+  - At h = 1 the ratio and the ±1σ coverage disagree: ρ 3.80 in against 2.13 out, coverage 35.0% against 35.9%. **The reading splits by
+    horizon and by statistic; any summary must say so (PLAN rule 10).** The §6.2 framing "in-sample flatters" is G5's to withdraw or qualify.
+- **Item 5, discharge.** Verdicts verbatim in M-101's and M-102's Status lines; M-103 pending, awaiting GT2.
+- **Item 6, stages and keys.**
+  - Stages: 20v0 (GT1's `x11_power`, which had none), 20v1 (X9) and 20v2 (X10).
+  - Deviation: all three stages are NEEDS_WEIGHTS. X9's frozen script reads the released checkpoint and our arms in one run, so its
+    released part cannot be a separate stage without changing a pre-registered script.
+  - 184 keys `x9_*` and `x10_*`, intervals included, appended after the last block of `paper_numbers.py`. No cited line moved;
+    the highest cited line is 2871.
+Build/gates: pass. Fast build, all eight gates, fast build again: PAPER.md, PAPER.tex, MODEL_CARD.md, README.md, docs/BUILD_CHECKS.md byte-identical; ledger_check PASS (M-97–M-100, M-103 pending); pipeline_coverage pass.
+Round-5 gates (report mode until G16): not available until G6
+Paper numbers changed: n_entries 292 → 295; ledger_kb 679 → 702 (FINDINGS_LEDGER.md)
+New keys: 184 (`x9_*`, `x10_*`; results/x9_per_member_propagation.json, results/x10_insample_vs_heldout.json)
+Ledger: M-101, M-102 (PRE-REGISTERED → DISCHARGED); M-103 (PRE-REGISTERED)
+Re-anchored checks: none
+CPU jobs over 1 min: X9 --assert-only ×4 (about 1 min each); the untrained dry runs (about 5 min); X9 reading (91 s); build and gates (88 s). All contended with the X11 queue.
+Queue (Y5): running (0 of 20 done at 18:50; the first run at iteration 1,325 with finite loss; projected finish about 2026-10-22 00:15)
+Body words / main-content pages: unchanged (17,804 / 26.9)
+Subagents: none
+Next: G4 (Sonnet 5.5, high) — post hoc N7–N14 per PROTOCOLS §5. N7 item 8 can now include X9's (a) and (d) per-trajectory values. Beside the queue.
+Decisions for user: none (ruling this session: DECISIONS.md#G3-assert-ii)
