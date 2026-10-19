@@ -1,0 +1,1061 @@
+{
+  "checked_on": "2026-10-19",
+  "method": "each fragment is asserted present, whitespace-removed and case-folded, in the arXiv HTML rendering or the pypdf text of the version it is attributed to; section titles come from the HTML, pages from the PDF",
+  "families": {
+    "RWM": {
+      "arxiv": "2501.10100",
+      "versions": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current": "v5",
+      "dates": {
+        "v1": "2025-01-17",
+        "v2": "2025-04-23",
+        "v3": "2025-04-24",
+        "v4": "2025-11-24",
+        "v5": "2025-12-14"
+      }
+    },
+    "RWMU": {
+      "arxiv": "2504.16680",
+      "versions": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current": "v3",
+      "dates": {
+        "v1": "2025-04-23",
+        "v2": "2026-01-07",
+        "v3": "2026-01-08"
+      }
+    }
+  },
+  "workshop_versions": [
+    {
+      "forum_id": "u76d3gBWCX",
+      "url": "https://openreview.net/forum?id=u76d3gBWCX",
+      "status": "not reachable",
+      "reason": "OpenReview answered the automated request with a browser challenge (HTTP 403, ChallengeRequiredError); it was not bypassed; no text compared"
+    },
+    {
+      "forum_id": "mcwLgO93ym",
+      "url": "https://openreview.net/forum?id=mcwLgO93ym",
+      "status": "not reachable",
+      "reason": "OpenReview answered the automated request with a browser challenge (HTTP 403, ChallengeRequiredError); it was not bypassed; no text compared"
+    }
+  ],
+  "sources": {
+    "2501.10100v1.pdf": {
+      "sha256": "050610049285852c6683632427e8dfd0b94a8a189286e43dc6524336402fe8af",
+      "bytes": 46925547
+    },
+    "2501.10100v1.html": {
+      "sha256": "bb4923ccec8f4a30dae29cb9d782a8aa361eefa98afddaf35011d555d5efa963",
+      "bytes": 237510
+    },
+    "2501.10100v1_abs.html": {
+      "sha256": "8800078d2dc2d48fb87e9ec1122e0c15c2edb7f9907f8ab0a82f06293ffca4b5",
+      "bytes": 42713
+    },
+    "2501.10100v2.pdf": {
+      "sha256": "78db5e442a7c4fbff84872f79fbfbd32713e431a0469e719fa71a80695a748f3",
+      "bytes": 25856392
+    },
+    "2501.10100v2.html": {
+      "sha256": "06f708879117c80e78557eb4ddcba3ca4497b920734a1e7596182154f1c1292d",
+      "bytes": 311449
+    },
+    "2501.10100v2_abs.html": {
+      "sha256": "9d6a285a44a650780c36883c02fb8a7d42037bbb2aee5b74bc166649bfabd459",
+      "bytes": 41526
+    },
+    "2501.10100v3.pdf": {
+      "sha256": "505ba5611cde799f9ba8495f8742a97073b9e89ff8a9f253965de80f32cc5164",
+      "bytes": 25816297
+    },
+    "2501.10100v3.html": {
+      "sha256": "dd6354a60de6535e786c06cb3c50db73e0ab27e99f09c986a1332fd33a2fc52a",
+      "bytes": 241050
+    },
+    "2501.10100v3_abs.html": {
+      "sha256": "2f250b59579428d7c9b329366a71c1e835b1033c4fe26b6eb9346f5e3588837a",
+      "bytes": 41712
+    },
+    "2501.10100v4.pdf": {
+      "sha256": "249a22aee1065dae58add9fef24701c2ec9af06279b160d2d8b6066483ea012d",
+      "bytes": 49759345
+    },
+    "2501.10100v4.html": {
+      "sha256": "7cc9c661ff4739620e1b32eceb534def9fa077195ae2e931d51d212280ca9c6b",
+      "bytes": 293165
+    },
+    "2501.10100v4_abs.html": {
+      "sha256": "53831a2dfa06972dcf22863f4c428c4f6fb27c9dc709434c1ed24bd80bb0805f",
+      "bytes": 41712
+    },
+    "2501.10100v5.pdf": {
+      "sha256": "613d81eb472e437a76447f408f46ddeb0d786da29fae81e66089db1bfb1b7a14",
+      "bytes": 49759403
+    },
+    "2501.10100v5.html": {
+      "sha256": "3ab97fb43acb19a60ff3b0ac9ee8894fac7d656a35697b208012881a7917f79e",
+      "bytes": 293848
+    },
+    "2501.10100v5_abs.html": {
+      "sha256": "d10244aad0ecf3d8d4af5f3f2daa48ad346b4c695fa3cefd98ff2e5228c120da",
+      "bytes": 41440
+    },
+    "2504.16680v1.pdf": {
+      "sha256": "2e9539ec78d7f9a3bbf1fa03d77fe3eaaeb368d9a7124b93876d769bdf3d28cf",
+      "bytes": 8206246
+    },
+    "2504.16680v1.html": {
+      "sha256": "2cdfb127f8aa4fb2ee5947577255c7cdf6ae01dc85ccab132185a158e29d3ad6",
+      "bytes": 200133
+    },
+    "2504.16680v1_abs.html": {
+      "sha256": "2fcc1171ff250ad256828ed1324115a3ec98ed63d1a8bdbdce3dda5d7a9df4b4",
+      "bytes": 41412
+    },
+    "2504.16680v2.pdf": {
+      "sha256": "5d800f3c075269501279ef88beb4c37ba24ab2bfa63ad265b1a4b0698b7c4ba5",
+      "bytes": 39972240
+    },
+    "2504.16680v2.html": {
+      "sha256": "5e11ba0f04a71de54cbda51979ee62bd1d7cd36c3a5c41819401b388366dda87",
+      "bytes": 273671
+    },
+    "2504.16680v2_abs.html": {
+      "sha256": "809a78090c9d5e2bff1361eeb49e0ac0b43dc9221285e38bce8332be2f305a06",
+      "bytes": 42663
+    },
+    "2504.16680v3.pdf": {
+      "sha256": "b0906b92791f4bf4c1b0758c1a53ce1ab1fb62baee1e556995b34c8fb7e74ddb",
+      "bytes": 39972099
+    },
+    "2504.16680v3.html": {
+      "sha256": "f629d2f068b1bde2a154755d855c5dde46efe1e22aeb5265a4a91ae1490e1413",
+      "bytes": 273671
+    },
+    "2504.16680v3_abs.html": {
+      "sha256": "5b7e17ad577afa2cc1a70afb941ce3687e9b30916fccc6ce8b37cf8b01f49af8",
+      "bytes": 42764
+    }
+  },
+  "n_claims": 25,
+  "counts_by_label": {
+    "no": 12,
+    "moved": 7,
+    "reworded": 3,
+    "new": 3,
+    "removed": 0
+  },
+  "claims": [
+    {
+      "id": "rwm_ar_beats_tf",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "RWM-AR outperforms RWM-TF",
+      "appendix_d_row": "RWM-AR consistently outperforms RWM-TF",
+      "paper_relies_on_it_in": "Appendix D; §5",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "RWM-AR significantly outperforms its teacher-forcing counterpart",
+        "section": "IV-D Generality across Robotic Environments",
+        "page": 8,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "RWM-AR significantly outperforms its teacher-forcing counterpart",
+        "section": "4.3 Generality across Robotic Environments",
+        "page": 7,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_tf_poor",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "teacher forcing (N=1) gives poor autoregressive performance",
+      "appendix_d_row": "Teacher forcing gives \"poor autoregressive performance\"",
+      "paper_relies_on_it_in": "Appendix D; §5.2",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "this setting leads to poor autoregressive performance",
+        "section": "IV-C Dual-autoregressive Mechanism",
+        "page": 7,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "this setting leads to poor autoregressive performance",
+        "section": "A.4.1 Dual-autoregressive Mechanism",
+        "page": 18,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "moved",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_mn_optimal",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "M=32, N=8 is the optimal accuracy/training-time trade-off",
+      "appendix_d_row": "M=32, N=8 gives the optimal trade-off",
+      "paper_relies_on_it_in": "Appendix D; §5.2",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "an optimal trade-off emerges",
+        "section": "IV-C Dual-autoregressive Mechanism",
+        "page": 7,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "an optimal trade-off emerges",
+        "section": "A.4.1 Dual-autoregressive Mechanism",
+        "page": 19,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "moved",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_arch_baselines",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "RWM beats MLP, RSSM and transformer baselines",
+      "appendix_d_row": "Beats MLP, RSSM and transformer baselines",
+      "paper_relies_on_it_in": "Appendix D; §5.3",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "consistently achieves the lowest prediction errors across all environments",
+        "section": "IV-D Generality across Robotic Environments",
+        "page": null,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "consistently achieves the lowest prediction errors across all environments",
+        "section": "4.3 Generality across Robotic Environments",
+        "page": 7,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_generality",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "generality across robot morphologies",
+      "appendix_d_row": "Generality across quadruped, humanoid, manipulation",
+      "paper_relies_on_it_in": "Appendix D",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "RWM-AR demonstrates superior generalization and robustness across tasks, from manipulation to locomotion",
+        "section": "IV-D Generality across Robotic Environments",
+        "page": 8,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "RWM-AR demonstrates superior generalization and robustness across tasks, from manipulation to locomotion",
+        "section": "4.3 Generality across Robotic Environments",
+        "page": 8,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_zero_shot",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "zero-shot hardware transfer",
+      "appendix_d_row": "Zero-shot hardware transfer",
+      "paper_relies_on_it_in": "Appendix D",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "we deploy it on ANYmal D hardware in a zero-shot transfer setup",
+        "section": "IV-E Policy Learning and Hardware Transfer",
+        "page": 10,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "we deploy them on ANYmal D and Unitree G1 hardware in a zero-shot transfer setup",
+        "section": "4.4 Policy Learning and Hardware Transfer",
+        "page": 9,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v4",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "reworded",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_vs_shac_dreamer",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "MBPO-PPO beats SHAC and Dreamer",
+      "appendix_d_row": "MBPO-PPO beats SHAC and Dreamer",
+      "paper_relies_on_it_in": "Appendix D",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "SHAC and Dreamer fail to produce a deployable policy due to its collapse during training",
+        "section": "IV-E Policy Learning and Hardware Transfer",
+        "page": 10,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "SHAC and Dreamer fail to produce a deployable policy due to its collapse during training",
+        "section": "4.4 Policy Learning and Hardware Transfer",
+        "page": 9,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_sample_efficiency",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "~6M transitions against ~250M for model-free PPO (Table 1)",
+      "appendix_d_row": "Policies transfer to hardware from ~6M state transitions against ~250M",
+      "paper_relies_on_it_in": "Appendix D row 6; §9 (the headline sample-efficiency result)",
+      "tested_by_the_paper": false,
+      "v1": null,
+      "current": {
+        "version": "v5",
+        "fragment": "state transitions 6M",
+        "section": "5 Limitations",
+        "page": 9,
+        "table": "Table 1"
+      },
+      "v1_fragment_present_in": [],
+      "current_fragment_present_in": [
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v2",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "new",
+      "what_a_test_must_now_say": "Cite v2 or later, not v1: v1 has no such table. results/original_paper_figures.json gives its location as 2501.10100v1 Table I (Limitations)."
+    },
+    {
+      "id": "rwm_decay_factor",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "the loss has a decay factor alpha on each forecast step",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "Appendix H (C-09)",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "denotes a decay factor",
+        "section": "III-B Self-supervised Autoregressive Training",
+        "page": 4,
+        "table": null
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "denotes a decay factor",
+        "section": "3.2 Self-supervised Autoregressive Training",
+        "page": 4,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_table_decay",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "the training table sets the forecast decay to 1.0 (equal weights)",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "Appendix H (C-09)",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "forecast decay α 1.0",
+        "section": null,
+        "page": 15,
+        "table": "Table S9"
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "forecast decay α 1.0",
+        "section": null,
+        "page": 18,
+        "table": "Table S10"
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "moved",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwm_table_iterations",
+      "family": "RWM",
+      "arxiv": "2501.10100",
+      "claim": "the training table sets 2,500 iterations",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "Appendix H (C-13); §5.2",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "max iterations - 2500",
+        "section": null,
+        "page": 15,
+        "table": "Table S9"
+      },
+      "current": {
+        "version": "v5",
+        "fragment": "max iterations - 2500",
+        "section": null,
+        "page": 18,
+        "table": "Table S10"
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "moved",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_title_name",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "title and method name",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "References, item 2",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "Offline Robotic World Model: Learning Robotic Policies without a Physics Simulator",
+        "section": null,
+        "page": 1,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "Uncertainty-Aware Robotic World Model Makes Offline Model-Based Reinforcement Learning Work on Real Robots",
+        "section": null,
+        "page": 1,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1"
+      ],
+      "current_fragment_present_in": [
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v2",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "reworded",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_epistemic_follows",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "epistemic uncertainty closely follows the prediction error",
+      "appendix_d_row": "Epistemic \"closely follows the trend of the prediction error\"",
+      "paper_relies_on_it_in": "Appendix D; §6.6",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "closely follows the trend of the prediction error",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": null,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "closely follows the trend of the prediction error",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": null,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_trust_metric",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "the correlation justifies epistemic uncertainty as a trust metric",
+      "appendix_d_row": "Epistemic ... \"its role as a trust metric\"",
+      "paper_relies_on_it_in": "Appendix D; §6.6",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "justifies its role as a trust metric for policy optimization",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": 6,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "justifies its role as a trust metric for policy optimization",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": 7,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_epistemic_aligns",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "the follow-up's own summary of the same figure",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "not quoted by the paper",
+      "tested_by_the_paper": false,
+      "v1": null,
+      "current": {
+        "version": "v3",
+        "fragment": "aligns with the long-horizon prediction error",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": 6,
+        "table": null
+      },
+      "v1_fragment_present_in": [],
+      "current_fragment_present_in": [
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v2",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "new",
+      "what_a_test_must_now_say": "Added in v2 beside the same figure; the v1 claim above is unchanged. A test of the trust-metric claim need not change."
+    },
+    {
+      "id": "rwmu_aleatoric_low",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "the aleatoric uncertainty remains low",
+      "appendix_d_row": "Aleatoric \"remains low, reflecting small stochasticity\"",
+      "paper_relies_on_it_in": "Appendix D; §6.3",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "remains low, reflecting small stochasticity in the environment",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": 6,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "remains low, reflecting small stochasticity in the environment",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": 7,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_variance_effective",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "the learned variance captures aleatoric uncertainty effectively",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "§6.1 says the follow-up only observes that the aleatoric term stays low",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "The learned variance component captures aleatoric uncertainty effectively",
+        "section": "4.1 Uncertainty Quantification with Offline Robotic World Model",
+        "page": 5,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "The learned variance component captures aleatoric uncertainty effectively",
+        "section": "4.1 Uncertainty Quantification with Uncertainty-Aware Robotic World Model",
+        "page": 4,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_shared_trunk",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "bootstrap ensembles on the prediction head, after a shared recurrent feature extractor",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "§6.4; Appendix R",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "apply bootstrap ensembles to the observation prediction head of the model after a shared recurrent feature extractor",
+        "section": "4.1 Uncertainty Quantification with Offline Robotic World Model",
+        "page": 4,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "apply bootstrap ensembles to the observation prediction head of the model after a shared recurrent feature extractor",
+        "section": "4.1 Uncertainty Quantification with Uncertainty-Aware Robotic World Model",
+        "page": 4,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_mean_fed_forward",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "inference uses the ensemble mean as the next observation; epistemic = variance across members",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "§6.4 (the rollout feeds the mean through one hidden state)",
+      "tested_by_the_paper": true,
+      "v1": {
+        "fragment": "the ensemble mean is used as the predicted next observation",
+        "section": "4.1 Uncertainty Quantification with Offline Robotic World Model",
+        "page": 5,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "the ensemble mean is used as the predicted next observation",
+        "section": "4.1 Uncertainty Quantification with Uncertainty-Aware Robotic World Model",
+        "page": 4,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_propagated",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "uncertainty is effectively propagated over long horizons",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "not yet in the paper",
+      "tested_by_the_paper": true,
+      "v1": null,
+      "current": {
+        "version": "v3",
+        "fragment": "uncertainty effectively propagated over long horizons",
+        "section": "Abstract",
+        "page": 1,
+        "table": null
+      },
+      "v1_fragment_present_in": [],
+      "current_fragment_present_in": [
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v2",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "new",
+      "what_a_test_must_now_say": "v1 does not say this; v2 added it to the abstract and §4.1 with no change to Eq. 4 or the rollout. A test must score the propagated spread against accumulated error, not only one-step spread."
+    },
+    {
+      "id": "rwmu_penalty_improves",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "penalising rewards by disagreement prevents policy exploitation",
+      "appendix_d_row": "Penalising rewards by ensemble disagreement improves the learned policy",
+      "paper_relies_on_it_in": "Appendix D",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "By penalizing high-uncertainty transitions, MOPO-PPO prevents policy exploitation",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": 6,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "By penalizing high-uncertainty transitions, MOPO-PPO prevents policy exploitation",
+        "section": "5.1 Autoregressive Uncertainty Estimation",
+        "page": 7,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "no",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_real_robots",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "policy learning purely from offline data (real robots)",
+      "appendix_d_row": "Offline MBRL on real robots",
+      "paper_relies_on_it_in": "Appendix D",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "enabling policy learning purely from offline data",
+        "section": "Abstract",
+        "page": 1,
+        "table": null
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "training policies entirely from offline datasets",
+        "section": "Abstract",
+        "page": 1,
+        "table": null
+      },
+      "v1_fragment_present_in": [
+        "v1"
+      ],
+      "current_fragment_present_in": [
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v2",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "reworded",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_table_decay",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "the training table sets the forecast decay to 1.0",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "Appendix H (C-09)",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "forecast decay α 1.0",
+        "section": null,
+        "page": 15,
+        "table": "Table S8"
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "forecast decay α 1.0",
+        "section": null,
+        "page": 17,
+        "table": "Table S10"
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "moved",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_table_iterations",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "the training table sets 2,500 iterations and learning rate 1e-4",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "Figure 4's learning-rate comparison; §5.2",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "max iterations - 2500",
+        "section": null,
+        "page": 15,
+        "table": "Table S8"
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "max iterations - 2500",
+        "section": null,
+        "page": 17,
+        "table": "Table S10"
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "moved",
+      "what_a_test_must_now_say": null
+    },
+    {
+      "id": "rwmu_table_lr",
+      "family": "RWMU",
+      "arxiv": "2504.16680",
+      "claim": "the training table's learning rate",
+      "appendix_d_row": null,
+      "paper_relies_on_it_in": "Figure 4's learning-rate comparison",
+      "tested_by_the_paper": false,
+      "v1": {
+        "fragment": "learning rate - 1e-4",
+        "section": null,
+        "page": 15,
+        "table": "Table S8"
+      },
+      "current": {
+        "version": "v3",
+        "fragment": "learning rate - 1e-4",
+        "section": null,
+        "page": 17,
+        "table": "Table S10"
+      },
+      "v1_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "current_fragment_present_in": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "first_version_with_current_fragment": "v1",
+      "workshop_version": "not compared: OpenReview text not reachable",
+      "changed": "moved",
+      "what_a_test_must_now_say": null
+    }
+  ]
+}

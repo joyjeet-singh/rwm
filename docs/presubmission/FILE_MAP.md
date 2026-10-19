@@ -104,6 +104,7 @@ Where the checks and assertions are registered:
 - `scripts/t1_bibliography.py` → `results/t1_bibliography_verified.json` (stage 20p). Entries are declared in `ENTRIES` (`:44`), one dict per citation with key, arXiv ID, title, authors, venue, year, and the verbatim `fragments` the template must contain.
 - `$PY scripts/t1_bibliography.py --verify` needs the network. It re-fetches arXiv metadata and refreshes the pinned record (`:443-462`, with per-entry `entry_fingerprint`). The build asserts that the pinned table covers `ENTRIES` (`check_pinned_covers_entries()`). A new citation therefore needs a new entry, then a `--verify` run.
 - Quotations of the originals: `scripts/verify_original_quotes.py` checks them against `arxiv.org/html/2501.10100v1`, `v2` and `2504.16680v1` (`SOURCES`, `:35`), or against a `--cached DIR`. Writes `results/original_paper_figures.json`.
+- Version crosswalk (round 5, G1): `scripts/version_crosswalk.py --date YYYY-MM-DD [--fetch]` compares 25 claims and quotations of both originals across every arXiv version (RWM v1–v5, RWM-U v1–v3) and writes `results/version_crosswalk.json`; summary in `docs/presubmission/round5/CROSSWALK.md`. **Not a `reproduce.sh` stage:** it needs the network for `--fetch` and the gitignored downloads in `docs/presubmission/sources/g1/`. The two OpenReview workshop versions were unreachable (browser challenge) and are recorded as not compared.
 
 ## 10. Anonymised bundle and deny-list
 
