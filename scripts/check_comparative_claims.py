@@ -209,7 +209,7 @@ CLAIMS = [
              "arenas.in-sample.models.teacher-forced armB.368.p_binomial_two_sided"),
      "stated_orders": 13},
     # ---- C5 arena / horizon provenance (A1) ------------------------------
-    {"id": "C5.1", "kind": "cell", "where": "12",
+    {"id": "C5.1", "kind": "cell", "where": "12 -> supplementary S3 (G9)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "ranking error inversely at h = 368 on every one of",
      "cell": ("task_b_permutation.json",
               "arenas.all-episodes.models.released aleatoric.368"),
@@ -385,7 +385,7 @@ CLAIMS = [
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md",
                "FINDINGS_LEDGER.md#summary"]},
-    {"id": "C10.2", "kind": "retraction-consistency", "where": "6.5 / README",
+    {"id": "C10.2", "kind": "retraction-consistency", "where": "6.5 / README -> S3 (G9)", "surface": ["docs/SUPPLEMENT.md"],
      "says": "no per-dimension count in this paper reaches significance",
      "retracted": "sign test on 45 dimensions",
      "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",

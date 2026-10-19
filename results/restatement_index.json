@@ -76,8 +76,8 @@
           "ctx": "ut effect is **materially smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitio"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
           "key": "a2_rdd",
           "ctx": " and the depth held constant, disagreement still correlates {{a2_rdd}} {{a2_rdd_ci}} with realised error (\u00a76.6"
         }
@@ -224,8 +224,8 @@
           "ctx": " {{a2_r_pooled_ci}} | \u2014 | | the step index, linearly | {{d2b_par_all}} | \u2014 | depth explains {{d2b_shrink_all_a"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
           "key": "d2b_par_all",
           "ctx": " ensemble disagreement wins at every horizon and keeps {{d2b_par_all}} once the index is partialled out. Again"
         }
@@ -322,8 +322,8 @@
           "ctx": "y smaller than the pooled figure**, {{a2_rdd}} against {{a2_r_pooled}}, so a practitioner should expect disagr"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
           "key": "a2_r_pooled",
           "ctx": "} with realised error (\u00a76.6). That is smaller than the {{a2_r_pooled}} pooled figure, and it is the one that m"
         }
@@ -487,19 +487,19 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3x_ale_ok",
           "ctx": "le_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | {{d3_ale_c_lo}} \u2013"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3x_tol_res",
           "ctx": "iers and found the {{d3_tol}}-point band resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizo"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2643,
+          "line": 2619,
           "key": "q3_n_reorder",
           "ctx": " by the checkpoint (\u00a73). Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order and the rule returns **{{q"
         },
@@ -612,40 +612,40 @@
           "ctx": "mic err/\u03c3 [95% CI] | \u00b11\u03c3 [95% CI] | \u00b12\u03c3 | dims r>0 | |---|---|---|---|---| | 1 | \u2400\u00d7 [\u2400] | \u2400% [\u2400] | \u2400% | \u2400/45 |"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2237,
-          "key": null,
-          "ctx": " both are present together: \u00a76.3 derives the \u03c3 = 0 optimum from squared error on a sampled prediction through "
-        },
-        {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2330,
+          "line": 2306,
           "key": null,
           "ctx": "the held-out pair, \u2400 Monte Carlo resamples (seed 0) in-sample. Negative favours the configuration, so every re"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2351,
+          "line": 2327,
           "key": null,
           "ctx": "the held-out pair, \u2400 Monte Carlo resamples (seed 0) otherwise. The interventions are the stale action (the rel"
         },
         {
           "section": "Appendix X \u2014 rule X6: disagreement against predicted step size on shorter units",
-          "line": 2422,
+          "line": 2398,
           "key": null,
           "ctx": "val resamples whole units, paired, \u2400 times (seed 0). The rule reads **DISAGREEMENT BEATS STEP SIZE** if the in"
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2449,
+          "line": 2425,
           "key": null,
           "ctx": "terval resamples the \u2400 trajectories \u2400 times (seed 0), one draw shared across horizons. | h | epistemic, per-ho"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2657,
+          "line": 2633,
           "key": null,
           "ctx": "ses a GPU. And **we did not test whether the \u03c3 = 0 optimum affects other descendants of the PETS parameterisat"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2650,
+          "key": null,
+          "ctx": " both are present together: \u00a76.3 derives the \u03c3 = 0 optimum from squared error on a sampled prediction through "
         }
       ]
     },
@@ -685,7 +685,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2658,
+          "line": 2634,
           "key": "perm_all_holm_thr",
           "ctx": "s {{perm_all_holm_min_p}} against a threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} need"
         }
@@ -757,13 +757,13 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2308,
+          "line": 2284,
           "key": "d3x_ratio_lo",
           "ctx": "\u00b1{{d3x_band}}-point band, and Arm A's multipliers are {{d3x_ratio_lo}}\u00d7 to {{d3x_ratio_hi}}\u00d7 the released chec"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_ratio_lo",
           "ctx": "of the gap is the multipliers themselves: Arm A's are {{d3x_ratio_lo}}\u00d7 to {{d3x_ratio_hi}}\u00d7 the released chec"
         }
@@ -932,7 +932,7 @@
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2363,
+          "line": 2339,
           "key": "n5_err_armA_h8",
           "ctx": "larger percentages there reflect its smaller error, {{n5_err_armA_h8}} against {{n5_err_rel_h8}} relative-L1 ("
         }
@@ -962,7 +962,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2664,
+          "line": 2640,
           "key": "m49_shrink",
           "ctx": "sign does not answer: the point estimates fall by about {{m49_shrink}}, a difference no artifact here tests an"
         }
@@ -1550,28 +1550,28 @@
           "ctx": "The second fails: the paired difference excludes zero at {{e5_n_excl}} of {{e5_n_horizons}} horizons, not a ma"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2260,
-          "key": "q1_n_inherit",
-          "ctx": "odebase. On \u00a72's count the substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants ex"
-        },
-        {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_branch",
           "ctx": "as magnitude {{d3x_worst_delta}} points. That is branch {{d3x_branch}} of the rule's three. Per direction the "
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2605,
+          "line": 2581,
           "key": "e5_n_excl",
           "ctx": "o exclude zero at a majority of horizons, and it does at {{e5_n_excl}} of {{e5_n_horizons}}. Our arms have a h"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2613,
+          "line": 2589,
           "key": "m23_seed",
           "ctx": "ord. The headline A/B verdict rests on one seed too, seed {{m23_seed}}, the one its rule ran on; the magnitude"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2673,
+          "key": "q1_n_inherit",
+          "ctx": "odebase. On \u00a72's count the substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants ex"
         },
         {
           "section": "1. Introduction",
@@ -1959,43 +1959,43 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2265,
+          "line": 2241,
           "key": null,
           "ctx": "ntity the method uses \u2014 a scalar of \u2400\u2013\u2400 brings h=1 coverage to \u2400\u2013\u2400%, essentially calibrated against the \u2400% tar"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2268,
+          "line": 2244,
           "key": null,
           "ctx": "e aleatoric term a scalar of \u2400\u2013\u2400 gives \u2400\u2013\u2400% at h=1 and \u2400\u2013\u2400% at h=368. Fitting over the whole rollout instead d"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2282,
+          "line": 2258,
           "key": null,
           "ctx": "stant scalar manages \u2400 of \u2400, and those are the h=1 cells it was fitted at. **On Arm A, where the episodes are "
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2341,
+          "line": 2317,
           "key": null,
           "ctx": "eration Arm A's relative-L1 error by \u2400% \u2400 at h = 1 and \u2400% \u2400 at h = \u2400; on the held-out pair's \u2400 it changes it b"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2359,
+          "line": 2335,
           "key": null,
           "ctx": "adings. | model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **A"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2369,
+          "line": 2345,
           "key": null,
           "ctx": "adings. | model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **A"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2593,
+          "line": 2569,
           "key": null,
           "ctx": "e per-dimension matched comparison, both on seed 1 alone, as their artifacts record. The headline A/B verdict "
         }
@@ -2091,7 +2091,7 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "n3_best_over_mid",
           "ctx": "ed to {{n3_k_mid}} iterations, the centre has had {{n3_best_over_mid}}\u00d7 the computation of {{mn_best_config}},"
         }
@@ -2157,7 +2157,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2621,
+          "line": 2597,
           "key": "q2_factor",
           "ctx": "jectories, where all ten episodes provide {{e7_nind}}**, {{q2_factor}}\u00d7 the present sample, by the rule's own "
         }
@@ -2229,7 +2229,7 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "n3_cost_M32_N16",
           "ctx": "longer training forecast costs more per iteration, {{n3_cost_M32_N16}}\u00d7 the centre's for {{n3_lf_label}} and {"
         }
@@ -2295,7 +2295,7 @@
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2409,
+          "line": 2385,
           "key": "x2_ctx_ten_swap",
           "ctx": "swap by {{x2_ctx_ins_swap}}, {{x2_ctx_ho_swap}} and {{x2_ctx_ten_swap}} (`results/action_sensitivity.json`). *"
         }
@@ -2426,7 +2426,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2664,
+          "line": 2640,
           "key": "m49_ratio_gain",
           "ctx": "ement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde"
         }
@@ -2477,7 +2477,7 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "n3_cost_M32_N32",
           "ctx": "st_M32_N16}}\u00d7 the centre's for {{n3_lf_label}} and {{n3_cost_M32_N32}}\u00d7 for {{mn_best_config}}; the shorter hi"
         }
@@ -2556,7 +2556,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2630,
+          "line": 2606,
           "key": "q2_se_ratio",
           "ctx": "rom the forecast-index margin, whose standard error is {{q2_se_ratio}}\u00d7 the step-size margin's. The observed m"
         }
@@ -2858,82 +2858,82 @@
           "ctx": "at level, all ten episodes (n = {{m62_n_traj}} falling to {{m62_n_ep}}), the pooled correlation's interval wid"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2260,
-          "key": "q1_n_examined",
-          "ctx": "e substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants examined, and there only in"
-        },
-        {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
-          "key": "d3_tol",
-          "ctx": "nd scored on another, brings every coverage estimate within {{d3_tol}} points of nominal, where a global multi"
-        },
-        {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2297,
+          "line": 2273,
           "key": "d3_tol",
           "ctx": " released checkpoint: cells unseen by the multiplier within {{d3_tol}} points of {{d3_target}}%, per-horizon c"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3x_own_ale_ok",
           "ctx": "le_c_lo}} \u2013 {{d3_ale_c_hi}} ({{d3_ale_cspread}}\u00d7) | {{d3x_own_ale_ok}} / {{d3x_own_ale_cells}} | | epistemic |"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3_tol",
           "ctx": "n the released checkpoint every point estimate lands within {{d3_tol}} points of the {{d3_target}}% target for"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3_tol",
           "ctx": "cored this model under these very multipliers and found the {{d3_tol}}-point band resolvable at {{d3x_tol_res}"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3x_own_ale_ok",
           "ctx": "own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cell"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2308,
+          "line": 2284,
           "key": "d3x_band",
           "ctx": "t independent tests, have an interval wholly outside the \u00b1{{d3x_band}}-point band, and Arm A's multipliers are"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_band",
           "ctx": "mum detectable effect {{d3x_pmde_hi}} points against the \u00b1{{d3x_band}}-point band) and cannot resolve the abso"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "n3_sh_over_long_M8_N8",
           "ctx": "M8_N8}}, with {{n3_sh_over_long_M2_N8}}\u00d7 and {{n3_sh_over_long_M8_N8}}\u00d7 their computation, and on both in-samp"
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2467,
+          "line": 2443,
           "key": "d3_tol",
           "ctx": "eads WITHIN BAND if the coverage's 95% interval lies within {{d3_tol}} points of {{d3_target}}%, OUTSIDE BAND "
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2611,
+          "line": 2587,
           "key": "d3x_own_ale_ok",
           "ctx": "own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cell"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2682,
+          "line": 2658,
           "key": "q1_n_examined",
           "ctx": "counted how often the substitution is made among the {{q1_n_examined}} repositories we examined (\u00a72), which be"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2673,
+          "key": "q1_n_examined",
+          "ctx": "e substitution is present in {{q1_n_inherit}} of the {{q1_n_examined}} descendants examined, and there only in"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
+          "key": "d3_tol",
+          "ctx": "nd scored on another, brings every coverage estimate within {{d3_tol}} points of nominal, where a global multi"
         }
       ]
     },
@@ -3100,67 +3100,67 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2321,
+          "line": 2297,
           "key": "iters_long",
           "ctx": "t the centre trained to {{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterations: {{n3_appU_nrows_word}} rows"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "iters_long",
           "ctx": "_ci_mid_h100}}), and the other two are not resolved. At {{iters_long}} iterations, {{n3_best_over_long}}\u00d7 the "
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2361,
+          "line": 2337,
           "key": "iters_long",
           "ctx": "ining episodes' {{x2_n_ins}} trajectories it raises our {{iters_long}}-iteration Arm A's relative-L1 error by "
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2376,
+          "line": 2352,
           "key": "iters_long",
           "ctx": "ations ({{x2_E_swap_2500}}% {{x2_ci_swap_2500}}) and at {{iters_long}} ({{x2_E_swap_10k}}% {{x2_ci_swap_10k}})"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2386,
+          "line": 2362,
           "key": "iters_long",
           "ctx": "d}}. Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the relea"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2404,
+          "line": 2380,
           "key": "iters_long",
           "ctx": "}}). Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each; the relea"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2418,
+          "line": 2394,
           "key": "iters_long",
           "ctx": "unt. Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three seeds each, E the mea"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2487,
+          "line": 2463,
           "key": "iters_long",
           "ctx": "nd the A/B comparison (M-23's statistic, three seeds at {{iters_long}}), all on the held-out pair's {{mn_nind}"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2491,
+          "line": 2467,
           "key": "iters_long",
           "ctx": "iterations, three seeds each) and the A/B comparison at {{iters_long}} iterations (three seeds; M-23's statist"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2527,
+          "line": 2503,
           "key": "iters_long",
           "ctx": "8_tab_ab}} **The A/B comparison, Arm A against Arm B at {{iters_long}} iterations, three seeds each; arenas as"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2600,
+          "line": 2576,
           "key": "iters_long",
           "ctx": " trajectories, at {{iters_main}} iterations rather than {{iters_long}} (Appendix L). Nor can a larger dataset "
         },
@@ -3246,7 +3246,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2605,
+          "line": 2581,
           "key": "e5_ratio_h100",
           "ctx": "}} seed-horizon cells and the *calibration* failure, {{e5_ratio_h100}}\u00d7 at h = {{v2_deploy_h}}, but the pre-re"
         }
@@ -3356,7 +3356,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2289,
+          "line": 2265,
           "key": "d2_ale_cov368_lo",
           "ctx": "{{d2_ale_cov1_lo}}\u2013{{d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}\u2013{{d2_ale_cov368_hi}}% at h=368. Fitting"
         }
@@ -3515,76 +3515,76 @@
           "ctx": "agreement leads the index in **{{e5_lead_cells}} of {{e5_total_cells}}** seed-horizon cells, every paired esti"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
-          "key": "d3_epi_cells",
-          "ctx": " global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic cells, though no single cell "
-        },
-        {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3_ale_ok",
           "ctx": "he model too | |---|---|---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_o"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3_ale_cells",
           "ctx": "|---|---|---|---|---| | aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cell"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3_ale_cells",
           "ctx": "ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | "
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3_epi_ok",
           "ctx": "x_own_ale_ok}} / {{d3x_own_ale_cells}} | | epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_o"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3_epi_cells",
           "ctx": "d3x_own_ale_cells}} | | epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cell"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3_epi_cells",
           "ctx": "epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | "
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3x_epi_ok",
           "ctx": "pi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | {{d3_epi_c_lo}} \u2013"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3x_tol_pairs",
           "ctx": "d3_tol}}-point band resolvable at {{d3x_tol_res}} of {{d3x_tol_pairs}} quantity-by-horizon pairs, with a bindi"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3_epi_cells",
           "ctx": "s. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the h=1 cells it was fit"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2605,
+          "line": 2581,
           "key": "e5_lead_cells",
           "ctx": "\u00a76.6) reproduce the *direction* of \u00a76.6's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cell"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2605,
+          "line": 2581,
           "key": "e5_total_cells",
           "ctx": "irection* of \u00a76.6's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
+          "key": "d3_epi_cells",
+          "ctx": " global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic cells, though no single cell "
         }
       ]
     },
@@ -3643,7 +3643,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3_second_h",
           "ctx": "cov}}% at h={{d3_worst_h}} and {{d3_second_cov}}% at h={{d3_second_h}} \u2014 so the fitted multiplier is mildly **"
         },
@@ -3667,7 +3667,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2638,
+          "line": 2614,
           "key": null,
           "ctx": "ed dataset contains, not a better test. At h = 128 and below that is no longer true: a shorter unit gives \u2400 in"
         }
@@ -3825,13 +3825,13 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2289,
+          "line": 2265,
           "key": "d2_ale_cov368_hi",
           "ctx": "d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}\u2013{{d2_ale_cov368_hi}}% at h=368. Fitting over the whole rollo"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "n3_sh_over_long_M2_N8",
           "ctx": "D_long_M8_N8}} {{n3_sh_ci_long_M8_N8}}, with {{n3_sh_over_long_M2_N8}}\u00d7 and {{n3_sh_over_long_M8_N8}}\u00d7 their c"
         }
@@ -3946,61 +3946,61 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2341,
+          "line": 2317,
           "key": "mn_nind_ins",
           "ctx": "t pair ({{mn_nind}}) | h = {{v2_deploy_h}}, in-sample ({{mn_nind_ins}}) | h = {{v2_diag_h}}, held-out pair ({{"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2341,
+          "line": 2317,
           "key": "mn_nind_ins",
           "ctx": "out pair ({{mn_nind}}) | h = {{v2_diag_h}}, in-sample ({{mn_nind_ins}}) | |---|---|---|---|---|---|---| {{n3_a"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2346,
+          "line": 2322,
           "key": "mn_nind_ins",
           "ctx": "ind}}) and the in-sample arena (the training episodes' {{mn_nind_ins}} non-overlapping {{h2h_unit}}-step traje"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2347,
+          "line": 2323,
           "key": "mn_nind_ins",
           "ctx": "apping {{h2h_unit}}-step trajectories, n_independent = {{mn_nind_ins}}). Checkpoints: each configuration at {{"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2361,
+          "line": 2337,
           "key": "x2_n_ins",
           "ctx": "uch depends on the arena. On their own training episodes' {{x2_n_ins}} trajectories it raises our {{iters_long"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2384,
+          "line": 2360,
           "key": "x2_n_ins",
           "ctx": " A and Arm B, the in-sample arena: the training episodes' {{x2_n_ins}} non-overlapping {{h2h_unit}}-step traje"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2384,
+          "line": 2360,
           "key": "x2_n_ins",
           "ctx": "erlapping {{h2h_unit}}-step trajectories, n_independent = {{x2_n_ins}}. For the released checkpoint, all ten e"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2403,
+          "line": 2379,
           "key": "x2_n_ins",
           "ctx": "ores its actions. Arenas: each model's own training data ({{x2_n_ins}} trajectories for our arms, {{ad20_nind}"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2418,
+          "line": 2394,
           "key": "x2_n_ins",
           "ctx": "as: each model's own training data (the in-sample arena's {{x2_n_ins}} trajectories for our arms, all ten epis"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2499,
+          "line": 2475,
           "key": "mn_nind_ins",
           "ctx": "n_nind}}, except where a row names the in-sample arena ({{mn_nind_ins}}). | reading | causal pairing, as commi"
         }
@@ -4116,40 +4116,40 @@
           "ctx": "whose model never saw the test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
-          "key": "d3x_own_epi_ok",
-          "ctx": "ever saw those episodes, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
-        },
-        {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2287,
+          "line": 2263,
           "key": "d2_epi_cov368_lo",
           "ctx": "st the {{d2_target}}% target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%. On the aleatoric"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3x_own_epi_ok",
           "ctx": "epi_c_lo}} \u2013 {{d3_epi_c_hi}} ({{d3_epi_cspread}}\u00d7) | {{d3x_own_epi_ok}} / {{d3x_own_epi_cells}} | On the relea"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3x_own_epi_ok",
           "ctx": "en by the model as well, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and "
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_n_strad",
           "ctx": "ely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} straddling an edge, and the largest pai"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2611,
+          "line": 2587,
           "key": "d3x_own_epi_ok",
           "ctx": "whose model never saw them, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and "
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
+          "key": "d3x_own_epi_ok",
+          "ctx": "ever saw those episodes, its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cell"
         }
       ]
     },
@@ -4362,46 +4362,46 @@
           "ctx": " The control is inert, differing from clean in {{tw_dc_cluster_helped}} cells. **So \"costs nothing\" is too str"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
-          "key": "d3_epi_const_ok",
-          "ctx": "ints of nominal, where a global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic cells"
-        },
-        {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2284,
+          "line": 2260,
           "key": "d3_nind_fit",
           "ctx": "eckpoint, each scalar fitted on one held-out episode's {{d3_nind_fit}} trajectories and scored on the other's:"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2295,
+          "line": 2271,
           "key": "d3_nind_fit",
           "ctx": "etween them, so each direction fits on n_independent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fi"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2295,
+          "line": 2271,
           "key": "d3_nind_fit",
           "ctx": "dependent = {{d3_nind_fit}} and is scored on the other {{d3_nind_fit}}. The last column repeats the test on Ar"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3_ale_const_ok",
           "ctx": "aleatoric | **{{d3_ale_ok}} / {{d3_ale_cells}}** | {{d3_ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3_epi_const_ok",
           "ctx": "epistemic | **{{d3_epi_ok}} / {{d3_epi_cells}}** | {{d3_epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3_epi_const_ok",
           "ctx": "le in both directions. The constant scalar manages {{d3_epi_const_ok}} of {{d3_epi_cells}}, and those are the "
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
+          "key": "d3_epi_const_ok",
+          "ctx": "ints of nominal, where a global multiplier manages {{d3_epi_const_ok}} of the {{d3_epi_cells}} epistemic cells"
         },
         {
           "section": "3.1 Metrics",
@@ -4722,109 +4722,109 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2295,
+          "line": 2271,
           "key": "iters_main",
           "ctx": "eats the test on Arm A at ensemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_nseeds}} seeds), whos"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2319,
+          "line": 2295,
           "key": "iters_main",
           "ctx": "erdict, {{mn_verdict}}, stands as a statement about the {{iters_main}}-iteration budget (\u00a75.2). Each row sets "
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2320,
+          "line": 2296,
           "key": "iters_main",
           "ctx": "_n_better_word}} configurations that beat the centre at {{iters_main}} iterations against the centre trained t"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2321,
+          "line": 2297,
           "key": "iters_main",
           "ctx": "{{iters_main}} iterations against the centre trained to {{iters_main}}, {{n3_k_mid}} or {{iters_long}} iterati"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2332,
+          "line": 2308,
           "key": "iters_main",
           "ctx": "dings of its rules that differ). All {{tail_n}} runs at {{iters_main}} iterations, the sweep's, the baselines'"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "iters_main",
           "ctx": "histories win on all {{n3_n_readings_word}} readings at {{iters_main}} iterations while using well under half "
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2347,
+          "line": 2323,
           "key": "iters_main",
           "ctx": " = {{mn_nind_ins}}). Checkpoints: each configuration at {{iters_main}} iterations, the centre at the iteration"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2375,
+          "line": 2351,
           "key": "iters_main",
           "ctx": " at h = 8 on its in-sample arena: **{{x2_reading}}** at {{iters_main}} iterations ({{x2_E_swap_2500}}% {{x2_ci"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2386,
+          "line": 2362,
           "key": "iters_main",
           "ctx": "endent = {{ad20_nind}}. Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three se"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2404,
+          "line": 2380,
           "key": "iters_main",
           "ctx": "out pair ({{ad_nind}}). Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three se"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2418,
+          "line": 2394,
           "key": "iters_main",
           "ctx": "o the trajectory count. Checkpoints: Arm A and Arm B at {{iters_main}} and {{iters_long}} iterations, three se"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2487,
+          "line": 2463,
           "key": "iters_main",
           "ctx": "and baseline rules (M-74, M-75 and M-76, three seeds at {{iters_main}} iterations) and the A/B comparison (M-2"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2491,
+          "line": 2467,
           "key": "iters_main",
           "ctx": "It re-scores rules M-74, M-75 and M-76 (their models at {{iters_main}} iterations, three seeds each) and the A"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2505,
+          "line": 2481,
           "key": "iters_main",
           "ctx": "e M-74, the configuration sweep: nine configurations at {{iters_main}} iterations, three seeds each; arenas as"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2512,
+          "line": 2488,
           "key": "iters_main",
           "ctx": "aselines teacher-forced as the original trains them, at {{iters_main}} iterations, three seeds each; arenas as"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2520,
+          "line": 2496,
           "key": "iters_main",
           "ctx": "**Rule M-76, the baselines trained autoregressively, at {{iters_main}} iterations, three seeds each; arenas as"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2600,
+          "line": 2576,
           "key": "iters_main",
           "ctx": "turns **{{x3_reading}}** over {{x3_n}} trajectories, at {{iters_main}} iterations rather than {{iters_long}} ("
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2662,
+          "line": 2638,
           "key": "iters_main",
           "ctx": "ir's {{m23_nind}} 400-step trajectories, every model at {{iters_main}} training iterations. **With capacity he"
         },
@@ -4866,13 +4866,13 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2664,
+          "line": 2640,
           "key": "m49_mde_ratio",
           "ctx": "o **{{m49_ratio_gain}}\u00d7 matched**, against an MDE of {{m49_mde_ratio}}\u00d7, so the rule returns **{{m49_verdict}}"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2664,
+          "line": 2640,
           "key": "m49_mde_ratio",
           "ctx": " difference no artifact here tests and far below the {{m49_mde_ratio}}\u00d7 this comparison can resolve, and closi"
         }
@@ -4955,7 +4955,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2664,
+          "line": 2640,
           "key": "m44_ratio_gain",
           "ctx": "esolve.** The overconfidence improvement falls from {{m44_ratio_gain}}\u00d7 unmatched to **{{m49_ratio_gain}}\u00d7 mat"
         }
@@ -5272,7 +5272,7 @@
           "section": "Appendix K \u2014 section 6.5's two tables, and the per-dimension permutation tests behind them",
           "line": 1641,
           "key": "relale_oos_pos_h368",
-          "ctx": "lated with error on *every* dimension, against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here; App"
+          "ctx": "lated with error on *every* dimension, against {{relale_oos_pos_h368}}/{{perm_all_relale_ndim_h368}} here; sup"
         },
         {
           "section": "Appendix K \u2014 section 6.5's two tables, and the per-dimension permutation tests behind them",
@@ -5419,76 +5419,76 @@
           "ctx": "d it only so the comparison with the released checkpoint's {{d1n_nind}} is like for like. *Why the within-step"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2268,
-          "key": "d1n_nind",
-          "ctx": "dependent 400-step trajectories and all ten episodes hold {{d1n_nind}}, which is why \u00a711 and supplementary S2 "
-        },
-        {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
-          "key": "x7_n_traj",
-          "ctx": "and scored on the tenth, the epistemic coverage over all {{x7_n_traj}} trajectories is within the band at ever"
-        },
-        {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2385,
+          "line": 2361,
           "key": "ad20_nind",
           "ctx": "_n_ins}}. For the released checkpoint, all ten episodes: {{ad20_nind}} trajectories, n_independent = {{ad20_ni"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2385,
+          "line": 2361,
           "key": "ad20_nind",
           "ctx": "en episodes: {{ad20_nind}} trajectories, n_independent = {{ad20_nind}}. Checkpoints: Arm A and Arm B at {{iter"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2403,
+          "line": 2379,
           "key": "ad20_nind",
           "ctx": "n training data ({{x2_n_ins}} trajectories for our arms, {{ad20_nind}} for the released checkpoint) and the he"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2418,
+          "line": 2394,
           "key": "ad20_nind",
           "ctx": "{x2_n_ins}} trajectories for our arms, all ten episodes' {{ad20_nind}} for the released checkpoint) and the he"
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2465,
+          "line": 2441,
           "key": "x7_n_traj",
           "ctx": " \u00b11\u03c3 coverage on that episode's own; pooled, each of the {{x7_n_traj}} trajectories is scored once, by a multi"
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2468,
+          "line": 2444,
           "key": "x7_n_traj",
           "ctx": "nts its horizons WITHIN BAND. The interval resamples the {{x7_n_traj}} trajectories {{boot_n_mc}} times (seed "
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2475,
+          "line": 2451,
           "key": "x7_n_traj",
           "ctx": "---|---|---|---| {{x7_table}} **Arena: all ten episodes' {{x7_n_traj}} non-overlapping 400-step trajectories, "
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2475,
+          "line": 2451,
           "key": "x7_n_traj",
           "ctx": "} non-overlapping 400-step trajectories, n_independent = {{x7_n_traj}}, each scored by a multiplier fitted on "
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2600,
+          "line": 2576,
           "key": "x3_n",
           "ctx": "xed folds beside \u00a75's own and returns **{{x3_reading}}** over {{x3_n}} trajectories, at {{iters_main}} iterati"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2621,
+          "line": 2597,
           "key": "e7_nind",
           "ctx": "dent 400-step trajectories, where all ten episodes provide {{e7_nind}}**, {{q2_factor}}\u00d7 the present sample, b"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2681,
+          "key": "d1n_nind",
+          "ctx": "dependent 400-step trajectories and all ten episodes hold {{d1n_nind}}, which is why \u00a711 and supplementary S2 "
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
+          "key": "x7_n_traj",
+          "ctx": "and scored on the tenth, the epistemic coverage over all {{x7_n_traj}} trajectories is within the band at ever"
         },
         {
           "section": "3. Setup",
@@ -5578,7 +5578,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2287,
+          "line": 2263,
           "key": "d2_epi_cov368_hi",
           "ctx": " target, and leaves h=368 at {{d2_epi_cov368_lo}}\u2013{{d2_epi_cov368_hi}}%. On the aleatoric term a scalar of {{d"
         }
@@ -5626,13 +5626,13 @@
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2487,
+          "line": 2463,
           "key": "x8_n_changed",
           "ctx": "} trajectories, it returns **{{x8_reading}}**, though {{x8_n_changed}} of their alongside readings change (App"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2496,
+          "line": 2472,
           "key": "x8_n_changed",
           "ctx": "d numbers. Every rule returns **{{x8_reading}}**, and {{x8_n_changed}} of their alongside readings change: eac"
         }
@@ -5692,7 +5692,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_n_out_r2a",
           "ctx": "on the released checkpoint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest st"
         }
@@ -5757,7 +5757,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3_ncells_all",
           "ctx": "is outside it either. The largest deviation over all {{d3_ncells_all}} held-out cells is {{d3_worst_q}} at h={"
         }
@@ -5825,7 +5825,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2620,
+          "line": 2596,
           "key": "q2_n_req",
           "ctx": "If the observed margin is the true one, settling it needs {{q2_n_req}} independent 400-step trajectories, wher"
         }
@@ -5876,19 +5876,19 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2350,
+          "line": 2326,
           "key": "boot_n_exact4",
           "ctx": "ee-seed means, with its 95% interval: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair,"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2371,
+          "line": 2347,
           "key": "boot_n_exact4",
           "ctx": " and both interventions in each draw: exact over all {{boot_n_exact4}} ordered resamples on the held-out pair,"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2662,
+          "line": 2638,
           "key": "released_width",
           "ctx": "rnn_hidden_size` {{m49_width}} against the released {{released_width}}, giving {{m49_matched_params}} state-pa"
         },
@@ -6077,7 +6077,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2660,
+          "line": 2636,
           "key": "appG_n_rules",
           "ctx": "lied across our own pre-registered rules.** There are {{appG_n_rules}} of them (Appendix E), each reported, on"
         }
@@ -6107,7 +6107,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_n_out_a2r",
           "ctx": "the same: fitting on Arm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the"
         }
@@ -6341,31 +6341,31 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2295,
+          "line": 2271,
           "key": "d3x_nseeds",
           "ctx": "nsemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_nseeds}} seeds), whose model never saw either ep"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_nseeds",
           "ctx": "iers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on the released check"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_n_in",
           "ctx": "val on the paired change lying entirely outside the band, {{d3x_n_in}} entirely inside and {{d3x_n_strad}} str"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2314,
+          "line": 2290,
           "key": "d3x_nseeds",
           "ctx": "ing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} Arm A seeds share their training data a"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2605,
+          "line": 2581,
           "key": "e5_seeds",
           "ctx": "nts were first made on the released checkpoint alone. The {{e5_seeds}} ensemble-5 Arm A arms (\u00a76.6) reproduce "
         },
@@ -6425,13 +6425,13 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2662,
+          "line": 2638,
           "key": "v1_cap_ratio",
           "ctx": "the shared-trunk arm's {{v1_cap_shared}}, a factor of {{v1_cap_ratio}}, because each member brings its own tru"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2662,
+          "line": 2638,
           "key": "v1_cap_ratio",
           "ctx": "f {{m49_matched_ratio}} where \u00a76.8's contrast carried {{v1_cap_ratio}}. It scores them on the held-out pair's "
         }
@@ -6613,25 +6613,25 @@
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2359,
+          "line": 2335,
           "key": null,
           "ctx": "checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: each model'"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2369,
+          "line": 2345,
           "key": null,
           "ctx": "checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: the held-ou"
         },
         {
           "section": "Appendix X \u2014 rule X6: disagreement against predicted step size on shorter units",
-          "line": 2419,
+          "line": 2395,
           "key": null,
           "ctx": "h episode, by rule M-64's index builder, at h = 32 and h = \u2400, which governs. The statistic is rules M-51 and M"
         },
         {
           "section": "Appendix X \u2014 rule X6: disagreement against predicted step size on shorter units",
-          "line": 2433,
+          "line": 2409,
           "key": null,
           "ctx": "Bold, the reading, which returns **\u2400**; the h = 32 row is alongside, and its margin would carry \u2400. Units from "
         }
@@ -6742,7 +6742,7 @@
         },
         {
           "section": "S1 What testing the untested claims would require",
-          "line": 2574,
+          "line": 2550,
           "key": "rt_runs",
           "ctx": "a world-model training campaign each on the scale of ours, {{rt_runs}} runs in {{rt_hours}} h; the model train"
         }
@@ -6947,58 +6947,58 @@
           "ctx": "e test episodes, it manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells (\u00a76.7). **What the arm"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
-          "key": "d3x_own_epi_cells",
-          "ctx": "its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. And the ranking use th"
-        },
-        {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3x_own_ale_cells",
           "ctx": "i}} ({{d3_ale_cspread}}\u00d7) | {{d3x_own_ale_ok}} / {{d3x_own_ale_cells}} | | epistemic | **{{d3_epi_ok}} / {{d3_"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3x_own_epi_cells",
           "ctx": "hi}} ({{d3_epi_cspread}}\u00d7) | {{d3x_own_epi_ok}} / {{d3x_own_epi_cells}} | On the released checkpoint every poi"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3x_own_epi_cells",
           "ctx": "its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3x_own_ale_cells",
           "ctx": "_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells**, so the recipe that l"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_ncells_a2r",
           "ctx": "rm A, **{{d3x_verdict_a2r}}** ({{d3x_n_out_a2r}} of {{d3x_ncells_a2r}} cells outside the band); fitting on the"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_ncells_r2a",
           "ctx": "oint, **{{d3x_verdict_r2a}}** ({{d3x_n_out_r2a}} of {{d3x_ncells_r2a}}). The plainest statement of the gap is "
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2611,
+          "line": 2587,
           "key": "d3x_own_epi_cells",
           "ctx": "m, the same recipe manages {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2611,
+          "line": 2587,
           "key": "d3x_own_ale_cells",
           "ctx": "_epi_cells}} epistemic and {{d3x_own_ale_ok}} of {{d3x_own_ale_cells}} aleatoric cells, and two episodes is no"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
+          "key": "d3x_own_epi_cells",
+          "ctx": "its own multipliers manage {{d3x_own_epi_ok}} of {{d3x_own_epi_cells}} epistemic cells. And the ranking use th"
         }
       ]
     },
@@ -7700,82 +7700,82 @@
           "ctx": " | {{m68_from_sigma_h128}}% | {{m68_from_acc_h128}}% | | {{v2_diag_h}} | {{m68_sigma_x_h368}}\u00d7 | {{m68_acc_x_h"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2269,
-          "key": "v2_diag_h",
-          "ctx": " the free-baseline margin over whole trajectories at h = {{v2_diag_h}} and capacity's share of the trunk-shari"
-        },
-        {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2274,
-          "key": "v2_diag_h",
-          "ctx": "{{e7_r_dis}}, a margin this sample cannot resolve at h = {{v2_diag_h}}, so the verdict is {{e7_verdict}} ({{e7"
-        },
-        {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2276,
-          "key": "v2_diag_h",
-          "ctx": "ry one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar"
-        },
-        {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2276,
-          "key": "v2_diag_h",
-          "ctx": "* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_"
-        },
-        {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "v2_diag_h",
           "ctx": "best_config}} is still ahead on the held-out pair at h = {{v2_diag_h}} ({{n3_best_D_mid}} {{n3_best_ci_mid}}),"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2339,
+          "line": 2315,
           "key": "v2_diag_h",
           "ctx": "_n_readings_word}} readings: on the held-out pair at h = {{v2_diag_h}}, {{n3_sh_label_M2_N8}} by {{n3_sh_D_lon"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2341,
+          "line": 2317,
           "key": "v2_diag_h",
           "ctx": "| h = {{v2_deploy_h}}, in-sample ({{mn_nind_ins}}) | h = {{v2_diag_h}}, held-out pair ({{mn_nind}}) | h = {{v2"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2341,
+          "line": 2317,
           "key": "v2_diag_h",
           "ctx": ") | h = {{v2_diag_h}}, held-out pair ({{mn_nind}}) | h = {{v2_diag_h}}, in-sample ({{mn_nind_ins}}) | |---|---"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2359,
+          "line": 2335,
           "key": "v2_diag_h",
           "ctx": "es (\u00a77.2).** \u00a77.2's sentence on the held-out pair at h = {{v2_diag_h}} ended \"\u2026, with per-trajectory values {{"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2633,
+          "line": 2609,
           "key": "v2_diag_h",
           "ctx": "ing episodes only, and does not re-test the margin at h = {{v2_diag_h}}. **We did not measure what the miscali"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2652,
+          "line": 2628,
           "key": "q3_dom_h",
           "ctx": "ic computed after the verdict: the last horizon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_ste"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2653,
+          "line": 2629,
           "key": "q3_steps",
           "ctx": "zon band, h = {{q3_dom_h}}, holds {{q3_dom_steps}} of the {{q3_steps}} steps and {{q3_dom_share}}% of the corr"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2658,
+          "line": 2634,
           "key": "v2_diag_h",
           "ctx": " threshold of {{perm_all_holm_thr}}. Resolving it at h = {{v2_diag_h}} needs more episodes than the released d"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2682,
+          "key": "v2_diag_h",
+          "ctx": " the free-baseline margin over whole trajectories at h = {{v2_diag_h}} and capacity's share of the trunk-shari"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2687,
+          "key": "v2_diag_h",
+          "ctx": "{{e7_r_dis}}, a margin this sample cannot resolve at h = {{v2_diag_h}}, so the verdict is {{e7_verdict}} ({{e7"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2689,
+          "key": "v2_diag_h",
+          "ctx": "ry one of the {{perm_all_epi_ndim_h368}} dimensions at h={{v2_diag_h}}, and the faithful and teacher-forced ar"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2689,
+          "key": "v2_diag_h",
+          "ctx": "* head does the opposite, ranking error inversely at h = {{v2_diag_h}} on every one of {{perm_all_relale_ndim_"
         },
         {
           "section": "5. The base paper's central claim reproduces",
@@ -7815,7 +7815,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2267,
+          "line": 2243,
           "key": null,
           "ctx": "calibrated against the \u2400% target, and leaves h=368 at \u2400\u2013\u2400%. On the aleatoric term a scalar of \u2400\u2013\u2400 gives \u2400\u2013\u2400% a"
         }
@@ -8132,25 +8132,25 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2345,
+          "line": 2321,
           "key": "h2h_unit",
           "ctx": "r (episodes {{h2h_episodes}}, {{mn_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn"
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2347,
+          "line": 2323,
           "key": "h2h_unit",
           "ctx": "a (the training episodes' {{mn_nind_ins}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{mn"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2384,
+          "line": 2360,
           "key": "h2h_unit",
           "ctx": "rena: the training episodes' {{x2_n_ins}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{x2"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2393,
+          "line": 2369,
           "key": "h2h_unit",
           "ctx": "r (episodes {{h2h_episodes}}, {{ad_nind}} non-overlapping {{h2h_unit}}-step trajectories, n_independent = {{ad"
         },
@@ -8455,58 +8455,58 @@
           "ctx": " \u2400% | *On the held-out pair, n_independent = \u2400 400-step trajectories, every model at \u2400 iterations: the same \u03c3-"
         },
         {
-          "section": "Appendix S \u2014 the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (\u00a712)",
-          "line": 2247,
-          "key": null,
-          "ctx": ": our arms' held-out arena holds \u2400 independent 400-step trajectories and all ten episodes hold \u2400, which is why"
-        },
-        {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2275,
+          "line": 2251,
           "key": null,
           "ctx": "held-out episodes contribute \u2400 non-overlapping 400-step trajectories between them, so each direction fits on n"
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2444,
+          "line": 2420,
           "key": null,
           "ctx": "ed on the other nine episodes' non-overlapping 400-step trajectories with \u00a76.7's fitting function, imported, a"
         },
         {
           "section": "Appendix Y \u2014 rule X7: the per-horizon recalibration, fitted on nine episodes and scored on the tenth",
-          "line": 2455,
+          "line": 2431,
           "key": null,
           "ctx": "\u2400 **Arena: all ten episodes' \u2400 non-overlapping 400-step trajectories, n_independent = \u2400, each scored by a mult"
         },
         {
           "section": "Appendix Z \u2014 rule X8: our rules' verdicts under the released evaluation's timing",
-          "line": 2478,
+          "line": 2454,
           "key": null,
           "ctx": "e held-out pair, episodes \u2400, \u2400 non-overlapping 400-step trajectories, n_independent = \u2400, except where a row na"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2579,
+          "line": 2555,
           "key": null,
           "ctx": "s.** The out-of-sample arena has \u2400 independent 400-step trajectories (the n = \u2400 caveat of \u00a73). That is the bin"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2600,
+          "line": 2576,
           "key": null,
           "ctx": " the true one, settling it needs \u2400 independent 400-step trajectories, where all ten episodes provide \u2400**, \u2400\u00d7 t"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2638,
+          "line": 2614,
           "key": null,
           "ctx": "t gives \u2400 independent units at h = \u2400 where the 400-step unit gives \u2400 (Appendix K), and we did not rerun this p"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2642,
+          "line": 2618,
           "key": null,
           "ctx": "ied \u2400. It scores them on the held-out pair's \u2400 400-step trajectories, every model at \u2400 training iterations. **"
+        },
+        {
+          "section": "S3 What should travel, and the conclusion's discussion",
+          "line": 2660,
+          "key": null,
+          "ctx": ": our arms' held-out arena holds \u2400 independent 400-step trajectories and all ten episodes hold \u2400, which is why"
         }
       ]
     },
@@ -8598,7 +8598,7 @@
         },
         {
           "section": "Appendix U \u2014 the settings sweep at equal training compute",
-          "line": 2332,
+          "line": 2308,
           "key": "tail_n",
           "ctx": "n2_n_changed_word}} readings of its rules that differ). All {{tail_n}} runs at {{iters_main}} iterations, the "
         }
@@ -8842,25 +8842,25 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2295,
+          "line": 2271,
           "key": "d3x_ens",
           "ctx": "The last column repeats the test on Arm A at ensemble size {{d3x_ens}} and {{iters_main}} iterations ({{d3x_ns"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_ens",
           "ctx": "omputed. Multipliers were fitted on Arm A at ensemble size {{d3x_ens}} ({{d3x_nseeds}} seeds) and scored on th"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2662,
+          "line": 2638,
           "key": "r2_n_indep",
           "ctx": "ectable effect before any of its models existed, trains {{r2_n_indep}} independent members at `rnn_hidden_size"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2664,
+          "line": 2640,
           "key": "m49_n_conditions_met",
           "ctx": "}}\u00d7, so the rule returns **{{m49_verdict}}**: {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions "
         },
@@ -8944,7 +8944,7 @@
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2585,
+          "line": 2561,
           "key": null,
           "ctx": "on the released checkpoint alone. The \u2400 ensemble-5 Arm A arms (\u00a76.6) reproduce the *direction* of \u00a76.6's findi"
         }
@@ -9198,25 +9198,25 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3_nhoriz",
           "ctx": "se, over the same {{d3x_nind}} held-out trajectories and {{d3_nhoriz}} horizons. The statistic the rule govern"
         },
         {
           "section": "S1 What testing the untested claims would require",
-          "line": 2553,
+          "line": 2529,
           "key": "orig_n_tested",
           "ctx": "et the length limit.* Appendix D's first table marks {{orig_n_tested}} claims tested and the rest not. \"Not te"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2643,
+          "line": 2619,
           "key": "q3_n_pairs",
           "ctx": " applied to them but not by the checkpoint (\u00a73). Of the {{q3_n_pairs}} pairs, {{q3_n_reorder}} change order an"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2664,
+          "line": 2640,
           "key": "m49_n_conditions",
           "ctx": "{m49_verdict}}**: {{m49_n_conditions_met}} of its {{m49_n_conditions}} conditions hold, and the ratio threshol"
         }
@@ -9404,13 +9404,13 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2288,
+          "line": 2264,
           "key": "d2_ale_cov1_lo",
           "ctx": "m a scalar of {{d2_ale_c_lo}}\u2013{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}}\u2013{{d2_ale_cov1_hi}}% at h=1 and {{d2_ale"
         },
         {
           "section": "Appendix X \u2014 rule X6: disagreement against predicted step size on shorter units",
-          "line": 2449,
+          "line": 2425,
           "key": "x6_unit_len_h32",
           "ctx": "l}} {{x6_partial_ci}} | | 32 | {{x6_n_units_h32}} ({{x6_unit_len_h32}}) | {{x6_r_dis_h32}} | {{x6_r_step_h32}}"
         }
@@ -9719,19 +9719,19 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2288,
+          "line": 2264,
           "key": "d2_ale_cov1_hi",
           "ctx": "ale_c_lo}}\u2013{{d2_ale_c_hi}} gives {{d2_ale_cov1_lo}}\u2013{{d2_ale_cov1_hi}}% at h=1 and {{d2_ale_cov368_lo}}\u2013{{d2_a"
         },
         {
           "section": "Appendix X \u2014 rule X6: disagreement against predicted step size on shorter units",
-          "line": 2448,
+          "line": 2424,
           "key": "x6_n_units",
           "ctx": "al] | |---|---|---|---|---|---|---| | {{v2_deploy_h}} | {{x6_n_units}} ({{x6_unit_len}}) | {{x6_r_dis}} | {{x6"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2633,
+          "line": 2609,
           "key": "x6_n_units",
           "ctx": "tted before its reading, cut the same ten episodes into {{x6_n_units}} non-overlapping {{x6_unit_len}}-row uni"
         }
@@ -9791,37 +9791,37 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2299,
+          "line": 2275,
           "key": "d3x_ale_cells",
           "ctx": "ale_const_ok}} / {{d3_ale_cells}} | {{d3x_ale_ok}} / {{d3x_ale_cells}} | {{d3_ale_c_lo}} \u2013 {{d3_ale_c_hi}} ({{"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3x_epi_cells",
           "ctx": "epi_const_ok}} / {{d3_epi_cells}} | {{d3x_epi_ok}} / {{d3x_epi_cells}} | {{d3_epi_c_lo}} \u2013 {{d3_epi_c_hi}} ({{"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2307,
+          "line": 2283,
           "key": "d3x_ncells",
           "ctx": "nge in coverage the arena can resolve: {{d3x_n_out}} of {{d3x_ncells}} governing cells, which are not independ"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2312,
+          "line": 2288,
           "key": "d3x_ncells",
           "ctx": "he absolute one. The verdict is **{{d3x_verdict}}**: of {{d3x_ncells}} governing cells, {{d3x_n_out}} have a 9"
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2314,
+          "line": 2290,
           "key": "d3x_ncells",
           "ctx": ". \u00a76.7's caution applies here unchanged and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} "
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2314,
+          "line": 2290,
           "key": "d3x_ncells",
           "ctx": " and harder: the {{d3x_ncells}} governing cells are not {{d3x_ncells}} independent tests, the {{d3x_nseeds}} A"
         }
@@ -9951,7 +9951,7 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2302,
+          "line": 2278,
           "key": "d3_worst_ep",
           "ctx": " {{d3_worst_q}} at h={{d3_worst_h}}, fitted on episode {{d3_worst_ep}} and scored on the other, at {{d3_worst_"
         },
@@ -10095,37 +10095,37 @@
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2343,
+          "line": 2319,
           "key": null,
           "ctx": "e stale action moves our model's forecast at h = 8 by \u2400 and the released checkpoint's by \u2400 on their own traini"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2343,
+          "line": 2319,
           "key": null,
           "ctx": " their own training data (Appendix V), so at h = 8 the two respond about equally, and our model's larger perce"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2355,
+          "line": 2331,
           "key": null,
           "ctx": "he readings** are Arm A's, under the swap at h = 8 on its in-sample arena: **\u2400** at \u2400 iterations (\u2400% \u2400) and at"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2356,
+          "line": 2332,
           "key": null,
           "ctx": "ne raises the released checkpoint's error at h = 8 by \u2400% over all ten episodes. What the rule establishes is t"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2359,
+          "line": 2335,
           "key": null,
           "ctx": "| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: ea"
         },
         {
           "section": "Appendix V \u2014 rule X2, and section 7.2's figures for our models: whether they respond to the action they are given",
-          "line": 2369,
+          "line": 2345,
           "key": null,
           "ctx": "| model, checkpoint | actions given | h = 1 | h = 8 | h = 32 | h = \u2400 | |---|---|---|---|---|---| \u2400 **Arena: th"
         }
@@ -10308,13 +10308,13 @@
         },
         {
           "section": "Appendix T \u2014 section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)",
-          "line": 2300,
+          "line": 2276,
           "key": "d3_epi_cspread",
           "ctx": "3x_epi_cells}} | {{d3_epi_c_lo}} \u2013 {{d3_epi_c_hi}} ({{d3_epi_cspread}}\u00d7) | {{d3x_own_epi_ok}} / {{d3x_own_epi_"
         },
         {
           "section": "S2 The limitations in full",
-          "line": 2646,
+          "line": 2622,
           "key": "q3_c_ratio",
           "ctx": "ch rollout is penalised more. The multipliers differ by {{q3_c_ratio}}\u00d7 across horizons, so the design could h"
         }

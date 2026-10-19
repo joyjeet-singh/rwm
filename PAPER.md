@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1425 values substituted from 106 artifacts. -->
+     1424 values substituted from 106 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -736,7 +736,7 @@ Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms a
 
 **The same pattern holds for the quantity the method uses.** On the held-out pair (n_independent = 4 400-step trajectories, in-sample for the checkpoint), the epistemic term correlates positively with realised error on **45 of 45** dimensions at h = 368 while being 39.7× overconfident there, and its σ grows 1.59× from h = 1 to h = 368 while its error grows 13.33×. Under a permutation null that keeps the coupling between dimensions, nothing in this family survives Holm–Bonferroni in any of the three arenas, and out of sample at the 400-step unit nothing could, since its smallest attainable P already exceeds the smallest Holm threshold: at h = 368 the tests are underpowered at every sample size we can reach (Appendix K).
 
-So this section's claim is: **the magnitude failure is established and large; the ordering points the right way for the epistemic term and the faithful and teacher-forced arms, not for the corrected arm or the released aleatoric head (Appendix S), and is not established at conventional significance once the dependence between dimensions is respected. The failure is specifically magnitude calibration, in both components.**
+So this section's claim is: **the magnitude failure is established and large; the ordering points the right way for the epistemic term and the faithful and teacher-forced arms, not for the corrected arm or the released aleatoric head (supplementary S3), and is not established at conventional significance once the dependence between dimensions is respected. The failure is specifically magnitude calibration, in both components.**
 
 **The structural excuse does not survive.** One could argue that a model trained on an 8-step horizon cannot be expected to report calibrated
 uncertainty about step 368. It cannot report it about step 8 either. Inside the trained horizon,
@@ -1097,13 +1097,13 @@ horizon on the released checkpoint, where, fitted on nine episodes and scored on
 mixed (§6.7). Per dimension, no ordering reaches significance after multiplicity correction once the
 coupling between dimensions is respected (§6.5). As the scalar the method applies, ensemble disagreement gets the
 order right and the size wrong: it should not be read as a scale, and a ranking use deserves its own
-validation on the deployment distribution (Appendix S).
+validation on the deployment distribution (supplementary S3).
 
 **What should travel from this paper, and what should not.** *Properties of the objective and of how
 its bounds are built*, such as §6.3's σ = 0 optimum, are the ones to expect elsewhere, and only where both are present together, a hypothesis §2 states and leaves untested outside this codebase. *Properties of this released artifact*, its one-step misalignment, its
 shared trunk and its specific overconfidence factors, should be checked rather than assumed in any
 other. *Properties of this dataset and its arenas* are limits on what could be resolved, not
-findings in either direction (Appendix S gives all three, and why §5.2's verdict should not travel either).
+findings in either direction (supplementary S3 gives all three, and why §5.2's verdict should not travel either).
 
 ---
 
@@ -1781,7 +1781,7 @@ Adding the teacher-forced arm, trained for §5, sharpens the finding (our arms a
 | **teacher-forced Arm B** | **0.1188** | **45/45** | **0.2609** | **0.5565** |
 | released checkpoint | 0.0177 | 20/45 | 0.6957 | 0.9753 |
 
-**The CoV column is the aleatoric σ in every row**, the only σ the ensemble-size-1 arms have. Our ensemble-5 arms (§6.6) have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at 0.379–0.395 against the released checkpoint's 0.0177. **The count column is the out-of-sample arena** (n_independent = 4), so that all four models are compared on trajectories none of our arms trained on. For the released checkpoint's aleatoric head it is not the most informative arena: at h = 368 and n_independent = 20 over all ten episodes that head is 0/45, negatively correlated with error on *every* dimension, against 20/45 here; Appendix S quotes the larger arena.
+**The CoV column is the aleatoric σ in every row**, the only σ the ensemble-size-1 arms have. Our ensemble-5 arms (§6.6) have both: their aleatoric CoV is comparable to the other arms', and their *epistemic* term is far more input-dependent than any aleatoric head here, at 0.379–0.395 against the released checkpoint's 0.0177. **The count column is the out-of-sample arena** (n_independent = 4), so that all four models are compared on trajectories none of our arms trained on. For the released checkpoint's aleatoric head it is not the most informative arena: at h = 368 and n_independent = 20 over all ten episodes that head is 0/45, negatively correlated with error on *every* dimension, against 20/45 here; supplementary S3 quotes the larger arena.
 
 Arm B's σ is 15.6× more input-dependent than the faithful arm's, and it has the largest mean correlation of the four (r = 0.257). It is still 315× overconfident.
 
@@ -2399,31 +2399,7 @@ This appendix is now section S2 of the supplementary material (`docs/SUPPLEMENT.
 
 ## Appendix S — the conclusion's discussion of the ranking, the scale, the per-dimension evidence, and what should travel (§12)
 
-**What should travel, as §12 stated it.** §12 keeps two sentences of this paragraph.
-
-**What should travel from this paper, and what should not.** The findings are of three kinds. *Properties of the objective and of how its bounds are built* are the ones to expect elsewhere,
-and only where both are present together: §6.3 derives the σ = 0 optimum from squared
-error on a sampled prediction through a bounded head whose floor nothing pushes back up, so it
-should hold wherever both are present, the hypothesis §2 states and leaves untested outside this
-codebase. On §2's count the substitution is present in 1 of the 10
-descendants examined, and there only in a non-default mode; the survey did not examine the floor,
-so that is an upper bound on how often both are. *Properties of this released artifact* should be checked
-rather than assumed in any other: the one-step misalignment in its evaluation harness (§7.2), the
-trunk its five members share (§6.4), and its specific overconfidence factors,
-11,683× for the aleatoric σ and 33.4× for the epistemic term
-at h = 100 (§6.2), are measurements of one checkpoint. *Properties of this dataset
-and its arenas* are limits on what could be resolved, not findings in either direction, and neither pinned repository can lift them (§3): our arms' held-out arena holds 4 independent 400-step
-trajectories and all ten episodes hold 20, which is why §11 and supplementary S2 leave the replication at
-ensemble size 5, the free-baseline margin over whole trajectories at h = 368 and capacity's share of the
-trunk-sharing effect open rather than settled (on shorter units at h = 100, rule X6 settles the margin on the
-checkpoint's training episodes). §5.2's configuration verdict should not travel either: it is
-resolved, but at our data budget, and says nothing about the original's.
-
-The more useful finding is asymmetric, and it cuts both ways. The scale failure is established and large. The scale may be repairable per horizon, but on a model that has not seen the test episodes the evidence is mixed. On the released checkpoint a per-horizon multiplier, fitted on one episode and scored on another, brings every coverage estimate within 10 points of nominal, where a global multiplier manages 2 of the 12 epistemic cells, though no single cell is resolvable at this arena and the cells are not independent trials (§6.7). Fitted on nine episodes and scored on the tenth, the epistemic coverage over all 20 trajectories is within the band at every horizon (rule X7). On Arm A, whose model never saw those episodes, its own multipliers manage 17 of 36 epistemic cells. And the ranking use the follow-up claims does survive a real test: against the forecast step index, a free baseline neither original paper ran, ensemble disagreement wins at every horizon and keeps +0.596 once the index is partialled out. Against a second free baseline it does less well: the model's own predicted step size ranks error at +0.4697 against disagreement's +0.6053, a margin this sample cannot resolve at h = 368, so the verdict is SURVIVES entry-res ONLY (disagreement beats the one-step error before the window, but not the model's predicted step size). On shorter units of the same episodes, at h = 100, a later rule resolves that margin in disagreement's favour (rule X6: **DISAGREEMENT BEATS STEP SIZE**, +0.2816 [+0.1978, +0.3896]), on the checkpoint's training data. **The control this rests on removes trajectory difficulty rather than forecast depth**: with both the rollout and the depth held constant, disagreement still correlates +0.419 [+0.318, +0.576] with realised error (§6.6). That is smaller than the +0.605 pooled figure, and it is the one that means what a practitioner needs it to mean: not a re-encoding of the clock, and not merely a report of which episode is hard. It is the closest either original work comes to a claim this reproduction strengthens rather than qualifies, and even there the strengthening is of the ordering, not of the ensemble that produces it, since a free subtraction ranks nearly as well over whole trajectories.
-
-What does not survive is the per-dimension form of the ordering evidence. Three of the five σ estimates we measured order their own errors better than chance in direction: the epistemic term on every one of the 45 dimensions at h=368, and the faithful and teacher-forced arms. That count is a direction, not a tally of independent trials, since the dimensions are physically coupled (§6.5). The released checkpoint's *aleatoric* head does the opposite, ranking error inversely at h = 368 on every one of 45 dimensions over all ten episodes and at chance on the held-out pair alone, a dependence on arena that §6.5 sets out. The corrected arm sits at chance in both. Once the coupling is respected by permuting whole trajectories, no per-dimension count in this paper reaches significance after multiplicity correction; the independent-trials P-values an earlier draft carried were wrong by up to a factor of about 10^13 and are withdrawn (`S-15`). Neither quantity yields a usable interval. Per dimension, uncertainty in this family of models should be read as a weak ordering at best, or fixed at the objective. As the scalar the method applies, ensemble disagreement gets the order right (§6.6) and the size wrong: it should not be read as a scale, and a ranking use deserves its own validation on the deployment distribution rather than trust inherited from here.
-
----
+This appendix is now section S3 of the supplementary material (`docs/SUPPLEMENT.md`).
 
 ## Appendix T — section 6.7 in detail: the constant scalar, the per-horizon table, and whether the multipliers transfer between models (rule M-69)
 

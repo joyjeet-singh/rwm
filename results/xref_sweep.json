@@ -9,8 +9,8 @@
     "upstream",
     "new-docs"
   ],
-  "n_pointers": 114,
-  "n_ok": 114,
+  "n_pointers": 112,
+  "n_ok": 112,
   "n_reviewed_correct": 0,
   "reviewed": [],
   "n_unverified": 0,
@@ -187,13 +187,6 @@
     },
     {
       "class": "semantic",
-      "pointer": "Appendix S gives all three, and why \u00a75",
-      "ok": true,
-      "detail": "target Appendix S; nouns []; absent []",
-      "context": "Appendix S gives all three, and why \u00a75"
-    },
-    {
-      "class": "semantic",
       "pointer": "Appendix J lists the runs, the capacity-matched arm excluded from\nevery rate,",
       "ok": true,
       "detail": "target Appendix J; nouns ['runs', 'capacity-matched', 'excluded', 'rate', 'rate', 'fitted']; absent []",
@@ -205,13 +198,6 @@
       "ok": true,
       "detail": "target 6.3; nouns ['appendix']; absent []",
       "context": "\u00a76.3 quotes (Appendix B)"
-    },
-    {
-      "class": "semantic",
-      "pointer": "Appendix S quotes the larger arena",
-      "ok": true,
-      "detail": "target Appendix S; nouns ['larger', 'arena']; absent ['larger']",
-      "context": "Appendix S quotes the larger arena"
     },
     {
       "class": "semantic",

@@ -2,8 +2,8 @@
   "check": "rendered-PDF pass (Session 8 addendum A)",
   "one_time": "not registered as a check kind. It exists because text moved through a transformation layer in Sessions 5a and 6; the moves are done.",
   "pdf": "PAPER.pdf",
-  "pages": 73,
-  "chars_extracted": 283025,
+  "pages": 72,
+  "chars_extracted": 277724,
   "cannot_detect": "extracted PDF text loses layout. This sees that a table's header cells are present and that references resolve; it cannot see a column rendered too narrow or a float landing pages from its reference. Those need a reader, which \u00a7F.2 asks for.",
   "n_checks": 5,
   "n_pass": 5,
@@ -11,7 +11,7 @@
     {
       "check": "1. appendix letters resolve",
       "pass": true,
-      "detail": "source headings ABCDEFGHIJKLMNOPQRSTUVWXYZ; contiguous from A: True; in-text references ABDEFGHIJKLMNOPQSTUVWXYZ; dangling none"
+      "detail": "source headings ABCDEFGHIJKLMNOPQRSTUVWXYZ; contiguous from A: True; in-text references ABDEFGHIJKLMNOPQTUVWXYZ; dangling none"
     },
     {
       "check": "2. figure numbers match their references",
