@@ -9759,3 +9759,255 @@ returned reading. Found by F10's read-only review of Appendices A–M and checke
 **Evidence** `SRC` `scripts/x11d_fold_m44.py`, `scripts/x11_common.py`, `scripts/step5_train.py` (`--ensemble 5` with `--holdout`), `scripts/queue_run.py`, `results/x11_power.json`, `results/round5_queue_timing.json`;
 `RUN` `results/x11d_fold_m44.json` (awaited).
 **Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x11d_fold_m44.json` · **Relevance** METHOD
+
+### M-101 — PRE-REGISTERED rule X9: does propagating each member on its own predictions make the spread track accumulated error? · **NEW**
+**Entered before any of its data exists.** No `results/x9_*`, `results/x10_*` or `results/x11e_*` file exists. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`, and the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, the script ran only its `--assert-only` mode (MEAN through the existing functions, forecast step 1 of PER-MEMBER for assertion (ii), and the one-member fold check for assertion (iii); no per-member number past step 1) and a dry run of its reading on **untrained random weights** from a harness outside the repository; both logs, naming these SHA-256s, are in the session's evidence folder. The ordering can be checked from `git log`.
+
+**Deviations, all stated before any per-member number existed.** (1) File names: PLAN's G3 section names `x9_ts_inf_propagation`; PROTOCOLS, committed first, names `x9_per_member_propagation`, and that name is used. (2) The first `--assert-only` failed assertion (ii) by 6.4e-7, then 7.1e-15: the members' mean and the statistics were reduced on arrays of a different shape and memory layout from MEAN's, so float32 and float64 rounding differed in the last place; every head output and the spread were bitwise identical. By the user's ruling (`docs/presubmission/round5/DECISIONS.md#G3-assert-ii`) the script now takes the mean and spread at each step with MEAN's own `torch.stack(...).mean(0)` and reduces C-contiguous arrays; the tolerance stayed 0.0 and the assertion then passed. (3) Added: the ledger-hash guard. (4) X11e (M-103) runs from the same script with `--x11e` and writes its own artifact, so this rule's discharged artifact never changes.
+
+**Rule text, verbatim from `docs/presubmission/round5/PROTOCOLS.md`** (committed in `2d71330` before any data; subheadings set in bold and one failure-record path split, so the ledger parses; PROTOCOLS governs where they differ):
+
+*Inference only; pre-registered by this commit.*
+
+**Why.** RWM-U's current abstract says uncertainty is "effectively propagated over long horizons" (PREMISES P8).
+The released evaluation rollout feeds the ensemble mean to every head through one recurrent state, so the spread
+at step *t* is a one-step spread at one shared state history.
+
+**What it contrasts (PREMISES B2).** MEAN is the release's **evaluation** path (`model_ids=None`,
+`system_dynamics.py:112-115`), which is what our §6.4 measured. X9 does **not** test the imagination env's
+one-member-per-environment rollout (`envs/base.py:54,68,142`): there every head is still evaluated at one shared
+history, so its spread is again a one-step spread, and PER-MEMBER is the only mode in which the members' histories
+differ. That the imagination path is not tested is stated wherever X9 is reported.
+
+**2.1 Models and arenas (all exist; no training).**
+
+| tag | model | arena | n | batching |
+|---|---|---|---|---|
+| (a) `rel` | released checkpoint, 5 shared-trunk heads | all ten episodes, 20 non-overlapping 400-step trajectories, built as `task_d_nind20.py:162-176` | 20 | one batch of 20 |
+| (b) `e5` | Arm A ensemble-5 arms, seeds 0–2, 2,500 iterations, each a 5-head shared trunk | held-out pair {1, 8}, 4 trajectories, built as `task_d3_ens5.py:86-95` | 4 | one batch of 4 per seed |
+| (c) `ind` | independent ensemble, Arm A single models seeds 0–4, 2,500 iterations | held-out pair, 4 trajectories | 4 | one batch of 4 |
+| (c3) `ind3` | (c)'s members seeds 0–2 only | held-out pair | 4 | one batch of 4 |
+| (d) `fold` | per X3 fold, a three-member independent ensemble of that fold's Arm A seeds 0–2 (`x3_cross_fold.weights_path("A", fold, s)`) | each fold's own held-out pair: `MN.arena(ep, fold, 32)["starts"]`, windows from `MN.window_arrays(data, cfg, starts, 32, 32)` and `MN._pairing(..., 1)`, pooled over the five folds in `FOLDS` order | 20 (each episode held out once) | one batch of 4 per fold, as `MN.score` |
+
+(a) is "in-sample" only if the checkpoint trained on this recording, which is an assumption (PREMISES P20); X9
+reports (a) as "all ten episodes" with that caveat and draws no in-sample/held-out contrast from it. (c3) is
+reported beside (c) on fold {1, 8} to show what the member count alone does (three members are not five, and a
+small ensemble's spread is biased low); it carries no verdict.
+
+**2.2 Two propagation modes.**
+
+- **MEAN** (the released evaluation protocol). Computed by **calling the existing functions unchanged**:
+  `ReferenceRWM.rollout_uncertainty(st.clone(), ac, 32, action_offset=1)` for (a) and (b);
+  `r2_independent_ensemble.rollout_independent(models, st.clone(), ac, 32, 1)` for (c), (c3) and (d). No
+  reimplementation of MEAN is allowed.
+- **PER-MEMBER** (TS∞ in Chua et al. 2018's terms). Member *k* receives its own previous prediction at every step
+  after the first, through its own recurrent state; at forecast step 1 every member receives the same true
+  32-step history. For a shared-trunk model this means the trunk is run **once per member**, on that member's own
+  input, with MEAN's batch shape (B trajectories per call, not K·B), so float32 rounding matches MEAN's at step 1.
+  Implementation: a new function `step_heads(m, s_in, a_in, h_state)` that copies `ReferenceRWM.step` lines
+  `:94-105` verbatim and returns the per-head means `(E, B, 45)` and per-head σ `(E, B, 45)` instead of their
+  mean; member *k*'s step uses only head *k* of the trunk output computed from member *k*'s input and member *k*'s
+  hidden state. For independent members each member is stepped with `m.step` exactly as `rollout_independent`
+  does, but with its own prediction fed back. Index arithmetic for `s_in`, `a_in` is copied from
+  `score_reference.py:141-149`. The auxiliary trunk is not run (`want_aux=False`, as MEAN).
+- **Statistics** for both modes, at each forecast step: prediction ȳ = mean over members of the members'
+  predictions (under MEAN this is the fed-back mean itself); e = |ȳ − truth| per dimension; s = standard deviation
+  across members per dimension, ddof = 1 (as `means.std(0)`).
+- **Per-member σ** (the aleatoric head). The per-member predicted σ has collapsed (§6.3). Record its size beside
+  the error's: `alea_mean` = mean over (trajectory, step ≤ h, dimension) of the mean over members of each member's
+  σ, beside mean e, for both modes. It enters no statistic.
+
+**2.3 Statistics, by horizon.**
+
+Horizons h ∈ {1, 8, 32, 100, 128, 368}, cumulative over steps 1..h, pooled over (trajectory, step, dimension)
+exactly as §1's `block`. Per model, arena and mode: ρ = mean e / mean s; ±1σ and ±2σ coverage; mean Gaussian
+CRPS and NLL with scale s (§1); mean e, mean s, `alea_mean`, and the count of excluded elements. For (b) every
+quantity is computed per seed and pooled as §1 says (mean over seeds of per-seed values).
+
+**Fraction of the gap closed**, primary horizon h = 100, also reported at every horizon:
+f = ln(ρ_MEAN / ρ_PER) / ln(ρ_MEAN / √(2/π)).
+f = 0: no change; f = 1: per-member propagation brings ρ to its calibrated value; f < 0: per-member propagation
+widens the gap; f > 1: it overshoots into under-confidence. f is undefined when ρ_MEAN ≤ √(2/π); then the
+verdict is NO CLEAR CHANGE and the reason is recorded.
+
+**Per-trajectory values** (used by the n = 4 tests and stored for N7): for trajectory t, ρ_t,mode =
+mean_t e / mean_t s over (step ≤ h, dimension), f_t from ρ_t,MEAN and ρ_t,PER, and cov1_t,mode. For (b), each
+trajectory's value is the mean over the three seeds of the per-seed value ("seeds averaged within trajectory",
+M-27).
+
+**2.4 Intervals.**
+
+- **(a) and (d), n = 20.** Paired bootstrap over trajectories: one draw matrix
+  `default_rng(0).integers(0, 20, (20000, 20))`, the matrix `cluster_ci_from_per_traj` uses; in each draw both
+  modes are recomputed from the drawn trajectories' per-trajectory means (numerator and denominator resampled
+  together, as `cluster_ci_from_per_traj`), and f* is computed from that draw's ρ*_MEAN and ρ*_PER. Interval: 2.5th
+  and 97.5th percentiles (`np.percentile`, default method) of the finite draws; the number of finite draws is
+  recorded. Intervals are reported for ρ (both modes), ±1σ coverage (both modes), f, and the PER − MEAN differences
+  in CRPS and NLL. (d) resamples the 20 trajectories regardless of fold, as X3 does.
+- **(b), (c), (c3), n = 4.** Descriptive only. Exact two-sided sign-flip test on the four per-trajectory f_t
+  (seed-averaged for (b)): statistic T = mean(f_t); over all 16 sign vectors ε, p = #{ε : |mean(ε·f)| ≥ |T| −
+  1e-12} / 16, so the smallest attainable p is 0.125. Report p, "k of 4" (the number of f_t > 0), and the same test
+  on the per-trajectory log-ratios ln(ρ_t,MEAN / ρ_t,PER). For (b), also report each seed's own k of 4.
+
+**2.5 Verdict, per model and arena, at h = 100.**
+
+Exactly one of:
+- **PROPAGATION CLOSES THE GAP** — the per-member ±1σ coverage is inside X7's band [58.27%, 78.27%]: for n = 20,
+  its whole 95% interval lies inside the band (X7's own `WITHIN BAND` convention); for n = 4, the pooled value
+  **and** each of the four per-trajectory values (seed-averaged for (b)) lie inside the band.
+- **PROPAGATION NARROWS THE GAP** — not the above, and for n = 20 the lower end of f's paired interval is above 0;
+  for n = 4, f_t > 0 on 4 of 4 trajectories (reported with its exact p).
+- **PROPAGATION WIDENS THE GAP** — for n = 20 the upper end of f's interval is below 0; for n = 4, f_t < 0 on 4 of 4.
+- **NO CLEAR CHANGE** — otherwise, or when f is undefined, or when fewer than 19,000 of the 20,000 draws of f are
+  finite (n = 20).
+
+Verdicts are issued for (a), (b), (c) and (d). (c3) and every horizon other than 100 are reported without a verdict.
+The n = 4 verdicts are labelled descriptive: no n = 4 result can reach p < 0.125.
+
+**2.6 Assertions, all before any PER-MEMBER number is computed or printed.**
+
+The script computes and checks every MEAN quantity first, writes the assertion block, and exits `BLOCKED` (writing
+`results/x9_per_member_propagation.json` + `.blocked`, no reading) if any fails.
+
+1. **(i) MEAN reproduces the existing artifacts**, relative difference ≤ 1e-6 (relative to max(1e-12, |stored|)),
+   at every horizon:
+   (a) `results/task_d_nind20.json` `d1_by_horizon[h].epistemic.{ratio_err_over_sigma, coverage_pm1,
+   coverage_pm2, mean_sigma, mean_abs_err}` and the intervals `ratio_err_over_sigma_ci`, `coverage_pm1_ci`,
+   `coverage_pm2_ci` (same draw matrix); and `results/m65_gaussian_nominal.json` case
+   `released_ckpt_ens5 [epistemic] all ten episodes`, `by_horizon[h].rho_err_over_sigma` and
+   `coverage_pm1_observed_pct` / 100;
+   (b) `results/task_d3_ens5.json` `calibration[h].per_seed[s].{ratio_err_over_sigma, coverage_pm1,
+   coverage_pm2}`, `mean_ratio`, `mean_cov1`, `mean_cov2`, `ratio_ci`, `cov1_ci`, `cov2_ci` (with
+   `task_d3_ens5.py:242`'s draw matrix);
+   (c) `results/r2_independent_ensemble.json` `independent[h].{ratio_err_over_sigma, coverage_pm1,
+   coverage_pm2, mean_sigma, mean_abs_err}`.
+2. **(ii) The two modes agree at h = 1.** For every model, the step-1 predictions of every member and every
+   statistic at h = 1 are identical under MEAN and PER-MEMBER: maximum absolute difference exactly 0.0.
+3. **(iii) For (d), a one-member "ensemble" reproduces X3.** Each fold member alone, through the new PER-MEMBER
+   code with K = 1 and `MN`'s input construction, (1) reproduces our trainer's rollout of the same weights
+   (`x3_cross_fold.load(cfg, w)` then `.rollout(..., 32, action_offset=1)`) to a maximum absolute difference
+   < 1e-5 (the tolerance `task_d3_ens5.py:127-128` sets for the same class comparison), and (2) gives per-trajectory
+   relative-L1 (`MN.metrics(pred[:, 32:] − truth, truth, scale)[str(h)]["l1"]`) equal to
+   `results/x3_cross_fold.json` `per_trajectory.armA_per_seed_l1[str(h)][s][t]` within 1e-5 absolute at every
+   horizon, after asserting that the trajectory order matches `per_trajectory.fold` and `per_trajectory.start_row`.
+   Batching: one call per fold with that fold's four trajectories, as `MN.score`; at h = 368 batching alone moves
+   values by about 1e-2 (round 4 OUT_OF_SCOPE F2), so no other batching is allowed.
+4. **(iv) Inputs.** The trajectory start rows of (a) equal the union of (b)'s held-out starts and X10's 16
+   in-sample starts; every weight file's SHA-256 is recorded, and for (d) it equals `x3_cross_fold.json`
+   `weights_sha256[fold]["A{s}"]`; every prediction and spread is finite; s > 0 for every member count ≥ 2.
+
+The maximum observed difference for each assertion is written to the artifact whether it passes or fails.
+
+**2.7 Outputs.**
+
+- Script `scripts/x9_per_member_propagation.py`; artifact `results/x9_per_member_propagation.json` with `rule`,
+  `ledger`, `script_sha256`, `code_sha256` (this script, `score_reference.py`, `r2_independent_ensemble.py`,
+  `mn_sweep_eval.py`, `x3_cross_fold.py`, `rwm_data.py`, `rwm_metrics.py`), `git_head`, `assertions`, `design`,
+  per (model, arena, mode, horizon) the §2.3 statistics, per-trajectory values, intervals, the sign-flip tests,
+  `verdict` per model, `scope` (the sentence below), `timing`.
+- Stage `20v1 "X9 — per-member propagation against the released mean protocol"`, `NEEDS_WEIGHTS`, runtime from G3's
+  probe.
+- Keys (G3 adds them to `scripts/paper_numbers.py`): for arena tag A ∈ {rel, e5, ind, ind3, fold} and mode
+  M ∈ {mean, per}: `x9_{A}_{M}_rho_h100`, `x9_{A}_{M}_rho_h368`, `x9_{A}_{M}_cov1_h100`, `x9_{A}_{M}_cov1_h368`;
+  `x9_{A}_f_h100`, `x9_{A}_f_h368`; for A ∈ {rel, fold}: `x9_{A}_f_h100_ci`, `x9_{A}_per_cov1_h100_ci`; for A ∈
+  {e5, ind, ind3}: `x9_{A}_k4_h100`, `x9_{A}_p_h100`; for A ∈ {rel, e5, ind, fold}: `x9_{A}_verdict`; and
+  `x9_alea_over_err_max` (the largest `alea_mean` / mean e over every cell).
+
+**Scope sentence (locked).** Per-member propagation is not the released method. MEAN tests "effectively
+propagated" as the release's evaluation path does it; PER-MEMBER asks whether the ensemble's information would
+propagate if the members were rolled out separately. The release's imagination path, which propagates one member
+per environment, is not tested.
+
+**Frozen files and their SHA-256:** `scripts/x9_per_member_propagation.py` `7928649f1771854fcba9aa00bbfda2dd9a4535de6ac3e73d0dda184903feefd3`, `scripts/x11a_fold_ens5_calibration.py` `21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423`, `scripts/x11_common.py` `4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a`.
+
+**What the discharging session may and may not do.** G3 runs the script unchanged after this commit, writes the verdicts exactly as returned into this entry's Status line, and changes nothing else here. Not: change the models, arenas, modes, horizons, statistics, intervals, thresholds or labels; add a reading; or read any number here as bearing on a discharged rule.
+
+**Evidence** `SRC` `scripts/x9_per_member_propagation.py`, `scripts/x11_common.py`, `src/score_reference.py`, `scripts/r2_independent_ensemble.py`;
+`RUN` `results/x9_per_member_propagation.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x9_per_member_propagation.json` · **Relevance** METHOD
+
+### M-102 — PRE-REGISTERED rule X10: does measuring on training data flatter an ensemble's calibration? · **NEW**
+**Entered before any of its data exists.** No `results/x9_*`, `results/x10_*` or `results/x11e_*` file exists. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`, and the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, the script ran only its `--assert-only` mode (MEAN through the existing functions, forecast step 1 of PER-MEMBER for assertion (ii), and the one-member fold check for assertion (iii); no per-member number past step 1) and a dry run of its reading on **untrained random weights** from a harness outside the repository; both logs, naming these SHA-256s, are in the session's evidence folder. The ordering can be checked from `git log`.
+
+**Deviations.** Added: the ledger-hash guard; the statistics are computed by the frozen verbatim copy of `task_d3_ens5.py:243-278` in `scripts/x11a_fold_ens5_calibration.py` (`calibration`), which assertion (1) shows reproduces `results/task_d3_ens5.json`.
+
+**Rule text, verbatim from `docs/presubmission/round5/PROTOCOLS.md`** (committed in `2d71330` before any data; subheadings set in bold and one failure-record path split, so the ledger parses; PROTOCOLS governs where they differ):
+
+*Inference only; pre-registered by this commit.*
+
+**Models.** Arm A's ensemble-5 arms, seeds 0–2, 2,500 iterations (`runs/armA_seed{s}_ens5/weights_2500.pt`), loaded
+as `task_d3_ens5.py:117-119`. Their training split is recorded, so X10 does not depend on PREMISES P20.
+
+**Arenas.** In-sample: `MET.non_overlapping_starts(ep, split["train_episodes"], 400)` with the default split
+(`E.make_split(seed=0, strat_path=results/step0_strat.json)`), expected 16 trajectories, n_independent 16, from
+episodes {0, 2, 3, 4, 5, 6, 7, 9}. Held-out: the pair {1, 8}, 4 trajectories, exactly `task_d3_ens5.py:86-95`.
+In-sample is rolled out as one batch of 16, held-out as one batch of 4. Mode: MEAN only
+(`rollout_uncertainty`, `action_offset=1`).
+
+**Statistic.** Per seed s, arena and horizon h ∈ {1, 8, 32, 100, 128, 368}: ρ, ±1σ and ±2σ coverage of the
+epistemic spread, by `task_d3_ens5.py:254-271`'s lines (copied verbatim, with the file:line cited in the script).
+Q_s(h) = ρ_in,s(h) / ρ_out,s(h). Pooled as `task_d3_ens5.py` pools: ρ_arena(h) = mean over seeds of ρ_s; Q(h) =
+ρ_in(h) / ρ_out(h). Primary h = 1; also h = 100; every horizon reported.
+
+**Interval for Q.** Independent bootstraps of each arena's trajectories from one generator: `rng = default_rng(0)`;
+`I_in = rng.integers(0, 16, (20000, 16))`, then `I_out = rng.integers(0, 4, (20000, 4))`, in that order. In draw b,
+each arena's ρ* is computed as `task_d3_ens5._ci` does (seed-mean per-trajectory error means over the drawn
+trajectories, divided by the seed-mean per-trajectory σ means), and Q* = ρ*_in / ρ*_out. Interval: 2.5th and 97.5th
+percentiles of the finite draws. (The point value is a mean of per-seed ratios and the interval a ratio of
+seed-pooled means, as in `task_d3_ens5.py`; this is copied, not changed.)
+
+**Verdict at h = 1.**
+- **IN-SAMPLE FLATTERS** — Q_s(1) < 1 for all 3 seeds and the pooled interval lies below 1;
+- **IN-SAMPLE IS WORSE** — Q_s(1) > 1 for all 3 seeds and the pooled interval lies above 1;
+- **MIXED** — otherwise.
+
+h = 100 is reported with the same three labels, as "the label it would carry", not a second verdict.
+
+**Caveat (locked).** The arenas differ in episodes as well as in training status, and per-episode difficulty varies
+threefold (D-12), so this bounds the in-sample effect rather than isolating it. X11, if run, measures it with every
+episode in both roles.
+
+**Assertions, before any in-sample number is computed or printed.**
+1. The held-out arm reproduces `results/task_d3_ens5.json` at every horizon, relative difference ≤ 1e-6:
+   `calibration[h].per_seed[s].{ratio_err_over_sigma, coverage_pm1, coverage_pm2}`, `mean_ratio`, `mean_cov1`,
+   `mean_cov2`, and `ratio_ci`, `cov1_ci`, `cov2_ci` recomputed with `task_d3_ens5.py:242`'s own draw matrix.
+2. For each seed, `results/step5_armA_seed{s}_ens5.json`'s recorded `train_episodes` equal the in-sample episodes
+   and its `holdout_episodes` equal [1, 8].
+3. The in-sample arena has 16 trajectories, n_independent 16, two per training episode; its starts are disjoint
+   from the held-out starts, and their union equals `MET.non_overlapping_starts(ep, range(10), 400)`.
+4. For the in-sample batch, the harness agrees with our trainer's forward (`M.build_from_config(cfg,
+   ensemble_size=5)`, `rollout_full`) to < 1e-5, as `task_d3_ens5.py:122-128` checks for the held-out batch.
+
+**Outputs.** Script `scripts/x10_insample_vs_heldout.py`; artifact `results/x10_insample_vs_heldout.json` (with the
+same provenance fields as X9); stage `20v2 "X10 — in-sample against held-out calibration, ensemble-5 arms"`,
+`NEEDS_WEIGHTS`. Keys: `x10_q_h1`, `x10_q_h1_ci`, `x10_q_h1_seed{0,1,2}`, `x10_q_h100`, `x10_q_h100_ci`,
+`x10_rho_in_h1`, `x10_rho_out_h1`, `x10_cov1_in_h1`, `x10_cov1_out_h1`, `x10_n_in`, `x10_verdict`,
+`x10_label_h100`.
+
+**Frozen files and their SHA-256:** `scripts/x10_insample_vs_heldout.py` `687dbe08fdea8563569306d0cdbd6feb4efa9ffb6a31a3011a85a1f8914438b8`, `scripts/x11a_fold_ens5_calibration.py` `21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423`, `scripts/x11_common.py` `4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a`.
+
+**What the discharging session may and may not do.** As M-101.
+
+**Evidence** `SRC` `scripts/x10_insample_vs_heldout.py`, `scripts/x11a_fold_ens5_calibration.py`, `scripts/x11_common.py`;
+`RUN` `results/x10_insample_vs_heldout.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x10_insample_vs_heldout.json` · **Relevance** METHOD
+
+### M-103 — PRE-REGISTERED rule X11e: X9's per-member propagation on X3's folds' ensemble-5 arms · **NEW**
+**Entered before any of its data exists.** No X11 fold ensemble-5 run has finished (the queue of `docs/presubmission/round5/RUN_QUEUE.md` is training) and no `results/x11e_*` file exists. Its reading is `scripts/x9_per_member_propagation.py --x11e`, frozen with X9 (M-101) in this commit, and it refuses to run unless this entry records the SHA-256 of every frozen file. The runs, arena and gate are X11's (M-97); the rule is X9's (M-101) unchanged, at n = 20.
+
+**Rule text, verbatim from `docs/presubmission/round5/PROTOCOLS.md` §4.2:**
+
+**X11e.** X9 (§2) unchanged, on the fold ensemble-5 arms: MEAN against PER-MEMBER, arena as (d) but the shared-trunk
+arms (three seeds, pooled as (b)), n = 20, §2.4's paired bootstrap and §2.5's verdict. G3 implements it as an arena
+tag `fold_e5` in X9's script and freezes it in X9's `PRE-REGISTER` commit, before GT2 reads any queue run; X11e's
+ledger entry is G3's. Its assertion is X9's (i)(b): MEAN on fold {1, 8}'s arms reproduces `task_d3_ens5.json`.
+
+**Deviation.** PROTOCOLS §4's table put X11e's numbers inside X9's artifact; they go to `results/x11e_fold_e5_propagation.json` instead, so that X9's discharged artifact is never rewritten.
+
+**Frozen files and their SHA-256:** `scripts/x9_per_member_propagation.py` `7928649f1771854fcba9aa00bbfda2dd9a4535de6ac3e73d0dda184903feefd3`, `scripts/x11a_fold_ens5_calibration.py` `21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423`, `scripts/x11_common.py` `4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a`.
+
+**What the discharging session may and may not do.** GT2, after the queue has finished and X11's gate has passed, runs `--x11e` unchanged and writes its verdict exactly as returned into this entry's Status line. Not: anything M-101 forbids.
+
+**Evidence** `SRC` `scripts/x9_per_member_propagation.py`, `scripts/x11_common.py`;
+`RUN` `results/x11e_fold_e5_propagation.json` (awaited).
+**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x11e_fold_e5_propagation.json` · **Relevance** METHOD

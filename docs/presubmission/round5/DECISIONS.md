@@ -37,3 +37,20 @@ the 20 runs (`projected_total_h`; per run, `per_run.e5.projected_h` and `per_run
 average still carried the dry runs that had just ended), on mains power. Today's ensemble-5 probe ran faster than the
 finished runs' logged rate (`per_run.e5.probe_over_finished`), so no upward scaling applied. A re-probe is checked
 with `scripts/round5_queue_timing.py --cap 62`.
+
+## G3-assert-ii
+
+**User ruling, 2026-10-19 (chat), on G3's first `--assert-only` of `scripts/x9_per_member_propagation.py`:** "Fix and
+re-assert". X9's assertion (ii), that MEAN and PER-MEMBER agree exactly (0.0) at forecast step 1, failed by 6.4e-7.
+Cause, located on step-1 values only: every head's output and the across-member spread were bitwise identical; the
+members' mean ȳ differed by one float32 last-place unit (5.96e-8) because the script averaged the members over the whole
+(member, trajectory, time, dimension) array, where MEAN averages a (member, trajectory, dimension) stack at each step,
+and PyTorch reduces the two shapes in a different order. No per-member result had been computed. The fix computes ȳ, the
+spread and the members' σ at each step from `torch.stack` of that step's member predictions, MEAN's own operation
+(`r2_independent_ensemble.py:100-104`; `score_reference.py:99,121`), as PROTOCOLS §2.2 already requires ("MEAN's batch
+shapes so that float32 rounding matches"). The tolerance stays 0.0. The script was not yet pre-registered.
+
+*Second instance, same cause, same ruling (2026-10-19).* After the fix, ȳ, the error and the spread were bitwise identical
+at step 1, but the CRPS and NLL means differed by 2.8e-17 and 2.2e-16 (assertion (ii) reported 7.1e-15). The per-member
+spread array inherited the input tensor's non-contiguous memory layout and MEAN's did not, so numpy summed them in a
+different order. `cell()` now reduces C-contiguous copies. The tolerance stays 0.0.

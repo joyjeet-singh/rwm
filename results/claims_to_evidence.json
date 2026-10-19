@@ -3973,13 +3973,73 @@
         "scripts/x11d_fold_m44.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "M-101",
+      "claim": "PRE-REGISTERED rule X9: does propagating each member on its own predictions make the spr",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x9_per_member_propagation.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json",
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json",
+        "results/task_d_nind20.json",
+        "results/x3_cross_fold.json",
+        "results/x9_per_member_propagation.json",
+        "scripts/paper_numbers.py",
+        "scripts/r2_independent_ensemble.py",
+        "scripts/x11_common.py",
+        "scripts/x11a_fold_ens5_calibration.py",
+        "scripts/x9_per_member_propagation.py",
+        "src/score_reference.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-102",
+      "claim": "PRE-REGISTERED rule X10: does measuring on training data flatter an ensemble's calibrati",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x10_insample_vs_heldout.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/task_d3_ens5.json",
+        "results/x10_insample_vs_heldout.json",
+        "scripts/x10_insample_vs_heldout.py",
+        "scripts/x11_common.py",
+        "scripts/x11a_fold_ens5_calibration.py"
+      ],
+      "retracts": []
+    },
+    {
+      "id": "M-103",
+      "claim": "PRE-REGISTERED rule X11e: X9's per-member propagation on X3's folds' ensemble-5 arms",
+      "relevance": "METHOD",
+      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x11e_fold_e5_propagation.json`",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/x11e_fold_e5_propagation.json",
+        "scripts/x11_common.py",
+        "scripts/x11a_fold_ens5_calibration.py",
+        "scripts/x9_per_member_propagation.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
     "B": 5,
     "C": 16,
     "D": 39,
-    "M": 100,
+    "M": 103,
     "O": 14,
     "R": 80,
     "S": 21,
