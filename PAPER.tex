@@ -468,7 +468,7 @@ Rule X8 re-scores four of our rules with the released evaluation's timing, on th
 
 \section{Method}
 
-\textbf{An append-only ledger.} Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (292 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
+\textbf{An append-only ledger.} Every claim here has a permanent identifier, an evidence class (source, data, run, external, inference) and a status, in \texttt{FINDINGS\_LEDGER.md} (295 entries). Claims are never edited in place: one that turns out to be wrong is marked superseded, pointed at what replaced it, and kept.
 
 \textbf{Pre-registration, and one failure of it.} Decision rules were committed to git before the data that tested them, with one exception. Figure 1 and Appendix E give the lead time for each of the 28 whose data exist; 27 are positive and 1 is not. Every positive bar is a difference of two commit timestamps. \textbf{The negative one is not}: it is the duplication-control rule (\S{}7.4), whose \emph{data} side is the moment the control runs finished, a line in \texttt{results/\allowbreak{}control\_\allowbreak{}driver\allowbreak{}.log} rather than a commit, dated from the commit that introduced that line. The rule was stated in conversation before the runs and reached git \textbf{2.9 hours after they finished}, and we found it only by auditing our own \texttt{git log}. The measurement stands, because the arm was built without reference to its outcome, but the claim that it was pre-registered does not, and it is withdrawn. A discipline that is only checked when it succeeds is not a discipline.
 
@@ -714,7 +714,7 @@ The released evaluation pairs states and actions one step stale (\S{}7.2) & all 
 
 \section{Every pre-registered rule, its lead time and its verdict}
 
-\S{}8's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open a 679 KB ledger, so here is the table. It is generated from \texttt{FINDINGS\_LEDGER.md} and \texttt{results/\allowbreak{}appendix\_\allowbreak{}g\_\allowbreak{}rules\allowbreak{}.json}; nothing in it is typed.
+\S{}8's argument rests on decision rules committed to git before the data that tested them, and the body names those rules by identifier. An identifier with no table behind it is either decoration or an instruction to open a 702 KB ledger, so here is the table. It is generated from \texttt{FINDINGS\_LEDGER.md} and \texttt{results/\allowbreak{}appendix\_\allowbreak{}g\_\allowbreak{}rules\allowbreak{}.json}; nothing in it is typed.
 
 \textbf{Lead time} is the rule's commit timestamp subtracted from the commit that first held the data it tested, never by a stored hash: the first rules' commits are found by \emph{subject}, because the history was rewritten once and two of the commits Figure 1 cites changed hash (Data and code), and the later rules' by the commit that introduced their ledger heading. Positive means the rule was in git before the data existed. This is the same computation Figure 1 plots. A rule whose data do not exist yet has neither a lead time nor a verdict, and Figure 1 leaves it out until they do.
 

@@ -3938,6 +3938,66 @@ def main():
     put("m65_n_over", _m65["verdict"]["counts"]["OVER-DISPERSED"], "results/m65_gaussian_nominal.json")
     assert N["m65_n_adequate"]["value"] + N["m65_n_over"]["value"] + N["m65_n_heavy"]["value"] == N["m65_n_cells"]["value"]
 
+    # Round 5, G3: rules X9 (ledger M-101) and X10 (M-102), PROTOCOLS.md §2-§3. Appended after the last block, so that no
+    # line of this file the ledger cites moves. Every value is read from the two artifacts; intervals are kept.
+    X9 = J("x9_per_member_propagation.json")
+    _x9s = "results/x9_per_member_propagation.json"
+    assert X9["rule"] == "X9" and X9["ledger"] == "M-101" and all(v["pass"] for v in X9["assertions"].values())
+    assert X9["assertions"]["ii"]["max_abs_diff"] == 0.0 and X9["design"]["verdict_horizon"] == 100
+    _iv9 = lambda c: f"[{c[0]:.2f}, {c[1]:.2f}]"
+    _ip9 = lambda c: f"[{100 * c[0]:.1f}, {100 * c[1]:.1f}]"
+    for _a in ("rel", "e5", "ind", "ind3", "fold"):
+        _t9 = X9["tables"][_a]
+        for _h in ("100", "368"):
+            for _m in ("mean", "per"):
+                put(f"x9_{_a}_{_m}_rho_h{_h}", f'{_t9[_h][_m]["rho"]:.2f}', _x9s)
+                put(f"x9_{_a}_{_m}_cov1_h{_h}", f'{100 * _t9[_h][_m]["coverage_pm1"]:.1f}', _x9s)
+                put(f"x9_{_a}_{_m}_cov2_h{_h}", f'{100 * _t9[_h][_m]["coverage_pm2"]:.1f}', _x9s)
+                put(f"x9_{_a}_{_m}_crps_h{_h}", f'{_t9[_h][_m]["crps"]:.4f}', _x9s)
+                put(f"x9_{_a}_{_m}_nll_h{_h}", f'{_t9[_h][_m]["nll"]:.2f}', _x9s)
+            put(f"x9_{_a}_f_h{_h}", f'{_t9[_h]["f"]:.2f}', _x9s)
+            if _a in ("rel", "fold"):
+                _i9 = _t9[_h]["intervals"]
+                assert _i9["f_n_finite"] >= 19000, (_a, _h, _i9["f_n_finite"])
+                put(f"x9_{_a}_f_h{_h}_ci", _iv9(_i9["f_ci"]), _x9s)
+                put(f"x9_{_a}_per_cov1_h{_h}_ci", _ip9(_i9["per_cov1_ci"]), _x9s)
+                put(f"x9_{_a}_mean_cov1_h{_h}_ci", _ip9(_i9["mean_cov1_ci"]), _x9s)
+                put(f"x9_{_a}_per_rho_h{_h}_ci", _iv9(_i9["per_rho_ci"]), _x9s)
+                put(f"x9_{_a}_mean_rho_h{_h}_ci", _iv9(_i9["mean_rho_ci"]), _x9s)
+            else:
+                _s9 = _t9[_h]["tests"]["f"]
+                put(f"x9_{_a}_k4_h{_h}", _s9["k_positive"], _x9s)
+                put(f"x9_{_a}_p_h{_h}", f'{_s9["p"]:.3f}', _x9s)
+        assert _t9["1"]["f"] == 0.0 and _t9["1"]["mean"]["rho"] == _t9["1"]["per"]["rho"]
+    for _a in ("rel", "e5", "ind", "fold"):
+        put(f"x9_{_a}_verdict", X9["verdict"][_a]["label"], _x9s)
+    put("x9_alea_over_err_max", f'{X9["alea_over_err_max"]:.3f}', _x9s)
+    put("x9_band_lo", f'{100 * X9["design"]["band"][0]:.2f}', _x9s)
+    put("x9_band_hi", f'{100 * X9["design"]["band"][1]:.2f}', _x9s)
+    # the scope sentence travels with every X9 number (PROTOCOLS §2.7, locked)
+    put("x9_scope", X9["scope"], _x9s)
+
+    X10 = J("x10_insample_vs_heldout.json")
+    _x10s = "results/x10_insample_vs_heldout.json"
+    assert X10["rule"] == "X10" and X10["ledger"] == "M-102" and all(v["pass"] for v in X10["assertions"].values())
+    assert X10["design"]["n_in"] == 16 and X10["design"]["n_out"] == 4
+    for _h in ("1", "100", "368"):
+        _q = X10["q"][_h]
+        put(f"x10_q_h{_h}", f'{_q["q"]:.2f}', _x10s)
+        put(f"x10_q_h{_h}_ci", _iv9(_q["q_ci"]), _x10s)
+        put(f"x10_rho_in_h{_h}", f'{_q["rho_in"]:.2f}', _x10s)
+        put(f"x10_rho_out_h{_h}", f'{_q["rho_out"]:.2f}', _x10s)
+        put(f"x10_cov1_in_h{_h}", f'{100 * _q["cov1_in"]:.1f}', _x10s)
+        put(f"x10_cov1_out_h{_h}", f'{100 * _q["cov1_out"]:.1f}', _x10s)
+        put(f"x10_label_h{_h}", _q["label_it_would_carry"], _x10s)
+        for _sd, _v in _q["q_per_seed"].items():
+            put(f"x10_q_h{_h}_seed{_sd}", f"{_v:.2f}", _x10s)
+    put("x10_n_in", X10["design"]["n_in"], _x10s)
+    put("x10_n_out", X10["design"]["n_out"], _x10s)
+    put("x10_verdict", X10["verdict"]["label"], _x10s)
+    assert X10["verdict"]["label"] == X10["q"]["1"]["label_it_would_carry"] and X10["label_h100"] == X10["q"]["100"]["label_it_would_carry"]
+    put("x10_caveat", X10["caveat"], _x10s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

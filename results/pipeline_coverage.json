@@ -860,6 +860,7 @@
         "task3_control_arm",
         "task4_contamination_analysis",
         "task5_analyse",
+        "x11_common",
         "x1_partc_timing",
         "x3_cross_fold"
       ],
@@ -985,6 +986,7 @@
         "task3_control_arm",
         "task4_contamination_analysis",
         "task5_analyse",
+        "x11_common",
         "x1_partc_timing",
         "x3_cross_fold"
       ],

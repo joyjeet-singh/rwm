@@ -492,6 +492,17 @@ stage 20u5 "X8 — our rules' verdicts under the released evaluation's timing (M
 stage 20u6 "N5 — our models' stale-timing change with intervals (post hoc, R-80)" "1 min" \
       results/n5_stale_armA_ci.json NEEDS_WEIGHTS $PY scripts/n5_stale_armA_ci.py
 
+# Round 5 (docs/presubmission/round5/PROTOCOLS.md). X9 and X10 are inference-only rules on existing weights. X9's
+# frozen script reads the released checkpoint AND our arms in one run (it cannot be split without changing a
+# pre-registered script), so the whole stage is NEEDS_WEIGHTS. 20v0 is X11's power check, computed in GT1 before any
+# X11 fold run existed; the X11 training queue and readings get their stages in GT2.
+stage 20v0 "X11 power — M-43's criterion and M-44's MDE at n = 20, before any fold run" "3 min" \
+      results/x11_power.json NEEDS_WEIGHTS $PY scripts/x11_power.py
+stage 20v1 "X9 — per-member propagation against the released mean protocol (M-101)" "3 min" \
+      results/x9_per_member_propagation.json NEEDS_WEIGHTS $PY scripts/x9_per_member_propagation.py
+stage 20v2 "X10 — in-sample against held-out calibration, ensemble-5 arms (M-102)" "1 min" \
+      results/x10_insample_vs_heldout.json NEEDS_WEIGHTS $PY scripts/x10_insample_vs_heldout.py
+
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them
 # in -- added before the S21 clone by the user's ruling of 2026-09-26. None needs runs/:

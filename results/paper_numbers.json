@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "679"
+    "value": "702"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5765,7 +5765,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 292
+    "value": 295
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
@@ -9639,6 +9639,142 @@
     "source": "results/task5_differential.json",
     "value": "0.000e+00"
   },
+  "x10_caveat": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "the arenas differ in episodes as well as in training status, and per-episode difficulty varies threefold (D-12), so this bounds the in-sample effect rather than isolating it. X11, if run, measures it with every episode in both roles."
+  },
+  "x10_cov1_in_h1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "35.0"
+  },
+  "x10_cov1_in_h100": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "11.5"
+  },
+  "x10_cov1_in_h368": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "8.8"
+  },
+  "x10_cov1_out_h1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "35.9"
+  },
+  "x10_cov1_out_h100": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "8.2"
+  },
+  "x10_cov1_out_h368": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "6.3"
+  },
+  "x10_label_h1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "IN-SAMPLE IS WORSE"
+  },
+  "x10_label_h100": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "IN-SAMPLE FLATTERS"
+  },
+  "x10_label_h368": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "IN-SAMPLE FLATTERS"
+  },
+  "x10_n_in": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": 16
+  },
+  "x10_n_out": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": 4
+  },
+  "x10_q_h1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "1.79"
+  },
+  "x10_q_h100": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.72"
+  },
+  "x10_q_h100_ci": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "[0.61, 0.88]"
+  },
+  "x10_q_h100_seed0": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.74"
+  },
+  "x10_q_h100_seed1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.72"
+  },
+  "x10_q_h100_seed2": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.70"
+  },
+  "x10_q_h1_ci": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "[1.06, 2.65]"
+  },
+  "x10_q_h1_seed0": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "1.98"
+  },
+  "x10_q_h1_seed1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "1.72"
+  },
+  "x10_q_h1_seed2": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "1.69"
+  },
+  "x10_q_h368": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.73"
+  },
+  "x10_q_h368_ci": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "[0.62, 0.86]"
+  },
+  "x10_q_h368_seed0": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.78"
+  },
+  "x10_q_h368_seed1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.70"
+  },
+  "x10_q_h368_seed2": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "0.70"
+  },
+  "x10_rho_in_h1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "3.80"
+  },
+  "x10_rho_in_h100": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "7.61"
+  },
+  "x10_rho_in_h368": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "9.46"
+  },
+  "x10_rho_out_h1": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "2.13"
+  },
+  "x10_rho_out_h100": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "10.53"
+  },
+  "x10_rho_out_h368": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "12.99"
+  },
+  "x10_verdict": {
+    "source": "results/x10_insample_vs_heldout.json",
+    "value": "IN-SAMPLE IS WORSE"
+  },
   "x1_final_reading": {
     "source": "results/rssm_diagnostics.json",
     "value": "NOT RESCUED BY THE SETTINGS TRIED"
@@ -10062,6 +10198,606 @@
   "x8_trend_1": {
     "source": "results/x8_released_pairing.json",
     "value": "the ratio B/A rises at every step of the horizon grid, so h=368 is the end of a trend rather than a selected point; the gap excludes zero at h=8, h=32, h=100, h=128, h=368 and spans zero at h=1; at h=8, the horizon the model is trained on, the gap excludes zero; the ratio is below one at h=1"
+  },
+  "x9_alea_over_err_max": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.116"
+  },
+  "x9_band_hi": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "78.27"
+  },
+  "x9_band_lo": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "58.27"
+  },
+  "x9_e5_f_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.80"
+  },
+  "x9_e5_f_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.02"
+  },
+  "x9_e5_k4_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": 4
+  },
+  "x9_e5_k4_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": 4
+  },
+  "x9_e5_mean_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "8.2"
+  },
+  "x9_e5_mean_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "6.3"
+  },
+  "x9_e5_mean_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "16.1"
+  },
+  "x9_e5_mean_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "12.5"
+  },
+  "x9_e5_mean_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2664"
+  },
+  "x9_e5_mean_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.3352"
+  },
+  "x9_e5_mean_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "222.95"
+  },
+  "x9_e5_mean_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "379.87"
+  },
+  "x9_e5_mean_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "10.53"
+  },
+  "x9_e5_mean_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "12.99"
+  },
+  "x9_e5_p_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.125"
+  },
+  "x9_e5_p_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.125"
+  },
+  "x9_e5_per_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "46.0"
+  },
+  "x9_e5_per_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "62.1"
+  },
+  "x9_e5_per_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "71.5"
+  },
+  "x9_e5_per_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "85.2"
+  },
+  "x9_e5_per_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2226"
+  },
+  "x9_e5_per_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.3012"
+  },
+  "x9_e5_per_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "3.64"
+  },
+  "x9_e5_per_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.81"
+  },
+  "x9_e5_per_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.32"
+  },
+  "x9_e5_per_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.75"
+  },
+  "x9_e5_verdict": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "PROPAGATION NARROWS THE GAP"
+  },
+  "x9_fold_f_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.71"
+  },
+  "x9_fold_f_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[0.67, 0.76]"
+  },
+  "x9_fold_f_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.87"
+  },
+  "x9_fold_f_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[0.83, 0.92]"
+  },
+  "x9_fold_mean_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "13.4"
+  },
+  "x9_fold_mean_cov1_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[12.0, 14.7]"
+  },
+  "x9_fold_mean_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "12.4"
+  },
+  "x9_fold_mean_cov1_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[11.3, 13.5]"
+  },
+  "x9_fold_mean_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "25.3"
+  },
+  "x9_fold_mean_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "23.6"
+  },
+  "x9_fold_mean_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.3128"
+  },
+  "x9_fold_mean_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2641"
+  },
+  "x9_fold_mean_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "813.18"
+  },
+  "x9_fold_mean_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1275.78"
+  },
+  "x9_fold_mean_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "6.77"
+  },
+  "x9_fold_mean_rho_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[6.03, 7.42]"
+  },
+  "x9_fold_mean_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "6.46"
+  },
+  "x9_fold_mean_rho_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[5.87, 7.07]"
+  },
+  "x9_fold_per_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "48.1"
+  },
+  "x9_fold_per_cov1_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[44.6, 51.6]"
+  },
+  "x9_fold_per_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "55.1"
+  },
+  "x9_fold_per_cov1_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[51.8, 58.4]"
+  },
+  "x9_fold_per_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "70.5"
+  },
+  "x9_fold_per_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "78.0"
+  },
+  "x9_fold_per_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2772"
+  },
+  "x9_fold_per_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2420"
+  },
+  "x9_fold_per_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "17.03"
+  },
+  "x9_fold_per_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "10.75"
+  },
+  "x9_fold_per_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.49"
+  },
+  "x9_fold_per_rho_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[1.32, 1.65]"
+  },
+  "x9_fold_per_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.05"
+  },
+  "x9_fold_per_rho_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[0.95, 1.16]"
+  },
+  "x9_fold_verdict": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "PROPAGATION NARROWS THE GAP"
+  },
+  "x9_ind3_f_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.83"
+  },
+  "x9_ind3_f_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.02"
+  },
+  "x9_ind3_k4_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": 4
+  },
+  "x9_ind3_k4_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": 4
+  },
+  "x9_ind3_mean_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "14.7"
+  },
+  "x9_ind3_mean_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "14.1"
+  },
+  "x9_ind3_mean_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "26.8"
+  },
+  "x9_ind3_mean_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "26.0"
+  },
+  "x9_ind3_mean_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2223"
+  },
+  "x9_ind3_mean_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2075"
+  },
+  "x9_ind3_mean_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "2103.99"
+  },
+  "x9_ind3_mean_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "874.74"
+  },
+  "x9_ind3_mean_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "5.59"
+  },
+  "x9_ind3_mean_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "5.44"
+  },
+  "x9_ind3_p_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.125"
+  },
+  "x9_ind3_p_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.125"
+  },
+  "x9_ind3_per_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "54.2"
+  },
+  "x9_ind3_per_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "65.1"
+  },
+  "x9_ind3_per_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "75.3"
+  },
+  "x9_ind3_per_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "84.4"
+  },
+  "x9_ind3_per_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.1987"
+  },
+  "x9_ind3_per_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.1851"
+  },
+  "x9_ind3_per_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "10.32"
+  },
+  "x9_ind3_per_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "5.94"
+  },
+  "x9_ind3_per_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.11"
+  },
+  "x9_ind3_per_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.77"
+  },
+  "x9_ind_f_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.88"
+  },
+  "x9_ind_f_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.09"
+  },
+  "x9_ind_k4_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": 4
+  },
+  "x9_ind_k4_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": 4
+  },
+  "x9_ind_mean_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "15.3"
+  },
+  "x9_ind_mean_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "15.0"
+  },
+  "x9_ind_mean_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "29.5"
+  },
+  "x9_ind_mean_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "28.7"
+  },
+  "x9_ind_mean_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.2073"
+  },
+  "x9_ind_mean_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.1874"
+  },
+  "x9_ind_mean_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "63.53"
+  },
+  "x9_ind_mean_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "77.96"
+  },
+  "x9_ind_mean_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "5.20"
+  },
+  "x9_ind_mean_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "5.12"
+  },
+  "x9_ind_p_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.125"
+  },
+  "x9_ind_p_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.125"
+  },
+  "x9_ind_per_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "60.4"
+  },
+  "x9_ind_per_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "71.6"
+  },
+  "x9_ind_per_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "82.9"
+  },
+  "x9_ind_per_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "90.0"
+  },
+  "x9_ind_per_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.1803"
+  },
+  "x9_ind_per_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.1854"
+  },
+  "x9_ind_per_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.28"
+  },
+  "x9_ind_per_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.71"
+  },
+  "x9_ind_per_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.01"
+  },
+  "x9_ind_per_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.68"
+  },
+  "x9_ind_verdict": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "PROPAGATION NARROWS THE GAP"
+  },
+  "x9_rel_f_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.75"
+  },
+  "x9_rel_f_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[0.69, 0.82]"
+  },
+  "x9_rel_f_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.85"
+  },
+  "x9_rel_f_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[0.81, 0.90]"
+  },
+  "x9_rel_mean_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "4.6"
+  },
+  "x9_rel_mean_cov1_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[4.1, 5.1]"
+  },
+  "x9_rel_mean_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "3.6"
+  },
+  "x9_rel_mean_cov1_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[3.3, 3.9]"
+  },
+  "x9_rel_mean_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "9.3"
+  },
+  "x9_rel_mean_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "7.2"
+  },
+  "x9_rel_mean_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.6624"
+  },
+  "x9_rel_mean_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.1717"
+  },
+  "x9_rel_mean_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "6235.64"
+  },
+  "x9_rel_mean_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "10108.27"
+  },
+  "x9_rel_mean_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "33.43"
+  },
+  "x9_rel_mean_rho_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[28.65, 39.04]"
+  },
+  "x9_rel_mean_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "34.45"
+  },
+  "x9_rel_mean_rho_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[29.79, 40.28]"
+  },
+  "x9_rel_per_cov1_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "32.7"
+  },
+  "x9_rel_per_cov1_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[28.2, 37.3]"
+  },
+  "x9_rel_per_cov1_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "42.3"
+  },
+  "x9_rel_per_cov1_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[37.5, 47.4]"
+  },
+  "x9_rel_per_cov2_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "56.8"
+  },
+  "x9_rel_per_cov2_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "68.4"
+  },
+  "x9_rel_per_crps_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.5175"
+  },
+  "x9_rel_per_crps_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "0.7851"
+  },
+  "x9_rel_per_nll_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "32.30"
+  },
+  "x9_rel_per_nll_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "13.61"
+  },
+  "x9_rel_per_rho_h100": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "2.00"
+  },
+  "x9_rel_per_rho_h100_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[1.55, 2.45]"
+  },
+  "x9_rel_per_rho_h368": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "1.40"
+  },
+  "x9_rel_per_rho_h368_ci": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "[1.19, 1.61]"
+  },
+  "x9_rel_verdict": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "PROPAGATION NARROWS THE GAP"
+  },
+  "x9_scope": {
+    "source": "results/x9_per_member_propagation.json",
+    "value": "Per-member propagation is not the released method. MEAN tests \"effectively propagated\" as the release's evaluation path does it; PER-MEMBER asks whether the ensemble's information would propagate if the members were rolled out separately. The release's imagination path, which propagates one member per environment, is not tested."
   },
   "zero_delta_resid": {
     "source": "results/task3_hardening.json",
