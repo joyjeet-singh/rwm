@@ -343,3 +343,60 @@ Body words / main-content pages: unchanged (17,804 / 26.9)
 Subagents: none
 Next: G6 (Sonnet 5.5, high) — tooling for a short paper.
 Decisions for user: none
+
+## G6 — 2026-10-19 21:55 — Opus 5.5 (the plan assigns Sonnet 5.5), high — status: COMPLETE
+Commits: a77b262 [G6][1-2] Supplement and display precision; every prose check reads the supplement; scope audit fails on a per-claim gap
+         a85d49e [G6][3-4] scripts/round5_gates.py with self-tests; remaining gate scripts recognise {{key|sN}}; FILE_MAP §3, BUILD_CHECKS
+         (final [G6][close] commit: this entry and the checkpoint)
+Review items closed: the tooling for RV01–RV05 and RV08 (Annex 1).
+Done:
+- **How this session ran.** In the same conversation as G2–G5, at the user's request ("Start G6"). No subagent.
+- **Item 1, the supplement.** `docs/SUPPLEMENT.template.md` → `docs/SUPPLEMENT.md` is rendered in `build_paper.py`'s docs loop
+  (`placeholders.DOC_TEMPLATES`).
+  - Both bundle builders ship it: `make_anon_bundle.collect()` lists both files, `build_supplementary.py` walks `docs/` and
+    excludes neither, and the anonymised build's `scan_tree` reads every staged file.
+  - These read it: the comparative-claims checker (every `files` list naming a BUILD_CHECKS file now also names the supplement
+    of the same tier, edited on the same line); the typed-numeral audit (scanned and failing like the template, counted apart so
+    the paper's `{{tn_typed}}` is unchanged); the restatement index, horizon sweep and xref sweep (through
+    `placeholders.with_supplement`).
+  - `check_scope_audit.py` now requires the supplement per claim, not only per kind, and requires each sweep to name its
+    supplement read. A gap now fails the audit, which is a tightening (0 gaps before and after).
+  - `scripts/supplement_selftest.py` plants a violation in the supplement for all six tools; every one is caught, and every
+    touched file is restored (SHA-256 verified).
+- **Item 2, display precision.** `scripts/placeholders.py`: `{{key|sN}}` rounds every decimal to N significant figures,
+  decimal half-up on the stored digits. Signs, brackets, %, ×, words, integers, versions and identifiers are unchanged.
+  - The unit test passes 20 of 20 cases.
+  - `build_paper.py`, `build_readme.py` and every gate script (`check_comparative_claims`, `typed_numeral_audit`,
+    `restatement_index`, `horizon_sweep`, `part_f_gate`, `task_c1_claims_audit`, `c1_preflags`, `c1_diff_report`) recognise
+    the form. All edits are in place, so no cited line moved. `e4_reply_draft.py` is left as it is: a correspondence generator
+    with its own `|lower`.
+- **Item 3, `scripts/round5_gates.py`.** pages, abstract, ids, once, sig, keys, each a pure function with corrupt-and-catch
+  self-tests (all pass), run in `--report` mode. The definitions are in its docstring.
+  - **The `once` gate's setting-key exemptions are a name pattern** (`SETTING_KEY`); the artifact lists those it applied
+    (17 at this baseline).
+  - **The `ids` gate's verdict vocabulary is harvested** from the bold capitalised runs in the ledger and PROTOCOLS, less acronyms.
+  - Both are heuristics fixed here and open to G16's review.
+  - The paragraph "The gates for a short paper" in `BUILD_CHECKS.template.md` names the gates without typed limits (it cites
+    rulings Y1–Y3), so it adds no numeral and no key.
+- **Item 4, against BASELINE_G0.**
+  - Pages 26.87 (G0 "about 26.9"; same measurement, References at page 27, y = 152.4).
+  - Abstract 300 words, 19 numerals (same).
+  - Keys missing 0 (same: all 1,489 printed).
+  - **ids 93, against G0's approximate counts** of 26 ledger IDs, 25 rule IDs and 8 verdict labels. Mine gives the same 26 and
+    25 but 34 verdict labels: the harvested vocabulary also catches multi-word labels such as DOES NOT GENERALISE and MECHANISM
+    SUPPORTED, which G0's pattern missed. It adds 8 code names used as labels (`entry-res`, `step-size`), which G0 did not count.
+  - **sig 510, against G0's 514:** the gate exempts section, figure and table numbers, code in backticks, arXiv identifiers and
+    versions.
+  - once 33: G0 listed repeat counts but no violation count.
+Build/gates: pass. Fast build, all eight gates, round5_gates --report, the supplement self-test, the placeholder unit test, fast build again: PAPER.md, PAPER.tex, MODEL_CARD.md, README.md, docs/BUILD_CHECKS.md, docs/SUPPLEMENT.md byte-identical. PAPER.pdf (date only) restored.
+Round-5 gates (report mode until G16): pages 26.87/12, abstract 300/19, ids 93, once 33, sig 510, keys missing 0
+Paper numbers changed: none
+New keys: none
+Ledger: none
+Re-anchored checks: none (check_comparative_claims' file lists extended, check_scope_audit tightened)
+CPU jobs over 1 min: the supplement self-test (about 50 s, twice); build and gates (152 s); contended with the queue.
+Queue (Y5): running (1 of 20 done at 21:55; x11_e5_34_s0 started 20:51). The machine was on battery throughout this session.
+Body words / main-content pages: 17,804 / 26.87
+Subagents: none
+Next: G7 (Sonnet 5.5, medium) — bibliography.
+Decisions for user: none
