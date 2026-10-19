@@ -2,7 +2,7 @@
      Prose lives in PAPER.template.md; every number is substituted from
      results/paper_numbers.json by scripts/build_paper.py. Edit the template,
      then run: python scripts/build_paper.py
-     1432 values substituted from 107 artifacts. -->
+     1448 values substituted from 108 artifacts. -->
 
 # Right Order, Wrong Size: A Verified Reproduction of the Robotic World Model and the Uncertainty It Reports
 
@@ -1146,38 +1146,53 @@ read it as such.
 
 ## References
 
-1. C. Li, A. Krause, M. Hutter. *Robotic World Model: A Neural Network Simulator for Robust Policy
-   Optimization in Robotics.* arXiv:2501.10100**v1**, 17 January 2025.
+1. C. Li, A. Krause, M. Hutter. *Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics.* arXiv:2501.10100**v1**, 17 January 2025; current version v5, 14 December 2025, under the same title.
+   Presented as a workshop poster at NeurIPS 2025 (*Embodied World Models for Decision Making*); the venue's page does not say whether the workshop is archival.
    *Read at v1, whose Roman-numeral sectioning our references follow; v2 (23 April 2025)
    renumbered to Arabic and moved IV-C into Appendix A.4.1.*
-2. C. Li, A. Krause, M. Hutter. *Uncertainty-Aware Robotic World Model Makes Offline Model-Based
-   Reinforcement Learning Work on Real Robots.* arXiv:2504.16680**v1**, 23 April 2025.
-   *Read at v1; now at v3, last revised 8 Jan 2026. §5.1 and Eq. 4–5
+2. C. Li, A. Krause, M. Hutter. *Offline Robotic World Model: Learning Robotic Policies without a Physics Simulator.* arXiv:2504.16680**v1**, 23 April 2025; current version v3, 8 January 2026, retitled *Uncertainty-Aware Robotic World Model Makes Offline Model-Based Reinforcement Learning Work on Real Robots.*
+   Presented as a workshop poster at ICLR 2026 (*The 2nd Workshop on World Models: Understanding, Modelling and Scaling*); the venue's page does not say whether the workshop is archival.
+   *Read at v1. §5.1 and Eq. 4–5
 keep their numbers there; every figure and appendix table has moved, and the model is
 renamed RWM-O to RWM-U — the same model, with the letter re-expanded from
 "Offline Robotic World Model" to "Uncertainty-Aware Robotic World Model". The two names never co-occur: v1 uses
 RWM-O 39 times and no RWM-U, v3 the reverse. The crosswalk
 is in `results/original_paper_figures.json`.*
 3. Z. Abbas, S. Sokota, E. J. Talvitie, M. White. *Selective Dyna-style Planning Under Limited Model Capacity.* ICML 2020. arXiv:2007.02418, 2020.
-4. K. Chua, R. Calandra, R. McAllister, S. Levine. *Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.* NeurIPS 2018. arXiv:1805.12114, 2018.
-5. S. Fort, H. Hu, B. Lakshminarayanan. *Deep Ensembles: A Loss Landscape Perspective.* arXiv:1912.02757, 2019.
-6. C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. *On Calibration of Modern Neural Networks.* ICML 2017. arXiv:1706.04599, 2017.
-7. D. Hafner, T. Lillicrap, I. Fischer, R. Villegas, D. Ha, H. Lee, J. Davidson. *Learning Latent Dynamics for Planning from Pixels.* ICML 2019 (PMLR 97). arXiv:1811.04551, 2019.
-8. D. Hafner, T. Lillicrap, M. Norouzi, J. Ba. *Mastering Atari with Discrete World Models.* ICLR 2021. arXiv:2010.02193, 2021.
-9. M. Havasi, R. Jenatton, S. Fort, J. Z. Liu, J. Snoek, B. Lakshminarayanan, A. M. Dai, D. Tran. *Training independent subnetworks for robust prediction.* ICLR 2021. arXiv:2010.06610, 2021.
-10. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253, 2019.
-11. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951, 2020.
-12. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263, 2018.
-13. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474, 2017.
-14. S. Lee, S. Purushwalkam, M. Cogswell, D. Crandall, D. Batra. *Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks.* arXiv:1511.06314, 2015.
-15. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135, 2022.
-16. A. Malik, V. Kuleshov, J. Song, D. Nemer, H. Seymour, S. Ermon. *Calibrated Model-Based Deep Reinforcement Learning.* ICML 2019 (PMLR 97:4314-4323). arXiv:1906.08312, 2019.
-17. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530, 2019.
-18. M. Seitzer, A. Tavakoli, D. Antic, G. Martius. *On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks.* ICLR 2022. arXiv:2203.09168, 2022.
-19. Y. Wen, D. Tran, J. Ba. *BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning.* ICLR 2020. arXiv:2002.06715, 2020.
-20. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239, 2020.
+4. R. Agarwal, M. Schwarzer, P. S. Castro, A. Courville, M. G. Bellemare. *Deep Reinforcement Learning at the Edge of the Statistical Precipice.* NeurIPS 2021. arXiv:2108.13264, 2021.
+5. S. Albanie, J. F. Henriques, L. Bertinetto, A. Hernández-García, H. Doughty, G. Varol (eds.). *NeurIPS 2021 Workshop on Pre-registration in Machine Learning.* PMLR 181, 2022. https://proceedings.mlr.press/v181/
+6. A. N. Angelopoulos, S. Bates. *A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification.* arXiv:2107.07511, 2021.
+7. S. Bengio, O. Vinyals, N. Jaitly, N. Shazeer. *Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks.* NeurIPS 2015. arXiv:1506.03099, 2015.
+8. L. Bertinetto, J. F. Henriques, S. Albanie, M. Paganini, G. Varol (eds.). *NeurIPS 2020 Workshop on Pre-registration in Machine Learning.* PMLR 148, 2021. https://proceedings.mlr.press/v148/
+9. A. C. Cameron, J. B. Gelbach, D. L. Miller. *Bootstrap-Based Improvements for Inference with Clustered Errors.* Review of Economics and Statistics 90(3), 2008. doi:10.1162/rest.90.3.414
+10. K. Chua, R. Calandra, R. McAllister, S. Levine. *Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models.* NeurIPS 2018. arXiv:1805.12114, 2018.
+11. S. Fort, H. Hu, B. Lakshminarayanan. *Deep Ensembles: A Loss Landscape Perspective.* arXiv:1912.02757, 2019.
+12. C. Guo, G. Pleiss, Y. Sun, K. Q. Weinberger. *On Calibration of Modern Neural Networks.* ICML 2017. arXiv:1706.04599, 2017.
+13. D. Hafner, T. Lillicrap, I. Fischer, R. Villegas, D. Ha, H. Lee, J. Davidson. *Learning Latent Dynamics for Planning from Pixels.* ICML 2019 (PMLR 97). arXiv:1811.04551, 2019.
+14. D. Hafner, T. Lillicrap, M. Norouzi, J. Ba. *Mastering Atari with Discrete World Models.* ICLR 2021. arXiv:2010.02193, 2021.
+15. M. Havasi, R. Jenatton, S. Fort, J. Z. Liu, J. Snoek, B. Lakshminarayanan, A. M. Dai, D. Tran. *Training independent subnetworks for robust prediction.* ICLR 2021. arXiv:2010.06610, 2021.
+16. P. Henderson, R. Islam, P. Bachman, J. Pineau, D. Precup, D. Meger. *Deep Reinforcement Learning that Matters.* AAAI 2018. arXiv:1709.06560; doi:10.1609/aaai.v32i1.11694, 2018.
+17. M. Janner, J. Fu, M. Zhang, S. Levine. *When to Trust Your Model: Model-Based Policy Optimization.* NeurIPS 2019. arXiv:1906.08253, 2019.
+18. R. Kidambi, A. Rajeswaran, P. Netrapalli, T. Joachims. *MOReL : Model-Based Offline Reinforcement Learning.* NeurIPS 2020. arXiv:2005.05951, 2020.
+19. D. P. Kingma, J. Ba. *Adam: A Method for Stochastic Optimization.* ICLR 2015. arXiv:1412.6980, 2015.
+20. V. Kuleshov, N. Fenner, S. Ermon. *Accurate Uncertainties for Deep Learning Using Calibrated Regression.* ICML 2018. arXiv:1807.00263, 2018.
+21. B. Lakshminarayanan, A. Pritzel, C. Blundell. *Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles.* NeurIPS 2017. arXiv:1612.01474, 2017.
+22. N. O. Lambert, A. Wilcox, H. Zhang, K. S. J. Pister, R. Calandra. *Learning Accurate Long-term Dynamics for Model-based Reinforcement Learning.* IEEE CDC 2021. arXiv:2012.09156; doi:10.1109/cdc45484.2021.9683134, 2021.
+23. S. Lee, S. Purushwalkam, M. Cogswell, D. Crandall, D. Batra. *Why M Heads are Better than One: Training a Diverse Ensemble of Deep Networks.* arXiv:1511.06314, 2015.
+24. L. Lindemann, M. Cleaveland, G. Shim, G. J. Pappas. *Safe Planning in Dynamic Environments using Conformal Prediction.* IEEE RA-L 2023. arXiv:2210.10254; doi:10.1109/lra.2023.3292071, 2023.
+25. C. Lu, P. J. Ball, J. Parker-Holder, M. A. Osborne, S. J. Roberts. *Revisiting Design Choices in Offline Model-Based Reinforcement Learning.* ICLR 2022 (Spotlight). arXiv:2110.04135, 2022.
+26. A. Malik, V. Kuleshov, J. Song, D. Nemer, H. Seymour, S. Ermon. *Calibrated Model-Based Deep Reinforcement Learning.* ICML 2019 (PMLR 97:4314-4323). arXiv:1906.08312, 2019.
+27. I. Osband, C. Blundell, A. Pritzel, B. Van Roy. *Deep Exploration via Bootstrapped DQN.* NeurIPS 2016. arXiv:1602.04621, 2016.
+28. I. Osband, J. Aslanides, A. Cassirer. *Randomized Prior Functions for Deep Reinforcement Learning.* NeurIPS 2018. arXiv:1806.03335, 2018.
+29. Y. Ovadia, E. Fertig, J. Ren, Z. Nado, D. Sculley, S. Nowozin, J. V. Dillon, B. Lakshminarayanan, J. Snoek. *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift.* NeurIPS 2019. arXiv:1906.02530, 2019.
+30. M. Seitzer, A. Tavakoli, D. Antic, G. Martius. *On the Pitfalls of Heteroscedastic Uncertainty Estimation with Probabilistic Neural Networks.* ICLR 2022. arXiv:2203.09168, 2022.
+31. K. Stankeviciute, A. M. Alaa, M. van der Schaar. *Conformal Time-series Forecasting.* NeurIPS 2021. https://proceedings.neurips.cc/paper_files/paper/2021/hash/312f1ba2a72318edaaa995a67835fad5-Abstract.html
+32. E. Talvitie. *Self-Correcting Models for Model-Based Reinforcement Learning.* AAAI 2017. arXiv:1612.06018; doi:10.1609/aaai.v31i1.10850, 2017.
+33. A. Venkatraman, M. Hebert, J. A. Bagnell. *Improving Multi-Step Prediction of Learned Time Series Models.* AAAI 2015. doi:10.1609/aaai.v29i1.9590
+34. Y. Wen, D. Tran, J. Ba. *BatchEnsemble: An Alternative Approach to Efficient Ensemble and Lifelong Learning.* ICLR 2020. arXiv:2002.06715, 2020.
+35. T. Yu, G. Thomas, L. Yu, S. Ermon, J. Zou, S. Levine, C. Finn, T. Ma. *MOPO: Model-based Offline Policy Optimization.* NeurIPS 2020. arXiv:2005.13239, 2020.
 
-*Entries 3–20 are the bibliography of §2 and §5.3, generated from `results/t1_bibliography_verified.json`. Each was checked against the paper itself: title and full author list from the arXiv record, venue from the record or the paper's first page, and every sentence this paper attributes matched verbatim against that paper's own text: 18 of 18 entries and 19 of 19 attributed fragments, 3 of them single common words whose match verifies nothing about the attribution (ledger `D-35`). No entry was added that was not verified.*
+*Entries 3–35 are generated from `results/t1_bibliography_verified.json`. Each was checked against the paper itself: title and full author list from the arXiv record or, for an entry with no arXiv id, from its DOI's Crossref record or its proceedings page; venue from the record or the paper's first page; and every sentence this paper attributes matched verbatim against that paper's own text: 33 of 33 entries and 19 of 19 attributed fragments, 3 of them single common words whose match verifies nothing about the attribution (ledger `D-35`). No entry was added that was not verified.*
 
 ## Appendix A — verification chain
 

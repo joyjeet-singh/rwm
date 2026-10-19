@@ -2,9 +2,9 @@
   "scanned": "PAPER.template.md",
   "n_substituted": 2163,
   "n_typed": 344,
-  "n_restatements": 127,
+  "n_restatements": 128,
   "n_same_quantity_candidates": 67,
-  "n_lower_signal": 60,
+  "n_lower_signal": 61,
   "restatements": [
     {
       "value": "+0.419",
@@ -4155,35 +4155,20 @@
     },
     {
       "value": "18",
-      "n_locations": 4,
+      "n_locations": 2,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 4,
+      "n_substituted": 2,
       "sources": [
         "results/r2_combined_arm.json",
-        "results/t1_bibliography_verified.json",
         "results/task2_3_matched_trend.json"
       ],
       "keys": [
         "m68_from_acc_h32",
-        "r45_rel_all",
-        "t1_n_refs",
-        "t1_n_verified"
+        "r45_rel_all"
       ],
       "locations": [
-        {
-          "section": "References",
-          "line": 1130,
-          "key": "t1_n_verified",
-          "ctx": "utes matched verbatim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_fra"
-        },
-        {
-          "section": "References",
-          "line": 1130,
-          "key": "t1_n_refs",
-          "ctx": "atim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_"
-        },
         {
           "section": "Appendix H \u2014 findings not in the main text",
           "line": 1410,
@@ -5058,18 +5043,17 @@
     },
     {
       "value": "20",
-      "n_locations": 71,
+      "n_locations": 70,
       "same_quantity_candidate": true,
       "fails_build": false,
       "n_typed": 2,
-      "n_substituted": 69,
+      "n_substituted": 68,
       "sources": [
         "results/a2_trajectory_level_control.json",
         "results/alignment_defect_ci.json",
         "results/e5_synthetic_sigma.json",
         "results/e7_free_baselines.json",
         "results/m62_episode_clustering.json",
-        "results/t1_bibliography_verified.json",
         "results/task1_calibration.json",
         "results/task2_3_matched_trend.json",
         "results/task_b_permutation.json",
@@ -5094,7 +5078,6 @@
         "r45_nind_all",
         "relale_all_nind",
         "relale_oos_pos_h368",
-        "t1_last_entry_n",
         "x3_n",
         "x7_n_traj"
       ],
@@ -5248,12 +5231,6 @@
           "line": 1063,
           "key": "x7_n_traj",
           "ctx": "and scored on the tenth, the epistemic coverage over all {{x7_n_traj}} trajectories is within the band at ever"
-        },
-        {
-          "section": "References",
-          "line": 1130,
-          "key": "t1_last_entry_n",
-          "ctx": "{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the bibliography of \u00a72 and \u00a75.3, ge"
         },
         {
           "section": "Appendix D \u2014 every claim of the originals, and what we did with it",
@@ -6240,7 +6217,7 @@
           "section": "References",
           "line": 1130,
           "key": "t1_first_entry_n",
-          "ctx": "er_figures.json`.* {{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are the bibliograph"
+          "ctx": "er_figures.json`.* {{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are generated from "
         },
         {
           "section": "References",
@@ -6662,16 +6639,17 @@
     },
     {
       "value": "33",
-      "n_locations": 12,
+      "n_locations": 14,
       "same_quantity_candidate": false,
       "fails_build": false,
       "n_typed": 0,
-      "n_substituted": 12,
+      "n_substituted": 14,
       "sources": [
         "results/m64_short_units.json",
         "results/m65_gaussian_nominal.json",
         "results/step5_*.json",
         "results/step5_arm*.json",
+        "results/t1_bibliography_verified.json",
         "results/x3_cross_fold.json"
       ],
       "keys": [
@@ -6679,6 +6657,8 @@
         "m65_n_over",
         "rt_runs",
         "run_total",
+        "t1_n_refs",
+        "t1_n_verified",
         "x3_h1_unit"
       ],
       "locations": [
@@ -6699,6 +6679,18 @@
           "line": 378,
           "key": "x3_h1_unit",
           "ctx": "hort units, {{x3_h1_gap}} {{x3_h1_ci}} over {{x3_h1_n}} {{x3_h1_unit}}-row units. These are {{iters_main}}-ite"
+        },
+        {
+          "section": "References",
+          "line": 1130,
+          "key": "t1_n_verified",
+          "ctx": "utes matched verbatim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_fra"
+        },
+        {
+          "section": "References",
+          "line": 1130,
+          "key": "t1_n_refs",
+          "ctx": "atim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_"
         },
         {
           "section": "Appendix B \u2014 reproducing",
@@ -6812,6 +6804,36 @@
           "line": 1916,
           "key": "d1n_epi_ratio_h128",
           "ctx": "ea_ratio_ci_h128}}] | {{d1n_alea_cov1_h128}}% | {{d1n_epi_ratio_h128}}\u00d7 [{{d1n_epi_ratio_ci_h128}}] | {{d1n_ep"
+        }
+      ]
+    },
+    {
+      "value": "35",
+      "n_locations": 2,
+      "same_quantity_candidate": false,
+      "fails_build": false,
+      "n_typed": 0,
+      "n_substituted": 2,
+      "sources": [
+        "results/r2_independent_ensemble.json",
+        "results/t1_bibliography_verified.json"
+      ],
+      "keys": [
+        "r2_from_acc_h128",
+        "t1_last_entry_n"
+      ],
+      "locations": [
+        {
+          "section": "References",
+          "line": 1130,
+          "key": "t1_last_entry_n",
+          "ctx": "{t1_reference_list}} *Entries {{t1_first_entry_n}}\u2013{{t1_last_entry_n}} are generated from `results/t1_bibliogr"
+        },
+        {
+          "section": "Appendix O \u2014 rule M-44 in full: an ensemble that shares nothing",
+          "line": 2121,
+          "key": "r2_from_acc_h128",
+          "ctx": " {{r2_total_x_h128}}\u00d7 | {{r2_from_sigma_h128}}% | {{r2_from_acc_h128}}% | | {{v2_diag_h}} | {{r2_sigma_x_h368}"
         }
       ]
     },

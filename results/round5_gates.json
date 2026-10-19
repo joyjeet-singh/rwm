@@ -1,13 +1,13 @@
 {
  "mode": "report",
- "summary": "pages 26.87/12, abstract 300/19, ids 93, once 33, sig 510, keys missing 0",
+ "summary": "pages 26.88/12, abstract 300/19, ids 93, once 33, sig 510, keys missing 0",
  "gates": {
   "pages": {
    "pass": false,
-   "value": 26.87,
+   "value": 26.88,
    "max": 12.0,
    "references_page": 27,
-   "references_y": 152.42299999999994
+   "references_y": 147.34699999999992
   },
   "abstract": {
    "pass": false,

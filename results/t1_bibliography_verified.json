@@ -331,14 +331,342 @@
       "venue": "ICLR 2021",
       "why_we_engage": "Table S7 of the base paper fixes the RSSM's shapes and says it is categorical, and nothing else. 5.3 takes every unstated RSSM setting from DreamerV2 and reads Table S7's ambiguous latent size in DreamerV2's naming (docs/presubmission/BASELINE_SPECS.md).",
       "year": 2021
+    },
+    {
+      "authors": [
+        "Arun Venkatraman",
+        "Martial Hebert",
+        "J. Andrew Bagnell"
+      ],
+      "doi": "10.1609/aaai.v29i1.9590",
+      "establishes": "named by the TMLR review (RV32) as prior work on multi-step model training",
+      "fragments": [],
+      "key": "venkatraman2015",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/9590/9449",
+      "record_spelling": {
+        "J. Andrew Bagnell": "J.. Bagnell"
+      },
+      "title": "Improving Multi-Step Prediction of Learned Time Series Models",
+      "venue": "AAAI 2015",
+      "venue_record": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "why_we_engage": "it sets the prior for the paper's autoregressive against teacher-forced comparison.",
+      "year": 2015
+    },
+    {
+      "arxiv": "1506.03099",
+      "authors": [
+        "Samy Bengio",
+        "Oriol Vinyals",
+        "Navdeep Jaitly",
+        "Noam Shazeer"
+      ],
+      "establishes": "named by the TMLR review (RV32) as prior work on multi-step model training",
+      "fragments": [],
+      "key": "bengio2015",
+      "title": "Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2015/hash/e995f98d56967d946471af29d7bf99f1-Abstract.html",
+      "venue": "NeurIPS 2015",
+      "venue_record": "Advances in Neural Information Processing Systems",
+      "why_we_engage": "it sets the prior for the paper's autoregressive against teacher-forced comparison.",
+      "year": 2015
+    },
+    {
+      "arxiv": "1612.06018",
+      "authors": [
+        "Erik Talvitie"
+      ],
+      "doi": "10.1609/aaai.v31i1.10850",
+      "establishes": "named by the TMLR review (RV32) as prior work on multi-step model training",
+      "fragments": [],
+      "key": "talvitie2017",
+      "title": "Self-Correcting Models for Model-Based Reinforcement Learning",
+      "venue": "AAAI 2017",
+      "venue_record": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "why_we_engage": "it sets the prior for the paper's autoregressive against teacher-forced comparison.",
+      "year": 2017
+    },
+    {
+      "arxiv": "2012.09156",
+      "authors": [
+        "Nathan O. Lambert",
+        "Albert Wilcox",
+        "Howard Zhang",
+        "Kristofer S. J. Pister",
+        "Roberto Calandra"
+      ],
+      "doi": "10.1109/cdc45484.2021.9683134",
+      "establishes": "named by the TMLR review (RV32) as prior work on multi-step model training; the review gives no title, and this is the 2021 Lambert et al. paper on long-term dynamics for model-based RL that the G7 search found",
+      "fragments": [],
+      "key": "lambert2021",
+      "title": "Learning Accurate Long-term Dynamics for Model-based Reinforcement Learning",
+      "venue": "IEEE CDC 2021",
+      "venue_record": "2021 60th IEEE Conference on Decision and Control (CDC)",
+      "why_we_engage": "it sets the prior for the paper's autoregressive against teacher-forced comparison.",
+      "year": 2021
+    },
+    {
+      "arxiv": "2107.07511",
+      "authors": [
+        "Anastasios N. Angelopoulos",
+        "Stephen Bates"
+      ],
+      "establishes": "named by the TMLR review (RV33) as prior work on conformal prediction",
+      "fragments": [],
+      "key": "angelopoulos2021",
+      "title": "A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification",
+      "venue": "arXiv:2107.07511",
+      "why_we_engage": "the paper's per-horizon recalibration is to be framed against split conformal prediction.",
+      "year": 2021
+    },
+    {
+      "authors": [
+        "Kamile Stankeviciute",
+        "Ahmed M. Alaa",
+        "Mihaela van der Schaar"
+      ],
+      "establishes": "named by the TMLR review (RV33) as prior work on conformal prediction",
+      "fragments": [],
+      "key": "stankeviciute2021",
+      "title": "Conformal Time-series Forecasting",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2021/hash/312f1ba2a72318edaaa995a67835fad5-Abstract.html",
+      "venue": "NeurIPS 2021",
+      "venue_record": "Advances in Neural Information Processing Systems",
+      "why_we_engage": "the paper's per-horizon recalibration is to be framed against split conformal prediction.",
+      "year": 2021
+    },
+    {
+      "arxiv": "2210.10254",
+      "authors": [
+        "Lars Lindemann",
+        "Matthew Cleaveland",
+        "Gihyun Shim",
+        "George J. Pappas"
+      ],
+      "doi": "10.1109/lra.2023.3292071",
+      "establishes": "named by the TMLR review (RV33) as prior work on conformal prediction",
+      "fragments": [],
+      "key": "lindemann2023",
+      "title": "Safe Planning in Dynamic Environments using Conformal Prediction",
+      "venue": "IEEE RA-L 2023",
+      "venue_record": "IEEE Robotics and Automation Letters",
+      "why_we_engage": "the paper's per-horizon recalibration is to be framed against split conformal prediction.",
+      "year": 2023
+    },
+    {
+      "arxiv": "1602.04621",
+      "authors": [
+        "Ian Osband",
+        "Charles Blundell",
+        "Alexander Pritzel",
+        "Benjamin Van Roy"
+      ],
+      "establishes": "named by the TMLR review (RV34) as a shared-torso RL ensemble",
+      "fragments": [],
+      "key": "osband2016",
+      "title": "Deep Exploration via Bootstrapped DQN",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2016/hash/8d8818c8e140c64c743113f563cf750f-Abstract.html",
+      "venue": "NeurIPS 2016",
+      "venue_record": "Advances in Neural Information Processing Systems",
+      "why_we_engage": "the released ensemble shares a state trunk.",
+      "year": 2016
+    },
+    {
+      "arxiv": "1806.03335",
+      "authors": [
+        "Ian Osband",
+        "John Aslanides",
+        "Albin Cassirer"
+      ],
+      "establishes": "named by the TMLR review (RV34) as a shared-torso RL ensemble",
+      "fragments": [],
+      "key": "osband2018",
+      "title": "Randomized Prior Functions for Deep Reinforcement Learning",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2018/hash/5a7b238ba0f6502e5d6be14424b20ded-Abstract.html",
+      "venue": "NeurIPS 2018",
+      "venue_record": "Advances in Neural Information Processing Systems",
+      "why_we_engage": "the released ensemble shares a state trunk.",
+      "year": 2018
+    },
+    {
+      "arxiv": "2108.13264",
+      "authors": [
+        "Rishabh Agarwal",
+        "Max Schwarzer",
+        "Pablo Samuel Castro",
+        "Aaron Courville",
+        "Marc G. Bellemare"
+      ],
+      "establishes": "named by the TMLR review (RV35) as prior work on RL evaluation statistics",
+      "fragments": [],
+      "key": "agarwal2021",
+      "title": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2021/hash/f514cec81cb148559cf475e7426eed5e-Abstract.html",
+      "venue": "NeurIPS 2021",
+      "venue_record": "Advances in Neural Information Processing Systems",
+      "why_we_engage": "the paper's intervals rest on few seeds and few trajectories.",
+      "year": 2021
+    },
+    {
+      "arxiv": "1709.06560",
+      "authors": [
+        "Peter Henderson",
+        "Riashat Islam",
+        "Philip Bachman",
+        "Joelle Pineau",
+        "Doina Precup",
+        "David Meger"
+      ],
+      "doi": "10.1609/aaai.v32i1.11694",
+      "establishes": "named by the TMLR review (RV35) as prior work on RL evaluation statistics",
+      "fragments": [],
+      "key": "henderson2018",
+      "title": "Deep Reinforcement Learning that Matters",
+      "venue": "AAAI 2018",
+      "venue_record": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "why_we_engage": "the paper's intervals rest on few seeds and few trajectories.",
+      "year": 2018
+    },
+    {
+      "authors": [
+        "A. Colin Cameron",
+        "Jonah B. Gelbach",
+        "Douglas L. Miller"
+      ],
+      "doi": "10.1162/rest.90.3.414",
+      "establishes": "cluster bootstraps when clusters are few; cited by the technical fixes for the trajectory-clustered intervals",
+      "fragments": [],
+      "key": "cameron2008",
+      "title": "Bootstrap-Based Improvements for Inference with Clustered Errors",
+      "venue": "Review of Economics and Statistics 90(3)",
+      "venue_record": "Review of Economics and Statistics",
+      "why_we_engage": "the paper resamples whole trajectories, of which there are few.",
+      "year": 2008
+    },
+    {
+      "arxiv": "1412.6980",
+      "authors": [
+        "Diederik P. Kingma",
+        "Jimmy Ba"
+      ],
+      "establishes": "the Adam optimiser; cited by the technical fixes for the per-iteration step bound (N13)",
+      "fragments": [],
+      "key": "kingma2015",
+      "title": "Adam: A Method for Stochastic Optimization",
+      "venue": "ICLR 2015",
+      "venue_comment": "Published as a conference paper at the 3rd International Conference for Learning Representations",
+      "why_we_engage": "section 7.5's collapse argument is recast as Adam's step bound.",
+      "year": 2015
+    },
+    {
+      "authors": [
+        "Luca Bertinetto",
+        "Jo\u00e3o F. Henriques",
+        "Samuel Albanie",
+        "Michela Paganini",
+        "G\u00fcl Varol"
+      ],
+      "editors": true,
+      "establishes": "named by the TMLR review (RV36) as a venue for pre-registration in ML; the workshop was held in one year and its proceedings published the next",
+      "fragments": [],
+      "key": "prereg2020",
+      "title": "NeurIPS 2020 Workshop on Pre-registration in Machine Learning",
+      "url": "https://proceedings.mlr.press/v148/",
+      "venue": "PMLR 148",
+      "venue_record": "Published as Volume 148 by the Proceedings of Machine Learning Research",
+      "why_we_engage": "the paper's decision rules are pre-registered in git before the data exist.",
+      "year": 2021
+    },
+    {
+      "authors": [
+        "Samuel Albanie",
+        "Jo\u00e3o F. Henriques",
+        "Luca Bertinetto",
+        "Alex Hern\u00e1ndez-Garc\u00eda",
+        "Hazel Doughty",
+        "G\u00fcl Varol"
+      ],
+      "editors": true,
+      "establishes": "named by the TMLR review (RV36) as a venue for pre-registration in ML; the workshop was held in one year and its proceedings published the next",
+      "fragments": [],
+      "key": "prereg2021",
+      "title": "NeurIPS 2021 Workshop on Pre-registration in Machine Learning",
+      "url": "https://proceedings.mlr.press/v181/",
+      "venue": "PMLR 181",
+      "venue_record": "Published as Volume 181 by the Proceedings of Machine Learning Research",
+      "why_we_engage": "the paper's decision rules are pre-registered in git before the data exist.",
+      "year": 2022
     }
   ],
   "evidence_class": "EXT",
-  "n_entries": 18,
-  "n_references_after": 20,
+  "n_entries": 33,
+  "n_references_after": 35,
   "n_references_before": 2,
+  "originals": [
+    {
+      "arxiv": "2501.10100",
+      "authors": [
+        "Chenhao Li",
+        "Andreas Krause",
+        "Marco Hutter"
+      ],
+      "family": "RWM",
+      "key": "li2025rwm",
+      "read": "v1",
+      "title_current": "Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics",
+      "title_read": "Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics",
+      "workshop_conference": "NeurIPS 2025",
+      "workshop_label": "Poster in Workshop: Embodied World Models for Decision Making",
+      "workshop_url": "https://neurips.cc/virtual/2025/123991"
+    },
+    {
+      "arxiv": "2504.16680",
+      "authors": [
+        "Chenhao Li",
+        "Andreas Krause",
+        "Marco Hutter"
+      ],
+      "family": "RWMU",
+      "key": "li2025rwmu",
+      "read": "v1",
+      "title_current": "Uncertainty-Aware Robotic World Model Makes Offline Model-Based Reinforcement Learning Work on Real Robots",
+      "title_read": "Offline Robotic World Model: Learning Robotic Policies without a Physics Simulator",
+      "workshop_conference": "ICLR 2026",
+      "workshop_label": "Poster in Workshop: The 2nd Workshop on World Models: Understanding, Modelling and Scaling",
+      "workshop_url": "https://iclr.cc/virtual/2026/10018013"
+    }
+  ],
+  "originals_verification": [
+    {
+      "authors_match": true,
+      "current_matches_crosswalk": true,
+      "current_title_matches": true,
+      "current_version": "v5",
+      "entry_fingerprint": "6ce48413f4ab574c",
+      "key": "li2025rwm",
+      "read_title_matches": true,
+      "workshop_authors_found": true,
+      "workshop_conference_found": true,
+      "workshop_label_found": true,
+      "workshop_page_mentions_archival": false,
+      "workshop_title_found": true
+    },
+    {
+      "authors_match": true,
+      "current_matches_crosswalk": true,
+      "current_title_matches": true,
+      "current_version": "v3",
+      "entry_fingerprint": "3993c07b8e357d2d",
+      "key": "li2025rwmu",
+      "read_title_matches": true,
+      "workshop_authors_found": true,
+      "workshop_conference_found": true,
+      "workshop_label_found": true,
+      "workshop_page_mentions_archival": false,
+      "workshop_title_found": true
+    }
+  ],
   "purpose": "every section 2 reference, verified against the paper itself",
-  "rule": "no entry is added that was not verified. Title, full author list and venue come from the arXiv API; anything our text asserts the paper SAYS is additionally matched verbatim against its HTML.",
+  "rule": "no entry is added that was not verified. Title, full author list and venue come from the arXiv API, or for an entry with no arXiv id from its DOI's Crossref record or its proceedings page; anything our text asserts the paper SAYS is additionally matched verbatim against its HTML.",
   "untested_hypothesis": {
     "grounds": "the parameterisation is inherited line for line (chua2018 fragments); the objective is not (system_dynamics.py:283)",
     "statement": "the sigma = 0 optimum affects any descendant of the PETS parameterisation that replaced the Gaussian NLL with squared error on a reparameterised sample",
@@ -346,11 +674,11 @@
   },
   "verification": {
     "checked_on": "2026-10-09",
-    "method": "arXiv API metadata for title, author list and venue comment; for any entry whose 'why_we_engage' asserts what the paper SAYS, the asserted fragments were additionally matched as substrings of that paper's own arXiv HTML rendering after tag-stripping and whitespace collapse",
-    "n_entries": 18,
+    "method": "arXiv API metadata for title, author list and venue comment; for any entry whose 'why_we_engage' asserts what the paper SAYS, the asserted fragments were additionally matched as substrings of that paper's own arXiv HTML rendering after tag-stripping and whitespace collapse. Round 5 (G7): an entry with no arXiv id takes title, full author list, venue and year from its DOI's Crossref record or, with no DOI, from its proceedings page's citation meta tags (or, on a volume page with none, the page text); an arXiv entry that also names a DOI or proceedings page has its venue and year checked there, and one that names a venue_comment has it matched in the arXiv comment",
+    "n_entries": 33,
     "n_fragments_checked": 19,
     "n_fragments_verbatim": 19,
-    "n_metadata_verified": 18,
+    "n_metadata_verified": 33,
     "n_with_fragment_checks": 9,
     "per_entry": [
       {
@@ -533,6 +861,209 @@
         "key": "hafner2021",
         "published": "2020-10-05",
         "title_matches": true
+      },
+      {
+        "authors_match": true,
+        "display_names_in_pdf": true,
+        "doi": "10.1609/aaai.v29i1.9590",
+        "entry_fingerprint": "9d6b61fcfbeb2e80",
+        "key": "venkatraman2015",
+        "record": "crossref",
+        "record_spelling": {
+          "J. Andrew Bagnell": "J.. Bagnell"
+        },
+        "title_matches": true,
+        "venue_matches": true,
+        "venue_record": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "year_matches": true,
+        "year_record": 2015
+      },
+      {
+        "arxiv_version": "1506.03099v3",
+        "authors_match": true,
+        "comment": null,
+        "entry_fingerprint": "85850a5a31cf909b",
+        "key": "bengio2015",
+        "published": "2015-06-09",
+        "record": "page_meta",
+        "title_matches": true,
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2015/hash/e995f98d56967d946471af29d7bf99f1-Abstract.html",
+        "venue_matches": true,
+        "venue_record": "Advances in Neural Information Processing Systems",
+        "year_matches": true,
+        "year_record": 2015
+      },
+      {
+        "arxiv_version": "1612.06018v2",
+        "authors_match": true,
+        "comment": "Original paper appeared in Proceedings of the 31st AAAI Conference on Artificial Intelligence, 2017. This version incorporates the appendix into document (rather than as supplementary material), corrects a minor error in Lemma 1, and fixes some type-os",
+        "doi": "10.1609/aaai.v31i1.10850",
+        "entry_fingerprint": "b5dd087917c67521",
+        "key": "talvitie2017",
+        "published": "2016-12-19",
+        "record": "crossref",
+        "title_matches": true,
+        "venue_matches": true,
+        "venue_record": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "year_matches": true,
+        "year_record": 2017
+      },
+      {
+        "arxiv_version": "2012.09156v2",
+        "authors_match": true,
+        "comment": "8 pages, +4 pages appendix",
+        "doi": "10.1109/cdc45484.2021.9683134",
+        "entry_fingerprint": "460f0760b88261e1",
+        "key": "lambert2021",
+        "published": "2020-12-16",
+        "record": "crossref",
+        "title_matches": true,
+        "venue_matches": true,
+        "venue_record": "2021 60th IEEE Conference on Decision and Control (CDC)",
+        "year_matches": true,
+        "year_record": 2021
+      },
+      {
+        "arxiv_version": "2107.07511v6",
+        "authors_match": true,
+        "comment": "Blog and tutorial video at http://angelopoulos.ai/blog/posts/gentle-intro/ ; Code is available at https://github.com/aangelopoulos/conformal-prediction",
+        "entry_fingerprint": "5275ef41cc2dabeb",
+        "key": "angelopoulos2021",
+        "published": "2021-07-15",
+        "title_matches": true
+      },
+      {
+        "authors_match": true,
+        "entry_fingerprint": "0c25413176be3d0e",
+        "key": "stankeviciute2021",
+        "record": "page_meta",
+        "title_matches": true,
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2021/hash/312f1ba2a72318edaaa995a67835fad5-Abstract.html",
+        "venue_matches": true,
+        "venue_record": "Advances in Neural Information Processing Systems",
+        "year_matches": true,
+        "year_record": 2021
+      },
+      {
+        "arxiv_version": "2210.10254v2",
+        "authors_match": true,
+        "comment": null,
+        "doi": "10.1109/lra.2023.3292071",
+        "entry_fingerprint": "89d0bda45afad3b5",
+        "key": "lindemann2023",
+        "published": "2022-10-19",
+        "record": "crossref",
+        "title_matches": true,
+        "venue_matches": true,
+        "venue_record": "IEEE Robotics and Automation Letters",
+        "year_matches": true,
+        "year_record": 2023
+      },
+      {
+        "arxiv_version": "1602.04621v3",
+        "authors_match": true,
+        "comment": null,
+        "entry_fingerprint": "2117c6b467d9479b",
+        "key": "osband2016",
+        "published": "2016-02-15",
+        "record": "page_meta",
+        "title_matches": true,
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2016/hash/8d8818c8e140c64c743113f563cf750f-Abstract.html",
+        "venue_matches": true,
+        "venue_record": "Advances in Neural Information Processing Systems",
+        "year_matches": true,
+        "year_record": 2016
+      },
+      {
+        "arxiv_version": "1806.03335v2",
+        "authors_match": true,
+        "comment": null,
+        "entry_fingerprint": "d3f3d6f96dba8902",
+        "key": "osband2018",
+        "published": "2018-06-08",
+        "record": "page_meta",
+        "title_matches": true,
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2018/hash/5a7b238ba0f6502e5d6be14424b20ded-Abstract.html",
+        "venue_matches": true,
+        "venue_record": "Advances in Neural Information Processing Systems",
+        "year_matches": true,
+        "year_record": 2018
+      },
+      {
+        "arxiv_version": "2108.13264v4",
+        "authors_match": true,
+        "comment": "Outstanding Paper Award at NeurIPS 2021. Website: https://agarwl.github.io/rliable. 28 Pages, 33 Figures",
+        "entry_fingerprint": "895354d76138f780",
+        "key": "agarwal2021",
+        "published": "2021-08-30",
+        "record": "page_meta",
+        "title_matches": true,
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2021/hash/f514cec81cb148559cf475e7426eed5e-Abstract.html",
+        "venue_matches": true,
+        "venue_record": "Advances in Neural Information Processing Systems",
+        "year_matches": true,
+        "year_record": 2021
+      },
+      {
+        "arxiv_version": "1709.06560v3",
+        "authors_match": true,
+        "comment": "Accepted to the Thirthy-Second AAAI Conference On Artificial Intelligence (AAAI), 2018",
+        "doi": "10.1609/aaai.v32i1.11694",
+        "entry_fingerprint": "90141ef5490de6f2",
+        "key": "henderson2018",
+        "published": "2017-09-19",
+        "record": "crossref",
+        "title_matches": true,
+        "venue_matches": true,
+        "venue_record": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "year_matches": true,
+        "year_record": 2018
+      },
+      {
+        "authors_match": true,
+        "doi": "10.1162/rest.90.3.414",
+        "entry_fingerprint": "3efa9ec8d633d205",
+        "key": "cameron2008",
+        "record": "crossref",
+        "title_matches": true,
+        "venue_matches": true,
+        "venue_record": "Review of Economics and Statistics",
+        "year_matches": true,
+        "year_record": 2008
+      },
+      {
+        "arxiv_version": "1412.6980v9",
+        "authors_match": true,
+        "comment": "Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015",
+        "entry_fingerprint": "90a670c26075cf04",
+        "key": "kingma2015",
+        "published": "2014-12-22",
+        "title_matches": true,
+        "venue_matches": true
+      },
+      {
+        "authors_match": true,
+        "entry_fingerprint": "2a8adb436d850fc4",
+        "key": "prereg2020",
+        "record": "page_text",
+        "title_matches": true,
+        "url": "https://proceedings.mlr.press/v148/",
+        "venue_matches": true,
+        "venue_record": "Published as Volume 148 by the Proceedings of Machine Learning Research",
+        "year_matches": true,
+        "year_record": 2021
+      },
+      {
+        "authors_match": true,
+        "entry_fingerprint": "599ac0db00c6c968",
+        "key": "prereg2021",
+        "record": "page_text",
+        "title_matches": true,
+        "url": "https://proceedings.mlr.press/v181/",
+        "venue_matches": true,
+        "venue_record": "Published as Volume 181 by the Proceedings of Machine Learning Research",
+        "year_matches": true,
+        "year_record": 2022
       }
     ]
   }

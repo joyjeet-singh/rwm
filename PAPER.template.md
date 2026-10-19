@@ -1113,13 +1113,13 @@ read it as such.
 
 ## References
 
-1. C. Li, A. Krause, M. Hutter. *Robotic World Model: A Neural Network Simulator for Robust Policy
-   Optimization in Robotics.* arXiv:2501.10100**v1**, 17 January 2025.
-   *Read at v1, whose Roman-numeral sectioning our references follow; v2 (23 April 2025)
+1. C. Li, A. Krause, M. Hutter. *{{ref1_title_read}}.* arXiv:2501.10100**{{ref1_read}}**, {{ref1_read_date}}; current version {{ref1_current}}, {{ref1_current_date}}, under the same title.
+   Presented as a workshop poster at {{ref1_conf}} (*{{ref1_workshop}}*); the venue's page does not say whether the workshop is archival.
+   *Read at v1, whose Roman-numeral sectioning our references follow; v2 ({{ref1_v2_date}})
    renumbered to Arabic and moved IV-C into Appendix A.4.1.*
-2. C. Li, A. Krause, M. Hutter. *Uncertainty-Aware Robotic World Model Makes Offline Model-Based
-   Reinforcement Learning Work on Real Robots.* arXiv:2504.16680**v1**, 23 April 2025.
-   *Read at v1; now at {{v4_current}}, last revised {{v4_current_date}}. §5.1 and Eq. 4–5
+2. C. Li, A. Krause, M. Hutter. *{{ref2_title_read}}.* arXiv:2504.16680**{{ref2_read}}**, {{ref2_read_date}}; current version {{ref2_current}}, {{ref2_current_date}}, retitled *{{ref2_title_current}}.*
+   Presented as a workshop poster at {{ref2_conf}} (*{{ref2_workshop}}*); the venue's page does not say whether the workshop is archival.
+   *Read at v1. §5.1 and Eq. 4–5
 keep their numbers there; every figure and appendix table has moved, and the model is
 renamed {{v4_name_v1}} to {{v4_name_v3}} — the same model, with the letter re-expanded from
 "{{v4_exp_v1}}" to "{{v4_exp_v3}}". The two names never co-occur: v1 uses
@@ -1127,7 +1127,7 @@ renamed {{v4_name_v1}} to {{v4_name_v3}} — the same model, with the letter re-
 is in `results/original_paper_figures.json`.*
 {{t1_reference_list}}
 
-*Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are the bibliography of §2 and §5.3, generated from `results/t1_bibliography_verified.json`. Each was checked against the paper itself: title and full author list from the arXiv record, venue from the record or the paper's first page, and every sentence this paper attributes matched verbatim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_oneword}} of them single common words whose match verifies nothing about the attribution (ledger `D-35`). No entry was added that was not verified.*
+*Entries {{t1_first_entry_n}}–{{t1_last_entry_n}} are generated from `results/t1_bibliography_verified.json`. Each was checked against the paper itself: title and full author list from the arXiv record or, for an entry with no arXiv id, from its DOI's Crossref record or its proceedings page; venue from the record or the paper's first page; and every sentence this paper attributes matched verbatim against that paper's own text: {{t1_n_verified}} of {{t1_n_refs}} entries and {{t1_n_frag_ok}} of {{t1_n_frag}} attributed fragments, {{t1_n_frag_oneword}} of them single common words whose match verifies nothing about the attribution (ledger `D-35`). No entry was added that was not verified.*
 
 ## Appendix A — verification chain
 

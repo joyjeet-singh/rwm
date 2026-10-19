@@ -3324,21 +3324,60 @@ def main():
         parts = [x for x in name.replace(".", " ").split() if x]
         if len(parts) == 1:
             return parts[0]
-        return " ".join(p[0] + "." for p in parts[:-1]) + " " + parts[-1]
+        # round 5, G7: a surname particle stays with the surname ("B. Van Roy", "M. van der Schaar")
+        cut = next((i for i in range(1, len(parts) - 1) if parts[i] in ("van", "der", "de", "von", "Van", "Von")),
+                   len(parts) - 1)
+        return " ".join(p[0] + "." for p in parts[:cut]) + " " + " ".join(parts[cut:])
 
     _bib = sorted(T1["entries"], key=lambda e: (e["authors"][0].split()[-1].lower(),
                                                 e["year"]))
     _lines = []
     for _n, _e in enumerate(_bib, start=3):
-        _au = ", ".join(_initials(a) for a in _e["authors"])
+        _au = ", ".join(_initials(a) for a in _e["authors"]) + (" (eds.)" if _e.get("editors") else "")
+        if not _e.get("arxiv"):
+            # Round 5, G7: an entry with no arXiv id is identified by its DOI or, with none, its proceedings page.
+            _id = f'doi:{_e["doi"]}' if _e.get("doi") else _e["url"]
+            _when = "" if str(_e["year"]) in _e["venue"] else f', {_e["year"]}'
+            _lines.append(f'{_n}. {_au}. *{_e["title"]}.* {_e["venue"]}{_when}. {_id}')
+            continue
         # Two entries have no venue but the arXiv id itself (they are preprints
         # with no recorded journal_ref), and printing both gave
         # "arXiv:1912.02757. arXiv:1912.02757."
         _ven = "" if _e["venue"].replace("arXiv:", "") == _e["arxiv"] \
             else f'{_e["venue"]}. '
+        _doi = f'; doi:{_e["doi"]}' if _e.get("doi") else ""
         _lines.append(f'{_n}. {_au}. *{_e["title"]}.* {_ven}'
-                      f'arXiv:{_e["arxiv"]}, {_e["year"]}.')
+                      f'arXiv:{_e["arxiv"]}{_doi}, {_e["year"]}.')
     put("t1_reference_list", "\n".join(_lines), "results/t1_bibliography_verified.json")
+
+    # Round 5, G7: references 1 and 2. Every field is read from the verified record (titles, versions, workshop) or
+    # from G1's crosswalk (dates). "Under the same title" and "the venue's page does not say whether the workshop is
+    # archival" are template wording, so both are asserted here.
+    _XW = J("version_crosswalk.json")["families"]
+    _OV = {q["key"]: q for q in T1["originals_verification"]}
+
+    def _day(iso):
+        import datetime
+        d = datetime.date.fromisoformat(iso)
+        return f"{d.day} {d.strftime('%B')} {d.year}"
+    for _r, _o in zip(("ref1", "ref2"), T1["originals"]):
+        _v, _fam = _OV[_o["key"]], _XW[_o["family"]]
+        assert all(_v[k] for k in ("current_matches_crosswalk", "read_title_matches", "current_title_matches",
+                                   "authors_match", "workshop_label_found", "workshop_title_found",
+                                   "workshop_authors_found", "workshop_conference_found")), _o["key"]
+        assert _v["workshop_page_mentions_archival"] is False, f"{_o['key']}: the venue page now mentions archival"
+        _src = "results/t1_bibliography_verified.json"
+        put(f"{_r}_title_read", _o["title_read"], _src)
+        put(f"{_r}_title_current", _o["title_current"], _src)
+        put(f"{_r}_read", _o["read"], _src)
+        put(f"{_r}_current", _v["current_version"], _src)
+        put(f"{_r}_read_date", _day(_fam["dates"][_o["read"]]), "results/version_crosswalk.json")
+        put(f"{_r}_current_date", _day(_fam["dates"][_v["current_version"]]), "results/version_crosswalk.json")
+        put(f"{_r}_conf", _o["workshop_conference"], _src)
+        put(f"{_r}_workshop", _o["workshop_label"].replace("Poster in Workshop: ", ""), _src)
+    assert T1["originals"][0]["title_read"] == T1["originals"][0]["title_current"], "reference 1 says 'same title'"
+    assert T1["originals"][1]["title_read"] != T1["originals"][1]["title_current"], "reference 2 says 'retitled'"
+    put("ref1_v2_date", _day(_XW["RWM"]["dates"]["v2"]), "results/version_crosswalk.json")
     put("t1_first_entry_n", 3, "results/t1_bibliography_verified.json")
     put("t1_last_entry_n", len(_bib) + 2, "results/t1_bibliography_verified.json")
     put("t1_n_refs", T1["n_entries"], "results/t1_bibliography_verified.json")

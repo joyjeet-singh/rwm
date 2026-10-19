@@ -499,7 +499,7 @@ claims stayed, and only their history moved.
 - **[§2]** §2 closed with a note: every entry cited there and in §5.3 was checked against the paper
   itself, title, full author list and year from the arXiv record, venue from the record or, where it
   names none, from the paper's own first page, and every sentence attributed matched verbatim against
-  the paper's text; 18 of 18 entries and 19 of 19
+  the paper's text; 33 of 33 entries and 19 of 19
   fragments, 3 of them single common words. The References note now says the same once.
 - **[Data and code]** The anonymity paragraph said that a reviewer who chooses to look can identify the author, and argued that making the repository private would remove the identifying link and also the checkability §8 depends on, the worse trade. Ruling V7 (round 3) cut it to two sentences; the reasoning is in `docs/DOUBLE_BLIND_DECISION.md`.
 - **[References]** The bibliography is generated from `results/t1_bibliography_verified.json` rather
