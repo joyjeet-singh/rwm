@@ -860,19 +860,19 @@
     "value": 6
   },
   "appE_n_cpu": {
-    "source": "PAPER.template.md, Appendix C table",
+    "source": "docs/SUPPLEMENT.template.md, S1 table (was Appendix C)",
     "value": 0
   },
   "appE_n_cpu_word": {
-    "source": "PAPER.template.md, Appendix C table",
+    "source": "docs/SUPPLEMENT.template.md, S1 table (was Appendix C)",
     "value": "0"
   },
   "appE_n_sim": {
-    "source": "PAPER.template.md, Appendix C + D tables",
+    "source": "PAPER.template.md Appendix D + docs/SUPPLEMENT.template.md S1 tables",
     "value": 6
   },
   "appE_n_sim_word": {
-    "source": "PAPER.template.md, Appendix C + D tables",
+    "source": "PAPER.template.md Appendix D + docs/SUPPLEMENT.template.md S1 tables",
     "value": "six"
   },
   "appF_cpu_list": {
@@ -8489,7 +8489,7 @@
   },
   "pdf_pages": {
     "source": "results/compile_paper.json",
-    "value": 76
+    "value": 75
   },
   "pdf_warnings": {
     "source": "results/compile_paper.json",
@@ -11745,7 +11745,7 @@
   },
   "tn_typed": {
     "source": "results/typed_numerals.json",
-    "value": 1149
+    "value": 1137
   },
   "tw_cc_cluster_helped": {
     "source": "results/task3_three_way.json",

@@ -194,7 +194,7 @@ from training, and *in-sample*, the eight used for it. The released evaluation d
 trajectories from training data, and the original does not distinguish the two. **The released
 checkpoint trained on all ten episodes, so it has no held-out arena in this dataset**, and every
 figure for it is in-sample; later sections refer back to this as the in-sample caveat of §3. More
-data cannot be generated from either repository this reproduction pins (Appendix C).
+data cannot be generated from either repository this reproduction pins (supplementary S1).
 
 **Effective sample size.** Trajectory count is not sample size. Two 400-step trajectories whose
 spans overlap are not independent evidence, and the out-of-sample arena contains only
@@ -274,7 +274,7 @@ baselines (§5.3), and the follow-up's two claims about what its uncertainty out
 **{{appF_n_polhw_word}} of them are claims about policy learning or hardware** — every one but
 {{appF_model_list}}, which needs a simulator and recorded data from other robots but is a claim
 about the model rather than about a policy. This work trains no policy and runs on two CPU cores.
-The counts and lists are generated from the classification tags in the verdict column of Appendix D's first table, so none of them is typed. §11 states what the untested claims bound, and Appendix C what testing them
+The counts and lists are generated from the classification tags in the verdict column of Appendix D's first table, so none of them is typed. §11 states what the untested claims bound, and supplementary S1 what testing them
 would take.
 
 **For {{orig_n_without_word}} of the {{orig_n_tested_word}} claims we tested, the original reports no quantitative
@@ -1018,9 +1018,9 @@ policy is trained: no policy-learning result of either paper is reproduced or te
 sample-efficiency comparison included, and nothing here uses a GPU. Our arms use {{c2_pct}}% of the
 reference's world-model data (§5.1). And the released checkpoint trained on all ten episodes, so it
 has no held-out arena, and neither pinned repository can generate the data that would give it one
-(Appendix C). None of this can be lifted on CPU, and nothing in this paper claims otherwise.
+(supplementary S1). None of this can be lifted on CPU, and nothing in this paper claims otherwise.
 
-**Effective sample size bounds the long-horizon magnitudes.** The headline magnitudes rest on the held-out pair, {{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3); the direction is re-tested on all ten episodes, each out of sample once on fixed folds (rule X3: **{{x3_reading}}**, {{x3_n}} trajectories at {{iters_main}} iterations, not {{iters_long}}; §5). A larger dataset cannot be generated here (Appendix C), so the released checkpoint's lack of a held-out arena is a constraint, not a choice.
+**Effective sample size bounds the long-horizon magnitudes.** The headline magnitudes rest on the held-out pair, {{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3); the direction is re-tested on all ten episodes, each out of sample once on fixed folds (rule X3: **{{x3_reading}}**, {{x3_n}} trajectories at {{iters_main}} iterations, not {{iters_long}}; §5). A larger dataset cannot be generated here (supplementary S1), so the released checkpoint's lack of a held-out arena is a constraint, not a choice.
 
 **On whole trajectories, the ranking claim is not established as needing an ensemble.** The model's
 own predicted step size ranks error nearly as well, by a margin those {{e7_nind}} trajectories cannot
@@ -1176,46 +1176,7 @@ which inflates their wall clock and changes no weight; the artifact lists each o
 
 ## Appendix C — what testing the untested claims would require
 
-Appendix D's first table marks {{orig_n_tested}} claims tested and the rest not. "Not tested" is an apology
-unless it comes with a price, so here is what each would cost. We give compute orders where we
-can estimate them honestly from this project's own measurements and say so where we cannot.
-
-**Every row needs what this reproduction did not have: interaction.** Our arms train on the released CSV, which is a recording. Those claims need a
-policy acting in an environment, simulated or real, and the environment responding. In
-simulation that means Isaac Lab, which needs an RTX-class NVIDIA GPU, and no amount of CPU
-substitutes: the reference's data generation is GPU-parallel simulation, not a data-loading
-problem. For the hardware-transfer and real-robot rows the binding constraint is a robot rather
-than compute. **A GPU would not be enough on its own.** The code that generates data is in
-neither repository this reproduction pins: the only code that touches the file reads it
-(`train.py:44` in the lite release), the lite release's environment rolls the learned model forward
-rather than physics, and its readme places collection in a third repository, the authors' Isaac Lab
-extension (`readme.md:13`), which this reproduction does not pin and which would need Isaac Lab and
-an RTX-class GPU (ledger `D-36`).
-
-| untested claim | what it needs | order |
-|---|---|---|
-| Sample efficiency, {{c2_ref}} against ~250M transitions (§IV-E) | Isaac Lab, an RTX-class GPU, the MBPO-PPO loop, and a PPO baseline run to convergence for the comparison | the reference reports {{c2_ref}} pretraining transitions and 50 min of RWM training on their hardware; the PPO baseline's 250M is the dominant cost |
-| MBPO-PPO beats SHAC and Dreamer (§IV-E) | the above, plus SHAC and Dreamer implementations at matched budgets | three policy-learning stacks, each tuned enough that the comparison is fair — the largest engineering item here |
-| Zero-shot hardware transfer (§IV-E) | all of the above, plus an ANYmal, a safe test area, and the sim-to-real stack | not estimable in compute; the binding constraint is hardware access, not GPU hours |
-| Generality across quadruped, humanoid, manipulation (§IV-D) | recorded state-action data from a humanoid and a manipulator, which means Isaac Lab and a policy in each environment to generate it — the released CSV is one robot on one terrain | one data-generation run per morphology, plus a world-model training campaign each on the scale of ours, {{rt_runs}} runs in {{rt_hours}} h; the model training is the cheap half and the data is not |
-| Offline MBRL on real robots (2504.16680v1) | a real robot, a logged dataset from it, and the offline MBRL loop | not estimable in compute; hardware access again, and a claim the follow-up itself states as prospective |
-| Whether the penalty improves the learned policy (2504.16680v1 §5) | Isaac Lab, the MOPO-PPO loop, and at minimum an ablation with the penalty weight at zero | one policy-learning stack; the cheapest of the rows that need a simulator, and the one that would bound §11's open question about what the miscalibration costs |
-
-
-**Two claims this table once priced as within reach of this setup have since been run**: the
-configuration claim (§5.2) and the architecture claim (§5.3), {{rt_pre_runs}} runs and
-{{rt_pre_hours}} h of CPU training between them (Appendix B). The {{appE_n_sim_word}} that remain all
-need a simulator or hardware, and no amount of care with the released CSV changes that.
-
-**What we would do first.** The penalty ablation. It is the cheapest of the simulator-requiring
-items, it bears directly on a limitation §11 states our measurements cannot settle — whether the
-miscalibration we document costs anything downstream, where §11's policy-free proxy tests only
-whether the per-horizon correction reorders the penalty component and measures no cost — and it
-needs no robot.
-
-
-
----
+This appendix is now section S1 of the supplementary material (`docs/SUPPLEMENT.md`).
 
 ## Appendix D — every claim of the originals, and what we did with it
 
@@ -2290,7 +2251,7 @@ grounds; the physically-impossible-transition component costs nothing detectable
 {{m23_nind}} independent 400-step trajectories (the n = {{m23_nind}} caveat of §3). That is the
 binding constraint on §5's magnitudes, and no amount of trajectory oversampling changes it. The direction is re-tested on all ten episodes, each held out once: rule X3 trains both arms on {{x3_n_new_folds_word}} more fixed folds beside §5's own and returns **{{x3_reading}}** over {{x3_n}} trajectories, at {{iters_main}} iterations rather than {{iters_long}} (Appendix L). Nor can a larger
 dataset be generated here: the data generator is in neither pinned repository, and the one the lite
-release points to runs in a simulator this work did not have (Appendix C). The released checkpoint's lack
+release points to runs in a simulator this work did not have (supplementary S1). The released checkpoint's lack
 of a held-out arena is therefore a constraint, not a choice.
 
 **Ensemble size: supported, not established.** Our main arms run at ensemble size 1, where the epistemic term is identically zero, so the epistemic measurements were first made on the released checkpoint alone. The {{e5_seeds}} ensemble-5 Arm A arms (§6.6) reproduce the *direction* of §6.6's finding in {{e5_lead_cells}} of {{e5_total_cells}} seed-horizon cells and the *calibration* failure, {{e5_ratio_h100}}× at h = {{v2_deploy_h}}, but the pre-registered rule governing the replication returns **{{e5_verdict}}**: its second condition needs the paired difference to exclude zero at a majority of horizons, and it does at {{e5_n_excl}} of {{e5_n_horizons}}. Our arms have a held-out arena of only {{e5_nind}} independent trajectories, and the rule was written without checking what it could detect there. **So §6.6's finding is established on the released checkpoint and supported but not established on a model we trained.**

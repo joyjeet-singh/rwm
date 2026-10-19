@@ -868,7 +868,7 @@ def main():
     # Retractions, counted rather than asserted. An earlier draft said "four" and the
     # ledger had six by then -- exactly the drift this indirection exists to stop.
     led = open("FINDINGS_LEDGER.md").read()
-    TPL = open("PAPER.template.md").read()
+    TPL = open("PAPER.template.md").read(); _SUPTPL = open("docs/SUPPLEMENT.template.md").read()  # G9: moved sections
     sup = re.findall(r"^### (S-\d+) ", led, re.M)
     # S5: the three classes -- claims withdrawn on evidence, framings withdrawn, and
     # early hypotheses closed as housekeeping -- are scripts/ledger_check.py's, read from
@@ -1601,10 +1601,10 @@ def main():
     # Both counts are now derived from the two tables that carry them, so the
     # quantifier in 4 cannot outrun the enumeration two appendices later.
     def _table_rows(section_title):
-        """The data rows of the first Markdown table under a section heading."""
-        m = re.search(r"^## " + re.escape(section_title) + r".*$", TPL, re.M)
+        """The data rows of the first Markdown table under a section heading (the paper's, else the supplement's)."""
+        m = re.search(r"^## " + re.escape(section_title) + r".*$", TPL, re.M) or re.search(r"^## " + re.escape(section_title) + r".*$", _SUPTPL, re.M)
         assert m, f"no section titled {section_title!r}"
-        body = TPL[m.end():]
+        body = m.string[m.end():]
         nxt = body.find("\n## ")
         body = body[:nxt] if nxt > 0 else body
         # The FIRST table only: stop at its first non-table line. Round 3, R6 (ruling V5) put a second
@@ -1623,7 +1623,7 @@ def main():
     # (appE_*, appF_*) because they are identifiers, not labels; the headings they
     # are read from are the claims table (now D) and the pricing table (now C).
     _appF = _table_rows("Appendix D")
-    _appE = _table_rows("Appendix C")
+    _appE = _table_rows("S1 What testing the untested claims would require")  # G9: was Appendix C
     _f_tested = [r for r in _appF if re.split(r"(?<!\\)\|", r.strip("|"))[1].strip()
                  .lower().strip("* ") == "yes"]
     _f_untested = [r for r in _appF if r not in _f_tested]
@@ -1632,9 +1632,9 @@ def main():
     put("n_untested_word", WORDS.get(len(_f_untested), str(len(_f_untested))).lower(),
         "PAPER.template.md, Appendix D table")
     _e_cpu = [r for r in _appE if "no simulator needed" in r]
-    put("appE_n_cpu", len(_e_cpu), "PAPER.template.md, Appendix C table")
+    put("appE_n_cpu", len(_e_cpu), "docs/SUPPLEMENT.template.md, S1 table (was Appendix C)")
     put("appE_n_cpu_word", WORDS.get(len(_e_cpu), str(len(_e_cpu))).lower(),
-        "PAPER.template.md, Appendix C table")
+        "docs/SUPPLEMENT.template.md, S1 table (was Appendix C)")
 
     # B3. §4 stated a count of six and then ENUMERATED five. The count came from
     # here; the list was typed. That sentence is the replacement for retracted
@@ -1685,19 +1685,19 @@ def main():
                         "claim needs a simulator or hardware: " + ", ".join(_label(r) for r in _f_cpu))
     _f_sim = [r for r in _f_untested if "cpu" not in _tags(r)]
     assert len(_f_cpu) == len(_e_cpu), (
-        f"Appendix D tags {len(_f_cpu)} untested claims `cpu` while Appendix C "
+        f"Appendix D tags {len(_f_cpu)} untested claims `cpu` while supplementary S1 "
         f"prices {len(_e_cpu)} as needing no simulator")
     # Appendix D promises a price for EACH untested claim. It listed six of eight.
     assert len(_appE) == len(_f_untested), (
-        f"Appendix C prices {len(_appE)} claims; Appendix D marks {len(_f_untested)} "
-        "untested, and Appendix C's own opening says it prices each of them")
+        f"Supplementary S1 prices {len(_appE)} claims; Appendix D marks {len(_f_untested)} "
+        "untested, and S1's own opening says it prices each of them")
     _f_polhw = [r for r in _f_sim if {"policy", "hardware"} & set(_tags(r))]
     _f_model = [r for r in _f_sim if not ({"policy", "hardware"} & set(_tags(r)))]
     _n_sim = len(_f_sim)
     assert _n_sim == len(_f_untested) - len(_e_cpu)
-    put("appE_n_sim", _n_sim, "PAPER.template.md, Appendix C + D tables")
+    put("appE_n_sim", _n_sim, "PAPER.template.md Appendix D + docs/SUPPLEMENT.template.md S1 tables")
     put("appE_n_sim_word", WORDS.get(_n_sim, str(_n_sim)).lower(),
-        "PAPER.template.md, Appendix C + D tables")
+        "PAPER.template.md Appendix D + docs/SUPPLEMENT.template.md S1 tables")
     put("appF_n_polhw", len(_f_polhw), "PAPER.template.md, Appendix D verdict tags")
     put("appF_n_polhw_word", WORDS.get(len(_f_polhw), str(len(_f_polhw))),
         "PAPER.template.md, Appendix D verdict tags")
