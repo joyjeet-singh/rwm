@@ -1,21 +1,22 @@
-# Round-5 checkpoint — after G1 (2026-10-19)
+# Round-5 checkpoint — after G2 (2026-10-19)
 
-**State.** Branch `presubmission5`. Last log entry: **G1 — COMPLETE**. Nothing pushed. Y1–Y13 defaults stand.
+**State.** Branch `presubmission5`. Last log entry: **G2 — COMPLETE**. Nothing pushed. Y1–Y13 defaults stand (Y5 = B).
 
-**Next action.** Start G2 in a fresh terminal: `docs/presubmission/round5/go.zsh G2` (Opus 5.5, high). G2 reads
-PLAN §1, its section, `PREMISES.md` (esp. B2 and P12, P20), `CROSSWALK.md`. It does not open the review.
+**Next action.** Y5 is B, so the next session is **GT1** (Opus 5.5, high): `docs/presubmission/round5/go.zsh GT1`.
+GT1 completes `round5/PROTOCOLS.md` §4 (every ‹GT1›), probes one ensemble-5 and one single-model run on an idle machine,
+projects against the 30 CPU-h cap, commits the X11 rule and queue under a `PRE-REGISTER` subject, and launches the queue
+in the background. After GT1: G3 (X9, X10).
 
-**What G1 produced.** `round5/PREMISES.md` (P1–P40 + B1–B3), `round5/CROSSWALK.md` (incl. §code),
-`scripts/version_crosswalk.py` → `results/version_crosswalk.json` (not a stage; needs network + gitignored
-`docs/presubmission/sources/g1/`), six lines in `OUT_OF_SCOPE.md`, a FILE_MAP row.
+**What G2 produced.** `round5/PROTOCOLS.md` (commit 2d71330): X9 and X10 pre-registered rule text (§2, §3), X11 skeleton
+(§4), N7–N14 specifications (§5), summary table (§6), changes from Annex 2 (§7). Two lines in `OUT_OF_SCOPE.md`.
 
-**Facts G2/G3 must not lose.** (1) Both upstream repos: 0 commits since the pins; clones in
-`/Users/Shared/rwm_verify/upstream_latest/`. (2) Imagination env picks one random member per env; the
-evaluation path (`model_ids=None`) returns the ensemble mean — X9 must name its baseline path. (3) Per-head
-bootstrap exists only in `rsl_rl_rwm`'s MBPO-PPO update. (4) "Checkpoint trained on all ten episodes" is an
-assumption (P20) — X10 should say so. (5) RWM v1 has no 6M/250M table (B1; fix owner G12/G15).
+**Facts later sessions must not lose.** (1) G3 must commit X9's and X10's ledger entries (`PRE-REGISTERED`, IDs from
+`ledger_check.py`) and their scripts under a `PRE-REGISTER` subject **before** the first reading; the scripts are then
+frozen. (2) X9's MEAN must call `rollout_uncertainty` / `rollout_independent` unchanged; assertions run before any
+per-member number. (3) X9 (d) batches four trajectories per fold through `MN`'s input construction (batching moves
+h = 368 values by ~1e-2). (4) N10's seasonal period is written into the script in its own commit before any scoring.
+(5) The correspondence lives outside the repo (`../rwm_private/`); quote only what App. F quotes.
 
-**Blockers.** None. OpenReview workshop PDFs unreachable (browser challenge); record as not compared. Y5 queue not launched.
+**Blockers.** None.
 
-**Files.** `round5/{PREMISES,CROSSWALK,OUT_OF_SCOPE,SESSION_LOG,CHECKPOINT}.md`, `scripts/version_crosswalk.py`,
-`results/version_crosswalk.json`, `docs/presubmission/FILE_MAP.md`.
+**Files.** `round5/{PROTOCOLS,OUT_OF_SCOPE,SESSION_LOG,CHECKPOINT}.md`.

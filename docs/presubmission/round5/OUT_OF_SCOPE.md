@@ -9,3 +9,5 @@ One line each, with file:line. Do not fix in round 5.
 - `PAPER.template.md:1401` (App. H): "Table S9" for the training length does not say which paper; right for RWM v1, wrong for RWM-U v1 (S8) and v3 (S10). (G1; owner G15.)
 - `PAPER.template.md:2353` and `:689`: "heads differ only in initialisation" omits that `rsl_rl_rwm`'s MBPO-PPO update resamples the batch per head (`system_dynamics.py:129-140`, `mbpo_ppo.py:213`); true of the offline path. (G1; owner G13/G15.)
 - `scripts/insample_framing.py:37`: "the released ckpt trained on all ten" is an assumption; no record in either repository says which rows the checkpoint trained on. (G1; owner G3 for X10, G13/G14 for the wording.)
+- `docs/APPENDIX_G_VARIANCE_ARITHMETIC.template.md:70-72` (and its generated copy): the first author is referred to as "He"/"his"/"he"; the author's pronouns are not stated in the record, so the neutral "they" is safer. (G2; owner G9 or G15, whichever moves this text.)
+- `docs/presubmission/FILE_MAP.md`: no row yet for `round5/PROTOCOLS.md` (G2 added only the protocols file). (G2; owner G6 or G17.)

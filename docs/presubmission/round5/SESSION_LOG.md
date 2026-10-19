@@ -68,3 +68,38 @@ Body words / main-content pages: unchanged (17,804 / 26.9)
 Subagents: rwm-sources × 2 (venue pages and OpenReview; TMLR and MLRC policy pages). Both read through a summarising fetch tool; the results are recorded in `PREMISES.md` as such.
 Next: G2 (Opus 5.5, high) — analysis protocols committed before any data. Read PREMISES B2 and P12 before specifying X9.
 Decisions for user: none required. Optional: the venue question in P6 (what the paper may call the two follow-ups) can wait for G7/G14.
+
+## G2 — 2026-10-19 — Opus 5.5, high — status: COMPLETE
+Commits: 2d71330 [G2] PRE-REGISTER (rule text) X9 and X10; specifications for N7–N14
+         (final [G2] commit: this entry, the checkpoint and two out-of-scope lines)
+Review items closed: design of RV15–RV17, RV19, RV20, RV24–RV28, RV42 (Annex 1) in `round5/PROTOCOLS.md`; no measurement yet.
+Done: Start gate passed (G1 COMPLETE). One `rwm-reader` call located the scorers, builders, bootstraps, cache keys, action
+  offsets and weight paths; I verified every cited file:line before committing (several were corrected by 1–3 lines,
+  and the trainer class is `RWMEnsemble`). Before the commit there was no `x9_*`, `x10_*` or `n7_*`–`n14_*` file in
+  `results/`, `scripts/` or `cache/`, and all 23 weight files X9/X10 need exist. `PROTOCOLS.md` holds: X9 (MEAN = the
+  release's evaluation path, called through the existing functions unchanged; PER-MEMBER = TS∞ with one trunk pass per
+  member at MEAN's batch shape; four verdict labels, adding WIDENS THE GAP; assertions (i)–(iv)); X10 (Q = ρ_in/ρ_out,
+  draw order fixed, training split asserted from the run records); X11 skeleton for GT1 (Y5 = B, so no X12); N7–N14 with
+  inputs, formulas, tolerances, assertions, outputs, keys, stages 20v1–20v2 and 20w7–20w14. Thresholds fixed here: N8
+  ±2σ tolerance 2.5 points; N10 period window [10, 100] steps with a two-commit procedure; N11 Kendall as point estimates
+  only (no scipy in the venv; none added). §7 lists the 11 changes from Annex 2; each tightens or fills, none loosens.
+Findings that matter downstream:
+  1. N7: the stored n = 4 tests are exact *bootstrap* tests (`P5.boot_p`), whose smallest p is 2/256; an exact sign-flip
+     test's smallest p is 0.125, above every Holm level in the sweep, baseline and X4 families. N7 records `can_any_reject`.
+  2. N10: nRMSE divided by the RMS of σ is form 1 times a constant κ = mean σ / RMS σ, so model rows need no re-roll.
+  3. M-43's statistic is a pooled correlation with no per-trajectory decomposition; N7 tests a within-trajectory
+     estimand and labels it so.
+  4. X9 (d)'s one-member check must compare our trainer's class with `ReferenceRWM`; tolerance 1e-5, the precedent
+     `task_d3_ens5.py:127-128` set.
+Build/gates: not run (no text, number or generator changed); `ledger_check.py` PASS.
+Round-5 gates (report mode until G16): not available until G6
+Paper numbers changed: none
+New keys: none (keys are specified in PROTOCOLS.md for G3/G4)
+Ledger: none (G3 adds X9 and X10's PRE-REGISTERED entries with their scripts)
+Re-anchored checks: none
+CPU jobs over 1 min: none
+Queue (Y5): not launched (GT1)
+Body words / main-content pages: unchanged (17,804 / 26.9)
+Subagents: rwm-reader × 1
+Next: GT1 (Y5 = B; Opus 5.5, high) — complete PROTOCOLS.md §4, probe, pre-register and launch the queue. Then G3.
+Decisions for user: none
