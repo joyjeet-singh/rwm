@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "724"
+    "value": "725"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -7079,6 +7079,38 @@
     "source": "results/n13_adam.json",
     "value": "0.32"
   },
+  "n14_R_e5": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "7.57"
+  },
+  "n14_R_e5_ci": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "[3.98, 9.71]"
+  },
+  "n14_R_ind": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "2.60"
+  },
+  "n14_R_ind3": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "2.82"
+  },
+  "n14_R_ind3_ci": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "[1.58, 3.24]"
+  },
+  "n14_R_ind_ci": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "[1.64, 2.87]"
+  },
+  "n14_R_rel": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "174"
+  },
+  "n14_R_rel_ci": {
+    "source": "results/n14_one_step_accounting.json",
+    "value": "[82, 255]"
+  },
   "n2_changed_list": {
     "source": "results/pooled_nrmse_alongside.json",
     "value": "with the baselines teacher-forced, in-sample nRMSE at h = 1 returns DOES NOT REPRODUCE pooled against CANNOT BE SETTLED averaged; with the baselines autoregressive, in-sample nRMSE at h = 100 returns PARTIAL pooled against RWM AHEAD OF ALL THREE averaged"
@@ -8205,7 +8237,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 302
+    "value": 303
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",

@@ -4168,6 +4168,15 @@ def main():
     put("n13_ckpt_log_delta", f'{N13["ckpt_log_delta"]:.4f}', _n13s)
     put("n13_n_checkpoints_checked", N13["assertions"]["checkpoints_vs_logs"]["n_checked"], _n13s)
 
+    # Round 5, G4: N14 (ledger R-88, post hoc, optional, descriptive).
+    N14 = J("n14_one_step_accounting.json")
+    _n14s = "results/n14_one_step_accounting.json"
+    assert N14["post_hoc"] and all(v["pass"] for v in N14["assertions"].values())
+    for _m, _v in N14["models"].items():
+        put(f"n14_R_{_m}", f'{_v["R"]:.2f}' if _v["R"] < 100 else f'{_v["R"]:.0f}', _n14s)
+        put(f"n14_R_{_m}_ci", f'[{_v["R_ci"][0]:.2f}, {_v["R_ci"][1]:.2f}]' if _v["R_ci"][1] < 100
+            else f'[{_v["R_ci"][0]:.0f}, {_v["R_ci"][1]:.0f}]', _n14s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

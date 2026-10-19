@@ -10201,3 +10201,22 @@ probes, the X11 queue) are listed and skipped.
 
 **Evidence** `RUN` `results/n13_adam.json`; `SRC` `scripts/n13_adam.py`, `src/rwm_train.py`, `src/rwm_model.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-88 — N14 (post hoc): how much of the one-step error each ensemble's spread can account for · **NEW**
+**Post hoc and descriptive** (round 5, PLAN Annex 2 N14, optional; specification `docs/presubmission/round5/PROTOCOLS.md`
+§5 N14, committed in `2d71330`). It re-opens no rule.
+
+**The statistic.** At forecast step 1, with K members, R = E[e²] / ((1 + 1/K) E[s²]): the mean squared error of the members' mean
+against what the across-member variance (ddof = 1) would predict if the truth were one more draw from the members. R = 1 means the
+spread accounts for the one-step error; R > 1 means it accounts for 1/R of it. **Assertion:** at h = 1, ρ and ±1σ coverage
+reproduce `results/task_d3_ens5.json`, `results/r2_independent_ensemble.json` and `results/task_d_nind20.json` (relative difference
+0.0e+00).
+
+**Readings (95% intervals over whole trajectories):** the released checkpoint, all ten episodes (20 trajectories; in-sample only if it
+trained on this recording, PREMISES P20), R = 173.80 [82.17, 255.50]; the ensemble-5 arms, held-out pair (4), the seed mean of the per-seed ratios
+R = 7.57 [3.98, 9.71] (per seed 5.76, 8.72, 8.22); the independent ensemble of five, held-out pair, R = 2.60 [1.64, 2.87]; its first three members, R = 2.82 [1.58, 3.24]. **Every
+interval lies above 1:** even at one step no ensemble here accounts for its own error, and the shared-trunk ensembles account for the
+least of it.
+
+**Evidence** `RUN` `results/n14_one_step_accounting.json`; `SRC` `scripts/n14_one_step_accounting.py`, `scripts/x9_per_member_propagation.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

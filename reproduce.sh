@@ -516,6 +516,8 @@ stage 20w12 "N12 — the released checkpoint's provenance and one-step error (po
       results/n12_provenance.json NEEDS_WEIGHTS $PY scripts/n12_provenance.py
 stage 20w13 "N13 — Adam: defaults, the collapse rate and the step bound (post hoc, R-87)" "1 min" \
       results/n13_adam.json NEEDS_WEIGHTS $PY scripts/n13_adam.py
+stage 20w14 "N14 — how much one-step error each ensemble's spread accounts for (post hoc, optional, R-88)" "30 s" \
+      results/n14_one_step_accounting.json NEEDS_WEIGHTS $PY scripts/n14_one_step_accounting.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them

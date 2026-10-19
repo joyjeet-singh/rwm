@@ -1,0 +1,99 @@
+{
+ "analysis": "N14",
+ "post_hoc": true,
+ "descriptive": true,
+ "optional": true,
+ "never_reopens": "M-44, M-65 or any rule; nothing here changes a verdict",
+ "script": "scripts/n14_one_step_accounting.py",
+ "script_sha256": "d8b03c2f52863768b90aa14b2d55e458e2c235df7d141b8a09afbf036c844ee6",
+ "design": {
+  "statistic": "R = E[e^2] / ((1 + 1/K) E[s^2]) at forecast step 1",
+  "seed_pooling": "e5: the mean over seeds of each seed's R, recomputed in each draw",
+  "arenas": {
+   "e5": "held-out pair, 4",
+   "ind": "held-out pair, 4",
+   "ind3": "held-out pair, 4",
+   "rel": "all ten episodes, 20 (PREMISES P20)"
+  },
+  "specification": "docs/presubmission/round5/PROTOCOLS.md \u00a75 N14"
+ },
+ "assertions": {
+  "h1_reproduction": {
+   "pass": true,
+   "max_rel_diff": 0.0,
+   "tolerance": 1e-06,
+   "against": [
+    "results/task_d_nind20.json d1_by_horizon.1.epistemic",
+    "results/task_d3_ens5.json calibration.1.per_seed",
+    "results/r2_independent_ensemble.json independent.1"
+   ]
+  }
+ },
+ "models": {
+  "e5": {
+   "K": 5,
+   "n_trajectories": 4,
+   "E_e2": 0.010393958738111731,
+   "E_s2": 0.0011655472913515933,
+   "R": 7.566418538538483,
+   "R_ci": [
+    3.982657944217216,
+    9.707296304765052
+   ],
+   "per_seed_R": [
+    5.756980227678174,
+    8.72495565018176,
+    8.217319737755517
+   ]
+  },
+  "ind": {
+   "K": 5,
+   "n_trajectories": 4,
+   "E_e2": 0.011048851559039919,
+   "E_s2": 0.003547224298186603,
+   "R": 2.5956566388843494,
+   "R_ci": [
+    1.6394305937363802,
+    2.8664920316441975
+   ],
+   "per_seed_R": null
+  },
+  "ind3": {
+   "K": 3,
+   "n_trajectories": 4,
+   "E_e2": 0.011250875173697272,
+   "E_s2": 0.0029960713325594152,
+   "R": 2.816407035631091,
+   "R_ci": [
+    1.5832360792034668,
+    3.2437331195291477
+   ],
+   "per_seed_R": null
+  },
+  "rel": {
+   "K": 5,
+   "n_trajectories": 20,
+   "E_e2": 0.08884115468378795,
+   "E_s2": 0.0004259662139529727,
+   "R": 173.8032105475783,
+   "R_ci": [
+    82.16613849970683,
+    255.49815364816956
+   ],
+   "per_seed_R": null
+  }
+ },
+ "code_sha256": {
+  "scripts/n14_one_step_accounting.py": "d8b03c2f52863768b90aa14b2d55e458e2c235df7d141b8a09afbf036c844ee6",
+  "scripts/x9_per_member_propagation.py": "7928649f1771854fcba9aa00bbfda2dd9a4535de6ac3e73d0dda184903feefd3",
+  "scripts/r2_independent_ensemble.py": "f36314bb144746acdb7666ed4c5fabc8a89f5ef723f4793e6f68ed0f412af873",
+  "scripts/x11_common.py": "4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a",
+  "src/score_reference.py": "e79d986a2fd6bfa545a33ab30c5ef3065ff247b673b12f69a49c8017e88c21ac"
+ },
+ "git_head": "b87abbfec934f37cf8eda924508781cd943c15d2",
+ "timing": {
+  "wall_clock_s": 11.457079406001867,
+  "torch_threads": 2,
+  "cpu_count": 4
+ }
+}

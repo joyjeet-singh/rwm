@@ -4172,6 +4172,25 @@
         "src/rwm_train.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-88",
+      "claim": "N14 (post hoc): how much of the one-step error each ensemble's spread can account for",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/n14_one_step_accounting.json",
+        "results/r2_independent_ensemble.json",
+        "results/task_d3_ens5.json",
+        "results/task_d_nind20.json",
+        "scripts/n14_one_step_accounting.py",
+        "scripts/x9_per_member_propagation.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -4180,7 +4199,7 @@
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 87,
+    "R": 88,
     "S": 21,
     "X": 17
   },
