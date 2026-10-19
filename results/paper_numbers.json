@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "702"
+    "value": "705"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5759,13 +5759,165 @@
     "source": "results/n5_stale_armA_ci.json",
     "value": "+209.3"
   },
+  "n8_adequate_n": {
+    "source": "results/n8_tails.json",
+    "value": 15
+  },
+  "n8_adequate_pm2_under": {
+    "source": "results/n8_tails.json",
+    "value": 15
+  },
+  "n8_cov2_at_c_rel_epi_h1": {
+    "source": "results/n8_tails.json",
+    "value": "93.8"
+  },
+  "n8_cov2_at_c_rel_epi_h100": {
+    "source": "results/n8_tails.json",
+    "value": "88.8"
+  },
+  "n8_cov2_at_c_rel_epi_h128": {
+    "source": "results/n8_tails.json",
+    "value": "87.8"
+  },
+  "n8_cov2_at_c_rel_epi_h32": {
+    "source": "results/n8_tails.json",
+    "value": "90.9"
+  },
+  "n8_cov2_at_c_rel_epi_h368": {
+    "source": "results/n8_tails.json",
+    "value": "84.3"
+  },
+  "n8_cov2_at_c_rel_epi_h8": {
+    "source": "results/n8_tails.json",
+    "value": "92.1"
+  },
+  "n8_cov2_at_k_rel_epi_h1": {
+    "source": "results/n8_tails.json",
+    "value": "86.4"
+  },
+  "n8_cov2_at_k_rel_epi_h100": {
+    "source": "results/n8_tails.json",
+    "value": "83.7"
+  },
+  "n8_cov2_at_k_rel_epi_h128": {
+    "source": "results/n8_tails.json",
+    "value": "83.6"
+  },
+  "n8_cov2_at_k_rel_epi_h32": {
+    "source": "results/n8_tails.json",
+    "value": "84.7"
+  },
+  "n8_cov2_at_k_rel_epi_h368": {
+    "source": "results/n8_tails.json",
+    "value": "83.6"
+  },
+  "n8_cov2_at_k_rel_epi_h8": {
+    "source": "results/n8_tails.json",
+    "value": "85.1"
+  },
+  "n8_k_e5_epi_h1": {
+    "source": "results/n8_tails.json",
+    "value": "2.56"
+  },
+  "n8_k_e5_epi_h100": {
+    "source": "results/n8_tails.json",
+    "value": "12.92"
+  },
+  "n8_k_e5_epi_h128": {
+    "source": "results/n8_tails.json",
+    "value": "13.70"
+  },
+  "n8_k_e5_epi_h32": {
+    "source": "results/n8_tails.json",
+    "value": "10.14"
+  },
+  "n8_k_e5_epi_h368": {
+    "source": "results/n8_tails.json",
+    "value": "17.07"
+  },
+  "n8_k_e5_epi_h8": {
+    "source": "results/n8_tails.json",
+    "value": "7.68"
+  },
+  "n8_k_over_c_rel_epi_h1": {
+    "source": "results/n8_tails.json",
+    "value": "0.63"
+  },
+  "n8_k_over_c_rel_epi_h100": {
+    "source": "results/n8_tails.json",
+    "value": "0.73"
+  },
+  "n8_k_over_c_rel_epi_h128": {
+    "source": "results/n8_tails.json",
+    "value": "0.78"
+  },
+  "n8_k_over_c_rel_epi_h32": {
+    "source": "results/n8_tails.json",
+    "value": "0.64"
+  },
+  "n8_k_over_c_rel_epi_h368": {
+    "source": "results/n8_tails.json",
+    "value": "0.97"
+  },
+  "n8_k_over_c_rel_epi_h8": {
+    "source": "results/n8_tails.json",
+    "value": "0.62"
+  },
+  "n8_k_rel_epi_h1": {
+    "source": "results/n8_tails.json",
+    "value": "6.6"
+  },
+  "n8_k_rel_epi_h100": {
+    "source": "results/n8_tails.json",
+    "value": "30.8"
+  },
+  "n8_k_rel_epi_h128": {
+    "source": "results/n8_tails.json",
+    "value": "33.3"
+  },
+  "n8_k_rel_epi_h32": {
+    "source": "results/n8_tails.json",
+    "value": "18.1"
+  },
+  "n8_k_rel_epi_h368": {
+    "source": "results/n8_tails.json",
+    "value": "41.7"
+  },
+  "n8_k_rel_epi_h8": {
+    "source": "results/n8_tails.json",
+    "value": "11.7"
+  },
+  "n8_n_cells": {
+    "source": "results/n8_tails.json",
+    "value": 48
+  },
+  "n8_n_heavy": {
+    "source": "results/n8_tails.json",
+    "value": 30
+  },
+  "n8_n_light": {
+    "source": "results/n8_tails.json",
+    "value": 0
+  },
+  "n8_n_mixed": {
+    "source": "results/n8_tails.json",
+    "value": 18
+  },
+  "n8_n_near": {
+    "source": "results/n8_tails.json",
+    "value": 0
+  },
+  "n8_over_to_heavy": {
+    "source": "results/n8_tails.json",
+    "value": 30
+  },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
     "value": "five"
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 295
+    "value": 296
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",

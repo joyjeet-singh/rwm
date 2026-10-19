@@ -4033,6 +4033,24 @@
         "scripts/x9_per_member_propagation.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-81",
+      "claim": "N8 (post hoc): the tails of the calibration error \u2014 M-65's over-covering cells are heavy",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/m65_gaussian_nominal.json",
+        "results/n8_tails.json",
+        "scripts/m65_gaussian_nominal.py",
+        "scripts/n8_tails.py",
+        "scripts/task_d3_perhorizon.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -4041,7 +4059,7 @@
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 80,
+    "R": 81,
     "S": 21,
     "X": 17
   },

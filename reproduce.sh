@@ -502,6 +502,8 @@ stage 20v1 "X9 — per-member propagation against the released mean protocol (M-
       results/x9_per_member_propagation.json NEEDS_WEIGHTS $PY scripts/x9_per_member_propagation.py
 stage 20v2 "X10 — in-sample against held-out calibration, ensemble-5 arms (M-102)" "1 min" \
       results/x10_insample_vs_heldout.json NEEDS_WEIGHTS $PY scripts/x10_insample_vs_heldout.py
+stage 20w8 "N8 — the tails: M-65's cells at +-2 sigma and the coverage-matching multiplier (post hoc, R-81)" "10 s" \
+      results/n8_tails.json NEEDS_WEIGHTS $PY scripts/n8_tails.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them

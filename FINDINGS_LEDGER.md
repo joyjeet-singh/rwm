@@ -10011,3 +10011,27 @@ ledger entry is G3's. Its assertion is X9's (i)(b): MEAN on fold {1, 8}'s arms r
 **Evidence** `SRC` `scripts/x9_per_member_propagation.py`, `scripts/x11_common.py`;
 `RUN` `results/x11e_fold_e5_propagation.json` (awaited).
 **Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x11e_fold_e5_propagation.json` · **Relevance** METHOD
+
+### R-81 — N8 (post hoc): the tails of the calibration error — M-65's over-covering cells are heavy-tailed at ±2σ, and the coverage-matching multiplier · **NEW**
+**Post hoc.** Computed after M-65's data existed (round 5, PLAN Annex 2 N8; specification
+`docs/presubmission/round5/PROTOCOLS.md` §5 N8, committed in `2d71330` before this ran). It re-opens no rule and changes no
+verdict: M-65's verdict and counts stand as committed. It reports what M-65's cells look like at ±2σ, which M-65's branch did
+not read.
+
+**Assertions:** ρ, the mean-matching constant c and the ±1σ and ±2σ coverage under cσ equal `results/m65_gaussian_nominal.json`
+in all 48 cells (maximum difference 0.0e+00); the coverage-matching multiplier k
+equals `task_d3_perhorizon.fit_scalar`'s bisection on the released checkpoint's epistemic cell at every horizon (relative
+2.0e-16).
+
+**Signature** of each cell under mean-matching (tolerances fixed in PROTOCOLS: ±1σ against 68.27 ± 5.0, ±2σ against
+95.45 ± 2.5): **heavy-tailed 30**, light-tailed 0, near-Gaussian 0, mixed
+18, of 48. Against M-65's labels: GAUSSIAN NOMINAL ADEQUATE -> mixed (±1σ within, ±2σ under): 15; OVER-DISPERSED -> heavy-tailed: 30; OVER-DISPERSED -> mixed (±1σ over, ±2σ within): 3. So every cell M-65 called OVER-DISPERSED over-covers at ±1σ
+because the error is heavier-tailed than a Gaussian, and none of the cells it called adequate is near-Gaussian at ±2σ.
+
+**The coverage-matching multiplier** (DECISIONS Y7's "too small by ×k"), released checkpoint, epistemic, all ten episodes: h = 1: k = 6.56 against c = 10.41 (k/c = 0.630), ±2σ under kσ 86.4%; h = 100: k = 30.76 against c = 41.89 (k/c = 0.734), ±2σ under kσ 83.7%; h = 368: k = 41.69 against c = 43.17 (k/c = 0.966), ±2σ under kσ 83.6%.
+The ensemble-5 arms (held-out pair, seeds pooled): h = 1 k = 2.56, h = 100 k =
+12.92, h = 368 k = 17.07. Every cell's ρ, c, k, k/c and four
+coverages are in the artifact.
+
+**Evidence** `RUN` `results/n8_tails.json`; `SRC` `scripts/n8_tails.py`, `scripts/m65_gaussian_nominal.py`, `scripts/task_d3_perhorizon.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB
