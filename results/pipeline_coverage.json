@@ -1,6 +1,6 @@
 {
-  "n_artifacts": 90,
-  "n_paper_keys": 2476,
+  "n_artifacts": 100,
+  "n_paper_keys": 3278,
   "n_uncovered": 0,
   "uncovered": [],
   "exempt": {
@@ -37,6 +37,30 @@
       "exempt_reason": null
     },
     {
+      "artifact": "n10_floors.json",
+      "n_paper_keys": 222,
+      "writers": [
+        "n10_floors"
+      ],
+      "invoked_writers": [
+        "n10_floors"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "x9_per_member_propagation.json",
+      "n_paper_keys": 150,
+      "writers": [
+        "x9_per_member_propagation"
+      ],
+      "invoked_writers": [
+        "x9_per_member_propagation"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "task_b2_epistemic.json",
       "n_paper_keys": 137,
       "writers": [
@@ -46,6 +70,18 @@
       "invoked_writers": [
         "check_comparative_claims",
         "task_b2_epistemic"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "n11_rank_correlations.json",
+      "n_paper_keys": 137,
+      "writers": [
+        "n11_rank_correlations"
+      ],
+      "invoked_writers": [
+        "n11_rank_correlations"
       ],
       "covered": true,
       "exempt_reason": null
@@ -63,12 +99,26 @@
       "exempt_reason": null
     },
     {
+      "artifact": "n9_recalibration_scores.json",
+      "n_paper_keys": 108,
+      "writers": [
+        "n9_recalibration_scores"
+      ],
+      "invoked_writers": [
+        "n9_recalibration_scores"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "r2_combined_arm.json",
       "n_paper_keys": 91,
       "writers": [
+        "n7_exact_tests",
         "r2_independent_ensemble"
       ],
       "invoked_writers": [
+        "n7_exact_tests",
         "r2_independent_ensemble"
       ],
       "covered": true,
@@ -78,10 +128,24 @@
       "artifact": "r2_independent_ensemble.json",
       "n_paper_keys": 85,
       "writers": [
+        "n7_exact_tests",
         "r2_independent_ensemble"
       ],
       "invoked_writers": [
+        "n7_exact_tests",
         "r2_independent_ensemble"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "n7_exact_tests.json",
+      "n_paper_keys": 71,
+      "writers": [
+        "n7_exact_tests"
+      ],
+      "invoked_writers": [
+        "n7_exact_tests"
       ],
       "covered": true,
       "exempt_reason": null
@@ -137,6 +201,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "n8_tails.json",
+      "n_paper_keys": 38,
+      "writers": [
+        "n8_tails"
+      ],
+      "invoked_writers": [
+        "n8_tails"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "mn_compute_matched.json",
       "n_paper_keys": 35,
       "writers": [
@@ -170,6 +246,18 @@
       ],
       "invoked_writers": [
         "pooled_nrmse_rescore"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "x10_insample_vs_heldout.json",
+      "n_paper_keys": 34,
+      "writers": [
+        "x10_insample_vs_heldout"
+      ],
+      "invoked_writers": [
+        "x10_insample_vs_heldout"
       ],
       "covered": true,
       "exempt_reason": null
@@ -415,6 +503,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "n13_adam.json",
+      "n_paper_keys": 19,
+      "writers": [
+        "n13_adam"
+      ],
+      "invoked_writers": [
+        "n13_adam"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "x3_cross_fold.json",
       "n_paper_keys": 19,
       "writers": [
@@ -496,6 +596,18 @@
       "invoked_writers": [
         "check_comparative_claims",
         "task_d2b_robustness"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
+      "artifact": "n12_provenance.json",
+      "n_paper_keys": 15,
+      "writers": [
+        "n12_provenance"
+      ],
+      "invoked_writers": [
+        "n12_provenance"
       ],
       "covered": true,
       "exempt_reason": null
@@ -741,6 +853,18 @@
       "exempt_reason": null
     },
     {
+      "artifact": "n14_one_step_accounting.json",
+      "n_paper_keys": 8,
+      "writers": [
+        "n14_one_step_accounting"
+      ],
+      "invoked_writers": [
+        "n14_one_step_accounting"
+      ],
+      "covered": true,
+      "exempt_reason": null
+    },
+    {
       "artifact": "q1_pets_descendants.json",
       "n_paper_keys": 8,
       "writers": [
@@ -822,9 +946,11 @@
       "artifact": "m49_capacity_matched.json",
       "n_paper_keys": 7,
       "writers": [
+        "n7_exact_tests",
         "r2_independent_ensemble"
       ],
       "invoked_writers": [
+        "n7_exact_tests",
         "r2_independent_ensemble"
       ],
       "covered": true,
@@ -850,6 +976,7 @@
         "mn_sweep_differential",
         "mn_sweep_eval",
         "mn_sweep_timing",
+        "n13_adam",
         "pipeline_coverage",
         "round4_queue_timing",
         "step5_train",
@@ -868,6 +995,7 @@
         "baselines_timing",
         "mn_sweep_eval",
         "mn_sweep_timing",
+        "n13_adam",
         "pipeline_coverage",
         "round4_queue_timing",
         "step6_3_min_logstd",
@@ -977,6 +1105,7 @@
         "baselines_timing",
         "mn_sweep_eval",
         "mn_sweep_timing",
+        "n13_adam",
         "pipeline_coverage",
         "round4_queue_timing",
         "step5_train",
@@ -994,6 +1123,7 @@
         "baselines_timing",
         "mn_sweep_eval",
         "mn_sweep_timing",
+        "n13_adam",
         "pipeline_coverage",
         "round4_queue_timing",
         "step6_analyse",
