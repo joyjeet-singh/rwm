@@ -113,4 +113,8 @@ stands, or name the changes. Four things in it are choices rather than consequen
 The abstract draft (210 words, 5 numerals) and the four contributions (at most 45 words each) are in §abstract and
 §contributions; G11 starts from them and rechecks them against the readings (rule 10), including GT2's.
 
-**Status: AWAITING USER.**
+**Status: APPROVED.** User ruling, 2026-10-19 (chat): "I approve all 4 recommendations. Continue". So: (1) the plan as
+written, with no broader-impact statement; (2) "the released checkpoint, on its ten released episodes" replaces rule
+11's "trained on all ten episodes" for X7 and every released-checkpoint scope sentence; (3) the title *Right Ranking,
+Wrong Scale: Reproducing the Robotic World Model's Dynamics Model and Testing the Uncertainty of Its Follow-up*;
+(4) G9's migration list, item 13 included.
