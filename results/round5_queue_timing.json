@@ -1,0 +1,173 @@
+{
+ "rule": "X11 (round 5) queue timing",
+ "probe_iterations": 20,
+ "probes": {
+  "e5": {
+   "kind": "e5",
+   "seed": 0,
+   "fold": [
+    0,
+    2
+   ],
+   "steady_s_per_iter": 5.240717388263157,
+   "probe_wall_clock_s": 104.57884603399998,
+   "n_train_windows": 7688,
+   "losses_finite": true,
+   "rule": "X11"
+  },
+  "single": {
+   "kind": "single",
+   "seed": 3,
+   "fold": [
+    0,
+    2
+   ],
+   "steady_s_per_iter": 1.068462149473673,
+   "probe_wall_clock_s": 21.261198279999917,
+   "n_train_windows": 7688,
+   "losses_finite": true,
+   "rule": "X11"
+  }
+ },
+ "probe_minutes": 2.222389650344849,
+ "load_before": [
+  2.6162109375,
+  2.7900390625,
+  3.01025390625
+ ],
+ "load_after": [
+  3.53857421875,
+  3.1357421875,
+  3.115234375
+ ],
+ "per_run": {
+  "e5": {
+   "finished": {
+    "runs": [
+     "results/step5_armA_seed0_ens5.json",
+     "results/step5_armA_seed1_ens5.json",
+     "results/step5_armA_seed2_ens5.json"
+    ],
+    "wall_clock_s": [
+     14406.873469326001,
+     14240.875148473002,
+     15980.418844969994
+    ],
+    "steady_s_per_iter_0_475": [
+     6.6329894611663125,
+     5.655317479482106,
+     6.097458921440013
+    ]
+   },
+   "finished_mean_h": 4.132237728034166,
+   "finished_steady_s_per_iter": 6.128588620696143,
+   "probe_over_finished": 0.8551263125355388,
+   "scaled": false,
+   "projected_h": 4.132237728034166
+  },
+  "single": {
+   "finished": {
+    "runs": [
+     "results/x3_run_armA_ho02_seed0.json",
+     "results/x3_run_armA_ho02_seed1.json",
+     "results/x3_run_armA_ho02_seed2.json",
+     "results/x3_run_armA_ho34_seed0.json",
+     "results/x3_run_armA_ho34_seed1.json",
+     "results/x3_run_armA_ho34_seed2.json",
+     "results/x3_run_armA_ho56_seed0.json",
+     "results/x3_run_armA_ho56_seed1.json",
+     "results/x3_run_armA_ho56_seed2.json",
+     "results/x3_run_armA_ho79_seed0.json",
+     "results/x3_run_armA_ho79_seed1.json",
+     "results/x3_run_armA_ho79_seed2.json"
+    ],
+    "wall_clock_s": [
+     3431.8888327689997,
+     2279.006807605998,
+     2237.7182637809965,
+     2280.309199153,
+     2310.356039147002,
+     2218.4756750929955,
+     2236.018568955,
+     2283.690476666001,
+     2224.8887378380023,
+     3262.0101192119982,
+     2378.6368245549966,
+     4758.91377727
+    ],
+    "steady_s_per_iter_0_475": [
+     1.2905180168778942,
+     0.9041897123789501,
+     0.8889117692884266,
+     0.9006940885705262,
+     0.9251938032926257,
+     0.8867067465831459,
+     0.8886761492252615,
+     0.9048397302799889,
+     0.901732750983149,
+     1.3596777833242117,
+     0.9212905907642103,
+     2.142704629701052
+    ]
+   },
+   "finished_mean_h": 0.7384702157880784,
+   "finished_steady_s_per_iter": 1.0762613142724535,
+   "probe_over_finished": 0.9927534654499287,
+   "scaled": false,
+   "projected_h": 0.7384702157880784
+  }
+ },
+ "n_runs": {
+  "e5": 12,
+  "single": 8
+ },
+ "projected_total_h": 55.49461446271462,
+ "cap_rule": "DECISIONS.md#GT1-cap: 1.10 x the projection, rounded up to the next whole hour",
+ "cap_h": 62,
+ "cap_checked_against": null,
+ "blocked": false,
+ "queue_order": [
+  [
+   "e5",
+   0
+  ],
+  [
+   "single",
+   3
+  ],
+  [
+   "e5",
+   1
+  ],
+  [
+   "single",
+   4
+  ],
+  [
+   "e5",
+   2
+  ]
+ ],
+ "queue_lines": [
+  "x11_e5_02_s0 x11-e5-02 32 8 0 2500",
+  "x11_e5_34_s0 x11-e5-34 32 8 0 2500",
+  "x11_e5_56_s0 x11-e5-56 32 8 0 2500",
+  "x11_e5_79_s0 x11-e5-79 32 8 0 2500",
+  "x11_A_02_s3 x3-A-02 32 8 3 2500",
+  "x11_A_34_s3 x3-A-34 32 8 3 2500",
+  "x11_A_56_s3 x3-A-56 32 8 3 2500",
+  "x11_A_79_s3 x3-A-79 32 8 3 2500",
+  "x11_e5_02_s1 x11-e5-02 32 8 1 2500",
+  "x11_e5_34_s1 x11-e5-34 32 8 1 2500",
+  "x11_e5_56_s1 x11-e5-56 32 8 1 2500",
+  "x11_e5_79_s1 x11-e5-79 32 8 1 2500",
+  "x11_A_02_s4 x3-A-02 32 8 4 2500",
+  "x11_A_34_s4 x3-A-34 32 8 4 2500",
+  "x11_A_56_s4 x3-A-56 32 8 4 2500",
+  "x11_A_79_s4 x3-A-79 32 8 4 2500",
+  "x11_e5_02_s2 x11-e5-02 32 8 2 2500",
+  "x11_e5_34_s2 x11-e5-34 32 8 2 2500",
+  "x11_e5_56_s2 x11-e5-56 32 8 2 2500",
+  "x11_e5_79_s2 x11-e5-79 32 8 2 2500"
+ ]
+}
