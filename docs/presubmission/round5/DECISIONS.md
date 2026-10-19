@@ -54,3 +54,12 @@ shapes so that float32 rounding matches"). The tolerance stays 0.0. The script w
 at step 1, but the CRPS and NLL means differed by 2.8e-17 and 2.2e-16 (assertion (ii) reported 7.1e-15). The per-member
 spread array inherited the input tensor's non-contiguous memory layout and MEAN's did not, so numpy summed them in a
 different order. `cell()` now reduces C-contiguous copies. The tolerance stays 0.0.
+
+## G4-n7-a1
+
+**User ruling, 2026-10-19 (chat), on N7's first run:** "Use a1's float32 mean". N7's reproduction assertion (item 1) failed:
+`results/a1_ab_by_horizon.json`'s stored `gap` differed from the mean of its stored `gap_per_trajectory` by 3.0e-8 against
+PROTOCOLS' 1e-12. Cause: a1 averages a float32 array (`scripts/a1_ab_by_horizon.py:156,170`); N7 averaged the same stored
+values in float64. Every other N7 assertion passed and no N7 test had been computed (the run stopped with a `.blocked`
+record, kept at `/Users/Shared/rwm_verify/evidence/R5G4/`). The fix computes the point as a1 does, the float32 mean of
+the stored list; the tolerance stays 1e-12; the interval check is unchanged (`boot_cluster`, 1e-7).

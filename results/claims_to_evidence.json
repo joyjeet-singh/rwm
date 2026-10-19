@@ -4051,6 +4051,23 @@
         "scripts/task_d3_perhorizon.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-82",
+      "claim": "N7 (post hoc): exact sign-flip tests for every paired comparison reported at n = 4 with ",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/n7_exact_tests.json",
+        "scripts/n7_exact_tests.py",
+        "scripts/p5_sweep_power.py",
+        "scripts/review_bootstrap_unit.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -4059,7 +4076,7 @@
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 81,
+    "R": 82,
     "S": 21,
     "X": 17
   },

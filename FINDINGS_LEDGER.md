@@ -10035,3 +10035,30 @@ coverages are in the artifact.
 
 **Evidence** `RUN` `results/n8_tails.json`; `SRC` `scripts/n8_tails.py`, `scripts/m65_gaussian_nominal.py`, `scripts/task_d3_perhorizon.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-82 — N7 (post hoc): exact sign-flip tests for every paired comparison reported at n = 4 with a bootstrap interval, and at the episode level for the 20-trajectory arenas · **NEW**
+**Post hoc.** Computed after every input existed (round 5, PLAN Annex 2 N7; specification
+`docs/presubmission/round5/PROTOCOLS.md` §5 N7, committed in `2d71330`). It re-opens no rule and changes no verdict: every
+stored verdict, interval and bootstrap p stands. It sets beside each paired comparison the paper reports at n_independent = 4
+with a bootstrap interval the exact two-sided sign-flip test over all 16 sign vectors of the per-trajectory differences
+(seeds averaged within trajectory, M-27), and for the 20-trajectory arenas the exact test at the episode level (1,024 sign vectors).
+
+**Assertions** (PROTOCOLS' tolerances): every stored point and interval is reproduced from its stored per-trajectory list by
+the artifact's own functions: `p5_sweep_power.boot_ci`/`boot_p` for the sweep, the baselines and X4 (difference
+0.0e+00), `review_bootstrap_unit.boot_cluster` for a1 (3.0e-08), the
+re-rolled M-43 arrays (0.0e+00), X3's gap and per-episode means (0.0e+00). The first run
+stopped on a1's point check (3.0e-8: a1 averages float32); by the user's ruling
+(`docs/presubmission/round5/DECISIONS.md#G4-n7-a1`) it is now computed with a1's own float32 arithmetic, tolerance unchanged.
+
+**What an exact test can say at n = 4.** 260 comparisons tested, 228 of them at n = 4. The smallest attainable
+p at n = 4 is 0.125 (all four trajectories the same sign); 154 of the 228 reach it. **No member of any
+Holm family could be rejected by an exact test**, because 0.125 exceeds every family's first Holm level: sweep M-74 (m = 8, first Holm level 0.00625): exact p 0.125 at best, stored bootstrap p 0 at best; baselines M-75 (m = 3, first Holm level 0.01667): exact p 0.125 at best, stored bootstrap p 0 at best; baselines M-76 (m = 3, first Holm level 0.01667): exact p 0.125 at best, stored bootstrap p 0 at best; x4 X4 (m = 2, first Holm level 0.02500): exact p 0.125 at best, stored bootstrap p 0 at best.
+At the episode level of the held-out pair (2 units) the smallest attainable p is 0.5, so no test is possible there.
+
+**Selected rows.** The A/B gap (a1): h = 1: p = 0.375, 3 of 4; h = 8: p = 0.125, 4 of 4; h = 32: p = 0.125, 4 of 4; h = 100: p = 0.125, 4 of 4; h = 128: p = 0.125, 4 of 4; h = 368: p = 0.125, 4 of 4. M-43, as a WITHIN-trajectory estimand (r_t(disagreement) − r_t(index), a different
+quantity from the stored pooled difference): h = 8: p = 0.125, 4 of 4; h = 32: p = 0.875, 3 of 4; h = 128: p = 0.125, 4 of 4; h = 368: p = 0.500, 2 of 4. The independent-ensemble comparisons, seed-averaged: r2: log ratio p = 0.125 (4 of 4), coverage p = 0.125 (4 of 4); r2_combined: log ratio p = 0.125 (4 of 4), coverage p = 0.125 (4 of 4); m49: log ratio p = 0.125 (4 of 4), coverage p = 0.125 (4 of 4). X3's gap at the
+episode level: h = 1: p = 0.1953, 6 of 10; h = 8: p = 0.0215, 8 of 10; h = 32: p = 0.0020, 10 of 10; h = 100: p = 0.0020, 10 of 10; h = 128: p = 0.0020, 10 of 10; h = 368: p = 0.0020, 10 of 10. X9 at the episode level: rel_f_h100: p = 0.0020, 10 of 10; rel_log_ratio_h100: p = 0.0020, 10 of 10; rel_f_h368: p = 0.0020, 10 of 10; rel_log_ratio_h368: p = 0.0020, 10 of 10; fold_f_h100: p = 0.0020, 10 of 10; fold_log_ratio_h100: p = 0.0020, 10 of 10; fold_f_h368: p = 0.0020, 10 of 10; fold_log_ratio_h368: p = 0.0020, 10 of 10. Every row (source, JSON path, n, T, k, p, the stored interval and p) is in
+the artifact.
+
+**Evidence** `RUN` `results/n7_exact_tests.json`; `SRC` `scripts/n7_exact_tests.py`, `scripts/p5_sweep_power.py`, `scripts/review_bootstrap_unit.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

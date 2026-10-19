@@ -4022,6 +4022,39 @@ def main():
     put("n8_adequate_n", sum(v for k, v in _x8.items() if k.startswith("GAUSSIAN NOMINAL ADEQUATE")), _n8s)
     put("n8_adequate_pm2_under", sum(v for k, v in _x8.items() if k.startswith("GAUSSIAN NOMINAL ADEQUATE") and "±2σ under" in k), _n8s)
 
+    # Round 5, G4: N7 (ledger R-82, post hoc). NEEDS_WEIGHTS only for item 7's re-roll of M-43.
+    N7 = J("n7_exact_tests.json")
+    _n7s = "results/n7_exact_tests.json"
+    assert N7["post_hoc"] and all(v["pass"] for v in N7["assertions"].values())
+    _s7 = N7["summary"]
+    put("n7_p_min_n4", f'{_s7["p_min_n4"]:.3f}', _n7s)
+    put("n7_n_tested", _s7["n_tested"], _n7s)
+    put("n7_n_n4", _s7["n_n4"], _n7s)
+    put("n7_n_4of4", _s7["n_4of4"], _n7s)
+    _f7 = N7["families"]
+    put("n7_sweep_can_reject", "yes" if _f7["sweep M-74"]["can_any_reject"] else "no", _n7s)
+    put("n7_baselines_can_reject", "yes" if (_f7["baselines M-75"]["can_any_reject"] or _f7["baselines M-76"]["can_any_reject"]) else "no", _n7s)
+    put("n7_x4_can_reject", "yes" if _f7["x4 X4"]["can_any_reject"] else "no", _n7s)
+    put("n7_sweep_holm_first", f'{_f7["sweep M-74"]["holm_first_level"]:.5f}', _n7s)
+    for _h in ("1", "8", "32", "100", "128", "368"):
+        put(f"n7_a1_p_h{_h}", f'{_s7["a1"][_h]["p"]:.3f}', _n7s)
+        put(f"n7_a1_k_h{_h}", _s7["a1"][_h]["k"], _n7s)
+        put(f"n7_x3_ep_p_h{_h}", f'{_s7["x3_episode"][_h]["p"]:.4f}', _n7s)
+        put(f"n7_x3_ep_k_h{_h}", _s7["x3_episode"][_h]["k"], _n7s)
+    for _t in ("r2", "r2_combined", "m49"):
+        put(f"n7_{_t}_seedavg_p", f'{_s7["seed_averaged"][_t]["log_ratio"]["p"]:.3f}', _n7s)
+        put(f"n7_{_t}_seedavg_k", _s7["seed_averaged"][_t]["log_ratio"]["k"], _n7s)
+        put(f"n7_{_t}_seedavg_cov_p", f'{_s7["seed_averaged"][_t]["coverage_diff_pts"]["p"]:.3f}', _n7s)
+    for _h, _v in _s7["m43_within"].items():
+        put(f"n7_m43w_p_h{_h}", f'{_v["p"]:.3f}', _n7s)
+        put(f"n7_m43w_k_h{_h}", _v["k"], _n7s)
+    for _k, _v in _s7["x9_episode"].items():
+        put(f"n7_x9_{_k}_p", f'{_v["p"]:.4f}', _n7s)
+    _al7 = [r for r in N7["rows"] if r["path"].endswith("offset0-offset1/rel_l1")]
+    assert len(_al7) == 1
+    put("n7_align_p_rel_l1", f'{_al7[0]["p"]:.3f}', _n7s)
+    put("n7_align_k_rel_l1", _al7[0]["k"], _n7s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.

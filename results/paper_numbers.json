@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "705"
+    "value": "708"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5759,6 +5759,290 @@
     "source": "results/n5_stale_armA_ci.json",
     "value": "+209.3"
   },
+  "n7_a1_k_h1": {
+    "source": "results/n7_exact_tests.json",
+    "value": 3
+  },
+  "n7_a1_k_h100": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_a1_k_h128": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_a1_k_h32": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_a1_k_h368": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_a1_k_h8": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_a1_p_h1": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.375"
+  },
+  "n7_a1_p_h100": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_a1_p_h128": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_a1_p_h32": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_a1_p_h368": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_a1_p_h8": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_align_k_rel_l1": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_align_p_rel_l1": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_baselines_can_reject": {
+    "source": "results/n7_exact_tests.json",
+    "value": "no"
+  },
+  "n7_m43w_k_h128": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_m43w_k_h32": {
+    "source": "results/n7_exact_tests.json",
+    "value": 3
+  },
+  "n7_m43w_k_h368": {
+    "source": "results/n7_exact_tests.json",
+    "value": 2
+  },
+  "n7_m43w_k_h8": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_m43w_p_h128": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_m43w_p_h32": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.875"
+  },
+  "n7_m43w_p_h368": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.500"
+  },
+  "n7_m43w_p_h8": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_m49_seedavg_cov_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_m49_seedavg_k": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_m49_seedavg_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_n_4of4": {
+    "source": "results/n7_exact_tests.json",
+    "value": 154
+  },
+  "n7_n_n4": {
+    "source": "results/n7_exact_tests.json",
+    "value": 228
+  },
+  "n7_n_tested": {
+    "source": "results/n7_exact_tests.json",
+    "value": 260
+  },
+  "n7_p_min_n4": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_r2_combined_seedavg_cov_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_r2_combined_seedavg_k": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_r2_combined_seedavg_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_r2_seedavg_cov_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_r2_seedavg_k": {
+    "source": "results/n7_exact_tests.json",
+    "value": 4
+  },
+  "n7_r2_seedavg_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.125"
+  },
+  "n7_sweep_can_reject": {
+    "source": "results/n7_exact_tests.json",
+    "value": "no"
+  },
+  "n7_sweep_holm_first": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.00625"
+  },
+  "n7_x3_ep_k_h1": {
+    "source": "results/n7_exact_tests.json",
+    "value": 6
+  },
+  "n7_x3_ep_k_h100": {
+    "source": "results/n7_exact_tests.json",
+    "value": 10
+  },
+  "n7_x3_ep_k_h128": {
+    "source": "results/n7_exact_tests.json",
+    "value": 10
+  },
+  "n7_x3_ep_k_h32": {
+    "source": "results/n7_exact_tests.json",
+    "value": 10
+  },
+  "n7_x3_ep_k_h368": {
+    "source": "results/n7_exact_tests.json",
+    "value": 10
+  },
+  "n7_x3_ep_k_h8": {
+    "source": "results/n7_exact_tests.json",
+    "value": 8
+  },
+  "n7_x3_ep_p_h1": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.1953"
+  },
+  "n7_x3_ep_p_h100": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x3_ep_p_h128": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x3_ep_p_h32": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x3_ep_p_h368": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x3_ep_p_h8": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0215"
+  },
+  "n7_x4_can_reject": {
+    "source": "results/n7_exact_tests.json",
+    "value": "no"
+  },
+  "n7_x9_fold_f_h100_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_f_h128_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_f_h32_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_f_h368_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_f_h8_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_log_ratio_h100_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_log_ratio_h128_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_log_ratio_h32_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_log_ratio_h368_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_fold_log_ratio_h8_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_f_h100_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_f_h128_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_f_h32_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_f_h368_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_f_h8_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_log_ratio_h100_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_log_ratio_h128_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_log_ratio_h32_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_log_ratio_h368_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
+  "n7_x9_rel_log_ratio_h8_p": {
+    "source": "results/n7_exact_tests.json",
+    "value": "0.0020"
+  },
   "n8_adequate_n": {
     "source": "results/n8_tails.json",
     "value": 15
@@ -5917,7 +6201,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 296
+    "value": 297
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",

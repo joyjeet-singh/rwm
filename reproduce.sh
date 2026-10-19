@@ -504,6 +504,8 @@ stage 20v2 "X10 — in-sample against held-out calibration, ensemble-5 arms (M-1
       results/x10_insample_vs_heldout.json NEEDS_WEIGHTS $PY scripts/x10_insample_vs_heldout.py
 stage 20w8 "N8 — the tails: M-65's cells at +-2 sigma and the coverage-matching multiplier (post hoc, R-81)" "10 s" \
       results/n8_tails.json NEEDS_WEIGHTS $PY scripts/n8_tails.py
+stage 20w7 "N7 — exact sign-flip tests at n = 4 and at the episode level (post hoc, R-82)" "6 min" \
+      results/n7_exact_tests.json NEEDS_WEIGHTS $PY scripts/n7_exact_tests.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them

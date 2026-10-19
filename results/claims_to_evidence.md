@@ -111,3 +111,5 @@ One row per CONTRIB ledger entry.
 | `R-78` | (32, 32)'s advantage over the centre survives giving the centre twice the training compu | `RUN`, `SRC` | CONFIRMED | `results/mn_compute_matched.json`, `results/mn_sweep_timing.json` |
 | `R-79` | Our own checkpoints do feel the stale pairing, from h = 100 on, where the released check | `RUN`, `SRC` | CONFIRMED | `results/alignment_by_horizon.json`, `results/mn_compute_matched.json` |
 | `R-80` | N5 (post hoc): our models' error under the stale action timing, with intervals at every  | `RUN`, `SRC` | CONFIRMED | `results/action_sensitivity.json`, `results/alignment_by_horizon.json` |
+| `R-81` | N8 (post hoc): the tails of the calibration error — M-65's over-covering cells are heavy | `RUN`, `SRC` | CONFIRMED | `results/m65_gaussian_nominal.json`, `results/n8_tails.json` |
+| `R-82` | N7 (post hoc): exact sign-flip tests for every paired comparison reported at n = 4 with  | `RUN`, `SRC` | CONFIRMED | `results/n7_exact_tests.json`, `scripts/n7_exact_tests.py` |
