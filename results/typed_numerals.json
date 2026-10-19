@@ -18,6 +18,12 @@
     "date": 2,
     "table-denominator": 6
   },
+  "supplement": {
+    "file": "docs/SUPPLEMENT.template.md",
+    "n_typed": 0,
+    "n_unclassified": 0,
+    "unclassified": []
+  },
   "n_unclassified": 0,
   "unclassified": [],
   "n_classes": 18,

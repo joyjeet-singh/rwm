@@ -34,7 +34,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
-import rwm_data as R  # noqa: E402
+import rwm_data as R; import placeholders as PH  # noqa: E402
 
 PAPER = "PAPER.md"
 # BOTH pinned upstreams. The first sweep searched only robotic_world_model_lite and
@@ -100,7 +100,7 @@ def upstream_ok(fn, line):
 
 
 def main():
-    md = open(PAPER).read()
+    md = PH.with_supplement(open(PAPER).read(), built=True)
     secs = sections(md)
     rows, bad = [], []
 

@@ -12,7 +12,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
-import rwm_data as R  # noqa: E402
+import rwm_data as R; import placeholders as PH  # noqa: E402,E401,E702
 
 TEMPLATE = "PAPER.template.md"
 OUT = "PAPER.md"
@@ -92,7 +92,7 @@ def check_number_word_case(template, values):
     so the next build cannot reintroduce it.
     """
     bad = []
-    for m in re.finditer(r"\{\{([A-Za-z0-9_]+)\}\}", template):
+    for m in re.finditer(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", template):
         k = m.group(1)
         if k not in values or str(values[k]["value"]) not in _NUMBER_WORDS:
             continue
@@ -109,8 +109,8 @@ def check_number_word_case(template, values):
 # label on either, and they contradicted each other; and no table said which training
 # checkpoint its arms were at, so §5's 10,000-iteration table and the 2,500-iteration
 # head-to-head table printed different numbers for the same arm with nothing to say why.
-_CKPT_KEY = re.compile(r"\{\{[a-z0-9_]*(?:iters|ckpts?)[a-z0-9_]*\}\}")
-_H8_GAP_KEY = re.compile(r"\{\{(?:m23_h8_[a-z]+|ab_short_[a-z]+|a1_(?:gap|gap_ci|excl)_h8)\}\}")
+_CKPT_KEY = re.compile(r"\{\{[a-z0-9_]*(?:iters|ckpts?)[a-z0-9_]*(?:\|s[1-9])?\}\}")
+_H8_GAP_KEY = re.compile(r"\{\{(?:m23_h8_[a-z]+|ab_short_[a-z]+|a1_(?:gap|gap_ci|excl)_h8)(?:\|s[1-9])?\}\}")
 _ARM_CELL = re.compile(r"\b(Arm [AB]|faithful|corrected|teacher[- ]forced|autoregressive)\b", re.I)
 _ARM_HEADER = re.compile(r"\b(autoregressive|teacher forcing|independent|shared-trunk|combined|"
                          r"ensemble)\b", re.I)
@@ -149,7 +149,7 @@ def check_arm_table_captions(template, values):
     tables of the originals' claims are not arm tables."""
     lines = []
     for ln in template.split("\n"):
-        k = re.fullmatch(r"\{\{([A-Za-z0-9_]+)\}\}", ln.strip())
+        k = re.fullmatch(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", ln.strip())
         v = str(values.get(k.group(1), {}).get("value", "")) if k else ""
         lines += v.split("\n") if v.lstrip().startswith("|") else [ln]
     bad, i = [], 0
@@ -181,7 +181,7 @@ def check_arm_table_captions(template, values):
 _RETRACT_VOCAB = {"claims withdrawn on evidence": "n_retractions",
                   "framings withdrawn": "n_retract_framing",
                   "superseded entries": "n_superseded"}
-_RETRACT_PH = re.compile(r"\{\{(n_[a-z_]+)\}\}\s+(" + "|".join(_RETRACT_VOCAB) + r")\b")
+_RETRACT_PH = re.compile(r"\{\{(n_[a-z_]+)(?:\|s[1-9])?\}\}\s+(" + "|".join(_RETRACT_VOCAB) + r")\b")
 
 
 def _key_family(k):
@@ -259,12 +259,12 @@ def main():
             missing.append(k)
             return m.group(0)
         used.add(k)
-        return str(N[k]["value"])
+        return PH.render(N[k]["value"], m.group(2))
 
     # {{FIGURES}} is a placement marker, not a value: it is substituted after the
     # numeric pass, so exclude it from both the missing and leftover checks.
     text_marked = text.replace("{{FIGURES}}", "\x00FIGURES\x00")
-    out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", sub, text_marked)
+    out = PH.PH.sub(sub, text_marked)
     out = out.replace("\x00FIGURES\x00", "{{FIGURES}}")
 
     assert not missing, ("placeholders with no value in paper_numbers.json: "
@@ -351,7 +351,7 @@ def main():
     # count in the same PDF. Everything numeric that is NOT a placeholder is listed
     # here every build, so a typed number has to be looked at rather than assumed
     # benign. Section numbers, arXiv ids and defined constants are expected.
-    prose = re.sub(r"\{\{[A-Za-z0-9_]+\}\}", "", text)
+    prose = PH.PH_ANY.sub("", text)
     prose = re.sub(r"```.*?```", "", prose, flags=re.S)
     prose = re.sub(r"^ {4}.*$", "", prose, flags=re.M)
     prose = prose.split("## References")[0]
@@ -512,7 +512,7 @@ def main():
     # from the one section 8 prints, which is the drift kind-count exists to catch.
     # docs/APPENDIX_G_VARIANCE_ARITHMETIC.md joined it in Session 9, when 7.5's
     # extrapolation and Appendix G's five-assumption table moved out of the body.
-    for _stem in ("BUILD_CHECKS", "APPENDIX_G_VARIANCE_ARITHMETIC"):
+    for _stem in PH.DOC_TEMPLATES:          # round 5, G6: + SUPPLEMENT
         _bct = os.path.join("docs", _stem + ".template.md")
         if not os.path.exists(_bct):
             continue
@@ -524,9 +524,9 @@ def main():
                 _bc_missing.append(k)
                 return m.group(0)
             _bc_used.add(k)
-            return str(N[k]["value"])
+            return PH.render(N[k]["value"], m.group(2))
 
-        _bc_out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", _bcsub, open(_bct).read())
+        _bc_out = PH.PH.sub(_bcsub, open(_bct).read())
         assert not _bc_missing, (
             f"{_bct} has placeholders with no value: "
             f"{sorted(set(_bc_missing))}")

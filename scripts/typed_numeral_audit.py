@@ -44,7 +44,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
-import rwm_data as R  # noqa: E402
+import rwm_data as R; import placeholders as PH  # noqa: E402
 
 TEMPLATE = "PAPER.template.md"
 OUT = "typed_numerals.json"
@@ -192,7 +192,7 @@ def prepare(text):
     hundreds of characters away, and reported restatements against the wrong
     sentence entirely.
     """
-    t = re.sub(r"\{\{[A-Za-z0-9_]+\}\}", "\u2400", text)
+    t = re.sub(r"\{\{[A-Za-z0-9_]+(?:\|s[1-9])?\}\}", "\u2400", text)
     t = re.sub(r"```.*?```", "", t, flags=re.S)
     t = re.sub(r"^ {4}.*$", "", t, flags=re.M)
     # Excise the References SECTION -- not everything after it.
@@ -346,7 +346,26 @@ def main():
         print(f"\n  every typed numeral is an address, a horizon label or a declared constant")
         print(f"  ({len(EXCEPTIONS)} declared exceptions, {len(CLASSES)} classes)")
 
+    # Round 5, G6: the supplement holds text moved out of the PDF. It is audited by the same classes and fails the
+    # audit the same way, but counted apart, so the paper's {{tn_typed}} stays the template's own count.
+    sup_rows, sup_unclassified = [], []
+    if os.path.exists(PH.SUPPLEMENT_TEMPLATE):
+        for sp in _spans(open(PH.SUPPLEMENT_TEMPLATE).read() if "--plant-supplement" not in sys.argv else
+                         open(PH.SUPPLEMENT_TEMPLATE).read() + "\n\nThe arm is 12.7 times overconfident.\n"):
+            c = classify(sp)
+            sup_rows.append({"num": sp["num"], "line": sp["line"], "class": c, "ctx": re.sub(r"\s+", " ", sp["ctx"])})
+            if c is None:
+                sup_unclassified.append(sup_rows[-1])
+        print(f"  numerals typed in {PH.SUPPLEMENT_TEMPLATE}: {len(sup_rows)}, {len(sup_unclassified)} not covered")
+        for u in sup_unclassified[:20]:
+            print(f"    supplement L{u['line']:<5} {u['num']:>10}   ...{u['ctx'][-110:]}")
+    if "--plant-supplement" in sys.argv:
+        caught = any(u["num"] == "12.7" for u in sup_unclassified)
+        print(f"  SUPPLEMENT SELF-TEST: {'caught the planted measurement' if caught else 'FAILED: plant not caught'}")
+        return 0 if caught else 1
     rec = {"template": TEMPLATE, "n_typed": len(rows), "by_class": counts,
+           "supplement": {"file": PH.SUPPLEMENT_TEMPLATE, "n_typed": len(sup_rows),
+                          "n_unclassified": len(sup_unclassified), "unclassified": sup_unclassified},
            "n_unclassified": len(unclassified), "unclassified": unclassified,
            "n_classes": len(CLASSES), "n_exceptions": len(EXCEPTIONS),
            "classes": [{"name": n, "why": w} for n, _, w in CLASSES],
@@ -363,7 +382,7 @@ def main():
 
     json.dump(rec, open(os.path.join(R.RESULTS, OUT), "w"), indent=2)
     print(f"\n  wrote results/{OUT}")
-    return 1 if unclassified else 0
+    return 1 if (unclassified or sup_unclassified) else 0
 
 
 if __name__ == "__main__":

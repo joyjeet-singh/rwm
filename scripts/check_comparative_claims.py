@@ -382,23 +382,23 @@ CLAIMS = [
     {"id": "C10.1", "kind": "retraction-consistency", "where": "7.5 / README / RESULTS",
      "says": "the released artifacts do not reproduce the released",
      "retracted": "cannot have come from the released recipe",
-     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md",
                "FINDINGS_LEDGER.md#summary"]},
     {"id": "C10.2", "kind": "retraction-consistency", "where": "6.5 / README",
      "says": "no per-dimension count in this paper reaches significance",
      "retracted": "sign test on 45 dimensions",
-     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
     {"id": "C10.3", "kind": "retraction-consistency", "where": "6.7",
      "says": "The two largest deviations are both on the",
      "retracted": "deviations are both at h=100 on the aleatoric term, in opposite directions",
-     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
     {"id": "C10.4", "kind": "retraction-consistency", "where": "4",
      "says": "are claims about policy learning or hardware",
      "retracted": "without exception",
-     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
     # C10.5 extends the C10 group from "is a retracted claim still asserted" to
     # "is a retraction filed under the class the ledger gives it". S-15 was filed
@@ -415,7 +415,7 @@ CLAIMS = [
      # and the supplement now share one vocabulary -- claims withdrawn on evidence,
      # framings withdrawn, superseded entries -- counted by scripts/ledger_check.py.
      "says": "The most consequential of the framings withdrawn",
-     "files": ["PAPER.md", "docs/BUILD_CHECKS.template.md", "docs/BUILD_CHECKS.md",
+     "files": ["PAPER.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md",
                "README.md", "MODEL_CARD.md", "RESULTS.md"]},
 
     # ---- C11 cross-artifact-sync -----------------------------------------
@@ -600,14 +600,14 @@ CLAIMS = [
      "says": "the calibrated targets are",
      "value": ("paper_numbers.json", "v3_cov_nominal1.value"),
      "sites": [], "forbid_variants": ["68.3%", "68.3\\%", "68.3 %"],
-     "files": ["PAPER.md", "PAPER.tex", "docs/BUILD_CHECKS.md",
+     "files": ["PAPER.md", "PAPER.tex", "docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md",
                "README.md", "MODEL_CARD.md"]},
     {"id": "C7.4", "kind": "count-consistency", "where": "6.6 / 10",
      "label": "the h=1 disagreement interval",
      "says": "it is the largest anywhere in this work",
      "value": ("paper_numbers.json", "d2_epi_ci_h1.value"),
      "sites": [], "forbid_variants": ["+0.917"],
-     "files": ["PAPER.md", "docs/BUILD_CHECKS.md", "README.md", "MODEL_CARD.md"]},
+     "files": ["PAPER.md", "docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md", "README.md", "MODEL_CARD.md"]},
 
     # ---- C3.7: the sign check that should have caught 3.1 -----------------
     # 6.8 said the two largest held-out deviations were "in opposite
@@ -802,14 +802,14 @@ CLAIMS = [
     # its own paragraph or the next one (a table's caption sentence follows the table).
     {"id": "C25.1", "kind": "rule-seed-scope", "where": "abstract / contributions / 5 / 11",
      "says": "the rule's horizon",
-     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "README.template.md"],
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "README.template.md"],
      "keys_regex": r"d1_ratio|a1_[A-Za-z_]*h368", "trigger_regex": r"\brules?\b|pre-regist",
      "window_lines": 2,
      # T3 review F2: "{{d1_seeds}} seeds" and "three seeds" were markers, and they pass the very
      # text this check exists to catch ("over 3 seeds" does not say the rule ran on one). Only
      # phrases that name the rule's seed, or call the three seeds an extension, count.
      # Whitespace-tolerant: the abstract's "one seed per arm" wraps across a line break.
-     "marker_regex": r"\{\{m23_seed\}\}|one\s+seed\s+per\s+arm|three-seed\s+extension|extends?\s+(it|the\s+rule)"},
+     "marker_regex": r"\{\{m23_seed(?:\|s[1-9])?\}\}|one\s+seed\s+per\s+arm|three-seed\s+extension|extends?\s+(it|the\s+rule)"},
     # C25.2: the alignment defect's cost is small and not consistent in sign at h = 368 (S-20, R-76). No
     # sentence may pair "overstat..." with an alignment figure unless its paragraph names the reversal.
     # Round 3, R3 re-anchor (PLAN 1.2 rule 8): section 7.2 no longer says the evaluation "overstates" the checkpoint's
@@ -819,7 +819,7 @@ CLAIMS = [
     # pairing "overstat" with one of them is caught too: coverage grows, it does not shrink.
     {"id": "C25.2", "kind": "overstat-reversal", "where": "7.2 / abstract / contributions",
      "says": "What the stale pairing costs depends on the horizon",
-     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "README.template.md"],
+     "files": ["PAPER.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "README.template.md"],
      "figure_regex": r"ad(?:20|h20|h)?_[A-Za-z0-9_]+|stale_[A-Za-z0-9_]+",
      "reversal_regex": r"revers|not consistent in sign"},
 
@@ -834,7 +834,7 @@ CLAIMS = [
     {"id": "C26.1", "kind": "compute-claim", "where": "abstract / contributions / Appendix D / 12",
      # Round 3, R6 re-anchor: the abstract's "so" became a colon to fit rule 10's wording in C12.1's budget.
      "says": "the ranking depends on training budget",
-     "files": ["PAPER.md", "README.md", "MODEL_CARD.md", "docs/BUILD_CHECKS.md",
+     "files": ["PAPER.md", "README.md", "MODEL_CARD.md", "docs/BUILD_CHECKS.md", "docs/SUPPLEMENT.md",
                "docs/APPENDIX_G_VARIANCE_ARITHMETIC.md"],
      "forbidden_regex": r"trains\s+twice\s+as\s+long|\beven\s+when\b(?:\W+\w+){0,12}?\W+(?:centre|center|setting)\b",
      "compute_regex": r"\bcompute\b|\btrain(?:ed|s)\s+longer\b",
@@ -848,10 +848,10 @@ CLAIMS = [
     {"id": "C27.1", "kind": "alignment-arena", "where": "abstract / contributions / 3.1 / 7.2",
      # Round 3, R6 re-anchor (rule 10): the abstract names the metric whose rise resolves at h = 1.
      "says": "over all ten episodes this raises the checkpoint's short-horizon relative-L1 error",
-     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md"],
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md"],
      "defect_regex": r"\bstale\b|misaligned|previous step's action|\balignment\b",
      "short_regex": r"short[\s-]horizons?|\bup to\b|\bh = 1\b",
-     "all_ten_regex": r"\{\{(?:adh20|ad20)_\w+\}\}|all ten episodes"},
+     "all_ten_regex": r"\{\{(?:adh20|ad20)_\w+(?:\|s[1-9])?\}\}|all ten episodes"},
     # G3: round 2 quoted Arm A's stale-pairing sensitivity as evidence our models barely respond to the action; the
     # figure was void (S-21) and rule X2 measured the response. A paragraph citing stale_armA_* must carry an X2 key.
     # Round 4, F4 re-anchor (item 1): section 7.2's "They respond to the action" became "Our models do use the action",
@@ -859,19 +859,19 @@ CLAIMS = [
     # matches (wider, never narrower: every stale_armA_* paragraph is still matched).
     {"id": "C27.2", "kind": "action-response", "where": "7.2 / model card",
      "says": "Our models do use the action",
-     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "scripts/build_model_card.py"]},
     # Round 4, F4 item 8. G7: our models' stale-timing change is printed only with its interval. Any sentence that prints
     # an Arm A stale-timing figure (a stale_armA_* key, or N5's n5_ins_h* / n5_ho_h*) must carry N5's interval key for the
     # same arena and horizon; a stale_armA_* figure has none, so it always fails. A sentence that names our models and
     # the stale timing beside a percentage, with no N5 interval key, fails too (a figure typed rather than bound).
     {"id": "C28.1", "kind": "stale-interval", "where": "7.2 / model card",
      "says": "For models trained under the causal pairing, the stale one also raises error",
-     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "scripts/build_model_card.py"]},
     # G8: a paragraph saying our models respond to (use, depend on) the action carries the one-policy caveat: rule X2
     # shows the forecasts depend on the action, not that they are right under actions the data's one policy never took.
     {"id": "C28.2", "kind": "action-caveat", "where": "7.2 / Appendices H, V / model card",
      "says": "every action in the data comes from one policy",
-     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "scripts/build_model_card.py"]},
+     "files": ["PAPER.template.md", "README.template.md", "docs/BUILD_CHECKS.template.md", "docs/SUPPLEMENT.template.md", "scripts/build_model_card.py"]},
     # G9: no front-matter sentence (the abstract, section 1 and the README) pairs "one reading unresolved", or the
     # contribution's "but <one reading>, which is unresolved", with a configuration list: per configuration several
     # readings leave a winner unresolved (section 5.2), so the verdict-level count misstates them (round 3's R6 item).
@@ -1479,7 +1479,7 @@ def evaluate(c, paper, override=None):
                     f'in {conf_a}, n_independent in {conf_n}'
                     + (f'; {len(bad)} mismatch(es), first: {bad[0]}' if bad else ''))
     if k == "rule-seed-scope":
-        keys = re.compile(r"\{\{(?:" + exp["keys_regex"] + r")\}\}")
+        keys = re.compile(r"\{\{(?:" + exp["keys_regex"] + r")(?:\|s[1-9])?\}\}")
         trig, mark, W = re.compile(exp["trigger_regex"], re.I), re.compile(exp["marker_regex"], re.I), exp["window_lines"]
         bad, n, plant, missed_plant = [], 0, exp.get("_plant", {}), []
         for f in exp["files"]:
@@ -1511,7 +1511,7 @@ def evaluate(c, paper, override=None):
                                    f"{n - len(bad)} name the seed or the three-seed extension"
                                    + (f"; missing at {bad}" if bad else ""))
     if k == "overstat-reversal":
-        fig, rev = re.compile(r"\{\{(?:" + exp["figure_regex"] + r")\}\}"), re.compile(exp["reversal_regex"], re.I)
+        fig, rev = re.compile(r"\{\{(?:" + exp["figure_regex"] + r")(?:\|s[1-9])?\}\}"), re.compile(exp["reversal_regex"], re.I)
         bad, n, plant, missed_plant = [], 0, exp.get("_plant", {}), []
         for f in exp["files"]:
             paras = [(p, False) for p in re.split(r"\n\s*\n", open(f).read())]
@@ -1593,7 +1593,7 @@ def evaluate(c, paper, override=None):
                     n += 1
                     # Round 4, F4 review: an X2 RESPONSE key (the reading or the swap figure), not any x2_ key --
                     # the N5 sentences carry x2_n_ins as their trajectory count, which said nothing about response
-                    if not re.search(r"\{\{x2_(?:reading|E_swap_\w+|ci_swap_\w+)\}\}|v\('x2_(?:reading|E_swap_\w+|ci_swap_\w+)'\)", para):
+                    if not re.search(r"\{\{x2_(?:reading|E_swap_\w+|ci_swap_\w+)(?:\|s[1-9])?\}\}|v\('x2_(?:reading|E_swap_\w+|ci_swap_\w+)'\)", para):
                         bad.append(f"{f}: {para.strip()[:70]!r}")
         if plant and not _all_planted_caught(plant, bad):
             return True, f"planted wording NOT caught: {[p[:50] for p in plant.values()]}"
@@ -1604,9 +1604,9 @@ def evaluate(c, paper, override=None):
         bad, n = [], 0
         NUMS = json.load(open("results/paper_numbers.json"))
         hval = lambda name: str(NUMS[name]["value"]) if name in NUMS else None
-        pt = re.compile(r"\{\{(stale_armA_\w+|n5_(ins|ho)_h(\d+))\}\}|v\('(stale_armA_\w+|n5_(ins|ho)_h(\d+))'\)")
+        pt = re.compile(r"\{\{(stale_armA_\w+|n5_(ins|ho)_h(\d+))(?:\|s[1-9])?\}\}|v\('(stale_armA_\w+|n5_(ins|ho)_h(\d+))'\)")
         # a horizon phrase: "at h = 1", "at h = {{v2_deploy_h}}", "at 1 step", "at {v('v2_deploy_h')} steps"
-        hz = re.compile(r"\bat\s+(?:h\s*=\s*)?(?:\{\{(v2_\w+_h)\}\}|\{?v\('(v2_\w+_h)'\)\}?|(\d+)\b(?!,\d))")
+        hz = re.compile(r"\bat\s+(?:h\s*=\s*)?(?:\{\{(v2_\w+_h)(?:\|s[1-9])?\}\}|\{?v\('(v2_\w+_h)'\)\}?|(\d+)\b(?!,\d))")
         ours = re.compile(r"(?i)\b(?:our|arm a|arm b|autoregressive-10k|teacher-forced-10k)\b")
         timing = re.compile(r"(?i)\bstale\b|\boffset\b|released evaluation's timing|released pairing|one step stale")
         typed = re.compile(r"(?<![\w{.])[+−-]?\d+(?:\.\d+)?\s*(?:%|percent\b)(?!\s*(?:interval|cluster|confidence|CI\b))")
@@ -1617,7 +1617,7 @@ def evaluate(c, paper, override=None):
             for para in re.split(r"\n\s*\n", txt):
                 for sent in re.split(r"(?<=\.)\s+", para.replace("\n", " ")):
                     hits = list(pt.finditer(sent))
-                    lit = ours.search(sent) and timing.search(sent) and typed.search(re.sub(r"\{\{\w+\}\}|v\('\w+'\)", "", sent))
+                    lit = ours.search(sent) and timing.search(sent) and typed.search(re.sub(r"\{\{\w+(?:\|s[1-9])?\}\}|v\('\w+'\)", "", sent))
                     if not hits and not lit:
                         continue
                     n += 1
@@ -1629,7 +1629,7 @@ def evaluate(c, paper, override=None):
                             continue
                         # its own interval key, directly after it
                         own = rf"n5_{ar}_ci_h{hh}"
-                        if not re.match(r"[)}\s]*%?\s*\{?(?:\{\{" + own + r"\}\}|v\('" + own + r"'\))", sent[m.end():]):
+                        if not re.match(r"[)}\s]*%?\s*\{?(?:\{\{" + own + r"(?:\|s[1-9])?\}\}|v\('" + own + r"'\))", sent[m.end():]):
                             why = why or f"n5_{ar}_h{hh} is not followed by its own interval key"
                             continue
                         # and the horizon printed beside it is the key's: the first horizon phrase after it (up to
@@ -1655,7 +1655,7 @@ def evaluate(c, paper, override=None):
                            r"|\b(?:use|uses|using)\s+(?:the\s+|their\s+|its\s+)?actions?\b"
                            r"|\bdepend\w*\s+on\s+(?:the\s+|their\s+|its\s+)?actions?\b"
                            r"|\bsensitiv\w*\s+to\s+(?:the\s+|their\s+|its\s+)?actions?\b"
-                           r"|\{\{x2_reading\}\}|v\('x2_reading'\)")
+                           r"|\{\{x2_reading(?:\|s[1-9])?\}\}|v\('x2_reading'\)")
         caveat = re.compile(r"(?i)\bone\s+policy\b(?![-\w])")
         for f in exp["files"]:
             txt = open(f).read() + ("\n\n" + plant[f] if f in plant else "")
@@ -1676,9 +1676,9 @@ def evaluate(c, paper, override=None):
     if k == "config-unresolved":
         plant = exp.get("_plant", {})
         bad, n = [], 0
-        unres = re.compile(r"(?i)(?:\bone|\bsingle|\b1|\{\{mn_fm_n_unres_word\}\})\s+(?:\w+\s+){0,2}?(?:is\s+|remains\s+)?"
+        unres = re.compile(r"(?i)(?:\bone|\bsingle|\b1|\{\{mn_fm_n_unres_word(?:\|s[1-9])?\}\})\s+(?:\w+\s+){0,2}?(?:is\s+|remains\s+)?"
                            r"(?:unresolved|not\s+resolved)\b|\bbut\s+[^,.;]{1,80},\s+which\s+is\s+(?:unresolved|not\s+resolved)")
-        cfg = re.compile(r"\{\{mn_(?:better_kinds|better_list|n_better_word|n_short_better_word|better_long_phrase)\}\}"
+        cfg = re.compile(r"\{\{mn_(?:better_kinds|better_list|n_better_word|n_short_better_word|better_long_phrase)(?:\|s[1-9])?\}\}"
                          r"|(?i:shorter histor|longer (?:training )?forecasts?|neighbours|configurations?"
                          r"|history and forecast lengths)|\(\d+,\s*\d+\)")
         # the front matter and the other summaries rule 11 names for this claim: the abstract and section 1, section

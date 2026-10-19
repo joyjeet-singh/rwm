@@ -38,7 +38,7 @@ CHECKER = "scripts/check_comparative_claims.py"
 # its own file list; anything else is outside it.
 PROSE_SURFACES = ["PAPER.template.md", "docs/BUILD_CHECKS.template.md",
                   "docs/APPENDIX_G_RULES.md", "README.md", "MODEL_CARD.md", "RESULTS.md",
-                  "docs/EXTERNAL_READ_BRIEF.md"]
+                  "docs/EXTERNAL_READ_BRIEF.md", "docs/SUPPLEMENT.template.md"]
 
 # Hand-classified, with the reason recorded. Keyed by check kind.
 SCOPE = {
@@ -138,8 +138,16 @@ SCOPE = {
 }
 
 
-def main():
-    src = open(CHECKER).read()
+# Round 5, G6: the single-file sweeps read the supplement through scripts/placeholders.py. Each must still name the
+# call that brings it in, or a passage moved there leaves its scan; the audit reads their source for it.
+SWEEPS = {"scripts/typed_numeral_audit.py": "PH.SUPPLEMENT_TEMPLATE", "scripts/restatement_index.py": "PH.with_supplement",
+          "scripts/horizon_sweep.py": "PH.with_supplement", "scripts/xref_sweep.py": "PH.with_supplement"}
+SUPPLEMENT_BY_TIER = {"template": "docs/SUPPLEMENT.template.md", "built": "docs/SUPPLEMENT.md"}
+
+
+def main(src=None, sweep_src=None, write=True):
+    src = open(CHECKER).read() if src is None else src
+    sweep_src = {f: open(f).read() for f in SWEEPS} if sweep_src is None else sweep_src
     # B4: the class was [a-z-]+, so the five kinds spelled with an underscore --
     # figure_reference, population_partition, retraction_class_consistency,
     # table_renders, arena_consistency -- were invisible here, and "0
@@ -181,14 +189,34 @@ def main():
             want = {"template": "docs/BUILD_CHECKS.template.md",
                     "built": "docs/BUILD_CHECKS.md"}.get(tier)
             row["tier"] = tier
-            row["requires"] = want
-            if want:
-                row["covers_moved_text"] = want in named
-                if want not in named:
-                    row["gap"] = (f"scans the {tier} tier but does not name {want}; "
+            want_all = [w for w in (want, SUPPLEMENT_BY_TIER.get(tier)) if w]
+            row["requires"] = want_all
+            if want_all:
+                miss = [w for w in want_all if w not in named]
+                row["covers_moved_text"] = not miss
+                if miss:
+                    row["gap"] = (f"scans the {tier} tier but does not name {miss}; "
                                   f"text moved there is outside this check")
-                    gaps.append({"kind": k, "tier": tier, "missing": [want]})
+                    gaps.append({"kind": k, "tier": tier, "missing": miss})
         rows.append(row)
+    # Per claim, not per kind: a claim that scans a BUILD_CHECKS file must scan the supplement of the same tier, or
+    # one claim can drop it while another of its kind keeps the kind's union whole.
+    for m in re.finditer(r'\{"id":\s*"([^"]+)"(.*?)(?=\{"id"|\Z)', src, re.S):
+        cid, blk = m.group(1), m.group(2)
+        fm = re.search(r'"files":\s*\[(.*?)\]', blk, re.S)
+        if not fm:
+            continue
+        names = set(re.findall(r'"([^"]+\.md)"', fm.group(1)))
+        for bc, sup in (("docs/BUILD_CHECKS.template.md", SUPPLEMENT_BY_TIER["template"]),
+                        ("docs/BUILD_CHECKS.md", SUPPLEMENT_BY_TIER["built"])):
+            if bc in names and sup not in names:
+                gaps.append({"kind": f"claim {cid}", "tier": "per-claim", "missing": [sup]})
+    sweeps = []
+    for f, token in SWEEPS.items():
+        ok = token in sweep_src.get(f, "")
+        sweeps.append({"script": f, "reads_supplement_via": token, "ok": ok})
+        if not ok:
+            gaps.append({"kind": f, "tier": "sweep", "missing": [token]})
 
     out = {
         "audit": "how each comparative check selects its input, and what moving text costs",
@@ -211,6 +239,7 @@ def main():
         "n_unclassified": len(unclassified),
         "unclassified": unclassified,
         "coverage_gaps": gaps,
+        "sweeps_read_supplement": sweeps,
         "checks": rows,
         "note_on_paper_md_scanners": (
             "The whole-file scanners that search PAPER.md rather than a named file list "
@@ -225,6 +254,8 @@ def main():
             "take the supplementary as well; unit-consistency needs nothing, because the "
             "moved text states no n_independent figure."),
     }
+    if not write:
+        return out
     op = os.path.join(R.RESULTS, "check_scope_audit.json")
     json.dump(out, open(op, "w"), indent=2)
 
@@ -244,8 +275,24 @@ def main():
         for g in gaps:
             print(f"    !! {g['kind']} does not scan {g['missing']}")
     print(f"\n  wrote {R.rel(op)}")
-    return 1 if unclassified else 0
+    return 1 if (unclassified or gaps) else 0
+
+
+def self_test():
+    """Corrupt each input the round-5 extension guards and require the audit to report a gap."""
+    src = open(CHECKER).read()
+    sw = {f: open(f).read() for f in SWEEPS}
+    clean = main(src, sw, write=False)
+    a = main(src.replace('"docs/SUPPLEMENT.template.md", ', "", 1), sw, write=False)
+    b = main(src.replace('"docs/SUPPLEMENT.md", ', "", 1), sw, write=False)
+    c = main(src, {**sw, "scripts/horizon_sweep.py": sw["scripts/horizon_sweep.py"].replace("PH.with_supplement", "open")},
+             write=False)
+    ok = not clean["coverage_gaps"] and all(x["coverage_gaps"] for x in (a, b, c))
+    print(f"  self-test: clean {len(clean['coverage_gaps'])} gaps; supplement template dropped {len(a['coverage_gaps'])}, "
+          f"built supplement dropped {len(b['coverage_gaps'])}, a sweep's supplement read dropped {len(c['coverage_gaps'])} "
+          f"-> {'PASS' if ok else 'FAIL'}")
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(self_test() if "--self-test" in sys.argv else main())

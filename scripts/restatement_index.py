@@ -51,7 +51,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
-import rwm_data as R  # noqa: E402
+import rwm_data as R; import placeholders as PH  # noqa: E402
 import typed_numeral_audit as TNA  # noqa: E402
 
 TEMPLATE = "PAPER.template.md"
@@ -139,7 +139,7 @@ def scan(text, values):
     psecs = sections(prepared)
     rows = []
     # ---- substituted
-    for m in re.finditer(r"\{\{([A-Za-z0-9_]+)\}\}", text):
+    for m in re.finditer(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", text):
         k = m.group(1)
         if k not in values:
             continue
@@ -246,7 +246,7 @@ def typed_restatements(text, values, min_shared=2):
     # PREPARED text at the matching sentinel, so both sides of the comparison are
     # in one coordinate system.
     sentinels = [m.start() for m in re.finditer("\u2400", prepared)]
-    ph = [m for m in re.finditer(r"\{\{([A-Za-z0-9_]+)\}\}", text)]
+    ph = [m for m in re.finditer(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", text)]
     if len(sentinels) != len(ph):
         sentinels = None
     for n, m in enumerate(ph):
@@ -495,7 +495,7 @@ def main():
     path = TEMPLATE
     if "--against" in sys.argv:
         path = sys.argv[sys.argv.index("--against") + 1]
-    text = open(path).read()
+    text = PH.with_supplement(open(path).read()) if path == TEMPLATE else open(path).read()  # G6: + supplement
     values = json.load(open(os.path.join(R.RESULTS, "paper_numbers.json")))
     rows = scan(text, values)
     restatements, ambiguous = analyse(rows, values)

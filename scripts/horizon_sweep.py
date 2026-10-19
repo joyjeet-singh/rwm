@@ -38,7 +38,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
-import rwm_data as R  # noqa: E402
+import rwm_data as R; import placeholders as PH  # noqa: E402
 
 TEMPLATE = "PAPER.template.md"
 
@@ -214,7 +214,7 @@ def _resolve(text):
     the hand-typed number this build exists to prevent.
     """
     N = _art("paper_numbers.json")
-    return re.sub(r"\{\{([A-Za-z0-9_]+)\}\}",
+    return re.sub(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}",
                   lambda m: str(N[m.group(1)]["value"]) if m.group(1) in N else m.group(0),
                   text)
 
@@ -243,7 +243,7 @@ def scan(text=None):
     """Return the list of offending sentences, worst first."""
     grid = horizon_grid()
     deploy, diag = deploy_diag()
-    text = text if text is not None else open(TEMPLATE).read()
+    text = text if text is not None else PH.with_supplement(open(TEMPLATE).read())
     findings = []
     for line_no, para, is_row, row_scope in blocks(text):
         para_named = named_horizons(para, deploy, diag, grid)
@@ -254,7 +254,7 @@ def scan(text=None):
             if not sent:
                 continue
             carried = {}
-            for k in re.findall(r"\{\{([A-Za-z0-9_]+)\}\}", sent):
+            for k in re.findall(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", sent):
                 h = key_horizon(k, grid)
                 if h is not None:
                     carried.setdefault(h, []).append(k)

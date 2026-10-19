@@ -224,7 +224,7 @@
       "where": "7.5 / README / RESULTS",
       "says": "the released artifacts do not reproduce the released",
       "pass": true,
-      "detail": "retracted assertion \"cannot have come from the released recipe\" absent from all 6 files"
+      "detail": "retracted assertion \"cannot have come from the released recipe\" absent from all 7 files"
     },
     {
       "id": "C10.2",
@@ -232,7 +232,7 @@
       "where": "6.5 / README",
       "says": "no per-dimension count in this paper reaches significance",
       "pass": true,
-      "detail": "retracted assertion \"sign test on 45 dimensions\" absent from all 5 files"
+      "detail": "retracted assertion \"sign test on 45 dimensions\" absent from all 6 files"
     },
     {
       "id": "C10.3",
@@ -240,7 +240,7 @@
       "where": "6.7",
       "says": "The two largest deviations are both on the",
       "pass": true,
-      "detail": "retracted assertion \"deviations are both at h=100 on the aleatori\" absent from all 5 files"
+      "detail": "retracted assertion \"deviations are both at h=100 on the aleatori\" absent from all 6 files"
     },
     {
       "id": "C10.4",
@@ -248,7 +248,7 @@
       "where": "4",
       "says": "are claims about policy learning or hardware",
       "pass": true,
-      "detail": "retracted assertion \"without exception\" absent from all 5 files"
+      "detail": "retracted assertion \"without exception\" absent from all 6 files"
     },
     {
       "id": "C10.5",
@@ -320,7 +320,7 @@
       "where": "3.1 / 6.7 / Figure 1",
       "says": "the calibrated targets are",
       "pass": true,
-      "detail": "nominal coverage at \u00b11\u03c3: canonical 68.27; 3 near-miss spellings checked across 5 files; none present"
+      "detail": "nominal coverage at \u00b11\u03c3: canonical 68.27; 3 near-miss spellings checked across 6 files; none present"
     },
     {
       "id": "C7.4",
@@ -328,7 +328,7 @@
       "where": "6.6 / 10",
       "says": "it is the largest anywhere in this work",
       "pass": true,
-      "detail": "the h=1 disagreement interval: canonical [+0.918, +0.999]; 1 near-miss spellings checked across 4 files; none present"
+      "detail": "the h=1 disagreement interval: canonical [+0.918, +0.999]; 1 near-miss spellings checked across 5 files; none present"
     },
     {
       "id": "C3.7",
@@ -504,7 +504,7 @@
       "where": "abstract / contributions / Appendix D / 12",
       "says": "the ranking depends on training budget",
       "pass": true,
-      "detail": "0 forbidden phrasings in 5 rendered files; 4 front-matter sentences name compute or longer training ({'abstract': 1, 'contributions': 1, 'appendix_d': 1, 'conclusion': 1}), 4 with the qualifier"
+      "detail": "0 forbidden phrasings in 6 rendered files; 4 front-matter sentences name compute or longer training ({'abstract': 1, 'contributions': 1, 'appendix_d': 1, 'conclusion': 1}), 4 with the qualifier"
     },
     {
       "id": "C27.1",
