@@ -65,7 +65,7 @@ def main():
     for sec in dict.fromkeys(s for s, _ in body):
         text = "\n".join(l for s, l in body if s == sec)
         for s in sentences(text):
-            keys = re.findall(r"\{\{([A-Za-z0-9_]+)\}\}", s)
+            keys = re.findall(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", s)
             quantitative = bool(keys) or bool(re.search(r"\b\d+(\.\d+)?\s*(%|×|x)\b", s))
             if not (quantitative or (ASSERTIVE.search(s) and COMPARATIVE.search(s))):
                 continue

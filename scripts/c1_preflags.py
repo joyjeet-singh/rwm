@@ -143,13 +143,13 @@ def main():
     grid = HS.horizon_grid()
     deploy, diag = HS.deploy_diag()
     t1 = tier1_lines()
-    used_keys = set(re.findall(r"\{\{([A-Za-z0-9_]+)\}\}", tpl))
+    used_keys = set(re.findall(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", tpl))
 
     un = [c for c in audit["claims"] if c["verdict"] == "UNREVIEWED"]
     rows = []
     for c in un:
         claim = c["claim"]
-        keys = re.findall(r"\{\{([A-Za-z0-9_]+)\}\}", claim)
+        keys = re.findall(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", claim)
         # the paragraph this claim sits in, for context and for paragraph-scope flags
         para, para_line = "", None
         best = 0
@@ -190,7 +190,7 @@ def main():
         if nn and min(nn) <= 4 and any(v in claim.lower() for v in STRENGTH_VERBS):
             flags.append("strength-vs-n")
         para_hz = set()
-        for k in re.findall(r"\{\{([A-Za-z0-9_]+)\}\}", para):
+        for k in re.findall(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", para):
             h = meta.get(k, {}).get("horizon")
             if h:
                 para_hz.add(h)

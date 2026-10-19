@@ -1,0 +1,505 @@
+{
+ "mode": "report",
+ "summary": "pages 26.87/12, abstract 300/19, ids 93, once 33, sig 510, keys missing 0",
+ "gates": {
+  "pages": {
+   "pass": false,
+   "value": 26.87,
+   "max": 12.0,
+   "references_page": 27,
+   "references_y": 152.42299999999994
+  },
+  "abstract": {
+   "pass": false,
+   "words": 300,
+   "max_words": 210,
+   "numerals": 19,
+   "max_numerals": 5,
+   "numeral_list": [
+    "1",
+    "3",
+    "4.61",
+    "368",
+    "2,500",
+    "10,000",
+    "20",
+    "368",
+    "4",
+    "0.133",
+    "0.605",
+    "33.4",
+    "100",
+    "100",
+    "89.15",
+    "2.03",
+    "10",
+    "17",
+    "36"
+   ]
+  },
+  "ids": {
+   "pass": false,
+   "n": 93,
+   "by_kind": {
+    "ledger_id": 26,
+    "rule_id": 25,
+    "commit_label": 0,
+    "verdict_label": 34,
+    "code_label": 8
+   },
+   "distinct": {
+    "ledger_id": [
+     "M-16",
+     "M-23",
+     "M-43",
+     "M-44",
+     "M-45",
+     "M-49",
+     "M-50",
+     "M-51",
+     "M-52",
+     "M-62",
+     "M-63",
+     "M-64",
+     "M-68",
+     "M-69",
+     "M-70",
+     "M-74",
+     "M-75",
+     "M-76"
+    ],
+    "rule_id": [
+     "X1",
+     "X2",
+     "X3",
+     "X4",
+     "X5",
+     "X6",
+     "X7",
+     "X8"
+    ],
+    "commit_label": [],
+    "verdict_label": [
+     "BETTER",
+     "COMBINATION IMPROVES CALIBRATION",
+     "DISAGREEMENT BEATS STEP SIZE",
+     "DOES NOT GENERALISE",
+     "DOES NOT REORDER",
+     "DOES NOT REPRODUCE",
+     "EVALUATION-LIMITED",
+     "MECHANISM SUPPORTED",
+     "MOVE",
+     "OBJECTIVE-DRIVEN",
+     "PARTIAL",
+     "REPLICATES ACROSS FOLDS",
+     "REPRODUCES",
+     "RESCUED BY THE SETTINGS TRIED",
+     "SURVIVES",
+     "UNDER-POWERED",
+     "UNIFORM",
+     "WITHIN BAND AT"
+    ],
+    "code_label": [
+     "entry-res",
+     "step-size"
+    ]
+   },
+   "verdict_vocabulary": [
+    "ACROSS",
+    "ACTION",
+    "ADEQUATE",
+    "AHEAD",
+    "BAND",
+    "BASELINE",
+    "BEATS",
+    "BETTER",
+    "BOOTSTRAPPABLE",
+    "BOTH",
+    "BUDGET",
+    "CALIBRATION",
+    "CANNOT",
+    "CAPACITY",
+    "CHANGE",
+    "CLEAR",
+    "CLOSES",
+    "CLUSTER",
+    "COMBINATION",
+    "CONCENTRATED",
+    "CONFIRMED",
+    "DISAGREEMENT",
+    "DISTINGUISHED",
+    "DOES",
+    "EPISODE",
+    "EVALUATION-LIMITED",
+    "EXPLAINS",
+    "FALSE",
+    "FIXED",
+    "FLATTERS",
+    "FOLDS",
+    "GAUSSIAN",
+    "GENERALISE",
+    "GENERALISES",
+    "HEAVY-TAILED",
+    "IMPROVE",
+    "IMPROVES",
+    "IN-SAMPLE",
+    "INCOMPLETE",
+    "INCONCLUSIVE",
+    "INFORMATIVE",
+    "LEVEL",
+    "MATCHING",
+    "MECHANISM",
+    "MIXED",
+    "MOVE",
+    "MOVES",
+    "NARROWS",
+    "NEITHER",
+    "NOMINAL",
+    "OBJECTIVE-DRIVEN",
+    "OPTIMAL",
+    "OUTSIDE",
+    "OVER-DISPERSED",
+    "PARTIAL",
+    "PARTIALLY",
+    "PER-HORIZON",
+    "PER-MEMBER",
+    "PRE-REGISTERED",
+    "PROPAGATION",
+    "REFUTED",
+    "REORDER",
+    "REPLICATES",
+    "REPRODUCE",
+    "REPRODUCES",
+    "RESCUED",
+    "RESCUES",
+    "RESOLVED",
+    "RESPONDS",
+    "RESTORE",
+    "RESTORES",
+    "REVERSES",
+    "RWM-U",
+    "SCALAR",
+    "SETTINGS",
+    "SETTLED",
+    "SIZE",
+    "STEP",
+    "SUPPORTED",
+    "SURVIVES",
+    "THIS",
+    "THREE",
+    "TRIED",
+    "UNDER-POWERED",
+    "UNDERPOWERED",
+    "UNIFORM",
+    "UNRESOLVABLE",
+    "UNRESOLVED",
+    "WIDENS",
+    "WITHIN",
+    "WORSE"
+   ]
+  },
+  "once": {
+   "pass": false,
+   "n": 33,
+   "violations": [
+    {
+     "key": "a2_rdd",
+     "interval": false,
+     "abstract": 0,
+     "prose": 4,
+     "table_caption": 0
+    },
+    {
+     "key": "a2_rdd_ci",
+     "interval": true,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 0
+    },
+    {
+     "key": "ad20_rel_ci",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "ad_rel_ci",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "adh20_rel_ci_h1",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "adh20_rel_ci_h100",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "adh20_rel_ci_h32",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "c2_pct",
+     "interval": false,
+     "abstract": 1,
+     "prose": 3,
+     "table_caption": 0
+    },
+    {
+     "key": "d1_ratio",
+     "interval": false,
+     "abstract": 1,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "d1n_epi_ratio_ci_h100",
+     "interval": false,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 1
+    },
+    {
+     "key": "d1n_epi_ratio_h1",
+     "interval": false,
+     "abstract": 0,
+     "prose": 5,
+     "table_caption": 1
+    },
+    {
+     "key": "d1n_epi_ratio_h100",
+     "interval": false,
+     "abstract": 1,
+     "prose": 7,
+     "table_caption": 1
+    },
+    {
+     "key": "d1n_epi_ratio_h368",
+     "interval": false,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 0
+    },
+    {
+     "key": "d3_epi_cells",
+     "interval": false,
+     "abstract": 0,
+     "prose": 5,
+     "table_caption": 0
+    },
+    {
+     "key": "d3_tol",
+     "interval": false,
+     "abstract": 1,
+     "prose": 4,
+     "table_caption": 0
+    },
+    {
+     "key": "d3x_own_epi_cells",
+     "interval": false,
+     "abstract": 1,
+     "prose": 4,
+     "table_caption": 0
+    },
+    {
+     "key": "d3x_own_epi_ok",
+     "interval": false,
+     "abstract": 1,
+     "prose": 4,
+     "table_caption": 0
+    },
+    {
+     "key": "d4_ci",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "d4_r",
+     "interval": false,
+     "abstract": 1,
+     "prose": 3,
+     "table_caption": 0
+    },
+    {
+     "key": "diff_terms",
+     "interval": false,
+     "abstract": 0,
+     "prose": 4,
+     "table_caption": 0
+    },
+    {
+     "key": "e7_mde_margin",
+     "interval": false,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 0
+    },
+    {
+     "key": "e7_r_dis",
+     "interval": false,
+     "abstract": 0,
+     "prose": 4,
+     "table_caption": 0
+    },
+    {
+     "key": "e7_step_r",
+     "interval": false,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 1
+    },
+    {
+     "key": "h2h_unit",
+     "interval": false,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 0
+    },
+    {
+     "key": "m44_ratio_gain",
+     "interval": false,
+     "abstract": 1,
+     "prose": 4,
+     "table_caption": 0
+    },
+    {
+     "key": "m64_h1_ci",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "v1_shared_pct",
+     "interval": false,
+     "abstract": 1,
+     "prose": 5,
+     "table_caption": 0
+    },
+    {
+     "key": "v3_cov_nominal1",
+     "interval": false,
+     "abstract": 0,
+     "prose": 7,
+     "table_caption": 0
+    },
+    {
+     "key": "win_fore",
+     "interval": false,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 0
+    },
+    {
+     "key": "x3_ci",
+     "interval": true,
+     "abstract": 0,
+     "prose": 2,
+     "table_caption": 0
+    },
+    {
+     "key": "x6_ci",
+     "interval": true,
+     "abstract": 0,
+     "prose": 5,
+     "table_caption": 0
+    },
+    {
+     "key": "x6_margin",
+     "interval": false,
+     "abstract": 0,
+     "prose": 5,
+     "table_caption": 0
+    },
+    {
+     "key": "x7_summary",
+     "interval": false,
+     "abstract": 0,
+     "prose": 3,
+     "table_caption": 0
+    }
+   ],
+   "exempt_setting_keys_applied": [
+    "a1_nind",
+    "d1_seeds",
+    "d1n_nind",
+    "d3_nind_fit",
+    "e7_nind",
+    "iters_long",
+    "iters_main",
+    "m23_nind",
+    "m23_seed",
+    "mn_nind",
+    "nind_oos_400",
+    "r2_n_indep",
+    "v2_deploy_h",
+    "v2_diag_h",
+    "x3_n",
+    "x6_n_units",
+    "x7_n_traj"
+   ]
+  },
+  "sig": {
+   "pass": false,
+   "n": 510,
+   "n_decimals": 618,
+   "examples": [
+    "4.61",
+    "0.133",
+    "0.605",
+    "33.4",
+    "89.15",
+    "2.03",
+    "34.4",
+    "0.419",
+    "33.4",
+    "0.4697",
+    "0.6053",
+    "0.2816",
+    "0.1978",
+    "0.3896",
+    "4.43",
+    "4.61",
+    "2.58",
+    "2.2275",
+    "1.3683",
+    "3.5053",
+    "0.0194",
+    "0.0310",
+    "89.15",
+    "2.03",
+    "1.45"
+   ],
+   "exceptions": [
+    "arXiv-style identifier",
+    "version number",
+    "section, figure, table or equation number",
+    "code, in backticks",
+    "URL"
+   ]
+  },
+  "keys": {
+   "pass": true,
+   "missing": [],
+   "n_missing": 0,
+   "n_base": 1489,
+   "n_retired": 0,
+   "retired_with_bad_reason": []
+  }
+ }
+}

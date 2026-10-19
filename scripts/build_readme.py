@@ -22,7 +22,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "src"))
-import rwm_data as R  # noqa: E402
+import rwm_data as R; import placeholders as PH  # noqa: E402
 
 TEMPLATE = "README.template.md"
 OUT = "README.md"
@@ -40,9 +40,9 @@ def main():
             missing.append(k)
             return m.group(0)
         used.add(k)
-        return str(N[k]["value"])
+        return PH.render(N[k]["value"], m.group(2))
 
-    out = re.sub(r"\{\{([A-Za-z0-9_]+)\}\}", sub, text)
+    out = PH.PH.sub(sub, text)
     assert not missing, ("placeholders with no value in paper_numbers.json: "
                          + ", ".join(sorted(set(missing))))
     leftover = re.findall(r"\{\{[^}]*\}\}", out)
@@ -52,7 +52,7 @@ def main():
     # some numerals are legitimate (version pins, commit prefixes, licence
     # names); listing them every build means a typed result number has to be
     # looked at rather than assumed benign.
-    prose = re.sub(r"\{\{[A-Za-z0-9_]+\}\}", "", text)
+    prose = re.sub(r"\{\{[A-Za-z0-9_]+(?:\|s[1-9])?\}\}", "", text)
     prose = re.sub(r"```.*?```", "", prose, flags=re.S)
     prose = re.sub(r"<!--.*?-->", "", prose, flags=re.S)
     typed = sorted({m.group(1) for m in

@@ -195,6 +195,17 @@ rewording a sentence fails the check rather than silently detaching it from the 
 and a **relation recomputed from the artifacts**. A check that only re-asserts an artifact fact
 guards nothing; a check that only matches text guards nothing either.
 
+**The gates for a short paper.** Beside the registry, `scripts/round5_gates.py` runs six gates on the paper as
+built, each with its own corrupt-and-catch self-test: `pages` (the main content, read from the compiled PDF, within
+ruling Y1's limit), `abstract` (the abstract within ruling Y2's word and numeral budget, counted as the abstract
+check above counts it), `ids` (no ledger or rule identifiers, commit labels, capitalised verdict labels or code names
+used as labels in the main text, ruling Y3), `once` (each interval at most once in prose and once in tables and
+captions, never in the abstract, and any other result at most twice), `sig` (no decimal printed to more than two
+significant figures) and `keys` (no number in the record leaves the paper, the supplement and the ledger together
+unless it is listed as retired, with its reason). They report rather than fail until the final review makes them
+blocking. `scripts/supplement_selftest.py` plants a violation in `docs/SUPPLEMENT.md` for every check that reads it
+and requires each to catch it, so text moved out of the PDF stays checked.
+
 **The self-test.** Every assertion is run against a deliberately corrupted expectation on each
 build and must fail: the interval relation inverted, the extremum replaced by the *runner-up*
 rather than an absent label, the sign flipped, the order of magnitude and the dimension counts

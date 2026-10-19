@@ -43,6 +43,18 @@ $PY scripts/paper_numbers.py && $PY scripts/build_paper.py && $PY scripts/build_
 $PY scripts/ledger_check.py && $PY scripts/check_comparative_claims.py --self-test && $PY scripts/typed_numeral_audit.py && $PY scripts/restatement_index.py && $PY scripts/horizon_sweep.py && $PY scripts/xref_sweep.py && $PY scripts/check_scope_audit.py && $PY scripts/pdf_render_check.py
 ```
 
+**Round-5 gates and the supplement's self-test** (G6), run after the prose checks:
+
+```
+$PY scripts/round5_gates.py --report && $PY scripts/supplement_selftest.py && $PY scripts/placeholders.py
+```
+
+`round5_gates.py` writes `results/round5_gates.json` (pages, abstract, ids, once, sig, keys; `--report` until G16
+makes it blocking, `--self-test` for the corrupt-and-catch tests alone). `supplement_selftest.py` plants a violation in
+`docs/SUPPLEMENT` for each prose check and requires each to catch it, restoring every file it touches.
+`placeholders.py` holds the one placeholder definition (`{{key}}` and `{{key|sN}}`) and its unit test.
+`docs/SUPPLEMENT.template.md` → `docs/SUPPLEMENT.md` is rendered by `build_paper.py` beside `BUILD_CHECKS`.
+
 **Build-order lag.** The paper prints counts that the gates write: `{{tn_typed}}` comes from `typed_numeral_audit.py`, and the `{{cc_*}}` counts from `check_comparative_claims.py`. An edit that adds numerals or claims therefore prints stale counts on the first build. After any content edit, run: fast build → gates → fast build again, and require `PAPER.md`, `PAPER.tex`, `MODEL_CARD.md`, `README.md` and `docs/BUILD_CHECKS.md` to be byte-identical to the build before.
 
 Where the checks and assertions are registered:

@@ -75,7 +75,7 @@ def git_show(rev, path):
 def resolved(text, numbers):
     """{key: value} for every placeholder in a claim, as the build resolves it."""
     return {k: str(numbers[k]["value"]) if k in numbers else "<absent>"
-            for k in re.findall(r"\{\{([A-Za-z0-9_]+)\}\}", text)}
+            for k in re.findall(r"\{\{([A-Za-z0-9_]+)(?:\|s[1-9])?\}\}", text)}
 
 
 def horizons_named(text):
@@ -155,7 +155,7 @@ def main():
     import difflib
 
     def norm(t):
-        t = re.sub(r"\{\{[A-Za-z0-9_]+\}\}", " ", t)
+        t = re.sub(r"\{\{[A-Za-z0-9_]+(?:\|s[1-9])?\}\}", " ", t)
         t = re.sub(r"[*_`\[\]]", " ", t)
         return " ".join(t.split()).lower()
 

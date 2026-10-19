@@ -99,7 +99,7 @@ def main():
             f"{len(os.listdir(R.FIGURES))} figures {figbad or 'clean'}")
 
     # ---- 3 no hand-typed numbers ----
-    tpl = re.sub(r"\{\{\w+\}\}", " ", open("PAPER.template.md").read())
+    tpl = re.sub(r"\{\{\w+(?:\|s[1-9])?\}\}", " ", open("PAPER.template.md").read())
     tpl = re.sub(r"```.*?```", "", tpl, flags=re.S).split("## References")[0]
     # Three classes of numeral are ADDRESSES rather than results, and stripping
     # the class is safer than allow-listing each value -- an allow-list of line
@@ -339,8 +339,8 @@ def main():
     body = T.split("\n## 1.")[1]
     # {{FIGURES}} is a placement marker, not a value, and has no entry in
     # paper_numbers.json. It entered the body when Appendix D was added.
-    ak = set(re.findall(r"\{\{(\w+)\}\}", abstract)) - {"FIGURES"}
-    bk = set(re.findall(r"\{\{(\w+)\}\}", body)) - {"FIGURES"}
+    ak = set(re.findall(r"\{\{(\w+)(?:\|s[1-9])?\}\}", abstract)) - {"FIGURES"}
+    bk = set(re.findall(r"\{\{(\w+)(?:\|s[1-9])?\}\}", body)) - {"FIGURES"}
     OKA = {"n_defects", "n_retract_framing_word", "m23_n_episodes", "m23_n_episodes_positive",
            "unreach_recalled_iters", "unreach_factor"}
     orphan = []
