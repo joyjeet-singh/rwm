@@ -1,0 +1,795 @@
+{
+ "rule": "X10",
+ "ledger": "M-102",
+ "frozen_sha256": {
+  "scripts/x10_insample_vs_heldout.py": "687dbe08fdea8563569306d0cdbd6feb4efa9ffb6a31a3011a85a1f8914438b8",
+  "scripts/x11a_fold_ens5_calibration.py": "21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423",
+  "scripts/x11_common.py": "4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a"
+ },
+ "script": "scripts/x10_insample_vs_heldout.py",
+ "script_sha256": "687dbe08fdea8563569306d0cdbd6feb4efa9ffb6a31a3011a85a1f8914438b8",
+ "exploratory": true,
+ "never_reopens": "any discharged rule; nothing here changes a verdict",
+ "design": {
+  "models": "Arm A ensemble-5, seeds 0-2, 2,500 iterations",
+  "in_sample_episodes": [
+   0,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   9
+  ],
+  "held_out_episodes": [
+   1,
+   8
+  ],
+  "n_in": 16,
+  "n_out": 4,
+  "mode": "MEAN",
+  "in_sample_starts": [
+   0,
+   400,
+   1999,
+   2399,
+   2999,
+   3399,
+   3999,
+   4399,
+   4999,
+   5399,
+   5999,
+   6399,
+   6999,
+   7399,
+   8999,
+   9399
+  ],
+  "held_out_starts": [
+   999,
+   1399,
+   7999,
+   8399
+  ],
+  "interval": "independent bootstraps of each arena from one default_rng(0): I_in (20000, 16) then I_out (20000, 4)",
+  "horizons": [
+   1,
+   8,
+   32,
+   100,
+   128,
+   368
+  ]
+ },
+ "assertions": {
+  "2": {
+   "pass": true,
+   "train_episodes": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9
+   ],
+   "holdout_episodes": [
+    1,
+    8
+   ]
+  },
+  "3": {
+   "pass": true,
+   "n_in": 16,
+   "n_out": 4,
+   "per_episode": {
+    "0": 2,
+    "2": 2,
+    "3": 2,
+    "4": 2,
+    "5": 2,
+    "6": 2,
+    "7": 2,
+    "9": 2
+   }
+  },
+  "1": {
+   "pass": true,
+   "max_rel_diff": 0.0,
+   "tolerance": 1e-06,
+   "against": "results/task_d3_ens5.json calibration, intervals included"
+  },
+  "4": {
+   "pass": true,
+   "max_abs_diff": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0
+   },
+   "tolerance": 1e-05
+  }
+ },
+ "calibration_in": {
+  "1": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 3.8854224435731703,
+     "coverage_pm1": 0.35694444444444445,
+     "coverage_pm2": 0.5541666666666667,
+     "n_positive": 45
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 3.715517531002478,
+     "coverage_pm1": 0.3458333333333333,
+     "coverage_pm2": 0.5680555555555555,
+     "n_positive": 45
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 3.8081853065861964,
+     "coverage_pm1": 0.3458333333333333,
+     "coverage_pm2": 0.5791666666666667,
+     "n_positive": 45
+    }
+   ],
+   "mean_ratio": 3.8030417603872815,
+   "mean_cov1": 0.34953703703703703,
+   "mean_cov2": 0.5671296296296297,
+   "mean_npos": 45,
+   "ratio_ci": [
+    2.2803307577922656,
+    5.063068935809557
+   ],
+   "cov1_ci": [
+    0.29861111111111116,
+    0.39675925925925926
+   ],
+   "cov2_ci": [
+    0.500462962962963,
+    0.6282407407407408
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 16
+  },
+  "8": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 6.590126760645004,
+     "coverage_pm1": 0.18697916666666667,
+     "coverage_pm2": 0.32829861111111114,
+     "n_positive": 45
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 6.680801574548367,
+     "coverage_pm1": 0.18055555555555555,
+     "coverage_pm2": 0.33038194444444446,
+     "n_positive": 45
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 6.49390683003044,
+     "coverage_pm1": 0.18055555555555555,
+     "coverage_pm2": 0.33315972222222223,
+     "n_positive": 45
+    }
+   ],
+   "mean_ratio": 6.588278388407937,
+   "mean_cov1": 0.18269675925925927,
+   "mean_cov2": 0.33061342592592596,
+   "mean_npos": 45,
+   "ratio_ci": [
+    4.808554780286743,
+    8.28902342984367
+   ],
+   "cov1_ci": [
+    0.15318287037037037,
+    0.21273148148148147
+   ],
+   "cov2_ci": [
+    0.28206018518518516,
+    0.3804976851851852
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 16
+  },
+  "32": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 6.567800020894073,
+     "coverage_pm1": 0.140234375,
+     "coverage_pm2": 0.266796875,
+     "n_positive": 45
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 6.693698489675336,
+     "coverage_pm1": 0.14192708333333334,
+     "coverage_pm2": 0.2696614583333333,
+     "n_positive": 45
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 6.520365746333046,
+     "coverage_pm1": 0.14175347222222223,
+     "coverage_pm2": 0.2685763888888889,
+     "n_positive": 45
+    }
+   ],
+   "mean_ratio": 6.593954752300818,
+   "mean_cov1": 0.14130497685185187,
+   "mean_cov2": 0.2683449074074074,
+   "mean_npos": 45,
+   "ratio_ci": [
+    5.192796223876515,
+    7.885329471913073
+   ],
+   "cov1_ci": [
+    0.12157118055555555,
+    0.16145869502314814
+   ],
+   "cov2_ci": [
+    0.23287000868055555,
+    0.3047887731481481
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 16
+  },
+  "100": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 7.6793438451419025,
+     "coverage_pm1": 0.11122222222222222,
+     "coverage_pm2": 0.21756944444444445,
+     "n_positive": 45
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 7.718046583300509,
+     "coverage_pm1": 0.11840277777777777,
+     "coverage_pm2": 0.2278888888888889,
+     "n_positive": 45
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 7.42594804851164,
+     "coverage_pm1": 0.11530555555555555,
+     "coverage_pm2": 0.22234722222222222,
+     "n_positive": 45
+    }
+   ],
+   "mean_ratio": 7.607779492318017,
+   "mean_cov1": 0.11497685185185184,
+   "mean_cov2": 0.22260185185185186,
+   "mean_npos": 45,
+   "ratio_ci": [
+    6.6444222796771,
+    8.603795305027342
+   ],
+   "cov1_ci": [
+    0.10335625000000001,
+    0.12621296296296297
+   ],
+   "cov2_ci": [
+    0.2014537037037037,
+    0.24324131944444438
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 16
+  },
+  "128": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 8.185042500962318,
+     "coverage_pm1": 0.10440538194444444,
+     "coverage_pm2": 0.20477430555555556,
+     "n_positive": 45
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 8.288632142272194,
+     "coverage_pm1": 0.11163194444444445,
+     "coverage_pm2": 0.2152126736111111,
+     "n_positive": 45
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 7.847793109858703,
+     "coverage_pm1": 0.10846354166666666,
+     "coverage_pm2": 0.20980902777777777,
+     "n_positive": 45
+    }
+   ],
+   "mean_ratio": 8.107155917697739,
+   "mean_cov1": 0.10816695601851851,
+   "mean_cov2": 0.20993200231481482,
+   "mean_npos": 45,
+   "ratio_ci": [
+    7.002738165573875,
+    9.262542348753652
+   ],
+   "cov1_ci": [
+    0.09730179398148149,
+    0.11831967954282407
+   ],
+   "cov2_ci": [
+    0.19021601924189815,
+    0.2284108253761574
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 16
+  },
+  "368": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 9.759577984881437,
+     "coverage_pm1": 0.08177083333333333,
+     "coverage_pm2": 0.1617602657004831,
+     "n_positive": 44
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 9.56828281125174,
+     "coverage_pm1": 0.0917836654589372,
+     "coverage_pm2": 0.17894399154589372,
+     "n_positive": 44
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 9.056241667531339,
+     "coverage_pm1": 0.08894927536231884,
+     "coverage_pm2": 0.174056461352657,
+     "n_positive": 44
+    }
+   ],
+   "mean_ratio": 9.461367487888172,
+   "mean_cov1": 0.08750125805152979,
+   "mean_cov2": 0.17158690619967795,
+   "mean_npos": 44,
+   "ratio_ci": [
+    8.189398035840119,
+    10.881522208466352
+   ],
+   "cov1_ci": [
+    0.0790006038647343,
+    0.09523962736513686
+   ],
+   "cov2_ci": [
+    0.1552805454911433,
+    0.18618546195652172
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 16
+  }
+ },
+ "calibration_out": {
+  "1": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 1.963409980179693,
+     "coverage_pm1": 0.35,
+     "coverage_pm2": 0.5833333333333334,
+     "n_positive": 36
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 2.1645823781926126,
+     "coverage_pm1": 0.37777777777777777,
+     "coverage_pm2": 0.6611111111111111,
+     "n_positive": 39
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 2.2591547524185294,
+     "coverage_pm1": 0.35,
+     "coverage_pm2": 0.5666666666666667,
+     "n_positive": 30
+    }
+   ],
+   "mean_ratio": 2.129049036930278,
+   "mean_cov1": 0.3592592592592592,
+   "mean_cov2": 0.6037037037037037,
+   "mean_npos": 35,
+   "ratio_ci": [
+    1.7010166008122691,
+    2.477311345059171
+   ],
+   "cov1_ci": [
+    0.2962962962962963,
+    0.4222222222222222
+   ],
+   "cov2_ci": [
+    0.537037037037037,
+    0.6703703703703704
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 4
+  },
+  "8": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 6.3977405386910124,
+     "coverage_pm1": 0.15,
+     "coverage_pm2": 0.27152777777777776,
+     "n_positive": 38
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 6.453618234089482,
+     "coverage_pm1": 0.13541666666666666,
+     "coverage_pm2": 0.2569444444444444,
+     "n_positive": 40
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 6.141565979345106,
+     "coverage_pm1": 0.1375,
+     "coverage_pm2": 0.2701388888888889,
+     "n_positive": 34
+    }
+   ],
+   "mean_ratio": 6.3309749173752,
+   "mean_cov1": 0.14097222222222222,
+   "mean_cov2": 0.26620370370370366,
+   "mean_npos": 37.333333333333336,
+   "ratio_ci": [
+    4.448603876870001,
+    7.475211590013358
+   ],
+   "cov1_ci": [
+    0.11018518518518519,
+    0.17175925925925928
+   ],
+   "cov2_ci": [
+    0.21111111111111108,
+    0.3212962962962963
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 4
+  },
+  "32": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 7.630653436855101,
+     "coverage_pm1": 0.11684027777777778,
+     "coverage_pm2": 0.22083333333333333,
+     "n_positive": 38
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 8.01866303939285,
+     "coverage_pm1": 0.10503472222222222,
+     "coverage_pm2": 0.20208333333333334,
+     "n_positive": 35
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 8.314801703483292,
+     "coverage_pm1": 0.10190972222222222,
+     "coverage_pm2": 0.1920138888888889,
+     "n_positive": 30
+    }
+   ],
+   "mean_ratio": 7.9880393932437475,
+   "mean_cov1": 0.10792824074074074,
+   "mean_cov2": 0.20497685185185185,
+   "mean_npos": 34.333333333333336,
+   "ratio_ci": [
+    5.939594211044423,
+    9.806199564178701
+   ],
+   "cov1_ci": [
+    0.08530092592592592,
+    0.1370949074074074
+   ],
+   "cov2_ci": [
+    0.16099537037037037,
+    0.2544560185185185
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 4
+  },
+  "100": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 10.339877216321218,
+     "coverage_pm1": 0.08616666666666667,
+     "coverage_pm2": 0.173,
+     "n_positive": 45
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 10.722031668800753,
+     "coverage_pm1": 0.07977777777777778,
+     "coverage_pm2": 0.15283333333333332,
+     "n_positive": 43
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 10.53661793395056,
+     "coverage_pm1": 0.07983333333333334,
+     "coverage_pm2": 0.1575,
+     "n_positive": 44
+    }
+   ],
+   "mean_ratio": 10.532842273024176,
+   "mean_cov1": 0.08192592592592593,
+   "mean_cov2": 0.1611111111111111,
+   "mean_npos": 44,
+   "ratio_ci": [
+    8.965000248093578,
+    11.504394494044844
+   ],
+   "cov1_ci": [
+    0.068,
+    0.09585185185185185
+   ],
+   "cov2_ci": [
+    0.13448148148148148,
+    0.18774074074074076
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 4
+  },
+  "128": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 10.704810384248361,
+     "coverage_pm1": 0.08255208333333333,
+     "coverage_pm2": 0.16358506944444445,
+     "n_positive": 44
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 11.453705105518203,
+     "coverage_pm1": 0.07521701388888889,
+     "coverage_pm2": 0.14696180555555555,
+     "n_positive": 44
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 10.948185510764693,
+     "coverage_pm1": 0.07591145833333333,
+     "coverage_pm2": 0.14965277777777777,
+     "n_positive": 44
+    }
+   ],
+   "mean_ratio": 11.035567000177085,
+   "mean_cov1": 0.07789351851851851,
+   "mean_cov2": 0.15339988425925927,
+   "mean_npos": 44,
+   "ratio_ci": [
+    9.46691521976081,
+    11.862939409905724
+   ],
+   "cov1_ci": [
+    0.06811342592592592,
+    0.0876736111111111
+   ],
+   "cov2_ci": [
+    0.13466435185185185,
+    0.17213541666666665
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 4
+  },
+  "368": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "ratio_err_over_sigma": 12.504077046564104,
+     "coverage_pm1": 0.06422101449275362,
+     "coverage_pm2": 0.12737016908212562,
+     "n_positive": 41
+    },
+    {
+     "seed": 1,
+     "ratio_err_over_sigma": 13.61145626431731,
+     "coverage_pm1": 0.060733695652173916,
+     "coverage_pm2": 0.1216334541062802,
+     "n_positive": 39
+    },
+    {
+     "seed": 2,
+     "ratio_err_over_sigma": 12.852468310388662,
+     "coverage_pm1": 0.06397946859903382,
+     "coverage_pm2": 0.126268115942029,
+     "n_positive": 42
+    }
+   ],
+   "mean_ratio": 12.989333873756692,
+   "mean_cov1": 0.06297805958132045,
+   "mean_cov2": 0.12509057971014492,
+   "mean_npos": 40.666666666666664,
+   "ratio_ci": [
+    11.914687297984132,
+    13.940168536084947
+   ],
+   "cov1_ci": [
+    0.05835346215780999,
+    0.06772342995169081
+   ],
+   "cov2_ci": [
+    0.1174718196457327,
+    0.13270933977455718
+   ],
+   "bootstrap_unit": "whole trajectory, seeds pooled within each draw",
+   "n_independent": 4
+  }
+ },
+ "q": {
+  "1": {
+   "q": 1.786263112976774,
+   "q_ci": [
+    1.0554009344845463,
+    2.648548456814473
+   ],
+   "q_per_seed": {
+    "0": 1.9789155004792087,
+    "1": 1.7165054878183332,
+    "2": 1.6856681918356227
+   },
+   "n_boot_finite": 20000,
+   "rho_in": 3.8030417603872815,
+   "rho_out": 2.129049036930278,
+   "cov1_in": 0.34953703703703703,
+   "cov1_out": 0.3592592592592592,
+   "cov2_in": 0.5671296296296297,
+   "cov2_out": 0.6037037037037037,
+   "label_it_would_carry": "IN-SAMPLE IS WORSE"
+  },
+  "8": {
+   "q": 1.040641998174179,
+   "q_ci": [
+    0.7253466153246528,
+    1.5640019314266835
+   ],
+   "q_per_seed": {
+    "0": 1.030070963458195,
+    "1": 1.0352024759163552,
+    "2": 1.0573698714416326
+   },
+   "n_boot_finite": 20000,
+   "rho_in": 6.588278388407937,
+   "rho_out": 6.3309749173752,
+   "cov1_in": 0.18269675925925927,
+   "cov1_out": 0.14097222222222222,
+   "cov2_in": 0.33061342592592596,
+   "cov2_out": 0.26620370370370366,
+   "label_it_would_carry": "MIXED"
+  },
+  "32": {
+   "q": 0.8254784969986452,
+   "q_ci": [
+    0.5997691575238036,
+    1.1966833563237136
+   ],
+   "q_per_seed": {
+    "0": 0.8607126604875568,
+    "1": 0.8347649049213774,
+    "2": 0.7841877628424369
+   },
+   "n_boot_finite": 20000,
+   "rho_in": 6.593954752300818,
+   "rho_out": 7.9880393932437475,
+   "cov1_in": 0.14130497685185187,
+   "cov1_out": 0.10792824074074074,
+   "cov2_in": 0.2683449074074074,
+   "cov2_out": 0.20497685185185185,
+   "label_it_would_carry": "MIXED"
+  },
+  "100": {
+   "q": 0.7222912197026266,
+   "q_ci": [
+    0.610173079909209,
+    0.8762606067349832
+   ],
+   "q_per_seed": {
+    "0": 0.7426919763631491,
+    "1": 0.7198306087603418,
+    "2": 0.7047752983985615
+   },
+   "n_boot_finite": 20000,
+   "rho_in": 7.607779492318017,
+   "rho_out": 10.532842273024176,
+   "cov1_in": 0.11497685185185184,
+   "cov1_out": 0.08192592592592593,
+   "cov2_in": 0.22260185185185186,
+   "cov2_out": 0.1611111111111111,
+   "label_it_would_carry": "IN-SAMPLE FLATTERS"
+  },
+  "128": {
+   "q": 0.7346388198782758,
+   "q_ci": [
+    0.6175756364502485,
+    0.8910782510875284
+   ],
+   "q_per_seed": {
+    "0": 0.7646134968449543,
+    "1": 0.7236638333109231,
+    "2": 0.7168122153339874
+   },
+   "n_boot_finite": 20000,
+   "rho_in": 8.107155917697739,
+   "rho_out": 11.035567000177085,
+   "cov1_in": 0.10816695601851851,
+   "cov1_out": 0.07789351851851851,
+   "cov2_in": 0.20993200231481482,
+   "cov2_out": 0.15339988425925927,
+   "label_it_would_carry": "IN-SAMPLE FLATTERS"
+  },
+  "368": {
+   "q": 0.728395126327738,
+   "q_ci": [
+    0.6219518379177109,
+    0.8555950959230958
+   ],
+   "q_per_seed": {
+    "0": 0.7805116641986138,
+    "1": 0.702958054263097,
+    "2": 0.7046305385722033
+   },
+   "n_boot_finite": 20000,
+   "rho_in": 9.461367487888172,
+   "rho_out": 12.989333873756692,
+   "cov1_in": 0.08750125805152979,
+   "cov1_out": 0.06297805958132045,
+   "cov2_in": 0.17158690619967795,
+   "cov2_out": 0.12509057971014492,
+   "label_it_would_carry": "IN-SAMPLE FLATTERS"
+  }
+ },
+ "verdict": {
+  "h": 1,
+  "label": "IN-SAMPLE IS WORSE",
+  "q": 1.786263112976774,
+  "q_ci": [
+   1.0554009344845463,
+   2.648548456814473
+  ],
+  "q_per_seed": {
+   "0": 1.9789155004792087,
+   "1": 1.7165054878183332,
+   "2": 1.6856681918356227
+  }
+ },
+ "label_h100": "IN-SAMPLE FLATTERS",
+ "caveat": "the arenas differ in episodes as well as in training status, and per-episode difficulty varies threefold (D-12), so this bounds the in-sample effect rather than isolating it. X11, if run, measures it with every episode in both roles.",
+ "weights_sha256": {
+  "s0": "923e3a0b935cff3cb611cf6b35eea83701df4a78f02a22e3f10a6a2e945b9496",
+  "s1": "e756ca16fe2cd4e1615ca27b47d9bb519dd0d4da6dfe263758b1d5bbdaabeaaa",
+  "s2": "2688b16030a57b4b4201bc844a9e1b3607df8734e7b62b1f7b7efb11ed5d9652"
+ },
+ "code_sha256": {
+  "scripts/x10_insample_vs_heldout.py": "687dbe08fdea8563569306d0cdbd6feb4efa9ffb6a31a3011a85a1f8914438b8",
+  "scripts/x11a_fold_ens5_calibration.py": "21eba67375c02beafc0d356c1a57bf7f1176bc35b22272ccf566ee12454d0423",
+  "scripts/x11_common.py": "4efb9ea3d3fd8ff105bfc2e1da3a98aa58f58a8d32a5ae0aef78dc7fc62e953a",
+  "scripts/task_d3_ens5.py": "f162acb0cfcc02d76d16b79dec65bc8a260b3eb769995b389989746b6e6327fa",
+  "src/score_reference.py": "e79d986a2fd6bfa545a33ab30c5ef3065ff247b673b12f69a49c8017e88c21ac",
+  "src/rwm_model.py": "f929f13562b41deae659b43399985afd387b3da5ef63e8f72c933409a26681ec",
+  "src/rwm_data.py": "aff0a74423aa11cf6ad691b0da8aefb4be7de35b68d51fb9131245ce60b60cc9",
+  "src/rwm_metrics.py": "e420e8cbcbad3c749a9eb93724005970c772e4450d413b96ddaa6220b325bd3e",
+  "src/rollout_eval.py": "14f4426c528666a6ad43ce5fc105f1da9b47e6854023dbbb61a943b2b80fc4bd"
+ },
+ "git_head": "8a34451f46d95258701c295bc9891ec31d94c6a4",
+ "timing": {
+  "wall_clock_s": 16.607784855999853,
+  "torch_threads": 2,
+  "cpu_count": 4
+ }
+}

@@ -9924,7 +9924,7 @@ per environment, is not tested.
 
 **Evidence** `SRC` `scripts/x9_per_member_propagation.py`, `scripts/x11_common.py`, `src/score_reference.py`, `scripts/r2_independent_ensemble.py`;
 `RUN` `results/x9_per_member_propagation.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x9_per_member_propagation.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x9_per_member_propagation.json` (`verdict`), at h = 100: rel: **PROPAGATION NARROWS THE GAP**; e5: **PROPAGATION NARROWS THE GAP** (n = 4, descriptive); ind: **PROPAGATION NARROWS THE GAP** (n = 4, descriptive); fold: **PROPAGATION NARROWS THE GAP**. Recorded in round 5's `docs/presubmission/round5/READINGS.md` (G5). · **Relevance** METHOD
 
 ### M-102 — PRE-REGISTERED rule X10: does measuring on training data flatter an ensemble's calibration? · **NEW**
 **Entered before any of its data exists.** No `results/x9_*`, `results/x10_*` or `results/x11e_*` file exists. Its frozen files are committed in the same commit as this text, whose subject begins `PRE-REGISTER`, and the script refuses to compute the reading unless this entry records the SHA-256 of every one of them (`scripts/x11_common.py` `require_prereg`). Before that commit, on these bytes, the script ran only its `--assert-only` mode (MEAN through the existing functions, forecast step 1 of PER-MEMBER for assertion (ii), and the one-member fold check for assertion (iii); no per-member number past step 1) and a dry run of its reading on **untrained random weights** from a harness outside the repository; both logs, naming these SHA-256s, are in the session's evidence folder. The ordering can be checked from `git log`.
@@ -9990,7 +9990,7 @@ same provenance fields as X9); stage `20v2 "X10 — in-sample against held-out c
 
 **Evidence** `SRC` `scripts/x10_insample_vs_heldout.py`, `scripts/x11a_fold_ens5_calibration.py`, `scripts/x11_common.py`;
 `RUN` `results/x10_insample_vs_heldout.json` (awaited).
-**Status** PRE-REGISTERED, NOT YET DISCHARGED — awaits `results/x10_insample_vs_heldout.json` · **Relevance** METHOD
+**Status** PRE-REGISTERED, DISCHARGED by `results/x10_insample_vs_heldout.json` (`verdict`). **It returns IN-SAMPLE IS WORSE** at h = 1; at h = 100 the label it would carry is IN-SAMPLE FLATTERS. Recorded in round 5's `docs/presubmission/round5/READINGS.md` (G5). · **Relevance** METHOD
 
 ### M-103 — PRE-REGISTERED rule X11e: X9's per-member propagation on X3's folds' ensemble-5 arms · **NEW**
 **Entered before any of its data exists.** No X11 fold ensemble-5 run has finished (the queue of `docs/presubmission/round5/RUN_QUEUE.md` is training) and no `results/x11e_*` file exists. Its reading is `scripts/x9_per_member_propagation.py --x11e`, frozen with X9 (M-101) in this commit, and it refuses to run unless this entry records the SHA-256 of every frozen file. The runs, arena and gate are X11's (M-97); the rule is X9's (M-101) unchanged, at n = 20.

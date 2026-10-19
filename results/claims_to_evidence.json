@@ -3978,7 +3978,7 @@
       "id": "M-101",
       "claim": "PRE-REGISTERED rule X9: does propagating each member on its own predictions make the spr",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x9_per_member_propagation.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x9_per_member_propagation.json` (`verdict`), at h = 100: rel: **PROPAGATION NARROWS THE GAP**; e5: **PROPAGATION NARROWS THE GAP** (n = 4, descriptive); ind: **PROPAGATION NARROWS THE GAP** (n = 4, descriptive); fold: **PROPAGATION NARROWS THE GAP**. Recorded in round 5's `docs/presubmission/round5/READINGS.md` (G5).",
       "evidence": [
         "RUN",
         "SRC"
@@ -4003,7 +4003,7 @@
       "id": "M-102",
       "claim": "PRE-REGISTERED rule X10: does measuring on training data flatter an ensemble's calibrati",
       "relevance": "METHOD",
-      "status": "PRE-REGISTERED, NOT YET DISCHARGED \u2014 awaits `results/x10_insample_vs_heldout.json`",
+      "status": "PRE-REGISTERED, DISCHARGED by `results/x10_insample_vs_heldout.json` (`verdict`). **It returns IN-SAMPLE IS WORSE** at h = 1; at h = 100 the label it would carry is IN-SAMPLE FLATTERS. Recorded in round 5's `docs/presubmission/round5/READINGS.md` (G5).",
       "evidence": [
         "RUN",
         "SRC"
