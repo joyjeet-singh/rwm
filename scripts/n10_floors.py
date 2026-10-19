@@ -51,7 +51,7 @@ M_HIST, FORECAST, LEN = 32, MN.FORECAST, 400
 WINDOW, FRAC = (10, 100), 0.8
 TOL = 1e-6
 # Fixed from the training episodes by `--period` before any held-out scoring (PROTOCOLS §5 N10).
-PERIODS = {"default": None, "02": None, "34": None, "56": None, "79": None}
+PERIODS = {"default": 27, "02": 27, "34": 26, "56": 26, "79": 27}
 MODULES = ("scripts/n10_floors.py", "scripts/mn_sweep_eval.py", "src/rwm_metrics.py", "src/rwm_data.py",
            "src/rollout_eval.py", "scripts/x11_common.py")
 
