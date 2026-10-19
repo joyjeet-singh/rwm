@@ -42,8 +42,8 @@ Commits: e2b0e89 [G1][2-3] Version crosswalk: script, artifact (25 claims, RWM v
          7fcf186 [G1][1,4] Premises P1-P40, crosswalk summary with upstream-code section, six out-of-scope lines
          (final [G1][5] commit: this entry and the checkpoint)
 Review items closed: evidence gathered for RV09–RV13, RV31, RV39 (`PREMISES.md`, `CROSSWALK.md`); no review item is fixed (no paper edits).
-Done: Start gate passed (G0 COMPLETE). Read the review. `PREMISES.md`: 40 premises — TRUE 27, PARTLY 11 (P2, P3, P6, P12, P22, P23, P28, P40, and
-  P20, P15, P39 with a qualification), FALSE 0 — plus three findings the review did not raise (B1–B3). Downloaded RWM v1–v5 and RWM-U v1–v3 (PDF,
+Done: Start gate passed (G0 COMPLETE). Read the review. `PREMISES.md`: 40 premises — TRUE 32 (P15, P20, P39 with a qualification), PARTLY 8 (P2, P3, P6, P12, P22,
+  P23, P28, P40), FALSE 0 — plus three findings the review did not raise (B1–B3). Downloaded RWM v1–v5 and RWM-U v1–v3 (PDF,
   HTML, abstract page) to `docs/presubmission/sources/g1/` (gitignored; SHA-256 in the artifact). **OpenReview forums `u76d3gBWCX` and `mcwLgO93ym`
   could not be fetched** (browser challenge, HTTP 403; not bypassed), so no workshop text exists locally. `scripts/version_crosswalk.py` →
   `results/version_crosswalk.json` (25 claims; no 12, moved 7, reworded 3, new 3, removed 0; deterministic on re-run). Upstream: cloned both to
