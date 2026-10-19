@@ -296,3 +296,50 @@ Body words / main-content pages: unchanged (17,804 / 26.9)
 Subagents: none
 Next: G5 (Opus 5.5, medium) — readings into the record. It must carry R-84's h = 100 exception and X10's horizon split into READINGS.md.
 Decisions for user: none pending (rulings this session: DECISIONS.md#G4-n7-a1, #G4-n10-pooled, #G4-n13-ckpt)
+
+## G5 — 2026-10-19 21:32 — Opus 5.5 (the plan assigns medium effort), high — status: COMPLETE
+Commits: dc0d0a0 [G5][1-3] Readings into the record: S-22, S-23, S-24, C-17, C-18, R-89; M-65, M-96, C-04, C-11 Status lines
+         c39d6b8 [G5][4] READINGS.md
+         dc5ec61 [G5][5] Build and gates: retraction counts re-derived; BUILD_CHECKS' enumeration gains S-22; the external brief's counts
+         (final [G5][close] commit: this entry and the checkpoint)
+Review items closed: RV12, RV13, RV24, RV26 (record); inputs to RV14 and RV17 (Annex 1).
+Done:
+- **How this session ran.** In the same conversation as G2–G4, at the user's request ("Start G5"). No subagent.
+- **Item 1, M-65.** S-22 (evidence class) withdraws M-65's reading "NOT HEAVY-TAILED in every one of 48 cells", its "Gaussian
+  nominal is defensible", and its "no single lambda repairs" argument, with **Retracts** `M-65` and `M-96` (M-96's sentence that
+  the reading stands). It points at R-81, and states the coverage-matching multiplier as Y7's "too small by".
+  - M-65's Status is now "… its returned reading SUPERSEDED by `S-22`"; M-96 is "SUPERSEDED IN PART". Neither was CONTRIB.
+  - No check asserted the withdrawn reading (grep of `check_comparative_claims.py` and every template), so no expectation changed.
+- **Item 2.**
+  - C-17 corrects C-09. Both papers set α = 1.0 (RWM v1 Table S9, RWM-U v1 Table S8), so it is a naming difference, not a gap;
+    PLAN's withdrawal condition ("RWM's own paper sets none") is false. The same entry covers Table S8 for the training length.
+  - C-18 (new): per-head bootstrap resampling exists in the MBPO-PPO path, not in the offline path our arms follow
+    (`step5_train.py:259` passes no `bootstrap`).
+  - S-23 (framing) withdraws C-04's presentation of the shared state trunk as undisclosed (RWM-U v1 §4.1 states it). C-04 is
+    marked SUPERSEDED IN PART; its facts and X-12 stand.
+  - R-89 corrects R-75's circular count to three counts read from the artifact.
+- **Item 3, framings, grepped first.**
+  - S-24 withdraws C-11's "the floor freezes, and nothing can reopen it": `step6_3_min_logstd.json` shows the floor moving at
+    5.2× slower than log δ. C-11 is marked SUPERSEDED IN PART.
+  - "No single λ" lived only in M-65 and goes with S-22.
+  - "In-sample flatters calibration", "under-penalised", "provably" and "aware of" appear in no ledger entry. They are wording
+    changes; READINGS.md lists their template lines (19, 59, 585, 595, 632).
+- **Item 4.** `round5/READINGS.md`, 1,370 words. Every reading has its keys and scope: Y7's factor per horizon is `n8_k_rel_epi_h*`,
+  and N12's provenance sentence is in it. Every number in it is a key name; three typed numbers caught and replaced before commit.
+- **Item 5.** Two gates failed on the first pass, both stale counts the new S-22 exposed:
+  - C7.1: `BUILD_CHECKS.template.md`'s typed enumeration listed 8 evidence retractions. S-22 was added.
+  - C11.3: `docs/EXTERNAL_READ_BRIEF.md`'s sentence had been stale since before this round ("20 … seven … six"). Its counts are
+    now written from the keys.
+  - No check loosened. Then all passed.
+Build/gates: pass. Fast build, all eight gates, fast build again: PAPER.md, PAPER.tex, MODEL_CARD.md, README.md, docs/BUILD_CHECKS.md byte-identical; ledger_check PASS (retraction classes 9 evidence, 8 framing, 7 early hypotheses; 24 superseded).
+Round-5 gates (report mode until G16): not available until G6
+Paper numbers changed: n_entries 303 → 309; ledger_kb 725 → 734; n_superseded 21 → 24; n_retractions 8 → 9 (and its word forms); n_retract_framing 6 → 8 (and word forms); n_retract_total 14 → 17; n_framing_cohorts 3 → 4 (ledger_check's classification, results/claims_to_evidence.json)
+New keys: none
+Ledger: S-22, S-23, S-24, C-17, C-18, R-89 (new); M-65 SUPERSEDED (its reading), M-96, C-04, C-11 SUPERSEDED IN PART
+Re-anchored checks: none
+CPU jobs over 1 min: build and gates, twice (about 70 s each; contended with the queue)
+Queue (Y5): running (1 of 20 done at 21:32; the second, x11_e5_34_s0, started 20:51). The machine was on battery at the end of the session.
+Body words / main-content pages: unchanged (17,804 / 26.9)
+Subagents: none
+Next: G6 (Sonnet 5.5, high) — tooling for a short paper.
+Decisions for user: none
