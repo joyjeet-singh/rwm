@@ -400,3 +400,62 @@ Body words / main-content pages: 17,804 / 26.87
 Subagents: none
 Next: G7 (Sonnet 5.5, medium) — bibliography.
 Decisions for user: none
+
+## G7 — 2026-10-19 21:58 — Opus 5.5 (the plan assigns Sonnet 5.5, medium) — status: COMPLETE
+Commits: [G7][1-3] scripts/t1_bibliography.py verifies DOI and proceedings-page records; fifteen entries; references 1 and 2 from the crosswalk
+         (final [G7][close] commit: this entry and the checkpoint)
+Review items closed: RV10, RV32–RV36 and RV46 at the reference list. The citations enter the text in G11–G15.
+Done:
+- **How this session ran.** In the same conversation as G2–G6, at the user's request ("Start G7"). One `rwm-sources`
+  subagent (read-only) identified candidate records for the review's works. Every field it reported was then re-read by the
+  tool itself; the subagent's report is not evidence.
+- **Item 1, `scripts/t1_bibliography.py`.** An entry may now carry a `doi` (title, ordered full author list, venue and year
+  from the Crossref record) or a proceedings `url` (from the page's citation meta tags or, on a volume page with none, from
+  the page text, each field matched as whole words). An arXiv entry keeps arXiv as the source of title and authors, and may
+  add a DOI or page to have its venue and year checked there, or a `venue_comment` matched in the arXiv comment. Absent
+  fields leave the fingerprint unchanged, so all eighteen earlier entries still match their pins.
+  - **`--verify --only k1,k2`** verifies only those entries and prints their records for pasting; it writes nothing.
+  - **`--self-test`** (network) corrupts one field of each record kind and requires rejection: 10 of 10 caught, uncorrupted
+    all pass. Two weaknesses it found were fixed before pinning. A prefix of a true name (Bagnel inside Bagnell) passed the
+    PDF check, and a truncated title or editor name passed the volume-page check. Both are now whole-word matches.
+  - `fetch()` retries a timeout or a 429/5xx twice. One live run timed out mid-session; nothing was pinned from it.
+- **Item 2, fifteen entries** (`CHECKED_ON_G7`), all verified live and pinned:
+  - venkatraman2015, bengio2015, talvitie2017, lambert2021, angelopoulos2021, stankeviciute2021, lindemann2023,
+    osband2016, osband2018, agarwal2021, henderson2018, cameron2008, kingma2015, prereg2020, prereg2021.
+  - **prereg2021 is added beyond the PLAN's list** because the review names "the NeurIPS 2020–21 pre-registration
+    workshops" (RV36), and PMLR 181 is the 2021 volume.
+  - **Venkatraman et al.: the publisher's record has a defect.** Crossref and the AAAI page both print the third author as
+    "J.. Bagnell"; the paper's first page reads "J. Andrew Bagnell". The entry gives the paper's spelling. A pinned
+    `record_spelling` maps it to the record's, and the display name is checked against the PDF.
+  - **Lambert et al. (2021): the review gives no title.** The entry is the CDC 2021 paper on long-term dynamics for
+    model-based RL; its `establishes` field says it was chosen by search.
+  - **Stankevičiūtė is spelt as the record gives it**, "Stankeviciute".
+  - No new entry carries a fragment. `establishes` says only why the work is listed (the review item that names it), not
+    what it shows. A fragment is added with the sentence that attributes a claim.
+- **Item 3, references 1 and 2.** New `ORIGINALS` record (`verify_originals()`, pinned in `_ORIGINALS_PINNED`, checked at
+  build): titles of v1 and of the current version from each version's arXiv abstract page, the current version from the API
+  against `results/version_crosswalk.json`, and the workshop poster from the venue's own page. **The venue pages answered
+  directly this time**, so P6's summarised read is now a raw-text check. Neither page mentions archival status, and the build
+  asserts that, because the template says so.
+  - Reference 2 now gives v1's title, "Offline Robotic World Model: …", with the current v3 (8 January 2026) and its new
+    title beside it (RV10).
+  - Reference 1 adds v5 (14 December 2025).
+  - Both name the presentation as a workshop poster: NeurIPS 2025, *Embodied World Models for Decision Making*; ICLR 2026,
+    *The 2nd Workshop on World Models: Understanding, Modelling and Scaling*.
+  - Every field is a key (`ref1_*`, `ref2_*`). The rewrite is line-preserving (7 lines for 7), so no cited template line
+    moved.
+  - The References note now says entries without an arXiv id are checked against Crossref or the proceedings page.
+- **Renderer** (`paper_numbers.py`): DOI and page entries print `doi:` or the URL; editors print "(eds.)"; a surname
+  particle stays with the surname ("B. Van Roy", "M. van der Schaar").
+Build/gates: pass. Fast build twice, all eight gates, round5_gates --report, the supplement self-test, the placeholder unit test, the bibliography self-test, fast build again: PAPER.md, PAPER.tex, MODEL_CARD.md, README.md, docs/BUILD_CHECKS.md, docs/SUPPLEMENT.md byte-identical. The first rebuild's README lagged one compile behind on the page count (75 → 76); it converged on the next build.
+Round-5 gates (report mode until G16): pages 26.88/12, abstract 300/19, ids 93, once 33, sig 510, keys missing 0
+Paper numbers changed: t1_n_refs and t1_n_verified 18 → 33; t1_last_entry_n and t1_refs_after 20 → 35; t1_reference_list; pdf_pages 75 → 76
+New keys: ref1_{title_read,title_current,read,read_date,current,current_date,conf,workshop,v2_date}, ref2_{same, less v2_date}
+Ledger: none
+Re-anchored checks: none
+CPU jobs over 1 min: build and gates (about 150 s, twice); contended with the queue.
+Queue (Y5): running (1 of 20 done; x11_e5_34_s0 started 20:51). The machine was on battery through this session (30% at 22:33); the user chose to continue.
+Body words / main-content pages: unchanged prose; pages 26.88 (the reference list)
+Subagents: rwm-sources ×1 (record identification; read-only)
+Next: G8 (Opus 5.5, high) — outline, page budget and abstract.
+Decisions for user: none
