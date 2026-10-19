@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "658"
+    "value": "679"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -5765,7 +5765,7 @@
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 288
+    "value": 292
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",
