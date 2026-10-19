@@ -103,3 +103,67 @@ Body words / main-content pages: unchanged (17,804 / 26.9)
 Subagents: rwm-reader × 1
 Next: GT1 (Y5 = B; Opus 5.5, high) — complete PROTOCOLS.md §4, probe, pre-register and launch the queue. Then G3.
 Decisions for user: none
+
+## GT1 — 2026-10-19 16:55 — Opus 5.5, high — status: COMPLETE
+Commits: dbecbf0 [GT1][3] Training support for X11: step5_train --holdout with --ensemble 5 (five lines changed in place, none moved); queue_run's x11-e5 trainers; fold checks (a)-(c) pass, (b) bitwise
+         e1a92d0 [GT1][1] X11 power before any fold run: M-43's criterion and M-44's MDE at n = 20 by the n = 4 code (results/x11_power.json); n = 4 reproductions pass
+         99f6bd2 [GT1][5] Timing probe on an idle machine: 55.5 CPU-h projected for 20 runs; cap 62 h by ruling GT1-cap
+         1a2f021 [GT1] PRE-REGISTER X11a-X11d (M-97 to M-100) and the X11 rule text, before any X11 run exists
+         bcc3f6e [GT1][6] Launch: 20 X11 runs queued at 16:44:57 (+0530), projected 55.5 CPU-h against the 62 h cap, finish about 2026-10-22 00:15
+         21d0a3d [GT1] Build and gates after the pre-registration: n_entries 288 -> 292, ledger_kb 658 -> 679; no paper edits
+         (final [GT1][close] commit: this entry and the checkpoint)
+Review items closed: RV20 (launch) (Annex 1).
+Done:
+- **How this session ran.** In the same conversation as G2, at the user's request ("Start GT1. Raise the 30 CPU-hour cap if
+  needed"); the plan assigns a fresh terminal (Y13). Recorded in `DECISIONS.md#GT1-cap`. No subagent.
+- **Cap ruling.** The user raised Y5's 30 CPU-hours. Recorded before the probe as 1.10 × the probe's projection, rounded up;
+  set after it at **62 h** (projected 55.5 h). The stored run records had already put it near 56 h, so B's 30 h was never reachable.
+- **Item 3, training support.** `scripts/step5_train.py --holdout` now takes `--ensemble 5` for Arm A. Five lines changed in place,
+  none moved; the eight cited lines (`:64`, `:122-147`, `:138`, `:173`, `:184`, `:205`, `:244`, `:289-321`) stay put; nothing hashes the
+  file. `scripts/queue_run.py` gained `x11-e5-<fold>` and an `ensemble` check. `round5/gt1_fold_support.json`:
+  - (a) windows per fold equal every committed run's `n_train_windows`, and {1, 8} has round 4's SHA-256;
+  - (b) three 50-iteration runs reproduce the committed loss traces **bitwise**: ensemble-5 via `--holdout 1,8` and via the
+    default path, and single-model seed 3 via `--holdout`;
+  - (c) every fold excludes exactly its two episodes.
+- **Item 1, the rules.** `PROTOCOLS.md` §4 is complete: runs, readings, MDEs and seven listed changes from the discharged rules.
+  `scripts/x11_power.py` → `results/x11_power.json`, written before any fold run. Assertions: M-43's n = 4 power was replayed exactly;
+  M-44's n = 4 per-pair values match to 1e-12, and its binding MDE is within 5% (the draws can't be replayed, because they share a
+  generator with M-45). At n = 20, on an in-sample pool (so upper bounds), M-43's criterion fires on most draws; M-44's binding MDE
+  barely shrinks (`m44.n20`).
+- **Item 2, reading scripts.** `scripts/x11{a,b,c,d}_*.py` plus `scripts/x11_common.py`, one per rule, each copying the discharged
+  code with file:line. Each `--assert-only` reproduces its fold-{1, 8} artifact with maximum difference **0.0**
+  (`task_d3_ens5.json` calibration, governing and M-43 verdict; `task_d3_perhorizon.json`; `r2_independent_ensemble.json`).
+  Dry runs of every `reading()` on substituted weights ran end to end from a harness in the scratchpad; their numbers are a code test
+  and are not recorded. Each reading refuses to run unless its ledger entry records the SHA-256 of its frozen files; tested both ways.
+  A missing run record stops a reading with `FileNotFoundError` (no output written), not a `.blocked` record.
+- **Item 4, ledger.** M-97 (X11a), M-98 (X11b), M-99 (X11c), M-100 (X11d), PRE-REGISTERED, written by `round5/gt1_write_prereg.py`.
+  Every figure in them is read from an artifact; the writer checks that the evidence logs name each frozen file's current SHA-256.
+  RESULTS.md M- 96 → 100. IDs are max + 1, as round 4 did; `ledger_check.py` has no allocator.
+- **X11e** (X9 on the fold ensemble-5 arms): rule text in §4. **Its script is G3's**: arena tag `fold_e5` inside
+  `scripts/x9_per_member_propagation.py`, frozen in G3's PRE-REGISTER commit, before GT2. Its ledger entry is also G3's.
+- **Item 5, timing.** `scripts/round5_queue_timing.py` → `results/round5_queue_timing.json`, on mains power with nothing else
+  running. Ensemble-5 4.13 h per run, single model 0.74 h.
+- **Item 6, launch.** `runs/queue_round5.txt` was written from the record and launched at 16:44:57 under `nohup caffeinate -i`.
+  Runner PID 14182; log `runs/queue_round5.log`; sentinel: the log's last line "queue empty; runner exits" with 20 done, 0 failed.
+  The first run passed 50 iterations with finite losses (iteration-0, 25 and 50 lines only). `round5/RUN_QUEUE.md` has the status
+  command and the restart procedure.
+- The machine was on battery earlier in the session; it was on AC power for the probe and the launch.
+Build/gates: pass. Fast build, all eight gates, fast build again: PAPER.md, PAPER.tex, MODEL_CARD.md, README.md and docs/BUILD_CHECKS.md byte-identical; ledger_check PASS (M-97 to M-100 pending).
+Round-5 gates (report mode until G16): not available until G6
+Paper numbers changed: n_entries 288 → 292; ledger_kb 658 → 679 (FINDINGS_LEDGER.md)
+New keys: none
+Ledger: M-97, M-98, M-99, M-100 (PRE-REGISTERED)
+Re-anchored checks: none
+CPU jobs over 1 min:
+- fold support (b), three 50-iteration runs, about 12 min (contended with x11_power);
+- x11_power, twice, about 2 min each;
+- x11b `--assert-only`, about 4.6 min, twice;
+- the dry runs, twice, about 20–25 min each;
+- the timing probe, 2.2 min (idle);
+- build and gates, 96 s (contended with the queue's first run).
+Queue (Y5): running (0 of 20 done at 16:50; projected finish about 2026-10-22 00:15 +0530)
+Body words / main-content pages: unchanged (17,804 / 26.9)
+Subagents: none
+Next: G3 (Opus 5.5, high) — X9 (with X11e's `fold_e5` arena in the same frozen script) and X10. It runs while the queue trains;
+  log every job as contended, and read no queue-run log except through RUN_QUEUE.md's filter.
+Decisions for user: none (ruling this session: DECISIONS.md#GT1-cap)

@@ -1,22 +1,22 @@
-# Round-5 checkpoint — after G2 (2026-10-19)
+# Round-5 checkpoint — after GT1 (2026-10-19)
 
-**State.** Branch `presubmission5`. Last log entry: **G2 — COMPLETE**. Nothing pushed. Y1–Y13 defaults stand (Y5 = B).
+**State.** Branch `presubmission5`. Last log entry: **GT1 — COMPLETE**. Nothing pushed. Y5 = B with the cap raised to 62
+CPU-hours (`DECISIONS.md#GT1-cap`). **The X11 training queue is running in the background**: launched 2026-10-19 16:44:57
+(+0530), runner PID 14182, 20 runs, projected 55.5 CPU-h, finish about **2026-10-22 00:15**.
 
-**Next action.** Y5 is B, so the next session is **GT1** (Opus 5.5, high): `docs/presubmission/round5/go.zsh GT1`.
-GT1 completes `round5/PROTOCOLS.md` §4 (every ‹GT1›), probes one ensemble-5 and one single-model run on an idle machine,
-projects against the 30 CPU-h cap, commits the X11 rule and queue under a `PRE-REGISTER` subject, and launches the queue
-in the background. After GT1: G3 (X9, X10).
+**Next action.** G3 (Opus 5.5, high): `docs/presubmission/round5/go.zsh G3`. X9 and X10 per `PROTOCOLS.md` §2–§3. **Also**: X9's
+script must carry X11e's arena (`fold_e5`, `PROTOCOLS.md` §4.2) and be frozen, with X11e's ledger entry, in G3's PRE-REGISTER
+commit. G3 runs beside the queue (inference only; log jobs as contended). Then G4. GT2 only after the queue finishes.
 
-**What G2 produced.** `round5/PROTOCOLS.md` (commit 2d71330): X9 and X10 pre-registered rule text (§2, §3), X11 skeleton
-(§4), N7–N14 specifications (§5), summary table (§6), changes from Annex 2 (§7). Two lines in `OUT_OF_SCOPE.md`.
+**Queue status** (repository root; reads no reading):
+`echo "done $(wc -l < runs/queue_round5_done.txt) of 20; failed $(wc -l < runs/queue_round5_failed.txt)"; tail -n 2 runs/queue_round5.log`.
+If the runner has stopped (`pgrep -f queue_runner`), relaunch per `round5/RUN_QUEUE.md`. Never read `[checkpoint …]` lines before GT2.
 
-**Facts later sessions must not lose.** (1) G3 must commit X9's and X10's ledger entries (`PRE-REGISTERED`, IDs from
-`ledger_check.py`) and their scripts under a `PRE-REGISTER` subject **before** the first reading; the scripts are then
-frozen. (2) X9's MEAN must call `rollout_uncertainty` / `rollout_independent` unchanged; assertions run before any
-per-member number. (3) X9 (d) batches four trajectories per fold through `MN`'s input construction (batching moves
-h = 368 values by ~1e-2). (4) N10's seasonal period is written into the script in its own commit before any scoring.
-(5) The correspondence lives outside the repo (`../rwm_private/`); quote only what App. F quotes.
+**Facts later sessions must not lose.** (1) X11a–d are frozen (M-97–M-100 record their SHA-256s); GT2 runs them unchanged and changes
+only those entries' Status lines. (2) A missing run record stops a reading with `FileNotFoundError` (no output), not `.blocked`.
+(3) The scripts print nothing from fold runs until GT2. (4) G2's facts still hold (CHECKPOINT history in SESSION_LOG).
 
 **Blockers.** None.
 
-**Files.** `round5/{PROTOCOLS,OUT_OF_SCOPE,SESSION_LOG,CHECKPOINT}.md`.
+**Files.** `round5/{PROTOCOLS,DECISIONS,RUN_QUEUE,SESSION_LOG,CHECKPOINT}.md`, `round5/gt1_*`, `scripts/x11*.py`,
+`scripts/round5_queue_timing.py`, `scripts/step5_train.py`, `scripts/queue_run.py`, `results/{x11_power,round5_queue_timing}.json`.
