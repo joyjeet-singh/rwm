@@ -1,0 +1,345 @@
+{
+ "rule": "X11 (power, before any fold run)",
+ "script": "scripts/x11_power.py",
+ "script_sha256": "5e77afc0318abb9eb5b2263d28764d854ed838c2cc7bbd5c20736293f05e12f8",
+ "code_sha256": {
+  "scripts/x11_power.py": "5e77afc0318abb9eb5b2263d28764d854ed838c2cc7bbd5c20736293f05e12f8",
+  "scripts/task_d3b_ens5_power.py": "62c12d1f750d6b07b7ffe2af73af46e49255ae6b7cf121356f63da01124f0eca",
+  "scripts/p1_power_check.py": "6ee977046cb4a508cb8ba35f758f00c25c512d1b8fd3f54a19394dfad5371100",
+  "src/score_reference.py": "e79d986a2fd6bfa545a33ab30c5ef3065ff247b673b12f69a49c8017e88c21ac",
+  "src/rwm_data.py": "aff0a74423aa11cf6ad691b0da8aefb4be7de35b68d51fb9131245ce60b60cc9",
+  "src/rwm_metrics.py": "e420e8cbcbad3c749a9eb93724005970c772e4450d413b96ddaa6220b325bd3e",
+  "src/rollout_eval.py": "14f4426c528666a6ad43ce5fc105f1da9b47e6854023dbbb61a943b2b80fc4bd"
+ },
+ "git_head": "d34084492ad62fc7804bbae7f78770d4d1e06831",
+ "caveat": "the n = 20 pool is all ten episodes, in-sample for our arms (they trained on eight); every n = 20 power is an upper bound and every n = 20 MDE a lower bound, as at n = 4",
+ "assertions": {
+  "m43_n4_replayed": {
+   "pass": true,
+   "max_abs_diff": 0.0,
+   "against": "results/task_d3b_ens5_power.json power[h].{power_at_n4, effect_at_n20}"
+  },
+  "m44_n4_observed": {
+   "pass": true,
+   "max_abs_diff": 0.0,
+   "against": "results/p1_power_check.json m44.pairs[*].{log_ratio_observed, coverage_diff_observed_pts}"
+  },
+  "m44_n4_binding_mde": {
+   "pass": true,
+   "max_rel_diff": 0.005652675568847006,
+   "tolerance": 0.05,
+   "recomputed": {
+    "ratio_mde_multiplicative": 1.4374418617882194,
+    "coverage_mde_pts": 2.2740941151862635
+   },
+   "stored": {
+    "ratio": 1.445613445594126,
+    "coverage_pts": 2.261523819342549
+   }
+  }
+ },
+ "m43": {
+  "criterion": "paired interval on r(disagreement) - r(index) excludes zero (task_d3b_ens5_power.py)",
+  "n4_replayed": {
+   "8": {
+    "effect_at_n20": 0.5677900049301636,
+    "power": 0.24,
+    "n_draws": 400,
+    "subsample_n": 4,
+    "with_replacement": false,
+    "seed_used": 0
+   },
+   "32": {
+    "effect_at_n20": 0.7901155638841091,
+    "power": 0.9375,
+    "n_draws": 400,
+    "subsample_n": 4,
+    "with_replacement": false,
+    "seed_used": 0
+   },
+   "128": {
+    "effect_at_n20": 0.4245299178205747,
+    "power": 0.9625,
+    "n_draws": 400,
+    "subsample_n": 4,
+    "with_replacement": false,
+    "seed_used": 0
+   },
+   "368": {
+    "effect_at_n20": 0.447605967385454,
+    "power": 0.8475,
+    "n_draws": 400,
+    "subsample_n": 4,
+    "with_replacement": false,
+    "seed_used": 0
+   }
+  },
+  "n20": {
+   "seed0": {
+    "8": {
+     "effect_at_n20": 0.5677900049301636,
+     "power": 0.94,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 0
+    },
+    "32": {
+     "effect_at_n20": 0.7901155638841091,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 0
+    },
+    "128": {
+     "effect_at_n20": 0.4245299178205747,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 0
+    },
+    "368": {
+     "effect_at_n20": 0.447605967385454,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 0
+    }
+   },
+   "seed1": {
+    "8": {
+     "effect_at_n20": 0.5652001085186302,
+     "power": 0.735,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 1
+    },
+    "32": {
+     "effect_at_n20": 0.7744723202836821,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 1
+    },
+    "128": {
+     "effect_at_n20": 0.37256353395610614,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 1
+    },
+    "368": {
+     "effect_at_n20": 0.4492329220505201,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 1
+    }
+   },
+   "seed2": {
+    "8": {
+     "effect_at_n20": 0.6084339507237874,
+     "power": 0.9475,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 2
+    },
+    "32": {
+     "effect_at_n20": 0.7898715832651637,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 2
+    },
+    "128": {
+     "effect_at_n20": 0.44650123006189546,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 2
+    },
+    "368": {
+     "effect_at_n20": 0.44512625673119854,
+     "power": 1.0,
+     "n_draws": 400,
+     "subsample_n": 20,
+     "with_replacement": true,
+     "seed_used": 2
+    }
+   }
+  },
+  "n20_mean_power": 0.9685416666666667,
+  "n20_worst_power": 0.735,
+  "change_from_n4": "draws of 20 from the 20-trajectory pool are with replacement; at n = 4 they were without"
+ },
+ "m44": {
+  "n4_recomputed": {
+   "n_trajectories": 4,
+   "horizon": 100,
+   "pairs": [
+    {
+     "pair": "ens5_seed0 vs ens5_seed1",
+     "same_architecture": true,
+     "log_ratio_observed": -0.03629266464977279,
+     "coverage_diff_observed_pts": 0.6388888888888888,
+     "log_ratio_se": 0.010602771316208483,
+     "coverage_diff_se_pts": 0.35128032568276235,
+     "ratio_mde_multiplicative": 1.0301501490517495,
+     "coverage_mde_pts": 0.9841417680178208
+    },
+    {
+     "pair": "ens5_seed0 vs ens5_seed2",
+     "same_architecture": true,
+     "log_ratio_observed": -0.018848618109330542,
+     "coverage_diff_observed_pts": 0.633333333333333,
+     "log_ratio_se": 0.02529905727125028,
+     "coverage_diff_se_pts": 0.11743486914612149,
+     "ratio_mde_multiplicative": 1.0734496825403192,
+     "coverage_mde_pts": 0.32900379354799913
+    },
+    {
+     "pair": "ens5_seed0 vs released",
+     "same_architecture": false,
+     "log_ratio_observed": -0.9100254029600796,
+     "coverage_diff_observed_pts": 2.9111111111111114,
+     "log_ratio_se": 0.1285375572424854,
+     "coverage_diff_se_pts": 0.8128607810480495,
+     "ratio_mde_multiplicative": 1.4334855418839583,
+     "coverage_mde_pts": 2.277298748963866
+    },
+    {
+     "pair": "ens5_seed1 vs ens5_seed2",
+     "same_architecture": true,
+     "log_ratio_observed": 0.01744404654044221,
+     "coverage_diff_observed_pts": -0.005555555555555869,
+     "log_ratio_se": 0.018677476233991616,
+     "coverage_diff_se_pts": 0.30717180515309916,
+     "ratio_mde_multiplicative": 1.053719769404084,
+     "coverage_mde_pts": 0.8605679888876019
+    },
+    {
+     "pair": "ens5_seed1 vs released",
+     "same_architecture": false,
+     "log_ratio_observed": -0.8737327383103068,
+     "coverage_diff_observed_pts": 2.2722222222222226,
+     "log_ratio_se": 0.1310395501631624,
+     "coverage_diff_se_pts": 0.7375600393164056,
+     "ratio_mde_multiplicative": 1.4435689239610596,
+     "coverage_mde_pts": 2.0663373039788766
+    },
+    {
+     "pair": "ens5_seed2 vs released",
+     "same_architecture": false,
+     "log_ratio_observed": -0.8911767848507491,
+     "coverage_diff_observed_pts": 2.2777777777777786,
+     "log_ratio_se": 0.12898688824472146,
+     "coverage_diff_se_pts": 0.8847299293842895,
+     "ratio_mde_multiplicative": 1.4352912058066614,
+     "coverage_mde_pts": 2.478646292616047
+    }
+   ],
+   "binding_cross_architecture": {
+    "ratio_mde_multiplicative": 1.4374418617882194,
+    "coverage_mde_pts": 2.2740941151862635
+   },
+   "optimistic_same_architecture": {
+    "ratio_mde_multiplicative": 1.0522908237508728,
+    "coverage_mde_pts": 0.724571183484474
+   }
+  },
+  "n20": {
+   "n_trajectories": 20,
+   "horizon": 100,
+   "pairs": [
+    {
+     "pair": "ens5_seed0 vs ens5_seed1",
+     "same_architecture": true,
+     "log_ratio_observed": -0.011343067567024507,
+     "coverage_diff_observed_pts": -0.44666666666666605,
+     "log_ratio_se": 0.01736355543254592,
+     "coverage_diff_se_pts": 0.4020314302862747,
+     "ratio_mde_multiplicative": 1.0498480928658922,
+     "coverage_mde_pts": 1.1263253125026433
+    },
+    {
+     "pair": "ens5_seed0 vs ens5_seed2",
+     "same_architecture": true,
+     "log_ratio_observed": 0.026789988310788698,
+     "coverage_diff_observed_pts": -0.1999999999999988,
+     "log_ratio_se": 0.013992368656088544,
+     "coverage_diff_se_pts": 0.3121889632733139,
+     "ratio_mde_multiplicative": 1.039979304254614,
+     "coverage_mde_pts": 0.8746239849165746
+    },
+    {
+     "pair": "ens5_seed0 vs released",
+     "same_architecture": false,
+     "log_ratio_observed": -1.4059724755464633,
+     "coverage_diff_observed_pts": 6.011111111111111,
+     "log_ratio_se": 0.11865491965757334,
+     "coverage_diff_se_pts": 0.577674742737981,
+     "ratio_mde_multiplicative": 1.3943409537133196,
+     "coverage_mde_pts": 1.6184050204132852
+    },
+    {
+     "pair": "ens5_seed1 vs ens5_seed2",
+     "same_architecture": true,
+     "log_ratio_observed": 0.0381330558778133,
+     "coverage_diff_observed_pts": 0.24666666666666726,
+     "log_ratio_se": 0.013582287145039654,
+     "coverage_diff_se_pts": 0.26743787779235073,
+     "ratio_mde_multiplicative": 1.0387851806824153,
+     "coverage_mde_pts": 0.7492500053168029
+    },
+    {
+     "pair": "ens5_seed1 vs released",
+     "same_architecture": false,
+     "log_ratio_observed": -1.3946294079794388,
+     "coverage_diff_observed_pts": 6.457777777777777,
+     "log_ratio_se": 0.12508317764947144,
+     "coverage_diff_se_pts": 0.7592901727864514,
+     "ratio_mde_multiplicative": 1.41967955634068,
+     "coverage_mde_pts": 2.127216124706762
+    },
+    {
+     "pair": "ens5_seed2 vs released",
+     "same_architecture": false,
+     "log_ratio_observed": -1.432762463857252,
+     "coverage_diff_observed_pts": 6.21111111111111,
+     "log_ratio_se": 0.1195571181086827,
+     "coverage_diff_se_pts": 0.7143461816464464,
+     "ratio_mde_multiplicative": 1.3978697279320458,
+     "coverage_mde_pts": 2.0013017034640344
+    }
+   ],
+   "binding_cross_architecture": {
+    "ratio_mde_multiplicative": 1.4039188458505536,
+    "coverage_mde_pts": 1.9156409495280267
+   },
+   "optimistic_same_architecture": {
+    "ratio_mde_multiplicative": 1.0428591003176502,
+    "coverage_mde_pts": 0.9167331009120069
+   }
+  },
+  "verdict_thresholds_unchanged": {
+   "ratio": 1.45,
+   "coverage_pts": 2.26,
+   "source": "M-44's committed thresholds (r2_independent_ensemble.py:50-51); X11d keeps them"
+  }
+ },
+ "timing": {
+  "wall_clock_s": 116.41699489899975,
+  "torch_threads": 2,
+  "cpu_count": 4
+ }
+}
