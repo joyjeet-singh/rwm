@@ -63,3 +63,10 @@ PROTOCOLS' 1e-12. Cause: a1 averages a float32 array (`scripts/a1_ab_by_horizon.
 values in float64. Every other N7 assertion passed and no N7 test had been computed (the run stopped with a `.blocked`
 record, kept at `/Users/Shared/rwm_verify/evidence/R5G4/`). The fix computes the point as a1 does, the float32 mean of
 the stored list; the tolerance stays 1e-12; the interval check is unchanged (`boot_cluster`, 1e-7).
+
+## G4-n10-pooled
+
+**User ruling, 2026-10-19 (chat), before any N10 scoring:** "Mean of per-fold pooled". PROTOCOLS §5 N10 asks for nRMSE in
+the pooled convention on X3's five-fold arena, where each fold has its own training scale, so one pooled value over the 20
+trajectories is undefined. N10 pools within each fold with that fold's scale and averages the five fold values with equal
+weight (each fold has 4 trajectories), labelled as such; the per-trajectory convention is reported as specified.
