@@ -4068,6 +4068,23 @@
         "scripts/review_bootstrap_unit.py"
       ],
       "retracts": []
+    },
+    {
+      "id": "R-83",
+      "claim": "N9 (post hoc): the per-horizon recalibration scored on \u00b12\u03c3 coverage, CRPS, NLL and width",
+      "relevance": "CONTRIB",
+      "status": "CONFIRMED",
+      "evidence": [
+        "RUN",
+        "SRC"
+      ],
+      "artifacts": [
+        "results/n9_recalibration_scores.json",
+        "results/x7_loeo_recalibration.json",
+        "scripts/n9_recalibration_scores.py",
+        "scripts/x7_loeo_recalibration.py"
+      ],
+      "retracts": []
     }
   ],
   "counts_by_prefix": {
@@ -4076,7 +4093,7 @@
     "D": 39,
     "M": 103,
     "O": 14,
-    "R": 82,
+    "R": 83,
     "S": 21,
     "X": 17
   },

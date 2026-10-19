@@ -4621,7 +4621,7 @@
   },
   "ledger_kb": {
     "source": "FINDINGS_LEDGER.md, on disk",
-    "value": "708"
+    "value": "711"
   },
   "long_unit_rows": {
     "source": "results/task_d_nind20.json",
@@ -6195,13 +6195,445 @@
     "source": "results/n8_tails.json",
     "value": 30
   },
+  "n9_epi_before_cov1_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "16.2"
+  },
+  "n9_epi_before_cov1_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "4.6"
+  },
+  "n9_epi_before_cov1_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "4.4"
+  },
+  "n9_epi_before_cov1_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "7.0"
+  },
+  "n9_epi_before_cov1_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "3.6"
+  },
+  "n9_epi_before_cov1_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "10.0"
+  },
+  "n9_epi_before_cov2_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "30.1"
+  },
+  "n9_epi_before_cov2_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "9.3"
+  },
+  "n9_epi_before_cov2_h100_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[8.3, 10.2]"
+  },
+  "n9_epi_before_cov2_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "8.8"
+  },
+  "n9_epi_before_cov2_h128_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[8.0, 9.5]"
+  },
+  "n9_epi_before_cov2_h1_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[25.8, 34.2]"
+  },
+  "n9_epi_before_cov2_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "13.7"
+  },
+  "n9_epi_before_cov2_h32_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[11.8, 15.4]"
+  },
+  "n9_epi_before_cov2_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "7.2"
+  },
+  "n9_epi_before_cov2_h368_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[6.6, 7.8]"
+  },
+  "n9_epi_before_cov2_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "19.8"
+  },
+  "n9_epi_before_cov2_h8_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[17.1, 22.2]"
+  },
+  "n9_epi_before_crps_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.0986"
+  },
+  "n9_epi_before_crps_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.6624"
+  },
+  "n9_epi_before_crps_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.8480"
+  },
+  "n9_epi_before_crps_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.2535"
+  },
+  "n9_epi_before_crps_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "1.1744"
+  },
+  "n9_epi_before_crps_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.1681"
+  },
+  "n9_epi_before_nll_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "98.29"
+  },
+  "n9_epi_before_nll_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "6235.69"
+  },
+  "n9_epi_before_nll_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "7599.36"
+  },
+  "n9_epi_before_nll_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "1739.39"
+  },
+  "n9_epi_before_nll_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "10167.38"
+  },
+  "n9_epi_before_nll_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "599.91"
+  },
+  "n9_epi_before_width_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.025"
+  },
+  "n9_epi_before_width_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.040"
+  },
+  "n9_epi_before_width_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.050"
+  },
+  "n9_epi_before_width_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.023"
+  },
+  "n9_epi_before_width_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.069"
+  },
+  "n9_epi_before_width_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.023"
+  },
+  "n9_epi_const_cov1_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "68.6"
+  },
+  "n9_epi_const_cov1_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "26.5"
+  },
+  "n9_epi_const_cov1_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "25.0"
+  },
+  "n9_epi_const_cov1_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "37.1"
+  },
+  "n9_epi_const_cov1_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "21.2"
+  },
+  "n9_epi_const_cov1_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "50.6"
+  },
+  "n9_epi_const_cov2_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "86.3"
+  },
+  "n9_epi_const_cov2_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "43.8"
+  },
+  "n9_epi_const_cov2_h100_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[40.3, 47.2]"
+  },
+  "n9_epi_const_cov2_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "41.8"
+  },
+  "n9_epi_const_cov2_h128_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[39.1, 44.5]"
+  },
+  "n9_epi_const_cov2_h1_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[82.1, 90.0]"
+  },
+  "n9_epi_const_cov2_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "57.9"
+  },
+  "n9_epi_const_cov2_h32_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[51.4, 63.7]"
+  },
+  "n9_epi_const_cov2_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "36.2"
+  },
+  "n9_epi_const_cov2_h368_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[33.9, 38.6]"
+  },
+  "n9_epi_const_cov2_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "71.1"
+  },
+  "n9_epi_const_cov2_h8_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[64.2, 77.3]"
+  },
+  "n9_epi_const_crps_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.0847"
+  },
+  "n9_epi_const_crps_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.6199"
+  },
+  "n9_epi_const_crps_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.7958"
+  },
+  "n9_epi_const_crps_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.2315"
+  },
+  "n9_epi_const_crps_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "1.1025"
+  },
+  "n9_epi_const_crps_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.1499"
+  },
+  "n9_epi_const_nll_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.50"
+  },
+  "n9_epi_const_nll_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "146.29"
+  },
+  "n9_epi_const_nll_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "178.35"
+  },
+  "n9_epi_const_nll_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "39.23"
+  },
+  "n9_epi_const_nll_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "236.93"
+  },
+  "n9_epi_const_nll_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "12.71"
+  },
+  "n9_epi_const_width_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.164"
+  },
+  "n9_epi_const_width_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.263"
+  },
+  "n9_epi_const_width_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.328"
+  },
+  "n9_epi_const_width_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.149"
+  },
+  "n9_epi_const_width_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.449"
+  },
+  "n9_epi_const_width_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.150"
+  },
+  "n9_epi_perh_cov1_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "68.6"
+  },
+  "n9_epi_perh_cov1_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "68.2"
+  },
+  "n9_epi_perh_cov1_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "68.2"
+  },
+  "n9_epi_perh_cov1_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "68.3"
+  },
+  "n9_epi_perh_cov1_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "68.2"
+  },
+  "n9_epi_perh_cov1_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "68.4"
+  },
+  "n9_epi_perh_cov2_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "86.3"
+  },
+  "n9_epi_perh_cov2_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "83.5"
+  },
+  "n9_epi_perh_cov2_h100_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[80.9, 85.9]"
+  },
+  "n9_epi_perh_cov2_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "83.5"
+  },
+  "n9_epi_perh_cov2_h128_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[81.5, 85.4]"
+  },
+  "n9_epi_perh_cov2_h1_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[82.1, 90.0]"
+  },
+  "n9_epi_perh_cov2_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "84.5"
+  },
+  "n9_epi_perh_cov2_h32_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[78.2, 89.8]"
+  },
+  "n9_epi_perh_cov2_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "83.6"
+  },
+  "n9_epi_perh_cov2_h368_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[81.6, 85.5]"
+  },
+  "n9_epi_perh_cov2_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "85.1"
+  },
+  "n9_epi_perh_cov2_h8_ci": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "[79.1, 90.2]"
+  },
+  "n9_epi_perh_crps_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.0847"
+  },
+  "n9_epi_perh_crps_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.5786"
+  },
+  "n9_epi_perh_crps_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.7504"
+  },
+  "n9_epi_perh_crps_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.2182"
+  },
+  "n9_epi_perh_crps_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "1.0588"
+  },
+  "n9_epi_perh_crps_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.1453"
+  },
+  "n9_epi_perh_nll_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.50"
+  },
+  "n9_epi_perh_nll_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "6.78"
+  },
+  "n9_epi_perh_nll_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "7.17"
+  },
+  "n9_epi_perh_nll_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "4.92"
+  },
+  "n9_epi_perh_nll_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "6.49"
+  },
+  "n9_epi_perh_nll_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "3.68"
+  },
+  "n9_epi_perh_width_h1": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.164"
+  },
+  "n9_epi_perh_width_h100": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "1.229"
+  },
+  "n9_epi_perh_width_h128": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "1.668"
+  },
+  "n9_epi_perh_width_h32": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.408"
+  },
+  "n9_epi_perh_width_h368": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "2.901"
+  },
+  "n9_epi_perh_width_h8": {
+    "source": "results/n9_recalibration_scores.json",
+    "value": "0.266"
+  },
   "n_defects": {
     "source": "PAPER.template.md section 7 subsections",
     "value": "five"
   },
   "n_entries": {
     "source": "FINDINGS_LEDGER.md",
-    "value": 297
+    "value": 298
   },
   "n_ep_rest": {
     "source": "results/step0_regimes.json",

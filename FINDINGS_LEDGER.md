@@ -10062,3 +10062,25 @@ the artifact.
 
 **Evidence** `RUN` `results/n7_exact_tests.json`; `SRC` `scripts/n7_exact_tests.py`, `scripts/p5_sweep_power.py`, `scripts/review_bootstrap_unit.py`.
 **Status** CONFIRMED · **Relevance** CONTRIB
+
+### R-83 — N9 (post hoc): the per-horizon recalibration scored on ±2σ coverage, CRPS, NLL and width — ±1σ is restored, ±2σ is not · **NEW**
+**Post hoc.** Computed after X7's reading existed (round 5, PLAN Annex 2 N9; specification
+`docs/presubmission/round5/PROTOCOLS.md` §5 N9, committed in `2d71330`). It re-opens no rule and changes no verdict: X7 (M-89,
+M-92) read ±1σ coverage only, and its WITHIN BAND reading stands. This scores the same rescalings on the measures a forecast user
+also needs.
+
+**Assertion:** X7's `reading()` was run unchanged on the released checkpoint's per-episode rollouts; its ±1σ coverage and
+interval for all three calibrations at every horizon equal `results/x7_loeo_recalibration.json` (maximum difference
+0.0e+00), and every multiplier equals X7's (relative
+0.0e+00).
+
+**Epistemic σ, the ten held-out episodes pooled (20 trajectories; each episode scored with the multiplier fitted on the other
+nine), before → constant / per-horizon:** h = 1: ±1σ 16.2% → 68.6% (constant) / 68.6% (per-horizon); ±2σ 30.1% → 86.3% / 86.3% [82.1%, 90.0%]; CRPS 0.0986 → 0.0847 / 0.0847; NLL 98.29 → 0.50 / 0.50; width 0.025 → 0.164 / 0.164. h = 100: ±1σ 4.6% → 26.5% (constant) / 68.2% (per-horizon); ±2σ 9.3% → 43.8% / 83.5% [80.9%, 85.9%]; CRPS 0.6624 → 0.6199 / 0.5786; NLL 6235.69 → 146.29 / 6.78; width 0.040 → 0.263 / 1.229. h = 368: ±1σ 3.6% → 21.2% (constant) / 68.2% (per-horizon); ±2σ 7.2% → 36.2% / 83.6% [81.6%, 85.5%]; CRPS 1.1744 → 1.1025 / 1.0588; NLL 10167.38 → 236.93 / 6.49; width 0.069 → 0.449 / 2.901. The per-horizon multiplier brings ±1σ coverage
+to the nominal 68.27% at every horizon, as X7 found, but **±2σ coverage stays well short of the nominal 95.45%** at every horizon:
+the rescaled error is heavier-tailed than a Gaussian (R-81). CRPS improves under both rescalings; NLL falls by orders of
+magnitude; the per-horizon interval is many times wider than the raw one. CRPS and width are in normalised-state units, NLL in
+nats per (step, dimension). Every horizon, both quantities and every interval are in the artifact. The same caveat as X7: unseen by
+the multiplier, not necessarily by the model (PREMISES P20).
+
+**Evidence** `RUN` `results/n9_recalibration_scores.json`; `SRC` `scripts/n9_recalibration_scores.py`, `scripts/x7_loeo_recalibration.py`.
+**Status** CONFIRMED · **Relevance** CONTRIB

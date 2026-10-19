@@ -506,6 +506,8 @@ stage 20w8 "N8 — the tails: M-65's cells at +-2 sigma and the coverage-matchin
       results/n8_tails.json NEEDS_WEIGHTS $PY scripts/n8_tails.py
 stage 20w7 "N7 — exact sign-flip tests at n = 4 and at the episode level (post hoc, R-82)" "6 min" \
       results/n7_exact_tests.json NEEDS_WEIGHTS $PY scripts/n7_exact_tests.py
+stage 20w9 "N9 — the per-horizon recalibration scored on +-2 sigma, CRPS, NLL and width (post hoc, R-83)" "1 min" \
+      results/n9_recalibration_scores.json $PY scripts/n9_recalibration_scores.py
 
 # The referee questions Q1-Q3 (phase A of the referee revisions). The paper reads all
 # three artifacts, and until these stages existed a clean clone only ever carried them

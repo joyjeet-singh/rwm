@@ -4055,6 +4055,21 @@ def main():
     put("n7_align_p_rel_l1", f'{_al7[0]["p"]:.3f}', _n7s)
     put("n7_align_k_rel_l1", _al7[0]["k"], _n7s)
 
+    # Round 5, G4: N9 (ledger R-83, post hoc). The released checkpoint only, so not NEEDS_WEIGHTS.
+    N9 = J("n9_recalibration_scores.json")
+    _n9s = "results/n9_recalibration_scores.json"
+    assert N9["post_hoc"] and N9["assertions"]["coverage_and_interval"]["pass"] and N9["assertions"]["multipliers"]["pass"]
+    _e9 = N9["scores"]["epistemic"]
+    for _h in ("1", "8", "32", "100", "128", "368"):
+        for _cn, _ct in (("before", "before"), ("constant", "const"), ("per_horizon", "perh")):
+            _r9 = _e9[_h][_cn]
+            put(f"n9_epi_{_ct}_cov1_h{_h}", f'{100 * _r9["cov1"]:.1f}', _n9s)
+            put(f"n9_epi_{_ct}_cov2_h{_h}", f'{100 * _r9["cov2"]:.1f}', _n9s)
+            put(f"n9_epi_{_ct}_cov2_h{_h}_ci", f'[{100 * _r9["ci95"]["cov2"][0]:.1f}, {100 * _r9["ci95"]["cov2"][1]:.1f}]', _n9s)
+            put(f"n9_epi_{_ct}_crps_h{_h}", f'{_r9["crps"]:.4f}', _n9s)
+            put(f"n9_epi_{_ct}_nll_h{_h}", f'{_r9["nll"]:.2f}', _n9s)
+            put(f"n9_epi_{_ct}_width_h{_h}", f'{_r9["width"]:.3f}', _n9s)
+
     # ------------------------------------------------------------------
     # Surface every value that is a LITERAL in this file rather than read from
     # an artifact.
